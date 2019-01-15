@@ -61,14 +61,14 @@ to redirect it to :phpfunction:`error_log`:
     .. code-block:: php
 
         // app/config/config_prod.php
-        $container->loadFromExtension('monolog', array(
+        $container->loadFromExtension('monolog', [
             // ...
-            'handlers' => array(
-                'nested' => array(
+            'handlers' => [
+                'nested' => [
                     'type' => 'error_log',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Configuring Database Access & Session Handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,11 +161,11 @@ Make sure this file is imported into the main config file:
         $loader->import('config.php');
         $loader->import('config_prod_secrets.php');
 
-        $container->loadFromExtension('framework', array(
-            'session' => array(
+        $container->loadFromExtension('framework', [
+            'session' => [
                 'handler_id' => null,
-            ),
-        ));
+            ],
+        ]);
 
         // ...
 

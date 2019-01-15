@@ -88,10 +88,10 @@ short example containing most features described below:
          */
         private function transformText($dummy, array $options = [])
         {
-            $defaultOptions = array(
+            $defaultOptions = [
                 'some_default' => 'values',
                 'another_default' => 'more values',
-            );
+            ];
 
             foreach ($options as $option) {
                 if (!in_array($option, $defaultOptions)) {

@@ -205,19 +205,19 @@ using the ``simple_form`` key:
         // ...
         use AppBundle\Security\TimeAuthenticator;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area'    => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area'    => [
                     'pattern'     => '^/admin',
-                    'simple_form' => array(
+                    'simple_form' => [
                         'provider'      => ...,
                         'authenticator' => AppBundle\Security\TimeAuthenticator::class,
                         'check_path'    => 'login_check',
                         'login_path'    => 'login',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 The ``simple_form`` key has the same options as the normal ``form_login``
 option, but with the additional ``authenticator`` key that points to the

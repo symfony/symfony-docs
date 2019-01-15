@@ -151,14 +151,14 @@ configuration:
     .. code-block:: php
 
         // app/config/config_test.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
                 'host'     => 'localhost',
                 'dbname'   => 'testdb',
                 'user'     => 'testdb',
                 'password' => 'testdb',
-            ),
-        ));
+            ],
+        ]);
 
 Make sure that your database runs on localhost and has the defined database and
 user credentials set up.

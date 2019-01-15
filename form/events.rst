@@ -318,7 +318,7 @@ callback for better readability::
                 ->add('show_email', CheckboxType::class)
                 ->addEventListener(
                     FormEvents::PRE_SET_DATA,
-                    array($this, 'onPreSetData')
+                    [$this, 'onPreSetData']
                 )
             ;
         }
@@ -352,10 +352,10 @@ Event subscribers have different uses:
     {
         public static function getSubscribedEvents()
         {
-            return array(
+            return [
                 FormEvents::PRE_SET_DATA => 'onPreSetData',
                 FormEvents::PRE_SUBMIT   => 'onPreSubmit',
-            );
+            ];
         }
 
         public function onPreSetData(FormEvent $event)

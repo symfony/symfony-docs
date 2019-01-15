@@ -136,7 +136,7 @@ With this knowledge, you can easily implement the ``guessType()`` method of the
             $phpdoc = $reflectionProperty->getDocComment();
 
             // parse the $phpdoc into an array like:
-            // array('var' => 'string', 'since' => '1.0')
+            // ['var' => 'string', 'since' => '1.0']
             $phpdocTags = ...;
 
             return $phpdocTags;

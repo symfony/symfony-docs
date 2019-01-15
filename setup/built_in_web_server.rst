@@ -36,9 +36,9 @@ Then, enable the bundle in the kernel of the application::
     {
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 // ...
-            );
+            ];
 
             if ('dev' === $this->getEnvironment()) {
                 // ...

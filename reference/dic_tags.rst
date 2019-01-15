@@ -172,7 +172,7 @@ Second, define a service:
 
         $container
             ->register(CustomFilter::class)
-            ->addTag('assetic.filter', array('alias' => 'my_filter'))
+            ->addTag('assetic.filter', ['alias' => 'my_filter'])
         ;
 
 Finally, apply the filter:
@@ -335,7 +335,7 @@ the generic ``app.lock`` service can be defined as follows:
         $container->register('app.sqlite_lock', SqliteLock::class)->setPublic(false);
 
         $container->register('app.lock')
-            ->addTag('auto_alias', array('format' => 'app.%database_type%_lock'));
+            ->addTag('auto_alias', ['format' => 'app.%database_type%_lock']);
 
 The ``format`` option defines the expression used to construct the name of the service
 to alias. This expression can use any container parameter (as usual,
@@ -566,7 +566,7 @@ can also register it manually:
 
         $container
             ->register(MyCustomWarmer::class)
-            ->addTag('kernel.cache_warmer', array('priority' => 0))
+            ->addTag('kernel.cache_warmer', ['priority' => 0])
         ;
 
 .. note::
@@ -676,7 +676,7 @@ channel when injecting the logger in a service.
 
         $container->register(CustomLogger::class)
             ->addArgument(new Reference('logger'))
-            ->addTag('monolog.logger', array('channel' => 'app'));
+            ->addTag('monolog.logger', ['channel' => 'app']);
 
 .. tip::
 
@@ -771,7 +771,7 @@ attribute:
 
         $container
             ->register(IntrospectionProcessor::class)
-            ->addTag('monolog.processor', array('handler' => 'firephp'))
+            ->addTag('monolog.processor', ['handler' => 'firephp'])
         ;
 
 You can also add a processor for a specific logging channel by using the
@@ -808,7 +808,7 @@ You can also add a processor for a specific logging channel by using the
 
         $container
             ->register(IntrospectionProcessor::class)
-            ->addTag('monolog.processor', array('channel' => 'security'))
+            ->addTag('monolog.processor', ['channel' => 'security'])
         ;
 
 .. note::
@@ -994,7 +994,7 @@ templates):
         use AppBundle\Templating\AppHelper;
 
         $container->register(AppHelper::class)
-            ->addTag('templating.helper', array('alias' => 'alias_name'))
+            ->addTag('templating.helper', ['alias' => 'alias_name'])
         ;
 
 .. _dic-tags-translation-loader:
@@ -1044,7 +1044,7 @@ Now, register your loader as a service and tag it with ``translation.loader``:
 
         $container
             ->register(MyCustomLoader::class)
-            ->addTag('translation.loader', array('alias' => 'bin'))
+            ->addTag('translation.loader', ['alias' => 'bin'])
         ;
 
 The ``alias`` option is required and very important: it defines the file
@@ -1138,7 +1138,7 @@ required option: ``alias``, which defines the name of the extractor::
         use AppBundle\Translation\CustomExtractor;
 
         $container->register(CustomExtractor::class)
-            ->addTag('translation.extractor', array('alias' => 'foo'));
+            ->addTag('translation.extractor', ['alias' => 'foo']);
 
 translation.dumper
 ------------------
@@ -1195,7 +1195,7 @@ This is the name that's used to determine which dumper should be used.
         use AppBundle\Translation\JsonFileDumper;
 
         $container->register(JsonFileDumper::class)
-            ->addTag('translation.dumper', array('alias' => 'json'));
+            ->addTag('translation.dumper', ['alias' => 'json']);
 
 .. seealso::
 
@@ -1330,7 +1330,7 @@ also register it manually:
 
         $container
             ->register(CustomLoader::class)
-            ->addTag('twig.loader', array('priority' => 0))
+            ->addTag('twig.loader', ['priority' => 0])
         ;
 
 .. note::

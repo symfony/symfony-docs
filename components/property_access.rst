@@ -40,9 +40,9 @@ You can read an array with the
 method. This is done using the index notation that is used in PHP::
 
     // ...
-    $person = array(
+    $person = [
         'first_name' => 'Wouter',
-    );
+    ];
 
     var_dump($propertyAccessor->getValue($person, '[first_name]')); // 'Wouter'
     var_dump($propertyAccessor->getValue($person, '[age]')); // null
@@ -57,9 +57,9 @@ method::
         ->enableExceptionOnInvalidIndex()
         ->getPropertyAccessor();
 
-    $person = array(
+    $person = [
         'first_name' => 'Wouter',
-    );
+    ];
 
     // instead of returning null, the code now throws an exception of type
     // Symfony\Component\PropertyAccess\Exception\NoSuchIndexException
@@ -68,14 +68,14 @@ method::
 You can also use multi dimensional arrays::
 
     // ...
-    $persons = array(
-        array(
+    $persons = [
+        [
             'first_name' => 'Wouter',
-        ),
-        array(
+        ],
+        [
             'first_name' => 'Ryan',
-        )
-    );
+        ]
+    ];
 
     var_dump($propertyAccessor->getValue($persons, '[0][first_name]')); // 'Wouter'
     var_dump($propertyAccessor->getValue($persons, '[1][first_name]')); // 'Ryan'
@@ -99,7 +99,7 @@ To read from properties, use the "dot" notation::
 
     $child = new Person();
     $child->firstName = 'Bar';
-    $person->children = array($child);
+    $person->children = [$child];
 
     var_dump($propertyAccessor->getValue($person, 'children[0].firstName')); // 'Bar'
 
@@ -176,8 +176,8 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
     // ...
     class Person
     {
-        private $children = array(
-            'Wouter' => array(...),
+        private $children = [
+            'Wouter' => [...],
         );
 
         public function __get($id)
@@ -188,7 +188,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
     $person = new Person();
 
-    var_dump($propertyAccessor->getValue($person, 'Wouter')); // array(...)
+    var_dump($propertyAccessor->getValue($person, 'Wouter')); // [...]
 
 .. _components-property-access-magic-call:
 
@@ -201,9 +201,9 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     // ...
     class Person
     {
-        private $children = array(
-            'wouter' => array(...),
-        );
+        private $children = [
+            'wouter' => [...],
+        ];
 
         public function __call($name, $args)
         {
@@ -226,7 +226,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
         ->enableMagicCall()
         ->getPropertyAccessor();
 
-    var_dump($propertyAccessor->getValue($person, 'wouter')); // array(...)
+    var_dump($propertyAccessor->getValue($person, 'wouter')); // [...]
 
 .. caution::
 
@@ -289,11 +289,11 @@ can use setters, the magic ``__set()`` method or properties to set values::
 
     $propertyAccessor->setValue($person, 'firstName', 'Wouter');
     $propertyAccessor->setValue($person, 'lastName', 'de Jong'); // setLastName is called
-    $propertyAccessor->setValue($person, 'children', array(new Person())); // __set is called
+    $propertyAccessor->setValue($person, 'children', [new Person()]); // __set is called
 
     var_dump($person->firstName); // 'Wouter'
     var_dump($person->getLastName()); // 'de Jong'
-    var_dump($person->getChildren()); // array(Person());
+    var_dump($person->getChildren()); // [Person()];
 
 You can also use ``__call()`` to set values but you need to enable the feature,
 see `Enable other Features`_.
@@ -327,9 +327,9 @@ see `Enable other Features`_.
         ->enableMagicCall()
         ->getPropertyAccessor();
 
-    $propertyAccessor->setValue($person, 'wouter', array(...));
+    $propertyAccessor->setValue($person, 'wouter', [...]);
 
-    var_dump($person->getWouter()); // array(...)
+    var_dump($person->getWouter()); // [...]
 
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -364,9 +364,9 @@ properties through *adder* and *remover* methods.
     }
 
     $person = new Person();
-    $propertyAccessor->setValue($person, 'children', array('kevin', 'wouter'));
+    $propertyAccessor->setValue($person, 'children', ['kevin', 'wouter']);
 
-    var_dump($person->getChildren()); // array('kevin', 'wouter')
+    var_dump($person->getChildren()); // ['kevin', 'wouter']
 
 The PropertyAccess component checks for methods called ``add<SingularOfThePropertyName>()``
 and ``remove<SingularOfThePropertyName>()``. Both methods must be defined.

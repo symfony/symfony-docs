@@ -219,12 +219,12 @@ data is an array, for example a set of tokens. In this case, managing the array
 becomes a burden because you have to retrieve the array then process it and
 store it again::
 
-    $tokens = array(
-        'tokens' => array(
+    $tokens = [
+        'tokens' => [
             'a' => 'a6c1e0b6',
             'b' => 'f4a7b1f3',
-        ),
-    );
+        ],
+    ];
 
 So any processing of this might quickly get ugly, even simply adding a token to
 the array::
@@ -278,7 +278,7 @@ has a simple API
     Gets flashes by type and clears those flashes from the bag.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::setAll`
-    Sets all flashes, accepts a keyed array of arrays ``type => array(messages)``.
+    Sets all flashes, accepts a keyed array of arrays ``type => [messages]``.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::all`
     Gets all flashes (as a keyed array of arrays) and clears the flashes from the bag.

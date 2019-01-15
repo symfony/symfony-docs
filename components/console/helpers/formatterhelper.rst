@@ -50,7 +50,7 @@ notice that the background is only as long as each individual line. Use the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatBlock`
 to generate a block output::
 
-    $errorMessages = array('Error!', 'Something went wrong');
+    $errorMessages = ['Error!', 'Something went wrong'];
     $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
     $output->writeln($formattedBlock);
 

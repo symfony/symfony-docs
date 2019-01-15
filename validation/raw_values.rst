@@ -51,54 +51,54 @@ Validation of arrays is possible using the ``Collection`` constraint::
 
     $validator = Validation::createValidator();
 
-    $input = array(
-        'name' => array(
-          'first_name' => 'Fabien',
-          'last_name' => 'Potencier',
-        ),
+    $input = [
+        'name' => [
+            'first_name' => 'Fabien',
+            'last_name' => 'Potencier',
+        ],
         'email' => 'test@email.tld',
         'simple' => 'hello',
         'gender' => 3,
         'file' => null,
         'password' => 'test',
-        'tags' => array(
-            array(
+        'tags' => [
+            [
                 'slug' => 'symfony_doc',
                 'label' => 'symfony doc',
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 
-    $groups = new Assert\GroupSequence(array('Default', 'custom'));
+    $groups = new Assert\GroupSequence(['Default', 'custom']);
 
-    $constraint = new Assert\Collection(array(
+    $constraint = new Assert\Collection([
         // the keys correspond to the keys in the input array
-        'name' => new Assert\Collection(array(
-          'first_name' => new Assert\Length(array('min' => 101)),
-          'last_name' => new Assert\Length(array('min' => 1)),
-        )),
+        'name' => new Assert\Collection([
+            'first_name' => new Assert\Length(['min' => 101]),
+            'last_name' => new Assert\Length(['min' => 1]),
+        ]),
         'email' => new Assert\Email(),
-        'simple' => new Assert\Length(array('min' => 102)),
-        'gender' => new Assert\Choice(array(3, 4)),
+        'simple' => new Assert\Length(['min' => 102]),
+        'gender' => new Assert\Choice([3, 4]),
         'file' => new Assert\File(),
-        'password' => new Assert\Length(array('min' => 60)),
-        'tags' => new Assert\Optional(array(
+        'password' => new Assert\Length(['min' => 60]),
+        'tags' => new Assert\Optional([
             new Assert\Type('array'),
-            new Assert\Count(array('min' => 1)),
-            new Assert\All(array(
-                new Assert\Collection(array(
-                    'slug' => array(
+            new Assert\Count(['min' => 1]),
+            new Assert\All([
+                new Assert\Collection([
+                    'slug' => [
                         new Assert\NotBlank(),
-                        new Assert\Type(array('type' => 'string'))
-                    ),
-                    'label' => array(
+                        new Assert\Type(['type' => 'string'])
+                    ],
+                    'label' => [
                         new Assert\NotBlank(),
-                    ),
-                )),
-                new CustomUniqueTagValidator(array('groups' => 'custom')),
-            )),
-        )),
-    ));
+                    ],
+                ]),
+                new CustomUniqueTagValidator(['groups' => 'custom']),
+            ]),
+        ]),
+    ]);
 
     $violations = $validator->validate($input, $constraint, $groups);
 

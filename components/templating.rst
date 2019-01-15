@@ -49,7 +49,7 @@ which uses the template reference to actually find and load the template::
 
     $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
 
-    echo $templating->render('hello.php', array('firstname' => 'Fabien'));
+    echo $templating->render('hello.php', ['firstname' => 'Fabien']);
 
 .. code-block:: html+php
 
@@ -83,9 +83,9 @@ can then be included by other templates. As the ``$view`` variable is an
 instance of ``PhpEngine``, you can use the ``render()`` method (which was used
 to render the template originally) inside the template to render another template::
 
-    <?php $names = array('Fabien', ...) ?>
+    <?php $names = ['Fabien', ...] ?>
     <?php foreach ($names as $name) : ?>
-        <?= $view->render('hello.php', array('firstname' => $name)) ?>
+        <?= $view->render('hello.php', ['firstname' => $name]) ?>
     <?php endforeach ?>
 
 Global Variables
@@ -200,10 +200,10 @@ method is used::
     use Symfony\Component\Templating\PhpEngine;
     use Symfony\Component\Templating\DelegatingEngine;
 
-    $templating = new DelegatingEngine(array(
+    $templating = new DelegatingEngine([
         new PhpEngine(...),
         new CustomEngine(...),
-    ));
+    ]);
 
 Learn More
 ----------

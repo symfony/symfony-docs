@@ -230,10 +230,10 @@ configuration option to point to it:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('twig', array(
+        $container->loadFromExtension('twig', [
             'exception_controller' => 'AppBundle:Exception:showException',
             // ...
-        ));
+        ]);
 
 The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
 class used by the TwigBundle as a listener of the ``kernel.exception`` event creates

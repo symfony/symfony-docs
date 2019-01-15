@@ -90,9 +90,9 @@ the user's current password:
             {
                 $metadata->addPropertyConstraint(
                     'oldPassword',
-                    new SecurityAssert\UserPassword(array(
+                    new SecurityAssert\UserPassword([
                         'message' => 'Wrong value for your current password',
-                    ))
+                    ])
                 );
             }
         }

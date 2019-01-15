@@ -96,13 +96,13 @@ class::
     use Symfony\Component\Intl\ResourceBundle\Compiler\BundleCompiler;
 
     $writer = new TextBundleWriter();
-    $writer->write('/path/to/bundle', 'en', array(
-        'Data' => array(
+    $writer->write('/path/to/bundle', 'en', [
+        'Data' => [
             'entry1',
             'entry2',
             // ...
-        ),
-    ));
+        ],
+    ]);
 
     $compiler = new BundleCompiler();
     $compiler->compile('/path/to/bundle', '/path/to/binary/bundle');
@@ -123,13 +123,13 @@ writes an array or an array-like object to a .php resource bundle::
     use Symfony\Component\Intl\ResourceBundle\Writer\PhpBundleWriter;
 
     $writer = new PhpBundleWriter();
-    $writer->write('/path/to/bundle', 'en', array(
-        'Data' => array(
+    $writer->write('/path/to/bundle', 'en', [
+        'Data' => [
             'entry1',
             'entry2',
             // ...
-        ),
-    ));
+        ],
+    ]);
 
 BinaryBundleReader
 ~~~~~~~~~~~~~~~~~~
@@ -201,7 +201,7 @@ returned::
     var_dump($data['Data']['entry1']);
 
     // returns null if the key "Data" does not exist
-    var_dump($reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1')));
+    var_dump($reader->readEntry('/path/to/bundle', 'en', ['Data', 'entry1']));
 
 Additionally, the
 :method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReaderInterface::readEntry`
@@ -215,7 +215,7 @@ locale will be merged. In order to suppress this behavior, the last parameter
     var_dump($reader->readEntry(
         '/path/to/bundle',
         'en',
-        array('Data', 'entry1'),
+        ['Data', 'entry1'],
         false
     ));
 
@@ -243,7 +243,7 @@ bundle::
     \Locale::setDefault('en');
 
     $languages = Intl::getLanguageBundle()->getLanguageNames();
-    // => array('ab' => 'Abkhazian', ...)
+    // => ['ab' => 'Abkhazian', ...]
 
     $language = Intl::getLanguageBundle()->getLanguageName('de');
     // => 'German'
@@ -252,7 +252,7 @@ bundle::
     // => 'Austrian German'
 
     $scripts = Intl::getLanguageBundle()->getScriptNames();
-    // => array('Arab' => 'Arabic', ...)
+    // => ['Arab' => 'Arabic', ...]
 
     $script = Intl::getLanguageBundle()->getScriptName('Hans');
     // => 'Simplified'
@@ -261,7 +261,7 @@ All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $languages = Intl::getLanguageBundle()->getLanguageNames('de');
-    // => array('ab' => 'Abchasisch', ...)
+    // => ['ab' => 'Abchasisch', ...]
 
 Country Names
 ~~~~~~~~~~~~~
@@ -273,7 +273,7 @@ The translations of country names can be found in the region bundle::
     \Locale::setDefault('en');
 
     $countries = Intl::getRegionBundle()->getCountryNames();
-    // => array('AF' => 'Afghanistan', ...)
+    // => ['AF' => 'Afghanistan', ...]
 
     $country = Intl::getRegionBundle()->getCountryName('GB');
     // => 'United Kingdom'
@@ -282,7 +282,7 @@ All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $countries = Intl::getRegionBundle()->getCountryNames('de');
-    // => array('AF' => 'Afghanistan', ...)
+    // => ['AF' => 'Afghanistan', ...]
 
 Locales
 ~~~~~~~
@@ -294,7 +294,7 @@ The translations of locale names can be found in the locale bundle::
     \Locale::setDefault('en');
 
     $locales = Intl::getLocaleBundle()->getLocaleNames();
-    // => array('af' => 'Afrikaans', ...)
+    // => ['af' => 'Afrikaans', ...]
 
     $locale = Intl::getLocaleBundle()->getLocaleName('zh_Hans_MO');
     // => 'Chinese (Simplified, Macau SAR China)'
@@ -303,7 +303,7 @@ All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $locales = Intl::getLocaleBundle()->getLocaleNames('de');
-    // => array('af' => 'Afrikaans', ...)
+    // => ['af' => 'Afrikaans', ...]
 
 Currencies
 ~~~~~~~~~~
@@ -316,7 +316,7 @@ be found in the currency bundle::
     \Locale::setDefault('en');
 
     $currencies = Intl::getCurrencyBundle()->getCurrencyNames();
-    // => array('AFN' => 'Afghan Afghani', ...)
+    // => ['AFN' => 'Afghan Afghani', ...]
 
     $currency = Intl::getCurrencyBundle()->getCurrencyName('INR');
     // => 'Indian Rupee'
@@ -338,7 +338,7 @@ accept the translation locale as the last, optional parameter, which defaults
 to the current default locale::
 
     $currencies = Intl::getCurrencyBundle()->getCurrencyNames('de');
-    // => array('AFN' => 'Afghanische Afghani', ...)
+    // => ['AFN' => 'Afghanische Afghani', ...]
 
 That's all you need to know for now. Have fun coding!
 

@@ -45,9 +45,9 @@ as a key. This can be useful when you need to set a custom class for the button:
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     // ...
 
-    $builder->add('save', SubmitType::class, array(
-        'attr' => array('class' => 'save'),
-    ));
+    $builder->add('save', SubmitType::class, [
+        'attr' => ['class' => 'save'],
+    ]);
 
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
 
@@ -70,12 +70,12 @@ form wizard with buttons to go to the previous or the next step::
     // ...
 
     $form = $this->createFormBuilder($user)
-        ->add('previousStep', SubmitType::class, array(
+        ->add('previousStep', SubmitType::class, [
             'validation_groups' => false,
-        ))
-        ->add('nextStep', SubmitType::class, array(
-            'validation_groups' => array('Registration'),
-        ))
+        ])
+        ->add('nextStep', SubmitType::class, [
+            'validation_groups' => ['Registration'],
+        ])
         ->getForm();
 
 The special ``false`` ensures that no validation is performed when the previous

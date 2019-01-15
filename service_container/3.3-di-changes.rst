@@ -221,7 +221,7 @@ service as an argument to another with the following config:
 
         $container->register('app.invoice_generator', InvoiceGenerator::class);
         $container->register('app.invoice_mailer', InvoiceMailer::class)
-            ->setArguments(array(new Reference('app.invoice_generator')));
+            ->setArguments([new Reference('app.invoice_generator')]);
 
 To pass the ``InvoiceGenerator`` as an argument to ``InvoiceMailer``, you needed
 to specify the service's *id* as an argument: ``app.invoice_generator``. Service

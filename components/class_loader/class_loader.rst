@@ -41,29 +41,29 @@ your classes::
     $loader->addPrefix('Symfony', __DIR__.'/vendor/symfony/symfony/src');
 
     // registers several namespaces at once
-    $loader->addPrefixes(array(
+    $loader->addPrefixes([
         'Symfony' => __DIR__.'/../vendor/symfony/symfony/src',
         'Monolog' => __DIR__.'/../vendor/monolog/monolog/src',
-    ));
+    ]);
 
     // registers a prefix for a class following the PEAR naming conventions
     $loader->addPrefix('Twig_', __DIR__.'/vendor/twig/twig/lib');
 
-    $loader->addPrefixes(array(
+    $loader->addPrefixes([
         'Swift_' => __DIR__.'/vendor/swiftmailer/swiftmailer/lib/classes',
         'Twig_'  => __DIR__.'/vendor/twig/twig/lib',
-    ));
+    ]);
 
 Classes from a sub-namespace or a sub-hierarchy of `PEAR`_ classes can be
 looked for in a location list to ease the vendoring of a sub-set of classes
 for large projects::
 
-    $loader->addPrefixes(array(
+    $loader->addPrefixes([
         'Doctrine\Common'          => __DIR__.'/vendor/doctrine/common/lib',
         'Doctrine\DBAL\Migrations' => __DIR__.'/vendor/doctrine/migrations/lib',
         'Doctrine\DBAL'            => __DIR__.'/vendor/doctrine/dbal/lib',
         'Doctrine'                 => __DIR__.'/vendor/doctrine/orm/lib',
-    ));
+    ]);
 
 In this example, if you try to use a class in the ``Doctrine\Common`` namespace
 or one of its children, the autoloader will first look for the class under

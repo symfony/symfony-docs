@@ -66,10 +66,10 @@ parameters key:
     .. code-block:: php
 
         // app/config/config.php
-        $container->setParameter('tokens', array(
+        $container->setParameter('tokens', [
             'client1' => 'pass1',
             'client2' => 'pass2',
-        ));
+        ]);
 
 Tag Controllers to Be Checked
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,7 +152,7 @@ event listeners, you can learn more about them at :doc:`/event_dispatcher`::
 
         public static function getSubscribedEvents()
         {
-            return array(
+            return [
                 KernelEvents::CONTROLLER => 'onKernelController',
             );
         }
@@ -227,10 +227,10 @@ header on the response if it's found::
 
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             KernelEvents::CONTROLLER => 'onKernelController',
             KernelEvents::RESPONSE => 'onKernelResponse',
-        );
+        ];
     }
 
 That's it! The ``TokenSubscriber`` is now notified before every controller is

@@ -26,10 +26,10 @@ Then, enable the bundle in the ``AppKernel.php`` file of your Symfony applicatio
 
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 // ...
                 new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            );
+            ];
 
             // ...
         }
@@ -73,14 +73,14 @@ your application:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
+        $container->loadFromExtension('assetic', [
             'debug' => '%kernel.debug%',
             'use_controller' => '%kernel.debug%',
-            'filters' => array(
+            'filters' => [
                 'cssrewrite' => null,
-            ),
+            ],
             // ...
-        ));
+        ]);
 
         // ...
 
@@ -338,16 +338,16 @@ configuration under the ``assetic`` section. Read more in the
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'assets' => array(
-                'jquery_and_ui' => array(
-                    'inputs' => array(
+        $container->loadFromExtension('assetic', [
+            'assets' => [
+                'jquery_and_ui' => [
+                    'inputs' => [
                         '@AppBundle/Resources/public/js/thirdparty/jquery.js',
                         '@AppBundle/Resources/public/js/thirdparty/jquery.ui.js',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 After you have defined the named assets, you can reference them in your templates
 with the ``@named_asset`` notation:
@@ -418,13 +418,13 @@ should be defined:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'uglifyjs2' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'uglifyjs2' => [
                     'bin' => '/usr/local/bin/uglifyjs',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Now, to actually *use* the filter on a group of JavaScript files, add it
 into your template:
@@ -542,9 +542,9 @@ the following change in your ``config_dev.yml`` file:
     .. code-block:: php
 
         // app/config/config_dev.php
-        $container->loadFromExtension('assetic', array(
+        $container->loadFromExtension('assetic', [
             'use_controller' => false,
-        ));
+        ]);
 
 Next, since Symfony is no longer generating these assets for you, you'll
 need to dump them manually. To do so, run the following command:

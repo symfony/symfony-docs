@@ -21,5 +21,5 @@ template:
         echo $view['form']->label(
             $form['name'],
             'Your name',
-            array('label_attr' => array('class' => 'CUSTOM_LABEL_CLASS'))
+            ['label_attr' => [['class' => 'CUSTOM_LABEL_CLASS']]
         );

@@ -38,12 +38,12 @@ for the ``handler_id``:
 
     .. code-block:: php
 
-        $container->loadFromExtension('framework', array(
-            'session' => array(
+        $container->loadFromExtension('framework', [
+            'session' => [
                 'storage_id' => 'session.storage.php_bridge',
                 'handler_id' => null,
-            ),
-        ));
+            ],
+        ]);
 
 Otherwise, if the problem is simply that you cannot avoid the application
 starting the session with ``session_start()``, you can still make use of
@@ -77,12 +77,12 @@ the example below:
 
     .. code-block:: php
 
-        $container->loadFromExtension('framework', array(
-            'session' => array(
+        $container->loadFromExtension('framework', [
+            'session' => [
                 'storage_id' => 'session.storage.php_bridge',
                 'handler_id' => 'session.storage.native_file',
-            ),
-        ));
+            ],
+        ]);
 
 .. note::
 

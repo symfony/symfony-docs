@@ -67,11 +67,11 @@ a more permissive regular expression for it:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('share', new Route('/share/{token}', array(
+        $routes->add('share', new Route('/share/{token}', [
             '_controller' => 'AppBundle:Default:share',
-        ), array(
+        ], [
             'token' => '.+',
-        )));
+        ]));
 
         return $routes;
 

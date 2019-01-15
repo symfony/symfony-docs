@@ -40,17 +40,17 @@ Next, create an ``index.php`` file that creates a kernel class and executes it::
 
         public function registerBundles()
         {
-            return array(
+            return [
                 new Symfony\Bundle\FrameworkBundle\FrameworkBundle()
-            );
+            ];
         }
 
         protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
         {
             // PHP equivalent of config.yml
-            $c->loadFromExtension('framework', array(
+            $c->loadFromExtension('framework', [
                 'secret' => 'S0ME_SECRET'
-            ));
+            ]);
         }
 
         protected function configureRoutes(RouteCollectionBuilder $routes)
@@ -62,9 +62,9 @@ Next, create an ``index.php`` file that creates a kernel class and executes it::
 
         public function randomAction($limit)
         {
-            return new JsonResponse(array(
+            return new JsonResponse([
                 'number' => rand(0, $limit)
-            ));
+            ]);
         }
     }
 
@@ -144,7 +144,7 @@ hold the kernel. Now it looks like this::
     // require Composer's autoloader
     $loader = require __DIR__.'/../vendor/autoload.php';
     // auto-load annotations
-    AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+    AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
     class AppKernel extends Kernel
     {
@@ -152,10 +152,10 @@ hold the kernel. Now it looks like this::
 
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
                 new Symfony\Bundle\TwigBundle\TwigBundle(),
-            );
+            ];
 
             if ($this->getEnvironment() == 'dev') {
                 $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
@@ -170,10 +170,10 @@ hold the kernel. Now it looks like this::
 
             // configure WebProfilerBundle only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
-                $c->loadFromExtension('web_profiler', array(
+                $c->loadFromExtension('web_profiler', [
                     'toolbar' => true,
                     'intercept_redirects' => false,
-                ));
+                ]);
             }
         }
 
@@ -243,15 +243,15 @@ because the configuration started to get bigger:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             'secret' => 'S0ME_SECRET',
-            'templating' => array(
-                'engines' => array('twig'),
-            ),
-            'profiler' => array(
+            'templating' => [
+                'engines' => ['twig'],
+            ],
+            'profiler' => [
                 'only_exceptions' => false,
-            ),
-        ));
+            ],
+        ]);
 
 This also loads annotation routes from an ``src/App/Controller/`` directory, which
 has one file in it::
@@ -271,9 +271,9 @@ has one file in it::
         {
             $number = rand(0, $limit);
 
-            return $this->render('micro/random.html.twig', array(
+            return $this->render('micro/random.html.twig', [
                 'number' => $number
-            ));
+            ]);
         }
     }
 

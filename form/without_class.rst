@@ -17,7 +17,7 @@ an array of the submitted data. This is actually really easy::
 
     public function contactAction(Request $request)
     {
-        $defaultData = array('message' => 'Type your message here');
+        $defaultData = ['message' => 'Type your message here'];
         $form = $this->createFormBuilder($defaultData)
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
@@ -87,15 +87,15 @@ but here's a short example::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('firstName', TextType::class, array(
-               'constraints' => new Length(array('min' => 3)),
+           ->add('firstName', TextType::class, [
+               'constraints' => new Length(['min' => 3]),
            ))
-           ->add('lastName', TextType::class, array(
-               'constraints' => array(
+           ->add('lastName', TextType::class, [
+               'constraints' => [
                    new NotBlank(),
-                   new Length(array('min' => 3)),
-               ),
-           ))
+                   new Length(['min' => 3]),
+               ],
+           ])
         ;
     }
 
@@ -107,7 +107,7 @@ but here's a short example::
 
     .. code-block:: php
 
-        new NotBlank(array('groups' => array('create', 'update')));
+        new NotBlank(['groups' => ['create', 'update']]);
 
 .. tip::
 

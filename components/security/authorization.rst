@@ -54,7 +54,7 @@ recognizes several strategies:
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
     // instances of Symfony\Component\Security\Core\Authorization\Voter\VoterInterface
-    $voters = array(...);
+    $voters = [...];
 
     // one of "affirmative", "consensus", "unanimous"
     $strategy = ...;
@@ -119,7 +119,7 @@ on a "remember-me" cookie, or even authenticated anonymously?
     // any object
     $object = ...;
 
-    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY'));
+    $vote = $authenticatedVoter->vote($token, $object, ['IS_AUTHENTICATED_FULLY']);
 
 RoleVoter
 ~~~~~~~~~
@@ -134,7 +134,7 @@ method::
 
     $roleVoter = new RoleVoter('ROLE_');
 
-    $roleVoter->vote($token, $object, array('ROLE_ADMIN'));
+    $roleVoter->vote($token, $object, ['ROLE_ADMIN']);
 
 RoleHierarchyVoter
 ~~~~~~~~~~~~~~~~~~
@@ -151,9 +151,9 @@ role::
     use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
     use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
-    $hierarchy = array(
-        'ROLE_SUPER_ADMIN' => array('ROLE_ADMIN', 'ROLE_USER'),
-    );
+    $hierarchy = [
+        'ROLE_SUPER_ADMIN' => ['ROLE_ADMIN', 'ROLE_USER'],
+    ];
 
     $roleHierarchy = new RoleHierarchy($hierarchy);
 
@@ -209,7 +209,7 @@ are required for the current user to get access to the application::
 
     $accessMap = new AccessMap();
     $requestMatcher = new RequestMatcher('^/admin');
-    $accessMap->add($requestMatcher, array('ROLE_ADMIN'));
+    $accessMap->add($requestMatcher, ['ROLE_ADMIN']);
 
     $accessListener = new AccessListener(
         $securityContext,

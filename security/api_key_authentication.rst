@@ -189,7 +189,7 @@ The ``$userProvider`` might look something like this::
                 null,
                 // the roles for the user - you may choose to determine
                 // these dynamically somehow based on the user
-                array('ROLE_API')
+                ['ROLE_API']
             );
         }
 
@@ -340,23 +340,23 @@ and ``provider`` keys:
         use AppBundle\Security\ApiKeyAuthenticator;
         use AppBundle\Security\ApiKeyUserProvider;
 
-        $container->loadFromExtension('security', array(
-            'providers' => array(
-                'api_key_user_provider' => array(
+        $container->loadFromExtension('security', [
+            'providers' => [
+                'api_key_user_provider' => [
                     'id' => ApiKeyUserProvider::class,
-                ),
-            ),
-            'firewalls' => array(
-                'main' => array(
+                ],
+            ],
+            'firewalls' => [
+                'main' => [
                     'pattern'        => '^/api',
                     'stateless'      => true,
-                    'simple_preauth' => array(
+                    'simple_preauth' => [
                         'authenticator'  => ApiKeyAuthenticator::class,
-                    ),
+                    ],
                     'provider' => 'api_key_user_provider',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 If you have defined ``access_control``, make sure to add a new entry:
 
@@ -388,14 +388,14 @@ If you have defined ``access_control``, make sure to add a new entry:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'access_control' => array(
-                array(
+        $container->loadFromExtension('security', [
+            'access_control' => [
+                [
                     'path' => '^/api',
                     'role' => 'ROLE_API',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 That's it! Now, your ``ApiKeyAuthenticator`` should be called at the beginning
 of each request and your authentication process will take place.
@@ -458,15 +458,15 @@ configuration or set it to ``false``:
         // app/config/security.php
 
         // ..
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area'       => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area'       => [
                     'pattern'        => '^/api',
                     'stateless'      => false,
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Even though the token is being stored in the session, the credentials - in this
 case the API key (i.e. ``$token->getCredentials()``) - are not stored in the session

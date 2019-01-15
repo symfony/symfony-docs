@@ -10,12 +10,12 @@ more control::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('attending', ChoiceType::class, array(
-        'choices' => array(
+    $builder->add('attending', ChoiceType::class, [
+        'choices' => [
             'yes' => true,
             'no' => false,
             'maybe' => null,
-        ),
+        ],
         'choice_label' => function ($choiceValue, $key, $value) {
             if ($value == $choiceValue) {
                 return 'Definitely!';
@@ -26,7 +26,7 @@ more control::
             // or if you want to translate some key
             //return 'form.choice.'.$key;
         },
-    ));
+    ]);
 
 This method is called for *each* choice, passing you the choice ``$value`` and the
 ``$key`` from the choices array (``$index`` is related to `choice_value`_). This
@@ -42,14 +42,14 @@ If your choice values are objects, then ``choice_label`` can also be a
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('attending', ChoiceType::class, array(
-        'choices' => array(
+    $builder->add('attending', ChoiceType::class, [
+        'choices' => [
             new Status(Status::YES),
             new Status(Status::NO),
             new Status(Status::MAYBE),
-        ),
+        ],
         'choice_label' => 'displayName',
-    ));
+    ]);
 
 If set to ``false``, all the tag labels will be discarded for radio or checkbox
 inputs. You can also return ``false`` from the callable to discard certain labels.

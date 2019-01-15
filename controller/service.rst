@@ -64,9 +64,9 @@ syntax:
     .. code-block:: php
 
         // app/config/routing.php
-        $collection->add('hello', new Route('/hello', array(
+        $collection->add('hello', new Route('/hello', [
             '_controller' => 'app.hello_controller:indexAction',
-        )));
+        ]));
 
 .. note::
 
@@ -116,7 +116,7 @@ service and use it directly::
         {
             $content = $this->twig->render(
                 'hello/index.html.twig',
-                array('name' => $name)
+                ['name' => $name]
             );
 
             return new Response($content);

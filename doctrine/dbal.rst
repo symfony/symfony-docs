@@ -66,16 +66,16 @@ To get started, configure the database connection parameters:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
                 'driver'    => 'pdo_mysql',
                 'dbname'    => 'Symfony',
                 'user'      => 'root',
                 'password'  => null,
                 'charset'   => 'UTF8',
                 'server_version' => '5.6',
-            ),
-        ));
+            ],
+        ]);
 
 For full DBAL configuration options, or to learn how to configure multiple
 connections, see :ref:`reference-dbal-configuration`.
@@ -138,14 +138,14 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         use AppBundle\Type\CustomFirst;
         use AppBundle\Type\CustomSecond;
 
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'types' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
+                'types' => [
                     'custom_first'  => CustomFirst::class,
                     'custom_second' => CustomSecond::class,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Registering custom Mapping Types in the SchemaTool
 --------------------------------------------------
@@ -188,13 +188,13 @@ mapping type:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-               'mapping_types' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
+               'mapping_types' => [
                   'enum'  => 'string',
-               ),
-            ),
-        ));
+               ],
+            ],
+        ]);
 
 .. _`PDO`:           https://php.net/pdo
 .. _`Doctrine`:      http://www.doctrine-project.org

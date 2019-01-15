@@ -40,14 +40,14 @@ to apply to all instances of a specific class:
         // app/config/security.php
         use Symfony\Component\Security\Core\User\User;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'encoders' => array(
-                User::class => array(
+            'encoders' => [
+                User::class => [
                     'algorithm' => 'sha512',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Another option is to use a "named" encoder and then select which encoder
 you want to use dynamically.
@@ -91,15 +91,15 @@ named encoders:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'encoders' => array(
-                'harsh' => array(
+            'encoders' => [
+                'harsh' => [
                     'algorithm' => 'bcrypt',
                     'cost'      => '15',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -167,14 +167,14 @@ you must register a service for it in order to use it as a named encoder:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'encoders' => array(
-                'app_encoder' => array(
+            'encoders' => [
+                'app_encoder' => [
                     'id' => 'app.password_encoder_service',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 This creates an encoder named ``app_encoder`` from a service named
 ``app.password_encoder_service``.

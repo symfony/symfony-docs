@@ -69,13 +69,13 @@ You can also match on the HTTP *host* of the incoming request.
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('mobile_homepage', new Route('/', array(
+        $routes->add('mobile_homepage', new Route('/', [
             '_controller' => 'AppBundle:Main:mobileHomepage',
-        ), [], [], 'm.example.com'));
+        ], [], [], 'm.example.com'));
 
-        $routes->add('homepage', new Route('/', array(
+        $routes->add('homepage', new Route('/', [
             '_controller' => 'AppBundle:Main:homepage',
-        )));
+        ]));
 
         return $routes;
 
@@ -151,13 +151,13 @@ you can use placeholders in your hostname:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('project_homepage', new Route('/', array(
+        $routes->add('project_homepage', new Route('/', [
             '_controller' => 'AppBundle:Main:projectsHomepage',
-        ), [], [], '{project_name}.example.com'));
+        ], [], [], '{project_name}.example.com'));
 
-        $routes->add('homepage', new Route('/', array(
+        $routes->add('homepage', new Route('/', [
             '_controller' => 'AppBundle:Main:homepage',
-        )));
+        ]));
 
         return $routes;
 
@@ -240,16 +240,16 @@ instance, if you want to match both ``m.example.com`` and
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('mobile_homepage', new Route('/', array(
+        $routes->add('mobile_homepage', new Route('/', [
             '_controller' => 'AppBundle:Main:mobileHomepage',
             'subdomain'   => 'm',
-        ), array(
+        ], [
             'subdomain' => 'm|mobile',
-        ), [], '{subdomain}.example.com'));
+        ], [], '{subdomain}.example.com'));
 
-        $routes->add('homepage', new Route('/', array(
+        $routes->add('homepage', new Route('/', [
             '_controller' => 'AppBundle:Main:homepage',
-        )));
+        ]));
 
         return $routes;
 
@@ -333,16 +333,16 @@ instance, if you want to match both ``m.example.com`` and
             use Symfony\Component\Routing\Route;
 
             $routes = new RouteCollection();
-            $routes->add('mobile_homepage', new Route('/', array(
+            $routes->add('mobile_homepage', new Route('/', [
                 '_controller' => 'AppBundle:Main:mobileHomepage',
                 'domain' => '%domain%',
-            ), array(
+            ], [
                 'domain' => '%domain%',
-            ), [], 'm.{domain}'));
+            ], [], 'm.{domain}'));
 
-            $routes->add('homepage', new Route('/', array(
+            $routes->add('homepage', new Route('/', [
                 '_controller' => 'AppBundle:Main:homepage',
-            )));
+            ]));
 
             return $routes;
 
@@ -415,5 +415,5 @@ past url matching in your functional tests::
         '/homepage',
         [],
         [],
-        array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
+        ['HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain')]
     );

@@ -661,12 +661,12 @@ else that can be used to create a working example::
     use Symfony\Component\Routing\RouteCollection;
 
     $routes = new RouteCollection();
-    $routes->add('hello', new Route('/hello/{name}', array(
+    $routes->add('hello', new Route('/hello/{name}', [
         '_controller' => function (Request $request) {
             return new Response(
                 sprintf("Hello %s", $request->get('name'))
             );
-        })
+        }]
     ));
 
     $request = Request::createFromGlobals();

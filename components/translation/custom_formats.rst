@@ -122,4 +122,4 @@ YAML file are dumped into a text file with the custom format::
     $translations = $loader->load(__DIR__ . '/translations/messages.fr_FR.yml' , 'fr_FR');
 
     $dumper = new MyFormatDumper();
-    $dumper->dump($translations, array('path' => __DIR__.'/dumps'));
+    $dumper->dump($translations, ['path' => __DIR__.'/dumps']);

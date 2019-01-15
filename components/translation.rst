@@ -120,9 +120,9 @@ argument is the loader name (this was the first argument of the ``addLoader()``
 method), the second is the resource and the third argument is the locale::
 
     // ...
-    $translator->addResource('array', array(
+    $translator->addResource('array', [
         'Hello World!' => 'Bonjour',
-    ), 'fr_FR');
+    ], 'fr_FR');
 
 Loading Messages with the File Loaders
 ......................................
@@ -176,7 +176,7 @@ For (3), the fallback locales can be set by calling
 :method:`Symfony\\Component\\Translation\\Translator::setFallbackLocales`::
 
     // ...
-    $translator->setFallbackLocales(array('en'));
+    $translator->setFallbackLocales(['en']);
 
 .. _using-message-domains:
 

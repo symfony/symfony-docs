@@ -42,7 +42,7 @@ your autoloader to load the Routing component::
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
-    $route = new Route('/foo', array('_controller' => 'MyController'));
+    $route = new Route('/foo', ['_controller' => 'MyController']);
     $routes = new RouteCollection();
     $routes->add('route_name', $route);
 
@@ -51,7 +51,7 @@ your autoloader to load the Routing component::
     $matcher = new UrlMatcher($routes, $context);
 
     $parameters = $matcher->match('/foo');
-    // array('_controller' => 'MyController', '_route' => 'route_name')
+    // ['_controller' => 'MyController', '_route' => 'route_name']
 
 .. note::
 
@@ -109,8 +109,8 @@ Take the following route, which combines several of these ideas::
 
     $route = new Route(
         '/archive/{month}', // path
-        array('_controller' => 'showArchive'), // default values
-        array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
+        ['_controller' => 'showArchive'], // default values
+        ['month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'], // requirements
         [], // options
         '{subdomain}.example.com', // host
         [], // schemes
@@ -120,12 +120,12 @@ Take the following route, which combines several of these ideas::
     // ...
 
     $parameters = $matcher->match('/archive/2012-01');
-    // array(
+    // [
     //     '_controller' => 'showArchive',
     //     'month' => '2012-01',
     //     'subdomain' => 'www',
     //     '_route' => ...
-    //  )
+    // ]
 
     $parameters = $matcher->match('/archive/foo');
     // throws ResourceNotFoundException
@@ -145,8 +145,8 @@ as value.
 
         $route = new Route(
             '/start/{suffix}',
-            array('suffix' => ''),
-            array('suffix' => '.*')
+            ['suffix' => ''],
+            ['suffix' => '.*']
         );
 
 Using Prefixes
@@ -165,12 +165,12 @@ host to all routes of a subtree using methods provided by the
     $subCollection->add(...);
     $subCollection->add(...);
     $subCollection->addPrefix('/prefix');
-    $subCollection->addDefaults(array(...));
-    $subCollection->addRequirements(array(...));
-    $subCollection->addOptions(array(...));
+    $subCollection->addDefaults([...]);
+    $subCollection->addRequirements([]);
+    $subCollection->addOptions([]);
     $subCollection->setHost('admin.example.com');
-    $subCollection->setMethods(array('POST'));
-    $subCollection->setSchemes(array('https'));
+    $subCollection->setMethods(['POST']);
+    $subCollection->setSchemes(['https']);
 
     $rootCollection->addCollection($subCollection);
 
@@ -224,9 +224,9 @@ a certain route::
 
     $generator = new UrlGenerator($routes, $context);
 
-    $url = $generator->generate('show_post', array(
+    $url = $generator->generate('show_post', [
         'slug' => 'my-blog-post',
-    ));
+    ]);
     // /show/my-blog-post
 
 .. note::
@@ -291,7 +291,7 @@ To load this file, you can use the following code. This assumes that your
     use Symfony\Component\Routing\Loader\YamlFileLoader;
 
     // looks inside *this* directory
-    $fileLocator = new FileLocator(array(__DIR__));
+    $fileLocator = new FileLocator([__DIR__]);
     $loader = new YamlFileLoader($fileLocator);
     $routes = $loader->load('routes.yml');
 
@@ -311,7 +311,7 @@ have to provide the name of a PHP file which returns a :class:`Symfony\\Componen
     $routes = new RouteCollection();
     $routes->add(
         'route_name',
-        new Route('/foo', array('_controller' => 'ExampleController'))
+        new Route('/foo', ['_controller' => 'ExampleController'])
     );
     // ...
 
@@ -363,13 +363,13 @@ path) or disable caching (if it's set to ``null``). The caching is done
 automatically in the background if you want to use it. A basic example of the
 :class:`Symfony\\Component\\Routing\\Router` class would look like::
 
-    $fileLocator = new FileLocator(array(__DIR__));
+    $fileLocator = new FileLocator([__DIR__]);
     $requestContext = new RequestContext('/');
 
     $router = new Router(
         new YamlFileLoader($fileLocator),
         'routes.yml',
-        array('cache_dir' => __DIR__.'/cache'),
+        ['cache_dir' => __DIR__.'/cache'],
         $requestContext
     );
     $router->match('/foo/bar');
@@ -444,13 +444,13 @@ routes with UTF-8 characters:
 
         $routes = new RouteCollection();
         $routes->add('route1', new Route('/category/{name}',
-            array(
+            [
                 '_controller' => 'AppBundle:Default:category',
-            ),
+            ],
             [],
-            array(
+            [
                 'utf8' => true,
-            )
+            ]
         ));
 
         // ...
@@ -525,15 +525,15 @@ You can also include UTF-8 strings as routing requirements:
 
         $routes = new RouteCollection();
         $routes->add('route2', new Route('/default/{default}',
-            array(
+            [
                 '_controller' => 'AppBundle:Default:default',
-            ),
-            array(
+            ],
+            [
                 'default' => '한국어',
-            ),
-            array(
+            ],
+            [
                 'utf8' => true,
-            )
+            ]
         ));
 
         // ...

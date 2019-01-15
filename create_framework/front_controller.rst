@@ -80,10 +80,10 @@ Such a script might look like the following::
     $request = Request::createFromGlobals();
     $response = new Response();
 
-    $map = array(
+    $map = [
         '/hello' => __DIR__.'/hello.php',
         '/bye'   => __DIR__.'/bye.php',
-    );
+    ];
 
     $path = $request->getPathInfo();
     if (isset($map[$path])) {
@@ -203,10 +203,10 @@ We have the first version of our framework::
     $request = Request::createFromGlobals();
     $response = new Response();
 
-    $map = array(
+    $map = [
         '/hello' => __DIR__.'/../src/pages/hello.php',
         '/bye'   => __DIR__.'/../src/pages/bye.php',
-    );
+    ];
 
     $path = $request->getPathInfo();
     if (isset($map[$path])) {

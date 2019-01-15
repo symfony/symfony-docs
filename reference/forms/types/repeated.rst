@@ -42,14 +42,14 @@ Example Usage
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
     // ...
 
-    $builder->add('password', RepeatedType::class, array(
+    $builder->add('password', RepeatedType::class, [
         'type' => PasswordType::class,
         'invalid_message' => 'The password fields must match.',
-        'options' => array('attr' => array('class' => 'password-field')),
+        'options' => ['attr' => ['class' => 'password-field']],
         'required' => true,
-        'first_options'  => array('label' => 'Password'),
-        'second_options' => array('label' => 'Repeat Password'),
-    ));
+        'first_options'  => ['label' => 'Password'],
+        'second_options' => ['label' => 'Repeat Password'],
+    ]);
 
 Upon a successful form submit, the value entered into both of the "password"
 fields becomes the data of the ``password`` key. In other words, even though
@@ -124,10 +124,10 @@ the label::
     use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
     // ...
 
-    $builder->add('password', RepeatedType::class, array(
-        'first_options'  => array('label' => 'Password'),
-        'second_options' => array('label' => 'Repeat Password'),
-    ));
+    $builder->add('password', RepeatedType::class, [
+        'first_options'  => ['label' => 'Password'],
+        'second_options' => ['label' => 'Repeat Password'],
+    ]);
 
 options
 ~~~~~~~

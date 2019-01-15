@@ -15,11 +15,11 @@ field so that it displays above it::
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'error_mapping' => array(
+        $resolver->setDefaults([
+            'error_mapping' => [
                 'matchingCityAndZipCode' => 'city',
-            ),
-        ));
+            ],
+        ]);
     }
 
 Here are the rules for the left and the right side of the mapping:
@@ -38,8 +38,8 @@ parent form. You can use the dot (``.``) on the left side to map errors of all
 unmapped properties to a particular field. For instance, to map all these
 errors to the ``city`` field, use::
 
-    $resolver->setDefaults(array(
-        'error_mapping' => array(
+    $resolver->setDefaults([
+        'error_mapping' => [
             '.' => 'city',
-        ),
-    ));
+        ],
+    ]);

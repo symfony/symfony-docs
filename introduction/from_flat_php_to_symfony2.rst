@@ -486,7 +486,7 @@ incidentally, acts quite a bit like the Symfony templating engine::
     function list_action()
     {
         $posts = get_all_posts();
-        $html = render_template('templates/list.php', array('posts' => $posts));
+        $html = render_template('templates/list.php', ['posts' => $posts]);
 
         return new Response($html);
     }
@@ -494,7 +494,7 @@ incidentally, acts quite a bit like the Symfony templating engine::
     function show_action($id)
     {
         $post = get_post_by_id($id);
-        $html = render_template('templates/show.php', array('post' => $post));
+        $html = render_template('templates/show.php', ['post' => $post]);
 
         return new Response($html);
     }
@@ -555,7 +555,7 @@ them for you. Here's the same sample application, now built in Symfony::
                 ->createQuery('SELECT p FROM AppBundle:Post p')
                 ->execute();
 
-            return $this->render('Blog/list.html.php', array('posts' => $posts));
+            return $this->render('Blog/list.html.php', ['posts' => $posts]);
         }
 
         public function showAction($id)
@@ -569,7 +569,7 @@ them for you. Here's the same sample application, now built in Symfony::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('Blog/show.html.php', array('post' => $post));
+            return $this->render('Blog/show.html.php', ['post' => $post]);
         }
     }
 
@@ -595,7 +595,7 @@ database and the Templating component to render a template and return a
         <li>
             <a href="<?= $view['router']->path(
                 'blog_show',
-                array('id' => $post->getId())
+                ['id' => $post->getId()]
             ) ?>">
                 <?= $post->getTitle() ?>
             </a>

@@ -106,14 +106,14 @@ First, configure a new ``scssphp`` Assetic filter:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                 'scssphp' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                 'scssphp' => [
                      'formatter' => 'Leafo\ScssPhp\Formatter\Compressed',
-                 ),
+                 ],
                  // ...
-            ),
-        ));
+            ],
+        ]);
 
 The value of the ``formatter`` option is the fully qualified class name of the
 formatter used by the filter to produce the compiled CSS file. Using the
@@ -179,12 +179,12 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
                  'jsqueeze' => null,
                  // ...
-            ),
-        ));
+            ],
+        ]);
 
 Next, update the code of your Twig template to add the ``{% javascripts %}`` tag
 defined by Assetic:

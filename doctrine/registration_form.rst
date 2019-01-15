@@ -95,7 +95,7 @@ With some validation added, your class may look something like this::
 
         public function __construct()
         {
-            $this->roles = array('ROLE_USER');
+            $this->roles = ['ROLE_USER'];
         }
 
         // other properties and methods
@@ -203,19 +203,19 @@ Next, create the form for the ``User`` entity::
             $builder
                 ->add('email', EmailType::class)
                 ->add('username', TextType::class)
-                ->add('plainPassword', RepeatedType::class, array(
+                ->add('plainPassword', RepeatedType::class, [
                     'type' => PasswordType::class,
-                    'first_options'  => array('label' => 'Password'),
-                    'second_options' => array('label' => 'Repeat Password'),
-                ))
+                    'first_options'  => ['label' => 'Password'],
+                    'second_options' => ['label' => 'Repeat Password'],
+                ])
             ;
         }
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => User::class,
-            ));
+            ]);
         }
     }
 
@@ -276,7 +276,7 @@ into the database::
 
             return $this->render(
                 'registration/register.html.twig',
-                array('form' => $form->createView())
+                ['form' => $form->createView()]
             );
         }
     }
@@ -312,11 +312,11 @@ encoder in the security configuration:
         // app/config/security.php
         use AppBundle\Entity\User;
 
-        $container->loadFromExtension('security', array(
-            'encoders' => array(
+        $container->loadFromExtension('security', [
+            'encoders' => [
                 User::class => 'bcrypt',
-            ),
-        ));
+            ],
+        ]);
 
 In this case the recommended `bcrypt`_ algorithm is used. If needed, check out
 the :ref:`user password encoding <security-encoding-user-password>` article.
@@ -355,9 +355,9 @@ the :ref:`user password encoding <security-encoding-user-password>` article.
             use Symfony\Component\Routing\Route;
 
             $routes = new RouteCollection();
-            $routes->add('user_registration', new Route('/register', array(
+            $routes->add('user_registration', new Route('/register', [
                 '_controller' => 'AppBundle:Registration:register',
-            )));
+            ]));
 
             return $routes;
 
@@ -442,10 +442,10 @@ To do this, add a ``termsAccepted`` field to your form, but set its
             $builder
                 ->add('email', EmailType::class);
                 // ...
-                ->add('termsAccepted', CheckboxType::class, array(
+                ->add('termsAccepted', CheckboxType::class, [
                     'mapped' => false,
                     'constraints' => new IsTrue(),
-                ))
+                ])
             );
         }
     }

@@ -58,9 +58,9 @@ Then in your form, inject the resolver and set it as the ``validation_groups``::
         // ...
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'validation_groups' => $this->groupResolver,
-            ));
+            ]);
         }
     }
 

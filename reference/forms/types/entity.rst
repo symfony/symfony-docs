@@ -61,7 +61,7 @@ be listed inside the choice field::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('users', EntityType::class, array(
+    $builder->add('users', EntityType::class, [
         // looks for choices from this entity
         'class' => 'AppBundle:User',
 
@@ -71,7 +71,7 @@ be listed inside the choice field::
         // used to render a select box, check boxes or radios
         // 'multiple' => true,
         // 'expanded' => true,
-    ));
+    ]);
 
 This will build a ``select`` drop-down containing *all* of the ``User`` objects
 in the database. To render radio buttons or checkboxes instead, change the
@@ -90,14 +90,14 @@ the `query_builder`_ option::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('users', EntityType::class, array(
+    $builder->add('users', EntityType::class, [
         'class' => 'AppBundle:User',
         'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
         'choice_label' => 'username',
-    ));
+    ]);
 
 .. _reference-forms-entity-choices:
 
@@ -114,10 +114,10 @@ then you can supply the ``choices`` option directly::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('users', EntityType::class, array(
+    $builder->add('users', EntityType::class, [
         'class' => 'AppBundle:User',
         'choices' => $group->getUsers(),
-    ));
+    ]);
 
 .. include:: /reference/forms/types/options/select_how_rendered.rst.inc
 
@@ -135,10 +135,10 @@ the HTML element::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('category', EntityType::class, array(
+    $builder->add('category', EntityType::class, [
         'class' => 'AppBundle:Category',
         'choice_label' => 'displayName',
-    ));
+    ]);
 
 If left blank, the entity object will be cast to a string and so must have a ``__toString()``
 method. You can also pass a callback function for more control::
@@ -146,12 +146,12 @@ method. You can also pass a callback function for more control::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('category', EntityType::class, array(
+    $builder->add('category', EntityType::class, [
         'class' => 'AppBundle:Category',
         'choice_label' => function ($category) {
             return $category->getDisplayName();
         }
-    ));
+    ]);
 
 The method is called for each entity in the list and passed to the function. For
 more details, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
@@ -168,10 +168,10 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
         use Symfony\Bridge\Doctrine\Form\Type\EntityType;
         // ...
 
-        $builder->add('genre', EntityType::class, array(
+        $builder->add('genre', EntityType::class, [
            'class' => 'MyBundle:Genre',
            'choice_label' => 'translations[en].name',
-        ));
+        ]);
 
 class
 ~~~~~
@@ -280,11 +280,11 @@ of entity objects::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('users', EntityType::class, array(
+    $builder->add('users', EntityType::class, [
         'class' => User::class,
         // this method must return an array of User entities
         'preferred_choices' => $group->getPreferredUsers(),
-    ));
+    ]);
 
 The preferred choices are only meaningful when rendering a ``select`` element
 (i.e. ``expanded`` false). The preferred choices and normal choices are separated

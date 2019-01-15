@@ -328,7 +328,7 @@ create a class which implements
             $listenerId = 'security.authentication.listener.wsse.'.$id;
             $container->setDefinition($listenerId, new ChildDefinition(WsseListener::class));
 
-            return array($providerId, $listenerId, $defaultEntryPoint);
+            return [$providerId, $listenerId, $defaultEntryPoint];
         }
 
         public function getPosition()
@@ -448,10 +448,10 @@ to service ids that may not exist yet: ``AppBundle\Security\Authentication\Provi
             ->setPublic(false);
 
         $container->register(WsseListener::class)
-            ->setArguments(array(
+            ->setArguments([
                 new Reference('security.token_storage'),
                 new Reference('security.authentication.manager'),
-            ))
+            ])
             ->setPublic(false);
 
 Now that your services are defined, tell your security context about your
@@ -516,17 +516,17 @@ You are finished! You can now define parts of your app as under WSSE protection.
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'wsse_secured' => array(
+            'firewalls' => [
+                'wsse_secured' => [
                     'pattern'   => '^/api/',
                     'stateless' => true,
                     'wsse'      => true,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Congratulations! You have written your very own custom security authentication
 provider!
@@ -629,19 +629,19 @@ set to any desirable value per firewall.
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'wsse_secured' => array(
+            'firewalls' => [
+                'wsse_secured' => [
                     'pattern'   => '^/api/',
                     'stateless' => true,
-                    'wsse'      => array(
+                    'wsse'      => [
                         'lifetime' => 30,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.

@@ -123,7 +123,7 @@ duplicated service definitions:
         $container->register(BaseDoctrineRepository::class)
             ->setAbstract(true)
             ->addArgument(new Reference('doctrine.orm.entity_manager'))
-            ->addMethodCall('setLogger', array(new Reference('logger')))
+            ->addMethodCall('setLogger', [new Reference('logger')])
         ;
 
         // extend the AppBundle\Repository\BaseDoctrineRepository service

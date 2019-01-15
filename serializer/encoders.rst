@@ -17,7 +17,7 @@ You can add new encoders to a Serializer instance by using its second constructo
     use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
-    $encoders = array(new XmlEncoder(), new JsonEncoder());
+    $encoders = [new XmlEncoder(), new JsonEncoder()];
     $serializer = new Serializer([], $encoders);
 
 Built-in Encoders
@@ -49,7 +49,7 @@ This encoder transforms arrays into XML and vice versa.
 
 For example, take an object normalized as following::
 
-    array('foo' => array(1, 2), 'bar' => true);
+    ['foo' => [1, 2], 'bar' => true];
 
 The ``XmlEncoder`` will encode this object like that::
 
@@ -63,7 +63,7 @@ The ``XmlEncoder`` will encode this object like that::
 Be aware that this encoder will consider keys beginning with ``@`` as attributes::
 
     $encoder = new XmlEncoder();
-    $encoder->encode(array('foo' => array('@bar' => 'value')));
+    $encoder->encode(['foo' => ['@bar' => 'value']]);
     // will return:
     // <?xml version="1.0"?>
     // <response>

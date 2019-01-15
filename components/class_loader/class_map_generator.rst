@@ -119,7 +119,7 @@ is the same as in the example above)::
     use Symfony\Component\ClassLoader\ClassMapGenerator;
 
     ClassMapGenerator::dump(
-        array(__DIR__.'/library/bar', __DIR__.'/library/foo'),
+        [__DIR__.'/library/bar', __DIR__.'/library/foo'],
         __DIR__.'/class_map.php'
     );
 

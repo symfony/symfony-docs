@@ -53,9 +53,9 @@ Adding Services
 
 To connect existing service definitions, use the
 :method:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher::addListenerService`
-method where the ``$callback`` is an array of ``array($serviceId, $methodName)``::
+method where the ``$callback`` is an array of ``[$serviceId, $methodName]``::
 
-    $dispatcher->addListenerService($eventName, array('foo', 'logListener'));
+    $dispatcher->addListenerService($eventName, ['foo', 'logListener']);
 
 Adding Subscriber Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,12 +81,12 @@ The ``EventSubscriberInterface`` is exactly as you would expect::
     {
         public static function getSubscribedEvents()
         {
-            return array(
-                KernelEvents::RESPONSE => array(
-                    array('onKernelResponsePre', 10),
-                    array('onKernelResponsePost', 0),
+            return [
+                KernelEvents::RESPONSE => [
+                    ['onKernelResponsePre', 10],
+                    ['onKernelResponsePost', 0],
                 ),
-                'store.order'     => array('onStoreOrder', 0),
+                'store.order' => ['onStoreOrder', 0],
             );
         }
 

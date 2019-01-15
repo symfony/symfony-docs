@@ -17,14 +17,14 @@ lifetime as its constructor arguments::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
-    $cache = new ChainAdapter(array(
+    $cache = new ChainAdapter([
 
         // The ordered list of adapters used to fetch cached items
         array $adapters,
 
         // The max lifetime of items propagated from lower adapters to upper ones
         $maxLifetime = 0
-    ));
+    ]);
 
 .. note::
 
@@ -40,10 +40,10 @@ slowest storage engines, :class:`Symfony\\Component\\Cache\\Adapter\\ApcuAdapter
     use Symfony\Component\Cache\Adapter\ChainAdapter;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-    $cache = new ChainAdapter(array(
+    $cache = new ChainAdapter([
         new ApcuAdapter(),
         new FilesystemAdapter(),
-    ));
+    ]);
 
 When calling this adapter's :method:`Symfony\\Component\\Cache\\ChainAdapter::prune` method,
 the call is delegated to all its compatible cache adapters. It is safe to mix both adapters
@@ -54,10 +54,10 @@ incompatible adapters are silently ignored::
     use Symfony\Component\Cache\Adapter\ChainAdapter;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
-    $cache = new ChainAdapter(array(
+    $cache = new ChainAdapter([
         new ApcuAdapter(),        // does NOT implement PruneableInterface
         new FilesystemAdapter(),  // DOES implement PruneableInterface
-    ));
+    ]);
 
     // prune will proxy the call to FilesystemAdapter while silently skipping ApcuAdapter
     $cache->prune();

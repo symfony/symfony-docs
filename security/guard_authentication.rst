@@ -55,7 +55,7 @@ property they use to access their account via the API::
 
         public function getRoles()
         {
-            return array('ROLE_USER');
+            return ['ROLE_USER'];
         }
 
         public function getPassword()
@@ -126,19 +126,19 @@ Next, make sure you've configured a "user provider" for the user:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'providers' => array(
-                'your_db_provider' => array(
-                    'entity' => array(
+            'providers' => [
+                'your_db_provider' => [
+                    'entity' => [
                         'class' => 'AppBundle:User',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
 
             // ...
-        ));
+        ]);
 
 That's it! Need more information about this step, see:
 
@@ -187,9 +187,9 @@ This requires you to implement several methods::
          */
         public function getCredentials(Request $request)
         {
-            return array(
+            return [
                 'token' => $request->headers->get('X-AUTH-TOKEN'),
-            );
+            ];
         }
 
         public function getUser($credentials, UserProviderInterface $userProvider)
@@ -221,12 +221,12 @@ This requires you to implement several methods::
 
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
-            $data = array(
+            $data = [
                 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
 
                 // or to translate this message
                 // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
-            );
+            ];
 
             return new JsonResponse($data, Response::HTTP_FORBIDDEN);
         }
@@ -236,10 +236,10 @@ This requires you to implement several methods::
          */
         public function start(Request $request, AuthenticationException $authException = null)
         {
-            $data = array(
+            $data = [
                 // you might translate this message
                 'message' => 'Authentication Required'
-            );
+            ];
 
             return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
         }
@@ -325,21 +325,21 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
         // ..
         use AppBundle\Security\TokenAuthenticator;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main'       => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main'       => [
                     'pattern'        => '^/',
                     'anonymous'      => true,
                     'logout'         => true,
-                    'guard'          => array(
-                        'authenticators'  => array(
+                    'guard'          => [
+                        'authenticators'  => [
                             TokenAuthenticator::class
-                        ),
-                    ),
+                        ],
+                    ],
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 You did it! You now have a fully-working API token authentication system. If your
 homepage required ``ROLE_USER``, then you could test it under different conditions:

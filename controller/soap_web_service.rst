@@ -101,7 +101,7 @@ route ``/soap``::
 
     $soapClient = new \SoapClient('http://example.com/app.php/soap?wsdl');
 
-    $result = $soapClient->call('hello', array('name' => 'Scott'));
+    $result = $soapClient->call('hello', ['name' => 'Scott']);
 
 An example WSDL is below.
 

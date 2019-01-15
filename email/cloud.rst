@@ -65,14 +65,14 @@ and complete the configuration with the provided ``username`` and ``password``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swiftmailer', array(
+        $container->loadFromExtension('swiftmailer', [
             'transport'  => 'smtp',
             'host'       => 'email-smtp.us-east-1.amazonaws.com',
             'port'       => 587,
             'encryption' => 'tls',
             'username'   => 'AWS_SES_SMTP_USERNAME',
             'password'   => 'AWS_SES_SMTP_PASSWORD',
-        ));
+        ]);
 
 The ``port`` and ``encryption`` keys are not present in the Symfony Standard
 Edition configuration by default, but you can simply add them as needed.

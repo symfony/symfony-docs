@@ -19,11 +19,11 @@ Calling a command from another one is straightforward::
     {
         $command = $this->getApplication()->find('demo:greet');
 
-        $arguments = array(
+        $arguments = [
             'command' => 'demo:greet',
             'name'    => 'Fabien',
             '--yell'  => true,
-        );
+        ];
 
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);

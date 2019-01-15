@@ -55,10 +55,10 @@ To use it, first register a new handler service:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
         $storageDefinition = $container->register(PdoSessionHandler::class)
-            ->setArguments(array(
+            ->setArguments([
                 'mysql:dbname=mydatabase; host=myhost; port=myport',
-                array('db_username' => 'myuser', 'db_password' => 'mypassword'),
-            ))
+                ['db_username' => 'myuser', 'db_password' => 'mypassword'],
+            ])
         ;
 
 .. tip::
@@ -93,13 +93,13 @@ Next, tell Symfony to use your service as the session handler:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
         // ...
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'session' => array(
+            'session' => [
                 // ...
                 'handler_id' => PdoSessionHandler::class,
-            ),
-        ));
+            ],
+        ]);
 
 Configuring the Table and Column Names
 --------------------------------------
@@ -151,10 +151,10 @@ a second array argument to ``PdoSessionHandler``:
         // ...
 
         $container->register(PdoSessionHandler::class)
-            ->setArguments(array(
+            ->setArguments([
                 'mysql:dbname=mydatabase; host=myhost; port=myport',
-                array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
-            ))
+                ['db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword']
+            ])
         ;
 
 These are parameters that you can configure:
@@ -221,10 +221,10 @@ of your project's data, you can use the connection settings from the
 
         // ...
         $container->register(PdoSessionHandler::class)
-            ->setArguments(array(
+            ->setArguments([
                 'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%',
-                array('db_username' => '%database_user%', 'db_password' => '%database_password%')
-            ))
+                ['db_username' => '%database_user%', 'db_password' => '%database_password%']
+            ])
         ;
 
 .. _example-sql-statements:

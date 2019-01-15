@@ -98,10 +98,10 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\Type('string'));
 
-                $metadata->addPropertyConstraint('age', new Assert\Type(array(
+                $metadata->addPropertyConstraint('age', new Assert\Type([
                     'type'    => 'integer',
                     'message' => 'The value {{ value }} is not a valid {{ type }}.',
-                )));
+                ]));
             }
         }
 

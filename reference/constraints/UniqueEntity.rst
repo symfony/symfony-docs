@@ -102,9 +102,9 @@ your user table:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addConstraint(new UniqueEntity(array(
+                $metadata->addConstraint(new UniqueEntity([
                     'fields'  => 'email',
-                )));
+                ]));
 
                 $metadata->addPropertyConstraint('email', new Assert\Email());
             }
@@ -279,11 +279,11 @@ Consider this example:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addConstraint(new UniqueEntity(array(
-                    'fields'    => array('host', 'port'),
+                $metadata->addConstraint(new UniqueEntity([
+                    'fields'    => ['host', 'port'],
                     'errorPath' => 'port',
                     'message'   => 'This port is already in use on that host.',
-                )));
+                ]));
             }
         }
 

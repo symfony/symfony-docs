@@ -51,13 +51,13 @@ using the ``bin`` option of the ``jpegoptim`` filter:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'jpegoptim' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'jpegoptim' => [
                     'bin' => 'path/to/jpegoptim',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 It can now be used from a template:
 
@@ -109,14 +109,14 @@ to ``true``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'jpegoptim' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'jpegoptim' => [
                     'bin'       => 'path/to/jpegoptim',
                     'strip_all' => 'true',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Lowering Maximum Quality
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -160,14 +160,14 @@ be at the expense of its quality:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'jpegoptim' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'jpegoptim' => [
                     'bin' => 'path/to/jpegoptim',
                     'max' => '70',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Shorter Syntax: Twig Function
 -----------------------------
@@ -215,16 +215,16 @@ following configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'jpegoptim' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'jpegoptim' => [
                     'bin' => 'path/to/jpegoptim',
-                ),
-            ),
-            'twig' => array(
-                'functions' => array('jpegoptim'),
-            ),
-        ));
+                ],
+            ],
+            'twig' => [
+                'functions' => ['jpegoptim'],
+            ],
+        ]);
 
 The Twig template can now be changed to the following:
 
@@ -275,20 +275,20 @@ file:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'jpegoptim' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'jpegoptim' => [
                     'bin' => 'path/to/jpegoptim',
-                ),
-            ),
-            'twig' => array(
-                'functions' => array(
-                    'jpegoptim' => array(
+                ],
+            ],
+            'twig' => [
+                'functions' => [
+                    'jpegoptim' => [
                         'output' => 'images/*.jpg',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 

@@ -64,18 +64,18 @@ Enable the x509 authentication for a particular firewall in the security configu
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'secured_area' => array(
+            'firewalls' => [
+                'secured_area' => [
                     'pattern' => '^/',
-                    'x509'    => array(
+                    'x509'    => [
                         'provider' => 'your_user_provider',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 By default, the firewall provides the ``SSL_CLIENT_S_DN_Email`` variable to
 the user provider, and sets the ``SSL_CLIENT_S_DN`` as credentials in the
@@ -136,16 +136,16 @@ corresponding firewall in your security configuration:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area' => [
                     'pattern'     => '^/',
-                    'remote_user' => array(
+                    'remote_user' => [
                         'provider' => 'your_user_provider',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 The firewall will then provide the ``REMOTE_USER`` environment variable to
 your user provider. You can change the variable name used by setting the ``user``

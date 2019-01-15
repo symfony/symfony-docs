@@ -129,9 +129,9 @@ could listen to the ``mailer.post_send`` event and change the method's return va
 
         public static function getSubscribedEvents()
         {
-            return array(
+            return [
                 'mailer.post_send' => 'onMailerPostSend'
-            );
+            ];
         }
     }
 

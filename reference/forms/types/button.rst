@@ -40,9 +40,9 @@ as a key. This can be useful when you need to set a custom class for the button:
     use Symfony\Component\Form\Extension\Core\Type\ButtonType;
     // ...
 
-    $builder->add('save', ButtonType::class, array(
-        'attr' => array('class' => 'save'),
-    ));
+    $builder->add('save', ButtonType::class, [
+        'attr' => ['class' => 'save'],
+    ]);
 
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
 

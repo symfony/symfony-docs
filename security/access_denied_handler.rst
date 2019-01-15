@@ -59,14 +59,14 @@ configure it under your firewall:
         // app/config/security.php
         use AppBundle\Security\AccessDeniedHandler;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
                     // ...
                     'access_denied_handler' => AccessDeniedHandler::class,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 That's it! Any ``AccessDeniedException`` thrown by code under the ``main`` firewall
 will now be handled by your service.

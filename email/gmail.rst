@@ -44,11 +44,11 @@ In the development configuration file, change the ``transport`` setting to
     .. code-block:: php
 
         // app/config/config_dev.php
-        $container->loadFromExtension('swiftmailer', array(
+        $container->loadFromExtension('swiftmailer', [
             'transport' => 'gmail',
             'username'  => 'your_gmail_username',
             'password'  => 'your_gmail_password',
-        ));
+        ]);
 
 .. tip::
 
@@ -96,11 +96,11 @@ In the development configuration file, change the ``transport`` setting to
         .. code-block:: php
 
             // app/config/config_dev.php
-            $container->loadFromExtension('swiftmailer', array(
+            $container->loadFromExtension('swiftmailer', [
                 'transport' => 'gmail',
                 'username'  => '%mailer_user%',
                 'password'  => '%mailer_password%',
-            ));
+            ]);
 
 Redefining the Default Configuration Parameters
 -----------------------------------------------

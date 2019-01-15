@@ -32,13 +32,13 @@ set the headers, set the rows and then render the table::
         {
             $table = new Table($output);
             $table
-                ->setHeaders(array('ISBN', 'Title', 'Author'))
-                ->setRows(array(
-                    array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
-                    array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
-                    array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
-                    array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
-                ))
+                ->setHeaders(['ISBN', 'Title', 'Author'])
+                ->setRows([
+                    ['99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'],
+                    ['9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'],
+                    ['960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'],
+                    ['80-902734-1-6', 'And Then There Were None', 'Agatha Christie'],
+                ])
             ;
             $table->render();
         }
@@ -49,13 +49,13 @@ You can add a table separator anywhere in the output by passing an instance of
 
     use Symfony\Component\Console\Helper\TableSeparator;
 
-    $table->setRows(array(
-        array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
-        array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
+    $table->setRows([
+        ['99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'],
+        ['9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'],
         new TableSeparator(),
-        array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
-        array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
-    ));
+        ['960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'],
+        ['80-902734-1-6', 'And Then There Were None', 'Agatha Christie'],
+    ]);
 
 .. code-block:: terminal
 
@@ -74,7 +74,7 @@ contents. Use the :method:`Symfony\\Component\\Console\\Helper\\Table::setColumn
 method to set the column widths explicitly::
 
     // ...
-    $table->setColumnWidths(array(10, 0, 30));
+    $table->setColumnWidths([10, 0, 30]);
     $table->render();
 
 In this example, the first column width will be ``10``, the last column width
@@ -197,12 +197,12 @@ To make a table cell that spans multiple columns you can use a :class:`Symfony\\
 
     $table = new Table($output);
     $table
-        ->setHeaders(array('ISBN', 'Title', 'Author'))
-        ->setRows(array(
-            array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+        ->setHeaders(['ISBN', 'Title', 'Author'])
+        ->setRows([
+            ['99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'],
             new TableSeparator(),
-            array(new TableCell('This value spans 3 columns.', array('colspan' => 3))),
-        ))
+            [new TableCell('This value spans 3 columns.', ['colspan' => 3])],
+        ])
     ;
     $table->render();
 
@@ -223,9 +223,9 @@ This results in:
     You can create a multiple-line page title using a header cell that spans
     the entire table width::
 
-        $table->setHeaders(array(
-            array(new TableCell('Main table title', array('colspan' => 3))),
-            array('ISBN', 'Title', 'Author'),
+        $table->setHeaders([
+            [new TableCell('Main table title', ['colspan' => 3])],
+            ['ISBN', 'Title', 'Author'],
         ))
         // ...
 
@@ -248,15 +248,15 @@ In a similar way you can span multiple rows::
 
     $table = new Table($output);
     $table
-        ->setHeaders(array('ISBN', 'Title', 'Author'))
-        ->setRows(array(
-            array(
+        ->setHeaders(['ISBN', 'Title', 'Author'])
+        ->setRows([
+            [
                 '978-0521567817',
                 'De Monarchia',
-                new TableCell("Dante Alighieri\nspans multiple rows", array('rowspan' => 2)),
-            ),
-            array('978-0804169127', 'Divine Comedy'),
-        ))
+                new TableCell("Dante Alighieri\nspans multiple rows", ['rowspan' => 2]),
+            ],
+            ['978-0804169127', 'Divine Comedy'],
+        ])
     ;
     $table->render();
 

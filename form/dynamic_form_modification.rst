@@ -53,9 +53,9 @@ a bare form class looks like::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Product::class,
-            ));
+            ]);
         }
     }
 
@@ -155,7 +155,7 @@ you can also move the logic for creating the ``name`` field to an
         {
             // Tells the dispatcher that you want to listen on the form.pre_set_data
             // event and that the preSetData method should be called.
-            return array(FormEvents::PRE_SET_DATA => 'preSetData');
+            return [FormEvents::PRE_SET_DATA => 'preSetData'];
         }
 
         public function preSetData(FormEvent $event)
@@ -294,14 +294,14 @@ security helper to fill in the listener logic::
 
                 $form = $event->getForm();
 
-                $formOptions = array(
+                $formOptions = [
                     'class' => User::class,
                     'choice_label' => 'fullName',
                     'query_builder' => function (UserRepository $userRepository) use ($user) {
                         // call a method on your repository that returns the query builder
                         // return $userRepository->createFriendsQueryBuilder($user);
                     },
-                );
+                ];
 
                 // create the field, this is similar the $builder->add()
                 // field name, field type, field options
@@ -385,10 +385,10 @@ sport like this::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('sport', EntityType::class, array(
+                ->add('sport', EntityType::class, [
                     'class'       => 'AppBundle:Sport',
                     'placeholder' => '',
-                ))
+                ])
             ;
 
             $builder->addEventListener(
@@ -402,11 +402,11 @@ sport like this::
                     $sport = $data->getSport();
                     $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
-                    $form->add('position', EntityType::class, array(
+                    $form->add('position', EntityType::class, [
                         'class' => 'AppBundle:Position',
                         'placeholder' => '',
                         'choices' => $positions,
-                    ));
+                    ]);
                 }
             );
         }
@@ -449,20 +449,20 @@ The type would now look like::
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('sport', EntityType::class, array(
+                ->add('sport', EntityType::class, [
                     'class'       => 'AppBundle:Sport',
                     'placeholder' => '',
-                ));
+                ]);
             ;
 
             $formModifier = function (FormInterface $form, Sport $sport = null) {
                 $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
-                $form->add('position', EntityType::class, array(
+                $form->add('position', EntityType::class, [
                     'class' => 'AppBundle:Position',
                     'placeholder' => '',
                     'choices' => $positions,
-                ));
+                ]);
             };
 
             $builder->addEventListener(
@@ -528,7 +528,7 @@ your application. Assume that you have a sport meetup creation controller::
 
             return $this->render(
                 'meetup/create.html.twig',
-                array('form' => $form->createView())
+                ['form' => $form->createView()]
             );
         }
 

@@ -27,7 +27,7 @@ a command in a sub-process::
     use Symfony\Component\Process\Process;
     use Symfony\Component\Process\Exception\ProcessFailedException;
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->run();
 
     // executes after the command finishes
@@ -55,7 +55,7 @@ You can also use the :class:`Symfony\\Component\\Process\\Process` class with th
 foreach construct to get the output while it is generated. By default, the loop waits
 for new output before going to the next iteration::
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->start();
 
     foreach ($process as $type => $data) {
@@ -72,7 +72,7 @@ for new output before going to the next iteration::
     it is generated. That iterator is exposed via the ``getIterator()`` method
     to allow customizing its behavior::
 
-        $process = new Process(array('ls', '-lsa'));
+        $process = new Process(['ls', '-lsa']);
         $process->start();
         $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
         foreach ($iterator as $data) {
@@ -91,7 +91,7 @@ with a non-zero code)::
     use Symfony\Component\Process\Exception\ProcessFailedException;
     use Symfony\Component\Process\Process;
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
 
     try {
         $process->mustRun();
@@ -112,7 +112,7 @@ with a non-zero code)::
     saves you from any escaping and allows sending signals seamlessly
     (e.g. to stop processes before completion.)::
 
-        $process = new Process(array('/path/command', '--flag', 'arg 1', 'etc.'));
+        $process = new Process(['/path/command', '--flag', 'arg 1', 'etc.']);
 
     If you need to use stream redirections, conditional execution, or any other
     feature provided by the shell of your operating system, you can also define
@@ -132,7 +132,7 @@ with a non-zero code)::
         $process = new Process('echo "!MESSAGE!"');
 
         // On both Unix-like and Windows
-        $process->run(null, array('MESSAGE' => 'Something to output'));
+        $process->run(null, ['MESSAGE' => 'Something to output']);
 
 Getting real-time Process Output
 --------------------------------
@@ -144,7 +144,7 @@ anonymous function to the
 
     use Symfony\Component\Process\Process;
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->run(function ($type, $buffer) {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
@@ -163,7 +163,7 @@ process, the :method:`Symfony\\Component\\Process\\Process::isRunning` method
 to check if the process is done and the
 :method:`Symfony\\Component\\Process\\Process::getOutput` method to get the output::
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->start();
 
     while ($process->isRunning()) {
@@ -175,7 +175,7 @@ to check if the process is done and the
 You can also wait for a process to end if you started it asynchronously and
 are done doing other stuff::
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->start();
 
     // ... do other things
@@ -214,7 +214,7 @@ are done doing other stuff::
 a callback that is called repeatedly whilst the process is still running, passing
 in the output and its type::
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->start();
 
     $process->wait(function ($type, $buffer) {
@@ -246,7 +246,7 @@ provides the :class:`Symfony\\Component\\Process\\InputStream` class::
     $input = new InputStream();
     $input->write('foo');
 
-    $process = new Process(array('cat'));
+    $process = new Process(['cat']);
     $process->setInput($input);
     $process->start();
 
@@ -272,7 +272,7 @@ The input of a process can also be defined using `PHP streams`_::
 
     $stream = fopen('php://temporary', 'w+');
 
-    $process = new Process(array('cat'));
+    $process = new Process(['cat']);
     $process->setInput($stream);
     $process->start();
 
@@ -298,7 +298,7 @@ is sent to the running process. The default signal sent to a process is ``SIGKIL
 Please read the :ref:`signal documentation below<reference-process-signal>`
 to find out more about signal handling in the Process component::
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->start();
 
     // ... do other things
@@ -327,7 +327,7 @@ a different timeout (in seconds) to the ``setTimeout()`` method::
 
     use Symfony\Component\Process\Process;
 
-    $process = new Process(array('ls', '-lsa'));
+    $process = new Process(['ls', '-lsa']);
     $process->setTimeout(3600);
     $process->run();
 
@@ -359,7 +359,7 @@ considers the time since the last output was produced by the process::
 
     use Symfony\Component\Process\Process;
 
-    $process = new Process(array('something-with-variable-runtime'));
+    $process = new Process(['something-with-variable-runtime']);
     $process->setTimeout(3600);
     $process->setIdleTimeout(60);
     $process->run();
@@ -375,7 +375,7 @@ When running a program asynchronously, you can send it POSIX signals with the
 
     use Symfony\Component\Process\Process;
 
-    $process = new Process(array('find', '/', '-name', 'rabbit'));
+    $process = new Process(['find', '/', '-name', 'rabbit']);
     $process->start();
 
     // will send a SIGKILL to the process
@@ -389,7 +389,7 @@ You can access the `pid`_ of a running process with the
 
     use Symfony\Component\Process\Process;
 
-    $process = new Process(array('/usr/bin/php', 'worker.php'));
+    $process = new Process(['/usr/bin/php', 'worker.php']);
     $process->start();
 
     $pid = $process->getPid();
@@ -404,7 +404,7 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
     use Symfony\Component\Process\Process;
 
-    $process = new Process(array('/usr/bin/php', 'worker.php'));
+    $process = new Process(['/usr/bin/php', 'worker.php']);
     $process->disableOutput();
     $process->run();
 

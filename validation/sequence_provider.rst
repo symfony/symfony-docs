@@ -113,12 +113,12 @@ username and the password are different only if all other validation passes
                 $metadata->addPropertyConstraint('username', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('password', new Assert\NotBlank());
 
-                $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue(array(
+                $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue([
                     'message' => 'The password cannot match your first name',
-                    'groups'  => array('Strict'),
-                )));
+                    'groups'  => ['Strict'],
+                ]));
 
-                $metadata->setGroupSequence(array('User', 'Strict'));
+                $metadata->setGroupSequence(['User', 'Strict']);
             }
         }
 
@@ -252,10 +252,10 @@ entity and a new constraint group called ``Premium``:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme(array(
-                    'schemes' => array('VISA'),
-                    'groups'  => array('Premium'),
-                )));
+                $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme([
+                    'schemes' => ['VISA'],
+                    'groups'  => ['Premium'],
+                ]));
             }
         }
 
@@ -280,12 +280,12 @@ method, which should return an array of groups to use::
             // when returning a simple array, if there's a violation in any group
             // the rest of groups are not validated. E.g. if 'User' fails,
             // 'Premium' and 'Api' are not validated:
-            return array('User', 'Premium', 'Api');
+            return ['User', 'Premium', 'Api'];
 
             // when returning a nested array, all the groups included in each array
             // are validated. E.g. if 'User' fails, 'Premium' is also validated
             // (and you'll get its violations too) but 'Api' won't be validated:
-            return array(array('User', 'Premium'), 'Api');
+            return [['User', 'Premium'], 'Api'];
         }
     }
 
