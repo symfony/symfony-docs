@@ -157,17 +157,17 @@ class names::
         // ...
 
         // this method can't compile classes that contain PHP annotations
-        $this->addClassesToCompile(array(
+        $this->addClassesToCompile([
             UserManager::class,
             Slugger::class,
             // ...
-        ));
+        ]);
 
         // add here only classes that contain PHP annotations
-        $this->addAnnotatedClassesToCompile(array(
+        $this->addAnnotatedClassesToCompile([
             'AppBundle\\Controller\\DefaultController',
             // ...
-        ));
+        ]);
     }
 
 .. note::
@@ -186,15 +186,15 @@ The classes to compile can also be added using file path patterns::
     {
         // ...
 
-        $this->addClassesToCompile(array(
+        $this->addClassesToCompile([
             '**Bundle\\Manager\\',
             // ...
-        ));
+        ]);
 
-        $this->addAnnotatedClassesToCompile(array(
+        $this->addAnnotatedClassesToCompile([
             '**Bundle\\Controller\\',
             // ...
-        ));
+        ]);
     }
 
 Patterns are transformed into the actual class namespaces using the classmap

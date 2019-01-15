@@ -159,7 +159,7 @@ If you do want to though then the container can call the setter method::
 
     $containerBuilder
         ->register('newsletter_manager', 'NewsletterManager')
-        ->addMethodCall('setMailer', array(new Reference('mailer')));
+        ->addMethodCall('setMailer', [new Reference('mailer')]);
 
 You could then get your ``newsletter_manager`` service from the container
 like this::
@@ -300,7 +300,7 @@ config files:
 
         $container
             ->register('newsletter_manager', 'NewsletterManager')
-            ->addMethodCall('setMailer', array(new Reference('mailer')));
+            ->addMethodCall('setMailer', [new Reference('mailer')]);
 
 Learn More
 ----------

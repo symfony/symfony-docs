@@ -318,15 +318,15 @@ Using the BCrypt Password Encoder
         // app/config/security.php
         use Symfony\Component\Security\Core\User\User;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'encoders' => array(
-                User::class => array(
+            'encoders' => [
+                User::class => [
                     'algorithm' => 'bcrypt',
                     'cost'      => 15,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 The ``cost`` can be in the range of ``4-31`` and determines how long a password
 will be encoded. Each increment of ``cost`` *doubles* the time it takes
@@ -395,14 +395,14 @@ Using the Argon2i Password Encoder
         // app/config/security.php
         use Symfony\Component\Security\Core\User\User;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'encoders' => array(
-                User::class => array(
+            'encoders' => [
+                User::class => [
                     'algorithm' => 'argon2i',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 A salt for each new password is generated automatically and need not be
 persisted. Since an encoded password contains the salt used to encode it,
@@ -468,18 +468,18 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'somename' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'somename' => [
                     // ...
                     'context' => 'my_context',
-                ),
-                'othername' => array(
+                ],
+                'othername' => [
                     // ...
                     'context' => 'my_context',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -539,16 +539,16 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'somename' => array(
-                    'http_digest' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'somename' => [
+                    'http_digest' => [
                         'secret' => '%secret%',
                         'realm'  => 'secure-api',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat

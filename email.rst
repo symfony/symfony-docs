@@ -60,12 +60,12 @@ already included:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('swiftmailer', array(
+        $container->loadFromExtension('swiftmailer', [
             'transport'  => "%mailer_transport%",
             'host'       => "%mailer_host%",
             'username'   => "%mailer_user%",
             'password'   => "%mailer_password%",
-        ));
+        ]);
 
 These values (e.g. ``%mailer_transport%``), are reading from the parameters
 that are set in the :ref:`parameters.yml <config-parameters.yml>` file. You
@@ -110,7 +110,7 @@ an email is pretty straightforward::
                 $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
                     'Emails/registration.html.twig',
-                    array('name' => $name)
+                    ['name' => $name]
                 ),
                 'text/html'
             )
@@ -119,7 +119,7 @@ an email is pretty straightforward::
             ->addPart(
                 $this->renderView(
                     'Emails/registration.txt.twig',
-                    array('name' => $name)
+                    ['name' => $name]
                 ),
                 'text/plain'
             )

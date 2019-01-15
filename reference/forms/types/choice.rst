@@ -58,13 +58,13 @@ the ``choices`` option::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('isAttending', ChoiceType::class, array(
-        'choices'  => array(
+    $builder->add('isAttending', ChoiceType::class, [
+        'choices'  => [
             'Maybe' => null,
             'Yes' => true,
             'No' => false,
-        ),
-    ));
+        ],
+    ]);
 
 This will create a ``select`` drop-down like this:
 
@@ -135,18 +135,18 @@ by passing a multi-dimensional ``choices`` array::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('stockStatus', ChoiceType::class, array(
-        'choices' => array(
-            'Main Statuses' => array(
+    $builder->add('stockStatus', ChoiceType::class, [
+        'choices' => [
+            'Main Statuses' => [
                 'Yes' => 'stock_yes',
                 'No' => 'stock_no',
-            ),
-            'Out of Stock Statuses' => array(
+            ],
+            'Out of Stock Statuses' => [
                 'Backordered' => 'stock_backordered',
                 'Discontinued' => 'stock_discontinued',
-            ),
-        ),
-    ));
+            ],
+        ],
+    ]);
 
 .. image:: /_images/reference/form/choice-example4.png
    :align: center
@@ -159,7 +159,7 @@ Field Options
 choices
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
@@ -168,9 +168,9 @@ is the item's label and the array value is the item's value::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('inStock', ChoiceType::class, array(
-        'choices' => array('In Stock' => true, 'Out of Stock' => false),
-    ));
+    $builder->add('inStock', ChoiceType::class, [
+        'choices' => ['In Stock' => true, 'Out of Stock' => false],
+    ]);
 
 If there are choice values that are not scalar or the stringified
 representation is not unique Symfony will use incrementing integers
@@ -204,11 +204,11 @@ if you want to take advantage of lazy loading::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('constants', ChoiceType::class, array(
+    $builder->add('constants', ChoiceType::class, [
         'choice_loader' => new CallbackChoiceLoader(function() {
             return StaticClass::getConstants();
         }),
-    ));
+    ]);
 
 This will cause the call of ``StaticClass::getConstants()`` to not happen if the
 request is redirected and if there is no pre set or submitted data. Otherwise
@@ -254,7 +254,7 @@ The actual default value of this option depends on other field options:
 
 * If ``multiple`` is ``false`` and ``expanded`` is ``false``, then ``''``
   (empty string);
-* Otherwise ``array()`` (empty array).
+* Otherwise ``[]`` (empty array).
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER

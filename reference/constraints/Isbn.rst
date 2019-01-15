@@ -87,10 +87,10 @@ on an object that will contain an ISBN.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('isbn', new Assert\Isbn(array(
+                $metadata->addPropertyConstraint('isbn', new Assert\Isbn([
                     'type'    => 'isbn10',
                     'message' => 'This value is not valid.',
-                )));
+                ]));
             }
         }
 

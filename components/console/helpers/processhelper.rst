@@ -14,7 +14,7 @@ a very verbose verbosity (e.g. -vv)::
     use Symfony\Component\Process\Process;
 
     $helper = $this->getHelper('process');
-    $process = new Process(array('figlet', 'Symfony'));
+    $process = new Process(['figlet', 'Symfony']);
 
     $helper->run($output, $process);
 
@@ -43,7 +43,7 @@ There are three ways to use the process helper:
 * An array of arguments::
 
     // ...
-    $helper->run($output, array('figlet', 'Symfony'));
+    $helper->run($output, ['figlet', 'Symfony']);
 
   .. note::
 
@@ -55,7 +55,7 @@ There are three ways to use the process helper:
     use Symfony\Component\Process\Process;
 
     // ...
-    $process = new Process(array('figlet', 'Symfony'));
+    $process = new Process(['figlet', 'Symfony']);
 
     $helper->run($output, $process);
 

@@ -37,12 +37,12 @@ this path, update the ``framework.session.save_path`` configuration key:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'session' => array(
+        $container->loadFromExtension('framework', [
+            'session' => [
                 'handler_id' => 'session.handler.native_file',
                 'save_path' => '%kernel.project_dir%/var/sessions/%kernel.environment%'
-            ),
-        ));
+            ],
+        ]);
 
 Storing Sessions Elsewhere (e.g. database)
 ------------------------------------------

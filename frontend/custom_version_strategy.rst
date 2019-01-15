@@ -151,10 +151,10 @@ After creating the strategy PHP class, register it as a Symfony service.
 
         $container->autowire(GulpBusterVersionStrategy::class)
             ->setArguments(
-                array(
+                [
                     '%kernel.project_dir%/busters.json',
                     '%%s?version=%%s',
-                )
+                ]
         )->setPublic(false);
 
 Finally, enable the new asset versioning for all the application assets or just
@@ -191,11 +191,11 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
         // app/config/config.php
         use AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy;
 
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'assets' => array(
+            'assets' => [
                 'version_strategy' => GulpBusterVersionStrategy::class,
-            ),
-        ));
+            ],
+        ]);
 
 .. _`gulp-buster`: https://www.npmjs.com/package/gulp-buster

@@ -69,9 +69,9 @@ a new method called ``helloAction()`` with the following content::
          */
         public function helloAction($name)
         {
-            return $this->render('default/hello.html.twig', array(
+            return $this->render('default/hello.html.twig', [
                 'name' => $name,
-            ));
+            ]);
         }
     }
 
@@ -123,9 +123,9 @@ as its default value::
      */
     public function helloAction($name, $_format)
     {
-        return $this->render('default/hello.'.$_format.'.twig', array(
+        return $this->render('default/hello.'.$_format.'.twig', [
             'name' => $name,
-        ));
+        ]);
     }
 
 Obviously, when you support several request formats, you have to provide
@@ -165,9 +165,9 @@ option of the ``@Route()`` annotation::
      */
     public function helloAction($name, $_format)
     {
-        return $this->render('default/hello.'.$_format.'.twig', array(
+        return $this->render('default/hello.'.$_format.'.twig', [
             'name' => $name,
-        ));
+        ]);
     }
 
 The ``hello`` action will now match URLs like ``/hello/fabien.xml`` or
@@ -191,7 +191,7 @@ method::
          */
         public function indexAction()
         {
-            return $this->redirectToRoute('hello', array('name' => 'Fabien'));
+            return $this->redirectToRoute('hello', ['name' => 'Fabien']);
         }
     }
 
@@ -267,7 +267,7 @@ forget to add the new ``use`` statement that imports this ``Request`` class)::
             $isAjax = $request->isXmlHttpRequest();
 
             // what's the preferred language of the user?
-            $language = $request->getPreferredLanguage(array('en', 'fr'));
+            $language = $request->getPreferredLanguage(['en', 'fr']);
 
             // get the value of a $_GET parameter
             $pageName = $request->query->get('page');

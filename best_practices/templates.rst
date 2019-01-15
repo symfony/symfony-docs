@@ -122,11 +122,11 @@ class in the constructor of the Twig extension::
 
         public function getFilters()
         {
-            return array(
+            return [
                 new TwigFilter(
                     'md2html',
-                    array($this, 'markdownToHtml'),
-                    array('is_safe' => array('html'), 'pre_escape' => 'html')
+                    [$this, 'markdownToHtml'],
+                    ['is_safe' => ['html'], 'pre_escape' => 'html']
                 ),
             );
         }

@@ -98,6 +98,6 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('debug', array(
+        $container->loadFromExtension('debug', [
            'dump_destination' => 'php://stderr',
-        ));
+        ]);

@@ -65,28 +65,28 @@ a new provider that chains the two together:
         // app/config/security.php
         use AppBundle\Entity\User;
 
-        $container->loadFromExtension('security', array(
-            'providers' => array(
-                'chain_provider' => array(
-                    'chain' => array(
-                        'providers' => array('in_memory', 'user_db'),
-                    ),
-                ),
-                'in_memory' => array(
-                    'memory' => array(
-                       'users' => array(
-                           'foo' => array('password' => 'test'),
-                       ),
-                    ),
-                ),
-                'user_db' => array(
-                    'entity' => array(
+        $container->loadFromExtension('security', [
+            'providers' => [
+                'chain_provider' => [
+                    'chain' => [
+                        'providers' => ['in_memory', 'user_db'],
+                    ],
+                ],
+                'in_memory' => [
+                    'memory' => [
+                        'users' => [
+                            'foo' => ['password' => 'test'],
+                        ],
+                    ],
+                ],
+                'user_db' => [
+                    'entity' => [
                         'class'    => User::class,
                         'property' => 'username',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 Now, all firewalls that explicitly define ``chain_provider`` as their user
 provider will, in turn, try to load the user from both the ``in_memory`` and
@@ -142,21 +142,21 @@ the first provider is always used:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'secured_area' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'secured_area' => [
                     // ...
                     'pattern' => '^/',
                     'provider' => 'user_db',
-                    'http_basic' => array(
+                    'http_basic' => [
                         // ...
                         'realm' => 'Secured Demo Area',
                         'provider' => 'in_memory',
-                    ),
-                    'form_login' => array(),
-                ),
-            ),
-        ));
+                    ],
+                    'form_login' => [],
+                ],
+            ],
+        ]);
 
 In this example, if a user tries to log in via HTTP authentication, the authentication
 system will use the ``in_memory`` user provider. But if the user tries to

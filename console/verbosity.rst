@@ -53,10 +53,10 @@ level. For example::
         {
             $user = new User(...);
 
-            $output->writeln(array(
+            $output->writeln([
                 'Username: '.$input->getArgument('username'),
                 'Password: '.$input->getArgument('password'),
-            ));
+            ]);
 
             // available methods: ->isQuiet(), ->isVerbose(), ->isVeryVerbose(), ->isDebug()
             if ($output->isVerbose()) {

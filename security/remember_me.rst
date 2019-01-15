@@ -61,13 +61,13 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'main' => array(
+            'firewalls' => [
+                'main' => [
                     // ...
-                    'remember_me' => array(
+                    'remember_me' => [
                         'secret'   => '%secret%',
                         'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
@@ -75,10 +75,10 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                         // checkbox in the login form (see below), uncomment
                         // the following line to always enable it.
                         //'always_remember_me' => true,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 The ``remember_me`` firewall defines the following configuration options:
 

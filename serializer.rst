@@ -53,14 +53,14 @@ it in your configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'serializer' => array(
+            'serializer' => [
                 'enable_annotations' => true,
                 // Alternatively, if you don't want to use annotations
                 //'enabled' => true,
-            ),
-        ));
+            ],
+        ]);
 
 Using the Serializer Service
 ----------------------------
@@ -202,19 +202,19 @@ with the following configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'serializer' => array(
+            'serializer' => [
                 'enable_annotations' => true,
-            ),
-        ));
+            ],
+        ]);
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::
 
     $json = $serializer->serialize(
         $someObject,
-        'json', array('groups' => array('group1'))
+        'json', ['groups' => ['group1']]
     );
 
 In addition to the ``@Groups`` annotation, the Serializer component also
@@ -268,12 +268,12 @@ value:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'serializer' => array(
+            'serializer' => [
                 'name_converter' => 'serializer.name_converter.camel_case_to_snake_case',
-            ),
-        ));
+            ],
+        ]);
 
 Going Further with the Serializer
 ---------------------------------

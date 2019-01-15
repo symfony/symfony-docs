@@ -302,12 +302,12 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('twig', array(
+        $container->loadFromExtension('twig', [
             // ...
-            'paths' => array(
-               '%kernel.project_dir%/vendor/acme/foo-bar/templates' => null,
-            ),
-        ));
+            'paths' => [
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates' => null,
+            ],
+        ]);
 
 The directories defined in the ``paths`` option have more priority than the
 default directories defined by Symfony. In the above example, if the template
@@ -346,12 +346,12 @@ for that directory:
     .. code-block:: php
 
         # app/config/config.php
-        $container->loadFromExtension('twig', array(
+        $container->loadFromExtension('twig', [
             // ...
-            'paths' => array(
-               '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
-            ),
-        ));
+            'paths' => [
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
+            ],
+        ]);
 
 This option is useful to not mess with the default template directories defined
 by Symfony. Besides, it simplifies how you refer to those templates:

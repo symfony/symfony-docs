@@ -143,7 +143,7 @@ values::
     $rootNode
         ->children()
             ->enumNode('delivery')
-                ->values(array('standard', 'expedited', 'priority'))
+                ->values(['standard', 'expedited', 'priority'])
             ->end()
         ->end()
     ;
@@ -509,9 +509,9 @@ methods::
     // is equivalent to
 
     $arrayNode
-        ->treatFalseLike(array('enabled' => false))
-        ->treatTrueLike(array('enabled' => true))
-        ->treatNullLike(array('enabled' => true))
+        ->treatFalseLike(['enabled' => false])
+        ->treatTrueLike(['enabled' => true])
+        ->treatNullLike(['enabled' => true])
         ->children()
             ->booleanNode('enabled')
                 ->defaultFalse()
@@ -742,7 +742,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function ($v) { return array('name' => $v); })
+                    ->then(function ($v) { return ['name' => $v]; })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()
@@ -767,7 +767,7 @@ The builder is used for adding advanced validation rules to node definitions, li
                     ->scalarNode('driver')
                         ->isRequired()
                         ->validate()
-                            ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
+                            ->ifNotInArray(['mysql', 'sqlite', 'mssql'])
                             ->thenInvalid('Invalid database driver %s')
                         ->end()
                     ->end()
@@ -820,7 +820,7 @@ Otherwise the result is a clean array of configuration values::
         file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml')
     );
 
-    $configs = array($config, $extraConfig);
+    $configs = [$config, $extraConfig];
 
     $processor = new Processor();
     $databaseConfiguration = new DatabaseConfiguration();

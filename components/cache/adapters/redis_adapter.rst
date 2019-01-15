@@ -95,14 +95,14 @@ array of ``key => value`` pairs representing option names and their respective v
         'redis://localhost:6379',
 
         // associative array of configuration options
-        array(
+        [
             'lazy' => false,
             'persistent' => 0,
             'persistent_id' => null,
             'timeout' => 30,
             'read_timeout' => 0,
             'retry_interval' => 0,
-         )
+        ]
 
     );
 

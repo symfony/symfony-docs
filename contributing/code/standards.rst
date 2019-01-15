@@ -86,12 +86,12 @@ short example containing most features described below:
          *
          * @throws \RuntimeException When an invalid option is provided
          */
-        private function transformText($dummy, array $options = array())
+        private function transformText($dummy, array $options = [])
         {
-            $defaultOptions = array(
+            $defaultOptions = [
                 'some_default' => 'values',
                 'another_default' => 'more values',
-            );
+            ];
 
             foreach ($options as $option) {
                 if (!in_array($option, $defaultOptions)) {

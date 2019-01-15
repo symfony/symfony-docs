@@ -39,10 +39,10 @@ Example Usage
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     // ...
 
-    $builder->add('public', CheckboxType::class, array(
+    $builder->add('public', CheckboxType::class, [
         'label'    => 'Show this entry publicly?',
         'required' => false,
-    ));
+    ]);
 
 Field Options
 -------------

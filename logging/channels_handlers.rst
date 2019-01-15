@@ -77,23 +77,23 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'security' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'security' => [
                     'type'     => 'stream',
                     'path'     => '%kernel.logs_dir%/security.log',
-                    'channels' => array(
+                    'channels' => [
                         'security',
-                    ),
-                ),
-                'main'     => array(
+                    ],
+                ],
+                'main'     => [
                     // ...
-                    'channels' => array(
+                    'channels' => [
                         '!security',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. caution::
 
@@ -162,12 +162,12 @@ You can also configure additional channels without the need to tag your services
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('monolog', array(
-            'channels' => array(
+        $container->loadFromExtension('monolog', [
+            'channels' => [
                 'foo',
                 'bar',
-            ),
-        ));
+            ],
+        ]);
 
 Symfony automatically registers one service per channel (in this example, the
 channel ``foo`` creates a service called ``monolog.logger.foo``). In order to

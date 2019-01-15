@@ -96,7 +96,7 @@ Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
     // search inside *both* directories
-    $finder->in(array(__DIR__, '/elsewhere'));
+    $finder->in([__DIR__, '/elsewhere']);
 
     // same as above
     $finder->in(__DIR__)->in('/elsewhere');

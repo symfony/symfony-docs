@@ -98,15 +98,15 @@ example, in ``config_dev.yml``:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'console' => array(
-                   'type' => 'console',
-                   'process_psr_3_messages' => false,
-                   'channels' => array('!event', '!doctrine', '!console'),
-                ),
-            ),
-        ));
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'console' => [
+                    'type' => 'console',
+                    'process_psr_3_messages' => false,
+                    'channels' => ['!event', '!doctrine', '!console'],
+                ],
+            ],
+        ]);
 
 Now, log messages will be shown on the console based on the log levels and verbosity.
 By default (normal verbosity level), warnings and higher will be shown. But in

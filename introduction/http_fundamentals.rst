@@ -337,7 +337,7 @@ A very simple front controller might look like this::
     $request = Request::createFromGlobals();
     $path = $request->getPathInfo(); // the URI path being requested
 
-    if (in_array($path, array('', '/'))) {
+    if (in_array($path, ['', '/'])) {
         $response = new Response('Welcome to the homepage.');
     } elseif ('/contact' === $path) {
         $response = new Response('Contact us');

@@ -100,15 +100,15 @@ information. By convention, this information is usually configured in an
         .. code-block:: php
 
             // app/config/config.php
-            $container->loadFromExtension('doctrine', array(
-                'dbal' => array(
+            $container->loadFromExtension('doctrine', [
+                'dbal' => [
                     'driver'   => 'pdo_mysql',
                     'host'     => '%database_host%',
                     'dbname'   => '%database_name%',
                     'user'     => '%database_user%',
                     'password' => '%database_password%',
-                ),
-            ));
+                ],
+            ]);
 
     By separating the database information into a separate file, you can
     easily keep different versions of the file on each server. You can also
@@ -185,15 +185,15 @@ can automatically generate an empty ``test_project`` database for you:
         .. code-block:: php
 
             // app/config/config.php
-            $configuration->loadFromExtension('doctrine', array(
-                'dbal' => array(
+            $configuration->loadFromExtension('doctrine', [
+                'dbal' => [
                     'charset' => 'utf8mb4',
-                    'default_table_options' => array(
+                    'default_table_options' => [
                         'charset' => 'utf8mb4',
                         'collate' => 'utf8mb4_unicode_ci',
-                    )
-                ),
-            ));
+                    ]
+                ],
+            ]);
 
     We recommend against MySQL's ``utf8`` character set, since it does not
     support 4-byte unicode characters, and strings containing them will be
@@ -248,13 +248,13 @@ can automatically generate an empty ``test_project`` database for you:
         .. code-block:: php
 
             // app/config/config.php
-            $container->loadFromExtension('doctrine', array(
-                'dbal' => array(
+            $container->loadFromExtension('doctrine', [
+                'dbal' => [
                     'driver'  => 'pdo_sqlite',
                     'path'    => '%kernel.project_dir%/app/sqlite.db',
                     'charset' => 'UTF-8',
-                ),
-            ));
+                ],
+            ]);
 
 Creating an Entity Class
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -664,14 +664,15 @@ to easily fetch objects based on multiple conditions::
     $repository = $this->getDoctrine()->getRepository(Product::class);
 
     // looks for a single product matching the given name and price
-    $product = $repository->findOneBy(
-        array('name' => 'Keyboard', 'price' => 19.99)
-    );
+    $product = $repository->findOneBy([
+        'name' => 'Keyboard',
+        'price' => 19.99
+    ]);
 
     // looks for multiple products matching the given name, ordered by price
     $products = $repository->findBy(
-        array('name' => 'Keyboard'),
-        array('price' => 'ASC')
+        ['name' => 'Keyboard'],
+        ['price' => 'ASC']
     );
 
 .. tip::

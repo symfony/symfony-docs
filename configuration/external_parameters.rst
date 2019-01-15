@@ -58,11 +58,11 @@ variable in your service container configuration, you can reference it using
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
                 'host' => '%env(DATABASE_HOST)%',
-            ),
-        ));
+            ],
+        ]);
 
 You can also give the ``env()`` parameters a default value: the default value
 will be used whenever the corresponding environment variable is *not* found:
@@ -183,11 +183,11 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'router' => array(
+        $container->loadFromExtension('framework', [
+            'router' => [
                 'http_port' => '%env(int:HTTP_PORT)%',
-            ),
-        ));
+            ],
+        ]);
 
 Symfony provides the following env var processors:
 
@@ -227,9 +227,9 @@ Symfony provides the following env var processors:
 
             // config/packages/framework.php
             $container->setParameter('env(SECRET)', 'some_secret');
-            $container->loadFromExtension('framework', array(
+            $container->loadFromExtension('framework', [
                 'secret' => '%env(string:SECRET)%',
-            ));
+            ]);
 
 ``env(bool:FOO)``
     Casts ``FOO`` to a bool:
@@ -267,9 +267,9 @@ Symfony provides the following env var processors:
 
             // config/packages/framework.php
             $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
-            $container->loadFromExtension('framework', array(
+            $container->loadFromExtension('framework', [
                 'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
-            ));
+            ]);
 
 ``env(int:FOO)``
     Casts ``FOO`` to an int.
@@ -314,14 +314,14 @@ Symfony provides the following env var processors:
 
             // config/packages/security.php
             $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
-            $container->loadFromExtension('security', array(
-                'access_control' => array(
-                    array(
+            $container->loadFromExtension('security', [
+                'access_control' => [
+                    [
                         'path' => '^/health-check$',
                         'methods' => '%env(const:HEALTH_CHECK_METHOD)%',
-                    ),
-                ),
-            ));
+                    ],
+                ],
+            ]);
 
 ``env(base64:FOO)``
     Decodes the content of ``FOO``, which is a base64 encoded string.
@@ -363,9 +363,9 @@ Symfony provides the following env var processors:
 
             // config/packages/framework.php
             $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
-            $container->loadFromExtension('framework', array(
+            $container->loadFromExtension('framework', [
                 'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
-            ));
+            ]);
 
 ``env(resolve:FOO)``
     Replaces the string ``FOO`` by the value of a config parameter with the
@@ -404,9 +404,9 @@ Symfony provides the following env var processors:
             // config/packages/sentry.php
             $container->setParameter('env(HOST)', '10.0.0.1');
             $container->setParameter('env(SENTRY_DSN)', 'http://%env(HOST)%/project');
-            $container->loadFromExtension('sentry', array(
+            $container->loadFromExtension('sentry', [
                 'dsn' => '%env(resolve:SENTRY_DSN)%',
-            ));
+            ]);
 
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
@@ -444,9 +444,9 @@ Symfony provides the following env var processors:
 
             // config/packages/framework.php
             $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
-            $container->loadFromExtension('google', array(
+            $container->loadFromExtension('google', [
                 'auth' => '%env(file:AUTH_FILE)%',
-            ));
+            ]);
 
 It is also possible to combine any number of processors:
 

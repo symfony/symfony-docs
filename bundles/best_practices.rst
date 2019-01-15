@@ -232,10 +232,10 @@ following standardized instructions in your ``README.md`` file.
         {
             public function registerBundles()
             {
-                $bundles = array(
+                $bundles = [
                     // ...
                     new <vendor>\<bundle-name>\<bundle-long-name>(),
-                );
+                ];
 
                 // ...
             }
@@ -278,11 +278,11 @@ following standardized instructions in your ``README.md`` file.
             {
                 public function registerBundles()
                 {
-                    $bundles = array(
+                    $bundles = [
                         // ...
 
                         new <vendor>\<bundle-name>\<bundle-long-name>(),
-                    );
+                    ];
 
                     // ...
                 }

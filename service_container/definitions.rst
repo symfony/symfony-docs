@@ -79,10 +79,10 @@ fetched from the container::
     use Symfony\Component\DependencyInjection\Definition;
     use Symfony\Component\DependencyInjection\Reference;
 
-    $definition = new Definition(DoctrineConfigManager::class, array(
+    $definition = new Definition(DoctrineConfigManager::class, [
         new Reference('doctrine'), // a reference to another service
         '%app.config_table_name%',  // will be resolved to the value of a container parameter
-    ));
+    ]);
 
     // gets all arguments configured for this definition
     $constructorArguments = $definition->getArguments();
@@ -115,7 +115,7 @@ any method calls in the definitions as well::
     $methodCalls = $definition->getMethodCalls();
 
     // configures a new method call
-    $definition->addMethodCall('setLogger', array(new Reference('logger')));
+    $definition->addMethodCall('setLogger', [new Reference('logger')]);
 
     // replaces all previously configured method calls with the passed array
     $definition->setMethodCalls($methodCalls);

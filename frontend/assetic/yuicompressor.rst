@@ -67,17 +67,17 @@ stylesheets:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
+        $container->loadFromExtension('assetic', [
             // 'java' => '/usr/bin/java',
-            'filters' => array(
-                'yui_css' => array(
+            'filters' => [
+                'yui_css' => [
                     'jar' => '%kernel.project_dir%/app/Resources/java/yuicompressor.jar',
-                ),
-                'yui_js' => array(
+                ],
+                'yui_js' => [
                     'jar' => '%kernel.project_dir%/app/Resources/java/yuicompressor.jar',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 .. note::
 

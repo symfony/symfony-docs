@@ -327,12 +327,12 @@ to associate both methods::
 
     public function provideUrls()
     {
-        return array(
-            array('/'),
-            array('/blog'),
-            array('/contact'),
+        return [
+            ['/'],
+            ['/blog'],
+            ['/contact'],
             // ...
-        );
+        ];
     }
 
 .. index::
@@ -364,9 +364,9 @@ returns a ``Crawler`` instance.
         request(
             $method,
             $uri,
-            array $parameters = array(),
-            array $files = array(),
-            array $server = array(),
+            array $parameters = [],
+            array $files = [],
+            array $server = [],
             $content = null,
             $changeHistory = true
         )
@@ -379,13 +379,13 @@ returns a ``Crawler`` instance.
         $client->request(
             'GET',
             '/post/hello-world',
-            array(),
-            array(),
-            array(
+            [],
+            [],
+            [
                 'CONTENT_TYPE'          => 'application/json',
                 'HTTP_REFERER'          => '/foo/bar',
                 'HTTP_X-Requested-With' => 'XMLHttpRequest',
-            )
+            ]
         );
 
 Use the crawler to find DOM elements in the response. These elements can then
@@ -395,7 +395,7 @@ be used to click on links and submit forms::
     $crawler = $client->click($link);
 
     $form = $crawler->selectButton('validate')->form();
-    $crawler = $client->submit($form, array('name' => 'Fabien'));
+    $crawler = $client->submit($form, ['name' => 'Fabien']);
 
 The ``click()`` and ``submit()`` methods both return a ``Crawler`` object.
 These methods are the best way to browse your application as it takes care
@@ -411,15 +411,15 @@ The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
 
     // submits a form directly (but using the Crawler is easier!)
-    $client->request('POST', '/submit', array('name' => 'Fabien'));
+    $client->request('POST', '/submit', ['name' => 'Fabien']);
 
     // submits a raw JSON string in the request body
     $client->request(
         'POST',
         '/submit',
-        array(),
-        array(),
-        array('CONTENT_TYPE' => 'application/json'),
+        [],
+        [],
+        ['CONTENT_TYPE' => 'application/json'],
         '{"name":"Fabien"}'
     );
 
@@ -435,17 +435,17 @@ or perform more complex requests. Some useful examples::
     $client->request(
         'POST',
         '/submit',
-        array('name' => 'Fabien'),
-        array('photo' => $photo)
+        ['name' => 'Fabien'],
+        ['photo' => $photo]
     );
 
     // Perform a DELETE request and pass HTTP headers
     $client->request(
         'DELETE',
         '/post/12',
-        array(),
-        array(),
-        array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word')
+        [],
+        [],
+        ['PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word']
     );
 
 Last but not least, you can force each request to be executed in its own PHP
@@ -653,7 +653,7 @@ The Crawler can extract information from the nodes::
     // (_text returns the node value)
     // returns an array for each element in crawler,
     // each with the value and href
-    $info = $crawler->extract(array('_text', 'href'));
+    $info = $crawler->extract(['_text', 'href']);
 
     // executes a lambda for each node and return an array of results
     $data = $crawler->each(function ($node, $i) {
@@ -710,15 +710,15 @@ to get a ``Form`` instance for the form wrapping the button node::
 When calling the ``form()`` method, you can also pass an array of field values
 that overrides the default ones::
 
-    $form = $buttonCrawlerNode->form(array(
+    $form = $buttonCrawlerNode->form([
         'my_form[name]'    => 'Fabien',
         'my_form[subject]' => 'Symfony rocks!',
-    ));
+    ]);
 
 And if you want to simulate a specific HTTP method for the form, pass it as a
 second argument::
 
-    $form = $buttonCrawlerNode->form(array(), 'DELETE');
+    $form = $buttonCrawlerNode->form([], 'DELETE');
 
 The Client can submit ``Form`` instances::
 
@@ -727,10 +727,10 @@ The Client can submit ``Form`` instances::
 The field values can also be passed as a second argument of the ``submit()``
 method::
 
-    $client->submit($form, array(
+    $client->submit($form, [
         'my_form[name]'    => 'Fabien',
         'my_form[subject]' => 'Symfony rocks!',
-    ));
+    ]);
 
 For more complex situations, use the ``Form`` instance as an array to set the
 value of each field individually::
@@ -860,33 +860,33 @@ configuration option:
         // app/config/config_test.php
 
         // ...
-        $container->loadFromExtension('swiftmailer', array(
+        $container->loadFromExtension('swiftmailer', [
             'disable_delivery' => true,
-        ));
+        ]);
 
 You can also use a different environment entirely, or override the default
 debug mode (``true``) by passing each as options to the ``createClient()``
 method::
 
-    $client = static::createClient(array(
+    $client = static::createClient([
         'environment' => 'my_test_env',
         'debug'       => false,
-    ));
+    ]);
 
 If your application behaves according to some HTTP headers, pass them as the
 second argument of ``createClient()``::
 
-    $client = static::createClient(array(), array(
+    $client = static::createClient([], [
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
-    ));
+    ]);
 
 You can also override HTTP headers on a per request basis::
 
-    $client->request('GET', '/', array(), array(), array(
+    $client->request('GET', '/', [], [], [
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
-    ));
+    ]);
 
 .. tip::
 

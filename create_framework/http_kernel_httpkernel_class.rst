@@ -170,7 +170,7 @@ only if needed::
 
         public static function getSubscribedEvents()
         {
-            return array('kernel.view' => 'onView');
+            return ['kernel.view' => 'onView'];
         }
     }
 

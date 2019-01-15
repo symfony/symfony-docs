@@ -82,13 +82,13 @@ First, you need to configure the connection the ACL system is supposed to use:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'acl' => array(
+            'acl' => [
                 'connection' => 'default',
-            ),
-        ));
+            ],
+        ]);
 
 .. note::
 

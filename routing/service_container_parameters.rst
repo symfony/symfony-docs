@@ -47,11 +47,11 @@ inside your routing configuration:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('contact', new Route('/{_locale}/contact', array(
+        $routes->add('contact', new Route('/{_locale}/contact', [
             '_controller' => 'AppBundle:Main:contact',
-        ), array(
+        ], [
             '_locale' => '%app.locales%',
-        )));
+        ]));
 
         return $routes;
 
@@ -118,9 +118,9 @@ path):
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('some_route', new Route('/%app.route_prefix%/contact', array(
+        $routes->add('some_route', new Route('/%app.route_prefix%/contact', [
             '_controller' => 'AppBundle:Main:contact',
-        )));
+        ]));
 
         return $routes;
 

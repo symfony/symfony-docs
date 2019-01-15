@@ -13,10 +13,10 @@ from *that* controller::
 
     public function indexAction($name)
     {
-        $response = $this->forward('AppBundle:Something:fancy', array(
+        $response = $this->forward('AppBundle:Something:fancy', [
             'name'  => $name,
             'color' => 'green',
-        ));
+        ]);
 
         // ... further modify the response or return it directly
 

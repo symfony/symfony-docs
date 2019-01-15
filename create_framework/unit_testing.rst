@@ -164,13 +164,13 @@ Response::
         $matcher
             ->expects($this->once())
             ->method('match')
-            ->will($this->returnValue(array(
+            ->will($this->returnValue([
                 '_route' => 'foo',
                 'name' => 'Fabien',
                 '_controller' => function ($name) {
                     return new Response('Hello '.$name);
                 }
-            )))
+            ]))
         ;
         $matcher
             ->expects($this->once())

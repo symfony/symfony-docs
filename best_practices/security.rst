@@ -285,7 +285,7 @@ the same ``getAuthorEmail()`` logic you used above::
 
         protected function supports($attribute, $subject)
         {
-            if (!in_array($attribute, array(self::CREATE, self::EDIT))) {
+            if (!in_array($attribute, [self::CREATE, self::EDIT])) {
                 return false;
             }
 
@@ -309,7 +309,7 @@ the same ``getAuthorEmail()`` logic you used above::
             switch ($attribute) {
                 case self::CREATE:
                     // if the user is an admin, allow them to create new posts
-                    if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
+                    if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
                         return true;
                     }
 

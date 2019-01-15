@@ -35,10 +35,10 @@ To log a message, inject the default logger in your controller::
         $logger->info('I just got the logger');
         $logger->error('An error occurred');
 
-        $logger->critical('I left the oven on!', array(
+        $logger->critical('I left the oven on!', [
             // include extra "context" info in your logs
             'cause' => 'in_hurry',
-        ));
+        ]);
 
         // ...
     }
@@ -147,19 +147,19 @@ to write logs using the :phpfunction:`syslog` function:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'file_log' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'file_log' => [
                     'type'  => 'stream',
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level' => 'debug',
-                ),
-                'syslog_handler' => array(
+                ],
+                'syslog_handler' => [
                     'type'  => 'syslog',
                     'level' => 'error',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 This defines a *stack* of handlers and each handler is called in the order that it's
 defined.
@@ -232,24 +232,24 @@ one of the messages reaches an ``action_level``. Take this example:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'filter_for_errors' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'filter_for_errors' => [
                     'type'         => 'fingers_crossed',
                     'action_level' => 'error',
                     'handler'      => 'file_log',
-                ),
-                'file_log' => array(
+                ],
+                'file_log' => [
                     'type'  => 'stream',
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level' => 'debug',
-                ),
-                'syslog_handler' => array(
+                ],
+                'syslog_handler' => [
                     'type'  => 'syslog',
                     'level' => 'error',
-                ),
+                ],
             ),
-        ));
+        ]);
 
 Now, if even one log entry has an ``error`` level or higher, then *all* log entries
 for that request are saved to a file via the ``file_log`` handler. That means that
@@ -329,18 +329,18 @@ option of your handler to ``rotating_file``:
     .. code-block:: php
 
         // app/config/config_dev.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'main' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'main' => [
                     'type'  => 'rotating_file',
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level' => 'debug',
                     // max number of log files to keep
                     // defaults to zero, which means infinite files
                     'max_files' => 10,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Using a Logger inside a Service
 -------------------------------

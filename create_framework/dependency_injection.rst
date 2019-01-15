@@ -108,33 +108,33 @@ Create a new file to host the dependency injection container configuration::
     $containerBuilder = new DependencyInjection\ContainerBuilder();
     $containerBuilder->register('context', Routing\RequestContext::class);
     $containerBuilder->register('matcher', Routing\Matcher\UrlMatcher::class)
-        ->setArguments(array($routes, new Reference('context')))
+        ->setArguments([$routes, new Reference('context')])
     ;
     $containerBuilder->register('request_stack', HttpFoundation\RequestStack::class);
     $containerBuilder->register('controller_resolver', HttpKernel\Controller\ControllerResolver::class);
     $containerBuilder->register('argument_resolver', HttpKernel\Controller\ArgumentResolver::class);
 
     $containerBuilder->register('listener.router', HttpKernel\EventListener\RouterListener::class)
-        ->setArguments(array(new Reference('matcher'), new Reference('request_stack')))
+        ->setArguments([new Reference('matcher'), new Reference('request_stack')])
     ;
     $containerBuilder->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
-        ->setArguments(array('UTF-8'))
+        ->setArguments(['UTF-8'])
     ;
     $containerBuilder->register('listener.exception', HttpKernel\EventListener\ExceptionListener::class)
-        ->setArguments(array('Calendar\Controller\ErrorController::exceptionAction'))
+        ->setArguments(['Calendar\Controller\ErrorController::exceptionAction'])
     ;
     $containerBuilder->register('dispatcher', EventDispatcher\EventDispatcher::class)
-        ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
-        ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
-        ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
+        ->addMethodCall('addSubscriber', [new Reference('listener.router')])
+        ->addMethodCall('addSubscriber', [new Reference('listener.response')])
+        ->addMethodCall('addSubscriber', [new Reference('listener.exception')])
     ;
     $containerBuilder->register('framework', Framework::class)
-        ->setArguments(array(
+        ->setArguments([
             new Reference('dispatcher'),
             new Reference('controller_resolver'),
             new Reference('request_stack'),
             new Reference('argument_resolver'),
-        ))
+        ])
     ;
 
     return $containerBuilder;
@@ -198,7 +198,7 @@ Now, here is how you can register a custom listener in the front controller::
 
     $container->register('listener.string_response', StringResponseListener::class);
     $container->getDefinition('dispatcher')
-        ->addMethodCall('addSubscriber', array(new Reference('listener.string_response')))
+        ->addMethodCall('addSubscriber', [new Reference('listener.string_response')])
     ;
 
 Beside describing your objects, the dependency injection container can also be
@@ -214,7 +214,7 @@ charset configurable::
 
     // ...
     $container->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
-        ->setArguments(array('%charset%'))
+        ->setArguments(['%charset%'])
     ;
 
 After this change, you must set the charset before using the response listener
@@ -227,7 +227,7 @@ Instead of relying on the convention that the routes are defined by the
 
     // ...
     $container->register('matcher', Routing\Matcher\UrlMatcher::class)
-        ->setArguments(array('%routes%', new Reference('context')))
+        ->setArguments(['%routes%', new Reference('context')])
     ;
 
 And the related change in the front controller::

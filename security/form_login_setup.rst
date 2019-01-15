@@ -50,17 +50,17 @@ First, enable form login under your firewall:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
                     'anonymous'  => null,
-                    'form_login' => array(
+                    'form_login' => [
                         'login_path' => 'login',
                         'check_path' => 'login',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -131,9 +131,9 @@ configuration (``login``):
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('login', new Route('/login', array(
+        $routes->add('login', new Route('/login', [
             '_controller' => 'AppBundle:Security:login',
-        )));
+        ]));
 
         return $routes;
 
@@ -150,10 +150,10 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', array(
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
-        ));
+        ]);
     }
 
 .. note::
@@ -306,9 +306,9 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
         // app/config/security.php
 
         // ...
-        'access_control' => array(
-            array('path' => '^/', 'role' => 'ROLE_ADMIN'),
-        ),
+        'access_control' => [
+            ['path' => '^/', 'role' => 'ROLE_ADMIN'],
+        ],
 
 Adding an access control that matches ``/login/*`` and requires *no* authentication
 fixes the problem:
@@ -346,10 +346,10 @@ fixes the problem:
         // app/config/security.php
 
         // ...
-        'access_control' => array(
-            array('path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
-            array('path' => '^/', 'role' => 'ROLE_ADMIN'),
-        ),
+        'access_control' => [
+            ['path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
+            ['path' => '^/', 'role' => 'ROLE_ADMIN'],
+        ],
 
 3. Be Sure check_path Is Behind a Firewall
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

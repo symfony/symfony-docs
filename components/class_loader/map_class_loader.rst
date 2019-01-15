@@ -29,10 +29,10 @@ an instance of the ``MapClassLoader`` class::
 
     require_once '/path/to/src/Symfony/Component/ClassLoader/MapClassLoader.php';
 
-    $mapping = array(
+    $mapping = [
         'Foo' => '/path/to/Foo',
         'Bar' => '/path/to/Bar',
-    );
+    ];
 
     $loader = new MapClassLoader($mapping);
 

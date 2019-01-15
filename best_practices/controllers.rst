@@ -108,9 +108,9 @@ for the homepage of our app::
                 ->getRepository(Post::class)
                 ->findLatest();
 
-            return $this->render('default/index.html.twig', array(
+            return $this->render('default/index.html.twig', [
                 'posts' => $posts,
-            ));
+            ]);
         }
     }
 
@@ -155,10 +155,10 @@ For example::
     {
         $deleteForm = $this->createDeleteForm($post);
 
-        return $this->render('admin/post/show.html.twig', array(
+        return $this->render('admin/post/show.html.twig', [
             'post'        => $post,
             'delete_form' => $deleteForm->createView(),
-        ));
+        ]);
     }
 
 Normally, you'd expect a ``$id`` argument to ``showAction()``. Instead, by
@@ -182,7 +182,7 @@ manually. In our application, we have this situation in ``CommentController``::
     {
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findOneBy(array('slug' => $postSlug));
+            ->findOneBy(['slug' => $postSlug]);
 
         if (!$post) {
             throw $this->createNotFoundException();

@@ -12,18 +12,18 @@ applies if the ``multiple`` option is set to false.
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('states', ChoiceType::class, array(
+    $builder->add('states', ChoiceType::class, [
         'placeholder' => 'Choose an option',
-    ));
+    ]);
 
 * Guarantee that no "empty" value option is displayed::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('states', ChoiceType::class, array(
+    $builder->add('states', ChoiceType::class, [
         'placeholder' => false,
-    ));
+    ]);
 
 If you leave the ``placeholder`` option unset, then a blank (with no text)
 option will automatically be added if and only if the ``required`` option
@@ -33,6 +33,6 @@ is false::
     // ...
 
     // a blank (with no text) option will be added
-    $builder->add('states', ChoiceType::class, array(
+    $builder->add('states', ChoiceType::class, [
         'required' => false,
-    ));
+    ]);

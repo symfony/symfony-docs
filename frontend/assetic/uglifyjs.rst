@@ -111,14 +111,14 @@ your JavaScripts:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'uglifyjs2' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'uglifyjs2' => [
                     // the path to the uglifyjs executable
                     'bin' => '/usr/local/bin/uglifyjs',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -179,13 +179,13 @@ can configure its location using the ``node`` key:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
+        $container->loadFromExtension('assetic', [
             'node'      => '/usr/bin/nodejs',
-            'uglifyjs2' => array(
+            'uglifyjs2' => [
                 // the path to the uglifyjs executable
                 'bin' => '/usr/local/bin/uglifyjs',
-            ),
-        ));
+            ],
+        ]);
 
 Minify your Assets
 ------------------
@@ -282,13 +282,13 @@ Next, add the configuration for this filter:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('assetic', array(
-            'filters' => array(
-                'uglifycss' => array(
+        $container->loadFromExtension('assetic', [
+            'filters' => [
+                'uglifycss' => [
                     'bin' => '/usr/local/bin/uglifycss',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 To use the filter for your CSS files, add the filter to the Assetic ``stylesheets``
 helper:

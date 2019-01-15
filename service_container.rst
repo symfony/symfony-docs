@@ -760,11 +760,11 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
 
         $container->register(LuckyController::class)
             ->setPublic(true)
-            ->setBindings(array(
+            ->setBindings([
                 '$adminEmail' => 'manager@example.com',
                 '$requestLogger' => new Reference('monolog.logger.request'),
                 LoggerInterface::class => new Reference('monolog.logger.request'),
-            ))
+            ])
         ;
 
 By putting the ``bind`` key under ``_defaults``, you can specify the value of *any*
@@ -1150,19 +1150,19 @@ admin email. In this case, each needs to have a unique service id:
 
         $container->register('site_update_manager.superadmin', SiteUpdateManager::class)
             ->setAutowired(false)
-            ->setArguments(array(
+            ->setArguments([
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
                 'superadmin@example.com'
-            ));
+            ]);
 
         $container->register('site_update_manager.normal_users', SiteUpdateManager::class)
             ->setAutowired(false)
-            ->setArguments(array(
+            ->setArguments([
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
                 'contact@example.com'
-            ));
+            ]);
 
         $container->setAlias(SiteUpdateManager::class, 'site_update_manager.superadmin')
 

@@ -148,12 +148,12 @@ you do. The resource name itself is not actually used in the example::
 
             // prepare a new route
             $path = '/extra/{parameter}';
-            $defaults = array(
+            $defaults = [
                 '_controller' => 'AppBundle:Extra:extra',
-            );
-            $requirements = array(
+            ];
+            $requirements = [
                 'parameter' => '\d+',
-            );
+            ];
             $route = new Route($path, $defaults, $requirements);
 
             // add the new route to the route collection

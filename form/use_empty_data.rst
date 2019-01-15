@@ -62,9 +62,9 @@ that constructor with no arguments::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'empty_data' => new Blog($this->someDependency),
-            ));
+            ]);
         }
     }
 
@@ -93,9 +93,9 @@ The closure must accept a ``FormInterface`` instance as the first argument::
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'empty_data' => function (FormInterface $form) {
                 return new Blog($form->get('title')->getData());
             },
-        ));
+        ]);
     }

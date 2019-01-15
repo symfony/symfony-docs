@@ -112,11 +112,11 @@ to false:
         // app/config/config.php
 
         // ...
-        $container->loadFromExtension('framework', array(
-            'profiler' => array(
+        $container->loadFromExtension('framework', [
+            'profiler' => [
                 'enabled' => true,
                 'collect' => false,
-            ),
-        ));
+            ],
+        ]);
 
 In this way only tests that call ``$client->enableProfiler()`` will collect data.

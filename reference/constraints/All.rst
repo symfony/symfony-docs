@@ -38,7 +38,7 @@ entry in that array:
              *     @Assert\Length(min=5)
              * })
              */
-             protected $favoriteColors = array();
+             protected $favoriteColors = [];
         }
 
     .. code-block:: yaml
@@ -86,12 +86,12 @@ entry in that array:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('favoriteColors', new Assert\All(array(
-                    'constraints' => array(
+                $metadata->addPropertyConstraint('favoriteColors', new Assert\All([
+                    'constraints' => [
                         new Assert\NotBlank(),
-                        new Assert\Length(array('min' => 5)),
-                    ),
-                )));
+                        new Assert\Length(['min' => 5]),
+                    ],
+                ]));
             }
         }
 

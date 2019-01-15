@@ -235,7 +235,7 @@ service type to a service.
 
         $container
             ->register(CommandBus::class)
-            ->addTag('container.service_subscriber', array('key' => 'logger', 'id' => 'monolog.logger.event'))
+            ->addTag('container.service_subscriber', ['key' => 'logger', 'id' => 'monolog.logger.event'])
         ;
 
 .. tip::
@@ -296,10 +296,10 @@ include as many services as needed in it.
         $container
             ->register('app.command_handler_locator', ServiceLocator::class)
             ->addTag('container.service_locator')
-            ->setArguments(array(array(
+            ->setArguments([[
                 'AppBundle\FooCommand' => new Reference('app.command_handler.foo'),
                 'AppBundle\BarCommand' => new Reference('app.command_handler.bar'),
-            )))
+            ]])
         ;
 
 .. note::
@@ -343,7 +343,7 @@ Now you can use the service locator by injecting it in any other service:
 
         $container
             ->register(CommandBus::class)
-            ->setArguments(array(new Reference('app.command_handler_locator')))
+            ->setArguments([new Reference('app.command_handler_locator')])
         ;
 
 In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
@@ -358,10 +358,10 @@ will share identical locators amongst all the services referencing them::
     {
         //...
 
-        $locateableServices = array(
+        $locateableServices = [
             //...
             'logger' => new Reference('logger'),
-        );
+        ];
 
         $myService->addArgument(ServiceLocatorTagPass::register($container, $locateableServices));
     }

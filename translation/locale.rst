@@ -97,12 +97,12 @@ by the routing system using the special ``_locale`` parameter:
         $routes = new RouteCollection();
         $routes->add('contact', new Route(
             '/{_locale}/contact',
-            array(
+            [
                 '_controller' => 'AppBundle:Contact:index',
-            ),
-            array(
+            ],
+            [
                 '_locale' => 'en|fr|de',
-            )
+            ]
         ));
 
         return $routes;
@@ -159,6 +159,6 @@ the framework:
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             'default_locale' => 'en',
-        ));
+        ]);

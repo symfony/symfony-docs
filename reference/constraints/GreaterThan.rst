@@ -99,9 +99,9 @@ The following constraints ensure that:
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\GreaterThan(5));
 
-                $metadata->addPropertyConstraint('age', new Assert\GreaterThan(array(
+                $metadata->addPropertyConstraint('age', new Assert\GreaterThan([
                     'value' => 18,
-                )));
+                ]));
             }
         }
 

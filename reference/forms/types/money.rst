@@ -68,9 +68,9 @@ For example::
     use Symfony\Component\Form\Extension\Core\Type\MoneyType;
     // ...
 
-    $builder->add('price', MoneyType::class, array(
+    $builder->add('price', MoneyType::class, [
         'divisor' => 100,
-    ));
+    ]);
 
 In this case, if the ``price`` field is set to ``9900``, then the value
 ``99`` will actually be rendered to the user. When the user submits the
