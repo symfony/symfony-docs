@@ -154,7 +154,7 @@ event listeners, you can learn more about them at :doc:`/event_dispatcher`::
         {
             return [
                 KernelEvents::CONTROLLER => 'onKernelController',
-            );
+            ];
         }
     }
 

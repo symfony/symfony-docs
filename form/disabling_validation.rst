@@ -13,7 +13,7 @@ these cases you can set the ``validation_groups`` option to ``false``::
     {
         $resolver->setDefaults([
             'validation_groups' => false,
-        ] );
+        ]);
     }
 
 Note that when you do that, the form will still run basic integrity checks,

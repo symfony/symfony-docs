@@ -487,7 +487,7 @@ of the form fields::
         $builder
             ->add('myField', TextType::class, [
                 'required' => true,
-                'constraints' => [new Length(['min' => 3]))
+                'constraints' => [new Length(['min' => 3])]
             ))
         ;
     }

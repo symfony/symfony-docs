@@ -249,7 +249,7 @@ one of the messages reaches an ``action_level``. Take this example:
                     'level' => 'error',
                 ],
             ),
-        ));
+        ]);
 
 Now, if even one log entry has an ``error`` level or higher, then *all* log entries
 for that request are saved to a file via the ``file_log`` handler. That means that

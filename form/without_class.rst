@@ -89,7 +89,7 @@ but here's a short example::
         $builder
            ->add('firstName', TextType::class, [
                'constraints' => new Length(['min' => 3]),
-           ))
+           ])
            ->add('lastName', TextType::class, [
                'constraints' => [
                    new NotBlank(),

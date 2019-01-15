@@ -11,7 +11,7 @@ you can list the most popular on top, like Bork Bork and Pirate::
     // ...
 
     $builder->add('language', ChoiceType::class, [
-            'choices' => [
+        'choices' => [
             'English' => 'en',
             'Spanish' => 'es',
             'Bork'   => 'muppets',
