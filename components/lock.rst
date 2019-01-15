@@ -298,7 +298,7 @@ then the lock is considered as acquired; otherwise as not acquired::
     use Symfony\Component\Lock\Store\RedisStore;
 
     $stores = [];
-    foreach (array('server1', 'server2', 'server3') as $server) {
+    foreach (['server1', 'server2', 'server3'] as $server) {
         $redis = new \Redis();
         $redis->connect($server);
 

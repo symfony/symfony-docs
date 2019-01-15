@@ -296,17 +296,17 @@ key (the default mailer is identified by the ``default_mailer`` option):
 
     .. code-block:: php
 
-        $container->loadFromExtension('swiftmailer', array(
+        $container->loadFromExtension('swiftmailer', [
             'default_mailer' => 'second_mailer',
-            'mailers' => array(
-                'first_mailer' => array(
+            'mailers' => [
+                'first_mailer' => [
                     // ...
-                ),
-                'second_mailer' => array(
+                ],
+                'second_mailer' => [
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Each mailer is registered automatically as a service with these IDs::
 
@@ -386,10 +386,10 @@ alternatives based on the :ref:`service binding <services-binding>` feature:
 
         $container->register(Service::class)
             ->setPublic(true)
-            ->setBindings(array(
+            ->setBindings([
                 // this injects the second mailer when this service type-hints constructor arguments with \Swift_Mailer
                 \Swift_Mailer => '@swiftmailer.mailer.second_mailer',
                 // this injects the second mailer when this service has a constructor argument called $specialMailer
                 '$specialMailer' => '@swiftmailer.mailer.second_mailer',
-            ))
+            ])
         ;

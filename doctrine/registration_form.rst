@@ -201,7 +201,6 @@ The template renders the form:
         {{ form_end(registrationForm) }}
     {% endblock %}
 
-
 Adding a "accept terms" Checkbox
 --------------------------------
 
@@ -226,10 +225,10 @@ To do this, add a ``termsAccepted`` field to your form, but set its
             $builder
                 ->add('email', EmailType::class);
                 // ...
-                ->add('termsAccepted', CheckboxType::class, array(
+                ->add('termsAccepted', CheckboxType::class, [
                     'mapped' => false,
                     'constraints' => new IsTrue(),
-                ))
+                ])
             );
         }
     }

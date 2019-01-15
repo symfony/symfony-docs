@@ -117,7 +117,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
         $container
             ->register(SunshineCommand::class)
-            ->addTag('console.command', array('command' => 'app:sunshine'))
+            ->addTag('console.command', ['command' => 'app:sunshine'])
         ;
 
 .. note::

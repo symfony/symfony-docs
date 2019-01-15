@@ -292,10 +292,10 @@ constructor::
     use Symfony\Component\Asset\UrlPackage;
     // ...
 
-    $urls = array(
+    $urls = [
         '//static1.example.com/images/',
         '//static2.example.com/images/',
-    );
+    ];
     $urlPackage = new UrlPackage($urls, new StaticVersionStrategy('v1'));
 
     echo $urlPackage->getUrl('/logo.png');
@@ -320,7 +320,7 @@ protocol-relative URLs for HTTPs requests, any base URL for HTTP requests)::
     // ...
 
     $urlPackage = new UrlPackage(
-        array('http://example.com/', 'https://example.com/'),
+        ['http://example.com/', 'https://example.com/'],
         new StaticVersionStrategy('v1'),
         new RequestStackContext($requestStack)
     );
@@ -350,10 +350,10 @@ they all have different base paths::
 
     $defaultPackage = new Package($versionStrategy);
 
-    $namedPackages = array(
+    $namedPackages = [
         'img' => new UrlPackage('http://img.example.com/', $versionStrategy),
         'doc' => new PathPackage('/somewhere/deep/for/documents', $versionStrategy),
-    );
+    ];
 
     $packages = new Packages($defaultPackage, $namedPackages);
 

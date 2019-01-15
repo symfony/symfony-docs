@@ -32,15 +32,15 @@ request::
     {
         public function collect(Request $request, Response $response, \Exception $exception = null)
         {
-            $this->data = array(
+            $this->data = [
                 'method' => $request->getMethod(),
                 'acceptable_content_types' => $request->getAcceptableContentTypes(),
-            );
+            ];
         }
 
         public function reset()
         {
-            $this->data = array();
+            $this->data = [];
         }
 
         public function getName()
@@ -269,11 +269,11 @@ to specify a tag that contains the template:
         $container
             ->autowire(RequestCollector::class)
             ->setPublic(false)
-            ->addTag('data_collector', array(
+            ->addTag('data_collector', [
                 'template' => 'data_collector/template.html.twig',
                 'id'       => 'app.request_collector',
                 // 'priority' => 300,
-            ))
+            ])
         ;
 
 The position of each panel in the toolbar is determined by the collector priority.

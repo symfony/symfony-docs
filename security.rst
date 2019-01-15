@@ -153,17 +153,18 @@ command will pre-configure this for you:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'encoders' => array(
-                'App\Entity\User' => array(
+            'encoders' => [
+                'App\Entity\User' => [
                     'algorithm' => 'bcrypt',
                     'cost' => 12,
-                )
-            ),
+                ]
+            ],
+
             // ...
-        ));
+        ]);
 
 Now that Symfony knows *how* you want to encode the passwords, you can use the
 ``UserPasswordEncoderInterface`` service to do this before saving your users to
@@ -264,17 +265,17 @@ important section is ``firewalls``:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'dev' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'dev' => [
                     'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
                     'security'  => false,
                 ),
-                'main' => array(
+                'main' => [
                     'anonymous' => null,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 A "firewall" is your authentication system: the configuration below it defines
 *how* your users will be able to authenticate (e.g. login form, API token, etc).
@@ -463,20 +464,20 @@ start with ``/admin``, you can:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
+            'firewalls' => [
                 // ...
-                'main' => array(
+                'main' => [
                     // ...
-                ),
-            ),
-           'access_control' => array(
+                ],
+            ],
+           'access_control' => [
                // require ROLE_ADMIN for /admin*
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
-            ),
-        ));
+               ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+           ],
+        ]);
 
 You can define as many URL patterns as you need - each is a regular expression.
 **BUT**, only **one** will be matched per request: Symfony starts at the top of
@@ -518,14 +519,14 @@ the list and stops when it finds the first match:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'access_control' => array(
-                array('path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'),
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
-            ),
-        ));
+            'access_control' => [
+                ['path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'],
+                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+            ],
+        ]);
 
 Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of simply ``/admin`` (without
@@ -780,16 +781,16 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'secured_area' => array(
+            'firewalls' => [
+                'secured_area' => [
                     // ...
-                    'logout' => array('path' => 'app_logout'),
-                ),
-            ),
-        ));
+                    'logout' => ['path' => 'app_logout'],
+                ],
+            ],
+        ]);
 
 Next, you'll need to create a route for this URL (but not a controller):
 
@@ -894,17 +895,17 @@ rules by creating a role hierarchy:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'role_hierarchy' => array(
+            'role_hierarchy' => [
                 'ROLE_ADMIN'       => 'ROLE_USER',
-                'ROLE_SUPER_ADMIN' => array(
+                'ROLE_SUPER_ADMIN' => [
                     'ROLE_ADMIN',
                     'ROLE_ALLOWED_TO_SWITCH',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Users with the ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. And users with ``ROLE_SUPER_ADMIN``, will automatically have

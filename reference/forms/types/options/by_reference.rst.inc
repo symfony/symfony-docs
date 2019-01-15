@@ -19,7 +19,7 @@ To explain this further, here's a simple example::
     $builder
         ->add('title', TextType::class)
         ->add(
-            $builder->create('author', FormType::class, array('by_reference' => ?))
+            $builder->create('author', FormType::class, ['by_reference' => ?])
                 ->add('name', TextType::class)
                 ->add('email', EmailType::class)
         )

@@ -63,9 +63,9 @@ you've already setup some translations for the ``fr`` locale:
     .. code-block:: php
 
         // translations/messages.fr.php
-        return array(
+        return [
             'Symfony is great' => 'J\'aime Symfony',
-        );
+        ];
 
 and for the ``en`` locale:
 
@@ -94,9 +94,9 @@ and for the ``en`` locale:
     .. code-block:: php
 
         // translations/messages.en.php
-        return array(
+        return [
             'Symfony is great' => 'Symfony is great',
-        );
+        ];
 
 To inspect all messages in the ``fr`` locale for the application, run:
 

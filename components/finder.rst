@@ -92,7 +92,7 @@ Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
     // search inside *both* directories
-    $finder->in(array(__DIR__, '/elsewhere'));
+    $finder->in([__DIR__, '/elsewhere']);
 
     // same as above
     $finder->in(__DIR__)->in('/elsewhere');
@@ -217,7 +217,7 @@ Multiple filenames can be defined by chaining calls or passing an array::
     $finder->files()->name('*.php')->name('*.twig');
 
     // same as above
-    $finder->files()->name(array('*.php', '*.twig'));
+    $finder->files()->name(['*.php', '*.twig']);
 
 The ``notName()`` method excludes files matching a pattern::
 
@@ -228,7 +228,7 @@ Multiple filenames can be excluded by chaining calls or passing an array::
     $finder->files()->notName('*.rb')->notName('*.py');
 
     // same as above
-    $finder->files()->notName(array('*.rb', '*.py'));
+    $finder->files()->notName(['*.rb', '*.py']);
 
 File Contents
 ~~~~~~~~~~~~~
@@ -270,7 +270,7 @@ Multiple paths can be defined by chaining calls or passing an array::
     $finder->path('data')->path('foo/bar');
 
     // same as above
-    $finder->path(array('data', 'foo/bar'));
+    $finder->path(['data', 'foo/bar']);
 
 Internally, strings are converted into regular expressions by escaping slashes
 and adding delimiters:
@@ -289,9 +289,10 @@ Multiple paths can be excluded by chaining calls or passing an array::
     $finder->notPath('first/dir')->notPath('other/dir');
 
     // same as above
-    $finder->notPath(array('first/dir', 'other/dir'));
+    $finder->notPath(['first/dir', 'other/dir']);
 
 .. versionadded:: 4.2
+
     Support for passing arrays to ``notPath()`` was introduced in Symfony
     4.2
 
@@ -308,7 +309,7 @@ Restrict by a size range by chaining calls or passing an array::
     $finder->files()->size('>= 1K')->size('<= 2K');
 
     // same as above
-    $finder->files()->size(array('>= 1K', '<= 2K'));
+    $finder->files()->size(['>= 1K', '<= 2K']);
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``, ``!=``.
@@ -330,7 +331,7 @@ Restrict by a date range by chaining calls or passing an array::
     $finder->date('>= 2018-01-01')->date('<= 2018-12-31');
 
     // same as above
-    $finder->date(array('>= 2018-01-01', '<= 2018-12-31'));
+    $finder->date(['>= 2018-01-01', '<= 2018-12-31']);
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
@@ -352,7 +353,7 @@ Restrict by a depth range by chaining calls or passing an array::
     $finder->depth('> 2')->depth('< 5');
 
     // same as above
-    $finder->depth(array('> 2', '< 5'));
+    $finder->depth(['> 2', '< 5']);
 
 Custom Filtering
 ~~~~~~~~~~~~~~~~

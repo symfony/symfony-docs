@@ -232,7 +232,6 @@ Then, this bundle is enabled automatically, but only for the ``dev`` and
 ``test`` environments::
 
     // config/bundles.php
-
     return [
         // ...
         Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],

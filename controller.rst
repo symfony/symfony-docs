@@ -123,7 +123,7 @@ Generating URLs
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::generateUrl`
 method is just a helper method that generates the URL for a given route::
 
-    $url = $this->generateUrl('app_lucky_number', array('max' => 10));
+    $url = $this->generateUrl('app_lucky_number', ['max' => 10]);
 
 Redirecting
 ~~~~~~~~~~~
@@ -143,10 +143,10 @@ and ``redirect()`` methods::
         // return new RedirectResponse($this->generateUrl('homepage'));
 
         // does a permanent - 301 redirect
-        return $this->redirectToRoute('homepage', array(), 301);
+        return $this->redirectToRoute('homepage', [], 301);
 
         // redirect to a route with parameters
-        return $this->redirectToRoute('app_lucky_number', array('max' => 10));
+        return $this->redirectToRoute('app_lucky_number', ['max' => 10]);
 
         // redirects to a route and maintains the original query string parameters
         return $this->redirectToRoute('blog_show', $request->query->all());
@@ -174,7 +174,7 @@ method renders a template **and** puts that content into a ``Response``
 object for you::
 
     // renders templates/lucky/number.html.twig
-    return $this->render('lucky/number.html.twig', array('number' => $number));
+    return $this->render('lucky/number.html.twig', ['number' => $number]);
 
 Templating and Twig are explained more in the
 :doc:`Creating and Using Templates article </templating>`.
@@ -267,10 +267,10 @@ the argument by its name:
 
         $container->register(LuckyController::class)
             ->setPublic(true)
-            ->setBindings(array(
+            ->setBindings([
                 '$logger' => new Reference('monolog.logger.doctrine'),
                 '$projectDir' => '%kernel.project_dir%'
-            ))
+            ])
         ;
 
 Like with all services, you can also use regular :ref:`constructor injection <services-constructor-injection>`
@@ -400,7 +400,7 @@ To get the session, add an argument and type-hint it with
         $foobar = $session->get('foobar');
 
         // uses a default value if the attribute doesn't exist
-        $filters = $session->get('filters', array());
+        $filters = $session->get('filters', []);
     }
 
 Stored attributes remain in the session for the remainder of that user's session.
@@ -501,7 +501,7 @@ the ``Request`` class::
     {
         $request->isXmlHttpRequest(); // is it an Ajax request?
 
-        $request->getPreferredLanguage(array('en', 'fr'));
+        $request->getPreferredLanguage(['en', 'fr']);
 
         // retrieves GET and POST variables respectively
         $request->query->get('page');
@@ -555,10 +555,10 @@ special ``JsonResponse`` object that encodes the data automatically::
     public function index()
     {
         // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
-        return $this->json(array('username' => 'jane.doe'));
+        return $this->json(['username' => 'jane.doe']);
 
         // the shortcut defines three optional arguments
-        // return $this->json($data, $status = 200, $headers = array(), $context = array());
+        // return $this->json($data, $status = 200, $headers = [], $context = []);
     }
 
 If the :doc:`serializer service </serializer>` is enabled in your

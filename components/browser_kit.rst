@@ -131,21 +131,21 @@ field values, etc.) before submitting it::
     $client->submitForm('Log in');
 
     // the second optional argument lets you override the default form field values
-    $client->submitForm('Log in', array(
+    $client->submitForm('Log in', [
         'login' => 'my_user',
         'password' => 'my_pass',
         // to upload a file, the value must be the absolute file path
         'file' => __FILE__,
-    ));
+    ]);
 
     // you can override other form options too
     $client->submitForm(
         'Log in',
-        array('login' => 'my_user', 'password' => 'my_pass'),
+        ['login' => 'my_user', 'password' => 'my_pass'],
         // override the default form HTTP method
         'PUT',
         // override some $_SERVER parameters (e.g. HTTP headers)
-        array('HTTP_ACCEPT_LANGUAGE' => 'es')
+        ['HTTP_ACCEPT_LANGUAGE' => 'es']
     );
 
 If you need the :class:`Symfony\\Component\\DomCrawler\\Form` object that
@@ -246,7 +246,7 @@ into the client constructor::
     $cookieJar->set($cookie);
 
     // create a client and set the cookies
-    $client = new Client(array(), null, $cookieJar);
+    $client = new Client([], null, $cookieJar);
     // ...
 
 History

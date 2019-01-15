@@ -98,11 +98,11 @@ that will be used if Symfony can't find some translation:
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             'default_locale' => 'en',
-            'translator' => array('fallbacks' => array('en')),
+            'translator' => ['fallbacks' => ['en']],
             // ...
-        ));
+        ]);
 
 The locale used in translations is the one stored on the request. This is
 typically set via a ``_locale`` attribute on your routes (see :ref:`translation-locale-url`).
@@ -162,9 +162,9 @@ different formats, XLIFF being the recommended format:
     .. code-block:: php
 
         // translations/messages.fr.php
-        return array(
+        return [
             'Symfony is great' => 'J\'aime Symfony',
-        );
+        ];
 
 For information on where these files should be located, see
 :ref:`translation-resource-locations`.
@@ -338,7 +338,7 @@ The translator service is accessible in PHP templates through the
     <?= $view['translator']->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array('%count%' => 10)
+        ['%count%' => 10]
     ) ?>
 
 Extracting Translation Contents and Updating Catalogs Automatically
@@ -455,13 +455,13 @@ For more options, see :ref:`component-translator-message-catalogs`.
         .. code-block:: php
 
             // config/packages/translation.php
-            $container->loadFromExtension('framework', array(
-                'translator' => array(
-                    'paths' => array(
+            $container->loadFromExtension('framework', [
+                'translator' => [
+                    'paths' => [
                         '%kernel.project_dir%/custom/path/to/translations',
-                    ),
-                ),
-            ));
+                    ],
+                ],
+            ]);
 
 .. note::
 

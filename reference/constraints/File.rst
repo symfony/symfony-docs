@@ -140,14 +140,14 @@ below a certain file size and a valid PDF, add the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('bioFile', new Assert\File(array(
+                $metadata->addPropertyConstraint('bioFile', new Assert\File([
                     'maxSize' => '1024k',
-                    'mimeTypes' => array(
+                    'mimeTypes' => [
                         'application/pdf',
                         'application/x-pdf',
-                    ),
+                    ],
                     'mimeTypesMessage' => 'Please upload a valid PDF',
-                )));
+                ]));
             }
         }
 

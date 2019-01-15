@@ -95,7 +95,7 @@ array of ``key => value`` pairs representing option names and their respective v
         'redis://localhost:6379',
 
         // associative array of configuration options
-        array(
+        [
             'compression' => true,
             'lazy' => false,
             'persistent' => 0,
@@ -104,7 +104,7 @@ array of ``key => value`` pairs representing option names and their respective v
             'timeout' => 30,
             'read_timeout' => 0,
             'retry_interval' => 0,
-         )
+        ]
 
     );
 

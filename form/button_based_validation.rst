@@ -24,9 +24,9 @@ so we set its ``validation_groups`` option to false::
 
     $form = $this->createFormBuilder($task)
         // ...
-        ->add('previousStep', SubmitType::class, array(
+        ->add('previousStep', SubmitType::class, [
             'validation_groups' => false,
-        ))
+        ])
         ->getForm();
 
 Now the form will skip your validation constraints. It will still validate

@@ -301,9 +301,9 @@ doubling them to prevent Symfony from interpreting them as container parameters)
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             'ide' => 'myide://open?url=file://%%f&line=%%l',
-        ));
+        ]);
 
 Since every developer uses a different IDE, the recommended way to enable this
 feature is to configure it on a system level. This can be done by setting the
@@ -369,7 +369,7 @@ method.
 trusted_hosts
 ~~~~~~~~~~~~~
 
-**type**: ``array`` | ``string`` **default**: ``array()``
+**type**: ``array`` | ``string`` **default**: ``[]``
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse
@@ -419,9 +419,9 @@ the application won't respond and the user will receive a 400 response.
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'trusted_hosts' => array('^example\.com$', '^example\.org$'),
-        ));
+        $container->loadFromExtension('framework', [
+            'trusted_hosts' => ['^example\.com$', '^example\.org$'],
+        ]);
 
 Hosts can also be configured to respond to any subdomain, via
 ``^(.+\.)?example\.com$`` for instance.
@@ -430,7 +430,7 @@ In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // public/index.php
-    Request::setTrustedHosts(array('^(.+\.)?example\.com$', '^(.+\.)?example\.org$'));
+    Request::setTrustedHosts(['^(.+\.)?example\.com$', '^(.+\.)?example\.org$']);
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
@@ -534,9 +534,9 @@ You can also set ``esi`` to ``true`` to enable it:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             'esi' => true,
-        ));
+        ]);
 
 fragments
 ~~~~~~~~~
@@ -679,13 +679,13 @@ To configure a ``jsonp`` format:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'request' => array(
-                'formats' => array(
+        $container->loadFromExtension('framework', [
+            'request' => [
+                'formats' => [
                     'jsonp' => 'application/javascript',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 router
 ~~~~~~
@@ -939,11 +939,11 @@ setting the value to ``null``:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'session' => array(
+        $container->loadFromExtension('framework', [
+            'session' => [
                 'save_path' => null,
-            ),
-        ));
+            ],
+        ]);
 
 .. _reference-session-metadata-update-threshold:
 
@@ -996,11 +996,11 @@ Whether to enable the session support in the framework.
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'session' => array(
+        $container->loadFromExtension('framework', [
+            'session' => [
                 'enabled' => true,
-            ),
-        ));
+            ],
+        ]);
 
 assets
 ~~~~~~
@@ -1043,12 +1043,12 @@ This option allows you to define a base path to be used for assets:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'assets' => array(
+            'assets' => [
                 'base_path' => '/images',
-            ),
-        ));
+            ],
+        ]);
 
 .. _reference-templating-base-urls:
 .. _reference-assets-base-urls:
@@ -1092,12 +1092,12 @@ collection each time it generates an asset's path:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'assets' => array(
-                'base_urls' => array('http://cdn.example.com/'),
-            ),
-        ));
+            'assets' => [
+                'base_urls' => ['http://cdn.example.com/'],
+            ],
+        ]);
 
 .. _reference-framework-assets-packages:
 
@@ -1141,16 +1141,16 @@ You can group assets into packages, to specify different base URLs for them:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'assets' => array(
-                'packages' => array(
-                    'avatars' => array(
+            'assets' => [
+                'packages' => [
+                    'avatars' => [
                         'base_urls' => 'http://static_cdn.example.com/avatars',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 Now you can use the ``avatars`` package in your templates:
 
@@ -1218,12 +1218,12 @@ Now, activate the ``version`` option:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'assets' => array(
+            'assets' => [
                 'version' => 'v2',
-            ),
-        ));
+            ],
+        ]);
 
 Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
 this feature, you **must** manually increment the ``version`` value
@@ -1345,25 +1345,25 @@ individually for each asset package:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'assets' => array(
+        $container->loadFromExtension('framework', [
+            'assets' => [
                 'version_strategy' => 'app.asset.my_versioning_strategy',
-                'packages' => array(
-                    'foo_package' => array(
+                'packages' => [
+                    'foo_package' => [
                         // this package removes any versioning (its assets won't be versioned)
                         'version' => null,
-                    ),
-                    'bar_package' => array(
+                    ],
+                    'bar_package' => [
                         // this package uses its own strategy (the default strategy is ignored)
                         'version_strategy' => 'app.asset.another_version_strategy',
-                    ),
-                    'baz_package' => array(
+                    ],
+                    'baz_package' => [
                         // this package inherits the default strategy
                         'base_path' => '/images',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -1437,22 +1437,22 @@ package:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'assets' => array(
+        $container->loadFromExtension('framework', [
+            'assets' => [
                 // this manifest is applied to every asset (including packages)
                 'json_manifest_path' => '%kernel.project_dir%/public/build/manifest.json',
-                'packages' => array(
-                    'foo_package' => array(
+                'packages' => [
+                    'foo_package' => [
                         // this package uses its own manifest (the default file is ignored)
                         'json_manifest_path' => '%kernel.project_dir%/public/build/a_different_manifest.json',
-                    ),
-                    'bar_package' => array(
+                    ],
+                    'bar_package' => [
                         // this package uses the global manifest (the default file is used)
                         'base_path' => '/images',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -1531,15 +1531,15 @@ configure this like:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'templating' => array(
-                'form' => array(
-                    'resources' => array(
+        $container->loadFromExtension('framework', [
+            'templating' => [
+                'form' => [
+                    'resources' => [
                         'form_themes',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -1602,7 +1602,7 @@ Whether or not to enable the ``translator`` service in the service container.
 fallbacks
 .........
 
-**type**: ``string|array`` **default**: ``array('en')``
+**type**: ``string|array`` **default**: ``['en']``
 
 This option is used when the translation key for the current locale wasn't
 found.
@@ -2038,16 +2038,16 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'cache' => array(
-                'pools' => array(
-                    'cache.mycache' => array(
+        $container->loadFromExtension('framework', [
+            'cache' => [
+                'pools' => [
+                    'cache.mycache' => [
                         'adapter' => 'cache.adapter.redis',
                         'default_lifetime' => 3600,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. _reference-cache-pools-name:
 

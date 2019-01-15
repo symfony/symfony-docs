@@ -78,11 +78,11 @@ action to redirect to this new url:
         $routes->addCollection($appRoutes);
 
         // redirecting the homepage
-        $routes->add('homepage', new Route('/', array(
+        $routes->add('homepage', new Route('/', [
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'path'        => '/app',
             'permanent'   => true,
-        )));
+        ]));
 
         return $routes;
 
@@ -148,14 +148,14 @@ action:
         $routes = new RouteCollection();
         // ...
 
-        $routes->add('admin', new Route('/wp-admin', array(
+        $routes->add('admin', new Route('/wp-admin', [
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
             'route'       => 'sonata_admin_dashboard',
             // make a permanent redirection...
             'permanent'   => true,
             // ...and keep the original query string parameters
             'keepQueryParams' => true,
-        )));
+        ]));
 
         return $routes;
 
@@ -243,19 +243,19 @@ permanent redirects use ``308`` code instead of ``301``:
         $collection = new RouteCollection();
 
         // redirects with the 308 status code
-        $collection->add('route_foo', new Route('...', array(
+        $collection->add('route_foo', new Route('...', [
             // ...
             '_controller'       => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'permanent'         => true,
             'keepRequestMethod' => true,
-        )));
+        ]));
 
         // redirects with the 307 status code
-        $collection->add('route_bar', new Route('...', array(
+        $collection->add('route_bar', new Route('...', [
             // ...
             '_controller'       => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'permanent'         => false,
             'keepRequestMethod' => true,
-        )));
+        ]));
 
         return $collection;

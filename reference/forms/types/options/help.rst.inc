@@ -8,6 +8,6 @@ rendered below the field.
 
 .. code-block:: php
 
-    $builder->add('zip_code', null, array(
+    $builder->add('zip_code', null, [
         'help' => 'The ZIP/Postal code for your credit card\'s billing address.',
-    ));
+    ]);

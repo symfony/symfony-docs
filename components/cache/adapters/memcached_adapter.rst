@@ -57,12 +57,12 @@ helper method allows creating and configuring a `Memcached`_ class instance usin
     );
 
     // pass an array of DSN strings to register multiple servers with the client
-    $client = MemcachedAdapter::createConnection(array(
+    $client = MemcachedAdapter::createConnection([
         'memcached://10.0.0.100',
         'memcached://10.0.0.101',
         'memcached://10.0.0.102',
         // etc...
-    ));
+    ]);
 
 The `Data Source Name (DSN)`_ for this adapter must use the following format:
 
@@ -81,7 +81,7 @@ Below are common examples of valid DSNs showing a combination of available value
 
     use Symfony\Component\Cache\Adapter\MemcachedAdapter;
 
-    $client = MemcachedAdapter::createConnection(array(
+    $client = MemcachedAdapter::createConnection([
         // hostname + port
         'memcached://my.server.com:11211'
 
@@ -96,7 +96,7 @@ Below are common examples of valid DSNs showing a combination of available value
 
         // socket instead of hostname/IP + weight
         'memcached:///var/run/memcached.sock?weight=20'
-    ));
+    ]);
 
 Configure the Options
 ---------------------
@@ -110,14 +110,14 @@ option names and their respective values::
 
     $client = MemcachedAdapter::createConnection(
         // a DSN string or an array of DSN strings
-        array(),
+        [],
 
         // associative array of configuration options
-        array(
+        [
             'compression' => true,
             'libketama_compatible' => true,
             'serializer' => 'igbinary',
-         )
+        ]
     );
 
 Available Options

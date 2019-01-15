@@ -88,10 +88,10 @@ First, to use ESI, be sure to enable it in your application configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'esi' => array('enabled' => true),
-        ));
+            'esi' => ['enabled' => true],
+        ]);
 
 Now, suppose you have a page that is relatively static, except for a news
 ticker at the bottom of the content. With ESI, you can cache the news ticker
@@ -218,10 +218,10 @@ that must be enabled in your configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'fragments' => array('path' => '/_fragment'),
-        ));
+            'fragments' => ['path' => '/_fragment'],
+        ]);
 
 One great advantage of the ESI renderer is that you can make your application
 as dynamic as needed and at the same time, hit the application as little as

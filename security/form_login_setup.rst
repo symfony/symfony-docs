@@ -294,9 +294,9 @@ domain:
     .. code-block:: php
 
         // translations/security.en.php
-        return array(
+        return [
             'Invalid credentials.' => 'The password you entered was invalid!',
-        );
+        ];
 
 If the message isn't translated, make sure you've installed the ``translator``
 and try clearing your cache:

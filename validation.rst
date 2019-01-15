@@ -177,9 +177,9 @@ will appear.
 You could also pass the collection of errors into a template::
 
     if (count($errors) > 0) {
-        return $this->render('author/validation.html.twig', array(
+        return $this->render('author/validation.html.twig', [
             'errors' => $errors,
-        ));
+        ]);
     }
 
 Inside the template, you can output the list of errors exactly as needed:
@@ -235,11 +235,11 @@ file:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'validation' => array(
+        $container->loadFromExtension('framework', [
+            'validation' => [
                 'enabled' => true,
-            ),
-        ));
+            ],
+        ]);
 
 Besides, if you plan to use annotations to configure validation, replace the
 previous configuration by the following:
@@ -271,11 +271,11 @@ previous configuration by the following:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'validation' => array(
+        $container->loadFromExtension('framework', [
+            'validation' => [
                 'enable_annotations' => true,
-            ),
-        ));
+            ],
+        ]);
 
 .. index::
    single: Validation; Constraints
@@ -393,10 +393,10 @@ literature genre mostly associated with the author, which can be set to either
             {
                 // ...
 
-                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
-                    'choices' => array('fiction', 'non-fiction'),
+                $metadata->addPropertyConstraint('genre', new Assert\Choice([
+                    'choices' => ['fiction', 'non-fiction'],
                     'message' => 'Choose a valid genre.',
-                )));
+                ]));
             }
         }
 
@@ -474,7 +474,7 @@ options can be specified in this way.
 
                 $metadata->addPropertyConstraint(
                     'genre',
-                    new Assert\Choice(array('fiction', 'non-fiction'))
+                    new Assert\Choice(['fiction', 'non-fiction'])
                 );
             }
         }
@@ -495,9 +495,9 @@ of the form fields::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('myField', TextType::class, array(
+            ->add('myField', TextType::class, [
                 'required' => true,
-                'constraints' => array(new Length(array('min' => 3)))
+                'constraints' => [new Length(['min' => 3])]
             ))
         ;
     }
@@ -593,7 +593,7 @@ class to have at least 3 characters.
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
                 $metadata->addPropertyConstraint(
                     'firstName',
-                    new Assert\Length(array("min" => 3))
+                    new Assert\Length(["min" => 3])
                 );
             }
         }
@@ -673,9 +673,9 @@ this method must return ``true``:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue(array(
+                $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue([
                     'message' => 'The password cannot match your first name',
-                )));
+                ]));
             }
         }
 

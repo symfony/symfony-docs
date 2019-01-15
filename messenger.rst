@@ -179,13 +179,13 @@ the messenger component, the following configuration should have been created:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'transports' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'transports' => [
                     'amqp' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 .. code-block:: bash
 
@@ -251,13 +251,13 @@ configuration:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'routing' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'routing' => [
                     'My\Message\Message' => 'amqp',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Such configuration would only route the ``My\Message\Message`` message to be
 asynchronous, the rest of the messages would still be directly handled.
@@ -303,14 +303,14 @@ instead of a class name:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'routing' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'routing' => [
                     'My\Message\Message' => 'another_transport',
                     '*' => 'amqp',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 A class of messages can also be routed to multiple senders by specifying a list:
 
@@ -349,13 +349,13 @@ A class of messages can also be routed to multiple senders by specifying a list:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'routing' => array(
-                    'My\Message\ToBeSentToTwoSenders' => array('amqp', 'audit'),
-                ),
-            ),
-        ));
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'routing' => [
+                    'My\Message\ToBeSentToTwoSenders' => ['amqp', 'audit'],
+                ],
+            ],
+        ]);
 
 By specifying the ``send_and_handle`` option, you can also route a class of messages to a sender
 while still having them passed to their respective handler:
@@ -396,16 +396,16 @@ while still having them passed to their respective handler:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'routing' => array(
-                    'My\Message\ThatIsGoingToBeSentAndHandledLocally' => array(
-                        'senders' => array('amqp'),
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'routing' => [
+                    'My\Message\ThatIsGoingToBeSentAndHandledLocally' => [
+                        'senders' => ['amqp'],
                         'send_and_handle' => true,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 Consuming Messages
 ------------------
@@ -485,15 +485,15 @@ you can disable them like this:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'buses' => array(
-                    'messenger.bus.default' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'buses' => [
+                    'messenger.bus.default' => [
                         'default_middleware' => false,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 Adding your own Middleware
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -539,18 +539,18 @@ within the buses to add some extra capabilities like this:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'buses' => array(
-                    'messenger.bus.default' => array(
-                        'middleware' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'buses' => [
+                    'messenger.bus.default' => [
+                        'middleware' => [
                             'App\Middleware\MyMiddleware',
                             'App\Middleware\AnotherMiddleware',
-                        ),
-                    ),
-                ),
-            ),
-        ));
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Note that if the service is abstract, a different instance of the service will
 be created per bus.
@@ -610,21 +610,20 @@ This middleware can be configured to define the entity manager to use:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'buses' => array(
-                    'command_bus' => array(
-                        'middleware' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'buses' => [
+                    'command_bus' => [
+                        'middleware' => [
                             // Using the default configured entity manager name
                             'doctrine_transaction',
                             // Using another entity manager
-                            array('id' => 'doctrine_transaction', 'arguments' => array('custom')),
-                        ),
-                    ),
-                ),
-            ),
-        ));
-
+                            ['id' => 'doctrine_transaction', 'arguments' => ['custom']],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Defining such configurable middleware is based on Symfony's
 :doc:`dependency injection </service_container>` features:
@@ -675,7 +674,7 @@ Defining such configurable middleware is based on Symfony's
             ->setAbstract(true)
             // Main dependencies are defined by the parent definitions.
             // Arguments provided in the middleware config will be appended on the child definition.
-            ->setArguments(array(new Reference('doctrine')));
+            ->setArguments([new Reference('doctrine')]);
 
 .. note::
 
@@ -768,7 +767,7 @@ Register your Factory
         use Your\Transport\YourTransportFactory;
 
         $container->register(YourTransportFactory::class)
-            ->setTags(array('messenger.transport_factory'));
+            ->setTags(['messenger.transport_factory']);
 
 Use your Transport
 ~~~~~~~~~~~~~~~~~~
@@ -808,13 +807,13 @@ named transport using your own DSN:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'transports' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'transports' => [
                     'yours' => 'my-transport://...',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 In addition of being able to route your messages to the ``yours`` sender, this
 will give you access to the following services:

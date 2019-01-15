@@ -40,9 +40,9 @@ as integration of other related components:
 
     .. code-block:: php
 
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             'form' => true,
-        ));
+        ]);
 
 Using the Bundle Extension
 --------------------------
@@ -81,10 +81,10 @@ allow users to configure it with some configuration that looks like this:
     .. code-block:: php
 
         // config/packages/acme_social.php
-        $container->loadFromExtension('acme_social', array(
+        $container->loadFromExtension('acme_social', [
             'client_id'     => 123,
             'client_secret' => 'your_secret',
-        ));
+        ]);
 
 The basic idea is that instead of having the user override individual
 parameters, you let the user configure just a few, specifically created,
@@ -129,14 +129,14 @@ automatically converts XML and YAML to an array).
 For the configuration example in the previous section, the array passed to your
 ``load()`` method will look like this::
 
-    array(
-        array(
-            'twitter' => array(
+    [
+        [
+            'twitter' => [
                 'client_id' => 123,
                 'client_secret' => 'your_secret',
-            ),
-        ),
-    )
+            ],
+        ],
+    ]
 
 Notice that this is an *array of arrays*, not just a single flat array of the
 configuration values. This is intentional, as it allows Symfony to parse several
@@ -144,21 +144,21 @@ configuration resources. For example, if ``acme_social`` appears in another
 configuration file - say ``config/packages/dev/acme_social.yaml`` - with
 different values beneath it, the incoming array might look like this::
 
-    array(
+    [
         // values from config/packages/acme_social.yaml
-        array(
-            'twitter' => array(
+        [
+            'twitter' => [
                 'client_id' => 123,
                 'client_secret' => 'your_secret',
-            ),
-        ),
+            ],
+        ],
         // values from config/packages/dev/acme_social.yaml
-        array(
-            'twitter' => array(
+        [
+            'twitter' => [
                 'client_id' => 456,
-            ),
-        ),
-    )
+            ],
+        ],
+    ]
 
 The order of the two arrays depends on which one is set first.
 
@@ -307,7 +307,7 @@ In your extension, you can load this and dynamically set its arguments::
 
         public function load(array $configs, ContainerBuilder $container)
         {
-            $config = array();
+            $config = [];
             // let resources override the previous set value
             foreach ($configs as $subConfig) {
                 $config = array_merge($config, $subConfig);

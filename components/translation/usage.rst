@@ -11,9 +11,9 @@ Imagine you want to translate the string *"Symfony is great"* into French::
 
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
-    $translator->addResource('array', array(
+    $translator->addResource('array', [
         'Symfony is great!' => 'Symfony est super !',
-    ), 'fr_FR');
+    ], 'fr_FR');
 
     var_dump($translator->trans('Symfony is great!'));
 
@@ -42,7 +42,7 @@ variable with a "placeholder"::
     // ...
     $translated = $translator->trans(
         'Hello %name%',
-        array('%name%' => $name)
+        ['%name%' => $name]
     );
 
     var_dump($translated);
@@ -69,9 +69,9 @@ is done just as before:
 
     .. code-block:: php
 
-        return array(
+        return [
             'Hello %name%' => 'Bonjour %name%',
-        );
+        ];
 
     .. code-block:: yaml
 
@@ -134,10 +134,10 @@ recommended format. These files are parsed by one of the loader classes.
 
     .. code-block:: php
 
-        return array(
+        return [
             'Symfony is great' => 'J\'aime Symfony',
             'symfony.great'    => 'J\'aime Symfony',
-        );
+        ];
 
 .. _translation-real-vs-keyword-messages:
 
@@ -185,20 +185,20 @@ recommended format. These files are parsed by one of the loader classes.
 
         .. code-block:: php
 
-            array(
-                'symfony' => array(
-                    'is' => array(
+            [
+                'symfony' => [
+                    'is' => [
                         'great'   => 'Symfony is great',
                         'amazing' => 'Symfony is amazing',
-                    ),
-                    'has' => array(
+                    ],
+                    'has' => [
                         'bundles' => 'Symfony has bundles',
-                    ),
+                    ],
                 ),
-                'user' => array(
+                'user' => [
                     'login' => 'Login',
-                ),
-            );
+                ],
+            ];
 
     The multiple levels are flattened into single id/translation pairs by
     adding a dot (``.``) between every level, therefore the above examples are
@@ -215,12 +215,12 @@ recommended format. These files are parsed by one of the loader classes.
 
         .. code-block:: php
 
-            return array(
+            return [
                 'symfony.is.great'    => 'Symfony is great',
                 'symfony.is.amazing'  => 'Symfony is amazing',
                 'symfony.has.bundles' => 'Symfony has bundles',
                 'user.login'          => 'Login',
-            );
+            ];
 
 .. _component-translation-pluralization:
 
@@ -264,7 +264,7 @@ To translate pluralized messages, use the
         'Hurry up %name%! There is one apple left.|There are %count% apples left.',
         10,
         // no need to include %count% here; Symfony does that for you
-        array('%name%' => $user->getName())
+        ['%name%' => $user->getName()]
     );
 
 The second argument (``10`` in this example) is the *number* of objects being
@@ -366,7 +366,7 @@ use for translation::
 
     $translator->trans(
         'Symfony is great',
-        array(),
+        [],
         'messages',
         'fr_FR'
     );
@@ -374,7 +374,7 @@ use for translation::
     $translator->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array(),
+        [],
         'messages',
         'fr_FR'
     );
@@ -388,7 +388,7 @@ use for translation::
         $translator->transChoice(
             '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
             10,
-            array('%count%' => 10),
+            ['%count%' => 10],
             'messages',
             'fr_FR'
         );
@@ -408,15 +408,15 @@ messages. Specify the required locale::
 
 The ``$messages`` variable will have the following structure::
 
-    array(
-        'messages' => array(
+    [
+        'messages' => [
             'Hello world' => 'Bonjour tout le monde',
-        ),
-        'validators' => array(
+        ],
+        'validators' => [
             'Value should not be empty' => 'Valeur ne doit pas être vide',
             'Value is too long' => 'Valeur est trop long',
-        ),
-    );
+        ],
+    ];
 
 Adding Notes to Translation Contents
 ------------------------------------
