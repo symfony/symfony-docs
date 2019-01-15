@@ -11,8 +11,8 @@ To do this, add a second button with the caption "Save and add" to your form::
     $form = $this->createFormBuilder($task)
         ->add('task', TextType::class)
         ->add('dueDate', DateType::class)
-        ->add('save', SubmitType::class, array('label' => 'Create Task'))
-        ->add('saveAndAdd', SubmitType::class, array('label' => 'Save and Add'))
+        ->add('save', SubmitType::class, ['label' => 'Create Task'])
+        ->add('saveAndAdd', SubmitType::class, ['label' => 'Save and Add'])
         ->getForm();
 
 In your controller, use the button's

@@ -27,7 +27,7 @@ define arbitrary matching logic, use the ``conditions`` routing option:
              *     condition="context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
              * )
              *
-             * expressions can also include config parameters 
+             * expressions can also include config parameters
              * condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
              */
             public function contact()
@@ -43,7 +43,7 @@ define arbitrary matching logic, use the ``conditions`` routing option:
             path:       /contact
             controller: 'App\Controller\DefaultController::contact'
             condition:  "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
-            # expressions can also include config parameters 
+            # expressions can also include config parameters
             # condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
 
     .. code-block:: xml
@@ -71,14 +71,14 @@ define arbitrary matching logic, use the ``conditions`` routing option:
 
         $routes = new RouteCollection();
         $routes->add('contact', new Route(
-            '/contact', array(
+            '/contact', [
                 '_controller' => 'App\Controller\DefaultController::contact',
-            ),
-            array(),
-            array(),
+            ],
+            [],
+            [],
             '',
-            array(),
-            array(),
+            [],
+            [],
             'context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"'
             // expressions can also include config parameters
             // 'request.headers.get("User-Agent") matches "%app.allowed_browsers%"'
@@ -111,7 +111,7 @@ variables that are passed into the expression:
     would generate the following PHP in the cache directory::
 
         if (rtrim($pathInfo, '/contact') === '' && (
-            in_array($context->getMethod(), array(0 => "GET", 1 => "HEAD"))
+            in_array($context->getMethod(), [0 => "GET", 1 => "HEAD"])
             && preg_match("/firefox/i", $request->headers->get("User-Agent"))
         )) {
             // ...

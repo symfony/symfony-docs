@@ -118,42 +118,42 @@ like this:
 
         // config/packages/workflow.php
 
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'workflows' => array(
-                'blog_publishing' => array(
+            'workflows' => [
+                'blog_publishing' => [
                     'type' => 'workflow', // or 'state_machine'
-                    'audit_trail' => array(
+                    'audit_trail' => [
                         'enabled' => true
-                    ),
-                    'marking_store' => array(
+                    ],
+                    'marking_store' => [
                         'type' => 'multiple_state', // or 'single_state'
-                        'arguments' => array('currentPlace')
+                        'arguments' => ['currentPlace'],
                     ),
-                    'supports' => array('App\Entity\BlogPost'),
-                    'places' => array(
+                    'supports' => ['App\Entity\BlogPost'],
+                    'places' => [
                         'draft',
                         'review',
                         'rejected',
                         'published',
-                    ),
-                    'transitions' => array(
-                        'to_review' => array(
+                    ],
+                    'transitions' => [
+                        'to_review' => [
                             'from' => 'draft',
                             'to' => 'review',
-                         ),
-                         'publish' => array(
-                             'from' => 'review',
-                             'to' => 'published',
-                         ),
-                         'reject' => array(
-                             'from' => 'review',
-                             'to' => 'rejected',
-                         ),
-                     ),
-                 ),
-             ),
-         ));
+                        ],
+                        'publish' => [
+                            'from' => 'review',
+                            'to' => 'published',
+                        ],
+                        'reject' => [
+                            'from' => 'review',
+                            'to' => 'rejected',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. code-block:: php
 
@@ -351,9 +351,9 @@ workflow leaves a place::
 
         public static function getSubscribedEvents()
         {
-            return array(
+            return [
                 'workflow.blog_publishing.leave' => 'onLeave',
-            );
+            ];
         }
     }
 
@@ -393,9 +393,9 @@ See example to make sure no blog post without title is moved to "review"::
 
         public static function getSubscribedEvents()
         {
-            return array(
-                'workflow.blogpost.guard.to_review' => array('guardReview'),
-            );
+            return [
+                'workflow.blogpost.guard.to_review' => ['guardReview'],
+            ];
         }
     }
 

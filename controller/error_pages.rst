@@ -231,10 +231,10 @@ configuration option to point to it:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', array(
+        $container->loadFromExtension('twig', [
             'exception_controller' => 'App\Controller\ExceptionController::showException',
             // ...
-        ));
+        ]);
 
 The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
 class used by the TwigBundle as a listener of the ``kernel.exception`` event creates

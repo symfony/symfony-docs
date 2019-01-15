@@ -240,8 +240,8 @@ And do the same with the other listener::
 Our front controller should now look like the following::
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addListener('response', array(new Simplex\ContentLengthListener(), 'onResponse'), -255);
-    $dispatcher->addListener('response', array(new Simplex\GoogleListener(), 'onResponse'));
+    $dispatcher->addListener('response', [new Simplex\ContentLengthListener(), 'onResponse'], -255);
+    $dispatcher->addListener('response', [new Simplex\GoogleListener(), 'onResponse']);
 
 Even if the code is now nicely wrapped in classes, there is still a slight
 issue: the knowledge of the priorities is "hardcoded" in the front controller,
@@ -270,7 +270,7 @@ look at the new version of the ``GoogleListener``::
 
         public static function getSubscribedEvents()
         {
-            return array('response' => 'onResponse');
+            return ['response' => 'onResponse'];
         }
     }
 
@@ -287,7 +287,7 @@ And here is the new version of ``ContentLengthListener``::
 
         public static function getSubscribedEvents()
         {
-            return array('response' => array('onResponse', -255));
+            return ['response' => ['onResponse', -255]];
         }
     }
 

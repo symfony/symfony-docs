@@ -143,10 +143,10 @@ method::
     {
         protected function getOptions()
         {
-            return array(
+            return [
                 'default_ttl' => 0,
                 // ...
-            );
+            ];
         }
     }
 
@@ -333,14 +333,14 @@ Additionally, most cache-related HTTP headers can be set via the single
 :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method::
 
     // sets cache settings in one call
-    $response->setCache(array(
+    $response->setCache([
         'etag'          => $etag,
         'last_modified' => $date,
         'max_age'       => 10,
         's_maxage'      => 10,
         'public'        => true,
         // 'private'    => true,
-    ));
+    ]);
 
 Cache Invalidation
 ------------------

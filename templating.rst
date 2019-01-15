@@ -531,9 +531,9 @@ configuration:
         use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
-        $routes->add('welcome', new Route('/', array(
+        $routes->add('welcome', new Route('/', [
             '_controller' => 'App\Controller\WelcomeController::index',
-        )));
+        ]));
 
         return $routes;
 
@@ -594,9 +594,9 @@ route:
         use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
-        $routes->add('article_show', new Route('/article/{slug}', array(
+        $routes->add('article_show', new Route('/article/{slug}', [
             '_controller' => 'App\Controller\ArticleController::show',
-        )));
+        ]));
 
         return $routes;
 

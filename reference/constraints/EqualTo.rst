@@ -100,9 +100,9 @@ and that the ``age`` is ``20``, you could do the following:
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\EqualTo('Mary'));
 
-                $metadata->addPropertyConstraint('age', new Assert\EqualTo(array(
+                $metadata->addPropertyConstraint('age', new Assert\EqualTo([
                     'value' => 20,
-                )));
+                ]));
             }
         }
 

@@ -103,9 +103,9 @@ The following constraints ensure that:
             {
                 $metadata->addPropertyConstraint('age', new Assert\NotIdenticalTo('Mary'));
 
-                $metadata->addPropertyConstraint('age', new Assert\NotIdenticalTo(array(
+                $metadata->addPropertyConstraint('age', new Assert\NotIdenticalTo([
                     'value' => 15,
-                )));
+                ]));
             }
         }
 

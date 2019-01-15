@@ -236,11 +236,11 @@ for all parameters that are arrays.
     .. code-block:: php
 
         // config/services.php
-        $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
-        $container->setParameter('my_multilang.language_fallback', array(
-            'en' => array('en', 'fr'),
-            'fr' => array('fr', 'en'),
-        ));
+        $container->setParameter('my_mailer.gateways', ['mail1', 'mail2', 'mail3']);
+        $container->setParameter('my_multilang.language_fallback', [
+            'en' => ['en', 'fr'],
+            'fr' => ['fr', 'en'],
+        ]);
 
 Environment Variables and Dynamic Values
 ----------------------------------------

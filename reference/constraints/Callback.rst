@@ -106,7 +106,7 @@ field those errors should be attributed::
         public function validate(ExecutionContextInterface $context, $payload)
         {
             // somehow you have an array of "fake names"
-            $fakeNames = array(/* ... */);
+            $fakeNames = [/* ... */];
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
@@ -126,7 +126,7 @@ have access to the object instance, they receive the object as the first argumen
     public static function validate($object, ExecutionContextInterface $context, $payload)
     {
         // somehow you have an array of "fake names"
-        $fakeNames = array(/* ... */);
+        $fakeNames = [/* ... */];
 
         // check if the name is actually a fake name
         if (in_array($object->getFirstName(), $fakeNames)) {
@@ -211,10 +211,10 @@ You can then use the following configuration to invoke this validator:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addConstraint(new Assert\Callback(array(
+                $metadata->addConstraint(new Assert\Callback([
                     Validator::class,
                     'validate',
-                )));
+                ]));
             }
         }
 
@@ -264,7 +264,7 @@ callback method:
 
 * A **string** containing the name of a concrete or static method;
 
-* An array callable with the format ``array('<Class>', '<method>')``;
+* An array callable with the format ``['<Class>', '<method>']``;
 
 * A closure.
 

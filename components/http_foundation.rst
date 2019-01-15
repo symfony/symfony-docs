@@ -53,7 +53,7 @@ which is almost equivalent to the more verbose, but also more flexible,
     $request = new Request(
         $_GET,
         $_POST,
-        array(),
+        [],
         $_COOKIE,
         $_FILES,
         $_SERVER
@@ -167,7 +167,7 @@ When PHP imports the request query, it handles request parameters like
     // the query string is '?foo[bar]=baz'
 
     $request->query->get('foo');
-    // returns array('bar' => 'baz')
+    // returns ['bar' => 'baz']
 
     $request->query->get('foo[bar]');
     // returns null
@@ -211,7 +211,7 @@ a request::
     $request = Request::create(
         '/hello-world',
         'GET',
-        array('name' => 'Fabien')
+        ['name' => 'Fabien']
     );
 
 The :method:`Symfony\\Component\\HttpFoundation\\Request::create` method
@@ -349,12 +349,12 @@ PHP callable that is able to create an instance of your ``Request`` class::
     use Symfony\Component\HttpFoundation\Request;
 
     Request::setFactory(function (
-        array $query = array(),
-        array $request = array(),
-        array $attributes = array(),
-        array $cookies = array(),
-        array $files = array(),
-        array $server = array(),
+        array $query = [],
+        array $request = [],
+        array $attributes = [],
+        array $cookies = [],
+        array $files = [],
+        array $server = [],
         $content = null
     ) {
         return new SpecialRequest(
@@ -385,7 +385,7 @@ code, and an array of HTTP headers::
     $response = new Response(
         'Content',
         Response::HTTP_OK,
-        array('content-type' => 'text/html')
+        ['content-type' => 'text/html']
     );
 
 This information can also be manipulated after the Response object creation::
@@ -471,14 +471,14 @@ The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method
 call::
 
-    $response->setCache(array(
+    $response->setCache([
         'etag'          => 'abcdef',
         'last_modified' => new \DateTime(),
         'max_age'       => 600,
         's_maxage'      => 600,
         'private'       => false,
         'public'        => true,
-    ));
+    ]);
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
@@ -624,9 +624,9 @@ right content and headers. A JSON response might look like this::
     use Symfony\Component\HttpFoundation\Response;
 
     $response = new Response();
-    $response->setContent(json_encode(array(
+    $response->setContent(json_encode([
         'data' => 123,
-    )));
+    ]));
     $response->headers->set('Content-Type', 'application/json');
 
 There is also a helpful :class:`Symfony\\Component\\HttpFoundation\\JsonResponse`
@@ -635,12 +635,12 @@ class, which can make this even easier::
     use Symfony\Component\HttpFoundation\JsonResponse;
 
     // if you know the data to send when creating the response
-    $response = new JsonResponse(array('data' => 123));
+    $response = new JsonResponse(['data' => 123]);
 
     // if you don't know the data to send when creating the response
     $response = new JsonResponse();
     // ...
-    $response->setData(array('data' => 123));
+    $response->setData(['data' => 123]);
 
     // if the data to send is already encoded in JSON
     $response = JsonResponse::fromJsonString('{ "data": 123 }');

@@ -451,20 +451,20 @@ a relative/absolute URL or a Symfony route name:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'main' => array(
+            'firewalls' => [
+                'main' => [
                     // ...
 
-                    'form_login' => array(
+                    'form_login' => [
                         // ...
                         'default_target_path' => 'after_login_route_name',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 Always Redirect to the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -509,20 +509,20 @@ previously requested URL and always redirect to the default page:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'main' => array(
+            'firewalls' => [
+                'main' => [
                     // ...
 
-                    'form_login' => array(
+                    'form_login' => [
                         // ...
                         'always_use_default_target_path' => true,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. _control-the-redirect-url-from-inside-the-form:
 
@@ -597,19 +597,19 @@ parameter is included in the request, you may use the value of the
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'main' => array(
+            'firewalls' => [
+                'main' => [
                     // ...
-                    'form_login' => array(
+                    'form_login' => [
                         // ...
                         'use_referer' => true,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -663,19 +663,19 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'main' => array(
+            'firewalls' => [
+                'main' => [
                     // ...
-                    'form_login' => array(
+                    'form_login' => [
                         // ...
                         'failure_path' => 'login_failure_route_name',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 This option can also be set via the ``_failure_path`` request parameter:
 
@@ -739,19 +739,19 @@ redirects can be customized using the  ``target_path_parameter`` and
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'main' => array(
+            'firewalls' => [
+                'main' => [
                     // ...
-                    'form_login' => array(
+                    'form_login' => [
                         'target_path_parameter' => 'go_to',
                         'failure_path_parameter' => 'back_to',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 Using the above configuration, the query string parameters and hidden form fields
 are now fully customized:

@@ -110,12 +110,12 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
                 ->add('dueDate', DateType::class)
-                ->add('save', SubmitType::class, array('label' => 'Create Task'))
+                ->add('save', SubmitType::class, ['label' => 'Create Task'])
                 ->getForm();
 
-            return $this->render('default/new.html.twig', array(
+            return $this->render('default/new.html.twig', [
                 'form' => $form->createView(),
-            ));
+            ]);
         }
     }
 
@@ -234,7 +234,7 @@ your controller::
         $form = $this->createFormBuilder($task)
             ->add('task', TextType::class)
             ->add('dueDate', DateType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Task'))
+            ->add('save', SubmitType::class, ['label' => 'Create Task'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -253,9 +253,9 @@ your controller::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('default/new.html.twig', array(
+        return $this->render('default/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
 .. caution::
@@ -460,7 +460,7 @@ boxes. However, the :doc:`DateType </reference/forms/types/date>` can be
 configured to be rendered as a single text box (where the user would enter
 the date as a string in the box)::
 
-    ->add('dueDate', DateType::class, array('widget' => 'single_text'))
+    ->add('dueDate', DateType::class, ['widget' => 'single_text'])
 
 .. image:: /_images/form/simple-form-2.png
     :align: center
@@ -478,10 +478,10 @@ the documentation for each type.
     :ref:`disable HTML5 validation <forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
 
-        ->add('dueDate', DateType::class, array(
+        ->add('dueDate', DateType::class, [
             'widget' => 'single_text',
             'required' => false
-        ))
+        ])
 
     Also note that setting the ``required`` option to ``true`` will **not**
     result in server-side validation to be applied. In other words, if a
@@ -497,10 +497,10 @@ the documentation for each type.
     The label for the form field can be set using the ``label`` option,
     which can be applied to any field::
 
-        ->add('dueDate', DateType::class, array(
+        ->add('dueDate', DateType::class, [
             'widget' => 'single_text',
             'label'  => 'Due Date',
-        ))
+        ])
 
     The label for a field can also be set in the template rendering the
     form, see below. If you don't need a label associated to your input,
@@ -526,7 +526,7 @@ guess from the validation rules that both the ``task`` field is a normal
 
         $form = $this->createFormBuilder($task)
             ->add('task')
-            ->add('dueDate', null, array('widget' => 'single_text'))
+            ->add('dueDate', null, ['widget' => 'single_text'])
             ->add('save', SubmitType::class)
             ->getForm();
     }
@@ -579,7 +579,7 @@ the correct values of a number of field options.
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
 
-    ->add('task', null, array('attr' => array('maxlength' => 4)))
+    ->add('task', null, ['attr' => ['maxlength' => 4]])
 
 .. index::
    single: Forms; Creating form classes
@@ -607,7 +607,7 @@ that will house the logic for building the task form::
         {
             $builder
                 ->add('task')
-                ->add('dueDate', null, array('widget' => 'single_text'))
+                ->add('dueDate', null, ['widget' => 'single_text'])
                 ->add('save', SubmitType::class)
             ;
         }
@@ -650,9 +650,9 @@ the choice is ultimately up to you.
         // ...
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Task::class,
-            ));
+            ]);
         }
 
 .. tip::
@@ -672,7 +672,7 @@ the choice is ultimately up to you.
             $builder
                 ->add('task')
                 ->add('dueDate')
-                ->add('agreeTerms', CheckboxType::class, array('mapped' => false))
+                ->add('agreeTerms', CheckboxType::class, ['mapped' => false])
                 ->add('save', SubmitType::class)
             ;
         }

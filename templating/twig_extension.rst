@@ -44,9 +44,9 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
     {
         public function getFilters()
         {
-            return array(
-                new TwigFilter('price', array($this, 'formatPrice')),
-            );
+            return [
+                new TwigFilter('price', [$this, 'formatPrice']),
+            ];
         }
 
         public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
@@ -71,9 +71,9 @@ If you want to create a function instead of a filter, define the
     {
         public function getFunctions()
         {
-            return array(
-                new TwigFunction('area', array($this, 'calculateArea')),
-            );
+            return [
+                new TwigFunction('area', [$this, 'calculateArea']),
+            ];
         }
 
         public function calculateArea(int $width, int $length)
@@ -131,10 +131,10 @@ callable defined in ``getFilters()``::
     {
         public function getFilters()
         {
-            return array(
+            return [
                 // the logic of this filter is now implemented in a different class
-                new TwigFilter('price', array(AppRuntime::class, 'priceFilter')),
-            );
+                new TwigFilter('price', [AppRuntime::class, 'priceFilter']),
+            ];
         }
     }
 

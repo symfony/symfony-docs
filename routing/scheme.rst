@@ -58,9 +58,9 @@ the URI scheme via schemes:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('secure', new Route('/secure', array(
+        $routes->add('secure', new Route('/secure', [
             '_controller' => 'App\Controller\MainController::secure',
-        ), array(), array(), '', array('https')));
+        ], [], [], '', ['https']));
 
         return $routes;
 

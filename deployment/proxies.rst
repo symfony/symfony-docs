@@ -70,7 +70,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
        // ...
        Request::setTrustedProxies(
            // trust *all* requests
-           array('127.0.0.1', $request->server->get('REMOTE_ADDR')),
+           ['127.0.0.1', $request->server->get('REMOTE_ADDR')],
 
            // if you're using ELB, otherwise use a constant from above
            Request::HEADER_X_FORWARDED_AWS_ELB

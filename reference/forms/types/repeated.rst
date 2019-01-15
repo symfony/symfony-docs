@@ -43,14 +43,14 @@ Example Usage
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
     // ...
 
-    $builder->add('password', RepeatedType::class, array(
+    $builder->add('password', RepeatedType::class, [
         'type' => PasswordType::class,
         'invalid_message' => 'The password fields must match.',
-        'options' => array('attr' => array('class' => 'password-field')),
+        'options' => ['attr' => ['class' => 'password-field']],
         'required' => true,
-        'first_options'  => array('label' => 'Password'),
-        'second_options' => array('label' => 'Repeat Password'),
-    ));
+        'first_options'  => ['label' => 'Password'],
+        'second_options' => ['label' => 'Repeat Password'],
+    ]);
 
 Upon a successful form submit, the value entered into both of the "password"
 fields becomes the data of the ``password`` key. In other words, even though
@@ -116,7 +116,7 @@ name is used to "guess" the label for you.
 first_options
 ~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 Additional options (will be merged into `options`_ below) that should be
 passed *only* to the first field. This is especially useful for customizing
@@ -125,15 +125,15 @@ the label::
     use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
     // ...
 
-    $builder->add('password', RepeatedType::class, array(
-        'first_options'  => array('label' => 'Password'),
-        'second_options' => array('label' => 'Repeat Password'),
-    ));
+    $builder->add('password', RepeatedType::class, [
+        'first_options'  => ['label' => 'Password'],
+        'second_options' => ['label' => 'Repeat Password'],
+    ]);
 
 options
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 This options array will be passed to each of the two underlying fields.
 In other words, these are the options that customize the individual field
@@ -151,7 +151,7 @@ The same as ``first_name``, but for the second field.
 second_options
 ~~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 Additional options (will be merged into `options`_ above) that should be
 passed *only* to the second field. This is especially useful for customizing

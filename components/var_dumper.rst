@@ -253,7 +253,7 @@ Example::
 
         public function testWithDumpEquals()
         {
-            $testedVar = array(123, 'foo');
+            $testedVar = [123, 'foo'];
 
             $expectedDump = <<<EOTXT
     array:2 [
@@ -282,13 +282,13 @@ For simple variables, reading the output should be straightforward.
 Here are some examples showing first a variable defined in PHP,
 then its dump representation::
 
-    $var = array(
+    $var = [
         'a simple string' => "in an array of 5 elements",
         'a float' => 1.0,
         'an integer' => 1,
         'a boolean' => true,
-        'an empty array' => array(),
-    );
+        'an empty array' => [],
+    ];
     dump($var);
 
 .. image:: /_images/components/var_dumper/01-simple.png
@@ -369,11 +369,11 @@ then its dump representation::
 
 .. code-block:: php
 
-    $var = array();
+    $var = [];
     $var[0] = 1;
     $var[1] =& $var[0];
     $var[1] += 1;
-    $var[2] = array("Hard references (circular or sibling)");
+    $var[2] = ["Hard references (circular or sibling)"];
     $var[3] =& $var[2];
     $var[3][] = "are dumped using `&number` prefixes.";
     dump($var);

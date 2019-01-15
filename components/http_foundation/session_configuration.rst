@@ -45,7 +45,7 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
-    $sessionStorage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
+    $sessionStorage = new NativeSessionStorage([], new NativeFileSessionHandler());
     $session = new Session($sessionStorage);
 
 .. note::
@@ -85,7 +85,7 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
     $pdo = new \PDO(...);
-    $sessionStorage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
+    $sessionStorage = new NativeSessionStorage([], new PdoSessionHandler($pdo));
     $session = new Session($sessionStorage);
 
 Migrating Between Save Handlers
@@ -202,7 +202,7 @@ calculated by adding the PHP runtime configuration value in
     using the ``migrate()`` or ``invalidate()`` methods of the ``Session`` class.
 
     The initial cookie lifetime can be set by configuring ``NativeSessionStorage``
-    using the ``setOptions(array('cookie_lifetime' => 1234))`` method.
+    using the ``setOptions(['cookie_lifetime' => 1234])`` method.
 
 .. note::
 

@@ -320,15 +320,15 @@ Using the BCrypt Password Encoder
         // app/config/security.php
         use Symfony\Component\Security\Core\User\User;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'encoders' => array(
-                User::class => array(
+            'encoders' => [
+                User::class => [
                     'algorithm' => 'bcrypt',
                     'cost'      => 15,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 The ``cost`` can be in the range of ``4-31`` and determines how long a password
 will be encoded. Each increment of ``cost`` *doubles* the time it takes
@@ -403,17 +403,17 @@ Using the Argon2i Password Encoder
         // config/packages/security.php
         use Symfony\Component\Security\Core\User\User;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'encoders' => array(
-                User::class => array(
+            'encoders' => [
+                User::class => [
                     'algorithm' => 'argon2i',
                     'memory_cost' => 16384,
                     'time_cost' => 2,
                     'threads' => 4,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 A salt for each new password is generated automatically and need not be
 persisted. Since an encoded password contains the salt used to encode it,
@@ -479,18 +479,18 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'somename' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'somename' => [
                     // ...
                     'context' => 'my_context',
-                ),
-                'othername' => array(
+                ],
+                'othername' => [
                     // ...
                     'context' => 'my_context',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 .. note::
 

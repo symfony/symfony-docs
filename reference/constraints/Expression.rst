@@ -119,10 +119,10 @@ One way to accomplish this is with the Expression constraint:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addConstraint(new Assert\Expression(array(
+                $metadata->addConstraint(new Assert\Expression([
                     'expression' => 'this.getCategory() in ["php", "symfony"] or !this.isTechnicalPost()',
                     'message' => 'If this is a tech post, the category should be either php or symfony!',
-                )));
+                ]));
             }
 
             // ...
@@ -208,10 +208,10 @@ more about the expression language syntax, see
             {
                 public static function loadValidatorMetadata(ClassMetadata $metadata)
                 {
-                    $metadata->addPropertyConstraint('isTechnicalPost', new Assert\Expression(array(
+                    $metadata->addPropertyConstraint('isTechnicalPost', new Assert\Expression([
                         'expression' => 'this.getCategory() in ["php", "symfony"] or value == false',
                         'message' => 'If this is a tech post, the category should be either php or symfony!',
-                    )));
+                    ]));
                 }
 
                 // ...

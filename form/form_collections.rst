@@ -101,9 +101,9 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Tag::class,
-            ));
+            ]);
         }
     }
 
@@ -129,17 +129,17 @@ Notice that you embed a collection of ``TagType`` forms using the
         {
             $builder->add('description');
 
-            $builder->add('tags', CollectionType::class, array(
+            $builder->add('tags', CollectionType::class, [
                 'entry_type' => TagType::class,
-                'entry_options' => array('label' => false),
-            ));
+                'entry_options' => ['label' => false],
+            ]);
         }
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Task::class,
-            ));
+            ]);
         }
     }
 
@@ -178,9 +178,9 @@ In your controller, you'll create a new form from the ``TaskType``::
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
-            return $this->render('task/new.html.twig', array(
+            return $this->render('task/new.html.twig', [
                 'form' => $form->createView(),
-            ));
+            ]);
         }
     }
 
@@ -263,11 +263,11 @@ add the ``allow_add`` option to your collection field::
     {
         $builder->add('description');
 
-        $builder->add('tags', CollectionType::class, array(
+        $builder->add('tags', CollectionType::class, [
             'entry_type' => TagType::class,
-            'entry_options' => array('label' => false),
+            'entry_options' => ['label' => false],
             'allow_add' => true,
-        ));
+        ]);
     }
 
 In addition to telling the field to accept any number of submitted objects, the
@@ -425,10 +425,10 @@ Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false`
     {
         // ...
 
-        $builder->add('tags', CollectionType::class, array(
+        $builder->add('tags', CollectionType::class, [
             // ...
             'by_reference' => false,
-        ));
+        ]);
     }
 
 With these two changes, when the form is submitted, each new ``Tag`` object
@@ -557,10 +557,10 @@ Start by adding the ``allow_delete`` option in the form Type::
     {
         // ...
 
-        $builder->add('tags', CollectionType::class, array(
+        $builder->add('tags', CollectionType::class, [
             // ...
             'allow_delete' => true,
-        ));
+        ]);
     }
 
 Now, you need to put some code into the ``removeTag()`` method of ``Task``::
@@ -692,7 +692,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 $entityManager->flush();
 
                 // redirect back to some edit page
-                return $this->redirectToRoute('task_edit', array('id' => $id));
+                return $this->redirectToRoute('task_edit', ['id' => $id]);
             }
 
             // render some form template

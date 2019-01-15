@@ -62,21 +62,21 @@ This is how your security configuration can look in action:
         use App\Security\LoginFormAuthenticator;
         use App\Security\FacebookConnectAuthenticator;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'firewalls' => array(
-                'default' => array(
+            'firewalls' => [
+                'default' => [
                     'anonymous' => null,
-                    'guard' => array(
+                    'guard' => [
                         'entry_point' => '',
-                        'authenticators' => array(
+                        'authenticators' => [
                             LoginFormAuthenticator::class,
                             FacebookConnectAuthenticator::class'
-                        ),
-                    ),
-                ),
-            ),
-        ));
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 There is one limitation with this approach - you have to use exactly one entry point.
 
@@ -147,29 +147,29 @@ the solution is to split the configuration into two separate firewalls:
         use App\Security\ApiTokenAuthenticator;
         use App\Security\LoginFormAuthenticator;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'firewalls' => array(
-                'api' => array(
+            'firewalls' => [
+                'api' => [
                     'pattern' => '^/api',
-                    'guard' => array(
-                        'authenticators' => array(
+                    'guard' => [
+                        'authenticators' => [
                             ApiTokenAuthenticator::class,
-                        ),
-                    ),
-                ),
-                'default' => array(
+                        ],
+                    ],
+                ],
+                'default' => [
                     'anonymous' => null,
-                    'guard' => array(
-                        'authenticators' => array(
+                    'guard' => [
+                        'authenticators' => [
                             LoginFormAuthenticator::class,
-                        ),
-                    ),
-                ),
-            ),
-            'access_control' => array(
-                array('path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'),
-                array('path' => '^/api', 'role' => 'ROLE_API_USER'),
-                array('path' => '^/', 'role' => 'ROLE_USER'),
-            ),
-        ));
+                        ],
+                    ],
+                ],
+            ],
+            'access_control' => [
+                ['path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
+                ['path' => '^/api', 'role' => 'ROLE_API_USER'],
+                ['path' => '^/', 'role' => 'ROLE_USER'],
+            ],
+        ]);

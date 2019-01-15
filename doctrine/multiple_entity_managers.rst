@@ -128,31 +128,31 @@ The following configuration code shows how you can configure two entity managers
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
                 'default_connection' => 'default',
-                'connections' => array(
+                'connections' => [
                     // configure these for your database server
-                    'default' => array(
+                    'default' => [
                         'url'            => '%env(DATABASE_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
-                    ),
+                    ],
                     // configure these for your database server
-                    'customer' => array(
+                    'customer' => [
                         'url'            => '%env(DATABASE_CUSTOMER_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
 
-            'orm' => array(
+            'orm' => [
                 'default_entity_manager' => 'default',
-                'entity_managers' => array(
-                    'default' => array(
+                'entity_managers' => [
+                    'default' => [
                         'connection' => 'default',
                         'mappings'   => array(
                             'Main'  => array(
@@ -164,21 +164,21 @@ The following configuration code shows how you can configure two entity managers
                             )
                         ),
                     ),
-                    'customer' => array(
+                    'customer' => [
                         'connection' => 'customer',
-                        'mappings'   => array(
-                            'Customer'  => array(
+                        'mappings'   => [
+                            'Customer'  => [
                                 is_bundle => false,
                                 type => 'annotation',
                                 dir => '%kernel.project_dir%/src/Entity/Customer',
                                 prefix => 'App\Entity\Customer',
                                 alias => 'Customer',
-                            )
-                        ),
-                    ),
-                ),
-            ),
-        ));
+                            ]
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the

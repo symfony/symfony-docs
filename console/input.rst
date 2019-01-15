@@ -220,7 +220,7 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
             null,
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
             'Which colors do you like?',
-            array('blue', 'red')
+            ['blue', 'red']
         );
 
 Options with optional arguments

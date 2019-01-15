@@ -36,12 +36,12 @@ Basic Usage
     use Symfony\Component\Form\Extension\Core\Type\RangeType;
     // ...
 
-    $builder->add('name', RangeType::class, array(
-        'attr' => array(
+    $builder->add('name', RangeType::class, [
+        'attr' => [
             'min' => 5,
             'max' => 50
-        )
-    ));
+        ]
+    ]);
 
 Inherited Options
 -----------------

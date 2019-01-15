@@ -52,18 +52,18 @@ If you're loading users from the database, you can use the built-in ``entity`` p
         // config/packages/security.php
         use App\Entity\User;
 
-        $container->loadFromExtension('security', array(
-            'providers' => array(
-                'our_db_provider' => array(
-                    'entity' => array(
+        $container->loadFromExtension('security', [
+            'providers' => [
+                'our_db_provider' => [
+                    'entity' => [
                         'class'    => User::class,
                         'property' => 'username',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
 
             // ...
-        ));
+        ]);
 
 The ``providers`` section creates a "user provider" called ``our_db_provider`` that
 knows to query from your ``App\Entity\User`` entity by the ``username`` property.
@@ -142,17 +142,17 @@ To finish this, remove the ``property`` key from the user provider in
         // config/packages/security.php
         use App\Entity\User;
 
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'providers' => array(
-                'our_db_provider' => array(
-                    'entity' => array(
+            'providers' => [
+                'our_db_provider' => [
+                    'entity' => [
                         'class' => User::class,
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 This tells Symfony to *not* query automatically for the User. Instead, when needed
 (e.g. because ``switch_user``, ``remember_me`` or some other security feature is

@@ -126,14 +126,14 @@ performance. Define the list of annotated classes to compile in the
     {
         // ...
 
-        $this->addAnnotatedClassesToCompile(array(
+        $this->addAnnotatedClassesToCompile([
             // you can define the fully qualified class names...
             'App\\Controller\\DefaultController',
             // ... but glob patterns are also supported:
             '**Bundle\\Controller\\',
 
             // ...
-        ));
+        ]);
     }
 
 .. note::

@@ -146,12 +146,12 @@ that was loaded into the container. You are only loading a single config
 file in the above example but it will still be within an array. The array
 will look like this::
 
-    array(
-        array(
+    [
+        [
             'foo' => 'fooValue',
             'bar' => 'barValue',
-        ),
-    )
+        ],
+    ]
 
 Whilst you can manually manage merging the different files, it is much better
 to use :doc:`the Config component </components/config>` to
@@ -486,7 +486,7 @@ dump it::
         $dumper = new PhpDumper($containerBuilder);
         file_put_contents(
             $file,
-            $dumper->dump(array('class' => 'MyCachedContainer'))
+            $dumper->dump(['class' => 'MyCachedContainer'])
         );
     }
 
@@ -519,7 +519,7 @@ application::
             $dumper = new PhpDumper($containerBuilder);
             file_put_contents(
                 $file,
-                $dumper->dump(array('class' => 'MyCachedContainer'))
+                $dumper->dump(['class' => 'MyCachedContainer'])
             );
         }
     }
@@ -552,7 +552,7 @@ for these resources and use them as metadata for the cache::
 
         $dumper = new PhpDumper($containerBuilder);
         $containerConfigCache->write(
-            $dumper->dump(array('class' => 'MyCachedContainer')),
+            $dumper->dump(['class' => 'MyCachedContainer']),
             $containerBuilder->getResources()
         );
     }

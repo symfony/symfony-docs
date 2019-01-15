@@ -190,11 +190,11 @@ method::
     $output = fopen('php://memory', 'r+b');
 
     $dumper = new HtmlDumper();
-    $dumper->dump($var, $output, array(
+    $dumper->dump($var, $output, [
         // 1 and 160 are the default values for these options
         'maxDepth' => 1,
         'maxStringLength' => 160
-    ));
+    ]);
 
 The output format of a dumper can be fine tuned by the two flags
 ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap
@@ -215,7 +215,7 @@ next to its content:
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-    $var = array('test');
+    $var = ['test'];
     $dumper = new CliDumper();
     echo $dumper->dump($var, true);
 
@@ -239,7 +239,7 @@ similar to PHP's short array notation:
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-    $var = array('test');
+    $var = ['test'];
     $dumper = new CliDumper();
     echo $dumper->dump($var, true);
 
@@ -263,7 +263,7 @@ using a the logical OR operator ``|``:
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-    $var = array('test');
+    $var = ['test'];
     $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH | AbstractDumper::DUMP_LIGHT_ARRAY);
     echo $dumper->dump($var, true);
 
@@ -286,7 +286,7 @@ or its ``addCasters()`` method::
 
     use Symfony\Component\VarDumper\Cloner\VarCloner;
 
-    $myCasters = array(...);
+    $myCasters = [...];
     $cloner = new VarCloner($myCasters);
 
     // or
@@ -296,10 +296,10 @@ or its ``addCasters()`` method::
 The provided ``$myCasters`` argument is an array that maps a class,
 an interface or a resource type to a callable::
 
-    $myCasters = array(
+    $myCasters = [
         'FooClass' => $myFooClassCallableCaster,
         ':bar resource' => $myBarResourceCallableCaster,
-    );
+    ];
 
 As you can notice, resource types are prefixed by a ``:`` to prevent
 colliding with a class name.

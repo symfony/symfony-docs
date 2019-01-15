@@ -47,10 +47,10 @@ can do this without creating a controller:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('acme_privacy', new Route('/privacy', array(
+        $routes->add('acme_privacy', new Route('/privacy', [
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController',
             'template'    => 'static/privacy.html.twig',
-        )));
+        ]));
 
         return $routes;
 
@@ -112,12 +112,12 @@ exactly how your page is cached:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('acme_privacy', new Route('/privacy', array(
+        $routes->add('acme_privacy', new Route('/privacy', [
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController',
             'template'    => 'static/privacy.html.twig',
             'maxAge'      => 86400,
             'sharedAge'   => 86400,
-        )));
+        ]));
 
         return $routes;
 

@@ -14,13 +14,13 @@ to a field. To avoid duplicated keyword messages, you can configure the label
 format to a static value, like::
 
     // ...
-    $profileFormBuilder->add('address', AddressType::class, array(
+    $profileFormBuilder->add('address', AddressType::class, [
         'label_format' => 'form.address.%name%',
-    ));
+    ]);
 
-    $invoiceFormBuilder->add('invoice', AddressType::class, array(
+    $invoiceFormBuilder->add('invoice', AddressType::class, [
         'label_format' => 'form.address.%name%',
-    ));
+    ]);
 
 This option is inherited by the child types. With the code above, the label of
 the ``street`` field of both forms will use the ``form.address.street`` keyword

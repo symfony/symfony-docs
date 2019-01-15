@@ -107,12 +107,12 @@ Now you can configure the routes:
         use App\Controller\BlogController;
 
         $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog', array(
+        $routes->add('blog_list', new Route('/blog', [
             '_controller' => [BlogController::class, 'list']
-        )));
-        $routes->add('blog_show', new Route('/blog/{slug}', array(
+        ]));
+        $routes->add('blog_show', new Route('/blog/{slug}', [
             '_controller' => [BlogController::class, 'show']
-        )));
+        ]));
 
         return $routes;
 
@@ -343,11 +343,11 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         use App\Controller\BlogController;
 
         $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page}', array(
+        $routes->add('blog_list', new Route('/blog/{page}', [
             '_controller' => [BlogController::class, 'list'],
-        ), array(
+        ], [
             'page' => '\d+'
-        )));
+        ]));
 
         // ...
 
@@ -505,13 +505,13 @@ So how can you make ``blog_list`` once again match when the user visits
         $routes = new RouteCollection();
         $routes->add('blog_list', new Route(
             '/blog/{page}',
-            array(
+            [
                 '_controller' => [BlogController::class, 'list'],
                 'page'        => 1,
-            ),
-            array(
+            ],
+            [
                 'page' => '\d+'
-            )
+            ]
         ));
 
         // ...
@@ -689,14 +689,14 @@ With all of this in mind, check out this advanced example:
         $routes = new RouteCollection();
         $routes->add(
             'article_show',
-            new Route('/articles/{_locale}/{year}/{slug}.{_format}', array(
+            new Route('/articles/{_locale}/{year}/{slug}.{_format}', [
                 '_controller' => [ArticleController::class, 'show'],
                 '_format'     => 'html',
-            ), array(
+            ], [
                 '_locale' => 'en|fr',
                 '_format' => 'html|rss',
                 'year'    => '\d+',
-            ))
+            ])
         );
 
         return $routes;
@@ -821,7 +821,7 @@ route. With this information, an URL can be generated in a controller::
             // /blog/my-blog-post
             $url = $this->generateUrl(
                 'blog_show',
-                array('slug' => 'my-blog-post')
+                ['slug' => 'my-blog-post']
             );
         }
     }
@@ -846,7 +846,7 @@ service::
         {
             $url = $this->router->generate(
                 'blog_show',
-                array('slug' => 'my-blog-post')
+                ['slug' => 'my-blog-post']
             );
             // ...
         }
@@ -861,10 +861,10 @@ Generating URLs with Query Strings
 The ``generate()`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
-    $this->router->generate('blog', array(
+    $this->router->generate('blog', [
         'page' => 2,
         'category' => 'Symfony',
-    ));
+    ]);
     // /blog/2?category=Symfony
 
 Generating Localized URLs
@@ -897,7 +897,7 @@ method::
 
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-    $this->generateUrl('blog_show', array('slug' => 'my-blog-post'), UrlGeneratorInterface::ABSOLUTE_URL);
+    $this->generateUrl('blog_show', ['slug' => 'my-blog-post'], UrlGeneratorInterface::ABSOLUTE_URL);
     // http://www.example.com/blog/my-blog-post
 
 .. note::
@@ -935,7 +935,7 @@ are *not* passing a ``slug`` value (which is required, because it has a ``{slug}
 wildcard in the route path. To fix this, pass a ``slug`` value when generating the
 route::
 
-    $this->generateUrl('blog_show', array('slug' => 'slug-value'));
+    $this->generateUrl('blog_show', ['slug' => 'slug-value']);
 
     // or, in Twig
     // {{ path('blog_show', {'slug': 'slug-value'}) }}

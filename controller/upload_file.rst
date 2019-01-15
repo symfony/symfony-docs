@@ -66,16 +66,16 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
         {
             $builder
                 // ...
-                ->add('brochure', FileType::class, array('label' => 'Brochure (PDF file)'))
+                ->add('brochure', FileType::class, ['label' => 'Brochure (PDF file)'])
                 // ...
             ;
         }
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Product::class,
-            ));
+            ]);
         }
     }
 
@@ -143,9 +143,9 @@ Finally, you need to update the code of the controller that handles the form::
                 return $this->redirect($this->generateUrl('app_product_list'));
             }
 
-            return $this->render('product/new.html.twig', array(
+            return $this->render('product/new.html.twig', [
                 'form' => $form->createView(),
-            ));
+            ]);
         }
 
         /**
@@ -436,12 +436,12 @@ Now, register this class as a Doctrine listener:
         use App\EventListener\BrochureUploaderListener;
 
         $container->autowire(BrochureUploaderListener::class)
-            ->addTag('doctrine.event_listener', array(
+            ->addTag('doctrine.event_listener', [
                 'event' => 'prePersist',
-            ))
-            ->addTag('doctrine.event_listener', array(
+            ])
+            ->addTag('doctrine.event_listener', [
                 'event' => 'preUpdate',
-            ))
+            ])
         ;
 
 This listener is now automatically executed when persisting a new Product

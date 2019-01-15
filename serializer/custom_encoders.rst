@@ -27,7 +27,7 @@ create your own encoder that uses the
 
     class YamlEncoder implements EncoderInterface, DecoderInterface
     {
-        public function encode($data, $format, array $context = array())
+        public function encode($data, $format, array $context = [])
         {
             return Yaml::dump($data);
         }
@@ -37,7 +37,7 @@ create your own encoder that uses the
             return 'yaml' === $format;
         }
 
-        public function decode($data, $format, array $context = array())
+        public function decode($data, $format, array $context = [])
         {
             return Yaml::parse($data);
         }

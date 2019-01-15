@@ -108,15 +108,15 @@ The Monolog console handler is enabled by default:
     .. code-block:: php
 
         // config/packages/dev/monolog.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'console' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'console' => [
                    'type' => 'console',
                    'process_psr_3_messages' => false,
-                   'channels' => array('!event', '!doctrine', '!console'),
-                ),
-            ),
-        ));
+                   'channels' => ['!event', '!doctrine', '!console'],
+                ],
+            ],
+        ]);
 
 Now, log messages will be shown on the console based on the log levels and verbosity.
 By default (normal verbosity level), warnings and higher will be shown. But in

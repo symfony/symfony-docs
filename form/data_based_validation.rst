@@ -14,12 +14,12 @@ to an array callback::
     // ...
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'validation_groups' => array(
+        $resolver->setDefaults([
+            'validation_groups' => [
                 Client::class,
                 'determineValidationGroups',
-            ),
-        ));
+            ],
+        ]);
     }
 
 This will call the static method ``determineValidationGroups()`` on the
@@ -34,17 +34,17 @@ You can also define whole logic inline by using a ``Closure``::
     // ...
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
 
                 if (Client::TYPE_PERSON == $data->getType()) {
-                    return array('person');
+                    return ['person'];
                 }
 
-                return array('company');
+                return ['company'];
             },
-        ));
+        ]);
     }
 
 Using the ``validation_groups`` option overrides the default validation
@@ -58,17 +58,17 @@ of the entity as well you have to adjust the option as follows::
     // ...
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $data = $form->getData();
 
                 if (Client::TYPE_PERSON == $data->getType()) {
-                    return array('Default', 'person');
+                    return ['Default', 'person'];
                 }
 
-                return array('Default', 'company');
+                return ['Default', 'company'];
             },
-        ));
+        ]);
     }
 
 You can find more information about how the validation groups and the default constraints

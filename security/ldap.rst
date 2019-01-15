@@ -116,15 +116,15 @@ An LDAP client can be configured using the built-in
 
         $container
             ->register(Adapter::class)
-            ->setArguments(array(
+            ->setArguments([
                 'host' => 'my-server',
                 'port' => 389,
                 'encryption' => 'tls',
-                'options' => array(
+                'options' => [
                     'protocol_version' => 3,
                     'referrals' => false
-                ),
-            ));
+                ],
+            ]);
 
 Fetching Users Using the LDAP User Provider
 -------------------------------------------
@@ -179,20 +179,20 @@ use the ``ldap`` user provider.
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
-        $container->loadFromExtension('security', array(
-            'providers' => array(
-                'ldap_users' => array(
-                    'ldap' => array(
+        $container->loadFromExtension('security', [
+            'providers' => [
+                'ldap_users' => [
+                    'ldap' => [
                         'service' => Ldap::class,
                         'base_dn' => 'dc=example,dc=com',
                         'search_dn' => 'cn=read-only-admin,dc=example,dc=com',
                         'search_password' => 'password',
                         'default_roles' => 'ROLE_USER',
                         'uid_key' => 'uid',
-                    ),
-                ),
-            ),
-        );
+                    ],
+                ],
+            ],
+        ];
 
 .. caution::
 
@@ -381,17 +381,17 @@ Configuration example for form login
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array(
-                    'form_login_ldap' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
+                    'form_login_ldap' => [
                         'service' => Ldap::class,
                         'dn_string' => 'uid={username},dc=example,dc=com',
                         // ...
-                    ),
-                ),
-            )
-        );
+                    ],
+                ],
+            ]
+        ];
 
 Configuration example for HTTP Basic
 ....................................
@@ -434,18 +434,18 @@ Configuration example for HTTP Basic
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array(
-                    'http_basic_ldap' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
+                    'http_basic_ldap' => [
                         'service' => Ldap::class,
                         'dn_string' => 'uid={username},dc=example,dc=com',
                         // ...
-                    ),
+                    ],
                     'stateless' => true,
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
 Configuration example for form login and query_string
 .....................................................
@@ -492,18 +492,18 @@ Configuration example for form login and query_string
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array(
-                    'form_login_ldap' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
+                    'form_login_ldap' => [
                         'service' => Ldap::class,
                         'dn_string' => 'dc=example,dc=com',
                         'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
                         // ...
-                    ),
-                ),
-            )
-        );
+                    ],
+                ],
+            ]
+        ];
 
 .. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html

@@ -44,11 +44,11 @@ to your controller, and as attributes of the ``Request`` object:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog/{page}', array(
+        $routes->add('blog', new Route('/blog/{page}', [
             '_controller' => 'App\Controller\BlogController::index',
             'page'        => 1,
             'title'       => 'Hello world!',
-        )));
+        ]));
 
         return $routes;
 

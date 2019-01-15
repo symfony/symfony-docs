@@ -64,7 +64,7 @@ sending an email is pretty straightforward::
                 $this->renderView(
                     // templates/emails/registration.html.twig
                     'emails/registration.html.twig',
-                    array('name' => $name)
+                    ['name' => $name]
                 ),
                 'text/html'
             )
@@ -73,7 +73,7 @@ sending an email is pretty straightforward::
             ->addPart(
                 $this->renderView(
                     'emails/registration.txt.twig',
-                    array('name' => $name)
+                    ['name' => $name]
                 ),
                 'text/plain'
             )

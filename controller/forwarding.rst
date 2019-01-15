@@ -13,10 +13,10 @@ from *that* controller::
 
     public function index($name)
     {
-        $response = $this->forward('App\Controller\OtherController::fancy', array(
+        $response = $this->forward('App\Controller\OtherController::fancy', [
             'name'  => $name,
             'color' => 'green',
-        ));
+        ]);
 
         // ... further modify the response or return it directly
 
