@@ -401,3 +401,4 @@
 /weblink /web_link
 /components/weblink /components/web_link
 /frontend/encore/installation-no-flex /frontend/encore/installation
+/http_cache/form_csrf_caching /security/csrf

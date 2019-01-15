@@ -106,9 +106,9 @@ A controller that implements this interface looks like this::
 Creating an Event Subscriber
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, you'll need to create an event listener, which will hold the logic
+Next, you'll need to create an event subscriber, which will hold the logic
 that you want to be executed before your controllers. If you're not familiar with
-event listeners, you can learn more about them at :doc:`/event_dispatcher`::
+event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
 
     // src/EventSubscriber/TokenSubscriber.php
     namespace App\EventSubscriber;
