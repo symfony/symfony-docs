@@ -375,10 +375,10 @@ To answer this, change the service declaration:
 
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
-            ->addTag('app.mail_transport', ['alias' => 'foo']);
+            ->addTag('app.mail_transport', ['alias' => 'smtp']);
 
         $container->register(\Swift_SendmailTransport::class)
-            ->addTag('app.mail_transport', ['alias' => 'bar']);
+            ->addTag('app.mail_transport', ['alias' => 'sendmail']);
 
 .. tip::
 
