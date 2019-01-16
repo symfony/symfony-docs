@@ -203,7 +203,7 @@ service type to a service.
 
     .. code-block:: yaml
 
-        // app/config/services.yml
+        # app/config/services.yml
         services:
             AppBundle\CommandBus:
                 tags:
