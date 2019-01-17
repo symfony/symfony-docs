@@ -5,7 +5,8 @@
 The MIME Component
 ==================
 
-    The MIME component allows manipulating MIME types.
+    The MIME component provides utilities related to MIME types, such as
+    guessing the MIME type of a given file.
 
 Installation
 ------------
@@ -18,27 +19,44 @@ Alternatively, you can clone the `<https://github.com/symfony/mime>`_ repository
 
 .. include:: /components/require_autoload.rst.inc
 
-.. tip::
+MIME Types Utilities
+--------------------
 
-    You should have the ``fileinfo`` PHP extension installed for greater performance.
-
-MIME Types
-----------
-
-The :class:`Symfony\\Component\\Mime\\MimeTypes` class manipulates the
-relationships between MIME types and file name extensions::
+The :class:`Symfony\\Component\\Mime\\MimeTypes` class transforms between
+MIME types and file name extensions::
 
     use Symfony\Component\Mime\MimeTypes;
 
     $mimeTypes = new MimeTypes();
-    $exts = $mimeTypes->getExtensions('application/mbox');
-    // $exts contains an array of extensions: ['mbox']
+    $exts = $mimeTypes->getExtensions('application/javascript');
+    // $exts = ['js', 'jsm', 'mjs']
+    $exts = $mimeTypes->getExtensions('image/jpeg');
+    // $exts = ['jpeg', 'jpg', 'jpe']
 
-    $mimeTypes = $mimeTypes->getMimeTypes('mbox');
-    // $mimeTypes contains an array of MIME types: ['application/mbox']
+    $mimeTypes = $mimeTypes->getMimeTypes('js');
+    // $mimeTypes = ['application/javascript', 'application/x-javascript', 'text/javascript']
+    $mimeTypes = $mimeTypes->getMimeTypes('apk');
+    // $mimeTypes = ['application/vnd.android.package-archive']
 
-    // guess a mime type for a file
+These methods return arrays with one or more elements. The element position
+indicates its priority (e.g. the first returned extension is the preferred one).
+
+Guessing the MIME Type
+----------------------
+
+This component also guesses the MIME type of any given file::
+
+    use Symfony\Component\Mime\MimeTypes;
+
+    $mimeTypes = new MimeTypes();
     $mimeType = $mimeTypes->guessMimeType('/some/path/to/image.gif');
+    // Guessing is not based on the file name, so $mimeType will be 'image/gif'
+    // only if the given file is truly a GIF image
+
+Guessing the MIME type is a time-consuming process that requires inspecting
+part of the file contents. Symfony applies multiple guessing mechanisms, one
+of them based on the PHP `fileinfo extension`_. It's recommended to install
+that extension to improve the guessing performance.
 
 Adding a MIME Type Guesser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,8 +78,11 @@ You can register your own MIME type guesser by creating a class that extends
 
         public function guessMimeType(string $path): ?string
         {
-            // return a MIME type based on the content of the file stored in $path
-            // you MUST not use the filename to determine the MIME type.
-            return 'text/plain';
+            // inspect the contents of the file stored in $path to guess its
+            // type and return a valid MIME type ... or null if unknown
+
+            return '...';
         }
     }
+
+.. _`fileinfo extension`: https://php.net/fileinfo
