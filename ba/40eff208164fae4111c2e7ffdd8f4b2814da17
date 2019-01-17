@@ -1,0 +1,101 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-01-10T20:55:41Z
+
+Can you show the full error and stack trace that you got without these changes?
+
+---------------------------------------------------------------------------
+
+by wimme002 at 2019-01-11T06:24:00Z
+
+Tried it in 2 completely different projects (sf 3.4 and 4.2) with both the same result
+
+```
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="App\Test">
+        <property name="test">
+            <constraint name="EqualTo">
+                <value>5</value>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>
+```
+
+```php
+namespace App;
+
+class Test
+{
+    public $test = 10;
+}
+```
+```php
+class Service
+{
+    private $validator;
+
+    public function __construct(
+        ValidatorInterface $validator
+    ) {
+        $this->validator = $validator;
+    }
+
+    public function xxx()
+    {
+        $test = new Test();
+        $errors = $this->validator->validate($test);
+    }
+}
+```
+
+>
+> ConstraintDefinitionException
+> --
+> Symfony\Component\Validator\Exception\ConstraintDefinitionException: The "Symfony\Component\Validator\Constraints\EqualTo" constraint requires either the "value" or "propertyPath" option to be set.    at vendor/symfony/symfony/src/Symfony/Component/Validator/Constraints/AbstractComparison.php:41   at Symfony\Component\Validator\Constraints\AbstractComparison->__construct(array('5'))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Mapping/Loader/AbstractLoader.php:86)   at Symfony\Component\Validator\Mapping\Loader\AbstractLoader->newConstraint('EqualTo', array('5'))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Mapping/Loader/XmlFileLoader.php:94)   at Symfony\Component\Validator\Mapping\Loader\XmlFileLoader->parseConstraints(object(SimpleXMLElement))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Mapping/Loader/XmlFileLoader.php:221)   at Symfony\Component\Validator\Mapping\Loader\XmlFileLoader->loadClassMetadataFromXml(object(ClassMetadata), object(SimpleXMLElement))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Mapping/Loader/XmlFileLoader.php:44)   at Symfony\Component\Validator\Mapping\Loader\XmlFileLoader->loadClassMetadata(object(ClassMetadata))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Mapping/Loader/LoaderChain.php:54)   at Symfony\Component\Validator\Mapping\Loader\LoaderChain->loadClassMetadata(object(ClassMetadata))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Mapping/Factory/LazyLoadingMetadataFactory.php:105)   at Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory->getMetadataFor(object(Test))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Validator/RecursiveContextualValidator.php:328)   at Symfony\Component\Validator\Validator\RecursiveContextualValidator->validateObject(object(Test), '', array('Default'), 1, object(ExecutionContext))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Validator/RecursiveContextualValidator.php:139)   at Symfony\Component\Validator\Validator\RecursiveContextualValidator->validate(object(Test), null, array('Default'))      (vendor/symfony/symfony/src/Symfony/Component/Validator/Validator/RecursiveValidator.php:100)   at Symfony\Component\Validator\Validator\RecursiveValidator->validate(object(Test), null, null)      (vendor/symfony/symfony/src/Symfony/Component/Validator/Validator/TraceableValidator.php:65)   at Symfony\Component\Validator\Validator\TraceableValidator->validate(object(Test))      (src/Infrastructure/Controller/ConverterController.php:74)   at xxx\Infrastructure\Controller\ConverterController->xxx(object(Request))      (vendor/symfony/symfony/src/Symfony/Component/HttpKernel/HttpKernel.php:151)   at Symfony\Component\HttpKernel\HttpKernel->handleRaw(object(Request), 1)      (vendor/symfony/symfony/src/Symfony/Component/HttpKernel/HttpKernel.php:68)   at Symfony\Component\HttpKernel\HttpKernel->handle(object(Request), 1, true)      (vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Kernel.php:200)   at Symfony\Component\HttpKernel\Kernel->handle(object(Request))      (app/app.php:25)
+>
+
+If I dump the $options in AbstractComparison the result is
+
+```
+AbstractComparison.php on line 36:
+array:1 [
+  0 => "5"
+]
+```
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2019-01-11T09:56:30Z
+
+Could be a regression that should be fixed in the core instead. I can have a look at it this week-end. WDYT @xabbuh?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-01-11T11:11:12Z
+
+@HeahDude Reading the code again this seems to be intended. What should also work is this:
+
+```xml
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="App\Test">
+        <property name="test">
+            <constraint name="EqualTo">
+                <value key="value">5</value>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>
+```
+
+But for this example I think that would be more confusing than the proposed change.
