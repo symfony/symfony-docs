@@ -1,6 +1,6 @@
 .. index:: Vagrant, Homestead
 
-Using Symfony with Homestead/Vagrant
+Using Symfony with Homestead/vagrant
 ====================================
 
 In order to develop a Symfony application, you might want to use a virtual
