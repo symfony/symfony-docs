@@ -78,7 +78,7 @@ The following constraints ensure that:
             <class name="App\Entity\Person">
             <property name="firstName">
                     <constraint name="NotIdenticalTo">
-                        <value>Mary</value>
+                        Mary
                     </constraint>
                 </property>
                 <property name="age">
