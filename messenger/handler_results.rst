@@ -29,12 +29,13 @@ leveraging a Messenger bus for synchronous needs.
 The :method:`Symfony\\Component\\Messenger\\HandleTrait::handle` method ensures
 there is exactly one handler registered and returns its result.
 
-Working with command & query buses
+Working with Command & Query Buses
 ----------------------------------
 
 The Messenger component can be used in CQRS architectures where command & query
-buses are central pieces of the application.
-See Martin Fowler's `article about CQRS`_ to learn more and :doc:`how to configure multiple buses </messenger/multiple_buses>`.
+buses are central pieces of the application. Read Martin Fowler's
+`article about CQRS`_ to learn more and
+:doc:`how to configure multiple buses </messenger/multiple_buses>`.
 
 As queries are usually synchronous and expected to be handled once,
 getting the result from the handler is a common need.
@@ -47,7 +48,6 @@ a ``$messageBus`` property:
     .. code-block:: php
 
         // src/Action/ListItems.php
-
         namespace App\Action;
 
         use App\Message\ListItemsQuery;
@@ -88,7 +88,6 @@ wherever you need a query bus behavior instead of the ``MessageBusInterface``:
     .. code-block:: php
 
         // src/MessageBus/QueryBus.php
-
         namespace App\MessageBus;
 
         use Symfony\Component\Messenger\Envelope;
@@ -115,4 +114,4 @@ wherever you need a query bus behavior instead of the ``MessageBusInterface``:
             }
         }
 
-.. _article about CQRS: https://martinfowler.com/bliki/CQRS.html
+.. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html
