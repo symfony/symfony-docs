@@ -37,9 +37,8 @@ tools.
 
 .. caution::
 
-    Apart from the error handler, you should never enable the debug
-    tools in a production environment as they might disclose sensitive
-    information to the user.
+    You should never enable the debug tools, except for the error handler, in a
+    production environment as they might disclose sensitive information to the user.
 
 Enabling the Error Handler
 --------------------------
@@ -53,11 +52,8 @@ fatal errors)::
 
     ErrorHandler::register();
 
-.. note::
-
-    This one is fine to use in a production environment and will be
-    enabled if you use the framework bundle, so that you get better
-    logging.
+This error handler is enabled by default in the production environment when the
+application uses the FrameworkBundle because it generates better error logs.
 
 Enabling the Exception Handler
 ------------------------------
