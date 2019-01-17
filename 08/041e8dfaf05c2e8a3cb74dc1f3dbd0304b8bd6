@@ -1,0 +1,171 @@
+---------------------------------------------------------------------------
+
+by ogizanagi at 2019-01-05T13:53:19Z
+
+This was named "PSR-4 based service discovery" in https://symfony.com/blog/new-in-symfony-3-3-psr-4-based-service-discovery, but @weaverryan was worried about people not knowing about what it is in https://github.com/symfony/symfony-docs/pull/10689#discussion_r243077209.
+I think we should indeed find a proper name and stick to it in the documentation.
+
+Names I've seen so far:
+- PSR-4 service discovery
+- (service definitions) prototypes
+- Glob service discovery
+
+Personally, I've always used the first one.
+"resource declaration" might not really suit, as IMHO "resource" is more about DI config files.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-01-05T13:59:26Z
+
+Isn't this way to specific? I mean, the thing is: If only one service in the container (be it configured explicitly or through PSR-4 service discovery) that implements this interface, the alias is automatically created.
+
+> As long as *only one service* in the service container implements an interface (including services configured through [PSR-4 service discovery](#some-link-to-somewhere)), Symfony will automatically create the alias and configuring it is not mandatory. It is however a good practice to configure it, to avoid errors when creating a new implementation.
+
+(I've added the last sentence as a proposal, as I think it's unwanted behavior to have a broken container when creating a new class somewhere in `src/`).
+
+Thanks btw for following up the short slack discussion!
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T14:01:43Z
+
+>  "resource declaration" might not really suit, as IMHO "resource" is more about DI config files.
+
+Right, that is indeed more about the `resource: '../../src/App/Namespace/*'` alone. I think the `declaration` part is good, because you feel it refers to some configuration block, and that block is a way to declare many services at once.
+
+How about "glob-based service declaration", that will trigger a "PSR-4 service discovery".
+
+> Isn't this way to specific? I mean, the thing is: If only one service in the container (be it configured explicitly or through PSR-4 service discovery) that implements this interface, the alias is automatically created.
+
+Are you 100% sure about this? We discussed about this only happening when both the interface and the class are discovered through the same discovery, cc @lucascourot
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T14:08:08Z
+
+Let me try on a fresh install.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T14:13:21Z
+
+@wouterj  when I do this, the alias disappears from `bin/console debug:container`
+
+```
+commit 87bc4b918233397545adef9546aab59c65eb0fd5 (HEAD -> master)
+Author: Grégoire Paris <postmaster@greg0ire.fr>
+Date:   Sat Jan 5 15:12:43 2019 +0100
+
+    Split into 2 discoveries, no longer works
+
+diff --git a/config/services.yaml b/config/services.yaml
+index 5c4b417..fbe7e97 100644
+--- a/config/services.yaml
++++ b/config/services.yaml
+@@ -11,11 +11,11 @@ services:
+         autowire: true      # Automatically injects dependencies in your services.
+         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+-    # makes classes in src/ available to be used as services
+-    # this creates a service per class whose id is the fully-qualified class name
+-    App\:
+-        resource: '../src/*'
+-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
++    App\Domain\:
++        resource: '../src/Domain/*'
++
++    App\Infrastructure\:
++        resource: '../src/Infrastructure/*'
+
+     # controllers are imported separately to make sure services can be injected
+     # as action arguments even if you don't extend any base controller class
+
+```
+
+I can publish the repository if you want to tinker with it.
+
+Let me take this as an occasion to celebrate how fast it is to create a throwaway Symfony application to prove a point now. Flex is awesome! :tada:
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2019-01-05T14:14:31Z
+
+I confirm too. It must be discovered by the same discovery in order to work. (see https://github.com/symfony/symfony/blob/5c2cee5c0fcf09d90ffd414bb8d13e023fc5ae9e/src/Symfony/Component/DependencyInjection/Loader/FileLoader.php#L78-L83 which is called for each configured discovery)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-01-05T15:13:20Z
+
+Wow, alrighty. (I'm not really into Symfony core logic anymore 😞)
+
+In general, I think people call the `resource: ...` line just the "resource option". I think the concept itself is called PSR-4 service discovery (at least, it was introduced in the PR and blog posts in this way).
+
+What about using the concept name here? *"As long as there is only one class implementing the interface, and that class is part of the same PSR-4 service discovery."* We can then link the `PSR-4 service discovery` part to the section/article talking about that. That's how new terms/concepts were documented in the older versions of Symfony as well (i.e. when introducing the Service Container concept in Sf 2)
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T16:38:21Z
+
+Not sure about the PSR-4 part… is this really incompatible with PSR-0? Maybe it only works with PSR-4 for now, but maybe there could be other ways of doing discovery in the future, who knows? How about dropping it? "As long as there is only one class implementing the interface, and that class is part of the same service discovery…" It still feels a bit awkward to use the concept name IMO, especially since the full name is "PSR-4 service discovery and registration". And can we really say "a discovery", or is discovery separated in several parts for which we should find a name ("discovery pass"?) ?
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T16:51:11Z
+
+slack://symfony-devs#naming suggests "{prototype,template} service definition" (credits to @ro0NL).
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T16:52:19Z
+
+![screenshot_2019-01-05 naming symfony devs slack](https://user-images.githubusercontent.com/657779/50726843-bf6a2980-1112-11e9-9922-b753520055e4.png)
+
+---------------------------------------------------------------------------
+
+by lucascourot at 2019-01-05T17:29:36Z
+
+> I think it's unwanted behavior to have a broken container when creating a new class somewhere in src/
+
+@wouterj There are already different ways of breaking things up by adding a new class in src. For example with `_instanceof`. I find the single-interface autowiring feature very helpful especially when implementing ports & adapters architecture.
+
+@greg0ire I'm ok with "prototype service definition"
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2019-01-05T18:13:11Z
+
+> There are already different ways of breaking things up by adding a new class in src. For example with _instanceof. I find the single-interface autowiring feature very helpful especially when implementing ports & adapters architecture.
+
+Nevertheless, it's a very implicit behavior. Promoting to make this explicit by declaring the alias yourself is a good thing if you ask me.
+
+(btw I'm personally never relying on this in a ports & adapters architecture, because I'm used to only use discovery+autowiring for infra & specific conventions for the application layer. This way the interfaces are usually not even part of the same discovery, which once again forces to make everything explicit and is a good thing to me.)
+
+@greg0ire : "prototype service definition" is fine. It was the second in my list and it's how the feature is referenced in code & tests.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T20:57:00Z
+
+> It was the second in my list
+
+Silly me, I didn't even notice! Let's go with that then!
+
+Good points about explicit vs implicit, I don't like that implicit autowiring either, but that behavior still needs to be documented properly, and will be challenged more easily if people know it exists.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-05T21:11:26Z
+
+Please review again, maybe you can phrase this better than I did.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-01-17T12:28:40Z
+
+Do you consider this PR finished? Thanks.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2019-01-17T13:12:16Z
+
+If no one can think of a better wording, I do.
