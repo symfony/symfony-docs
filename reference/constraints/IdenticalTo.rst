@@ -78,7 +78,7 @@ The following constraints ensure that:
             <class name="AppBundle\Entity\Person">
                 <property name="firstName">
                     <constraint name="IdenticalTo">
-                        <value>Mary</value>
+                        Mary
                     </constraint>
                 </property>
                 <property name="age">
