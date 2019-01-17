@@ -42,7 +42,7 @@ The ``projects/`` directory on your PC is now accessible at
 ``/home/vagrant/projects`` in the Homestead environment.
 
 After you've done this, configure the Symfony application in the Homestead
-configuration:
+configuratioN:
 
 .. code-block:: yaml
 
