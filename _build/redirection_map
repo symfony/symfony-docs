@@ -117,7 +117,7 @@
 /cookbook/console/commands_as_services /console/commands_as_services
 /cookbook/console/console_command /console
 /cookbook/console/index /console
-/cookbook/console/logging /console/logging
+/cookbook/console/logging /console
 /cookbook/console/request_context /console/request_context
 /cookbook/console/style /console/style
 /cookbook/console/usage /console/usage
@@ -359,3 +359,4 @@
 /weblink /web_link
 /components/weblink /components/web_link
 /frontend/encore/installation-no-flex /frontend/encore/installation
+/console/logging /console
