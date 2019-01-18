@@ -850,7 +850,7 @@ because it is deeper than the configured maximum depth of 2::
         'child' => [
                 'foo' => 'level2',
                 'child' => [
-                        'child' => null,
+                        'foo' => 'level3',
                     ],
             ],
     ];
