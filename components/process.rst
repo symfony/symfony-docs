@@ -112,11 +112,6 @@ with a non-zero code)::
 
 .. tip::
 
-    .. versionadded:: 3.3
-
-        The ability to define commands as arrays of arguments was introduced in
-        Symfony 3.3.
-
     Using array of arguments is the recommended way to define commands. This
     saves you from any escaping and allows sending signals seamlessly
     (e.g. to stop processes before completion.)::

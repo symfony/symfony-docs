@@ -64,10 +64,6 @@ If you have lots of validation errors, you can filter them by error code::
         // handle this specific error (display some message, send an email, etc.)
     }
 
-.. versionadded:: 3.3
-
-    The ``findByCodes()`` method was introduced in Symfony 3.3.
-
 Retrieving a Validator Instance
 -------------------------------
 
