@@ -366,6 +366,15 @@ console::
     :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
 
+Logging Command Errors
+----------------------
+
+Whenever an exception is thrown while running commands, Symfony adds a log
+message for it including the entire failing command. In addition, Symfony
+registers an :doc:`event subscriber </event_dispatcher>` to listen to the
+:ref:`ConsoleEvents::TERMINATE event <console-events-terminate>` and adds a log
+message whenever a command doesn't finish with the ``0`` exit status.
+
 Learn More
 ----------
 
