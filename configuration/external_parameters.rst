@@ -137,10 +137,6 @@ the following:
 Environment Variable Processors
 -------------------------------
 
-.. versionadded:: 3.4
-
-    Environment variable processors were introduced in Symfony 3.4.
-
 The values of environment variables are considered strings by default.
 However, your code may expect other data types, like integers or booleans.
 Symfony solves this problem with *processors*, which modify the contents of the

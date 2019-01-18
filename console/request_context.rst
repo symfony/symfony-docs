@@ -65,10 +65,6 @@ will override the defaults.
         $container->setParameter('asset.request_context.base_path', $container->getParameter('router.request_context.base_url'));
         $container->setParameter('asset.request_context.secure', true);
 
-.. versionadded:: 3.4
-
-    The ``asset.request_context.*`` parameters were introduced in Symfony 3.4.
-
 Configuring the Request Context per Command
 -------------------------------------------
 
