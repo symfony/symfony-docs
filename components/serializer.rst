@@ -166,11 +166,6 @@ needs three parameters:
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
 
-.. versionadded:: 3.3
-
-    Support for the ``allow_extra_attributes`` key in the context was introduced
-    in Symfony 3.3.
-
 By default, additional attributes that are not mapped to the denormalized object
 will be ignored by the Serializer component. If you prefer to throw an exception
 when this happens, set the ``allow_extra_attributes`` context option to

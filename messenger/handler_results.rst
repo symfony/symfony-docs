@@ -6,23 +6,19 @@ Getting Results from your Handler
 
 When a message is handled, the :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware`
 adds a :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp` for each object that handled the message.
-You can use this to get the value returned by the handler(s):
+You can use this to get the value returned by the handler(s)::
 
-.. configuration-block::
+    use Symfony\Component\Messenger\MessageBusInterface;
+    use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-    .. code-block:: php
+    $envelope = $messageBus->dispatch(SomeMessage());
 
-        use Symfony\Component\Messenger\MessageBusInterface;
-        use Symfony\Component\Messenger\Stamp\HandledStamp;
+    // get the value that was returned by the last message handler
+    $handledStamp = $envelope->last(HandledStamp::class);
+    $handledStamp->getResult();
 
-        $envelope = $messageBus->dispatch(SomeMessage());
-
-        // get the value that was returned by the last message handler
-        $handledStamp = $envelope->last(HandledStamp::class);
-        $handledStamp->getResult();
-
-        // or get info about all of handlers
-        $handledStamps = $envelope->all(HandledStamp::class);
+    // or get info about all of handlers
+    $handledStamps = $envelope->all(HandledStamp::class);
 
 A :class:`Symfony\\Component\\Messenger\\HandleTrait` also exists in order to ease
 leveraging a Messenger bus for synchronous needs.
@@ -41,77 +37,69 @@ As queries are usually synchronous and expected to be handled once,
 getting the result from the handler is a common need.
 
 To make this easy, you can leverage the ``HandleTrait`` in any class that has
-a ``$messageBus`` property:
+a ``$messageBus`` property::
 
-.. configuration-block::
+    // src/Action/ListItems.php
+    namespace App\Action;
 
-    .. code-block:: php
+    use App\Message\ListItemsQuery;
+    use App\MessageHandler\ListItemsQueryResult;
+    use Symfony\Component\Messenger\HandleTrait;
+    use Symfony\Component\Messenger\MessageBusInterface;
 
-        // src/Action/ListItems.php
-        namespace App\Action;
+    class ListItems
+    {
+        use HandleTrait;
 
-        use App\Message\ListItemsQuery;
-        use App\MessageHandler\ListItemsQueryResult;
-        use Symfony\Component\Messenger\HandleTrait;
-        use Symfony\Component\Messenger\MessageBusInterface;
-
-        class ListItems
+        public function __construct(MessageBusInterface $messageBus)
         {
-            use HandleTrait;
-
-            public function __construct(MessageBusInterface $messageBus)
-            {
-                $this->messageBus = $messageBus;
-            }
-
-            public function __invoke()
-            {
-                $result = $this->query(new ListItemsQuery(/* ... */));
-
-                // Do something with the result
-                // ...
-            }
-
-            // Creating such a method is optional, but allows type-hinting the result
-            private function query(ListItemsQuery $query): ListItemsResult
-            {
-                return $this->handle($query);
-            }
+            $this->messageBus = $messageBus;
         }
+
+        public function __invoke()
+        {
+            $result = $this->query(new ListItemsQuery(/* ... */));
+
+            // Do something with the result
+            // ...
+        }
+
+        // Creating such a method is optional, but allows type-hinting the result
+        private function query(ListItemsQuery $query): ListItemsResult
+        {
+            return $this->handle($query);
+        }
+    }
 
 Hence, you can use the trait to create command & query bus classes.
 For example, you could create a special ``QueryBus`` class and inject it
-wherever you need a query bus behavior instead of the ``MessageBusInterface``:
+wherever you need a query bus behavior instead of the ``MessageBusInterface``::
 
-.. configuration-block::
+    // src/MessageBus/QueryBus.php
+    namespace App\MessageBus;
 
-    .. code-block:: php
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\HandleTrait;
+    use Symfony\Component\Messenger\MessageBusInterface;
 
-        // src/MessageBus/QueryBus.php
-        namespace App\MessageBus;
+    class QueryBus
+    {
+        use HandleTrait;
 
-        use Symfony\Component\Messenger\Envelope;
-        use Symfony\Component\Messenger\HandleTrait;
-        use Symfony\Component\Messenger\MessageBusInterface;
-
-        class QueryBus
+        public function __construct(MessageBusInterface $messageBus)
         {
-            use HandleTrait;
-
-            public function __construct(MessageBusInterface $messageBus)
-            {
-                $this->messageBus = $messageBus;
-            }
-
-            /**
-             * @param object|Envelope $query
-             *
-             * @return mixed The handler returned value
-             */
-            public function query($query)
-            {
-                return $this->handle($query);
-            }
+            $this->messageBus = $messageBus;
         }
+
+        /**
+         * @param object|Envelope $query
+         *
+         * @return mixed The handler returned value
+         */
+        public function query($query)
+        {
+            return $this->handle($query);
+        }
+    }
 
 .. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html

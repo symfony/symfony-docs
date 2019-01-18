@@ -114,6 +114,8 @@ Listeners receive a
         $event->setError(new \LogicException('Caught exception', $exitCode, $event->getError()));
     });
 
+.. _console-events-terminate:
+
 The ``ConsoleEvents::TERMINATE`` Event
 --------------------------------------
 
