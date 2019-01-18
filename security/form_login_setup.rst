@@ -40,11 +40,11 @@ and your generated code may be slightly different:
 .. versionadded:: 1.8
     Support for login form authentication was added to ``make:auth`` in MakerBundle 1.8.
 
-This generates the following: (1) a login route & controller, (2) a template that
-renders the login form, (3) a :doc:`Guard authenticator </security/guard_authentication>`
-class that processes the login submit and (4) updates the main security config file.
+This generates the following: 1) a login route & controller, 2) a template that
+renders the login form, 3) a :doc:`Guard authenticator </security/guard_authentication>`
+class that processes the login submit and 4) updates the main security config file.
 
-(1) The ``/login`` route & controller::
+**Step 1.** The ``/login`` route & controller::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
@@ -73,8 +73,8 @@ class that processes the login submit and (4) updates the main security config f
         }
     }
 
-(2) The template has very little to do with security: it just generates a
-traditional HTML form that submits to ``/login``:
+**Step 2.** The template has very little to do with security: it just generates
+a traditional HTML form that submits to ``/login``:
 
 .. code-block:: twig
 
@@ -115,7 +115,7 @@ traditional HTML form that submits to ``/login``:
     </form>
     {% endblock %}
 
-(3) The Guard authenticator processes the form submit::
+**Step 3.** The Guard authenticator processes the form submit::
 
     // src/Security/LoginFormAuthenticator.php
     namespace App\Security;
@@ -212,7 +212,7 @@ traditional HTML form that submits to ``/login``:
         }
     }
 
-(4) Updates the main security config file to enable the Guard authenticator:
+**Step 4.** Updates the main security config file to enable the Guard authenticator:
 
 .. configuration-block::
 
