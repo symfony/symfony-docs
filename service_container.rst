@@ -49,17 +49,21 @@ What other services are available? Find out by running:
 
     $ php bin/console debug:autowiring
 
-    # this is just a *small* sample of the output...
-    ==========================================================  ==================================
-    Class/Interface Type                                        Alias Service ID
-    ==========================================================  ==================================
-    Psr\Cache\CacheItemPoolInterface                            alias for "cache.app.recorder"
-    Psr\Log\LoggerInterface                                     alias for "monolog.logger"
-    Symfony\Component\EventDispatcher\EventDispatcherInterface  alias for "debug.event_dispatcher"
-    Symfony\Component\HttpFoundation\RequestStack               alias for "request_stack"
-    Symfony\Component\HttpFoundation\Session\SessionInterface   alias for "session"
-    Symfony\Component\Routing\RouterInterface                   alias for "router.default"
-    ==========================================================  ==================================
+      # this is just a *small* sample of the output...
+
+      Describes a logger instance.
+      Psr\Log\LoggerInterface (monolog.logger)
+
+      Request stack that controls the lifecycle of requests.
+      Symfony\Component\HttpFoundation\RequestStack (request_stack)
+
+      Interface for the session.
+      Symfony\Component\HttpFoundation\Session\SessionInterface (session)
+
+      RouterInterface is the interface that all Router classes must implement.
+      Symfony\Component\Routing\RouterInterface (router.default)
+
+      [...]
 
 When you use these type-hints in your controller methods or inside your
 :ref:`own services <service-container-creating-service>`, Symfony will automatically
@@ -261,18 +265,21 @@ type-hints by running:
 
     $ php bin/console debug:autowiring
 
-This command is your best friend.  This is a small subset of the output:
+      # this is just a *small* sample of the output...
 
-=============================================================== =====================================
-Class/Interface Type                                            Alias Service ID
-=============================================================== =====================================
-``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
-``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
-``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
-``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
-``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
-``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
-=============================================================== =====================================
+      Describes a logger instance.
+      Psr\Log\LoggerInterface (monolog.logger)
+
+      Request stack that controls the lifecycle of requests.
+      Symfony\Component\HttpFoundation\RequestStack (request_stack)
+
+      Interface for the session.
+      Symfony\Component\HttpFoundation\Session\SessionInterface (session)
+
+      RouterInterface is the interface that all Router classes must implement.
+      Symfony\Component\Routing\RouterInterface (router.default)
+
+      [...]
 
 Handling Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
