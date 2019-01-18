@@ -201,7 +201,15 @@ Access the node name (HTML tag name) of the first node of the current selection 
 
 Access the value of the first node of the current selection::
 
+    // if the node does not exist, calling to text() will result in an exception
     $message = $crawler->filterXPath('//body/p')->text();
+
+    // avoid the exception passing an argument that text() returns when node does not exist
+    $message = $crawler->filterXPath('//body/p')->text('Default text content');
+
+.. versionadded:: 4.3
+
+    The default argument of ``text()`` was introduced in Symfony 4.3.
 
 Access the attribute value of the first node of the current selection::
 
@@ -298,7 +306,15 @@ and :phpclass:`DOMNode` objects::
     Or you can get the HTML of the first node using
     :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
 
+        // if the node does not exist, calling to html() will result in an exception
         $html = $crawler->html();
+
+        // avoid the exception passing an argument that html() returns when node does not exist
+        $html = $crawler->html('Default <strong>HTML</strong> content');
+
+    .. versionadded:: 4.3
+
+        The default argument of ``html()`` was introduced in Symfony 4.3.
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
