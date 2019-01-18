@@ -40,11 +40,11 @@ and your generated code may be slightly different:
 .. versionadded:: 1.8
     Support for login form authentication was added to ``make:auth`` in MakerBundle 1.8.
 
-This generates three things: (1) a login route & controller, (2) a template that
-renders the login form and (3) a :doc:`Guard authenticator </security/guard_authentication>`
-class that processes the login submit.
+This generates the following: 1) a login route & controller, 2) a template that
+renders the login form, 3) a :doc:`Guard authenticator </security/guard_authentication>`
+class that processes the login submit and 4) updates the main security config file.
 
-The ``/login`` route & controller::
+**Step 1.** The ``/login`` route & controller::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
@@ -73,8 +73,8 @@ The ``/login`` route & controller::
         }
     }
 
-The template has very little to do with security: it just generates a traditional
-HTML form that submits to ``/login``:
+**Step 2.** The template has very little to do with security: it just generates
+a traditional HTML form that submits to ``/login``:
 
 .. code-block:: twig
 
@@ -115,7 +115,7 @@ HTML form that submits to ``/login``:
     </form>
     {% endblock %}
 
-The Guard authenticator processes the form submit::
+**Step 3.** The Guard authenticator processes the form submit::
 
     // src/Security/LoginFormAuthenticator.php
     namespace App\Security;
@@ -211,6 +211,63 @@ The Guard authenticator processes the form submit::
             return $this->router->generate('app_login');
         }
     }
+
+**Step 4.** Updates the main security config file to enable the Guard authenticator:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    guard:
+                        authenticators:
+                            - App\Security\LoginFormAuthenticator
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <firewall name="main">
+                    <!-- ... -->
+                    <guard>
+                        <authenticator class="App\Security\LoginFormAuthenticator" />
+                    </guard>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        use App\Security\LoginFormAuthenticator;
+
+        $container->loadFromExtension('security', [
+            // ...
+            'firewalls' => [
+                'main' => [
+                    // ...,
+                    'guard' => [
+                        'authenticators' => [
+                            LoginFormAuthenticator::class,
+                        ]
+                    ],
+                ],
+            ],
+        ]);
 
 Finishing the Login Form
 ------------------------
