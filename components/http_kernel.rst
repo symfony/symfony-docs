@@ -581,7 +581,7 @@ below for more details).
     **ExceptionListener in Security**
 
     The other important listener is the
-    :class:`Symfony\\Component\\Security\\Http\\Firewall\\ExceptionListener`.
+    :class:`Symfony\\Component\\Security\\Http\\Firewall\\ExceptionListener` comes from the Security component.
     The goal of this listener is to handle security exceptions and, when
     appropriate, *help* the user to authenticate (e.g. redirect to the login
     page).
