@@ -375,7 +375,7 @@ Some file systems (such as some types of NFS) do not support locking.
     always be locked on the same machine or to use a well configured shared file
     system.
 
-Files on file the system can be removed during a maintenance operation. For instance, 
+Files on the file system can be removed during a maintenance operation. For instance,
 to clean up the ``/tmp`` directory or after a reboot of the machine when a directory
 uses tmpfs. It's not an issue if the lock is released when the process ended, but
 it is in case of ``Lock`` reused between requests.
