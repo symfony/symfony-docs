@@ -29,6 +29,8 @@ The ``EmailType`` field is a text field that is rendered using the HTML5
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
 +-------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Inherited Options
 -----------------
 

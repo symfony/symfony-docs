@@ -31,6 +31,8 @@ The ``FileType`` represents a file input in your form.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Basic Usage
 -----------
 

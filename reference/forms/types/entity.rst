@@ -54,6 +54,8 @@ objects from the database.
 | Class       | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
 +-------------+------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Basic Usage
 -----------
 

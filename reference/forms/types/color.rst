@@ -36,6 +36,8 @@ element.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ColorType` |
 +-------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Inherited Options
 -----------------
 

@@ -81,6 +81,15 @@ Once the extension is registered, any method that you've overridden (e.g.
 ``buildForm()``) will be called whenever *any* field of the given type
 (``FileType``) is built.
 
+.. tip::
+
+    Run the following command to verify that the form type extension was
+    successfully registered in the application:
+
+    .. code-block:: terminal
+
+        $ php bin/console debug:form
+
 Adding the extension Business Logic
 -----------------------------------
 

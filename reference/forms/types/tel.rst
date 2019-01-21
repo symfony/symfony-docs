@@ -35,6 +35,8 @@ to input phone numbers.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TelType`   |
 +-------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Inherited Options
 -----------------
 

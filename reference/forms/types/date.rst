@@ -47,6 +47,8 @@ and can understand a number of different input formats via the `input`_ option.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
 +----------------------+-----------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Basic Usage
 -----------
 

@@ -40,6 +40,8 @@ If you want to have a boolean field, use :doc:`CheckboxType </reference/forms/ty
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
 +-------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Inherited Options
 -----------------
 

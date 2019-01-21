@@ -87,6 +87,15 @@ The goal of this field was to extend the choice type to enable selection of the
 shipping type. This is achieved by fixing the ``choices`` to a list of available
 shipping options.
 
+.. tip::
+
+    Run the following command to verify that the form type was successfully
+    registered in the application:
+
+    .. code-block:: terminal
+
+        $ php bin/console debug:form
+
 Creating a Template for the Field
 ---------------------------------
 

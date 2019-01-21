@@ -31,6 +31,8 @@ The ``PasswordType`` field renders an input password text box.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Field Options
 -------------
 
