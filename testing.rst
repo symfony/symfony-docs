@@ -59,7 +59,7 @@ want to test the overall behavior of your application, see the section about
 
 Writing Symfony unit tests is no different from writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
-called ``Calculator`` in the ``Util/`` directory of the app bundle::
+called ``Calculator`` in the ``Util/`` directory (There is no utill directory, by default while installing symfony.You have to manually create it inside src folder)of the app bundle::
 
     // src/Util/Calculator.php
     namespace App\Util;
