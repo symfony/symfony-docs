@@ -33,3 +33,7 @@
   * :doc:`Respectful Review comments </contributing/community/review-comments>`
   * :doc:`Community Reviews </contributing/community/reviews>`
   * :doc:`Other Resources </contributing/community/other>`
+
+* **Diversity**
+
+  * :doc:`Governance </contributing/diversity/governance>`
