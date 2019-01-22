@@ -737,6 +737,36 @@ class to the ``div`` element around each row:
 
 .. tip::
 
+    If you want to customize some instances of the same form only (without
+    the need to create a new form type) you can set the ``block_prefix``
+    option in your form type::
+
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\FormBuilderInterface;
+
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder->add('name', TextType::class, array(
+                'block_prefix' => 'wrapped_text',
+            ));
+        }
+
+    .. versionadded:: 4.3
+
+        The ``block_prefix`` option was introduced in Symfony 4.3.
+
+    Then the block name will be ``wrapped_text_row``.
+
+    .. code-block:: html+twig
+
+        {% block wrapped_text_row %}
+            <div class="wrapped">
+                {{ form_row(form) }}
+            </div>
+        {% endblock wrapped_text_row %}
+
+.. tip::
+
     See :ref:`form-theming-methods` for how to apply this customization.
 
 Adding a "Required" Asterisk to Field Labels

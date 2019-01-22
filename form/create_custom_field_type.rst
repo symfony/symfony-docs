@@ -89,6 +89,12 @@ shipping options.
 
 .. tip::
 
+    If the purpose of this new form type was to customize the rendering of some
+    fields only, skip this step and use ``block_name`` or ``block_prefix`` option
+    instead. For more information, see :ref:`form-customization-form-themes`.
+
+.. tip::
+
     Run the following command to verify that the form type was successfully
     registered in the application:
 
