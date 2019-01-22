@@ -236,7 +236,7 @@ and tag it with ``form.type_guesser``:
 .. tip::
 
     Run the following command to verify that the form type guesser was
-    successfullyregistered in the application:
+    successfully registered in the application:
 
     .. code-block:: terminal
 
