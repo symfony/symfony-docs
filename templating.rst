@@ -98,7 +98,12 @@ it:
 
 Twig comes with a long list of `tags`_, `filters`_ and `functions`_ that are available
 by default. You can even add your own *custom* filters, functions (and more) via
-a :doc:`Twig Extension </templating/twig_extension>`.
+a :doc:`Twig Extension </templating/twig_extension>`. Run the following command
+to list them all:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:twig
 
 Twig code will look similar to PHP code, with subtle, nice differences. The following
 example uses a standard ``for`` tag and the ``cycle()`` function to print ten div tags,

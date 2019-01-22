@@ -232,3 +232,12 @@ and tag it with ``form.type_guesser``:
             ->getFormFactory();
 
         // ...
+
+.. tip::
+
+    Run the following command to verify that the form type guesser was
+    successfullyregistered in the application:
+
+    .. code-block:: terminal
+
+        $ php bin/console debug:form

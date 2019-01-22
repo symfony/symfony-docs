@@ -35,6 +35,8 @@ accuracy.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType` |
 +-------------+------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Example Usage
 -------------
 

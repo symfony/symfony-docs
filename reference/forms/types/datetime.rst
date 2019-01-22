@@ -56,6 +56,8 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Field Options
 -------------
 

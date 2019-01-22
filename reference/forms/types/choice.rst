@@ -50,6 +50,8 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`         |
 +-------------+------------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Example Usage
 -------------
 

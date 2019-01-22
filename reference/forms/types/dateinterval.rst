@@ -51,6 +51,8 @@ or an array (see `input`_).
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateIntervalType`       |
 +----------------------+----------------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Basic Usage
 -----------
 

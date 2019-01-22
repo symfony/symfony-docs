@@ -21,6 +21,8 @@ A submit button.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType` |
 +----------------------+----------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 The Submit button has an additional method
 :method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` that lets
 you check whether this button was used to submit the form. This is especially

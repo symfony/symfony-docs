@@ -43,6 +43,8 @@ how the input and output of the data is handled.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Field Options
 -------------
 

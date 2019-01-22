@@ -46,6 +46,8 @@ on all types for which ``FormType`` is the parent.
 | Class     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType` |
 +-----------+--------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Field Options
 -------------
 

@@ -40,6 +40,8 @@ This field adds a percentage sign "``%``" after the input box.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
 +-------------+-----------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Field Options
 -------------
 

@@ -23,6 +23,8 @@ The hidden type represents a hidden input field.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
 +-------------+----------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Overridden Options
 ------------------
 

@@ -30,6 +30,8 @@ Read about the input search field at `DiveIntoHTML5.info`_
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SearchType` |
 +-------------+----------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Inherited Options
 -----------------
 
