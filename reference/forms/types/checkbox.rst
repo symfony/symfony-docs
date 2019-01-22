@@ -37,6 +37,8 @@ if you want to handle submitted values like "0" or "false").
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Example Usage
 -------------
 

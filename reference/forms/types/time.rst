@@ -48,6 +48,8 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
 +----------------------+-----------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Basic Usage
 -----------
 

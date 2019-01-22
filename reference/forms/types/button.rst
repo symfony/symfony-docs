@@ -19,6 +19,8 @@ A simple, non-responsive button.
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType` |
 +----------------------+----------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Inherited Options
 -----------------
 

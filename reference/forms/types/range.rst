@@ -29,6 +29,8 @@ The ``RangeType`` field is a slider that is rendered using the HTML5
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType` |
 +-------------+---------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Basic Usage
 -----------
 

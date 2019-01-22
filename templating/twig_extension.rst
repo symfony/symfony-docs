@@ -103,6 +103,15 @@ successfully registered:
 
 You can now start using your filter in any Twig template.
 
+.. tip::
+
+    Run the following command to verify that the filters and functions created
+    by your extensions are successfully registered:
+
+    .. code-block:: terminal
+
+        $ php bin/console debug:twig
+
 .. _lazy-loaded-twig-extensions:
 
 Creating Lazy-Loaded Twig Extensions

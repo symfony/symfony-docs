@@ -57,6 +57,8 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LocaleType`   |
 +-------------+------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 Field Options
 -------------
 

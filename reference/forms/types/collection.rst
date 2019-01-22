@@ -40,6 +40,8 @@ photos).
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`    |
 +-------------+-----------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 .. note::
 
     If you are working with a collection of Doctrine entities, pay special

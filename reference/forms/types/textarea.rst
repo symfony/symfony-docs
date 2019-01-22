@@ -29,6 +29,8 @@ Renders a ``textarea`` HTML element.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
 +-------------+------------------------------------------------------------------------+
 
+.. include:: /reference/forms/types/options/_debug_form.rst.inc
+
 .. tip::
 
     If you prefer to use an **advanced WYSIWYG editor** instead of a plain
