@@ -185,7 +185,7 @@ when constructing the normalizer::
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
     $normalizer = new ObjectNormalizer($classMetadataFactory);
     $serializer = new Serializer([$normalizer]);
-    $person = $serializer->deserialize($data, 'Acme\Person', 'xml', [
+    $person = $serializer->deserialize($data, 'App\Model\Person', 'xml', [
         'allow_extra_attributes' => false,
     ]);
 
