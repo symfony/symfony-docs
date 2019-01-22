@@ -549,7 +549,7 @@ below for more details).
     There are two main listeners to ``kernel.exception`` when using the
     Symfony Framework.
 
-    **ExceptionListener in HttpKernel**
+    **ExceptionListener in the HttpKernel Component**
 
     The first comes core to the HttpKernel component
     and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`.
@@ -578,7 +578,7 @@ below for more details).
        controller to render is passed as a constructor argument to this listener.
        This controller will return the final ``Response`` for this error page.
 
-    **ExceptionListener in Security**
+    **ExceptionListener in the Security Component**
 
     The other important listener is the
     :class:`Symfony\\Component\\Security\\Http\\Firewall\\ExceptionListener`.
