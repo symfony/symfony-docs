@@ -166,6 +166,21 @@ above.
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
 argument.
 
+.. _reference-forms-twig-help:
+
+form_help(view, variables)
+--------------------------
+
+Renders the help message of a given field.
+
+.. code-block:: twig
+
+    {{ form_help(form.name) }}
+
+    {# change the help message #}
+    {{ form_help(form.name, {help: 'This is a help message'}) }}
+
+
 .. _reference-forms-twig-rest:
 
 form_rest(view, variables)
