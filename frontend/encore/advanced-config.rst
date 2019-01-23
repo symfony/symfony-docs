@@ -18,7 +18,7 @@ modify the config after fetching it from Encore:
 
     // fetch the config, then modify it!
     var config = Encore.getWebpackConfig();
-    config.watchOptions = { poll: true, ignored: /node_modules/ };
+    config.devServer.watchOptions = { poll: true, ignored: /node_modules/ };
 
     // other examples: add an alias or extension
     // config.resolve.alias.local = path.resolve(__dirname, './resources/src');
