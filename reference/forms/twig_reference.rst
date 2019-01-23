@@ -180,7 +180,6 @@ Renders the help message of a given field.
     {# change the help message #}
     {{ form_help(form.name, {help: 'This is a help message'}) }}
 
-
 .. _reference-forms-twig-rest:
 
 form_rest(view, variables)
