@@ -66,7 +66,7 @@ If you reload the page, the perceived performance will improve because the
 server responded with both the HTML page and the CSS file when the browser only
 requested the HTML page.
 
-Additionnaly, according to `the Priority Hints specification`_, you can signal
+Additionally, according to `the Priority Hints specification`_, you can signal
 the priority of the resource to download using the ``importance`` attribute:
 
 .. code:: twig
