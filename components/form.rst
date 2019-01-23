@@ -56,7 +56,7 @@ support for very important features:
 The Symfony Form component relies on other libraries to solve these problems.
 Most of the time you will use Twig and the Symfony
 :doc:`HttpFoundation </components/http_foundation>`,
-Translation and Validator components, but you can replace any of these with
+:doc:`Translation </components/translation>` and :doc:`Validator </components/validator>` components, but you can replace any of these with
 a different library of your choice.
 
 The following sections explain how to plug these libraries into the form
