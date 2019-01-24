@@ -4,859 +4,418 @@
 How to Customize Form Rendering
 ===============================
 
-Symfony gives you a wide variety of ways to customize how a form is rendered.
-In this guide, you'll learn how to customize every possible part of your
-form with as little effort as possible whether you use Twig or PHP as your
-templating engine.
+Symfony gives you several ways to customize how a form is rendered. In this
+article you'll learn how to make single customizations to one or more fields of
+your forms. If you need to customize all your forms in the same way, create
+instead a :doc:`form theme </form/form_themes>` or use any of the built-in
+themes, such as the :doc:`Bootstrap theme for Symfony forms </form/bootstrap4>`.
 
-Form Rendering Basics
----------------------
+.. _form-rendering-basics:
 
-Recall that the label, error and HTML widget of a form field can
-be rendered by using the ``form_row()`` Twig function or the ``row`` PHP helper
-method:
+Form Rendering Functions
+------------------------
 
-.. code-block:: twig
-
-    {{ form_row(form.age) }}
-
-You can also render each of the four parts of the field individually:
-
-.. code-block:: html+twig
-
-    <div>
-        {{ form_label(form.age) }}
-        {{ form_errors(form.age) }}
-        {{ form_widget(form.age) }}
-        {{ form_help(form.age) }}
-    </div>
-
-In both cases, the form label, errors and HTML widget are rendered by using
-a set of markup that ships standard with Symfony. For example, both of the
-above templates would render:
-
-.. code-block:: html
-
-    <div>
-        <label for="form_age">Age</label>
-        <ul>
-            <li>This field is required</li>
-        </ul>
-        <input type="number" id="form_age" name="form[age]" />
-    </div>
-
-To quickly prototype and test a form, you can render the entire form with
-just one line:
+A single call to the :ref:`form() Twig function <reference-forms-twig-form>` is
+enough to render an entire form, including all its fields and error messages:
 
 .. code-block:: twig
 
-    {# renders all fields #}
-    {{ form_widget(form) }}
-
-    {# renders all fields *and* the form start and end tags #}
+    {# form is a variable passed from the controller and created
+      by calling to the $form->createView() method #}
     {{ form(form) }}
 
-The remainder of this recipe will explain how every part of the form's markup
-can be modified at several different levels. For more information about form
-rendering in general, see :doc:`/form/rendering`.
-
-.. _form-customization-form-themes:
-
-What are Form Themes?
----------------------
-
-Symfony uses form fragments - a small piece of a template that renders just
-one part of a form - to render each part of a form - field labels, errors,
-``input`` text fields, ``select`` tags, etc.
-
-The fragments are defined as blocks in Twig and as template files in PHP.
-
-A *theme* is nothing more than a set of fragments that you want to use when
-rendering a form. In other words, if you want to customize one portion of
-how a form is rendered, you'll import a *theme* which contains a customization
-of the appropriate form fragments.
-
-Symfony comes with some **built-in form themes** that define each and every
-fragment needed to render every part of a form:
-
-* `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element.
-* `form_table_layout.html.twig`_, wraps the entire form inside a ``<table>``
-  element and each form field inside a ``<tr>`` element.
-* `bootstrap_3_layout.html.twig`_, wraps each form field inside a ``<div>`` element
-  with the appropriate CSS classes to apply the default `Bootstrap 3 CSS framework`_
-  styles.
-* `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
-  but the CSS classes applied are the ones used to display the forms horizontally
-  (i.e. the label and the widget in the same row).
-* `bootstrap_4_layout.html.twig`_, same as ``bootstrap_3_layout.html.twig``, but
-  updated for `Bootstrap 4 CSS framework`_ styles.
-* `bootstrap_4_horizontal_layout.html.twig`_, same as ``bootstrap_3_horizontal_layout.html.twig``
-  but updated for Bootstrap 4 styles.
-* `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>`` element
-  with the appropriate CSS classes to apply the default `Foundation CSS framework`_
-  styles.
-
-.. caution::
-
-    When you use the Bootstrap form themes and render the fields manually,
-    calling ``form_label()`` for a checkbox/radio field doesn't show anything.
-    Due to Bootstrap internals, the label is already shown by ``form_widget()``.
-
-.. tip::
-
-    Read more about the :doc:`Bootstrap 4 form theme </form/bootstrap4>`.
-
-In the next section you will learn how to customize a theme by overriding
-some or all of its fragments.
-
-For example, when the widget of an ``integer`` type field is rendered, an ``input``
-``number`` field is generated
+The next step is to use the :ref:`form_start() <reference-forms-twig-start>`,
+:ref:`form_end() <reference-forms-twig-end>`,
+:ref:`form_errors() <reference-forms-twig-errors>` and
+:ref:`form_row() <reference-forms-twig-row>` Twig functions to render the
+different form parts so you can customize them adding HTML elements and attributes:
 
 .. code-block:: html+twig
 
-    {{ form_widget(form.age) }}
-
-renders:
-
-.. code-block:: html
-
-    <input type="number" id="form_age" name="form[age]" required="required" value="33" />
-
-Internally, Symfony uses the ``integer_widget`` fragment to render the field.
-This is because the field type is ``integer`` and you're rendering its ``widget``
-(as opposed to its ``label`` or ``errors``).
-
-In Twig that would default to the block ``integer_widget`` from the `form_div_layout.html.twig`_
-template.
-
-In PHP it would rather be the ``integer_widget.html.php`` file located in
-the ``FrameworkBundle/Resources/views/Form`` folder.
-
-The default implementation of the ``integer_widget`` fragment looks like this:
-
-.. code-block:: twig
-
-    {# form_div_layout.html.twig #}
-    {% block integer_widget %}
-        {% set type = type|default('number') %}
-        {{ block('form_widget_simple') }}
-    {% endblock integer_widget %}
-
-As you can see, this fragment itself renders another fragment - ``form_widget_simple``:
-
-.. code-block:: html+twig
-
-    {# form_div_layout.html.twig #}
-    {% block form_widget_simple %}
-        {% set type = type|default('text') %}
-        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-    {% endblock form_widget_simple %}
-
-The point is, the fragments dictate the HTML output of each part of a form. To
-customize the form output, you need to identify and override the correct
-fragment. A set of these form fragment customizations is known as a form "theme".
-When rendering a form, you can choose which form theme(s) you want to apply.
-
-In Twig a theme is a single template file and the fragments are the blocks defined
-in this file.
-
-In PHP a theme is a folder and the fragments are individual template files in
-this folder.
-
-.. _form-customization-sidebar:
-
-.. sidebar:: Knowing which Block to Customize
-
-    In this example, the customized fragment name is ``integer_widget`` because
-    you want to override the HTML ``widget`` for all ``integer`` field types. If
-    you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
-
-    The ``integer`` part comes from the class name: ``IntegerType`` becomes ``integer``,
-    based on a standard.
-
-    As you can see, the fragment name is a combination of the field type and
-    which part of the field is being rendered (e.g. ``widget``, ``label``,
-    ``errors``, ``row``). For example, to change how errors are rendered specifically
-    for input fields of type ``text``, you would customize the ``text_errors`` fragment.
-
-    More commonly, however, you'll want to customize how errors are displayed
-    across *all* fields. You can do this by customizing the ``form_errors``
-    fragment. This takes advantage of field type inheritance. Specifically,
-    since the ``text`` type extends from the ``form`` type, the Form component
-    will first look for the type-specific fragment (e.g. ``text_errors``) before
-    falling back to its parent fragment name if it doesn't exist (e.g. ``form_errors``).
-
-    For more information on this topic, see :ref:`form-template-blocks`.
-
-.. _form-theming-methods:
-
-Form Theming
-------------
-
-To see the power of form theming, suppose you want to wrap every input ``number``
-field with a ``div`` tag. The key to doing this is to customize the
-``integer_widget`` fragment.
-
-Form Theming in Twig
---------------------
-
-When customizing the form field block in Twig, you have two options on *where*
-the customized form block can live:
-
-+--------------------------------------+-----------------------------------+-------------------------------------------+
-| Method                               | Pros                              | Cons                                      |
-+======================================+===================================+===========================================+
-| Inside the same template as the form | Quick and easy                    | Can't be reused in other templates        |
-+--------------------------------------+-----------------------------------+-------------------------------------------+
-| Inside a separate template           | Can be reused by many templates   | Requires an extra template to be created  |
-+--------------------------------------+-----------------------------------+-------------------------------------------+
-
-Both methods have the same effect but are better in different situations.
-
-Method 1: Inside the same Template as the Form
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The easiest way to customize the ``integer_widget`` block is to customize it
-directly in the template that's actually rendering the form.
-
-.. code-block:: html+twig
-
-    {% extends 'base.html.twig' %}
-
-    {% form_theme form _self %}
-
-    {% block integer_widget %}
-        <div class="integer_widget">
-            {% set type = type|default('number') %}
-            {{ block('form_widget_simple') }}
+    {{ form_start(form) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(form) }}
         </div>
-    {% endblock %}
 
-    {% block content %}
-        {# ... render the form #}
-
-        {{ form_row(form.age) }}
-    {% endblock %}
-
-By using the special ``{% form_theme form _self %}`` tag, Twig looks inside
-the same template for any overridden form blocks. Assuming the ``form.age``
-field is an ``integer`` type field, when its widget is rendered, the customized
-``integer_widget`` block will be used.
-
-The disadvantage of this method is that the customized form block can't be
-reused when rendering other forms in other templates. In other words, this method
-is most useful when making form customizations that are specific to a single
-form in your application. If you want to reuse a form customization across
-several (or all) forms in your application, read on to the next section.
-
-Method 2: Inside a separate Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can also choose to put the customized ``integer_widget`` form block in a
-separate template entirely. The code and end-result are the same, but you
-can now re-use the form customization across many templates:
-
-.. code-block:: html+twig
-
-    {# templates/form/fields.html.twig #}
-    {% block integer_widget %}
-        <div class="integer_widget">
-            {% set type = type|default('number') %}
-            {{ block('form_widget_simple') }}
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.task) }}
+            </div>
+            <div class="col" id="some-custom-id">
+                {{ form_row(form.dueDate) }}
+            </div>
         </div>
-    {% endblock %}
+    {{ form_end(form) }}
 
-Now that you've created the customized form block, you need to tell Symfony
-to use it. Inside the template where you're actually rendering your form,
-tell Symfony to use the template via the ``form_theme`` tag:
+The ``form_row()`` function outputs the entire field contents, including the
+label, help message, HTML elements and error messages. All this can be further
+customized using other Twig functions, as illustrated in the following diagram:
 
-.. code-block:: html+twig
+.. raw:: html
 
-    {% form_theme form 'form/fields.html.twig' %}
+    <object data="../_images/form/form-field-parts.svg" type="image/svg+xml"></object>
 
-    {{ form_widget(form.age) }}
-
-When the ``form.age`` widget is rendered, Symfony will use the ``integer_widget``
-block from the new template and the ``input`` tag will be wrapped in the
-``div`` element specified in the customized block.
-
-Multiple Templates
-..................
-
-A form can also be customized by applying several templates. To do this, pass the
-name of all the templates as an array using the ``with`` keyword:
+The :ref:`form_label() <reference-forms-twig-label>`,
+:ref:`form_widget() <reference-forms-twig-widget>`,
+:ref:`form_help() <reference-forms-twig-help>` and
+:ref:`form_errors() <reference-forms-twig-errors>` Twig functions give you total
+control over how each form field is rendered, so you can fully customize them:
 
 .. code-block:: html+twig
 
-    {% form_theme form with ['common.html.twig', 'form/fields.html.twig'] %}
+    <div class="form-control">
+        <i class="fa fa-calendar"></i> {{ form_label(form.dueDate) }}
+        {{ form_widget(form.dueDate) }}
 
-    {# ... #}
+        <small>{{ form_help(form.dueDate) }}</small>
 
-The templates can also be located in different bundles, use the Twig namespaced
-path to reference these templates, e.g. ``@AcmeFormExtra/form/fields.html.twig``.
-
-Disabling usage of globally defined themes
-..........................................
-
-Sometimes you may want to disable the use of the globally defined form themes in order
-to have more control over rendering of a form. You might want this, for example,
-when creating an admin interface for a bundle which can be installed on a wide range
-of Symfony apps (and so you can't control what themes are defined globally).
-
-You can do this by including the ``only`` keyword after the list form themes:
-
-.. code-block:: html+twig
-
-    {% form_theme form with ['common.html.twig', 'form/fields.html.twig'] only %}
-
-    {# ... #}
-
-.. caution::
-
-    When using the ``only`` keyword, none of Symfony's built-in form themes
-    (``form_div_layout.html.twig``, etc.) will be applied. In order to render
-    your forms correctly, you need to either provide a fully-featured form theme
-    yourself, or extend one of the built-in form themes with Twig's ``use``
-    keyword instead of ``extends`` to re-use the original theme contents.
-
-    .. code-block:: html+twig
-
-        {# templates/form/common.html.twig #}
-        {% use "form_div_layout.html.twig" %}
-
-        {# ... #}
-
-Child Forms
-...........
-
-You can also apply a form theme to a specific child of your form:
-
-.. code-block:: html+twig
-
-    {% form_theme form.a_child_form 'form/fields.html.twig' %}
-
-This is useful when you want to have a custom theme for a nested form that's
-different than the one of your main form. Specify both your themes:
-
-.. code-block:: html+twig
-
-    {% form_theme form 'form/fields.html.twig' %}
-
-    {% form_theme form.a_child_form 'form/fields_child.html.twig' %}
-
-.. _referencing-base-form-blocks-twig-specific:
-
-Referencing base Form Blocks
-----------------------------
-
-So far, to override a particular form block, the best method is to copy
-the default block from `form_div_layout.html.twig`_, paste it into a different template,
-and then customize it. In many cases, you can avoid doing this by referencing
-the base block when customizing it.
-
-This is not a lot of work, but varies slightly depending on if your form block customizations
-are in the same template as the form or a separate template.
-
-Referencing Blocks from inside the same Template as the Form
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Import the blocks by adding a ``use`` tag in the template where you're rendering
-the form:
-
-.. code-block:: twig
-
-    {% use 'form_div_layout.html.twig' with integer_widget as base_integer_widget %}
-
-Now, when the blocks from `form_div_layout.html.twig`_ are imported, the
-``integer_widget`` block is called ``base_integer_widget``. This means that when
-you redefine the ``integer_widget`` block, you can reference the default markup
-via ``base_integer_widget``:
-
-.. code-block:: html+twig
-
-    {% block integer_widget %}
-        <div class="integer_widget">
-            {{ block('base_integer_widget') }}
+        <div class="form-error">
+            {{ form_errors(form.dueDate) }}
         </div>
-    {% endblock %}
-
-Referencing base Blocks from an external Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If your form customizations live inside an external template, you can reference
-the base block by using the ``parent()`` Twig function:
-
-.. code-block:: html+twig
-
-    {# templates/form/fields.html.twig #}
-    {% extends 'form_div_layout.html.twig' %}
-
-    {% block integer_widget %}
-        <div class="integer_widget">
-            {{ parent() }}
-        </div>
-    {% endblock %}
+    </div>
 
 .. note::
 
-    It is not possible to reference the base block when using PHP as the
-    templating engine. You have to manually copy the content from the base block
-    to your new template file.
+    Later in this article you can find the full reference of these Twig
+    functions with more usage examples.
 
-.. _twig:
+Form Rendering Variables
+------------------------
 
-Making Application-wide Customizations
+Some of the Twig functions mentioned in the previous section allow to pass
+variables to configure their behavior. For example, the ``form_label()``
+function lets you define a custom label to override the one defined in the form:
+
+.. code-block:: html+twig
+
+    {{ form_label(form.task, 'My Custom Task Label') }}
+
+Some :doc:`form field types </reference/forms/types>` have additional rendering
+options that can be passed to the widget. These options are documented with each
+type, but one common option is ``attr``, which allows you to modify HTML
+attributes on the form element. The following would add the ``task_field`` CSS
+class to the rendered input text field:
+
+.. code-block:: html+twig
+
+    {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
+
+.. note::
+
+    If you're rendering an entire form at once (or an entire embedded form),
+    the ``variables`` argument will only be applied to the form itself and
+    not its children. In other words, the following will **not** pass a
+    "foo" class attribute to all of the child fields in the form:
+
+    .. code-block:: twig
+
+        {# does **not** work - the variables are not recursive #}
+        {{ form_widget(form, { 'attr': {'class': 'foo'} }) }}
+
+If you need to render form fields "by hand" then you can access individual
+values for fields (such as the ``id``, ``name`` and ``label``) using its
+``vars``  property. For example to get the ``id``:
+
+.. code-block:: html+twig
+
+    {{ form.task.vars.id }}
+
+.. note::
+
+    Later in this article you can find the full reference of these Twig
+    variables and their description.
+
+Form Themes
+-----------
+
+The Twig functions and variables shown in the previous sections can help you
+customize one or more fields of your forms. However, this customization can't
+be applied to the rest of the forms of your app.
+
+If you want to customize all forms in the same way (for example to adapt the
+generated HTML code to the CSS framework used in your app) you must create a
+:doc:`form theme </form/form_themes>`.
+
+.. _reference-form-twig-functions-variables:
+
+Form Functions and Variables Reference
 --------------------------------------
 
-If you'd like a certain form customization to be global to your application,
-you can accomplish this by making the form customizations in an external
-template and then importing it inside your application configuration.
+.. _reference-form-twig-functions:
 
-By using the following configuration, any customized form blocks inside the
-``form/fields.html.twig`` template will be used globally when a form is
-rendered.
+Functions
+~~~~~~~~~
 
-.. configuration-block::
+.. _reference-forms-twig-form:
 
-    .. code-block:: yaml
+form(form_view, variables)
+..........................
 
-        # config/packages/twig.yaml
-        twig:
-            form_themes:
-                - 'form/fields.html.twig'
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <twig:form-theme>form/fields.html.twig</twig:form-theme>
-                <!-- ... -->
-            </twig:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'form/fields.html.twig',
-            ],
-
-            // ...
-        ]);
-
-By default, Twig uses a *div* layout when rendering forms. Some people, however,
-may prefer to render forms in a *table* layout. Use the ``form_table_layout.html.twig``
-resource to use such a layout:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/twig.yaml
-        twig:
-            form_themes:
-                - 'form_table_layout.html.twig'
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <twig:form-theme>form_table_layout.html.twig</twig:form-theme>
-                <!-- ... -->
-            </twig:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'form_table_layout.html.twig',
-            ],
-
-            // ...
-        ]);
-
-If you only want to make the change in one template, add the following line to
-your template file rather than adding the template as a resource:
-
-.. code-block:: html+twig
-
-    {% form_theme form 'form_table_layout.html.twig' %}
-
-Note that the ``form`` variable in the above code is the form view variable
-that you passed to your template.
-
-How to Customize an individual Field
-------------------------------------
-
-So far, you've seen the different ways you can customize the widget output
-of all text field types. You can also customize individual fields. For example,
-suppose you have two ``text`` fields in a ``product`` form - ``name`` and
-``description`` - but you only want to customize one of the fields. This can be
-accomplished by customizing a fragment whose name is a combination of the field's
-``id`` attribute and which part of the field is being customized. For example, to
-customize the ``name`` field only:
-
-.. code-block:: html+twig
-
-    {% form_theme form _self %}
-
-    {% block _product_name_widget %}
-        <div class="text_widget">
-            {{ block('form_widget_simple') }}
-        </div>
-    {% endblock %}
-
-    {{ form_widget(form.name) }}
-
-Here, the ``_product_name_widget`` fragment defines the template to use for the
-field whose *id* is ``product_name`` (and name is ``product[name]``).
-
-.. tip::
-
-    The ``product`` portion of the field is the form name, which may be set
-    manually or generated automatically based on your form type name (e.g.
-    ``ProductType`` equates to ``product``). If you're not sure what your
-    form name is, look at the HTML code rendered for your form.
-
-    If you want to change the ``product`` or ``name`` portion of the block
-    name ``_product_name_widget`` you can set the ``block_name`` option in your
-    form type::
-
-        use Symfony\Component\Form\FormBuilderInterface;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            // ...
-
-            $builder->add('name', TextType::class, [
-                'block_name' => 'custom_name',
-            ]);
-        }
-
-    Then the block name will be ``_product_custom_name_widget``.
-
-You can also override the markup for an entire field row using the same method:
-
-.. code-block:: html+twig
-
-    {% form_theme form _self %}
-
-    {% block _product_name_row %}
-        <div class="name_row">
-            {{ form_label(form) }}
-            {{ form_errors(form) }}
-            {{ form_widget(form) }}
-            {{ form_help(form) }}
-        </div>
-    {% endblock %}
-
-    {{ form_row(form.name) }}
-
-.. _form-custom-prototype:
-
-How to Customize a Collection Prototype
----------------------------------------
-
-When using a :doc:`collection of forms </form/form_collections>`,
-the prototype can be overridden with a completely custom prototype by
-overriding a block. For example, if your form field is named ``tasks``, you
-will be able to change the widget for each task as follows:
-
-.. code-block:: html+twig
-
-    {% form_theme form _self %}
-
-    {% block _tasks_entry_widget %}
-        <tr>
-            <td>{{ form_widget(form.task) }}</td>
-            <td>{{ form_widget(form.dueDate) }}</td>
-        </tr>
-    {% endblock %}
-
-Not only can you override the rendered widget, but you can also change the
-complete form row or the label as well. For the ``tasks`` field given above,
-the block names would be the following:
-
-================  =======================
-Part of the Form  Block Name
-================  =======================
-``label``         ``_tasks_entry_label``
-``widget``        ``_tasks_entry_widget``
-``row``           ``_tasks_entry_row``
-================  =======================
-
-Other common Customizations
----------------------------
-
-So far, this recipe has shown you several different ways to customize a single
-piece of how a form is rendered. The key is to customize a specific fragment that
-corresponds to the portion of the form you want to control (see
-:ref:`naming form blocks <form-customization-sidebar>`).
-
-In the next sections, you'll see how you can make several common form customizations.
-To apply these customizations, use one of the methods described in the
-:ref:`form-theming-methods` section.
-
-Customizing Error Output
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. note::
-
-    The Form component only handles *how* the validation errors are rendered,
-    and not the actual validation error messages. The error messages themselves
-    are determined by the validation constraints you apply to your objects.
-    For more information, see the article on :doc:`validation </validation>`.
-
-There are many different ways to customize how errors are rendered when a
-form is submitted with errors. The error messages for a field are rendered
-when you use the ``form_errors()`` helper:
+Renders the HTML of a complete form.
 
 .. code-block:: twig
 
-    {{ form_errors(form.age) }}
+    {# render the form and change the submission method #}
+    {{ form(form, {'method': 'GET'}) }}
 
-By default, the errors are rendered inside an unordered list:
-
-.. code-block:: html
-
-    <ul>
-        <li>This field is required</li>
-    </ul>
-
-To override how errors are rendered for *all* fields, copy, paste
-and customize the ``form_errors`` fragment.
-
-.. code-block:: html+twig
-
-    {% form_theme form _self %}
-
-    {# form_errors.html.twig #}
-    {% block form_errors %}
-        {% spaceless %}
-            {% if errors|length > 0 %}
-            <ul>
-                {% for error in errors %}
-                    <li>{{ error.message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        {% endspaceless %}
-    {% endblock form_errors %}
-
-.. tip::
-
-    See :ref:`form-theming-methods` for how to apply this customization.
-
-You can also customize the error output for just one specific field type.
-To customize *only* the markup used for these errors, follow the same directions
-as above but put the contents in a relative ``_errors`` block (or file in case
-of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
-
-.. tip::
-
-    See :ref:`form-template-blocks` to find out which specific block or file you
-    have to customize.
-
-Certain errors that are more global to your form (i.e. not specific to just one
-field) are rendered separately, usually at the top of your form:
+You will mostly use this helper for prototyping or if you use custom form
+themes. If you need more flexibility in rendering the form, you should use
+the other helpers to render individual parts of the form instead:
 
 .. code-block:: twig
 
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.dueDate) }}
+
+        {{ form_row(form.submit, { 'label': 'Submit me' }) }}
+    {{ form_end(form) }}
+
+.. _reference-forms-twig-start:
+
+form_start(form_view, variables)
+................................
+
+Renders the start tag of a form. This helper takes care of printing the
+configured method and target action of the form. It will also include the
+correct ``enctype`` property if the form contains upload fields.
+
+.. code-block:: twig
+
+    {# render the start tag and change the submission method #}
+    {{ form_start(form, {'method': 'GET'}) }}
+
+.. _reference-forms-twig-end:
+
+form_end(form_view, variables)
+..............................
+
+Renders the end tag of a form.
+
+.. code-block:: twig
+
+    {{ form_end(form) }}
+
+This helper also outputs ``form_rest()`` (which is explained later in this
+article) unless you set ``render_rest`` to false:
+
+.. code-block:: twig
+
+    {# don't render unrendered fields #}
+    {{ form_end(form, {'render_rest': false}) }}
+
+.. _reference-forms-twig-label:
+
+form_label(form_view, label, variables)
+.......................................
+
+Renders the label for the given field. You can optionally pass the specific
+label you want to display as the second argument.
+
+.. code-block:: twig
+
+    {{ form_label(form.name) }}
+
+    {# The two following syntaxes are equivalent #}
+    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}}) }}
+
+    {{ form_label(form.name, null, {
+        'label': 'Your name',
+        'label_attr': {'class': 'foo'}
+    }) }}
+
+See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
+argument.
+
+.. _reference-forms-twig-help:
+
+form_help(form_view)
+....................
+
+Renders the help text for the given field.
+
+.. code-block:: twig
+
+    {{ form_help(form.name) }}
+
+.. _reference-forms-twig-errors:
+
+form_errors(form_view)
+......................
+
+Renders any errors for the given field.
+
+.. code-block:: twig
+
+    {# render only the error messages related to this field #}
+    {{ form_errors(form.name) }}
+
+    {# render any "global" errors not associated to any form field #}
     {{ form_errors(form) }}
 
-To customize *only* the markup used for these errors, follow the same directions
-as above, but now check if the ``compound`` variable is set to ``true``. If it
-is ``true``, it means that what's being currently rendered is a collection of
-fields (e.g. a whole form), and not just an individual field.
+.. _reference-forms-twig-widget:
 
-.. code-block:: html+twig
+form_widget(form_view, variables)
+.................................
 
-    {% form_theme form _self %}
-
-    {# form_errors.html.twig #}
-    {% block form_errors %}
-        {% spaceless %}
-            {% if errors|length > 0 %}
-                {% if compound %}
-                    <ul>
-                        {% for error in errors %}
-                            <li>{{ error.message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    {# ... display the errors for a single field #}
-                {% endif %}
-            {% endif %}
-        {% endspaceless %}
-    {% endblock form_errors %}
-
-Customizing the "Form Row"
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When you can manage it, the easiest way to render a form field is via the
-``form_row()`` function, which renders the label, errors and HTML widget of
-a field. To customize the markup used for rendering *all* form field rows,
-override the ``form_row`` fragment. For example, suppose you want to add a
-class to the ``div`` element around each row:
-
-.. code-block:: html+twig
-
-    {# form_row.html.twig #}
-    {% block form_row %}
-        <div class="form_row">
-            {{ form_label(form) }}
-            {{ form_errors(form) }}
-            {{ form_widget(form) }}
-            {{ form_help(form) }}
-        </div>
-    {% endblock form_row %}
-
-.. tip::
-
-    See :ref:`form-theming-methods` for how to apply this customization.
-
-Adding a "Required" Asterisk to Field Labels
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to denote all of your required fields with a required asterisk (``*``),
-you can do this by customizing the ``form_label`` fragment.
-
-If you're making the form customization inside the same template as your
-form, modify the ``use`` tag and add the following:
-
-.. code-block:: html+twig
-
-    {% use 'form_div_layout.html.twig' with form_label as base_form_label %}
-
-    {% block form_label %}
-        {{ block('base_form_label') }}
-
-        {% if label is not same as(false) and required %}
-            <span class="required" title="This field is required">*</span>
-        {% endif %}
-    {% endblock %}
-
-If you're making the form customization inside a separate template, use
-the following:
-
-.. code-block:: html+twig
-
-    {% extends 'form_div_layout.html.twig' %}
-
-    {% block form_label %}
-        {{ parent() }}
-
-        {% if label is not same as(false) and required %}
-            <span class="required" title="This field is required">*</span>
-        {% endif %}
-    {% endblock %}
-
-.. tip::
-
-    See :ref:`form-theming-methods` for how to apply this customization.
-
-.. sidebar:: Using CSS only
-
-    By default, ``label`` tags of required fields are rendered with a
-    ``required`` CSS class. Thus, you can also add an asterisk using CSS only:
-
-    .. code-block:: css
-
-        label.required:before {
-            content: "* ";
-        }
-
-Adding "help" Messages
-~~~~~~~~~~~~~~~~~~~~~~
-
-You can also customize your form widgets to have an optional "help" message.
-
-If you're making the form customization inside the same template as your
-form, modify the ``use`` tag and add the following:
-
-.. code-block:: html+twig
-
-    {% use 'form_div_layout.html.twig' with form_widget_simple as base_form_widget_simple %}
-
-    {% block form_widget_simple %}
-        {{ block('base_form_widget_simple') }}
-
-        {% if help is defined %}
-            <span class="help-block">{{ help }}</span>
-        {% endif %}
-    {% endblock %}
-
-If you're making the form customization inside a separate template, use
-the following:
-
-.. code-block:: html+twig
-
-    {% extends 'form_div_layout.html.twig' %}
-
-    {% block form_widget_simple %}
-        {{ parent() }}
-
-        {% if help is defined %}
-            <span class="help-block">{{ help }}</span>
-        {% endif %}
-    {% endblock %}
-
-To render a help message below a field, pass in a ``help`` variable:
-
-.. code-block:: twig
-
-    {{ form_widget(form.title, {'help': 'foobar'}) }}
-
-.. tip::
-
-    See :ref:`form-theming-methods` for how to apply this customization.
-
-Using Form Variables
---------------------
-
-Most of the functions available for rendering different parts of a form (e.g.
-the form widget, form label, form errors, etc.) also allow you to make certain
-customizations directly. Look at the following example:
+Renders the HTML widget of a given field. If you apply this to an entire
+form or collection of fields, each underlying form row will be rendered.
 
 .. code-block:: twig
 
     {# render a widget, but add a "foo" class to it #}
-    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
+    {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
 
-The array passed as the second argument contains form "variables". For
-more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
+The second argument to ``form_widget()`` is an array of variables. The most
+common variable is ``attr``, which is an array of HTML attributes to apply
+to the HTML widget. In some cases, certain types also have other template-related
+options that can be passed. These are discussed on a type-by-type basis.
+The ``attributes`` are not applied recursively to child fields if you're
+rendering many fields at once (e.g. ``form_widget(form)``).
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
-.. _`form_table_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_table_layout.html.twig
-.. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig
-.. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
-.. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
-.. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
-.. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.3/
-.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.1/
-.. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
-.. _`Foundation CSS framework`: http://foundation.zurb.com/
+See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
+argument.
+
+.. _reference-forms-twig-row:
+
+form_row(form_view, variables)
+..............................
+
+Renders the "row" of a given field, which is the combination of the field's
+label, errors, help and widget.
+
+.. code-block:: twig
+
+    {# render a field row, but display a label with text "foo" #}
+    {{ form_row(form.name, {'label': 'foo'}) }}
+
+The second argument to ``form_row()`` is an array of variables. The templates
+provided in Symfony only allow to override the label as shown in the example
+above.
+
+See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
+argument.
+
+.. _reference-forms-twig-rest:
+
+form_rest(form_view, variables)
+...............................
+
+This renders all fields that have not yet been rendered for the given form.
+It's a good idea to always have this somewhere inside your form as it'll
+render hidden fields for you and make any fields you forgot to render more
+obvious (since it'll render the field for you).
+
+.. code-block:: twig
+
+    {{ form_rest(form) }}
+
+Tests
+~~~~~
+
+Tests can be executed by using the ``is`` operator in Twig to create a
+condition. Read `the Twig documentation`_ for more information.
+
+.. _form-twig-selectedchoice:
+
+selectedchoice(selected_value)
+..............................
+
+This test will check if the current choice is equal to the ``selected_value``
+or if the current choice is in the array (when ``selected_value`` is an
+array).
+
+.. code-block:: twig
+
+    <option {% if choice is selectedchoice(value) %}selected="selected"{% endif %} ...>
+
+.. _form-twig-rootform:
+
+rootform
+........
+
+This test will check if the current ``form`` does not have a parent form view.
+
+.. code-block:: twig
+
+    {# DON'T DO THIS: this simple check can't differentiate between a form having
+       a parent form view and a form defining a nested form field called 'parent' #}
+
+    {% if form.parent is null %}
+        {{ form_errors(form) }}
+    {% endif %}
+
+   {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
+
+    {% if form is rootform %}
+        {{ form_errors(form) }}
+    {% endif %}
+
+.. _twig-reference-form-variables:
+.. _reference-form-twig-variables:
+
+Form Variables Reference
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following variables are common to every field type. Certain field types
+may define even more variables and some variables here only really apply to
+certain types. To know the exact variables available for each type, check out
+the code of the templates used by your :doc:`form theme </form/form_themes>`.
+
+Assuming you have a ``form`` variable in your template and you want to
+reference the variables on the ``name`` field, accessing the variables is
+done by using a public ``vars`` property on the
+:class:`Symfony\\Component\\Form\\FormView` object:
+
+.. code-block:: html+twig
+
+    <label for="{{ form.name.vars.id }}"
+        class="{{ form.name.vars.required ? 'required' }}">
+        {{ form.name.vars.label }}
+    </label>
+
+======================  ======================================================================================
+Variable                Usage
+======================  ======================================================================================
+``action``              The action of the current form.
+``attr``                A key-value array that will be rendered as HTML attributes on the field.
+``block_prefixes``      An array of all the names of the parent types.
+``cache_key``           A unique key which is used for caching.
+``compound``            Whether or not a field is actually a holder for a group of children fields
+                        (for example, a ``choice`` field, which is actually a group of checkboxes.
+``data``                The normalized data of the type.
+``disabled``            If ``true``, ``disabled="disabled"`` is added to the field.
+``errors``              An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).
+                        Note that you can't use ``form.errors`` to determine if a form is valid,
+                        since this only returns "global" errors: some individual fields may have errors.
+                        Instead, use the ``valid`` option.
+``form``                The current ``FormView`` instance.
+``full_name``           The ``name`` HTML attribute to be rendered.
+``help``                The help message that will be rendered.
+``id``                  The ``id`` HTML attribute to be rendered.
+``label``               The string label that will be rendered.
+``label_attr``          A key-value array that will be rendered as HTML attributes on the label.
+``method``              The method of the current form (POST, GET, etc.).
+``multipart``           If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.
+``name``                The name of the field (e.g. ``title``) - but not the ``name``
+                        HTML attribute, which is ``full_name``.
+``required``            If ``true``, a ``required`` attribute is added to the field to activate HTML5
+                        validation. Additionally, a ``required`` class is added to the label.
+``submitted``           Returns ``true`` or ``false`` depending on whether the whole form is submitted
+``translation_domain``  The domain of the translations for this form.
+``valid``               Returns ``true`` or ``false`` depending on whether the whole form is valid.
+``value``               The value that will be used when rendering (commonly the ``value`` HTML attribute).
+                        This only applies to the root form element.
+======================  ======================================================================================
+
+.. tip::
+
+    Behind the scenes, these variables are made available to the ``FormView``
+    object of your form when the Form component calls ``buildView()`` and
+    ``finishView()`` on each "node" of your form tree. To see what "view"
+    variables a particular field has, find the source code for the form
+    field (and its parent fields) and look at the above two functions.
+
+.. _`the Twig documentation`: https://twig.symfony.com/doc/2.x/templates.html#test-operator

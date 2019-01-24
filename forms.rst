@@ -88,7 +88,7 @@ render the actual HTML form. In Symfony, this is done by building a form
 object and then rendering it in a template. For now, this can all be done
 from inside a controller::
 
-    // src/Controller/DefaultController.php
+    // src/Controller/TaskController.php
     namespace App\Controller;
 
     use App\Entity\Task;
@@ -98,7 +98,7 @@ from inside a controller::
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-    class DefaultController extends AbstractController
+    class TaskController extends AbstractController
     {
         public function new(Request $request)
         {
@@ -113,7 +113,7 @@ from inside a controller::
                 ->add('save', SubmitType::class, ['label' => 'Create Task'])
                 ->getForm();
 
-            return $this->render('default/new.html.twig', [
+            return $this->render('task/new.html.twig', [
                 'form' => $form->createView(),
             ]);
         }
@@ -151,46 +151,33 @@ Rendering the Form
 
 Now that the form has been created, the next step is to render it. This is
 done by passing a special form "view" object to your template (notice the
-``$form->createView()`` in the controller above) and using a set of form
-helper functions:
+``$form->createView()`` in the controller above) and using a set of
+:ref:`form helper functions <reference-form-twig-functions>`:
 
 .. code-block:: html+twig
 
-    {# templates/default/new.html.twig #}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {# templates/task/new.html.twig #}
+    {{ form(form) }}
 
 .. image:: /_images/form/simple-form.png
     :align: center
 
-.. note::
+That's it! The :ref:`form() function <reference-forms-twig-form>` renders all
+fields *and* the ``<form>`` start and end tags. By default, the form method is
+``POST`` and the target URL is the same that displayed the form.
 
-    This example assumes that you submit the form in a "POST" request and to
-    the same URL that it was displayed in. You will learn later how to
-    change the request method and the target URL of the form.
+As easy as this is, it's not very flexible. Usually, you'll need more control
+about how the entire form or some of its fields look. Symfony provides several
+ways of doing that:
 
-That's it! Just three lines are needed to render the complete form:
-
-``form_start(form)``
-    Renders the start tag of the form, including the correct enctype attribute
-    when using file uploads.
-
-``form_widget(form)``
-    Renders all the fields, which includes the field element itself, a label
-    and any validation error messages for the field.
-
-``form_end(form)``
-    Renders the end tag of the form and any fields that have not
-    yet been rendered, in case you rendered each field yourself. This is useful
-    for rendering hidden fields and taking advantage of the automatic
-    :doc:`CSRF Protection </security/csrf>`.
-
-.. seealso::
-
-    As easy as this is, it's not very flexible (yet). Usually, you'll want to
-    render each form field individually so you can control how the form looks.
-    You'll learn how to do that in the ":doc:`/form/rendering`" section.
+* If your app uses a CSS framework such as Bootstrap or Foundation, use any of
+  the :ref:`built-in form themes <symfony-builtin-forms>` to make all your forms
+  match the style of the rest of your app;
+* If you want to customize only a few fields or a few forms of your app, read
+  the :doc:`How to Customize Form Rendering </form/form_customization>` article;
+* If you want to customize all your forms in the same way, create a
+  :doc:`Symfony form theme </form/form_themes>` (based on any of the built-in
+  themes or from scratch).
 
 Before moving on, notice how the rendered ``task`` input field has the value
 of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
@@ -253,7 +240,7 @@ your controller::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('default/new.html.twig', [
+        return $this->render('task/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -427,7 +414,7 @@ Validation is a very powerful feature of Symfony and has its own
 
     .. code-block:: html+twig
 
-        {# templates/default/new.html.twig #}
+        {# templates/task/new.html.twig #}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
         {{ form_widget(form) }}
         {{ form_end(form) }}
@@ -505,6 +492,18 @@ the documentation for each type.
     The label for a field can also be set in the template rendering the
     form, see below. If you don't need a label associated to your input,
     you can disable it by setting its value to ``false``.
+
+    .. tip::
+
+        By default, ``<label>`` tags of required fields are rendered with a
+        ``required`` CSS class, so you can display an asterisk for required
+        fields applying these CSS styles:
+
+        .. code-block:: css
+
+            label.required:before {
+                content: "*";
+            }
 
 .. index::
    single: Forms; Field type guessing
@@ -616,7 +615,7 @@ that will house the logic for building the task form::
 This new class contains all the directions needed to create the task form. It can
 be used to build a form object in the controller::
 
-    // src/Controller/DefaultController.php
+    // src/Controller/TaskController.php
     use App\Form\TaskType;
 
     public function new()

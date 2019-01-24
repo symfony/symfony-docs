@@ -177,8 +177,9 @@ between Twig and several Symfony components:
 
     $ composer require symfony/twig-bridge
 
-The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
-that help you render the HTML widget, label and error for each field
+The TwigBridge integration provides you with several
+:ref:`Twig Functions <reference-form-twig-functions-variables>`
+that help you render the HTML widget, label, help and errors for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
@@ -231,7 +232,7 @@ The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
 to Twig, which gives you access to the Twig functions for rendering forms.
 To do this, you first need to create a :class:`Symfony\\Bridge\\Twig\\Form\\TwigRendererEngine`,
-where you define your :ref:`form themes <form-customization-form-themes>`
+where you define your :doc:`form themes </form/form_themes>`
 (i.e. resources/files that define form HTML markup).
 
 For general details on rendering forms, see :doc:`/form/form_customization`.
@@ -510,8 +511,8 @@ Rendering the Form
 
 Now that the form has been created, the next step is to render it. This is
 done by passing a special form "view" object to your template (notice the
-``$form->createView()`` in the controller above) and using a set of form
-helper functions:
+``$form->createView()`` in the controller above) and using a set of
+:ref:`form helper functions <reference-form-twig-functions>`:
 
 .. code-block:: html+twig
 
@@ -528,7 +529,7 @@ That's it! By printing ``form_widget(form)``, each field in the form is
 rendered, along with a label and error message (if there is one). While this is
 convenient, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
-to do that in the ":doc:`/form/rendering`" section.
+to do that in the :doc:`form customization </form/form_customization>` article.
 
 Changing a Form's Method and Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
