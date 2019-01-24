@@ -232,7 +232,7 @@ The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
 to Twig, which gives you access to the Twig functions for rendering forms.
 To do this, you first need to create a :class:`Symfony\\Bridge\\Twig\\Form\\TwigRendererEngine`,
-where you define your :ref:`form themes <form-customization-form-themes>`
+where you define your :doc:`form themes </form/form_themes>`
 (i.e. resources/files that define form HTML markup).
 
 For general details on rendering forms, see :doc:`/form/form_customization`.
@@ -529,7 +529,7 @@ That's it! By printing ``form_widget(form)``, each field in the form is
 rendered, along with a label and error message (if there is one). While this is
 convenient, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
-to do that in the :doc:`form customization </form/form_customization>" article.
+to do that in the :doc:`form customization </form/form_customization>` article.
 
 Changing a Form's Method and Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

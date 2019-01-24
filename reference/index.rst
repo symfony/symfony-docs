@@ -17,7 +17,6 @@ Reference Documents
 
     forms/types
     constraints
-    forms/twig_reference
 
     twig_reference
 
