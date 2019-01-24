@@ -295,7 +295,7 @@ be redirected after success:
 
     -     throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     +     // redirect to some "app_homepage" route - of wherever you want
-    +     return new RedirectResponse($this->router->generate('app_homepage'));
+    +     return new RedirectResponse($this->urlGenerator->generate('app_homepage'));
     }
 
 Unless you have any other TODOs in that file, that's it! If you're loading users
