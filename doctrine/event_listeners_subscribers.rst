@@ -207,57 +207,7 @@ whenever possible.
 Priorities for Event Listeners
 ------------------------------
 
-In case you have multiple listeners for the same event you can control the order
-in which they are invoked using the ``priority`` attribute on the tag. Priorities
-are defined with positive or negative integers (they default to ``0``). Higher
-numbers mean that listeners are invoked earlier.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            App\EventListener\MyHighPriorityListener:
-                tags:
-                    - { name: doctrine.event_listener, event: postPersist, priority: 10 }
-
-            App\EventListener\MyLowPriorityListener:
-                tags:
-                    - { name: doctrine.event_listener, event: postPersist, priority: 1 }
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-
-            <services>
-                <service id="App\EventListener\MyHighPriorityListener" autowire="true">
-                    <tag name="doctrine.event_listener" event="postPersist" priority="10" />
-                </service>
-                <service id="App\EventListener\MyLowPriorityListener" autowire="true">
-                    <tag name="doctrine.event_listener" event="postPersist" priority="1" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        use AppBundle\EventListener\MyHighPriorityListener;
-        use AppBundle\EventListener\MyLowPriorityListener;
-
-        $container
-            ->autowire(MyHighPriorityListener::class)
-            ->addTag('doctrine.event_listener', ['event' => 'postPersist', 'priority' => 10])
-        ;
-
-        $container
-            ->autowire(MyLowPriorityListener::class)
-            ->addTag('doctrine.event_listener', ['event' => 'postPersist', 'priority' => 1])
-        ;
+Doctrine does not support setting priority for it's events.
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the DoctrineBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineBundle/entity-listeners.html
