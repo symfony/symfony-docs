@@ -148,8 +148,8 @@ link for details), create a ``shipping_widget`` block to handle this:
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
-    be ``shipping_widget`` (see :ref:`form-customization-form-themes`).
-    Further, the main config file should point to the custom form template
+    be ``shipping_widget`` (see :ref:`form fragment naming <form-fragment-naming>`
+    rules). Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
     When using Twig this is:
