@@ -42,6 +42,7 @@ Configuration
 
 * `debug`_
 * `exception_controller`_
+* `form_themes`_
 * `number_format`_
 
   * `decimals`_
@@ -195,6 +196,62 @@ conditions (see :doc:`/controller/error_pages`). Modifying this
 option is advanced. If you need to customize an error page you should use
 the previous link. If you need to perform some behavior on an exception,
 you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
+
+.. _config-twig-form-themes:
+
+form_themes
+~~~~~~~~~~~
+
+**type**: ``array`` of ``string`` **default**: ``['form_div_layout.html.twig']``
+
+Defines one or more :doc:`form themes </form/form_themes>` which are applied to
+all the forms of the application:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            form_themes: ['bootstrap_4_layout.html.twig', 'form/my_theme.html.twig']
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
+                <twig:form-theme>form/my_theme.html.twig</twig:form-theme>
+                <!-- ... -->
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        $container->loadFromExtension('twig', [
+            'form_themes' => [
+                'bootstrap_4_layout.html.twig',
+                'form/my_theme.html.twig',
+            ],
+            // ...
+        ]);
+
+The order in which themes are defined is important because each theme overrides
+all the previous one. When rendering a form field whose block is not defined in
+the form theme, Symfony falls back to the previous themes until the first one.
+
+These global themes are applied to all forms, even those which use the
+:ref:`form_theme Twig tag <reference-twig-tag-form-theme>`, but you can
+:ref:`disable global themes for specific forms <disabling-global-themes-for-single-forms>`.
 
 number_format
 ~~~~~~~~~~~~~
