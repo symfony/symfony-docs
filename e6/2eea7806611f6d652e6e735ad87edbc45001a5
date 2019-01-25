@@ -1,0 +1,111 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-01-24T16:51:18Z
+
+@eXtreme thanks for contributing this. Sadly, I can't reproduce this error. If I add the `watchOptions` config as shown in the docs today, it worked for me. I didn't have to add the `devServer` option.
+
+This is what I did: I added `aggregateTimeout: 10000` to `config.watchOptions` because it's easy to know if the option is working or not (it will wait 10 seconds before recompiling assets). I quit `yarn encore dev --watch`, started again, and I saw the 10 second delay. (note: at first I did the mistake of not restarting `encore` after changing `webpack.config.js` config and that's why the options didn't work for me).
+
+So, can you please double check if this works for you too? Thanks!
+
+---------------------------------------------------------------------------
+
+by eXtreme at 2019-01-24T17:13:52Z
+
+@javiereguiluz when I just dump the config in the `webpack.config.js` to console (before adding `watchOptions`)
+
+```js
+var config = Encore.getWebpackConfig();
+console.log(config);
+```
+
+the output is:
+
+```
+nodejs_1  | { context: '/var/www/symfony',
+nodejs_1  |   entry: { app: './assets/js/index.js' },
+nodejs_1  |   mode: 'development',
+nodejs_1  |   output:
+nodejs_1  |    { path: '/var/www/symfony/public/build',
+nodejs_1  |      filename: '[name].js',
+nodejs_1  |      publicPath: 'http://localhost:8080/',
+nodejs_1  |      pathinfo: true },
+nodejs_1  |   module: { rules: [ [Object], [Object], [Object], [Object] ] },
+nodejs_1  |   plugins:
+nodejs_1  |    [ MiniCssExtractPlugin { options: [Object] },
+nodejs_1  |      DeleteUnusedEntriesJSPlugin { entriesToDelete: [] },
+nodejs_1  |      ManifestPlugin { opts: [Object] },
+nodejs_1  |      LoaderOptionsPlugin { options: [Object] },
+nodejs_1  |      CleanWebpackPlugin { paths: [Array], options: [Object] },
+nodejs_1  |      DefinePlugin { definitions: [Object] },
+nodejs_1  |      { options: [Object],
+nodejs_1  |        lastBuildSucceeded: false,
+nodejs_1  |        isFirstBuild: true },
+nodejs_1  |      FriendlyErrorsWebpackPlugin {
+nodejs_1  |        compilationSuccessInfo: [Object],
+nodejs_1  |        onErrors: undefined,
+nodejs_1  |        shouldClearConsole: false,
+nodejs_1  |        formatters: [Array],
+nodejs_1  |        transformers: [Array] },
+nodejs_1  |      AssetsWebpackPlugin { options: [Object], writer: [Function: queuedWriter] } ],
+nodejs_1  |   optimization:
+nodejs_1  |    { namedModules: true,
+nodejs_1  |      chunkIds: 'named',
+nodejs_1  |      runtimeChunk: 'single',
+nodejs_1  |      splitChunks: { chunks: 'async' } },
+nodejs_1  |   devtool: 'inline-source-map',
+nodejs_1  |   devServer:
+nodejs_1  |    { contentBase: '/var/www/symfony/public',
+nodejs_1  |      publicPath: 'http://localhost:8080/',
+nodejs_1  |      headers: { 'Access-Control-Allow-Origin': '*' },
+nodejs_1  |      hot: true,
+nodejs_1  |      quiet: true,
+nodejs_1  |      compress: true,
+nodejs_1  |      historyApiFallback: true,
+nodejs_1  |      watchOptions: { ignored: /node_modules/ },
+nodejs_1  |      https: undefined },
+nodejs_1  |   performance: { hints: false },
+nodejs_1  |   stats:
+nodejs_1  |    { hash: false,
+nodejs_1  |      version: false,
+nodejs_1  |      timings: false,
+nodejs_1  |      assets: false,
+nodejs_1  |      chunks: false,
+nodejs_1  |      maxModules: 0,
+nodejs_1  |      modules: false,
+nodejs_1  |      reasons: false,
+nodejs_1  |      children: false,
+nodejs_1  |      source: false,
+nodejs_1  |      errors: false,
+nodejs_1  |      errorDetails: false,
+nodejs_1  |      warnings: false,
+nodejs_1  |      publicPath: false,
+nodejs_1  |      builtAt: false },
+nodejs_1  |   resolve:
+nodejs_1  |    { extensions:
+nodejs_1  |       [ '.wasm', '.mjs', '.js', '.json', '.jsx', '.vue', '.ts', '.tsx' ],
+nodejs_1  |      alias: {} },
+nodejs_1  |   externals: {} }
+```
+
+and `watchOptions` are under `devServer`.
+
+Isn't this because I use the dev server? https://symfony.com/doc/current/frontend/encore/dev-server.html
+
+If so, maybe we should change the docs and add two versions of this snippet, one for "using webpack-dev-server" and one for not using it.
+
+---------------------------------------------------------------------------
+
+by Lyrkan at 2019-01-25T09:28:10Z
+
+Hi there,
+
+@eXtreme Indeed, if you use the dev server (`--dev-server`) the `watchOptions` have to be filled under the `devServer` key. If you don't (`yarn encore dev --watch`) then you have to put them directly at the root.
+
+That being said there is a pending PR on Encore that should help setting those parameters correctly by introducing an `Encore.configureWatchOptions(...)` method: https://github.com/symfony/webpack-encore/pull/486
+
+---------------------------------------------------------------------------
+
+by eXtreme at 2019-01-25T09:31:57Z
+
+Hi @Lyrkan that indeed looks like a better approach.
