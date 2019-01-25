@@ -8,6 +8,8 @@ Encore generates the Webpack configuration that's used in your
 For example, suppose you need to set `Webpack's watchOptions`_ setting. To do that,
 modify the config after fetching it from Encore:
 
+.. TODO update the following config example when https://github.com/symfony/webpack-encore/pull/486 is merged and configureWatchOptions() is introduced
+
 .. code-block:: javascript
 
     // webpack.config.js
@@ -18,7 +20,10 @@ modify the config after fetching it from Encore:
 
     // fetch the config, then modify it!
     var config = Encore.getWebpackConfig();
+    // if you run 'encore dev --watch'
     config.watchOptions = { poll: true, ignored: /node_modules/ };
+    // if you run 'encore dev-server'
+    config.devServer.watchOptions = { poll: true, ignored: /node_modules/ };
 
     // other examples: add an alias or extension
     // config.resolve.alias.local = path.resolve(__dirname, './resources/src');

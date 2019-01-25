@@ -66,6 +66,16 @@ If you reload the page, the perceived performance will improve because the
 server responded with both the HTML page and the CSS file when the browser only
 requested the HTML page.
 
+Additionally, according to `the Priority Hints specification`_, you can signal
+the priority of the resource to download using the ``importance`` attribute:
+
+.. code:: twig
+
+    <head>
+       {# ... #}
+        <link rel="stylesheet" href="{{ preload('/app.css', { importance: 'low' }) }}">
+    </head>
+
 .. tip::
 
     Google Chrome provides an interface to debug HTTP/2 connections. Browse
@@ -163,6 +173,7 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
 .. _`preload`: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
+.. _`the Priority Hints specification`: https://wicg.github.io/priority-hints/
 .. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-(http/2)
 .. _`Cloudflare`: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
 .. _`Fastly`: https://docs.fastly.com/guides/performance-tuning/http2-server-push
