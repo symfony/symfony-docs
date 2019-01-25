@@ -213,7 +213,7 @@ all the forms of the application:
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_layout.html.twig', form/my_theme.html.twig']
+            form_themes: ['bootstrap_4_layout.html.twig', 'form/my_theme.html.twig']
             # ...
 
     .. code-block:: xml

@@ -90,8 +90,9 @@ shipping options.
 Creating a Template for the Field
 ---------------------------------
 
-Each field type is rendered by a template fragment, which is determined in part by
-the class name of your type. For more information, see :ref:`form-customization-form-themes`.
+Each field type is rendered by a template fragment whose name is determined in
+part by the class name of your type. Read the :ref:`from fragment naming <form-fragment-naming>`
+rules for more details.
 
 .. note::
 

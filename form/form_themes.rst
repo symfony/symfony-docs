@@ -13,7 +13,7 @@ Symfony and how to create your own custom form theme.
 Symfony Built-In Form Themes
 ----------------------------
 
-Symfony comes with several **built-in form themes** that makes your forms look
+Symfony comes with several **built-in form themes** that make your forms look
 great when using some of the most popular CSS frameworks. Each theme is defined
 in a single Twig template:
 

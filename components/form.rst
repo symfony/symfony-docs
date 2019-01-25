@@ -179,7 +179,7 @@ between Twig and several Symfony components:
 
 The TwigBridge integration provides you with several
 :ref:`Twig Functions <reference-form-twig-functions-variables>`
-that help you render the HTML widget, label, help and error for each field
+that help you render the HTML widget, label, help and errors for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
