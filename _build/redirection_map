@@ -403,3 +403,5 @@
 /frontend/encore/installation-no-flex /frontend/encore/installation
 /http_cache/form_csrf_caching /security/csrf
 /console/logging /console
+/reference/forms/twig_reference /form/form_customization
+/form/rendering /form/form_customization
