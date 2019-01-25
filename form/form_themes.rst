@@ -72,7 +72,7 @@ want to use another theme for all the forms of your app, configure it in the
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:theme>bootstrap_4_horizontal_layout.html.twig</twig:theme>
+                <twig:form-theme>bootstrap_4_horizontal_layout.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -385,7 +385,7 @@ you want to apply the theme globally to all forms, define the
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:theme>form/my_theme.html.twig</twig:theme>
+                <twig:form-theme>form/my_theme.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>

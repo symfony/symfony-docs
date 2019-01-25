@@ -228,8 +228,8 @@ all the forms of the application:
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:theme>bootstrap_4_layout.html.twig</twig:theme>
-                <twig:theme>form/my_theme.html.twig</twig:theme>
+                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
+                <twig:form-theme>form/my_theme.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
