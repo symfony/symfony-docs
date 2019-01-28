@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-01-25T16:37:49Z
+
+Update: sadly, relative links don't work inside the `toctree` directive (see https://github.com/sphinx-doc/sphinx/issues/701) so we must remove one of the links (not a big deal because it can be easily found in other ways).
