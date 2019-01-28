@@ -591,11 +591,11 @@ no longer exist. The simplest way to fix this is to find all your old service id
 and update them to the new class id: ``app.github_notifier`` to ``App\Service\GitHubNotifier``.
 
 In large projects, there's a better way: create legacy aliases that map the old id
-to the new id. Create a new ``legacy_aliases.yml`` file:
+to the new id. Create a new ``legacy_aliases.yaml`` file:
 
 .. code-block:: yaml
 
-    # app/config/legacy_aliases.yml
+    # config/legacy_aliases.yaml
     services:
         _defaults:
             public: true
@@ -611,7 +611,7 @@ Then import this at the top of ``services.yaml``:
 
     # config/services.yaml
     + imports:
-    +     - { resource: legacy_aliases.yml }
+    +     - { resource: legacy_aliases.yaml }
 
     # ...
 
@@ -635,7 +635,7 @@ Now you're ready to default all services to be private:
     +          public: false
 
 Thanks to this, any services created in this file cannot be fetched directly from
-the container. But, since the old service id's are aliases in a separate file (``legacy_aliases.yml``),
+the container. But, since the old service id's are aliases in a separate file (``legacy_aliases.yaml``),
 these *are* still public. This makes sure the app keeps working.
 
 If you did *not* change the id of some of your services (because there are multiple
@@ -723,7 +723,7 @@ Step 5) Cleanup!
 
 To make sure your application didn't break, you did some extra work. Now it's time
 to clean things up! First, update your application to *not* use the old service id's (the
-ones in ``legacy_aliases.yml``). This means updating any service arguments (e.g.
+ones in ``legacy_aliases.yaml``). This means updating any service arguments (e.g.
 ``@app.github_notifier`` to ``@App\Service\GitHubNotifier``) and updating your
 code to not fetch this service directly from the container. For example:
 
@@ -739,7 +739,7 @@ code to not fetch this service directly from the container. For example:
             // ...
         }
 
-As soon as you do this, you can delete ``legacy_aliases.yml`` and remove its import.
+As soon as you do this, you can delete ``legacy_aliases.yaml`` and remove its import.
 You should do the same thing for any services that you made public, like
 ``app.api_client_github`` and ``app.api_client_sl_connect``. Once you're not fetching
 these directly from the container, you can remove the ``public: true`` flag:
