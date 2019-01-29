@@ -9,6 +9,14 @@ In Symfony applications, all errors are treated as exceptions, no matter if they
 are just a 404 Not Found error or a fatal error triggered by throwing some
 exception in your code.
 
+If your app has the `TwigBundle`_ installed, a special controller handles these
+exceptions. This controller displays debug information for errors and allows to
+customize error pages, so run this command to make sure the bundle is installed:
+
+.. code-block:: terminal
+
+    $ composer require twig
+
 In the :doc:`development environment </configuration/environments>`,
 Symfony catches all the exceptions and displays a special **exception page**
 with lots of debug information to help you discover the root problem:
@@ -351,6 +359,7 @@ time and again, you can have just one (or several) listeners deal with them.
     and takes measures like redirecting the user to the login page, logging them
     out and other things.
 
+.. _`TwigBundle`: https://github.com/symfony/twig-bundle
 .. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
 .. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php
