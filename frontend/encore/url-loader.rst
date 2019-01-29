@@ -10,7 +10,7 @@ it's disabled by default. First, add the URL loader to your project:
 
 .. code-block:: terminal
 
-    $ yarn add --dev url-loader
+    $ yarn add url-loader --dev
 
 Then enable it in your ``webpack.config.js``:
 
