@@ -139,6 +139,14 @@ that group are valid, the second group, ``Strict``, will be validated.
     infinite recursion (as the ``Default`` group references the group
     sequence, which will contain the ``Default`` group which references the
     same group sequence, ...).
+    
+.. caution::
+    
+    Calling ``validate()`` with a group in the sequence (``Strict`` in previous example)
+    will cause a validation **only** with that group and not with all the groups in the 
+    sequence.
+    This is because sequence is now referred to ``Default`` group validation even if the
+    "single" group is in the sequence.
 
 You can also define a group sequence in the ``validation_groups`` form option::
 
