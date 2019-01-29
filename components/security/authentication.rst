@@ -13,6 +13,10 @@ an *authenticated* token if the supplied credentials were found to be valid.
 The listener should then store the authenticated token using
 :class:`the token storage <Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface>`::
 
+    // src/EventListener/SomeAuthenticationListener.php
+    
+    namespace App\EventListener;
+
     use Symfony\Component\Security\Http\Firewall\ListenerInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
