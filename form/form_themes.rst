@@ -275,6 +275,8 @@ form. You can also define this value explicitly with the ``block_name`` option::
 In this example, the fragment name will be ``_product_custom_name_widget``
 instead of the default ``_product_name_widget``.
 
+.. _form-fragment-custom-naming:
+
 Custom Fragment Naming for Individual Fields
 ............................................
 
