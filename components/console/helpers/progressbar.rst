@@ -95,6 +95,23 @@ that the progress bar display is refreshed with a 100% completion.
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::display`
     to show the progress bar again.
 
+If you want to use the progress bar to show the progress of an iteration you can use the
+:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::iterate` method that will automatically call ``start``,
+``advance`` and ``finish`` while iterating::
+
+    use Symfony\Component\Console\Helper\ProgressBar;
+
+    $progressBar = new ProgressBar($output);
+
+    // starts and displays the progress bar
+    foreach ($progressBar->iterate($iterable) as $key => $value) {
+        // ... do some work
+    }
+
+.. versionadded:: 4.3
+
+    The ``iterate`` method was introduced in Symfony 4.3.
+
 Customizing the Progress Bar
 ----------------------------
 
