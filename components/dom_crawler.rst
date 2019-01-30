@@ -78,6 +78,17 @@ Node Filtering
 Using XPath expressions is really easy::
 
     $crawler = $crawler->filterXPath('descendant-or-self::body/p');
+    
+    // To chained "filterXPath" : be aware that filterXPath is evaluated in the context of the crawler
+    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i) {
+        // NOK : Direct child can not be found
+        $childCrawler = $parentCrawler->filterXPath('child-tag/sub-child-tag');
+        
+        // OK : You must specify parent tag
+        $subChildCrawler = $parentCrawler->filterXPath('parent/child-tag/sub-child-tag');
+        $subChildCrawler = $parentCrawler->filterXPath('node()/child-tag/sub-child-tag');
+    });
+    
 
 .. tip::
 
