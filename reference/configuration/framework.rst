@@ -152,6 +152,8 @@ Configuration
   * `metadata_update_threshold`_
   * `name`_
   * `save_path`_
+  * `sid_length`_
+  * `sid_bits_per_character`_
   * `storage_id`_
 
 * `templating`_
@@ -898,6 +900,31 @@ gc_maxlifetime
 This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
+
+sid_length
+..........
+
+**type**: ``integer``
+
+This determines the length of session ID string. Session ID length can be
+between 22 to 256. The default is 32. If you need compatibility you may
+specify 32, 40, etc. Longer session ID is harder to guess. At least 32 chars
+is recommended.
+
+This option refers to the`session.sid_length` of the `php.ini`
+
+sid_bits_per_character
+......................
+
+**type**: ``integer``
+
+This determines the number of bits in encoded session ID character. 
+The possible values are '4' (0-9, a-f), '5' (0-9, a-v), and '6' 
+(0-9, a-z, A-Z, "-", ","). 
+The default is 4. The more bits results in stronger session ID. 
+5 is recommended value for most environments.
+
+This option refers to the`session.sid_bits_per_character` of the `php.ini`
 
 save_path
 .........
