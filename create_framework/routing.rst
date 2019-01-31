@@ -220,9 +220,8 @@ generate absolute URLs::
         use Symfony\Component\Routing\Matcher\CompiledUrlMatcher;
         use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
 
-        // $compiledRoutes is a plain PHP array that describes
-        // all routes using a performant data format
-        // you can and SHOULD cache it, typically by exporting it to a PHP file
+        // $compiledRoutes is a plain PHP array that describes all routes in a performant data format
+        // you can (and should) cache it, typically by exporting it to a PHP file
         $compiledRoutes = (new CompiledUrlMatcherDumper($routes))->getCompiledRoutes();
 
         $matcher = new CompiledUrlMatcher($compiledRoutes, $context);
