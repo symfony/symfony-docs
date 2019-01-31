@@ -45,7 +45,7 @@ extend from the original template, not from the overridden one:
 
     {# templates/bundles/FOSUserBundle/Registration/confirmed.html.twig #}
     {# the special '!' prefix avoids errors when extending from an overridden template #}
-    {% extends "@!FOSUserBundle/Registration/confirmed.html.twig" %}
+    {% extends "@!FOSUser/Registration/confirmed.html.twig" %}
 
     {% block some_block %}
         ...
