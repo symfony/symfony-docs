@@ -243,19 +243,22 @@ exists before using it to generate a URL. In those cases, don't use the
 :method:`Symfony\\Component\\Routing\\Router::getRouteCollection` method because
 that regenerates the routing cache and slows down the application.
 
-Instead, try to generate the URL and catch the
-:class:`Symfony\\Component\\Routing\\Exception\\RouteNotFoundException` thrown
-when the route doesn't exist::
+Instead, use the :method:`Symfony\\Component\\Routing\\Matcher\\Dumper\\CompiledUrlMatcherDumper::getCompiledRoutes`
+method to get the list of all the application routes in a performant data format::
 
-    use Symfony\Component\Routing\Exception\RouteNotFoundException;
+    use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
 
-    // ...
+    // if you are checking lots of routes, export this variable into a PHP file to cache it
+    $compiledRoutes = (new CompiledUrlMatcherDumper($routes))->getCompiledRoutes();
 
-    try {
-        $url = $generator->generate($dynamicRouteName, $parameters);
-    } catch (RouteNotFoundException $e) {
-        // the route is not defined...
+    if (\in_array($routeName, $compiledRoutes, true)) {
+        // the route exists in the application
     }
+
+.. versionadded:: 4.3
+
+    The :class:`Symfony\\Component\\Routing\\Matcher\\Dumper\\CompiledUrlMatcherDumper`
+    class was introduced in Symfony 4.3.
 
 Load Routes from a File
 ~~~~~~~~~~~~~~~~~~~~~~~
