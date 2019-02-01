@@ -283,7 +283,8 @@ Fragment Naming for Collections
 When using a :doc:`collection of forms </form/form_collections>`, the fragment
 of each collection item follows the pattern ``_field-name_entry_part``. For
 example, if your form field is named ``tasks``, the fragment for each task will
-be named ``_tasks_entry`` (``_tasks_entry_row``, ``_tasks_entry_label``, ``_tasks_entry_widget``, ``_tasks_entry_error``)
+be named ``_tasks_entry`` (``_tasks_entry_row``, ``_tasks_entry_label``,
+``_tasks_entry_widget``, ``_tasks_entry_error``)
 
 Template Fragment Inheritance
 .............................
