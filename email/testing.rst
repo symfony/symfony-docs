@@ -22,7 +22,7 @@ Start with a simple controller action that sends an email::
 
         $mailer->send($message);
 
-        return $this->render(...);
+        return $this->render();
     }
 
 In your functional test, use the ``swiftmailer`` collector on the profiler
