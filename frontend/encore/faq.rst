@@ -138,21 +138,23 @@ Babel. But, you can change that via the ``configureBabel()`` method. See
 
 .. _`rsync`: https://rsync.samba.org/
 
-How Do I Integrate my Webpack Configuration in my IDE?
-------------------------------------------------------
+How Do I Integrate my Encore Configuration with my IDE?
+-------------------------------------------------------
 
-Some IDE (like `PhpStorm <https://www.jetbrains.com/help/phpstorm/using-webpack.html>`_) can read and interpret your ``webpack.config.js`` file
-to make your development easier (e.g.: aliases resolution).
-
-However, you could face the following error:
+`Webpack integration in PhpStorm`_ and other IDEs makes your development more
+productive (for example by resolving aliases). However, you may face this error:
 
 .. code-block:: text
 
-    Error details: Encore.setOutputPath() cannot be called yet because the runtime environment doesn't appear to be configured. Make sure you're using the encore executable or call Encore.configureRuntimeEnvironment() first if you're purposely not calling Encore directly.
+    Encore.setOutputPath() cannot be called yet because the runtime environment
+    doesn't appear to be configured. Make sure you're using the encore executable
+    or call Encore.configureRuntimeEnvironment() first if you're purposely not
+    calling Encore directly.
 
-It fails because Encore Runtime Environment is only configured when you are running it (e.g. ``yarn encore dev``).
-
-To properly fix it, you should manually call ``Encore.isRuntimeEnvironmentConfigured()`` and ``Encore.configureRuntimeEnvironment()``:
+It fails because the Encore Runtime Environment is only configured when you are
+running it (e.g. when executing ``yarn encore dev``). Fix this issue calling to
+``Encore.isRuntimeEnvironmentConfigured()`` and
+``Encore.configureRuntimeEnvironment()`` methods:
 
 .. code-block:: javascript
 
@@ -163,4 +165,6 @@ To properly fix it, you should manually call ``Encore.isRuntimeEnvironmentConfig
         Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
     }
 
-    // Normal Encore usage
+    // ... the rest of the Encore configuration
+
+.. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html
