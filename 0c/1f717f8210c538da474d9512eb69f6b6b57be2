@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-01-22T10:28:56Z
+
+@xavierkaitha94 if you make the change proposed in this pull request, the test works again? I'm not sure if the test is failing because of this PHP syntax error (it should be `render('...')` instead of `render(...)`) or because the rest of the code in the article is wrong. thanks.
