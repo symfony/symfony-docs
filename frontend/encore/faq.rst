@@ -137,3 +137,30 @@ Babel. But, you can change that via the ``configureBabel()`` method. See
 :doc:`/frontend/encore/babel` for details.
 
 .. _`rsync`: https://rsync.samba.org/
+
+How Do I Integrate my Webpack Configuration in my IDE?
+------------------------------------------------------
+
+Some IDE (like `PhpStorm <https://www.jetbrains.com/help/phpstorm/using-webpack.html>`_) can read and interpret your ``webpack.config.js`` file
+to make your development easier (e.g.: aliases resolution).
+
+However, you could face the following error:
+
+.. code-block:: text
+
+    Error details: Encore.setOutputPath() cannot be called yet because the runtime environment doesn't appear to be configured. Make sure you're using the encore executable or call Encore.configureRuntimeEnvironment() first if you're purposely not calling Encore directly.
+
+It fails because Encore Runtime Environment is only configured when you are running it (e.g. ``yarn encore dev``).
+
+To properly fix it, you should manually call ``Encore.isRuntimeEnvironmentConfigured()`` and ``Encore.configureRuntimeEnvironment()``:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    const Encore = require('@symfony/webpack-encore')
+
+    if (!Encore.isRuntimeEnvironmentConfigured()) {
+        Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+    }
+
+    // Normal Encore usage
