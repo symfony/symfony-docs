@@ -109,13 +109,13 @@ You can also limit a test run to a directory or a specific test file:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ ./bin/phpunit
+    $ php bin/phpunit
 
     # run all tests in the Util/ directory
-    $ ./bin/phpunit tests/Util
+    $ php bin/phpunit tests/Util
 
     # run tests for the Calculator class
-    $ ./bin/phpunit tests/Util/CalculatorTest.php
+    $ php bin/phpunit tests/Util/CalculatorTest.php
 
 .. index::
    single: Tests; Functional tests
