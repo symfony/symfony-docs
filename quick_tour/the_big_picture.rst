@@ -81,7 +81,7 @@ have a ``Symfony/`` directory that looks like this:
         # remove the Git history
         $ rm -rf .git
     
-    For an exact version, replace `2.1.x-dev` with the latest Symfony version
+    For an exact version, replace ``2.1.x-dev`` with the latest Symfony version
     (e.g. 2.1.1). For details, see the `Symfony Installation Page`_
 
 .. tip::
