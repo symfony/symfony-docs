@@ -87,6 +87,15 @@ Contribute to Symfony:
 
     contributing/index
 
+CMF
+---
+
+The Symfony CMFproject makes it easier for developers to add CMS functionality
+to applications built with the Symfony2 PHP framework.
+
+.. toctree::
+    :hidden:
+
 .. include:: /contributing/map.rst.inc
 
 Create your Own Framework

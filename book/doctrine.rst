@@ -22,7 +22,7 @@ can be.
     easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
-    more information, read the "`DoctrineMongoDBBundle`_"
+    more information, read the DoctrineMongoDBBundle
     documentation.
 
 A Simple Example: A Product
@@ -1120,7 +1120,6 @@ table, the new ``product.category_id`` column, and the new foreign key:
 .. code-block:: bash
 
     $ php app/console doctrine:schema:update --force
-
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
