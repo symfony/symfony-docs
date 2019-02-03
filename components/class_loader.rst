@@ -58,10 +58,10 @@ Learn More
     :maxdepth: 1
 
     class_loader/class_loader
-    class_loader/class_map_generator.rst
-    class_loader/debug_class_loader.rst
-    class_loader/map_class_loader.rst
-    class_loader/psr4_class_loader.rst
+    class_loader/class_map_generator
+    class_loader/debug_class_loader
+    class_loader/map_class_loader
+    class_loader/psr4_class_loader
 
 .. toctree::
     :hidden:
