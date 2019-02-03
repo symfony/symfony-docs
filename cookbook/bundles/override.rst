@@ -34,6 +34,8 @@ is almost always the case), you can easily override controllers via bundle
 inheritance. For more information, see :doc:`/cookbook/bundles/inheritance`.
 If the controller is a service, see the next section on how to override it.
 
+.. _override-services-configuration:
+
 Services & Configuration
 ------------------------
 
@@ -107,7 +109,7 @@ Forms
 
 In order to override a form type, it has to be registered as a service (meaning
 it is tagged as ``form.type``). You can then override it as you would override any
-service as explained in `Services & Configuration`_. This, of course, will only
+service as explained in :ref:`override-services-configuration`. This, of course, will only
 work if the type is referred to by its alias rather than being instantiated,
 e.g.::
 
