@@ -61,5 +61,4 @@ service, you need to specify your service as follows::
 
 In this example, ``my_bundle.annot_controller`` should be the id of the
 ``AnnotController`` instance defined in the service container. This is
-documented in the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/routing`
-chapter.
+documented in the ``@Routing`` chapter.

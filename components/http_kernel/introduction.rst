@@ -285,9 +285,9 @@ on the event object that's passed to listeners on this event.
     the Symfony Framework, and many deal with collecting profiler data when
     the profiler is enabled.
     
-    One interesting listener comes from the :doc:`SensioFrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/index>`,
+    One interesting listener comes from the SensioFrameworkExtraBundle,
     which is packaged with the Symfony Standard Edition. This listener's
-    :doc:`@ParamConverter</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    ``@ParamConverter``
     functionality allows you to pass a full object (e.g. a ``Post`` object)
     to your controller instead of a scalar value (e.g. an ``id`` parameter
     that was on your route). The listener - ``ParamConverterListener`` - uses
@@ -392,10 +392,9 @@ return a ``Response``.
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
     There is no default listener inside the Symfony Framework for the ``kernel.view``
-    event. However, one core bundle -
-    :doc:`SensioFrameworkExtraBundle </bundles/SensioFrameworkExtraBundle/index>` -
+    event. However, one core bundle - SensioFrameworkExtraBundle -
     *does* add a listener to this event. If your controller returns an array,
-    and you place the :doc:`@Template</bundles/SensioFrameworkExtraBundle/annotations/view>`
+    and you place the ``@Template``
     annotation above the controller, then this listener renders a template,
     passes the array you returned from your controller to that template,
     and creates a ``Response`` containing the returned content from that

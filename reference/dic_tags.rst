@@ -768,7 +768,7 @@ other source, first create a class that implements the
     }
 
 Your custom loader's ``load`` method is responsible for returning a
-:Class:`Symfony\\Component\\Translation\\MessageCatalogue`.
+:class:`Symfony\\Component\\Translation\\MessageCatalogue`.
 
 Now, register your loader as a service and tag it with ``translation.loader``:
 

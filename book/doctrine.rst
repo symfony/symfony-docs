@@ -20,7 +20,7 @@ be.
     easy, and explained in the ":doc:`/cookbook/doctrine/dbal`" cookbook entry.
 
     You can also persist data to `MongoDB`_ using Doctrine ODM library. For
-    more information, read the ":doc:`/bundles/DoctrineMongoDBBundle/index`"
+    more information, read the DoctrineMongoDBBundle
     documentation.
 
 A Simple Example: A Product
@@ -446,7 +446,7 @@ in your application. To do this, run:
     new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
-    :doc:`migrations</bundles/DoctrineMigrationsBundle/index>`, which allow you to
+    DoctrineMigrationsBundle, which allow you to
     generate these SQL statements and store them in migration classes that
     can be run systematically on your production server in order to track
     and migrate your database schema safely and reliably.
@@ -526,7 +526,7 @@ an ``UPDATE`` query if the record already exists in the database.
 
     Doctrine provides a library that allows you to programmatically load testing
     data into your project (i.e. "fixture data"). For information, see
-    :doc:`/bundles/DoctrineFixturesBundle/index`.
+    DoctrineFixturesBundle/index.
 
 Fetching Objects from the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -554,7 +554,7 @@ on its ``id`` value::
 
     You can achieve the equivalent of this without writing any code by using
     the ``@ParamConverter`` shortcut. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/converters>`
+    FrameworkExtraBundle
     for more details.
 
 When you query for a particular type of object, you always use what's known
@@ -1074,7 +1074,7 @@ table, and ``product.category_id`` column, and new foreign key:
 
     This task should only be really used during development. For a more robust
     method of systematically updating your production database, read about
-    :doc:`Doctrine migrations</bundles/DoctrineMigrationsBundle/index>`.
+    DoctrineMigrationsBundle.
 
 Saving Related Entities
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1527,7 +1527,7 @@ Some notable or interesting tasks include:
 
    To be able to load data fixtures to your database, you will need to have
    the ``DoctrineFixturesBundle`` bundle installed. To learn how to do it,
-   read the ":doc:`/bundles/DoctrineFixturesBundle/index`" entry of the
+   read the "DoctrineFixturesBundle" entry of the
    documentation.
 
 .. tip::
@@ -1557,7 +1557,6 @@ lifecycle.
 For more information about Doctrine, see the *Doctrine* section of the
 :doc:`cookbook</cookbook/index>`, which includes the following articles:
 
-* :doc:`/bundles/DoctrineFixturesBundle/index`
 * :doc:`/cookbook/doctrine/common_extensions`
 
 .. _`Doctrine`: http://www.doctrine-project.org/
