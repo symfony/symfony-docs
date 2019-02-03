@@ -181,4 +181,4 @@ Learn more
 
     bundles/*
 
-_`third-party bundles`: http://knpbundles.com
+.. _`third-party bundles`: http://knpbundles.com
