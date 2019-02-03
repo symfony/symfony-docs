@@ -681,7 +681,7 @@ Minor Documentation Changes
 * `#5911 <https://github.com/symfony/symfony-docs/pull/5911>`_ Wrap all strings containing @ in quotes in Yaml (WouterJ)
 * `#5889 <https://github.com/symfony/symfony-docs/pull/5889>`_ Always use "main" as the default firewall name (to match Symfony Standard Edition) (javiereguiluz)
 * `#5888 <https://github.com/symfony/symfony-docs/pull/5888>`_ Removed the use of ContainerAware class (javiereguiluz)
-* `#5625 <https://github.com/symfony/symfony-docs/pull/5625>`_ Tell about SYMFONY__TEMPLATING__HELPER__CODE__FILE_LINK_FORMAT (nicolas-grekas)
+* `#5625 <https://github.com/symfony/symfony-docs/pull/5625>`_ Tell about ``SYMFONY__TEMPLATING__HELPER__CODE__FILE_LINK_FORMAT`` (nicolas-grekas)
 * `#5896 <https://github.com/symfony/symfony-docs/pull/5896>`_ [Book][Templating] Update absolute URL asset to match 2.7 (lemoinem)
 * `#5828 <https://github.com/symfony/symfony-docs/pull/5828>`_ move the getEntityManager, only get it if needed (OskarStark)
 * `#5900 <https://github.com/symfony/symfony-docs/pull/5900>`_ Added new security advisories to the docs (fabpot)
