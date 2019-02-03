@@ -221,10 +221,10 @@ option. Read more about this and other options in
 
     If the dumped contents are complex, consider using the local search box to
     look for specific variables or values. First, click anywhere on the dumped
-    contents and then press :kbd:`Ctrl. + F` or :kbd:`Cmd. + F` to make the local
+    contents and then press ``Ctrl. + F`` or ``Cmd. + F`` to make the local
     search box appear. All the common shortcuts to navigate the search results
-    are supported (:kbd:`Ctrl. + G` or :kbd:`Cmd. + G`, :kbd:`F3`, etc.) When
-    finished, press :kbd:`Esc.` to hide the box again.
+    are supported (``Ctrl. + G`` or ``Cmd. + G``, ``F3``, etc.) When
+    finished, press ``Esc.`` to hide the box again.
 
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
