@@ -61,7 +61,7 @@ Distribution:
 
 .. tip::
 
-    For an exact version, replace `2.2.0` with the latest Symfony version
+    For an exact version, replace ``2.2.0`` with the latest Symfony version
     (e.g. 2.2.1). For details, see the `Symfony Installation Page`_
 
 .. tip::

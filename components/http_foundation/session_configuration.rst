@@ -13,10 +13,10 @@ Save Handlers
 ~~~~~~~~~~~~~
 
 The PHP session workflow has 6 possible operations that may occur. The normal
-session follows `open`, `read`, `write` and `close`, with the possibility of
-`destroy` and `gc` (garbage collection which will expire any old sessions: `gc`
+session follows ``open``, ``read``, ``write`` and ``close``, with the possibility of
+``destroy`` and ``gc`` (garbage collection which will expire any old sessions: ``gc``
 is called randomly according to PHP's configuration and if called, it is invoked
-after the `open` operation). You can read more about this at
+after the ``open`` operation). You can read more about this at
 `php.net/session.customhandler`_
 
 Native PHP Save Handlers
