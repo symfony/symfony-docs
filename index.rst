@@ -67,18 +67,6 @@ Get answers quickly with reference documents:
 
 .. include:: /reference/map.rst.inc
 
-Bundles
--------
-
-The Symfony Standard Edition comes with some bundles. Learn more about them:
-
-.. toctree::
-    :hidden:
-
-    bundles/index
-
-.. include:: /bundles/map.rst.inc
-
 CMF
 ---
 

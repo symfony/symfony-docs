@@ -133,7 +133,7 @@ the route ``_controller`` value:
 
     You can also use annotations to configure routing using a controller
     defined as a service. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    FrameworkExtraBundle documentation
     for details.
 
 Alternatives to base Controller Methods

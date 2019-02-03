@@ -60,7 +60,7 @@ below renders the ``index.html.php`` template::
         );
     }
 
-You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
+You can also use the ``@Template``
 shortcut to render the default ``AcmeHelloBundle:Hello:index.html.php`` template::
 
     // src/Acme/HelloBundle/Controller/HelloController.php

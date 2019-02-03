@@ -1197,7 +1197,7 @@ Thanks to the SensioFrameworkExtraBundle, you can also secure your controller us
     }
 
 For more information, see the
-:doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/security>`.
+FrameworkExtraBundle documentation.
 
 Securing other Services
 ~~~~~~~~~~~~~~~~~~~~~~~

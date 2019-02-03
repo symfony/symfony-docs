@@ -1190,7 +1190,7 @@ from the new routing resource.
 .. tip::
 
     You can also define routes using annotations. See the
-    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    FrameworkExtraBundle documentation
     to see how.
 
 Adding a Host Requirement to Imported Routes

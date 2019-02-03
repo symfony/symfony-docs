@@ -158,7 +158,7 @@ second_options
 
 **type**: ``array`` **default**: ``array()``
 
-Additional options (will be merged into `options` above) that should be passed
+Additional options (will be merged into ``options`` above) that should be passed
 *only* to the second field. This is especially useful for customizing the
 label (see `first_options`_).
 
