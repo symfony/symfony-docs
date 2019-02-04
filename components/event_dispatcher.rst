@@ -262,7 +262,7 @@ order. Start by creating this custom event class and documenting it::
      */
     class OrderPlacedEvent extends Event
     {
-        const NAME = 'order.placed';
+        public const NAME = 'order.placed';
 
         protected $order;
 
