@@ -116,8 +116,8 @@ The following block shows all possible configuration keys:
     to find your PostgreSQL version and ``mysql -V`` to get your MySQL
     version).
 
-    If you are running a MariaDB database, you must prefix the ``server_version``
-    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.2.12``).
+    If you are running a MariaDB database, you must suffix the ``server_version``
+    value with ``-mariadb`` (e.g. ``server_version: 10.2.12-mariadb``).
 
     Always wrap the server version number with quotes to parse it as a string
     instead of a float number. Otherwise, the floating-point representation
