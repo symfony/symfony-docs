@@ -22,6 +22,7 @@ Symfony Profiler, which will look like this:
 
 .. image:: /_images/profiler/web-interface.png
    :align: center
+   :class: with-browser
 
 Accessing Profiling Data Programmatically
 -----------------------------------------
