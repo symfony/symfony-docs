@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2019-02-05T12:55:59Z
+
+It generated a file with quotes: `"src/Entity/\"user\".php"`.
+
+I have this problem with and without quotes.
+
+Maybe it's related to how the shell pass the values, I used `bash` in a Docker container. Terminal is `gnome-terminal`.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-02-05T14:21:41Z
+
+@gsylvestre thanks for reporting this. Sadly, we've changed this multiple times:
+
+* In https://github.com/symfony/symfony-docs/pull/10178 we added the quotes to fix some issues
+* In https://github.com/symfony/symfony-docs/pull/10520 it was proposed to remove the quotes to fix some issues (but we didn't merged because it was solved differently)
+
+So, I'm lost. I don't know if we should add or remove these quotes 😅
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-02-05T14:30:29Z
+
+@gsylvestre Which terminal do you use?
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2019-02-05T14:37:48Z
+
+I don't know if `echo` and the Symfony console behaves in the same way but with `bash` in `gnome-terminal`, I have to use quote or escape the backslash in order to have the backslash in the output:
+
+```
+$ echo "App\Entity"
+App\Entity
+$ echo App\Entity
+AppEntity
+$ echo App\\Entity
+App\Entity
+```
+
+---------------------------------------------------------------------------
+
+by gsylvestre at 2019-02-05T19:18:59Z
+
+Oh geez sorry about that.
+I was on _cmder_ on Windows 10.
+I noticed the `App\\Entity` notation was used on 4.0 docs...
+
+I'll make some tests and come back to you.
+
+---------------------------------------------------------------------------
+
+by gsylvestre at 2019-02-05T20:13:18Z
+
+Here are the results on Windows 10:
+
+|               |   PHPStorm   |    cmder     |     cmd      |   git bash  | power shell |
+|---------------|:------------:|:------------:|:------------:|:-----------:|:-----------:|
+| 'App\Entity'  | 'App\Entity' | 'App\Entity' | 'App\Entity' | ok          | not tested  |
+| "App\Entity"  | ok           | ok           | ok           | ok          | ok          |
+| App\\\\Entity   | App\\\\Entity  | App\\\\Entity  | App\\\\Entity  | App\\\\Entity | not tested  |
+| App\Entity    | ok           | ok           | ok           | AppEntity   | ok          |
+
+`"App\Entity"` would be a winner on Windows.
+
+Any problem with this on other OS/terminal?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-02-05T20:26:11Z
+
+afaik double quotes should be fine on Unix based terminals too
