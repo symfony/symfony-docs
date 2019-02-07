@@ -402,11 +402,14 @@ superclass are extracted.
     $reflectionExtractor->isReadable($class, $property);
     $reflectionExtractor->isWritable($class, $property);
 
-    // Initializable information
+    // Initializable information.
     $reflectionExtractor->isInitializable($class, $property);
 
-    // Constructor information
+    // Constructor type information.
     $reflectionExtractor->extractFromConstructor($class, $property);
+    $reflectionExtractor->getTypes($class, $property, [
+        'enable_constructor_extraction' => true
+    ]);
 
 PhpDocExtractor
 ~~~~~~~~~~~~~~~
