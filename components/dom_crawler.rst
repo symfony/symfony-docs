@@ -186,9 +186,6 @@ Get all the direct child nodes matching a CSS selector::
 
     $crawler->filter('body')->children('p.lorem');
 
-.. versionadded:: 4.2
-    The optional selector in ``children($selector)`` method was introduced in Symfony 4.2.
-
 .. note::
 
     All the traversal methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
@@ -204,7 +201,15 @@ Access the node name (HTML tag name) of the first node of the current selection 
 
 Access the value of the first node of the current selection::
 
+    // if the node does not exist, calling to text() will result in an exception
     $message = $crawler->filterXPath('//body/p')->text();
+
+    // avoid the exception passing an argument that text() returns when node does not exist
+    $message = $crawler->filterXPath('//body/p')->text('Default text content');
+
+.. versionadded:: 4.3
+
+    The default argument of ``text()`` was introduced in Symfony 4.3.
 
 Access the attribute value of the first node of the current selection::
 
@@ -214,12 +219,17 @@ Extract attribute and/or node values from the list of nodes::
 
     $attributes = $crawler
         ->filterXpath('//body/p')
-        ->extract(['_text', 'class'])
+        ->extract(['_name', '_text', 'class'])
     ;
 
 .. note::
 
-    Special attribute ``_text`` represents a node value.
+    Special attribute ``_text`` represents a node value, while ``_name``
+    represents the element name (the HTML tag name).
+
+    .. versionadded:: 4.3
+
+        The special attribute ``_name`` was introduced in Symfony 4.3.
 
 Call an anonymous function on each node of the list::
 
@@ -296,7 +306,15 @@ and :phpclass:`DOMNode` objects::
     Or you can get the HTML of the first node using
     :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
 
+        // if the node does not exist, calling to html() will result in an exception
         $html = $crawler->html();
+
+        // avoid the exception passing an argument that html() returns when node does not exist
+        $html = $crawler->html('Default <strong>HTML</strong> content');
+
+    .. versionadded:: 4.3
+
+        The default argument of ``html()`` was introduced in Symfony 4.3.
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~

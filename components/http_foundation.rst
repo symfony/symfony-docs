@@ -551,9 +551,6 @@ abstracts the hard work behind a simple API::
 
     $response->headers->set('Content-Disposition', $disposition);
 
-.. versionadded:: 4.2
-    The static ``HeaderUtils::makeDisposition()`` method was introduced in Symfony 4.2.
-
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
 

@@ -484,9 +484,6 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
     to access to the current class name, format and context.
 
-    .. versionadded:: 4.2
-        The ``AdvancedNameConverterInterface`` interface was introduced in Symfony 4.2.
-
 .. _using-camelized-method-names-for-underscored-attributes:
 
 CamelCase to snake_case
@@ -641,10 +638,6 @@ When serializing, you can set a callback to format a specific object property::
 
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
-
-.. versionadded:: 4.2
-    The ``$outerObject``, ``$attributeName``, ``$format`` and ``$context``
-    parameters of the callback were introduced in Symfony 4.2.
 
 .. _component-serializer-normalizers:
 
@@ -841,10 +834,6 @@ to ``true``::
     $result = $normalizer->normalize($dummy, 'json', ['skip_null_values' => true]);
     // ['bar' => 'notNull']
 
-.. versionadded:: 4.2
-
-    The ``skip_null_values`` option was introduced in Symfony 4.2.
-
 .. _component-serializer-handling-circular-references:
 
 Handling Circular References
@@ -939,10 +928,6 @@ having unique identifiers::
     $serializer = new Serializer([$normalizer], [$encoder]);
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
-
-.. versionadded:: 4.2
-    The ``$format`` and ``$context`` parameters of ``setCircularReferenceHandler()``
-    were introduced in Symfony 4.2.
 
 Handling Serialization Depth
 ----------------------------
@@ -1089,11 +1074,6 @@ having unique identifiers::
         ],
     ];
     */
-
-.. versionadded:: 4.2
-
-    The ``$outerObject``, ``$attributeName``, ``$format`` and ``$context``
-    parameters of ``setMaxDepthHandler()`` were introduced in Symfony 4.2.
 
 Handling Arrays
 ---------------

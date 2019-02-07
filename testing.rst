@@ -421,9 +421,6 @@ These methods are the best way to browse your application as it takes care
 of a lot of things for you, like detecting the HTTP method from a form and
 giving you a nice API for uploading files.
 
-.. versionadded:: 4.2
-    The ``clickLink()`` and ``submitForm()`` methods were introduced in Symfony 4.2.
-
 The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
 

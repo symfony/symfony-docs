@@ -73,6 +73,7 @@ regions
 **type**: ``int`` **default**: ``\DateTimeZone::ALL``
 
 .. versionadded:: 4.2
+
     This option was deprecated in Symfony 4.2.
 
 The available regions in the timezone choice list. For example: ``DateTimeZone::AMERICA | DateTimeZone::EUROPE``

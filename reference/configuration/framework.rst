@@ -749,9 +749,6 @@ utf8
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 4.2
-  The ``framework.router.utf8`` option was introduced in Symfony 4.2.
-
 When this option is set to ``true``, route patterns can include UTF-8 characters.
 If the charset of your application is UTF-8 (as defined in the
 :ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
@@ -831,9 +828,6 @@ cookie_samesite
 
 **type**: ``string`` or ``null`` **default**: ``null``
 
-. versionadded:: 4.2
-    The ``cookie_samesite`` option was introduced in Symfony 4.2.
-
 It controls they way cookies are sent when the HTTP request was not originated
 from the same domain the cookies are associated to. Setting this option is
 recommended to mitigate `CSRF security attacks`_.
@@ -868,9 +862,6 @@ cookie_secure
 This determines whether cookies should only be sent over secure connections. The
 default value is ``auto``, which means ``true`` for HTTPS requests and ``false``
 for HTTP requests.
-
-.. versionadded:: 4.2
-    The ``auto`` value was introduced in Symfony 4.2.
 
 cookie_httponly
 ...............
@@ -2091,9 +2082,6 @@ tags
 """"
 
 **type**: ``boolean`` | ``string`` **default**: ``null``
-
-.. versionadded:: 4.2
-    The ``tags`` option was introduced in Symfony 4.2.
 
 Whether your service should be able to handle tags or not.
 Can also be the service id of another cache pool where tags will be stored.

@@ -175,10 +175,6 @@ Sort the result by name or by type (directories first, then files)::
     as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
     ``file1.txt``, ``file2.txt``, ``file10.txt``).
 
-    .. versionadded:: 4.2
-
-        The option to use the natural sort order was introduced in Symfony 4.2.
-
 Sort the files and directories by the last accessed, changed or modified time::
 
     $finder->sortByAccessedTime();
@@ -197,10 +193,6 @@ You can reverse any sorting by using the ``reverseSorting()`` method::
 
     // results will be sorted "Z to A" instead of the default "A to Z"
     $finder->sortByName()->reverseSorting();
-
-.. versionadded:: 4.2
-
-    The ``reverseSorting()`` method was introduced in Symfony 4.2.
 
 .. note::
 
@@ -237,11 +229,6 @@ Multiple filenames can be excluded by chaining calls or passing an array::
 
     // same as above
     $finder->files()->notName(['*.rb', '*.py']);
-
-.. versionadded:: 4.2
-
-    Support for passing arrays to ``name()`` and ``notName()`` was introduced
-    in Symfony 4.2
 
 File Contents
 ~~~~~~~~~~~~~
@@ -285,10 +272,6 @@ Multiple paths can be defined by chaining calls or passing an array::
     // same as above
     $finder->path(['data', 'foo/bar']);
 
-.. versionadded:: 4.2
-
-    Support for passing arrays to ``path()`` was introduced in Symfony 4.2
-
 Internally, strings are converted into regular expressions by escaping slashes
 and adding delimiters:
 
@@ -328,10 +311,6 @@ Restrict by a size range by chaining calls or passing an array::
     // same as above
     $finder->files()->size(['>= 1K', '<= 2K']);
 
-.. versionadded:: 4.2
-
-    Support for passing arrays to ``size()`` was introduced in Symfony 4.2
-
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``, ``!=``.
 
@@ -354,10 +333,6 @@ Restrict by a date range by chaining calls or passing an array::
     // same as above
     $finder->date(['>= 2018-01-01', '<= 2018-12-31']);
 
-.. versionadded:: 4.2
-
-    Support for passing arrays to ``date()`` was introduced in Symfony 4.2
-
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
 ``until`` or ``before`` as an alias for ``<``.
@@ -379,10 +354,6 @@ Restrict by a depth range by chaining calls or passing an array::
 
     // same as above
     $finder->depth(['> 2', '< 5']);
-
-.. versionadded:: 4.2
-
-    Support for passing arrays to ``depth()`` was introduced in Symfony 4.2
 
 Custom Filtering
 ~~~~~~~~~~~~~~~~

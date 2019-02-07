@@ -143,6 +143,7 @@ checkMX
 **type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 4.2
+
     This option was deprecated in Symfony 4.2.
 
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
@@ -159,6 +160,7 @@ checkHost
 **type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 4.2
+
     This option was deprecated in Symfony 4.2.
 
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to

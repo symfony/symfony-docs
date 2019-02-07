@@ -139,9 +139,6 @@ to your class and choose which groups to use when serializing::
 
     The value of the ``groups`` key can be a single string, or an array of strings.
 
-    .. versionadded:: 4.2
-        The option to pass a single string to ``groups`` was introduced in Symfony 4.2.
-
 In addition to the ``@Groups`` annotation, the Serializer component also
 supports YAML or XML files. These files are automatically loaded when being
 stored in one of the following locations:

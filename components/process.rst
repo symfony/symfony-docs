@@ -100,10 +100,6 @@ with a non-zero code)::
 Using Features From the OS Shell
 --------------------------------
 
-.. versionadded:: 4.2
-
-    The ``fromShellCommandline()`` static method was introduced in Symfony 4.2.
-
 Using array of arguments is the recommended way to define commands. This
 saves you from any escaping and allows sending signals seamlessly
 (e.g. to stop processes before completion)::
@@ -239,9 +235,6 @@ process and checks its output to wait until its fully initialized::
     });
 
     // ... do things after the process is ready
-
-.. versionadded:: 4.2
-    The ``waitUntil()`` method was introduced in Symfony 4.2.
 
 Streaming to the Standard Input of a Process
 --------------------------------------------

@@ -88,10 +88,6 @@ You can optionally display titles at the top and the bottom of the table::
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------- Page 1/2 -------+------------------+
 
-.. versionadded:: 4.2
-    The ``setHeaderTitle()`` and ``setFooterTitle()`` methods were introduced
-    in Symfony 4.2.
-
 By default the width of the columns is calculated automatically based on their
 contents. Use the :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`
 method to set the column widths explicitly::
@@ -153,9 +149,6 @@ The output of this command will be:
     | 0-7   |            |                                |
     |                (the rest of rows...)                |
     +-------+------------+--------------------------------+
-
-.. versionadded:: 4.2
-    The ``setColumnMaxWidth()`` method was introduced in Symfony 4.2.
 
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::

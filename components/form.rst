@@ -759,9 +759,6 @@ method to access the list of errors. It returns a
 Clearing Form Errors
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.2
-    The ``clearErrors()`` method was introduced in Symfony 4.2.
-
 Any errors can be manually cleared using the
 :method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors`
 method. This is useful when you'd like to validate the form without showing

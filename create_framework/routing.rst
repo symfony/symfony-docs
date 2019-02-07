@@ -217,6 +217,11 @@ generate absolute URLs::
     highly optimized URL matcher class that can replace the default
     ``UrlMatcher``::
 
-        $dumper = new Routing\Matcher\Dumper\PhpMatcherDumper($routes);
+        use Symfony\Component\Routing\Matcher\CompiledUrlMatcher;
+        use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
 
-        echo $dumper->dump();
+        // $compiledRoutes is a plain PHP array that describes all routes in a performant data format
+        // you can (and should) cache it, typically by exporting it to a PHP file
+        $compiledRoutes = (new CompiledUrlMatcherDumper($routes))->getCompiledRoutes();
+
+        $matcher = new CompiledUrlMatcher($compiledRoutes, $context);

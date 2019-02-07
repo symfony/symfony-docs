@@ -95,6 +95,33 @@ that the progress bar display is refreshed with a 100% completion.
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::display`
     to show the progress bar again.
 
+If the progress information is stored in an iterable variable (such as an array
+or a PHP generator) you can use the
+:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::iterate` method,
+which starts, advances and finishes the progress bar automatically::
+
+    use Symfony\Component\Console\Helper\ProgressBar;
+
+    $progressBar = new ProgressBar($output);
+
+    // $iterable can be for example an array ([1, 2, 3, ...]) or a generator
+    // $iterable = function () { yield 1; yield 2; ... };
+    foreach ($progressBar->iterate($iterable) as $value) {
+        // ... do some work
+    }
+
+If ``$iterable = [1, 2]``, the previous code will output the following:
+
+.. code-block:: terminal
+
+     0/2 [>---------------------------]   0%
+     1/2 [==============>-------------]  50%
+     2/2 [============================] 100%
+
+.. versionadded:: 4.3
+
+    The ``iterate()`` method was introduced in Symfony 4.3.
+
 Customizing the Progress Bar
 ----------------------------
 

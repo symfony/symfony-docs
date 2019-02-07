@@ -77,10 +77,6 @@ provide it with a set of information extractors.
     $class = YourAwesomeCoolClass::class;
     $properties = $propertyInfo->getProperties($class);
 
-.. versionadded:: 4.2
-    :class:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface`
-    was introduced in Symfony 4.2.
-
 Extractor Ordering
 ~~~~~~~~~~~~~~~~~~
 
@@ -489,11 +485,6 @@ with the ``property_info`` service in the Symfony Framework.
     $doctrineExtractor->getProperties($class);
     // Type information.
     $doctrineExtractor->getTypes($class, $property);
-
-.. versionadded:: 4.2
-    The option to pass Doctrine's EntityManager to ``DoctrineExtractor`` was
-    introduced in Symfony 4.2. Previously you needed to pass the class metadata
-    factory associated to the EntityManager.
 
 .. _`components-property-information-extractors-creation`:
 

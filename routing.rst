@@ -219,9 +219,6 @@ caused by definition inconsistency.
     This prevents having to define multiple paths when you want to use the same
     route path for locales that share the same language.
 
-.. versionadded:: 4.2
-    The feature to fall back on the language part only was introduced in Symfony 4.2.
-
 A common requirement for internationalized applications is to prefix all routes
 with a locale. This can be done by defining a different prefix for each locale
 (and setting an empty prefix for your default locale if you prefer it):
@@ -524,6 +521,14 @@ So how can you make ``blog_list`` once again match when the user visits
 
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
+
+If you want to always include some default value in the generated URL (for
+example to force the generation of ``/blog/1`` instead of ``/blog`` in the
+previous example) add the ``!`` character before the placeholder name: ``/blog/{!page}``
+
+.. versionadded:: 4.3
+    The feature to force the inclusion of default values in generated URLs was
+    introduced in Symfony 4.3.
 
 As it happens with requirements, default values can also be inlined in each
 placeholder using the syntax ``{placeholder_name?default_value}``. This feature

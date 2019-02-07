@@ -275,6 +275,32 @@ form. You can also define this value explicitly with the ``block_name`` option::
 In this example, the fragment name will be ``_product_custom_name_widget``
 instead of the default ``_product_name_widget``.
 
+.. _form-fragment-custom-naming:
+
+Custom Fragment Naming for Individual Fields
+............................................
+
+The ``block_prefix`` option allows form fields to define their own custom
+fragment name. This is mostly useful to customize some instances of the same
+field without having to :doc:`create a custom form type </form/create_custom_field_type>`::
+
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('name', TextType::class, array(
+            'block_prefix' => 'wrapped_text',
+        ));
+    }
+
+.. versionadded:: 4.3
+
+    The ``block_prefix`` option was introduced in Symfony 4.3.
+
+Now you can use ``wrapped_text_row``, ``wrapped_text_widget``, etc. as the block
+names.
+
 .. _form-custom-prototype:
 
 Fragment Naming for Collections
