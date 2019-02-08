@@ -50,7 +50,7 @@ To do that, first install the WebLink component:
 
 .. code-block:: terminal
 
-    $ composer req web-link
+    $ composer require symfony/web-link
 
 Now, update the template to use the ``preload()`` Twig function provided by
 WebLink:
