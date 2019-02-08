@@ -232,8 +232,9 @@ in the Translation component documentation.
 
 .. versionadded:: 4.2
 
-    In 4.2 the ``Translator::transChoice()`` method has been deprecated in favor of
-    using ``Translator::trans()`` with "%count%" as the parameter driving plurals.
+    In Symfony 4.2 the ``Translator::transChoice()`` method was deprecated in
+    favor of using ``Translator::trans()`` with ``%count%`` as the parameter
+    driving plurals.
 
 Translations in Templates
 -------------------------
