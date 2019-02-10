@@ -46,6 +46,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 | options              | - `disabled`_                                                               |
 |                      | - `help`_                                                                   |
 |                      | - `help_attr`_                                                              |
+|                      | - `help_html`_                                                              |
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
@@ -232,6 +233,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
+
+.. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 

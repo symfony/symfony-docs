@@ -25,6 +25,7 @@ that you want to use for your number.
 |             | - `error_mapping`_                                                   |
 |             | - `help`_                                                            |
 |             | - `help_attr`_                                                       |
+|             | - `help_html`_                                                       |
 |             | - `invalid_message`_                                                 |
 |             | - `invalid_message_parameters`_                                      |
 |             | - `label`_                                                           |
@@ -86,6 +87,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
+
+.. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
