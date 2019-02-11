@@ -546,7 +546,16 @@ read any flash messages from the session using ``app.flashes()``:
         </div>
     {% endfor %}
 
-    {# ...or you can read and display every flash message available #}
+    {# ...or you can read and display every flash message available for given labels #}
+    {% for label, messages in app.flashes(['success', 'warning']) %}
+        {% for message in messages %}
+            <div class="flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {# ...finally you can read and display every flash message available #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash-{{ label }}">
