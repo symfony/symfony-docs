@@ -443,7 +443,7 @@ while still having them passed to their respective handler:
     the spool as it's only called during the ``kernel.terminate`` event (which
     is not dispatched during command call).
 
-    The first thing to change is the SwiftMailer configuration:
+    To do so, update the SwiftMailer configuration:
 
     .. configuration-block::
 
