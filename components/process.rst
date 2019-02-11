@@ -128,6 +128,28 @@ environment variables using the second argument of the ``run()``,
     // On both Unix-like and Windows
     $process->run(null, ['MESSAGE' => 'Something to output']);
 
+Setting Environment Variables for Processes
+-------------------------------------------
+
+The constructor of the :class:`Symfony\\Component\\Process\\Process` class and
+all its methods related to executing processes (``run()``, ``mustRun()``,
+``start()``, etc.) allow passing an array of environment variables to set before
+running the process::
+
+    $process = new Process(['...'], null, ['ENV_VAR_NAME' => 'value']);
+    $process = Process::fromShellCommandline('...', null, ['ENV_VAR_NAME' => 'value']);
+    $process->run(null, ['ENV_VAR_NAME' => 'value']);
+    // ...
+
+These environment variables are automatically inherited by child processes. You
+can prevent that setting the following env vars to ``false``::
+
+    // ...
+    $process = new Process(['...'], null, [
+        'APP_ENV' => false,
+        'SYMFONY_DOTENV_VARS' => false
+    ]);
+
 Getting real-time Process Output
 --------------------------------
 
