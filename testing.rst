@@ -13,7 +13,7 @@ The PHPUnit Testing Framework
 
 Symfony integrates with an independent library called `PHPUnit`_ to give you a
 rich testing framework. This article won't cover PHPUnit itself, which has its
-own excellent `documentation`_.
+own excellent `documentation`_.  (Please note that latest relaesed version of Php Unit version 8.2 is not compactable with symfony 4.2)
 
 Before creating your first test, install the `PHPUnit Bridge component`_, which
 wraps the original PHPUnit binary to provide additional features:
