@@ -29,6 +29,7 @@ photos).
 |             | - `error_mapping`_                                                          |
 |             | - `help`_                                                                   |
 |             | - `help_attr`_                                                              |
+|             | - `help_html`_                                                              |
 |             | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
 |             | - `label_format`_                                                           |
@@ -425,6 +426,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
+
+.. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 

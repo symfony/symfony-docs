@@ -21,6 +21,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `extra_fields_message`_                                          |
 |           | - `help`_                                                          |
 |           | - `help_attr`_                                                     |
+|           | - `help_html`_                                                     |
 |           | - `inherit_data`_                                                  |
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
@@ -109,6 +110,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
+
+.. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
