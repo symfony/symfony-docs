@@ -904,27 +904,25 @@ start and depends on `gc_divisor`_ and `gc_probability`_.
 sid_length
 ..........
 
-**type**: ``integer``
+**type**: ``integer`` **default**: ``32``
 
-This determines the length of session ID string. Session ID length can be
-between 22 to 256. The default is 32. If you need compatibility you may
-specify 32, 40, etc. Longer session ID is harder to guess. At least 32 chars
-is recommended.
+This determines the length of session ID string, which can be an integer between
+``22`` and ``256`` (both inclusive), being ``32`` the recommended value. Longer
+session IDs are harder to guess.
 
-This option refers to the`session.sid_length` of the `php.ini`
+This option is related to the `session.sid_length PHP option`_.
 
 sid_bits_per_character
 ......................
 
-**type**: ``integer``
+**type**: ``integer`` **default**: ``4``
 
-This determines the number of bits in encoded session ID character. 
-The possible values are '4' (0-9, a-f), '5' (0-9, a-v), and '6' 
-(0-9, a-z, A-Z, "-", ","). 
-The default is 4. The more bits results in stronger session ID. 
-5 is recommended value for most environments.
+This determines the number of bits in encoded session ID character. The possible
+values are ``4`` (0-9, a-f), ``5`` (0-9, a-v), and ``6`` (0-9, a-z, A-Z, "-", ",").
+The more bits results in stronger session ID. ``5`` is recommended value for
+most environments.
 
-This option refers to the`session.sid_bits_per_character` of the `php.ini`
+This option is related to the `session.sid_bits_per_character PHP option`_.
 
 save_path
 .........
@@ -2178,3 +2176,5 @@ available, or to ``flock`` otherwise. Store's DSN are also allowed.
 .. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin
 .. _`error_reporting PHP option`: https://secure.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
 .. _`CSRF security attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`session.sid_length PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-length
+.. _`session.sid_bits_per_character PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
