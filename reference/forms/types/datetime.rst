@@ -196,6 +196,11 @@ Defines the ``widget`` option for both the :doc:`DateType </reference/forms/type
 and :doc:`TimeType </reference/forms/types/time>`. This can be overridden
 with the `date_widget`_ and `time_widget`_ options.
 
+.. versionadded:: 4.3
+
+    Using the ``date_format``, ``date_widget``, and ``time_widget`` options when
+    the ``widget`` option is set to ``single_text`` is deprecated since Symfony 4.3.
+
 .. include:: /reference/forms/types/options/with_minutes.rst.inc
 
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
