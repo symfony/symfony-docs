@@ -476,7 +476,7 @@ while still having them passed to their respective handler:
                   // ... Other keys except the spool one.
             ));
             
-        Then time to send your message which contain the email content:
+        Then time to send your message which contains the email content:
         
         .. code-block:: php
         
