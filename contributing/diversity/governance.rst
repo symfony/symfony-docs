@@ -24,6 +24,15 @@ guiding key players should:
 * Be committed to good governance and want to contribute to the initiative's
   continued improvement.
 
+The current guidance team is composed of the following people (in alphabetical
+order):
+
+* **Lukas Kahwe Smith** (`lsmith77`_);
+* **Michelle Sanver** (`michellesanver`_);
+* **Nicolas Grekas** (`nicolas-grekas`_);
+* **Timo Bakx** (`TimoBakx`_);
+* **Zan Baldwin** (`zanbaldwin`_).
+
 Veto
 ~~~~
 
@@ -109,3 +118,9 @@ hold specific positions while being adaptable to accommodate unforeseen needs of
 the community, especially as membership and involvement grows over time (changes
 to key player appointment will have to be approved by the current system, which
 is Fabien Potencier).
+
+.. _`lsmith77`: https://github.com/lsmith77/
+.. _`michellesanver`: https://github.com/michellesanver/
+.. _`nicolas-grekas`: https://github.com/nicolas-grekas/
+.. _`TimoBakx`: https://github.com/TimoBakx/
+.. _`zanbaldwin`: https://github.com/zanbaldwin/
