@@ -45,7 +45,6 @@ on all types for which ``FormType`` is the parent.
 |           | - `translation_domain`_                                            |
 |           | - `label_translation_parameters`_                                  |
 |           | - `attr_translation_parameters`_                                   |
-|           | - `translation_parameters`_                                        |
 +-----------+--------------------------------------------------------------------+
 | Parent    | none                                                               |
 +-----------+--------------------------------------------------------------------+
