@@ -465,7 +465,7 @@ while still having them passed to their respective handler:
                     http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
                 <swiftmailer:config>
-                    <!-- Other keys expect the spool one --> 
+                    <!-- Other keys except the spool one --> 
                 </swiftmailer:config>
             </container>
 
