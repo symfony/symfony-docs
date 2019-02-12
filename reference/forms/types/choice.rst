@@ -47,7 +47,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `translation_domain`_                                                      |
 |             | - `label_translation_parameters`_                                            |
 |             | - `attr_translation_parameters`_                                             |
-|             | - `helptranslation_parameters`_                                              |
+|             | - `help_translation_parameters`_                                             |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                                |
 +-------------+------------------------------------------------------------------------------+
