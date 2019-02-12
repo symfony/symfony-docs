@@ -473,7 +473,7 @@ while still having them passed to their respective handler:
 
             // config/packages/messenger.php
             $container->loadFromExtension('swiftmailer', array(
-                  // ... Other keys expect the spool one.
+                  // ... Other keys except the spool one.
             ));
             
         Then time to send your message which contain the email content:
