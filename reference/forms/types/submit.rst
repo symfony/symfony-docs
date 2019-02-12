@@ -14,7 +14,8 @@ A submit button.
 |                      | - `label`_                                                           |
 |                      | - `label_format`_                                                    |
 |                      | - `translation_domain`_                                              |
-|                      | - `translation_parameters`_                                          |
+|                      | - `label_translation_parameters`_                                    |
+|                      | - `attr_translation_parameters`_                                     |
 |                      | - `validation_groups`_                                               |
 +----------------------+----------------------------------------------------------------------+
 | Parent type          | :doc:`ButtonType</reference/forms/types/button>`                     |
@@ -60,7 +61,85 @@ as a key. This can be useful when you need to set a custom class for the button:
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
-.. include:: /reference/forms/types/options/submit_translation_parameters.rst.inc
+label_translation_parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array()``
+
+Translated `label`_ can contain
+:ref:`placeholders <component-translation-placeholders>`.
+This option allows you to pass an array of parameters in order to replace
+placeholders with actual values.
+
+Given this translation message:
+
+.. code-block:: yaml
+
+    # translations/messages.en.yml
+    form.order.submit_to_company: Send an order to %company%
+
+you can specify placeholder value:
+
+.. code-block:: php
+
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    // ...
+
+    $builder->add('send', SubmitType::class, array(
+        'label' => 'form.order.submit_to_company',
+        'label_translation_parameters' => array(
+            '%company%' => 'ACME Inc.',
+        ),
+    ));
+
+Note that `label_translation_parameters` of submits are merged with those of its
+parent. In other words the parent's translation parameters are available for
+children's submits but can be overriden:
+
+.. code-block:: php
+
+    // App/Controller/OrderController.php
+    use App\Form\OrderType;
+    // ...
+
+    $form = $this->createForm(OrderType::class, $order, array(
+        // available to all children, grandchildren and so on.
+        'label_translation_parameters' => array(
+            '%company%' => 'ACME',
+        ),
+    ));
+
+.. code-block:: php
+
+    // App/Form/OrderType.php
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    // ...
+
+    $builder->add('send', SubmitType::class, array(
+        'label' => 'form.order.submit_to_company',
+        // Value of parent's 'label_translation_parameters' will be merged with
+        // this field's empty 'label_translation_parameters'.
+        // array('%company%' => 'ACME') will be used to translate this label.
+    ));
+
+.. code-block:: php
+
+    // App/Form/OrderType.php
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    // ...
+
+    $builder->add('send', SubmitType::class, array(
+        'label' => 'form.order.submit_to_company',
+        'label_translation_parameters' => array(
+            '%company%' => 'American Company Making Everything',
+        ),
+        // Value of parent's 'label_translation_parameters' will be merged with
+        // this submit's 'label_translation_parameters'.
+        // array('%company%' => 'American Company Making Everything')
+        // will be passed to translate this label.
+    ));
+
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
 
 validation_groups
 ~~~~~~~~~~~~~~~~~

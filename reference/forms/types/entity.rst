@@ -32,7 +32,9 @@ objects from the database.
 |             | - `placeholder`_                                                 |
 |             | - `preferred_choices`_                                           |
 |             | - `translation_domain`_                                          |
-|             | - `translation_parameters`_                                      |
+|             | - `label_translation_parameters`_                                |
+|             | - `attr_translation_parameters`_                                 |
+|             | - `help_translation_parameters`_                                 |
 |             | - `trim`_                                                        |
 |             |                                                                  |
 |             | from the :doc:`FormType </reference/forms/types/form>`:          |
@@ -308,7 +310,11 @@ when rendering the field:
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
-.. include:: /reference/forms/types/options/entity_type_translation_parameters.rst.inc
+.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
