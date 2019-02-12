@@ -32,13 +32,11 @@ objects from the database.
 |             | - `placeholder`_                                                 |
 |             | - `preferred_choices`_                                           |
 |             | - `translation_domain`_                                          |
-|             | - `label_translation_parameters`_                                |
-|             | - `attr_translation_parameters`_                                 |
-|             | - `help_translation_parameters`_                                 |
 |             | - `trim`_                                                        |
 |             |                                                                  |
 |             | from the :doc:`FormType </reference/forms/types/form>`:          |
 |             |                                                                  |
+|             | - `attr`_                                                        |
 |             | - `data`_                                                        |
 |             | - `disabled`_                                                    |
 |             | - `empty_data`_                                                  |
@@ -52,6 +50,9 @@ objects from the database.
 |             | - `label_format`_                                                |
 |             | - `mapped`_                                                      |
 |             | - `required`_                                                    |
+|             | - `label_translation_parameters`_                                |
+|             | - `attr_translation_parameters`_                                 |
+|             | - `help_translation_parameters`_                                 |
 +-------------+------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                |
 +-------------+------------------------------------------------------------------+
@@ -310,16 +311,12 @@ when rendering the field:
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
-.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
-
-.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
-
-.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
-
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
 These options inherit from the :doc:`form </reference/forms/types/form>`
 type:
+
+.. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -356,3 +353,9 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
