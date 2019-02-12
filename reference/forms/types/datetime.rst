@@ -133,6 +133,11 @@ used by the HTML5 ``datetime-local`` field. Keeping the default value will
 cause the field to be rendered as an ``input`` field with ``type="datetime-local"``.
 For more information on valid formats, see `Date/Time Format Syntax`_.
 
+.. versionadded:: 4.3
+
+    Using the ``format`` option when the ``html5`` option is enabled is deprecated
+    since Symfony 4.3.
+
 .. include:: /reference/forms/types/options/hours.rst.inc
 
 .. include:: /reference/forms/types/options/html5.rst.inc
