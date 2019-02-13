@@ -1,7 +1,7 @@
 label_translation_parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 Translated `label`_, can
 contain :ref:`placeholders <component-translation-placeholders>`.
@@ -26,7 +26,7 @@ you can specify placeholder value:
         ]
     ));
 
-Note that `label_translation_parameters` of children fields are merged with those
+Note that ``label_translation_parameters`` of children fields are merged with those
 of its parent. In other words the parent's translation parameters are available
 for children but can be overriden:
 

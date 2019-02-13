@@ -64,7 +64,7 @@ as a key. This can be useful when you need to set a custom class for the button:
 label_translation_parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 Translated `label`_ can contain
 :ref:`placeholders <component-translation-placeholders>`.
@@ -92,7 +92,7 @@ you can specify placeholder value:
         ),
     ));
 
-Note that `label_translation_parameters` of submits are merged with those of its
+Note that ``label_translation_parameters`` of submits are merged with those of its
 parent. In other words the parent's translation parameters are available for
 children's submits but can be overriden:
 
