@@ -282,47 +282,6 @@ Now you can configure all the user information in ``config/packages/security.yam
                         john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
                         jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
 
-Injecting the Memory User Provider as a Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Symfony creates an abstract service called ``security.user.provider.in_memory``
-which cannot be injected into your services. Instead, inject the normal service
-created for each memory provider which is named
-``security.user.provider.concrete.<your-provider-name>``.
-
-For example, if you are :doc:`building a form login </security/form_login_setup>`
-and want to inject the previous ``backend_users`` provider in your
-``LoginFormAuthenticator``, do the following::
-
-    // src/Security/LoginFormAuthenticator.php
-    namespace App\Security;
-
-    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
-    use Symfony\Component\Security\Core\User\InMemoryUserProvider;
-
-    class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
-    {
-        private $userProvider;
-
-        public function __construct(InMemoryUserProvider $userProvider, /* ... */)
-        {
-            $this->userProvider = $userProvider;
-            // ...
-        }
-    }
-
-Then, inject the concrete service created by Symfony for the ``backend_users``
-user provider:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        # ...
-
-        App\Security\LoginFormAuthenticator:
-            $userProvider: '@security.user.provider.concrete.backend_users'
-
 .. _security-ldap-user-provider:
 
 LDAP User Provider
@@ -492,3 +451,59 @@ Comparing Users Manually with EquatableInterface
 Or, if you need more control over the "compare users" process, make your User class
 implement :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`.
 Then, your ``isEqualTo()`` method will be called when comparing users.
+
+Injecting a User Provider in your Services
+------------------------------------------
+
+Symfony defines several services related to user providers:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container user.provider
+
+      Select one of the following services to display its information:
+      [0] security.user.provider.in_memory
+      [1] security.user.provider.in_memory.user
+      [2] security.user.provider.ldap
+      [3] security.user.provider.chain
+      ...
+
+Most of these services are abstract and cannot be injected in your services.
+Instead, you must inject the normal service that Symfony creates for each of
+your user providers. The names of these services follow this pattern:
+``security.user.provider.concrete.<your-provider-name>``.
+
+For example, if you are :doc:`building a form login </security/form_login_setup>`
+and want to inject in your ``LoginFormAuthenticator`` a user provider of type
+``memory`` and called  ``backend_users``, do the following::
+
+    // src/Security/LoginFormAuthenticator.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+    use Symfony\Component\Security\Core\User\InMemoryUserProvider;
+
+    class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
+    {
+        private $userProvider;
+
+        // change the 'InMemoryUserProvider' type-hint in the constructor if
+        // you are injecting a different type of user provider
+        public function __construct(InMemoryUserProvider $userProvider, /* ... */)
+        {
+            $this->userProvider = $userProvider;
+            // ...
+        }
+    }
+
+Then, inject the concrete service created by Symfony for the ``backend_users``
+user provider:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        # ...
+
+        App\Security\LoginFormAuthenticator:
+            $userProvider: '@security.user.provider.concrete.backend_users'
