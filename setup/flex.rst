@@ -169,6 +169,8 @@ manual steps:
 
 #. Move the original parameters defined in ``app/config/parameters.*.yml`` to
    the new ``config/services.yaml`` and ``.env`` files depending on your needs.
+   If you have defined :doc:`custom config options in your bundles </bundles/configuration>`
+   move them to the new ``config/services.yaml`` and ``.env`` files.
 
 #. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
    update the namespaces of every PHP file to be ``App\...`` (advanced IDEs can do
