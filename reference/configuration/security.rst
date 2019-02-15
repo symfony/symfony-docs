@@ -234,29 +234,10 @@ statically using the ``dn_string`` config option.
 User provider
 ~~~~~~~~~~~~~
 
-Users will still be fetched from the configured user provider. If you
-wish to fetch your users from a LDAP server, you will need to use the
-``ldap`` user provider, in addition to one of the three authentication
-providers (``form_login_ldap`` or ``http_basic_ldap`` or ``json-login-ldap``).
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            providers:
-                my_ldap_users:
-                    ldap:
-                        service: ldap
-                        base_dn: 'dc=symfony,dc=com'
-                        search_dn: '%ldap.search_dn%'
-                        search_password: '%ldap.search_password%'
-                        default_roles: ''
-                        uid_key: 'uid'
-                        filter: '(&({uid_key}={username})(objectclass=person)(ou=Users))'
+Users will still be fetched from the configured user provider. If you wish to
+fetch your users from a LDAP server, you will need to use the
+:doc:`LDAP User Provider </security/ldap>` and any of these authentication
+providers: ``form_login_ldap`` or ``http_basic_ldap`` or ``json-login-ldap``.
 
 Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
