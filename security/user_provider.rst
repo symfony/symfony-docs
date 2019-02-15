@@ -1,8 +1,7 @@
-All about User Providers
-========================
+Security User Providers
+=======================
 
-Each User class in your app will usually need its own "user provider": a class
-that has two jobs:
+User providers are PHP classes related to Symfony Security that have two jobs:
 
 **Reload the User from the Session**
     At the beginning of each request (unless your firewall is ``stateless``), Symfony
@@ -12,26 +11,264 @@ that has two jobs:
     has "changed" and de-authenticates the user if they have (see :ref:`user_session_refresh`).
 
 **Load the User for some Feature**
-    Some features, like ``switch_user``, ``remember_me`` and many of the built-in
+    Some features, like :doc:`user impersonation </security/impersonating_user>`,
+    :doc:`Remember Me </security/remember_me>` and many of the built-in
     :doc:`authentication providers </security/auth_providers>`, use the user provider
     to load a User object via its "username" (or email, or whatever field you want).
 
 Symfony comes with several built-in user providers:
 
-.. toctree::
-    :hidden:
+* :ref:`Entity User Provider <security-entity-user-provider>` (loads users from
+  a database);
+* :ref:`LDAP User Provider <security-ldap-user-provider>` (loads users from a
+  LDAP server);
+* :ref:`Memory User Provider <security-memory-user-provider>` (loads users from
+  a configuration file);
+* :ref:`Chain User Provider <security-chain-user-provider>` (merges two or more
+  user providers into a new user provider).
 
-    entity_provider
+The built-in user providers cover all the needs for most applications, but you
+can also create your own :ref:`custom user provider <custom-user-provider>`.
 
-* :doc:`entity: (load users from the database) </security/entity_provider>`
-* :doc:`ldap </security/ldap>`
-* ``memory`` (users are hardcoded in config)
-* ``chain`` (try multiple user providers)
+.. _security-entity-user-provider:
 
-Or you can create a :ref:`custom user provider <custom-user-provider>`.
+Entity User Provider
+--------------------
 
-User providers are configured in ``config/packages/security.yaml`` under the
-``providers`` key, and each has different configuration options:
+This is the most common user provider for traditional web applications. Users
+are stored in a database and the user provider uses :doc:`Doctrine </doctrine>`
+to retrieve them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+            # ...
+
+            providers:
+                users:
+                    entity:
+                        # the class of the entity that represents users
+                        class: 'App\Entity\User'
+                        # the property to query by - e.g. username, email, etc
+                        property: 'username'
+                        # optional: if you're using multiple Doctrine entity
+                        # managers, this option defines which one to use
+                        # manager_name: 'customer'
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <provider name="users">
+                    <!-- 'class' is the entity that represents users and 'property'
+                         is the entity property to query by - e.g. username, email, etc -->
+                    <entity class="App\Entity\User" property="username" />
+
+                    <!-- optional: if you're using multiple Doctrine entity
+                         managers, this option defines which one to use -->
+                    <!-- <entity class="App\Entity\User" property="username"
+                                 manager-name="customer" /> -->
+                </provider>
+
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Entity\User;
+
+        $container->loadFromExtension('security', [
+            'providers' => [
+                'users' => [
+                    'entity' => [
+                        // the class of the entity that represents users
+                        'class'    => User::class,
+                        // the property to query by - e.g. username, email, etc
+                        'property' => 'username',
+                        // optional: if you're using multiple Doctrine entity
+                        // managers, this option defines which one to use
+                        // 'manager_name' => 'customer',
+                    ],
+                ],
+            ],
+
+            // ...
+        ]);
+
+The ``providers`` section creates a "user provider" called ``users`` that knows
+to query from your ``App\Entity\User`` entity by the ``username`` property. You
+can choose any name for the user provider, but it's recommended to pick a
+descriptive name because this will be later used in the firewall configuration.
+
+.. _authenticating-someone-with-a-custom-entity-provider:
+
+Using a Custom Query to Load the User
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``entity`` provider can only query from one *specific* field, specified by
+the ``property`` config key. If you want a bit more control over this - e.g. you
+want to find a user by ``email`` *or* ``username``, you can do that by making
+your ``UserRepository`` implement the
+:class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
+interface only requires one method: ``loadUserByUsername($username)``::
+
+    // src/Repository/UserRepository.php
+    namespace App\Repository;
+
+    use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+    use Doctrine\ORM\EntityRepository;
+
+    class UserRepository extends EntityRepository implements UserLoaderInterface
+    {
+        // ...
+
+        public function loadUserByUsername($usernameOrEmail)
+        {
+            return $this->createQueryBuilder('u')
+                ->where('u.username = :query OR u.email = :query')
+                ->setParameter('query', $usernameOrEmail)
+                ->getQuery()
+                ->getOneOrNullResult();
+        }
+    }
+
+To finish this, remove the ``property`` key from the user provider in
+``security.yaml``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            providers:
+                users:
+                    entity:
+                        class: App\Entity\User
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="users">
+                    <entity class="App\Entity\User" />
+                </provider>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Entity\User;
+
+        $container->loadFromExtension('security', [
+            // ...
+
+            'providers' => [
+                'users' => [
+                    'entity' => [
+                        'class' => User::class,
+                    ],
+                ],
+            ],
+        ]);
+
+This tells Symfony to *not* query automatically for the User. Instead, when
+needed (e.g. because :doc:`user impersonation </security/impersonating_user>`,
+:doc:`Remember Me </security/remember_me>`, or some other security feature is
+activated), the ``loadUserByUsername()`` method on ``UserRepository`` will be called.
+
+.. _security-memory-user-provider:
+
+Memory User Provider
+--------------------
+
+It's not recommended to use this provider in real applications because of its
+limitations and how difficult is to manage users. It may be useful in app
+prototypes and for limited apps that don't store users in databases.
+
+This user provider stores all user information in a configuration file,
+including their passwords. That's why the first step is to configure how these
+users will encode their passwords:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            encoders:
+                # this internal class is used by Symfony to represent in-memory users
+                Symfony\Component\Security\Core\User\User: 'bcrypt'
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <config>
+                <!-- ... -->
+
+                <!-- this internal class is used by Symfony to represent in-memory users -->
+                <encoder class="Symfony\Component\Security\Core\User\User"
+                    algorithm="bcrypt"
+                />
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+
+        // this internal class is used by Symfony to represent in-memory users
+        use Symfony\Component\Security\Core\User\User;
+
+        $container->loadFromExtension('security', [
+            // ...
+            'encoders' => [
+                User::class => [
+                    'algorithm' => 'bcrypt',
+                ],
+            ],
+        ]);
+
+Then, run this command to encode the plain text passwords of your users:
+
+.. code-block:: terminal
+
+    $ php bin/console security:encode-password
+
+Now you can configure all the user information in ``config/packages/security.yaml``:
 
 .. code-block:: yaml
 
@@ -39,37 +276,72 @@ User providers are configured in ``config/packages/security.yaml`` under the
     security:
         # ...
         providers:
-            # this becomes the internal name of the provider
-            # not usually important, but can be used to specify which
-            # provider you want for which firewall (advanced case) or
-            # for a specific authentication provider
-            some_provider_key:
-
-                # provider type - one of the above
+            backend_users:
                 memory:
-                    # custom options for that provider
                     users:
-                        user:  { password: '%env(USER_PASSWORD)%', roles: [ 'ROLE_USER' ] }
-                        admin: { password: '%env(ADMIN_PASSWORD)%', roles: [ 'ROLE_ADMIN' ] }
+                        john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
+                        jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
 
-            a_chain_provider:
+.. _security-ldap-user-provider:
+
+LDAP User Provider
+------------------
+
+This user provider requires installing certain dependencies and using some
+special authentication providers, so it's explained in a separate article:
+:doc:`/security/ldap`.
+
+.. _security-chain-user-provider:
+
+Chain User Provider
+-------------------
+
+This user provider combines two or more of the other provider types (``entity``,
+``memory`` and ``ldap``) to create a new user provider. The order in which
+providers are configured is important because Symfony will look for users
+starting from the first provider and will keep looking for in the other
+providers until the user is found:
+
+.. code-block:: yaml
+
+    # config/packages/security.yaml
+    security:
+        # ...
+        providers:
+            backend_users:
+                memory:
+                    # ...
+
+            legacy_users:
+                entity:
+                    # ...
+
+            users:
+                entity:
+                    # ...
+
+            all_users:
                 chain:
-                    providers: [some_provider_key, another_provider_key]
+                    providers: ['legacy_users', 'users', 'backend']
 
 .. _custom-user-provider:
 
 Creating a Custom User Provider
 -------------------------------
 
-If you're loading users from a custom location (e.g. via an API or legacy database
-connection), you'll need to create a custom user provider class. First, make sure
-you've followed the :doc:`Security Guide </security>` to create your ``User`` class.
+Most applications don't need to create a custom provider. If you store users in
+a database, a LDAP server or a configuration file, Symfony supports that.
+However, if you're loading users from a custom location (e.g. via an API or
+legacy database connection), you'll need to create a custom user provider.
 
-If you used the ``make:user`` command to create your ``User`` class (and you answered
-the questions indicating that you need a custom user provider), that command will
-generate a nice skeleton to get you started::
+First, make sure you've followed the :doc:`Security Guide </security>` to create
+your ``User`` class.
 
-    // .. src/Security/UserProvider.php
+If you used the ``make:user`` command to create your ``User`` class (and you
+answered the questions indicating that you need a custom user provider), that
+command will generate a nice skeleton to get you started::
+
+    // src/Security/UserProvider.php
     namespace App\Security;
 
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -132,34 +404,32 @@ generate a nice skeleton to get you started::
         }
     }
 
-Most of the work is already done! Read the comments in the code and update the TODO
-sections to finish the user provider.
-
-When you're done, tell Symfony about the user provider by adding it in ``security.yaml``:
+Most of the work is already done! Read the comments in the code and update the
+TODO sections to finish the user provider. When you're done, tell Symfony about
+the user provider by adding it in ``security.yaml``:
 
 .. code-block:: yaml
 
     # config/packages/security.yaml
     security:
         providers:
-            # internal name - can be anything
+            # the name of your user provider can be anything
             your_custom_user_provider:
                 id: App\Security\UserProvider
 
-That's it! When you use any of the features that require a user provider, your
-provider will be used! If you have multiple firewalls and multiple providers,
-you can specify *which* provider to use by adding a ``provider`` key under your
-firewall and setting it to the internal name you gave to your user provider.
+Lastly, update the ``config/packages/security.yaml`` file to set the
+``provider`` key to ``your_custom_user_provider`` in all the firewalls which
+will use this custom user provider.
 
 .. _user_session_refresh:
 
 Understanding how Users are Refreshed from the Session
 ------------------------------------------------------
 
-At the end of every request (unless your firewall is ``stateless``), your ``User``
-object is serialized to the session. At the beginning of the next request, it's
-deserialized and then passed to your user provider to "refresh" it (e.g. Doctrine
-queries for a fresh user).
+At the end of every request (unless your firewall is ``stateless``), your
+``User`` object is serialized to the session. At the beginning of the next
+request, it's deserialized and then passed to your user provider to "refresh" it
+(e.g. Doctrine queries for a fresh user).
 
 Then, the two User objects (the original from the session and the refreshed User
 object) are "compared" to see if they are "equal". By default, the core
@@ -182,3 +452,58 @@ Or, if you need more control over the "compare users" process, make your User cl
 implement :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`.
 Then, your ``isEqualTo()`` method will be called when comparing users.
 
+Injecting a User Provider in your Services
+------------------------------------------
+
+Symfony defines several services related to user providers:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container user.provider
+
+      Select one of the following services to display its information:
+      [0] security.user.provider.in_memory
+      [1] security.user.provider.in_memory.user
+      [2] security.user.provider.ldap
+      [3] security.user.provider.chain
+      ...
+
+Most of these services are abstract and cannot be injected in your services.
+Instead, you must inject the normal service that Symfony creates for each of
+your user providers. The names of these services follow this pattern:
+``security.user.provider.concrete.<your-provider-name>``.
+
+For example, if you are :doc:`building a form login </security/form_login_setup>`
+and want to inject in your ``LoginFormAuthenticator`` a user provider of type
+``memory`` and called  ``backend_users``, do the following::
+
+    // src/Security/LoginFormAuthenticator.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+    use Symfony\Component\Security\Core\User\InMemoryUserProvider;
+
+    class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
+    {
+        private $userProvider;
+
+        // change the 'InMemoryUserProvider' type-hint in the constructor if
+        // you are injecting a different type of user provider
+        public function __construct(InMemoryUserProvider $userProvider, /* ... */)
+        {
+            $this->userProvider = $userProvider;
+            // ...
+        }
+    }
+
+Then, inject the concrete service created by Symfony for the ``backend_users``
+user provider:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        # ...
+
+        App\Security\LoginFormAuthenticator:
+            $userProvider: '@security.user.provider.concrete.backend_users'
