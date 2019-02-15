@@ -122,6 +122,7 @@ a traditional HTML form that submits to ``/login``:
 
     use App\Entity\User;
     use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\RouterInterface;
