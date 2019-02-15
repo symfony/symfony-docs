@@ -20,7 +20,7 @@ Symfony comes with several built-in user providers:
 
 * :ref:`Entity User Provider <security-entity-user-provider>` (loads users from
   a database);
-* :ref:`LDAP User Provider <security-dap-user-provider>` (loads users from a
+* :ref:`LDAP User Provider <security-ldap-user-provider>` (loads users from a
   LDAP server);
 * :ref:`Memory User Provider <security-memory-user-provider>` (loads users from
   a configuration file);
