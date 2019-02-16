@@ -11,6 +11,8 @@ borders with a reduced risk of propagating transcription errors.
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 |                | - `payload`_                                                          |
+|                | - `allowLowerCase`_                                                   |
+|                | - `allowSpaces`_                                                      |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Iban`             |
 +----------------+-----------------------------------------------------------------------+
@@ -109,6 +111,22 @@ You can use the following parameters in this message:
 +=================+=============================+
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
+
+allowLowerCase
+~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+If this option is set to ``false`` and value contains a lowercase letter, a validation
+error will be returned.
+
+allowSpaces
+~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+If this option is set to ``false`` and value contains a space, a validation
+error will be returned.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

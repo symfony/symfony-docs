@@ -14,6 +14,8 @@ check that the BIC is associated with a given IBAN.
 |                | - `iban`_                                                             |
 |                | - `ibanMessage`_                                                      |
 |                | - `ibanPropertyPath`_                                                 |
+|                | - `allowLowerCase`_                                                   |
+|                | - `allowSpaces`_                                                      |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Bic`              |
 +----------------+-----------------------------------------------------------------------+
@@ -130,5 +132,21 @@ It defines the object property whose value stores the IBAN used to check the BIC
 For example, if you want to compare the ``$bic`` property of some object
 with regard to the ``$iban`` property of the same object, use
 ``propertyPath="iban"`` in the comparison constraint of ``$bic``.
+
+allowLowerCase
+~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is set to ``false`` and value contains a lowercase letter, a validation
+error will be returned. If set to ``true``, lowercase letters are allowed.
+
+allowSpaces
+~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+If this option is set to ``false`` and value contains a space, a validation
+error will be returned.
 
 .. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code
