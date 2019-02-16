@@ -1,7 +1,7 @@
 grouping
 ~~~~~~~~
 
-**type**: ``integer`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 This value is used internally as the ``NumberFormatter::GROUPING_USED``
 value when using PHP's ``NumberFormatter`` class. Its documentation is
