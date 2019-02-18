@@ -699,3 +699,209 @@ in the configuration of the collecting service:
                 )
                 ;
         };
+
+Tagged Services Collection with Index
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to retrieve a specific service within the injected collection
+you can use the ``index_by`` and ``default_index_method`` options of the argument
+in combination with ``!tagged``.
+
+In the following example, all services tagged with ``app.handler`` are passed as
+first constructor argument to ``App\Handler\HandlerCollection``,
+but we can now access a specific injected service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Handler\One:
+                tags:
+                    - { name: 'app.handler', key: 'handler_one' }
+
+            App\Handler\Two:
+                tags:
+                    - { name: 'app.handler', key: 'handler_two' }
+
+            App\HandlerCollection:
+                # inject all services tagged with app.handler as first argument
+                arguments: [!tagged { tag: 'app.handler', index_by: 'key' }]
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Handler\One">
+                    <tag name="app.handler" key="handler_one" />
+                </service>
+
+                <service id="App\Handler\Two">
+                    <tag name="app.handler" key="handler_two" />
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged" tag="app.handler" index-by="key" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+        $container->register(App\Handler\One::class)
+            ->addTag('app.handler', ['key' => 'handler_one']);
+
+        $container->register(App\Handler\Two::class)
+            ->addTag('app.handler', ['key' => 'handler_two']);
+
+        $container->register(App\Handler\HandlerCollection::class)
+            // inject all services tagged with app.handler as first argument
+            ->addArgument(new TaggedIteratorArgument('app.handler', 'key'));
+
+After compilation the ``HandlerCollection`` is able to iterate over your
+application handlers. To retrieve a specific service by it's ``key`` attribute
+from the iterator, we can use ``iterator_to_array`` and retrieve the ``handler_two``:
+to get an array and then retrieve the ``handler_two`` handler::
+
+    // src/Handler/HandlerCollection.php
+    namespace App\Handler;
+
+    class HandlerCollection
+    {
+        public function __construct(iterable $handlers)
+        {
+            $handlers = iterator_to_array($handlers);
+
+            $handlerTwo = $handlers['handler_two']:
+        }
+    }
+
+.. tip::
+
+    You can omit the ``index_attribute_name`` attribute, by implementing a static
+    method ``getDefaultIndexAttributeName`` to the handler.
+
+    Based on the previous example ``App\Handler\One`` should look like this::
+
+        // src/Handler/One.php
+        namespace App\Handler;
+
+        class One
+        {
+            public static function getDefaultIndexName(): string
+            {
+                return 'handler_one';
+            }
+        }
+
+    And the configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                App\Handler\One:
+                    tags:
+                        - { name: 'app.handler', priority: 20 }
+
+                # ...
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="App\Handler\One">
+                        <tag name="app.handler" priority="20" />
+                    </service>
+
+                    <!-- ... -->
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->register(App\Handler\One::class)
+                ->addTag('app.handler', ['priority' => 20]);
+
+            // ...
+
+    You also can define the name of the static method to implement on each service
+    with the ``default_index_method`` attribute on the argument.
+
+    Based on the previous example ``App\Handler\One`` should look like::
+
+        // src/Handler/One.php
+        namespace App\Handler;
+
+        class One
+        {
+            public static function someFunctionName(): string
+            {
+                return 'handler_one';
+            }
+        }
+
+    And the configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                # ...
+
+                App\HandlerCollection:
+                    # inject all services tagged with app.handler as first argument
+                    arguments: [!tagged { tag: 'app.handler', index_by: 'key', default_index_method: 'someFunctionName' }]
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+
+                    <!-- ... --!>
+
+                    <service id="App\HandlerCollection">
+                        <!-- inject all services tagged with app.handler as first argument -->
+                        <argument type="tagged" tag="app.handler" index-by="key" default-index-method="someFunctionName" />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            // ...
+
+            $container->register(App\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->addArgument(new TaggedIteratorArgument('app.handler', 'key', 'someFunctionName'));
+
+See also :doc:`tagged locator services </service_container/service_subscribers_locators>`
