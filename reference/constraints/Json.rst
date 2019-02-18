@@ -92,7 +92,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should b valid JSON.``
+**type**: ``string`` **default**: ``This value should be valid JSON.``
 
 This message is shown if the underlying data is not a valid JSON.
 
