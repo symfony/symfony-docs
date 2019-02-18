@@ -237,7 +237,7 @@ User provider
 Users will still be fetched from the configured user provider. If you wish to
 fetch your users from a LDAP server, you will need to use the
 :doc:`LDAP User Provider </security/ldap>` and any of these authentication
-providers: ``form_login_ldap`` or ``http_basic_ldap`` or ``json-login-ldap``.
+providers: ``form_login_ldap`` or ``http_basic_ldap`` or ``json_login_ldap``.
 
 Using the PBKDF2 Encoder: Security and Speed
 --------------------------------------------
