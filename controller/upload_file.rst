@@ -66,7 +66,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
         {
             $builder
                 // ...
-                ->add('brochure', FileType::class, ['label' => 'Brochure (PDF file)'])
+                ->add('brochure', FileType::class, ['label' => 'Brochure (PDF file)', 'data_class' => null])
                 // ...
             ;
         }
@@ -101,6 +101,7 @@ Finally, you need to update the code of the controller that handles the form::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
     use App\Entity\Product;
@@ -119,8 +120,8 @@ Finally, you need to update the code of the controller that handles the form::
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // $file stores the uploaded PDF file
-                /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-                $file = $product->getBrochure();
+                /** @var UploadedFile $file */
+                $file = $form->get('brochure')->getData();
 
                 $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
