@@ -109,8 +109,8 @@ to retrieve them:
         ]);
 
 The ``providers`` section creates a "user provider" called ``users`` that knows
-to query from your ``App\Entity\User`` entity by the ``username`` property. You
-can choose any name for the user provider, but it's recommended to pick a
+how to query from your ``App\Entity\User`` entity by the ``username`` property.
+You can choose any name for the user provider, but it's recommended to pick a
 descriptive name because this will be later used in the firewall configuration.
 
 .. _authenticating-someone-with-a-custom-entity-provider:
@@ -208,7 +208,7 @@ Memory User Provider
 --------------------
 
 It's not recommended to use this provider in real applications because of its
-limitations and how difficult is to manage users. It may be useful in app
+limitations and how difficult it is to manage users. It may be useful in app
 prototypes and for limited apps that don't store users in databases.
 
 This user provider stores all user information in a configuration file,
