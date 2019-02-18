@@ -1,7 +1,6 @@
 Json
-=======
 
-Validates that a value is a ``json``. Specifically, this checks to see if
+Validates that a value is valid ``json``. Specifically, this checks to see if
 the value is a valid ``json`` or not.
 
 +----------------+-----------------------------------------------------------------------+
@@ -20,7 +19,7 @@ Basic Usage
 
 The ``Json`` constraint can be applied to a property or a "getter" method,
 but is most commonly useful in the latter case. For example, suppose that
-you want to guarantee that some ``jsonString`` property is a valid ``json``.
+you want to guarantee that some ``jsonString`` property is valid JSON.
 
 .. configuration-block::
 
@@ -61,7 +60,7 @@ you want to guarantee that some ``jsonString`` property is a valid ``json``.
             <class name="App\Entity\Book">
                 <property name="chapters">
                     <constraint name="Json">
-                        <option name="You've entered an invalid Json.</option>
+                        <option name"message">You've entered an invalid Json.</option>
                     </constraint>
                 </property>
             </class>
@@ -82,7 +81,7 @@ you want to guarantee that some ``jsonString`` property is a valid ``json``.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('chapters', new Assert\Json(array(
-                    'message' => 'You've entered an invalid Json.',
+                    'message' => 'You\'ve entered an invalid Json.',
                 )));
             }
         }
@@ -93,8 +92,8 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be a valid json.``
+**type**: ``string`` **default**: ``This value should b valid JSON.``
 
-This message is shown if the underlying data is not a valid json.
+This message is shown if the underlying data is not a valid JSON.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
