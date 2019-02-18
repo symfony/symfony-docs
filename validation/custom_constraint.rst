@@ -68,7 +68,7 @@ The validator class is also simple, and only has one required method ``validate(
             if (!$constraint instanceof ContainsAlphanumeric) {
                 throw new UnexpectedTypeException($constraint, ContainsAlphanumeric::class);
             }
-            
+
             // custom constraints should ignore null and empty values to allow
             // other constraints (NotBlank, NotNull, etc.) take care of that
             if (null === $value || '' === $value) {
@@ -214,7 +214,7 @@ not to the property:
     .. code-block:: php-annotations
 
         /**
-         * @AcmeAssert\ContainsAlphanumeric
+         * @AcmeAssert\ProtocolClassValidator
          */
         class AcmeEntity
         {
@@ -226,11 +226,11 @@ not to the property:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\AcmeEntity:
             constraints:
-                - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
+                - AppBundle\Validator\Constraints\ProtocolClassValidator: ~
 
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/validation.xml -->
         <class name="AppBundle\Entity\AcmeEntity">
-            <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric" />
+            <constraint name="AppBundle\Validator\Constraints\ProtocolClassValidator" />
         </class>
