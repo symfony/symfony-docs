@@ -219,7 +219,7 @@ not to the property:
     .. code-block:: php-annotations
 
         /**
-         * @AcmeAssert\ContainsAlphanumeric
+         * @AcmeAssert\ProtocolClassValidator
          */
         class AcmeEntity
         {
@@ -231,11 +231,11 @@ not to the property:
         # config/validator/validation.yaml
         App\Entity\AcmeEntity:
             constraints:
-                - App\Validator\Constraints\ContainsAlphanumeric: ~
+                - App\Validator\Constraints\ProtocolClassValidator: ~
 
     .. code-block:: xml
 
         <!-- config/validator/validation.xml -->
         <class name="App\Entity\AcmeEntity">
-            <constraint name="App\Validator\Constraints\ContainsAlphanumeric" />
+            <constraint name="App\Validator\Constraints\ProtocolClassValidator" />
         </class>
