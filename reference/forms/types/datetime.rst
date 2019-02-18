@@ -66,10 +66,15 @@ Defines the ``format`` option that will be passed down to the date field.
 See the :ref:`DateType's format option <reference-forms-type-date-format>`
 for more details.
 
+The ``date_format`` option does not have any effect when the form is rendered
+as an HTML5 datetime input.
+
 date_widget
 ~~~~~~~~~~~
 
 .. include:: /reference/forms/types/options/date_widget_description.rst.inc
+
+The ``date_widget`` option is ignored when the ``widget`` option is set to ``single_text``.
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
@@ -148,6 +153,8 @@ time_widget
 **type**: ``string`` **default**: ``choice``
 
 Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/time>`.
+
+The ``time_widget`` option is ignored when the ``widget`` option is set to ``single_text``.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
