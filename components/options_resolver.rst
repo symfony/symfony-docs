@@ -36,7 +36,7 @@ Imagine you have a ``Mailer`` class which has four options: ``host``,
         }
     }
 
-When accessing the ``$options``, you need to add a lot of boilerplate code to
+When accessing the ``$options``, you need to add some boilerplate code to
 check which options are set::
 
     class Mailer
@@ -55,9 +55,8 @@ check which options are set::
         }
     }
 
-This boilerplate code is boring and repetitive. Also, the default values of the
-options are buried in the business logic of your code. Use the
-:phpfunction:`array_replace` to fix that::
+Also, the default values of the options are buried in the business logic of your
+code. Use the :phpfunction:`array_replace` to fix that::
 
     class Mailer
     {
