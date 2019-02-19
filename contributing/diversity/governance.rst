@@ -72,6 +72,23 @@ For an actionable item to pass, approval from greater than 50% of the voting key
 players is required. Use or management of finances/donations require at least a
 two-thirds majority to pass.
 
+For transparency and ease-of-understanding, this means only the following
+combinations of votes will result in an actionable item passing:
+
++-----+---------+---------+
+| For | Against | Abstain |
++=====+=========+=========+
+| 5   | 0       | 0       |
++-----+---------+---------+
+| 4   | 1       | 0       |
++-----+---------+---------+
+| 3   | 2       | 0       |
++-----+---------+---------+
+| 4   | 0       | 1       |
++-----+---------+---------+
+| 3   | 1       | 1       |
++-----+---------+---------+
+
 Guidance Principles
 -------------------
 
