@@ -440,13 +440,13 @@ To do this, add a ``termsAccepted`` field to your form, but set its
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('email', EmailType::class);
+                ->add('email', EmailType::class)
                 // ...
                 ->add('termsAccepted', CheckboxType::class, [
                     'mapped' => false,
                     'constraints' => new IsTrue(),
                 ])
-            );
+            ;
         }
     }
 
