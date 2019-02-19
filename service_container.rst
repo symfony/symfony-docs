@@ -534,8 +534,8 @@ You can also fetch parameters directly from the container::
     {
         // ...
 
-        // this ONLY works if you extend the base Controller
-        $adminEmail = $this->container->getParameter('admin_email');
+        // this ONLY works if you extend the base AbstractController
+        $adminEmail = $this->container->get('parameter_bag')->get('admin_email');
 
         // or a shorter way!
         // $adminEmail = $this->getParameter('admin_email');
