@@ -117,7 +117,7 @@ options:
 Finally, you can override the action and method in the template by passing them
 to the ``form()`` or the ``form_start()`` helper functions:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# templates/default/new.html.twig #}
     {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
