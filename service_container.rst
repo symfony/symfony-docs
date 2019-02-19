@@ -534,11 +534,11 @@ You can also fetch parameters directly from the container::
     {
         // ...
 
-        // this ONLY works if you extend the base AbstractController
-        $adminEmail = $this->container->get('parameter_bag')->get('admin_email');
+        // this shortcut ONLY works if you extend the base AbstractController
+        $adminEmail = $this->getParameter('admin_email');
 
-        // or a shorter way!
-        // $adminEmail = $this->getParameter('admin_email');
+        // this is the equivalent code of the previous shortcut:
+        // $adminEmail = $this->container->get('parameter_bag')->get('admin_email');
     }
 
 For more info about parameters, see :doc:`/service_container/parameters`.
