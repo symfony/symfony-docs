@@ -46,13 +46,17 @@ If your valid choice list is simple, you can pass them in directly via the
 
         class Author
         {
+            const GENRES = ['fiction', 'non-fiction'];
+
             /**
              * @Assert\Choice({"New York", "Berlin", "Tokyo"})
              */
             protected $city;
 
             /**
-             * @Assert\Choice(choices={"fiction", "non-fiction"}, message="Choose a valid genre.")
+             * You can also directly provide an array constant to the "choices" option in the annotation
+             *
+             * @Assert\Choice(choices=Author::GENRES, message="Choose a valid genre.")
              */
             protected $genre;
         }
@@ -278,35 +282,6 @@ you can pass the class name and the method as an array.
                 )));
             }
         }
-
-Supplying the Choices from an Array Constant
---------------------------------------------
-
-You can also directly provide a constant containing an array to the ``choices`` option in the annotation::
-
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
-
-    use Symfony\Component\Validator\Constraints as Assert;
-
-    class Author
-    {
-        const GENRES = ['action', 'comedy'];
-
-        /**
-         * @Assert\Choice(choices=Author::GENRES)
-         */
-        protected $genre;
-    }
-
-.. warning::
-
-  The constant in the option is used without quotes.
-
-.. note::
-
-  If the constant is defined in a different class, you can pass the fully qualified class name.
-
 
 Available Options
 -----------------
