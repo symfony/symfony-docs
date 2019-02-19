@@ -46,27 +46,16 @@ check which options are set::
         {
             $mail = ...;
 
-            $mail->setHost(isset($this->options['host'])
-                ? $this->options['host']
-                : 'smtp.example.org');
-
-            $mail->setUsername(isset($this->options['username'])
-                ? $this->options['username']
-                : 'user');
-
-            $mail->setPassword(isset($this->options['password'])
-                ? $this->options['password']
-                : 'pa$$word');
-
-            $mail->setPort(isset($this->options['port'])
-                ? $this->options['port']
-                : 25);
+            $mail->setHost($this->options['host'] ?? 'smtp.example.org');
+            $mail->setUsername($this->options['username'] ?? 'user');
+            $mail->setPassword($this->options['password'] ?? 'pa$$word');
+            $mail->setPort($this->options['port'] ?? 25);
 
             // ...
         }
     }
 
-This boilerplate is hard to read and repetitive. Also, the default values of the
+This boilerplate code is boring and repetitive. Also, the default values of the
 options are buried in the business logic of your code. Use the
 :phpfunction:`array_replace` to fix that::
 
