@@ -157,6 +157,76 @@ Configuration of the service container then looks like this:
             # old syntax
             factory: ['@App\Email\NewsletterManagerFactory', createNewsletterManager]
 
+.. _factories-invokable:
+
+Suppose you now change your factory method to ``__invoke()`` so that your
+factory service can be used as a callback::
+
+    class InvokableNewsletterManagerFactory
+    {
+        public function __invoke()
+        {
+            $newsletterManager = new NewsletterManager();
+
+            // ...
+
+            return $newsletterManager;
+        }
+    }
+
+.. versionadded:: 4.3
+
+    Invokable factories for services were introduced in Symfony 4.3.
+
+Services can be created and configured via invokable factories by omitting the
+method name, just as route definitions can reference :ref:`invokable
+controllers <controller-service-invoke>`.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+
+        services:
+            # ...
+
+            AppBundle\Email\NewsletterManager:
+                class:     AppBundle\Email\NewsletterManager
+                factory:   '@AppBundle\Email\NewsletterManagerFactory'
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="AppBundle\Email\NewsletterManager"
+                         class="AppBundle\Email\NewsletterManager">
+                    <factory service="AppBundle\Email\NewsletterManagerFactory" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+
+        use AppBundle\Email\NewsletterManager;
+        use AppBundle\Email\NewsletterManagerFactory;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->register(NewsletterManager::class, NewsletterManager::class)
+            ->setFactory(new Reference(NewsletterManagerFactory::class));
+
 .. _factories-passing-arguments-factory-method:
 
 Passing Arguments to the Factory Method
