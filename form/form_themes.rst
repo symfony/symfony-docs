@@ -307,10 +307,66 @@ Fragment Naming for Collections
 ...............................
 
 When using a :doc:`collection of forms </form/form_collections>`, the fragment
-of each collection item follows the pattern ``_field-name_entry_part``. For
-example, if your form field is named ``tasks``, the fragment for each task will
-be named ``_tasks_entry`` (``_tasks_entry_row``, ``_tasks_entry_label``,
-``_tasks_entry_widget``, ``_tasks_entry_error``)
+of each collection item follows a predefined pattern. For example, consider the
+following complex example where a ``TaskManagerType`` has a collection of
+``TaskListType`` which in turn has a collection of ``TaskType``::
+
+    class TaskManagerType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options = array())
+        {
+            // ...
+            $builder->add('taskLists', CollectionType::class, array(
+                'entry_type' => TaskListType::class,
+                'block_name' => 'task_lists',
+            ));
+        }
+    }
+
+    class TaskListType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options = array())
+        {
+            // ...
+            $builder->add('tasks', CollectionType::class, array(
+                'entry_type' => TaskType::class,
+            ));
+        }
+    }
+
+    class TaskType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options = array())
+        {
+            $builder->add('name');
+            // ...
+        }
+    }
+
+Then you get all the following customizable blocks (where ``*`` can be replaced
+by ``row``, ``widget``, ``label``, or ``help``):
+
+.. code-block:: twig
+
+    {% block _task_manager_task_lists_* %}
+        {# the collection field of TaskManager #}
+    {% endblock %}
+
+    {% block _task_manager_task_lists_entry_* %}
+        {# the inner TaskListType #}
+    {% endblock %}
+
+    {% block _task_manager_task_lists_entry_tasks_* %}
+        {# the collection field of TaskListType #}
+    {% endblock %}
+
+    {% block _task_manager_task_lists_entry_tasks_entry_* %}
+        {# the inner TaskType #}
+    {% endblock %}
+
+    {% block _task_manager_task_lists_entry_tasks_entry_name_* %}
+        {# the field of TaskType #}
+    {% endblock %}
 
 Template Fragment Inheritance
 .............................
