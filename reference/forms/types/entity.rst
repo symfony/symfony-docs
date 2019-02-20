@@ -99,6 +99,13 @@ the `query_builder`_ option::
         'choice_label' => 'username',
     ]);
 
+.. note::
+
+    Using form collections may result in making too many database requests to
+    fetch related entities. This is know as the *"N + 1 query problem"* and it
+    can be solved :ref:`joining related records <doctrine-associations-join-query>`
+    when querying for Doctrine associations.
+
 .. _reference-forms-entity-choices:
 
 Using Choices
