@@ -86,7 +86,7 @@ Some of the Twig functions mentioned in the previous section allow to pass
 variables to configure their behavior. For example, the ``form_label()``
 function lets you define a custom label to override the one defined in the form:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form_label(form.task, 'My Custom Task Label') }}
 
@@ -96,7 +96,7 @@ type, but one common option is ``attr``, which allows you to modify HTML
 attributes on the form element. The following would add the ``task_field`` CSS
 class to the rendered input text field:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
 
@@ -116,7 +116,7 @@ If you need to render form fields "by hand" then you can access individual
 values for fields (such as the ``id``, ``name`` and ``label``) using its
 ``vars``  property. For example to get the ``id``:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form.task.vars.id }}
 
