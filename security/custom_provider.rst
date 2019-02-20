@@ -174,6 +174,14 @@ Here's an example of how this might look::
         }
     }
 
+.. note::
+
+    If fetching the user is a complex or slow operation, you can avoid making it
+    for every request and rely instead on some cache provided by yourself.
+    This is not recommended if you store users in a :doc:`Doctrine database </doctrine>`
+    because it can cause errors when trying to persist changes made to a cached
+    user not fetched from the database.
+
 Create a Service for the User Provider
 --------------------------------------
 
