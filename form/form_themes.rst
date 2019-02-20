@@ -341,6 +341,8 @@ for any overridden form blocks:
 
 .. code-block:: html+twig
 
+    {% extends 'base.html.twig' %}
+
     {% form_theme form _self %}
 
     {# this overrides the widget of any field of type integer, but only in the
@@ -359,12 +361,16 @@ for any overridden form blocks:
         </div>
     {% endblock %}
 
-
     {# ... render the form ... #}
 
-The disadvantage of this method is that the customized form blocks can't be
-reused when rendering other forms in other templates. If that's what you need,
-create a form theme in a separate template as explained in the next section.
+The main disadvantage of this method is that it only works if your template
+extends another (``'base.html.twig'`` in the previous example). If your template
+does not, you must point ``form_theme`` to a separate template, as explained in
+the next section.
+
+Another disadvantage is that the customized form blocks can't be reused when
+rendering other forms in other templates. If that's what you need, create a form
+theme in a separate template as explained in the next section.
 
 Creating a Form Theme in a Separate Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
