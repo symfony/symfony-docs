@@ -19,7 +19,7 @@ will be called ``ShippingType`` and the file will be stored in the default locat
 for form fields, which is ``<BundleName>\Form\Type``.
 
 All field types must implement the :class:`Symfony\\Component\\Form\\FormTypeInterface`,
-but you can instead extend from :class:`Symfony\\Component\\Form\\AbstractType`,
+but you should instead extend from :class:`Symfony\\Component\\Form\\AbstractType`,
 which already implements that interface and provides some utilities::
 
     // src/AppBundle/Form/Type/ShippingType.php
