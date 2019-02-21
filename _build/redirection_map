@@ -409,3 +409,5 @@
 /profiler/profiling_data /profiler
 /profiler/wdt_follow_ajax /profiler
 /security/entity_provider /security/user_provider
+/session/avoid_session_start /session
+/session/sessions_directory /session

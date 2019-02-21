@@ -63,7 +63,7 @@ authentication, have Varnish remove the corresponding header from requests to
 prevent clients from bypassing the cache. In practice, you will need sessions
 at least for some parts of the site, e.g. when using forms with
 :doc:`CSRF Protection </security/csrf>`. In this situation, make sure to
-:doc:`only start a session when actually needed </session/avoid_session_start>`
+:ref:`only start a session when actually needed <session-avoid-start>`
 and clear the session when it is no longer needed. Alternatively, you can look
 into :ref:`caching pages that contain CSRF protected forms <caching-pages-that-contain-csrf-protected-forms>`.
 
