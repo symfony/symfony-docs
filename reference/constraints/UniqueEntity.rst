@@ -170,10 +170,10 @@ not need to be used.
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``findBy()``
+**type**: ``string`` **default**: ``findBy``
 
 The name of a custom repository method to determine the uniqueness.
-If it's left blank, ``findBy()`` will be used. The method gets passed
+If it's left blank, ``findBy`` will be used. The method gets passed
 an indexed array with elements in the form ``fieldName => value``
 (where ``fieldName`` is the content of the ``fields`` option).
 The method should return a
