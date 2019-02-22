@@ -224,7 +224,6 @@ following standardized instructions in your ``README.md`` file.
         in the `app/AppKernel.php` file of your project:
 
         ```php
-        <?php
         // app/AppKernel.php
 
         // ...
