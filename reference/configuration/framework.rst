@@ -1741,9 +1741,10 @@ static_method
 
 **type**: ``string | array`` **default**: ``['loadValidatorMetadata']``
 
-Defines the static method which is called to load the validation metadata of the
-class. You can define an array of strings with the names of several methods. In
-that case, all of them will be called in that order to load the metadata.
+Defines the name of the static method which is called to load the validation
+metadata of the class. You can define an array of strings with the names of
+several methods. In that case, all of them will be called in that order to load
+the metadata.
 
 strict_email
 ............
