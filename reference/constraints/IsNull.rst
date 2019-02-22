@@ -2,7 +2,7 @@ IsNull
 ======
 
 Validates that a value is exactly equal to ``null``. To force that a property
-is simply blank (blank string or ``null``), see the  :doc:`/reference/constraints/Blank`
+is blank (blank string or ``null``), see the  :doc:`/reference/constraints/Blank`
 constraint. To ensure that a property is not null, see :doc:`/reference/constraints/NotNull`.
 
 Also see :doc:`NotNull <NotNull>`.

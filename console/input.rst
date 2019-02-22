@@ -119,7 +119,7 @@ Using Command Options
 Unlike arguments, options are not ordered (meaning you can specify them in any
 order) and are specified with two dashes (e.g. ``--yell``). Options are
 *always* optional, and can be setup to accept a value (e.g. ``--dir=src``) or
-simply as a boolean flag without a value (e.g.  ``--yell``).
+as a boolean flag without a value (e.g.  ``--yell``).
 
 For example, add a new option to the command that can be used to specify
 how many times in a row the message should be printed::

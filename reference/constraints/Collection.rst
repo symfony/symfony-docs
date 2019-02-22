@@ -163,7 +163,7 @@ following:
 Presence and Absence of Fields
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, this constraint validates more than simply whether or not the
+By default, this constraint validates more than whether or not the
 individual fields in the collection pass their assigned constraints. In
 fact, if any keys of a collection are missing or if there are any unrecognized
 keys in the collection, validation errors will be thrown.

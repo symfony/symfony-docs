@@ -121,7 +121,7 @@ Configuration
   * `https_port`_
   * `resource`_
   * `strict_requirements`_
-  * `type`_
+  * :ref:`type <reference-router-type>`
   * `utf8`_
 
 * `secret`_
@@ -155,6 +155,7 @@ Configuration
   * `sid_length`_
   * `sid_bits_per_character`_
   * `storage_id`_
+  * `use_cookies`_
 
 * `templating`_
 
@@ -188,8 +189,23 @@ Configuration
 
     * :ref:`paths <reference-validation-mapping-paths>`
 
+  * `static_method`_
   * `strict_email`_
   * `translation_domain`_
+
+* `workflows`_
+
+  * :ref:`enabled <reference-workflows-enabled>`
+  * :ref:`name <reference-workflows-name>`
+
+    * `audit_trail`_
+    * `initial_place`_
+    * `marking_store`_
+    * `places`_
+    * `supports`_
+    * `support_strategy`_
+    * `transitions`_
+    * :ref:`type <reference-workflows-type>`
 
 secret
 ~~~~~~
@@ -700,6 +716,8 @@ resource
 The path the main routing resource (e.g. a YAML file) that contains the
 routes and imports the router should load.
 
+.. _reference-router-type:
+
 type
 ....
 
@@ -1025,6 +1043,15 @@ Whether to enable the session support in the framework.
                 'enabled' => true,
             ],
         ]);
+
+use_cookies
+...........
+
+**type**: ``boolean`` **default**: ``null``
+
+This specifies if the session ID is stored on the client side using cookies or
+not. By default it will use the value defined in the ``php.ini`` with the
+``session.use_cookies`` directive.
 
 assets
 ~~~~~~
@@ -1741,6 +1768,16 @@ translation_domain
 The translation domain that is used when translating validation constraint
 error messages.
 
+static_method
+.............
+
+**type**: ``string | array`` **default**: ``['loadValidatorMetadata']``
+
+Defines the name of the static method which is called to load the validation
+metadata of the class. You can define an array of strings with the names of
+several methods. In that case, all of them will be called in that order to load
+the metadata.
+
 strict_email
 ............
 
@@ -2162,6 +2199,135 @@ lock
 
 The default lock adapter. If not defined, the value is set to ``semaphore`` when
 available, or to ``flock`` otherwise. Store's DSN are also allowed.
+
+workflows
+~~~~~~~~~
+
+**type**: ``array``
+
+A list of workflows to be created by the framework extension:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                my_workflow:
+                    # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:workflows>
+                    <framework:workflow
+                        name="my_workflow" />
+                </framework:workflows>
+                <!-- ... -->
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        $container->loadFromExtension('framework', [
+            'workflows' => [
+                'my_workflow' => // ...
+            ],
+        ]);
+
+.. seealso::
+
+    See also the article about :doc:`using workflows in Symfony apps </workflow>`.
+
+.. _reference-workflows-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the support for workflows or not. This setting is
+automatically set to ``true`` when one of the child settings is configured.
+
+.. _reference-workflows-name:
+
+name
+....
+
+**type**: ``prototype``
+
+Name of the workflow you want to create.
+
+audit_trail
+"""""""""""
+
+**type**: ``array``
+
+initial_place
+"""""""""""""
+
+**type**: ``string`` **default**: ``null``
+
+marking_store
+"""""""""""""
+
+**type**: ``array``
+
+Each marking store can define any of these options:
+
+* ``arguments`` (**type**: ``array``)
+* ``service`` (**type**: ``string``)
+* ``type`` (**type**: ``string`` **possible values**: ``'multiple_state'`` or
+  ``'single_state'``)
+
+places
+""""""
+
+**type**: ``array``
+
+supports
+""""""""
+
+**type**: ``string`` | ``array``
+
+support_strategy
+""""""""""""""""
+
+**type**: ``string``
+
+transitions
+"""""""""""
+
+**type**: ``array``
+
+Each marking store can define any of these options:
+
+* ``from`` (**type**: ``string``)
+* ``guard`` (**type**: ``string``) a :doc:`ExpressionLanguage </components/expression_language>`
+  compatible expression to block the transition
+* ``name`` (**type**: ``string``)
+* ``to`` (**type**: ``string``)
+
+.. _reference-workflows-type:
+
+type
+""""
+
+**type**: ``string`` **possible values**: ``'workflow'`` or ``'state_machine'``
+
+Defines the kind fo workflow that is going to be created, which can be either
+a :doc:`normal workflow </workflow/usage>` or a :doc:`state machine </workflow/state-machines>`.
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

@@ -66,15 +66,15 @@ framework more configurable, but at the same time, it introduces a lot of
 issues:
 
 * We are not able to register custom listeners anymore as the dispatcher is
-  not available outside the Framework class (an easy workaround could be the
+  not available outside the Framework class (a workaround could be the
   adding of a ``Framework::getEventDispatcher()`` method);
 
 * We have lost the flexibility we had before; you cannot change the
   implementation of the ``UrlMatcher`` or of the ``ControllerResolver``
   anymore;
 
-* Related to the previous point, we cannot test our framework easily anymore
-  as it's impossible to mock internal objects;
+* Related to the previous point, we cannot test our framework without much
+  effort anymore as it's impossible to mock internal objects;
 
 * We cannot change the charset passed to ``ResponseListener`` anymore (a
   workaround could be to pass it as a constructor argument).
@@ -234,7 +234,7 @@ And the related change in the front controller::
 
     $container->setParameter('routes', include __DIR__.'/../src/app.php');
 
-We have obviously barely scratched the surface of what you can do with the
+We have barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object
 definitions, from shared service support to dumping a container to a plain PHP class,
 and much more. The Symfony dependency injection container is really powerful

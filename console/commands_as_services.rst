@@ -113,7 +113,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
         // config/services.php
         use App\Command\SunshineCommand;
-        //...
+        // ...
 
         $container
             ->register(SunshineCommand::class)
