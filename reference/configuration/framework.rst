@@ -125,7 +125,7 @@ Configuration
   * `https_port`_
   * `resource`_
   * `strict_requirements`_
-  * `type`_
+  * :ref:`type <reference-router-type>`
 
 * `secret`_
 * `serializer`_
@@ -759,6 +759,8 @@ resource
 
 The path the main routing resource (e.g. a YAML file) that contains the
 routes and imports the router should load.
+
+.. _reference-router-type:
 
 type
 ....
