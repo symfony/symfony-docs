@@ -170,11 +170,14 @@ not need to be used.
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``findBy()``
+**type**: ``string`` **default**: ``findBy``
 
-The name of the repository method to use for making the query to determine
-the uniqueness. If it's left blank, the ``findBy()`` method will be used.
-This method should return a countable result.
+The name of a custom repository method to determine the uniqueness.
+If it's left blank, ``findBy`` will be used. The method gets passed
+an indexed array with elements in the form ``fieldName => value``
+(where ``fieldName`` is the content of the ``fields`` option).
+The method should return a
+[countable](http://php.net/manual/function.is-countable.php) result.
 
 entityClass
 ~~~~~~~~~~~
