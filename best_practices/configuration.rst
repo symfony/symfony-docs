@@ -6,8 +6,6 @@ and security credentials) and different environments (development, production).
 That's why Symfony recommends that you split the application configuration into
 three parts.
 
-.. _config-parameters.yml:
-
 Infrastructure-Related Configuration
 ------------------------------------
 
@@ -52,8 +50,6 @@ To override these variables with machine-specific or sensitive values, create a
     or outputting the ``phpinfo()`` contents will display the values of the
     environment variables, exposing sensitive information such as the database
     credentials.
-
-.. _best-practices-canonical-parameters:
 
 Canonical Parameters
 ~~~~~~~~~~~~~~~~~~~~
