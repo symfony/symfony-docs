@@ -189,6 +189,7 @@ Configuration
 
     * :ref:`paths <reference-validation-mapping-paths>`
 
+  * `static_method`_
   * `strict_email`_
   * `translation_domain`_
 
@@ -1744,6 +1745,16 @@ translation_domain
 
 The translation domain that is used when translating validation constraint
 error messages.
+
+static_method
+.............
+
+**type**: ``string | array`` **default**: ``['loadValidatorMetadata']``
+
+Defines the name of the static method which is called to load the validation
+metadata of the class. You can define an array of strings with the names of
+several methods. In that case, all of them will be called in that order to load
+the metadata.
 
 strict_email
 ............
