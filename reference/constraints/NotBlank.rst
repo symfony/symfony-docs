@@ -8,7 +8,7 @@ a blank array, ``null`` or ``false``::
         // validation will fail
     }
 
-To force that a value is simply not equal to ``null``, see the
+To force that a value is not equal to ``null``, see the
 :doc:`/reference/constraints/NotNull` constraint.
 
 +----------------+------------------------------------------------------------------------+

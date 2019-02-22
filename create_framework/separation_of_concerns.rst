@@ -171,7 +171,7 @@ a well defined goal:
   our application;
 
 * ``src/Simplex``: The reusable framework code that abstracts the handling of
-  incoming Requests (by the way, it makes your controllers/templates easily
+  incoming Requests (by the way, it makes your controllers/templates better
   testable -- more about that later on);
 
 * ``src/Calendar``: Our application specific code (the controllers and the

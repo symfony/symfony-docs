@@ -29,8 +29,8 @@ the routes from any bundle, then they must be manually imported from somewhere
 in your application (e.g. ``app/config/routing.yml``).
 
 The easiest way to "override" a bundle's routing is to never import it at
-all. Instead of importing a third-party bundle's routing, simply copy
-that routing file into your application, modify it, and import it instead.
+all. Instead of importing a third-party bundle's routing, copy that
+routing file into your application, modify it, and import it instead.
 
 Controllers
 -----------

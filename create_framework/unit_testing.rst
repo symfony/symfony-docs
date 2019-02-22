@@ -136,7 +136,7 @@ Executing this test is as simple as running ``phpunit`` from the
 After the test ran, you should see a green bar. If not, you have a bug
 either in the test or in the framework code!
 
-Adding a unit test for any exception thrown in a controller is just as easy::
+Adding a unit test for any exception thrown in a controller::
 
     public function testErrorHandling()
     {
