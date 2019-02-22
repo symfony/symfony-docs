@@ -772,18 +772,15 @@ alias will be set to this service id. This class has to implement
 handler_id
 ..........
 
-**type**: ``string`` **default**: ``'session.handler.native_file'``
+**type**: ``string`` **default**: ``null``
 
-The service id used for session storage. The ``session.handler`` service
-alias will be set to this service id.
+The service id used for session storage. The default ``null`` value means to use
+the native PHP session mechanism. Set it to ``'session.handler.native_file'`` to
+let Symfony manage the sessions itself using files to store the session
+metadata.
 
-You can also set it to ``null``, to default to the handler of your PHP
-installation.
-
-.. seealso::
-
-    You can see an example of the usage of this in
-    :doc:`/doctrine/pdo_session_storage`.
+If you prefer to make Symfony store sessions in a database read
+:doc:`/doctrine/pdo_session_storage`.
 
 .. _name:
 
