@@ -19,7 +19,7 @@ This can be done by importing routing resources from the main routing file:
         # config/routes.yaml
         app_file:
             # loads routes from the given routing file stored in some bundle
-            resource: '@AcmeOtherBundle/Resources/config/routing.yml'
+            resource: '@AcmeOtherBundle/Resources/config/routing.yaml'
 
         app_annotations:
             # loads routes from the PHP annotations of the controllers found in that directory
@@ -46,7 +46,7 @@ This can be done by importing routing resources from the main routing file:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- loads routes from the given routing file stored in some bundle -->
-            <import resource="@AcmeOtherBundle/Resources/config/routing.yml" />
+            <import resource="@AcmeOtherBundle/Resources/config/routing.yaml" />
 
             <!-- loads routes from the PHP annotations of the controllers found in that directory -->
             <import resource="../src/Controller/" type="annotation" />
@@ -66,7 +66,7 @@ This can be done by importing routing resources from the main routing file:
         $routes = new RouteCollection();
         $routes->addCollection(
             // loads routes from the given routing file stored in some bundle
-            $loader->import("@AcmeOtherBundle/Resources/config/routing.yml")
+            $loader->import("@AcmeOtherBundle/Resources/config/routing.yaml")
 
             // loads routes from the PHP annotations of the controllers found in that directory
             $loader->import("../src/Controller/", "annotation")
