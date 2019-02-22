@@ -77,7 +77,7 @@ but is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-Each application comes with a caching kernel (``AppCache``)that wraps the
+Each application comes with a caching kernel (``AppCache``) that wraps the
 default one (``AppKernel``). The caching Kernel *is* the reverse proxy.
 
 To enable caching, modify the code of your front controller. You can also make these

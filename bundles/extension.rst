@@ -27,10 +27,11 @@ following conventions:
   ``AppExtension`` and the one for AcmeHelloBundle would be called
   ``AcmeHelloExtension``).
 
-The Extension class should implement the
+The Extension class must implement the
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`,
-but usually you would extend the
-:class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension` class::
+but instead you should extend the
+:class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension` class,
+which already implements the interface and provides some utilities::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
     namespace Acme\HelloBundle\DependencyInjection;

@@ -66,7 +66,7 @@ framework more configurable, but at the same time, it introduces a lot of
 issues:
 
 * We are not able to register custom listeners anymore as the dispatcher is
-  not available outside the Framework class (an workaround could be the
+  not available outside the Framework class (a workaround could be the
   adding of a ``Framework::getEventDispatcher()`` method);
 
 * We have lost the flexibility we had before; you cannot change the
