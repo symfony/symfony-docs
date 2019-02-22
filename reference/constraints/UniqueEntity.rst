@@ -169,11 +169,13 @@ not need to be used.
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``findBy()``
+**type**: ``string`` **default**: ``findBy``
 
-The name of the repository method to use for making the query to determine
-the uniqueness. If it's left blank, the ``findBy()`` method will be used.
-This method should return a countable result.
+The name of the repository method used to determine the uniqueness. If it's left
+blank, ``findBy()`` will be used. The method receives as its argument a
+``fieldName => value`` associative array (where ``fieldName`` is each of the
+fields configured in the ``fields`` option). The method should return a
+`countable PHP variable`_.
 
 entityClass
 ~~~~~~~~~~~
@@ -297,3 +299,4 @@ also has a ``null`` value, validation would fail.
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`race conditions`: https://en.wikipedia.org/wiki/Race_condition
+.. _`countable PHP variable`: https://php.net/manual/function.is-countable.php

@@ -181,6 +181,31 @@ success_handler
 The service ID used for handling a successful logout. The service must implement
 :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
 
+.. _reference-security-logout-csrf:
+
+csrf_parameter
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``'_csrf_token'``
+
+The name of the parameter that stores the CSRF token value.
+
+csrf_token_generator
+~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+The ``id`` of the service used to generate the CSRF tokens. Symfony provides a
+default service whose ID is ``security.csrf.token_manager``.
+
+csrf_token_id
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``'logout'``
+
+An arbitrary string used to generate the token value (and check its validity
+afterwards).
+
 .. _reference-security-ldap:
 
 LDAP functionality
