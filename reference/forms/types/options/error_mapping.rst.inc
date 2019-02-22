@@ -26,12 +26,12 @@ Here are the rules for the left and the right side of the mapping:
 
 * The left side contains property paths;
 * If the violation is generated on a property or method of a class, its
-  path is simply ``propertyName``;
+  path is the ``propertyName``;
 * If the violation is generated on an entry of an ``array`` or ``ArrayAccess``
   object, the property path is ``[indexName]``;
 * You can construct nested property paths by concatenating them, separating
   properties by dots. For example: ``addresses[work].matchingCityAndZipCode``;
-* The right side contains simply the names of fields in the form.
+* The right side contains the names of fields in the form.
 
 By default, errors for any property that is not mapped will bubble up to the
 parent form. You can use the dot (``.``) on the left side to map errors of all

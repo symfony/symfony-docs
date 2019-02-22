@@ -20,7 +20,7 @@ a payment through a payment gateway.
 Basic Usage
 -----------
 
-To use the ``CardScheme`` validator, simply apply it to a property or method
+To use the ``CardScheme`` validator, apply it to a property or method
 on an object that will contain a credit card number.
 
 .. configuration-block::

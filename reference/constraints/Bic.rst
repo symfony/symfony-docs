@@ -19,7 +19,7 @@ uniquely identify both financial and non-financial institutions.
 Basic Usage
 -----------
 
-To use the Bic validator, simply apply it to a property on an object that
+To use the Bic validator, apply it to a property on an object that
 will contain a Business Identifier Code (BIC).
 
 .. configuration-block::

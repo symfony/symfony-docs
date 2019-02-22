@@ -3,9 +3,9 @@ Callback
 
 The purpose of the Callback constraint is to create completely custom
 validation rules and to assign any validation errors to specific fields
-on your object. If you're using validation with forms, this means that you
-can make these custom errors display next to a specific field, instead of
-simply at the top of your form.
+on your object. If you're using validation with forms, this means that
+instead of displaying custom errors at the top of the form, you can
+display them next to the field they apply to.
 
 This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods

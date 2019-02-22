@@ -37,11 +37,11 @@ Using Assetic
 
 .. include:: /assetic/_standard_edition_warning.rst.inc
 
-These days, you probably can't simply create static CSS and JavaScript files
-and include them in your template. Instead, you'll probably want to combine
-and minify these to improve client-side performance. You may also want to
-use LESS or Sass (for example), which means you'll need some way to process
-these into CSS files.
+These days, you probably can't create static CSS and JavaScript files and
+include them in your template without much effort. Instead, you'll probably
+want to combine and minify these to improve client-side performance. You may
+also want to use LESS or Sass (for example), which means you'll need some way
+to process these into CSS files.
 
 A lot of tools exist to solve these problems, including pure-frontend (non-PHP)
 tools like GruntJS.

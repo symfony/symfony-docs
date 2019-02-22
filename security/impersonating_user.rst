@@ -16,8 +16,8 @@ to understand a bug a user sees that you can't reproduce).
     server-side, but pre-authenticated information (``SSL_CLIENT_S_DN_Email``,
     ``REMOTE_USER`` or other) is sent in each request.
 
-Impersonating the user can be easily done by activating the ``switch_user``
-firewall listener:
+Impersonating the user can be done by activating the ``switch_user`` firewall
+listener:
 
 .. configuration-block::
 

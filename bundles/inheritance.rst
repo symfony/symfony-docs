@@ -35,8 +35,8 @@ Then, register the third-party FOSUserBundle as the "parent" of your bundle::
         }
     }
 
-By making this simple change, you can now override several parts of the FOSUserBundle
-simply by creating a file with the same name.
+By making this small change, you can now override several parts of the FOSUserBundle
+by creating a file with the same name.
 
 .. note::
 
@@ -82,8 +82,8 @@ original method, and change its functionality::
 Overriding Resources: Templates, Routing, etc
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most resources can also be overridden, simply by creating a file in the same
-location as your parent bundle.
+Most resources can also be overridden by creating a file in the same location
+as your parent bundle.
 
 For example, it's very common to need to override the FOSUserBundle's
 ``layout.html.twig`` template so that it uses your application's base layout.

@@ -9,8 +9,8 @@ There are two types of bundles:
 * Application-specific bundles: only used to build your application;
 * Reusable bundles: meant to be shared across many projects.
 
-This article is all about how to structure your **reusable bundles** so that
-they're easy to configure and extend. Many of these recommendations do not
+This article is all about how to structure your **reusable bundles** to be
+configurable and extendable. Many of these recommendations do not
 apply to application bundles because you'll want to keep those as simple
 as possible. For application bundles, just follow the practices shown throughout
 the guides.

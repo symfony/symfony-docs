@@ -108,8 +108,7 @@ The @Security Annotation
 ------------------------
 
 For controlling access on a controller-by-controller basis, use the ``@Security``
-annotation whenever possible. It's easy to read and is placed consistently
-above each action.
+annotation whenever possible. Placing it above each action makes it consistent and readable.
 
 In our application, you need the ``ROLE_ADMIN`` in order to create a new post.
 Using ``@Security``, this looks like:
@@ -156,7 +155,7 @@ Notice that this requires the use of the `ParamConverter`_, which automatically
 queries for the ``Post`` object and puts it on the ``$post`` argument. This
 is what makes it possible to use the ``post`` variable in the expression.
 
-This has one major drawback: an expression in an annotation cannot easily
+This has one major drawback: an expression in an annotation cannot
 be reused in other parts of the application. Imagine that you want to add
 a link in a template that will only be seen by authors. Right now you'll
 need to repeat the expression code using Twig syntax:
@@ -167,7 +166,7 @@ need to repeat the expression code using Twig syntax:
         <a href=""> ... </a>
     {% endif %}
 
-The easiest solution - if your logic is simple enough - is to add a new method
+A good solution - if your logic is simple enough - can be to add a new method
 to the ``Post`` entity that checks if a given user is its author::
 
     // src/AppBundle/Entity/Post.php

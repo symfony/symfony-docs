@@ -232,8 +232,7 @@ Using an event listener, your form might look like this::
 The problem is now to get the current user and create a choice field that
 contains only this user's friends.
 
-Luckily it is pretty easy to inject a service inside of the form. This can be
-done in the constructor::
+The service can be injected into the form via its constructor::
 
     use Symfony\Component\Security\Core\Security;
     // ...
