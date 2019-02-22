@@ -122,7 +122,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
         use AppBundle\Command\SunshineCommand;
 
-        //...
+        // ...
 
         $container
             ->register(SunshineCommand::class)

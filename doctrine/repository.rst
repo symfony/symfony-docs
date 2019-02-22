@@ -25,7 +25,7 @@ To do this, add the repository class name to your entity's mapping definition:
          */
         class Product
         {
-            //...
+            // ...
         }
 
     .. code-block:: yaml

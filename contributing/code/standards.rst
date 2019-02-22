@@ -29,9 +29,7 @@ Symfony Coding Standards in Detail
 If you want to learn about the Symfony coding standards in detail, here's a
 short example containing most features described below:
 
-.. code-block:: html+php
-
-    <?php
+.. code-block:: php
 
     /*
      * This file is part of the Symfony package.
