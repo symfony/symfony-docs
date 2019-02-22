@@ -8,8 +8,8 @@ Configuration
 -------------
 
 Sessions are provided by the `HttpFoundation component`_, which is included in
-all Symfony applications, no matter how you installed it. So you only need to
-configure it before using it:
+all Symfony applications, no matter how you installed it. Before using the
+sessions, check their configuration:
 
 .. configuration-block::
 
@@ -18,7 +18,7 @@ configure it before using it:
         # config/packages/framework.yaml
         framework:
             session:
-                # enabled the support of sessions in the app
+                # enables the support of sessions in the app
                 enabled: true
 
                 # ID of the service used for session storage
@@ -64,7 +64,7 @@ configure it before using it:
             ],
         ]);
 
-Check out the Symfony config reference to learn more about all the
+Check out the Symfony config reference to learn more about the other available
 :ref:`Session configuration options <config-framework-session>`. Also, if you
 prefer to store session metadata in the database instead of the filesystem,
 check out this article: :doc:`/doctrine/pdo_session_storage`.
