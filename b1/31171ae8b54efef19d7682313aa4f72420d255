@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-02-22T09:55:46Z
+
+Instead of fixing this ... we should remove this link because it's no longer used in the article (it was used in 3.4).
+
+I wondered why this didn't failed (current RST validator would have failed if the link reference was wrong). The reason it didn't failed --> this is no longer used 😄
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-02-22T09:58:54Z
+
+Please squash my commits @javiereguiluz, thank you!
