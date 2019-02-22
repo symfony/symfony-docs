@@ -4,7 +4,7 @@ The HttpKernel Component: The HttpKernel Class
 If you were to use our framework right now, you would probably have to add
 support for custom error messages. We do have 404 and 500 error support but
 the responses are hardcoded in the framework itself. Making them customizable
-is easy enough though: dispatch a new event and listen to it. Doing it right
+is straightforward though: dispatch a new event and listen to it. Doing it right
 means that the listener has to call a regular controller. But what if the
 error controller throws an exception? You will end up in an infinite loop.
 There should be an easier way, right?
@@ -114,8 +114,8 @@ client; that's what the ``ResponseListener`` does::
 
     $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
-This one was easy too! Let's take another one: do you want out of the box
-support for streamed responses? Subscribe to ``StreamedResponseListener``::
+If you want out of the box support for streamed responses, subscribe
+to ``StreamedResponseListener``::
 
     $dispatcher->addSubscriber(new HttpKernel\EventListener\StreamedResponseListener());
 

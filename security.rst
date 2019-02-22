@@ -408,8 +408,7 @@ Add Code to Deny Access
 There are **two** ways to deny access to something:
 
 #. :ref:`access_control in security.yaml <security-authorization-access-control>`
-   allows you to protect URL patterns (e.g. ``/admin/*``). This is easy,
-   but less flexible;
+   allows you to protect URL patterns (e.g. ``/admin/*``). Simpler, but less flexible;
 
 #. :ref:`in your controller (or other code) <security-securing-controller>`.
 
@@ -529,8 +528,8 @@ the list and stops when it finds the first match:
         ]);
 
 Prepending the path with ``^`` means that only URLs *beginning* with the
-pattern are matched. For example, a path of simply ``/admin`` (without
-the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
+pattern are matched. For example, a path of ``/admin`` (without the ``^``)
+would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
 
 Each ``access_control`` can also match on IP address, hostname and HTTP methods.
 It can also be used to redirect a user to the ``https`` version of a URL pattern.
