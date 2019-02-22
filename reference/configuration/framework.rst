@@ -203,7 +203,7 @@ Configuration
     * `supports`_
     * `support_strategy`_
     * `transitions`_
-    * `type`_
+    * :ref:`type <reference-workflows-type>`
 
 secret
 ~~~~~~
@@ -2275,6 +2275,8 @@ Each marking store can define any of these options:
   compatible expression to block the transition
 * ``name`` (**type**: ``string``)
 * ``to`` (**type**: ``string``)
+
+.. _reference-workflows-type:
 
 type
 """"
