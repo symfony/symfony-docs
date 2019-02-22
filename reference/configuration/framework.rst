@@ -156,6 +156,7 @@ Configuration
   * `name`_
   * `save_path`_
   * `storage_id`_
+  * `use_cookies`_
 
 * `templating`_
 
@@ -1003,6 +1004,15 @@ Whether to enable the session support in the framework.
                 'enabled' => true,
             ],
         ]);
+
+use_cookies
+...........
+
+**type**: ``boolean`` **default**: ``null``
+
+This specifies if the session ID is stored on the client side using cookies or
+not. By default it will use the value defined in the ``php.ini`` with the
+``session.use_cookies`` directive.
 
 assets
 ~~~~~~
