@@ -79,7 +79,7 @@ There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
 `EasyDeployBundle`_
-    A Symfony bundle that adds easy deploy tools to your application.
+    A Symfony bundle that adds deploy tools to your application.
 
 `Deployer`_
     This is another native PHP rewrite of Capistrano, with some ready recipes for

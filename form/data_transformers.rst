@@ -121,8 +121,7 @@ Harder Example: Transforming an Issue Number into an Issue Entity
 Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
 Task has an optional foreign key to its related Issue). Adding a listbox with all
 possible issues could eventually get *really* long and take a long time to load.
-Instead, you decide you want to add a textbox, where the user can simply enter the
-issue number.
+Instead, you decide you want to add a textbox, where the user can enter the issue number.
 
 Start by setting up the text field like normal::
 
@@ -300,9 +299,9 @@ know to pass your ``TaskType`` an instance of the ``IssueToNumberTransformer``.
     For more information about defining form types as services, read
     :doc:`register your form type as a service </form/form_dependencies>`.
 
-Now, you can easily use your ``TaskType``::
+Now, you can use your ``TaskType``::
 
-    // e.g. in a controller somewhere
+    // e.g. somewhere in a controller
     $form = $this->createForm(TaskType::class, $task);
 
     // ...

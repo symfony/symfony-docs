@@ -52,7 +52,7 @@ As you can see for yourself, the simple code we had written first is not that
 simple anymore if we want to avoid PHP warnings/notices and make the code
 more secure.
 
-Beyond security, this code is not even easily testable. Even if there is not
+Beyond security, this code is quite hard to test. Even if there is not
 much to test, it strikes me that writing unit tests for the simplest possible
 snippet of PHP code is not natural and feels ugly. Here is a tentative PHPUnit
 unit test for the above code::
@@ -126,10 +126,10 @@ containing the new requirement.
 .. sidebar:: Class Autoloading
 
     When installing a new dependency, Composer also generates a
-    ``vendor/autoload.php`` file that allows any class to be easily
-    `autoloaded`_. Without autoloading, you would need to require the file
-    where a class is defined before being able to use it. But thanks to
-    `PSR-4`_, we can just let Composer and PHP do the hard work for us.
+    ``vendor/autoload.php`` file that allows any class to be `autoloaded`_.
+    Without autoloading, you would need to require the file where a class
+    is defined before being able to use it. But thanks to `PSR-4`_,
+    we can just let Composer and PHP do the hard work for us.
 
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::
@@ -201,7 +201,7 @@ You can also simulate a request::
 
     $request = Request::create('/index.php?name=Fabien');
 
-With the ``Response`` class, you can easily tweak the response::
+With the ``Response`` class, you can tweak the response::
 
     $response = new Response();
 

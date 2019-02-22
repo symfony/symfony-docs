@@ -21,8 +21,7 @@ to manage your project using `SVN`_ in a similar manner you would do with
 .. tip::
 
     This is **a** method to tracking your Symfony project in a Subversion
-    repository. There are several ways to do and this one is simply one that
-    works.
+    repository. There are several ways to do and this one is one that works.
 
 The Subversion Repository
 -------------------------

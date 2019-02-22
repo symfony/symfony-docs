@@ -166,8 +166,8 @@ block and set the value of two variables called ``icon`` and ``text``:
         <img src="data:image/png;base64,..." />
 
     Another solution is to define the images as SVG files. In addition to being
-    resolution-independent, these images can be easily embedded in the Twig
-    template or included from an external file to reuse them in several templates:
+    resolution-independent, these images can be embedded in the Twig template
+    or included from an external file to reuse them in several templates:
 
     .. code-block:: twig
 
