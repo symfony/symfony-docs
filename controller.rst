@@ -405,15 +405,12 @@ To get the session, add an argument and type-hint it with
 
 Stored attributes remain in the session for the remainder of that user's session.
 
-.. tip::
-
-    Every ``SessionInterface`` implementation is supported. If you have your
-    own implementation, type-hint this in the argument instead.
-
 For more info, see :doc:`/session`.
 
 .. index::
    single: Session; Flash messages
+
+.. _flash-messages:
 
 Flash Messages
 ~~~~~~~~~~~~~~
