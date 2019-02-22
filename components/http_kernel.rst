@@ -174,7 +174,7 @@ to the login page or a 403 Access Denied response.
 If a ``Response`` is returned at this stage, the process skips directly to
 the :ref:`kernel.response <component-http-kernel-kernel-response>` event.
 
-Other listeners simply initialize things or add more information to the request.
+Other listeners initialize things or add more information to the request.
 For example, a listener might determine and set the locale on the ``Request``
 object.
 

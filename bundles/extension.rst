@@ -29,7 +29,7 @@ following conventions:
 
 The Extension class should implement the
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`,
-but usually you would simply extend the
+but usually you would extend the
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension` class::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php

@@ -72,7 +72,7 @@ will override the defaults.
 Configuring the Request Context per Command
 -------------------------------------------
 
-To change it only in one command you can simply fetch the Request Context
+To change it only in one command you need to fetch the Request Context
 from the ``router`` service and override its settings::
 
     // src/AppBundle/Command/DemoCommand.php
