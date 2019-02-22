@@ -188,7 +188,7 @@ csrf_parameter
 
 **type**: ``string`` **default**: ``'_csrf_token'``
 
-The name of the parameter that stores the CSRK token value.
+The name of the parameter that stores the CSRF token value.
 
 csrf_token_generator
 ~~~~~~~~~~~~~~~~~~~~
@@ -197,7 +197,6 @@ csrf_token_generator
 
 The ``id`` of the service used to generate the CSRF tokens. Symfony provides a
 default service whose ID is ``security.csrf.token_manager``.
-
 
 csrf_token_id
 ~~~~~~~~~~~~~
