@@ -252,7 +252,7 @@ that message with the ``invalid_message`` option (see below).
 Using the Transformer
 ~~~~~~~~~~~~~~~~~~~~~
 
-Next, you need to use the ``IssueToNumberTransformer`` object inside if ``TaskType``
+Next, you need to use the ``IssueToNumberTransformer`` object inside of ``TaskType``
 and add it to the ``issue`` field. No problem! Just add a ``__construct()`` method
 and type-hint the new class::
 
