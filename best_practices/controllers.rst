@@ -208,8 +208,9 @@ flexible::
         // ...
     }
 
-The point is this: the ParamConverter shortcut is great for simple situations.
-But you shouldn't forget that querying for entities directly is not to difficult.
+The point is this: the ParamConverter shortcut is great for most situations.
+However, there is nothing wrong with querying for entities directly if the
+ParamConverter would get complicated.
 
 Pre and Post Hooks
 ------------------

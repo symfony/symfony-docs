@@ -166,7 +166,7 @@ need to repeat the expression code using Twig syntax:
         <a href=""> ... </a>
     {% endif %}
 
-A better solution - if your logic is simple enough - is to add a new method
+A good solution - if your logic is simple enough - can be to add a new method
 to the ``Post`` entity that checks if a given user is its author::
 
     // src/AppBundle/Entity/Post.php

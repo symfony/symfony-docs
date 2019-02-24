@@ -52,7 +52,7 @@ As you can see for yourself, the simple code we had written first is not that
 simple anymore if we want to avoid PHP warnings/notices and make the code
 more secure.
 
-Beyond security, this code is quite hard to test. Even if there is not
+Beyond security, this code can be complex to test. Even if there is not
 much to test, it strikes me that writing unit tests for the simplest possible
 snippet of PHP code is not natural and feels ugly. Here is a tentative PHPUnit
 unit test for the above code::
