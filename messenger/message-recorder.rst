@@ -1,29 +1,61 @@
 .. index::
-    single: Messenger; Record messages
+    single: Messenger; Record messages; Transaction messages
 
-Events Recorder: Handle Events After CommandHandler Is Done
-===========================================================
+Transactional Messages: Handle Events After CommandHandler Is Done
+==================================================================
 
-Let's take the example of an application that has a command (a CQRS message) named
-``CreateUser``. That command is handled by the ``CreateUserHandler`` which creates
-a ``User`` object, stores that object to a database and dispatches a ``UserCreated`` event.
-That event is also a normal message but is handled by an *event* bus.
+A message handler can ``dispatch`` new messages during execution, to either the same or
+a different bus (if the application has `multiple buses </messenger/multiple_buses>`_).
+Any errors or exceptions that occur during this process can have unintended consequences,
+such as:
 
-There are many subscribers to the ``UserCreated`` event, one subscriber may send
+- If using the ``DoctrineTransactionMiddleware`` and a dispatched message to the same bus
+  and an exception is thrown, then any database transactions in the original handler will
+  be rolled back.
+- If the message is dispatched to a different bus, then the dispatched message can still
+  be handled even if the original handler encounters an exception.
+
+An Example ``SignUpUser`` Process
+---------------------------------
+
+Let's take the example of an application with both a *command* and an *event* bus. The application
+dispatches a command named ``SignUpUser`` to the command bus. The command is handled by the
+``SignUpUserHandler`` which creates a ``User`` object, stores that object to a database and
+dispatches a ``UserSignedUp`` event to the event bus.
+
+There are many subscribers to the ``UserSignedUp`` event, one subscriber may send
 a welcome email to the new user. We are using the ``DoctrineTransactionMiddleware``
 to wrap all database queries in one database transaction.
 
-**Problem:** If an exception is thrown when sending the welcome email, then the user
+**Problem 1:** If an exception is thrown when sending the welcome email, then the user
 will not be created because the ``DoctrineTransactionMiddleware`` will rollback the
 Doctrine transaction, in which the user has been created.
 
-**Solution:** The solution is to not dispatch the ``UserCreated`` event in the
-``CreateUserHandler`` but to just "record" the events. The recorded events will
-be dispatched after ``DoctrineTransactionMiddleware`` has committed the transaction.
+**Problem 2:** If an exception is thrown when saving the user to the database, the welcome
+email is still sent.
 
-To enable this, you simply just add the ``messenger.middleware.handles_recorded_messages``
+``HandleMessageInNewTransaction`` Middleware
+--------------------------------------------
+
+For many applications, the desired behavior is to have any messages dispatched by the handler
+to `only` be handled after the handler finishes. This can be by using the
+``HandleMessageInNewTransaction`` middleware and adding a ``Transaction`` stamp to
+`the message Envelope </components/messenger#adding-metadata-to-messages-envelopes>`_.
+This middleware enables us to add messages to a separate transaction that will only be
+dispatched *after* the current message handler finishes.
+
+Referencing the above example, this means that the ``UserSignedUp`` event would not be handled
+until *after* the ``SignUpUserHandler`` had completed and the new ``User`` was persisted to the
+database. If the ``SignUpUserHandler`` encounters an exception, the ``UserSignedUp`` event will
+never be handled and if an exception is thrown while sending the welcome email, the Doctrine
+transaction will not be rolled back.
+
+To enable this, you need to add the ``handle_message_in_new_transaction``
 middleware. Make sure it is registered before ``DoctrineTransactionMiddleware``
 in the middleware chain.
+
+**Note:** The ``handle_message_in_new_transaction`` middleware must be loaded for *all* of the
+buses. For the example, the middleware must be loaded for both the command and event buses.
 
 .. configuration-block::
 
@@ -33,45 +65,56 @@ in the middleware chain.
         framework:
             messenger:
                 default_bus: messenger.bus.command
+
                 buses:
                     messenger.bus.command:
                         middleware:
-                            - messenger.middleware.validation
-                            - messenger.middleware.handles_recorded_messages: ['@messenger.bus.event']
-                              # Doctrine transaction must be after handles_recorded_messages middleware
-                            - app.doctrine_transaction_middleware: ['default']
+                            - validation
+                            - handle_message_in_new_transaction
+                            - doctrine_transaction
                     messenger.bus.event:
+                        default_middleware: allow_no_handlers
                         middleware:
-                            - messenger.middleware.allow_no_handler
-                            - messenger.middleware.validation
+                            - validation
+                            - handle_message_in_new_transaction
+                            - doctrine_transaction
+
 
 .. code-block:: php
 
     namespace App\Messenger\CommandHandler;
 
     use App\Entity\User;
-    use App\Messenger\Command\CreateUser;
-    use App\Messenger\Event\UserCreatedEvent;
+    use App\Messenger\Command\SignUpUser;
+    use App\Messenger\Event\UserSignedUp;
     use Doctrine\ORM\EntityManagerInterface;
-    use Symfony\Component\Messenger\MessageRecorderInterface;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Stamp\Transaction;
+    use Symfony\Component\Messenger\MessageBusInterface;
 
-    class CreateUserHandler
+    class SignUpUserHandler
     {
         private $em;
-        private $eventRecorder;
+        private $eventBus;
 
-        public function __construct(MessageRecorderInterface $eventRecorder, EntityManagerInterface $em)
+        public function __construct(MessageBusInterface $eventBus, EntityManagerInterface $em)
         {
-            $this->eventRecorder = $eventRecorder;
+            $this->eventBus = $eventBus;
             $this->em = $em;
         }
 
-        public function __invoke(CreateUser $command)
+        public function __invoke(SignUpUser $command)
         {
             $user = new User($command->getUuid(), $command->getName(), $command->getEmail());
             $this->em->persist($user);
 
-            // "Record" this event to be processed later by "handles_recorded_messages".
-            $this->eventRecorder->record(new UserCreatedEvent($command->getUuid());
+            // The Transaction stamp marks the event message to be handled
+            // only if this handler does not throw an exception.
+
+            $event = new UserSignedUp($command->getUuid());
+            $this->eventBus->dispatch(
+                (new Envelope($event))
+                    ->with(new Transaction())
+            );
         }
     }
