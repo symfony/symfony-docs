@@ -56,7 +56,7 @@ or an array (see `input`_).
 Basic Usage
 -----------
 
-The most important options are `input`_ and `widget`_.
+This field type is highly configurable. The most important options are `input`_ and `widget`_.
 
 You can configure *a lot* of different options, including exactly *which* range
 options to show (e.g. don't show "months", but *do* show "days")::

@@ -121,9 +121,9 @@ be available inside your controller. Its value can be used to determine which
 set of blog posts to display for the given page.
 
 But hold on! Since placeholders are required by default, this route will
-no longer match on ``/blog``. Instead, to see page 1 of the blog, you'd
-need to use the URL ``/blog/1``! Since that's no way for a rich web app
-to behave, modify the route to make the ``{page}`` parameter optional.
+no longer match on ``/blog`` alone. Instead, to see page 1 of the blog,
+you'd need to use the URL ``/blog/1``! Since that's no way for a rich web
+app to behave, modify the route to make the ``{page}`` parameter optional.
 This is done by including it in the ``defaults`` collection:
 
 .. configuration-block::
