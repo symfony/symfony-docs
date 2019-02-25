@@ -39,10 +39,15 @@ environment variable in the ``.env`` file:
     # use this to disable email delivery
     MAILER_URL=null://localhost
 
-    # use this to configure a traditional SMTP server (make sure to URL-encode the
-    # values of the username and password if they contain non-alphanumeric characters
-    # such as '+', '@', ':' and '*', which are reserved in URLs)
+    # use this to configure a traditional SMTP server
     MAILER_URL=smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=
+
+.. caution::
+
+    If the username, password or host contain any character considered special in a
+    URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``), you must
+    encode them. See `RFC 3986`_ for the full list of reserved characters or use the
+    :phpfunction:`urlencode` function to encode them.
 
 Refer to the :doc:`SwiftMailer configuration reference </reference/configuration/swiftmailer>`
 for the detailed explanation of all the available config options.
