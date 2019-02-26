@@ -10,8 +10,8 @@ Forms
     Do you prefer video tutorials? Check out the `Symfony Forms screencast series`_.
 
 Dealing with HTML forms is one of the most common - and challenging - tasks for
-a web developer. Symfony integrates a Form component that makes dealing with
-forms easy. In this article, you'll build a complex form from the ground up,
+a web developer. Symfony integrates a Form component that helps you dealing
+with forms. In this article, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
 Installation
@@ -70,12 +70,12 @@ going to need to build a form. But before you begin, first focus on the generic
         }
     }
 
-This class is a "plain-old-PHP-object" because, so far, it has nothing
-to do with Symfony or any other library. It's a normal PHP object
-that directly solves a problem inside *your* application (i.e. the need to
-represent a task in your application). By the end of this article,
-you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
-its data and persist it to the database.
+This class is a "plain-old-PHP-object" because, so far, it has nothing to do
+with Symfony or any other library. It's a normal PHP object that directly solves
+a problem inside *your* application (i.e. the need to represent a task in your
+application). By the end of this article, you'll be able to submit data to a
+``Task`` instance (via an HTML form), validate its data and persist it to the
+database.
 
 .. index::
    single: Forms; Create a form in a controller

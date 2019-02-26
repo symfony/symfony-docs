@@ -138,8 +138,8 @@ is then passed onto the ``deduplicated`` handler.
     set the ``action_level`` to ``error`` instead of ``critical``. See the
     code above for an example.
 
-The ``deduplicated`` handler keeps all the messages for a request and
-then passes them onto the nested handler in one go, but only if the records are
+The ``deduplicated`` handler keeps all the messages for a request and then
+passes them onto the nested handler in one go, but only if the records are
 unique over a given period of time (60 seconds by default). If the records are
 duplicates they are discarded. Adding this handler reduces the amount of
 notifications to a manageable level, specially in critical failure scenarios.

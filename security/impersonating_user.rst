@@ -14,8 +14,8 @@ a user sees that you can't reproduce).
     (e.g. ``REMOTE_USER``) where the authentication information is expected to be
     sent on each request.
 
-Impersonating the user can be done by activating the ``switch_user``
-firewall listener:
+Impersonating the user can be done by activating the ``switch_user`` firewall
+listener:
 
 .. configuration-block::
 

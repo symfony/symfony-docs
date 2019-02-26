@@ -165,7 +165,7 @@ Autowiring works by reading the ``Rot13Transformer`` *type-hint* in ``TwitterCli
 The autowiring system **looks for a service whose id exactly matches the type-hint**:
 so ``App\Util\Rot13Transformer``. In this case, that exists! When you configured
 the ``Rot13Transformer`` service, you used its fully-qualified class name as its
-id. Autowiring isn't magic: it simply looks for a service whose id matches the type-hint.
+id. Autowiring isn't magic: it looks for a service whose id matches the type-hint.
 If you :ref:`load services automatically <service-container-services-load-example>`,
 each service's id is its class name.
 
@@ -254,8 +254,7 @@ Working with Interfaces
 -----------------------
 
 You might also find yourself type-hinting abstractions (e.g. interfaces) instead
-of concrete classes as it makes it easy to replace your dependencies with other
-objects.
+of concrete classes as it replaces your dependencies with other objects.
 
 To follow this best practice, suppose you decide to create a ``TransformerInterface``::
 
@@ -361,7 +360,7 @@ Suppose you create a second class - ``UppercaseTransformer`` that implements
 
 If you register this as a service, you now have *two* services that implement the
 ``App\Util\TransformerInterface`` type. Autowiring subsystem can not decide
-which one to use. Remember, autowiring isn't magic; it simply looks for a service
+which one to use. Remember, autowiring isn't magic; it looks for a service
 whose id matches the type-hint. So you need to choose one by creating an alias
 from the type to the correct service id (see :ref:`autowiring-interface-alias`).
 

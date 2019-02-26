@@ -523,9 +523,9 @@ Start by adding a ``_defaults`` section with ``autowire`` and ``autoconfigure``.
 
         # ...
 
-This step does not yet change anything yet: you're already *explicitly* configuring all of your services.
-So, ``autowire`` does nothing. You're also already tagging your services, so
-``autoconfigure`` also doesn't change any existing services.
+You're already *explicitly* configuring all of your services. So, ``autowire``
+does nothing. You're also already tagging your services, so ``autoconfigure``
+also doesn't change any existing services.
 
 You have not added ``public: false`` yet. That will come in a minute.
 

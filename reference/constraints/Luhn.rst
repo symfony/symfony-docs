@@ -19,7 +19,7 @@ card: before communicating with a payment gateway.
 Basic Usage
 -----------
 
-To use the Luhn validator, simply apply it to a property on an object that
+To use the Luhn validator, apply it to a property on an object that
 will contain a credit card number.
 
 .. configuration-block::
