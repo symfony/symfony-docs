@@ -6,8 +6,8 @@ How to Embed Forms
 
 Often, you'll want to build a form that will include fields from many different
 objects. For example, a registration form may contain data belonging to
-a ``User`` object as well as many ``Address`` objects. Fortunately, this
-is easy and natural with the Form component.
+a ``User`` object as well as many ``Address`` objects. Fortunately this can
+be achieved by the Form component.
 
 .. _forms-embedding-single-object:
 

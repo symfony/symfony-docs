@@ -165,8 +165,8 @@ Overriding Parent Dependencies
 ------------------------------
 
 There may be times where you want to override what service is injected for
-one child service only. You can override most settings by specifying it
-in the child class:
+one child service only. You can override most settings by specifying it in
+the child class:
 
 .. configuration-block::
 

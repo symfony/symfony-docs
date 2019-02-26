@@ -185,7 +185,7 @@ Override the ``public`` Directory
 
 If you need to rename or move your ``public`` directory, the only thing you need
 to guarantee is that the path to the ``var`` directory is still correct in your
-``index.php`` front controller. If you simply renamed the directory, you're
+``index.php`` front controller. If you renamed the directory, you're
 fine. But if you moved it in some way, you may need to modify these paths inside
 those files::
 

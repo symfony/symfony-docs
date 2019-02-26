@@ -76,8 +76,7 @@ same happens when calling ``Container::get()`` directly.
 The actual class will be instantiated as soon as you try to interact with the
 service (e.g. call one of its methods).
 
-To check if your proxy works you can check the interface of the
-received object::
+To check if your proxy works you can check the interface of the received object::
 
     dump(class_implements($service));
     // the output should include "ProxyManager\Proxy\LazyLoadingInterface"

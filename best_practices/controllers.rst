@@ -128,7 +128,7 @@ Fetching Services
 
 If you extend the base ``AbstractController`` class, you can't access services
 directly from the container via ``$this->container->get()`` or ``$this->get()``.
-Instead, you must use dependency injection to fetch services: most easily done by
+Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>`:
 
 .. best-practice::
@@ -218,9 +218,9 @@ flexible::
         // ...
     }
 
-The point is this: the ParamConverter shortcut is great for simple situations.
-But you shouldn't forget that querying for entities directly is still very
-easy.
+The point is this: the ParamConverter shortcut is great for most situations.
+However, there is nothing wrong with querying for entities directly if the
+ParamConverter would get complicated.
 
 Pre and Post Hooks
 ------------------

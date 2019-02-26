@@ -138,9 +138,8 @@ the ``configureContainer()`` method to decide which configuration files to load.
 
 Symfony's default ``Kernel`` class implements this method by loading first the
 config files found on ``config/packages/*`` and then, the files found on
-``config/packages/ENVIRONMENT_NAME/``. You are, of course, free to implement
-this method differently if you need a more sophisticated way of loading your
-configuration.
+``config/packages/ENVIRONMENT_NAME/``. You are free to implement this method
+differently if you need a more sophisticated way of loading your configuration.
 
 .. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern

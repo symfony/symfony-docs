@@ -53,8 +53,8 @@ and can understand a number of different input formats via the `input`_ option.
 Basic Usage
 -----------
 
-This field type is highly configurable, but easy to use. The most important
-options are ``input`` and ``widget``.
+This field type is highly configurable. The most important options
+are ``input`` and ``widget``.
 
 Suppose that you have a ``publishedAt`` field whose underlying date is a
 ``DateTime`` object. The following configures the ``date`` type for that

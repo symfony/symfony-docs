@@ -4,8 +4,7 @@
 How to Use the submit() Function to Handle Form Submissions
 ===========================================================
 
-With the ``handleRequest()`` method, you can handle form
-submissions::
+Handle the form submission with the ``handleRequest()`` method::
 
     use Symfony\Component\HttpFoundation\Request;
     // ...

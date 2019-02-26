@@ -2,7 +2,7 @@ NotNull
 =======
 
 Validates that a value is not strictly equal to ``null``. To ensure that
-a value is simply not blank (not a blank string), see the  :doc:`/reference/constraints/NotBlank`
+a value is not blank (not a blank string), see the  :doc:`/reference/constraints/NotBlank`
 constraint.
 
 +----------------+-----------------------------------------------------------------------+

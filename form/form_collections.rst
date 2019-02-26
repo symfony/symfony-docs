@@ -510,9 +510,8 @@ you will learn about next!).
     of the relationship is modified.
 
     The trick is to make sure that the single "Task" is set on each "Tag".
-    One way to do this is to add some extra logic to ``addTag()``,
-    which is called by the form type since ``by_reference`` is set to
-    ``false``::
+    One way to do this is to add some extra logic to ``addTag()``, which
+    is called by the form type since ``by_reference`` is set to ``false``::
 
         // src/Entity/Task.php
 

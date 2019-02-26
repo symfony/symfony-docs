@@ -22,7 +22,7 @@ is either a valid ISBN-10 or a valid ISBN-13.
 Basic Usage
 -----------
 
-To use the ``Isbn`` validator, simply apply it to a property or method
+To use the ``Isbn`` validator, apply it to a property or method
 on an object that will contain an ISBN.
 
 .. configuration-block::
