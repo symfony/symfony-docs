@@ -1,9 +1,9 @@
 Advanced Webpack Config
 =======================
 
-Quite simply, Encore generates the Webpack configuration that's used in your
+Summarized, Encore generates the Webpack configuration that's used in your
 ``webpack.config.js`` file. Encore doesn't support adding all of Webpack's
-`configuration options`_, because many can be easily added on your own.
+`configuration options`_, because many can be added on your own.
 
 For example, suppose you need to set `Webpack's watchOptions`_ setting. To do that,
 modify the config after fetching it from Encore:

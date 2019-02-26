@@ -176,7 +176,7 @@ This practice is cumbersome and completely unnecessary for your own services.
     Don't define parameters for the classes of your services.
 
 This practice was wrongly adopted from third-party bundles. When Symfony
-introduced its service container, some developers used this technique to easily
+introduced its service container, some developers used this technique to
 allow overriding services. However, overriding a service by just changing its
 class name is a very rare use case because, frequently, the new service has
 different constructor arguments.

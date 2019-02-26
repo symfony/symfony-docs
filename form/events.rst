@@ -11,7 +11,8 @@ Using form events, you may modify information or fields at different steps
 of the workflow: from the population of the form to the submission of the
 data from the request.
 
-Registering an event listener is very easy using the Form component.
+By utilizing the Symfony event system, event listeners can be registered to
+your forms.
 
 For example, if you wish to register a function to the
 ``FormEvents::PRE_SUBMIT`` event, the following code lets you add a field,
@@ -262,7 +263,7 @@ Event Listeners
 
 An event listener may be any type of valid callable.
 
-Creating and binding an event listener to the form is very easy::
+Creating and binding an event listener to the form::
 
     // ...
 
