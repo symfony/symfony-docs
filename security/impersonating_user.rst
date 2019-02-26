@@ -98,11 +98,17 @@ to show a link to exit impersonation:
 Finding the Original User
 -------------------------
 
-In some cases, you may need to get the object that represents the impersonator
-user rather than the impersonated user. Use the following snippet to iterate
-over the user's roles until you find one that is a ``SwitchUserRole`` object::
+versionadded:: 4.3
 
-    use Symfony\Component\Security\Core\Role\SwitchUserRole;
+    The ``SwitchUserToken`` class was introduced in Symfony 4.3.
+
+In some cases, you may need to get the object that represents the impersonator
+user rather than the impersonated user. When a user is impersonated the token
+stored in the token storage will be a ``SwitchUserToken`` instance. Use the
+following snippet to obtain the original token which gives you access to
+the impersonator user::
+
+    use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken
     use Symfony\Component\Security\Core\Security;
     // ...
 
@@ -119,14 +125,13 @@ over the user's roles until you find one that is a ``SwitchUserRole`` object::
         {
             // ...
 
-            if ($this->security->isGranted('ROLE_PREVIOUS_ADMIN')) {
-                foreach ($this->security->getToken()->getRoles() as $role) {
-                    if ($role instanceof SwitchUserRole) {
-                        $impersonatorUser = $role->getSource()->getUser();
-                        break;
-                    }
-                }
+            $token = $this->security->getToken();
+
+            if ($token instanceof SwitchUserToken) {
+                $impersonatorUser = $token->getOriginalToken()->getUser();
             }
+
+            // ...
         }
     }
 
@@ -221,24 +226,17 @@ Create the voter class::
             }
 
             if (in_array('ROLE_CUSTOMER', $subject->getRoles())
-                && $this->hasSwitchToCustomerRole($token)) {
+                && in_array('ROLE_SWITCH_TO_CUSTOMER', $token->getRoleNames(), true)) {
                 return true;
             }
 
             return false;
         }
-
-        private function hasSwitchToCustomerRole(TokenInterface $token)
-        {
-            foreach ($token->getRoles() as $role) {
-                if ($role->getRole() === 'ROLE_SWITCH_TO_CUSTOMER') {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
+
+.. versionadded:: 4.3
+
+    The ``getRoleNames()`` method was introduced in Symfony 4.3.
 
 To enable the new voter in the app, register it as a service and
 :doc:`tag it </service_container/tags>` with the ``security.voter``
