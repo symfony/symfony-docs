@@ -108,7 +108,7 @@ stored in the token storage will be a ``SwitchUserToken`` instance. Use the
 following snippet to obtain the original token which gives you access to
 the impersonator user::
 
-    use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken
+    use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
     use Symfony\Component\Security\Core\Security;
     // ...
 
