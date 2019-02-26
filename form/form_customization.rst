@@ -312,12 +312,12 @@ obvious (since it'll render the field for you).
 
     {{ form_rest(form) }}
 
-parent_form(form_view)
+form_parent(form_view)
 ......................
 
 .. versionadded:: 4.3
 
-    The ``parent_form()`` function was introduced in Symfony 4.3.
+    The ``form_parent()`` function was introduced in Symfony 4.3.
 
 Returns the parent form view or ``null`` if the form view already is the
 root form. Using this function should be preferred over accessing the parent
