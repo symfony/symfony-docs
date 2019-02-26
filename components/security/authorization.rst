@@ -167,8 +167,10 @@ role::
 Roles
 -----
 
-Roles are strings that give expression to a certain right the user has. The only
-requirement is that they must start with the ``ROLE_`` prefix.
+Roles are strings that give expression to a certain right the user has (e.g.
+*"edit a blog post"*, *"create an invoice"*). You can freely choose those
+strings. The only requirement is that they must start with the ``ROLE_`` prefix
+(e.g. ``ROLE_POST_EDIT``, ``ROLE_INVOICE_CREATE``).
 
 Using the Decision Manager
 --------------------------

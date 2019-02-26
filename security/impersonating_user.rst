@@ -98,7 +98,7 @@ to show a link to exit impersonation:
 Finding the Original User
 -------------------------
 
-versionadded:: 4.3
+.. versionadded:: 4.3
 
     The ``SwitchUserToken`` class was introduced in Symfony 4.3.
 
