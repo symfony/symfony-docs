@@ -119,6 +119,7 @@ Valid values are:
 * ``LASER``
 * ``MAESTRO``
 * ``MASTERCARD``
+* ``MIR``
 * ``UATP``
 * ``VISA``
 
