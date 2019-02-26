@@ -195,7 +195,7 @@ any other "work" you can think of.
 If you need a service in a controller, type-hint an argument with its class
 (or interface) name. Symfony will automatically pass you the service you need::
 
-    use Psr\Log\LoggerInterface
+    use Psr\Log\LoggerInterface;
     // ...
 
     /**
