@@ -41,6 +41,7 @@ Topics
     frontend
     http_cache
     logging
+    mercure
     messenger
     performance
     profiler
