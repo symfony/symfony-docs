@@ -78,7 +78,7 @@ Create the file ``app/config/config_prod_secrets.php`` with the following
 contents::
 
     // get the path to the secrects.json file
-    $secrets = getenv("APP_SECRETS")
+    $secrets = getenv("APP_SECRETS");
     if (!$secrets) {
         return;
     }
