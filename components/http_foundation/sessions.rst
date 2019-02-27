@@ -226,8 +226,7 @@ store it again::
         ],
     ];
 
-So any processing of this might quickly get ugly, even simply adding a token to
-the array::
+So any processing of this might quickly get ugly, even adding a token to the array::
 
     $tokens = $session->get('tokens');
     $tokens['c'] = $value;
