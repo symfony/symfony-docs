@@ -25,6 +25,7 @@ Tag Name                                  Usage
 `kernel.event_listener`_                  Listen to different events/hooks in Symfony
 `kernel.event_subscriber`_                To subscribe to a set of different events/hooks in Symfony
 `kernel.fragment_renderer`_               Add new HTTP content rendering strategies
+`kernel.reset`_                           Allows to clean up services between requests
 `monolog.logger`_                         Logging with a custom logging channel
 `monolog.processor`_                      Add a custom processor for logging
 `routing.loader`_                         Register a custom service that loads routes
@@ -449,6 +450,21 @@ To add a new rendering strategy - in addition to the core strategies like
 ``EsiFragmentRenderer`` - create a class that implements
 :class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
 register it as a service, then tag it with ``kernel.fragment_renderer``.
+
+kernel.reset
+------------
+
+**Purpose**: Clean up services between requests
+
+During the ``kernel.terminate`` event, Symfony looks for any service tagged
+with the ``kernel.reset`` tag to reinitialize their state. This is done by
+calling to the method whose name is configured in the ``method`` argument of
+the tag.
+
+This is mostly useful when running your projects in application servers that
+reuse the Symfony application between requests to improve performance. This tag
+is applied for example to the built-in :doc:`data collectors </profiler/data_collector>`
+of the profiler to delete all their information.
 
 .. _dic_tags-monolog:
 
