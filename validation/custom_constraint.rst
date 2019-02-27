@@ -219,7 +219,7 @@ not to the property:
     .. code-block:: php-annotations
 
         /**
-         * @AcmeAssert\ProtocolClassValidator
+         * @AcmeAssert\ProtocolClass
          */
         class AcmeEntity
         {
@@ -231,11 +231,11 @@ not to the property:
         # config/validator/validation.yaml
         App\Entity\AcmeEntity:
             constraints:
-                - App\Validator\Constraints\ProtocolClassValidator: ~
+                - App\Validator\Constraints\ProtocolClass: ~
 
     .. code-block:: xml
 
         <!-- config/validator/validation.xml -->
         <class name="App\Entity\AcmeEntity">
-            <constraint name="App\Validator\Constraints\ProtocolClassValidator" />
+            <constraint name="App\Validator\Constraints\ProtocolClass" />
         </class>
