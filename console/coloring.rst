@@ -43,7 +43,7 @@ It is possible to define your own styles using the
     $outputStyle = new OutputFormatterStyle('red', 'yellow', ['bold', 'blink']);
     $output->getFormatter()->setStyle('fire', $outputStyle);
 
-    $output->writeln('<fire>foo</>');
+    $output->writeln('<fire>foo</fire>');
 
 Available foreground and background colors are: ``black``, ``red``, ``green``,
 ``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
