@@ -174,7 +174,7 @@ Are you building an API? You can already return JSON easily from any controller:
         }
     }
 
-But for a *truly* rich API, try installing `Api Platform`_:
+But for a *truly* rich API, try installing `API Platform`_:
 
 .. code-block:: terminal
 
@@ -259,5 +259,5 @@ build features *without* sacrificing code quality or performance. It's all about
 the service container, and it's Symfony's super power. Read on: about :doc:`/quick_tour/the_architecture`.
 
 .. _`https://flex.symfony.com`: https://flex.symfony.com
-.. _`Api Platform`: https://api-platform.com/
+.. _`API Platform`: https://api-platform.com/
 .. _`Twig`: https://twig.symfony.com/
