@@ -7,8 +7,8 @@ Controller
 A controller is a PHP function you create that reads information from the
 ``Request`` object and creates and returns a ``Response`` object. The response could
 be an HTML page, JSON, XML, a file download, a redirect, a 404 error or anything
-else you can dream up. The controller executes whatever arbitrary logic
-*your application* needs to render the content of a page.
+else. The controller executes whatever arbitrary logic *your application* needs
+to render the content of a page.
 
 .. tip::
 

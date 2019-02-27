@@ -380,8 +380,8 @@ provides an implementation for
 :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`
 that looks through all methods in your class that have no arguments and a return
 type. It provides a ``ServiceLocator`` for the services of those return types.
-The service id is ``__METHOD__``. This allows you to easily add dependencies
-to your services based on type-hinted helper methods::
+The service id is ``__METHOD__``. This allows you to add dependencies to your
+services based on type-hinted helper methods::
 
     // src/Service/MyService.php
     namespace App\Service;

@@ -250,6 +250,6 @@ The ``render_esi`` helper supports two other useful options:
 ``ignore_errors``
     If set to true, an ``onerror`` attribute will be added to the ESI with a value
     of ``continue`` indicating that, in the event of a failure, the gateway cache
-    will simply remove the ESI tag silently.
+    will remove the ESI tag silently.
 
 .. _`ESI`: http://www.w3.org/TR/esi-lang

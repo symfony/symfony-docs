@@ -5,8 +5,8 @@ All Symfony features benefit from our :doc:`Backward Compatibility Promise
 </contributing/code/bc>` to give developers the confidence to upgrade to new
 versions safely and more often.
 
-But sometimes, a new feature is controversial. Or finding a good API is not
-easy. In such cases, we prefer to gather feedback from real-world usage, adapt
+But sometimes, a new feature is controversial or you cannot find a convincing API.
+In such cases, we prefer to gather feedback from real-world usage, adapt
 the API, or remove it altogether. Doing so is not possible with a no BC-break
 approach.
 

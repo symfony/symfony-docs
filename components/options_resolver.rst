@@ -522,8 +522,8 @@ Options without Default Values
 In some cases, it is useful to define an option without setting a default value.
 This is useful if you need to know whether or not the user *actually* set
 an option or not. For example, if you set the default value for an option,
-it's not possible to know whether the user passed this value or if it simply
-comes from the default::
+it's not possible to know whether the user passed this value or if it comes
+from the default::
 
     // ...
     class Mailer

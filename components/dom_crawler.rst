@@ -36,7 +36,7 @@ The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods
 to query and manipulate HTML and XML documents.
 
 An instance of the Crawler represents a set of :phpclass:`DOMElement` objects,
-which are basically nodes that you can traverse easily::
+which are basically nodes that you can traverse::
 
     use Symfony\Component\DomCrawler\Crawler;
 
