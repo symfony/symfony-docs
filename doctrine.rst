@@ -340,6 +340,8 @@ and save it!
     namespace App\Controller;
 
     // ...
+    use Symfony\Component\HttpFoundation\Response;
+    
     use App\Entity\Product;
 
     class ProductController extends AbstractController
