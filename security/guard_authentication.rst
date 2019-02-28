@@ -6,7 +6,7 @@ Custom Authentication System with Guard (API Token Example)
 
 Whether you need to build a traditional login form, an API token authentication system
 or you need to integrate with some proprietary single-sign-on system, the Guard
-component can make it easy... and fun!
+component will be the right choice!
 
 Guard authentication can be used to:
 

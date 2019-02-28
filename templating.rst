@@ -23,7 +23,7 @@ code.
 Templates
 ---------
 
-A template is simply a text file that can generate any text-based format
+A template is a text file that can generate any text-based format
 (HTML, XML, CSV, LaTeX ...). The most familiar type of template is a *PHP*
 template - a text file parsed by PHP that contains a mix of text and PHP code:
 
@@ -386,10 +386,9 @@ the last part of the extension (e.g. ``.twig`` or ``.php``) specifies which
 of these two *engines* should be used. The first part of the extension,
 (e.g. ``.html``, ``.css``, etc) is the final format that the template will
 generate. Unlike the engine, which determines how Symfony parses the template,
-this is simply an organizational tactic used in case the same resource needs
-to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
-or any other format. For more information, read the :doc:`/templating/formats`
-section.
+this is an organizational tactic used in case the same resource needs to be
+rendered as HTML (``index.html.twig``), XML (``index.xml.twig``), or any other
+format. For more information, read the :doc:`/templating/formats` section.
 
 .. index::
    single: Templating; Tags and helpers

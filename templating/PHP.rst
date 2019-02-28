@@ -66,9 +66,9 @@ Next, enable the php engine:
             ],
         ]);
 
-You can now render a PHP template instead of a Twig one simply by using the
-``.php`` extension in the template name instead of ``.twig``. The controller
-below renders the ``index.html.php`` template::
+You can now render a PHP template instead of a Twig one by using the ``.php``
+extension in the template name instead of ``.twig``. The controller below
+renders the ``index.html.php`` template::
 
     // src/Controller/HelloController.php
 
