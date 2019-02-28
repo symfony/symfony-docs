@@ -36,8 +36,8 @@ buses are central pieces of the application. Read Martin Fowler's
 As queries are usually synchronous and expected to be handled once,
 getting the result from the handler is a common need.
 
-You can leverage the ``HandleTrait`` in any class that has a ``$messageBus``
-property::
+To avoid boilerplate code, you can leverage the ``HandleTrait`` in any class
+that has a ``$messageBus`` property::
 
     // src/Action/ListItems.php
     namespace App\Action;
