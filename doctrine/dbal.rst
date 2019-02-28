@@ -13,8 +13,9 @@ How to Use Doctrine DBAL
 
 The `Doctrine`_ Database Abstraction Layer (DBAL) is an abstraction layer that
 sits on top of `PDO`_ and offers an intuitive and flexible API for communicating
-with the most popular relational databases. In other words, the DBAL library
-makes it easy to execute queries and perform other database actions.
+with the most popular relational databases. The DBAL library allows you to write
+queries independently of your ORM models, e.g. for building reports or direct
+data manipulations.
 
 .. tip::
 

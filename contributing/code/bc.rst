@@ -22,7 +22,7 @@ method signature.
 
 Also, not every BC break has the same impact on application code. While some BC
 breaks require you to make significant changes to your classes or your
-architecture, others are fixed as easily as changing the name of a method.
+architecture, others are fixed by changing the name of a method.
 
 That's why we created this page for you. The section "Using Symfony Code" will
 tell you how you can ensure that your application won't break completely when

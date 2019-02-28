@@ -286,8 +286,8 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
 
 .. note::
 
-    Comments are simply ignored by the YAML parser and do not need to be
-    indented according to the current level of nesting in a collection.
+    Comments are ignored by the YAML parser and do not need to be indented
+    according to the current level of nesting in a collection.
 
 Explicit Typing
 ---------------

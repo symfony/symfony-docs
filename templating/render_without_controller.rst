@@ -54,8 +54,8 @@ can do this without creating a controller:
 
         return $routes;
 
-The ``TemplateController`` will simply render whatever template you've passed as
-the ``template`` default value.
+The ``TemplateController`` will render whatever template you've passed as the
+``template`` default value.
 
 You can also use this trick when rendering embedded controllers
 from within a template. But since the purpose of rendering a controller from

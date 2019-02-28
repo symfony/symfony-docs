@@ -48,8 +48,8 @@ Using the Bundle Extension
 --------------------------
 
 Imagine you are creating a new bundle - AcmeSocialBundle - which provides
-integration with Twitter, etc. To make your bundle easy to use, you want to
-allow users to configure it with some configuration that looks like this:
+integration with Twitter. To make your bundle configurable to the user, you
+can add some configuration that looks like this:
 
 .. configuration-block::
 
