@@ -181,10 +181,6 @@ fields configured in the ``fields`` option). The method should return a
 entityClass
 ~~~~~~~~~~~
 
-.. versionadded:: 3.2
-
-    The ``entityClass`` option was introduced in Symfony 3.2.
-
 **type**: ``string``
 
 By default, the query performed to ensure the uniqueness uses the repository of

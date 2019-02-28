@@ -230,10 +230,6 @@ convenient for passwords::
             // ...
         }
 
-    .. versionadded:: 3.3
-
-        The ``QuestionHelper::disableStty()`` method was introduced in Symfony 3.3.
-
 Normalizing the Answer
 ----------------------
 
@@ -369,10 +365,6 @@ from the command line, you need to set the inputs that the command expects::
 
         // $this->assertRegExp('/.../', $commandTester->getDisplay());
     }
-
-.. versionadded:: 3.2
-
-    The ``CommandTester::setInputs()`` method was introduced in Symfony 3.2.
 
 By calling :method:`Symfony\\Component\\Console\\Tester\\CommandTester::setInputs`,
 you imitate what the console would do internally with all user input through the CLI.
