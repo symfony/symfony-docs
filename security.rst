@@ -619,7 +619,7 @@ See :doc:`/security/securing_services`.
 Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you *only* want to check if a user is simply logged in (you don't care about roles),
+If you *only* want to check if a user is logged in (you don't care about roles),
 you have two options. First, if you've given *every* user ``ROLE_USER``, you can
 just check for that role. Otherwise, you can use a special "attribute" in place
 of a role::

@@ -47,9 +47,8 @@ Notice that this template extends the section template (``blog/layout.html.twig`
 which in turn extends the base application layout (``base.html.twig``). This is
 the common three-level inheritance model.
 
-When building your application, you may choose to follow this method or simply
+When building your application, you may choose to follow this method or
 make each page template extend the base application template directly
 (e.g. ``{% extends 'base.html.twig' %}``). The three-template model is a
 best-practice method used by vendor bundles so that the base template for a
-bundle can be easily overridden to properly extend your application's base
-layout.
+bundle can be overridden to properly extend your application's base layout.

@@ -202,8 +202,19 @@ value:
 Going Further with the Serializer
 ---------------------------------
 
-`ApiPlatform`_ provides an API system supporting `JSON-LD`_ and `Hydra Core Vocabulary`_
-hypermedia formats. It is built on top of the Symfony Framework and its Serializer
+`API Platform`_ provides an API system supporting the following formats:
+
+* `JSON-LD`_ along with the `Hydra Core Vocabulary`_
+* `OpenAPI`_ v2 (formerly Swagger) and v3
+* `GraphQL`_
+* `JSON:API`_
+* `HAL`_
+* JSON
+* XML
+* YAML
+* CSV
+
+It is built on top of the Symfony Framework and its Serializer
 component. It provides custom normalizers and a custom encoder, custom metadata
 and a caching system.
 
@@ -218,7 +229,11 @@ take a look at how this bundle works.
     serializer/custom_normalizer
 
 .. _`APCu`: https://github.com/krakjoe/apcu
-.. _`ApiPlatform`: https://github.com/api-platform/core
+.. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com
+.. _`OpenAPI`: https://www.openapis.org
+.. _`GraphQL`: https://graphql.org
+.. _`JSON:API`: https://jsonapi.org
+.. _`HAL`: http://stateless.co/hal_specification.html
 .. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs

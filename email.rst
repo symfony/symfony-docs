@@ -122,9 +122,9 @@ setting up a regular SMTP server. To do that, update the ``MAILER_URL`` of your
     # username is your full Gmail or Google Apps email address
     MAILER_URL=gmail://username:password@localhost
 
-The ``gmail`` transport is simply a shortcut that uses the ``smtp`` transport,
-``ssl`` encryption, ``login`` auth mode and ``smtp.gmail.com`` host. If your app
-uses other encryption or auth mode, you must override those values
+The ``gmail`` transport is a shortcut that uses the ``smtp`` transport, ``ssl``
+encryption, ``login`` auth mode and ``smtp.gmail.com`` host. If your app uses
+other encryption or auth mode, you must override those values
 (:doc:`see mailer config reference </reference/configuration/swiftmailer>`):
 
 .. code-block:: bash

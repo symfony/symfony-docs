@@ -85,8 +85,7 @@ Deprecations
 From time to time, some classes and/or methods are deprecated in the
 framework; that happens when a feature implementation cannot be changed
 because of backward compatibility issues, but we still want to propose a
-"better" alternative. In that case, the old implementation can simply be
-**deprecated**.
+"better" alternative. In that case, the old implementation can be **deprecated**.
 
 A feature is marked as deprecated by adding a ``@deprecated`` phpdoc to
 relevant classes, methods, properties, ...::

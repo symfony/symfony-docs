@@ -398,7 +398,7 @@ you.
 .. image:: /_images/doctrine/mapping_relations_proxy.png
     :align: center
 
-What's important is the fact that you have easy access to the product's related
+What's important is the fact that you have access to the product's related
 category, but the category data isn't actually retrieved until you ask for
 the category (i.e. it's "lazily loaded").
 

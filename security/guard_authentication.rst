@@ -6,7 +6,7 @@ Custom Authentication System with Guard (API Token Example)
 
 Whether you need to build a traditional login form, an API token authentication system
 or you need to integrate with some proprietary single-sign-on system, the Guard
-component can make it easy... and fun!
+component will be the right choice!
 
 Guard authentication can be used to:
 
@@ -14,7 +14,7 @@ Guard authentication can be used to:
 * Create an API token authentication system (done on this page!)
 * `Social Authentication`_ (or use `HWIOAuthBundle`_ for a robust, but non-Guard solution)
 
-or anything else you dream up. In this example, we'll build an API token authentication
+or anything else. In this example, we'll build an API token authentication
 system so we can learn more about Guard in detail.
 
 Step 1) Prepare your User Class
