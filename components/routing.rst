@@ -383,11 +383,6 @@ automatically in the background if you want to use it. A basic example of the
 Unicode Routing Support
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.2
-
-    UTF-8 support for route paths and requirements was introduced in
-    Symfony 3.2.
-
 The Routing component supports UTF-8 characters in route paths and requirements.
 Thanks to the ``utf8`` route option, you can make Symfony match and generate
 routes with UTF-8 characters:

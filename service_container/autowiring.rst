@@ -437,11 +437,6 @@ with this interface will be passed the ``AppBundle\Util\Rot13Transformer`` servi
 But, you can also manually wire the *other* service by specifying the argument
 under the arguments key.
 
-.. versionadded:: 3.3
-
-    Using FQCN aliases to fix autowiring ambiguities was introduced in Symfony
-    3.3. Prior to version 3.3, you needed to use the ``autowiring_types`` key.
-
 Fixing Non-Autowireable Arguments
 ---------------------------------
 

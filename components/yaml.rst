@@ -127,10 +127,6 @@ contents of the given file path and converts them to a PHP value::
 
     $value = Yaml::parseFile('/path/to/file.yml');
 
-.. versionadded:: 3.4
-
-    The ``parseFile()`` method was introduced in Symfony 3.4.
-
 If an error occurs during parsing, the parser throws a ``ParseException`` exception.
 
 .. _components-yaml-dump:
@@ -265,10 +261,6 @@ representation of the object.
 Parsing and Dumping Objects as Maps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.2
-
-    Support for parsing and dumping objects as maps was introduced in Symfony 3.2.
-
 You can dump objects as Yaml maps by using the ``DUMP_OBJECT_AS_MAP`` flag::
 
     $object = new \stdClass();
@@ -356,10 +348,6 @@ syntax to parse them as proper PHP constants::
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.2
-
-    Support for parsing and dumping binary data was introduced in Symfony 3.2.
-
 You can dump binary data by using the ``DUMP_BASE64_BINARY_DATA`` flag::
 
     $imageContents = file_get_contents(__DIR__.'/images/logo.png');
@@ -376,10 +364,6 @@ Binary data is automatically parsed if they include the ``!!binary`` YAML tag
 
 Parsing and Dumping Custom Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-
-    Support for parsing and dumping custom tags was introduced in Symfony 3.3.
 
 In addition to the built-in support of tags like ``!php/const`` and
 ``!!binary``, you can define your own custom YAML tags and parse them with the

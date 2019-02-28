@@ -141,9 +141,9 @@ you can access those choices for validation or for building a select form elemen
         }
     }
 
-.. versionadded:: 3.2
+.. note::
 
-    As of Symfony 3.2 the callback no longer needs to be static.
+    The callback does not need to be static!
 
 You can pass the name of this method to the `callback`_ option of the ``Choice``
 constraint.

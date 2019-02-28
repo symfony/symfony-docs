@@ -540,11 +540,6 @@ the namespaces of the tested classes in your phpunit.xml.dist
 Modified PHPUnit script
 -----------------------
 
-.. versionadded:: 3.2
-
-    This modified PHPUnit script was introduced in the 3.2 version of
-    this component.
-
 This bridge provides a modified version of PHPUnit that you can call by using
 its ``bin/simple-phpunit`` command. It has the following features:
 

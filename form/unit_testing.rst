@@ -218,8 +218,3 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeExtensions`
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
-
-.. versionadded:: 3.3
-
-    The ``getTypes()``, ``getTypeExtensions()`` and ``getTypeGuessers()``
-    methods were introduced in Symfony 3.3.

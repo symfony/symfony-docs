@@ -4,10 +4,6 @@
 Service Subscribers & Locators
 ==============================
 
-.. versionadded:: 3.3
-
-    Service subscribers and locators were introduced in Symfony 3.3.
-
 Sometimes, a service needs access to several other services without being sure
 that all of them will actually be used. In those cases, you may want the
 instantiation of the services to be lazy. However, that's not possible using

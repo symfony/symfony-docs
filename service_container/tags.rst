@@ -440,11 +440,6 @@ tags set for the current service and gives you the attributes.
 Reference Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.4
-
-    Support for the tagged service notation in YAML, XML and PHP was introduced
-    in Symfony 3.4.
-
 Symfony provides a shortcut to inject all services tagged with a specific tag,
 which is a common need in some applications, so you don't have to write a
 compiler pass just for that.

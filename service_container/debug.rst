@@ -40,7 +40,3 @@ its id:
 
     # to show the service arguments:
     $ php bin/console debug:container 'AppBundle\Service\Mailer' --show-arguments
-
-.. versionadded:: 3.3
-
-   The ``--show-arguments`` option was introduced in Symfony 3.3.

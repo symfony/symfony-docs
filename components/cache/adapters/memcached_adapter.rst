@@ -7,10 +7,6 @@
 Memcached Cache Adapter
 =======================
 
-.. versionadded:: 3.3
-
-    The Memcached adapter was introduced in Symfony 3.3.
-
 This adapter stores the values in-memory using one (or more) `Memcached server`_
 instances. Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
 :ref:`Redis adapter <redis-adapter>`, it is not limited to the current server's

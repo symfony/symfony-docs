@@ -165,11 +165,6 @@ needs three parameters:
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
 
-.. versionadded:: 3.3
-
-    Support for the ``allow_extra_attributes`` key in the context was introduced
-    in Symfony 3.3.
-
 By default, additional attributes that are not mapped to the denormalized object
 will be ignored by the Serializer component. If you prefer to throw an exception
 when this happens, set the ``allow_extra_attributes`` context option to
@@ -624,11 +619,6 @@ There are several types of normalizers available:
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default it uses the RFC3339_ format.
 
-    .. versionadded:: 3.2
-
-        Support for specifying datetime format during denormalization was
-        introduced in the ``DateTimeNormalizer`` in Symfony 3.2.
-
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
@@ -663,10 +653,6 @@ The Serializer component supports many formats out of the box:
 
 All these encoders are enabled by default when using the Symfony Standard Edition
 with the serializer enabled.
-
-.. versionadded:: 3.2
-
-    The ``YamlEncoder`` and ``CsvEncoder`` encoders were introduced in Symfony 3.2
 
 .. _component-serializer-handling-circular-references:
 
