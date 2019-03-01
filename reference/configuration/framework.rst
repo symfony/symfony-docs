@@ -88,6 +88,32 @@ Configuration
   * `hinclude_default_template`_
   * :ref:`path <reference-fragments-path>`
 
+* `http_client`_
+
+  * `auth`_
+  * `base_uri`_
+  * `bindto`_
+  * `buffer`_
+  * `cafile`_
+  * `capath`_
+  * `capture_peer_cert_chain`_
+  * `ciphers`_
+  * `headers`_
+  * `http_version`_
+  * `local_cert`_
+  * `local_pk`_
+  * `max_host_connections`_
+  * `max_redirects`_
+  * `no_proxy`_
+  * `passphrase`_
+  * `peer_fingerprint`_
+  * `proxy`_
+  * `query`_
+  * `resolve`_
+  * `timeout`_
+  * `verify_host`_
+  * `verify_peer`_
+
 * `http_method_override`_
 * `ide`_
 * :ref:`lock <reference-lock>`
@@ -625,6 +651,260 @@ path
 
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
+
+http_client
+~~~~~~~~~~~
+
+If there's only one HTTP client defined in the app, you can configure it
+directly under the ``framework.http_client`` option:
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        # ...
+        http_client:
+            headers: [{ 'X-Powered-By': 'ACME App' }]
+            max_host_connections: 10
+            max_redirects: 7
+
+If the app defines multiple HTTP clients, you must give them a unique name and
+define them under the type of HTTP client you are creating (``http_clients`` for
+regular clients and ``api_clients`` for clients that include utilities to
+consume APIs):
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        # ...
+        http_client:
+            http_clients:
+                crawler:
+                    # ...
+                default:
+                    # ...
+            api_clients:
+                github:
+                    # ...
+
+auth
+....
+
+**type**: ``string``
+
+The username and password used to create the ``Authorization`` HTTP header
+used in HTTP Basic authentication. The value of this option must follow the
+format ``'username:password'`` (a colon separates both values).
+
+base_uri
+........
+
+**type**: ``string``
+
+URI that is merged into relative URIs, following the rules explained in the
+`RFC 3986`_ standard. This is useful when all the requests you make share a
+common prefix (e.g. ``https://api.github.com/``) so you can avoid adding it to
+every request.
+
+Here are some common examples of how ``base_uri`` merging works in practice:
+
+===================  ==============  ======================
+``base_uri``         Relative URI    Actual Requested URI
+===================  ==============  ======================
+http://foo.com       /bar            http://foo.com/bar
+http://foo.com/foo   /bar            http://foo.com/bar
+http://foo.com/foo   bar             http://foo.com/bar
+http://foo.com/foo/  bar             http://foo.com/foo/bar
+http://foo.com       http://baz.com  http://baz.com
+http://foo.com/?bar  bar             http://foo.com/bar
+===================  ==============  ======================
+
+bindto
+......
+
+**type**: ``string``
+
+A network interface name, IP address, a host name or a UNIX socket to use as the
+outgoing network interface.
+
+buffer
+......
+
+**type**: ``boolean``
+
+.. TODO: improve this useless description
+
+Indicates if the response should be buffered or not.
+
+cafile
+......
+
+**type**: ``string``
+
+The path of the certificate authority file that contains one or more
+certificates used to verify the other servers' certificates.
+
+capath
+......
+
+**type**: ``string``
+
+The path to a directory that contains one or more certificate authority files.
+
+capture_peer_cert_chain
+.......................
+
+**type**: ``boolean``
+
+If ``true``, the response includes a ``peer_certificate_chain`` attribute with
+the peer certificates (OpenSSL X.509 resources).
+
+ciphers
+.......
+
+**type**: ``string``
+
+A list of the names of the ciphers allowed for the SSL/TLS connections. They
+can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
+
+headers
+.......
+
+**type**: ``array``
+
+An associative array of the HTTP headers added before making the request. This
+value must use the format ``['header-name' => header-value, ...]``.
+
+http_version
+............
+
+**type**: ``string`` | ``null`` **default**: ``null``
+
+The HTTP version to use, typically ``'1.1'``  or ``'2.0'``. Leave it to ``null``
+to let Symfony select the best version automatically.
+
+local_cert
+..........
+
+**type**: ``string``
+
+The path to a file that contains the `PEM formatted`_ certificate used by the
+HTTP client. This is often combined with the ``local_pk`` and ``passphrase``
+options.
+
+local_pk
+........
+
+**type**: ``string``
+
+The path of a file that contains the `PEM formatted`_ private key of the
+certificate defined in the ``local_cert`` option.
+
+max_host_connections
+....................
+
+**type**: ``integer`` **default**: ``6``
+
+Defines the maximum amount of simultaneously open connections to a single host
+(considering a "host" the same as a "host name + port number" pair). This limit
+also applies for proxy connections, where the proxy is considered to be the host
+for which this limit is applied.
+
+max_redirects
+.............
+
+**type**: ``integer`` **default**: ``20``
+
+The maximum number of redirects to follow. Use ``0`` to not follow any
+redirection.
+
+no_proxy
+........
+
+**type**: ``string`` | ``null`` **default**: ``null``
+
+A comma separated list of hosts that do not require a proxy to be reached, even
+if one is configured. Use the ``'*'`` wildcard to match all hosts and an empty
+string to match none (disables the proxy).
+
+passphrase
+..........
+
+**type**: ``string``
+
+The passphrase used to encrypt the certificate stored in the file defined in the
+``local_cert`` option.
+
+peer_fingerprint
+................
+
+**type**: ``array``
+
+When negotiating a TLS or SSL connection, the server sends a certificate
+indicating its identity. A public key is extracted from this certificate and if
+it does not exactly match any of the public keys provided in this option, the
+connection is aborted before sending or receiving any data.
+
+The value of this option is an associative array of ``algorithm => hash``
+(e.g ``['pin-sha256' => '...']``).
+
+proxy
+.....
+
+**type**: ``string`` | ``null``
+
+The HTTP proxy to use to make the requests. Leave it to ``null`` to detect the
+proxy automatically based on your system configuration.
+
+query
+.....
+
+**type**: ``array``
+
+An associative array of the query string values added to the URL before making
+the request. This value must use the format ``['parameter-name' => parameter-value, ...]``.
+
+resolve
+.......
+
+**type**: ``array``
+
+A list of hostnames and their IP addresses to pre-populate the DNS cache used by
+the HTTP client in order to avoid a DNS lookup for those hosts. This option is
+useful both to improve performance and to make your tests easier.
+
+The value of this option is an associative array of ``domain => IP address``
+(e.g ``['symfony.com' => '46.137.106.254', ...]``).
+
+timeout
+.......
+
+**type**: ``float`` **default**: depends on your PHP config
+
+Time, in seconds, to wait for a response. If the response takes longer, a
+:class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
+Its default value is the same as the value of PHP's `default_socket_timeout`_
+config option.
+
+verify_host
+...........
+
+**type**: ``boolean``
+
+If ``true``, the certificate sent by other servers is verified to ensure that
+their common name matches the host included in the URL. This is usually
+combined with ``verify_peer`` to also verify the certificate authenticity.
+
+verify_peer
+...........
+
+**type**: ``boolean``
+
+If ``true``, the certificate sent by other servers when negotiating a TLS or SSL
+connection is verified for authenticity. Authenticating the certificate is not
+enough to be sure about the server, so you should combine this with the
+``verify_host`` option.
 
 profiler
 ~~~~~~~~
@@ -2410,3 +2690,6 @@ to know their differences.
 .. _`session.sid_length PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-length
 .. _`session.sid_bits_per_character PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
 .. _`X-Robots-Tag HTTP header`: https://developers.google.com/search/reference/robots_meta_tag
+.. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
+.. _`default_socket_timeout`: https://php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
+.. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
