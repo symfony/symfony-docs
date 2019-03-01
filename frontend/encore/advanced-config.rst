@@ -146,6 +146,47 @@ normally use from the command-line interface:
         keepPublicPath: true,
     });
 
+Having the full control on Loaders Rules
+----------------------------------------
+
+The method ``configureLoaderRule()`` provide a clean way to configure Webpack loaders rules (``module.rules``, see `Configuration <https://webpack.js.org/concepts/loaders/#configuration>`_).
+
+This is a low-level method. Any of your modifications will be applied just before pushing the loaders rules to Webpack.
+It means that you can override configuration provided by Encore, so maybe you will break things. Be careful when using it.
+
+A useful usage would be for configuring the ``eslint-loader`` to lint Vue files too.
+The following code is equivalent:
+
+.. code-block:: javascript
+
+    // Before
+    const webpackConfig = Encore.getWebpackConfig();
+
+    const eslintLoader = webpackConfig.module.rules.find(rule => rule.loader === 'eslint-loader');
+    eslintLoader.test = /\.(jsx?|vue)$/;
+
+    return webpackConfig;
+
+    // After
+    Encore.configureLoaderRule('eslint', loaderRule => {
+        loaderRule.test = /\.(jsx?|vue)$/
+    });
+
+    return Encore.getWebpackConfig();
+
+The following loaders are configurable with ``configureLoaderRule()``:
+  - ``javascript`` (alias ``js``)
+  - ``css``
+  - ``images``
+  - ``fonts``
+  - ``sass`` (alias ``scss``)
+  - ``less``
+  - ``stylus``
+  - ``vue``
+  - ``eslint``
+  - ``typescript`` (alias ``ts``)
+  - ``handlebars``
+
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`Webpack's watchOptions`: https://webpack.js.org/configuration/watch/#watchoptions
 .. _`array of configurations`: https://github.com/webpack/docs/wiki/configuration#multiple-configurations
