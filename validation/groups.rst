@@ -172,9 +172,9 @@ the class name or the string ``Default``.
     constraints in the ``BaseUser`` class will be validated.
 
 To tell the validator to use a specific group, pass one or more group names
-as the third argument to the ``validate()`` method::
+in the ``groups`` attribute of the second argument to the ``validate()`` method::
 
-    $errors = $validator->validate($author, null, ['registration']);
+    $errors = $validator->validate($author, ['groups'=>['registration']]);
 
 If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.
