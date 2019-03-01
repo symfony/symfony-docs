@@ -413,7 +413,7 @@ of domain logic in your templates:
 
 The following example shows these functions in action:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <h3>Actions</h3>
     {% if workflow_can(post, 'publish') %}
