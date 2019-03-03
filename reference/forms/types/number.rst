@@ -12,6 +12,7 @@ that you want to use for your number.
 | Rendered as | ``input`` ``text`` field                                             |
 +-------------+----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                        |
+|             | - `html5`_                                                           |
 |             | - `scale`_                                                           |
 |             | - `rounding_mode`_                                                   |
 +-------------+----------------------------------------------------------------------+
@@ -45,6 +46,18 @@ Field Options
 -------------
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
+
+html5
+~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.3
+
+    The ``html5`` option was introduced in Symfony 4.3.
+
+If set to ``true``, the HTML input will be rendered as a native HTML5 ``type="number"``
+form.
 
 scale
 ~~~~~
