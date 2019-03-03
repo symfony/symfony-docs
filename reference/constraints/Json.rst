@@ -37,7 +37,7 @@ you want to guarantee that some ``jsonString`` property is valid JSON.
              *     message = "You've entered an invalid Json."
              * )
              */
-             protected $chapters;
+             public $chapters;
         }
 
     .. code-block:: yaml
@@ -76,7 +76,7 @@ you want to guarantee that some ``jsonString`` property is valid JSON.
 
         class Book
         {
-            protected $chapters;
+            public $chapters;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
