@@ -91,34 +91,34 @@ Don't use hyperbole ("always", "never", "endlessly", "nothing", "worst", "horrib
 **Don't:** *"I don't like how you wrote this code"* - there is no clear explanation why you
 don't like how it's written.
 
-**Better:** *"I find it hard to read this code as there many nested if statements, can you make it more
-readable? By encapsulating some of it's details or maybe adding some comments to explain the overall logic."* -
+**Better:** *"I find it hard to read this code as there is many nested if statements, can you make it more
+readable? By encapsulating some of its details or maybe adding some comments to explain the overall logic."* -
 You explain why you find the code hard to read *and* give some suggestions for improvement.
 
 If a piece of code is in fact wrong, explain why:
 
-* ``This code doesn't comply with Symfony's CS rules. Please see [...] for details``.
+* "This code doesn't comply with Symfony's CS rules. Please see [...] for details."
 
-* ``Symfony 3 still uses PHP 5 and doesn't allow the usage scalar type-hints.``.
+* "Symfony 3 still uses PHP 5 and doesn't allow the usage scalar type-hints."
 
-* ``I think the code is less readable now`` - careful here, be sure explain why you think
+* "I think the code is less readable now." - careful here, be sure explain why you think
   the code is less readable, and maybe give some suggestions?
 
 **Examples of valid reasons to reject:**
 
-    * We tried that in the past (link to the relevant PR) but we needed to revert it for XXX reason.
+* "We tried that in the past (link to the relevant PR) but we needed to revert it for XXX reason."
 
-    * That change would introduce too many merge conflicts when merging up Symfony branches.
-      In the past we've always rejected changes like this.
+* "That change would introduce too many merge conflicts when merging up Symfony branches.
+  In the past we've always rejected changes like this."
 
-    * I profiled this change and it hurts performance significantly (if you don't profile, it's an opinion, so we can ignore)
+* "I profiled this change and it hurts performance significantly" - if you don't profile, it's an opinion, so we can ignore
 
-    * Code doesn't match Symfony's CS rules (e.g. use ``[]`` instead of ``array()``)
+* "Code doesn't match Symfony's CS rules (e.g. use ``[]`` instead of ``array()``)"
 
-    * We only provide integration with very popular projects (e.g. we integrate Bootstrap but not your own CSS framework)
+* "We only provide integration with very popular projects (e.g. we integrate Bootstrap but not your own CSS framework)"
 
-    * This would require adding lots of code and making lots of changes for a feature that doesn't look so important.
-      That could hurt maintaining in the future.
+* "This would require adding lots of code and making lots of changes for a feature that doesn't look so important.
+  That could hurt maintaining in the future."
 
 Asking for Changes
 ------------------
