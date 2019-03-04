@@ -27,7 +27,7 @@ repository.
 Basic Usage
 -----------
 
-Use the :class:`Symfony\Component\HttpClient\HttpClient` class to create the
+Use the :class:`Symfony\\Component\\HttpClient\\HttpClient` class to create the
 low-level HTTP client that makes requests, like the following ``GET`` request::
 
     use Symfony\Component\HttpClient\HttpClient;
@@ -78,8 +78,7 @@ Enabling cURL Support
 
 This component supports both the native PHP streams and cURL to make the HTTP
 requests. Although both are interchangeable and provide the same features,
-including concurrent requests, HTTP/2 is only supported when using cURL (and if
-the installed cURL version supports it).
+including concurrent requests, HTTP/2 is only supported when using cURL.
 
 ``HttpClient::create()`` selects the cURL transport if the `cURL PHP extension`_
 is enabled and falls back to PHP streams otherwise. If you prefer to select
@@ -97,6 +96,19 @@ the transport explicitly, use the following classes to create the client::
 When using this component in a full-stack Symfony application, this behavior is
 not configurable and cURL will be used automatically if the cURL PHP extension
 is installed and enabled. Otherwise, the native PHP streams will be used.
+
+Enabling HTTP/2 Support
+-----------------------
+
+HTTP/2 is only supported when using the cURL-based transport and the libcurl
+version is >= 7.36.0. If you meet these requirements, you can enable HTTP/2
+explicitly via the ``http_version`` option::
+
+    $httpClient = HttpClient::create(['http_version' => '2.0']);
+
+If you don't set the HTTP version explicitly, Symfony will use ``'2.0'`` only
+when the request protocol is ``https://`` (and the cURL requirements mentioned
+earlier are met).
 
 Making Requests
 ---------------
@@ -204,6 +216,13 @@ Concurrent Requests
 .. TODO
 
 
+Asynchronous Requests
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. TODO  see https://gist.github.com/tgalopin/a84a11ece0621b8a79ed923afe015b3c
+
+
 Processing Responses
 --------------------
 
@@ -274,13 +293,15 @@ Symfony Framework Integration
 -----------------------------
 
 When using this component in a full-stack Symfony application, you can configure
-multiple clients with different configurations and inject them in your services.
+multiple clients with different configurations and inject them into your services.
 
 Configuration
 ~~~~~~~~~~~~~
 
-Use the ``framework.http_client`` option to configure the default HTTP client
-used in the application:
+Use the ``framework.http_client`` key to configure the default HTTP client used
+in the application. Check out the full
+:ref:`http_client config reference <reference-http-client>` to learn about all
+the available config options:
 
 .. code-block:: yaml
 
@@ -316,7 +337,7 @@ configuration:
 Injecting the HTTP Client Into Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your application only defines one HTTP client, you can inject it in any
+If your application only defines one HTTP client, you can inject it into any
 service by type-hinting a constructor argument with the
 :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`::
 
@@ -346,7 +367,7 @@ has a service associated with it whose name follows the pattern
         # whenever a service type-hints ApiClientInterface, inject the GitHub client
         Symfony\Contracts\HttpClient\ApiClientInterface: '@api_client.github'
 
-        # inject the HTTP client called 'crawler' in this argument of this service
+        # inject the HTTP client called 'crawler' into this argument of this service
         App\Some\Service:
             $someArgument: '@http_client.crawler'
 

@@ -652,6 +652,8 @@ path
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
 
+.. _reference-http-client:
+
 http_client
 ~~~~~~~~~~~
 
