@@ -47,8 +47,7 @@ a routing ``{wildcard}`` to only match some regular expression:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page}">
-                <default key="_controller">App\Controller\BlogController::list</default>
+            <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <requirement key="page">\d+</requirement>
             </route>
 
@@ -58,19 +57,19 @@ a routing ``{wildcard}`` to only match some regular expression:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page}', [
-            '_controller' => 'App\Controller\BlogController::list',
-        ], [
-            'page' => '\d+',
-        ]));
+        use App\Controller\BlogController;
 
-        // ...
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog_list', '/blog/{page}')
+                ->controller([BlogController::class, 'list'])
+                ->requirements([
+                    'page' => '\d+',
+                ])
+            ;
+            // ...
+        };
 
 Thanks to the ``\d+`` requirement (i.e. a "digit" of any length), ``/blog/2`` will
 match this route but ``/blog/some-string`` will *not* match.
@@ -125,8 +124,7 @@ URL:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="homepage" path="/{_locale}">
-                <default key="_controller">App\Controller\MainController::homepage</default>
+            <route id="homepage" path="/{_locale}" controller="App\Controller\MainController::homepage">
                 <default key="_locale">en</default>
                 <requirement key="_locale">en|fr</requirement>
             </route>
@@ -135,18 +133,21 @@ URL:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('homepage', new Route('/{_locale}', [
-            '_controller' => 'App\Controller\MainController::homepage',
-            '_locale'     => 'en',
-        ], [
-            '_locale' => 'en|fr',
-        ]));
+        use App\Controller\MainController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('homepage', '/{_locale}')
+                ->controller([MainController::class, 'homepage'])
+                ->defaults([
+                    '_locale' => 'en',
+                ])
+                ->requirements([
+                    '_locale' => 'en|fr',
+                ])
+            ;
+        };
 
 For incoming requests, the ``{_locale}`` portion of the URL is matched against
 the regular expression ``(en|fr)``.
@@ -221,12 +222,12 @@ accomplished with the following route configuration:
         api_post_show:
             path:       /api/posts/{id}
             controller: App\Controller\BlogApiController::show
-            methods:    [GET, HEAD]
+            methods:    GET|HEAD
 
         api_post_edit:
             path:       /api/posts/{id}
             controller: App\Controller\BlogApiController::edit
-            methods:    [PUT]
+            methods:    PUT
 
     .. code-block:: xml
 
@@ -237,31 +238,47 @@ accomplished with the following route configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="api_post_show" path="/api/posts/{id}" methods="GET|HEAD">
-                <default key="_controller">App\Controller\BlogApiController::show</default>
-            </route>
+            <route id="api_post_show"
+                path="/api/posts/{id}"
+                controller="App\Controller\BlogApiController::show"
+                methods="GET|HEAD" />
 
-            <route id="api_post_edit" path="/api/posts/{id}" methods="PUT">
-                <default key="_controller">App\Controller\BlogApiController::edit</default>
-            </route>
+            <route id="api_post_edit"
+                path="/api/posts/{id}"
+                controller="App\Controller\BlogApiController::edit"
+                methods="PUT" />
         </routes>
 
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('api_post_show', new Route('/api/posts/{id}', [
-            '_controller' => 'App\Controller\BlogApiController::show',
-        ], [], [], '', [], ['GET', 'HEAD']));
+        use App\Controller\BlogApiController;
 
-        $routes->add('api_post_edit', new Route('/api/posts/{id}', [
-            '_controller' => 'App\Controller\BlogApiController::edit',
-        ], [], [], '', [], ['PUT']));
+        return function (RoutingConfigurator $routes) {
+            $routes->add('api_post_show', '/api/posts/{id}')
+                ->controller([BlogApiController::class, 'show'])
+                ->methods(['GET', 'HEAD'])
+            ;
+            $routes->add('api_post_edit', '/api/posts/{id}')
+                ->controller([BlogApiController::class, 'edit'])
+                ->methods(['PUT'])
+            ;
 
-        return $routes;
+            // or use collection
+            $api = $routes->collection('api_post_')
+                ->prefix('/api/posts/{id}')
+            ;
+            $api->add('show')
+                ->controller([BlogApiController::class, 'show'])
+                ->methods(['GET', 'HEAD'])
+            ;
+            $api->add('edit')
+                ->controller([BlogApiController::class, 'edit'])
+                ->methods(['PUT'])
+            ;
+        };
 
 Despite the fact that these two routes have identical paths
 (``/api/posts/{id}``), the first route will match only GET or HEAD requests and
