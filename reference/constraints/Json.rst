@@ -1,7 +1,7 @@
 Json
+====
 
-Validates that a value is valid ``json``. Specifically, this checks to see if
-the value is a valid ``json`` or not.
+Validates that a value has valid `JSON`_ syntax.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
@@ -17,9 +17,7 @@ the value is a valid ``json`` or not.
 Basic Usage
 -----------
 
-The ``Json`` constraint can be applied to a property or a "getter" method,
-but is most commonly useful in the latter case. For example, suppose that
-you want to guarantee that some ``jsonString`` property is valid JSON.
+The ``Json`` constraint can be applied to a property or a "getter" method:
 
 .. configuration-block::
 
@@ -60,7 +58,7 @@ you want to guarantee that some ``jsonString`` property is valid JSON.
             <class name="App\Entity\Book">
                 <property name="chapters">
                     <constraint name="Json">
-                        <option name"message">You've entered an invalid Json.</option>
+                        <option name="message">You've entered an invalid Json.</option>
                     </constraint>
                 </property>
             </class>
@@ -94,6 +92,8 @@ message
 
 **type**: ``string`` **default**: ``This value should be valid JSON.``
 
-This message is shown if the underlying data is not a valid JSON.
+This message is shown if the underlying data is not a valid JSON value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`JSON`: https://en.wikipedia.org/wiki/JSON
