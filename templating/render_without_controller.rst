@@ -25,6 +25,7 @@ can do this without creating a controller:
             controller:   Symfony\Bundle\FrameworkBundle\Controller\TemplateController
             defaults:
                 template: static/privacy.html.twig
+            methods: GET
 
     .. code-block:: xml
 
@@ -34,8 +35,10 @@ can do this without creating a controller:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="acme_privacy" path="/privacy">
-                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\TemplateController</default>
+            <route id="acme_privacy"
+                path="/privacy"
+                controller="Symfony\Bundle\FrameworkBundle\Controller\TemplateController"
+                methods="GET">
                 <default key="template">static/privacy.html.twig</default>
             </route>
         </routes>
@@ -50,7 +53,7 @@ can do this without creating a controller:
         $routes->add('acme_privacy', new Route('/privacy', [
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController',
             'template'    => 'static/privacy.html.twig',
-        ]));
+        ], [], [], '', [], ['GET']));
 
         return $routes;
 
@@ -88,6 +91,7 @@ exactly how your page is cached:
                 template:  'static/privacy.html.twig'
                 maxAge:    86400
                 sharedAge: 86400
+            methods: GET
 
     .. code-block:: xml
 
@@ -97,8 +101,10 @@ exactly how your page is cached:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="acme_privacy" path="/privacy">
-                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\TemplateController</default>
+            <route id="acme_privacy"
+                path="/privacy"
+                controller="Symfony\Bundle\FrameworkBundle\Controller\TemplateController"
+                methods="GET">
                 <default key="template">static/privacy.html.twig</default>
                 <default key="maxAge">86400</default>
                 <default key="sharedAge">86400</default>
@@ -117,7 +123,7 @@ exactly how your page is cached:
             'template'    => 'static/privacy.html.twig',
             'maxAge'      => 86400,
             'sharedAge'   => 86400,
-        ]));
+        ], [], [], '', [], ['GET']));
 
         return $routes;
 

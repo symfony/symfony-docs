@@ -43,9 +43,7 @@ the available blog posts for this imaginary blog application:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog" path="/blog">
-                <default key="_controller">App\Controller\BlogController::index</default>
-            </route>
+            <route id="blog" path="/blog" controller="App\Controller\BlogController::index" />
         </routes>
 
     .. code-block:: php
@@ -98,9 +96,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog" path="/blog/{page}">
-                <default key="_controller">App\Controller\BlogController::index</default>
-            </route>
+            <route id="blog" path="/blog/{page}" controller="App\Controller\BlogController::index" />
         </routes>
 
     .. code-block:: php
@@ -159,8 +155,7 @@ This is done by including it in the ``defaults`` collection:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog" path="/blog/{page}">
-                <default key="_controller">App\Controller\BlogController::index</default>
+            <route id="blog" path="/blog/{page}" controller="App\Controller\BlogController::index">
                 <default key="page">1</default>
             </route>
         </routes>

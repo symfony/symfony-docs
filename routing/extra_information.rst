@@ -30,8 +30,9 @@ to your controller, and as attributes of the ``Request`` object:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog" path="/blog/{page}">
-                <default key="_controller">App\Controller\BlogController::index</default>
+            <route id="blog"
+                path="/blog/{page}"
+                controller="App\Controller\BlogController::index">
                 <default key="page">1</default>
                 <default key="title">Hello world!</default>
             </route>

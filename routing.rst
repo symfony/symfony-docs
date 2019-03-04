@@ -90,11 +90,11 @@ Now you can configure the routes:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" controller="App\Controller\BlogController::list" path="/blog" >
+            <route id="blog_list" path="/blog" controller="App\Controller\BlogController::list">
                 <!-- settings -->
             </route>
 
-            <route id="blog_show" controller="App\Controller\BlogController::show" path="/blog/{slug}">
+            <route id="blog_show" path="/blog/{slug}" controller="App\Controller\BlogController::show">
                 <!-- settings -->
             </route>
         </routes>
@@ -102,9 +102,9 @@ Now you can configure the routes:
     .. code-block:: php
 
         // config/routes.php
+        use App\Controller\BlogController;
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
-        use App\Controller\BlogController;
 
         $routes = new RouteCollection();
         $routes->add('blog_list', new Route('/blog', [
@@ -407,8 +407,7 @@ concise, but it can decrease route readability when requirements are complex:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page<\d+>}"
-                   controller="App\Controller\BlogController::list" />
+            <route id="blog_list" path="/blog/{page<\d+>}" controller="App\Controller\BlogController::list" />
 
             <!-- ... -->
         </routes>
@@ -572,8 +571,7 @@ placeholder:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page <\d+>?1}"
-                   controller="App\Controller\BlogController::list" />
+            <route id="blog_list" path="/blog/{page <\d+>?1}" controller="App\Controller\BlogController::list" />
 
             <!-- ... -->
         </routes>

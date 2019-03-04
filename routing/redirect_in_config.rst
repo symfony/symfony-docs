@@ -28,7 +28,7 @@ action to redirect to this new url:
 
         # load some routes - one should ultimately have the path "/app"
         controllers:
-            resource: ../src/Controller/
+            resource: '../src/Controller/'
             type:     annotation
             prefix:   /app
 
@@ -50,14 +50,12 @@ action to redirect to this new url:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- load some routes - one should ultimately have the path "/app" -->
-            <import resource="../src/Controller/"
-                type="annotation"
-                prefix="/app"
-            />
+            <import resource="../src/Controller/" type="annotation" prefix="/app" />
 
             <!-- redirecting the homepage -->
-            <route id="homepage" path="/">
-                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
+            <route id="homepage"
+                path="/"
+                controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction">
                 <default key="path">/app</default>
                 <default key="permanent">true</default>
             </route>
@@ -129,8 +127,9 @@ action:
 
             <!-- ... -->
 
-            <route id="admin" path="/wp-admin">
-                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction</default>
+            <route id="admin"
+                path="/wp-admin"
+                controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction">
                 <default key="route">sonata_admin_dashboard</default>
                 <!-- make a permanent redirection... -->
                 <default key="permanent">true</default>
@@ -218,17 +217,19 @@ permanent redirects use ``308`` code instead of ``301``:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- redirects with the 308 status code -->
-            <route id="route_foo" path="...">
+            <route id="route_foo"
+                path="..."
+                controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction">
                 <!-- ... -->
-                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
                 <default key="permanent">true</default>
                 <default key="keepRequestMethod">true</default>
             </route>
 
             <!-- redirects with the 307 status code -->
-            <route id="route_bar" path="...">
+            <route id="route_bar"
+                path="..."
+                controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction">
                 <!-- ... -->
-                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
                 <default key="permanent">false</default>
                 <default key="keepRequestMethod">true</default>
             </route>

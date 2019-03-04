@@ -74,7 +74,7 @@ The next step is to configure a route in your app matching this path:
         class SecurityController extends AbstractController
         {
             /**
-             * @Route("/login", name="login")
+             * @Route("/login", name="login", methods={"POST"})
              */
             public function login(Request $request)
             {
@@ -93,6 +93,7 @@ The next step is to configure a route in your app matching this path:
         login:
             path:       /login
             controller: App\Controller\SecurityController::login
+            methods: POST
 
     .. code-block:: xml
 
@@ -103,9 +104,7 @@ The next step is to configure a route in your app matching this path:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="login" path="/login">
-                <default key="_controller">App\Controller\SecurityController::login</default>
-            </route>
+            <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="POST" />
         </routes>
 
     .. code-block:: php
@@ -117,7 +116,7 @@ The next step is to configure a route in your app matching this path:
         $routes = new RouteCollection();
         $routes->add('login', new Route('/login', [
             '_controller' => 'App\Controller\SecurityController::login',
-        ]));
+        ], [], [], '', [], ['POST']));
 
         return $routes;
 

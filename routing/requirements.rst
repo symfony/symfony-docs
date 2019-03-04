@@ -47,8 +47,9 @@ a routing ``{wildcard}`` to only match some regular expression:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page}">
-                <default key="_controller">App\Controller\BlogController::list</default>
+            <route id="blog_list"
+                path="/blog/{page}"
+                controller="App\Controller\BlogController::list">
                 <requirement key="page">\d+</requirement>
             </route>
 
@@ -125,8 +126,9 @@ URL:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="homepage" path="/{_locale}">
-                <default key="_controller">App\Controller\MainController::homepage</default>
+            <route id="homepage"
+                path="/{_locale}"
+                controller="App\Controller\MainController::homepage">
                 <default key="_locale">en</default>
                 <requirement key="_locale">en|fr</requirement>
             </route>
@@ -221,12 +223,12 @@ accomplished with the following route configuration:
         api_post_show:
             path:       /api/posts/{id}
             controller: App\Controller\BlogApiController::show
-            methods:    [GET, HEAD]
+            methods:    GET|HEAD
 
         api_post_edit:
             path:       /api/posts/{id}
             controller: App\Controller\BlogApiController::edit
-            methods:    [PUT]
+            methods:    PUT
 
     .. code-block:: xml
 
@@ -237,13 +239,15 @@ accomplished with the following route configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="api_post_show" path="/api/posts/{id}" methods="GET|HEAD">
-                <default key="_controller">App\Controller\BlogApiController::show</default>
-            </route>
+            <route id="api_post_show"
+                path="/api/posts/{id}"
+                controller="App\Controller\BlogApiController::show"
+                methods="GET|HEAD" />
 
-            <route id="api_post_edit" path="/api/posts/{id}" methods="PUT">
-                <default key="_controller">App\Controller\BlogApiController::edit</default>
-            </route>
+            <route id="api_post_edit"
+                path="/api/posts/{id}"
+                controller="App\Controller\BlogApiController::edit"
+                methods="PUT" />
         </routes>
 
     .. code-block:: php

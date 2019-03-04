@@ -100,7 +100,7 @@ configuration (``login``):
         class SecurityController extends AbstractController
         {
             /**
-             * @Route("/login", name="login")
+             * @Route("/login", name="login", methods={"GET", "POST"})
              */
             public function login()
             {
@@ -113,6 +113,7 @@ configuration (``login``):
         login:
             path:       /login
             controller: App\Controller\SecurityController::login
+            methods: GET|POST
 
     .. code-block:: xml
 
@@ -123,9 +124,7 @@ configuration (``login``):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="login" path="/login">
-                <default key="_controller">App\Controller\SecurityController::login</default>
-            </route>
+            <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="GET|POST" />
         </routes>
 
     ..  code-block:: php
@@ -138,7 +137,7 @@ configuration (``login``):
         $routes = new RouteCollection();
         $routes->add('login', new Route('/login', [
             '_controller' => [SecurityController::class, 'login'],
-        ]));
+        ], [], [], '', ['GET', 'POST']));
 
         return $routes;
 

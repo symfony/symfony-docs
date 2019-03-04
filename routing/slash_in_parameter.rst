@@ -57,8 +57,7 @@ a more permissive regular expression for it:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="share" path="/share/{token}">
-                <default key="_controller">App\Controller\DefaultController::share</default>
+            <route id="share" path="/share/{token}" controller="App\Controller\DefaultController::share">
                 <requirement key="token">.+</requirement>
             </route>
         </routes>

@@ -34,8 +34,7 @@ inside your routing configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">App\Controller\MainController::contact</default>
+            <route id="contact" path="/{_locale}/contact" controller="App\Controller\MainController::contact">
                 <requirement key="_locale">%app.locales%</requirement>
             </route>
         </routes>
@@ -106,9 +105,9 @@ path):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="some_route" path="/%app.route_prefix%/contact">
-                <default key="_controller">App\Controller\MainController::contact</default>
-            </route>
+            <route id="some_route"
+                path="/%app.route_prefix%/contact"
+                controller="App\Controller\MainController::contact" />
         </routes>
 
     .. code-block:: php

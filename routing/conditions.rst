@@ -55,8 +55,9 @@ define arbitrary matching logic, use the ``conditions`` routing option:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="contact" path="/contact">
-                <default key="_controller">App\Controller\DefaultController::contact</default>
+            <route id="contact"
+                path="/contact"
+                controller="App\Controller\DefaultController::contact">
                 <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
                 <!-- expressions can also include config parameters -->
                 <!-- <condition>request.headers.get('User-Agent') matches '%app.allowed_browsers%'</condition> -->
