@@ -57,8 +57,7 @@ a more permissive regular expression for it:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="share" path="/share/{token}">
-                <default key="_controller">App\Controller\DefaultController::share</default>
+            <route id="share" path="/share/{token}" controller="App\Controller\DefaultController::share">
                 <requirement key="token">.+</requirement>
             </route>
         </routes>
@@ -66,17 +65,18 @@ a more permissive regular expression for it:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('share', new Route('/share/{token}', [
-            '_controller' => 'App\Controller\DefaultController::share',
-        ], [
-            'token' => '.+',
-        ]));
+        use App\Controller\DefaultController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('share', '/share/{token}')
+                ->controller([DefaultController::class, 'share'])
+                ->requirements([
+                    'token' => '.+',
+                ])
+            ;
+        };
 
 That's it! Now, the ``{token}`` parameter can contain the ``/`` character.
 

@@ -302,20 +302,18 @@ other loaders that work the same way:
 * :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader`
 
 If you use the :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader` you
-have to provide the name of a PHP file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
+have to provide the name of a PHP file which returns a callable handling a :class:`Symfony\\Component\\Routing\\Loader\\Configurator\\RoutingConfigurator`.
+This class allows to chain imports, collections or simple route definition calls::
 
     // RouteProvider.php
-    use Symfony\Component\Routing\RouteCollection;
-    use Symfony\Component\Routing\Route;
+    namespace Symfony\Component\Routing\Loader\Configurator;
 
-    $routes = new RouteCollection();
-    $routes->add(
-        'route_name',
-        new Route('/foo', ['_controller' => 'ExampleController'])
-    );
-    // ...
-
-    return $routes;
+    return function (RoutingConfigurator $routes) {
+        $routes->add('route_name', '/foo')
+            ->controller('ExampleController')
+            // ...
+        ;
+    };
 
 Routes as Closures
 ..................
@@ -410,7 +408,7 @@ routes with UTF-8 characters:
 
         route1:
             path:     /category/{name}
-            defaults: { _controller: 'App\Controller\DefaultController::category' }
+            controller: App\Controller\DefaultController::category
             options:
                 utf8: true
 
@@ -422,31 +420,26 @@ routes with UTF-8 characters:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="route1" path="/category/{name}">
-                <default key="_controller">App\Controller\DefaultController::category</default>
+            <route id="route1" path="/category/{name}" controller="App\Controller\DefaultController::category">
                 <option key="utf8">true</option>
             </route>
         </routes>
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('route1', new Route('/category/{name}',
-            [
-                '_controller' => 'App\Controller\DefaultController::category',
-            ],
-            [],
-            [
-                'utf8' => true,
-            ]
-        ));
+        use App\Controller\DefaultController;
 
-        // ...
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('route1', '/category/{name}')
+                ->controller([DefaultController::class, 'category'])
+                ->options([
+                    'utf8' => true,
+                ])
+            ;
+        };
 
 In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
 ``.`` requirement to match any UTF-8 characters instead of just a single
@@ -471,11 +464,11 @@ You can also include UTF-8 strings as routing requirements:
              * @Route(
              *     "/category/{name}",
              *     name="route2",
-             *     requirements={"default"="한국어"},
+             *     defaults={"name"="한국어"},
              *     options={"utf8": true}
              * )
              */
-            public function default()
+            public function category()
             {
                 // ...
             }
@@ -483,10 +476,10 @@ You can also include UTF-8 strings as routing requirements:
     .. code-block:: yaml
 
         route2:
-            path:     /default/{default}
-            defaults: { _controller: 'App\Controller\DefaultController::default' }
-            requirements:
-                default: "한국어"
+            path:     /category/{name}
+            controller: 'App\Controller\DefaultController::category'
+            defaults:
+                name: "한국어"
             options:
                 utf8: true
 
@@ -498,34 +491,30 @@ You can also include UTF-8 strings as routing requirements:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="route2" path="/default/{default}">
-                <default key="_controller">App\Controller\DefaultController::default</default>
-                <requirement key="default">한국어</requirement>
+            <route id="route2" path="/category/{name}" controller="App\Controller\DefaultController::category">
+                <default key="name">한국어</default>
                 <option key="utf8">true</option>
             </route>
         </routes>
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('route2', new Route('/default/{default}',
-            [
-                '_controller' => 'App\Controller\DefaultController::default',
-            ],
-            [
-                'default' => '한국어',
-            ],
-            [
-                'utf8' => true,
-            ]
-        ));
+        use App\Controller\DefaultController;
 
-        // ...
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('route2', '/category/{name}')
+                ->controller([DefaultController::class, 'category'])
+                ->defaults([
+                    'name' => '한국어',
+                ])
+                ->options([
+                    'utf8' => true,
+                ])
+            ;
+        };
 
 .. tip::
 
