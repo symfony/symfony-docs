@@ -46,16 +46,19 @@ can do this without creating a controller:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('acme_privacy', new Route('/privacy', [
-            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController',
-            'template'    => 'static/privacy.html.twig',
-        ], [], [], '', [], ['GET']));
+        use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('acme_privacy', '/privacy')
+                ->controller(TemplateController::class)
+                ->methods(['GET'])
+                ->defaults([
+                    'template'  => 'static/privacy.html.twig',
+                ])
+            ;
+        };
 
 The ``TemplateController`` will render whatever template you've passed as the
 ``template`` default value.
@@ -114,18 +117,21 @@ exactly how your page is cached:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('acme_privacy', new Route('/privacy', [
-            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController',
-            'template'    => 'static/privacy.html.twig',
-            'maxAge'      => 86400,
-            'sharedAge'   => 86400,
-        ], [], [], '', [], ['GET']));
+        use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('acme_privacy', '/privacy')
+                ->controller(TemplateController::class)
+                ->methods(['GET'])
+                ->defaults([
+                    'template'  => 'static/privacy.html.twig',
+                    'maxAge'    => 86400,
+                    'sharedAge' => 86400,
+                ])
+            ;
+        };
 
 The ``maxAge`` and ``sharedAge`` values are used to modify the Response
 object created in the controller. For more information on caching, see

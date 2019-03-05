@@ -61,24 +61,21 @@ This can be done by importing routing resources from the main routing file:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->addCollection(
+        return function (RoutingConfigurator $routes) {
             // loads routes from the given routing file stored in some bundle
-            $loader->import("@AcmeOtherBundle/Resources/config/routing.yaml")
+            $routes->import('@AcmeOtherBundle/Resources/config/routing.yaml');
 
             // loads routes from the PHP annotations of the controllers found in that directory
-            $loader->import("../src/Controller/", "annotation")
+            $routes->import('../src/Controller/', 'annotation');
 
             // loads routes from the YAML or XML files found in that directory
-            $loader->import("../legacy/routing/", "directory")
+            $routes->import('../legacy/routing/', 'directory');
 
             // loads routes from the YAML or XML files found in some bundle directory
-            $loader->import("@AppBundle/Resources/config/routing/public/", "directory")
-        );
-
-        return $routes;
+            $routes->import('@AppBundle/Resources/config/routing/public/', 'directory');
+        };
 
 .. note::
 
@@ -125,24 +122,19 @@ suppose you want to prefix all application routes with ``/site`` (e.g.
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import
-                resource="../src/Controller/"
-                type="annotation"
-                prefix="/site" />
+            <import resource="../src/Controller/" type="annotation" prefix="/site" />
         </routes>
 
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $app = $loader->import('../src/Controller/', 'annotation');
-        $app->addPrefix('/site');
-
-        $routes = new RouteCollection();
-        $routes->addCollection($app);
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->import('../src/Controller/', 'annotation')
+                ->prefix('/site')
+            ;
+        };
 
 The path of each route being loaded from the new routing resource will now
 be prefixed with the string ``/site``.
@@ -184,12 +176,15 @@ be prefixed with the string ``/site``.
         .. code-block:: php
 
             // config/routes.php
-            use Symfony\Component\Routing\RouteCollection;
+            namespace Symfony\Component\Routing\Loader\Configurator;
 
-            $app = $loader->import('../src/Controller/', 'annotation');
-            // the second argument is the $trailingSlashOnRoot option
-            $app->addPrefix('/site', false);
-            // ...
+            use App\Controller\ArticleController;
+
+            return function (RoutingConfigurator $routes) {
+                $routes->import('../src/Controller/', 'annotation')
+                    ->prefix('/site', false)
+                ;
+            };
 
 Prefixing the Names of Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -251,15 +246,13 @@ a controller class or imported from a configuration file:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $app = $loader->import('../src/Controller/', 'annotation');
-        $app->addNamePrefix('blog_');
-
-        $collection = new RouteCollection();
-        $collection->addCollection($app);
-
-        return $collection;
+        return function (RoutingConfigurator $routes) {
+            $routes->import('../src/Controller/', 'annotation')
+                ->namePrefix('blog_')
+            ;
+        };
 
 In this example, the names of the routes will be ``blog_index`` and ``blog_post``.
 

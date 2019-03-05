@@ -67,17 +67,19 @@ You can also match on the HTTP *host* of the incoming request.
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('mobile_homepage', new Route('/', [
-            '_controller' => 'App\Controller\MainController::mobileHomepage',
-        ], [], [], 'm.example.com'));
+        use App\Controller\MainController;
 
-        $routes->add('homepage', new Route('/', [
-            '_controller' => 'App\Controller\MainController::homepage',
-        ]));
+        return function (RoutingConfigurator $routes) {
+            $routes->add('mobile_homepage', '/')
+                ->controller([MainController::class, 'mobileHomepage'])
+                ->host('m.example.com')
+            ;
+            $routes->add('homepage', '/')
+                ->controller([MainController::class, 'homepage'])
+            ;
+        };
 
         return $routes;
 
@@ -151,19 +153,19 @@ you can use placeholders in your hostname:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('project_homepage', new Route('/', [
-            '_controller' => 'App\Controller\MainController::projectsHomepage',
-        ], [], [], '{project}.example.com'));
+        use App\Controller\MainController;
 
-        $routes->add('homepage', new Route('/', [
-            '_controller' => 'App\Controller\MainController::homepage',
-        ]));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('project_homepage', '/')
+                ->controller([MainController::class, 'projectHomepage'])
+                ->host('{project}.example.com')
+            ;
+            $routes->add('homepage', '/')
+                ->controller([MainController::class, 'homepage'])
+            ;
+        };
 
 You can also set requirements and default options for these placeholders. For
 instance, if you want to match both ``m.example.com`` and
@@ -243,22 +245,25 @@ instance, if you want to match both ``m.example.com`` and
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('mobile_homepage', new Route('/', [
-            '_controller' => 'App\Controller\MainController::mobileHomepage',
-            'subdomain'   => 'm',
-        ], [
-            'subdomain' => 'm|mobile',
-        ], [], '{subdomain}.example.com'));
+        use App\Controller\MainController;
 
-        $routes->add('homepage', new Route('/', [
-            '_controller' => 'App\Controller\MainController::homepage',
-        ]));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('mobile_homepage', '/')
+                ->controller([MainController::class, 'mobileHomepage'])
+                ->host('{subdomain}.example.com')
+                ->defaults([
+                    'subdomain' => 'm',
+                ])
+                ->requirements([
+                    'subdomain' => 'm|mobile',
+                ])
+            ;
+            $routes->add('homepage', '/')
+                ->controller([MainController::class, 'homepage'])
+            ;
+        };
 
 .. tip::
 
@@ -339,22 +344,25 @@ instance, if you want to match both ``m.example.com`` and
         .. code-block:: php
 
             // config/routes.php
-            use Symfony\Component\Routing\RouteCollection;
-            use Symfony\Component\Routing\Route;
+            namespace Symfony\Component\Routing\Loader\Configurator;
 
-            $routes = new RouteCollection();
-            $routes->add('mobile_homepage', new Route('/', [
-                '_controller' => 'App\Controller\MainController::mobileHomepage',
-                'domain' => '%domain%',
-            ], [
-                'domain' => '%domain%',
-            ], [], 'm.{domain}'));
+            use App\Controller\MainController;
 
-            $routes->add('homepage', new Route('/', [
-                '_controller' => 'App\Controller\MainController::homepage',
-            ]));
-
-            return $routes;
+            return function (RoutingConfigurator $routes) {
+                $routes->add('mobile_homepage', '/')
+                    ->controller([MainController::class, 'mobileHomepage'])
+                    ->host('m.{domain}')
+                    ->defaults([
+                        'domain' => '%domain%',
+                    ])
+                    ->requirements([
+                        'domain' => '%domain%',
+                    ])
+                ;
+                $routes->add('homepage', '/')
+                    ->controller([MainController::class, 'homepage'])
+                ;
+            };
 
 .. tip::
 

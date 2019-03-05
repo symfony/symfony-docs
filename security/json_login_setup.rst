@@ -110,15 +110,16 @@ The next step is to configure a route in your app matching this path:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('login', new Route('/login', [
-            '_controller' => 'App\Controller\SecurityController::login',
-        ], [], [], '', [], ['POST']));
+        use App\Controller\SecurityController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('login', '/login')
+                ->controller([SecurityController::class, 'login'])
+                ->methods(['POST'])
+            ;
+        };
 
 Now, when you make a ``POST`` request, with the header ``Content-Type: application/json``,
 to the ``/login`` URL with the following JSON document as the body, the security

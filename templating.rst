@@ -530,15 +530,16 @@ configuration:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Route;
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('welcome', new Route('/', [
-            '_controller' => 'App\Controller\WelcomeController::index',
-        ], [], [], '', [], ['GET']));
+        use App\Controller\WelcomeController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('welcome', '/')
+                ->controller([WelcomeController::class, 'index'])
+                ->methods(['GET'])
+            ;
+        };
 
 To link to the page, use the ``path()`` Twig function and refer to the route:
 
@@ -575,7 +576,7 @@ route:
         article_show:
             path:       /article/{slug}
             controller: App\Controller\ArticleController::show
-            methods: 'GET'
+            methods: GET
 
     .. code-block:: xml
 
@@ -595,15 +596,16 @@ route:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Route;
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('article_show', new Route('/article/{slug}', [
-            '_controller' => 'App\Controller\ArticleController::show',
-        ], [], [], '', [], ['GET']));
+        use App\Controller\ArticleController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('article_show', '/articles/{slug}')
+                ->controller([ArticleController::class, 'show'])
+                ->methods(['GET'])
+            ;
+        };
 
 In this case, you need to specify both the route name (``article_show``) and
 a value for the ``{slug}`` parameter. Using this route, revisit the

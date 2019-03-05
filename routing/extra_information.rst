@@ -30,9 +30,7 @@ to your controller, and as attributes of the ``Request`` object:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog"
-                path="/blog/{page}"
-                controller="App\Controller\BlogController::index">
+            <route id="blog" path="/blog/{page}" controller="App\Controller\BlogController::index">
                 <default key="page">1</default>
                 <default key="title">Hello world!</default>
             </route>
@@ -41,17 +39,19 @@ to your controller, and as attributes of the ``Request`` object:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog/{page}', [
-            '_controller' => 'App\Controller\BlogController::index',
-            'page'        => 1,
-            'title'       => 'Hello world!',
-        ]));
+        use App\Controller\BlogController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog', '/blog/{page}')
+                ->controller([BlogController::class, 'index'])
+                ->defaults([
+                    'page'  => 1,
+                    'title' => 'Hello world!',
+                ])
+            ;
+        };
 
 Now, you can access this extra parameter in your controller, as an argument
 to the controller method::

@@ -64,9 +64,16 @@ a service like: ``App\Controller\HelloController::index``:
     .. code-block:: php
 
         // config/routes.php
-        $collection->add('hello', new Route('/hello', [
-            '_controller' => 'App\Controller\HelloController::index',
-        ], [], [], '', [], ['GET']));
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        use App\Controller\HelloController;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('hello', '/hello')
+                ->controller(['HelloController::class, 'index'])
+                ->methods(['GET'])
+            ;
+        };
 
 .. _controller-service-invoke:
 

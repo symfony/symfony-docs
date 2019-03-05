@@ -49,15 +49,15 @@ the available blog posts for this imaginary blog application:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog', [
-            '_controller' => 'App\Controller\BlogController::index',
-        ]));
+        use App\Controller\BlogController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog', '/blog')
+                ->controller([BlogController::class, 'index'])
+            ;
+        };
 
 So far, this route is as simple as possible - it contains no placeholders
 and will only match the exact URL ``/blog``. But what if you need this route
@@ -102,15 +102,15 @@ entries? Update the route to have a new ``{page}`` placeholder:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog/{page}', [
-            '_controller' => 'App\Controller\BlogController::index',
-        ]));
+        use App\Controller\BlogController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog', '/blog/{page}')
+                ->controller([BlogController::class, 'index'])
+            ;
+        };
 
 Like the ``{slug}`` placeholder before, the value matching ``{page}`` will
 be available inside your controller. Its value can be used to determine which
@@ -163,16 +163,18 @@ This is done by including it in the ``defaults`` collection:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog/{page}', [
-            '_controller' => 'App\Controller\BlogController::index',
-            'page'        => 1,
-        ]));
+        use App\Controller\BlogController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog', '/blog/{page}')
+                ->controller([BlogController::class, 'index'])
+                ->defaults([
+                    'page' => 1,
+                ])
+            ;
+        };
 
 By adding ``page`` to the ``defaults`` key, the ``{page}`` placeholder is
 no longer required. The URL ``/blog`` will match this route and the value

@@ -800,6 +800,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         # config/routes.yaml
         app_logout:
             path: /logout
+            methods: GET
 
     .. code-block:: php-annotations
 
@@ -812,7 +813,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         class SecurityController extends AbstractController
         {
             /**
-             * @Route("/logout", name="app_logout")
+             * @Route("/logout", name="app_logout", methods={"GET"})
              */
             public function logout()
             {
@@ -830,19 +831,19 @@ Next, you'll need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" />
+            <route id="app_logout" path="/logout" methods="GET" />
         </routes>
 
     ..  code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('app_logout', new Route('/logout'));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('logout', '/logout')
+                ->methods(['GET'])
+            ;
+        };
 
 And that's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
 Symfony will un-authenticate the current user and redirect them.

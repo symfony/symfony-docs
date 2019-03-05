@@ -130,16 +130,16 @@ configuration (``login``):
     ..  code-block:: php
 
         // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\SecurityController;
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
 
-        $routes = new RouteCollection();
-        $routes->add('login', new Route('/login', [
-            '_controller' => [SecurityController::class, 'login'],
-        ], [], [], '', ['GET', 'POST']));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('login', '/login')
+                ->controller([SecurityController::class, 'login'])
+                ->methods(['GET', 'POST'])
+            ;
+        };
 
 Great! Next, add the logic to ``login()`` that displays the login form::
 

@@ -52,15 +52,16 @@ the URI scheme via schemes:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('secure', new Route('/secure', [
-            '_controller' => 'App\Controller\MainController::secure',
-        ], [], [], '', ['https']));
+        use App\Controller\MainController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('secure', '/secure')
+                ->controller([MainController::class, 'secure'])
+                ->schemes(['https'])
+            ;
+        };
 
 The above configuration forces the ``secure`` route to always use HTTPS.
 

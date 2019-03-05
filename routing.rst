@@ -102,19 +102,18 @@ Now you can configure the routes:
     .. code-block:: php
 
         // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
 
-        $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog', [
-            '_controller' => [BlogController::class, 'list']
-        ]));
-        $routes->add('blog_show', new Route('/blog/{slug}', [
-            '_controller' => [BlogController::class, 'show']
-        ]));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog_list', '/blog')
+                ->controller([BlogController::class, 'list'])
+            ;
+            $routes->add('blog_show', '/blog/{slug}')
+                ->controller([BlogController::class, 'show'])
+            ;
+        };
 
 Thanks to these two routes:
 
@@ -202,9 +201,11 @@ Symfony provides a handy way to declare localized routes without duplication.
         // config/routes.php
         namespace Symfony\Component\Routing\Loader\Configurator;
 
+        use App\Controller\CompanyController;
+
         return function (RoutingConfigurator $routes) {
             $routes->add('about_us', ['nl' => '/over-ons', 'en' => '/about-us'])
-                ->controller('App\Controller\CompanyController::about');
+                ->controller([CompanyController::class, 'about']);
         };
 
 When a localized route is matched Symfony automatically knows which locale
@@ -254,15 +255,17 @@ with a locale. This can be done by defining a different prefix for each locale
     .. code-block:: php
 
         // config/routes/annotations.php
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = $loader->import('../src/Controller/', 'annotation');
-
-        // don't prefix URLs for English, the default locale
-        $app->addPrefix('/', ['_locale' => 'en']);
-        $app->addPrefix('/nl', ['_locale' => 'nl']);
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->import('../src/Controller/', 'annotation')
+                ->prefix([
+                    // don't prefix URLs for English, the default locale
+                    'en' => '',
+                    'nl' => '/nl'
+                ])
+            ;
+        };
 
 .. _routing-requirements:
 
@@ -342,20 +345,17 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\BlogController;
 
-        $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page}', [
-            '_controller' => [BlogController::class, 'list'],
-        ], [
-            'page' => '\d+'
-        ]));
-
-        // ...
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog_list', '/blog/{page}')
+                ->controller([BlogController::class, 'list'])
+                ->requirements(['page' => '\d+'])
+            ;
+            // ...
+        };
 
 The ``\d+`` is a regular expression that matches a *digit* of any length. Now:
 
@@ -415,18 +415,16 @@ concise, but it can decrease route readability when requirements are complex:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\BlogController;
 
-        $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page<\d+>}', [
-            '_controller' => [BlogController::class, 'list'],
-        ]));
-
-        // ...
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog_list', '/blog/{page<\d+>}')
+                ->controller([BlogController::class, 'list'])
+            ;
+            // ...
+        };
 
 To learn about other route requirements - like HTTP method, hostname and dynamic
 expressions - see :doc:`/routing/requirements`.
@@ -498,25 +496,17 @@ So how can you make ``blog_list`` once again match when the user visits
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\BlogController;
 
-        $routes = new RouteCollection();
-        $routes->add('blog_list', new Route(
-            '/blog/{page}',
-            [
-                '_controller' => [BlogController::class, 'list'],
-                'page'        => 1,
-            ],
-            [
-                'page' => '\d+'
-            ]
-        ));
-
-        // ...
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog_list', '/blog/{page}')
+                ->controller([BlogController::class, 'list'])
+                ->defaults(['page' => 1])
+                ->requirements(['page' => '\d+'])
+            ;
+        };
 
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
@@ -579,18 +569,15 @@ placeholder:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\BlogController;
 
-        $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page<\d+>?1}', [
-            '_controller' => [BlogController::class, 'list'],
-        ]));
-
-        // ...
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('blog_list', '/blog/{page<\d+>?1')
+                ->controller([BlogController::class, 'list'])
+            ;
+        };
 
 .. tip::
 
@@ -686,24 +673,23 @@ With all of this in mind, check out this advanced example:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\ArticleController;
 
-        $routes = new RouteCollection();
-        $routes->add(
-            'article_show',
-            new Route('/articles/{_locale}/{year}/{slug}.{_format}', [
-                '_controller' => [ArticleController::class, 'show'],
-                '_format'     => 'html',
-            ], [
-                '_locale' => 'en|fr',
-                '_format' => 'html|rss',
-                'year'    => '\d+',
-            ])
-        );
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('article_show', '/articles/{_locale}/{year}/{slug}.{_format}')
+                ->controller([ArticleController::class, 'show'])
+                ->defaults([
+                    '_format' => 'html',
+                ])
+                ->requirements([
+                    '_locale' => 'en|fr',
+                    '_format' => 'html|rss',
+                    'year'    => '\d+',
+                ])
+            ;
+        };
 
 As you've seen, this route will only match if the ``{_locale}`` portion of
 the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
@@ -812,7 +798,7 @@ To generate a URL, you need to specify the name of the route (e.g. ``blog_show``
 and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
 route. With this information, an URL can be generated in a controller::
 
-    class MainController extends AbstractController
+    class BlogController extends AbstractController
     {
         public function show($slug)
         {

@@ -91,22 +91,18 @@ by the routing system using the special ``_locale`` parameter:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\ContactController;
 
-        $routes = new RouteCollection();
-        $routes->add('contact', new Route(
-            '/{_locale}/contact',
-            [
-                '_controller' => [ContactController::class, 'index'],
-            ],
-            [
-                '_locale' => 'en|fr|de',
-            ]
-        ));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('contact', '/{_locale}/contact')
+                ->controller([ContactController::class, 'index'])
+                ->requirements([
+                    '_locale' => 'en|fr|de',
+                ])
+            ;
+        };
 
 When using the special ``_locale`` parameter in a route, the matched locale
 is *automatically set on the Request* and can be retrieved via the

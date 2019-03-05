@@ -64,25 +64,24 @@ action to redirect to this new url:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
+        use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 
-        // load some routes - one should ultimately have the path "/app"
-        $appRoutes = $loader->import("../src/Controller/", "annotation");
-        $appRoutes->setPrefix('/app');
-
-        $routes->addCollection($appRoutes);
-
-        // redirecting the homepage
-        $routes->add('homepage', new Route('/', [
-            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
-            'path'        => '/app',
-            'permanent'   => true,
-        ]));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            // load some routes - one should ultimately have the path "/app"
+            $routes->import('../src/Controller/', 'annotation')
+                ->prefix('/app')
+            ;
+            // redirecting the homepage
+            $routes->add('homepage', '/')
+                ->controller([RedirectController::class, 'urlRedirectAction'])
+                ->defaults([
+                    'path'      => '/app',
+                    'permanent' => true,
+                ])
+            ;
+        };
 
 In this example, you configured a route for the ``/`` path and let the
 ``RedirectController`` redirect it to ``/app``. The ``permanent`` switch
@@ -141,22 +140,23 @@ action:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        // ...
+        use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 
-        $routes->add('admin', new Route('/wp-admin', [
-            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
-            'route'       => 'sonata_admin_dashboard',
-            // make a permanent redirection...
-            'permanent'   => true,
-            // ...and keep the original query string parameters
-            'keepQueryParams' => true,
-        ]));
-
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            // redirecting the homepage
+            $routes->add('admin', '/wp-admin')
+                ->controller([RedirectController::class, 'redirectAction'])
+                ->defaults([
+                    'route' => 'sonata_admin_dashboard',
+                    // make a permanent redirection...
+                    'permanent' => true,
+                    // ...and keep the original query string parameters
+                    'keepQueryParams' => true,
+                ])
+            ;
+        };
 
 .. caution::
 
