@@ -413,6 +413,11 @@ method on the normalizer definition::
     $serializer = new Serializer([$normalizer], [$encoder]);
     $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsperson":false}
 
+You can also use the ``ignored_attributes`` option of the context to ignore attributes when
+normalizing an object::
+
+    $serializer->serialize($person, 'json', ['ignored_attributes' => ['age']]);
+
 .. _component-serializer-converting-property-names-when-serializing-and-deserializing:
 
 Converting Property Names when Serializing and Deserializing
