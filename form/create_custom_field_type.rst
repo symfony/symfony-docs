@@ -150,12 +150,12 @@ link for details), create a ``shipping_widget`` block to handle this:
         {% spaceless %}
             {% if expanded %}
                 <ul {{ block('widget_container_attributes') }}>
-                  {% for child in form if not child.rendered %}
-                      <li>
-                          {{ form_widget(child) }}
-                          {{ form_label(child) }}
-                      </li>
-                  {% endfor %}
+                    {% for child in form if not child.rendered %}
+                        <li>
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
                 </ul>
             {% else %}
                 {# let the choice widget render the select tag #}
