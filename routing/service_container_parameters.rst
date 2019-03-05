@@ -34,8 +34,7 @@ inside your routing configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">App\Controller\MainController::contact</default>
+            <route id="contact" path="/{_locale}/contact" controller="App\Controller\MainController::contact">
                 <requirement key="_locale">%app.locales%</requirement>
             </route>
         </routes>
@@ -43,17 +42,18 @@ inside your routing configuration:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('contact', new Route('/{_locale}/contact', [
-            '_controller' => 'App\Controller\MainController::contact',
-        ), [
-            '_locale' => '%app.locales%',
-        ]));
+        use App\Controller\MainController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('contact', '/{_locale}/contact')
+                ->controller([MainController::class, 'contact'])
+                ->requirements([
+                    '_locale' => '%app.locales%',
+                ])
+            ;
+        };
 
 You can now control and set the  ``app.locales`` parameter somewhere
 in your container:
@@ -106,23 +106,23 @@ path):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="some_route" path="/%app.route_prefix%/contact">
-                <default key="_controller">App\Controller\MainController::contact</default>
-            </route>
+            <route id="some_route"
+                path="/%app.route_prefix%/contact"
+                controller="App\Controller\MainController::contact" />
         </routes>
 
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('some_route', new Route('/%app.route_prefix%/contact', [
-            '_controller' => 'App\Controller\MainController::contact',
-        ]));
+        use App\Controller\MainController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('contact', '/%app.route_prefix%/contact')
+                ->controller([MainController::class, 'contact'])
+            ;
+        };
 
 .. note::
 

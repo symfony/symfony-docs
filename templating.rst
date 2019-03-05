@@ -499,7 +499,7 @@ configuration:
         class WelcomeController extends AbstractController
         {
             /**
-             * @Route("/", name="welcome")
+             * @Route("/", name="welcome", methods={"GET"})
              */
             public function index()
             {
@@ -513,6 +513,7 @@ configuration:
         welcome:
             path:     /
             controller: App\Controller\WelcomeController::index
+            methods: GET
 
     .. code-block:: xml
 
@@ -523,23 +524,22 @@ configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="welcome" path="/">
-                <default key="_controller">App\Controller\WelcomeController::index</default>
-            </route>
+            <route id="welcome" path="/" controller="App\Controller\WelcomeController::index" methods="GET" />
         </routes>
 
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Route;
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('welcome', new Route('/', [
-            '_controller' => 'App\Controller\WelcomeController::index',
-        ]));
+        use App\Controller\WelcomeController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('welcome', '/')
+                ->controller([WelcomeController::class, 'index'])
+                ->methods(['GET'])
+            ;
+        };
 
 To link to the page, use the ``path()`` Twig function and refer to the route:
 
@@ -562,7 +562,7 @@ route:
         class ArticleController extends AbstractController
         {
             /**
-             * @Route("/article/{slug}", name="article_show")
+             * @Route("/article/{slug}", name="article_show", methods={"GET"})
              */
             public function show($slug)
             {
@@ -576,6 +576,7 @@ route:
         article_show:
             path:       /article/{slug}
             controller: App\Controller\ArticleController::show
+            methods: GET
 
     .. code-block:: xml
 
@@ -586,23 +587,25 @@ route:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="article_show" path="/article/{slug}">
-                <default key="_controller">App\Controller\ArticleController::show</default>
-            </route>
+            <route id="article_show"
+                path="/article/{slug}"
+                controller="App\Controller\ArticleController::show"
+                methods="GET" />
         </routes>
 
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Route;
-        use Symfony\Component\Routing\RouteCollection;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        $routes = new RouteCollection();
-        $routes->add('article_show', new Route('/article/{slug}', [
-            '_controller' => 'App\Controller\ArticleController::show',
-        ]));
+        use App\Controller\ArticleController;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->add('article_show', '/articles/{slug}')
+                ->controller([ArticleController::class, 'show'])
+                ->methods(['GET'])
+            ;
+        };
 
 In this case, you need to specify both the route name (``article_show``) and
 a value for the ``{slug}`` parameter. Using this route, revisit the
