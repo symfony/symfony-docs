@@ -12,6 +12,7 @@ Validates that a given number or ``DateTime`` object is *between* some minimum a
 |                | - `maxMessage`_                                                     |
 |                | - `invalidMessage`_                                                 |
 |                | - `payload`_                                                        |
+|                | - `groups`_                                                         |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Range`          |
 +----------------+---------------------------------------------------------------------+

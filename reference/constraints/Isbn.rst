@@ -8,6 +8,7 @@ is either a valid ISBN-10 or a valid ISBN-13.
 | Applies to     | :ref:`property or method<validation-property-target>`                |
 +----------------+----------------------------------------------------------------------+
 | Options        | - `type`_                                                            |
+|                | - `groups`_                                                          |
 |                | - `message`_                                                         |
 |                | - `isbn10Message`_                                                   |
 |                | - `isbn13Message`_                                                   |

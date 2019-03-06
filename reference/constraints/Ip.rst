@@ -9,6 +9,7 @@ IPv6 and many other combinations.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `version`_                                                        |
+|                | - `groups`_                                                         |
 |                | - `message`_                                                        |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+

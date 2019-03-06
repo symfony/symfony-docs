@@ -10,7 +10,8 @@ Also see :doc:`IsTrue <IsTrue>`.
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
-| Options        | - `message`_                                                          |
+| Options        | - `groups`_                                                           |
+|                | - `message`_                                                          |
 |                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsFalse`          |

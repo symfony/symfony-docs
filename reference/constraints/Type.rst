@@ -9,6 +9,7 @@ option to validate this.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - :ref:`type <reference-constraint-type-type>`                      |
+|                | - `groups`_                                                         |
 |                | - `message`_                                                        |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+

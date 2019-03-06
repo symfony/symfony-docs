@@ -7,7 +7,8 @@ Validates that a value is a valid
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
 +----------------+-----------------------------------------------------------------------+
-| Options        | - `message`_                                                          |
+| Options        | - `groups`_                                                           |
+|                | - `message`_                                                          |
 |                | - `caseSensitive`_                                                    |
 |                | - `requireHyphen`_                                                    |
 |                | - `payload`_                                                          |

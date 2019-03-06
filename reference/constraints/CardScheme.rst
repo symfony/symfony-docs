@@ -9,6 +9,7 @@ a payment through a payment gateway.
 | Applies to     | :ref:`property or method <validation-property-target>`                   |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `schemes`_                                                             |
+|                | - `groups`_                                                              |
 |                | - `message`_                                                             |
 |                | - `payload`_                                                             |
 +----------------+--------------------------------------------------------------------------+

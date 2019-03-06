@@ -9,6 +9,7 @@ using an email address that already exists in the system.
 | Applies to     | :ref:`class <validation-class-target>`                                              |
 +----------------+-------------------------------------------------------------------------------------+
 | Options        | - `fields`_                                                                         |
+|                | - `groups`_                                                                         |
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |

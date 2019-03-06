@@ -20,6 +20,7 @@ and that extra keys are not present.
 |                | - `allowMissingFields`_                                                  |
 |                | - `missingFieldsMessage`_                                                |
 |                | - `payload`_                                                             |
+|                | - `groups`_                                                              |
 +----------------+--------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Collection`          |
 +----------------+--------------------------------------------------------------------------+

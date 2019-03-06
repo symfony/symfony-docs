@@ -13,6 +13,7 @@ Countable) element count is *between* some minimum and maximum value.
 |                | - `maxMessage`_                                                     |
 |                | - `exactMessage`_                                                   |
 |                | - `payload`_                                                        |
+|                | - `groups`_                                                         |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Count`          |
 +----------------+---------------------------------------------------------------------+

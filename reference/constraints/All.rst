@@ -9,6 +9,7 @@ you to apply a collection of constraints to each element of the array.
 +----------------+-------------------------------------------------------------------+
 | Options        | - `constraints`_                                                  |
 |                | - `payload`_                                                      |
+|                | - `groups`_                                                       |
 +----------------+-------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\All`          |
 +----------------+-------------------------------------------------------------------+

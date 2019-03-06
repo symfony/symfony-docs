@@ -36,6 +36,7 @@ form field.
 |                | - `uploadExtensionErrorMessage`_                                    |
 |                | - `uploadErrorMessage`_                                             |
 |                | - `payload`_                                                        |
+|                | - `groups`_                                                         |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`           |
 +----------------+---------------------------------------------------------------------+

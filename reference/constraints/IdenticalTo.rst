@@ -15,6 +15,7 @@ To force that a value is *not* identical, see
 | Applies to     | :ref:`property or method<validation-property-target>`                    |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `value`_                                                               |
+|                | - `groups`_                                                              |
 |                | - `message`_                                                             |
 |                | - `payload`_                                                             |
 |                | - `propertyPath`_                                                        |

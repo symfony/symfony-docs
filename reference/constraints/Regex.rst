@@ -7,6 +7,7 @@ Validates that a value matches a regular expression.
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `pattern`_                                                          |
+|                | - `groups`_                                                           |
 |                | - `htmlPattern`_                                                      |
 |                | - `match`_                                                            |
 |                | - `message`_                                                          |

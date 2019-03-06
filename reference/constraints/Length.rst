@@ -20,6 +20,7 @@ Validates that a given string length is *between* some minimum and maximum value
 |                | - `exactMessage`_                                                    |
 |                | - `charsetMessage`_                                                  |
 |                | - `payload`_                                                         |
+|                | - `groups`_                                                          |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Length`          |
 +----------------+----------------------------------------------------------------------+

@@ -10,6 +10,7 @@ an array of items is one of those valid choices.
 +----------------+----------------------------------------------------------------------+
 | Options        | - `choices`_                                                         |
 |                | - `callback`_                                                        |
+|                | - `groups`_                                                          |
 |                | - `multiple`_                                                        |
 |                | - `min`_                                                             |
 |                | - `max`_                                                             |

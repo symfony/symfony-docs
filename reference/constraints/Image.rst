@@ -38,6 +38,7 @@ of the documentation on this constraint.
 |                | - `allowPortraitMessage`_                                             |
 |                | - `corruptedMessage`_                                                 |
 |                | - See :doc:`File </reference/constraints/File>` for inherited options |
+|                | - `groups`_                                                           |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Image`            |
 +----------------+-----------------------------------------------------------------------+

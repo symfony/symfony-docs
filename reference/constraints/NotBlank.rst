@@ -14,7 +14,8 @@ To force that a value is not equal to ``null``, see the
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
-| Options        | - `message`_                                                           |
+| Options        | - `groups`_                                                            |
+|                | - `message`_                                                           |
 |                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotBlank`          |
