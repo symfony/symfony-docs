@@ -101,6 +101,12 @@ shipping options.
 
 .. tip::
 
+    If the purpose of this new form type was to customize the rendering of some
+    fields only, skip this step and use ``block_name`` or ``block_prefix`` options
+    instead to :ref:`define a custom form fragment name <form-fragment-custom-naming>`.
+
+.. tip::
+
     Run the following command to verify that the form type was successfully
     registered in the application:
 

@@ -511,6 +511,14 @@ So how can you make ``blog_list`` once again match when the user visits
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
 
+If you want to always include some default value in the generated URL (for
+example to force the generation of ``/blog/1`` instead of ``/blog`` in the
+previous example) add the ``!`` character before the placeholder name: ``/blog/{!page}``
+
+.. versionadded:: 4.3
+    The feature to force the inclusion of default values in generated URLs was
+    introduced in Symfony 4.3.
+
 As it happens with requirements, default values can also be inlined in each
 placeholder using the syntax ``{placeholder_name?default_value}``. This feature
 is compatible with inlined requirements, so you can inline both in a single
