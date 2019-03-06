@@ -149,17 +149,17 @@ normally use from the command-line interface:
 Having the full control on Loaders Rules
 ----------------------------------------
 
-The method ``configureLoaderRule()`` provide a clean way to configure Webpack loaders rules (``module.rules``, see `Configuration <https://webpack.js.org/concepts/loaders/#configuration>`_).
+The method ``configureLoaderRule()`` provides a clean way to configure Webpack loaders rules (``module.rules``, see `Configuration <https://webpack.js.org/concepts/loaders/#configuration>`_).
 
-This is a low-level method. Any of your modifications will be applied just before pushing the loaders rules to Webpack.
-It means that you can override configuration provided by Encore, so maybe you will break things. Be careful when using it.
+This is a low-level method. All your modifications will be applied just before pushing the loaders rules to Webpack.
+It means that you can override the default configuration provided by Encore, which may break things. Be careful when using it.
 
 A useful usage would be for configuring the ``eslint-loader`` to lint Vue files too.
 The following code is equivalent:
 
 .. code-block:: javascript
 
-    // Before
+    // Manually
     const webpackConfig = Encore.getWebpackConfig();
 
     const eslintLoader = webpackConfig.module.rules.find(rule => rule.loader === 'eslint-loader');
@@ -167,7 +167,7 @@ The following code is equivalent:
 
     return webpackConfig;
 
-    // After
+    // Using Encore.configureLoaderRule()
     Encore.configureLoaderRule('eslint', loaderRule => {
         loaderRule.test = /\.(jsx?|vue)$/
     });
