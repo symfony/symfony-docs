@@ -22,6 +22,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `help`_                                                          |
 |           | - `help_attr`_                                                     |
 |           | - `help_html`_                                                     |
+|           | - `help_translation_parameters`_                                   |
 |           | - `inherit_data`_                                                  |
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
@@ -42,6 +43,8 @@ on all types for which ``FormType`` is the parent.
 |           | - `disabled`_                                                      |
 |           | - `label`_                                                         |
 |           | - `translation_domain`_                                            |
+|           | - `label_translation_parameters`_                                  |
+|           | - `attr_translation_parameters`_                                   |
 +-----------+--------------------------------------------------------------------+
 | Parent    | none                                                               |
 +-----------+--------------------------------------------------------------------+
@@ -113,6 +116,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
+.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
+
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
@@ -167,3 +172,7 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
