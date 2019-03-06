@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-03-06T08:16:56Z
+
+It seems like we need to check the `4.2` branch for other things that were introduced later. Searching for `..versionadded:: 4.3` reveals some more changes.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-06T10:02:19Z
+
+@xabbuh I'm going to merge this and then I'm going to look for "versionadded 4.3" in 4.2 branch and remove everything that is left.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-03-06T10:12:17Z
+
+@javiereguiluz I think we should scan for all commits containing the "This PR was merged into the master branch." message in the `4.2` branch that were made after the `4.2` branch was created.
