@@ -10,11 +10,11 @@ A simple, non-responsive button.
 | Rendered as          | ``button`` tag                                                       |
 +----------------------+----------------------------------------------------------------------+
 | Inherited            | - `attr`_                                                            |
-| options              | - `disabled`_                                                        |
+| options              | - `attr_translation_parameters`_                                     |
+|                      | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
-|                      | - `translation_domain`_                                              |
 |                      | - `label_translation_parameters`_                                    |
-|                      | - `attr_translation_parameters`_                                     |
+|                      | - `translation_domain`_                                              |
 +----------------------+----------------------------------------------------------------------+
 | Parent type          | none                                                                 |
 +----------------------+----------------------------------------------------------------------+
@@ -59,77 +59,37 @@ label_translation_parameters
 
 **type**: ``array`` **default**: ``[]``
 
-Translated `label`_ can contain
-:ref:`placeholders <component-translation-placeholders>`.
-This option allows you to pass an array of parameters in order to replace
-placeholders with actual values.
+.. versionadded:: 4.3
+
+    The ``label_translation_parameters`` option was introduced in Symfony 4.3.
+
+The content of the `label`_ option is translated before displaying it, so it
+can contain :ref:`translation placeholders <component-translation-placeholders>`.
+This option defines the values used to replace those placeholders.
 
 Given this translation message:
 
 .. code-block:: yaml
 
     # translations/messages.en.yml
-    form.order.submit_to_company: Send an order to %company%
+    form.order.submit_to_company: 'Send an order to %company%'
 
-you can specify placeholder value:
+You can specify the placeholder values as follows:
 
 .. code-block:: php
 
     use Symfony\Component\Form\Extension\Core\Type\ButtonType;
     // ...
 
-    $builder->add('send', ButtonType::class, array(
+    $builder->add('send', ButtonType::class, [
         'label' => 'form.order.submit_to_company',
-        'label_translation_parameters' => array(
+        'label_translation_parameters' => [
             '%company%' => 'ACME Inc.',
-        ),
-    ));
+        ],
+    ]);
 
-Note that ``label_translation_parameters`` of buttons are merged with those of its
-parent. In other words the parent's translation parameters are available for
-children's buttons but can be overriden:
-
-.. code-block:: php
-
-    // App/Controller/OrderController.php
-    use App\Form\OrderType;
-    // ...
-
-    $form = $this->createForm(OrderType::class, $order, array(
-        // available to all children, grandchildren and so on.
-        'label_translation_parameters' => array(
-            '%company%' => 'ACME',
-        ),
-    ));
-
-.. code-block:: php
-
-    // App/Form/OrderType.php
-    use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-    // ...
-
-    $builder->add('send', ButtonType::class, array(
-        'label' => 'form.order.submit_to_company',
-        // Value of parent's 'label_translation_parameters' will be merged with
-        // this field's empty 'label_translation_parameters'.
-        // array('%company%' => 'ACME') will be used to translate this label.
-    ));
-
-.. code-block:: php
-
-    // App/Form/OrderType.php
-    use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-    // ...
-
-    $builder->add('send', ButtonType::class, array(
-        'label' => 'form.order.submit_to_company',
-        'label_translation_parameters' => array(
-            '%company%' => 'American Company Making Everything',
-        ),
-        // Value of parent's 'label_translation_parameters' will be merged with
-        // this button's 'label_translation_parameters'.
-        // array('%company%' => 'American Company Making Everything')
-        // will be used to translate this label.
-    ));
+The ``label_translation_parameters`` option of buttons is merged with the same
+option of its parents, so buttons can reuse and/or override any of the parent
+placeholders.
 
 .. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
