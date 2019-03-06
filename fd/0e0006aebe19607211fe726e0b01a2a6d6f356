@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-02-25T20:10:23Z
+
+shall we move it to an include instead of duplicating it? or is it not exactly the same content?
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2019-02-25T20:27:10Z
+
+Include: I dont't know how to do that.
+
+Differences:
+* I deleted the term "database". I could come up with another PR at Doctrine, using a more general term like "credentials" or anything.
+* And I added some more example characters. These are not so important, and I could add them at Doctrine too.
+
+So if you go for the include, I'll take care of the fine tuning :-)
+
+BTW: I'm not 100% sure if Swift Mailer does indeed use the same decoding as Doctrine, see https://github.com/symfony/swiftmailer-bundle/issues/270 . Is this just a (temporary) bug or a real difference?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-02-26T08:33:40Z
+
+@xabbuh @javiereguiluz please decide or not for an include
+
+@ThomasLandauer can you please update the PR title to sth meaningful? 🙏
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-02-28T15:31:09Z
+
+👍 on making this an include
