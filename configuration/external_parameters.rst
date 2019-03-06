@@ -446,15 +446,6 @@ Symfony provides the following env var processors:
                 'auth' => '%env(file:AUTH_FILE)%',
             ]);
 
-``env(trim:FOO)``
-    Trims the content of ``FOO`` env var, removing whitespaces from the beginning
-    and end of the string. This is especially useful in combination with the
-    ``file`` processor, as it'll remove newlines at the end of a file.
-
-    .. versionadded:: 4.3
-
-        The ``trim`` processor was introduced in Symfony 4.3.
-
 ``env(key:FOO:BAR)``
     Retrieves the value associated with the key ``FOO`` from the array whose
     contents are stored in the ``BAR`` env var:
@@ -492,51 +483,6 @@ Symfony provides the following env var processors:
             // config/services.php
             $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.json');
             $container->setParameter('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%');
-
-``env(default:fallback_param:BAR)``
-    Retrieves the value of the parameter ``fallback_param`` when the ``BAR`` env
-    var is not available:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/services.yaml
-            parameters:
-                # if PRIVATE_KEY is not a valid file path, the content of raw_key is returned
-                private_key: '%env(default:raw_key:file:PRIVATE_KEY)%'
-                raw_key: '%env(PRIVATE_KEY)%'
-
-        .. code-block:: xml
-
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-                <parameters>
-                    <!-- if PRIVATE_KEY is not a valid file path, the content of raw_key is returned -->
-                    <parameter key="private_key">%env(default:raw_key:file:PRIVATE_KEY)%</parameter>
-                    <parameter key="raw_key">%env(PRIVATE_KEY)%</parameter>
-                </parameters>
-            </container>
-
-        .. code-block:: php
-
-            // config/services.php
-
-            // if PRIVATE_KEY is not a valid file path, the content of raw_key is returned
-            $container->setParameter('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%');
-            $container->setParameter('raw_key', '%env(PRIVATE_KEY)%');
-
-    .. versionadded:: 4.3
-
-        The ``default`` processor was introduced in Symfony 4.3.
 
 It is also possible to combine any number of processors:
 
