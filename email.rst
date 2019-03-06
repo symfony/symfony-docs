@@ -176,3 +176,4 @@ Learn more
 .. _`Amazon SES`: http://aws.amazon.com/ses/
 .. _`generate an App password`: https://support.google.com/accounts/answer/185833
 .. _`allow less secure apps to access your Gmail account`: https://support.google.com/accounts/answer/6010255
+.. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
