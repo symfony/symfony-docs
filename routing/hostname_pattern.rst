@@ -381,8 +381,8 @@ You can also set the host option on imported routes:
 
     .. code-block:: php-annotations
 
-        // src/Controller/MainController.php
-        namespace Acme\HelloBundle\Controller;
+        // vendor/acme/acme-hello-bundle/src/Controller/MainController.php
+        namespace Acme\AcmeHelloBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
@@ -417,10 +417,13 @@ You can also set the host option on imported routes:
     .. code-block:: php
 
         // config/routes.php
-        $routes = $loader->import("@AcmeHelloBundle/Resources/config/routing.php");
-        $routes->setHost('hello.example.com');
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return $routes;
+        return function (RoutingConfigurator $routes) {
+            $routes->import("@AcmeHelloBundle/Resources/config/routing.php")
+                ->host('hello.example.com')
+            ;
+        };
 
 The host ``hello.example.com`` will be set on each route loaded from the new
 routing resource.
