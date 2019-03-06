@@ -290,6 +290,8 @@ the ``NotBlank`` constraint will still be applied (since it is wrapped in
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 fields
 ~~~~~~
 

@@ -84,6 +84,8 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

@@ -90,6 +90,8 @@ format
 This option allows to validate a custom date format. See
 :phpmethod:`DateTime::createFromFormat` for formatting options.
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

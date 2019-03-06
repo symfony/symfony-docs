@@ -86,6 +86,8 @@ will contain a Business Identifier Code (BIC).
 Available Options
 -----------------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

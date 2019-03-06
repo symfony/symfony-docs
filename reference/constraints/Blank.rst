@@ -90,6 +90,8 @@ of an ``Author`` class were blank, you could do the following:
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

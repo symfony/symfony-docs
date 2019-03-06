@@ -96,6 +96,8 @@ will contain an International Bank Account Number.
 Available Options
 -----------------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

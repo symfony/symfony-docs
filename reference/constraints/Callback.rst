@@ -253,6 +253,8 @@ constructor of the Callback constraint::
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 .. _callback-option:
 
 callback

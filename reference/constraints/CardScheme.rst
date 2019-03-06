@@ -102,6 +102,8 @@ on an object that will contain a credit card number.
 Available Options
 -----------------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 schemes
 ~~~~~~~
 

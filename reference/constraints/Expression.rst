@@ -246,6 +246,8 @@ in your expression:
 * ``value``: The value of the property being validated (only available when
   the constraint is applied directly to a property);
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

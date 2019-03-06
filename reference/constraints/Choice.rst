@@ -283,6 +283,8 @@ you can pass the class name and the method as an array.
 Available Options
 -----------------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 choices
 ~~~~~~~
 

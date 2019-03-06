@@ -102,6 +102,8 @@ be blank and to be at least 5 characters long.
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 constraints
 ~~~~~~~~~~~
 

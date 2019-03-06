@@ -136,6 +136,8 @@ If you need to require two fields to be individually unique (e.g. a unique
 ``email`` *and* a unique ``username``), you use two ``UniqueEntity`` entries,
 each with a single field.
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

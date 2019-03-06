@@ -291,6 +291,8 @@ Options
 
 .. include:: /reference/constraints/_comparison-value-option.rst.inc
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

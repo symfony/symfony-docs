@@ -126,6 +126,8 @@ of a variety of different values:
 ``all_public``
     Validates for all IP formats but without private and reserved ranges
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

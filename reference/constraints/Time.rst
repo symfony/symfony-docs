@@ -84,6 +84,8 @@ of the day when the event starts:
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

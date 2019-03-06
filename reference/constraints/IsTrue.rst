@@ -120,6 +120,8 @@ If the ``isTokenValid()`` returns false, the validation will fail.
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 

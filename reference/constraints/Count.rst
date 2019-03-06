@@ -104,6 +104,8 @@ you might add the following:
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 min
 ~~~
 

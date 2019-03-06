@@ -82,6 +82,8 @@ class were not strictly equal to ``null``, you would:
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 message
 ~~~~~~~
 
