@@ -8,7 +8,8 @@ that follows a valid ``HH:MM:SS`` format.
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
-| Options        | - `message`_                                                           |
+| Options        | - `groups`_                                                            |
+|                | - `message`_                                                           |
 |                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Time`              |
@@ -82,6 +83,8 @@ of the day when the event starts:
 
 Options
 -------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

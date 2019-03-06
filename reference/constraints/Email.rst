@@ -12,6 +12,7 @@ cast to a string before being validated.
 |                | - `checkMX`_                                                        |
 |                | - `checkHost`_                                                      |
 |                | - `payload`_                                                        |
+|                | - `groups`_                                                         |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Email`          |
 +----------------+---------------------------------------------------------------------+
@@ -92,6 +93,8 @@ Basic Usage
 
 Options
 -------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 strict
 ~~~~~~

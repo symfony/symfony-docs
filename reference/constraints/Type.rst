@@ -9,6 +9,7 @@ option to validate this.
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - :ref:`type <reference-constraint-type-type>`                      |
+|                | - `groups`_                                                         |
 |                | - `message`_                                                        |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
@@ -152,6 +153,8 @@ Also, you can use ``ctype_()`` functions from corresponding
 
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

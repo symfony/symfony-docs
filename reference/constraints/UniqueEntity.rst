@@ -9,6 +9,7 @@ using an email address that already exists in the system.
 | Applies to     | :ref:`class <validation-class-target>`                                              |
 +----------------+-------------------------------------------------------------------------------------+
 | Options        | - `fields`_                                                                         |
+|                | - `groups`_                                                                         |
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |
@@ -134,6 +135,8 @@ as long as they don't have the same name also).
 If you need to require two fields to be individually unique (e.g. a unique
 ``email`` *and* a unique ``username``), you use two ``UniqueEntity`` entries,
 each with a single field.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

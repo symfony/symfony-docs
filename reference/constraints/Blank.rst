@@ -16,7 +16,8 @@ But be careful as ``NotBlank`` is *not* strictly the opposite of ``Blank``.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `message`_                                                        |
+| Options        | - `groups`_                                                         |
+|                | - `message`_                                                        |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Blank`          |
@@ -88,6 +89,8 @@ of an ``Author`` class were blank, you could do the following:
 
 Options
 -------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~
