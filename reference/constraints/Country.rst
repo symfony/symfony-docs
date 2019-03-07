@@ -3,17 +3,14 @@ Country
 
 Validates that a value is a valid `ISO 3166-1 alpha-2`_ country code.
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - `groups`_                                                            |
-|                | - `message`_                                                           |
-|                | - `payload`_                                                           |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Country`           |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CountryValidator`  |
-+----------------+------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Country`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountryValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -90,11 +87,11 @@ This message is shown if the string is not a valid country code.
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ value }}``  | The current (invalid) country code             |
-+------------------+------------------------------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) country code
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
