@@ -62,16 +62,13 @@ field as **three different choice fields**::
         'widget' => 'choice',
     ]);
 
-If your underlying date is *not* a ``DateTime`` object (e.g. it's a unix timestamp),
-configure the `input`_ option.
-
-When working with a ``DateTimeImmutable`` object, add this as an ``input`` option::
+If your underlying date is *not* a ``DateTime`` object (e.g. it's a unix
+timestamp or a ``DateTimeImmutable`` object), configure the `input`_ option::
 
     $builder->add('publishedAt', DateType::class, [
         'widget' => 'choice',
         'input'  => 'datetime_immutable'
     ]);
-
 
 Rendering a single HTML5 Textbox
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
