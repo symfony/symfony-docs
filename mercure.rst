@@ -222,6 +222,7 @@ and to use URI Templates as patterns:
     .. image:: /_images/mercure/chrome.png
 
     To use it:
+
     * open the DevTools
     * select the "Network" tab
     * click on the request to the Mercure hub
