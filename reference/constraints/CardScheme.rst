@@ -125,7 +125,7 @@ Valid values are:
 
 .. versionadded:: 4.3
 
-    The ``UATP`` number scheme was introduced in Symfony 4.3.
+    The ``UATP`` and ``MIR`` number schemes were introduced in Symfony 4.3.
 
 For more information about the used schemes, see
 `Wikipedia: Issuer identification number (IIN)`_.
