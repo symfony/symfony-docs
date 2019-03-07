@@ -20,6 +20,7 @@ Validates that a given string length is *between* some minimum and maximum value
 |                | - `exactMessage`_                                                    |
 |                | - `charsetMessage`_                                                  |
 |                | - `payload`_                                                         |
+|                | - `groups`_                                                          |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Length`          |
 +----------------+----------------------------------------------------------------------+
@@ -218,3 +219,5 @@ You can use the following parameters in this message:
 +-------------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_groups-option.rst.inc

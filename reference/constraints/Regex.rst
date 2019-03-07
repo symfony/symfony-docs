@@ -7,6 +7,7 @@ Validates that a value matches a regular expression.
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `pattern`_                                                          |
+|                | - `groups`_                                                           |
 |                | - `htmlPattern`_                                                      |
 |                | - `match`_                                                            |
 |                | - `message`_                                                          |
@@ -176,6 +177,8 @@ be matched against. By default, this validator will fail if the input string
 does *not* match this regular expression (via the :phpfunction:`preg_match`
 PHP function). However, if `match`_ is set to false, then validation will
 fail if the input string *does* match this pattern.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 htmlPattern
 ~~~~~~~~~~~

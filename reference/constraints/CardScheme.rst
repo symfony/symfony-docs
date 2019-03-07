@@ -8,7 +8,8 @@ a payment through a payment gateway.
 +----------------+--------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                   |
 +----------------+--------------------------------------------------------------------------+
-| Options        | - `schemes`_                                                             |
+| Options        | - `groups`_                                                              |
+|                | - `schemes`_                                                             |
 |                | - `message`_                                                             |
 |                | - `payload`_                                                             |
 +----------------+--------------------------------------------------------------------------+
@@ -100,6 +101,8 @@ on an object that will contain a credit card number.
 
 Available Options
 -----------------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 schemes
 ~~~~~~~

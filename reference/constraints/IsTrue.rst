@@ -10,7 +10,8 @@ Also see :doc:`IsFalse <IsFalse>`.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `message`_                                                        |
+| Options        | - `groups`_                                                         |
+|                | - `message`_                                                        |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsTrue`         |
@@ -118,6 +119,8 @@ If the ``isTokenValid()`` returns false, the validation will fail.
 
 Options
 -------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

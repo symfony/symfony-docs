@@ -14,10 +14,11 @@ and that extra keys are not present.
 +----------------+--------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                   |
 +----------------+--------------------------------------------------------------------------+
-| Options        | - `fields`_                                                              |
-|                | - `allowExtraFields`_                                                    |
-|                | - `extraFieldsMessage`_                                                  |
+| Options        | - `allowExtraFields`_                                                    |
 |                | - `allowMissingFields`_                                                  |
+|                | - `extraFieldsMessage`_                                                  |
+|                | - `fields`_                                                              |
+|                | - `groups`_                                                              |
 |                | - `missingFieldsMessage`_                                                |
 |                | - `payload`_                                                             |
 +----------------+--------------------------------------------------------------------------+
@@ -289,15 +290,6 @@ the ``NotBlank`` constraint will still be applied (since it is wrapped in
 Options
 -------
 
-fields
-~~~~~~
-
-**type**: ``array`` [:ref:`default option <validation-default-option>`]
-
-This option is required and is an associative array defining all of the
-keys in the collection and, for each key, exactly which validator(s) should
-be executed against that element of the collection.
-
 allowExtraFields
 ~~~~~~~~~~~~~~~~
 
@@ -306,6 +298,16 @@ allowExtraFields
 If this option is set to ``false`` and the underlying collection contains
 one or more elements that are not included in the `fields`_ option, a validation
 error will be returned. If set to ``true``, extra fields are ok.
+
+allowMissingFields
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: false
+
+If this option is set to ``false`` and one or more fields from the `fields`_
+option are not present in the underlying collection, a validation error
+will be returned. If set to ``true``, it's ok if some fields in the `fields`_
+option are not present in the underlying collection.
 
 extraFieldsMessage
 ~~~~~~~~~~~~~~~~~~
@@ -323,15 +325,16 @@ You can use the following parameters in this message:
 | ``{{ field }}``  | The key of the extra field detected            |
 +------------------+------------------------------------------------+
 
-allowMissingFields
-~~~~~~~~~~~~~~~~~~
+fields
+~~~~~~
 
-**type**: ``boolean`` **default**: false
+**type**: ``array`` [:ref:`default option <validation-default-option>`]
 
-If this option is set to ``false`` and one or more fields from the `fields`_
-option are not present in the underlying collection, a validation error
-will be returned. If set to ``true``, it's ok if some fields in the `fields`_
-option are not present in the underlying collection.
+This option is required and is an associative array defining all of the
+keys in the collection and, for each key, exactly which validator(s) should
+be executed against that element of the collection.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 missingFieldsMessage
 ~~~~~~~~~~~~~~~~~~~~

@@ -10,6 +10,7 @@ gives you similar flexibility.
 | Applies to     | :ref:`class <validation-class-target>` or :ref:`property/method <validation-property-target>` |
 +----------------+-----------------------------------------------------------------------------------------------+
 | Options        | - :ref:`expression <reference-constraint-expression-option>`                                  |
+|                | - `groups`_                                                                                   |
 |                | - `message`_                                                                                  |
 |                | - `payload`_                                                                                  |
 +----------------+-----------------------------------------------------------------------------------------------+
@@ -244,6 +245,8 @@ in your expression:
 * ``this``: The object being validated (e.g. an instance of BlogPost);
 * ``value``: The value of the property being validated (only available when
   the constraint is applied directly to a property);
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

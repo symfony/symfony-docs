@@ -8,7 +8,8 @@ uniquely identify both financial and non-financial institutions.
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
-| Options        | - `message`_                                                          |
+| Options        | - `groups`_                                                           |
+|                | - `message`_                                                          |
 |                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Bic`              |
@@ -84,6 +85,8 @@ will contain a Business Identifier Code (BIC).
 
 Available Options
 -----------------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~
