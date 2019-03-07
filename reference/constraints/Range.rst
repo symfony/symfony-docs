@@ -341,13 +341,12 @@ The message that will be shown if the underlying value is less than the
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-| ``{{ limit }}`` | The lower limit             |
-+-----------------+-----------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ limit }}``  The lower limit
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 maxMessage
 ~~~~~~~~~~
@@ -359,13 +358,12 @@ The message that will be shown if the underlying value is more than the
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-| ``{{ limit }}`` | The upper limit             |
-+-----------------+-----------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ limit }}``  The upper limit
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 invalidMessage
 ~~~~~~~~~~~~~~
@@ -377,11 +375,11 @@ the `is_numeric`_ PHP function).
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

@@ -167,19 +167,15 @@ If set, the size of the underlying file must be below this file size in
 order to be valid. The size of the file can be given in one of the following
 formats:
 
-+--------+-----------+-----------------+------+
-| Suffix | Unit Name |      value      | e.g. |
-+========+===========+=================+======+
-|        | byte      |          1 byte | 4096 |
-+--------+-----------+-----------------+------+
-| k      | kilobyte  |     1,000 bytes | 200k |
-+--------+-----------+-----------------+------+
-| M      | megabyte  | 1,000,000 bytes |   2M |
-+--------+-----------+-----------------+------+
-| Ki     | kibibyte  |     1,024 bytes | 32Ki |
-+--------+-----------+-----------------+------+
-| Mi     | mebibyte  | 1,048,576 bytes |  8Mi |
-+--------+-----------+-----------------+------+
+======  =========  ===============  ========
+Suffix  Unit Name  Value            Example
+======  =========  ===============  ========
+(none)  byte       1 byte           ``4096``
+``k``   kilobyte   1,000 bytes      ``200k``
+``M``   megabyte   1,000,000 bytes  ``2M``
+``Ki``  kibibyte   1,024 bytes      ``32Ki``
+``Mi``  mebibyte   1,048,576 bytes  ``8Mi``
+======  =========  ===============  ========
 
 For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
@@ -217,19 +213,15 @@ The message displayed if the file is larger than the `maxSize`_ option.
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ size }}``   | File size of the given file                    |
-+------------------+------------------------------------------------+
-| ``{{ limit }}``  | Maximum file size allowed                      |
-+------------------+------------------------------------------------+
-| ``{{ suffix }}`` | Suffix for the used file size unit (see above) |
-+------------------+------------------------------------------------+
-| ``{{ file }}``   | Absolute file path                             |
-+------------------+------------------------------------------------+
-| ``{{ name }}``   | Base file name                                 |
-+------------------+------------------------------------------------+
+================  =============================================================
+Parameter         Description
+================  =============================================================
+``{{ file }}``    Absolute file path
+``{{ limit }}``   Maximum file size allowed
+``{{ name }}``    Base file name
+``{{ size }}``    File size of the given file
+``{{ suffix }}``  Suffix for the used file size unit (see above)
+================  =============================================================
 
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
@@ -241,17 +233,14 @@ per the `mimeTypes`_ option.
 
 You can use the following parameters in this message:
 
-+-----------------+----------------------------------------+
-| Parameter       | Description                            |
-+=================+========================================+
-| ``{{ type }}``  | The MIME type of the given file        |
-+-----------------+----------------------------------------+
-| ``{{ types }}`` | The list of allowed MIME types         |
-+-----------------+----------------------------------------+
-| ``{{ file }}``  | Absolute file path                     |
-+-----------------+----------------------------------------+
-| ``{{ name }}``  | Base file name                         |
-+-----------------+----------------------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ file }}``   Absolute file path
+``{{ name }}``   Base file name
+``{{ type }}``   The MIME type of the given file
+``{{ types }}``  The list of allowed MIME types
+===============  ==============================================================
 
 disallowEmptyMessage
 ~~~~~~~~~~~~~~~~~~~~
@@ -263,13 +252,12 @@ this message is displayed.
 
 You can use the following parameters in this message:
 
-+----------------+--------------------+
-| Parameter      | Description        |
-+================+====================+
-| ``{{ file }}`` | Absolute file path |
-+----------------+--------------------+
-| ``{{ name }}`` | Base file name     |
-+----------------+--------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ file }}``   Absolute file path
+``{{ name }}``   Base file name
+===============  ==============================================================
 
 notFoundMessage
 ~~~~~~~~~~~~~~~
@@ -282,11 +270,11 @@ cannot be constructed with an invalid file path.
 
 You can use the following parameters in this message:
 
-+----------------+--------------------+
-| Parameter      | Description        |
-+================+====================+
-| ``{{ file }}`` | Absolute file path |
-+----------------+--------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ file }}``   Absolute file path
+===============  ==============================================================
 
 notReadableMessage
 ~~~~~~~~~~~~~~~~~~
@@ -298,11 +286,11 @@ fails when passed the path to the file.
 
 You can use the following parameters in this message:
 
-+----------------+--------------------+
-| Parameter      | Description        |
-+================+====================+
-| ``{{ file }}`` | Absolute file path |
-+----------------+--------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ file }}``   Absolute file path
+===============  ==============================================================
 
 uploadIniSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -314,13 +302,12 @@ The message that is displayed if the uploaded file is larger than the ``upload_m
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ limit }}``  | Maximum file size allowed                      |
-+------------------+------------------------------------------------+
-| ``{{ suffix }}`` | Suffix for the used file size unit (see above) |
-+------------------+------------------------------------------------+
+================  =============================================================
+Parameter         Description
+================  =============================================================
+``{{ limit }}``   Maximum file size allowed
+``{{ suffix }}``  Suffix for the used file size unit (see above)
+================  =============================================================
 
 uploadFormSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

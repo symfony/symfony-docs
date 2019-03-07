@@ -154,13 +154,12 @@ than the `min`_ option.
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-| ``{{ limit }}`` | The expected minimum length |
-+-----------------+-----------------------------+
+=================  ============================================================
+Parameter          Description
+=================  ============================================================
+``{{ limit }}``    The expected minimum length
+``{{ value }}``    The current (invalid) value
+=================  ============================================================
 
 maxMessage
 ~~~~~~~~~~
@@ -172,13 +171,12 @@ than the `max`_ option.
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-| ``{{ limit }}`` | The expected maximum length |
-+-----------------+-----------------------------+
+=================  ============================================================
+Parameter          Description
+=================  ============================================================
+``{{ limit }}``    The expected maximum length
+``{{ value }}``    The current (invalid) value
+=================  ============================================================
 
 exactMessage
 ~~~~~~~~~~~~
@@ -190,13 +188,12 @@ value's length is not exactly this value.
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-| ``{{ limit }}`` | The exact expected length   |
-+-----------------+-----------------------------+
+=================  ============================================================
+Parameter          Description
+=================  ============================================================
+``{{ limit }}``    The exact expected length
+``{{ value }}``    The current (invalid) value
+=================  ============================================================
 
 charsetMessage
 ~~~~~~~~~~~~~~
@@ -207,13 +204,12 @@ The message that will be shown if the value is not using the given `charset`_.
 
 You can use the following parameters in this message:
 
-+-------------------+-----------------------------+
-| Parameter         | Description                 |
-+===================+=============================+
-| ``{{ value }}``   | The current (invalid) value |
-+-------------------+-----------------------------+
-| ``{{ charset }}`` | The expected charset        |
-+-------------------+-----------------------------+
+=================  ============================================================
+Parameter          Description
+=================  ============================================================
+``{{ charset }}``  The expected charset
+``{{ value }}``    The current (invalid) value
+=================  ============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

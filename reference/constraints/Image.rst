@@ -357,13 +357,12 @@ The error message if the width of the image exceeds `maxWidth`_.
 
 You can use the following parameters in this message:
 
-+---------------------+-----------------------------+
-| Parameter           | Description                 |
-+=====================+=============================+
-| ``{{ width }}``     | The current (invalid) width |
-+---------------------+-----------------------------+
-| ``{{ max_width }}`` | The maximum allowed width   |
-+---------------------+-----------------------------+
+===================  ==========================================================
+Parameter            Description
+===================  ==========================================================
+``{{ max_width }}``  The maximum allowed width
+``{{ width }}``      The current (invalid) width
+===================  ==========================================================
 
 minWidthMessage
 ~~~~~~~~~~~~~~~
@@ -375,13 +374,12 @@ The error message if the width of the image is less than `minWidth`_.
 
 You can use the following parameters in this message:
 
-+---------------------+-----------------------------+
-| Parameter           | Description                 |
-+=====================+=============================+
-| ``{{ width }}``     | The current (invalid) width |
-+---------------------+-----------------------------+
-| ``{{ min_width }}`` | The minimum required width  |
-+---------------------+-----------------------------+
+===================  ==========================================================
+Parameter            Description
+===================  ==========================================================
+``{{ min_width }}``  The minimum required width
+``{{ width }}``      The current (invalid) width
+===================  ==========================================================
 
 maxHeightMessage
 ~~~~~~~~~~~~~~~~
@@ -393,13 +391,12 @@ The error message if the height of the image exceeds `maxHeight`_.
 
 You can use the following parameters in this message:
 
-+----------------------+------------------------------+
-| Parameter            | Description                  |
-+======================+==============================+
-| ``{{ height }}``     | The current (invalid) height |
-+----------------------+------------------------------+
-| ``{{ max_height }}`` | The maximum allowed height   |
-+----------------------+------------------------------+
+====================  =========================================================
+Parameter             Description
+====================  =========================================================
+``{{ height }}``      The current (invalid) height
+``{{ max_height }}``  The maximum allowed height
+====================  =========================================================
 
 minHeightMessage
 ~~~~~~~~~~~~~~~~
@@ -411,13 +408,12 @@ The error message if the height of the image is less than `minHeight`_.
 
 You can use the following parameters in this message:
 
-+----------------------+------------------------------+
-| Parameter            | Description                  |
-+======================+==============================+
-| ``{{ height }}``     | The current (invalid) height |
-+----------------------+------------------------------+
-| ``{{ min_height }}`` | The minimum required height  |
-+----------------------+------------------------------+
+====================  =========================================================
+Parameter             Description
+====================  =========================================================
+``{{ height }}``      The current (invalid) height
+``{{ min_height }}``  The minimum required height
+====================  =========================================================
 
 maxPixelsMessage
 ~~~~~~~~~~~~~~~~
@@ -429,17 +425,14 @@ The error message if the amount of pixels of the image exceeds `maxPixels`_.
 
 You can use the following parameters in this message:
 
-+----------------------+---------------------------------------+
-| Parameter            | Description                           |
-+======================+=======================================+
-| ``{{ pixels }}``     | The current amount of pixels          |
-+----------------------+---------------------------------------+
-| ``{{ max_pixels }}`` | The maximum allowed amount of pixels  |
-+----------------------+---------------------------------------+
-| ``{{ height }}``     | The current image height              |
-+----------------------+---------------------------------------+
-| ``{{ width }}``      | The current image width               |
-+----------------------+---------------------------------------+
+====================  =========================================================
+Parameter             Description
+====================  =========================================================
+``{{ height }}``      The current image height
+``{{ max_pixels }}``  The maximum allowed amount of pixels
+``{{ pixels }}``      The current amount of pixels
+``{{ width }}``       The current image width
+====================  =========================================================
 
 minPixelsMessage
 ~~~~~~~~~~~~~~~~
@@ -451,17 +444,14 @@ The error message if the amount of pixels of the image is less than `minPixels`_
 
 You can use the following parameters in this message:
 
-+----------------------+---------------------------------------+
-| Parameter            | Description                           |
-+======================+=======================================+
-| ``{{ pixels }}``     | The current amount of pixels          |
-+----------------------+---------------------------------------+
-| ``{{ min_pixels }}`` | The minimum required amount of pixels |
-+----------------------+---------------------------------------+
-| ``{{ height }}``     | The current image height              |
-+----------------------+---------------------------------------+
-| ``{{ width }}``      | The current image width               |
-+----------------------+---------------------------------------+
+====================  =========================================================
+Parameter             Description
+====================  =========================================================
+``{{ height }}``      The current image height
+``{{ min_pixels }}``  The minimum required amount of pixels
+``{{ pixels }}``      The current amount of pixels
+``{{ width }}``       The current image width
+====================  =========================================================
 
 maxRatioMessage
 ~~~~~~~~~~~~~~~
@@ -473,13 +463,12 @@ The error message if the aspect ratio of the image exceeds `maxRatio`_.
 
 You can use the following parameters in this message:
 
-+---------------------+-----------------------------+
-| Parameter           | Description                 |
-+=====================+=============================+
-| ``{{ ratio }}``     | The current (invalid) ratio |
-+---------------------+-----------------------------+
-| ``{{ max_ratio }}`` | The maximum allowed ratio   |
-+---------------------+-----------------------------+
+===================  ==========================================================
+Parameter            Description
+===================  ==========================================================
+``{{ max_ratio }}``  The maximum required ratio
+``{{ ratio }}``      The current (invalid) ratio
+===================  ==========================================================
 
 minRatioMessage
 ~~~~~~~~~~~~~~~
@@ -491,13 +480,12 @@ The error message if the aspect ratio of the image is less than `minRatio`_.
 
 You can use the following parameters in this message:
 
-+---------------------+-----------------------------+
-| Parameter           | Description                 |
-+=====================+=============================+
-| ``{{ ratio }}``     | The current (invalid) ratio |
-+---------------------+-----------------------------+
-| ``{{ min_ratio }}`` | The minimum required ratio  |
-+---------------------+-----------------------------+
+===================  ==========================================================
+Parameter            Description
+===================  ==========================================================
+``{{ min_ratio }}``  The minimum required ratio
+``{{ ratio }}``      The current (invalid) ratio
+===================  ==========================================================
 
 allowSquareMessage
 ~~~~~~~~~~~~~~~~~~
@@ -509,13 +497,12 @@ The error message if the image is square and you set `allowSquare`_ to ``false``
 
 You can use the following parameters in this message:
 
-+------------------+--------------------+
-| Parameter        | Description        |
-+==================+====================+
-| ``{{ width }}``  | The current width  |
-+------------------+--------------------+
-| ``{{ height }}`` | The current height |
-+------------------+--------------------+
+================  =============================================================
+Parameter         Description
+================  =============================================================
+``{{ height }}``  The current height
+``{{ width }}``   The current width
+================  =============================================================
 
 allowLandscapeMessage
 ~~~~~~~~~~~~~~~~~~~~~
@@ -527,13 +514,12 @@ The error message if the image is landscape oriented and you set `allowLandscape
 
 You can use the following parameters in this message:
 
-+------------------+--------------------+
-| Parameter        | Description        |
-+==================+====================+
-| ``{{ width }}``  | The current width  |
-+------------------+--------------------+
-| ``{{ height }}`` | The current height |
-+------------------+--------------------+
+================  =============================================================
+Parameter         Description
+================  =============================================================
+``{{ height }}``  The current height
+``{{ width }}``   The current width
+================  =============================================================
 
 allowPortraitMessage
 ~~~~~~~~~~~~~~~~~~~~
@@ -545,13 +531,12 @@ The error message if the image is portrait oriented and you set `allowPortrait`_
 
 You can use the following parameters in this message:
 
-+------------------+--------------------+
-| Parameter        | Description        |
-+==================+====================+
-| ``{{ width }}``  | The current width  |
-+------------------+--------------------+
-| ``{{ height }}`` | The current height |
-+------------------+--------------------+
+================  =============================================================
+Parameter         Description
+================  =============================================================
+``{{ height }}``  The current height
+``{{ width }}``   The current width
+================  =============================================================
 
 corruptedMessage
 ~~~~~~~~~~~~~~~~

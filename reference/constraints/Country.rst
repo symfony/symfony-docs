@@ -87,11 +87,11 @@ This message is shown if the string is not a valid country code.
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ value }}``  | The current (invalid) country code             |
-+------------------+------------------------------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) country code
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
