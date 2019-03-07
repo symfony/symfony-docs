@@ -189,30 +189,29 @@ Subscribing to updates in JavaScript is straightforward:
 
 .. code-block:: javascript
 
-    <script>
     const es = new EventSource('http://localhost:3000/hub?topic=' + encodeURIComponent('http://example.com/books/1'));
     es.onmessage = e => {
         // Will be called every time an update is published by the server
         console.log(JSON.parse(e.data));
     }
-    </script>
 
 Mercure also allows to subscribe to several topics,
 and to use URI Templates as patterns:
 
 .. code-block:: javascript
 
-    <script>
-    const u = new URL('http://localhost:3000/hub'); // URL is a built-in JavaScript class to manipulate URLs
+    // URL is a built-in JavaScript class to manipulate URLs
+    const u = new URL('http://localhost:3000/hub');
     u.searchParams.append('topic', 'http://example.com/books/1');
-    u.searchParams.append('topic', 'http://example.com/books/2'); // Subscribe to updates of several Book resources
-    u.searchParams.append('topic', 'http://example.com/reviews/{id}'); // All Review resources will match this pattern
+    // Subscribe to updates of several Book resources
+    u.searchParams.append('topic', 'http://example.com/books/2');
+    // All Review resources will match this pattern
+    u.searchParams.append('topic', 'http://example.com/reviews/{id}');
 
     const es = new EventSource(u);
     es.onmessage = e => {
         console.log(JSON.parse(e.data));
     }
-    </script>
 
 .. tip::
 
@@ -222,6 +221,7 @@ and to use URI Templates as patterns:
     .. image:: /_images/mercure/chrome.png
 
     To use it:
+
     * open the DevTools
     * select the "Network" tab
     * click on the request to the Mercure hub
@@ -293,7 +293,7 @@ by using the ``AbstractController::addLink`` helper method::
         public function __invoke(Request $request): JsonResponse
         {
             // This parameter is automatically created by the MercureBundle
-            $hubUrl = $this->getParameter('mercure.default_hub'); 
+            $hubUrl = $this->getParameter('mercure.default_hub');
 
             // Link: <http://localhost:3000/hub>; rel="mercure"
             $this->addLink($request, new Link('mercure', $hubUrl));
@@ -310,7 +310,6 @@ and to subscribe to it:
 
 .. code-block:: javascript
 
-    <script>
     // Fetch the original resource served by the Symfony web API
     fetch('/books/1') // Has Link: <http://localhost:3000/hub>; rel="mercure"
         .then(response => {
@@ -325,7 +324,6 @@ and to subscribe to it:
             const es = new EventSource(h);
             es.onmessage = e => console.log(e.data);
         });
-    </script>
 
 Authorization
 -------------
