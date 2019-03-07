@@ -9,11 +9,11 @@ check that the BIC is associated with a given IBAN.
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
-            - `message`_
-            - `payload`_
             - `iban`_
             - `ibanMessage`_
             - `ibanPropertyPath`_
+            - `message`_
+            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Bic`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\BicValidator`
 ==========  ===================================================================
@@ -89,23 +89,6 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This is not a valid Business Identifier Code (BIC).``
-
-The default message supplied when the value does not pass the BIC check.
-
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ value }}``  The current (invalid) BIC value
-===============  ==============================================================
-
-.. include:: /reference/constraints/_payload-option.rst.inc
-
 iban
 ~~~~
 
@@ -130,5 +113,22 @@ It defines the object property whose value stores the IBAN used to check the BIC
 For example, if you want to compare the ``$bic`` property of some object
 with regard to the ``$iban`` property of the same object, use
 ``propertyPath="iban"`` in the comparison constraint of ``$bic``.
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This is not a valid Business Identifier Code (BIC).``
+
+The default message supplied when the value does not pass the BIC check.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) BIC value
+===============  ==============================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code

@@ -255,6 +255,10 @@ the validation of the ``Address`` fields failed.
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
 traverse
 ~~~~~~~~
 
@@ -263,7 +267,3 @@ traverse
 If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is
 set to ``true``.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
-
-.. include:: /reference/constraints/_groups-option.rst.inc

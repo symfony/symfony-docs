@@ -107,8 +107,6 @@ and that the ``age`` is ``20``, you could do the following:
 Options
 -------
 
-.. include:: /reference/constraints/_comparison-value-option.rst.inc
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 message
@@ -131,3 +129,5 @@ Parameter                      Description
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-value-option.rst.inc

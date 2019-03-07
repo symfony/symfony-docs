@@ -315,13 +315,23 @@ can check that a delivery date starts within the next five hours like this:
 Options
 -------
 
-min
-~~~
+.. include:: /reference/constraints/_groups-option.rst.inc
 
-**type**: ``number`` or ``string`` (date format)
+invalidMessage
+~~~~~~~~~~~~~~
 
-This required option is the "min" value. Validation will fail if the given
-value is **less** than this min value.
+**type**: ``string`` **default**: ``This value should be a valid number.``
+
+The message that will be shown if the underlying value is not a number (per
+the `is_numeric`_ PHP function).
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 max
 ~~~
@@ -330,23 +340,6 @@ max
 
 This required option is the "max" value. Validation will fail if the given
 value is **greater** than this max value.
-
-minMessage
-~~~~~~~~~~
-
-**type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
-
-The message that will be shown if the underlying value is less than the
-`min`_ option.
-
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ limit }}``  The lower limit
-``{{ value }}``  The current (invalid) value
-===============  ==============================================================
 
 maxMessage
 ~~~~~~~~~~
@@ -365,25 +358,32 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-invalidMessage
-~~~~~~~~~~~~~~
+min
+~~~
 
-**type**: ``string`` **default**: ``This value should be a valid number.``
+**type**: ``number`` or ``string`` (date format)
 
-The message that will be shown if the underlying value is not a number (per
-the `is_numeric`_ PHP function).
+This required option is the "min" value. Validation will fail if the given
+value is **less** than this min value.
+
+minMessage
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
+
+The message that will be shown if the underlying value is less than the
+`min`_ option.
 
 You can use the following parameters in this message:
 
 ===============  ==============================================================
 Parameter        Description
 ===============  ==============================================================
+``{{ limit }}``  The lower limit
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
-
-.. include:: /reference/constraints/_groups-option.rst.inc
 
 .. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
 .. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php

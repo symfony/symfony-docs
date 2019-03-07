@@ -114,26 +114,6 @@ and "50", you might add the following:
 Options
 -------
 
-min
-~~~
-
-**type**: ``integer``
-
-This required option is the "min" length value. Validation will fail if
-the given value's length is **less** than this min value.
-
-It is important to notice that NULL values and empty strings are considered
-valid no matter if the constraint required a minimum length. Validators
-are triggered only if the value is not blank.
-
-max
-~~~
-
-**type**: ``integer``
-
-This required option is the "max" length value. Validation will fail if
-the given value's length is **greater** than this max value.
-
 charset
 ~~~~~~~
 
@@ -144,37 +124,19 @@ The charset to be used when computing value's length. The
 the :phpfunction:`mb_strlen` PHP function is used if available. If neither
 are available, the :phpfunction:`strlen` PHP function is used.
 
-minMessage
-~~~~~~~~~~
+charsetMessage
+~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
+**type**: ``string`` **default**: ``This value does not match the expected {{ charset }} charset.``
 
-The message that will be shown if the underlying value's length is less
-than the `min`_ option.
-
-You can use the following parameters in this message:
-
-=================  ============================================================
-Parameter          Description
-=================  ============================================================
-``{{ limit }}``    The expected minimum length
-``{{ value }}``    The current (invalid) value
-=================  ============================================================
-
-maxMessage
-~~~~~~~~~~
-
-**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
-
-The message that will be shown if the underlying value's length is more
-than the `max`_ option.
+The message that will be shown if the value is not using the given `charset`_.
 
 You can use the following parameters in this message:
 
 =================  ============================================================
 Parameter          Description
 =================  ============================================================
-``{{ limit }}``    The expected maximum length
+``{{ charset }}``  The expected charset
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
@@ -195,22 +157,60 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-charsetMessage
-~~~~~~~~~~~~~~
+.. include:: /reference/constraints/_groups-option.rst.inc
 
-**type**: ``string`` **default**: ``This value does not match the expected {{ charset }} charset.``
+max
+~~~
 
-The message that will be shown if the value is not using the given `charset`_.
+**type**: ``integer``
+
+This required option is the "max" length value. Validation will fail if
+the given value's length is **greater** than this max value.
+
+maxMessage
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
+
+The message that will be shown if the underlying value's length is more
+than the `max`_ option.
 
 You can use the following parameters in this message:
 
 =================  ============================================================
 Parameter          Description
 =================  ============================================================
-``{{ charset }}``  The expected charset
+``{{ limit }}``    The expected maximum length
+``{{ value }}``    The current (invalid) value
+=================  ============================================================
+
+min
+~~~
+
+**type**: ``integer``
+
+This required option is the "min" length value. Validation will fail if
+the given value's length is **less** than this min value.
+
+It is important to notice that NULL values and empty strings are considered
+valid no matter if the constraint required a minimum length. Validators
+are triggered only if the value is not blank.
+
+minMessage
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
+
+The message that will be shown if the underlying value's length is less
+than the `min`_ option.
+
+You can use the following parameters in this message:
+
+=================  ============================================================
+Parameter          Description
+=================  ============================================================
+``{{ limit }}``    The expected minimum length
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
-
-.. include:: /reference/constraints/_groups-option.rst.inc

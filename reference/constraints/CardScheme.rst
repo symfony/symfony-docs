@@ -101,6 +101,23 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
+
+The message shown when the value does not pass the ``CardScheme`` check.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
 schemes
 ~~~~~~~
 
@@ -128,22 +145,5 @@ Valid values are:
 
 For more information about the used schemes, see
 `Wikipedia: Issuer identification number (IIN)`_.
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
-
-The message shown when the value does not pass the ``CardScheme`` check.
-
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ value }}``  The current (invalid) value
-===============  ==============================================================
-
-.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Wikipedia: Issuer identification number (IIN)`: https://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29

@@ -106,6 +106,26 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be of type {{ type }}.``
+
+The message if the underlying data is not of the given type.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ type }}``   The expected type
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
 .. _reference-constraint-type-type:
 
 type
@@ -150,26 +170,6 @@ Also, you can use ``ctype_()`` functions from corresponding
 
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
-
-.. include:: /reference/constraints/_groups-option.rst.inc
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This value should be of type {{ type }}.``
-
-The message if the underlying data is not of the given type.
-
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ type }}``   The expected type
-``{{ value }}``  The current (invalid) value
-===============  ==============================================================
-
-.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _built-in PHP extension: https://php.net/book.ctype.php
 .. _a list of ctype functions: https://php.net/ref.ctype.php

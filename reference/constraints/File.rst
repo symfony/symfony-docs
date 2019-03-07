@@ -158,6 +158,38 @@ have been specified.
 Options
 -------
 
+binaryFormat
+~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``null``
+
+When ``true``, the sizes will be displayed in messages with binary-prefixed
+units (KiB, MiB). When ``false``, the sizes will be displayed with SI-prefixed
+units (kB, MB). When ``null``, then the binaryFormat will be guessed from
+the value defined in the ``maxSize`` option.
+
+For more information about the difference between binary and SI prefixes,
+see `Wikipedia: Binary prefix`_.
+
+disallowEmptyMessage
+~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``An empty file is not allowed.``
+
+This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
+this message is displayed.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ file }}``   Absolute file path
+``{{ name }}``   Base file name
+===============  ==============================================================
+
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 maxSize
 ~~~~~~~
 
@@ -180,30 +212,6 @@ Suffix  Unit Name  Value            Example
 For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
 
-binaryFormat
-~~~~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``null``
-
-When ``true``, the sizes will be displayed in messages with binary-prefixed
-units (KiB, MiB). When ``false``, the sizes will be displayed with SI-prefixed
-units (kB, MB). When ``null``, then the binaryFormat will be guessed from
-the value defined in the ``maxSize`` option.
-
-For more information about the difference between binary and SI prefixes,
-see `Wikipedia: Binary prefix`_.
-
-mimeTypes
-~~~~~~~~~
-
-**type**: ``array`` or ``string``
-
-If set, the validator will check that the mime type of the underlying file
-is equal to the given mime type (if a string) or exists in the collection
-of given mime types (if an array).
-
-You can find a list of existing mime types on the `IANA website`_.
-
 maxSizeMessage
 ~~~~~~~~~~~~~~
 
@@ -223,6 +231,17 @@ Parameter         Description
 ``{{ suffix }}``  Suffix for the used file size unit (see above)
 ================  =============================================================
 
+mimeTypes
+~~~~~~~~~
+
+**type**: ``array`` or ``string``
+
+If set, the validator will check that the mime type of the underlying file
+is equal to the given mime type (if a string) or exists in the collection
+of given mime types (if an array).
+
+You can find a list of existing mime types on the `IANA website`_.
+
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
@@ -240,23 +259,6 @@ Parameter        Description
 ``{{ name }}``   Base file name
 ``{{ type }}``   The MIME type of the given file
 ``{{ types }}``  The list of allowed MIME types
-===============  ==============================================================
-
-disallowEmptyMessage
-~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``An empty file is not allowed.``
-
-This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
-this message is displayed.
-
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ file }}``   Absolute file path
-``{{ name }}``   Base file name
 ===============  ==============================================================
 
 notFoundMessage
@@ -292,6 +294,48 @@ Parameter        Description
 ``{{ file }}``   Absolute file path
 ===============  ==============================================================
 
+.. include:: /reference/constraints/_payload-option.rst.inc
+
+uploadCantWriteErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``Cannot write temporary file to disk.``
+
+The message that is displayed if the uploaded file can't be stored in the
+temporary folder.
+
+This message has no parameters.
+
+uploadErrorMessage
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The file could not be uploaded.``
+
+The message that is displayed if the uploaded file could not be uploaded
+for some unknown reason.
+
+This message has no parameters.
+
+uploadExtensionErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``A PHP extension caused the upload to fail.``
+
+The message that is displayed if a PHP extension caused the file upload to
+fail.
+
+This message has no parameters.
+
+uploadFormSizeErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The file is too large.``
+
+The message that is displayed if the uploaded file is larger than allowed
+by the HTML file input field.
+
+This message has no parameters.
+
 uploadIniSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -308,25 +352,6 @@ Parameter         Description
 ``{{ limit }}``   Maximum file size allowed
 ``{{ suffix }}``  Suffix for the used file size unit (see above)
 ================  =============================================================
-
-uploadFormSizeErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``The file is too large.``
-
-The message that is displayed if the uploaded file is larger than allowed
-by the HTML file input field.
-
-This message has no parameters.
-
-uploadPartialErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``The file was only partially uploaded.``
-
-The message that is displayed if the uploaded file is only partially uploaded.
-
-This message has no parameters.
 
 uploadNoFileErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -347,39 +372,14 @@ missing.
 
 This message has no parameters.
 
-uploadCantWriteErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+uploadPartialErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``Cannot write temporary file to disk.``
+**type**: ``string`` **default**: ``The file was only partially uploaded.``
 
-The message that is displayed if the uploaded file can't be stored in the
-temporary folder.
-
-This message has no parameters.
-
-uploadExtensionErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``A PHP extension caused the upload to fail.``
-
-The message that is displayed if a PHP extension caused the file upload to
-fail.
+The message that is displayed if the uploaded file is only partially uploaded.
 
 This message has no parameters.
-
-uploadErrorMessage
-~~~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``The file could not be uploaded.``
-
-The message that is displayed if the uploaded file could not be uploaded
-for some unknown reason.
-
-This message has no parameters.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
-
-.. include:: /reference/constraints/_groups-option.rst.inc
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/index.html
 .. _`Wikipedia: Binary prefix`: http://en.wikipedia.org/wiki/Binary_prefix

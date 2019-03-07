@@ -98,6 +98,8 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
+.. include:: /reference/constraints/_payload-option.rst.inc
+
 strict
 ~~~~~~
 
@@ -126,8 +128,6 @@ The following PHP constants can also be used:
 * ``Uuid::V5_SHA1``
 
 All five versions are allowed by default.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Universally unique identifier (UUID)`: http://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: http://tools.ietf.org/html/rfc4122

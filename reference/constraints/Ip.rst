@@ -79,6 +79,25 @@ Basic Usage
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This is not a valid IP address.``
+
+This message is shown if the string is not a valid IP address.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
 version
 ~~~~~~~
 
@@ -122,22 +141,3 @@ of a variety of different values:
     Validates for IPv6 but without private and reserved ranges
 ``all_public``
     Validates for all IP formats but without private and reserved ranges
-
-.. include:: /reference/constraints/_groups-option.rst.inc
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This is not a valid IP address.``
-
-This message is shown if the string is not a valid IP address.
-
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ value }}``  The current (invalid) value
-===============  ==============================================================
-
-.. include:: /reference/constraints/_payload-option.rst.inc
