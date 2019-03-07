@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-02-11T14:46:12Z
+
+I think I would update the description for these options in 3.4 already because they even do not make sense there. You just get meaningful feedback now. If you agree with that, I will send a PR later tonight.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-02-17T16:05:20Z
+
+see #11004
