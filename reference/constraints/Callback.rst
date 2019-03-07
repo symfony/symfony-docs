@@ -253,8 +253,6 @@ constructor of the Callback constraint::
 Options
 -------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
-
 .. _callback-option:
 
 callback
@@ -277,5 +275,7 @@ instance as only argument.
 Static or closure callbacks receive the validated object as the first argument
 and the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
 instance as the second argument.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc

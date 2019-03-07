@@ -283,8 +283,6 @@ you can pass the class name and the method as an array.
 Available Options
 -----------------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
-
 choices
 ~~~~~~~
 
@@ -302,6 +300,8 @@ callback
 This is a callback method that can be used instead of the `choices`_ option
 to return the choices array. See
 `Supplying the Choices with a Callback Function`_ for details on its usage.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 multiple
 ~~~~~~~~
