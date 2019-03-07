@@ -5,18 +5,15 @@ Validates that a value is of a specific data type. For example, if a variable
 should be an array, you can use this constraint with the ``array`` type
 option to validate this.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - :ref:`type <reference-constraint-type-type>`                      |
-|                | - `groups`_                                                         |
-|                | - `message`_                                                        |
-|                | - `payload`_                                                        |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`  |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+            - :ref:`type <reference-constraint-type-type>`
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Type`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -109,6 +106,26 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be of type {{ type }}.``
+
+The message if the underlying data is not of the given type.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ type }}``   The expected type
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
 .. _reference-constraint-type-type:
 
 type
@@ -153,27 +170,6 @@ Also, you can use ``ctype_()`` functions from corresponding
 
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
-
-.. include:: /reference/constraints/_groups-option.rst.inc
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This value should be of type {{ type }}.``
-
-The message if the underlying data is not of the given type.
-
-You can use the following parameters in this message:
-
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-| ``{{ type }}``  | The expected type           |
-+-----------------+-----------------------------+
-
-.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _built-in PHP extension: https://php.net/book.ctype.php
 .. _a list of ctype functions: https://php.net/ref.ctype.php

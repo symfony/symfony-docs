@@ -4,21 +4,18 @@ Count
 Validates that a given collection's (i.e. an array or an object that implements
 Countable) element count is *between* some minimum and maximum value.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `min`_                                                            |
-|                | - `max`_                                                            |
-|                | - `minMessage`_                                                     |
-|                | - `maxMessage`_                                                     |
-|                | - `exactMessage`_                                                   |
-|                | - `payload`_                                                        |
-|                | - `groups`_                                                         |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Count`          |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CountValidator` |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `exactMessage`_
+            - `groups`_
+            - `max`_
+            - `maxMessage`_
+            - `min`_
+            - `minMessage`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Count`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -104,15 +101,24 @@ you might add the following:
 Options
 -------
 
+exactMessage
+~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
+
+The message that will be shown if min and max values are equal and the underlying
+collection elements count is not exactly this value.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ count }}``  The current collection size
+``{{ limit }}``  The exact expected collection size
+===============  ==============================================================
+
 .. include:: /reference/constraints/_groups-option.rst.inc
-
-min
-~~~
-
-**type**: ``integer``
-
-This required option is the "min" count value. Validation will fail if the
-given collection elements count is **less** than this min value.
 
 max
 ~~~
@@ -121,24 +127,6 @@ max
 
 This required option is the "max" count value. Validation will fail if the
 given collection elements count is **greater** than this max value.
-
-minMessage
-~~~~~~~~~~
-
-**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``
-
-The message that will be shown if the underlying collection elements count
-is less than the `min`_ option.
-
-You can use the following parameters in this message:
-
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ count }}``  | The current collection size                    |
-+------------------+------------------------------------------------+
-| ``{{ limit }}``  | The lower limit                                |
-+------------------+------------------------------------------------+
 
 maxMessage
 ~~~~~~~~~~
@@ -150,30 +138,36 @@ is more than the `max`_ option.
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ count }}``  | The current collection size                    |
-+------------------+------------------------------------------------+
-| ``{{ limit }}``  | The upper limit                                |
-+------------------+------------------------------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ count }}``  The current collection size
+``{{ limit }}``  The upper limit
+===============  ==============================================================
 
-exactMessage
-~~~~~~~~~~~~
+min
+~~~
 
-**type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
+**type**: ``integer``
 
-The message that will be shown if min and max values are equal and the underlying
-collection elements count is not exactly this value.
+This required option is the "min" count value. Validation will fail if the
+given collection elements count is **less** than this min value.
+
+minMessage
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``
+
+The message that will be shown if the underlying collection elements count
+is less than the `min`_ option.
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ count }}``  | The current collection size                    |
-+------------------+------------------------------------------------+
-| ``{{ limit }}``  | The exact expected collection size             |
-+------------------+------------------------------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ count }}``  The current collection size
+``{{ limit }}``  The lower limit
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

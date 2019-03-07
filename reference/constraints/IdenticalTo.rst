@@ -11,19 +11,16 @@ To force that a value is *not* identical, see
     considered equal. Use :doc:`/reference/constraints/EqualTo` to compare
     with ``==``.
 
-+----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                    |
-+----------------+--------------------------------------------------------------------------+
-| Options        | - `value`_                                                               |
-|                | - `groups`_                                                              |
-|                | - `message`_                                                             |
-|                | - `payload`_                                                             |
-|                | - `propertyPath`_                                                        |
-+----------------+--------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IdenticalTo`         |
-+----------------+--------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IdenticalToValidator`|
-+----------------+--------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+            - `propertyPath`_
+            - `value`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\IdenticalTo`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IdenticalToValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -113,8 +110,6 @@ The following constraints ensure that:
 Options
 -------
 
-.. include:: /reference/constraints/_comparison-value-option.rst.inc
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 message
@@ -126,16 +121,16 @@ This is the message that will be shown if the value is not identical.
 
 You can use the following parameters in this message:
 
-+-------------------------------+-----------------------------+
-| Parameter                     | Description                 |
-+===============================+=============================+
-| ``{{ value }}``               | The current (invalid) value |
-+-------------------------------+-----------------------------+
-| ``{{ compared_value }}``      | The expected value          |
-+-------------------------------+-----------------------------+
-| ``{{ compared_value_type }}`` | The expected value type     |
-+-------------------------------+-----------------------------+
+=============================  ================================================
+Parameter                      Description
+=============================  ================================================
+``{{ compared_value }}``       The expected value
+``{{ compared_value_type }}``  The expected value type
+``{{ value }}``                The current (invalid) value
+=============================  ================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-value-option.rst.inc
