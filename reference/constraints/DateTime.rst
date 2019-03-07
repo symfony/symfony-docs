@@ -8,6 +8,7 @@ that can be cast into a string) that follows a specific format.
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `format`_                                                            |
+|                | - `groups`_                                                            |
 |                | - `message`_                                                           |
 |                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -93,6 +94,8 @@ format
 
 This option allows to validate a custom date format. See
 :phpmethod:`DateTime::createFromFormat` for formatting options.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

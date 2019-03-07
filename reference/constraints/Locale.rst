@@ -11,7 +11,8 @@ followed by an underscore (``_``) and the `ISO 3166-1 alpha-2`_ *country* code
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
-| Options        | - `message`_                                                           |
+| Options        | - `groups`_                                                            |
+|                | - `message`_                                                           |
 |                | - `payload`_                                                           |
 |                | - `canonicalize`_                                                      |
 +----------------+------------------------------------------------------------------------+
@@ -88,6 +89,8 @@ Basic Usage
 
 Options
 -------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

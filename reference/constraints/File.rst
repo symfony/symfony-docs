@@ -36,6 +36,7 @@ form field.
 |                | - `uploadExtensionErrorMessage`_                                    |
 |                | - `uploadErrorMessage`_                                             |
 |                | - `payload`_                                                        |
+|                | - `groups`_                                                         |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`           |
 +----------------+---------------------------------------------------------------------+
@@ -393,6 +394,8 @@ for some unknown reason.
 This message has no parameters.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/index.html
 .. _`Wikipedia: Binary prefix`: http://en.wikipedia.org/wiki/Binary_prefix

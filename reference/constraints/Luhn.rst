@@ -8,7 +8,8 @@ card: before communicating with a payment gateway.
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
-| Options        | - `message`_                                                          |
+| Options        | - `groups`_                                                           |
+|                | - `message`_                                                          |
 |                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Luhn`             |
@@ -89,6 +90,8 @@ will contain a credit card number.
 
 Available Options
 -----------------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

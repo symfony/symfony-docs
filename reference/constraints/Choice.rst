@@ -10,6 +10,7 @@ an array of items is one of those valid choices.
 +----------------+----------------------------------------------------------------------+
 | Options        | - `choices`_                                                         |
 |                | - `callback`_                                                        |
+|                | - `groups`_                                                          |
 |                | - `multiple`_                                                        |
 |                | - `min`_                                                             |
 |                | - `max`_                                                             |
@@ -294,6 +295,8 @@ callback
 This is a callback method that can be used instead of the `choices`_ option
 to return the choices array. See
 `Supplying the Choices with a Callback Function`_ for details on its usage.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 multiple
 ~~~~~~~~

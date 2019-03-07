@@ -38,6 +38,7 @@ of the documentation on this constraint.
 |                | - `allowPortraitMessage`_                                             |
 |                | - `corruptedMessage`_                                                 |
 |                | - See :doc:`File </reference/constraints/File>` for inherited options |
+|                | - `groups`_                                                           |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Image`            |
 +----------------+-----------------------------------------------------------------------+
@@ -564,6 +565,8 @@ The error message when the `detectCorrupted`_ option is enabled and the image
 is corrupted.
 
 This message has no parameters.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
 .. _`PHP GD extension`: http://php.net/manual/en/book.image.php

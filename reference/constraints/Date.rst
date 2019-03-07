@@ -7,7 +7,8 @@ be cast into a string) that follows a valid ``YYYY-MM-DD`` format.
 +----------------+--------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`             |
 +----------------+--------------------------------------------------------------------+
-| Options        | - `message`_                                                       |
+| Options        | - `groups`_                                                        |
+|                | - `message`_                                                       |
 |                | - `payload`_                                                       |
 +----------------+--------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Date`          |
@@ -84,6 +85,8 @@ Basic Usage
 
 Options
 -------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

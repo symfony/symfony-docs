@@ -10,6 +10,7 @@ that a value is not equal to ``null``, see the
 | Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `allowNull`_                                                         |
+|                | - `groups`_                                                            |
 |                | - `message`_                                                           |
 |                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
@@ -94,6 +95,8 @@ constraint violation.
 .. versionadded:: 4.3
 
     The ``allowNull`` option was introduced in Symfony 4.3.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~
