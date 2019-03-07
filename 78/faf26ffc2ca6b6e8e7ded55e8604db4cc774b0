@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-02-23T20:17:42Z
+
+The code is merged, so this can be merged too, right?
+
+---------------------------------------------------------------------------
+
+by fancyweb at 2019-02-27T20:38:03Z
+
+@xabbuh Do you want me to add the doc for https://github.com/symfony/symfony/pull/30358 here since it's related and not yet merged?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-03-03T21:49:37Z
+
+@fancyweb Would be nice if you could do that.
+
+---------------------------------------------------------------------------
+
+by fancyweb at 2019-03-05T17:45:03Z
+
+@xabbuh Done!
+
+Status: Needs Review
+
+---------------------------------------------------------------------------
+
+by fancyweb at 2019-03-06T08:37:51Z
+
+@OskarStark Added the "versionadded" directives at the end of each option block. I had to take a decision because their position in the current documentation is not really consistent.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-03-06T09:18:24Z
+
+I have left some last minor comments. After that we are good. Thank you for the great work! 👍
