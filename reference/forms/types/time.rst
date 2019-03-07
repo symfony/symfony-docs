@@ -20,6 +20,7 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `hours`_                                                                  |
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
+|                      | - `input_format`_                                                           |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
 |                      | - `seconds`_                                                                |
@@ -131,6 +132,18 @@ on your underlying object. Valid values are:
 The value that comes back from the form will also be normalized back into
 this format.
 
+input_format
+~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``H:i:s``
+
+.. versionadded:: 4.3
+
+    The ``input_format`` option was introduced in Symfony 4.3.
+
+If the ``input`` option is set to ``string``, this option specifies the format
+of the time. This must be a valid `PHP time format`_.
+
 .. include:: /reference/forms/types/options/minutes.rst.inc
 
 .. include:: /reference/forms/types/options/model_timezone.rst.inc
@@ -226,3 +239,5 @@ Form Variables
 | type         | ``string``  | Only present when widget is ``single_text`` and HTML5 is activated,  |
 |              |             | contains the input type to use (``datetime``, ``date`` or ``time``). |
 +--------------+-------------+----------------------------------------------------------------------+
+
+.. _`PHP time format`: https://secure.php.net/manual/en/function.date.php
