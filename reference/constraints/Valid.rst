@@ -262,9 +262,9 @@ traverse
 
 **type**: ``boolean`` **default**: ``true``
 
-If this constraint is applied to a property that holds an array of objects,
-then each object in that array will be validated only if this option is
-set to ``true``.
+If this constraint is applied to a ``Traversable``, then all containing values
+will be validated if this option is set to ``true``. This option is ignored on
+arrays: Arrays are traversed in either case. Keys are not validated.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
