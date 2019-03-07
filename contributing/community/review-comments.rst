@@ -92,7 +92,7 @@ Don't use hyperbole ("always", "never", "endlessly", "nothing", "worst", "horrib
 don't like how it's written.
 
 **Better:** *"I find it hard to read this code as there are many nested if statements, can you make it more
-readable? By encapsulating some of its details or maybe adding some comments to explain the overall logic."* -
+readable? By encapsulating some of the details or maybe adding some comments to explain the overall logic."* -
 You explain why you find the code hard to read *and* give some suggestions for improvement.
 
 If a piece of code is in fact wrong, explain why:
