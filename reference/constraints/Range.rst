@@ -3,21 +3,18 @@ Range
 
 Validates that a given number or ``DateTime`` object is *between* some minimum and maximum.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `min`_                                                            |
-|                | - `max`_                                                            |
-|                | - `minMessage`_                                                     |
-|                | - `maxMessage`_                                                     |
-|                | - `invalidMessage`_                                                 |
-|                | - `payload`_                                                        |
-|                | - `groups`_                                                         |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Range`          |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator` |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `invalidMessage`_
+            - `max`_
+            - `maxMessage`_
+            - `min`_
+            - `minMessage`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Range`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

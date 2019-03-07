@@ -4,21 +4,18 @@ Count
 Validates that a given collection's (i.e. an array or an object that implements
 Countable) element count is *between* some minimum and maximum value.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `min`_                                                            |
-|                | - `max`_                                                            |
-|                | - `minMessage`_                                                     |
-|                | - `maxMessage`_                                                     |
-|                | - `exactMessage`_                                                   |
-|                | - `payload`_                                                        |
-|                | - `groups`_                                                         |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Count`          |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CountValidator` |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `exactMessage`_
+            - `groups`_
+            - `max`_
+            - `maxMessage`_
+            - `min`_
+            - `minMessage`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Count`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

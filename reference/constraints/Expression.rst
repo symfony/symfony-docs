@@ -6,19 +6,17 @@ for more complex, dynamic validation. See `Basic Usage`_ for an example.
 See :doc:`/reference/constraints/Callback` for a different constraint that
 gives you similar flexibility.
 
-+----------------+-----------------------------------------------------------------------------------------------+
-| Applies to     | :ref:`class <validation-class-target>` or :ref:`property/method <validation-property-target>` |
-+----------------+-----------------------------------------------------------------------------------------------+
-| Options        | - :ref:`expression <reference-constraint-expression-option>`                                  |
-|                | - `groups`_                                                                                   |
-|                | - `message`_                                                                                  |
-|                | - `payload`_                                                                                  |
-|                | - `values`_                                                                                   |
-+----------------+-----------------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Expression`                               |
-+----------------+-----------------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionValidator`                      |
-+----------------+-----------------------------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`class <validation-class-target>`
+            or :ref:`property/method <validation-property-target>`
+Options     - :ref:`expression <reference-constraint-expression-option>`
+            - `groups`_
+            - `message`_
+            - `payload`_
+            - `values`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Expression`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

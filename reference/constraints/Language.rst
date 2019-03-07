@@ -4,17 +4,14 @@ Language
 Validates that a value is a valid language *Unicode language identifier*
 (e.g. ``fr`` or ``zh-Hant``).
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - `groups`_                                                            |
-|                | - `message`_                                                           |
-|                | - `payload`_                                                           |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Language`          |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\LanguageValidator` |
-+----------------+------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Language`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LanguageValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

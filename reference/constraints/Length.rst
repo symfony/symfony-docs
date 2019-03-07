@@ -9,23 +9,20 @@ Validates that a given string length is *between* some minimum and maximum value
     also add the :doc:`/reference/constraints/NotBlank` or :doc:`/reference/constraints/NotNull`
     constraints to validate against these.
 
-+----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`               |
-+----------------+----------------------------------------------------------------------+
-| Options        | - `min`_                                                             |
-|                | - `max`_                                                             |
-|                | - `charset`_                                                         |
-|                | - `minMessage`_                                                      |
-|                | - `maxMessage`_                                                      |
-|                | - `exactMessage`_                                                    |
-|                | - `charsetMessage`_                                                  |
-|                | - `payload`_                                                         |
-|                | - `groups`_                                                          |
-+----------------+----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Length`          |
-+----------------+----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator` |
-+----------------+----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `charset`_
+            - `charsetMessage`_
+            - `exactMessage`_
+            - `groups`_
+            - `max`_
+            - `maxMessage`_
+            - `min`_
+            - `minMessage`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Length`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

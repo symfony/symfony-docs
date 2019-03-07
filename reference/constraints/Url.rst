@@ -3,21 +3,18 @@ Url
 
 Validates that a value is a valid URL string.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `groups`_                                                         |
-|                | - `message`_                                                        |
-|                | - `protocols`_                                                      |
-|                | - `payload`_                                                        |
-|                | - `checkDNS`_                                                       |
-|                | - `dnsMessage`_                                                     |
-|                | - `relativeProtocol`_                                               |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\UrlValidator`   |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `checkDNS`_
+            - `dnsMessage`_
+            - `groups`_
+            - `message`_
+            - `payload`_
+            - `protocols`_
+            - `relativeProtocol`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Url`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UrlValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

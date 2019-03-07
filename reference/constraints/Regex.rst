@@ -3,20 +3,17 @@ Regex
 
 Validates that a value matches a regular expression.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `pattern`_                                                          |
-|                | - `groups`_                                                           |
-|                | - `htmlPattern`_                                                      |
-|                | - `match`_                                                            |
-|                | - `message`_                                                          |
-|                | - `payload`_                                                          |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Regex`            |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\RegexValidator`   |
-+----------------+-----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `htmlPattern`_
+            - `match`_
+            - `message`_
+            - `pattern`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Regex`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RegexValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

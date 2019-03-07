@@ -16,32 +16,29 @@ form field.
     If the file you're validating is an image, try the :doc:`Image </reference/constraints/Image>`
     constraint.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `maxSize`_                                                        |
-|                | - `binaryFormat`_                                                   |
-|                | - `mimeTypes`_                                                      |
-|                | - `maxSizeMessage`_                                                 |
-|                | - `mimeTypesMessage`_                                               |
-|                | - `disallowEmptyMessage`_                                           |
-|                | - `notFoundMessage`_                                                |
-|                | - `notReadableMessage`_                                             |
-|                | - `uploadIniSizeErrorMessage`_                                      |
-|                | - `uploadFormSizeErrorMessage`_                                     |
-|                | - `uploadPartialErrorMessage`_                                      |
-|                | - `uploadNoFileErrorMessage`_                                       |
-|                | - `uploadNoTmpDirErrorMessage`_                                     |
-|                | - `uploadCantWriteErrorMessage`_                                    |
-|                | - `uploadExtensionErrorMessage`_                                    |
-|                | - `uploadErrorMessage`_                                             |
-|                | - `payload`_                                                        |
-|                | - `groups`_                                                         |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`           |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`  |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `binaryFormat`_
+            - `disallowEmptyMessage`_
+            - `groups`_
+            - `maxSize`_
+            - `maxSizeMessage`_
+            - `mimeTypes`_
+            - `mimeTypesMessage`_
+            - `notFoundMessage`_
+            - `notReadableMessage`_
+            - `payload`_
+            - `uploadCantWriteErrorMessage`_
+            - `uploadErrorMessage`_
+            - `uploadExtensionErrorMessage`_
+            - `uploadFormSizeErrorMessage`_
+            - `uploadIniSizeErrorMessage`_
+            - `uploadNoFileErrorMessage`_
+            - `uploadNoTmpDirErrorMessage`_
+            - `uploadPartialErrorMessage`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\File`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

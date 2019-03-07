@@ -7,17 +7,14 @@ string "``0``".
 
 Also see :doc:`IsTrue <IsTrue>`.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `groups`_                                                           |
-|                | - `message`_                                                          |
-|                | - `payload`_                                                          |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsFalse`          |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsFalseValidator` |
-+----------------+-----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\IsFalse`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsFalseValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

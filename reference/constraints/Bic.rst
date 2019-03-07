@@ -6,20 +6,17 @@ This constraint is used to ensure that a value has the proper format of a
 uniquely identify both financial and non-financial institutions. You may also
 check that the BIC is associated with a given IBAN.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `groups`_                                                           |
-|                | - `message`_                                                          |
-|                | - `payload`_                                                          |
-|                | - `iban`_                                                             |
-|                | - `ibanMessage`_                                                      |
-|                | - `ibanPropertyPath`_                                                 |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Bic`              |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\BicValidator`     |
-+----------------+-----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+            - `iban`_
+            - `ibanMessage`_
+            - `ibanPropertyPath`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Bic`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\BicValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

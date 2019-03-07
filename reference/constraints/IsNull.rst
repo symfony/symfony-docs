@@ -7,17 +7,14 @@ constraint. To ensure that a property is not null, see :doc:`/reference/constrai
 
 Also see :doc:`NotNull <NotNull>`.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `groups`_                                                           |
-|                | - `message`_                                                          |
-|                | - `payload`_                                                          |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsNull`           |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsNullValidator`  |
-+----------------+-----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\IsNull`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsNullValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

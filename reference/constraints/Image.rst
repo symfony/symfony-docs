@@ -11,39 +11,36 @@ of the image.
 See the :doc:`File </reference/constraints/File>` constraint for the bulk
 of the documentation on this constraint.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `mimeTypes`_                                                        |
-|                | - `minWidth`_                                                         |
-|                | - `maxWidth`_                                                         |
-|                | - `maxHeight`_                                                        |
-|                | - `minHeight`_                                                        |
-|                | - `maxRatio`_                                                         |
-|                | - `minRatio`_                                                         |
-|                | - `allowSquare`_                                                      |
-|                | - `allowLandscape`_                                                   |
-|                | - `allowPortrait`_                                                    |
-|                | - `detectCorrupted`_                                                  |
-|                | - `mimeTypesMessage`_                                                 |
-|                | - `sizeNotDetectedMessage`_                                           |
-|                | - `maxWidthMessage`_                                                  |
-|                | - `minWidthMessage`_                                                  |
-|                | - `maxHeightMessage`_                                                 |
-|                | - `minHeightMessage`_                                                 |
-|                | - `maxRatioMessage`_                                                  |
-|                | - `minRatioMessage`_                                                  |
-|                | - `allowSquareMessage`_                                               |
-|                | - `allowLandscapeMessage`_                                            |
-|                | - `allowPortraitMessage`_                                             |
-|                | - `corruptedMessage`_                                                 |
-|                | - See :doc:`File </reference/constraints/File>` for inherited options |
-|                | - `groups`_                                                           |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Image`            |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ImageValidator`   |
-+----------------+-----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `allowLandscape`_
+            - `allowLandscapeMessage`_
+            - `allowPortrait`_
+            - `allowPortraitMessage`_
+            - `allowSquare`_
+            - `allowSquareMessage`_
+            - `corruptedMessage`_
+            - `detectCorrupted`_
+            - `groups`_
+            - `maxHeight`_
+            - `maxHeightMessage`_
+            - `maxRatio`_
+            - `maxRatioMessage`_
+            - `maxWidth`_
+            - `maxWidthMessage`_
+            - `mimeTypes`_
+            - `mimeTypesMessage`_
+            - `minHeight`_
+            - `minHeightMessage`_
+            - `minRatio`_
+            - `minRatioMessage`_
+            - `minWidth`_
+            - `minWidthMessage`_
+            - `sizeNotDetectedMessage`_
+            - See :doc:`File </reference/constraints/File>` for inherited options
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Image`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ImageValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

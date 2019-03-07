@@ -5,18 +5,15 @@ Validates that a value is a valid IP address. By default, this will validate
 the value as IPv4, but a number of different options exist to validate as
 IPv6 and many other combinations.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `version`_                                                        |
-|                | - `groups`_                                                         |
-|                | - `message`_                                                        |
-|                | - `payload`_                                                        |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Ip`             |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IpValidator`    |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+            - `version`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Ip`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IpValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

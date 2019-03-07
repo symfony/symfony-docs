@@ -5,25 +5,22 @@ This constraint is used to ensure that the given value is one of a given
 set of *valid* choices. It can also be used to validate that each item in
 an array of items is one of those valid choices.
 
-+----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`               |
-+----------------+----------------------------------------------------------------------+
-| Options        | - `choices`_                                                         |
-|                | - `callback`_                                                        |
-|                | - `groups`_                                                          |
-|                | - `multiple`_                                                        |
-|                | - `min`_                                                             |
-|                | - `max`_                                                             |
-|                | - `message`_                                                         |
-|                | - `multipleMessage`_                                                 |
-|                | - `minMessage`_                                                      |
-|                | - `maxMessage`_                                                      |
-|                | - `payload`_                                                         |
-+----------------+----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`          |
-+----------------+----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator` |
-+----------------+----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `callback`_
+            - `choices`_
+            - `groups`_
+            - `max`_
+            - `maxMessage`_
+            - `message`_
+            - `min`_
+            - `minMessage`_
+            - `multiple`_
+            - `multipleMessage`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Choice`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

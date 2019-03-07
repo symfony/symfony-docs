@@ -3,18 +3,15 @@ DivisibleBy
 
 Validates that a value is divisible by another value, defined in the options.
 
-+----------------+---------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                     |
-+----------------+---------------------------------------------------------------------------+
-| Options        | - `value`_                                                                |
-|                | - `message`_                                                              |
-|                | - `payload`_                                                              |
-|                | - `propertyPath`_                                                         |
-+----------------+---------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\DivisibleBy`          |
-+----------------+---------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\DivisibleByValidator` |
-+----------------+---------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `message`_
+            - `payload`_
+            - `propertyPath`_
+            - `value`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\DivisibleBy`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\DivisibleByValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

@@ -5,17 +5,14 @@ This constraint is used to ensure that a credit card number passes the
 `Luhn algorithm`_. It is useful as a first step to validating a credit
 card: before communicating with a payment gateway.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `groups`_                                                           |
-|                | - `message`_                                                          |
-|                | - `payload`_                                                          |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Luhn`             |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\LuhnValidator`    |
-+----------------+-----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Luhn`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LuhnValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

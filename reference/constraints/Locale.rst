@@ -8,18 +8,15 @@ the two letter `ISO 639-1`_ *language* code (e.g. ``fr``), or the language code
 followed by an underscore (``_``) and the `ISO 3166-1 alpha-2`_ *country* code
 (e.g. ``fr_FR`` for French/France).
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - `groups`_                                                            |
-|                | - `message`_                                                           |
-|                | - `payload`_                                                           |
-|                | - `canonicalize`_                                                      |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Locale`            |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`   |
-+----------------+------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `canonicalize`_
+            - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Locale`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

@@ -5,17 +5,14 @@ Validates that a value is not strictly equal to ``null``. To ensure that
 a value is not blank (not a blank string), see the  :doc:`/reference/constraints/NotBlank`
 constraint.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `groups`_                                                           |
-|                | - `message`_                                                          |
-|                | - `payload`_                                                          |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotNull`          |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\NotNullValidator` |
-+----------------+-----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotNull`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotNullValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

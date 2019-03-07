@@ -5,23 +5,20 @@ Validates that a particular field (or fields) in a Doctrine entity is (are)
 unique. This is commonly used, for example, to prevent a new user to register
 using an email address that already exists in the system.
 
-+----------------+-------------------------------------------------------------------------------------+
-| Applies to     | :ref:`class <validation-class-target>`                                              |
-+----------------+-------------------------------------------------------------------------------------+
-| Options        | - `fields`_                                                                         |
-|                | - `groups`_                                                                         |
-|                | - `message`_                                                                        |
-|                | - `em`_                                                                             |
-|                | - `repositoryMethod`_                                                               |
-|                | - `entityClass`_                                                                    |
-|                | - `errorPath`_                                                                      |
-|                | - `ignoreNull`_                                                                     |
-|                | - `payload`_                                                                        |
-+----------------+-------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
-+----------------+-------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`   |
-+----------------+-------------------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`class <validation-class-target>`
+Options     - `em`_
+            - `entityClass`_
+            - `errorPath`_
+            - `fields`_
+            - `groups`_
+            - `ignoreNull`_
+            - `message`_
+            - `payload`_
+            - `repositoryMethod`_
+Class       :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`
+Validator   :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------

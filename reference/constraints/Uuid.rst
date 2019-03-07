@@ -6,19 +6,16 @@ By default, this will validate the format according to the RFC's guidelines, but
 be relaxed to accept non-standard UUIDs that other systems (like PostgreSQL) accept.
 UUID versions can also be restricted using a whitelist.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `groups`_                                                         |
-|                | - `message`_                                                        |
-|                | - `strict`_                                                         |
-|                | - `versions`_                                                       |
-|                | - `payload`_                                                        |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Uuid`           |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\UuidValidator`  |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+            - `strict`_
+            - `versions`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Uuid`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UuidValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
