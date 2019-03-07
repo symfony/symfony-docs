@@ -4,21 +4,18 @@ Isbn
 This constraint validates that an `International Standard Book Number (ISBN)`_
 is either a valid ISBN-10 or a valid ISBN-13.
 
-+----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                |
-+----------------+----------------------------------------------------------------------+
-| Options        | - `type`_                                                            |
-|                | - `groups`_                                                          |
-|                | - `message`_                                                         |
-|                | - `isbn10Message`_                                                   |
-|                | - `isbn13Message`_                                                   |
-|                | - `bothIsbnMessage`_                                                 |
-|                | - `payload`_                                                         |
-+----------------+----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`            |
-+----------------+----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsbnValidator`   |
-+----------------+----------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `bothIsbnMessage`_
+            - `groups`_
+            - `isbn10Message`_
+            - `isbn13Message`_
+            - `message`_
+            - `payload`_
+            - `type`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsbnValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -100,31 +97,23 @@ on an object that will contain an ISBN.
 Available Options
 -----------------
 
-type
-~~~~
+bothIsbnMessage
+~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
 
-The type of ISBN to validate against. Valid values are ``isbn10``, ``isbn13``
-and ``null`` to accept any kind of ISBN.
-
-.. include:: /reference/constraints/_groups-option.rst.inc
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``null``
-
-The message that will be shown if the value is not valid. If not ``null``,
-this message has priority over all the other messages.
+The message that will be shown if the `type`_ option is ``null`` and the given
+value does not pass any of the ISBN checks.
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 isbn10Message
 ~~~~~~~~~~~~~
@@ -136,11 +125,11 @@ value does not pass the ISBN-10 check.
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 isbn13Message
 ~~~~~~~~~~~~~
@@ -152,28 +141,36 @@ value does not pass the ISBN-13 check.
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
-bothIsbnMessage
-~~~~~~~~~~~~~~~
+message
+~~~~~~~
 
-**type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
+**type**: ``string`` **default**: ``null``
 
-The message that will be shown if the `type`_ option is ``null`` and the given
-value does not pass any of the ISBN checks.
+The message that will be shown if the value is not valid. If not ``null``,
+this message has priority over all the other messages.
 
 You can use the following parameters in this message:
 
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+type
+~~~~
+
+**type**: ``string`` **default**: ``null``
+
+The type of ISBN to validate against. Valid values are ``isbn10``, ``isbn13``
+and ``null`` to accept any kind of ISBN.
 
 .. _`International Standard Book Number (ISBN)`: https://en.wikipedia.org/wiki/Isbn

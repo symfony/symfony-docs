@@ -8,18 +8,15 @@ the two letter `ISO 639-1`_ *language* code (e.g. ``fr``), or the language code
 followed by an underscore (``_``) and the `ISO 3166-1 alpha-2`_ *country* code
 (e.g. ``fr_FR`` for French/France).
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - `groups`_                                                            |
-|                | - `message`_                                                           |
-|                | - `payload`_                                                           |
-|                | - `canonicalize`_                                                      |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Locale`            |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`   |
-+----------------+------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `canonicalize`_
+            - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Locale`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -90,25 +87,6 @@ Basic Usage
 Options
 -------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This value is not a valid locale.``
-
-This message is shown if the string is not a valid locale.
-
-You can use the following parameters in this message:
-
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-
-.. include:: /reference/constraints/_payload-option.rst.inc
-
 canonicalize
 ~~~~~~~~~~~~
 
@@ -121,6 +99,25 @@ canonicalize
 
 If ``true``, the :phpmethod:`Locale::canonicalize` method will be applied before checking
 the validity of the given locale (e.g. ``FR-fr.utf8`` is transformed into ``fr_FR``).
+
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value is not a valid locale.``
+
+This message is shown if the string is not a valid locale.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`ICU format locale IDs`: http://userguide.icu-project.org/locale
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes

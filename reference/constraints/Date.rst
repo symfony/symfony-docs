@@ -4,17 +4,14 @@ Date
 Validates that a value is a valid date, meaning a string (or an object that can
 be cast into a string) that follows a valid ``YYYY-MM-DD`` format.
 
-+----------------+--------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`             |
-+----------------+--------------------------------------------------------------------+
-| Options        | - `groups`_                                                        |
-|                | - `message`_                                                       |
-|                | - `payload`_                                                       |
-+----------------+--------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Date`          |
-+----------------+--------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\DateValidator` |
-+----------------+--------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Date`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\DateValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -97,10 +94,10 @@ This message is shown if the underlying data is not a valid date.
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ value }}``  | The current (invalid) value                    |
-+------------------+------------------------------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

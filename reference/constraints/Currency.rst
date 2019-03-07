@@ -3,17 +3,14 @@ Currency
 
 Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
-+----------------+---------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                     |
-+----------------+---------------------------------------------------------------------------+
-| Options        | - `groups`_                                                               |
-|                | - `message`_                                                              |
-|                | - `payload`_                                                              |
-+----------------+---------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Currency`             |
-+----------------+---------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CurrencyValidator`    |
-+----------------+---------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Currency`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CurrencyValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -93,11 +90,11 @@ This is the message that will be shown if the value is not a valid currency.
 
 You can use the following parameters in this message:
 
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ value }}``  | The current (invalid) value                    |
-+------------------+------------------------------------------------+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

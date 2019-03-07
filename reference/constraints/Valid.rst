@@ -5,15 +5,13 @@ This constraint is used to enable validation on objects that are embedded
 as properties on an object being validated. This allows you to validate
 an object and all sub-objects associated with it.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `traverse`_                                                       |
-|                | - `payload`_                                                        |
-|                | - `groups`_                                                         |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `payload`_
+            - `traverse`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Valid`
+==========  ===================================================================
 
 .. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
 
@@ -257,6 +255,10 @@ the validation of the ``Address`` fields failed.
 Options
 -------
 
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
 traverse
 ~~~~~~~~
 
@@ -265,7 +267,3 @@ traverse
 If this constraint is applied to a property that holds an array of objects,
 then each object in that array will be validated only if this option is
 set to ``true``.
-
-.. include:: /reference/constraints/_payload-option.rst.inc
-
-.. include:: /reference/constraints/_groups-option.rst.inc

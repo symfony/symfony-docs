@@ -4,20 +4,17 @@ Email
 Validates that a value is a valid email address. The underlying value is
 cast to a string before being validated.
 
-+----------------+---------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`              |
-+----------------+---------------------------------------------------------------------+
-| Options        | - `mode`_                                                           |
-|                | - `message`_                                                        |
-|                | - `checkMX`_                                                        |
-|                | - `checkHost`_                                                      |
-|                | - `payload`_                                                        |
-|                | - `groups`_                                                         |
-+----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Email`          |
-+----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\EmailValidator` |
-+----------------+---------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `checkHost`_
+            - `checkMX`_
+            - `groups`_
+            - `message`_
+            - `mode`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Email`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\EmailValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -94,7 +91,52 @@ Basic Usage
 Options
 -------
 
+checkHost
+~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.2
+
+    This option was deprecated in Symfony 4.2.
+
+If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
+check the validity of the MX *or* the A *or* the AAAA record of the host
+of the given email.
+
+checkMX
+~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.2
+
+    This option was deprecated in Symfony 4.2.
+
+If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
+check the validity of the MX record of the host of the given email.
+
+.. caution::
+
+    This option is not reliable because it depends on the network conditions
+    and some valid servers refuse to respond to those requests.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value is not a valid email address.``
+
+This message is shown if the underlying data is not a valid email address.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 mode
 ~~~~
@@ -124,51 +166,6 @@ html5
 .....
 
 This matches the pattern used for the `HTML5 email input element`_.
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This value is not a valid email address.``
-
-This message is shown if the underlying data is not a valid email address.
-
-You can use the following parameters in this message:
-
-+------------------+------------------------------------------------+
-| Parameter        | Description                                    |
-+==================+================================================+
-| ``{{ value }}``  | The current (invalid) value                    |
-+------------------+------------------------------------------------+
-
-checkMX
-~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 4.2
-
-    This option was deprecated in Symfony 4.2.
-
-If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
-check the validity of the MX record of the host of the given email.
-
-.. caution::
-
-    This option is not reliable because it depends on the network conditions
-    and some valid servers refuse to respond to those requests.
-
-checkHost
-~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 4.2
-
-    This option was deprecated in Symfony 4.2.
-
-If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
-check the validity of the MX *or* the A *or* the AAAA record of the host
-of the given email.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

@@ -5,23 +5,20 @@ Validates that a particular field (or fields) in a Doctrine entity is (are)
 unique. This is commonly used, for example, to prevent a new user to register
 using an email address that already exists in the system.
 
-+----------------+-------------------------------------------------------------------------------------+
-| Applies to     | :ref:`class <validation-class-target>`                                              |
-+----------------+-------------------------------------------------------------------------------------+
-| Options        | - `fields`_                                                                         |
-|                | - `groups`_                                                                         |
-|                | - `message`_                                                                        |
-|                | - `em`_                                                                             |
-|                | - `repositoryMethod`_                                                               |
-|                | - `entityClass`_                                                                    |
-|                | - `errorPath`_                                                                      |
-|                | - `ignoreNull`_                                                                     |
-|                | - `payload`_                                                                        |
-+----------------+-------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
-+----------------+-------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`   |
-+----------------+-------------------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`class <validation-class-target>`
+Options     - `em`_
+            - `entityClass`_
+            - `errorPath`_
+            - `fields`_
+            - `groups`_
+            - `ignoreNull`_
+            - `message`_
+            - `payload`_
+            - `repositoryMethod`_
+Class       :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`
+Validator   :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -120,45 +117,6 @@ between all of the constraints in your user table:
 Options
 -------
 
-fields
-~~~~~~
-
-**type**: ``array`` | ``string`` [:ref:`default option <validation-default-option>`]
-
-This required option is the field (or list of fields) on which this entity
-should be unique. For example, if you specified both the ``email`` and ``name``
-field in a single ``UniqueEntity`` constraint, then it would enforce that
-the combination value is unique (e.g. two users could have the same email,
-as long as they don't have the same name also).
-
-If you need to require two fields to be individually unique (e.g. a unique
-``email`` *and* a unique ``username``), you use two ``UniqueEntity`` entries,
-each with a single field.
-
-.. include:: /reference/constraints/_groups-option.rst.inc
-
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This value is already used.``
-
-The message that's displayed when this constraint fails. This message is always
-mapped to the first field causing the violation, even when using multiple fields
-in the constraint.
-
-Messages can include the ``{{ value }}`` placeholder to display a string
-representation of the invalid entity. If the entity doesn't define the
-``__toString()`` method, the following generic value will be used: *"Object of
-class __CLASS__ identified by <comma separated IDs>"*
-
-You can use the following parameters in this message:
-
-+-----------------+-----------------------------+
-| Parameter       | Description                 |
-+=================+=============================+
-| ``{{ value }}`` | The current (invalid) value |
-+-----------------+-----------------------------+
-
 em
 ~~
 
@@ -168,17 +126,6 @@ The name of the entity manager to use for making the query to determine
 the uniqueness. If it's left blank, the correct entity manager will be
 determined for this class. For that reason, this option should probably
 not need to be used.
-
-repositoryMethod
-~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``findBy``
-
-The name of the repository method used to determine the uniqueness. If it's left
-blank, ``findBy()`` will be used. The method receives as its argument a
-``fieldName => value`` associative array (where ``fieldName`` is each of the
-fields configured in the ``fields`` option). The method should return a
-`countable PHP variable`_.
 
 entityClass
 ~~~~~~~~~~~
@@ -289,6 +236,23 @@ Consider this example:
 
 Now, the message would be bound to the ``port`` field with this configuration.
 
+fields
+~~~~~~
+
+**type**: ``array`` | ``string`` [:ref:`default option <validation-default-option>`]
+
+This required option is the field (or list of fields) on which this entity
+should be unique. For example, if you specified both the ``email`` and ``name``
+field in a single ``UniqueEntity`` constraint, then it would enforce that
+the combination value is unique (e.g. two users could have the same email,
+as long as they don't have the same name also).
+
+If you need to require two fields to be individually unique (e.g. a unique
+``email`` *and* a unique ``username``), you use two ``UniqueEntity`` entries,
+each with a single field.
+
+.. include:: /reference/constraints/_groups-option.rst.inc
+
 ignoreNull
 ~~~~~~~~~~
 
@@ -299,7 +263,40 @@ entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
 
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value is already used.``
+
+The message that's displayed when this constraint fails. This message is always
+mapped to the first field causing the violation, even when using multiple fields
+in the constraint.
+
+Messages can include the ``{{ value }}`` placeholder to display a string
+representation of the invalid entity. If the entity doesn't define the
+``__toString()`` method, the following generic value will be used: *"Object of
+class __CLASS__ identified by <comma separated IDs>"*
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+repositoryMethod
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``findBy``
+
+The name of the repository method used to determine the uniqueness. If it's left
+blank, ``findBy()`` will be used. The method receives as its argument a
+``fieldName => value`` associative array (where ``fieldName`` is each of the
+fields configured in the ``fields`` option). The method should return a
+`countable PHP variable`_.
 
 .. _`race conditions`: https://en.wikipedia.org/wiki/Race_condition
 .. _`countable PHP variable`: https://php.net/manual/function.is-countable.php
