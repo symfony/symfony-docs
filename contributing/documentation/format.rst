@@ -173,32 +173,30 @@ New Features or Behavior Changes
 
 If you're documenting a brand new feature or a change that's been made in
 Symfony, you should precede your description of the change with a
-``.. versionadded:: 2.X`` directive and a short description:
+``.. versionadded:: 3.x`` directive and a short description:
 
 .. code-block:: rst
 
-    .. versionadded:: 2.7
+    .. versionadded:: 3.4
 
-        The ``askHiddenResponse()`` method was introduced in Symfony 2.7.
-
-    You can also ask a question and hide the response. This is particularly [...]
+        The special ``!`` template prefix was introduced in Symfony 3.4.
 
 If you're documenting a behavior change, it may be helpful to *briefly* describe
 how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 2.7
+    .. versionadded:: 3.4
 
-        The ``include()`` function is a new Twig feature that's available in
-        Symfony 2.7. Prior, the ``{% include %}`` tag was used.
+        Support for annotation routing without an external bundle was added in
+        Symfony 3.4. Prior, you needed to install the SensioFrameworkExtraBundle.
 
-Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
+Whenever a new major version of Symfony is released (e.g. 3.0, 4.0, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony versions that have
-reached end-of-maintenance will be removed. For example, if Symfony 2.5 were
-released today, and 2.2 had recently reached its end-of-maintenance, the 2.2
-``versionadded`` tags would be removed from the new ``2.5`` branch.
+a lower major version will be removed. For example, if Symfony 4.0 were
+released today, 3.0 to 3.4 ``versionadded`` tags would be removed from the new
+``4.0`` branch.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/

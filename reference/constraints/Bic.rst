@@ -9,7 +9,8 @@ check that the BIC is associated with a given IBAN.
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
-| Options        | - `message`_                                                          |
+| Options        | - `groups`_                                                           |
+|                | - `message`_                                                          |
 |                | - `payload`_                                                          |
 |                | - `iban`_                                                             |
 |                | - `ibanMessage`_                                                      |
@@ -88,6 +89,8 @@ will contain a Business Identifier Code (BIC).
 
 Available Options
 -----------------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

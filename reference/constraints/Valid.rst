@@ -10,6 +10,7 @@ an object and all sub-objects associated with it.
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
 |                | - `payload`_                                                        |
+|                | - `groups`_                                                         |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
 +----------------+---------------------------------------------------------------------+
@@ -266,3 +267,5 @@ then each object in that array will be validated only if this option is
 set to ``true``.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_groups-option.rst.inc

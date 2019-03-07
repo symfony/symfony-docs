@@ -6,7 +6,8 @@ Validates that a value is a valid URL string.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `message`_                                                        |
+| Options        | - `groups`_                                                         |
+|                | - `message`_                                                        |
 |                | - `protocols`_                                                      |
 |                | - `payload`_                                                        |
 |                | - `checkDNS`_                                                       |
@@ -81,6 +82,8 @@ Basic Usage
 
 Options
 -------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 message
 ~~~~~~~

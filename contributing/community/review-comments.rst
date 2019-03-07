@@ -91,15 +91,15 @@ Don't use hyperbole ("always", "never", "endlessly", "nothing", "worst", "horrib
 **Don't:** *"I don't like how you wrote this code"* - there is no clear explanation why you
 don't like how it's written.
 
-**Better:** *"I find it hard to read this code as there is many nested if statements, can you make it more
-readable? By encapsulating some of its details or maybe adding some comments to explain the overall logic."* -
+**Better:** *"I find it hard to read this code as there are many nested if statements, can you make it more
+readable? By encapsulating some of the details or maybe adding some comments to explain the overall logic."* -
 You explain why you find the code hard to read *and* give some suggestions for improvement.
 
 If a piece of code is in fact wrong, explain why:
 
 * "This code doesn't comply with Symfony's CS rules. Please see [...] for details."
 
-* "Symfony 3 still uses PHP 5 and doesn't allow the usage scalar type-hints."
+* "Symfony 3 still uses PHP 5 and doesn't allow the usage of scalar type-hints."
 
 * "I think the code is less readable now." - careful here, be sure explain why you think
   the code is less readable, and maybe give some suggestions?
