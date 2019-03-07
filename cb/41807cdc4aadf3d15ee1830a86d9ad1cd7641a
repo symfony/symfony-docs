@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-06T11:09:29Z
+
+@HeahDude
+
+1) You mentioned we should remove this:
+`* "Code doesn't match Symfony's CS rules (e.g. use ``[]`` instead of ``array()``)"`
+
+But we should keep it, as of now it doesn't match Symfony CS if you use `array()`, and therefore its correct.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-06T11:11:43Z
+
+@HeahDude
+
+2) You mentioned `the?` and I don't get it 😄 :
+
+<img width="666" alt="screenshot 2019-03-06 12 10 36" src="https://user-images.githubusercontent.com/995707/53877213-dccf4d00-4008-11e9-85e1-4d0c4c0f7381.png">
+
+I created this PR and added your comments here as questions, because I will target the correct branch in my PR (#11080) and do a rebase, so your comments would get lost
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2019-03-06T17:55:41Z
+
+I meant, what about:
+```diff
+-readable? By encapsulating some of its details or maybe adding some
++readable? By encapsulating some of the details or maybe adding some
+```
+?
