@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by nikophil at 2018-12-27T11:36:11Z
+
+Hi @HeahDude
+i think you know what i'm talking about here ;)
+
+i've wondered if this would need a `configuration-block` and if we have to list all the other way to configure this, but i think it's really specific to the annotation...
+what do you think ?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2018-12-27T14:32:22Z
+
+Thank you for your contribution 👍
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-01-11T11:33:17Z
+
+I wonder if it would not be easier to expand the code example that we have in the "Basic usage" section to also contain choices coming from a constant and adding an inline comment there.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-02-18T20:17:19Z
+
+friendly ping @nikophil
+
+@xabbuh's comment is a legitimate consideration 🤔
+
+---------------------------------------------------------------------------
+
+by nikophil at 2019-02-19T07:37:13Z
+
+hi @OskarStark  sorry, i've forgotten this one, i was thinking it was merged.
+
+here is some update.
