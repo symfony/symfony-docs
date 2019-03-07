@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-05T10:23:48Z
+
+This PR includes a GIF that weights almost 4 MB !!!!!!
+
+![gif-mb](https://user-images.githubusercontent.com/73419/53798717-15075a80-3f39-11e9-9495-f5cc09587deb.png)
+
+I'm not sure we should include it in the docs. Maybe link it from the docs instead?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2019-03-05T10:55:23Z
+
+* Gif replaced by a YouTube link
+* "Courtesy" messages removed
+* Link to https://uri-template-tester.mercure.rocks added
+
+---------------------------------------------------------------------------
+
+by dunglas at 2019-03-05T10:57:08Z
+
+Should I remove the `<script>` tags from the JS snippets @javiereguiluz?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-05T14:51:59Z
+
+@dunglas please, don't remove the `<script>` tags. They are useful because most of our readers are used to backend things, so let's be super explicit when using JavaScript. Also, we display them in other parts of the Symfony Docs.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-06T13:51:27Z
+
+This new article looks finished to me. Anyone wants to review it one last time before merging it? Thanks!
+
+---------------------------------------------------------------------------
+
+by dunglas at 2019-03-06T23:12:36Z
+
+Thanks for the reviews @OskarStark @javiereguiluz @alanpoulain @soyuka
