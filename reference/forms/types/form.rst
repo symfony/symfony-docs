@@ -37,7 +37,6 @@ on all types for which ``FormType`` is the parent.
 | Inherited | - `attr`_                                                          |
 | options   | - `auto_initialize`_                                               |
 |           | - `block_name`_                                                    |
-|           | - `block_prefix`_                                                  |
 |           | - `disabled`_                                                      |
 |           | - `label`_                                                         |
 |           | - `translation_domain`_                                            |
