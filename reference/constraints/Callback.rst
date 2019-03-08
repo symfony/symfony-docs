@@ -18,7 +18,7 @@ can do anything, including creating and assigning validation errors.
     add validator "violations".
 
 ==========  ===================================================================
-Applies to  :ref:`class <validation-class-target>`
+Applies to  :ref:`class <validation-class-target>` or :ref:`property/method <validation-property-target>`
 Options     - :ref:`callback <callback-option>`
             - `groups`_
             - `payload`_
