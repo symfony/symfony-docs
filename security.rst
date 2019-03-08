@@ -226,7 +226,7 @@ user to be logged in to access this URL:
 
             access_control:
                 # require ROLE_ADMIN for /admin*
-                - { path: ^/admin, roles: ROLE_ADMIN }
+                - { path: '^/admin', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -713,7 +713,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
 
             access_control:
                 # require ROLE_ADMIN for /admin*
-                - { path: ^/admin, roles: ROLE_ADMIN }
+                - { path: '^/admin', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -751,7 +751,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
             ],
            'access_control' => [
                // require ROLE_ADMIN for /admin*
-               ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+               ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
            ],
         ]);
 
@@ -773,8 +773,8 @@ matches the URL.
             # ...
 
             access_control:
-                - { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
-                - { path: ^/admin, roles: ROLE_ADMIN }
+                - { path: '^/admin/users', roles: ROLE_SUPER_ADMIN }
+                - { path: '^/admin', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -801,8 +801,8 @@ matches the URL.
             // ...
 
             'access_control' => [
-                ['path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'],
-                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+                ['path' => '^/admin/users', 'roles' => 'ROLE_SUPER_ADMIN'],
+                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
             ],
         ]);
 

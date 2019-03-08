@@ -286,6 +286,7 @@ Symfony provides the following env var processors:
             # config/packages/security.yaml
             parameters:
                 env(HEALTH_CHECK_METHOD): 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD'
+
             security:
                 access_control:
                     - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }

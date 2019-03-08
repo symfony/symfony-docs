@@ -18,7 +18,7 @@ to use HTTPS then you could use the following configuration:
                 # ...
 
                 access_control:
-                    - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
+                    - { path: '^/secure', roles: ROLE_ADMIN, requires_channel: https }
 
         .. code-block:: xml
 
@@ -46,7 +46,7 @@ to use HTTPS then you could use the following configuration:
                 'access_control' => [
                     [
                         'path'             => '^/secure',
-                        'role'             => 'ROLE_ADMIN',
+                        'roles'            => 'ROLE_ADMIN',
                         'requires_channel' => 'https',
                     ],
                 ],
@@ -66,7 +66,7 @@ role:
             # ...
 
             access_control:
-                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
     .. code-block:: xml
 
@@ -97,7 +97,7 @@ role:
             'access_control' => [
                 [
                     'path'             => '^/login',
-                    'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    'roles'            => 'IS_AUTHENTICATED_ANONYMOUSLY',
                     'requires_channel' => 'https',
                 ],
             ],

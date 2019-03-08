@@ -283,7 +283,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
         # ...
         access_control:
-            - { path: ^/, roles: ROLE_ADMIN }
+            - { path: '^/', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -307,7 +307,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
         // ...
         'access_control' => [
-            ['path' => '^/', 'role' => 'ROLE_ADMIN'],
+            ['path' => '^/', 'roles' => 'ROLE_ADMIN'],
         ],
 
 Adding an access control that matches ``/login/*`` and requires *no* authentication
@@ -321,8 +321,8 @@ fixes the problem:
 
         # ...
         access_control:
-            - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/, roles: ROLE_ADMIN }
+            - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: '^/', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -347,8 +347,8 @@ fixes the problem:
 
         // ...
         'access_control' => [
-            ['path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
-            ['path' => '^/', 'role' => 'ROLE_ADMIN'],
+            ['path' => '^/login', 'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
+            ['path' => '^/', 'roles' => 'ROLE_ADMIN'],
         ],
 
 3. Be Sure check_path Is Behind a Firewall
