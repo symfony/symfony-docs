@@ -129,7 +129,7 @@ like this:
                     'marking_store' => [
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => ['currentPlace'],
-                    ),
+                    ],
                     'supports' => ['App\Entity\BlogPost'],
                     'places' => [
                         'draft',
