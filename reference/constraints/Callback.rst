@@ -17,17 +17,17 @@ can do anything, including creating and assigning validation errors.
     as you'll see in the example, a callback method has the ability to directly
     add validator "violations".
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`class <validation-class-target>`                                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - :ref:`callback <callback-option>`                                    |
-|                | - `groups`_                                                            |
-|                | - `payload`_                                                           |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`          |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CallbackValidator` |
-+----------------+------------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------------------------------+
+| Applies to     | :ref:`class <validation-class-target>` or :ref:`property/method <validation-property-target>` |
++----------------+-----------------------------------------------------------------------------------------------+
+| Options        | - :ref:`callback <callback-option>`                                                           |
+|                | - `groups`_                                                                                   |
+|                | - `payload`_                                                                                  |
++----------------+-----------------------------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`                                 |
++----------------+-----------------------------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CallbackValidator`                        |
++----------------+-----------------------------------------------------------------------------------------------+
 
 Configuration
 -------------
