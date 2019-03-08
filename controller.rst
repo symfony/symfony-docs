@@ -147,7 +147,7 @@ and many others that you'll learn about next.
 .. tip::
 
     You can extend either ``Controller`` or ``AbstractController``. The difference
-    is that when you extend ``AbstractController``, you can't access to your services
+    is that when you extend ``AbstractController``, you can't access your services
     via ``$this->get()`` or ``$this->container->get()``, only to a set of common
     Symfony services. This forces you to write more robust code to access services.
 
