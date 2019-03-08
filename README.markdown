@@ -33,3 +33,6 @@ $ docker build . -t symfony-docs
 # (if it's already in use, change the '8080' port by any other port)
 $ docker run --rm -p 8080:80 symfony-docs
 ```
+
+If you use a virtual machine use its ip instead of the localhost to access the
+server (i.e `http://192.168.99.100:8080`).
