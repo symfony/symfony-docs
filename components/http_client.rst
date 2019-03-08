@@ -117,14 +117,14 @@ The client created with the ``HttpClient`` class provides a single ``request()``
 method to perform all HTTP requests, whereas the client created with the
 ``ApiClient`` class provides a method for each HTTP verb::
 
-    $response = $httpClient->request('GET', 'https://');
-    $response = $httpClient->request('POST', 'https://');
-    $response = $httpClient->request('PUT', 'https://');
+    $response = $httpClient->request('GET', 'https://...');
+    $response = $httpClient->request('POST', 'https://...');
+    $response = $httpClient->request('PUT', 'https://...');
     // ...
 
-    $response = $apiClient->get('https://');
-    $response = $apiClient->post('https://');
-    $response = $apiClient->put('https://');
+    $response = $apiClient->get('https://...');
+    $response = $apiClient->post('https://...');
+    $response = $apiClient->put('https://...');
     // ...
 
 Query String Parameters
@@ -153,7 +153,8 @@ requests and the specific headers for each request::
         'Authorization' => 'Bearer ...',
     ]]);
 
-    // this header is only included in this request
+    // this header is only included in this request and overrides the value
+    // of the same header if defined globally by the HTTP client
     $response = $httpClient->request('POST', 'https://...', [
         'headers' => [
             'Content-type' => 'text/plain',
@@ -165,7 +166,7 @@ Uploading Data
 
 This component provides several methods for uploading data using the ``body``
 option. You can use regular strings, closures and resources and they'll be
-processing automatically when making the requests::
+processed automatically when making the requests::
 
     $response = $httpClient->request('POST', 'https://...', [
         // defining data using a regular string
@@ -244,6 +245,8 @@ following methods::
     // returns info coming from the transport layer, such as "raw_headers",
     // "redirect_count", "start_time", "redirect_url", etc.
     $httpInfo = $response->getInfo();
+    // you can get individual info too
+    $startTime = $response->getInfo('start_time');
 
 Streaming Responses
 ~~~~~~~~~~~~~~~~~~~
@@ -257,7 +260,7 @@ Handling Exceptions
 
 When an HTTP error happens (status code 3xx, 4xx or 5xx) your code is expected
 to handle it by checking the status code of the response. If you don't do that,
-an appropriate exception is thrown::
+the ``getHeaders()`` and ``getContent()`` methods throw an appropriate exception::
 
     $response = $httpClient->request('GET', 'https://httpbin.org/status/403');
 
@@ -265,8 +268,9 @@ an appropriate exception is thrown::
     // because it doesn't check the status code of the response
     $content = $response->getContent();
 
-    // this code doesn't throw an exception because it handles the HTTP error itself
-    $content = 403 !== $reponse->getStatusCode() ? $response->getContent() : null;
+    // pass FALSE as the optional argument to not throw an exception and
+    // return instead an empty string
+    $content = $response->getContent(false);
 
 PSR-7 and PSR-18 Compatibility
 ------------------------------
