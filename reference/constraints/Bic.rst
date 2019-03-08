@@ -94,6 +94,10 @@ iban
 
 **type**: ``string`` **default**: ``null``
 
+.. versionadded:: 4.3
+
+    The ``iban`` option was introduced in Symfony 4.3.
+
 An IBAN value to validate that the BIC is associated with it.
 
 ibanMessage
@@ -101,12 +105,20 @@ ibanMessage
 
 **type**: ``string`` **default**: ``This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.``
 
+.. versionadded:: 4.3
+
+    The ``ibanMessage`` option was introduced in Symfony 4.3.
+
 The default message supplied when the value does not pass the combined BIC/IBAN check.
 
 ibanPropertyPath
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
+
+.. versionadded:: 4.3
+
+    The ``ibanPropertyPath`` option was introduced in Symfony 4.3.
 
 It defines the object property whose value stores the IBAN used to check the BIC with.
 
