@@ -157,7 +157,7 @@ Configuring the Metadata Cache
 
 The metadata for the serializer is automatically cached to enhance application
 performance. By default, the serializer uses the ``cache.system`` cache pool
-which is configured using the :ref:`cache.system <reference-cache-systen>`
+which is configured using the :ref:`cache.system <reference-cache-system>`
 option.
 
 Enabling a Name Converter
