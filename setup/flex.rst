@@ -184,6 +184,36 @@ manual steps:
    original ``web/app_*.php`` front controllers were customized, add those changes
    to the new ``public/index.php`` controller.
 
+Customizing Flex Paths
+----------------------
+
+The Flex recipes make a few assumptions about your project's directory structure.
+Some of these assumptions can be customized by adding a key under the ``extra``
+section of your ``composer.json`` file. For example, to tell Flex to copy any
+PHP classes into ``src/App`` instead of ``src``:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+
+        "extra": {
+            "src-dir": "src/App"
+        }
+    }
+
+The configurable paths are:
+
+* ``bin-dir``: defaults to ``bin/``
+* ``config-dir``: defaults to ``config/``
+* ``src-dir`` defaults to ``src/``
+* ``var-dir`` defaults to ``var/``
+* ``public-dir`` defaults to ``public/``
+
+If you customize these paths, some files copied from a recipe still may contain
+references to the original path. In other words: you may need to update some things
+manually after a recipe is installed.
+
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`Symfony Installer`: https://github.com/symfony/symfony-installer
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
