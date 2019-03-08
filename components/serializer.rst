@@ -578,7 +578,7 @@ There are several types of normalizers available:
     calling the constructor during the denormalization process.
 
     Objects are normalized to a map of property names and values (names are
-    generated removing the ``get``, ``set``, ``has`` or ``remove`` prefix from
+    generated removing the ``get``, ``set``, ``has``, ``is`` or ``remove`` prefix from
     the method name and lowercasing the first letter; e.g. ``getFirstName()`` ->
     ``firstName``).
 

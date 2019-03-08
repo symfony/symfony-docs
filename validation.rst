@@ -151,7 +151,7 @@ message:
 
 .. code-block:: text
 
-    AppBundle\Entity\Author.name:
+    Object(AppBundle\Entity\Author).name:
         This value should not be blank
 
 If you insert a value into the ``name`` property, the happy success message
