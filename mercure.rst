@@ -530,7 +530,7 @@ Checkout `the dedicated API Platform documentation`_ to learn more about
 its Mercure support.
 
 .. _`the Mercure protocol`: https://github.com/dunglas/mercure#protocol-specification
-.. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/fr/docs/Server-sent_events
+.. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/docs/Server-sent_events
 .. _`a polyfill`: https://github.com/Yaffle/EventSource
 .. _`high-level implementations`: https://github.com/dunglas/mercure#resources
 .. _`In this recording`: https://www.youtube.com/watch?v=UI1l0JOjLeI
