@@ -4,14 +4,14 @@
 Routing
 =======
 
-Beautiful URLs are an absolute must for any serious web application. This
-means leaving behind ugly URLs like ``index.php?article_id=57`` in favor
-of something like ``/read/intro-to-symfony``.
+Beautiful URLs are a must for any serious web application. This means leaving
+behind ugly URLs like ``index.php?article_id=57`` in favor of something like
+``/read/intro-to-symfony``.
 
 Having flexibility is even more important. What if you need to change the
-URL of a page from ``/blog`` to ``/news``? How many links should you need to
+URL of a page from ``/blog`` to ``/news``? How many links would you need to
 hunt down and update to make the change? If you're using Symfony's router,
-the change is simple.
+the change should be trivial.
 
 The Symfony router lets you define creative URLs that you map to different
 areas of your application. By the end of this article, you'll be able to:
@@ -27,10 +27,13 @@ areas of your application. By the end of this article, you'll be able to:
 Routing Examples
 ----------------
 
-A *route* is a map from a URL path to a controller. For example, suppose
-you want to match any URL like ``/blog/my-post`` or ``/blog/all-about-symfony``
-and send it to a controller that can look up and render that blog post.
-The route is simple:
+A *route* is a map from a URL path to attributes (i.e a controller). Suppose
+you want one route that matches ``/blog`` exactly and another more dynamic
+route that can match *any* URL like ``/blog/my-post`` or
+``/blog/all-about-symfony``.
+
+Routes can be configured in YAML, XML, PHP or annotations. All formats provide
+the same features and performance, so choose the one you prefer:
 
 .. configuration-block::
 
@@ -56,6 +59,7 @@ The route is simple:
 
             /**
              * Matches /blog/*
+             * but not /blog/slug/extra-part
              *
              * @Route("/blog/{slug}", name="blog_show")
              */
@@ -72,10 +76,13 @@ The route is simple:
 
         # app/config/routing.yml
         blog_list:
+            # Matches /blog exactly
             path:     /blog
             defaults: { _controller: AppBundle:Blog:list }
 
         blog_show:
+            # Matches /blog/*
+            # but not /blog/slug/extra-part
             path:     /blog/{slug}
             defaults: { _controller: AppBundle:Blog:show }
 
@@ -88,10 +95,13 @@ The route is simple:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
+            <!-- Matches /blog exactly -->
             <route id="blog_list" path="/blog">
                 <default key="_controller">AppBundle:Blog:list</default>
             </route>
 
+            <!-- Matches /blog/* -->
+            <!-- but not /blog/slug/extra-part -->
             <route id="blog_show" path="/blog/{slug}">
                 <default key="_controller">AppBundle:Blog:show</default>
             </route>
@@ -104,9 +114,12 @@ The route is simple:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
+        // Matches /blog exactly
         $routes->add('blog_list', new Route('/blog', [
             '_controller' => 'AppBundle:Blog:list',
         ]));
+        // Matches /blog/*
+            // but not /blog/slug/extra-part
         $routes->add('blog_show', new Route('/blog/{slug}', [
             '_controller' => 'AppBundle:Blog:show',
         ]));
@@ -119,13 +132,21 @@ Thanks to these two routes:
   is executed;
 
 * If the user goes to ``/blog/*``, the second route is matched and ``showAction()``
-  is executed. Because the route path is ``/blog/{slug}``, a ``$slug`` variable is
-  passed to ``showAction()`` matching that value. For example, if the user goes to
+  is executed. Because the route path is ``/blog/{slug}``, a ``$slug`` variable
+  is passed to ``showAction()`` matching that value. For example, if the user goes to
   ``/blog/yay-routing``, then ``$slug`` will equal ``yay-routing``.
 
-Whenever you have a ``{placeholder}`` in your route path, that portion becomes a
-wildcard: it matches *any* value. Your controller can now *also* have an argument
-called ``$placeholder`` (the wildcard and argument names *must* match).
+Whenever you have a ``{placeholder}`` in your route path, that portion becomes
+a wildcard: it matches *any* value. Your controller can now *also* have an
+argument called ``$placeholder`` (the wildcard and argument names *must*
+match).
+
+.. caution::
+
+    However the slash ``/`` is ignored by default in placeholder values because
+    the router uses it as separator between different placeholders.
+    To learn more about this, you can read
+    :ref:`routing/slash_in_parameter`.
 
 Each route also has an internal name: ``blog_list`` and ``blog_show``. These can
 be anything (as long as each is unique) and don't have any meaning yet.

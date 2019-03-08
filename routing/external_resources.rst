@@ -7,8 +7,8 @@ How to Include External Routing Resources
 Simple applications can define all their routes in a single configuration file -
 usually ``app/config/routing.yml`` (see :ref:`routing-creating-routes`).
 However, in most applications it's common to import routes definitions from
-different resources: PHP annotations in controller files, YAML or XML files
-stored in some directory, etc.
+different resources: PHP annotations in controller files, YAML, XML or PHP
+files stored in some directory, etc.
 
 This can be done by importing routing resources from the main routing file:
 
@@ -19,7 +19,7 @@ This can be done by importing routing resources from the main routing file:
         # app/config/routing.yml
         app_file:
             # loads routes from the given routing file stored in some bundle
-            resource: '@AcmeOtherBundle/Resources/config/routing.yml'
+            resource: '@AcmeBundle/Resources/config/routing.yml'
 
         app_annotations:
             # loads routes from the PHP annotations of the controllers found in that directory
@@ -27,13 +27,13 @@ This can be done by importing routing resources from the main routing file:
             type:     annotation
 
         app_directory:
-            # loads routes from the YAML or XML files found in that directory
+            # loads routes from the YAML, XML or PHP files found in that directory
             resource: '../legacy/routing/'
             type:     directory
 
         app_bundle:
-            # loads routes from the YAML or XML files found in some bundle directory
-            resource: '@AppBundle/Resources/config/routing/public/'
+            # loads routes from the YAML, XML or PHP files found in some bundle directory
+            resource: '@AcmeOtherBundle/Resources/config/routing/'
             type:     directory
 
     .. code-block:: xml
@@ -46,7 +46,7 @@ This can be done by importing routing resources from the main routing file:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- loads routes from the given routing file stored in some bundle -->
-            <import resource="@AcmeOtherBundle/Resources/config/routing.yml"/>
+            <import resource="@AcmeBundle/Resources/config/routing.yml"/>
 
             <!-- loads routes from the PHP annotations of the controllers found in that directory -->
             <import resource="@AppBundle/Controller/" type="annotation"/>
@@ -55,7 +55,7 @@ This can be done by importing routing resources from the main routing file:
             <import resource="../legacy/routing/" type="directory"/>
 
             <!-- loads routes from the YAML or XML files found in some bundle directory -->
-            <import resource="@AppBundle/Resources/config/routing/public/" type="directory"/>
+            <import resource="@AcmeOtherBundle/Resources/config/routing/" type="directory"/>
         </routes>
 
     .. code-block:: php
@@ -66,7 +66,7 @@ This can be done by importing routing resources from the main routing file:
         $routes = new RouteCollection();
         $routes->addCollection(
             // loads routes from the given routing file stored in some bundle
-            $loader->import("@AcmeOtherBundle/Resources/config/routing.yml")
+            $loader->import("@AcmeBundle/Resources/config/routing.yml")
 
             // loads routes from the PHP annotations of the controllers found in that directory
             $loader->import("@AppBundle/Controller/", "annotation")
@@ -75,15 +75,15 @@ This can be done by importing routing resources from the main routing file:
             $loader->import("../legacy/routing/", "directory")
 
             // loads routes from the YAML or XML files found in some bundle directory
-            $loader->import("@AppBundle/Resources/config/routing/public/", "directory")
-        );
+            $routes->import('@AcmeOtherBundle/Resources/config/routing/public/', 'directory');
+        };
 
         return $routes;
 
 .. note::
 
-    When importing resources from YAML, the key (e.g. ``app_file``) is meaningless.
-    Just be sure that it's unique so no other lines override it.
+    When importing resources, the key (e.g. ``app_file``) is the name of collection.
+    Just be sure that it's unique per file so no other lines override it.
 
 .. _prefixing-imported-routes:
 
@@ -91,8 +91,8 @@ Prefixing the URLs of Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
-suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
-``/site/blog/{slug}`` instead of ``/blog/{slug}``):
+to prefix all application routes with ``/site`` (e.g.``/site/blog/{slug}``
+instead of ``/blog/{slug}``):
 
 .. configuration-block::
 
