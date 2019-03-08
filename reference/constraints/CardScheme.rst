@@ -136,12 +136,7 @@ Valid values are:
 * ``LASER``
 * ``MAESTRO``
 * ``MASTERCARD``
-* ``UATP``
 * ``VISA``
-
-.. versionadded:: 4.3
-
-    The ``UATP`` number scheme was introduced in Symfony 4.3.
 
 For more information about the used schemes, see
 `Wikipedia: Issuer identification number (IIN)`_.

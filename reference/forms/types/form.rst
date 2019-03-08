@@ -157,8 +157,6 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 
 .. include:: /reference/forms/types/options/block_name.rst.inc
 
-.. include:: /reference/forms/types/options/block_prefix.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
