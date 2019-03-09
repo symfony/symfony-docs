@@ -150,12 +150,12 @@ binding capabilities to clarify which bus will be injected based on the argument
         $container->bind('$queryBus', 'messenger.bus.queries');
         $container->bind('$eventBus', 'messenger.bus.events');
 
-Restrict handlers per bus
+Restrict Handlers per Bus
 -------------------------
 
 By default, each handler will be available to handle messages on *all*
 of your buses. To prevent dispatching a message to the wrong bus without an error,
-you can restrict each handler to a specific bus using the `messenger.message_handler` tag:
+you can restrict each handler to a specific bus using the ``messenger.message_handler`` tag:
 
 .. configuration-block::
 
@@ -251,7 +251,7 @@ the correct tag:
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php')
             ->tag('messenger.message_handler', ['bus' => 'messenger.bus.queries']);
 
-Debugging the buses
+Debugging the Buses
 -------------------
 
 The ``debug:messenger`` command lists available messages & handlers per bus.
