@@ -537,6 +537,128 @@ Symfony provides the following env var processors:
 
         The ``default`` processor was introduced in Symfony 4.3.
 
+``env(url:FOO)``
+    Parses an absolute URL and returns its components.
+
+    .. code-block:: bash
+
+        # .env
+        MONGODB_URL="mongodb://db_user:db_password@127.0.0.1:27017/db_name"
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/mongodb.yaml
+            mongo_db_bundle:
+                clients:
+                    default:
+                        hosts:
+                        - { host: '%env(key:host:url:MONGODB_URL)%', port: '%env(key:port:url:MONGODB_URL)%' }
+                        username: '%env(key:user:url:MONGODB_URL)%'
+                        password: '%env(key:pass:url:MONGODB_URL)%'
+                connections:
+                    default:
+                        database_name: '%env(key:path:url:MONGODB_URL)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/mongodb.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <mongodb:config>
+                    <mongodb:client name="default" username="%env(key:user:url:MONGODB_URL)%" password="%env(key:pass:url:MONGODB_URL)%">
+                        <mongodb:host host="%env(key:host:url:MONGODB_URL)%" port="%env(key:port:url:MONGODB_URL)%"/>
+                    </mongodb:client>
+                    <mongodb:connections name="default" database_name="%env(key:path:url:MONGODB_URL)%"/>
+                </mongodb:config>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/mongodb.php
+            $container->loadFromExtension('mongodb', [
+                'clients' => [
+                    'default' => [
+                        'hosts' => [
+                            [
+                                'host' => '%env(key:host:url:MONGODB_URL)%',
+                                'port' => '%env(key:port:url:MONGODB_URL)%',
+                            ],
+                        ],
+                        'username' => '%env(key:user:url:MONGODB_URL)%',
+                        'password' => '%env(key:pass:url:MONGODB_URL)%',
+                    ],
+                ],
+                'connections' => [
+                    'default' => [
+                        'database_name' => '%env(key:path:url:MONGODB_URL)%',
+                    ],
+                ],
+            ]);
+
+    .. caution::
+
+        In order to ease extraction of the resource from the URL, The leading
+        ``/`` is trimed from the ``path`` component.
+
+    .. versionadded:: 4.3
+
+        The ``url`` processor was introduced in Symfony 4.3.
+
+``env(query_string:FOO)``
+    Parses an encoded string as if it were the query string passed via a URL.
+
+    .. code-block:: bash
+
+        # .env
+        MONGODB_URL="mongodb://db_user:db_password@127.0.0.1:27017/db_name?timeout=3000"
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/mongodb.yaml
+            mongo_db_bundle:
+                clients:
+                    default:
+                        # ...
+                        connectTimeoutMS: '%env(int:key:timeout:query_string:MONGODB_URL)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/mongodb.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <mongodb:config>
+                    <mongodb:client name="default" connectTimeoutMS="%env(int:key:timeout:query_string:MONGODB_URL)%" />
+                </mongodb:config>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/mongodb.php
+            $container->loadFromExtension('mongodb', [
+                'clients' => [
+                    'default' => [
+                        // ...
+                        'connectTimeoutMS' => '%env(int:key:timeout:query_string:MONGODB_URL)%',
+                    ],
+                ],
+            ]);
+
+    .. versionadded:: 4.3
+
+        The ``query_string`` processor was introduced in Symfony 4.3.
+
 It is also possible to combine any number of processors:
 
 .. code-block:: yaml
