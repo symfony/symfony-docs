@@ -1086,7 +1086,7 @@ or the relative path from **your configuration file**:
         services:
             # ...
 
-            App\ServiceWithYamlInside:
+            App\ServiceWithArrayConfigFromYamlFile:
                 arguments:
                     - !yaml_file '%kernel.root_dir%/some/file.yaml'
 
@@ -1102,7 +1102,7 @@ or the relative path from **your configuration file**:
             <services>
                 <!-- ... -->
 
-                <service id="my_service" class="App\ServiceWithYamlInside">
+                <service id="my_service" class="App\ServiceWithArrayConfigFromYamlFile">
                     <argument type="yaml-file">%kernel.root_dir%/some/file.yaml</argument>
                 </service>
             </services>
