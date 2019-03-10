@@ -37,9 +37,7 @@ Usage
 
 To use this component, create a new
 :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor` instance and
-provide it with a set of information extractors.
-
-.. code-block:: php
+provide it with a set of information extractors::
 
     use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
     use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -146,9 +144,7 @@ List Information
 
 Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface`
 provide the list of properties that are available on a class as an array
-containing each property name as a string.
-
-.. code-block:: php
+containing each property name as a string::
 
     $properties = $propertyInfo->getProperties($class);
     /*
@@ -168,9 +164,7 @@ Type Information
 
 Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface`
 provide :ref:`extensive data type information <components-property-info-type>`
-for a property.
-
-.. code-block:: php
+for a property::
 
     $types = $propertyInfo->getTypes($class, $property);
 
@@ -199,9 +193,7 @@ Description Information
 
 Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface`
 provide long and short descriptions from a properties annotations as
-strings.
-
-.. code-block:: php
+strings::
 
     $title = $propertyInfo->getShortDescription($class, $property);
     /*
@@ -225,9 +217,7 @@ Access Information
 ~~~~~~~~~~~~~~~~~~
 
 Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface`
-provide whether properties are readable or writable as booleans.
-
-.. code-block:: php
+provide whether properties are readable or writable as booleans::
 
     $propertyInfo->isReadable($class, $property);
     // Example Result: bool(true)
@@ -422,9 +412,7 @@ Using `phpDocumentor Reflection`_ to parse property and method annotations,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor`
 provides type and description information. This extractor is automatically
 registered with the ``property_info`` in the Symfony Framework *if* the dependent
-library is present.
-
-.. code-block:: php
+library is present::
 
     use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 
@@ -447,9 +435,7 @@ Using :ref:`groups metadata <serializer-using-serialization-groups-annotations>`
 from the :doc:`Serializer component </components/serializer>`,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
 provides list information. This extractor is *not* registered automatically
-with the ``property_info`` service in the Symfony Framework.
-
-.. code-block:: php
+with the ``property_info`` service in the Symfony Framework::
 
     use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
@@ -475,9 +461,7 @@ DoctrineExtractor
 Using entity mapping data from `Doctrine ORM`_, the
 :class:`Symfony\\Bridge\\Doctrine\\PropertyInfo\\DoctrineExtractor`
 provides list and type information. This extractor is not registered automatically
-with the ``property_info`` service in the Symfony Framework.
-
-.. code-block:: php
+with the ``property_info`` service in the Symfony Framework::
 
     use Doctrine\ORM\EntityManager;
     use Doctrine\ORM\Tools\Setup;
