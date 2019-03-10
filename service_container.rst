@@ -1076,6 +1076,7 @@ Injecting the content of YAML file as argument
 ----------------------------------------------
 
 .. versionadded:: 4.3
+
     Support for the YAML file notation in YAML and XML was introduced
     in Symfony 4.3.
 
