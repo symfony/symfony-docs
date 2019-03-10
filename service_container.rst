@@ -1075,7 +1075,7 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
 Injecting the content of YAML file as argument
 ----------------------------------------------
 
-You can automatically parse a YAML file and injecting it as an argument be referencing the **absolute path** to the file,
+You can automatically parse a YAML file and injecting it as an argument by referencing the **absolute path** to the file,
 or the relative path from **your configuration file**:
 
 .. configuration-block::
