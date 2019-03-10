@@ -1103,7 +1103,7 @@ or the relative path from **your configuration file**:
                 <!-- ... -->
 
                 <service id="my_service" class="App\ServiceWithYamlInside">
-                    <argument type="yaml_file">%kernel.root_dir%/some/file.yaml</argument>
+                    <argument type="yaml-file">%kernel.root_dir%/some/file.yaml</argument>
                 </service>
             </services>
         </container>
