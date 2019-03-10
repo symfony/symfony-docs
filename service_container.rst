@@ -1075,6 +1075,10 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
 Injecting the content of YAML file as argument
 ----------------------------------------------
 
+.. versionadded:: 4.3
+    Support for the YAML file notation in YAML and XML was introduced
+    in Symfony 4.3.
+
 You can automatically parse a YAML file and injecting it as an argument by referencing the **absolute path** to the file,
 or the relative path from **your configuration file**:
 
