@@ -1072,6 +1072,44 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
     and the automatically loaded service will be passed - by default - when you type-hint
     ``SiteUpdateManager``. That's why creating the alias is a good idea.
 
+Injecting the content of YAML file as argument
+----------------------------------------------
+
+You can automatically parse a YAML file and injecting it as an argument be referencing the **absolute path** to the file,
+or the relative path from **your configuration file**:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\ServiceWithYamlInside:
+                arguments:
+                    - !yaml_file '%kernel.root_dir%/some/file.yaml'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="my_service" class="App\ServiceWithYamlInside">
+                    <argument type="yaml_file">%kernel.root_dir%/some/file.yaml</argument>
+                </service>
+            </services>
+        </container>
+
+You need the :doc:`YAML component </components/yaml>` to use this feature.
+
 Learn more
 ----------
 
