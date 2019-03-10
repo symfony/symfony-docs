@@ -148,7 +148,7 @@ all the classes are already loaded as services. All you need to do is specify th
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" />

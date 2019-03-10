@@ -86,7 +86,7 @@ The route is simple:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_list" path="/blog">
                 <default key="_controller">AppBundle:Blog:list</default>
@@ -214,7 +214,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_list" path="/blog/{page}">
                 <default key="_controller">AppBundle:Blog:list</default>
@@ -304,7 +304,7 @@ So how can you make ``blog_list`` once again match when the user visits
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_list" path="/blog/{page}">
                 <default key="_controller">AppBundle:Blog:list</default>
@@ -395,7 +395,7 @@ With all of this in mind, check out this advanced example:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show"
                 path="/articles/{_locale}/{year}/{slug}.{_format}">
@@ -606,7 +606,7 @@ sees our annotation routes:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- the type is required to enable the annotation reader for this resource -->
             <import resource="@AppBundle/Controller/" type="annotation"/>

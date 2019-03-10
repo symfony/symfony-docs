@@ -122,7 +122,7 @@ The above would be the equivalent of writing the following into the
             xmlns:acme-something="http://example.org/schema/dic/acme_something"
             xmlns:acme-other="http://example.org/schema/dic/acme_other"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <acme-something:config use-acme-goodbye="false">
                 <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>

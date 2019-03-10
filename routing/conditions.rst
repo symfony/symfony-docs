@@ -49,7 +49,7 @@ define arbitrary matching logic, use the ``conditions`` routing option:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/contact">
                 <default key="_controller">AcmeDemoBundle:Main:contact</default>
