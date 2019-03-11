@@ -20,7 +20,7 @@ key in your application configuration.
 
     When using XML, you must use the ``http://symfony.com/schema/dic/security``
     namespace and the related XSD schema is available at:
-    ``http://symfony.com/schema/dic/services/services-1.0.xsd``
+    ``https://symfony.com/schema/dic/services/services-1.0.xsd``
 
 .. _reference-security-firewall-form-login:
 
@@ -301,7 +301,7 @@ Using the BCrypt Password Encoder
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -453,7 +453,7 @@ multiple firewalls, the "context" could actually be shared:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
                 <firewall name="somename" context="my_context">
@@ -527,7 +527,7 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
                 <firewall name="somename">

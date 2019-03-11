@@ -20,7 +20,7 @@ key in your application configuration.
 
     When using XML, you must use the ``http://symfony.com/schema/dic/debug``
     namespace and the related XSD schema is available at:
-    ``http://symfony.com/schema/dic/debug/debug-1.0.xsd``
+    ``https://symfony.com/schema/dic/debug/debug-1.0.xsd``
 
 Configuration
 -------------
@@ -89,8 +89,8 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:debug="http://symfony.com/schema/dic/debug"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/debug http://symfony.com/schema/dic/debug/debug-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/debug https://symfony.com/schema/dic/debug/debug-1.0.xsd">
 
             <debug:config dump-destination="php://stderr" />
         </container>

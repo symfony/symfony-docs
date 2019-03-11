@@ -29,9 +29,9 @@ In the development configuration file, change the ``transport`` setting to
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
+                https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer
-                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+                https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <!-- ... -->
             <swiftmailer:config
@@ -81,9 +81,9 @@ In the development configuration file, change the ``transport`` setting to
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/swiftmailer
-                    http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+                    https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
                 <!-- ... -->
                 <swiftmailer:config
