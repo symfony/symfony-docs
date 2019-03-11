@@ -533,7 +533,7 @@ Symfony provides the following env var processors:
             $container->setParameter('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%');
             $container->setParameter('raw_key', '%env(PRIVATE_KEY)%');
 
-    When the fallback parameter is ommited (e.g. ``env(default::API_KEY)``), the
+    When the fallback parameter is omitted (e.g. ``env(default::API_KEY)``), the
     value returned is ``null``.
 
     .. versionadded:: 4.3
