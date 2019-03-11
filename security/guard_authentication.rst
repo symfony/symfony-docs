@@ -252,7 +252,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
 You did it! You now have a fully-working API token authentication system. If your
 homepage required ``ROLE_USER``, then you could test it under different conditions:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # test with no token
     curl http://localhost:8000/
@@ -382,7 +382,7 @@ to cause a failure::
 In this case, since "ILuvAPIs" is a ridiculous API key, you could include an easter
 egg to return a custom message if someone tries this:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     curl -H "X-AUTH-TOKEN: ILuvAPIs" http://localhost:8000/
     # {"message":"ILuvAPIs is not a real API key: it's just a silly phrase"}

@@ -587,7 +587,7 @@ It's also possible to set this env var in the ``phpunit.xml.dist`` file.
 
 If you have installed the bridge through Composer, you can run it by calling e.g.:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ vendor/bin/simple-phpunit
 
