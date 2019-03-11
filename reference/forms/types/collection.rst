@@ -372,9 +372,7 @@ prototype_data
 
 Allows you to define specific data for the prototype. Each new row added will
 initially contain the data set by this option. By default, the data configured
-for all entries with the `entry_options`_ option will be used.
-
-.. code-block:: php
+for all entries with the `entry_options`_ option will be used::
 
     use Symfony\Component\Form\Extension\Core\Type\CollectionType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
