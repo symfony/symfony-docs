@@ -14,7 +14,7 @@ A Single-File Symfony Application
 Start with a completely empty directory and install these Symfony components
 via Composer:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/config symfony/http-kernel \
       symfony/http-foundation symfony/routing \
