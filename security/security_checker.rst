@@ -23,7 +23,9 @@ FriendsOfPHP organization.
     The ``security:check`` command terminates with a non-zero exit code if
     any of your dependencies is affected by a known security vulnerability.
     This way you can add it to your project build process and your continuous
-    integration workflows to make them fail when there are vulnerabilities.
+    integration workflows to make them fail when there are vulnerabilities which
+    would result in a non-zero exit code being returned when the command is 
+    executed.
 
 .. note::
 
