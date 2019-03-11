@@ -473,6 +473,10 @@ Because :doc:`the Form component </forms>` as well as `API Platform`_
 internally use the Validator Component, all your forms
 and web APIs will also automatically benefit from these default constraints.
 
+.. versionadded:: 4.3
+
+    The automatic validation has been added in Symfony 4.3.
+
 .. tip::
 
     Don't forget to add :doc:`more precise validation constraints </reference/constraints>`
