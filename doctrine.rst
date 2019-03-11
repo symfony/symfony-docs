@@ -415,7 +415,7 @@ is smart enough to know if it should INSERT or UPDATE your entity.
 Validating Objects
 ------------------
 
-:doc:`The Symfony validator </validation>` reuse Doctrine metadata
+:doc:`The Symfony validator </validation>` reuses Doctrine metadata
 to perform some basic validation tasks::
 
     // src/Controller/ProductController.php
@@ -454,7 +454,7 @@ to perform some basic validation tasks::
         }
     }
 
-The following table summaries the mapping between Doctrine metadata and
+The following table summarizes the mapping between Doctrine metadata and
 the corresponding validation constraints:
 
 +--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
