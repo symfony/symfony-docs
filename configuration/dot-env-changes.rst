@@ -82,7 +82,7 @@ changes can be made to any Symfony 3.4 or higher app:
        $ mv .env .env.local
        $ git mv .env.dist .env
 
-    You can also update the `comment on the top of .env`_ to reflect the new changes.
+   You can also update the `comment on the top of .env`_ to reflect the new changes.
 
 #. If you're using PHPUnit, you will also need to `create a new .env.test`_ file
    and update your `phpunit.xml.dist file`_ so it loads the ``config/bootstrap.php``
