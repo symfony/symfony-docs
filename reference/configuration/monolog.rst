@@ -20,7 +20,7 @@ in your application configuration.
 
     When using XML, you must use the ``http://symfony.com/schema/dic/monolog``
     namespace and the related XSD schema is available at:
-    ``http://symfony.com/schema/dic/monolog/monolog-1.0.xsd``
+    ``https://symfony.com/schema/dic/monolog/monolog-1.0.xsd``
 
 .. tip::
 

@@ -20,7 +20,7 @@ to :doc:`send emails </email>`. All these options are configured under the
 
     When using XML, you must use the ``http://symfony.com/schema/dic/swiftmailer``
     namespace and the related XSD schema is available at:
-    ``http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd``
+    ``https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd``
 
 Configuration
 -------------
@@ -284,9 +284,9 @@ key (the default mailer is identified by the ``default_mailer`` option):
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
+                https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer
-                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+                https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config default-mailer="second_mailer">
                 <swiftmailer:mailer name="first_mailer"/>
@@ -358,7 +358,7 @@ alternatives based on the :ref:`service binding <services-binding>` feature:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <defaults autowire="true" autoconfigure="true" public="false">

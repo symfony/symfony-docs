@@ -207,7 +207,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
             <config>
                 <!-- ... -->
 

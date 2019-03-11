@@ -420,7 +420,7 @@ routes with UTF-8 characters:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="route1" path="/category/{name}" controller="App\Controller\DefaultController::category">
                 <option key="utf8">true</option>
@@ -491,7 +491,7 @@ You can also include UTF-8 strings as routing requirements:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="route2" path="/category/{name}" controller="App\Controller\DefaultController::category">
                 <default key="name">한국어</default>

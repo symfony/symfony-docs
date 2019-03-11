@@ -54,7 +54,7 @@ You can also match on the HTTP *host* of the incoming request.
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="mobile_homepage"
                 path="/"
@@ -140,7 +140,7 @@ you can use placeholders in your hostname:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="projects_homepage"
                 path="/"
@@ -229,7 +229,7 @@ instance, if you want to match both ``m.example.com`` and
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="mobile_homepage"
                 path="/"
@@ -328,7 +328,7 @@ instance, if you want to match both ``m.example.com`` and
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/routing
-                    http://symfony.com/schema/routing/routing-1.0.xsd">
+                    https://symfony.com/schema/routing/routing-1.0.xsd">
 
                 <route id="mobile_homepage"
                     path="/"
@@ -409,7 +409,7 @@ You can also set the host option on imported routes:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="@AcmeHelloBundle/Resources/config/routing.xml" host="hello.example.com" />
         </routes>

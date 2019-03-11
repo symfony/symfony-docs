@@ -25,7 +25,7 @@ When overriding an existing definition, the original service is lost:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="App\Mailer" />
@@ -73,7 +73,7 @@ but keeps a reference of the old one as ``App\DecoratingMailer.inner``:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="App\Mailer" />
@@ -128,7 +128,7 @@ automatically changed to ``decorating_service_id + '.inner'``):
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="App\Mailer" />
@@ -186,7 +186,7 @@ automatically changed to ``decorating_service_id + '.inner'``):
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-                xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+                xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
                     <!-- ... -->
@@ -248,7 +248,7 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
 
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="Foo" />

@@ -46,9 +46,9 @@ an **event bus**. The event bus could have zero or more subscribers.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
+                https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- The bus that is going to be injected when injecting MessageBusInterface -->
@@ -131,7 +131,7 @@ binding capabilities to clarify which bus will be injected based on the argument
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <defaults>
@@ -150,12 +150,12 @@ binding capabilities to clarify which bus will be injected based on the argument
         $container->bind('$queryBus', 'messenger.bus.queries');
         $container->bind('$eventBus', 'messenger.bus.events');
 
-Restrict handlers per bus
+Restrict Handlers per Bus
 -------------------------
 
 By default, each handler will be available to handle messages on *all*
 of your buses. To prevent dispatching a message to the wrong bus without an error,
-you can restrict each handler to a specific bus using the `messenger.message_handler` tag:
+you can restrict each handler to a specific bus using the ``messenger.message_handler`` tag:
 
 .. configuration-block::
 
@@ -173,7 +173,7 @@ you can restrict each handler to a specific bus using the `messenger.message_han
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="App\MessageHandler\SomeCommandHandler">
@@ -223,7 +223,7 @@ the correct tag:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- command handlers -->
@@ -251,7 +251,7 @@ the correct tag:
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php')
             ->tag('messenger.message_handler', ['bus' => 'messenger.bus.queries']);
 
-Debugging the buses
+Debugging the Buses
 -------------------
 
 The ``debug:messenger`` command lists available messages & handlers per bus.

@@ -40,8 +40,8 @@ To use it, first register a new handler service:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
@@ -133,7 +133,7 @@ a second array argument to ``PdoSessionHandler``:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">

@@ -43,7 +43,7 @@ This can be done by importing routing resources from the main routing file:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- loads routes from the given routing file stored in some bundle -->
             <import resource="@AcmeOtherBundle/Resources/config/routing.yaml" />
@@ -120,7 +120,7 @@ suppose you want to prefix all application routes with ``/site`` (e.g.
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="../src/Controller/" type="annotation" prefix="/site" />
         </routes>
@@ -164,7 +164,7 @@ be prefixed with the string ``/site``.
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/routing
-                    http://symfony.com/schema/routing/routing-1.0.xsd">
+                    https://symfony.com/schema/routing/routing-1.0.xsd">
 
                 <import
                     resource="../src/Controller/"
@@ -235,7 +235,7 @@ a controller class or imported from a configuration file:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import
                 resource="../src/Controller/"

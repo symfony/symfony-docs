@@ -29,9 +29,9 @@ as integration of other related components:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
+                https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:form />
@@ -69,7 +69,7 @@ can add some configuration that looks like this:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:acme-social="http://example.org/schema/dic/acme_social"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
            <acme-social:config>
                <acme-social:twitter client-id="123" client-secret="your_secret" />
@@ -240,7 +240,7 @@ For example, imagine your bundle has the following example config:
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd">
+            https://symfony.com/schema/dic/services/services-1.0.xsd">
 
         <services>
             <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">

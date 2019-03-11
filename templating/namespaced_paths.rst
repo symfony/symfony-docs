@@ -46,7 +46,7 @@ First, register a namespace for this directory:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
                 <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
@@ -107,7 +107,7 @@ specific template doesn't exist.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
                 <twig:path namespace="theme">%kernel.project_dir%/vendor/acme/themes/theme1</twig:path>
