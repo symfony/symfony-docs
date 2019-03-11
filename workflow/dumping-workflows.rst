@@ -12,15 +12,11 @@ Use the ``GraphvizDumper`` or ``StateMachineGraphvizDumper`` to create DOT
 files, or use ``PlantUmlDumper`` for PlantUML files. Both types can be converted
 to PNG or SVG images.
 
-Images of the workflow defined above:
-
-.. code-block:: php
+Images of the workflow defined above::
 
     // dump-graph-dot.php
     $dumper = new GraphvizDumper();
     echo $dumper->dump($definition);
-
-.. code-block:: php
 
     // dump-graph-puml.php
     $dumper = new PlantUmlDumper();
