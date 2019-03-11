@@ -513,9 +513,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
             ->addArgument(new TaggedIteratorArgument('app.handler'));
 
 After compilation the ``HandlerCollection`` service is able to iterate over your
-application handlers.
-
-.. code-block:: php
+application handlers::
 
     // src/HandlerCollection.php
     namespace App;

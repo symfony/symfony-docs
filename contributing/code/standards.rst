@@ -27,9 +27,7 @@ Symfony Coding Standards in Detail
 ----------------------------------
 
 If you want to learn about the Symfony coding standards in detail, here's a
-short example containing most features described below:
-
-.. code-block:: php
+short example containing most features described below::
 
     /*
      * This file is part of the Symfony package.

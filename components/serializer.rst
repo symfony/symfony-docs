@@ -1102,9 +1102,7 @@ If you want to deserialize such a structure, you need to add the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
 to the set of normalizers. By appending ``[]`` to the type parameter of the
 :method:`Symfony\\Component\\Serializer\\Serializer::deserialize` method,
-you indicate that you're expecting an array instead of a single object.
-
-.. code-block:: php
+you indicate that you're expecting an array instead of a single object::
 
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
