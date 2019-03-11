@@ -19,10 +19,13 @@ Alternatively, you can clone the `<https://github.com/symfony/psr-http-message-b
 
 .. include:: /components/require_autoload.rst.inc
 
-The bridge also needs a PSR-7 implementation to allow converting HttpFoundation
-objects to PSR-7 objects. It provides native support for `Zend Diactoros`_.
-Use Composer (`zendframework/zend-diactoros on Packagist <https://packagist.org/packages/zendframework/zend-diactoros>`_)
-or refer to the project documentation to install it.
+The bridge also needs a PSR-7 and `PSR-17`_ implementation to allow converting
+HttpFoundation objects to PSR-7 objects. See a full list of PSR-17 libraries on
+that provide `psr/http-factory-implementation`_ on Packagist.org. Example:
+
+.. code-block:: terminal
+
+    $ composer require nyholm/psr7
 
 Usage
 -----
@@ -33,32 +36,35 @@ Converting from HttpFoundation Objects to PSR-7
 The bridge provides an interface of a factory called
 :class:`Symfony\\Bridge\\PsrHttpMessage\\HttpMessageFactoryInterface`
 that builds objects implementing PSR-7 interfaces from HttpFoundation objects.
-It also provide a default implementation using Zend Diactoros internally.
 
 The following code snippet explains how to convert a :class:`Symfony\\Component\\HttpFoundation\\Request`
-to a ``Zend\Diactoros\ServerRequest`` class implementing the
+to a ``Nyholm\Psr7\ServerRequest`` class implementing the
 ``Psr\Http\Message\ServerRequestInterface`` interface::
 
-    use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+    use Nyholm\Psr7\Factory\Psr17Factory;
+    use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
     use Symfony\Component\HttpFoundation\Request;
 
     $symfonyRequest = new Request([], [], [], [], [], ['HTTP_HOST' => 'dunglas.fr'], 'Content');
     // The HTTP_HOST server key must be set to avoid an unexpected error
 
-    $psr7Factory = new DiactorosFactory();
-    $psrRequest = $psr7Factory->createRequest($symfonyRequest);
+    $psr17Factory = new Psr17Factory();
+    $psrHttpFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
+    $psrRequest = $psrHttpFactory->createRequest($symfonyRequest);
 
 And now from a :class:`Symfony\\Component\\HttpFoundation\\Response` to a
-``Zend\Diactoros\Response`` class implementing the
+``Nyholm\Psr7\Response`` class implementing the
 ``Psr\Http\Message\ResponseInterface`` interface::
 
-    use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
+    use Nyholm\Psr7\Factory\Psr17Factory;
+    use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
     use Symfony\Component\HttpFoundation\Response;
 
     $symfonyResponse = new Response('Content');
 
-    $psr7Factory = new DiactorosFactory();
-    $psrResponse = $psr7Factory->createResponse($symfonyResponse);
+    $psr17Factory = new Psr17Factory();
+    $psrHttpFactory = new PsrHttpFactory($psr17Factory, $psr17Factory, $psr17Factory, $psr17Factory);
+    $psrResponse = $psrHttpFactory->createResponse($symfonyResponse);
 
 Converting Objects implementing PSR-7 Interfaces to HttpFoundation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -89,5 +95,6 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
     $symfonyResponse = $httpFoundationFactory->createResponse($psrResponse);
 
 .. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
-.. _`Zend Diactoros`: https://github.com/zendframework/zend-diactoros
+.. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
+.. _`psr/http-factory-implementation`: https://packagist.org/providers/psr/http-factory-implementation
 .. _`symfony/psr-http-message-bridge on Packagist`: https://packagist.org/packages/symfony/psr-http-message-bridge
