@@ -17,7 +17,7 @@ A Single-File Symfony Application
 Start with a completely empty directory. Get ``symfony/symfony`` as a dependency
 via Composer:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/symfony
 
@@ -76,7 +76,7 @@ Next, create an ``index.php`` file that creates a kernel class and executes it::
 
 That's it! To test it, you can start the built-in web server:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php -S localhost:8000
 
@@ -339,7 +339,7 @@ this:
 
 As before you can use PHP built-in server:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     cd web/
     $ php -S localhost:8000

@@ -199,7 +199,7 @@ in ``vendor/composer/autoload_classmap.php``.
 Execute this command to generate the class map (and make it part of your
 deployment process too):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer dump-autoload --optimize --no-dev --classmap-authoritative
 
