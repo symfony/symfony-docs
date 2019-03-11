@@ -151,7 +151,7 @@ the messenger component, the following configuration should have been created:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 transports:
@@ -159,7 +159,7 @@ the messenger component, the following configuration should have been created:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -178,7 +178,7 @@ the messenger component, the following configuration should have been created:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'transports' => [
@@ -221,7 +221,7 @@ configuration:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 routing:
@@ -229,7 +229,7 @@ configuration:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -250,7 +250,7 @@ configuration:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'routing' => [
@@ -269,7 +269,7 @@ instead of a class name:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 routing:
@@ -278,7 +278,7 @@ instead of a class name:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -302,7 +302,7 @@ instead of a class name:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'routing' => [
@@ -318,7 +318,7 @@ A class of messages can also be routed to multiple senders by specifying a list:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 routing:
@@ -326,7 +326,7 @@ A class of messages can also be routed to multiple senders by specifying a list:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -348,7 +348,7 @@ A class of messages can also be routed to multiple senders by specifying a list:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'routing' => [
@@ -364,7 +364,7 @@ while still having them passed to their respective handler:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 routing:
@@ -374,7 +374,7 @@ while still having them passed to their respective handler:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -395,7 +395,7 @@ while still having them passed to their respective handler:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'routing' => [
@@ -456,7 +456,7 @@ you can disable them like this:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 buses:
@@ -465,7 +465,7 @@ you can disable them like this:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -484,7 +484,7 @@ you can disable them like this:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'buses' => [
@@ -505,7 +505,7 @@ within the buses to add some extra capabilities like this:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 buses:
@@ -516,7 +516,7 @@ within the buses to add some extra capabilities like this:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -538,7 +538,7 @@ within the buses to add some extra capabilities like this:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'buses' => [
@@ -570,7 +570,7 @@ This middleware can be configured to define the entity manager to use:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 buses:
@@ -583,7 +583,7 @@ This middleware can be configured to define the entity manager to use:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -609,7 +609,7 @@ This middleware can be configured to define the entity manager to use:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'buses' => [
@@ -779,7 +779,7 @@ named transport using your own DSN:
 
     .. code-block:: yaml
 
-        # config/packages/messenger.yaml
+        # config/packages/framework.messenger.yaml
         framework:
             messenger:
                 transports:
@@ -787,7 +787,7 @@ named transport using your own DSN:
 
     .. code-block:: xml
 
-        <!-- config/packages/messenger.xml -->
+        <!-- config/packages/framework.messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -806,7 +806,7 @@ named transport using your own DSN:
 
     .. code-block:: php
 
-        // config/packages/messenger.php
+        // config/packages/framework.messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'transports' => [

@@ -28,7 +28,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: yaml
 
-        # config/packages/workflow.yaml
+        # config/packages/framework.workflows.yaml
         framework:
             workflows:
                 pull_request:

@@ -35,7 +35,7 @@ like this:
 
     .. code-block:: yaml
 
-        # config/packages/workflow.yaml
+        # config/packages/framework.workflows.yaml
         framework:
             workflows:
                 blog_publishing:

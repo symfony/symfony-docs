@@ -60,7 +60,7 @@ First, run this command to install the translator before using it:
 Configuration
 -------------
 
-The previous command creates an initial config file where you can define the
+The previous command creates initial config files where you can define the
 default locale of the app and the :ref:`fallback locales <translation-fallback>`
 that will be used if Symfony can't find some translation:
 
@@ -68,16 +68,22 @@ that will be used if Symfony can't find some translation:
 
     .. code-block:: yaml
 
-        # config/packages/translation.yaml
+        # config/packages/framework.default_locale.yaml
         framework:
             default_locale: 'en'
+                # ...
+
+    .. code-block:: yaml
+
+        # config/packages/framework.translator.yaml
+        framework:
             translator:
                 fallbacks: ['en']
                 # ...
 
     .. code-block:: xml
 
-        <!-- config/packages/translation.xml -->
+        <!-- config/packages/framework.translator.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -97,9 +103,16 @@ that will be used if Symfony can't find some translation:
 
     .. code-block:: php
 
-        // config/packages/translation.php
+        // config/packages/framework.default_locale.php
         $container->loadFromExtension('framework', [
             'default_locale' => 'en',
+            // ...
+        ]);
+
+    .. code-block:: php
+
+        // config/packages/framework.translator.php
+        $container->loadFromExtension('framework', [
             'translator' => ['fallbacks' => ['en']],
             // ...
         ]);
@@ -432,7 +445,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: yaml
 
-            # config/packages/translation.yaml
+            # config/packages/framework.translator.yaml
             framework:
                 translator:
                     paths:
@@ -440,7 +453,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: xml
 
-            <!-- config/packages/translation.xml -->
+            <!-- config/packages/framework.translator.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:framework="http://symfony.com/schema/dic/symfony"
@@ -460,7 +473,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: php
 
-            // config/packages/translation.php
+            // config/packages/framework.translator.php
             $container->loadFromExtension('framework', [
                 'translator' => [
                     'paths' => [

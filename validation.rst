@@ -212,13 +212,13 @@ file:
 
     .. code-block:: yaml
 
-        # config/packages/framework.yaml
+        # config/packages/framework.validation.yaml
         framework:
             validation: { enabled: true }
 
     .. code-block:: xml
 
-        <!-- config/packages/framework.xml -->
+        <!-- config/packages/framework.validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -234,7 +234,7 @@ file:
 
     .. code-block:: php
 
-        // config/packages/framework.php
+        // config/packages/framework.validation.php
         $container->loadFromExtension('framework', [
             'validation' => [
                 'enabled' => true,
@@ -248,13 +248,13 @@ previous configuration by the following:
 
     .. code-block:: yaml
 
-        # config/packages/framework.yaml
+        # config/packages/framework.validation.yaml
         framework:
             validation: { enable_annotations: true }
 
     .. code-block:: xml
 
-        <!-- config/packages/framework.xml -->
+        <!-- config/packages/framework.validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -270,7 +270,7 @@ previous configuration by the following:
 
     .. code-block:: php
 
-        // config/packages/framework.php
+        // config/packages/framework.validation.php
         $container->loadFromExtension('framework', [
             'validation' => [
                 'enable_annotations' => true,

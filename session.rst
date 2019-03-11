@@ -15,7 +15,7 @@ sessions, check their default configuration:
 
     .. code-block:: yaml
 
-        # config/packages/framework.yaml
+        # config/packages/framework.session.yaml
         framework:
             session:
                 # enables the support of sessions in the app
@@ -29,7 +29,7 @@ sessions, check their default configuration:
 
     .. code-block:: xml
 
-        <!-- config/packages/framework.xml -->
+        <!-- config/packages/framework.session.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -54,7 +54,7 @@ sessions, check their default configuration:
 
     .. code-block:: php
 
-        // config/packages/framework.php
+        // config/packages/framework.session.php
         $container->loadFromExtension('framework', [
             'session' => [
                 // enables the support of sessions in the app

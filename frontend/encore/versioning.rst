@@ -56,7 +56,7 @@ an ``img`` tag) to certain assets. If you're using Symfony, just activate the
 .. code-block:: yaml
 
     # this file is added automatically when installing Encore with Symfony Flex
-    # config/packages/assets.yaml
+    # config/packages/framework.assets.yaml
     framework:
         assets:
             json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
