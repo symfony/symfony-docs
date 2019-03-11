@@ -32,7 +32,7 @@ FriendsOfPHP organization.
     any of your dependencies is affected by a known security vulnerability.
     This allows you to add it to your project build process and your continuous
     integration workflows. Depending on the continious integration workflow, a
-    non-zero exit code could also result in the build process terminating in the 
+    non-zero exit code could result in the build process terminating in the 
     event of vulnerabilities being highlighted. 
 
 .. tip::
