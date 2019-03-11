@@ -574,7 +574,7 @@ placeholder:
         use App\Controller\BlogController;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('blog_list', '/blog/{page<\d+>?1')
+            $routes->add('blog_list', '/blog/{page<\d+>?1}')
                 ->controller([BlogController::class, 'list'])
             ;
         };
