@@ -309,9 +309,7 @@ In your extension, you can load this and dynamically set its arguments::
     Using the Config component is fully optional. The ``load()`` method gets an
     array of configuration values. You can simply parse these arrays yourself
     (e.g. by overriding configurations and using :phpfunction:`isset` to check
-    for the existence of a value). Be aware that it'll be very hard to support XML.
-
-    .. code-block:: php
+    for the existence of a value). Be aware that it'll be very hard to support XML::
 
         public function load(array $configs, ContainerBuilder $container)
         {

@@ -235,9 +235,7 @@ output produced by the different casters.
     in Symfony 3.1.
 
 If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
-next to its content:
-
-.. code-block:: php
+next to its content::
 
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
@@ -259,9 +257,7 @@ next to its content:
     // ]
 
 If ``DUMP_LIGHT_ARRAY`` is set, then arrays are dumped in a shortened format
-similar to PHP's short array notation:
-
-.. code-block:: php
+similar to PHP's short array notation::
 
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
@@ -283,9 +279,7 @@ similar to PHP's short array notation:
     // ]
 
 If you would like to use both options, then you can just    combine them by
-using a the logical OR operator ``|``:
-
-.. code-block:: php
+using a the logical OR operator ``|``::
 
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;

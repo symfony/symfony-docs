@@ -16,9 +16,7 @@ User checkers are classes that must implement the
 defines two methods called ``checkPreAuth()`` and ``checkPostAuth()`` to
 perform checks before and after user authentication. If one or more conditions
 are not met, an exception should be thrown which extends the
-:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException`.
-
-.. code-block:: php
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException`::
 
     namespace AppBundle\Security;
 
