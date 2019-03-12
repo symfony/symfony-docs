@@ -48,7 +48,6 @@ configure the service container to use the
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -116,7 +115,6 @@ Configuration of the service container then looks like this:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -201,7 +199,6 @@ example takes the ``templating`` service as an argument:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
