@@ -69,9 +69,9 @@ Platform.sh how to deploy your application (read more about
     hooks:
         build: |
           rm web/app_dev.php
-          bin/console --env=prod assetic:dump --no-debug
+          php bin/console --env=prod assetic:dump --no-debug
         deploy: |
-          bin/console --env=prod cache:clear
+          php bin/console --env=prod cache:clear
 
 For best practices, you should also add a ``.platform`` folder at the root of
 your Git repository which contains the following files:
