@@ -41,7 +41,7 @@ Take the following ``access_control`` entries as an example:
             # ...
             access_control:
                 - { path: ^/admin, roles: ROLE_USER_IP, ip: 127.0.0.1 }
-                - { path: ^/admin, roles: ROLE_USER_IP, ip: 127.0.0.1, port: 8080 }
+                - { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8080 }
                 - { path: ^/admin, roles: ROLE_USER_HOST, host: symfony\.com$ }
                 - { path: ^/admin, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
                 - { path: ^/admin, roles: ROLE_USER }
@@ -59,7 +59,7 @@ Take the following ``access_control`` entries as an example:
             <config>
                 <!-- ... -->
                 <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
-                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" port="8080" />
+                <rule path="^/admin" role="ROLE_USER_PORT" ip="127.0.0.1" port="8080" />
                 <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$" />
                 <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT" />
                 <rule path="^/admin" role="ROLE_USER" />
@@ -79,7 +79,7 @@ Take the following ``access_control`` entries as an example:
                 ],
                 [
                     'path' => '^/admin',
-                    'role' => 'ROLE_USER_IP',
+                    'role' => 'ROLE_USER_PORT',
                     'ip' => '127.0.0.1',
                     'port' => '8080',
                 ),
