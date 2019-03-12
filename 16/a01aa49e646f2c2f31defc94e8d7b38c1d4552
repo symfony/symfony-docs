@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-11T09:54:52Z
+
+@shreypuranik thanks for this contribution!
+
+The way I understood your contribution is like this: "be careful, if you add this command and there are vulnerabilities, the build will fail". The way it's explained looks like a bad thing ... but that's precisely what we want to emphasize: add this command to your CI, because when there are vulnerabilities, it will fail.
+
+I've reworded it a bit to make this more clear. Is it OK to you? Thanks.
+
+---------------------------------------------------------------------------
+
+by shreypuranik at 2019-03-11T10:03:59Z
+
+Hi @javiereguiluz, thanks for reviewing so promptly. I completely agree with your amended commit, as it certainly reads a lot more transparently. I have added a minor line to emphasise the non-zero exit code. Hope thats ok? Thanks,
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-11T12:24:07Z
+
+@shreypuranik I'm afraid I don't agree with your last proposal 😓  I think it's redundant with the first phrase, which also talks about non-zero exit code.
+
+---------------------------------------------------------------------------
+
+by shreypuranik at 2019-03-11T12:36:02Z
+
+@javiereguiluz Thanks for reviewing. I have just pushed up a further commit which removes the additional line about the non-zero exit code.
