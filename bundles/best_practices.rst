@@ -265,11 +265,8 @@ following standardized instructions in your ``README.md`` file.
         -------------------------
 
         Then, enable the bundle by adding it to the list of registered bundles
-        in the ``app/AppKernel.php`` file of your project:
+        in the ``app/AppKernel.php`` file of your project::
 
-        .. code-block:: php
-
-            <?php
             // app/AppKernel.php
 
             // ...
