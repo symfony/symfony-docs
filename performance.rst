@@ -75,7 +75,7 @@ overhead that can be avoided as follows:
     opcache.validate_timestamps=0
 
 After each deploy, you must empty and regenerate the cache of OPcache. Otherwise
-you won't see the updates made in the application. Given than in PHP, the CLI
+you won't see the updates made in the application. Given that in PHP, the CLI
 and the web processes don't share the same OPcache, you cannot clear the web
 server OPcache by executing some command in your terminal. These are some of the
 possible solutions:
