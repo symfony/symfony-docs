@@ -25,18 +25,17 @@ FriendsOfPHP organization.
     This way you can add it to your project build process and your continuous
     integration workflows to make them fail when there are vulnerabilities.
 
-.. tip::
-
-    Earlier versions of this command used a tool hosted at a now deprecated URL,
-    with the tool having since been moved to a new location, which has been 
-    reflected in newer versions of the bundle. Use the latest version of the 
-    command to avoid getting exit code zero and breaking existing build plans
-    if the command has been integrated into project build process.
-    
 .. note::
 
     To enable the ``security:check`` command, make sure the
     `SensioDistributionBundle`_ is installed and enabled in your application.
+
+.. note::
+
+    Make sure that the installed version of the security checker package is at
+    least 5.0 (run ``composer show sensiolabs/security-checker`` to show it).
+    Older versions checked the security vulnerabilities using an URL that is no
+    longer available and the command execution will result in an error.
 
 .. tip::
 
