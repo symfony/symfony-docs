@@ -19,9 +19,10 @@ Alternatively, you can clone the `<https://github.com/symfony/psr-http-message-b
 
 .. include:: /components/require_autoload.rst.inc
 
-The bridge also needs a PSR-7 and `PSR-17`_ implementation to allow converting
-HttpFoundation objects to PSR-7 objects. See a full list of PSR-17 libraries on
-that provide `psr/http-factory-implementation`_ on Packagist.org. Example:
+The bridge also needs a PSR-7 and `PSR-17`_ implementation to convert
+HttpFoundation objects to PSR-7 objects. The following command installs the
+``nyholm/psr7`` library, a lightweight and fast PSR-7 implementation, but you
+can use any of the `libraries that implement psr/http-factory-implementation`_:
 
 .. code-block:: terminal
 
@@ -96,5 +97,4 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
 
 .. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
-.. _`psr/http-factory-implementation`: https://packagist.org/providers/psr/http-factory-implementation
-.. _`symfony/psr-http-message-bridge on Packagist`: https://packagist.org/packages/symfony/psr-http-message-bridge
+.. _`libraries that implement psr/http-factory-implementation`: https://packagist.org/providers/psr/http-factory-implementation
