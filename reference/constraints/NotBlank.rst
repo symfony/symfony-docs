@@ -64,7 +64,7 @@ class were not blank, you could do the following:
 
             <class name="AppBundle\Entity\Author">
                 <property name="firstName">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
             </class>
         </constraint-mapping>

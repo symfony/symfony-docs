@@ -65,7 +65,7 @@ entry in that array:
                 <property name="favoriteColors">
                     <constraint name="All">
                         <option name="constraints">
-                            <constraint name="NotBlank" />
+                            <constraint name="NotBlank"/>
                             <constraint name="Length">
                                 <option name="min">5</option>
                             </constraint>

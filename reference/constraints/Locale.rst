@@ -58,7 +58,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\User">
                 <property name="locale">
-                    <constraint name="Locale" />
+                    <constraint name="Locale"/>
                 </property>
             </class>
         </constraint-mapping>

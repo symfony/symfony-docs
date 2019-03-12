@@ -120,17 +120,17 @@ An example WSDL is below.
 
         <types>
             <xsd:schema targetNamespace="urn:hellowsdl">
-                <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
-                <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+                <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+                <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
             </xsd:schema>
         </types>
 
         <message name="helloRequest">
-            <part name="name" type="xsd:string" />
+            <part name="name" type="xsd:string"/>
         </message>
 
         <message name="helloResponse">
-            <part name="return" type="xsd:string" />
+            <part name="return" type="xsd:string"/>
         </message>
 
         <portType name="hellowsdlPortType">
@@ -160,7 +160,7 @@ An example WSDL is below.
 
         <service name="hellowsdl">
             <port name="hellowsdlPort" binding="tns:hellowsdlBinding">
-                <soap:address location="http://example.com/app.php/soap" />
+                <soap:address location="http://example.com/app.php/soap"/>
             </port>
         </service>
     </definitions>

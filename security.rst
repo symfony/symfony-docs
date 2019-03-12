@@ -68,15 +68,15 @@ configuration looks like this:
 
             <config>
                 <provider name="in_memory">
-                    <memory />
+                    <memory/>
                 </provider>
 
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
-                    security="false" />
+                    security="false"/>
 
                 <firewall name="main">
-                    <anonymous />
+                    <anonymous/>
                 </firewall>
             </config>
         </srv:container>
@@ -167,8 +167,8 @@ To activate this, add the ``http_basic`` key under your firewall:
                 <!-- ... -->
 
                 <firewall name="main">
-                    <anonymous />
-                    <http-basic />
+                    <anonymous/>
+                    <http-basic/>
                 </firewall>
             </config>
         </srv:container>
@@ -246,7 +246,7 @@ user to be logged in to access this URL:
                 </firewall>
 
                 <!-- require ROLE_ADMIN for /admin* -->
-                <rule path="^/admin" role="ROLE_ADMIN" />
+                <rule path="^/admin" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -339,8 +339,8 @@ provider, but it's better to think of it as an "in configuration" provider:
             <config>
                 <provider name="in_memory">
                     <memory>
-                        <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                        <user name="admin" password="kitten" roles="ROLE_ADMIN" />
+                        <user name="ryan" password="ryanpass" roles="ROLE_USER"/>
+                        <user name="admin" password="kitten" roles="ROLE_ADMIN"/>
                     </memory>
                 </provider>
                 <!-- ... -->
@@ -413,7 +413,7 @@ To fix this, add an ``encoders`` key:
                 <!-- ... -->
 
                 <encoder class="Symfony\Component\Security\Core\User\User"
-                    algorithm="plaintext" />
+                    algorithm="plaintext"/>
                 <!-- ... -->
             </config>
         </srv:container>
@@ -493,7 +493,7 @@ is ``bcrypt``:
 
                 <encoder class="Symfony\Component\Security\Core\User\User"
                     algorithm="bcrypt"
-                    cost="12" />
+                    cost="12"/>
 
                 <!-- ... -->
             </config>
@@ -557,8 +557,8 @@ It will give you something like this:
 
                 <provider name="in_memory">
                     <memory>
-                        <user name="ryan" password="$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli" roles="ROLE_USER" />
-                        <user name="admin" password="$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G" roles="ROLE_ADMIN" />
+                        <user name="ryan" password="$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli" roles="ROLE_USER"/>
+                        <user name="admin" password="$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G" roles="ROLE_ADMIN"/>
                     </memory>
                 </provider>
             </config>
@@ -733,7 +733,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
                 </firewall>
 
                 <!-- require ROLE_ADMIN for /admin* -->
-                <rule path="^/admin" role="ROLE_ADMIN" />
+                <rule path="^/admin" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -789,8 +789,8 @@ matches the URL.
             <config>
                 <!-- ... -->
 
-                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
-                <rule path="^/admin" role="ROLE_ADMIN" />
+                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN"/>
+                <rule path="^/admin" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -1126,7 +1126,7 @@ the firewall can handle this automatically for you when you activate the
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <logout path="/logout" target="/" />
+                    <logout path="/logout" target="/"/>
                 </firewall>
             </config>
         </srv:container>
@@ -1164,7 +1164,7 @@ Next, you'll need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="logout" path="/logout" />
+            <route id="logout" path="/logout"/>
         </routes>
 
     ..  code-block:: php

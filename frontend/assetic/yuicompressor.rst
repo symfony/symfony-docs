@@ -57,10 +57,10 @@ stylesheets:
             <assetic:config>
                 <assetic:filter
                     name="yui_css"
-                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar" />
+                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar"/>
                 <assetic:filter
                     name="yui_js"
-                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar" />
+                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar"/>
             </assetic:config>
         </container>
 
@@ -115,7 +115,7 @@ can be repeated to minify your stylesheets.
 .. code-block:: html+twig
 
     {% stylesheets '@AppBundle/Resources/public/css/*' filter='yui_css' %}
-        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
 Disable Minification in Debug Mode

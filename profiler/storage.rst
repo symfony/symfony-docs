@@ -34,7 +34,7 @@ directory. If you want to use another location to store the profiles, define the
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:profiler dsn="file:/tmp/symfony/profiler" />
+                <framework:profiler dsn="file:/tmp/symfony/profiler"/>
             </framework:config>
         </container>
 

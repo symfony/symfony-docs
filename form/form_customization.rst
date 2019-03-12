@@ -40,7 +40,7 @@ above templates would render:
         <ul>
             <li>This field is required</li>
         </ul>
-        <input type="number" id="form_age" name="form[age]" />
+        <input type="number" id="form_age" name="form[age]"/>
     </div>
 
 To quickly prototype and test a form, you can render the entire form with
@@ -122,7 +122,7 @@ renders:
 
 .. code-block:: html
 
-    <input type="number" id="form_age" name="form[age]" required="required" value="33" />
+    <input type="number" id="form_age" name="form[age]" required="required" value="33"/>
 
 Internally, Symfony uses the ``integer_widget`` fragment to render the field.
 This is because the field type is ``integer`` and you're rendering its ``widget``

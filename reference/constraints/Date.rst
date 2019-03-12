@@ -55,7 +55,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\Author">
                 <property name="birthday">
-                    <constraint name="Date" />
+                    <constraint name="Date"/>
                 </property>
             </class>
         </constraint-mapping>

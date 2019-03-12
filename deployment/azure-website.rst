@@ -407,25 +407,25 @@ application, configure it with the following content:
       <system.webServer>
         <rewrite>
           <rules>
-            <clear />
+            <clear/>
             <rule name="BlockAccessToPublic" patternSyntax="Wildcard" stopProcessing="true">
-              <match url="*" />
+              <match url="*"/>
               <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
-                <add input="{URL}" pattern="/web/*" />
+                <add input="{URL}" pattern="/web/*"/>
               </conditions>
-              <action type="CustomResponse" statusCode="403" statusReason="Forbidden: Access is denied." statusDescription="You do not have permission to view this directory or page using the credentials that you supplied." />
+              <action type="CustomResponse" statusCode="403" statusReason="Forbidden: Access is denied." statusDescription="You do not have permission to view this directory or page using the credentials that you supplied."/>
             </rule>
             <rule name="RewriteAssetsToPublic" stopProcessing="true">
-              <match url="^(.*)(\.css|\.js|\.jpg|\.png|\.gif|\.ico)$" />
+              <match url="^(.*)(\.css|\.js|\.jpg|\.png|\.gif|\.ico)$"/>
               <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
               </conditions>
-              <action type="Rewrite" url="web/{R:0}" />
+              <action type="Rewrite" url="web/{R:0}"/>
             </rule>
             <rule name="RewriteRequestsToPublic" stopProcessing="true">
-              <match url="^(.*)$" />
+              <match url="^(.*)$"/>
               <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
               </conditions>
-              <action type="Rewrite" url="web/app.php/{R:0}" />
+              <action type="Rewrite" url="web/app.php/{R:0}"/>
             </rule>
           </rules>
         </rewrite>

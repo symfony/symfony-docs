@@ -56,7 +56,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\Journal">
                 <property name="issn">
-                    <constraint name="Issn" />
+                    <constraint name="Issn"/>
                 </property>
             </class>
         </constraint-mapping>

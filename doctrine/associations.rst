@@ -93,7 +93,7 @@ property on the ``Product`` class, annotated as follows:
                     inversed-by="products"
                     join-column="category">
 
-                    <join-column name="category_id" referenced-column-name="id" />
+                    <join-column name="category_id" referenced-column-name="id"/>
                 </many-to-one>
             </entity>
         </doctrine-mapping>
@@ -157,7 +157,7 @@ to hold those associated objects.
                 <one-to-many
                     field="products"
                     target-entity="Product"
-                    mapped-by="category" />
+                    mapped-by="category"/>
 
                 <!--
                     don't forget to init the collection in

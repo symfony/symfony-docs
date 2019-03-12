@@ -98,12 +98,12 @@ The following configuration code shows how you can configure two entity managers
 
                 <doctrine:orm default-entity-manager="default">
                     <doctrine:entity-manager name="default" connection="default">
-                        <doctrine:mapping name="AppBundle" />
-                        <doctrine:mapping name="AcmeStoreBundle" />
+                        <doctrine:mapping name="AppBundle"/>
+                        <doctrine:mapping name="AcmeStoreBundle"/>
                     </doctrine:entity-manager>
 
                     <doctrine:entity-manager name="customer" connection="customer">
-                        <doctrine:mapping name="AcmeCustomerBundle" />
+                        <doctrine:mapping name="AcmeCustomerBundle"/>
                     </doctrine:entity-manager>
                 </doctrine:orm>
             </doctrine:config>

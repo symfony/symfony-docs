@@ -41,7 +41,7 @@ file:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:csrf-protection enabled="true" />
+                <framework:csrf-protection enabled="true"/>
             </framework:config>
         </container>
 
@@ -85,7 +85,7 @@ use the default provider available in the security component:
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <form-login csrf-token-generator="security.csrf.token_manager" />
+                    <form-login csrf-token-generator="security.csrf.token_manager"/>
                 </firewall>
             </config>
         </srv:container>

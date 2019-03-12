@@ -55,13 +55,13 @@ managers that use this connection.
                 <!-- ... -->
 
                 <service id="AppBundle\EventListener\SearchIndexer">
-                    <tag name="doctrine.event_listener" event="postPersist" />
+                    <tag name="doctrine.event_listener" event="postPersist"/>
                 </service>
                 <service id="AppBundle\EventListener\SearchIndexer2">
-                    <tag name="doctrine.event_listener" event="postPersist" connection="default" />
+                    <tag name="doctrine.event_listener" event="postPersist" connection="default"/>
                 </service>
                 <service id="AppBundle\EventListener\SearchIndexerSubscriber">
-                    <tag name="doctrine.event_subscriber" connection="default" />
+                    <tag name="doctrine.event_subscriber" connection="default"/>
                 </service>
             </services>
         </container>
@@ -222,7 +222,7 @@ to the tag like so:
 
             <services>
                 <service id="my.listener" class="AppBundle\EventListener\SearchIndexer">
-                    <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
+                    <tag name="doctrine.event_listener" event="postPersist" lazy="true"/>
                 </service>
             </services>
         </container>
@@ -272,10 +272,10 @@ numbers mean that listeners are invoked earlier.
 
             <services>
                 <service id="my.listener.with_high_priority" class="AppBundle\EventListener\MyHighPriorityListener">
-                    <tag name="doctrine.event_listener" event="postPersist" priority="10" />
+                    <tag name="doctrine.event_listener" event="postPersist" priority="10"/>
                 </service>
                 <service id="my.listener.with_low_priority" class="AppBundle\EventListener\MyLowPriorityListener">
-                    <tag name="doctrine.event_listener" event="postPersist" priority="1" />
+                    <tag name="doctrine.event_listener" event="postPersist" priority="1"/>
                 </service>
             </services>
         </container>

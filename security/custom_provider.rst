@@ -213,7 +213,7 @@ to the list of providers in the "security" section. Choose a name for the user p
             <config>
                 <!-- ... -->
 
-                <provider name="webservice" id="AppBundle\Security\User\WebserviceUserProvider" />
+                <provider name="webservice" id="AppBundle\Security\User\WebserviceUserProvider"/>
             </config>
         </srv:container>
 
@@ -261,7 +261,7 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
                 <!-- ... -->
 
                 <encoder class="AppBundle\Security\User\WebserviceUser"
-                    algorithm="bcrypt" />
+                    algorithm="bcrypt"/>
             </config>
         </srv:container>
 
@@ -332,7 +332,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
 
                     <encoder class="AppBundle\Security\User\WebserviceUser"
                         algorithm="bcrypt"
-                        cost="12" />
+                        cost="12"/>
                 </config>
             </srv:container>
 

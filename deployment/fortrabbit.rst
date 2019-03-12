@@ -54,7 +54,7 @@ to redirect it to :phpfunction:`error_log`:
 
             <monolog:config>
                 <!-- ... -->
-                <monolog:handler name="nested" type="error_log" />
+                <monolog:handler name="nested" type="error_log"/>
             </monolog:config>
         </container>
 
@@ -144,14 +144,14 @@ Make sure this file is imported into the main config file:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="config.xml" />
-                <import resource="config_prod_secrets.php" />
+                <import resource="config.xml"/>
+                <import resource="config_prod_secrets.php"/>
             </imports>
 
             <!-- .. -->
             <framework:config>
                 <!-- .. -->
-                <framework:session handler-id="null" />
+                <framework:session handler-id="null"/>
             </framework:config>
         </container>
 

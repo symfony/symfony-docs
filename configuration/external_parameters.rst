@@ -175,7 +175,7 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:router http-port="%env(int:HTTP_PORT)%" />
+                <framework:router http-port="%env(int:HTTP_PORT)%"/>
             </framework:config>
         </container>
 
@@ -219,7 +219,7 @@ Symfony provides the following env var processors:
                     <parameter key="env(SECRET)">some_secret</parameter>
                 </parameters>
 
-                <framework:config secret="%env(string:SECRET)%" />
+                <framework:config secret="%env(string:SECRET)%"/>
             </container>
 
         .. code-block:: php
@@ -259,7 +259,7 @@ Symfony provides the following env var processors:
                     <parameter key="env(HTTP_METHOD_OVERRIDE)">true</parameter>
                 </parameters>
 
-                <framework:config http-methode-override="%env(bool:HTTP_METHOD_OVERRIDE)%" />
+                <framework:config http-methode-override="%env(bool:HTTP_METHOD_OVERRIDE)%"/>
             </container>
 
         .. code-block:: php
@@ -305,7 +305,7 @@ Symfony provides the following env var processors:
                 </parameters>
 
                 <security:config>
-                    <rule path="^/health-check$" methods="%env(const:HEALTH_CHECK_METHOD)%" />
+                    <rule path="^/health-check$" methods="%env(const:HEALTH_CHECK_METHOD)%"/>
                 </security:config>
             </container>
 
@@ -355,7 +355,7 @@ Symfony provides the following env var processors:
                     <parameter key="env(TRUSTED_HOSTS)">["10.0.0.1", "10.0.0.2"]</parameter>
                 </parameters>
 
-                <framework:config trusted-hosts="%env(json:TRUSTED_HOSTS)%" />
+                <framework:config trusted-hosts="%env(json:TRUSTED_HOSTS)%"/>
             </container>
 
         .. code-block:: php
@@ -395,7 +395,7 @@ Symfony provides the following env var processors:
                     <parameter key="env(SENTRY_DSN)">http://%env(HOST)%/project</parameter>
                 </parameters>
 
-                <sentry:config dsn="%env(resolve:SENTRY_DSN)%" />
+                <sentry:config dsn="%env(resolve:SENTRY_DSN)%"/>
             </container>
 
         .. code-block:: php
@@ -436,7 +436,7 @@ Symfony provides the following env var processors:
                     <parameter key="env(AUTH_FILE)">../config/auth.json</parameter>
                 </parameters>
 
-                <google auth="%env(file:AUTH_FILE)%" />
+                <google auth="%env(file:AUTH_FILE)%"/>
             </container>
 
         .. code-block:: php
@@ -523,7 +523,7 @@ in the container. The following imports a file named ``parameters.php``.
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
-                <import resource="parameters.php" />
+                <import resource="parameters.php"/>
             </imports>
 
         </container>

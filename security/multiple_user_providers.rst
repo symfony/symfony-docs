@@ -50,12 +50,12 @@ a new provider that chains the two together:
 
                 <provider name="in_memory">
                     <memory>
-                        <user name="foo" password="test" />
+                        <user name="foo" password="test"/>
                     </memory>
                 </provider>
 
                 <provider name="user_db">
-                    <entity class="AppBundle\Entity\User" property="username" />
+                    <entity class="AppBundle\Entity\User" property="username"/>
                 </provider>
             </config>
         </srv:container>
@@ -133,8 +133,8 @@ the first provider is always used:
             <config>
                 <firewall name="secured_area" pattern="^/" provider="user_db">
                     <!-- ... -->
-                    <http-basic realm="Secured Demo Area" provider="in_memory" />
-                    <form-login />
+                    <http-basic realm="Secured Demo Area" provider="in_memory"/>
+                    <form-login/>
                 </firewall>
             </config>
         </srv:container>

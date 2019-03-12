@@ -64,7 +64,7 @@ your application:
                 http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config debug="%kernel.debug%" use-controller="%kernel.debug%">
-                <assetic:filters cssrewrite="null" />
+                <assetic:filters cssrewrite="null"/>
             </assetic:config>
 
             <!-- ... -->
@@ -181,7 +181,7 @@ except with the ``stylesheets`` tag:
 .. code-block:: html+twig
 
     {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
 .. note::
@@ -195,7 +195,7 @@ except with the ``stylesheets`` tag:
         {# ... #}
         {% block stylesheets %}
             {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
+                <link rel="stylesheet" href="{{ asset_url }}"/>
             {% endstylesheets %}
         {% endblock %}
         {# ... #}
@@ -223,7 +223,7 @@ To include an image you can use the ``image`` tag.
 .. code-block:: html+twig
 
     {% image '@AppBundle/Resources/public/images/example.jpg' %}
-        <img src="{{ asset_url }}" alt="Example" />
+        <img src="{{ asset_url }}" alt="Example"/>
     {% endimage %}
 
 You can also use Assetic for image optimization. More information in
@@ -411,7 +411,7 @@ should be defined:
             <assetic:config>
                 <assetic:filter
                     name="uglifyjs2"
-                    bin="/usr/local/bin/uglifyjs" />
+                    bin="/usr/local/bin/uglifyjs"/>
             </assetic:config>
         </container>
 
@@ -536,7 +536,7 @@ the following change in your ``config_dev.yml`` file:
                 http://symfony.com/schema/dic/assetic
                 http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
-            <assetic:config use-controller="false" />
+            <assetic:config use-controller="false"/>
         </container>
 
     .. code-block:: php

@@ -26,7 +26,7 @@ if the service does not exist:
                 <!-- ... -->
 
                 <service id="AppBundle\Newsletter\NewsletterManager">
-                    <argument type="service" id="logger" on-invalid="null" />
+                    <argument type="service" id="logger" on-invalid="null"/>
                 </service>
             </services>
         </container>

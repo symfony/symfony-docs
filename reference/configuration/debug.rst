@@ -92,7 +92,7 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/debug https://symfony.com/schema/dic/debug/debug-1.0.xsd">
 
-            <debug:config dump-destination="php://stderr" />
+            <debug:config dump-destination="php://stderr"/>
         </container>
 
     .. code-block:: php

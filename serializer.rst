@@ -42,10 +42,10 @@ it in your configuration:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
             <framework:config>
                 <!-- ... -->
-                <framework:serializer enable-annotations="true" />
+                <framework:serializer enable-annotations="true"/>
                 <!--
                 Alternatively, if you don't want to use annotations
-                <framework:serializer enabled="true" />
+                <framework:serializer enabled="true"/>
                 -->
             </framework:config>
         </container>
@@ -142,7 +142,7 @@ properties and setters (``setXxx()``) to change properties:
 
             <services>
                 <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
-                    <tag name="serializer.normalizer" />
+                    <tag name="serializer.normalizer"/>
                 </service>
             </services>
         </container>
@@ -195,7 +195,7 @@ with the following configuration:
 
             <framework:config>
                 <!-- ... -->
-                <framework:serializer enable-annotations="true" />
+                <framework:serializer enable-annotations="true"/>
             </framework:config>
         </container>
 
@@ -262,7 +262,7 @@ value:
         <!-- app/config/config.xml -->
         <framework:config>
             <!-- ... -->
-            <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case" />
+            <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case"/>
         </framework:config>
 
     .. code-block:: php

@@ -88,7 +88,7 @@ your class as a service and using the  ``form.type_extension`` tag:
 
             <services>
                 <service id="AppBundle\Form\Extension\ImageTypeExtension">
-                    <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
+                    <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType"/>
                 </service>
             </services>
         </container>

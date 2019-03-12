@@ -104,7 +104,7 @@ your JavaScripts:
                 <!-- bin: the path to the uglifyjs executable -->
                 <assetic:filter
                     name="uglifyjs2"
-                    bin="/usr/local/bin/uglifyjs" />
+                    bin="/usr/local/bin/uglifyjs"/>
             </assetic:config>
         </container>
 
@@ -172,7 +172,7 @@ can configure its location using the ``node`` key:
                 node="/usr/bin/nodejs" >
                 <assetic:filter
                     name="uglifyjs2"
-                    bin="/usr/local/bin/uglifyjs" />
+                    bin="/usr/local/bin/uglifyjs"/>
             </assetic:config>
         </container>
 
@@ -275,7 +275,7 @@ Next, add the configuration for this filter:
             <assetic:config>
                 <assetic:filter
                     name="uglifycss"
-                    bin="/usr/local/bin/uglifycss" />
+                    bin="/usr/local/bin/uglifycss"/>
             </assetic:config>
         </container>
 
@@ -296,7 +296,7 @@ helper:
 .. code-block:: html+twig
 
     {% stylesheets 'bundles/App/css/*' filter='uglifycss' filter='cssrewrite' %}
-         <link rel="stylesheet" href="{{ asset_url }}" />
+         <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
 Just like with the ``uglifyjs2`` filter, if you prefix the filter name with

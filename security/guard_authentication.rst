@@ -116,7 +116,7 @@ Next, make sure you've configured a "user provider" for the user:
                 <!-- ... -->
 
                 <provider name="your_db_provider">
-                    <entity class="AppBundle:User" />
+                    <entity class="AppBundle:User"/>
                 </provider>
 
                 <!-- ... -->
@@ -307,7 +307,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                     pattern="^/"
                     anonymous="true"
                 >
-                    <logout />
+                    <logoutOjso/>
 
                     <guard>
                         <authenticator>AppBundle\Security\TokenAuthenticator</authenticator>

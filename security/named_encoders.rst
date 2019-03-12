@@ -84,7 +84,7 @@ named encoders:
                 <!-- ... -->
                 <encoder class="harsh"
                     algorithm="bcrypt"
-                    cost="15" />
+                    cost="15"/>
             </config>
         </srv:container>
 
@@ -160,7 +160,7 @@ you must register a service for it in order to use it as a named encoder:
             <config>
                 <!-- ... -->
                 <encoder class="app_encoder"
-                    id="app.password_encoder_service" />
+                    id="app.password_encoder_service"/>
             </config>
         </srv:container>
 

@@ -18,8 +18,8 @@ much more concise:
 
 .. code-block:: html+twig
 
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}"/>
 
     {# ... #}
 
@@ -62,7 +62,7 @@ matter of wrapping all the assets with a single Twig tag:
         'css/bootstrap.min.css'
         'css/main.css'
         filter='cssrewrite' output='css/compiled/app.css' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
     {# ... #}

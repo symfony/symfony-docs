@@ -59,7 +59,7 @@ a relative/absolute URL or a Symfony route name:
                 <!-- ... -->
 
                 <firewall name="main">
-                    <form-login default-target-path="after_login_route_name" />
+                    <form-login default-target-path="after_login_route_name"/>
                 </firewall>
             </config>
         </srv:container>
@@ -117,7 +117,7 @@ previously requested URL and always redirect to the default page:
 
                 <firewall name="main">
                     <!-- ... -->
-                    <form-login always-use-default-target-path="true" />
+                    <form-login always-use-default-target-path="true"/>
                 </firewall>
             </config>
         </srv:container>
@@ -163,8 +163,8 @@ Defining the redirect URL via POST using a hidden form field:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="_target_path" value="{{ path('account') }}" />
-        <input type="submit" name="login" />
+        <input type="hidden" name="_target_path" value="{{ path('account') }}"/>
+        <input type="submit" name="login"/>
     </form>
 
 Using the Referring URL
@@ -205,7 +205,7 @@ parameter is included in the request, you may use the value of the
 
                 <firewall name="main">
                     <!-- ... -->
-                    <form-login use-referer="true" />
+                    <form-login use-referer="true"/>
                 </firewall>
             </config>
         </srv:container>
@@ -271,7 +271,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
                 <firewall name="main">
                     <!-- ... -->
-                    <form-login failure-path="login_failure_route_name" />
+                    <form-login failure-path="login_failure_route_name"/>
                 </firewall>
             </config>
         </srv:container>
@@ -305,8 +305,8 @@ This option can also be set via the ``_failure_path`` request parameter:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}" />
-        <input type="submit" name="login" />
+        <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}"/>
+        <input type="submit" name="login"/>
     </form>
 
 Customizing the Target and Failure Request Parameters
@@ -346,8 +346,8 @@ redirects can be customized using the  ``target_path_parameter`` and
 
                 <firewall name="main">
                     <!-- ... -->
-                    <form-login target-path-parameter="go_to" />
-                    <form-login failure-path-parameter="back_to" />
+                    <form-login target-path-parameter="go_to"/>
+                    <form-login failure-path-parameter="back_to"/>
                 </firewall>
             </config>
         </srv:container>
@@ -382,9 +382,9 @@ are now fully customized:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="go_to" value="{{ path('dashboard') }}" />
-        <input type="hidden" name="back_to" value="{{ path('forgot_password') }}" />
-        <input type="submit" name="login" />
+        <input type="hidden" name="go_to" value="{{ path('dashboard') }}"/>
+        <input type="hidden" name="back_to" value="{{ path('forgot_password') }}"/>
+        <input type="submit" name="login"/>
     </form>
 
 Redirecting to the Last Accessed Page with ``TargetPathTrait``

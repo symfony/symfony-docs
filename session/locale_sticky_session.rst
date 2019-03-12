@@ -93,7 +93,7 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
                     <service id="AppBundle\EventSubscriber\LocaleSubscriber">
                         <argument>%kernel.default_locale%</argument>
 
-                        <tag name="kernel.event_subscriber" />
+                        <tag name="kernel.event_subscriber"/>
                     </service>
                 </services>
             </container>

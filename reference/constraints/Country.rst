@@ -53,7 +53,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\User">
                 <property name="country">
-                    <constraint name="Country" />
+                    <constraint name="Country"/>
                 </property>
             </class>
         </constraint-mapping>

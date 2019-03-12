@@ -85,7 +85,7 @@ information:
                 </service>
 
                 <service id="AppBundle\Logger\SessionRequestProcessor" autowire="true">
-                    <tag name="monolog.processor" />
+                    <tag name="monolog.processor"/>
                 </service>
             </services>
         </container>
@@ -191,7 +191,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="AppBundle\Logger\SessionRequestProcessor" autowire="true">
-                    <tag name="monolog.processor" handler="main" />
+                    <tag name="monolog.processor" handler="main"/>
                 </service>
             </services>
         </container>
@@ -236,7 +236,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="AppBundle\Logger\SessionRequestProcessor" autowire="true">
-                    <tag name="monolog.processor" channel="main" />
+                    <tag name="monolog.processor" channel="main"/>
                 </service>
             </services>
         </container>

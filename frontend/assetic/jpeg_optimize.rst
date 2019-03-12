@@ -44,7 +44,7 @@ using the ``bin`` option of the ``jpegoptim`` filter:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim" />
+                    bin="path/to/jpegoptim"/>
             </assetic:config>
         </container>
 
@@ -102,7 +102,7 @@ to ``true``:
                 <assetic:filter
                     name="jpegoptim"
                     bin="path/to/jpegoptim"
-                    strip-all="true" />
+                    strip-all="true"/>
             </assetic:config>
         </container>
 
@@ -153,7 +153,7 @@ be at the expense of its quality:
                 <assetic:filter
                     name="jpegoptim"
                     bin="path/to/jpegoptim"
-                    max="70" />
+                    max="70"/>
             </assetic:config>
         </container>
 
@@ -204,10 +204,10 @@ following configuration:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim" />
+                    bin="path/to/jpegoptim"/>
                 <assetic:twig>
                     <assetic:function
-                        name="jpegoptim" />
+                        name="jpegoptim"/>
                 </assetic:twig>
             </assetic:config>
         </container>
@@ -263,11 +263,11 @@ file:
             <assetic:config>
                 <assetic:filter
                     name="jpegoptim"
-                    bin="path/to/jpegoptim" />
+                    bin="path/to/jpegoptim"/>
                 <assetic:twig>
                     <assetic:function
                         name="jpegoptim"
-                        output="images/*.jpg" />
+                        output="images/*.jpg"/>
                 </assetic:twig>
             </assetic:config>
         </container>

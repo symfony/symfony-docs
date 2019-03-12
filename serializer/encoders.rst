@@ -67,7 +67,7 @@ Be aware that this encoder will consider keys beginning with ``@`` as attributes
     // will return:
     // <?xml version="1.0"?>
     // <response>
-    //     <foo bar="value" />
+    //     <foo bar="value"/>
     // </response>
 
 The ``YamlEncoder``

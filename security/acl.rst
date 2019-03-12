@@ -75,7 +75,7 @@ First, you need to configure the connection the ACL system is supposed to use:
             <config>
                 <!-- ... -->
 
-                <acl connection="default" />
+                <acl connection="default"/>
             </config>
         </srv:container>
 

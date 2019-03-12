@@ -153,7 +153,7 @@ the framework:
                 http://symfony.com/schema/dic/symfony
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config default-locale="en" />
+            <framework:config default-locale="en"/>
         </container>
 
     .. code-block:: php

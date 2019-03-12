@@ -30,7 +30,7 @@ this path, update the ``framework.session.save_path`` configuration key:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:session handler-id="session.handler.native_file" save-path="%kernel.project_dir%/var/sessions/%kernel.environment%" />
+                <framework:session handler-id="session.handler.native_file" save-path="%kernel.project_dir%/var/sessions/%kernel.environment%"/>
             </framework:config>
         </container>
 

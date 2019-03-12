@@ -126,8 +126,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:type name="custom_first" class="AppBundle\Type\CustomFirst" />
-                    <doctrine:type name="custom_second" class="AppBundle\Type\CustomSecond" />
+                    <doctrine:type name="custom_first" class="AppBundle\Type\CustomFirst"/>
+                    <doctrine:type name="custom_second" class="AppBundle\Type\CustomSecond"/>
                 </doctrine:dbal>
             </doctrine:config>
         </container>

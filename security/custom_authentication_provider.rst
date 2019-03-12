@@ -431,7 +431,7 @@ to service ids that may not exist yet: ``AppBundle\Security\Authentication\Provi
                     public="false"
                 >
                     <argument type="service" id="security.token_storage"/>
-                    <argument type="service" id="security.authentication.manager" />
+                    <argument type="service" id="security.authentication.manager"/>
                 </service>
             </services>
         </container>
@@ -621,7 +621,7 @@ set to any desirable value per firewall.
                 <!-- ... -->
 
                 <firewall name="wsse_secured" pattern="^/api/" stateless="true">
-                    <wsse lifetime="30" />
+                    <wsse lifetime="30"/>
                 </firewall>
             </config>
         </srv:container>

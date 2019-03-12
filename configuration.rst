@@ -51,18 +51,18 @@ The main configuration file is called ``config.yml``:
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <imports>
-                <import resource="parameters.yml" />
-                <import resource="security.yml" />
-                <import resource="services.yml" />
+                <import resource="parameters.yml"/>
+                <import resource="security.yml"/>
+                <import resource="services.yml"/>
             </imports>
 
             <framework:config secret="%secret%">
-                <framework:router resource="%kernel.project_dir%/app/config/routing.xml" />
+                <framework:router resource="%kernel.project_dir%/app/config/routing.xml"/>
                 <!-- ... -->
             </framework:config>
 
             <!-- Twig Configuration -->
-            <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%" />
+            <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%"/>
 
             <!-- ... -->
         </container>
@@ -154,9 +154,9 @@ it *also* loads other configuration files via its ``imports`` key:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <imports>
-                <import resource="parameters.yml" />
-                <import resource="security.yml" />
-                <import resource="services.yml" />
+                <import resource="parameters.yml"/>
+                <import resource="security.yml"/>
+                <import resource="services.yml"/>
             </imports>
 
             <!-- ... -->
@@ -206,7 +206,7 @@ can also load XML files or PHP files.
                     https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
                 <imports>
-                    <import resource="parameters.res" type="yml" />
+                    <import resource="parameters.res" type="yml"/>
                     <!-- ... -->
                 </imports>
             </container>
@@ -342,7 +342,7 @@ configure DoctrineBundle and other parts of Symfony:
                     driver="pdo_mysql"
 
                     user="%database_user%"
-                    password="%database_password%" />
+                    password="%database_password%"/>
             </doctrine:config>
         </container>
 

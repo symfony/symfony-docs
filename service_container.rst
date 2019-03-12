@@ -211,10 +211,10 @@ each time you ask for it.
 
                 <services>
                     <!-- Default configuration for services in *this* file -->
-                    <defaults autowire="true" autoconfigure="true" public="false" />
+                    <defaults autowire="true" autoconfigure="true" public="false"/>
 
                     <!-- Load services from whatever directories you want (you can update this!) -->
-                    <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                    <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}"/>
                 </services>
             </container>
 
@@ -480,7 +480,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- ... -->
 
                 <!-- Same as before -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}"/>
 
                 <!-- Explicitly configure the service -->
                 <service id="AppBundle\Updates\SiteUpdateManager">
@@ -671,7 +671,7 @@ But, you can control this and pass in a different logger:
 
                 <!-- Explicitly configure the service -->
                 <service id="AppBundle\Service\MessageGenerator">
-                    <argument key="$logger" type="service" id="monolog.logger.request" />
+                    <argument key="$logger" type="service" id="monolog.logger.request"/>
                 </service>
             </services>
         </container>
@@ -828,7 +828,7 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
                 <!-- ... -->
 
                 <service id="AppBundle\Twig\MyTwigExtension">
-                    <tag name="twig.extension" />
+                    <tag name="twig.extension"/>
                 </service>
             </services>
         </container>
@@ -881,7 +881,7 @@ this file is ``public: false`` by default:
 
             <services>
                 <!-- Default configuration for services in *this* file -->
-                <defaults autowire="true" autoconfigure="true" public="false" />
+                <defaults autowire="true" autoconfigure="true" public="false"/>
             </services>
         </container>
 
@@ -972,10 +972,10 @@ key. For example, the default Symfony configuration contains this:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}"/>
 
                 <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
-                    <tag name="controller.service_arguments" />
+                    <tag name="controller.service_arguments"/>
                 </prototype>
             </services>
         </container>
@@ -1126,18 +1126,18 @@ admin email. In this case, each needs to have a unique service id:
                 <!-- ... -->
 
                 <service id="site_update_manager.superadmin" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
-                    <argument type="service" id="AppBundle\Service\MessageGenerator" />
-                    <argument type="service" id="mailer" />
+                    <argument type="service" id="AppBundle\Service\MessageGenerator"/>
+                    <argument type="service" id="mailer"/>
                     <argument>superadmin@example.com</argument>
                 </service>
 
                 <service id="site_update_manager.normal_users" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
-                    <argument type="service" id="AppBundle\Service\MessageGenerator" />
-                    <argument type="service" id="mailer" />
+                    <argument type="service" id="AppBundle\Service\MessageGenerator"/>
+                    <argument type="service" id="mailer"/>
                     <argument>contact@example.com</argument>
                 </service>
 
-                <service id="AppBundle\Updates\SiteUpdateManager" alias="site_update_manager.superadmin" />
+                <service id="AppBundle\Updates\SiteUpdateManager" alias="site_update_manager.superadmin"/>
             </services>
         </container>
 

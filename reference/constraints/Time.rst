@@ -58,7 +58,7 @@ of the day when the event starts:
 
             <class name="AppBundle\Entity\Event">
                 <property name="startsAt">
-                    <constraint name="Time" />
+                    <constraint name="Time"/>
                 </property>
             </class>
         </constraint-mapping>

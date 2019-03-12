@@ -41,8 +41,8 @@ First, enable form login under your firewall:
 
             <config>
                 <firewall name="main">
-                    <anonymous />
-                    <form-login login-path="login" check-path="login" />
+                    <anonymous/>
+                    <form-login login-path="login" check-path="login"/>
                 </firewall>
             </config>
         </srv:container>
@@ -185,15 +185,15 @@ Finally, create the template:
 
     <form action="{{ path('login') }}" method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
+        <input type="password" id="password" name="_password"/>
 
         {#
             If you want to control the URL the user
             is redirected to on success (more details below)
-            <input type="hidden" name="_target_path" value="/account" />
+            <input type="hidden" name="_target_path" value="/account"/>
         #}
 
         <button type="submit">login</button>
@@ -297,7 +297,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
             <config>
                 <!-- ... -->
-                <rule path="^/" role="ROLE_ADMIN" />
+                <rule path="^/" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -336,8 +336,8 @@ fixes the problem:
 
             <config>
                 <!-- ... -->
-                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
-                <rule path="^/" role="ROLE_ADMIN" />
+                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                <rule path="^/" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
