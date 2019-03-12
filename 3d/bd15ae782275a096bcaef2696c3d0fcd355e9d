@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2019-03-12T12:36:10Z
+
+Hmm, being consistent should be adding it everywhere. Otherwise the code in not "copy/pastable" anymore for window users... That's why we add it usually.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-12T14:57:01Z
+
+Except these lines now all should have a php prefix for windows users, or did I miss some?
