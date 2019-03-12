@@ -30,7 +30,8 @@ FriendsOfPHP organization.
     Earlier versions of this command used a tool hosted at a now deprecated URL,
     with the tool having since been moved to a new location, which has been 
     reflected in newer versions of the bundle. Use the latest version of the 
-    command to avoid getting exit code zero and breaking existing build plans.  
+    command to avoid getting exit code zero and breaking existing build plans
+    if the command has been integrated into project build process.
     
 .. note::
 
