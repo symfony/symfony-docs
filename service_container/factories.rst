@@ -101,7 +101,6 @@ Configuration of the service container then looks like this:
     .. code-block:: yaml
 
         # app/config/services.yml
-
         services:
             # ...
 
@@ -160,7 +159,6 @@ Configuration of the service container then looks like this:
     .. code-block:: yaml
 
         # app/config/services.yml
-
         AppBundle\Email\NewsletterManager:
             class: AppBundle\Email\NewsletterManager
             # new syntax
@@ -187,7 +185,6 @@ example takes the ``templating`` service as an argument:
     .. code-block:: yaml
 
         # app/config/services.yml
-
         services:
             # ...
 
