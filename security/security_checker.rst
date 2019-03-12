@@ -13,7 +13,9 @@ First, install the security checker in your project:
 
 .. code-block:: terminal
 
-    $ composer require sensiolabs/security-checker
+    # require at least the 5.0 version of the package because older versions
+    # checked the security vulnerabilities using an URL that is no longer available
+    $ composer require sensiolabs/security-checker:^5.0
 
 Then run this command:
 
