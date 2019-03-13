@@ -73,6 +73,7 @@ Configuration
   * :ref:`enabled <reference-csrf_protection-enabled>`
 
 * `default_locale`_
+* `disallow_search_engine_index`_
 * `esi`_
 
   * :ref:`enabled <reference-esi-enabled>`
@@ -383,6 +384,21 @@ method.
 
     You can read more information about the default locale in
     :ref:`translation-default-locale`.
+
+disallow_search_engine_index
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
+
+.. versionadded:: 4.3
+
+    The ``disallow_search_engine_index`` option was introduced in Symfony 4.3.
+
+If ``true``, Symfony adds a ``X-Robots-Tag: noindex`` HTTP tag to all responses
+(unless your own app adds that header, in which case it's not modified). This
+`X-Robots-Tag HTTP header`_ tells search engines to not index your web site.
+This option is a protection measure in case you accidentally publish your site
+in debug mode.
 
 trusted_hosts
 ~~~~~~~~~~~~~
@@ -2340,3 +2356,4 @@ a :doc:`normal workflow </workflow/usage>` or a :doc:`state machine </workflow/s
 .. _`CSRF security attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`session.sid_length PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-length
 .. _`session.sid_bits_per_character PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
+.. _`X-Robots-Tag HTTP header`: https://developers.google.com/search/reference/robots_meta_tag
