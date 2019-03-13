@@ -335,7 +335,7 @@ Event subscribers have different uses:
 * Listening to multiple events;
 * Regrouping multiple listeners inside a single class.
 
-.. code-block:: php
+Consider the following example of a form event subscriber::
 
     // src/Form/EventListener/AddEmailFieldListener.php
     namespace App\Form\EventListener;
