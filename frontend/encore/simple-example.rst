@@ -129,7 +129,7 @@ If you're *not* using Symfony, you can ignore the ``entrypoints.json`` file and
 point to the final, built file directly. ``entrypoints.json`` is only required for
 some optional features.
 
-.. versionadded:: 0.21.0
+.. versionchanged:: 0.21.0
 
     The ``encore_entry_link_tags()`` comes from WebpackEncoreBundle and relies
     on a feature in Encore that was first introduced in version 0.21.0. Previously,
