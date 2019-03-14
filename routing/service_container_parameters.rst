@@ -16,6 +16,27 @@ inside your routing configuration:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/MainController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/{_locale}/contact", name="contact", requirements={
+             *     "_locale"="%app.locales%"
+             * })
+             */
+            public function contactAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -89,6 +110,25 @@ You can also use a parameter to define your route path (or part of your
 path):
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/MainController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/%app.route_prefix%/contact", name="contact")
+             */
+            public function contactAction()
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
