@@ -168,6 +168,30 @@ getters, this means that you can do something like this::
 
 This will produce: ``He is an author``
 
+Accessing a non existing property path
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default a :class:`Symfony\\Component\\PropertyAccess\\Exception\\NoSuchPropertyException` is thrown if the property path passed to :method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
+does not exist.
+You can change this behaviour using the :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::disableExceptionOnInvalidPropertyPath`
+method::
+
+    // ...
+    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
+        ->disableExceptionOnInvalidPropertyPath()
+        ->getPropertyAccessor();
+
+    class Person
+    {
+        public $name;
+    }
+
+    $person = new Person();
+
+    // instead of throwing an exception the following code returns null
+    $value = $propertyAccessor->getValue($person, 'birthday');
+
+
 Magic ``__get()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
