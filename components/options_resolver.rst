@@ -73,13 +73,11 @@ code. Use the :phpfunction:`array_replace` to fix that::
         }
     }
 
-Now all four options are guaranteed to be set. But what happens if the user of
-the ``Mailer`` class makes a mistake?
-
-.. code-block:: php
+Now all four options are guaranteed to be set, but you could still make an error
+like the following when using the ``Mailer`` class::
 
     $mailer = new Mailer([
-        'usernme' => 'johndoe',  // usernme misspelled (instead of username)
+        'usernme' => 'johndoe',  // 'username' is wrongly spelled as 'usernme'
     ]);
 
 No error will be shown. In the best case, the bug will appear during testing,
