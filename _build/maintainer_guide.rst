@@ -63,11 +63,14 @@ If the branch is wrong, there's no need to ask the contributor to rebase. The
 Step 2: Merge the pull request
 ..............................
 
+Never use GitHub's web interface (or desktop clients) to merge PRs or to solve
+merge conflicts. Always use the ``gh`` tool for anything related to merges.
+
 We require 2 approval votes from team members before merging a PR, except if
 it's a typo, a small change or an obvious error.
 
 If a PR contains lots of commits, there's no need to ask the contributor to
-squash them. the ``gh`` tool does that automatically. The only exception is
+squash them. The ``gh`` tool does that automatically. The only exception is
 when commits are made by more than one person. ``gh`` can't squash that, so it's
 better to ask to the original contributor.
 
@@ -82,6 +85,12 @@ better to ask to the original contributor.
 
     # merge any PR passing its GitHub number as argument
     $ gh merge 11159
+
+    # the gh tool will ask you some questions. The only important thing to
+    # consider for Symfony Docs is that the merge category is always 'minor'
+    # no matter if the PR is a bug fix, a new feature, etc. Always choose 'minor'
+
+    # push your changes (you can merge several PRs and push once at the end)
     $ git push origin
     $ git push upstream
 
