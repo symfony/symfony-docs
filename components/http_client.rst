@@ -54,7 +54,7 @@ shortcuts and utilities for common operations::
 
     $response = $apiClient->post('https://api.github.com/gists', [
         // this is transformed into the proper Basic authorization header
-        'auth' => 'username:password',
+        'auth_basic' => ['username', 'password'],
         // this PHP array is encoded as JSON and added to the request body
         'json' => [
             'description' => 'Created by Symfony HttpClient',
@@ -127,6 +127,32 @@ method to perform all HTTP requests, whereas the client created with the
     $response = $apiClient->put('https://...');
     // ...
 
+Authentication
+~~~~~~~~~~~~~~
+
+The HTTP and API clients support different authentication mechanisms. They can
+be defined globally when creating the client (to apply it to all requests) and
+to each request (which overrides any global authentication, if defined)::
+
+    // Use the same authentication for all requests
+    $httpClient = HttpClient::create([
+        // HTTP Basic authentication with only the username and not a password
+        'auth_basic' => ['the-username'],
+
+        // HTTP Basic authentication with a username and a password
+        'auth_basic' => ['the-username', 'the-password'],
+
+        // HTTP Bearer authentication (also called token authentication)
+        'auth_bearer' => 'the-bearer-token',
+    ]);
+
+    $response = $httpClient->request('GET', 'https://...', [
+        // use a different HTTP Basic authentication only for this request
+        'auth_basic' => ['the-username', 'the-password'],
+
+        // ...
+    ]);
+
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -150,7 +176,7 @@ requests and the specific headers for each request::
 
     // this header is added to all requests made by this client
     $httpClient = HttpClient::create(['headers' => [
-        'Authorization' => 'Bearer ...',
+        'Accept-Encoding' => 'gzip',
     ]]);
 
     // this header is only included in this request and overrides the value
