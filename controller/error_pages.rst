@@ -207,7 +207,7 @@ configuration option to point to it:
 
         # app/config/config.yml
         twig:
-            exception_controller: AppBundle:Exception:showException
+            exception_controller: AppBundle:Exception:showAction
 
     .. code-block:: xml
 
@@ -222,7 +222,7 @@ configuration option to point to it:
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:exception-controller>AppBundle:Exception:showException</twig:exception-controller>
+                <twig:exception-controller>AppBundle:Exception:showAction</twig:exception-controller>
             </twig:config>
 
         </container>
@@ -231,7 +231,7 @@ configuration option to point to it:
 
         // app/config/config.php
         $container->loadFromExtension('twig', [
-            'exception_controller' => 'AppBundle:Exception:showException',
+            'exception_controller' => 'AppBundle:Exception:showAction',
             // ...
         ]);
 
