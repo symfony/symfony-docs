@@ -212,12 +212,12 @@ get logged on the server as well as the emails being sent:
                     type:    deduplication
                     handler: swift
                 swift:
-                    type:       swift_mailer
-                    from_email: 'error@example.com'
-                    to_email:   'error@example.com'
-                    subject:    'An Error Occurred! %%message%%'
-                    level:      debug
-                    formatter:  monolog.formatter.html
+                    type:         swift_mailer
+                    from_email:   'error@example.com'
+                    to_email:     'error@example.com'
+                    subject:      'An Error Occurred! %%message%%'
+                    level:        debug
+                    formatter:    monolog.formatter.html
                     content_type: text/html
 
     .. code-block:: xml
