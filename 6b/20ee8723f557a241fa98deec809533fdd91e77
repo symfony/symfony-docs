@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by Krap at 2019-03-14T09:10:38Z
+
+Hi,
+
+I perfectly understand that ; my feeling is that there should be a way to
+avoid this pitfall.
+It would be a pitty to discourage users for such a basic error (that i
+made, being an experimented developper), just because copy/paste of the
+first sample doesn't work immediately...
+
+Since this is the first hand-created file in the tutorial, i though of this
+addition in first place, but i agree that this may not be the right
+solution to keep the documentation coherent.
+
+Maybe there could be a warning before, or as an alternative, the user may
+be directed to file generation (php bin/console make:controller
+LuckyController) ?
+
+At last, the "real" problem may not be in the documentation : the error
+message i got in the console tells me the file was found but not the
+controller class inside ; i though of errors in namespaces, uses, class
+declaration, missing brackets, ...
+Maybe the message could tell something like "or this file is not a valid
+php file" ?
+
+Hope that could help.
+
+Regards
+
+Le jeu. 14 mars 2019 à 08:12, Oskar Stark <notifications@github.com> a
+écrit :
+
+> *@OskarStark* commented on this pull request.
+>
+> Thank you for your contribution. I am against 👎 this change, because on
+> no other place, except if php and html is mixed, we added an php open tag
+>
+> —
+> You are receiving this because you authored the thread.
+> Reply to this email directly, view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/11151#pullrequestreview-214346756>,
+> or mute the thread
+> <https://github.com/notifications/unsubscribe-auth/AAdOT-_oPF5CEab6NrWtiVxRMhRkamYHks5vWfZVgaJpZM4bv3oP>
+> .
+>
