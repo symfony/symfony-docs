@@ -139,6 +139,11 @@ through the transport layer, use the ``SerializerStamp`` stamp::
         ]))
     );
 
+.. note::
+
+    As the groups are applied to the whole message,
+    be sure to define the group for every embedded object. 
+
 At the moment, the Symfony Messenger has the following built-in envelope stamps:
 
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`,
