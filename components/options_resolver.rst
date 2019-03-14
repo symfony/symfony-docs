@@ -85,11 +85,11 @@ options are buried in the business logic of your code. Use the
         }
     }
 
-Now all four options are guaranteed to be set. Consider the user of the
-``Mailer`` class makes a mistake::
+Now all four options are guaranteed to be set, but you could still make an error
+like the following when using the ``Mailer`` class::
 
     $mailer = new Mailer([
-        'usernme' => 'johndoe',  // usernme misspelled (instead of username)
+        'usernme' => 'johndoe',  // 'username' is wrongly spelled as 'usernme'
     ]);
 
 No error will be shown. In the best case, the bug will appear during testing,
