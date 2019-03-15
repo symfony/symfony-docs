@@ -138,3 +138,7 @@ path):
 
     For parameter handling within a Dependency Injection Class see
     :doc:`/configuration/using_parameters_in_dic`.
+    
+.. versionadded:: 4.3
+
+    Support for boolean container parameters was introduced in Symfony 4.3.
