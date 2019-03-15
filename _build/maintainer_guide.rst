@@ -6,6 +6,55 @@ and it's managed by the `Symfony Docs team`_. This article explains in detail
 some of those management tasks, so it's only useful for maintainers and not
 regular readers or Symfony developers.
 
+Reviewing Pull Requests
+-----------------------
+
+All the recommendations of the `Symfony's respectful review comments`_ apply,
+but there are extra things to keep in mind for maintainers:
+
+* Always be nice in all interactions with all contributors.
+* Be extra-patient with new contributors (they show a special badge on GitHub).
+* Don't assume that contributors know what you think it's obvious to contribute
+  (e.g. lots of people don't know what to "squash commits" means).
+* Don't use acronyms like IMO, IIRC, etc. or complex English words (most
+  contributors are not native in English and it's intimidating for them).
+* Never engage in a heated discussion. Lock it right away using GitHub.
+* Never discuss non-tech issues. Some PRs are related to our Diversity initiative
+  and some people always try to drag you into politics. Never engage in that and
+  lock the issue/PR as off-topic on GitHub.
+
+Fixing Minor Issues Yourself
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It's common for new contributors to make lots of minor mistakes in the syntax
+of the RST format used in the docs. It's also common for non English speakers to
+make minor typos.
+
+Even if your intention is good, if you add lots of comments when reviewing a
+first contribution, that person will probably not contribute again. It's better
+to fix the minor errors and typos yourself while merging.
+
+.. code-block:: terminal
+
+    $ gh merge 11059
+
+      Working on symfony/symfony-docs (branch master)
+      Merging Pull Request 11059: dmaicher/patch-3
+
+      ...
+
+      # This is important!! Say NO to push the changes now
+      Push the changes now? (Y/n) n
+      Now, push with: git push gh "master" refs/notes/github-comments
+
+      # Now, open your editor and make the needed changes ...
+
+      $ git commit -a
+      # Use "Minor reword", "Minor tweak", etc. as the commit message
+
+      # now run the 'push' command shown above by 'gh' (it's different each time)
+      $ git push gh "master" refs/notes/github-comments
+
 Merging Pull Requests
 ---------------------
 
@@ -240,4 +289,5 @@ The solution is to remove those non-existent files:
 
 .. _`symfony/symfony-docs`: https://github.com/symfony/symfony-docs
 .. _`Symfony Docs team`: https://github.com/orgs/symfony/teams/team-symfony-docs
+.. _`Symfony's respectful review comments`: https://symfony.com/doc/current/contributing/community/review-comments.html
 .. _`Git`: https://git-scm.com/
