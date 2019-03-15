@@ -2,9 +2,9 @@ Symfony Docs Maintainer Guide
 =============================
 
 The `symfony/symfony-docs`_ repository stores the Symfony project documentation
-and it's managed by the `Symfony Docs team`_. This article explains in detail
-some of those management tasks, so it's only useful for maintainers and not
-regular readers or Symfony developers.
+and is managed by the `Symfony Docs team`_. This article explains in detail some
+of those management tasks, so it's only useful for maintainers and not regular
+readers or Symfony developers.
 
 Reviewing Pull Requests
 -----------------------
