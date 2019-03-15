@@ -18,20 +18,20 @@ inside your routing configuration:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route("/{_locale}/contact", name="contact", requirements={
              *     "_locale"="%app.locales%"
              * })
              */
-            public function contactAction()
+            public function contact()
             {
                 // ...
             }
@@ -113,18 +113,18 @@ path):
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route("/%app.route_prefix%/contact", name="contact")
              */
-            public function contactAction()
+            public function contact()
             {
                 // ...
             }
