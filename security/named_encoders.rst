@@ -88,7 +88,7 @@ be done with named encoders:
                 <!-- ... -->
                 <encoder class="harsh"
                     algorithm="bcrypt"
-                    cost="15" />
+                    cost="15"/>
             </config>
         </srv:container>
 
@@ -164,7 +164,7 @@ you must register a service for it in order to use it as a named encoder:
             <config>
                 <!-- ... -->
                 <encoder class="app_encoder"
-                    id="App\Security\Encoder\MyCustomPasswordEncoder" />
+                    id="App\Security\Encoder\MyCustomPasswordEncoder"/>
             </config>
         </srv:container>
 

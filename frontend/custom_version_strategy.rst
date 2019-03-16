@@ -182,7 +182,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets version-strategy="App\Asset\VersionStrategy\GulpBusterVersionStrategy" />
+                <framework:assets version-strategy="App\Asset\VersionStrategy\GulpBusterVersionStrategy"/>
             </framework:config>
         </container>
 

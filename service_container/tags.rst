@@ -30,7 +30,7 @@ example:
 
             <services>
                 <service id="App\Twig\AppExtension" public="false">
-                    <tag name="twig.extension" />
+                    <tag name="twig.extension"/>
                 </service>
             </services>
         </container>
@@ -88,7 +88,7 @@ If you want to apply tags automatically for your own services, use the
                 <!-- this config only applies to the services created by this file -->
                 <instanceof id="App\Security\CustomInterface" autowire="true">
                     <!-- services whose classes are instances of CustomInterface will be tagged automatically -->
-                    <tag name="app.custom_tag" />
+                    <tag name="app.custom_tag"/>
                 </instanceof>
             </services>
         </container>
@@ -175,7 +175,7 @@ Then, define the chain as a service:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Mail\TransportChain" />
+                <service id="App\Mail\TransportChain"/>
             </services>
         </container>
 
@@ -219,11 +219,11 @@ For example, you may add the following transports as services:
                 <service id="Swift_SmtpTransport">
                     <argument>%mailer_host%</argument>
 
-                    <tag name="app.mail_transport" />
+                    <tag name="app.mail_transport"/>
                 </service>
 
                 <service class="\Swift_SendmailTransport">
-                    <tag name="app.mail_transport" />
+                    <tag name="app.mail_transport"/>
                 </service>
             </services>
         </container>
@@ -375,11 +375,11 @@ To answer this, change the service declaration:
                 <service id="Swift_SmtpTransport">
                     <argument>%mailer_host%</argument>
 
-                    <tag name="app.mail_transport" alias="smtp" />
+                    <tag name="app.mail_transport" alias="smtp"/>
                 </service>
 
                 <service id="Swift_SendmailTransport">
-                    <tag name="app.mail_transport" alias="sendmail" />
+                    <tag name="app.mail_transport" alias="sendmail"/>
                 </service>
             </services>
         </container>
@@ -483,16 +483,16 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
             <services>
                 <service id="App\Handler\One">
-                    <tag name="app.handler" />
+                    <tag name="app.handler"/>
                 </service>
 
                 <service id="App\Handler\Two">
-                    <tag name="app.handler" />
+                    <tag name="app.handler"/>
                 </service>
 
                 <service id="App\HandlerCollection">
                     <!-- inject all services tagged with app.handler as first argument -->
-                    <argument type="tagged" tag="app.handler" />
+                    <argument type="tagged" tag="app.handler"/>
                 </service>
             </services>
         </container>
@@ -550,7 +550,7 @@ application handlers::
 
                 <services>
                     <service id="App\Handler\One">
-                        <tag name="app.handler" priority="20" />
+                        <tag name="app.handler" priority="20"/>
                     </service>
                 </services>
             </container>

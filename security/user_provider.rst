@@ -73,12 +73,12 @@ to retrieve them:
                 <provider name="users">
                     <!-- 'class' is the entity that represents users and 'property'
                          is the entity property to query by - e.g. username, email, etc -->
-                    <entity class="App\Entity\User" property="username" />
+                    <entity class="App\Entity\User" property="username"/>
 
                     <!-- optional: if you're using multiple Doctrine entity
                          managers, this option defines which one to use -->
                     <!-- <entity class="App\Entity\User" property="username"
-                                 manager-name="customer" /> -->
+                                 manager-name="customer"/> -->
                 </provider>
 
                 <!-- ... -->
@@ -175,7 +175,7 @@ To finish this, remove the ``property`` key from the user provider in
                 <!-- ... -->
 
                 <provider name="users">
-                    <entity class="App\Entity\User" />
+                    <entity class="App\Entity\User"/>
                 </provider>
             </config>
         </srv:container>

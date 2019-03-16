@@ -92,7 +92,7 @@ using a special "tag":
 
             <services>
                 <service id="App\EventListener\ExceptionListener">
-                    <tag name="kernel.event_listener" event="kernel.exception" />
+                    <tag name="kernel.event_listener" event="kernel.exception"/>
                 </service>
             </services>
         </container>

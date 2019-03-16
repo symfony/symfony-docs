@@ -407,7 +407,7 @@ concise, but it can decrease route readability when requirements are complex:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page<\d+>}" controller="App\Controller\BlogController::list" />
+            <route id="blog_list" path="/blog/{page<\d+>}" controller="App\Controller\BlogController::list"/>
 
             <!-- ... -->
         </routes>
@@ -553,7 +553,7 @@ placeholder:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page <\d+>?1}" controller="App\Controller\BlogController::list" />
+            <route id="blog_list" path="/blog/{page <\d+>?1}" controller="App\Controller\BlogController::list"/>
 
             <!-- ... -->
         </routes>

@@ -47,15 +47,15 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
                     http://symfony.com/schema/dic/framework https://symfony.com/schema/dic/framework/framework-1.0.xsd"
             >
                 <framework:config secret="%env(APP_SECRET)%">
-                    <!--<framework:csrf-protection enabled="true“ />-->
-                    <!--<framework:esi enabled="true" />-->
-                    <!--<framework:fragments enabled="true" />-->
+                    <!--<framework:csrf-protection enabled="true“/>-->
+                    <!--<framework:esi enabled="true"/>-->
+                    <!--<framework:fragments enabled="true"/>-->
 
                     <!-- Enables session support. Note that the session will ONLY be started if you read or write from it.
                          Remove or comment this section to explicitly disable session support. -->
-                    <framework:session />
+                    <framework:session/>
 
-                    <framework:php-errors log="true" />
+                    <framework:php-errors log="true"/>
                 </framework:config>
             </container>
 

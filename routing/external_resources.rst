@@ -46,16 +46,16 @@ This can be done by importing routing resources from the main routing file:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- loads routes from the given routing file stored in some bundle -->
-            <import resource="@AcmeOtherBundle/Resources/config/routing.yaml" />
+            <import resource="@AcmeOtherBundle/Resources/config/routing.yaml"/>
 
             <!-- loads routes from the PHP annotations of the controllers found in that directory -->
-            <import resource="../src/Controller/" type="annotation" />
+            <import resource="../src/Controller/" type="annotation"/>
 
             <!-- loads routes from the YAML or XML files found in that directory -->
-            <import resource="../legacy/routing/" type="directory" />
+            <import resource="../legacy/routing/" type="directory"/>
 
             <!-- loads routes from the YAML or XML files found in some bundle directory -->
-            <import resource="@AppBundle/Resources/config/routing/public/" type="directory" />
+            <import resource="@AppBundle/Resources/config/routing/public/" type="directory"/>
         </routes>
 
     .. code-block:: php
@@ -122,7 +122,7 @@ suppose you want to prefix all application routes with ``/site`` (e.g.
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../src/Controller/" type="annotation" prefix="/site" />
+            <import resource="../src/Controller/" type="annotation" prefix="/site"/>
         </routes>
 
     .. code-block:: php
@@ -170,7 +170,7 @@ be prefixed with the string ``/site``.
                     resource="../src/Controller/"
                     type="annotation"
                     prefix="/site"
-                    trailing-slash-on-root="false" />
+                    trailing-slash-on-root="false"/>
             </routes>
 
         .. code-block:: php
@@ -240,7 +240,7 @@ a controller class or imported from a configuration file:
             <import
                 resource="../src/Controller/"
                 type="annotation"
-                name-prefix="blog_" />
+                name-prefix="blog_"/>
         </routes>
 
     .. code-block:: php

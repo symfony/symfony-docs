@@ -38,7 +38,7 @@ Symfony to use your session handler instead of the default one:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
-                <framework:session handler-id="App\Session\CustomSessionHandler" />
+                <framework:session handler-id="App\Session\CustomSessionHandler"/>
             </framework:config>
         </container>
 

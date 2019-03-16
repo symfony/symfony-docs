@@ -44,7 +44,7 @@ for more information):
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:csrf-protection enabled="true" />
+                <framework:csrf-protection enabled="true"/>
             </framework:config>
         </container>
 
@@ -132,7 +132,7 @@ generate a CSRF token in the template and store it as a hidden form field:
 
     <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
         {# the argument of csrf_token() is an arbitrary string used to generate the token #}
-        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}" />
+        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
 
         <button type="submit">Delete item</button>
     </form>

@@ -589,7 +589,7 @@ defines a ``Person`` entity with a ``firstName`` property:
                 https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="App\Entity\Person">
-                <attribute name="firstName" serialized-name="customer_name" />
+                <attribute name="firstName" serialized-name="customer_name"/>
             </class>
         </serializer>
 
@@ -795,7 +795,7 @@ the key  ``#comment`` for encoding XML comments::
     // will return:
     // <?xml version="1.0"?>
     // <response>
-    //     <foo bar="value" />
+    //     <foo bar="value"/>
     //     <qux><!-- A comment --!><qux>
     // </response>
 
@@ -1370,8 +1370,8 @@ and ``BitBucketCodeRepository`` classes:
         >
             <class name="App\CodeRepository">
                 <discriminator-map type-property="type">
-                    <mapping type="github" class="App\GitHubCodeRepository" />
-                    <mapping type="bitbucket" class="App\BitBucketCodeRepository" />
+                    <mapping type="github" class="App\GitHubCodeRepository"/>
+                    <mapping type="bitbucket" class="App\BitBucketCodeRepository"/>
                 </discriminator-map>
             </class>
         </serializer>

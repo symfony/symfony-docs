@@ -22,7 +22,7 @@
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <imports>
-                    <import resource="%kernel.project_dir%/somefile.yaml" />
+                    <import resource="%kernel.project_dir%/somefile.yaml"/>
                 </imports>
             </container>
 

@@ -146,7 +146,7 @@ that accepts the dependency::
 
                 <service id="app.newsletter_manager" class="App\Mail\NewsletterManager">
                     <call method="setMailer">
-                        <argument type="service" id="mailer" />
+                        <argument type="service" id="mailer"/>
                     </call>
                 </service>
             </services>
@@ -220,7 +220,7 @@ Another possibility is setting public fields of the class directly::
                 <!-- ... -->
 
                 <service id="app.newsletter_manager" class="App\Mail\NewsletterManager">
-                    <property name="mailer" type="service" id="mailer" />
+                    <property name="mailer" type="service" id="mailer"/>
                 </service>
             </services>
         </container>

@@ -245,7 +245,7 @@ a traditional HTML form that submits to ``/login``:
                 <firewall name="main">
                     <!-- ... -->
                     <guard>
-                        <authenticator class="App\Security\LoginFormAuthenticator" />
+                        <authenticator class="App\Security\LoginFormAuthenticator"/>
                     </guard>
                 </firewall>
             </config>

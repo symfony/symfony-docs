@@ -96,7 +96,7 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
                         <argument>%kernel.default_locale%</argument>
 
                         <!-- uncomment the next line if you are not using autoconfigure -->
-                        <!-- <tag name="kernel.event_subscriber" /> -->
+                        <!-- <tag name="kernel.event_subscriber"/> -->
                     </service>
                 </services>
             </container>

@@ -134,7 +134,7 @@ view layer:
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
-        <input type="submit" class="btn" value="Create" />
+        <input type="submit" class="btn" value="Create"/>
     {{ form_end(form) }}
 
 Validation

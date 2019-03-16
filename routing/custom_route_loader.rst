@@ -230,7 +230,7 @@ Now define a service for the ``ExtraLoader``:
                 <!-- ... -->
 
                 <service id="App\Routing\ExtraLoader">
-                    <tag name="routing.loader" />
+                    <tag name="routing.loader"/>
                 </service>
             </services>
         </container>
@@ -274,7 +274,7 @@ What remains to do is adding a few lines to the routing configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="." type="extra" />
+            <import resource="." type="extra"/>
         </routes>
 
     .. code-block:: php

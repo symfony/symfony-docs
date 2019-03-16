@@ -89,8 +89,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:type name="custom_first" class="App\Type\CustomFirst" />
-                    <doctrine:type name="custom_second" class="App\Type\CustomSecond" />
+                    <doctrine:type name="custom_first" class="App\Type\CustomFirst"/>
+                    <doctrine:type name="custom_second" class="App\Type\CustomSecond"/>
                 </doctrine:dbal>
             </doctrine:config>
         </container>

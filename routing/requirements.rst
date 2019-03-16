@@ -241,12 +241,12 @@ accomplished with the following route configuration:
             <route id="api_post_show"
                 path="/api/posts/{id}"
                 controller="App\Controller\BlogApiController::show"
-                methods="GET|HEAD" />
+                methods="GET|HEAD"/>
 
             <route id="api_post_edit"
                 path="/api/posts/{id}"
                 controller="App\Controller\BlogApiController::edit"
-                methods="PUT" />
+                methods="PUT"/>
         </routes>
 
     .. code-block:: php

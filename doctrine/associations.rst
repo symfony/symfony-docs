@@ -196,7 +196,7 @@ the ``Product`` entity (and getter & setter methods):
                     field="category"
                     target-entity="App\Entity\Category"
                     inversed-by="products">
-                    <join-column nullable="false" />
+                    <join-column nullable="false"/>
                 </many-to-one>
             </entity>
         </doctrine-mapping>
@@ -271,7 +271,7 @@ class that will hold these objects:
                 <one-to-many
                     field="products"
                     target-entity="App\Entity\Product"
-                    mapped-by="category" />
+                    mapped-by="category"/>
 
                 <!--
                     don't forget to init the collection in
