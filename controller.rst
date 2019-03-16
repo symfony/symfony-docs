@@ -186,7 +186,7 @@ and ``redirect()`` methods::
         // redirects to a route with parameters
         return $this->redirectToRoute('blog_show', ['slug' => 'my-page']);
 
-        // redirects to a route and mantains the original query string parameters
+        // redirects to a route and maintains the original query string parameters
         return $this->redirectToRoute('blog_show', $request->query->all());
 
         // redirects externally
