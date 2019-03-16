@@ -98,7 +98,7 @@ First, configure a new ``scssphp`` Assetic filter:
                 http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
-                <assetic:filter name="scssphp" formatter="Leafo\ScssPhp\Formatter\Compressed" />
+                <assetic:filter name="scssphp" formatter="Leafo\ScssPhp\Formatter\Compressed"/>
                 <!-- ... -->
             </assetic:config>
         </container>
@@ -136,7 +136,7 @@ by Assetic:
                 "assets/scss/font-awesome.scss"
                 "assets/css/*.css"
             %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
+                <link rel="stylesheet" href="{{ asset_url }}"/>
             {% endstylesheets %}
 
 This simple configuration compiles, combines and minifies the SCSS files into a
@@ -171,7 +171,7 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
                 http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
-                <assetic:filter name="jsqueeze" />
+                <assetic:filter name="jsqueeze"/>
                 <!-- ... -->
             </assetic:config>
         </container>

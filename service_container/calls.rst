@@ -57,7 +57,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
                 <service id="AppBundle\Service\MessageGenerator">
                     <!-- ... -->
                     <call method="setLogger">
-                        <argument type="service" id="logger" />
+                        <argument type="service" id="logger"/>
                     </call>
                 </service>
             </services>

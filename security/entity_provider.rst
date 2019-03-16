@@ -241,18 +241,18 @@ the username and then check the password (more on passwords in a moment):
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <encoder class="AppBundle\Entity\User" algorithm="bcrypt" />
+                <encoder class="AppBundle\Entity\User" algorithm="bcrypt"/>
 
                 <!-- ... -->
 
                 <provider name="our_db_provider">
                     <!-- if you're using multiple entity managers, add:
                          manager-name="customer" -->
-                    <entity class="AppBundle:User" property="username" />
+                    <entity class="AppBundle:User" property="username"/>
                 </provider>
 
                 <firewall name="main" pattern="^/" provider="our_db_provider">
-                    <http-basic />
+                    <http-basic/>
                 </firewall>
 
                 <!-- ... -->
@@ -488,7 +488,7 @@ To finish this, just remove the ``property`` key from the user provider in
                 <!-- ... -->
 
                 <provider name="our_db_provider">
-                    <entity class="AppBundle:User" />
+                    <entity class="AppBundle:User"/>
                 </provider>
             </config>
         </srv:container>

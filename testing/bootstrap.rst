@@ -44,7 +44,7 @@ cache to be cleared:
         <!-- ... -->
 
         <php>
-            <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test" />
+            <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
         </php>
     </phpunit>
 

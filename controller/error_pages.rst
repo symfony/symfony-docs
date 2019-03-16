@@ -157,7 +157,7 @@ To use this feature, you need to have a definition in your
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="@TwigBundle/Resources/config/routing/errors.xml"
-                prefix="/_error" />
+                prefix="/_error"/>
         </routes>
 
     .. code-block:: php
@@ -287,7 +287,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
                 <services>
                     <!-- ... be sure autowiring is enabled -->
-                    <defaults autowire="true" />
+                    <defaults autowire="true"/>
                     <!-- ... -->
 
                     <service id="AppBundle\Controller\CustomExceptionController" public="true">

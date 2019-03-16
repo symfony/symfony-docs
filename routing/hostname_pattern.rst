@@ -391,7 +391,7 @@ You can also set the host option on imported routes:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@AppBundle/Resources/config/routing.xml" host="hello.example.com" />
+            <import resource="@AppBundle/Resources/config/routing.xml" host="hello.example.com"/>
         </routes>
 
     .. code-block:: php

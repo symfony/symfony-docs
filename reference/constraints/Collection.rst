@@ -115,10 +115,10 @@ following:
                     <constraint name="Collection">
                         <option name="fields">
                             <value key="personal_email">
-                                <constraint name="Email" />
+                                <constraint name="Email"/>
                             </value>
                             <value key="short_bio">
-                                <constraint name="NotBlank" />
+                                <constraint name="NotBlank"/>
                                 <constraint name="Length">
                                     <option name="max">100</option>
                                     <option name="maxMessage">Your short bio is too long!</option>
@@ -241,13 +241,13 @@ you can do the following:
                         <option name="fields">
                             <value key="personal_email">
                                 <constraint name="Required">
-                                    <constraint name="NotBlank" />
-                                    <constraint name="Email" />
+                                    <constraint name="NotBlank"/>
+                                    <constraint name="Email"/>
                                 </constraint>
                             </value>
                             <value key="alternate_email">
                                 <constraint name="Optional">
-                                    <constraint name="Email" />
+                                    <constraint name="Email"/>
                                 </constraint>
                             </value>
                         </option>

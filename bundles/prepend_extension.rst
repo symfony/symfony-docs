@@ -128,7 +128,7 @@ The above would be the equivalent of writing the following into the
                 <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
             </acme-something:config>
 
-            <acme-other:config use-acme-goodbye="false" />
+            <acme-other:config use-acme-goodbye="false"/>
 
         </container>
 

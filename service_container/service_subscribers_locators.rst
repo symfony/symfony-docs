@@ -220,7 +220,7 @@ service type to a service.
             <services>
 
                 <service id="AppBundle\CommandBus">
-                    <tag name="container.service_subscriber" key="logger" id="monolog.logger.event" />
+                    <tag name="container.service_subscriber" key="logger" id="monolog.logger.event"/>
                 </service>
 
             </services>
@@ -276,10 +276,10 @@ include as many services as needed in it.
 
                 <service id="app.command_handler_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
                     <argument type="collection">
-                        <argument key="AppBundle\FooCommand" type="service" id="app.command_handler.foo" />
-                        <argument key="AppBundle\BarCommand" type="service" id="app.command_handler.bar" />
+                        <argument key="AppBundle\FooCommand" type="service" id="app.command_handler.foo"/>
+                        <argument key="AppBundle\BarCommand" type="service" id="app.command_handler.bar"/>
                     </argument>
-                    <tag name="container.service_locator" />
+                    <tag name="container.service_locator"/>
                 </service>
 
             </services>
@@ -329,7 +329,7 @@ Now you can use the service locator by injecting it in any other service:
             <services>
 
                 <service id="AppBundle\CommandBus">
-                    <argument type="service" id="app.command_handler_locator" />
+                    <argument type="service" id="app.command_handler_locator"/>
                 </service>
 
             </services>

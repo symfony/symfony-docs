@@ -46,16 +46,16 @@ This can be done by importing routing resources from the main routing file:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- loads routes from the given routing file stored in some bundle -->
-            <import resource="@AcmeOtherBundle/Resources/config/routing.yml" />
+            <import resource="@AcmeOtherBundle/Resources/config/routing.yml"/>
 
             <!-- loads routes from the PHP annotations of the controllers found in that directory -->
-            <import resource="@AppBundle/Controller/" type="annotation" />
+            <import resource="@AppBundle/Controller/" type="annotation"/>
 
             <!-- loads routes from the YAML or XML files found in that directory -->
-            <import resource="../legacy/routing/" type="directory" />
+            <import resource="../legacy/routing/" type="directory"/>
 
             <!-- loads routes from the YAML or XML files found in some bundle directory -->
-            <import resource="@AppBundle/Resources/config/routing/public/" type="directory" />
+            <import resource="@AppBundle/Resources/config/routing/public/" type="directory"/>
         </routes>
 
     .. code-block:: php
@@ -128,7 +128,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
             <import
                 resource="@AppBundle/Controller/"
                 type="annotation"
-                prefix="/site" />
+                prefix="/site"/>
         </routes>
 
     .. code-block:: php

@@ -56,7 +56,7 @@ a valid currency, you could do the following:
 
             <class name="AppBundle\Entity\Order">
                 <property name="currency">
-                    <constraint name="Currency" />
+                    <constraint name="Currency"/>
                 </property>
             </class>
         </constraint-mapping>

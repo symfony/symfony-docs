@@ -92,10 +92,10 @@ duplicated service definitions:
 
             <services>
                 <service id="AppBundle\Repository\BaseDoctrineRepository" abstract="true">
-                    <argument type="service" id="doctrine.orm.entity_manager" />
+                    <argument type="service" id="doctrine.orm.entity_manager"/>
 
                     <call method="setLogger">
-                        <argument type="service" id="logger" />
+                        <argument type="service" id="logger"/>
                     </call>
                 </service>
 
@@ -207,14 +207,14 @@ the child class:
                 >
                     <!-- appends the '@app.username_checker' argument to the parent
                          argument list -->
-                    <argument type="service" id="app.username_checker" />
+                    <argument type="service" id="app.username_checker"/>
                 </service>
 
                 <service id="AppBundle\Repository\DoctrinePostRepository"
                     parent="AppBundle\Repository\BaseDoctrineRepository"
                 >
                     <!-- overrides the first argument (using the index attribute) -->
-                    <argument index="0" type="service" id="doctrine.custom_entity_manager" />
+                    <argument index="0" type="service" id="doctrine.custom_entity_manager"/>
                 </service>
 
                 <!-- ... -->

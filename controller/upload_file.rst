@@ -399,7 +399,7 @@ Now, register this class as a Doctrine listener:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <!-- ... be sure autowiring is enabled -->
-            <defaults autowire="true" />
+            <defaults autowire="true"/>
             <!-- ... -->
 
             <service id="AppBundle\EventListener\BrochureUploaderListener">

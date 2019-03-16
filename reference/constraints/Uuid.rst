@@ -58,7 +58,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\File">
                 <property name="identifier">
-                    <constraint name="Uuid" />
+                    <constraint name="Uuid"/>
                 </property>
             </class>
         </constraint-mapping>

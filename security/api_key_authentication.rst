@@ -320,14 +320,14 @@ and ``provider`` keys:
             <config>
                 <!-- ... -->
 
-                <provider name="api_key_user_provider" id="AppBundle\Security\ApiKeyUserProvider" />
+                <provider name="api_key_user_provider" id="AppBundle\Security\ApiKeyUserProvider"/>
 
                 <firewall name="main"
                     pattern="^/api"
                     stateless="true"
                     provider="api_key_user_provider"
                 >
-                    <simple-preauth authenticator="AppBundle\Security\ApiKeyAuthenticator" />
+                    <simple-preauth authenticator="AppBundle\Security\ApiKeyAuthenticator"/>
                 </firewall>
             </config>
         </srv:container>
@@ -381,7 +381,7 @@ If you have defined ``access_control``, make sure to add a new entry:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
             <config>
-                <rule path="^/api" role="ROLE_API" />
+                <rule path="^/api" role="ROLE_API"/>
             </config>
         </srv:container>
 

@@ -353,10 +353,10 @@ object.
 
             <class name="AppBundle\Entity\Task">
                 <property name="task">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
                 <property name="dueDate">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                     <constraint name="Type">\DateTime</constraint>
                 </property>
             </class>

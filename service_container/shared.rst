@@ -26,7 +26,7 @@ in your service definition:
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="AppBundle\SomeNonSharedService" shared="false" />
+            <service id="AppBundle\SomeNonSharedService" shared="false"/>
         </services>
 
     .. code-block:: php

@@ -56,7 +56,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\Author">
                 <property name="bioUrl">
-                    <constraint name="Url" />
+                    <constraint name="Url"/>
                 </property>
             </class>
         </constraint-mapping>

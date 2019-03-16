@@ -46,7 +46,7 @@ You can also control the ``public`` option on a service-by-service basis:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Service\Foo" public="false" />
+                <service id="AppBundle\Service\Foo" public="false"/>
             </services>
         </container>
 
@@ -114,9 +114,9 @@ services.
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Mail\PhpMailer" public="false" />
+                <service id="AppBundle\Mail\PhpMailer" public="false"/>
 
-                <service id="app.mailer" alias="AppBundle\Mail\PhpMailer" />
+                <service id="app.mailer" alias="AppBundle\Mail\PhpMailer"/>
             </services>
         </container>
 
@@ -186,11 +186,11 @@ The following example shows how to inject an anonymous service into another serv
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" />
+                <defaults autowire="true"/>
 
                 <service id="foo" class="AppBundle\Foo">
                     <argument type="service">
-                        <service class="AppBundle\AnonymousBar" />
+                        <service class="AppBundle\AnonymousBar"/>
                     </argument>
                 </service>
             </services>
@@ -220,7 +220,7 @@ Using an anonymous service as a factory looks like this:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" />
+                <defaults autowire="true"/>
 
                 <service id="foo" class="AppBundle\Foo">
                     <factory method="constructFoo">

@@ -139,8 +139,8 @@ You can use custom validators just as the ones provided by Symfony itself:
 
             <class name="AppBundle\Entity\AcmeEntity">
                 <property name="name">
-                    <constraint name="NotBlank" />
-                    <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric" />
+                    <constraint name="NotBlank"/>
+                    <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric"/>
                 </property>
             </class>
         </constraint-mapping>
@@ -232,5 +232,5 @@ not to the property:
 
         <!-- src/AppBundle/Resources/config/validation.xml -->
         <class name="AppBundle\Entity\AcmeEntity">
-            <constraint name="AppBundle\Validator\Constraints\ProtocolClassValidator" />
+            <constraint name="AppBundle\Validator\Constraints\ProtocolClassValidator"/>
         </class>

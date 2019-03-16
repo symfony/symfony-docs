@@ -179,7 +179,7 @@ As an example, a test could look like this::
         <?xml version="1.0" charset="utf-8" ?>
         <phpunit>
             <php>
-                <server name="KERNEL_DIR" value="/path/to/your/app/" />
+                <server name="KERNEL_DIR" value="/path/to/your/app/"/>
             </php>
             <!-- ... -->
         </phpunit>
@@ -852,7 +852,7 @@ configuration option:
                 https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <!-- ... -->
-            <swiftmailer:config disable-delivery="true" />
+            <swiftmailer:config disable-delivery="true"/>
         </container>
 
     .. code-block:: php

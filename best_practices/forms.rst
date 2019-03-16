@@ -143,7 +143,7 @@ view layer:
         {{ form_widget(form) }}
 
         <input type="submit" value="Create"
-               class="btn btn-default pull-right" />
+               class="btn btn-default pull-right"/>
     {{ form_end(form) }}
 
 Validation

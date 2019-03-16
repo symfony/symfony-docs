@@ -56,7 +56,7 @@ Enable the x509 authentication for a particular firewall in the security configu
                 <!-- ... -->
 
                 <firewall name="secured_area" pattern="^/">
-                    <x509 provider="your_user_provider" />
+                    <x509 provider="your_user_provider"/>
                 </firewall>
             </config>
         </srv:container>

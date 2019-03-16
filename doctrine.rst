@@ -93,7 +93,7 @@ information. By convention, this information is usually configured in an
                         host="%database_host%"
                         dbname="%database_name%"
                         user="%database_user%"
-                        password="%database_password%" />
+                        password="%database_password%"/>
                 </doctrine:config>
             </container>
 
@@ -241,7 +241,7 @@ can automatically generate an empty ``test_project`` database for you:
                     <doctrine:dbal
                         driver="pdo_sqlite"
                         path="%kernel.project_dir%/app/sqlite.db"
-                        charset="UTF-8" />
+                        charset="UTF-8"/>
                 </doctrine:config>
             </container>
 
@@ -383,11 +383,11 @@ directly inside the ``Product`` class via DocBlock annotations:
 
             <entity name="AppBundle\Entity\Product" table="product">
                 <id name="id" type="integer">
-                    <generator strategy="AUTO" />
+                    <generator strategy="AUTO"/>
                 </id>
-                <field name="name" type="string" length="100" />
-                <field name="price" type="decimal" scale="2" />
-                <field name="description" type="text" />
+                <field name="name" type="string" length="100"/>
+                <field name="price" type="decimal" scale="2"/>
+                <field name="description" type="text"/>
             </entity>
         </doctrine-mapping>
 

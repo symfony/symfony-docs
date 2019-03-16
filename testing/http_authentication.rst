@@ -40,7 +40,7 @@ firewall, but only in the configuration file used by tests:
         <security:config>
             <!-- replace 'main' by the name of your own firewall -->
             <security:firewall name="main">
-              <security:http-basic />
+              <security:http-basic/>
            </security:firewall>
         </security:config>
 

@@ -90,12 +90,12 @@ both services:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" autoconfigure="true" public="false" />
+                <defaults autowire="true" autoconfigure="true" public="false"/>
                 <!-- ... -->
 
-                <service id="AppBundle\Service\TwitterClient" autowire="true" />
+                <service id="AppBundle\Service\TwitterClient" autowire="true"/>
 
-                <service id="AppBundle\Util\Rot13Transformer" autowire="true" />
+                <service id="AppBundle\Util\Rot13Transformer" autowire="true"/>
             </services>
         </container>
 
@@ -231,8 +231,8 @@ adding a service alias:
             <services>
                 <!-- ... -->
 
-                <service id="app.rot13.transformer" class="AppBundle\Util\Rot13Transformer" autowire="true" />
-                <service id="AppBundle\Util\Rot13Transformer" alias="app.rot13.transformer" />
+                <service id="app.rot13.transformer" class="AppBundle\Util\Rot13Transformer" autowire="true"/>
+                <service id="AppBundle\Util\Rot13Transformer" alias="app.rot13.transformer"/>
             </services>
         </container>
 
@@ -323,9 +323,9 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
             <services>
                 <!-- ... -->
-                <service id="AppBundle\Util\Rot13Transformer" />
+                <service id="AppBundle\Util\Rot13Transformer"/>
 
-                <service id="AppBundle\Util\TransformerInterface" alias="AppBundle\Util\Rot13Transformer" />
+                <service id="AppBundle\Util\TransformerInterface" alias="AppBundle\Util\Rot13Transformer"/>
             </services>
         </container>
 
@@ -406,13 +406,13 @@ that alias:
 
             <services>
                 <!-- ... -->
-                <service id="AppBundle\Util\Rot13Transformer" />
-                <service id="AppBundle\Util\UppercaseTransformer" />
+                <service id="AppBundle\Util\Rot13Transformer"/>
+                <service id="AppBundle\Util\UppercaseTransformer"/>
 
-                <service id="AppBundle\Util\TransformerInterface" alias="AppBundle\Util\Rot13Transformer" />
+                <service id="AppBundle\Util\TransformerInterface" alias="AppBundle\Util\Rot13Transformer"/>
 
                 <service id="AppBundle\Service\TwitterClient" autowire="true">
-                    <!-- <argument key="$transformer" type="service" id="AppBundle\Util\UppercaseTransformer" /> -->
+                    <!-- <argument key="$transformer" type="service" id="AppBundle\Util\UppercaseTransformer"/> -->
                 </service>
             </services>
         </container>

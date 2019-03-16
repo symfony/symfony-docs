@@ -158,7 +158,7 @@ page as being the content of a sub-request call:
 
     This is the content of your page
 
-    Is 2012 a leap year? <esi:include src="/leapyear/2012" />
+    Is 2012 a leap year? <esi:include src="/leapyear/2012"/>
 
     Some other content
 

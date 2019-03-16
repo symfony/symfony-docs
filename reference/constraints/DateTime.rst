@@ -56,7 +56,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\Author">
                 <property name="createdAt">
-                    <constraint name="DateTime" />
+                    <constraint name="DateTime"/>
                 </property>
             </class>
         </constraint-mapping>

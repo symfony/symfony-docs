@@ -28,11 +28,11 @@ When overriding an existing definition, the original service is lost:
             xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Mailer" />
+                <service id="AppBundle\Mailer"/>
 
                 <!-- this replaces the old AppBundle\Mailer definition with the new
                      one, the old definition is lost -->
-                <service id="AppBundle\Mailer" class="AppBundle\NewMailer" />
+                <service id="AppBundle\Mailer" class="AppBundle\NewMailer"/>
             </services>
         </container>
 
@@ -82,13 +82,13 @@ but keeps a reference of the old one as ``App\DecoratingMailer.inner``:
             xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Mailer" />
+                <service id="AppBundle\Mailer"/>
 
                 <service id="AppBundle\DecoratingMailer"
                     decorates="AppBundle\Mailer"
                     public="false"
                 >
-                    <argument type="service" id="AppBundle\DecoratingMailer.inner" />
+                    <argument type="service" id="AppBundle\DecoratingMailer.inner"/>
                 </service>
 
             </services>
@@ -154,7 +154,7 @@ replaces the ``AppBundle\Mailer`` service. The old ``AppBundle\Mailer`` service 
                         decoration-inner-name="AppBundle\DecoratingMailer.wooz"
                         public="false"
                     >
-                        <argument type="service" id="AppBundle\DecoratingMailer.wooz" />
+                        <argument type="service" id="AppBundle\DecoratingMailer.wooz"/>
                     </service>
 
                 </services>
@@ -208,14 +208,14 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Foo" />
+                <service id="Foo"/>
 
                 <service id="Bar" decorates="Foo" decoration-priority="5" public="false">
-                    <argument type="service" id="Bar.inner" />
+                    <argument type="service" id="Bar.inner"/>
                 </service>
 
                 <service id="Baz" decorates="Foo" decoration-priority="1" public="false">
-                    <argument type="service" id="Baz.inner" />
+                    <argument type="service" id="Baz.inner"/>
                 </service>
             </services>
         </container>

@@ -56,7 +56,7 @@ Basic Usage
 
             <class name="AppBundle\Entity\Author">
                 <property name="ipAddress">
-                    <constraint name="Ip" />
+                    <constraint name="Ip"/>
                 </property>
             </class>
         </constraint-mapping>

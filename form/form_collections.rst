@@ -497,7 +497,7 @@ you will learn about next!).
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">
                         <cascade>
-                            <cascade-persist />
+                            <cascade-persist/>
                         </cascade>
                     </one-to-many>
                 </entity>

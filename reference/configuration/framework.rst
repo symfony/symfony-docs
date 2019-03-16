@@ -312,7 +312,7 @@ doubling them to prevent Symfony from interpreting them as container parameters)
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ide="myide://open?url=file://%%f&line=%%l" />
+            <framework:config ide="myide://open?url=file://%%f&line=%%l"/>
         </container>
 
     .. code-block:: php
@@ -547,7 +547,7 @@ You can also set ``esi`` to ``true`` to enable it:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:esi />
+                <framework:esi/>
             </framework:config>
         </container>
 
@@ -952,7 +952,7 @@ setting the value to ``null``:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:session save-path="null" />
+                <framework:session save-path="null"/>
             </framework:config>
         </container>
 
@@ -1009,7 +1009,7 @@ Whether to enable the session support in the framework.
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:session enabled="true" />
+                <framework:session enabled="true"/>
             </framework:config>
         </container>
 
@@ -1065,7 +1065,7 @@ This option allows you to define a base path to be used for assets:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets base-path="/images" />
+                <framework:assets base-path="/images"/>
             </framework:config>
         </container>
 
@@ -1114,7 +1114,7 @@ collection each time it generates an asset's path:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets base-url="http://cdn.example.com/" />
+                <framework:assets base-url="http://cdn.example.com/"/>
             </framework:config>
         </container>
 
@@ -1162,7 +1162,7 @@ You can group assets into packages, to specify different base URLs for them:
                 <framework:assets>
                     <framework:package
                         name="avatars"
-                        base-url="http://static_cdn.example.com/avatars" />
+                        base-url="http://static_cdn.example.com/avatars"/>
                 </framework:assets>
             </framework:config>
         </container>
@@ -1213,7 +1213,7 @@ For example, suppose you have the following:
 
 .. code-block:: html+twig
 
-    <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
+    <img src="{{ asset('images/logo.png') }}" alt="Symfony!"/>
 
 By default, this will render a path to your image such as ``/images/logo.png``.
 Now, activate the ``version`` option:
@@ -1240,7 +1240,7 @@ Now, activate the ``version`` option:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets version="v2" />
+                <framework:assets version="v2"/>
             </framework:config>
         </container>
 
@@ -1358,15 +1358,15 @@ individually for each asset package:
                     <!-- this package removes any versioning (its assets won't be versioned) -->
                     <framework:package
                         name="foo_package"
-                        version="null" />
+                        version="null"/>
                     <!-- this package uses its own strategy (the default strategy is ignored) -->
                     <framework:package
                         name="bar_package"
-                        version-strategy="app.asset.another_version_strategy" />
+                        version-strategy="app.asset.another_version_strategy"/>
                     <!-- this package inherits the default strategy -->
                     <framework:package
                         name="baz_package"
-                        base_path="/images" />
+                        base_path="/images"/>
                 </framework:assets>
             </framework:config>
         </container>
@@ -1458,11 +1458,11 @@ package:
                     <!-- this package uses its own manifest (the default file is ignored) -->
                     <framework:package
                         name="foo_package"
-                        json-manifest-path="%kernel.project_dir%/web/assets/a_different_manifest.json" />
+                        json-manifest-path="%kernel.project_dir%/web/assets/a_different_manifest.json"/>
                     <!-- this package uses the global manifest (the default file is used) -->
                     <framework:package
                         name="bar_package"
-                        base-path="/images" />
+                        base-path="/images"/>
                 </framework:assets>
             </framework:config>
         </container>
@@ -2211,7 +2211,7 @@ A list of workflows to be created by the framework extension:
             <framework:config>
                 <framework:workflows>
                     <framework:workflow
-                        name="my_workflow" />
+                        name="my_workflow"/>
                 </framework:workflows>
                 <!-- ... -->
             </framework:config>

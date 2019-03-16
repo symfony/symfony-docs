@@ -58,7 +58,7 @@ will contain a Business Identifier Code (BIC).
 
             <class name="AppBundle\Entity\Transaction">
                 <property name="businessIdentifierCode">
-                    <constraint name="Bic" />
+                    <constraint name="Bic"/>
                 </property>
             </class>
         </constraint-mapping>

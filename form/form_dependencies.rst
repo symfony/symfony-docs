@@ -123,7 +123,7 @@ manually and tag it with ``form.type``:
             <services>
                 <service id="AppBundle\Form\TaskType">
                     <argument type="service" id="doctrine.orm.entity_manager"/>
-                    <tag name="form.type" />
+                    <tag name="form.type"/>
                 </service>
             </services>
         </container>

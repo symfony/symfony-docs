@@ -55,7 +55,7 @@ configuration:
             <services>
 
                 <!-- synthetic services don't specify a class -->
-                <service id="app.synthetic_service" synthetic="true" />
+                <service id="app.synthetic_service" synthetic="true"/>
 
             </services>
         </container>

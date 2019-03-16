@@ -33,8 +33,8 @@ First, enable the JSON login under your firewall:
 
             <config>
                 <firewall name="main">
-                    <anonymous />
-                    <json-login check-path="/login" />
+                    <anonymous/>
+                    <json-login check-path="/login"/>
                 </firewall>
             </config>
         </srv:container>
@@ -182,10 +182,10 @@ The security configuration should be:
 
             <config>
                 <firewall name="main">
-                    <anonymous />
+                    <anonymous/>
                     <json-login check-path="login"
                                 username-path="security.credentials.login"
-                                password-path="security.credentials.password" />
+                                password-path="security.credentials.password"/>
                 </firewall>
             </config>
         </srv:container>

@@ -33,7 +33,7 @@ as integration of other related components:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:form />
+                <framework:form/>
             </framework:config>
         </container>
 
@@ -82,7 +82,7 @@ allow users to configure it with some configuration that looks like this:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
            <acme-social:config>
-               <acme-social:twitter client-id="123" client-secret="your_secret" />
+               <acme-social:twitter client-id="123" client-secret="your_secret"/>
            </acme-social:config>
 
            <!-- ... -->

@@ -236,7 +236,7 @@ because the configuration started to get bigger:
                 <framework:templating>
                     <framework:engine>twig</framework:engine>
                 </framework:templating>
-                <framework:profiler only-exceptions="false" />
+                <framework:profiler only-exceptions="false"/>
             </framework:config>
         </container>
 

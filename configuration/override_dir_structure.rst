@@ -197,7 +197,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
                     http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
                 <!-- ... -->
-                <assetic:config read-from="%kernel.project_dir%/../public_html" />
+                <assetic:config read-from="%kernel.project_dir%/../public_html"/>
 
             </container>
 

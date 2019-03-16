@@ -50,7 +50,7 @@ configuration:
             <framework:config>
                 <!-- ... -->
                 <framework:profiler>
-                    <framework:matcher ip="168.0.0.1" />
+                    <framework:matcher ip="168.0.0.1"/>
                 </framework:profiler>
             </framework:config>
         </container>
@@ -143,7 +143,7 @@ profiler to use this service as the matcher:
             <framework:config>
                 <!-- ... -->
                 <framework:profiler>
-                    <framework:matcher service="AppBundle\Profiler\SuperAdminMatcher" />
+                    <framework:matcher service="AppBundle\Profiler\SuperAdminMatcher"/>
                 </framework:profiler>
             </framework:config>
         </container>

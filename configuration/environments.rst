@@ -77,7 +77,7 @@ accomplished easily and transparently:
                 http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <imports>
-                <import resource="config.xml" />
+                <import resource="config.xml"/>
             </imports>
 
             <!-- ... -->
@@ -123,10 +123,10 @@ configuration file:
                 http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
 
             <imports>
-                <import resource="config.xml" />
+                <import resource="config.xml"/>
             </imports>
 
-            <webprofiler:config toolbar="true" />
+            <webprofiler:config toolbar="true"/>
 
         </container>
 
@@ -229,7 +229,7 @@ this code and changing the environment string.
                     http://symfony.com/schema/dic/doctrine
                     http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
-                <doctrine:dbal logging="%kernel.debug%" />
+                <doctrine:dbal logging="%kernel.debug%"/>
 
             </container>
 
@@ -319,11 +319,11 @@ The best way to accomplish this is via a new environment called, for example,
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="config_prod.xml" />
+                <import resource="config_prod.xml"/>
             </imports>
 
             <framework:config>
-                <framework:profiler only-exceptions="false" />
+                <framework:profiler only-exceptions="false"/>
             </framework:config>
 
         </container>

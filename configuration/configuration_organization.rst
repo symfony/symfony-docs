@@ -131,9 +131,9 @@ needed for the ``app/config/dev/config.yml`` file:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="../common/config.xml" />
-                <import resource="parameters.xml" />
-                <import resource="security.xml" />
+                <import resource="../common/config.xml"/>
+                <import resource="parameters.xml"/>
+                <import resource="security.xml"/>
             </imports>
 
             <!-- ... -->
@@ -242,10 +242,10 @@ format (``.yml``, ``.xml``, ``.php``, ``.ini``):
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="parameters.yml" />
-                <import resource="services.xml" />
-                <import resource="security.yml" />
-                <import resource="legacy.php" />
+                <import resource="parameters.yml"/>
+                <import resource="services.xml"/>
+                <import resource="security.yml"/>
+                <import resource="legacy.php"/>
             </imports>
 
             <!-- ... -->
@@ -306,8 +306,8 @@ any other configuration file:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="parameters.yml" />
-                <import resource="/etc/sites/mysite.com/parameters.yml" />
+                <import resource="parameters.yml"/>
+                <import resource="/etc/sites/mysite.com/parameters.yml"/>
             </imports>
 
             <!-- ... -->
@@ -349,8 +349,8 @@ doesn't exist:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="parameters.yml" />
-                <import resource="/etc/sites/mysite.com/parameters.yml" ignore-errors="true" />
+                <import resource="parameters.yml"/>
+                <import resource="/etc/sites/mysite.com/parameters.yml" ignore-errors="true"/>
             </imports>
 
             <!-- ... -->
