@@ -15,10 +15,10 @@ define arbitrary matching logic, use the ``conditions`` routing option:
         // src/Controller/DefaultController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             /**
              * @Route(
