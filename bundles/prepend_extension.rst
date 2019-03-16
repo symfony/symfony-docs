@@ -128,7 +128,7 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
                 <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
             </acme-something:config>
 
-            <acme-other:config use-acme-goodbye="false" />
+            <acme-other:config use-acme-goodbye="false"/>
 
         </container>
 

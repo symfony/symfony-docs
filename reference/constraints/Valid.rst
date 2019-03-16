@@ -118,10 +118,10 @@ stores an ``Address`` instance in the ``$address`` property::
 
             <class name="App\Entity\Address">
                 <property name="street">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
                 <property name="zipCode">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                     <constraint name="Length">
                         <option name="max">5</option>
                     </constraint>
@@ -130,13 +130,13 @@ stores an ``Address`` instance in the ``$address`` property::
 
             <class name="App\Entity\Author">
                 <property name="firstName">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                     <constraint name="Length">
                         <option name="min">4</option>
                     </constraint>
                 </property>
                 <property name="lastName">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
             </class>
         </constraint-mapping>
@@ -221,7 +221,7 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
             <class name="App\Entity\Author">
                 <property name="address">
-                    <constraint name="Valid" />
+                    <constraint name="Valid"/>
                 </property>
             </class>
         </constraint-mapping>

@@ -54,7 +54,7 @@ Basic Usage
 
             <class name="App\Entity\Author">
                 <property name="bioUrl">
-                    <constraint name="Url" />
+                    <constraint name="Url"/>
                 </property>
             </class>
         </constraint-mapping>

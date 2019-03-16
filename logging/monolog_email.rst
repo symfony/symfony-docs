@@ -167,7 +167,7 @@ You can adjust the time period using the ``time`` option:
         <monolog:handler name="deduplicated"
             type="deduplication"
             time="10"
-            handler="swift" />
+            handler="swift"/>
 
     .. code-block:: php
 

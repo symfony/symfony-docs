@@ -52,7 +52,7 @@ Basic Usage
 
             <class name="App\Entity\Author">
                 <property name="birthday">
-                    <constraint name="Date" />
+                    <constraint name="Date"/>
                 </property>
             </class>
         </constraint-mapping>

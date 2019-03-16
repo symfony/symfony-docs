@@ -53,7 +53,7 @@ Basic Usage
 
             <class name="App\Entity\Author">
                 <property name="createdAt">
-                    <constraint name="DateTime" />
+                    <constraint name="DateTime"/>
                 </property>
             </class>
         </constraint-mapping>

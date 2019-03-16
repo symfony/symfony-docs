@@ -45,7 +45,7 @@ tags:
 
                 <!-- ... -->
                 <framework:config>
-                    <framework:fragment path="/_fragment" />
+                    <framework:fragment path="/_fragment"/>
                 </framework:config>
             </container>
 
@@ -83,7 +83,7 @@ in your application configuration:
 
             <!-- ... -->
             <framework:config>
-                <framework:templating hinclude-default-template="hinclude.html.twig" />
+                <framework:templating hinclude-default-template="hinclude.html.twig"/>
             </framework:config>
         </container>
 

@@ -63,7 +63,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
             <entity name="App\Entity\Product">
                 <!-- ... -->
                 <lifecycle-callbacks>
-                    <lifecycle-callback type="prePersist" method="setCreatedAtValue" />
+                    <lifecycle-callback type="prePersist" method="setCreatedAtValue"/>
                 </lifecycle-callbacks>
             </entity>
         </doctrine-mapping>

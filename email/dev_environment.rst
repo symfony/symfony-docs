@@ -39,7 +39,7 @@ You can disable sending email by setting the ``disable_delivery`` option to
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-            <swiftmailer:config disable-delivery="true" />
+            <swiftmailer:config disable-delivery="true"/>
         </container>
 
     .. code-block:: php
