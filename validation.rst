@@ -86,7 +86,7 @@ following:
 
             <class name="App\Entity\Author">
                 <property name="name">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
             </class>
         </constraint-mapping>
@@ -228,7 +228,7 @@ file:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:validation enabled="true" />
+                <framework:validation enabled="true"/>
             </framework:config>
         </container>
 
@@ -264,7 +264,7 @@ previous configuration by the following:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:validation enable-annotations="true" />
+                <framework:validation enable-annotations="true"/>
             </framework:config>
         </container>
 
@@ -568,7 +568,7 @@ class to have at least 3 characters.
 
             <class name="App\Entity\Author">
                 <property name="firstName">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                     <constraint name="Length">
                         <option name="min">3</option>
                     </constraint>

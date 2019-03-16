@@ -325,7 +325,7 @@ directory instead:
 
             <doctrine:config>
                 <doctrine:orm auto-mapping="true">
-                    <mapping name="AppBundle" dir="SomeResources/config/doctrine" type="xml" />
+                    <mapping name="AppBundle" dir="SomeResources/config/doctrine" type="xml"/>
                 </doctrine:orm>
             </doctrine:config>
         </container>

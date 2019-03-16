@@ -996,7 +996,7 @@ Here, we set it to 2 for the ``$child`` property:
                 https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="Acme\MyObj">
-                <attribute name="child" max-depth="2" />
+                <attribute name="child" max-depth="2"/>
             </class>
         </serializer>
 
@@ -1143,7 +1143,7 @@ The array keys beginning with ``@`` are considered XML attributes::
     // is encoded as follows:
     // <?xml version="1.0"?>
     // <response>
-    //     <foo bar="value" />
+    //     <foo bar="value"/>
     // </response>
 
 Use the special ``#`` key to define the data of a node::

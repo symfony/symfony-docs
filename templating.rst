@@ -651,9 +651,9 @@ You can now use the ``asset()`` function:
 
 .. code-block:: html+twig
 
-    <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
+    <img src="{{ asset('images/logo.png') }}" alt="Symfony!"/>
 
-    <link href="{{ asset('css/blog.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/blog.css') }}" rel="stylesheet"/>
 
 The ``asset()`` function's main purpose is to make your application more portable.
 If your application lives at the root of your host (e.g. ``http://example.com``),
@@ -675,7 +675,7 @@ as follows:
 
 .. code-block:: html+twig
 
-    <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
+    <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!"/>
 
 .. index::
    single: Templating; Including stylesheets and JavaScripts
@@ -710,7 +710,7 @@ stylesheets and JavaScripts that you'll need throughout your site:
             {# ... #}
 
             {% block stylesheets %}
-                <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+                <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
             {% endblock %}
         </head>
         <body>
@@ -736,7 +736,7 @@ page. From inside that contact page's template, do the following:
     {% block stylesheets %}
         {{ parent() }}
 
-        <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/contact.css') }}" rel="stylesheet"/>
     {% endblock %}
 
     {# ... #}
@@ -754,7 +754,7 @@ is by default the "public/" directory of your application).
 
 .. code-block:: html+twig
 
-    <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/acmedemo/css/contact.css') }}" rel="stylesheet"/>
 
 The end result is a page that includes ``main.js`` and both the ``main.css`` and ``contact.css``
 stylesheets.

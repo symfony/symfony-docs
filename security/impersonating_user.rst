@@ -45,7 +45,7 @@ listener:
 
                 <firewall name="main">
                     <!-- ... -->
-                    <switch-user />
+                    <switch-user/>
                 </firewall>
             </config>
         </srv:container>
@@ -170,7 +170,7 @@ also adjust the query parameter name via the ``parameter`` setting:
 
                 <firewall name="main">
                     <!-- ... -->
-                    <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user" />
+                    <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user"/>
                 </firewall>
             </config>
         </srv:container>

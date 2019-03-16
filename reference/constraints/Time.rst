@@ -55,7 +55,7 @@ of the day when the event starts:
 
             <class name="App\Entity\Event">
                 <property name="startsAt">
-                    <constraint name="Time" />
+                    <constraint name="Time"/>
                 </property>
             </class>
         </constraint-mapping>

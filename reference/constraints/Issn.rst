@@ -53,7 +53,7 @@ Basic Usage
 
             <class name="App\Entity\Journal">
                 <property name="issn">
-                    <constraint name="Issn" />
+                    <constraint name="Issn"/>
                 </property>
             </class>
         </constraint-mapping>

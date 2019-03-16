@@ -45,7 +45,7 @@ this spool, use the following configuration:
                 http://symfony.com/schema/dic/swiftmailer https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config>
-                <swiftmailer:spool type="memory" />
+                <swiftmailer:spool type="memory"/>
             </swiftmailer:config>
         </container>
 

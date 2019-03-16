@@ -282,7 +282,7 @@ config files:
 
                 <service id="newsletter_manager" class="NewsletterManager">
                     <call method="setMailer">
-                        <argument type="service" id="mailer" />
+                        <argument type="service" id="mailer"/>
                     </call>
                 </service>
             </services>

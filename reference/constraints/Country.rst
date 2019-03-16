@@ -50,7 +50,7 @@ Basic Usage
 
             <class name="App\Entity\User">
                 <property name="country">
-                    <constraint name="Country" />
+                    <constraint name="Country"/>
                 </property>
             </class>
         </constraint-mapping>

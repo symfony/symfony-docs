@@ -50,8 +50,8 @@ Next, enable the php engine:
             <framework:config>
                 <!-- ... -->
                 <framework:templating>
-                    <framework:engine id="twig" />
-                    <framework:engine id="php" />
+                    <framework:engine id="twig"/>
+                    <framework:engine id="php"/>
                 </framework:templating>
             </framework:config>
         </container>
@@ -149,7 +149,7 @@ another one:
     <!DOCTYPE html>
     <html>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
             <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
         </head>
         <body>
@@ -191,7 +191,7 @@ The base layout already has the code to output the title in the header:
 
     <!-- src/Resources/views/base.html.php -->
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
     </head>
 
@@ -309,9 +309,9 @@ Symfony provides the ``assets`` tag to deal with them:
 
 .. code-block:: html+php
 
-    <link href="<?= $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css"/>
 
-    <img src="<?= $view['assets']->getUrl('images/logo.png') ?>" />
+    <img src="<?= $view['assets']->getUrl('images/logo.png') ?>"/>
 
 The ``assets`` helper's main purpose is to make your application more
 portable. Thanks to this helper, you can move the application root directory

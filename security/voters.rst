@@ -300,7 +300,7 @@ security configuration:
         >
 
             <config>
-                <access-decision-manager strategy="unanimous" allow-if-all-abstain="false"  />
+                <access-decision-manager strategy="unanimous" allow-if-all-abstain="false"/>
             </config>
         </srv:container>
 

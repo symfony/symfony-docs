@@ -53,7 +53,7 @@ Basic Usage
 
             <class name="App\Entity\Author">
                 <property name="ipAddress">
-                    <constraint name="Ip" />
+                    <constraint name="Ip"/>
                 </property>
             </class>
         </constraint-mapping>

@@ -55,7 +55,7 @@ class were not strictly equal to ``null``, you would:
 
             <class name="App\Entity\Author">
                 <property name="firstName">
-                    <constraint name="NotNull" />
+                    <constraint name="NotNull"/>
                 </property>
             </class>
         </constraint-mapping>

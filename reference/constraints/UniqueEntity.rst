@@ -80,7 +80,7 @@ between all of the constraints in your user table:
                     <option name="fields">email</option>
                 </constraint>
                 <property name="email">
-                    <constraint name="Email" />
+                    <constraint name="Email"/>
                 </property>
             </class>
         </constraint-mapping>

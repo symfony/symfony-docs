@@ -57,7 +57,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 
             <class name="App\Entity\Author">
                 <property name="firstName">
-                    <constraint name="IsNull" />
+                    <constraint name="IsNull"/>
                 </property>
             </class>
         </constraint-mapping>

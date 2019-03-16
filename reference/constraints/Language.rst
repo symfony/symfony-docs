@@ -51,7 +51,7 @@ Basic Usage
 
             <class name="App\Entity\User">
                 <property name="preferredLanguage">
-                    <constraint name="Language" />
+                    <constraint name="Language"/>
                 </property>
             </class>
         </constraint-mapping>

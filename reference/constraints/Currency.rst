@@ -53,7 +53,7 @@ a valid currency, you could do the following:
 
             <class name="App\Entity\Order">
                 <property name="currency">
-                    <constraint name="Currency" />
+                    <constraint name="Currency"/>
                 </property>
             </class>
         </constraint-mapping>

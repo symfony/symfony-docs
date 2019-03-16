@@ -89,7 +89,7 @@ An LDAP client can be configured using the built-in
 
             <services>
                 <service id="Symfony\Component\Ldap\Ldap">
-                    <argument type="service" id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter" />
+                    <argument type="service" id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter"/>
                 </service>
                 <service id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter">
                     <argument type="collection">
@@ -377,7 +377,7 @@ Configuration example for form login
                 <firewall name="main">
                     <form-login-ldap
                             service="Symfony\Component\Ldap\Ldap"
-                            dn-string="uid={username},dc=example,dc=com" />
+                            dn-string="uid={username},dc=example,dc=com"/>
                 </firewall>
             </config>
         </srv:container>
@@ -430,7 +430,7 @@ Configuration example for HTTP Basic
 
             <config>
                 <firewall name="main" stateless="true">
-                    <http-basic-ldap service="Symfony\Component\Ldap\Ldap" dn-string="uid={username},dc=example,dc=com" />
+                    <http-basic-ldap service="Symfony\Component\Ldap\Ldap" dn-string="uid={username},dc=example,dc=com"/>
                 </firewall>
             </config>
         </srv:container>
@@ -488,7 +488,7 @@ Configuration example for form login and query_string
                     <form-login-ldap
                             service="Symfony\Component\Ldap\Ldap"
                             dn-string="dc=example,dc=com"
-                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))" />
+                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))"/>
                 </firewall>
             </config>
         </srv:container>

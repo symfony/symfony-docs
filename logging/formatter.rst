@@ -40,7 +40,7 @@ configure your handler to use it:
                 https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="Monolog\Formatter\JsonFormatter" />
+                <service id="Monolog\Formatter\JsonFormatter"/>
             </services>
 
             <!-- config/packages/prod/monolog.xml (and/or config/packages/dev/monolog.xml) -->

@@ -27,7 +27,7 @@ as this is the only useful one outside of Akamai context:
             <!-- ... some content -->
 
             <!-- Embed the content of another page here -->
-            <esi:include src="http://..." />
+            <esi:include src="http://..."/>
 
             <!-- ... more content -->
         </body>
@@ -81,7 +81,7 @@ First, to use ESI, be sure to enable it in your application configuration:
 
             <framework:config>
                 <!-- ... -->
-                <framework:esi enabled="true" />
+                <framework:esi enabled="true"/>
             </framework:config>
         </container>
 
@@ -211,7 +211,7 @@ that must be enabled in your configuration:
 
             <!-- ... -->
             <framework:config>
-                <framework:fragment path="/_fragment" />
+                <framework:fragment path="/_fragment"/>
             </framework:config>
         </container>
 

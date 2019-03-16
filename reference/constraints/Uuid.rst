@@ -55,7 +55,7 @@ Basic Usage
 
             <class name="App\Entity\File">
                 <property name="identifier">
-                    <constraint name="Uuid" />
+                    <constraint name="Uuid"/>
                 </property>
             </class>
         </constraint-mapping>
