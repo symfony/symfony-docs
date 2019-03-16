@@ -498,7 +498,7 @@ of the form fields::
             ->add('myField', TextType::class, [
                 'required' => true,
                 'constraints' => [new Length(['min' => 3])]
-            ))
+            ])
         ;
     }
 

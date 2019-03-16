@@ -180,7 +180,9 @@ You can adjust the time period using the ``time`` option:
                     // the time in seconds during which duplicate entries are discarded (default: 60)
                     'time' => 10,
                     'handler' => 'swift',
-                ]
+                ],
+            ],
+        ]);
 
 The messages are then passed to the ``swift`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are
