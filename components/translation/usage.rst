@@ -194,7 +194,7 @@ recommended format. These files are parsed by one of the loader classes.
                     'has' => [
                         'bundles' => 'Symfony has bundles',
                     ],
-                ),
+                ],
                 'user' => [
                     'login' => 'Login',
                 ],

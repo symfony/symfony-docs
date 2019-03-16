@@ -110,7 +110,7 @@ generated class map with, for example, the
 
     The example assumes that you already have autoloading working (e.g.
     through `Composer`_ or one of the other class loaders from the ClassLoader
-    component.
+    component).
 
 Besides dumping the class map for one directory, you can also pass an array
 of directories for which to generate the class map (the result actually
