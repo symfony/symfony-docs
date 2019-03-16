@@ -45,8 +45,8 @@ First, enable ``form_login`` under your firewall:
 
             <config>
                 <firewall name="main">
-                    <anonymous />
-                    <form-login login-path="login" check-path="login" />
+                    <anonymous/>
+                    <form-login login-path="login" check-path="login"/>
                 </firewall>
             </config>
         </srv:container>
@@ -124,7 +124,7 @@ configuration (``login``):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="GET|POST" />
+            <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="GET|POST"/>
         </routes>
 
     ..  code-block:: php
@@ -190,15 +190,15 @@ Finally, create the template:
 
     <form action="{{ path('login') }}" method="post">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
+        <input type="password" id="password" name="_password"/>
 
         {#
             If you want to control the URL the user
             is redirected to on success (more details below)
-            <input type="hidden" name="_target_path" value="/account" />
+            <input type="hidden" name="_target_path" value="/account"/>
         #}
 
         <button type="submit">login</button>
@@ -287,7 +287,7 @@ security component:
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <form-login csrf-token-generator="security.csrf.token_manager" />
+                    <form-login csrf-token-generator="security.csrf.token_manager"/>
                 </firewall>
             </config>
         </srv:container>

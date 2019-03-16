@@ -46,7 +46,7 @@ the URI scheme via schemes:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="secure" path="/secure" schemes="https" controller="App\Controller\MainController::secure" />
+            <route id="secure" path="/secure" schemes="https" controller="App\Controller\MainController::secure"/>
         </routes>
 
     .. code-block:: php

@@ -171,7 +171,7 @@ automatically when installing Twig support):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@TwigBundle/Resources/config/routing/errors.xml" prefix="/_error" />
+            <import resource="@TwigBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
         </routes>
 
     .. code-block:: php
@@ -293,7 +293,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
                 <services>
                     <!-- ... be sure autowiring is enabled -->
-                    <defaults autowire="true" />
+                    <defaults autowire="true"/>
                     <!-- ... -->
 
                     <service id="App\Controller\CustomExceptionController" public="true">

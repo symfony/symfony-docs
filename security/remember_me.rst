@@ -50,7 +50,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                     <remember-me
                         secret="%kernel.secret%"
                         lifetime="604800"
-                        path="/" />
+                        path="/"/>
                     <!-- by default, the feature is enabled by checking a checkbox
                          in the login form (see below), add always-remember-me="true"
                          to always enable it. -->
@@ -154,7 +154,7 @@ this:
     <form method="post">
         {# ... your form fields #}
 
-        <input type="checkbox" id="remember_me" name="_remember_me" checked />
+        <input type="checkbox" id="remember_me" name="_remember_me" checked/>
         <label for="remember_me">Keep me logged in</label>
 
         {# ... #}

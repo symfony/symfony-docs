@@ -215,7 +215,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
                     pattern="^/"
                     anonymous="true"
                 >
-                    <logout />
+                    <logout/>
 
                     <guard>
                         <authenticator>App\Security\TokenAuthenticator</authenticator>

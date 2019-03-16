@@ -144,7 +144,7 @@ command will pre-configure this for you:
 
                 <encoder class="App\Entity\User"
                     algorithm="bcrypt"
-                    cost="12" />
+                    cost="12"/>
 
                 <!-- ... -->
             </config>
@@ -254,10 +254,10 @@ important section is ``firewalls``:
             <config>
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
-                    security="false" />
+                    security="false"/>
 
                 <firewall name="main">
-                    <anonymous />
+                    <anonymous/>
                 </firewall>
             </config>
         </srv:container>
@@ -456,7 +456,7 @@ start with ``/admin``, you can:
                 </firewall>
 
                 <!-- require ROLE_ADMIN for /admin* -->
-                <rule path="^/admin" role="ROLE_ADMIN" />
+                <rule path="^/admin" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -510,8 +510,8 @@ the list and stops when it finds the first match:
             <config>
                 <!-- ... -->
 
-                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN" />
-                <rule path="^/admin" role="ROLE_ADMIN" />
+                <rule path="^/admin/users" role="ROLE_SUPER_ADMIN"/>
+                <rule path="^/admin" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -772,7 +772,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <logout path="app_logout" />
+                    <logout path="app_logout"/>
                 </firewall>
             </config>
         </srv:container>
@@ -831,7 +831,7 @@ Next, you'll need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="GET" />
+            <route id="app_logout" path="/logout" methods="GET"/>
         </routes>
 
     ..  code-block:: php

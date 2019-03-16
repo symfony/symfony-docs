@@ -103,8 +103,8 @@ format (``.yaml``, ``.xml``, ``.php``, ``.ini``):
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="my_config_file.yaml" />
-                <import resource="legacy.php" />
+                <import resource="my_config_file.yaml"/>
+                <import resource="legacy.php"/>
             </imports>
 
             <!-- ... -->
@@ -157,7 +157,7 @@ when importing it from any other configuration file:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
-                <import resource="/etc/sites/mysite.com/parameters.yaml" ignore-errors="true" />
+                <import resource="/etc/sites/mysite.com/parameters.yaml" ignore-errors="true"/>
             </imports>
 
             <!-- ... -->

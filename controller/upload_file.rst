@@ -418,7 +418,7 @@ Now, register this class as a Doctrine listener:
 
             <services>
                 <!-- ... be sure autowiring is enabled -->
-                <defaults autowire="true" />
+                <defaults autowire="true"/>
                 <!-- ... -->
 
                 <service id="App\EventListener\BrochureUploaderListener">

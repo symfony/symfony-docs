@@ -104,7 +104,7 @@ The next step is to configure a route in your app matching this path:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="POST" />
+            <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="POST"/>
         </routes>
 
     .. code-block:: php

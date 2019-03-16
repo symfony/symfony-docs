@@ -104,7 +104,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
             <services>
                 <service id="App\Command\SunshineCommand">
-                     <tag name="console.command" command="app:sunshine" />
+                     <tag name="console.command" command="app:sunshine"/>
                 </service>
             </services>
         </container>

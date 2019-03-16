@@ -48,7 +48,7 @@ sessions, check their default configuration:
                 <framework:session enabled="true"
                                    handler-id="null"
                                    cookie-secure="auto"
-                                   cookie-samesite="lax" />
+                                   cookie-samesite="lax"/>
             </framework:config>
         </container>
 
@@ -105,7 +105,7 @@ session metadata files:
             <framework:config>
                 <framework:session enabled="true"
                                    handler-id="session.handler.native_file"
-                                   save-path="%kernel.project_dir%/var/sessions/%kernel.environment%" />
+                                   save-path="%kernel.project_dir%/var/sessions/%kernel.environment%"/>
             </framework:config>
         </container>
 

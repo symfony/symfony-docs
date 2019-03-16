@@ -69,12 +69,12 @@ what the file looks like in Symfony 4):
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" autoconfigure="true" public="false" />
+                <defaults autowire="true" autoconfigure="true" public="false"/>
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
 
                 <prototype namespace="App\Controller\" resource="../src/Controller">
-                    <tag name="controller.service_arguments" />
+                    <tag name="controller.service_arguments"/>
                 </prototype>
 
                 <!-- add more services, or override services that need manual wiring -->
@@ -122,7 +122,7 @@ thanks to the following config:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
             </services>
         </container>
 
@@ -194,12 +194,12 @@ service as an argument to another with the following config:
 
             <services>
                 <service id="app.invoice_generator"
-                    class="App\Service\InvoiceGenerator" />
+                    class="App\Service\InvoiceGenerator"/>
 
                 <service id="app.invoice_mailer"
                     class="App\Service\InvoiceMailer">
 
-                    <argument type="service" id="app.invoice_generator" />
+                    <argument type="service" id="app.invoice_generator"/>
                 </service>
             </services>
         </container>
@@ -311,7 +311,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
                 <!-- ... -->
 
                 <prototype namespace="App\Controller\" resource="../src/Controller">
-                    <tag name="controller.service_arguments" />
+                    <tag name="controller.service_arguments"/>
                 </prototype>
             </services>
         </container>
@@ -457,7 +457,7 @@ inherited from an abstract definition:
                 <!-- ... -->
 
                 <instanceof id="App\Domain\LoaderInterface" public="true">
-                    <tag name="app.domain_loader" />
+                    <tag name="app.domain_loader"/>
                 </instanceof>
             </services>
         </container>
