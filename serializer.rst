@@ -101,7 +101,7 @@ properties and setters (``setXxx()``) to change properties:
 
             <services>
                 <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
-                    <tag name="serializer.normalizer" />
+                    <tag name="serializer.normalizer"/>
                 </service>
             </services>
         </container>
@@ -186,7 +186,7 @@ value:
         <!-- config/packages/framework.xml -->
         <framework:config>
             <!-- ... -->
-            <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case" />
+            <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case"/>
         </framework:config>
 
     .. code-block:: php

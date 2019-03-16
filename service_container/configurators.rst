@@ -151,14 +151,14 @@ all the classes are already loaded as services. All you need to do is specify th
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <prototype namespace="App\" resource="../src/*" />
+                <prototype namespace="App\" resource="../src/*"/>
 
                 <service id="App\Mail\NewsletterManager">
-                    <configurator service="App\Mail\EmailConfigurator" method="configure" />
+                    <configurator service="App\Mail\EmailConfigurator" method="configure"/>
                 </service>
 
                 <service id="App\Mail\GreetingCardManager">
-                    <configurator service="App\Mail\EmailConfigurator" method="configure" />
+                    <configurator service="App\Mail\EmailConfigurator" method="configure"/>
                 </service>
             </services>
         </container>

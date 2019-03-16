@@ -92,12 +92,12 @@ both services:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" autoconfigure="true" public="false" />
+                <defaults autowire="true" autoconfigure="true" public="false"/>
                 <!-- ... -->
 
-                <service id="App\Service\TwitterClient" autowire="true" />
+                <service id="App\Service\TwitterClient" autowire="true"/>
 
-                <service id="App\Util\Rot13Transformer" autowire="true" />
+                <service id="App\Util\Rot13Transformer" autowire="true"/>
             </services>
         </container>
 
@@ -221,8 +221,8 @@ adding a service alias:
             <services>
                 <!-- ... -->
 
-                <service id="app.rot13.transformer" class="App\Util\Rot13Transformer" autowire="true" />
-                <service id="App\Util\Rot13Transformer" alias="app.rot13.transformer" />
+                <service id="app.rot13.transformer" class="App\Util\Rot13Transformer" autowire="true"/>
+                <service id="App\Util\Rot13Transformer" alias="app.rot13.transformer"/>
             </services>
         </container>
 
@@ -315,9 +315,9 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
             <services>
                 <!-- ... -->
-                <service id="App\Util\Rot13Transformer" />
+                <service id="App\Util\Rot13Transformer"/>
 
-                <service id="App\Util\TransformerInterface" alias="App\Util\Rot13Transformer" />
+                <service id="App\Util\TransformerInterface" alias="App\Util\Rot13Transformer"/>
             </services>
         </container>
 
@@ -401,13 +401,13 @@ that alias:
 
             <services>
                 <!-- ... -->
-                <service id="App\Util\Rot13Transformer" />
-                <service id="App\Util\UppercaseTransformer" />
+                <service id="App\Util\Rot13Transformer"/>
+                <service id="App\Util\UppercaseTransformer"/>
 
-                <service id="App\Util\TransformerInterface" alias="App\Util\Rot13Transformer" />
+                <service id="App\Util\TransformerInterface" alias="App\Util\Rot13Transformer"/>
 
                 <service id="App\Service\TwitterClient" autowire="true">
-                    <!-- <argument key="$transformer" type="service" id="App\Util\UppercaseTransformer" /> -->
+                    <!-- <argument key="$transformer" type="service" id="App\Util\UppercaseTransformer"/> -->
                 </service>
             </services>
         </container>

@@ -158,7 +158,7 @@ the environment variable is passed to the kernel::
                     http://symfony.com/schema/dic/twig
                     https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-                <twig:config debug="%kernel.debug%" />
+                <twig:config debug="%kernel.debug%"/>
 
             </container>
 
@@ -231,7 +231,7 @@ configuration file:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:profiler only-exceptions="false" />
+                <framework:profiler only-exceptions="false"/>
             </framework:config>
 
         </container>

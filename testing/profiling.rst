@@ -40,7 +40,7 @@ tests significantly. That's why Symfony disables it by default:
             <!-- ... -->
 
             <framework:config>
-                <framework:profiler enabled="true" collect="false" />
+                <framework:profiler enabled="true" collect="false"/>
             </framework:config>
         </container>
 

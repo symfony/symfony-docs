@@ -167,7 +167,7 @@ create an alias pointing to the existing ``profiler`` service:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Symfony\Component\HttpKernel\Profiler\Profiler" alias="profiler" />
+                <service id="Symfony\Component\HttpKernel\Profiler\Profiler" alias="profiler"/>
             </services>
         </container>
 

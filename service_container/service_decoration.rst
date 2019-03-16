@@ -28,11 +28,11 @@ When overriding an existing definition, the original service is lost:
             xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Mailer" />
+                <service id="App\Mailer"/>
 
                 <!-- this replaces the old App\Mailer definition with the new
                      one, the old definition is lost -->
-                <service id="App\Mailer" class="App\NewMailer" />
+                <service id="App\Mailer" class="App\NewMailer"/>
             </services>
         </container>
 
@@ -76,7 +76,7 @@ but keeps a reference of the old one as ``App\DecoratingMailer.inner``:
             xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Mailer" />
+                <service id="App\Mailer"/>
 
                 <service id="App\DecoratingMailer"
                     decorates="App\Mailer"
@@ -131,12 +131,12 @@ automatically changed to ``decorating_service_id + '.inner'``):
             xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Mailer" />
+                <service id="App\Mailer"/>
 
                 <service id="App\DecoratingMailer"
                     decorates="App\Mailer"
                 >
-                    <argument type="service" id="App\DecoratingMailer.inner" />
+                    <argument type="service" id="App\DecoratingMailer.inner"/>
                 </service>
 
             </services>
@@ -197,7 +197,7 @@ automatically changed to ``decorating_service_id + '.inner'``):
                         decoration-inner-name="App\DecoratingMailer.wooz"
                         public="false"
                     >
-                        <argument type="service" id="App\DecoratingMailer.wooz" />
+                        <argument type="service" id="App\DecoratingMailer.wooz"/>
                     </service>
 
                 </services>
@@ -251,14 +251,14 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Foo" />
+                <service id="Foo"/>
 
                 <service id="Bar" decorates="Foo" decoration-priority="5" public="false">
-                    <argument type="service" id="Bar.inner" />
+                    <argument type="service" id="Bar.inner"/>
                 </service>
 
                 <service id="Baz" decorates="Foo" decoration-priority="1" public="false">
-                    <argument type="service" id="Baz.inner" />
+                    <argument type="service" id="Baz.inner"/>
                 </service>
             </services>
         </container>

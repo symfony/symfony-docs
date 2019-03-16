@@ -58,11 +58,11 @@ Take the following ``access_control`` entries as an example:
 
             <config>
                 <!-- ... -->
-                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1" />
-                <rule path="^/admin" role="ROLE_USER_PORT" ip="127.0.0.1" port="8080" />
-                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$" />
-                <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT" />
-                <rule path="^/admin" role="ROLE_USER" />
+                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1"/>
+                <rule path="^/admin" role="ROLE_USER_PORT" ip="127.0.0.1" port="8080"/>
+                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$"/>
+                <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT"/>
+                <rule path="^/admin" role="ROLE_USER"/>
             </config>
         </srv:container>
 
@@ -215,7 +215,7 @@ pattern so that it is only accessible by requests from the local server itself:
                     <ip>::1</ip>
                 </rule>
 
-                <rule path="^/internal" role="ROLE_NO_ACCESS" />
+                <rule path="^/internal" role="ROLE_NO_ACCESS"/>
             </config>
         </srv:container>
 
@@ -292,7 +292,7 @@ key:
 
             <config>
                 <rule path="^/_internal/secure"
-                    allow-if="'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')" />
+                    allow-if="'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')"/>
             </config>
         </srv:container>
 

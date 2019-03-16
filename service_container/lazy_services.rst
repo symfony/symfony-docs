@@ -57,7 +57,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Twig\AppExtension" lazy="true" />
+                <service id="App\Twig\AppExtension" lazy="true"/>
             </services>
         </container>
 

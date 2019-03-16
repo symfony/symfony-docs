@@ -41,7 +41,7 @@ logging these HTTP codes based on the MonologBundle configuration:
                         <monolog:url>^/foo</monolog:url>
                         <monolog:url>^/bar</monolog:url>
                     </monolog:excluded-http-code>
-                    <monolog:excluded-http-code code="404" />
+                    <monolog:excluded-http-code code="404"/>
                 </monolog:handler>
             </monolog:config>
         </container>

@@ -84,7 +84,7 @@ information:
                 </service>
 
                 <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor" />
+                    <tag name="monolog.processor"/>
                 </service>
             </services>
         </container>
@@ -189,7 +189,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor" handler="main" />
+                    <tag name="monolog.processor" handler="main"/>
                 </service>
             </services>
         </container>
@@ -233,7 +233,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor" channel="main" />
+                    <tag name="monolog.processor" channel="main"/>
                 </service>
             </services>
         </container>

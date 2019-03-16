@@ -75,11 +75,11 @@ username and the password are different only if all other validation passes
 
             <class name="App\Entity\User">
                 <property name="username">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
 
                 <property name="password">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
 
                 <getter property="passwordSafe">
@@ -223,7 +223,7 @@ entity and a new constraint group called ``Premium``:
 
             <class name="App\Entity\User">
                 <property name="name">
-                    <constraint name="NotBlank" />
+                    <constraint name="NotBlank"/>
                 </property>
 
                 <property name="creditCard">
@@ -332,7 +332,7 @@ provides a sequence of groups to be validated:
                 https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="App\Entity\User">
-                <group-sequence-provider />
+                <group-sequence-provider/>
                 <!-- ... -->
             </class>
         </constraint-mapping>

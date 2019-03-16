@@ -152,7 +152,7 @@ path):
 
             <route id="some_route"
                 path="/%app.route_prefix%/contact"
-                controller="App\Controller\MainController::contact" />
+                controller="App\Controller\MainController::contact"/>
         </routes>
 
     .. code-block:: php

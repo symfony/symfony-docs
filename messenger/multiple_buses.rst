@@ -54,14 +54,14 @@ an **event bus**. The event bus could have zero or more subscribers.
                 <!-- The bus that is going to be injected when injecting MessageBusInterface -->
                 <framework:messenger default-bus="messenger.bus.commands">
                     <framework:bus name="messenger.bus.commands">
-                        <framework:middleware id="validation" />
-                        <framework:middleware id="doctrine_transaction" />
+                        <framework:middleware id="validation"/>
+                        <framework:middleware id="doctrine_transaction"/>
                     <framework:bus>
                     <framework:bus name="messenger.bus.queries">
-                        <framework:middleware id="validation" />
+                        <framework:middleware id="validation"/>
                     <framework:bus>
                     <framework:bus name="messenger.bus.events" default-middleware="allow_no_handlers">
-                        <framework:middleware id="validation" />
+                        <framework:middleware id="validation"/>
                     <framework:bus>
                 </framework:messenger>
             </framework:config>
@@ -135,9 +135,9 @@ binding capabilities to clarify which bus will be injected based on the argument
 
             <services>
                 <defaults>
-                   <bind key="$commandBus" type="service" id="messenger.bus.commands" />
-                   <bind key="$queryBus" type="service" id="messenger.bus.queries" />
-                   <bind key="$eventBus" type="service" id="messenger.bus.events" />
+                   <bind key="$commandBus" type="service" id="messenger.bus.commands"/>
+                   <bind key="$queryBus" type="service" id="messenger.bus.queries"/>
+                   <bind key="$eventBus" type="service" id="messenger.bus.events"/>
                 </defaults>
             </services>
         </container>
@@ -177,7 +177,7 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
 
             <services>
                 <service id="App\MessageHandler\SomeCommandHandler">
-                    <tag name="messenger.message_handler" bus="messenger.bus.commands" />
+                    <tag name="messenger.message_handler" bus="messenger.bus.commands"/>
                 </service>
             </services>
         </container>
@@ -228,11 +228,11 @@ the correct tag:
             <services>
                 <!-- command handlers -->
                 <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php">
-                    <tag name="messenger.message_handler" bus="messenger.bus.commands" />
+                    <tag name="messenger.message_handler" bus="messenger.bus.commands"/>
                 </service>
                 <!-- query handlers -->
                 <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php">
-                    <tag name="messenger.message_handler" bus="messenger.bus.queries" />
+                    <tag name="messenger.message_handler" bus="messenger.bus.queries"/>
                 </service>
             </services>
         </container>

@@ -524,7 +524,7 @@ configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="welcome" path="/" controller="App\Controller\WelcomeController::index" methods="GET" />
+            <route id="welcome" path="/" controller="App\Controller\WelcomeController::index" methods="GET"/>
         </routes>
 
     .. code-block:: php
@@ -590,7 +590,7 @@ route:
             <route id="article_show"
                 path="/article/{slug}"
                 controller="App\Controller\ArticleController::show"
-                methods="GET" />
+                methods="GET"/>
         </routes>
 
     .. code-block:: php

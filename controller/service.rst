@@ -57,7 +57,7 @@ a service like: ``App\Controller\HelloController::index``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="hello" path="/hello" controller="App\Controller\HelloController::index" methods="GET" />
+            <route id="hello" path="/hello" controller="App\Controller\HelloController::index" methods="GET"/>
 
         </routes>
 

@@ -140,7 +140,7 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/debug https://symfony.com/schema/dic/debug/debug-1.0.xsd">
 
-            <debug:config dump-destination="tcp://%env(VAR_DUMPER_SERVER)%" />
+            <debug:config dump-destination="tcp://%env(VAR_DUMPER_SERVER)%"/>
         </container>
 
     .. code-block:: php

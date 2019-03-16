@@ -88,7 +88,7 @@ type-hinted method arguments:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <sensio-framework-extra:config>
-                <request converters="true" auto-convert="false" />
+                <request converters="true" auto-convert="false"/>
             </sensio-framework-extra:config>
         </container>
 
@@ -194,11 +194,11 @@ and adding a priority.
 
             <services>
                 <!-- ... be sure autowiring is enabled -->
-                <defaults autowire="true" />
+                <defaults autowire="true"/>
                 <!-- ... -->
 
                 <service id="App\ArgumentResolver\UserValueResolver">
-                    <tag name="controller.argument_value_resolver" priority="50" />
+                    <tag name="controller.argument_value_resolver" priority="50"/>
                 </service>
             </services>
 

@@ -55,7 +55,7 @@ to register a new `test listener`_ called ``SymfonyTestsListener``:
         <!-- ... -->
 
         <listeners>
-            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
         </listeners>
     </phpunit>
 
@@ -122,7 +122,7 @@ The summary includes:
         <!-- phpunit.xml.dist -->
         <!-- ... -->
         <listeners>
-            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
         </listeners>
 
 Trigger Deprecation Notices
@@ -179,8 +179,8 @@ message, enclosed with ``/``. For example, with:
         <!-- ... -->
 
         <php>
-            <server name="KERNEL_CLASS" value="App\Kernel" />
-            <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/" />
+            <server name="KERNEL_CLASS" value="App\Kernel"/>
+            <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/"/>
         </php>
     </phpunit>
 
@@ -342,7 +342,7 @@ following listener in your PHPUnit configuration:
     <!-- phpunit.xml.dist -->
     <!-- ... -->
     <listeners>
-        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
     </listeners>
 
 .. note::
@@ -676,7 +676,7 @@ Add the following configuration to the ``phpunit.xml.dist`` file
         <!-- ... -->
 
         <listeners>
-            <listener class="Symfony\Bridge\PhpUnit\CoverageListener" />
+            <listener class="Symfony\Bridge\PhpUnit\CoverageListener"/>
         </listeners>
     </phpunit>
 

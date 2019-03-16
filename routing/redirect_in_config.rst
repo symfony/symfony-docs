@@ -50,7 +50,7 @@ action to redirect to this new url:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- load some routes - one should ultimately have the path "/app" -->
-            <import resource="../src/Controller/" type="annotation" prefix="/app" />
+            <import resource="../src/Controller/" type="annotation" prefix="/app"/>
 
             <!-- redirecting the homepage -->
             <route id="homepage"

@@ -63,7 +63,7 @@ To support HTTP Basic authentication, add the ``http_basic`` key to your firewal
                 <!-- ... -->
 
                 <firewall name="main">
-                    <http-basic realm="Secured Area" />
+                    <http-basic realm="Secured Area"/>
                 </firewall>
             </config>
         </srv:container>
@@ -130,7 +130,7 @@ Enable the x509 authentication for a particular firewall in the security configu
 
                 <firewall name="main">
                     <!-- ... -->
-                    <x509 provider="your_user_provider" />
+                    <x509 provider="your_user_provider"/>
                 </firewall>
             </config>
         </srv:container>

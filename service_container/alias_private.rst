@@ -48,7 +48,7 @@ You can also control the ``public`` option on a service-by-service basis:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Service\Foo" public="false" />
+                <service id="App\Service\Foo" public="false"/>
             </services>
         </container>
 
@@ -114,9 +114,9 @@ services.
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Mail\PhpMailer" public="false" />
+                <service id="App\Mail\PhpMailer" public="false"/>
 
-                <service id="app.mailer" alias="App\Mail\PhpMailer" />
+                <service id="app.mailer" alias="App\Mail\PhpMailer"/>
             </services>
         </container>
 
@@ -246,7 +246,7 @@ The following example shows how to inject an anonymous service into another serv
             <services>
                 <service id="foo" class="App\Foo">
                     <argument type="service">
-                        <service class="App\AnonymousBar" />
+                        <service class="App\AnonymousBar"/>
                     </argument>
                 </service>
             </services>

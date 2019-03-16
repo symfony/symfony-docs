@@ -173,9 +173,9 @@ each time you ask for it.
 
                 <services>
                     <!-- Default configuration for services in *this* file -->
-                    <defaults autowire="true" autoconfigure="true" public="false" />
+                    <defaults autowire="true" autoconfigure="true" public="false"/>
 
-                    <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
+                    <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
                 </services>
             </container>
 
@@ -416,7 +416,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- ... -->
 
                 <!-- Same as before -->
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
 
                 <!-- Explicitly configure the service -->
                 <service id="App\Updates\SiteUpdateManager">
@@ -604,7 +604,7 @@ But, you can control this and pass in a different logger:
 
                 <!-- Explicitly configure the service -->
                 <service id="App\Service\MessageGenerator">
-                    <argument key="$logger" type="service" id="monolog.logger.request" />
+                    <argument key="$logger" type="service" id="monolog.logger.request"/>
                 </service>
             </services>
         </container>
@@ -883,7 +883,7 @@ key. For example, the default Symfony configuration contains this:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
             </services>
         </container>
 
@@ -1020,18 +1020,18 @@ admin email. In this case, each needs to have a unique service id:
                 <!-- ... -->
 
                 <service id="site_update_manager.superadmin" class="App\Updates\SiteUpdateManager" autowire="false">
-                    <argument type="service" id="App\Service\MessageGenerator" />
-                    <argument type="service" id="mailer" />
+                    <argument type="service" id="App\Service\MessageGenerator"/>
+                    <argument type="service" id="mailer"/>
                     <argument>superadmin@example.com</argument>
                 </service>
 
                 <service id="site_update_manager.normal_users" class="App\Updates\SiteUpdateManager" autowire="false">
-                    <argument type="service" id="App\Service\MessageGenerator" />
-                    <argument type="service" id="mailer" />
+                    <argument type="service" id="App\Service\MessageGenerator"/>
+                    <argument type="service" id="mailer"/>
                     <argument>contact@example.com</argument>
                 </service>
 
-                <service id="App\Updates\SiteUpdateManager" alias="site_update_manager.superadmin" />
+                <service id="App\Updates\SiteUpdateManager" alias="site_update_manager.superadmin"/>
             </services>
         </container>
 
