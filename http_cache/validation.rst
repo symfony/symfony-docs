@@ -23,7 +23,7 @@ page again (see below for an implementation example).
 
     The 304 status code means "Not Modified". It's important because with
     this status code the response does *not* contain the actual content being
-    requested. Instead, the response is simply a light-weight set of directions that
+    requested. Instead, the response is a light-weight set of directions that
     tells the cache that it should use its stored version.
 
 Like with expiration, there are two different HTTP headers that can be used
@@ -32,10 +32,10 @@ to implement the validation model: ``ETag`` and ``Last-Modified``.
 .. sidebar:: Expiration and Validation
 
     You can of course use both validation and expiration within the same ``Response``.
-    As expiration wins over validation, you can easily benefit from the best of
-    both worlds. In other words, by using both expiration and validation, you
-    can instruct the cache to serve the cached content, while checking back
-    at some interval (the expiration) to verify that the content is still valid.
+    As expiration wins over validation, you can benefit from the best of both worlds.
+    In other words, by using both expiration and validation, you can instruct the cache
+    to serve the cached content, while checking back at some interval (the expiration)
+    to verify that the content is still valid.
 
     .. tip::
 
