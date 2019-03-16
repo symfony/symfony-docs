@@ -153,10 +153,10 @@ You can also add links to the HTTP response directly from controllers and servic
 
     use Fig\Link\GenericLinkProvider;
     use Fig\Link\Link;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
 
-    class BlogController extends Controller
+    class BlogController extends AbstractController
     {
         public function index(Request $request)
         {
