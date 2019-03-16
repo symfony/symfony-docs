@@ -20,8 +20,9 @@ String Constraints
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Ip </reference/constraints/Ip>`
-* :doc:`Uuid</reference/constraints/Uuid>`
 * :doc:`Json</reference/constraints/Json>`
+* :doc:`Uuid</reference/constraints/Uuid>`
+* :doc:`UserPassword </reference/constraints/UserPassword>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -44,13 +45,10 @@ Date Constraints
 * :doc:`DateTime </reference/constraints/DateTime>`
 * :doc:`Time </reference/constraints/Time>`
 
-Collection Constraints
-~~~~~~~~~~~~~~~~~~~~~~
+Choice Constraints
+~~~~~~~~~~~~~~~~~~
 
 * :doc:`Choice </reference/constraints/Choice>`
-* :doc:`Collection </reference/constraints/Collection>`
-* :doc:`Count </reference/constraints/Count>`
-* :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
 * :doc:`Language </reference/constraints/Language>`
 * :doc:`Locale </reference/constraints/Locale>`
 * :doc:`Country </reference/constraints/Country>`
@@ -78,5 +76,7 @@ Other Constraints
 * :doc:`Callback </reference/constraints/Callback>`
 * :doc:`Expression </reference/constraints/Expression>`
 * :doc:`All </reference/constraints/All>`
-* :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`Valid </reference/constraints/Valid>`
+* :doc:`Collection </reference/constraints/Collection>`
+* :doc:`Count </reference/constraints/Count>`
+* :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
