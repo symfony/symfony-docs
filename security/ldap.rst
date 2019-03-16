@@ -490,7 +490,7 @@ Configuration example for form login and query_string
                     ],
                 ],
             ]
-        ];
+        ]);
 
 .. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html

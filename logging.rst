@@ -248,7 +248,7 @@ one of the messages reaches an ``action_level``. Take this example:
                     'type'  => 'syslog',
                     'level' => 'error',
                 ],
-            ),
+            ],
         ]);
 
 Now, if even one log entry has an ``error`` level or higher, then *all* log entries

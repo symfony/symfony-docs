@@ -365,7 +365,7 @@ done by using a public ``vars`` property on the
 | ``label_attr``         | A key-value array that will be rendered as HTML attributes on the label.            |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``compound``           | Whether or not a field is actually a holder for a group of children fields          |
-|                        | (for example, a ``choice`` field, which is actually a group of checkboxes.          |
+|                        | (for example, a ``choice`` field, which is actually a group of checkboxes).         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``block_prefixes``     | An array of all the names of the parent types.                                      |
 +------------------------+-------------------------------------------------------------------------------------+

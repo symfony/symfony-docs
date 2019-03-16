@@ -128,7 +128,7 @@ class in the constructor of the Twig extension::
                     [$this, 'markdownToHtml'],
                     ['is_safe' => ['html'], 'pre_escape' => 'html']
                 ),
-            );
+            ];
         }
 
         public function markdownToHtml($content)
