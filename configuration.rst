@@ -47,7 +47,7 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
                     http://symfony.com/schema/dic/framework https://symfony.com/schema/dic/framework/framework-1.0.xsd"
             >
                 <framework:config secret="%env(APP_SECRET)%">
-                    <!--<framework:csrf-protection enabled="true“ />-->
+                    <!--<framework:csrf-protection enabled="true" />-->
                     <!--<framework:esi enabled="true" />-->
                     <!--<framework:fragments enabled="true" />-->
 
