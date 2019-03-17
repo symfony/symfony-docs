@@ -9,9 +9,8 @@ a different bus (if the application has `multiple buses </messenger/multiple_bus
 Any errors or exceptions that occur during this process can have unintended consequences,
 such as:
 
-- If using the ``DoctrineTransactionMiddleware`` and a dispatched message to the same bus
-  and an exception is thrown, then any database transactions in the original handler will
-  be rolled back.
+- If using the ``DoctrineTransactionMiddleware`` and a dispatched message throws an exception,
+  then any database transactions in the original handler will be rolled back.
 - If the message is dispatched to a different bus, then the dispatched message can still
   be handled even if the original handler encounters an exception.
 
@@ -32,17 +31,15 @@ will not be created because the ``DoctrineTransactionMiddleware`` will rollback 
 Doctrine transaction, in which the user has been created.
 
 **Problem 2:** If an exception is thrown when saving the user to the database, the welcome
-email is still sent.
+email is still sent because it is handled asynchronously.
 
-``HandleMessageInNewTransaction`` Middleware
---------------------------------------------
+``DispatchAfterCurrentBusMiddleware`` Middleware
+------------------------------------------------
 
 For many applications, the desired behavior is to have any messages dispatched by the handler
 to `only` be handled after the handler finishes. This can be by using the
-``HandleMessageInNewTransaction`` middleware and adding a ``Transaction`` stamp to
-`the message Envelope </components/messenger#adding-metadata-to-messages-envelopes>`_.
-This middleware enables us to add messages to a separate transaction that will only be
-dispatched *after* the current message handler finishes.
+``DispatchAfterCurrentBusMiddleware`` middleware and adding a ``DispatchAfterCurrentBusStamp``
+stamp to `the message Envelope </components/messenger#adding-metadata-to-messages-envelopes>`_.
 
 Referencing the above example, this means that the ``UserSignedUp`` event would not be handled
 until *after* the ``SignUpUserHandler`` had completed and the new ``User`` was persisted to the
@@ -50,11 +47,12 @@ database. If the ``SignUpUserHandler`` encounters an exception, the ``UserSigned
 never be handled and if an exception is thrown while sending the welcome email, the Doctrine
 transaction will not be rolled back.
 
-To enable this, you need to add the ``handle_message_in_new_transaction``
-middleware. Make sure it is registered before ``DoctrineTransactionMiddleware``
+The  ``dispatch_after_current_bus`` middleware is enabled by default. It is configured as the
+first middleware on all busses. When doing a highly custom or special configuration, then make
+sure ``dispatch_after_current_bus`` is registered before ``doctrine_transaction``
 in the middleware chain.
 
-**Note:** The ``handle_message_in_new_transaction`` middleware must be loaded for *all* of the
+**Note:** The ``dispatch_after_current_bus`` middleware must be loaded for *all* of the
 buses. For the example, the middleware must be loaded for both the command and event buses.
 
 .. configuration-block::
@@ -70,13 +68,11 @@ buses. For the example, the middleware must be loaded for both the command and e
                     messenger.bus.command:
                         middleware:
                             - validation
-                            - handle_message_in_new_transaction
                             - doctrine_transaction
                     messenger.bus.event:
                         default_middleware: allow_no_handlers
                         middleware:
                             - validation
-                            - handle_message_in_new_transaction
                             - doctrine_transaction
 
 
@@ -89,7 +85,7 @@ buses. For the example, the middleware must be loaded for both the command and e
     use App\Messenger\Event\UserSignedUp;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\Messenger\Envelope;
-    use Symfony\Component\Messenger\Stamp\Transaction;
+    use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
     use Symfony\Component\Messenger\MessageBusInterface;
 
     class SignUpUserHandler
@@ -108,13 +104,44 @@ buses. For the example, the middleware must be loaded for both the command and e
             $user = new User($command->getUuid(), $command->getName(), $command->getEmail());
             $this->em->persist($user);
 
-            // The Transaction stamp marks the event message to be handled
+            // The DispatchAfterCurrentBusStamp marks the event message to be handled
             // only if this handler does not throw an exception.
 
             $event = new UserSignedUp($command->getUuid());
             $this->eventBus->dispatch(
                 (new Envelope($event))
-                    ->with(new Transaction())
+                    ->with(new DispatchAfterCurrentBusStamp())
             );
         }
     }
+
+.. code-block:: php
+
+    namespace App\Messenger\EventSubscriber;
+
+    use App\Entity\User;
+    use App\Messenger\Event\UserSignedUp;
+    use Doctrine\ORM\EntityManagerInterface;
+
+    class WhenUserSignedUpThenSendWelcomeEmail
+    {
+        private $em;
+        private $mailer;
+
+        public function __construct(MyMailer $mailer, EntityManagerInterface $em)
+        {
+            $this->mailer = $mailer;
+            $this->em = $em;
+        }
+
+        public function __invoke(UserSignedUp $eent)
+        {
+            $user = $this->em->getRepository(User::class)->find(new User($event->getUuid()));
+
+            $this->mailer->sendWelcomeEmail($user);
+        }
+    }
+
+**Note:** If ``WhenUserSignedUpThenSendWelcomeEmail`` throws an exception, that exception
+will be wrapped into a ``DelayedMessageHandlingException``. Using ``DelayedMessageHandlingException::getExceptions``
+will give you all exceptions that are thrown while handing a message with the ``DispatchAfterCurrentBusStamp``.
