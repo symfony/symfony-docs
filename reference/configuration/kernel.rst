@@ -56,7 +56,7 @@ directory and rename it to something else (e.g. ``foo``).
 Root Directory
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 3.3
+.. deprecated:: 3.3
 
     The ``getRootDir()`` method is deprecated since Symfony 3.3. Use the new
     ``getProjectDir()`` method instead.

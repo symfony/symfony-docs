@@ -122,7 +122,7 @@ of the following:
 
 .. tip::
 
-    .. versionadded:: 3.3
+    .. deprecated:: 3.3
 
         The support of the special ``SYMFONY__`` environment variables was
         deprecated in Symfony 3.3 and it will be removed in 4.0. Instead of

@@ -500,7 +500,7 @@ Learn more about user checkers in :doc:`/security/user_checkers`.
 HTTP-Digest Authentication
 --------------------------
 
-.. versionadded:: 3.4
+.. deprecated:: 3.4
 
     HTTP-Digest Authentication was deprecated in Symfony 3.4 and it will be
     removed in Symfony 4.0.
