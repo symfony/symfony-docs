@@ -168,12 +168,15 @@ of the linked resource (``namespace``, ``class`` or ``method``):
 
     :phpfunction:`iterator_to_array`
 
-New Features or Behavior Changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+New Features, Behavior Changes or Deprecations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're documenting a brand new feature or a change that's been made in
-Symfony, you should precede your description of the change with a
-``.. versionadded:: 3.x`` directive and a short description:
+If you are documenting a brand new feature, a change or a deprecation that's
+been made in Symfony, you should precede your description of the change with
+the corresponding directive and a short description:
+
+For a new feature or a behaviour change use the ``.. versionadded:: 3.x``
+directive:
 
 .. code-block:: rst
 
@@ -181,8 +184,8 @@ Symfony, you should precede your description of the change with a
 
         The special ``!`` template prefix was introduced in Symfony 3.4.
 
-If you're documenting a behavior change, it may be helpful to *briefly* describe
-how the behavior has changed:
+If you are documenting a behavior change, it may be helpful to *briefly*
+describe how the behavior has changed:
 
 .. code-block:: rst
 
@@ -191,12 +194,21 @@ how the behavior has changed:
         Support for annotation routing without an external bundle was added in
         Symfony 3.4. Prior, you needed to install the SensioFrameworkExtraBundle.
 
+For a deprecation use the ``.. deprecated:: 3.X`` directive:
+
+.. code-block:: rst
+
+    .. deprecated:: 3.3
+
+        This technique is discouraged and the ``addClassesToCompile()`` method was
+        deprecated in Symfony 3.3 because modern PHP versions make it unnecessary.
+
 Whenever a new major version of Symfony is released (e.g. 3.0, 4.0, etc),
 a new branch of the documentation is created from the ``master`` branch.
-At this point, all the ``versionadded`` tags for Symfony versions that have
-a lower major version will be removed. For example, if Symfony 4.0 were
-released today, 3.0 to 3.4 ``versionadded`` tags would be removed from the new
-``4.0`` branch.
+At this point, all the ``versionadded`` and ``deprecated`` tags for Symfony
+versions that have a lower major version will be removed. For example, if
+Symfony 4.0 were released today, 3.0 to 3.4 ``versionadded`` and ``deprecated``
+tags would be removed from the new ``4.0`` branch.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/
