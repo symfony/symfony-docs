@@ -745,7 +745,7 @@ that are special: each adds a unique piece of functionality inside your applicat
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
 
-You can also use special attributes to configure them:
+You can also use special attributes to configure them (except ``_fragment``):
 
 .. configuration-block::
 
@@ -761,7 +761,6 @@ You can also use special attributes to configure them:
              *     "/articles/{_locale}/search.{_format}",
              *     locale="en",
              *     format="html",
-             *     fragment="first-result-id",
              *     requirements={
              *         "_locale": "en|fr",
              *         "_format": "html|xml",
@@ -802,7 +801,6 @@ You can also use special attributes to configure them:
 
                 <requirement key="_locale">en|fr</requirement>
                 <requirement key="_format">html|rss</requirement>
-                <requirement key="year">\d+</requirement>
 
             </route>
         </routes>
@@ -822,10 +820,11 @@ You can also use special attributes to configure them:
                 ->requirements([
                     '_locale' => 'en|fr',
                     '_format' => 'html|rss',
-                    'year'    => '\d+',
                 ])
             ;
         };
+
+Those attributes can also be used for imports.
 
 .. versionadded::
 
