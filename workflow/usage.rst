@@ -142,7 +142,7 @@ like this:
             ],
         ]);
 
-.. code-block:: php
+As configured, the following property is used by the marking store::
 
     class BlogPost
     {
