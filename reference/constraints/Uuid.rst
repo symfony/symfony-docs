@@ -25,14 +25,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\File:
-            properties:
-                identifier:
-                    - Uuid: ~
-
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/File.php
@@ -47,6 +39,14 @@ Basic Usage
              */
              protected $identifier;
         }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Entity\File:
+            properties:
+                identifier:
+                    - Uuid: ~
 
     .. code-block:: xml
 
