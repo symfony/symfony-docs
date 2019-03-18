@@ -163,13 +163,14 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
     :doc:`PropertyAccessor component </components/property_access>`
 
     For example, if the translations property is actually an associative
-    array of objects, each with a name property, then you could do this::
+    array of objects, each with a ``name`` property, then you could do this::
 
+        use MyBundle\Entity\Genre;
         use Symfony\Bridge\Doctrine\Form\Type\EntityType;
         // ...
 
         $builder->add('genre', EntityType::class, [
-           'class' => 'MyBundle:Genre',
+           'class' => Genre::class,
            'choice_label' => 'translations[en].name',
         ]);
 
