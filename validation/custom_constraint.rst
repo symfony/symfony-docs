@@ -179,7 +179,7 @@ Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Besides validating a single property, a constraint can have an entire class
-as its scope. Just add this to the ``Constraint`` class::
+as its scope. You only need to add this to the ``Constraint`` class::
 
     public function getTargets()
     {
