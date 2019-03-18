@@ -183,15 +183,15 @@ with the necessary ``validator.constraint_validator``. This means you can
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Beside validating a class property, a constraint can have a class scope by
-providing a target in its ``Constraint`` class::
+Besides validating a single property, a constraint can have an entire class
+as its scope. You only need to add this to the ``Constraint`` class::
 
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
     }
 
-With this, the validator ``validate()`` method gets an object as its first argument::
+With this, the validator's ``validate()`` method gets an object as its first argument::
 
     class ProtocolClassValidator extends ConstraintValidator
     {
@@ -211,7 +211,7 @@ With this, the validator ``validate()`` method gets an object as its first argum
     associated to. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
     to define that property.
 
-Note that a class constraint validator is applied to the class itself, and
+A class constraint validator is applied to the class itself, and
 not to the property:
 
 .. configuration-block::
@@ -219,7 +219,7 @@ not to the property:
     .. code-block:: php-annotations
 
         /**
-         * @AcmeAssert\ProtocolClassValidator
+         * @AcmeAssert\ProtocolClass
          */
         class AcmeEntity
         {
@@ -231,11 +231,11 @@ not to the property:
         # config/validator/validation.yaml
         App\Entity\AcmeEntity:
             constraints:
-                - App\Validator\Constraints\ProtocolClassValidator: ~
+                - App\Validator\Constraints\ProtocolClass: ~
 
     .. code-block:: xml
 
         <!-- config/validator/validation.xml -->
         <class name="App\Entity\AcmeEntity">
-            <constraint name="App\Validator\Constraints\ProtocolClassValidator"/>
+            <constraint name="App\Validator\Constraints\ProtocolClass"/>
         </class>
