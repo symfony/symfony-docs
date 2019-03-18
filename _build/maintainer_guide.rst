@@ -143,11 +143,47 @@ better to ask to the original contributor.
     $ git push origin
     $ git push upstream
 
-    # it's common to have to change the branch where a PR is merged.
+It's common to have to change the branch where a PR is merged. Instead of asking
+the contributors to rebase their PRs, the "gh" tool can change the branch with
+the ``-s`` option:
+
+.. code-block:: terminal
+
     # e.g. this PR was sent against 'master', but it's merged in '3.4'
     $ gh merge 11160 -s 3.4
     $ git push origin
     $ git push upstream
+
+Sometimes, when changing the branch, you may face rebase issues, but they are
+usually simple to fix:
+
+.. code-block:: terminal
+
+    $ gh merge 11160 -s 3.4
+
+      ...
+
+      Unable to rebase the patch for <comment>pull/11183</comment>
+      The command "'git' 'rebase' '--onto' '3.4' '4.2' 'pull/11160'" failed.
+      Exit Code: 128(Invalid exit argument)
+
+      [...]
+      Auto-merging reference/forms/types/entity.rst
+      CONFLICT (content): Merge conflict in reference/forms/types/entity.rst
+      Patch failed at 0001 Update entity.rst
+      The copy of the patch that failed is found in: .git/rebase-apply/patch
+
+    # Now, fix all the conflicts using your editor
+
+    # Add the modified files and continue the rebase
+    $ git add reference/forms/types/entity.rst ...
+    $ git rebase --continue
+
+    # Lastly, re-run the exact same original command that resulted in a conflict
+    # There's no need to change the branch or do anything else.
+    $ gh merge 11160 -s 3.4
+
+      The previous run had some conflicts. Do you want to resume the merge? (Y/n)
 
 Later in this article you can find a troubleshooting section for the errors that
 you will usually face while merging.
