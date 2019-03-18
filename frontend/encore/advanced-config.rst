@@ -100,26 +100,29 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
     $ yarn encore dev --config-name firstConfig
 
-Now you can use the configurations by using 
+Next, define the output directories of each build:
 
-.. code-block:: terminal
+.. code-block:: yaml
 
+    # config/packages/webpack_encore.yaml
     webpack_encore:
-      output_path: '%kernel.public_dir%/public/default_build'
-      builds:
-        foo: '%kernel.public_dir%/public/foo_build'
-        bar: '%kernel.public_dir%/public/bar_build'
-      
-And in your templatefiles you can reference the builds with:
+        output_path: '%kernel.public_dir%/web/default_build'
+        builds:
+            firstConfig: '%kernel.public_dir%/web/first_build'
+            secondConfig: '%kernel.public_dir%/web/second_build'
 
-.. code-block:: terminal
+Finally, use the third optional parameter of the ``encore_entry_*_tags()``
+functions to specify which build to use:
 
-    {# Using the entrypoints.json file located in ./public/foo_build #}
-    {{ encore_entry_script_tags('foo_entry', null, 'foo') }}
-    {{ encore_entry_link_tags('foo_entry', null, 'foo') }}
-    {# Using the entrypoints.json file located in ./public/bar_build #}
-    {{ encore_entry_script_tags('bar_entry', null, 'bar') }}
-    {{ encore_entry_link_tags('bar_entry', null, 'bar') }}
+.. code-block:: twig
+
+    {# Using the entrypoints.json file located in ./web/first_build #}
+    {{ encore_entry_script_tags('app', null, 'firstConfig') }}
+    {{ encore_entry_link_tags('global', null, 'firstConfig') }}
+
+    {# Using the entrypoints.json file located in ./web/second_build #}
+    {{ encore_entry_script_tags('mobile', null, 'secondConfig') }}
+    {{ encore_entry_link_tags('mobile', null, 'secondConfig') }}
 
 Generating a Webpack Configuration Object without using the Command-Line Interface
 ----------------------------------------------------------------------------------
