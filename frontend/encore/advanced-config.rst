@@ -100,6 +100,27 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
     $ yarn encore dev --config-name firstConfig
 
+Now you can use the configurations by using 
+
+.. code-block:: terminal
+
+    webpack_encore:
+      output_path: '%kernel.public_dir%/public/default_build'
+      builds:
+        foo: '%kernel.public_dir%/public/foo_build'
+        bar: '%kernel.public_dir%/public/bar_build'
+      
+And in your templatefiles you can reference the builds with:
+
+.. code-block:: terminal
+
+    {# Using the entrypoints.json file located in ./public/foo_build #}
+    {{ encore_entry_script_tags('foo_entry', null, 'foo') }}
+    {{ encore_entry_link_tags('foo_entry', null, 'foo') }}
+    {# Using the entrypoints.json file located in ./public/bar_build #}
+    {{ encore_entry_script_tags('bar_entry', null, 'bar') }}
+    {{ encore_entry_link_tags('bar_entry', null, 'bar') }}
+
 Generating a Webpack Configuration Object without using the Command-Line Interface
 ----------------------------------------------------------------------------------
 
