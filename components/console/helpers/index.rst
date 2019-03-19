@@ -11,6 +11,7 @@ The Console Helpers
     processhelper
     progressbar
     questionhelper
+    prettywordwrapper
     table
     debug_formatter
 
