@@ -57,7 +57,7 @@ command:
     $ php bin/console make:registration-form
 
 This command needs to know several things - like your ``User`` class and information
-about the properties on that class. The questions will vary based on your setup,
+about the properties on that class. The questions will very based on your setup,
 because the command will guess as much as possible.
 
 When the command is done, congratulations! You have a functional registration form
