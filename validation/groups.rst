@@ -132,7 +132,8 @@ With this configuration, there are three validation groups:
 
 ``Default``
     Contains the constraints in the current class and all referenced classes
-    that belong to no other group.
+    that belong to no other group. Contains the constraint on the ``city``
+    field only.
 
 ``User``
     Equivalent to all constraints of the ``User`` object in the ``Default``
