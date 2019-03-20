@@ -38,6 +38,7 @@ and your generated code may be slightly different:
      created: templates/security/login.html.twig
 
 .. versionadded:: 1.8
+
     Support for login form authentication was added to ``make:auth`` in MakerBundle 1.8.
 
 This generates the following: 1) a login route & controller, 2) a template that

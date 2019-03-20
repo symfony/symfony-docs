@@ -298,6 +298,7 @@ use:
     $ php bin/console make:crud Product
 
 .. versionadded:: 1.2
+
     The ``make:crud`` command was introduced in MakerBundle 1.2.
 
 .. index::

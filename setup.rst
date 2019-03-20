@@ -36,7 +36,7 @@ In other words, your new app is ready!
 
         # optional: install the web server bundle (explained next)
         $ cd my-project
-        $ composer require symfony/web-server-bundle --dev
+        $ composer require --dev symfony/web-server-bundle
 
 Running your Symfony Application
 --------------------------------

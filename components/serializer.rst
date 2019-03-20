@@ -762,7 +762,7 @@ The ``CsvEncoder`` encodes to and decodes from CSV.
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     Relying on the default value ``false`` is deprecated since Symfony 4.2.
 

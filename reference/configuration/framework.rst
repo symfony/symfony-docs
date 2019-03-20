@@ -1755,7 +1755,7 @@ strict_email
 
 **type**: ``Boolean`` **default**: ``false``
 
-.. versionadded:: 4.1
+.. deprecated:: 4.1
 
     The ``strict_email`` option was deprecated in Symfony 4.1. Use the new
     ``email_validation_mode`` option instead.

@@ -259,7 +259,7 @@ You can also restrict the list to a specific bus by providing its name as argume
 
 .. code-block:: terminal
 
-    $ bin/console debug:messenger
+    $ php bin/console debug:messenger
 
       Messenger
       =========
