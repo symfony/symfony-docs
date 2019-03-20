@@ -795,13 +795,6 @@ Next, you'll need to create a route for this URL (but not a controller):
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # config/routes.yaml
-        app_logout:
-            path: /logout
-            methods: GET
-
     .. code-block:: php-annotations
 
         // src/Controller/SecurityController.php
@@ -821,6 +814,13 @@ Next, you'll need to create a route for this URL (but not a controller):
                 throw new \Exception('Don\'t forget to activate logout in security.yaml');
             }
         }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        app_logout:
+            path: /logout
+            methods: GET
 
     .. code-block:: xml
 
