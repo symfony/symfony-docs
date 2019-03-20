@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-03-17T13:21:59Z
+
+Approved! And added "on hold", as we first have to make sure @javiereguiluz adds nice styling for this on symfony.com. The deprecated directive is rendered the same way as the versionadded (including the `.versionmodified` class), except that it's main class is `deprecated`. So it should be fairly easy to reuse the versionadded styles and only modify the color (i.e. some blackish)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-18T10:31:59Z
+
+There is a pending PR on symfony.com private repo to add the styles:
+
+### Before
+
+![before](https://user-images.githubusercontent.com/73419/54524050-3290e700-4971-11e9-8316-4f223bd2064f.png)
+
+### After
+
+![after](https://user-images.githubusercontent.com/73419/54524053-358bd780-4971-11e9-824e-672ce8c38e2a.png)
+
+And in dark mode:
+
+![after-dark-theme](https://user-images.githubusercontent.com/73419/54524059-391f5e80-4971-11e9-9bca-7bf2b2008c89.png)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-03-18T11:41:19Z
+
+Nice!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-18T11:55:02Z
+
+Wow this looks amazing 🥰👍🏻
