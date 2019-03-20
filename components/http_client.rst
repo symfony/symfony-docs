@@ -401,6 +401,57 @@ has a service associated with it whose name follows the pattern
         App\Some\Service:
             $someArgument: '@http_client.crawler'
 
+Testing HTTP Clients and Responses
+----------------------------------
+
+This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
+use them in tests that need an HTTP client which doesn't make actual HTTP
+requests.
+
+The first way of using ``MockHttpClient`` is to configure the set of responses
+to return using its constructor::
+
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    $responses = [
+        new MockResponse($body1, $info1),
+        new MockResponse($body2, $info2),
+    ];
+
+    $client = new MockHttpClient($responses);
+    // responses are returned in the same order as passed to MockHttpClient
+    $response1 = $client->request('...'); // returns $responses[0]
+    $response2 = $client->request('...'); // returns $responses[1]
+
+Another way of using ``MockHttpClient`` is to pass a callback that generates the
+responses dynamically when it's called::
+
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    $callback = function ($method, $url, $options) {
+        return new MockResponse('...';
+    };
+
+    $client = new MockHttpClient($callback);
+    $response = $client->request('...'); // calls $callback to get the response
+
+The responses provided to the mock client don't have to be instances of
+``MockResponse``. Any class implementing ``ResponseInterface`` will work (e.g.
+``$this->getMockBuilder(ResponseInterface::class)->getMock()``).
+
+However, using ``MockResponse`` allows simulating chunked responses and timeouts::
+
+    $body = function () {
+        yield 'hello';
+        // empty strings are turned into timeouts so that they are easy to test
+        yield '';
+        yield 'world';
+    };
+
+    $mockResponse = new MockResponse($body());
+
 .. _`cURL PHP extension`: https://php.net/curl
 .. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
