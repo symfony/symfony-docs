@@ -25,7 +25,7 @@ Update the route definition accordingly::
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', [
         'year' => null,
         '_controller' => [new LeapYearController(), 'index'],
-    )));
+    ]));
 
 The move is pretty straightforward and makes a lot of sense as soon as you
 create more pages but you might have noticed a non-desirable side-effect...
