@@ -906,7 +906,7 @@ This happens when your controller method has an argument (e.g. ``$slug``)::
 
     public function show($slug)
     {
-        // ..
+        // ...
     }
 
 But your route path does *not* have a ``{slug}`` wildcard (e.g. it is ``/blog/show``).
