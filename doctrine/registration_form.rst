@@ -50,6 +50,7 @@ To easiest way to build your registration form is by using the ``make:registrati
 command:
 
 .. versionadded:: 1.11
+
     The ``make:registration-form`` was introduced in MakerBundle 1.11.0.
 
 .. code-block:: terminal
