@@ -373,17 +373,22 @@ deal with this low level session variable. However, the
 :class:`Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait` utility
 can be used to read (like in the example above) or set this value manually.
 
-The only time target path is set from Symfony is when the user start the authentication flow, passing through the authentication entry point. This is done by the ExceptionListener, when the user tries to access a restricted page, and it is redirected to the login page. At that point target path is set.
+When the user tries to access a restricted page, it is redirected to the login page. 
+At that point target path is set and after a successful login, the user will
+be redirected to the target path set before.
 
-To set it on certain routes, you should implement a Listener:
+To set it on certain public routes, you can create an Event Subscriber:
+
 .. code-block:: php
-    namespace App\EventListener;
+    namespace App\EventSubscriber;
 
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+    use Symfony\Component\HttpKernel\KernelEvents;
     use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-    class RequestListener
+    class RequestSubscriber implements EventSubscriberInterface
     {
         use TargetPathTrait;
 
@@ -396,7 +401,7 @@ To set it on certain routes, you should implement a Listener:
         }
 
         /**
-         * Save targetPath for non-Ajax main request.
+         * Save targetPath for public routes
          *
          * @param GetResponseEvent $event
          */
@@ -412,7 +417,7 @@ To set it on certain routes, you should implement a Listener:
                 return;
             }
 
-            $includedRoutes = ['route-1', 'route-2'];
+            $includedRoutes = ['some-public-route', 'another-route'];
 
             if (!\in_array($request->attributes->get('_route'), $includedRoutes, true)) {
                 return;
@@ -420,9 +425,15 @@ To set it on certain routes, you should implement a Listener:
 
             $this->saveTargetPath($this->session, 'main', $request->getUri());
         }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                KernelEvents::REQUEST => ['onKernelRequest']
+            ];
+        }
     }
 
-This listener will save the target path for the *main* firewall for the `$includedRoutes`. If a user visits `route-1` (public route), then successfully logs in, it will be redirected to that route.
-
+This subscriber will save the target path for the *main* firewall for the `$includedRoutes`. If a user visits `some-public-route`, after a successful login, it will be redirected to that route.
 
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
