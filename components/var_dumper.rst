@@ -111,11 +111,11 @@ server, which outputs it to its own console or to an HTML file:
 .. code-block:: terminal
 
     # displays the dumped data in the console:
-    $ ./bin/console server:dump
+    $ php bin/console server:dump
       [OK] Server listening on tcp://0.0.0.0:9912
 
     # stores the dumped data in a file using the HTML format:
-    $ ./bin/console server:dump --format=html > dump.html
+    $ php bin/console server:dump --format=html > dump.html
 
 Inside a Symfony application, the output of the dump server is configured with
 the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
