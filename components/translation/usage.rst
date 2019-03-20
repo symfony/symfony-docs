@@ -67,15 +67,15 @@ is done just as before:
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        'Hello %name%': Bonjour %name%
+
     .. code-block:: php
 
         return [
             'Hello %name%' => 'Bonjour %name%',
         ];
-
-    .. code-block:: yaml
-
-        'Hello %name%': Bonjour %name%
 
 .. note::
 

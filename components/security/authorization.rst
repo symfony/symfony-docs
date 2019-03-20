@@ -49,7 +49,7 @@ recognizes several strategies:
 ``unanimous``
     only grant access if none of the voters has denied access;
 
-.. code-block:: php
+Usage of the available options in detail::
 
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
