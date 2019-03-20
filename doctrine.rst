@@ -29,7 +29,7 @@ which will help generate some code:
 .. code-block:: terminal
 
     $ composer require symfony/orm-pack
-    $ composer require symfony/maker-bundle --dev
+    $ composer require --dev symfony/maker-bundle
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,6 +117,7 @@ need. The command will ask you some questions - answer them like done below:
     (press enter again to finish)
 
 .. versionadded:: 1.3
+
     The interactive behavior of the ``make:entity`` command was introduced
     in MakerBundle 1.3.
 
@@ -332,9 +333,7 @@ to experiment:
     $ php bin/console make:controller ProductController
 
 Inside the controller, you can create a new ``Product`` object, set data on it,
-and save it!
-
-.. code-block:: php
+and save it::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -731,7 +730,7 @@ data into your project (i.e. "fixture data"). Install it with:
 
 .. code-block:: terminal
 
-    $ composer require doctrine/doctrine-fixtures-bundle --dev
+    $ composer require --dev doctrine/doctrine-fixtures-bundle
 
 Then, use the ``make:fixtures`` command to generate an empty fixture class:
 

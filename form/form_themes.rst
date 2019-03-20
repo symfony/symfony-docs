@@ -287,30 +287,30 @@ following complex example where a ``TaskManagerType`` has a collection of
 
     class TaskManagerType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = array())
+        public function buildForm(FormBuilderInterface $builder, array $options = [])
         {
             // ...
-            $builder->add('taskLists', CollectionType::class, array(
+            $builder->add('taskLists', CollectionType::class, [
                 'entry_type' => TaskListType::class,
                 'block_name' => 'task_lists',
-            ));
+            ]);
         }
     }
 
     class TaskListType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = array())
+        public function buildForm(FormBuilderInterface $builder, array $options = [])
         {
             // ...
-            $builder->add('tasks', CollectionType::class, array(
+            $builder->add('tasks', CollectionType::class, [
                 'entry_type' => TaskType::class,
-            ));
+            ]);
         }
     }
 
     class TaskType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = array())
+        public function buildForm(FormBuilderInterface $builder, array $options = [])
         {
             $builder->add('name');
             // ...

@@ -46,7 +46,7 @@ Kernel Name
 **type**: ``string`` **default**: ``src`` (i.e. the directory name holding
 the kernel class)
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     The ``kernel.name`` parameter and the ``Kernel::getName()`` method were
     deprecated in Symfony 4.2. If you need a unique ID for your kernels use the

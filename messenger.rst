@@ -416,7 +416,7 @@ like this:
 
 .. code-block:: terminal
 
-    $ bin/console messenger:consume-messages amqp
+    $ php bin/console messenger:consume-messages amqp
 
 The first argument is the receiver's service name. It might have been created by
 your ``transports`` configuration or it can be your own receiver.

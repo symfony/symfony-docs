@@ -197,7 +197,7 @@ The ``Configuration`` class to handle the sample configuration looks like::
         }
     }
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
 
