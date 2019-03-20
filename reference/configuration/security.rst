@@ -227,8 +227,8 @@ encoding algorithm. Also, each algorithm defines different config options:
 
 .. tip::
 
-    You can also create your own password encoders as services and you can also
-    dynamically select the password encoder for each user instance. Read
+    You can also create your own password encoders as services and you can even
+    select a different password encoder for each user instance. Read
     :doc:`this article </security/named_encoders>` for more details.
 
 .. _reference-security-argon2i:
@@ -238,7 +238,7 @@ Using the Argon2i Password Encoder
 
 It uses the `Argon2 key derivation function`_ and it's the encoder recommended
 by Symfony. Argon2 support was introduced in PHP 7.2, but if you use an earlier
-version, you can install the `libsodium`_ PHP extension.
+PHP version, you can install the `libsodium`_ PHP extension.
 
 The encoded passwords are ``96`` characters long, but due to the hashing
 requirements saved in the resulting hash this may change in the future, so make
@@ -346,7 +346,7 @@ application:
             ],
         ]);
 
-.. tip::
+.. seealso::
 
     Read :doc:`this article </security/firewall_restriction>` to learn about how
     to restrict firewalls by host and HTTP methods.
@@ -767,7 +767,6 @@ role_hierarchy
 Instead of associating many roles to users, this option allows you to define
 role inheritance rules by creating a role hierarchy, as explained in
 :ref:`security-role-hierarchy`.
->>>>>>> Revamped the main security reference article
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
