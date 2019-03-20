@@ -230,7 +230,7 @@ method or the ``transchoice`` tag/filter in your :ref:`template <translation-tag
 For much more information, see :ref:`component-translation-pluralization`
 in the Translation component documentation.
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     In Symfony 4.2 the ``Translator::transChoice()`` method was deprecated in
     favor of using ``Translator::trans()`` with ``%count%`` as the parameter
@@ -387,7 +387,7 @@ Symfony looks for message files (i.e. translations) in the following default loc
 
 * the ``Resources/translations/`` directory inside of any bundle.
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     Using the ``src/Resources/<bundle name>/translations/`` directory to store
     translations was deprecated in Symfony 4.2. Use instead the directory
