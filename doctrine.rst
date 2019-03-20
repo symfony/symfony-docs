@@ -333,9 +333,7 @@ to experiment:
     $ php bin/console make:controller ProductController
 
 Inside the controller, you can create a new ``Product`` object, set data on it,
-and save it!
-
-.. code-block:: php
+and save it::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
