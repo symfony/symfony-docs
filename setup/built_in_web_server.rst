@@ -27,7 +27,7 @@ Move into your project directory and run this command:
 .. code-block:: terminal
 
     $ cd your-project/
-    $ composer require symfony/web-server-bundle --dev
+    $ composer require --dev symfony/web-server-bundle
 
 Starting the Web Server
 -----------------------

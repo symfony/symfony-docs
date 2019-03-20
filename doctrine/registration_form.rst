@@ -21,7 +21,7 @@ Make sure MakerBundle is installed:
 
 .. code-block:: terminal
 
-    $ composer require symfony/maker-bundle --dev
+    $ composer require --dev symfony/maker-bundle
 
 If you need any other dependencies, MakerBundle will tell you when you run each
 command.

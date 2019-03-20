@@ -29,7 +29,7 @@ which will help generate some code:
 .. code-block:: terminal
 
     $ composer require symfony/orm-pack
-    $ composer require symfony/maker-bundle --dev
+    $ composer require --dev symfony/maker-bundle
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -732,7 +732,7 @@ data into your project (i.e. "fixture data"). Install it with:
 
 .. code-block:: terminal
 
-    $ composer require doctrine/doctrine-fixtures-bundle --dev
+    $ composer require --dev doctrine/doctrine-fixtures-bundle
 
 Then, use the ``make:fixtures`` command to generate an empty fixture class:
 
