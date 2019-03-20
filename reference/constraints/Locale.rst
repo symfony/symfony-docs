@@ -92,7 +92,7 @@ canonicalize
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 4.1
+.. deprecated:: 4.1
 
     Using this option with value ``false`` was deprecated in Symfony 4.1 and it
     will throw an exception in Symfony 5.0. Use ``true`` instead.

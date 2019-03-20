@@ -46,7 +46,7 @@ Install and run it with:
 
 .. code-block:: terminal
 
-    $ composer require server --dev
+    $ composer require --dev server
     $ php bin/console server:start
 
 Try your new app by going to ``http://localhost:8000`` in a browser!

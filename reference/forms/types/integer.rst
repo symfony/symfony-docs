@@ -89,7 +89,7 @@ scale
 
 **type**: ``integer`` **default**: ``0``
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     The ``scale`` option is deprecated since Symfony 4.2 and will be removed
     in 5.0.

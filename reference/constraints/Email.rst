@@ -96,7 +96,7 @@ checkHost
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     This option was deprecated in Symfony 4.2.
 
@@ -109,7 +109,7 @@ checkMX
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     This option was deprecated in Symfony 4.2.
 

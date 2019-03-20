@@ -159,7 +159,7 @@ logout_on_user_change
 
 **type**: ``boolean`` **default**: ``true``
 
-.. versionadded:: 4.1
+.. deprecated:: 4.1
 
     The ``logout_on_user_change`` option was deprecated in Symfony 4.1.
 

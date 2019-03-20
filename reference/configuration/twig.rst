@@ -315,7 +315,7 @@ paths
 
 **type**: ``array`` **default**: ``null``
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     Using the ``src/Resources/views/`` directory to store templates was
     deprecated in Symfony 4.2. Use instead the directory defined in the
