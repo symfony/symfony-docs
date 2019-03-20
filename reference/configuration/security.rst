@@ -22,18 +22,377 @@ key in your application configuration.
     namespace and the related XSD schema is available at:
     ``https://symfony.com/schema/dic/services/services-1.0.xsd``
 
+Configuration
+-------------
+
+**Basic Options**:
+
+* `access_denied_url`_
+* `always_authenticate_before_granting`_
+* `erase_credentials`_
+* `hide_user_not_found`_
+* `session_fixation_strategy`_
+
+**Advanced Options**:
+
+Some of these options define tens of sub-options and they are explained in
+separate articles:
+
+* `access_control`_
+* `acl`_
+* `encoders`_
+* `firewalls`_
+* `providers`_
+* `role_hierarchy`_
+
+access_denied_url
+~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+Defines the URL where the user is redirected after a ``403`` HTTP error (unless
+you define a custom access deny handler). Example: ``/no-permission``
+
+always_authenticate_before_granting
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If ``true``, the user is asked to authenticate before each call to the
+``isGranted()`` method in services and controllers or ``is_granted()`` from
+templates.
+
+erase_credentials
+~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+If ``true``, the ``eraseCredentials()`` method of the user object is called
+after authentication.
+
+hide_user_not_found
+~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+If ``true``, when a user is not found a generic exception of type
+:class:`Symfony\\Component\\Security\\Core\\Exception\\BadCredentialsException`
+is thrown with the message "Bad credentials".
+
+If ``false``, the exception thrown is of type
+:class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
+and it includes the given not found username.
+
+session_fixation_strategy
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``SessionAuthenticationStrategy::MIGRATE``
+
+`Session Fixation`_ is a security attack that permits an attacker to hijack a
+valid user session. Applications that don't assign new session IDs when
+authenticating users are vulnerable to this attack.
+
+The possible values of this option are:
+
+* ``NONE`` constant from :class:`Symfony\\Component\\Security\\Http\\Session\\SessionAuthenticationStrategy`
+  Don't change the session after authentication. This is **not recommended**.
+* ``MIGRATE`` constant from :class:`Symfony\\Component\\Security\\Http\\Session\\SessionAuthenticationStrategy`
+  The session ID is updated, but the rest of session attributes are kept.
+* ``INVALIDATE`` constant from :class:`Symfony\\Component\\Security\\Http\\Session\\SessionAuthenticationStrategy`
+  The entire session is regenerated, so the session ID is updated but all the
+  other session attributes are lost.
+
+access_control
+--------------
+
+Defines the security protection of the URLs of your application. It's used for
+example to trigger the user authentication when trying to access to the backend
+and to allow anonymous users to the login form page.
+
+This option is explained in detail in :doc:`/security/access_control`.
+
+acl
+---
+
+This option is used to define `ACL (Access Control List)`_, which allow to
+associate a list of permissions to an object. This option is deprecated since
+Symfony 3.4 and will be removed in 4.0.
+
+Instead of using ACLs, Symfony recommends :doc:`security voters </security/voters>`,
+which provide the same granular security access without the complication of ACLs.
+If you still want to implement ACLs, check out the `Symfony ACL Bundle`_.
+
+encoders
+--------
+
+This option defines the algorithm used to *encode* the password of the users.
+Although Symfony calls it *"password encoding"* for historical reasons, this is
+in fact, *"password hashing"*.
+
+If your app defines more than one user class, each of them can define its own
+encoding algorithm. Also, each algorithm defines different config options:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            encoders:
+                # bcrypt encoder with default options
+                AppBundle\Entity\User: 'bcrypt'
+
+                # bcrypt encoder with custom options
+                AppBundle\Entity\User:
+                    algorithm: 'bcrypt'
+                    cost:      15
+
+                # Argon2i encoder with default options
+                AppBundle\Entity\User: 'argon2i'
+
+                # PBKDF2 encoder using SHA512 hashing with default options
+                AppBundle\Entity\User: 'sha512'
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <!-- bcrypt encoder with default options -->
+                <encoder
+                    class="AppBundle\Entity\User"
+                    algorithm="bcrypt"
+                />
+
+                <!-- bcrypt encoder with custom options -->
+                <encoder
+                    class="AppBundle\Entity\User"
+                    algorithm="bcrypt"
+                    cost="15"
+                />
+
+                <!-- Argon2i encoder with default options -->
+                <encoder
+                    class="AppBundle\Entity\User"
+                    algorithm="argon2i"
+                />
+
+                <!-- PBKDF2 encoder using SHA512 hashing with default options -->
+                <encoder
+                    class="AppBundle\Entity\User"
+                    algorithm="sha512"
+                />
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        use AppBundle\Entity\User;
+
+        $container->loadFromExtension('security', [
+            // ...
+            'encoders' => [
+                // bcrypt encoder with default options
+                User::class => [
+                    'algorithm' => 'bcrypt',
+                ],
+
+                // bcrypt encoder with custom options
+                User::class => [
+                    'algorithm' => 'bcrypt',
+                    'cost'      => 15,
+                ],
+
+                // Argon2i encoder with default options
+                User::class => [
+                    'algorithm' => 'argon2i',
+                ],
+
+                // PBKDF2 encoder using SHA512 hashing with default options
+                User::class => [
+                    'algorithm' => 'sha512',
+                ],
+            ],
+        ]);
+
+.. tip::
+
+    You can also create your own password encoders as services and you can even
+    select a different password encoder for each user instance. Read
+    :doc:`this article </security/named_encoders>` for more details.
+
+.. _reference-security-argon2i:
+
+Using the Argon2i Password Encoder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It uses the `Argon2 key derivation function`_ and it's the encoder recommended
+by Symfony. Argon2 support was introduced in PHP 7.2, but if you use an earlier
+PHP version, you can install the `libsodium`_ PHP extension.
+
+The encoded passwords are ``96`` characters long, but due to the hashing
+requirements saved in the resulting hash this may change in the future, so make
+sure to allocate enough space for them to be persisted. Also, passwords include
+the `cryptographic salt`_ inside them (it's generated automatically for each new
+password) so you don't have to deal with it.
+
+.. _reference-security-bcrypt:
+
+Using the BCrypt Password Encoder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It uses the `bcrypt password hashing function`_ and it's recommended to use it
+when it's not possible to use Argon2i. The encoded passwords are ``60``
+characters long, so make sure to allocate enough space for them to be persisted.
+Also, passwords include the `cryptographic salt`_ inside them (it's generated
+automatically for each new password) so you don't have to deal with it.
+
+Its only configuration option is ``cost``, which is an integer in the range of
+``4-31`` (by default, ``13``). Each single increment of the cost **doubles the
+time** it takes to encode a password. It's designed this way so the password
+strength can be adapted to the future improvements in computation power.
+
+You can change the cost at any time — even if you already have some passwords
+encoded using a different cost. New passwords will be encoded using the new
+cost, while the already encoded ones will be validated using a cost that was
+used back when they were encoded.
+
+.. tip::
+
+    A simple technique to make tests much faster when using BCrypt is to set
+    the cost to ``4``, which is the minimum value allowed, in the ``test``
+    environment configuration.
+
+.. _reference-security-pbkdf2:
+
+Using the PBKDF2 Encoder
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using the `PBKDF2`_ encoder is no longer recommended since PHP added support for
+Argon2i and bcrypt. Legacy application still using it are encouraged to upgrade
+to those newer encoding algorithms.
+
+firewalls
+---------
+
+This is arguably the most important option of the security config file. It
+defines the authentication mechanism used for each URL (or URL pattern) of your
+application:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+
+        security:
+            # ...
+            firewalls:
+                # 'main' is the name of the firewall (can be chosen freely)
+                main:
+                    # 'pattern' is a regular expression matched against the incoming
+                    # request URL. If there's a match, authentication is triggered
+                    pattern: ^/admin
+                    # the rest of options depend on the authentication mechanism
+                    # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <!-- 'pattern' is a regular expression matched against the incoming
+                     request URL. If there's a match, authentication is triggered -->
+                <firewall name="main" pattern="^/admin">
+                    <!-- the rest of options depend on the authentication mechanism -->
+                    <!-- ... -->
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+
+        // ...
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                // 'main' is the name of the firewall (can be chosen freely)
+                'main' => [
+                    // 'pattern' is a regular expression matched against the incoming
+                    // request URL. If there's a match, authentication is triggered
+                    'pattern' => '^/admin',
+                    // the rest of options depend on the authentication mechanism
+                    // ...
+                ],
+            ],
+        ]);
+
+.. seealso::
+
+    Read :doc:`this article </security/firewall_restriction>` to learn about how
+    to restrict firewalls by host and HTTP methods.
+
+In addition to some common config options, the most important firewall options
+depend on the authentication mechanism, which can be any of these:
+
+.. code-block:: yaml
+
+    # app/config/security.yml
+    security:
+        # ...
+        firewalls:
+            main:
+                # ...
+                    x509:
+                        # ...
+                    remote_user:
+                        # ...
+                    simple_preauth:
+                        # ...
+                    guard:
+                        # ...
+                    form_login:
+                        # ...
+                    form_login_ldap:
+                        # ...
+                    json_login:
+                        # ...
+                    simple_form:
+                        # ...
+                    http_basic:
+                        # ...
+                    http_basic_ldap:
+                        # ...
+                    http_digest:
+                        # ...
+
 .. _reference-security-firewall-form-login:
 
-Form Login Configuration
-------------------------
+``form_login`` Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When using the ``form_login`` authentication listener beneath a firewall,
 there are several common options for configuring the "form login" experience.
-
 For even more details, see :doc:`/security/form_login`.
-
-The Login Form and Process
-~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 login_path
 ..........
@@ -95,8 +454,7 @@ By default, you must submit your login form to the ``check_path`` URL as
 a POST request. By setting this option to ``false``, you can send a GET
 request to the ``check_path`` URL.
 
-Redirecting after Login
-~~~~~~~~~~~~~~~~~~~~~~~
+**Options Related to Redirecting after Login**
 
 always_use_default_target_path
 ..............................
@@ -137,10 +495,7 @@ redirected to the ``default_target_path`` to avoid a redirection loop.
     For historical reasons, and to match the misspelling of the HTTP standard,
     the option is called ``use_referer`` instead of ``use_referrer``.
 
-.. _reference-security-pbkdf2:
-
-Logout Configuration
---------------------
+**Options Related to Logout Configuration**
 
 invalidate_session
 ~~~~~~~~~~~~~~~~~~
@@ -184,8 +539,8 @@ The service ID used for handling a successful logout. The service must implement
 
 .. _reference-security-ldap:
 
-LDAP functionality
-------------------
+LDAP Authentication
+~~~~~~~~~~~~~~~~~~~
 
 There are several options for connecting against an LDAP server,
 using the ``form_login_ldap`` and ``http_basic_ldap`` authentication
@@ -193,8 +548,7 @@ providers or the ``ldap`` user provider.
 
 For even more details, see :doc:`/security/ldap`.
 
-Authentication
-~~~~~~~~~~~~~~
+**Authentication**
 
 You can authenticate to an LDAP server using the LDAP variants of the
 ``form_login`` and ``http_basic`` authentication providers. Simply use
@@ -232,8 +586,7 @@ Depending on your LDAP server's configuration, you will need to override
 this value. This setting is only necessary if the user's DN cannot be derived
 statically using the ``dn_string`` config option.
 
-User provider
-~~~~~~~~~~~~~
+**User provider**
 
 Users will still be fetched from the configured user provider. If you
 wish to fetch your users from a LDAP server, you will need to use the
@@ -259,26 +612,15 @@ providers (``form_login_ldap`` or ``http_basic_ldap``).
                         uid_key: 'uid'
                         filter: '(&({uid_key}={username})(objectclass=person)(ou=Users))'
 
-Using the PBKDF2 Encoder: Security and Speed
---------------------------------------------
+HTTP-Digest Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `PBKDF2`_ encoder provides a high level of Cryptographic security, as
-recommended by the National Institute of Standards and Technology (NIST).
+.. deprecated:: 3.4
 
-You can see an example of the ``pbkdf2`` encoder in the YAML block on this
-page.
+    HTTP-Digest Authentication was deprecated in Symfony 3.4 and it will be
+    removed in Symfony 4.0.
 
-But using PBKDF2 also warrants a warning: using it (with a high number
-of iterations) slows down the process. Thus, PBKDF2 should be used with
-caution and care.
-
-A good configuration lies around at least 1000 iterations and sha512
-for the hash algorithm.
-
-.. _reference-security-bcrypt:
-
-Using the BCrypt Password Encoder
----------------------------------
+To use HTTP-Digest authentication you need to provide a realm and a secret:
 
 .. configuration-block::
 
@@ -286,12 +628,11 @@ Using the BCrypt Password Encoder
 
         # app/config/security.yml
         security:
-            # ...
-
-            encoders:
-                Symfony\Component\Security\Core\User\User:
-                    algorithm: bcrypt
-                    cost:      15
+            firewalls:
+                somename:
+                    http_digest:
+                        secret: '%secret%'
+                        realm: 'secure-api'
 
     .. code-block:: xml
 
@@ -304,119 +645,30 @@ Using the BCrypt Password Encoder
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <!-- ... -->
-                <encoder
-                    class="Symfony\Component\Security\Core\User\User"
-                    algorithm="bcrypt"
-                    cost="15"
-                />
+                <firewall name="somename">
+                    <http-digest secret="%secret%" realm="secure-api" />
+                </firewall>
             </config>
         </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
-        use Symfony\Component\Security\Core\User\User;
-
         $container->loadFromExtension('security', [
-            // ...
-            'encoders' => [
-                User::class => [
-                    'algorithm' => 'bcrypt',
-                    'cost'      => 15,
+            'firewalls' => [
+                'somename' => [
+                    'http_digest' => [
+                        'secret' => '%secret%',
+                        'realm'  => 'secure-api',
+                    ],
                 ],
             ],
         ]);
-
-The ``cost`` can be in the range of ``4-31`` and determines how long a password
-will be encoded. Each increment of ``cost`` *doubles* the time it takes
-to encode a password.
-
-If you don't provide the ``cost`` option, the default cost of ``13`` is
-used.
-
-.. note::
-
-    You can change the cost at any time — even if you already have some
-    passwords encoded using a different cost. New passwords will be encoded
-    using the new cost, while the already encoded ones will be validated
-    using a cost that was used back when they were encoded.
-
-A salt for each new password is generated automatically and need not be
-persisted. Since an encoded password contains the salt used to encode it,
-persisting the encoded password alone is enough.
-
-.. note::
-
-    BCrypt encoded passwords are ``60`` characters long, so make sure to
-    allocate enough space for them to be persisted.
-
-.. tip::
-
-    A simple technique to make tests much faster when using BCrypt is to set
-    the cost to ``4``, which is the minimum value allowed, in the ``test``
-    environment configuration.
-
-.. _reference-security-argon2i:
-
-Using the Argon2i Password Encoder
-----------------------------------
-
-.. caution::
-
-    To use this encoder, you either need to use PHP version 7.2 or install
-    the `libsodium`_ extension.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            # ...
-
-            encoders:
-                Symfony\Component\Security\Core\User\User:
-                    algorithm: argon2i
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
-            <encoder
-                class="Symfony\Component\Security\Core\User\User"
-                algorithm="argon2i"
-            />
-        </config>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        use Symfony\Component\Security\Core\User\User;
-
-        $container->loadFromExtension('security', [
-            // ...
-            'encoders' => [
-                User::class => [
-                    'algorithm' => 'argon2i',
-                ],
-            ],
-        ]);
-
-A salt for each new password is generated automatically and need not be
-persisted. Since an encoded password contains the salt used to encode it,
-persisting the encoded password alone is enough.
-
-.. note::
-
-    Argon2i encoded passwords are ``96`` characters long, but due to the hashing
-    requirements saved in the resulting hash this may change in the future.
 
 .. _reference-security-firewall-context:
 
 Firewall Context
-----------------
+~~~~~~~~~~~~~~~~
 
 Most applications will only need one :ref:`firewall <security-firewalls>`.
 But if your application *does* use multiple firewalls, you'll notice that
@@ -489,7 +741,7 @@ multiple firewalls, the "context" could actually be shared:
     same time.
 
 User Checkers
--------------
+~~~~~~~~~~~~~
 
 During the authentication of a user, additional checks might be required to
 verify if the identified user is allowed to log in. Each firewall can include
@@ -497,59 +749,31 @@ a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
 
-HTTP-Digest Authentication
---------------------------
+providers
+---------
 
-.. deprecated:: 3.4
+This options defines how the application users are loaded (from a database,
+a LDAP server, a configuration file, etc.) Read the following articles to learn
+more about each of those providers:
 
-    HTTP-Digest Authentication was deprecated in Symfony 3.4 and it will be
-    removed in Symfony 4.0.
+* :doc:`Load users from a database </security/entity_provider>`
+* :doc:`Load users from a LDAP server </security/ldap>`
+* :ref:`Load users from a configuration file <security-user-providers>`
+* :doc:`Create your own user provider </security/custom_provider>`
 
-To use HTTP-Digest authentication you need to provide a realm and a secret:
+role_hierarchy
+--------------
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            firewalls:
-                somename:
-                    http_digest:
-                        secret: '%secret%'
-                        realm: 'secure-api'
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <firewall name="somename">
-                    <http-digest secret="%secret%" realm="secure-api"/>
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'somename' => [
-                    'http_digest' => [
-                        'secret' => '%secret%',
-                        'realm'  => 'secure-api',
-                    ],
-                ],
-            ],
-        ]);
+Instead of associating many roles to users, this option allows you to define
+role inheritance rules by creating a role hierarchy, as explained in
+:ref:`security-role-hierarchy`.
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
 .. _`libsodium`: https://pecl.php.net/package/libsodium
+.. _`Session Fixation`: https://www.owasp.org/index.php/Session_fixation
+.. _`ACL (Access Control List)`: https://en.wikipedia.org/wiki/Access_control_list
+.. _`Symfony ACL Bundle`: https://github.com/symfony/acl-bundle
+.. _`Argon2 key derivation function`: https://en.wikipedia.org/wiki/Argon2
+.. _`bcrypt password hashing function`: https://en.wikipedia.org/wiki/Bcrypt
+.. _`cryptographic salt`: https://en.wikipedia.org/wiki/Salt_(cryptography)
