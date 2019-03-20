@@ -126,12 +126,12 @@ Make sure this file is imported into the main config file:
             - { resource: config.yml }
             - { resource: config_prod_secrets.php }
 
-        # ..
+        # ...
         framework:
             session:
                 # set handler_id to null to use default session handler from php.ini (memcached)
                 handler_id:  ~
-        # ..
+        # ...
 
     .. code-block:: xml
 
@@ -148,9 +148,9 @@ Make sure this file is imported into the main config file:
                 <import resource="config_prod_secrets.php"/>
             </imports>
 
-            <!-- .. -->
+            <!-- ... -->
             <framework:config>
-                <!-- .. -->
+                <!-- ... -->
                 <framework:session handler-id="null"/>
             </framework:config>
         </container>

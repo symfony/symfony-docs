@@ -322,7 +322,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
         // app/config/security.php
 
-        // ..
+        // ...
         use AppBundle\Security\TokenAuthenticator;
 
         $container->loadFromExtension('security', [
