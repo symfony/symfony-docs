@@ -27,7 +27,9 @@ This method has 3 arguments:
 * **name** - The name of the function in an expression;
 * **compiler** - A function executed when compiling an expression using the
   function;
-* **evaluator** - A function executed when the expression is evaluated::
+* **evaluator** - A function executed when the expression is evaluated.
+
+Example::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
