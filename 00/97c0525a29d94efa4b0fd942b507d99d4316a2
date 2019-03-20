@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-03-17T13:31:39Z
+
+Hmm, not sure if I agree with this "rule". For some reason (not sure why), Symfony decided Xliff should be the main language for translation instead of yaml. So that's why it's put in the first place.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-17T13:42:22Z
+
+If I browse the documentation and and select `yaml` for example, the `yaml` tab will be selected on all other following sites if I am right. Like here for example: https://symfony.com/doc/current/reference/configuration/security.html#using-the-bcrypt-password-encoder
+
+Anyway it wouldn't be a problem to use `.. code-block:: xliff`, use the `xml` lexer and change the rule, that `xliff` should be used first. I can check the content of the code-block too to know if its an `xliff` file.
+
+My goal is to make the docs consistent as possible to give fast automated feedback to the contributors, especially new ones. I totally agree, that we cannot have "rules" for everything  👍
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-18T15:13:33Z
+
+Even if being consistent is important (and we appreciate all your work around this) I think I agree with Wouter on this one.
+
+The order of configuration-block formats is from "most common"/"recommended" ... to "less common". So, for routes: annotations, yaml, xml, raw php ... but for translation it should be xml, yaml, raw php. This is for the reason explained by Wouter about XLIFF.
+
+Also, precisely because the tab is now selected automatically (and persisted when you change it) the tab order is almost irrelevant, because you always see your preferred format selected.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-20T09:12:55Z
+
+Thank you for your feedback Javier!
+
+I changed the rule to ensure the following order if an `.. code-block:: xml` is present **and** it contains `xliff`:
+* xml
+* php-annotations
+* yaml
+* php
+
+If an `.. code-block:: xml` is present **without** `xliff` content:
+* php-annotations
+* yaml
+* xml
+* php
+
+After that change, the current state of the PR is the result and it looks good to me 👍
