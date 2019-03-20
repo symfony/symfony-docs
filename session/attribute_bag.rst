@@ -1,7 +1,7 @@
 .. index::
    single: Sessions, Attribute Bag
 
-Changing the Session Attribute Bag provider
+Changing the Session Attribute Bag Provider
 ===========================================
 
 Symfony uses attribute bags to represent values stored in the session. It ships 
@@ -12,8 +12,9 @@ which allows you to :ref:`set and fetch values using character-separated paths <
 
 This is fully documented :doc:`in the component documentation </components/http_foundation/sessions>`.
 
-Changing the attribute bag in Symfony
+Changing the Attribute Bag in Symfony
 -------------------------------------
+
 To use a different attribute bag for your sessions, override the service 
 definition. In this example, we switch the default ``AttributeBag`` to the 
 ``NamespacedAttributeBag``:
@@ -29,3 +30,4 @@ definition. In this example, we switch the default ``AttributeBag`` to the
 
         session.namespacedattributebag:
             class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+            
