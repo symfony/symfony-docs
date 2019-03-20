@@ -457,7 +457,7 @@ configuration or set it to ``false``:
 
         // app/config/security.php
 
-        // ..
+        // ...
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'secured_area'       => [

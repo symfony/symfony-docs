@@ -55,7 +55,7 @@ PHP; it implements ``HttpKernelInterface`` and wraps another
 
     // example.com/web/front.php
 
-    // ..
+    // ...
 
     $framework = new Simplex\Framework($dispatcher, $matcher, $controllerResolver, $argumentResolver);
     $framework = new HttpKernel\HttpCache\HttpCache(
