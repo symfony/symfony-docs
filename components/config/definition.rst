@@ -483,7 +483,7 @@ In YAML you may have:
 .. code-block:: yaml
 
     # This value is only used for the search results page.
-    entries_per_page:     25
+    entries_per_page: 25
 
 and in XML:
 
