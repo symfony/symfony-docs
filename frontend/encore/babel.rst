@@ -41,7 +41,7 @@ The ``@babel/preset-env`` preset rewrites your JavaScript so that the final synt
 will work in whatever browsers you want. To configure the browsers that you need
 to support, see :ref:`browserslist_package_config`.
 
-After change our "browerslist" config, you will need to manually remove the babel
+After changing your "browserslist" config, you will need to manually remove the babel
 cache directory:
 
 .. code-block:: terminal
