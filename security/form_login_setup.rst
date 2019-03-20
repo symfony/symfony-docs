@@ -373,4 +373,56 @@ deal with this low level session variable. However, the
 :class:`Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait` utility
 can be used to read (like in the example above) or set this value manually.
 
+The only time target path is set from Symfony is when the user start the authentication flow, passing through the authentication entry point. This is done by the ExceptionListener, when the user tries to access a restricted page, and it is redirected to the login page. At that point target path is set.
+
+To set it on certain routes, you should implement a Listener:
+.. code-block:: php
+    namespace App\EventListener;
+
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+    use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
+    class RequestListener
+    {
+        use TargetPathTrait;
+
+        /** @var SessionInterface */
+        private $session;
+
+        public function __construct(SessionInterface $session)
+        {
+            $this->session = $session;
+        }
+
+        /**
+         * Save targetPath for non-Ajax main request.
+         *
+         * @param GetResponseEvent $event
+         */
+        public function onKernelRequest(GetResponseEvent $event): void
+        {
+            $request = $event->getRequest();
+
+            if (!$event->isMasterRequest()) {
+                return;
+            }
+
+            if ($request->isXmlHttpRequest()) {
+                return;
+            }
+
+            $includedRoutes = ['route-1', 'route-2'];
+
+            if (!\in_array($request->attributes->get('_route'), $includedRoutes, true)) {
+                return;
+            }
+
+            $this->saveTargetPath($this->session, 'main', $request->getUri());
+        }
+    }
+
+This listener will save the target path for the *main* firewall for the `$includedRoutes`. If a user visits `route-1` (public route), then successfully logs in, it will be redirected to that route.
+
+
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
