@@ -744,7 +744,7 @@ strict_requirements
 
 **type**: ``mixed`` **default**: ``true``
 
-Determines the routing generator behaviour. When generating a route that
+Determines the routing generator behavior. When generating a route that
 has specific :doc:`requirements </routing/requirements>`, the generator
 can behave differently in case the used parameters do not meet these requirements.
 
