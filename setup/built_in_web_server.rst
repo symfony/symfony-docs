@@ -135,8 +135,7 @@ you have to pass the correct location using the ``--docroot`` option:
 Stopping the Server
 -------------------
 
-When you finish your work, you can simply stop the web server by using the ``server:stop``
-command:
+When you finish your work, you can stop the web server with the following command:
 
 .. code-block:: terminal
 
