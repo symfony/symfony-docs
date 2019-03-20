@@ -175,7 +175,7 @@ If you are documenting a brand new feature, a change or a deprecation that's
 been made in Symfony, you should precede your description of the change with
 the corresponding directive and a short description:
 
-For a new feature or a behaviour change use the ``.. versionadded:: 3.x``
+For a new feature or a behavior change use the ``.. versionadded:: 3.x``
 directive:
 
 .. code-block:: rst

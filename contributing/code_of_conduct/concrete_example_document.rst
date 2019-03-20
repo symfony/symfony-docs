@@ -2,7 +2,7 @@ Code of Conduct: Concrete Example Document
 ==========================================
 
 This is a living document that serves to give concrete examples of
-unwanted behaviour. These examples have all taken place somewhere in the
+unwanted behavior. These examples have all taken place somewhere in the
 PHP community in the past, and are clear code of conduct violations
 according to the Symfony code of conduct.
 
