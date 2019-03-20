@@ -130,7 +130,7 @@ read more about it, see the ":doc:`/bundles/configuration`" article.
 Adding Classes to Compile
 -------------------------
 
-.. versionadded:: 3.3
+.. deprecated:: 3.3
 
     This technique is discouraged and the ``addClassesToCompile()`` method was
     deprecated in Symfony 3.3 because modern PHP versions make it unnecessary.
