@@ -230,7 +230,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
 
         // config/packages/security.php
 
-        // ..
+        // ...
         use App\Security\TokenAuthenticator;
 
         $container->loadFromExtension('security', [
