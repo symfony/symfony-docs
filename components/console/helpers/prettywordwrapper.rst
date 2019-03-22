@@ -1,13 +1,13 @@
 .. index::
-single: Console Helpers; Pretty Word Wrapper Helper
+single: Console Helpers; Word Wrapper Helper
 
-Pretty Word Wrapper Helper
-==========================
+Word Wrapper Helper
+===================
 
-The Pretty word wrapper provides a :method:`Symfony\\Component\\Console\\Helper\\PrettyWordWrapperHelper::wordwrap`
+The word wrapper provides a :method:`Symfony\\Component\\Console\\Helper\\WordWrapperHelper::wordwrap`
 function to create well wrapped text messages.
 
-The :class:`Symfony\\Component\\Console\\Helper\\PrettyWordWrapperHelper` is included
+The :class:`Symfony\\Component\\Console\\Helper\\WordWrapperHelper` is included
 in the default helper set, which you can get by calling
 :method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
 
@@ -32,11 +32,11 @@ other formatter that implements
 
     $text = '...';
     $wrappedText = $output->getFormatter()->format(
-        $output->getFormatter()->wordwrap($text, 30, PrettyWordWrapperHelper::CUT_ALL)
+        $output->getFormatter()->wordwrap($text, 30, WordWrapperHelper::CUT_ALL)
     );
 
     // OR, you can set the default cutting option
-    $output->getFormatter()->setDefaultWrapCutOption(PrettyWordWrapperHelper::CUT_ALL);
+    $output->getFormatter()->setDefaultWrapCutOption(WordWrapperHelper::CUT_ALL);
     $wrappedText = $output->getFormatter()->formatAndWrap($text, 30);
 
 You can use it with :class:`Table <Symfony\\Component\\Console\\Helper\\Table>` also:
@@ -45,9 +45,9 @@ You can use it with :class:`Table <Symfony\\Component\\Console\\Helper\\Table>` 
 
     $table = $this->getHelper('table');
     $table
-        ->setDefaultColumnWordWrapCutOption(PrettyWordWrapperHelper::CUT_DISABLE)
+        ->setDefaultColumnWordWrapCutOption(WordWrapperHelper::CUT_DISABLE)
         ->setColumnMaxWidth(1, 40)                                    // Here will use the set default cut option
-        ->setColumnMaxWidth(2, 20, PrettyWordWrapperHelper::CUT_ALL)  // Here will use the CUT_ALL option
+        ->setColumnMaxWidth(2, 20, WordWrapperHelper::CUT_ALL)  // Here will use the CUT_ALL option
     ;
 
 .. note::
@@ -82,7 +82,7 @@ Examples
 
 .. note::
 
-    The default option is ``PrettyWordWrapperHelper::CUT_LONG_WORDS``.
+    The default option is ``WordWrapperHelper::CUT_LONG_WORDS``.
 
 Default parameters:
 
@@ -90,7 +90,7 @@ Default parameters:
 Parameter       Value
 ==============  ===========================================================================================
 ``$width``      ``120``
-``$cutOption``  ``PrettyWordWrapperHelper::CUT_LONG_WORDS``
+``$cutOption``  ``WordWrapperHelper::CUT_LONG_WORDS``
 ``$break``      ``\n``
 ==============  ===========================================================================================
 
@@ -109,7 +109,7 @@ Short lines, **disable** cuts ( ``CUT_DISABLE`` )
 .. code-block:: php
 
     $text = "Lorem ipsum dolor sit amet.";
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_DISABLE);
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_DISABLE);
 
 .. code-block:: text
 
@@ -128,7 +128,7 @@ Short lines, **enable** word cutting only for long words ( ``CUT_LONG_WORDS`` )
 .. code-block:: php
 
     $text = "Lorem ipsum dolor sit amet.";
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_LONG_WORDS);
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_LONG_WORDS);
 
 .. code-block:: text
 
@@ -146,7 +146,7 @@ Short lines, **enable** cut for every word ( ``CUT_WORDS`` )
 .. code-block:: php
 
     $text = "Lorem ipsum dolor sit amet.";
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_WORDS);
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_WORDS);
 
 .. code-block:: text
 
@@ -164,7 +164,7 @@ Short lines, **disable** word cutting  ( ``CUT_DISABLE`` ) + **set** custom brea
 
     $text = "Lorem ipsum dolor sit amet.";
     // The width is 6 here, not 4 like above.
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_DISABLE, "<\n") . "<";
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_DISABLE, "<\n") . "<";
 
 .. code-block:: text
 
@@ -183,7 +183,7 @@ Short lines, **disable** word cutting ( ``CUT_DISABLE`` ) + **enable** fill up (
     $default = $wrapper->wordwrap(
         $text,
         6,
-        PrettyWordWrapperHelper::CUT_DISABLE | PrettyWordWrapperHelper::CUT_FILL_UP_MISSING,
+        WordWrapperHelper::CUT_DISABLE | WordWrapperHelper::CUT_FILL_UP_MISSING,
         "<\n"
     ) . "<";
 
@@ -200,7 +200,7 @@ Text with URL
 .. code-block:: php
 
     $text = "Lorem ipsum dolor sit amet: http://symfony.com";
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_DISABLE);
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_DISABLE);
 
 .. code-block:: text
 
@@ -216,7 +216,7 @@ Text with URL, **enable** word cut ( ``CUT_WORDS`` ) + **disable** URL cut
 .. code-block:: php
 
     $text = "Lorem ipsum dolor sit amet: http://symfony.com";
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_WORDS);
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_WORDS);
 
 .. code-block:: text
 
@@ -234,7 +234,7 @@ Text with URL, **disable** word cut + **enable** URL cut ( ``CUT_URLS`` )
 .. code-block:: php
 
     $text = "Lorem ipsum dolor sit amet: http://symfony.com";
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_URLS);
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_URLS);
 
 .. code-block:: text
 
@@ -254,7 +254,7 @@ Text with style tags
 .. code-block:: php
 
     $text = "<comment>Lorem ipsum <fg=white;bg=blue>dolor</> sit amet.</comment>";
-    $default = $wrapper->wordwrap($text, 4, PrettyWordWrapperHelper::CUT_WORDS);
+    $default = $wrapper->wordwrap($text, 4, WordWrapperHelper::CUT_WORDS);
 
 .. code-block:: text
 
@@ -270,4 +270,4 @@ Line endings
 ------------
 
 There are different line endings on different operating systems. It can cause some problems, so we unify it to ``\n``.
-You can switch this behavior off with ``PrettyWordWrapperHelper::CUT_NO_REPLACE_EOL``.
+You can switch this behavior off with ``WordWrapperHelper::CUT_NO_REPLACE_EOL``.

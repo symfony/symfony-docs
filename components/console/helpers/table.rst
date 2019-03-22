@@ -134,7 +134,7 @@ If you prefer to wrap long contents in multiple rows, use the
 
     // ...
     $table->setColumnMaxWidth(0, 5);
-    $table->setColumnMaxWidth(1, 10, PrettyWordWrapperHelper::CUT_ALL);
+    $table->setColumnMaxWidth(1, 10, WordWrapperHelper::CUT_ALL);
     $table->render();
 
 The output of this command will be:
@@ -153,7 +153,7 @@ The output of this command will be:
 .. note::
 
     More information about
-    :class:`PrettyWordWrapperHelper <Symfony\\Component\\Console\\Helper\\PrettyWordWrapperHelper>` and the available
+    :class:`WordWrapperHelper <Symfony\\Component\\Console\\Helper\\WordWrapperHelper>` and the available
     cut options: :doc:`/components/console/helpers/prettywordwrapper`
 
 The table style can be changed to any built-in styles via
