@@ -305,7 +305,7 @@ you.
 
 What's important is the fact that you have easy access to the product's related
 category, but the category data isn't actually retrieved until you ask for
-the category (i.e. it's "lazily loaded").
+the category (e.g. it's "lazily loaded").
 
 You can also query in the other direction::
 
@@ -322,7 +322,7 @@ You can also query in the other direction::
 
 In this case, the same things occur: you first query out for a single ``Category``
 object, and then Doctrine makes a second query to retrieve the related ``Product``
-objects, but only once/if you ask for them (i.e. when you call ``getProducts()``).
+objects, but only once/if you ask for them (e.g. when you call ``getProducts()``).
 The ``$products`` variable is an array of all ``Product`` objects that relate
 to the given ``Category`` object via their ``category_id`` value.
 

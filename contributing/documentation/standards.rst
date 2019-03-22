@@ -164,7 +164,7 @@ In addition, documentation follows these rules:
 
 * **Punctuation**: avoid the use of `Serial (Oxford) Commas`_;
 * **Pronouns**: avoid the use of `nosism`_ and always use *you* instead of *we*.
-  (i.e. avoid the first person point of view: use the second instead);
+  (e.g. avoid the first person point of view: use the second instead);
 * **Gender-neutral language**: when referencing a hypothetical person, such as
   *"a user with a session cookie"*, use gender-neutral pronouns (they/their/them).
   For example, instead of:

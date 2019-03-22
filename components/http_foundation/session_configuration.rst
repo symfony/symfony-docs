@@ -132,7 +132,7 @@ Configuring Garbage Collection
 When a session opens, PHP will call the ``gc`` handler randomly according to the
 probability set by ``session.gc_probability`` / ``session.gc_divisor``. For
 example if these were set to ``5/100`` respectively, it would mean a probability
-of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
+of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, e.g. 75%.
 
 If the garbage collection handler is invoked, PHP will pass the value stored in
 the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is

@@ -254,7 +254,7 @@ calling ``isGranted()`` from a controller or other places
 .. note::
 
     If you need to check access in any non-voter service, use the ``security.authorization_checker``
-    service (i.e. type-hint ``Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface``)
+    service (e.g. type-hint ``Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface``)
     instead of the ``security.access.decision_manager`` service shown here.
 
 .. _security-voters-change-strategy:

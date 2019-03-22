@@ -395,7 +395,7 @@ sport like this::
                 function (FormEvent $event) {
                     $form = $event->getForm();
 
-                    // this would be your entity, i.e. SportMeetup
+                    // this would be your entity, e.g. SportMeetup
                     $data = $event->getData();
 
                     $sport = $data->getSport();
@@ -467,7 +467,7 @@ The type would now look like::
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
                 function (FormEvent $event) use ($formModifier) {
-                    // this would be your entity, i.e. SportMeetup
+                    // this would be your entity, e.g. SportMeetup
                     $data = $event->getData();
 
                     $formModifier($event->getForm(), $data->getSport());

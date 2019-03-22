@@ -166,7 +166,7 @@ for each entity manager.
 
     When working with multiple connections and entity managers, you should be
     explicit about which configuration you want. If you *do* omit the name of
-    the connection or entity manager, the default (i.e. ``default``) is used.
+    the connection or entity manager, the default (e.g. ``default``) is used.
 
 When working with multiple connections to create your databases:
 
@@ -189,7 +189,7 @@ When working with multiple entity managers to update your schema:
     $ php bin/console doctrine:schema:update --force --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
-the default entity manager (i.e. ``default``) is returned::
+the default entity manager (e.g. ``default``) is returned::
 
     // ...
 

@@ -53,7 +53,7 @@ script to ensure that all of the needed vendor libraries are downloaded.
     their state in the latest Symfony Standard Edition.
 
     Of course, if you've added new entries to ``composer.json``, be sure
-    to replace only the original parts (i.e. be sure not to also delete any of
+    to replace only the original parts (e.g. be sure not to also delete any of
     your custom entries).
 
 .. _Composer: https://getcomposer.org/

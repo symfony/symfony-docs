@@ -57,7 +57,7 @@ input
 
 **type**: ``string`` **default**: ``string``
 
-The format of the *input* data - i.e. the format that the timezone is stored
+The format of the *input* data - e.g. the format that the timezone is stored
 on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``America/New_York``)

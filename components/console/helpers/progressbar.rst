@@ -37,7 +37,7 @@ number of units, and advance the progress as the command executes::
 
 .. tip::
 
-    You can also regress the progress bar (i.e. step backwards) by calling
+    You can also regress the progress bar (e.g. step backwards) by calling
     ``$progress->advance()`` with a negative value. For example, if you call
     ``$progress->advance(-2)`` then it will regress the progress bar 2 steps.
 

@@ -300,7 +300,7 @@ helper:
     {% endstylesheets %}
 
 Just like with the ``uglifyjs2`` filter, if you prefix the filter name with
-``?`` (i.e. ``?uglifycss``), the minification will only happen when you're
+``?`` (e.g. ``?uglifycss``), the minification will only happen when you're
 not in debug mode.
 
 .. _`UglifyJS`: https://github.com/mishoo/UglifyJS

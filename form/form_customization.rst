@@ -85,7 +85,7 @@ fragment needed to render every part of a form:
   styles.
 * `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
   but the CSS classes applied are the ones used to display the forms horizontally
-  (i.e. the label and the widget in the same row).
+  (e.g. the label and the widget in the same row).
 * `bootstrap_4_layout.html.twig`_, same as ``bootstrap_3_layout.html.twig``, but
   updated for `Bootstrap 4 CSS framework`_ styles.
 * `bootstrap_4_horizontal_layout.html.twig`_, same as ``bootstrap_3_horizontal_layout.html.twig``
@@ -682,7 +682,7 @@ of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
     See :ref:`form-template-blocks` to find out which specific block or file you
     have to customize.
 
-Certain errors that are more global to your form (i.e. not specific to just one
+Certain errors that are more global to your form (e.g. not specific to just one
 field) are rendered separately, usually at the top of your form:
 
 .. code-block:: twig

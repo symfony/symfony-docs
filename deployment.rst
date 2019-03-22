@@ -146,7 +146,7 @@ define other env vars too.
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Your vendors can be updated before transferring your source code (i.e.
+Your vendors can be updated before transferring your source code (e.g.
 update the ``vendor/`` directory, then transfer that with your source
 code) or afterwards on the server. Either way, just update your vendors
 as you normally do:

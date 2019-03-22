@@ -91,7 +91,7 @@ The main configuration file is called ``config.yml``:
         // ...
 
 Most top-level keys - like ``framework`` and ``twig`` - are configuration for a
-specific bundle (i.e. ``FrameworkBundle`` and ``TwigBundle``).
+specific bundle (e.g. ``FrameworkBundle`` and ``TwigBundle``).
 
 .. sidebar:: Configuration Formats
 

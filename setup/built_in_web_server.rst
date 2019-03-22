@@ -72,7 +72,7 @@ can change the socket passing an IP address and a port as a command-line argumen
     # passing a specific IP and port
     $ php bin/console server:start 192.168.0.1:8080
 
-    # passing '*' as the IP means to use 0.0.0.0 (i.e. any local IP address)
+    # passing '*' as the IP means to use 0.0.0.0 (e.g. any local IP address)
     $ php bin/console server:start *:8080
 
 .. versionadded:: 3.4
@@ -100,7 +100,7 @@ can change the socket passing an IP address and a port as a command-line argumen
 
     If you want to use the built-in web server from inside a virtual machine
     and then load the site from a browser on your host machine, you'll need
-    to listen on the ``0.0.0.0:8000`` address (i.e. on all IP addresses that
+    to listen on the ``0.0.0.0:8000`` address (e.g. on all IP addresses that
     are assigned to the virtual machine):
 
     .. code-block:: terminal

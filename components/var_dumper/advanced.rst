@@ -394,13 +394,13 @@ can use:
 * :class:`Symfony\\Component\\VarDumper\\Caster\\ConstStub` to wrap a value that is
   best represented by a PHP constant;
 * :class:`Symfony\\Component\\VarDumper\\Caster\\ClassStub` to wrap a PHP identifier
-  (*i.e.* a class name, a method name, an interface, *etc.*);
+  (*e.g.* a class name, a method name, an interface, *etc.*);
 * :class:`Symfony\\Component\\VarDumper\\Caster\\CutStub` to replace big noisy
   objects/strings/*etc.* by ellipses;
 * :class:`Symfony\\Component\\VarDumper\\Caster\\CutArrayStub` to keep only some
   useful keys of an array;
 * :class:`Symfony\\Component\\VarDumper\\Caster\\EnumStub` to wrap a set of virtual
-  values (*i.e.* values that do not exist as properties in the original PHP data
+  values (*e.g.* values that do not exist as properties in the original PHP data
   structure, but are worth listing alongside with real ones);
 * :class:`Symfony\\Component\\VarDumper\\Caster\\LinkStub` to wrap strings that can
   be turned into links by dumpers;

@@ -12,7 +12,7 @@ to be lightning fast, you need HTTP caching.
 Caching on the Shoulders of Giants
 ----------------------------------
 
-With HTTP Caching, you cache the full output of a page (i.e. the response) and bypass
+With HTTP Caching, you cache the full output of a page (e.g. the response) and bypass
 your application *entirely* on subsequent requests. Of course, caching entire responses
 isn't always possible for highly dynamic sites, or is it? With
 :doc:`Edge Side Includes (ESI) </http_cache/esi>`, you can use the power of HTTP caching
@@ -69,7 +69,7 @@ as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony reverse proxy.
 Symfony Reverse Proxy
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony comes with a reverse proxy (i.e. gateway cache) written in PHP.
+Symfony comes with a reverse proxy (e.g. gateway cache) written in PHP.
 :ref:`It's not a fully-featured reverse proxy cache like Varnish <http-cache-symfony-versus-varnish>`,
 but is a great way to start.
 

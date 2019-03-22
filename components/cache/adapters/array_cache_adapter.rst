@@ -18,7 +18,7 @@ toggles serialization as its second parameter::
     $cache = new ArrayAdapter(
 
         // the default lifetime (in seconds) for cache items that do not define their
-        // own lifetime, with a value 0 causing items to be stored indefinitely (i.e.
+        // own lifetime, with a value 0 causing items to be stored indefinitely (e.g.
         // until the current PHP process finishes)
         $defaultLifetime = 0,
 

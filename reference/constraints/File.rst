@@ -257,7 +257,7 @@ disallowEmptyMessage
 
 **type**: ``string`` **default**: ``An empty file is not allowed.``
 
-This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
+This constraint checks if the uploaded file is empty (e.g. 0 bytes). If it is,
 this message is displayed.
 
 You can use the following parameters in this message:

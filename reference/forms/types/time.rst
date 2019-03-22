@@ -114,7 +114,7 @@ input
 
 **type**: ``string`` **default**: ``datetime``
 
-The format of the *input* data - i.e. the format that the date is stored
+The format of the *input* data - e.g. the format that the date is stored
 on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``12:17:26``)

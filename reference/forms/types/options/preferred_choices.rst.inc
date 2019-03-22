@@ -48,8 +48,8 @@ Finally, if your values are objects, you can also specify a property path string
 on the object that will return true or false.
 
 The preferred choices are only meaningful when rendering a ``select`` element
-(i.e. ``expanded`` false). The preferred choices and normal choices are separated
-visually by a set of dotted lines (i.e. ``-------------------``). This can be customized
+(e.g. ``expanded`` false). The preferred choices and normal choices are separated
+visually by a set of dotted lines (e.g. ``-------------------``). This can be customized
 when rendering the field:
 
 .. configuration-block::

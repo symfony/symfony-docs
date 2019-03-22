@@ -36,7 +36,7 @@ Symfony, two basic approaches are (non-exhaustive):
   reference inside each ``Comment`` to all users who have access, and then
   compare these users to the provided ``Token``.
 - *Enforce security with roles*: In this approach, you would add a role for
-  each ``Comment`` object, i.e. ``ROLE_COMMENT_1``, ``ROLE_COMMENT_2``, etc.
+  each ``Comment`` object, e.g. ``ROLE_COMMENT_1``, ``ROLE_COMMENT_2``, etc.
 
 Both approaches are perfectly valid. However, they couple your authorization
 logic to your business code which makes it less reusable elsewhere, and also

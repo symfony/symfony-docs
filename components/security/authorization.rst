@@ -11,7 +11,7 @@ in the :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storag
 using its :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface::setToken`
 method.
 
-From then on, the user is authenticated, i.e. identified. Now, other parts
+From then on, the user is authenticated, e.g. identified. Now, other parts
 of the application can use the token to decide whether or not the user may
 request a certain URI, or modify a certain object. This decision will be made
 by an instance of :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface`.
@@ -88,7 +88,7 @@ manager to use them:
 ``vote(TokenInterface $token, $object, array $attributes)``
     this method will do the actual voting and return a value equal to one
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
-    i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
+    e.g. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
     or ``VoterInterface::ACCESS_ABSTAIN``;
 
 The Security component contains some standard voters which cover many use
@@ -100,7 +100,7 @@ AuthenticatedVoter
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AuthenticatedVoter`
 voter supports the attributes ``IS_AUTHENTICATED_FULLY``, ``IS_AUTHENTICATED_REMEMBERED``,
 and ``IS_AUTHENTICATED_ANONYMOUSLY`` and grants access based on the current
-level of authentication, i.e. is the user fully authenticated, or only based
+level of authentication, e.g. is the user fully authenticated, or only based
 on a "remember-me" cookie, or even authenticated anonymously?
 
 .. code-block:: php

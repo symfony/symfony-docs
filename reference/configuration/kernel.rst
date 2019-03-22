@@ -40,7 +40,7 @@ method and return another charset, for instance::
 Kernel Name
 ~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``app`` (i.e. the directory name holding
+**type**: ``string`` **default**: ``app`` (e.g. the directory name holding
 the kernel class)
 
 To change this setting, override the :method:`Symfony\\Component\\HttpKernel\\Kernel::getName`

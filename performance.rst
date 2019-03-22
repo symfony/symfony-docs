@@ -63,7 +63,7 @@ For more details, see :doc:`/components/class_loader/cache_class_loader`.
 .. note::
 
     When using the APC autoloader, if you add new classes, they will be found
-    automatically and everything will work the same as before (i.e. no
+    automatically and everything will work the same as before (e.g. no
     reason to "clear" the cache). However, if you change the location of a
     particular namespace or prefix, you'll need to flush your APC cache. Otherwise,
     the autoloader will still be looking at the old location for all classes
@@ -94,7 +94,7 @@ using the bootstrap file. To be sure, open your front controller (usually
 Note that there are two disadvantages when using a bootstrap file:
 
 * the file needs to be regenerated whenever any of the original sources change
-  (i.e. when you update the Symfony source or vendor libraries);
+  (e.g. when you update the Symfony source or vendor libraries);
 
 * when debugging, one will need to place break points inside the bootstrap file.
 
@@ -158,7 +158,7 @@ possible solutions:
 
 1. Restart the web server;
 2. Call the ``apc_clear_cache()`` or ``opcache_reset()`` functions via the
-   web server (i.e. by having these in a script that you execute over the web);
+   web server (e.g. by having these in a script that you execute over the web);
 3. Use the `cachetool`_ utility to control APC and OPcache from the CLI.
 
 .. _performance-configure-realpath-cache:

@@ -196,9 +196,9 @@ URL          Route     Parameters
     Of course, you can have more than one optional placeholder (e.g. ``/blog/{slug}/{page}``),
     but everything after an optional placeholder must be optional. For example,
     ``/{page}/blog`` is a valid path, but ``page`` will always be required
-    (i.e. ``/blog`` will not match this route).
+    (e.g. ``/blog`` will not match this route).
 
 .. tip::
 
     Routes with optional parameters at the end will not match on requests
-    with a trailing slash (i.e. ``/blog/`` will not match, ``/blog`` will match).
+    with a trailing slash (e.g. ``/blog/`` will not match, ``/blog`` will match).

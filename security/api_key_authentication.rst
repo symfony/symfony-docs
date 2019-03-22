@@ -144,7 +144,7 @@ In this specific example, the following things happen in ``authenticateToken()``
    corresponds to the ``$apiKey``;
 #. Second, you use the ``$userProvider`` again to load or create a ``User``
    object for the ``$username``;
-#. Finally, you create an *authenticated token* (i.e. a token with at least one
+#. Finally, you create an *authenticated token* (e.g. a token with at least one
    role) that has the proper roles and the User object attached to it.
 
 The goal is ultimately to use the ``$apiKey`` to find or create a ``User``
@@ -158,7 +158,7 @@ The User Provider
 The ``$userProvider`` can be any user provider (see :doc:`/security/custom_provider`).
 In this example, the ``$apiKey`` is used to somehow find the username for
 the user. This work is done in a ``getUsernameForApiKey()`` method, which
-is created entirely custom for this use-case (i.e. this isn't a method that's
+is created entirely custom for this use-case (e.g. this isn't a method that's
 used by Symfony's core user provider system).
 
 The ``$userProvider`` might look something like this::
@@ -232,7 +232,7 @@ would allow you to have custom data on the ``User`` object.
 Finally, just make sure that ``supportsClass()`` returns ``true`` for User
 objects with the same class as whatever user you return in ``loadUserByUsername()``.
 
-If your authentication is stateless like in this example (i.e. you expect
+If your authentication is stateless like in this example (e.g. you expect
 the user to send the API key with every request and so you don't save the
 login to the session), then you can simply throw the ``UnsupportedUserException``
 exception in ``refreshUser()``.
@@ -469,7 +469,7 @@ configuration or set it to ``false``:
         ]);
 
 Even though the token is being stored in the session, the credentials - in this
-case the API key (i.e. ``$token->getCredentials()``) - are not stored in the session
+case the API key (e.g. ``$token->getCredentials()``) - are not stored in the session
 for security reasons. To take advantage of the session, update ``ApiKeyAuthenticator``
 to see if the stored token has a valid User object that can be used::
 

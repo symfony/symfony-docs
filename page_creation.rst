@@ -185,7 +185,7 @@ So what about the other directories in the project?
     (``var/cache/``), logs (``var/logs/``) and sessions (``var/sessions/``).
 
 ``vendor/``
-    Third-party (i.e. "vendor") libraries live here! These are downloaded via the `Composer`_
+    Third-party (e.g. "vendor") libraries live here! These are downloaded via the `Composer`_
     package manager.
 
 ``web/``

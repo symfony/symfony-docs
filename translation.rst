@@ -7,7 +7,7 @@ Translations
 The term "internationalization" (often abbreviated `i18n`_) refers to the
 process of abstracting strings and other locale-specific pieces out of your
 application into a layer where they can be translated and converted based
-on the user's locale (i.e. language and country). For text, this means
+on the user's locale (e.g. language and country). For text, this means
 wrapping each with a function capable of translating the text (or "message")
 into the language of the user::
 
@@ -36,7 +36,7 @@ to learn even more. Overall, the process has several steps:
 #. :ref:`Enable and configure <translation-configuration>` Symfony's
    translation service;
 
-#. Abstract strings (i.e. "messages") by wrapping them in calls to the
+#. Abstract strings (e.g. "messages") by wrapping them in calls to the
    ``Translator`` (":ref:`translation-basic`");
 
 #. :ref:`Create translation resources/files <translation-resources>`
@@ -358,7 +358,7 @@ with these tasks:
 Translation Resource/File Names and Locations
 ---------------------------------------------
 
-Symfony looks for message files (i.e. translations) in the following default locations:
+Symfony looks for message files (e.g. translations) in the following default locations:
 
 * the ``translations/`` directory (at the root of the project);
 

@@ -62,7 +62,7 @@ going to need to build a form. But before you begin, first focus on the generic
 
 This class is a "plain-old-PHP-object" because, so far, it has nothing
 to do with Symfony or any other library. It's a normal PHP object that
-directly solves a problem inside *your* application (i.e. the need to
+directly solves a problem inside *your* application (e.g. the need to
 represent a task in your application). Of course, by the end of this article,
 you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
 its data and persist it to the database.
@@ -183,7 +183,7 @@ That's it! Just three lines are needed to render the complete form:
     You'll learn how to do that in the ":doc:`/form/rendering`" section.
 
 Before moving on, notice how the rendered ``task`` input field has the value
-of the ``task`` property from the ``$task`` object (i.e. "Write a blog post").
+of the ``task`` property from the ``$task`` object (e.g. "Write a blog post").
 This is the first job of a form: to take data from an object and translate
 it into a format that's suitable for being rendered in an HTML form.
 
@@ -545,8 +545,8 @@ the correct values of a number of field options.
     field type options can then be guessed from that information.
 
 ``required``
-    The ``required`` option can be guessed based on the validation rules (i.e. is
-    the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
+    The ``required`` option can be guessed based on the validation rules (e.g. is
+    the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (e.g. is the
     field ``nullable``). This is very useful, as your client-side validation will
     automatically match your validation rules.
 
@@ -558,7 +558,7 @@ the correct values of a number of field options.
 .. caution::
 
   These field options are *only* guessed if you're using Symfony to guess
-  the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
+  the field type (e.g. omit or pass ``null`` as the second argument to ``add()``).
 
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
@@ -622,7 +622,7 @@ the choice is ultimately up to you.
     Every form needs to know the name of the class that holds the underlying
     data (e.g. ``AppBundle\Entity\Task``). Usually, this is just guessed
     based off of the object passed to the second argument to ``createForm()``
-    (i.e. ``$task``). Later, when you begin embedding forms, this will no
+    (e.g. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::

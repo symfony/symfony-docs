@@ -124,7 +124,7 @@ the class name of your type. For more information, see :ref:`form-customization-
 In this case, since the parent field is ``ChoiceType``, you don't *need* to do
 any work as the custom field type will automatically be rendered like a ``ChoiceType``.
 But for the sake of this example, suppose that when your field is "expanded"
-(i.e. radio buttons or checkboxes, instead of a select field), you want to
+(e.g. radio buttons or checkboxes, instead of a select field), you want to
 always render it in a ``ul`` element. In your form theme template (see above
 link for details), create a ``shipping_widget`` block to handle this:
 
@@ -300,7 +300,7 @@ add a ``__construct()`` method like normal::
         // use $this->entityManager down anywhere you want ...
     }
 
-If you're using the default ``services.yml`` configuration (i.e. services from the
+If you're using the default ``services.yml`` configuration (e.g. services from the
 ``Form/`` are loaded and ``autoconfigure`` is enabled), this will already work!
 See :ref:`service-container-creating-service` for more details.
 

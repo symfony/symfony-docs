@@ -314,7 +314,7 @@ By default, templates can live in two different locations:
 
 ``app/Resources/views/``
     The application's ``views`` directory can contain application-wide base templates
-    (i.e. your application's layouts and templates of the application bundle) as
+    (e.g. your application's layouts and templates of the application bundle) as
     well as templates that override third party bundle templates
     (see :doc:`/templating/overriding`).
 
@@ -464,7 +464,7 @@ you set `with_context`_ to false).
 .. tip::
 
     The ``{'article': article}`` syntax is the standard Twig syntax for hash
-    maps (i.e. an array with named keys). If you needed to pass in multiple
+    maps (e.g. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
 .. index::

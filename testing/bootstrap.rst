@@ -48,5 +48,5 @@ cache to be cleared:
         </php>
     </phpunit>
 
-This now becomes an environment variable (i.e. ``$_ENV``) that's available
+This now becomes an environment variable (e.g. ``$_ENV``) that's available
 in the custom bootstrap file (``tests/bootstrap.php``).

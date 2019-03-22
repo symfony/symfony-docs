@@ -19,7 +19,7 @@ create one from scratch or use a 3rd party generator.
     be applicable to other implementations.
 
 SOAP works by exposing the methods of a PHP object to an external entity
-(i.e. the person using the SOAP service). To start, create a class - ``HelloService`` -
+(e.g. the person using the SOAP service). To start, create a class - ``HelloService`` -
 which represents the functionality that you'll expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
 ``hello``, which happens to send an email::

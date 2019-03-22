@@ -104,7 +104,7 @@ is the simplest way to create extensions. However, Twig must initialize all
 extensions before rendering any template, even if the template doesn't use an
 extension.
 
-If extensions don't define dependencies (i.e. if you don't inject services in
+If extensions don't define dependencies (e.g. if you don't inject services in
 them) performance is not affected. However, if extensions define lots of complex
 dependencies (e.g. those making database connections), the performance loss can
 be significant.

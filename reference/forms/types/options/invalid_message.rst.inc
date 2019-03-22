@@ -4,7 +4,7 @@ invalid_message
 **type**: ``string`` **default**: ``This value is not valid``
 
 This is the validation error message that's used if the data entered into
-this field doesn't make sense (i.e. fails validation).
+this field doesn't make sense (e.g. fails validation).
 
 This might happen, for example, if the user enters a nonsense string into
 a :doc:`TimeType </reference/forms/types/time>` field that cannot be converted

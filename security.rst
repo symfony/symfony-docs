@@ -658,7 +658,7 @@ in your table.
 
     All roles you assign to a user **must** begin with the ``ROLE_`` prefix.
     Otherwise, they won't be handled by Symfony's security system in the
-    normal way (i.e. unless you're doing something advanced, assigning a
+    normal way (e.g. unless you're doing something advanced, assigning a
     role like ``FOO`` to a user and then checking for ``FOO`` as described
     :ref:`below <security-role-authorization>` will not work).
 
@@ -890,7 +890,7 @@ Securing other Services
 .......................
 
 Anything in Symfony can be protected by doing something similar to the code
-used to secure a controller. For example, suppose you have a service (i.e. a
+used to secure a controller. For example, suppose you have a service (e.g. a
 PHP class) whose job is to send emails. You can restrict use of this class - no
 matter where it's being used from - to only certain users.
 

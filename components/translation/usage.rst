@@ -157,7 +157,7 @@ recommended format. These files are parsed by one of the loader classes.
     In the second method, messages are actually "keywords" that convey the
     idea of the message. The keyword message is then used as the "id" for
     any translations. In this case, translations must be made for the default
-    locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
+    locale (e.g. to translate ``symfony.great`` to ``Symfony is great``).
 
     The second method is handy because the message key won't need to be changed
     in every translation file if you decide that the message should actually

@@ -116,7 +116,7 @@ Other available loaders are the ``YamlFileLoader``, ``PhpFileLoader`` and
 
 .. caution::
 
-    If you removed the default file with service definitions (i.e.
+    If you removed the default file with service definitions (e.g.
     ``app/config/services.yml``), make sure to also remove it from the
     ``imports`` key in ``app/config/config.yml``.
 

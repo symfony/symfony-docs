@@ -27,7 +27,7 @@ and cache items version string as constructor arguments::
         $namespace = '',
 
         // the default lifetime (in seconds) for cache items that do not define their
-        // own lifetime, with a value 0 causing items to be stored indefinitely (i.e.
+        // own lifetime, with a value 0 causing items to be stored indefinitely (e.g.
         // until the APCu memory is cleared)
         $defaultLifetime = 0,
 

@@ -118,7 +118,7 @@ slightly::
 Harder Example: Transforming an Issue Number into an Issue Entity
 -----------------------------------------------------------------
 
-Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
+Say you have a many-to-one relation from the Task entity to an Issue entity (e.g. each
 Task has an optional foreign key to its related Issue). Adding a listbox with all
 possible issues could eventually get *really* long and take a long time to load.
 Instead, you decide you want to add a textbox, where the user can enter the issue number.

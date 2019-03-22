@@ -53,7 +53,7 @@ to how to respond. Responses may include:
 * Nothing (if we determine no Code of Conduct violation occurred).
 * A private reprimand from the Code of Conduct response team to the individual(s)
   involved.
-* An imposed vacation (i.e. asking someone to "take a week off" from a mailing
+* An imposed vacation (e.g. asking someone to "take a week off" from a mailing
   list or Slack).
 * A permanent or temporary ban from some or all Symfony conference/community
   spaces (events, meetings, mailing lists, IRC, Slack, etc.)

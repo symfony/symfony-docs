@@ -52,7 +52,7 @@ correct locale however you want::
         public static function getSubscribedEvents()
         {
             return [
-                // must be registered before (i.e. with a higher priority than) the default Locale listener
+                // must be registered before (e.g. with a higher priority than) the default Locale listener
                 KernelEvents::REQUEST => [['onKernelRequest', 20]],
             ];
         }

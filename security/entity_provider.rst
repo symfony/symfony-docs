@@ -335,7 +335,7 @@ and password ``admin`` (which has been encoded).
 Forbid Inactive Users (AdvancedUserInterface)
 ---------------------------------------------
 
-If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
+If a User's ``isActive`` property is set to ``false`` (e.g. ``is_active``
 is 0 in the database), the user will still be able to login to the site
 normally.
 

@@ -5,5 +5,5 @@ action
 
 This option specifies where to send the form's data on submission (usually
 a URI). Its value is rendered as the ``action`` attribute of the ``form``
-element. An empty value is considered a same-document reference, i.e. the
+element. An empty value is considered a same-document reference, e.g. the
 form will be submitted to the same URI that rendered the form.

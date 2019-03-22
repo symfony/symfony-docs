@@ -335,7 +335,7 @@ the Symfony Config component treats arrays as lists by default.
 .. note::
 
     As of writing this, there is an inconsistency: if only one file provides the
-    configuration in question, the keys (i.e. ``sf_connection`` and ``default``)
+    configuration in question, the keys (e.g. ``sf_connection`` and ``default``)
     are *not* lost. But if more than one file provides the configuration, the keys
     are lost as described above.
 

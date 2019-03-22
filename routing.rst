@@ -729,7 +729,7 @@ This happens when your controller method has an argument (e.g. ``$slug``)::
 
 But your route path does *not* have a ``{slug}`` wildcard (e.g. it is ``/blog/show``).
 Add a ``{slug}`` to your route path: ``/blog/show/{slug}`` or give the argument
-a default value (i.e. ``$slug = null``).
+a default value (e.g. ``$slug = null``).
 
     Some mandatory parameters are missing ("slug") to generate a URL for route
     "blog_show".

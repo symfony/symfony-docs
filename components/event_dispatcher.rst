@@ -42,7 +42,7 @@ event - ``kernel.response``. Here's how it works:
   the ``kernel.response`` event, passing with it an ``Event`` object that
   has access to the ``Response`` object;
 
-* The dispatcher notifies (i.e. calls a method on) all listeners of the
+* The dispatcher notifies (e.g. calls a method on) all listeners of the
   ``kernel.response`` event, allowing each of them to make modifications
   to the ``Response`` object.
 
@@ -405,7 +405,7 @@ Stopping Event Flow/Propagation
 In some cases, it may make sense for a listener to prevent any other listeners
 from being called. In other words, the listener needs to be able to tell
 the dispatcher to stop all propagation of the event to future listeners
-(i.e. to not notify any more listeners). This can be accomplished from
+(e.g. to not notify any more listeners). This can be accomplished from
 inside a listener via the
 :method:`Symfony\\Component\\EventDispatcher\\Event::stopPropagation` method::
 
@@ -460,7 +460,7 @@ specifically pass one::
     $dispatcher->dispatch('order.placed');
 
 Moreover, the event dispatcher always returns whichever event object that
-was dispatched, i.e. either the event that was passed or the event that
+was dispatched, e.g. either the event that was passed or the event that
 was created internally by the dispatcher. This allows for nice shortcuts::
 
     if (!$dispatcher->dispatch('foo.event')->isPropagationStopped()) {

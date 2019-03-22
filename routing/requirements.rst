@@ -72,7 +72,7 @@ a routing ``{wildcard}`` to only match some regular expression:
 
         return $routes;
 
-Thanks to the ``\d+`` requirement (i.e. a "digit" of any length), ``/blog/2`` will
+Thanks to the ``\d+`` requirement (e.g. a "digit" of any length), ``/blog/2`` will
 match this route but ``/blog/some-string`` will *not* match.
 
 .. sidebar:: Earlier Routes Always Win
@@ -186,7 +186,7 @@ Adding HTTP Method Requirements
 -------------------------------
 
 In addition to the URL, you can also match on the *method* of the incoming
-request (i.e. GET, HEAD, POST, PUT, DELETE). Suppose you create an API for
+request (e.g. GET, HEAD, POST, PUT, DELETE). Suppose you create an API for
 your blog and you have 2 routes: One for displaying a post (on a GET or HEAD
 request) and one for updating a post (on a PUT request). This can be
 accomplished with the following route configuration:

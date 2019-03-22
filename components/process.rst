@@ -85,7 +85,7 @@ for new output before going to the next iteration::
 
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
-if the process couldn't be executed successfully (i.e. the process exited
+if the process couldn't be executed successfully (e.g. the process exited
 with a non-zero code)::
 
     use Symfony\Component\Process\Exception\ProcessFailedException;

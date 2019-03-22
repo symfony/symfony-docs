@@ -75,7 +75,7 @@ method::
     $form->handleRequest();
 
 Behind the scenes, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
-object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
+object to read data off of the correct PHP superglobals (e.g. ``$_POST`` or
 ``$_GET``) based on the HTTP method configured on the form (POST is default).
 
 .. seealso::
@@ -231,7 +231,7 @@ always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
 to Twig, which gives you access to the Twig functions for rendering forms.
 To do this, you first need to create a :class:`Symfony\\Bridge\\Twig\\Form\\TwigRendererEngine`,
 where you define your :ref:`form themes <form-customization-form-themes>`
-(i.e. resources/files that define form HTML markup).
+(e.g. resources/files that define form HTML markup).
 
 For general details on rendering forms, see :doc:`/form/form_customization`.
 
@@ -649,7 +649,7 @@ method:
 
 This defines a common form "workflow", which contains 3 different possibilities:
 
-1) On the initial GET request (i.e. when the user "surfs" to your page),
+1) On the initial GET request (e.g. when the user "surfs" to your page),
    build your form and render it;
 
 If the request is a POST, process the submitted data (via ``handleRequest()``).

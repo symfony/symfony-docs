@@ -530,7 +530,7 @@ a controller, this is pretty easy. Add the following method to the
         // tells Doctrine you want to (eventually) save the Product (no queries yet)
         $entityManager->persist($product);
 
-        // actually executes the queries (i.e. the INSERT query)
+        // actually executes the queries (e.g. the INSERT query)
         $entityManager->flush();
 
         return new Response('Saved new product with id '.$product->getId());
@@ -590,7 +590,7 @@ issue an ``UPDATE`` query if the entity already exists in the database.
 .. tip::
 
     Doctrine provides a library that allows you to programmatically load testing
-    data into your project (i.e. "fixture data"). For information, see
+    data into your project (e.g. "fixture data"). For information, see
     the "`DoctrineFixturesBundle`_" documentation.
 
 Fetching Objects from the Database
@@ -632,7 +632,7 @@ repository object for an entity class via::
 .. note::
 
     You can also use ``AppBundle:Product`` syntax. This string is a shortcut you can use anywhere
-    in Doctrine instead of the full class name of the entity (i.e. ``AppBundle\Entity\Product``).
+    in Doctrine instead of the full class name of the entity (e.g. ``AppBundle\Entity\Product``).
     As long as your entity lives under the ``Entity`` namespace of your bundle,
     this will work.
 

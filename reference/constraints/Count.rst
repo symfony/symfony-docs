@@ -1,7 +1,7 @@
 Count
 =====
 
-Validates that a given collection's (i.e. an array or an object that implements
+Validates that a given collection's (e.g. an array or an object that implements
 Countable) element count is *between* some minimum and maximum value.
 
 +----------------+---------------------------------------------------------------------+

@@ -234,7 +234,7 @@ Restrict files and directories by path with the
     // for example this will match data/*.xml and data.xml if they exist
     $finder->path('data')->name('*.xml');
 
-On all platforms slash (i.e. ``/``) should be used as the directory separator.
+On all platforms slash (e.g. ``/``) should be used as the directory separator.
 
 The ``path()`` method accepts a string or a regular expression::
 

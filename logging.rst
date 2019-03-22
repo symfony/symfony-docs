@@ -74,7 +74,7 @@ and ``config_prod.yml``.
 By default, log entries are written to the ``var/logs/dev.log`` file when you're in
 the ``dev`` environment. In the ``prod`` environment, logs are written to ``var/logs/prod.log``,
 but *only* during a request where an error or high-priority log entry was made
-(i.e. ``error()`` , ``critical()``, ``alert()`` or ``emergency()``).
+(e.g. ``error()`` , ``critical()``, ``alert()`` or ``emergency()``).
 
 To control this, you'll configure different *handlers* that handle log entries, sometimes
 modify them, and ultimately store them.

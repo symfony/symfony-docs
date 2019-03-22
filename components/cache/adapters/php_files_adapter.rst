@@ -51,7 +51,7 @@ directory path as constructor arguments::
         $namespace = '',
 
         // the default lifetime (in seconds) for cache items that do not define their
-        // own lifetime, with a value 0 causing items to be stored indefinitely (i.e.
+        // own lifetime, with a value 0 causing items to be stored indefinitely (e.g.
         // until the files are deleted)
         $defaultLifetime = 0,
 

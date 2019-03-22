@@ -53,7 +53,7 @@ in the ``AppKernel`` class of your application::
         }
     }
 
-In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
+In this code, ``$this->environment`` is the current environment (e.g. ``dev``).
 In this case you have changed the location of the cache directory to
 ``var/{environment}/cache``.
 

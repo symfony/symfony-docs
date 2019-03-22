@@ -153,7 +153,7 @@ can run it with:
     # php application.php de:Gr Fabien
     # php application.php DE:Gre Fabien
 
-If you enter a short command that's ambiguous (i.e. there are more than one
+If you enter a short command that's ambiguous (e.g. there are more than one
 command that match), then no command will be run and some suggestions of
 the possible commands to choose from will be output.
 

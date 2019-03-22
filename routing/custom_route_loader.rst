@@ -110,7 +110,7 @@ extend or implement any special class, but the called method must return a
 Creating a custom Loader
 ------------------------
 
-To load routes from some custom source (i.e. from something other than annotations,
+To load routes from some custom source (e.g. from something other than annotations,
 YAML or XML files), you need to create a custom route loader. This loader
 has to implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 

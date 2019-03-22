@@ -49,7 +49,7 @@ When overriding an existing definition, the original service is lost:
         $container->register(Mailer::class, NewMailer::class);
 
 Most of the time, that's exactly what you want to do. But sometimes,
-you might want to decorate the old one instead (i.e. apply the `Decorator pattern`_).
+you might want to decorate the old one instead (e.g. apply the `Decorator pattern`_).
 In this case, the old service should be kept around to be able to reference
 it in the new one. This configuration replaces ``App\Mailer`` with a new one,
 but keeps a reference of the old one as ``App\DecoratingMailer.inner``:

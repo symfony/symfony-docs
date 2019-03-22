@@ -119,7 +119,7 @@ input
 
 **type**: ``string`` **default**: ``dateinterval``
 
-The format of the *input* data - i.e. the format that the interval is stored on
+The format of the *input* data - e.g. the format that the interval is stored on
 your underlying object. Valid values are:
 
 * ``string`` (a string formatted with `ISO 8601`_ standard, e.g. ``P7Y6M5DT12H15M30S``)

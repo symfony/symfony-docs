@@ -54,7 +54,7 @@ Additionally, you have access to a number of functions inside the expression:
 
 ``is_authenticated``
     Returns ``true`` if the user is authenticated via "remember-me" or authenticated
-    "fully" - i.e. returns true if the user is "logged in".
+    "fully" - e.g. returns true if the user is "logged in".
 ``is_anonymous``
     Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with the ``isGranted()`` function.
 ``is_remember_me``
@@ -86,7 +86,7 @@ Additionally, you have access to a number of functions inside the expression:
     behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,
     the ``is_remember_me()`` function *only* returns true if the user is authenticated
     via a remember-me cookie and ``is_fully_authenticated`` *only* returns
-    true if the user has actually logged in during this session (i.e. is
+    true if the user has actually logged in during this session (e.g. is
     full-fledged).
 
 Learn more

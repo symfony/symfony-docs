@@ -415,7 +415,7 @@ This is the route or path that your login form must submit to. The firewall
 will intercept any requests (``POST`` requests only, by default) to this
 URL and process the submitted login credentials.
 
-Be sure that this URL is covered by your main firewall (i.e. don't create
+Be sure that this URL is covered by your main firewall (e.g. don't create
 a separate firewall just for ``check_path`` URL).
 
 use_forward

@@ -17,7 +17,7 @@ you need.
 However, it's pretty common to need to include some global JavaScript and CSS on
 every page. For that reason, it usually makes sense to have one entry (e.g. ``app``)
 that contains this global code (both JavaScript & CSS) and is included on every
-page (i.e. it's included in the *layout* of your app). This means that you will
+page (e.g. it's included in the *layout* of your app). This means that you will
 always have one, global entry on every page (e.g. ``app``) and you *may* have one
 page-specific JavaScript and CSS file from a page-specific entry (e.g. ``checkout``).
 

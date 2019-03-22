@@ -445,7 +445,7 @@ Customizing Error Messages
 When ``onAuthenticationFailure()`` is called, it is passed an ``AuthenticationException``
 that describes *how* authentication failed via its ``$exception->getMessageKey()`` (and
 ``$exception->getMessageData()``) method. The message will be different based on *where*
-authentication fails (i.e. ``getUser()`` versus ``checkCredentials()``).
+authentication fails (e.g. ``getUser()`` versus ``checkCredentials()``).
 
 But, you can easily return a custom message by throwing a
 :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`.
@@ -555,7 +555,7 @@ can ignore this. Here is an example of good and bad behavior::
 
     public function supports(Request $request)
     {
-        // GOOD behavior: only authenticate (i.e. return true) on a specific route
+        // GOOD behavior: only authenticate (e.g. return true) on a specific route
         return 'login_route' === $request->attributes->get('_route') && $request->isMethod('POST');
 
         // e.g. your login system authenticates by the user's IP address

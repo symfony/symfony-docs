@@ -326,7 +326,7 @@ The **minimum configuration** to get your application running under Nginx is:
 .. caution::
 
     After you deploy to production, make sure that you **cannot** access the ``app_dev.php``
-    or ``config.php`` scripts (i.e. ``http://example.com/app_dev.php`` and ``http://example.com/config.php``).
+    or ``config.php`` scripts (e.g. ``http://example.com/app_dev.php`` and ``http://example.com/config.php``).
     If you *can* access these, be sure to remove the ``DEV`` section from the above configuration.
 
 .. note::

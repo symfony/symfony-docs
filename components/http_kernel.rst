@@ -215,10 +215,10 @@ attributes).
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Assuming that no ``kernel.request`` listener was able to create a ``Response``,
-the next step in HttpKernel is to determine and prepare (i.e. resolve) the
+the next step in HttpKernel is to determine and prepare (e.g. resolve) the
 controller. The controller is the part of the end-application's code that
 is responsible for creating and returning the ``Response`` for a specific page.
-The only requirement is that it is a PHP callable - i.e. a function, method
+The only requirement is that it is a PHP callable - e.g. a function, method
 on an object or a ``Closure``.
 
 But *how* you determine the exact controller for a request is entirely up

@@ -239,7 +239,7 @@ have all the request information at your fingertips::
 As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
 checks the *three* different values in PHP that can indicate whether or not
-the user is connecting via a secured connection (i.e. HTTPS).
+the user is connecting via a secured connection (e.g. HTTPS).
 
 Symfony Response Object
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -385,7 +385,7 @@ Here's what we've learned so far:
 #. Internally, Symfony uses *routes* and *controllers* to create the Response for
    the page (we'll learn about these soon!);
 #. Symfony turns your ``Response`` object into the text headers and content
-   (i.e. the HTTP response), which are sent back to the client.
+   (e.g. the HTTP response), which are sent back to the client.
 
 .. _`xkcd`: http://xkcd.com/
 .. _`XMLHttpRequest`: https://en.wikipedia.org/wiki/XMLHttpRequest

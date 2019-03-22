@@ -26,7 +26,7 @@ callbacks. This is not necessary if you're using YAML or XML for your mapping.
 
 Now, you can tell Doctrine to execute a method on any of the available lifecycle
 events. For example, suppose you want to set a ``createdAt`` date column to
-the current date, only when the entity is first persisted (i.e. inserted):
+the current date, only when the entity is first persisted (e.g. inserted):
 
 .. configuration-block::
 

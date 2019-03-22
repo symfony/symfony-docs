@@ -187,7 +187,7 @@ SwiftmailerBundle.
 
 Each environment can override the default configuration by providing a
 specific configuration file. For example, the ``dev`` environment loads
-the ``config_dev.yml`` file, which loads the main configuration (i.e.
+the ``config_dev.yml`` file, which loads the main configuration (e.g.
 ``config.yml``) and then modifies it to add some debugging tools:
 
 .. code-block:: yaml

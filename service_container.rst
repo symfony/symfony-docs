@@ -772,7 +772,7 @@ argument for *any* service defined in this file! You can bind arguments by name
 (e.g. ``$adminEmail``) or by type (e.g. ``Psr\Log\LoggerInterface``).
 
 The ``bind`` config can also be applied to specific services or when loading many
-services at once (i.e. :ref:`service-psr4-loader`).
+services at once (e.g. :ref:`service-psr4-loader`).
 
 .. _services-autowire:
 

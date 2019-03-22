@@ -111,7 +111,7 @@ format
 **type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\DateTimeType::HTML5_FORMAT``
 
 If the ``widget`` option is set to ``single_text``, this option specifies
-the format of the input, i.e. how Symfony will interpret the given input
+the format of the input, e.g. how Symfony will interpret the given input
 as a datetime string. It defaults to the `datetime local`_ format which is
 used by the HTML5 ``datetime-local`` field. Keeping the default value will
 cause the field to be rendered as an ``input`` field with ``type="datetime-local"``.
@@ -126,7 +126,7 @@ input
 
 **type**: ``string`` **default**: ``datetime``
 
-The format of the *input* data - i.e. the format that the date is stored
+The format of the *input* data - e.g. the format that the date is stored
 on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``2011-06-05 12:15:00``)

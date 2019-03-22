@@ -58,7 +58,7 @@ You *should* commit all of your source asset files, ``package.json`` and ``yarn.
 My App Lives under a Subdirectory
 ---------------------------------
 
-If your app does not live at the root of your web server (i.e. it lives under a subdirectory,
+If your app does not live at the root of your web server (e.g. it lives under a subdirectory,
 like ``/myAppSubdir``), you just need to configure that when calling ``Encore.setPublicPrefix()``:
 
 .. code-block:: diff

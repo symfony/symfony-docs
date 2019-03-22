@@ -1,7 +1,7 @@
 Security
 ========
 
-Authentication and Firewalls (i.e. Getting the User's Credentials)
+Authentication and Firewalls (e.g. Getting the User's Credentials)
 ------------------------------------------------------------------
 
 You can configure Symfony to authenticate your users using any method you
@@ -77,7 +77,7 @@ which uses a login form to load users from the database:
 
     The source code for our project contains comments that explain each part.
 
-Authorization (i.e. Denying Access)
+Authorization (e.g. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``

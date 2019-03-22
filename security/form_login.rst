@@ -14,14 +14,14 @@ learn of the possible customization options.
 Redirecting after Success
 -------------------------
 
-By default, the form will redirect to the URL the user requested (i.e. the URL
+By default, the form will redirect to the URL the user requested (e.g. the URL
 which triggered the login form being shown). For example, if the user requested
 ``http://www.example.com/admin/post/18/edit``, then after they have successfully
 logged in, they will be sent back to ``http://www.example.com/admin/post/18/edit``.
 
 This is done by storing the requested URL in the session. If no URL is present
 in the session (perhaps the user went directly to the login page), then the user
-is redirected to ``/`` (i.e. the homepage). You can change this behavior in
+is redirected to ``/`` (e.g. the homepage). You can change this behavior in
 several ways.
 
 Changing the default Page

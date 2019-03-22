@@ -10,7 +10,7 @@ How to Create a Custom Form Password Authenticator
     flexible way to accomplish custom authentication tasks like this.
 
 Imagine you want to allow access to your website only between 2pm and 4pm
-UTC. In this article, you'll learn how to do this for a login form (i.e. where
+UTC. In this article, you'll learn how to do this for a login form (e.g. where
 your user submits their username and password).
 
 The Password Authenticator
@@ -135,7 +135,7 @@ and the current time.
     requirements.
 
 Ultimately, your job is to return a *new* token object that is "authenticated"
-(i.e. it has at least 1 role set on it) and which has the ``User`` object
+(e.g. it has at least 1 role set on it) and which has the ``User`` object
 inside of it.
 
 Inside this method, the password encoder is needed to check the password's validity::

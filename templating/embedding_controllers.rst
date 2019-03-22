@@ -59,7 +59,7 @@ the controller:
     {% endfor %}
 
 Finally, call the controller from any template using the ``render()`` function
-and the common syntax for controllers (i.e. **bundle**:**controller**:**action**):
+and the common syntax for controllers (e.g. **bundle**:**controller**:**action**):
 
 .. code-block:: html+twig
 

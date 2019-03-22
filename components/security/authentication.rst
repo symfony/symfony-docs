@@ -204,7 +204,7 @@ own, it just needs to follow these rules:
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::encodePassword`
    and
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::isPasswordValid`
-   must first of all make sure the password is not too long, i.e. the password length is no longer
+   must first of all make sure the password is not too long, e.g. the password length is no longer
    than 4096 characters. This is for security reasons (see `CVE-2013-5750`_), and you can use the
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder::isPasswordTooLong`
    method for this check::
@@ -293,7 +293,7 @@ event is dispatched. But beware - this event will fire, for example, on *every*
 request if you have session-based authentication. See ``security.interactive_login``
 below if you need to do something when a user *actually* logs in.
 
-When a provider attempts authentication but fails (i.e. throws an ``AuthenticationException``),
+When a provider attempts authentication but fails (e.g. throws an ``AuthenticationException``),
 a ``security.authentication.failure`` event is dispatched. You could listen on
 the ``security.authentication.failure`` event, for example, in order to log
 failed login attempts.

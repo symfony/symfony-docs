@@ -11,7 +11,7 @@ to that describes the action to get from one place to another.
 .. image:: /_images/components/workflow/states_transitions.png
 
 A set of places and transitions creates a **definition**. A workflow needs
-a ``Definition`` and a way to write the states to the objects (i.e. an
+a ``Definition`` and a way to write the states to the objects (e.g. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
 
 Consider the following example for a blog post. A post can have places:
@@ -197,7 +197,7 @@ Using Events
 
 To make your workflows more flexible, you can construct the ``Workflow``
 object with an ``EventDispatcher``. You can now create event listeners to
-block transitions (i.e. depending on the data in the blog post) and do
+block transitions (e.g. depending on the data in the blog post) and do
 additional actions when a workflow operation happened (e.g. sending
 announcements).
 
