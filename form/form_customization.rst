@@ -297,15 +297,15 @@ name of all the templates as an array using the ``with`` keyword:
 The templates can also be located in different bundles, use the Twig namespaced
 path to reference these templates, e.g. ``@AcmeFormExtra/form/fields.html.twig``.
 
-Disabling usage of globally defined themes
+Disabling Usage of Globally Defined Themes
 ..........................................
 
 Sometimes you may want to disable the use of the globally defined form themes in order
-to have more control over rendering of a form. You might want this, for example,
+to have more control over the rendering of a form. You might want this, for example,
 when creating an admin interface for a bundle which can be installed on a wide range
 of Symfony apps (and so you can't control what themes are defined globally).
 
-You can do this by including the ``only`` keyword after the list form themes:
+You can do this by including the ``only`` keyword after the list of form themes:
 
 .. code-block:: html+twig
 
