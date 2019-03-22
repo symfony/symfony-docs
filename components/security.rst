@@ -36,6 +36,10 @@ used separately:
 ``symfony/security-csrf``
     It provides protection against `CSRF attacks`_.
 
+``symfony/security-guard``
+    It brings many layers of authentication together, allowing the creation
+    of complex authentication systems.
+
 .. seealso::
 
     This article explains how to use the Security features as an independent
