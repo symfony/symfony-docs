@@ -95,6 +95,7 @@ Thanks to Flex, after one command, you can start using Twig immediately:
     +            'name' => $name,
     +        ]);
          }
+    }
 
 By extending ``AbstractController``, you now have access to a number of shortcut
 methods and tools, like ``render()``. Create the new template:
