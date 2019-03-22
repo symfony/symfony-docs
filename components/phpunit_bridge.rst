@@ -605,11 +605,11 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
     It's also possible to set this env var in the ``phpunit.xml.dist`` file.
 
-Code coverage listener
+Code Coverage Listener
 ----------------------
 
 By default, the code coverage is computed with the following rule: if a line of
-code is executed, then it is marked as covered. And the test which executes a
+code is executed, then it is marked as covered. The test which executes a
 line of code is therefore marked as "covering the line of code". This can be
 misleading.
 
@@ -664,7 +664,7 @@ the ``Test`` part of the classname: ``My\Namespace\Tests\FooTest`` ->
 Installation
 ~~~~~~~~~~~~
 
-Add the following configuration to the ``phpunit.xml.dist`` file
+Add the following configuration to the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml
 

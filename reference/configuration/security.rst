@@ -309,7 +309,6 @@ application:
     .. code-block:: yaml
 
         # config/packages/security.yaml
-
         security:
             # ...
             firewalls:

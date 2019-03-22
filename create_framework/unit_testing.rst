@@ -57,13 +57,13 @@ resolver. Modify the framework to make use of them::
     class Framework
     {
         protected $matcher;
-        protected $resolver;
+        protected $controllerResolver;
         protected $argumentResolver;
 
         public function __construct(UrlMatcherInterface $matcher, ControllerResolverInterface $resolver, ArgumentResolverInterface $argumentResolver)
         {
             $this->matcher = $matcher;
-            $this->resolver = $resolver;
+            $this->controllerResolver = $resolver;
             $this->argumentResolver = $argumentResolver;
         }
 
