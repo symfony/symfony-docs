@@ -22,8 +22,8 @@ Alternatively, you can clone the `<https://github.com/symfony/security>`_ reposi
 
 .. include:: /components/require_autoload.rst.inc
 
-The Security component is divided into four smaller sub-components which can be
-used separately:
+The Security component is divided into several smaller sub-components which can
+be used separately:
 
 ``symfony/security-core``
     It provides all the common security features, from authentication to
