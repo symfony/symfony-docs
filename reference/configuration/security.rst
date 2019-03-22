@@ -294,7 +294,6 @@ application:
     .. code-block:: yaml
 
         # app/config/security.yml
-
         security:
             # ...
             firewalls:
@@ -646,7 +645,7 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
 
             <config>
                 <firewall name="somename">
-                    <http-digest secret="%secret%" realm="secure-api" />
+                    <http-digest secret="%secret%" realm="secure-api"/>
                 </firewall>
             </config>
         </srv:container>
