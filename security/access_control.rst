@@ -82,7 +82,7 @@ Take the following ``access_control`` entries as an example:
                     'role' => 'ROLE_USER_PORT',
                     'ip' => '127.0.0.1',
                     'port' => '8080',
-                ),
+                ],
                 [
                     'path' => '^/admin',
                     'role' => 'ROLE_USER_HOST',
