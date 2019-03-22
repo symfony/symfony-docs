@@ -723,10 +723,10 @@ This options defines how the application users are loaded (from a database,
 a LDAP server, a configuration file, etc.) Read the following articles to learn
 more about each of those providers:
 
-* :doc:`Load users from a database </security/entity_provider>`
-* :doc:`Load users from a LDAP server </security/ldap>`
-* :ref:`Load users from a configuration file <security-user-providers>`
-* :doc:`Create your own user provider </security/custom_provider>`
+* :ref:`Load users from a database <security-entity-user-provider>`
+* :ref:`Load users from a LDAP server <security-ldap-user-provider>`
+* :ref:`Load users from a configuration file <security-memory-user-provider>`
+* :ref:`Create your own user provider <custom-user-provider>`
 
 role_hierarchy
 --------------
