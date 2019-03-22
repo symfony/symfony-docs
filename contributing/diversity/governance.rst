@@ -121,7 +121,7 @@ management systems should be set up and monitored.
 Openness and Accountability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The behaviour and conduct of the initiative's guidance team sets the tone for
+The behavior and conduct of the initiative's guidance team sets the tone for
 the rest of the community. The guidance team should lead by example to create a
 culture that enables members to feel it is safe to suggest, question and
 challenge - rather than avoid - difficult ideas and topics. The team should
