@@ -59,7 +59,7 @@ immediately::
 Now what?
 ---------
 
-Now that the component is installed and autoloaded, read the specific component's
+Now, the component is installed and autoloaded. Read the specific component's
 documentation to find out more about how to use it.
 
 And have fun!

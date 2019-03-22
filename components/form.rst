@@ -157,7 +157,7 @@ the CSRF generator and validated when binding the form.
 
 You can disable CSRF protection per form using the ``csrf_protection`` option::
 
-    use Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType
+    use Symfony\Component\Form\Extension\Core\Type\FormType;
 
     $form = $formFactory->createBuilder(FormType::class, null, ['csrf_protection' => false])
         ->getForm();

@@ -396,7 +396,7 @@ Variable                Usage
 ``block_prefixes``      An array of all the names of the parent types.
 ``cache_key``           A unique key which is used for caching.
 ``compound``            Whether or not a field is actually a holder for a group of children fields
-                        (for example, a ``choice`` field, which is actually a group of checkboxes.
+                        (for example, a ``choice`` field, which is actually a group of checkboxes).
 ``data``                The normalized data of the type.
 ``disabled``            If ``true``, ``disabled="disabled"`` is added to the field.
 ``errors``              An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).
