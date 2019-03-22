@@ -37,8 +37,8 @@ used separately:
     It provides protection against `CSRF attacks`_.
 
 ``symfony/security-guard``
-    It brings many layers of authentication together, making it much easier
-    to create complex authentication systems.
+    It brings many layers of authentication together, allowing the creation
+    of complex authentication systems.
 
 .. seealso::
 
