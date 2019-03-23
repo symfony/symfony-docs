@@ -164,6 +164,7 @@ like this:
         ]);
 
 As configured, the following property is used by the marking store::
+.. code-block:: php
 
     class BlogPost
     {
@@ -620,34 +621,34 @@ requires:
 
         // config/packages/workflow.php
 
-        $container->loadFromExtension('framework', array(
+$container->loadFromExtension('framework', [
+    // ...
+    'workflows' => [
+        'blog_publishing' => [
+            'metadata' => [
+                'title' => 'Blog Publishing Workflow',
+            ],
             // ...
-            'workflows' => array(
-                'blog_publishing' => array(
-                    'metadata' => array(
-                        'title' => 'Blog Publishing Workflow',
-                    ),
-                    // ...
-                    'places' => array(
-                        'draft' => array(
-                            'metadata' => array(
-                                'max_num_of_words' => 500,
-                            ),
-                        ),
-                        // ...
-                    ),
-                    'transitions' => array(
-                        'to_review' => array(
-                            'from' => 'draft',
-                            'to' => 'review',
-                            'metadata' => array(
-                                'priority' => 0.5,
-                            ),
-                         ),
-                     ),
-                 ),
-             ),
-         ));
+            'places' => [
+                'draft' => [
+                    'metadata' => [
+                        'max_num_of_words' => 500,
+                    ],
+                ],
+                // ...
+            ],
+            'transitions' => [
+                'to_review' => [
+                    'from' => 'draft',
+                    'to' => 'review',
+                    'metadata' => [
+                        'priority' => 0.5,
+                    ],
+                ],
+            ],
+        ],
+    ],
+]);
 
 Then you can access this metadata in your controller as follows::
 
