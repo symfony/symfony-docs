@@ -688,15 +688,13 @@ In a Flash message in your Controller::
             $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
             $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
-In a listener, access via the Event
-
 Metadata can also be accessed in a Listener, from the Event object.
 
-The example below uses a new feature introduced in 4.1 called Transition Blockers. These let you
+Using transition blockers you can
 return a user-friendly error message when you stop a transition from happening. In the example we
-get this user-friendly message from the Event's metadata, giving you an easy place to manage the
-text. This is a contrived example; in production systems you may prefer to use the
-:doc:`Translation </components/translation>` component to manage text::
+get this message from the :class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving
+you an easy place to manage the text. This is a contrived example; in production code you may
+prefer to use the :doc:`Translation </components/translation>` component to manage messages::
 
     namespace App\Listener\Workflow\Task;
 
@@ -726,7 +724,9 @@ text. This is a contrived example; in production systems you may prefer to use t
         }
     }
 
+.. versionadded:: 4.1
 
+    The transition blockers were added in version 4.1.
 
 In Twig templates, metadata is available via the ``workflow_metadata()`` function:
 
