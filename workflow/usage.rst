@@ -511,7 +511,7 @@ was blocked. You can access the message from Twig. Here's an example:
         public static function getSubscribedEvents()
         {
             return array(
-                'workflow.blogpost.guard.to_publish' => array('guardPublish'),
+                'workflow.blogpost.guard.publish' => array('guardPublish'),
             );
         }
     }
