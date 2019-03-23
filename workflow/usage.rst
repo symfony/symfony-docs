@@ -49,7 +49,7 @@ like this:
                             - 'currentPlace'
                     supports:
                         - App\Entity\BlogPost
-                    initial_place: draft
+                    initial_places: [draft]
                     places:
                         - draft
                         - review
@@ -136,6 +136,7 @@ like this:
                         ],
                     ],
                     'supports' => ['App\Entity\BlogPost'],
+                    'initial_places' => ['draft'],
                     'places' => [
                         'draft',
                         'review',
