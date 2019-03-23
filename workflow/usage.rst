@@ -43,8 +43,9 @@ like this:
                     audit_trail:
                         enabled: true
                     marking_store:
-                        type: 'multiple_state' # one of 'single_state', 'multiple_state', 'method'
+                        type: 'method'
                         arguments:
+                            - false
                             - 'currentPlace'
                     supports:
                         - App\Entity\BlogPost
@@ -68,7 +69,7 @@ like this:
     .. code-block:: xml
 
         <!-- config/packages/workflow.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
+        <?xml version="1.0" encoding="utf-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
@@ -80,7 +81,8 @@ like this:
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:audit-trail enabled="true"/>
 
-                    <framework:marking-store type="single_state">
+                    <framework:marking-store type="method">
+                      <framework:argument>false</framework:argument>
                       <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
 
@@ -117,6 +119,7 @@ like this:
     .. code-block:: php
 
         // config/packages/workflow.php
+
         $container->loadFromExtension('framework', [
             // ...
             'workflows' => [
@@ -126,8 +129,11 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'multiple_state', // one of 'single_state', 'multiple_state', 'method'
-                        'arguments' => ['currentPlace'],
+                        'type' => 'method',
+                        'arguments' => [
+                            false,
+                            'currentPlace',
+                        ],
                     ],
                     'supports' => ['App\Entity\BlogPost'],
                     'places' => [
@@ -166,18 +172,14 @@ As configured, the following property is used by the marking store::
 
 .. note::
 
-    The marking store type could be "multiple_state", "single_state" or "method".
-    A single state marking store does not support a model being on multiple places
-    at the same time.
-
-    versionadded:: 4.3
-
-        The ``method`` marking store type was introduced in Symfony 4.3.
+    The Workflow Component supports workflows that can be in one or multiple places
+    (states) at the same time. To restrict a workflow to a single state, set the first
+    argument to ``true`` when defining the ``marking_store``.
 
 .. tip::
 
-    The ``type`` (default value ``single_state``) and ``arguments`` (default
-    value ``marking``) attributes of the ``marking_store`` option are optional.
+    The ``type`` (default value ``method``) and ``arguments`` (default
+    values ``false`` and ``marking``) attributes of the ``marking_store`` option are optional.
     If omitted, their default values will be used.
 
 .. tip::
@@ -224,89 +226,10 @@ you can get the workflow by injecting the Workflow registry service::
                 // ... if the transition is not allowed
             }
 
-            // Update the currentState on the post passing some contextual data
-            // to the whole workflow process
-            try {
-                $workflow->apply($post, 'publish', [
-                    'log_comment' => 'My logging comment for the publish transition.',
-                ]);
-            } catch (TransitionException $exception) {
-                // ... if the transition is not allowed
-            }
-
             // See all the available transitions for the post in the current state
             $transitions = $workflow->getEnabledTransitions($post);
         }
     }
-
-.. versionadded:: 4.1
-
-    The :class:`Symfony\\Component\\Workflow\\Exception\\TransitionException`
-    class was introduced in Symfony 4.1.
-
-.. versionadded:: 4.1
-
-    The :method:`Symfony\\Component\\Workflow\\Registry::all` method was
-    introduced in Symfony 4.1.
-
-You can pass some context as the second argument of the ``apply()`` method.
-This can be useful when the subject not only needs to apply a transition,
-but for example you also want to log the context in which the switch happened.
-
-This context is forwarded to the :method:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface::setMarking`
-method of the marking store.
-
-.. versionadded:: 4.3
-
-    The ``$context`` argument of the :method:`Symfony\\Component\\Workflow\\Workflow::apply`
-    method was introduced in Symfony 4.3.
-
-.. tip::
-
-    Configure the ``type`` as ``method`` of the ``marking_store`` option to use this feature
-    without implementing your own marking store.
-
-You can also use this ``$context`` in your own marking store implementation.
-A simple implementation example is when you want to store the place as integer instead of string in your object.
-
-Lets say your object has a status property, stored as an integer in your storage, and you want to log an optional
-comment any time the status changes::
-
-    // your own implementation class, to define in the configuration "marking_store"
-
-    class ObjectMarkingStore implements MarkingStoreInterface
-    {
-        public function getMarking($subject)
-        {
-            $subject->getStatus();
-            // ...
-            // return a marking
-        }
-
-        public function setMarking($subject, Marking $marking, array $context);
-        {
-            // ...
-            $subject->setStatus($newStatus, $context['log_comment'] ?? null);
-        }
-    }
-
-    // and in your Object class
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status, ?string $comment = null)
-    {
-        $this->status = $status;
-        $this->addStatusLogRecord(new StatusLog($this, $comment));
-
-        return $this;
-    }
-
-    // the StatusLog class can have a createdAt, a username,
-    // the new status, and finally your optional comment retrieved from the workflow context.
 
 Using Events
 ------------
@@ -455,7 +378,7 @@ See example to make sure no blog post without title is moved to "review"::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var App\Entity\BlogPost $post */
+            /** @var \App\Entity\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
@@ -549,70 +472,3 @@ The following example shows these functions in action:
     {% if 'waiting_some_approval' in workflow_marked_places(post) %}
         <span class="label">PENDING</span>
     {% endif %}
-
-Transition Blockers
--------------------
-
-.. versionadded:: 4.1
-
-    Transition Blockers were introduced in Symfony 4.1.
-
-Transition Blockers provide a way to return a human-readable message for why a
-transition was blocked::
-
-    use Symfony\Component\Workflow\Event\GuardEvent;
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-    class BlogPostPublishListener implements EventSubscriberInterface
-    {
-        public function guardPublish(GuardEvent $event)
-        {
-            /** @var \App\Entity\BlogPost $post */
-            $post = $event->getSubject();
-
-            // If it's after 9pm, prevent publication
-            if (date('H') > 21) {
-                $event->addTransitionBlocker(
-                    new TransitionBlocker(
-                        "You can not publish this blog post because it's too late. Try again tomorrow morning."
-                    )
-                );
-            }
-        }
-
-        public static function getSubscribedEvents()
-        {
-            return [
-                'workflow.blogpost.guard.publish' => ['guardPublish'],
-            ];
-        }
-    }
-
-You can access the message from a Twig template as follows:
-
-.. code-block:: html+twig
-
-    <h2>Publication was blocked because:</h2>
-    <ul>
-        {% for transition in workflow_all_transitions(article) %}
-            {% if not workflow_can(article, transition.name) %}
-                <li>
-                    <strong>{{ transition.name }}</strong>:
-                    <ul>
-                    {% for blocker in workflow_build_transition_blocker_list(article, transition.name) %}
-                        <li>
-                            {{ blocker.message }}
-                            {% if blocker.parameters.expression is defined %}
-                                <code>{{ blocker.parameters.expression }}</code>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
-Don't need a human-readable message? You can still use::
-
-    $event->setBlocked('true');
