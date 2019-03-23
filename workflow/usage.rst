@@ -14,6 +14,15 @@ install the workflow feature before using it:
 
     $ composer require symfony/workflow
 
+Configuration
+-------------
+
+To see all configuration options, if you are using the component inside a Symfony project run this command:
+
+.. code-block:: terminal
+
+    $ bin/console config:dump-reference framework workflows
+
 Creating a Workflow
 -------------------
 
