@@ -619,7 +619,9 @@ requires:
                     // ...
                     'places' => array(
                         'draft' => array(
-                            'max_num_of_words' => 500,
+                            'metadata' => array(
+                                'max_num_of_words' => 500,
+                            ),
                         ),
                         // ...
                     ),
