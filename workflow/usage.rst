@@ -538,6 +538,7 @@ Storing Metadata
 ----------------
 
 .. versionadded:: 4.1
+
     The feature to store metadata in workflows was introduced in Symfony 4.1.
 
 In case you need it, you can store arbitrary metadata in workflows, their
@@ -639,9 +640,7 @@ requires:
              ),
          ));
 
-Then, you can access this metadata in your PHP code as follows:
-
-In your Controller::
+Then you can access this metadata in your controller as follows::
 
     public function myControllerAction(Registry $registry, Article $article)
     {
@@ -676,13 +675,11 @@ There is a shortcut that works with everything::
 In a Flash message in your Controller::
 
             // $transition = ...; (an instance of Transition)
-            // $workflow is a WorkFlow instance retrieved from the Registry (see above)
+            // $workflow is a Workflow instance retrieved from the Registry (see above)
             $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
             $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
 In a listener, access via the Event::
-
-    <?php
 
     namespace App\Listener\Workflow\Task;
 
