@@ -553,7 +553,8 @@ requires:
         framework:
             workflows:
                 blog_publishing:
-                    metadata: 'Blog Publishing Workflow'
+                    metadata:
+                        title: 'Blog Publishing Workflow'
                     # ...
                     places:
                         draft:
@@ -580,7 +581,7 @@ requires:
         >
 
             <framework:config>
-                <framework:workflow name="blog_publishing" type="workflow">
+                <framework:workflow name="blog_publishing">
                     <framework:metadata>
                         <framework:title>Blog Publishing Workflow</framework:title>
                     </framework:metadata>
@@ -646,9 +647,6 @@ In your Controller::
     {
         $workflow = $registry->get($article);
 
-        // Or, if you don't inject the Workflow Registry, fetch from the Container:
-        $workflow = $this->get('workflow.article');
-
         $workflow
             ->getMetadataStore()
             ->getWorkflowMetadata()['title'] ?? false
@@ -678,8 +676,9 @@ There is a shortcut that works with everything::
 In a Flash message in your Controller::
 
             // $transition = ...; (an instance of Transition)
-            $title = $this->get('workflow.article')->getMetadataStore()->getMetadata('title', $transition);
-            $request->getSession()->getFlashBag()->add('info', "You have successfully applied the transition with title: '$title'");
+            // $workflow is a WorkFlow instance retrieved from the Registry (see above)
+            $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
+            $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
 In a listener, access via the Event::
 
@@ -691,7 +690,7 @@ In a listener, access via the Event::
     use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\Workflow\TransitionBlocker;
 
-    class DoneGuard implements EventSubscriberInterface
+    class OverdueGuard implements EventSubscriberInterface
     {
         public function guardPublish(GuardEvent $event)
         {
@@ -717,7 +716,7 @@ In a listener, access via the Event::
 
 In Twig templates, metadata is available via the ``workflow_metadata()`` function:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <h2>Metadata</h2>
     <p>
