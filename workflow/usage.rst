@@ -688,7 +688,15 @@ In a Flash message in your Controller::
             $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
             $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
-In a listener, access via the Event::
+In a listener, access via the Event
+
+Metadata can also be accessed in a Listener, from the Event object.
+
+The example below uses a new feature introduced in 4.1 called Transition Blockers. These let you
+return a user-friendly error message when you stop a transition from happening. In the example we
+get this user-friendly message from the Event's metadata, giving you an easy place to manage the
+text. This is a contrived example; in production systems you may prefer to use the
+:doc:`Translation </components/translation>` component to manage text::
 
     namespace App\Listener\Workflow\Task;
 
@@ -706,7 +714,7 @@ In a listener, access via the Event::
                 return;
             }
 
-            $explanation = $event->getMetadata('explaination', $event->getTransition());
+            $explanation = $event->getMetadata('explanation', $event->getTransition());
             $event->addTransitionBlocker(new TransitionBlocker($explanation , 0));
         }
 
