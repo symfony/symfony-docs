@@ -638,13 +638,82 @@ requires:
              ),
          ));
 
-Then, you can access this metadata in your PHP code as follows::
+Then, you can access this metadata in your PHP code as follows:
 
-    // MISSING EXAMPLE HERE...
-    //
-    //
-    //
-    //
+In your Controller::
+
+    public function myControllerAction(Registry $registry, Article $article)
+    {
+        $workflow = $registry->get($article);
+
+        // Or, if you don't inject the Workflow Registry, fetch from the Container:
+        $workflow = $this->get('workflow.article');
+
+        $workflow
+            ->getMetadataStore()
+            ->getWorkflowMetadata()['title'] ?? false
+        ;
+
+        // or
+        $workflow
+            ->getMetadataStore()
+            ->getPlaceMetadata('draft')['title'] ?? false
+        ;
+
+        // or
+        $aTransition = $workflow->getDefinition()->getTransitions()[0];
+        $workflow
+            ->getMetadataStore()
+            ->getTransitionMetadata($aTransition)['title'] ?? false
+        ;
+    }
+
+There is a shortcut that works with everything::
+
+    $workflow
+        ->getMetadataStore()
+        ->getMetadata('title')
+    ;
+
+In a Flash message in your Controller::
+
+            // $transition = ...; (an instance of Transition)
+            $title = $this->get('workflow.article')->getMetadataStore()->getMetadata('title', $transition);
+            $request->getSession()->getFlashBag()->add('info', "You have successfully applied the transition with title: '$title'");
+
+In a listener, access via the Event::
+
+    <?php
+
+    namespace App\Listener\Workflow\Task;
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Workflow\Event\GuardEvent;
+    use Symfony\Component\Workflow\TransitionBlocker;
+
+    class DoneGuard implements EventSubscriberInterface
+    {
+        public function guardPublish(GuardEvent $event)
+        {
+            $timeLimit = $event->getMetadata('time_limit', $event->getTransition());
+
+            if (date('Hi') <= $timeLimit) {
+                return;
+            }
+
+            $explanation = $event->getMetadata('explaination', $event->getTransition());
+            $event->addTransitionBlocker(new TransitionBlocker($explanation , 0));
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                'workflow.task.guard.done' => 'guardPublish',
+            ];
+        }
+    }
+
+
 
 In Twig templates, metadata is available via the ``workflow_metadata()`` function:
 
