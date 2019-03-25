@@ -302,7 +302,7 @@ What's Next?
 ------------
 
 Congrats! You're already starting to master Symfony and learn a whole new
-way of building beautiful, functional, fast and maintainable apps.
+way of building beautiful, functional, fast and maintainable applications.
 
 Ok, time to finish mastering the fundamentals by reading these articles:
 

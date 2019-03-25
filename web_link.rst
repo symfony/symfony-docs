@@ -97,7 +97,7 @@ automatically trigger a push for the related file in the same HTTP/2 connection.
 
 Popular proxy services and CDNs including `Cloudflare`_, `Fastly`_ and `Akamai`_
 also leverage this feature. It means that you can push resources to clients and
-improve performance of your apps in production right now.
+improve performance of your applications in production right now.
 
 If you want to prevent the push but let the browser preload the resource by
 issuing an early separate HTTP request, use the ``nopush`` option:
