@@ -424,7 +424,7 @@ routes with UTF-8 characters:
             <route id="route1"
                 path="/category/{name}"
                 controller="App\Controller\DefaultController::category"
-                utf8="true" />
+                utf8="true"/>
         </routes>
 
     .. code-block:: php
@@ -443,25 +443,24 @@ routes with UTF-8 characters:
 
 .. versionadded:: 4.3
 
-    The ``utf8`` shortcut has been introduced in Symfony 4.3.
-    Before you has to use the ``options`` setting to define
-    this value:
+    The ``utf8`` option/method has been introduced in Symfony 4.3.
+    Before you had to use the ``options`` setting to define this value:
 
     .. configuration-block::
 
         .. code-block:: php-annotations
 
             route1:
-                path:     /category/{name}
+                path:       /category/{name}
                 controller: App\Controller\DefaultController::category
-                options: { utf8: true }
+                options:    { utf8: true }
 
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        route1:
-            path:     /category/{name}
-            controller: App\Controller\DefaultController::category
-            utf8: true
+            route1:
+                path:       /category/{name}
+                controller: App\Controller\DefaultController::category
+                utf8:       true
 
         .. code-block:: xml
 
@@ -473,7 +472,7 @@ routes with UTF-8 characters:
 
                 <route id="route1"
                     path="/category/{name}"
-                    controller="App\Controller\DefaultController::category" >
+                    controller="App\Controller\DefaultController::category">
                     <option key="utf8">true</option>
                 </route>
             </routes>
@@ -544,7 +543,7 @@ You can also include UTF-8 strings as routing requirements:
             <route id="route2"
                 path="/category/{name}"
                 controller="App\Controller\DefaultController::category"
-                utf8="true" >
+                utf8="true">
                 <default key="name">한국어</default>
             </route>
         </routes>

@@ -776,13 +776,13 @@ You can also use special attributes to configure them (except ``_fragment``):
 
         # config/routes.yaml
         article_search:
-          path:     /articles/{_locale}/search.{_format}
-          controller: App\Controller\ArticleController::search
-          locale: en
-          format: html
+          path:        /articles/{_locale}/search.{_format}
+          controller:  App\Controller\ArticleController::search
+          locale:      en
+          format:      html
           requirements:
-              _locale:  en|fr
-              _format:  html|xml
+              _locale: en|fr
+              _format: html|xml
 
     .. code-block:: xml
 
@@ -816,7 +816,7 @@ You can also use special attributes to configure them (except ``_fragment``):
             $routes->add('article_show', '/articles/{_locale}/search.{_format}')
                 ->controller([ArticleController::class, 'search'])
                 ->locale('en')
-                ->format('html)
+                ->format('html')
                 ->requirements([
                     '_locale' => 'en|fr',
                     '_format' => 'html|rss',
@@ -824,11 +824,11 @@ You can also use special attributes to configure them (except ``_fragment``):
             ;
         };
 
-Those attributes can also be used for imports.
+These attributes can also be used for route imports.
 
 .. versionadded::
 
-    The special attributes has been introduced in Symfony 4.3.
+    The special attributes were introduced in Symfony 4.3.
 
 .. _routing-trailing-slash-redirection:
 
