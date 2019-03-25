@@ -62,7 +62,7 @@ method, you can disable a command inside a listener. The application
 will then *not* execute the command, but instead will return the code ``113``
 (defined in ``ConsoleCommandEvent::RETURN_CODE_DISABLED``). This code is one
 of the `reserved exit codes`_ for console commands that conform with the
-C/C++ standard.::
+C/C++ standard::
 
     use Symfony\Component\Console\Event\ConsoleCommandEvent;
     use Symfony\Component\Console\ConsoleEvents;
