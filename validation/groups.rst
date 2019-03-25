@@ -185,3 +185,13 @@ will be applied.
 Of course, you'll usually work with validation indirectly through the form
 library. For information on how to use validation groups inside forms, see
 :doc:`/form/validation_groups`.
+
+.. caution::
+
+    Using validation groups might lead to unexpected results when rendering your form:
+    * If you let Symfony [guess your form types](https://symfony.com/doc/3.4/forms.html#field-type-guessing),
+      *all* constraints will be considered in the form's view (not just the ones of
+      the active validation groups).
+    * If you don't let Symfony guess your form types, no constraints will be
+      considered at all in the form's view. This means that in the form builder, you
+      have to manually set each field type option you want to have in the form's view.
