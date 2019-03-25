@@ -487,8 +487,8 @@ the documentation for each type.
         ])
 
     The label for a field can also be set in the template rendering the
-    form, see below. If you don't need a label associated to your input,
-    you can disable it by setting its value to ``false``.
+    form, see ":doc:`/form/rendering`". If you don't want a label at all,
+    you can disable it by setting ``'label' => false``.
 
 .. index::
    single: Forms; Field type guessing
@@ -522,10 +522,10 @@ the guessed field.
 
 .. caution::
 
-    If your form uses a specific validation group, the field type guesser
-    will still consider *all* validation constraints when guessing your
-    field types (including constraints that are not part of the validation
-    group(s) being used).
+    If your form uses a specific :doc:`validation group </validation_groups>`,
+    the field type guesser will still consider *all* validation constraints when
+    guessing your field types (including constraints that are not part of the
+    active validation groups).
 
 .. index::
    single: Forms; Field type guessing
