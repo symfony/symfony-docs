@@ -44,7 +44,7 @@ then **extend and fit to your specific needs**:
 
 We know that old habits die hard and some of you will be shocked by some
 of these best practices. But by following these, you'll be able to develop
-appications faster, with less complexity and with the same or even higher
+applications faster, with less complexity and with the same or even higher
 quality. It's also a moving target that will continue to improve.
 
 Keep in mind that these are **optional recommendations** that you and your
