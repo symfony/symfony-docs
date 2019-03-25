@@ -207,7 +207,7 @@ loading all entities.
 
 .. caution::
 
-    The entity used in the ``FROM`` clause of the `query_builder` option
+    The entity used in the ``FROM`` clause of the ``query_builder`` option
     will always be validated against the class which you have specified at the
     `class`_ option. If you return another entity instead of the
     one used in your ``FROM`` clause (for instance if you return an entity
