@@ -303,7 +303,7 @@ Disabling Usage of Globally Defined Themes
 Sometimes you may want to disable the use of the globally defined form themes in order
 to have more control over the rendering of a form. You might want this, for example,
 when creating an admin interface for a bundle which can be installed on a wide range
-of Symfony apps (and so you can't control what themes are defined globally).
+of Symfony applications (and so you can't control what themes are defined globally).
 
 You can do this by including the ``only`` keyword after the list of form themes:
 

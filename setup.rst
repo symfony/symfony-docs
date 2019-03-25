@@ -249,8 +249,8 @@ Installing the Symfony Demo or Other Distributions
 --------------------------------------------------
 
 You've already downloaded the `Symfony Standard Edition`_: the default starting project
-for all Symfony apps. You'll use this project throughout the documentation to build
-your app!
+for all Symfony applications. You'll use this project throughout the documentation to
+build your application!
 
 Symfony also provides some other projects and starting skeletons that you can use:
 

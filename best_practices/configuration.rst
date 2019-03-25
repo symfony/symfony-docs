@@ -94,8 +94,8 @@ paginated results.
     Use constants to define configuration options that rarely change.
 
 The traditional approach for defining configuration options has caused many
-Symfony apps to include an option like the following, which would be used
-to control the number of posts to display on the blog homepage:
+Symfony applications to include an option like the following, which would be
+used to control the number of posts to display on the blog homepage:
 
 .. code-block:: yaml
 
