@@ -694,8 +694,12 @@ Metadata can also be accessed in a Listener, from the Event object.
 Using transition blockers you can
 return a user-friendly error message when you stop a transition from happening. In the example we
 get this message from the :class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving
-you an easy place to manage the text. This is a contrived example; in production code you may
-prefer to use the :doc:`Translation </components/translation>` component to manage messages::
+you an easy place to manage the text.
+
+.. tip::
+
+This is a simple example; in production you may prefer to use the :doc:`Translation </components/translation>`
+component to manage messages in one place::
 
     namespace App\Listener\Workflow\Task;
 
