@@ -541,7 +541,7 @@ Symfony provides the following env var processors:
         The ``default`` processor was introduced in Symfony 4.3.
 
 ``env(url:FOO)``
-    Parses an absolute URL and returns its components.
+    Parses an absolute URL and returns its components as an associative array.
 
     .. code-block:: bash
 
@@ -557,7 +557,7 @@ Symfony provides the following env var processors:
                 clients:
                     default:
                         hosts:
-                        - { host: '%env(key:host:url:MONGODB_URL)%', port: '%env(key:port:url:MONGODB_URL)%' }
+                            - { host: '%env(key:host:url:MONGODB_URL)%', port: '%env(key:port:url:MONGODB_URL)%' }
                         username: '%env(key:user:url:MONGODB_URL)%'
                         password: '%env(key:pass:url:MONGODB_URL)%'
                 connections:
@@ -606,15 +606,16 @@ Symfony provides the following env var processors:
 
     .. caution::
 
-        In order to ease extraction of the resource from the URL, The leading
-        ``/`` is trimed from the ``path`` component.
+        In order to ease extraction of the resource from the URL, the leading
+        ``/`` is trimmed from the ``path`` component.
 
     .. versionadded:: 4.3
 
         The ``url`` processor was introduced in Symfony 4.3.
 
 ``env(query_string:FOO)``
-    Parses an encoded string as if it were the query string passed via a URL.
+    Parses the query string part of the given URL and returns its components as
+    an associative array.
 
     .. code-block:: bash
 
