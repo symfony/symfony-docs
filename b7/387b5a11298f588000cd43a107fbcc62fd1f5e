@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-03-11T07:16:01Z
+
+I didn't review the full page: where do we tell about the router-wide default options?
+Because to me that's where the utf8 option makes the most sense. See https://github.com/symfony/recipes/blob/master/symfony/routing/4.2/config/packages/routing.yaml
+Note that this makes me wonder if we should merge this PR and the one on Symfony...
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2019-03-11T15:04:23Z
+
+@nicolas-grekas While this is a default in the framework routing page, this PR is about DX when using the component standalone. We have two pages for almost all components (one is about integration but not here):
+
+- framework routing https://symfony.com/doc/current/routing.html
+    No examples need `utf8` option because we required `annotations` which has the config we linked.
+    Maybe we could even add a not there to explain how to set it to `false`.
+- routing component (what I edit here) https://symfony.com/doc/current/components/routing.html
+   No integration.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-03-11T15:09:58Z
+
+configuring the defaults is also possible when using the component standalone
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2019-03-20T15:39:27Z
+
+https://github.com/symfony/symfony/pull/30508 has been merged.
