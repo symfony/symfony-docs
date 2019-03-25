@@ -472,13 +472,11 @@ Transition Blockers
 -------------------
 
 .. versionadded:: 4.1
+
     Transition Blockers were introduced in Symfony 4.1.
 
-Transition Blockers provide a simple way to return a human-readable message for why a transition
-was blocked. You can access the message from Twig. Here's an example:
-
-
-.. code-block:: php
+Transition Blockers provide a way to return a human-readable message for why a
+transition was blocked::
 
     use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -507,6 +505,8 @@ was blocked. You can access the message from Twig. Here's an example:
             ];
         }
     }
+
+You can access the message from a Twig template as follows:
 
 .. code-block:: html+twig
 
