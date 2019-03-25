@@ -411,3 +411,4 @@
 /security/entity_provider /security/user_provider
 /session/avoid_session_start /session
 /session/sessions_directory /session
+/frontend/encore/legacy-apps /frontend/encore/legacy-applications

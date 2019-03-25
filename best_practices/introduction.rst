@@ -19,8 +19,8 @@ What is this Guide About?
 -------------------------
 
 This guide aims to fix that by describing the **best practices for developing
-web apps with the Symfony full-stack Framework**. These are best practices that
-fit the philosophy of the framework as envisioned by its original creator
+web applications with the Symfony full-stack Framework**. These are best practices
+that fit the philosophy of the framework as envisioned by its original creator
 `Fabien Potencier`_.
 
 .. note::
@@ -44,8 +44,8 @@ then **extend and fit to your specific needs**:
 
 We know that old habits die hard and some of you will be shocked by some
 of these best practices. But by following these, you'll be able to develop
-apps faster, with less complexity and with the same or even higher quality.
-It's also a moving target that will continue to improve.
+applications faster, with less complexity and with the same or even higher
+quality. It's also a moving target that will continue to improve.
 
 Keep in mind that these are **optional recommendations** that you and your
 team may or may not follow to develop Symfony applications. If you want to

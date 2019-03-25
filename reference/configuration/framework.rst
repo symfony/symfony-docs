@@ -2220,7 +2220,7 @@ A list of workflows to be created by the framework extension:
 
 .. seealso::
 
-    See also the article about :doc:`using workflows in Symfony apps </workflow>`.
+    See also the article about :doc:`using workflows in Symfony applications </workflow>`.
 
 .. _reference-workflows-enabled:
 

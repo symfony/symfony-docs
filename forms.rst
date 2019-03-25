@@ -166,7 +166,7 @@ That's it! The :ref:`form() function <reference-forms-twig-form>` renders all
 fields *and* the ``<form>`` start and end tags. By default, the form method is
 ``POST`` and the target URL is the same that displayed the form.
 
-As easy as this is, it's not very flexible. Usually, you'll need more control
+As short as this is, it's not very flexible. Usually, you'll need more control
 about how the entire form or some of its fields look. Symfony provides several
 ways of doing that:
 
