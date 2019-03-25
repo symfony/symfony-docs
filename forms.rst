@@ -178,7 +178,7 @@ That's it! Just three lines are needed to render the complete form:
 
 .. seealso::
 
-    As short as this is, it's not very flexible (yet). Usually, you'll want to
+    As short as this is, it's not very flexible. Usually, you'll want to
     render each form field individually so you can control how the form looks.
     You'll learn how to do that in the ":doc:`/form/rendering`" section.
 
