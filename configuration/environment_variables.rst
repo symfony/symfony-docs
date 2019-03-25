@@ -1,34 +1,33 @@
 .. index::
-    single: Environments; External parameters
+    single: Environment Variables; env vars
 
-How to Set external Parameters in the Service Container
-=======================================================
+How to Configure Symfony With Environment Variables
+===================================================
 
 In :doc:`/configuration`, you learned how to manage your application
-configuration. At times, it may benefit your application to store certain
-credentials outside of your project code. Database configuration is one such
-example. The flexibility of the Symfony service container allows you to do this.
+configuration. In this article you'll learn how to use environment variables (or
+"env vars" for short) to configure some of those options, which is a common
+practice to configure sensitive options such as credentials and passwords.
 
 .. _config-env-vars:
 
-Environment Variables
----------------------
+Referencing Env Vars in Configuration Files
+-------------------------------------------
 
-You can reference environment variables by using special parameters named after
-the variables you want to use enclosed between ``env()``. Their actual values
-will be resolved at runtime (once per request), so that dumped containers can be
-reconfigured dynamically even after being compiled.
-
-For example, when installing the ``doctrine`` recipe, database configuration is
-put in a ``DATABASE_URL`` environment variable:
+First, define the value of the env var, using your shell environment or the
+``.env`` file at the project root directory. For example, consider the
+``DATABASE_URL`` env var defined when installing the ``doctrine`` recipe (by
+convention the env var names are always uppercase):
 
 .. code-block:: bash
 
     # .env
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
-This variable is referenced in the service container configuration using
-``%env(DATABASE_URL)%``:
+Then, you can reference those env vars in any configuration option enclosing
+their names with ``env()``. Their actual values will be resolved at runtime
+(once per request), so that dumped containers can be reconfigured dynamically
+even after being compiled:
 
 .. configuration-block::
 
@@ -69,8 +68,8 @@ This variable is referenced in the service container configuration using
             ]
         ]);
 
-You can also give the ``env()`` parameters a default value: the default value
-will be used whenever the corresponding environment variable is *not* found:
+You can also give the ``env()`` parameters a default value, which will be used
+whenever the corresponding environment variable is *not* found:
 
 .. configuration-block::
 
@@ -101,7 +100,7 @@ will be used whenever the corresponding environment variable is *not* found:
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 During development, you'll use the ``.env`` file to configure your environment
 variables. On your production server, it is recommended to configure these at

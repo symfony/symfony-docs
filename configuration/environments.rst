@@ -361,4 +361,4 @@ includes the following:
 Going further
 -------------
 
-Read the article on :doc:`/configuration/external_parameters`.
+Read the article on :doc:`/configuration/environment_variables`.

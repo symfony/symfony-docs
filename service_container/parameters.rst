@@ -245,7 +245,7 @@ for all parameters that are arrays.
 Environment Variables and Dynamic Values
 ----------------------------------------
 
-See :doc:`/configuration/external_parameters`.
+See :doc:`/configuration/environment_variables`.
 
 .. _component-di-parameters-constants:
 
