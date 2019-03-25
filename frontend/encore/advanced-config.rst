@@ -154,7 +154,7 @@ The method ``configureLoaderRule()`` provides a clean way to configure Webpack l
 This is a low-level method. All your modifications will be applied just before pushing the loaders rules to Webpack.
 It means that you can override the default configuration provided by Encore, which may break things. Be careful when using it.
 
-A useful usage would be for configuring the ``eslint-loader`` to lint Vue files too.
+One use might be to configure the ``eslint-loader`` to lint Vue files too.
 The following code is equivalent:
 
 .. code-block:: javascript
