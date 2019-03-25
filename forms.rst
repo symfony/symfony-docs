@@ -391,31 +391,6 @@ corresponding errors printed out with the form.
 Validation is a very powerful feature of Symfony and has its own
 :doc:`dedicated article </validation>`.
 
-.. _forms-html5-validation-disable:
-
-.. sidebar:: HTML5 Validation
-
-    Thanks to HTML5, many browsers can natively enforce certain validation constraints
-    on the client side. The most common validation is activated by rendering
-    a ``required`` attribute on fields that are required. For browsers that
-    support HTML5, this will result in a native browser message being displayed
-    if the user tries to submit the form with that field blank.
-
-    Generated forms take full advantage of this new feature by adding sensible
-    HTML attributes that trigger the validation. The client-side validation,
-    however, can be disabled by adding the ``novalidate`` attribute to the
-    ``form`` tag or ``formnovalidate`` to the submit tag. This is especially
-    useful when you want to test your server-side validation constraints,
-    but are being prevented by your browser from, for example, submitting
-    blank fields.
-
-.. code-block:: html+twig
-
-    {# app/Resources/views/default/new.html.twig #}
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-
 .. index::
    single: Forms; Built-in field types
 
@@ -449,47 +424,6 @@ the date as a string in the box)::
 .. image:: /_images/form/simple-form-2.png
     :align: center
 
-Each field type has a number of different options that can be passed to it.
-Many of these are specific to the field type and details can be found in
-the documentation for each type.
-
-.. sidebar:: The ``required`` Option
-
-    The most common option is the ``required`` option, which can be applied to
-    any field. By default, the ``required`` option is set to ``true``, meaning
-    that HTML5-ready browsers will apply client-side validation if the field
-    is left blank. If you don't want this behavior, either
-    :ref:`disable HTML5 validation <forms-html5-validation-disable>`
-    or set the ``required`` option on your field to ``false``::
-
-        ->add('dueDate', DateType::class, [
-            'widget' => 'single_text',
-            'required' => false
-        ])
-
-    Also note that setting the ``required`` option to ``true`` will **not**
-    result in server-side validation to be applied. In other words, if a
-    user submits a blank value for the field (either with an old browser
-    or web service, for example), it will be accepted as a valid value unless
-    you use Symfony's ``NotBlank`` or ``NotNull`` validation constraint.
-
-    In other words, the ``required`` option is "nice", but true server-side
-    validation should *always* be used.
-
-.. sidebar:: The ``label`` Option
-
-    The label for the form field can be set using the ``label`` option,
-    which can be applied to any field::
-
-        ->add('dueDate', DateType::class, [
-            'widget' => 'single_text',
-            'label'  => 'Due Date',
-        ])
-
-    The label for a field can also be set in the template rendering the
-    form, see ":doc:`/form/rendering`". If you don't want a label at all,
-    you can disable it by setting ``'label' => false``.
-
 .. index::
    single: Forms; Field type guessing
 
@@ -500,7 +434,7 @@ Field Type Guessing
 
 Now that you've added validation metadata to the ``Task`` class, Symfony
 already knows a bit about your fields. If you allow it, Symfony can "guess"
-the type of your field and set it up for you. In this example, Symfony can
+the types of your fields and set them up for you. In this example, Symfony can
 guess from the validation rules that both the ``task`` field is a normal
 ``TextType`` field and the ``dueDate`` field is a ``DateType`` field::
 
@@ -516,54 +450,76 @@ guess from the validation rules that both the ``task`` field is a normal
     }
 
 The "guessing" is activated when you omit the second argument to the ``add()``
-method (or if you pass ``null`` to it). If you pass an options array as the
-third argument (done for ``dueDate`` above), these options are applied to
-the guessed field.
+method (or set it to ``null``).
+
+In addition to guessing the type for a field, Symfony will also guess the correct
+values of a number of field options (e.g. ``required`` or ``maxlength``, see below).
+
+If you pass an options array as the third argument (as for ``dueDate`` above),
+these options are applied to the guessed field type, and will override any guessed
+field options.
 
 .. caution::
 
     If your form uses a specific :doc:`validation group </validation_groups>`,
-    the field type guesser will still consider *all* validation constraints when
+    the field type guesser will consider *all* validation constraints when
     guessing your field types (including constraints that are not part of the
     active validation groups).
 
-.. index::
-   single: Forms; Field type guessing
+.. sidebar:: The ``required`` Option
 
-Field Type Options Guessing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The most common option is the ``required`` option, which can be applied to
+    any field. When the guesser is disabled, the ``required`` option is set to
+    ``true`` by default, resulting in the ``required`` attribute to be present
+    in the field's HTML tag. When the guesser is active, the ``required`` option
+    is infered from the ``NotBlank`` or ``NotNull`` validation constraint, or 
+    the Doctrine metadata (i.e. is the field ``nullable``).
 
-In addition to guessing the "type" for a field, Symfony can also try to guess
-the correct values of a number of field options.
+    In any case, having the ``required`` option set to ``true`` will **not** result
+    in server-side validation to be applied. To effectively prevent Symfony from
+    accepting a blank value, you must use the ``NotBlank`` or ``NotNull`` constraint.
 
-.. tip::
+    In other words, the ``required`` option is "nice", but true server-side
+    validation should *always* be used.
 
-    When these options are set, the field will be rendered with special HTML
-    attributes that provide for HTML5 client-side validation. However, it
-    doesn't generate the equivalent server-side constraints (e.g. ``Assert\Length``).
-    And though you'll need to manually add your server-side validation, these
-    field type options can then be guessed from that information.
+.. sidebar:: The ``maxlength`` Option
 
-``required``
-    The ``required`` option can be guessed based on the validation rules (i.e. is
-    the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
-    field ``nullable``). This is very useful, as your client-side validation will
-    automatically match your validation rules.
+    If the field is some sort of text field, then the ``maxlength`` option can be
+    guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
+    from the Doctrine metadata (via the field's length). When the guesser is disabled,
+    you need to set the ``maxlength`` option manually (even if you do have an
+    appropriate validation constraint).
 
-``maxlength``
-    If the field is some sort of text field, then the ``maxlength`` option attribute
-    can be guessed from the validation constraints (if ``Length`` or ``Range`` is used)
-    or from the Doctrine metadata (via the field's length).
+.. sidebar:: The ``label`` Option
 
-.. caution::
+    The label for the form field can be set using the ``label`` option,
+    which can be applied to any field::
 
-  These field options are *only* guessed if you're using Symfony to guess
-  the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
+        ->add('dueDate', DateType::class, [
+            'widget' => 'single_text',
+            'label'  => 'Due Date',
+        ])
 
-If you'd like to change one of the guessed values, you can override it by
-passing the option in the options field array::
+    The label for a field can also be set in the template rendering the
+    form, see ":doc:`/form/rendering`". If you don't want a label at all,
+    you can disable it by setting ``'label' => false``.
 
-    ->add('task', null, ['attr' => ['maxlength' => 4]])
+.. _forms-html5-validation-disable:
+
+.. sidebar:: Disabling HTML5 Validation
+
+    Any HTML-based The client-side validation can be disabled by adding the
+    ``novalidate`` attribute to the ``form`` tag or ``formnovalidate`` to the
+    ``submit`` tag. This is especially useful when you want to test your
+    server-side validation constraints, but are being prevented by your browser
+    from, for example, submitting blank fields.
+
+.. code-block:: html+twig
+
+    {# app/Resources/views/default/new.html.twig #}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 
 .. index::
    single: Forms; Creating form classes
