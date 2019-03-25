@@ -90,11 +90,10 @@ to cache a response for 10 seconds, use the ``Response::setTtl()`` method::
 
 .. tip::
 
-    If, like me, you are running your framework from the command line by
-    simulating requests (``Request::create('/is_leap_year/2012')``), you can
-    easily debug Response instances by dumping their string representation
-    (``echo $response;``) as it displays all headers as well as the response
-    content.
+    If you are running your framework from the command line by simulating
+    requests (``Request::create('/is_leap_year/2012')``), you can debug
+    Response instances by dumping their string representation (``echo $response;``)
+    as it displays all headers as well as the response content.
 
 To validate that it works correctly, add a random number to the response
 content and check that the number only changes every 10 seconds::
@@ -114,8 +113,8 @@ comfortable with these concepts, read the `HTTP caching`_ chapter of the
 Symfony documentation.
 
 The Response class contains many other methods that let you configure the
-HTTP cache very easily. One of the most powerful is ``setCache()`` as it
-abstracts the most frequently used caching strategies into one simple array::
+HTTP cache. One of the most powerful is ``setCache()`` as it abstracts the
+most frequently used caching strategies into one array::
 
     $date = date_create_from_format('Y-m-d H:i:s', '2005-10-15 10:00:00');
 
@@ -135,8 +134,8 @@ abstracts the most frequently used caching strategies into one simple array::
     $response->setSharedMaxAge(10);
 
 When using the validation model, the ``isNotModified()`` method allows you to
-easily cut on the response time by short-circuiting the response generation as
-early as possible::
+cut on the response time by short-circuiting the response generation as early
+as possible::
 
     $response->setETag('whatever_you_compute_as_an_etag');
 
