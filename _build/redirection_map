@@ -412,3 +412,4 @@
 /session/avoid_session_start /session
 /session/sessions_directory /session
 /frontend/encore/legacy-apps /frontend/encore/legacy-applications
+/configuration/external_parameters /configuration/environment_variables
