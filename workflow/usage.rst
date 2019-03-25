@@ -621,34 +621,34 @@ requires:
 
         // config/packages/workflow.php
 
-$container->loadFromExtension('framework', [
-    // ...
-    'workflows' => [
-        'blog_publishing' => [
-            'metadata' => [
-                'title' => 'Blog Publishing Workflow',
-            ],
+        $container->loadFromExtension('framework', [
             // ...
-            'places' => [
-                'draft' => [
+            'workflows' => [
+                'blog_publishing' => [
                     'metadata' => [
-                        'max_num_of_words' => 500,
+                        'title' => 'Blog Publishing Workflow',
+                    ],
+                    // ...
+                    'places' => [
+                        'draft' => [
+                            'metadata' => [
+                                'max_num_of_words' => 500,
+                            ],
+                        ],
+                        // ...
+                    ],
+                    'transitions' => [
+                        'to_review' => [
+                            'from' => 'draft',
+                            'to' => 'review',
+                            'metadata' => [
+                                'priority' => 0.5,
+                            ],
+                        ],
                     ],
                 ],
-                // ...
             ],
-            'transitions' => [
-                'to_review' => [
-                    'from' => 'draft',
-                    'to' => 'review',
-                    'metadata' => [
-                        'priority' => 0.5,
-                    ],
-                ],
-            ],
-        ],
-    ],
-]);
+        ]);
 
 Then you can access this metadata in your controller as follows::
 
@@ -694,12 +694,12 @@ Metadata can also be accessed in a Listener, from the Event object.
 Using transition blockers you can
 return a user-friendly error message when you stop a transition from happening. In the example we
 get this message from the :class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving
-you an easy place to manage the text.
+you a central place to manage the text.
 
 .. tip::
 
-This is a simple example; in production you may prefer to use the :doc:`Translation </components/translation>`
-component to manage messages in one place::
+    This is a simple example; in production you may prefer to use the :doc:`Translation </components/translation>`
+    component to manage messages in one place::
 
     namespace App\Listener\Workflow\Task;
 
@@ -731,7 +731,7 @@ component to manage messages in one place::
 
 .. versionadded:: 4.1
 
-    The transition blockers were added in version 4.1.
+    The transition blockers were introduced in version 4.1.
 
 In Twig templates, metadata is available via the ``workflow_metadata()`` function:
 
