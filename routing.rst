@@ -623,7 +623,10 @@ With all of this in mind, check out this advanced example:
             /**
              * @Route(
              *     "/articles/{_locale}/{year}/{slug}.{_format}",
-             *     defaults={"_format": "html"},
+             *     defaults={
+             *         "_locale": "en",
+             *         "_format": "html"
+             *     },
              *     requirements={
              *         "_locale": "en|fr",
              *         "_format": "html|rss",
@@ -643,6 +646,7 @@ With all of this in mind, check out this advanced example:
           path:     /articles/{_locale}/{year}/{slug}.{_format}
           controller: App\Controller\ArticleController::show
           defaults:
+              _locale: en
               _format: html
           requirements:
               _locale:  en|fr
@@ -662,6 +666,7 @@ With all of this in mind, check out this advanced example:
                 path="/articles/{_locale}/{year}/{slug}.{_format}"
                 controller="App\Controller\ArticleController::show">
 
+                <default key="_locale">en</default>
                 <default key="_format">html</default>
                 <requirement key="_locale">en|fr</requirement>
                 <requirement key="_format">html|rss</requirement>
@@ -681,6 +686,7 @@ With all of this in mind, check out this advanced example:
             $routes->add('article_show', '/articles/{_locale}/{year}/{slug}.{_format}')
                 ->controller([ArticleController::class, 'show'])
                 ->defaults([
+                    '_locale' => 'en',
                     '_format' => 'html',
                 ])
                 ->requirements([
@@ -738,6 +744,91 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
+
+You can also use special attributes to configure them (except ``_fragment``):
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/ArticleController.php
+
+        // ...
+        class ArticleController extends AbstractController
+        {
+            /**
+             * @Route(
+             *     "/articles/{_locale}/search.{_format}",
+             *     locale="en",
+             *     format="html",
+             *     requirements={
+             *         "_locale": "en|fr",
+             *         "_format": "html|xml",
+             *     }
+             * )
+             */
+            public function search()
+            {
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        article_search:
+          path:     /articles/{_locale}/search.{_format}
+          controller: App\Controller\ArticleController::search
+          locale: en
+          format: html
+          requirements:
+              _locale:  en|fr
+              _format:  html|xml
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="article_search"
+                path="/articles/{_locale}/search.{_format}"
+                controller="App\Controller\ArticleController::search"
+                locale="en"
+                format="html">
+
+                <requirement key="_locale">en|fr</requirement>
+                <requirement key="_format">html|rss</requirement>
+
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        use App\Controller\ArticleController;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('article_show', '/articles/{_locale}/search.{_format}')
+                ->controller([ArticleController::class, 'search'])
+                ->locale('en')
+                ->format('html)
+                ->requirements([
+                    '_locale' => 'en|fr',
+                    '_format' => 'html|rss',
+                ])
+            ;
+        };
+
+Those attributes can also be used for imports.
+
+.. versionadded::
+
+    The special attributes has been introduced in Symfony 4.3.
 
 .. _routing-trailing-slash-redirection:
 
