@@ -6,8 +6,8 @@ How to Configure Symfony With Environment Variables
 
 In :doc:`/configuration`, you learned how to manage your application
 configuration. In this article you'll learn how to use environment variables (or
-"env vars" for short) to configure some of those options, such as credentials
-and passwords.
+"env vars" for short) to configure some of those options, which is a common
+practice to configure sensitive options such as credentials and passwords.
 
 .. _config-env-vars:
 
