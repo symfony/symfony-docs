@@ -92,7 +92,7 @@ or ``jQuery`` to be a global variable. But, when you use Webpack and ``require('
 no global variables are set.
 
 The fix depends on if the error is happening in your code or inside some third-party
-code that you're using. See :doc:`/frontend/encore/legacy-apps` for the fix.
+code that you're using. See :doc:`/frontend/encore/legacy-applications` for the fix.
 
 Uncaught ReferenceError: webpackJsonp is not defined
 ----------------------------------------------------

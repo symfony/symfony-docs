@@ -360,3 +360,4 @@
 /components/weblink /components/web_link
 /frontend/encore/installation-no-flex /frontend/encore/installation
 /console/logging /console
+/frontend/encore/legacy-apps /frontend/encore/legacy-applications

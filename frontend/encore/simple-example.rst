@@ -212,8 +212,8 @@ To import values, use ``import``:
 Page-Specific JavaScript or CSS (Multiple Entries)
 --------------------------------------------------
 
-So far, you only have one final JavaScript file: ``app.js``. For simple apps or
-SPA's (Single Page Applications), that might be fine! However, as your app grows,
+So far, you only have one final JavaScript file: ``app.js``. For small applications
+or SPA's (Single Page Applications), that might be fine! However, as your app grows,
 you may want to have page-specific JavaScript or CSS (e.g. checkout, account,
 etc.). To handle this, create a new "entry" JavaScript file for each page:
 
