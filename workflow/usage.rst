@@ -467,3 +467,70 @@ The following example shows these functions in action:
     {% if 'waiting_some_approval' in workflow_marked_places(post) %}
         <span class="label">PENDING</span>
     {% endif %}
+
+Transition Blockers
+-------------------
+
+.. versionadded:: 4.1
+
+    Transition Blockers were introduced in Symfony 4.1.
+
+Transition Blockers provide a way to return a human-readable message for why a
+transition was blocked::
+
+    use Symfony\Component\Workflow\Event\GuardEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+    class BlogPostPublishListener implements EventSubscriberInterface
+    {
+        public function guardPublish(GuardEvent $event)
+        {
+            /** @var \App\Entity\BlogPost $post */
+            $post = $event->getSubject();
+
+            // If it's after 9pm, prevent publication
+            if (date('H') > 21) {
+                $event->addTransitionBlocker(
+                    new TransitionBlocker(
+                        "You can not publish this blog post because it's too late. Try again tomorrow morning."
+                    )
+                );
+            }
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                'workflow.blogpost.guard.publish' => ['guardPublish'],
+            ];
+        }
+    }
+
+You can access the message from a Twig template as follows:
+
+.. code-block:: html+twig
+
+    <h2>Publication was blocked because:</h2>
+    <ul>
+        {% for transition in workflow_all_transitions(article) %}
+            {% if not workflow_can(article, transition.name) %}
+                <li>
+                    <strong>{{ transition.name }}</strong>:
+                    <ul>
+                    {% for blocker in workflow_build_transition_blocker_list(article, transition.name) %}
+                        <li>
+                            {{ blocker.message }}
+                            {% if blocker.parameters.expression is defined %}
+                                <code>{{ blocker.parameters.expression }}</code>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+Don't need a human-readable message? You can still use::
+
+    $event->setBlocked('true');
