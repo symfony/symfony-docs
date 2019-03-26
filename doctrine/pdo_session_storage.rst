@@ -68,8 +68,8 @@ To use it, first register a new handler service:
 
 .. tip::
 
-    Configure the database credentials as
-    :doc:`parameters defined with environment variables </configuration/external_parameters>`
+    Configure the database credentials
+    :doc:`using environment variables in the config file </configuration/environment_variables>`
     to make your application more secure.
 
 Next, tell Symfony to use your service as the session handler:
