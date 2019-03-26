@@ -253,11 +253,10 @@ the information will be available in the profiler.
 
 .. tip::
 
-    The following options can be set via environment variables using the
-    ``%env()%`` syntax: ``url``, ``transport``, ``username``, ``password``,
-    ``host``, ``port``, ``timeout``, ``source_ip``, ``local_domain``,
-    ``encryption``, ``auth_mode``.
-    For details, see the :doc:`/configuration/external_parameters` article.
+    The following options can be set via environment variables: ``url``,
+    ``transport``, ``username``, ``password``, ``host``, ``port``, ``timeout``,
+    ``source_ip``, ``local_domain``, ``encryption``, ``auth_mode``. For details,
+    see: :doc:`/configuration/environment_variables`.
 
 Using Multiple Mailers
 ----------------------
