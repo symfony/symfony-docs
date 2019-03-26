@@ -826,7 +826,7 @@ You can also use special attributes to configure them (except ``_fragment``):
 
 These attributes can also be used for route imports.
 
-.. versionadded::
+.. versionadded:: 4.3
 
     The special attributes were introduced in Symfony 4.3.
 
