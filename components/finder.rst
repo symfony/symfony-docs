@@ -399,7 +399,7 @@ The contents of returned files can be read with
 
 .. _`fluent interface`: https://en.wikipedia.org/wiki/Fluent_interface
 .. _`symbolic links`: https://en.wikipedia.org/wiki/Symbolic_link
-.. _`Version Control Files`: https://en.wikipedia.org/wiki/Version_control
+.. _`Version Control Systems`: https://en.wikipedia.org/wiki/Version_control
 .. _`PHP wrapper for URL-style protocols`: https://php.net/manual/en/wrappers.php
 .. _`PHP streams`: https://php.net/streams
 .. _`IEC standard`: https://physics.nist.gov/cuu/Units/binary.html
