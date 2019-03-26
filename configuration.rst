@@ -208,7 +208,7 @@ percent signs - e.g. ``%locale%``.
 .. seealso::
 
     You can also set parameters dynamically, like from environment variables.
-    See :doc:`/configuration/external_parameters`.
+    See :doc:`/configuration/environment_variables`.
 
 For more information about parameters - including how to reference them from inside
 a controller - see :ref:`service-container-parameters`.
