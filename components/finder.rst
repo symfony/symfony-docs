@@ -355,6 +355,15 @@ Restrict by a depth range by chaining calls or passing an array::
     // same as above
     $finder->depth(['> 2', '< 5']);
 
+Gitignore
+~~~~~~~~~~~~~~~
+
+The Finder can follow .gitignore file rules.  :method:`Symfony\\Component\\Finder\\Finder::ignoreVCSIgnored`::
+
+    $finder->ignoreVCSIgnored(true);
+
+This will exclude files based on .gitignore rules as git does.
+
 Custom Filtering
 ~~~~~~~~~~~~~~~~
 
