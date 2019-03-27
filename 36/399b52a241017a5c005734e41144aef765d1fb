@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by stof at 2019-03-27T15:55:41Z
+
+Note that most places will work fine with a non canonical path. But we have a few places which use to root dir to strip it from paths stored in the cache (to make the cache independent from the location of the project at the time it was generated) and these may not always canonicalize the root dir themselves.
