@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-03-26T20:05:10Z
+
+To be able to customise the message shown one would have to return different values in `getMessageKey()` (and optionally `getMessageData()`). The exception message will never be shown to the end user.
+
+---------------------------------------------------------------------------
+
+by rossdeane at 2019-03-27T07:20:39Z
+
+Sure, but this could still be set in the constructor, in a similar manner to `CustomUserMessageAuthenticationException`. (We have no idea about the users implementation of `AccountDeletedException` in this example.)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-03-27T08:02:53Z
+
+Oh I mean I am in favour of removing the second exception here as the comment is clearly misleading. Sorry, if that wasn't clear before. What I wonder though is if we should maybe also remove the constructor argument from the `AccountDeletedException`.
