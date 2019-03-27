@@ -103,6 +103,7 @@ URL:
              */
             public function homepageAction($_locale)
             {
+                // ...
             }
         }
 
