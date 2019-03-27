@@ -4,7 +4,7 @@
 How to Match a Route Based on the Host
 ======================================
 
-You can also match on the HTTP *host* of the incoming request.
+You can also match any route with the HTTP *host* of the incoming request.
 
 .. configuration-block::
 
@@ -167,9 +167,9 @@ you can use placeholders in your hostname:
             ;
         };
 
-You can also set requirements and default options for these placeholders. For
+Also, any requirement or default can be set for these placeholders. For
 instance, if you want to match both ``m.example.com`` and
-``mobile.example.com``, you use this:
+``mobile.example.com``, you can use this:
 
 .. configuration-block::
 
@@ -436,7 +436,7 @@ past url matching in your functional tests::
 
     $crawler = $client->request(
         'GET',
-        '/homepage',
+        '/',
         [],
         [],
         ['HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain')]

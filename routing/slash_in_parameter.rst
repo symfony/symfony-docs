@@ -1,6 +1,8 @@
 .. index::
    single: Routing; Allow / in route parameter
 
+.. _routing/slash_in_parameter:
+
 How to Allow a "/" Character in a Route Parameter
 =================================================
 
