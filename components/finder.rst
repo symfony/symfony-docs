@@ -139,7 +139,7 @@ Version Control Files
 ~~~~~~~~~~~~~~~~~~~~~
 
 `Version Control Systems`_ (or "VCS" for short), such as Git and Mercurial,
-create some special files to perform their work. Those files are ignored by
+create some special files to store their metadata. Those files are ignored by
 default when looking for files and directories, but you can change this with the
 ``ignoreVCS()`` method::
 
