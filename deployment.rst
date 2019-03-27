@@ -231,7 +231,7 @@ kernel and return your project's root directory::
 
         public function getProjectDir()
         {
-            return __DIR__.'/..';
+            return dirname(__DIR__);
         }
     }
 
