@@ -64,14 +64,27 @@ generation of cache files - and you probably will only change it when
 Project Directory
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: the directory of the project ``composer.json``
+**type**: ``string`` **default**: see explanation
 
-This returns the root directory of your Symfony project. It's calculated as
-the directory where the main ``composer.json`` file is stored.
+This returns the root directory of your Symfony project, which is useful to
+perform operations with file paths relative to your project's root. It's set by
+default to the parent directory of ``public/`` or ``bin/`` (depending if it's
+the front controller or the console script).
 
-If for some reason the ``composer.json`` file is not stored at the root of your
-project, you can override the :method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir`
-method to return the right project directory::
+If you need to change the project directory, pass the new path as the third
+argument of the ``new Kernel(...)`` instantiation both in ``public/index.php``
+and ``bin/console`` files.
+
+.. versionadded:: 4.3
+
+    The third argument of the ``Kernel`` class constructor was introduced in
+    Symfony 4.3. Also, in previous Symfony versions the project directory was
+    set by default to the directory that contained the project's
+    ``composer.json`` file.
+
+An alternative solution is to override the
+:method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir` method in the
+application kernel and return the right project directory path::
 
     // src/Kernel.php
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;

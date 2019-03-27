@@ -211,35 +211,6 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-Troubleshooting
----------------
-
-Deployments not Using the ``composer.json`` File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Symfony applications provide a ``kernel.project_dir`` parameter and a related
-:method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir` method.
-You can use this method to perform operations with file paths relative to your
-project's root directory. The logic to find that project root directory is based
-on the location of the main ``composer.json`` file.
-
-If your deployment method doesn't use Composer, you may have removed the
-``composer.json`` file and the application won't work on the production server.
-The solution is to override the ``getProjectDir()`` method in the application
-kernel and return your project's root directory::
-
-    // src/Kernel.php
-    // ...
-    class Kernel extends BaseKernel
-    {
-        // ...
-
-        public function getProjectDir()
-        {
-            return __DIR__.'/..';
-        }
-    }
-
 Learn More
 ----------
 
