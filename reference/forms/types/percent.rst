@@ -9,8 +9,8 @@ percentage data. If your percentage data is stored as a decimal (e.g. ``0.95``),
 you can use this field out-of-the-box. If you store your data as a number
 (e.g. ``95``), you should set the ``type`` option to ``integer``.
 
-When ``symbol`` is true, the field will add a percentage sign "``%``" after the
-input.
+When ``symbol`` is ``true``, the field will add a percentage sign "``%``" after
+the input.
 
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
@@ -66,9 +66,9 @@ symbol
     The ``symbol`` option was introduced in Symfony 4.3.
 
 By default, fields are rendered with a percentage sign ``%`` after the input.
-Setting the value to ``false`` will not display the percentage sign.
-Setting the value to a ``string`` (e.g. ``‱``), will show the string value instead
-of the default ``%`` sign.
+Setting the value to ``false`` will not display the percentage sign. Setting the
+value to a ``string`` (e.g. ``‱``), will show that string instead of the default
+``%`` sign.
 
 type
 ~~~~
