@@ -267,6 +267,12 @@ link for details), create a ``shipping_widget`` block to handle this:
                 ],
             ]);
 
+    .. deprecated:: 4.3
+
+        The integration of the Templating component in FrameworkBundle has been
+        deprecated since version 4.3 and will be removed in 5.0. Form theming with
+        PHP templates will no longer be supported and you'll need to use Twig instead.
+
 Using the Field Type
 --------------------
 
