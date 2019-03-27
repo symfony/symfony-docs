@@ -145,6 +145,17 @@ default when looking for files and directories, but you can change this with the
 
     $finder->ignoreVCS(false);
 
+If your project defines a ``.gitignore`` file, you can reuse those rules to
+exclude files and directories from the results with the
+:method:`Symfony\\Component\\Finder\\Finder::ignoreVCSIgnored` method::
+
+    // excludes files/directories matching the .gitignore patterns
+    $finder->ignoreVCSIgnored(true);
+
+.. versionadded:: 4.3
+
+    The ``ignoreVCSIgnored()`` method was introduced in Symfony 4.3.
+
 File Name
 ~~~~~~~~~
 
@@ -304,19 +315,6 @@ Restrict by a depth range by chaining calls or passing an array::
 
     // same as above
     $finder->depth(['> 2', '< 5']);
-
-Gitignore
-~~~~~~~~~
-
-The Finder can follow ``.gitignore`` file rules with the :method:`Symfony\\Component\\Finder\\Finder::ignoreVCSIgnored` method::
-
-    $finder->ignoreVCSIgnored(true);
-
-This will exclude files based on ``.gitignore`` rules as git does.
-
-.. versionadded:: 4.3
-
-    The ``ignoreVCSIgnored()`` method was introduced in Symfony 4.3.
 
 Custom Filtering
 ~~~~~~~~~~~~~~~~
