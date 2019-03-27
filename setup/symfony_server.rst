@@ -21,9 +21,9 @@ and follow the instructions for your operating system.
 Getting Started
 ---------------
 
-The Symfony web server is started once per project, so you may end up with
-several instances (each of them listening to a different port). This is the
-common workflow to serve a Symfony project:
+The Symfony server is started once per project, so you may end up with several
+instances (each of them listening to a different port). This is the common
+workflow to serve a Symfony project:
 
 .. code-block:: terminal
 
@@ -37,8 +37,8 @@ common workflow to serve a Symfony project:
     $ symfony open:local
 
 Running the server this way makes it display the log messages in the console, so
-you won't be able to run other commands at the same time. If you prefer, you can run the Symfony server in
-the background:
+you won't be able to run other commands at the same time. If you prefer, you can
+run the Symfony server in the background:
 
 .. code-block:: terminal
 
@@ -99,12 +99,16 @@ root directory:
     directory to set the same PHP version for a group of projects under that
     directory.
 
-This command is useful if you don't remember all the PHP versions installed on
-your computer:
+Run command if you don't remember all the PHP versions installed on your
+computer:
 
 .. code-block:: terminal
 
     $ symfony local:php:list
+
+      # You'll see all supported SAPIs (CGI, FastCGI, etc.) for each version.
+      # FastCGI (php-fpm) is used when possible; then CGI (which acts as a FastCGI
+      # server as well), and finally, the server falls back to plain CGI.
 
 Overriding PHP Config Options Per Project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -180,8 +184,7 @@ Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, Symfony proposes ``.wip`` (for *Work in Progress*) for the local
-domains (but you can choose any other TLD you like). Define a local domain for a
-project as follows:
+domains. You can define a local domain for your project as follows:
 
 .. code-block:: terminal
 
@@ -203,6 +206,12 @@ domains work:
 .. code-block:: terminal
 
     $ HTTPS_PROXY=https://127.0.0.1:7080 curl https://my-domain.wip
+
+.. tip::
+
+    If you prefer to use a different TLD, edit the ``~/.symfony/proxy.json``
+    file (where ``~`` means the path to your user directory) and change the
+    value of the ``tld`` option from ``wip`` to any other TLD.
 
 Long-Running Commands
 ---------------------
