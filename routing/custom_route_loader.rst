@@ -122,10 +122,16 @@ and configure the service and method to call:
             $routes->import('admin_route_loader:loadRoutes', 'service');
         };
 
-In this example, the routes are loaded by calling the ``loadRoutes()`` method of
-the service whose ID is ``admin_route_loader``. Your service doesn't have to
+In this example, the routes are loaded by calling the ``loadRoutes()`` method
+of the service whose ID is ``admin_route_loader``. Your service doesn't have to
 extend or implement any special class, but the called method must return a
 :class:`Symfony\\Component\\Routing\\RouteCollection` object.
+
+.. note::
+
+    The routes defined using service route loaders will be automatically
+    cached by the framework. So whenever your service should load new routes,
+    don't forget to clear the cache.
 
 Creating a custom Loader
 ------------------------
@@ -240,8 +246,7 @@ Now define a service for the ``ExtraLoader``:
         // config/services.php
         use App\Routing\ExtraLoader;
 
-        $container
-            ->autowire(ExtraLoader::class)
+        $container->autowire(ExtraLoader::class)
             ->addTag('routing.loader')
         ;
 
@@ -250,7 +255,7 @@ as potential route loaders and added as specialized route loaders to the
 ``routing.loader`` *service*, which is an instance of
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 
-Using the custom Loader
+Using the Custom Loader
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 If you did nothing else, your custom routing loader would *not* be called.
@@ -297,7 +302,7 @@ for the ``ExtraLoader``, so it is set to ``.`` (a single dot).
     cached by the framework. So whenever you change something in the loader
     class itself, don't forget to clear the cache.
 
-More advanced Loaders
+More Advanced Loaders
 ---------------------
 
 If your custom route loader extends from

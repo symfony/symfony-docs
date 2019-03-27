@@ -11,6 +11,32 @@ to your controller, and as attributes of the ``Request`` object:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        use Symfony\Component\Routing\Annotation\Route;
+
+        /**
+         * @Route(name="blog_")
+         */
+        class BlogController
+        {
+            /**
+             * @Route("/blog/{page}", name="index", defaults={"page": 1, "title": "Hello world!"})
+             */
+            public function index($page)
+            {
+                // ...
+            }
+        }
+
+        # config/routes.yaml
+        blog:
+            path:       /blog/{page}
+            controller: App\Controller\BlogController::index
+            defaults:
+                page: 1
+                title: "Hello world!"
+
     .. code-block:: yaml
 
         # config/routes.yaml

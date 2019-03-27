@@ -6,7 +6,7 @@ How to Restrict Route Matching through Conditions
 
 A route can be made to match only certain routing placeholders (via regular
 expressions), HTTP methods, or host names. If you need more flexibility to
-define arbitrary matching logic, use the ``conditions`` routing option:
+define arbitrary matching logic, use the ``condition`` routing setting:
 
 .. configuration-block::
 

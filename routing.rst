@@ -4,13 +4,14 @@
 Routing
 =======
 
-Beautiful URLs are a must for any serious web application. This means leaving behind
-ugly URLs like ``index.php?article_id=57`` in favor of something like ``/read/intro-to-symfony``.
+Beautiful URLs are a must for any serious web application. This means leaving
+behind ugly URLs like ``index.php?article_id=57`` in favor of something like
+``/read/intro-to-symfony``.
 
 Having flexibility is even more important. What if you need to change the
 URL of a page from ``/blog`` to ``/news``? How many links would you need to
 hunt down and update to make the change? If you're using Symfony's router,
-the change is simple.
+the change should be trivial.
 
 .. index::
    single: Routing; Basics
@@ -20,19 +21,13 @@ the change is simple.
 Creating Routes
 ---------------
 
-A *route* is a map from a URL path to a controller. Suppose you want one route that
-matches ``/blog`` exactly and another more dynamic route that can match *any* URL
-like ``/blog/my-post`` or ``/blog/all-about-symfony``.
+A *route* is a map from a URL path to attributes (i.e a controller). Suppose
+you want one route that matches ``/blog`` exactly and another more dynamic
+route that can match *any* URL like ``/blog/my-post`` or
+``/blog/all-about-symfony``.
 
-Routes can be configured in YAML, XML and PHP. All formats provide the same
-features and performance, so choose the one you prefer. If you choose PHP
-annotations, run this command once in your app to add support for them:
-
-.. code-block:: terminal
-
-    $ composer require annotations
-
-Now you can configure the routes:
+Routes can be configured in YAML, XML, PHP or annotations. All formats provide
+the same features and performance, so choose the one you prefer:
 
 .. configuration-block::
 
@@ -58,6 +53,7 @@ Now you can configure the routes:
 
             /**
              * Matches /blog/*
+             * but not /blog/slug/extra-part
              *
              * @Route("/blog/{slug}", name="blog_show")
              */
@@ -74,10 +70,13 @@ Now you can configure the routes:
 
         # config/routes.yaml
         blog_list:
+            # Matches /blog exactly
             path:     /blog
             controller: App\Controller\BlogController::list
 
         blog_show:
+            # Matches /blog/*
+            # but not /blog/slug/extra-part
             path:     /blog/{slug}
             controller: App\Controller\BlogController::show
 
@@ -90,10 +89,13 @@ Now you can configure the routes:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
+            <!-- Matches /blog exactly -->
             <route id="blog_list" path="/blog" controller="App\Controller\BlogController::list">
                 <!-- settings -->
             </route>
 
+            <!-- Matches /blog/* -->
+            <!-- but not /blog/slug/extra-part -->
             <route id="blog_show" path="/blog/{slug}" controller="App\Controller\BlogController::show">
                 <!-- settings -->
             </route>
@@ -107,9 +109,12 @@ Now you can configure the routes:
         use App\Controller\BlogController;
 
         return function (RoutingConfigurator $routes) {
+            // Matches /blog exactly
             $routes->add('blog_list', '/blog')
                 ->controller([BlogController::class, 'list'])
             ;
+            // Matches /blog/*
+            // but not /blog/slug/extra-part
             $routes->add('blog_show', '/blog/{slug}')
                 ->controller([BlogController::class, 'show'])
             ;
@@ -121,13 +126,21 @@ Thanks to these two routes:
   is executed;
 
 * If the user goes to ``/blog/*``, the second route is matched and ``show()``
-  is executed. Because the route path is ``/blog/{slug}``, a ``$slug`` variable is
-  passed to ``show()`` matching that value. For example, if the user goes to
+  is executed. Because the route path is ``/blog/{slug}``, a ``$slug`` variable
+  is passed to ``show()`` matching that value. For example, if the user goes to
   ``/blog/yay-routing``, then ``$slug`` will equal ``yay-routing``.
 
-Whenever you have a ``{placeholder}`` in your route path, that portion becomes a
-wildcard: it matches *any* value. Your controller can now *also* have an argument
-called ``$placeholder`` (the wildcard and argument names *must* match).
+Whenever you have a ``{placeholder}`` in your route path, that portion becomes
+a wildcard: it matches *any* value. Your controller can now *also* have an
+argument called ``$placeholder`` (the wildcard and argument names *must*
+match).
+
+.. caution::
+
+    However the slash ``/`` is ignored by default in placeholder values because
+    the router uses it as separator between different placeholders.
+    To learn more about this, you can read
+    :ref:`routing/slash_in_parameter`.
 
 Each route also has an internal name: ``blog_list`` and ``blog_show``. These can
 be anything (as long as each is unique) and don't have any meaning yet. You'll
@@ -1035,6 +1048,3 @@ Learn more about Routing
     :glob:
 
     routing/*
-
-.. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
-.. _`BeSimpleI18nRoutingBundle`: https://github.com/BeSimple/BeSimpleI18nRoutingBundle
