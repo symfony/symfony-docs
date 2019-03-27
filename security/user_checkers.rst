@@ -37,12 +37,7 @@ are not met, an exception should be thrown which extends the
 
             // user is deleted, show a generic Account Not Found message.
             if ($user->isDeleted()) {
-                throw new AccountDeletedException('...');
-
-                // or to customize the message shown
-                throw new CustomUserMessageAuthenticationException(
-                    'Your account was deleted. Sorry about that!'
-                );
+                throw new AccountDeletedException();
             }
         }
 
