@@ -63,4 +63,9 @@ which route is associated with the given URL:
     | Defaults     | _controller: App\Controller\BlogController:show         |
     | Options      | compiler_class: Symfony\Component\Routing\RouteCompiler |
     |              | utf8: true                                              |
+    | Condition    | context.getMethod() in ['GET', 'HEAD', 'POST']          |
     +--------------+---------------------------------------------------------+
+
+.. versionadded:: 4.3
+
+    The ``Condition`` was added to the router debug output in Symfony 4.3.
