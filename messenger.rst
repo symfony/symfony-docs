@@ -202,12 +202,12 @@ This will also configure the following services for you:
 
 .. note::
 
-    In order to use Symfony's built-in AMQP transport, you will need the Serializer
-    Component. Ensure that it is installed with:
+    In order to use Symfony's built-in AMQP transport, you will need the AMQP
+    PHP extension and the Serializer Component. Ensure that they are installed with:
 
     .. code-block:: terminal
 
-        $ composer require symfony/serializer-pack
+        $ composer require symfony/amqp-pack
 
 Routing
 -------
