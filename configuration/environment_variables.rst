@@ -642,7 +642,7 @@ Symfony provides the following env var processors:
                     http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <mongodb:config>
-                    <mongodb:client name="default" connectTimeoutMS="%env(int:key:timeout:query_string:MONGODB_URL)%" />
+                    <mongodb:client name="default" connectTimeoutMS="%env(int:key:timeout:query_string:MONGODB_URL)%"/>
                 </mongodb:config>
             </container>
 

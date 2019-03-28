@@ -15,19 +15,17 @@ Given this translation message:
 
 .. code-block:: yaml
 
-    # translations/messages.en.yml
+    # translations/messages.en.yaml
     form.order.id.help: 'This will be the reference in communications with %company%'
 
-You can specify the placeholder values as follows:
+You can specify the placeholder values as follows::
 
-.. code-block:: php
-
-    $builder->add('id', null, array(
+    $builder->add('id', null, [
         'help' => 'form.order.id.help',
         'help_translation_parameters' => [
-            '%company%' => 'ACME Inc.'
-        ]
-    ));
+            '%company%' => 'ACME Inc.',
+        ],
+    ]);
 
 The ``help_translation_parameters`` option of children fields is merged with the
 same option of their parents, so children can reuse and/or override any of the

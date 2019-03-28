@@ -61,22 +61,20 @@ Given this translation message:
 
 .. code-block:: yaml
 
-    # translations/messages.en.yml
+    # translations/messages.en.yaml
     form.order.reset: 'Reset an order to %company%'
 
-You can specify the placeholder values as follows:
-
-.. code-block:: php
+You can specify the placeholder values as follows::
 
     use Symfony\Component\Form\Extension\Core\Type\ResetType;
     // ...
 
-    $builder->add('send', ResetType::class, array(
+    $builder->add('send', ResetType::class, [
         'label' => 'form.order.reset',
-        'label_translation_parameters' => array(
+        'label_translation_parameters' => [
             '%company%' => 'ACME Inc.',
-        ),
-    ));
+        ],
+    ]);
 
 The ``label_translation_parameters`` option of buttons is merged with the same
 option of its parents, so buttons can reuse and/or override any of the parent

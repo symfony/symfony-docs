@@ -78,9 +78,9 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('chapters', new Assert\Json(array(
+                $metadata->addPropertyConstraint('chapters', new Assert\Json([
                     'message' => 'You\'ve entered an invalid Json.',
-                )));
+                ]));
             }
         }
 

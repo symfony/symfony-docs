@@ -78,6 +78,7 @@ Displaying Clickable Links
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 4.3
+
     The feature to display clickable links was introduced in Symfony 4.3.
 
 Commands can use the special ``<href>`` tag to display links similar to the

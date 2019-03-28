@@ -175,7 +175,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             <services>
                 <service id="app.mailer" alias="App\Mail\PhpMailer">
                     <!-- this will display a generic deprecation message... -->
-                    <deprecated />
+                    <deprecated/>
 
                     <!-- ...but you can also define a custom deprecation message -->
                     <deprecated>The "%alias_id%" service alias is deprecated. Don't use it anymore.</deprecated>

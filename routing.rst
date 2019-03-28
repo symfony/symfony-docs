@@ -529,6 +529,7 @@ example to force the generation of ``/blog/1`` instead of ``/blog`` in the
 previous example) add the ``!`` character before the placeholder name: ``/blog/{!page}``
 
 .. versionadded:: 4.3
+
     The feature to force the inclusion of default values in generated URLs was
     introduced in Symfony 4.3.
 
