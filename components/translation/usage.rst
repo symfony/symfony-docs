@@ -450,7 +450,7 @@ loaded/dumped when using this component inside a Symfony application:
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="utf-8"?>
+    <?xml version="1.0" encoding="UTF-8"?>
     <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
            srcLang="fr-FR" trgLang="en-US">
       <file id="messages.en_US">
