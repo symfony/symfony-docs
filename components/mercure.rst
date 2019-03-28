@@ -9,7 +9,7 @@ The Mercure Component
     browsers and other HTTP clients in a convenient, fast, reliable
     and battery-friendly way.
     It is especially useful to publish real-time updates of resources served
-    through web APIs, to reactive web and mobile apps.
+    through web APIs, to reactive web and mobile applications.
 
 The Mercure Component implements the "publisher" part of the Mercure Protocol.
 

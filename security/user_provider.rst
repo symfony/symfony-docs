@@ -208,8 +208,8 @@ Memory User Provider
 --------------------
 
 It's not recommended to use this provider in real applications because of its
-limitations and how difficult it is to manage users. It may be useful in app
-prototypes and for limited apps that don't store users in databases.
+limitations and how difficult it is to manage users. It may be useful in application
+prototypes and for limited applications that don't store users in databases.
 
 This user provider stores all user information in a configuration file,
 including their passwords. That's why the first step is to configure how these
