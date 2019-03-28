@@ -301,4 +301,4 @@ is not about creating a generic framework, but one that is tailored to your
 needs. Stop whenever you see fit, and further evolve the code from there.
 
 .. _`WSGI`: https://www.python.org/dev/peps/pep-0333/#middleware-components-that-play-both-sides
-.. _`Rack`: http://rack.rubyforge.org/
+.. _`Rack`: https://github.com/rack/rack
