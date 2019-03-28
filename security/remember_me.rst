@@ -150,7 +150,6 @@ this:
 .. code-block:: html+twig
 
     {# templates/security/login.html.twig #}
-
     <form method="post">
         {# ... your form fields #}
 
