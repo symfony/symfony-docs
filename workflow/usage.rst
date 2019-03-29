@@ -583,12 +583,12 @@ requires:
     .. code-block:: xml
 
         <!-- config/packages/workflow.xml -->
-        <?xml version="1.0" encoding="utf-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
         >
 
             <framework:config>
@@ -684,10 +684,11 @@ There is a shortcut that works with everything::
 
 In a Flash message in your Controller::
 
-            // $transition = ...; (an instance of Transition)
-            // $workflow is a Workflow instance retrieved from the Registry (see above)
-            $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
-            $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
+    // $transition = ...; (an instance of Transition)
+
+    // $workflow is a Workflow instance retrieved from the Registry (see above)
+    $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
+    $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
 Metadata can also be accessed in a Listener, from the Event object.
 
