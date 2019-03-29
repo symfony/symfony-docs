@@ -85,6 +85,9 @@ interface. Then:
     # Add the original repo as 'gh' remote (needed for the 'gh' tool)
     $ git remote add gh https://github.com/symfony/symfony-docs
 
+    # Configure 'gh' in Git as the remote used by the 'gh' tool
+    $ git config gh.remote gh
+
 Merging Process
 ~~~~~~~~~~~~~~~
 
