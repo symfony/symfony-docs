@@ -240,7 +240,7 @@ Template files live in the ``templates/`` directory, which was created for you a
 when you installed Twig. Create a new ``templates/lucky`` directory with a new
 ``number.html.twig`` file inside:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# templates/lucky/number.html.twig #}
 
