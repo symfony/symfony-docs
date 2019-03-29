@@ -82,7 +82,7 @@ If you want to apply tags automatically for your own services, use the
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" encoding="utf-8"?>
+        <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
                 <!-- this config only applies to the services created by this file -->
