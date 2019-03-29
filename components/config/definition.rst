@@ -403,7 +403,7 @@ has a certain value:
     (``null``, ``true``, ``false``), provide a replacement value in case
     the value is ``*.``
 
-.. code-block:: php
+The following example shows these methods in practice::
 
     $rootNode
         ->children()
