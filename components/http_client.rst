@@ -295,6 +295,68 @@ the ``getHeaders()`` and ``getContent()`` methods throw an appropriate exception
     // return instead an empty string
     $content = $response->getContent(false);
 
+Caching Requests and Responses
+------------------------------
+
+This component provides a special HTTP client via the
+:class:`Symfony\\Component\\HttpClient\\CachingHttpClient` class to cache
+requests and their responses. The actual HTTP caching is implemented using the
+:doc:`HttpKernel component </components/http_kernel>`, so make sure it's
+installed in your application.
+
+.. TODO:  check the PHPdoc of the class:
+.. https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpClient/CachingHttpClient.php
+.. Show some example of caching requests+responses
+
+Scoping Client
+--------------
+
+It's common that some of the HTTP client options depend on the URL of the
+request (e.g. you must set some headers when making requests to GitHub API but
+not for other hosts). If that's your case, this component provides a special
+HTTP client via the :class:`Symfony\\Component\\HttpClient\\ScopingHttpClient`
+class to autoconfigure the HTTP client based on the requested URL::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpClient\ScopingHttpClient;
+
+    $client = HttpClient::create();
+    $httpClient = new ScopingHttpClient($client, [
+        // the key is a regexp which must match the beginning of the request URL
+        'https://api\.github\.com/' => [
+            'headers' => [
+                'Accept' => 'application/vnd.github.v3+json',
+                'Authorization' => 'token '.$githubToken,
+            ],
+        ],
+
+        // use a '*' wildcard to apply some options to all requests
+        '*' => [
+            // ...
+        ]
+    ]);
+
+If the request URL is relative (because you use the ``base_uri`` option), the
+scoping HTTP client can't make a match. That's why you can define a third
+optional argument in its constructor which will be considered the default
+regular expression applied to relative URLs::
+
+    // ...
+
+    $httpClient = new ScopingHttpClient($client, [
+        'https://api\.github\.com/' => [
+            'base_uri' => 'https://api.github.com/',
+            // ...
+        ],
+
+        '*' => [
+            // ...
+        ]
+    ],
+        // this is the regexp applied to all relative URLs
+        'https://api\.github\.com/'
+    );
+
 PSR-7 and PSR-18 Compatibility
 ------------------------------
 
