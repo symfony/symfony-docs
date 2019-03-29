@@ -92,9 +92,7 @@ both provide list and type information it is probably better that:
   just mapped properties) are returned.
 * The :class:`Symfony\\Bridge\\Doctrine\\PropertyInfo\\DoctrineExtractor`
   has priority for type information so that entity metadata is used instead
-  of type-hinting to provide more accurate type information.
-
-.. code-block:: php
+  of type-hinting to provide more accurate type information::
 
     use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -357,21 +355,7 @@ ReflectionExtractor
 Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
 provides list, type and access information from setter and accessor methods.
 It can also give the type of a property, and if it is initializable through the
-constructor. It supports return and scalar types for PHP 7.
-
-.. note::
-
-    When using the Symfony framework, this service is automatically registered
-    when the ``property_info`` feature is enabled:
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            property_info:
-                enabled: true
-
-.. code-block:: php
+constructor. It supports return and scalar types for PHP 7::
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
@@ -389,6 +373,18 @@ constructor. It supports return and scalar types for PHP 7.
 
     // Initializable information
     $reflectionExtractor->isInitializable($class, $property);
+
+.. note::
+
+    When using the Symfony framework, this service is automatically registered
+    when the ``property_info`` feature is enabled:
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            property_info:
+                enabled: true
 
 PhpDocExtractor
 ~~~~~~~~~~~~~~~
