@@ -13,9 +13,9 @@ are considered different elements (a string and an integer, respectively).
 
 .. seealso::
 
-    If you want to validate that a given entity property is unique among all
-    entities (e.g. the user email) use the
-    :doc:`UniqueEntity constraint </reference/constraints/UniqueEntity>`.
+    If you want to validate that the value of an entity property is unique among
+    all entities of the same type (e.g. the registration email of all users) use
+    the :doc:`UniqueEntity constraint </reference/constraints/UniqueEntity>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

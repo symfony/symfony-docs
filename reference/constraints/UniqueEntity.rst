@@ -8,8 +8,7 @@ using an email address that already exists in the system.
 .. seealso::
 
     If you want to validate that all the elements of the collection are unique
-    (none of them is present more than once) use the
-    :doc:`Unique constraint </reference/constraints/Unique>`.
+    use the :doc:`Unique constraint </reference/constraints/Unique>`.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`

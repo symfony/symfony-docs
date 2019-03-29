@@ -14,8 +14,7 @@ and that extra keys are not present.
 .. seealso::
 
     If you want to validate that all the elements of the collection are unique
-    (none of them is present more than once) use the
-    :doc:`Unique constraint </reference/constraints/Unique>`.
+    use the :doc:`Unique constraint </reference/constraints/Unique>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
