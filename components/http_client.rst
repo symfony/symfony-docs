@@ -40,38 +40,9 @@ low-level HTTP client that makes requests, like the following ``GET`` request::
     $contentType = $response->getHeaders()['content-type'][0];
     // $contentType = 'application/json'
     $content = $response->getContent();
-    // $content = '{"id":521583,"name":"symfony-docs",...}'
-
-If you are consuming APIs, you should use instead the
-:class:`Symfony\\Component\\HttpClient\\ApiClient` class, which includes
-shortcuts and utilities for common operations::
-
-    use Symfony\Component\HttpClient\ApiClient;
-    use Symfony\Component\HttpClient\HttpClient;
-
-    $httpClient = HttpClient::create();
-    $apiClient = new ApiClient($httpClient);
-
-    $response = $apiClient->post('https://api.github.com/gists', [
-        // this is transformed into the proper Basic authorization header
-        'auth_basic' => ['username', 'password'],
-        // this PHP array is encoded as JSON and added to the request body
-        'json' => [
-            'description' => 'Created by Symfony HttpClient',
-            'public' => true,
-            'files' => [
-                'article.txt' => ['content' => 'Lorem Ipsum ...'],
-            ],
-        ],
-    ]);
-
-    // decodes the JSON body of the response into a PHP array
-    $result = $response->asArray();
-    // $result = [
-    //     'id' => '11b5f...023cf9',
-    //     'url' => 'https://api.github.com/gists/11b5f...023cf9',
-    //     ...
-    // ]
+    // $content = '{"id":521583, "name":"symfony-docs", ...}'
+    $content = $response->toArray();
+    // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
 
 Enabling cURL Support
 ---------------------
@@ -114,25 +85,19 @@ Making Requests
 ---------------
 
 The client created with the ``HttpClient`` class provides a single ``request()``
-method to perform all HTTP requests, whereas the client created with the
-``ApiClient`` class provides a method for each HTTP verb::
+method to perform all kinds of HTTP requests::
 
     $response = $httpClient->request('GET', 'https://...');
     $response = $httpClient->request('POST', 'https://...');
     $response = $httpClient->request('PUT', 'https://...');
     // ...
 
-    $response = $apiClient->get('https://...');
-    $response = $apiClient->post('https://...');
-    $response = $apiClient->put('https://...');
-    // ...
-
 Authentication
 ~~~~~~~~~~~~~~
 
-The HTTP and API clients support different authentication mechanisms. They can
-be defined globally when creating the client (to apply it to all requests) and
-to each request (which overrides any global authentication, if defined)::
+The HTTP client supports different authentication mechanisms. They can be
+defined globally when creating the client (to apply it to all requests) and to
+each request (which overrides any global authentication, if defined)::
 
     // Use the same authentication for all requests
     $httpClient = HttpClient::create([
@@ -198,6 +163,9 @@ processed automatically when making the requests::
         // defining data using a regular string
         'body' => 'raw data',
 
+        // defining data using an array of parameters
+        'body' => ['parameter1' => 'value1', '...'],
+
         // using a closure to generate the uploaded data
         'body' => function () {
             // ...
@@ -210,6 +178,14 @@ processed automatically when making the requests::
 When uploading data with the ``POST`` method, if you don't define the
 ``Content-Type`` HTTP header explicitly, Symfony adds the required
 ``'Content-Type: application/x-www-form-urlencoded'`` header for you.
+
+When uploading JSON payloads, use the ``json`` option instead of ``body``. The
+given content will be JSON-encoded automatically and the request will add the
+``Content-Type: application/json`` automatically too::
+
+    $response = $httpClient->request('POST', 'https://...', [
+        'json' => ['param1' => 'value1', '...'],
+    ]);
 
 Cookies
 ~~~~~~~
@@ -277,9 +253,30 @@ following methods::
 Streaming Responses
 ~~~~~~~~~~~~~~~~~~~
 
+Call to the ``stream()`` method of the HTTP client to get *chunks* of the
+response sequentially instead of waiting for the entire response::
 
-.. TODO:
+    $url = 'https://releases.ubuntu.com/18.04.1/ubuntu-18.04.1-desktop-amd64.iso';
+    $response = $httpClient->request('GET', $url, [
+        // optional: if you don't want to buffer the response in memory
+        'buffer' => false,
+        // optional: to display details about the response progress
+        'on_progress' => function (int $dlNow, int $dlSize, array $info) {
+            // ...
+        },
+    ]);
 
+    // Responses are lazy: this code is executed as soon as headers are received
+    if (200 !== $response->getStatusCode()) {
+        throw new \Exception('...');
+    }
+
+    // get the response contents in chunk and save them in a file
+    // response chunks implement Symfony\Contracts\HttpClient\ChunkInterface
+    $fileHandler = fopen('/ubuntu.iso', 'w');
+    foreach ($httpClient->stream($response) as $chunk) {
+        fwrite($fileHandler, $chunk->getContent(););
+    }
 
 Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
@@ -307,8 +304,8 @@ However, it includes the :class:`Symfony\\Component\\HttpClient\\Psr18Client`
 class, which is an adapter to turn a Symfony ``HttpClientInterface`` into a
 PSR-18 ``ClientInterface``.
 
-Before using it in your app, run the following commands to install the required
-dependencies:
+Before using it in your application, run the following commands to install the
+required dependencies:
 
 .. code-block:: terminal
 
@@ -318,6 +315,20 @@ dependencies:
     # installs an efficient implementation of response and stream factories
     # with autowiring aliases provided by Symfony Flex
     $ composer require nyholm/psr7
+
+Now you can make HTTP requests with the PSR-18 client as follows::
+
+    use Nyholm\Psr7\Factory\Psr17Factory;
+    use Symfony\Component\HttpClient\Psr18Client;
+
+    $psr17Factory = new Psr17Factory();
+    $psr18Client = new Psr18Client();
+
+    $url = 'https://symfony.com/versions.json';
+    $request = $psr17Factory->createRequest('GET', $url);
+    $response = $psr18Client->sendRequest($request);
+
+    $content = json_decode($response->getBody()->getContents(), true);
 
 Symfony Framework Integration
 -----------------------------
