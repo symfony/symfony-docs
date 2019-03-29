@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2019-03-25T08:32:53Z
+
+Docker support docs should be added (see Kevin's presentation -- I can help explain how that works as well of course)
+
+---------------------------------------------------------------------------
+
+by fabpot at 2019-03-25T08:35:54Z
+
+We might need a section on logs as there are quite a few interesting things to mention. First, parsing and colorization to ease debugging, and then, the fact that we aggregate all the logs (web server, Symfony ones, long-running command ones, ...).
+
+---------------------------------------------------------------------------
+
+by fabpot at 2019-03-25T08:43:48Z
+
+A section about env vars would be interesting as well.
