@@ -662,9 +662,8 @@ Then you can access this metadata in your controller as follows::
         ;
 
         // or
-        $workflow
-            ->getMetadataStore()
-            ->getPlaceMetadata('draft')['title'] ?? false
+        $workflow->getMetadataStore()
+            ->getWorkflowMetadata()['title'] ?? false
         ;
 
         // or
