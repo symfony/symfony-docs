@@ -141,7 +141,7 @@ Finally, template files should live in the ``app/Resources/views`` directory. Cr
 a new ``app/Resources/views/lucky`` directory with a new ``number.html.twig`` file
 inside:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# app/Resources/views/lucky/number.html.twig #}
 

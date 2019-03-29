@@ -366,7 +366,6 @@ Next, create the template:
 .. code-block:: html+twig
 
     {# app/Resources/views/registration/register.html.twig #}
-
     {{ form_start(form) }}
         {{ form_row(form.username) }}
         {{ form_row(form.email) }}
