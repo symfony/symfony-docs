@@ -129,6 +129,30 @@ listener class:
     internal Symfony listeners usually range from ``-255`` to ``255`` but your
     own listeners can use any positive or negative integer.
 
+
+.. tip::
+
+    When implementing both the ``\Symfony\Component\EventDispatcher\EventListenerInterface``
+    interface, and the ``__invoke`` method with a type-hinted argument, Symfony
+    uses that type-hint to define the event name.
+    If :ref:`autoconfigure <services-autoconfigure>` is enabled, you neither
+    don't have to manually define the ``kernel.event_listner`` tag.
+    Registering the previous listner could be simplified to:
+
+        // src/EventListener/ExceptionListener.php
+        namespace App\EventListener;
+
+        use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+
+        class ExceptionListener implements EventSubscriberInterface
+        {
+            public static function __invoke(ExceptionEvent $event)
+            {
+                // ...
+            }
+        }
+
+
 .. _events-subscriber:
 
 Creating an Event Subscriber
