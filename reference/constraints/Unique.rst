@@ -29,8 +29,9 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UniqueValidator`
 Basic Usage
 -----------
 
-This constraint can be applied to any property of type array or ``\Traversable``.
-In the following example, ``$contactEmails`` is an array of strings:
+This constraint can be applied to any property of type ``array`` or
+``\Traversable``. In the following example, ``$contactEmails`` is an array of
+strings:
 
 .. configuration-block::
 
@@ -43,7 +44,6 @@ In the following example, ``$contactEmails`` is an array of strings:
 
         class Person
         {
-
             /**
              * @Assert\Unique
              */
