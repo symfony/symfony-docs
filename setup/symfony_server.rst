@@ -153,6 +153,11 @@ to it:
     $ cp symfony php
     # now you can run "php ..." and the "symfony" command will be executed instead
 
+    # other PHP commands can be wrapped too using this trick
+    $ cp symfony php-config
+    $ cp symfony pear
+    $ cp symfony pecl
+
 Local Domain Names
 ------------------
 
