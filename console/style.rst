@@ -365,10 +365,11 @@ of your commands to change their appearance::
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             // Before
-            // $io = new SymfonyStyle($input, $output);
+            $io = new SymfonyStyle($input, $output);
 
             // After
             $io = new CustomStyle($input, $output);
+
             // ...
         }
     }
