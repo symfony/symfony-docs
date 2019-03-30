@@ -137,7 +137,7 @@ listener class:
     uses that type-hint to define the event name.
     If :ref:`autoconfigure <services-autoconfigure>` is enabled, you neither
     don't have to manually define the ``kernel.event_listner`` tag.
-    Registering the previous listner could be simplified to:
+    Registering the previous listener could be simplified to::
 
         // src/EventListener/ExceptionListener.php
         namespace App\EventListener;
