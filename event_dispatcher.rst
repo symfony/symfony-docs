@@ -132,7 +132,7 @@ listener class:
 
 .. tip::
 
-    When implementing both the ``\Symfony\Component\EventDispatcher\EventListenerInterface``
+    When implementing both the :class:`Symfony\\Component\\EventDispatcher\\EventListenerInterface`
     interface, and the ``__invoke`` method with a type-hinted argument, Symfony
     uses that type-hint to define the event name.
     If :ref:`autoconfigure <services-autoconfigure>` is enabled, you neither
@@ -142,16 +142,16 @@ listener class:
         // src/EventListener/ExceptionListener.php
         namespace App\EventListener;
 
+        use Symfony\Component\EventDispatcher\EventListenerInterface;
         use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
-        class ExceptionListener implements EventSubscriberInterface
+        class ExceptionListener implements EventListenerInterface
         {
-            public static function __invoke(ExceptionEvent $event)
+            public function __invoke(ExceptionEvent $event)
             {
                 // ...
             }
         }
-
 
 .. _events-subscriber:
 
