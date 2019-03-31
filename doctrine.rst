@@ -347,9 +347,9 @@ and save it!
     class ProductController extends AbstractController
     {
         /**
-         * @Route("/product", name="create_product"): Response
+         * @Route("/product", name="create_product")
          */
-        public function createProduct()
+        public function createProduct(): Response
         {
             // you can fetch the EntityManager via $this->getDoctrine()
             // or you can add an argument to your action: index(EntityManagerInterface $entityManager)
