@@ -254,7 +254,7 @@ a traditional HTML form that submits to ``/login``:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Security\LoginFormAuthenticator;
 
         $container->loadFromExtension('security', [
