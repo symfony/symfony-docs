@@ -282,7 +282,7 @@ key:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -291,6 +291,7 @@ key:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
                 <rule path="^/_internal/secure"
                     allow-if="'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')"/>
             </config>
@@ -298,12 +299,16 @@ key:
 
     .. code-block:: php
 
-        'access_control' => [
-            [
-                'path' => '^/_internal/secure',
-                'allow_if' => '"127.0.0.1" == request.getClientIp() or is_granted("ROLE_ADMIN")',
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+            'access_control' => [
+                [
+                    'path' => '^/_internal/secure',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or is_granted("ROLE_ADMIN")',
+                ],
             ],
-        ],
+        ]);
 
 In this case, when the user tries to access any URL starting with ``/_internal/secure``,
 they will only be granted access if the IP address is ``127.0.0.1`` or if
@@ -349,16 +354,20 @@ access those URLs via a specific port. This could be useful for example for
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <rule path="^/cart/checkout"
-                role="IS_AUTHENTICATED_ANONYMOUSLY"
-                port="8080"
-            />
+            <config>
+                <!-- ... -->
+                <rule path="^/cart/checkout"
+                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    port="8080"
+                />
+            </config>
         </srv:container>
 
     .. code-block:: php
 
         // config/packages/security.php
         $container->loadFromExtension('security', [
+            // ...
             'access_control' => [
                 [
                     'path' => '^/cart/checkout',
@@ -396,16 +405,20 @@ the user will be redirected to ``https``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <rule path="^/cart/checkout"
-                role="IS_AUTHENTICATED_ANONYMOUSLY"
-                requires-channel="https"
-            />
+            <config>
+                <!-- ... -->
+                <rule path="^/cart/checkout"
+                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    requires-channel="https"
+                />
+            </config>
         </srv:container>
 
     .. code-block:: php
 
         // config/packages/security.php
         $container->loadFromExtension('security', [
+            // ...
             'access_control' => [
                 [
                     'path' => '^/cart/checkout',
