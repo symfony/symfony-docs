@@ -347,9 +347,9 @@ and save it!
     class ProductController extends AbstractController
     {
         /**
-         * @Route("/product", name="product")
+         * @Route("/product", name="create_product"): Response
          */
-        public function index()
+        public function createProduct()
         {
             // you can fetch the EntityManager via $this->getDoctrine()
             // or you can add an argument to your action: index(EntityManagerInterface $entityManager)
@@ -430,9 +430,9 @@ to perform some basic validation tasks::
     class ProductController extends AbstractController
     {
         /**
-         * @Route("/product", name="product")
+         * @Route("/product", name="create_product")
          */
-        public function index(ValidatorInterface $validator)
+        public function createProduct(ValidatorInterface $validator): Response
         {
             $product = new Product();
             $product->setName(null); // The column in database isn't nullable
