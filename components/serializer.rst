@@ -398,7 +398,7 @@ Ignoring Attributes
 
 As an option, there's a way to ignore attributes from the origin object.
 To remove those attributes provide an array via the ``ignored_attributes``
-key in the ``context``` parameter of the desired serializer method::
+key in the ``context`` parameter of the desired serializer method::
 
     use Acme\Person;
     use Symfony\Component\Serializer\Serializer;
@@ -415,7 +415,7 @@ key in the ``context``` parameter of the desired serializer method::
     $serializer = new Serializer([$normalizer], [$encoder]);
     $serializer->serialize($person, 'json', ['ignored_attributes' => 'age']); // Output: {"name":"foo"}
 
-.. versionadded:: 4.2
+.. deprecated:: 4.2
 
     The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes` method was deprecated in Symfony 4.2.
 
