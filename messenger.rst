@@ -410,18 +410,22 @@ while still having them passed to their respective handler:
 Consuming Messages
 ------------------
 
-Once your messages have been routed, you will like to consume your messages in most
-of the cases. To do so, you can use the ``messenger:consume-messages`` command
-like this:
+Once your messages have been routed, you will like to consume your messages in
+most of the cases. To do so, use the ``messenger:consume`` command like this:
 
 .. code-block:: terminal
 
-    $ php bin/console messenger:consume-messages amqp
+    $ php bin/console messenger:consume amqp
 
 The first argument is the receiver's service name. It might have been created by
 your ``transports`` configuration or it can be your own receiver.
 It also requires a ``--bus`` option in case you have multiple buses configured,
 which is the name of the bus to which received messages should be dispatched.
+
+.. versionadded:: 4.3
+
+    The ``messenger:consume`` command was renamed in Symfony 4.3 (previously it
+    was called ``messenger:consume-messages``).
 
 Middleware
 ----------
