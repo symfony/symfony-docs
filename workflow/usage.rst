@@ -515,17 +515,7 @@ You can access the message from a Twig template as follows:
         {% for transition in workflow_all_transitions(article) %}
             {% if not workflow_can(article, transition.name) %}
                 <li>
-                    <strong>{{ transition.name }}</strong>:
-                    <ul>
-                    {% for blocker in workflow_build_transition_blocker_list(article, transition.name) %}
-                        <li>
-                            {{ blocker.message }}
-                            {% if blocker.parameters.expression is defined %}
-                                <code>{{ blocker.parameters.expression }}</code>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ul>
+                    <strong>{{ transition.name }}</strong> is blocked
                 </li>
             {% endif %}
         {% endfor %}
