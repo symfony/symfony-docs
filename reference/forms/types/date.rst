@@ -171,7 +171,7 @@ values for the year, month and day fields::
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
-.. versionadded:: 4.3
+.. deprecated:: 4.3
 
     Using the ``format`` option when the ``html5`` option is enabled is deprecated
     since Symfony 4.3.

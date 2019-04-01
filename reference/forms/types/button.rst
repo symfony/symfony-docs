@@ -71,12 +71,10 @@ Given this translation message:
 
 .. code-block:: yaml
 
-    # translations/messages.en.yml
+    # translations/messages.en.yaml
     form.order.submit_to_company: 'Send an order to %company%'
 
-You can specify the placeholder values as follows:
-
-.. code-block:: php
+You can specify the placeholder values as follows::
 
     use Symfony\Component\Form\Extension\Core\Type\ButtonType;
     // ...

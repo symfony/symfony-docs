@@ -289,9 +289,9 @@ field without having to :doc:`create a custom form type </form/create_custom_fie
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'block_prefix' => 'wrapped_text',
-        ));
+        ]);
     }
 
 .. versionadded:: 4.3
