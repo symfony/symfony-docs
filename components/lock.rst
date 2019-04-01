@@ -224,29 +224,29 @@ MongoDbStore
 .. versionadded:: 4.3
     The MongoDbStore was introduced Symfony 4.3.
 
-The MongoDbStore saves locks on a MongoDB server, it requires a ``\MongoDB\Client``
-connection from `mongodb/mongodb`_.
-This store does not support blocking and expects a TTL to avoid stalled locks::
+The MongoDbStore saves locks on a MongoDB server, it requires a
+``\MongoDB\Client`` connection from `mongodb/mongodb`_. This store does not
+support blocking and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\MongoDbStore;
 
     $mongoClient = new \MongoDB\Client('mongo://localhost/');
 
-    $options = array(
+    $options = [
         'database' => 'my-app',
-    );
+    ];
 
     $store = new MongoDbStore($mongoClient, $options);
 
 The ``MongoDbStore`` takes the following ``$options``:
 
-============ ========= ========================================================================
-Option       Default   Description
-============ ========= ========================================================================
-database               The name of the database [Mandatory]
-collection   ``lock``  The name of the collection
-gcProbablity ``0.001`` Should a TTL Index be created expressed as a probability from 0.0 to 1.0
-============ ========= ========================================================================
+============  =========  ========================================================================
+Option        Default    Description
+============  =========  ========================================================================
+database                 The name of the database [Mandatory]
+collection    ``lock``   The name of the collection
+gcProbablity  ``0.001``  Should a TTL Index be created expressed as a probability from 0.0 to 1.0
+============  =========  ========================================================================
 
 .. _lock-store-pdo:
 
@@ -532,15 +532,11 @@ MongoDbStore
 
 .. caution::
 
-    The locked resouce name is indexed in the ``_id`` field of the
-    lock collection.
-    An indexed field's value in MongoDB can be a maximum of 1024 bytes in
-    length inclusive of structural overhead.
-
-For more details see: https://docs.mongodb.com/manual/reference/limits/#Index-Key-Limit
+    The locked resource name is indexed in the ``_id`` field of the lock
+    collection. Beware that in MongoDB an indexed field's value can be
+    `a maximum of 1024 bytes in length`_ inclusive of structural overhead.
 
 A TTL index MUST BE used on MongoDB 2.2+ to automatically clean up expired locks.
-
 Such an index can be created manually:
 
 .. code-block:: javascript
@@ -551,29 +547,25 @@ Such an index can be created manually:
     )
 
 Alternatively, the method ``MongoDbStore::createTtlIndex(int $expireAfterSeconds = 0)``
-can be called once to create the TTL index during database setup.
-
-For more details see: http://docs.mongodb.org/manual/tutorial/expire-data/
+can be called once to create the TTL index during database setup. Read more
+about `Expire Data from Collections by Setting TTL`_ in MongoDB.
 
 .. tip::
 
-    ``MongoDbStore`` will attempt to automatically create a TTL index on
-    mongodb 2.2+. It's recommended to set constructor option
-    ``gcProbablity = 0.0`` to disable this behaviour if you have manually
-    dealt with TTL index creation.
+    ``MongoDbStore`` will attempt to automatically create a TTL index on MongoDB
+    2.2+. It's recommended to set constructor option ``gcProbablity = 0.0`` to
+    disable this behavior if you have manually dealt with TTL index creation.
 
 .. caution::
 
-    This store relies on all php application and database nodes to have
-    synchronized clocks for lock expiry to occur at the correct time.
-    To ensure locks don't expire prematurely; the lock TTL should be set
-    with enough extra time in ``expireAfterSeconds`` to account for any
-    clock drift between nodes.
+    This store relies on all PHP application and database nodes to have
+    synchronized clocks for lock expiry to occur at the correct time. To ensure
+    locks don't expire prematurely; the lock TTL should be set with enough extra
+    time in ``expireAfterSeconds`` to account for any clock drift between nodes.
 
 ``writeConcern``, ``readConcern`` and ``readPreference`` are not specified by
-MongoDbStore meaning the collection's settings will take effect.
-
-For more details see: https://docs.mongodb.com/manual/applications/replication/
+MongoDbStore meaning the collection's settings will take effect. Read more
+about `Replica Set Read and Write Semantics`_ in MongoDB.
 
 PdoStore
 ~~~~~~~~~~
@@ -702,3 +694,6 @@ are still running.
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`ZooKeeper`: https://zookeeper.apache.org/
+.. _`a maximum of 1024 bytes in length`: https://docs.mongodb.com/manual/reference/limits/#Index-Key-Limit
+.. _`Expire Data from Collections by Setting TTL`: https://docs.mongodb.com/manual/tutorial/expire-data/
+.. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/
