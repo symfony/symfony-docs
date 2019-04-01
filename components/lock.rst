@@ -222,7 +222,8 @@ MongoDbStore
 ~~~~~~~~~~~~
 
 .. versionadded:: 4.3
-    The MongoDbStore was introduced Symfony 4.3.
+
+    The ``MongoDbStore`` was introduced in Symfony 4.3.
 
 The MongoDbStore saves locks on a MongoDB server, it requires a
 ``\MongoDB\Client`` connection from `mongodb/mongodb`_. This store does not
