@@ -328,8 +328,9 @@ to ``database``, the env var will be called ``MYSQL_URL`` instead of
             ]
         ]);
 
-Now you can start the local Symfony server with ``symfony server:start`` and
-Symfony will also start your containers.
+Now you can start the containers and all their services will be exposed. Browse
+any page of your application and check the "Symfony Server" section in the web
+debug toolbar. You'll see that "Docker Compose" is "Up".
 
 SymfonyCloud Integration
 ------------------------
