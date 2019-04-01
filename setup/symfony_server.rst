@@ -244,6 +244,104 @@ server provides a ``run`` command to wrap them as follows:
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
 
+Docker Integration
+------------------
+
+The local Symfony server provides full `Docker`_ integration for projects that
+use it. First, make sure to expose the container ports:
+
+.. code-block:: yaml
+
+    # docker-compose.override.yaml
+    services:
+        database:
+            ports:
+                - "3600"
+
+        redis:
+            ports:
+                - "6379"
+
+        # ...
+
+Then, check your service names and update them if needed (Symfony creates
+environment variables following the name of the services so they can be
+autoconfigured):
+
+.. code-block:: yaml
+
+    # docker-compose.yaml
+    services:
+        # DATABASE_URL
+        database: ...
+        # MONGODB_DATABASE, MONGODB_SERVER
+        mongodb: ...
+        # REDIS_URL
+        redis: ...
+        # ELASTISEARCH_HOST, ELASTICSEARCH_PORT
+        elasticsearch: ...
+        # RABBITMQ_DSN
+        rabbitmq: ...
+
+If you can't or don't want to update the service names, you must update the
+Symfony application configuration to use the new environment variables. For
+example, if you want to keep a service called ``mysql`` instead of renaming it
+to ``database``, the env var will be called ``MYSQL_URL`` instead of
+``DATABASE_URL``, so you must update the configuration as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/doctrine.yaml
+        doctrine:
+            dbal:
+                url: '%env(MYSQL_URL)%'
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/doctrine.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <doctrine:config>
+                <doctrine:dbal
+                    url="%env(MYSQL_URL)%"
+                />
+            </doctrine:config>
+
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/doctrine.php
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
+                'url' => '%env(MYSQL_URL)%',
+            ]
+        ]);
+
+Now you can start the local Symfony server with ``symfony server:start`` and
+Symfony will also start your containers.
+
+SymfonyCloud Integration
+------------------------
+
+The local Symfony server provides full, but optional, integration with
+`SymfonyCloud`_, a service optimized to run your Symfony applications on the
+cloud. It provides features such as creating environments, backups/snapshots,
+and even access to a copy of the production data from your local machine to help
+debug any issues.
+
+`Read SymfonyCloud technical docs`_.
+
 Bonus Features
 --------------
 
@@ -282,18 +380,8 @@ commands from the Symfony server:
     # creates a new project based on the Symfony Demo application
     $ symfony new --demo my_project_name
 
-SymfonyCloud Integration
-------------------------
-
-The local Symfony server provides full, but optional, integration with
-`SymfonyCloud`_, a service optimized to run your Symfony applications on the
-cloud. It provides features such as creating environments, backups/snapshots,
-and even access to a copy of the production data from your local machine to help
-debug any issues.
-
-`Read SymfonyCloud technical docs`_.
-
 .. _`symfony.com/download`: https://symfony.com/download
 .. _`different ways of installing Symfony`: https://symfony.com/download
+.. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
