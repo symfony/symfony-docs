@@ -74,7 +74,7 @@ First, enable ``form_login`` under your firewall:
 
 Now, when the security system initiates the authentication process, it will
 redirect the user to the login form ``/login``. Implementing this login form
-is your job. First, create a new ``SecurityController`` inside a bundle::
+is your job. First, create a new ``SecurityController``::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
