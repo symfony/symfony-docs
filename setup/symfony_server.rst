@@ -325,7 +325,7 @@ to ``database``, the env var will be called ``MYSQL_URL`` instead of
         $container->loadFromExtension('doctrine', [
             'dbal' => [
                 'url' => '%env(MYSQL_URL)%',
-            ]
+            ],
         ]);
 
 Now you can start the containers and all their services will be exposed. Browse
