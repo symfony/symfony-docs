@@ -74,7 +74,7 @@ It then creates the service container before serving requests in its
 :method:`Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle`
 method.
 
-The kernel used in Symfony apps extends from :class:`Symfony\\Component\\HttpKernel\\Kernel`
+The kernel used in Symfony applications extends from :class:`Symfony\\Component\\HttpKernel\\Kernel`
 and uses the :class:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait`.
 The ``Kernel`` class leaves some methods from :class:`Symfony\\Component\\HttpKernel\\KernelInterface`
 unimplemented and the ``MicroKernelTrait`` defines several abstract methods, so
