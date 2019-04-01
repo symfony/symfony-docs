@@ -5,6 +5,11 @@ Validates that a particular field (or fields) in a Doctrine entity is (are)
 unique. This is commonly used, for example, to prevent a new user to register
 using an email address that already exists in the system.
 
+.. seealso::
+
+    If you want to validate that all the elements of the collection are unique
+    use the :doc:`Unique constraint </reference/constraints/Unique>`.
+
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
 Options     - `em`_

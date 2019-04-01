@@ -11,6 +11,11 @@ constraint.
 This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.
 
+.. seealso::
+
+    If you want to validate that all the elements of the collection are unique
+    use the :doc:`Unique constraint </reference/constraints/Unique>`.
+
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `allowExtraFields`_
