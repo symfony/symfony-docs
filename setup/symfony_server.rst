@@ -55,7 +55,7 @@ run the Symfony server in the background:
 Enabling TLS
 ------------
 
-Browsing the secure version of your apps locally is important to detect
+Browsing the secure version of your applications locally is important to detect
 problems with mixed content early, and to run libraries that only run in HTTPS.
 Traditionally this has been painful and complicated to set up, but the Symfony
 server automates everything. First, run this command:
@@ -167,7 +167,7 @@ local IP. However, sometimes it is preferable to associate a domain name to them
 * It's more convenient when you work continuously on the same project because
   port numbers can change but domains don't;
 * The behavior of some applications depend on their domains/subdomains;
-* To have stable endpoints, such as the local redirection URL for Oauth2.
+* To have stable endpoints, such as the local redirection URL for OAuth2.
 
 Setting up the Local Proxy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -279,7 +279,7 @@ commands from the Symfony server:
     # creates a new project based on symfony/website-skeleton
     $ symfony new --full my_project_name
 
-    # creates a new project based on the Symfony Demo application
+    # creates a new project based on symfony/demo
     $ symfony new --demo my_project_name
 
 SymfonyCloud Integration
