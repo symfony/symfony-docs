@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-29T09:40:23Z
+
+> Documents symfony/symfony#30706
+
+I think you mixed some things up, and you meant: https://github.com/symfony/symfony/pull/26555
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-29T16:55:59Z
+
+Travis is failing with this:
+
+```
+/home/travis/build/symfony/symfony-docs/reference/constraints/Unique.rst::
+WARNING: document isn't included in any toctree
+```
+
+But the new file is included in:
+
+https://github.com/symfony/symfony-docs/pull/11247/files#diff-5c99f0007238ae4a681869aa8713c3fdR40
+
+I'm lost :neutral_face:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-30T04:45:11Z
+
+I think you need to include it here
+
+https://github.com/symfony/symfony-docs/blob/master/reference/constraints.rst
+
+Your linked file is just an include but not an include in a toctree
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-01T07:00:16Z
+
+You are right Oskar! Thanks a lot. I've fixed the missing reference.
