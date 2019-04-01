@@ -139,7 +139,7 @@ other encryption or auth mode, you must override those values
 
 If your Gmail account uses 2-Step-Verification, you must `generate an App password`_
 and use it as the value of the mailer password. You must also ensure that you
-`allow less secure apps to access your Gmail account`_.
+`allow less secure applications to access your Gmail account`_.
 
 Using Cloud Services to Send Emails
 -----------------------------------
@@ -175,5 +175,5 @@ Learn more
 .. _`SendGrid`: https://sendgrid.com/
 .. _`Amazon SES`: http://aws.amazon.com/ses/
 .. _`generate an App password`: https://support.google.com/accounts/answer/185833
-.. _`allow less secure apps to access your Gmail account`: https://support.google.com/accounts/answer/6010255
+.. _`allow less secure applications to access your Gmail account`: https://support.google.com/accounts/answer/6010255
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt

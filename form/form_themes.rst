@@ -18,8 +18,8 @@ great when using some of the most popular CSS frameworks. Each theme is defined
 in a single Twig template:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element
-  and it's the theme used by default in Symfony apps unless you configure it as
-  explained later in this article.
+  and it's the theme used by default in Symfony applications unless you configure
+  it as explained later in this article.
 * `form_table_layout.html.twig`_, wraps the entire form inside a ``<table>``
   element and each form field inside a ``<tr>`` element.
 * `bootstrap_3_layout.html.twig`_, wraps each form field inside a ``<div>``
@@ -157,9 +157,9 @@ Disabling Global Themes for Single Forms
 Global form themes defined in the app are always applied to all forms, even
 those which use the ``form_theme`` tag to apply their own themes. You may want
 to disable this for example when creating an admin interface for a bundle which
-can be installed on different Symfony apps (and so you can't control what themes
-are enabled globally). To do that, add the ``only`` keyword after the list of
-form themes:
+can be installed on different Symfony applications (and so you can't control what
+themes are enabled globally). To do that, add the ``only`` keyword after the list
+of form themes:
 
 .. code-block:: twig
 
@@ -432,7 +432,7 @@ Creating a Form Theme in a Separate Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is recommended when creating form themes that are used in your entire app
-or even reused in different Symfony apps. You only need to create a Twig
+or even reused in different Symfony applications. You only need to create a Twig
 template somewhere and follow the :ref:`form fragment naming <form-fragment-naming>`
 rules to know which Twig blocks to define.
 

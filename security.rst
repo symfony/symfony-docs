@@ -109,7 +109,7 @@ here: :doc:`User Providers </security/user_provider>`.
 2c) Encoding Passwords
 ----------------------
 
-Not all apps have "users" that need passwords. *If* your users have passwords,
+Not all applications have "users" that need passwords. *If* your users have passwords,
 you can control how those passwords are encoded in ``security.yaml``. The ``make:user``
 command will pre-configure this for you:
 
