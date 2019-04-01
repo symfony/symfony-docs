@@ -1,6 +1,6 @@
 .. index::
     single: Polyfill
-    single: Normalizer
+    single: MessageFormatter
     single: Components; Polyfill
 
 The Symfony Polyfill / Intl MessageFormatter Component
