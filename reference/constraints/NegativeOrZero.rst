@@ -24,7 +24,7 @@ Basic Usage
 
 The following constraint ensure that:
 
-* the ``withdraw`` of a  bankaccount ``TransferItem`` is a negative number or equal to zero
+* the ``level`` of a ``UnderGroundGarage`` is a negative number or equal to zero
 
 .. configuration-block::
 
@@ -35,20 +35,20 @@ The following constraint ensure that:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class TransferItem
+        class UnderGroundGarage
         {
             /**
              * @Assert\NegativeOrZero
              */
-            protected $withdraw;
+            protected $level;
         }
 
     .. code-block:: yaml
 
         # config/validator/validation.yaml
-        App\Entity\TransferItem:
+        App\Entity\UnderGroundGarage:
             properties:
-                withdraw:
+                level:
                     - NegativeOrZero
 
     .. code-block:: xml
@@ -59,8 +59,8 @@ The following constraint ensure that:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="App\Entity\TransferItem">
-                <property name="withdraw">
+            <class name="App\Entity\UnderGroundGarage">
+                <property name="level">
                     <constraint name="NegativeOrZero"></constraint>
                 </property>
             </class>
@@ -68,17 +68,17 @@ The following constraint ensure that:
 
     .. code-block:: php
 
-        // src/Entity/TransferItem.php
+        // src/Entity/UnderGroundGarage.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class TransferItem
+        class UnderGroundGarage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('withdraw', new Assert\NegativeOrZero());
+                $metadata->addPropertyConstraint('level', new Assert\NegativeOrZero());
             }
         }
 
