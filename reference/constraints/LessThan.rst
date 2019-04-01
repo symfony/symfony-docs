@@ -36,7 +36,6 @@ The following constraints ensure that:
 
         class Person
         {
-
             /**
              * @Assert\LessThan(5)
              */
