@@ -141,6 +141,9 @@ has some methods to filter the input values:
 
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
     Returns the parameter value converted to integer;
+    
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getArray`
+    Returns the parameter value converted to array;
 
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
