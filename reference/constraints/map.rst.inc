@@ -40,10 +40,10 @@ Comparison Constraints
 
 Number Constraints
 ~~~~~~~~~~~~~~~~~~
-* :doc:`Date </reference/constraints/Positive>`
-* :doc:`Date </reference/constraints/PositiveOrZero>`
-* :doc:`Date </reference/constraints/Negative>`
-* :doc:`Date </reference/constraints/NegativeOrZero>`
+* :doc:`Positive </reference/constraints/Positive>`
+* :doc:`PositiveOrZero </reference/constraints/PositiveOrZero>`
+* :doc:`Negative </reference/constraints/Negative>`
+* :doc:`NegativeOrZero </reference/constraints/NegativeOrZero>`
 
 Date Constraints
 ~~~~~~~~~~~~~~~~

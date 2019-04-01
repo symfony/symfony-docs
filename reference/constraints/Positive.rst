@@ -77,6 +77,30 @@ The following constraint ensure that:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('income', new Assert\Positive();
+                $metadata->addPropertyConstraint('income', new Assert\Positive());
             }
         }
+
+Available Options
+-----------------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be positive.``
+
+The default message supplied when the value is not greater than zero.
+
+You can use the following parameters in this message:
+
+=============================  ================================================
+Parameter                      Description
+=============================  ================================================
+``{{ compared_value }}``       Always zero
+``{{ compared_value_type }}``  The expected value type
+``{{ value }}``                The current (invalid) value
+=============================  ================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc

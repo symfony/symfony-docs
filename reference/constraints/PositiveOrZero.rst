@@ -78,6 +78,30 @@ The following constraint ensure that:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('siblings', new Assert\PositiveOrZero();
+                $metadata->addPropertyConstraint('siblings', new Assert\PositiveOrZero());
             }
         }
+
+Available Options
+-----------------
+
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+message
+~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be either positive or zero.``
+
+The default message supplied when the value is not greater than or equal to zero.
+
+You can use the following parameters in this message:
+
+=============================  ================================================
+Parameter                      Description
+=============================  ================================================
+``{{ compared_value }}``       Always zero
+``{{ compared_value_type }}``  The expected value type
+``{{ value }}``                The current (invalid) value
+=============================  ================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
