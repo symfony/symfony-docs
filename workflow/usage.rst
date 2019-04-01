@@ -176,7 +176,7 @@ As configured, the following property is used by the marking store::
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
 
-    $post = new \AppBundle\Entity\BlogPost();
+    $post = new AppBundle\Entity\BlogPost();
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
@@ -339,7 +339,7 @@ See example to make sure no blog post without title is moved to "review"::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var \AppBundle\Entity\BlogPost $post */
+            /** @var AppBundle\Entity\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
