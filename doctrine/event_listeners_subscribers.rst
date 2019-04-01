@@ -241,8 +241,8 @@ numbers mean that listeners are invoked earlier.
     .. code-block:: php
 
         // config/services.php
-        use AppBundle\EventListener\MyHighPriorityListener;
-        use AppBundle\EventListener\MyLowPriorityListener;
+        use App\EventListener\MyHighPriorityListener;
+        use App\EventListener\MyLowPriorityListener;
 
         $container
             ->autowire(MyHighPriorityListener::class)
