@@ -346,8 +346,11 @@ need to escape the percent signs (``%``) by doubling them.
 
         // /path/to/guest/.../file will be opened
         // as /path/to/host/.../file on the host
-        // and /foo/.../file as /bar/.../file also
-        'myide://%f:%l&/path/to/guest/>/path/to/host/&/foo/>/bar/&...'
+        // and /var/www/app/ as /projects/my_project/ also
+        'myide://%%f:%%l&/path/to/guest/>/path/to/host/&/var/www/app/>/projects/my_project/&...'
+        
+        // example for PhpStorm
+        'phpstorm://open?file=%%f&line=%%l&/var/www/app/>/projects/my_project/'
 
 .. _reference-framework-test:
 
