@@ -50,8 +50,8 @@ the available blog posts for this imaginary blog application:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('blog', new Route('/blog', [
@@ -105,8 +105,8 @@ entries? Update the route to have a new ``{page}`` placeholder:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('blog', new Route('/blog/{page}', [
@@ -166,8 +166,8 @@ This is done by including it in the ``defaults`` collection:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('blog', new Route('/blog/{page}', [

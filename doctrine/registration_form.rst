@@ -43,9 +43,9 @@ With some validation added, your class may look something like this::
     namespace AppBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
-    use Symfony\Component\Validator\Constraints as Assert;
     use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Validator\Constraints as Assert;
 
     /**
      * @ORM\Entity
@@ -189,12 +189,12 @@ Next, create the form for the ``User`` entity::
 
     use AppBundle\Entity\User;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\EmailType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-    use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
     class UserType extends AbstractType
     {
@@ -237,8 +237,8 @@ into the database::
     // src/AppBundle/Controller/RegistrationController.php
     namespace AppBundle\Controller;
 
-    use AppBundle\Form\UserType;
     use AppBundle\Entity\User;
+    use AppBundle\Form\UserType;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
@@ -351,8 +351,8 @@ the :ref:`user password encoding <security-encoding-user-password>` article.
         .. code-block:: php
 
             // app/config/routing.php
-            use Symfony\Component\Routing\RouteCollection;
             use Symfony\Component\Routing\Route;
+            use Symfony\Component\Routing\RouteCollection;
 
             $routes = new RouteCollection();
             $routes->add('user_registration', new Route('/register', [
@@ -430,9 +430,10 @@ To do this, add a ``termsAccepted`` field to your form, but set its
 
     // src/AppBundle/Form/UserType.php
     // ...
-    use Symfony\Component\Validator\Constraints\IsTrue;
+
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Validator\Constraints\IsTrue;
 
     class UserType extends AbstractType
     {

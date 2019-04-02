@@ -114,9 +114,9 @@ duplicated service definitions:
 
     .. code-block:: php
 
-        use AppBundle\Repository\DoctrineUserRepository;
-        use AppBundle\Repository\DoctrinePostRepository;
         use AppBundle\Repository\BaseDoctrineRepository;
+        use AppBundle\Repository\DoctrinePostRepository;
+        use AppBundle\Repository\DoctrineUserRepository;
         use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -223,9 +223,9 @@ the child class:
 
     .. code-block:: php
 
-        use AppBundle\Repository\DoctrineUserRepository;
-        use AppBundle\Repository\DoctrinePostRepository;
         use AppBundle\Repository\BaseDoctrineRepository;
+        use AppBundle\Repository\DoctrinePostRepository;
+        use AppBundle\Repository\DoctrineUserRepository;
         use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
         // ...

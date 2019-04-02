@@ -42,9 +42,9 @@ A Customer entity::
     // src/AppBundle/Entity/Customer.php
     namespace AppBundle\Entity;
 
-    use Doctrine\ORM\Mapping as ORM;
     use Acme\CustomerBundle\Entity\Customer as BaseCustomer;
     use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
+    use Doctrine\ORM\Mapping as ORM;
 
     /**
      * @ORM\Entity
@@ -61,8 +61,8 @@ An Invoice entity::
     // src/Acme/InvoiceBundle/Entity/Invoice.php
     namespace Acme\InvoiceBundle\Entity;
 
-    use Doctrine\ORM\Mapping as ORM;
     use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
+    use Doctrine\ORM\Mapping as ORM;
 
     /**
      * Represents an Invoice.

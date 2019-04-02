@@ -1170,8 +1170,8 @@ Next, you'll need to create a route for this URL (but not a controller):
     ..  code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('logout', new Route('/logout'));

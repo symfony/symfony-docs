@@ -66,8 +66,8 @@ to your controller, and as attributes of the ``Request`` object:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('blog', new Route('/blog/{page}', [

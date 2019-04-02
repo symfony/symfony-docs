@@ -115,9 +115,9 @@ header value::
     namespace AppBundle\Controller;
 
     // ...
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\Request;
     use AppBundle\Entity\Article;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ArticleController extends Controller
     {
@@ -175,8 +175,8 @@ exposing a simple and efficient pattern::
     namespace AppBundle\Controller;
 
     // ...
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ArticleController extends Controller
     {

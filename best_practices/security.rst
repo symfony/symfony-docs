@@ -259,11 +259,11 @@ the same ``getAuthorEmail()`` logic you used above::
 
     namespace AppBundle\Security;
 
+    use AppBundle\Entity\Post;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use AppBundle\Entity\Post;
 
     class PostVoter extends Voter
     {

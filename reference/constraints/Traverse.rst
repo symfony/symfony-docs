@@ -30,8 +30,8 @@ configure the ``Traverse`` constraint on the ``Book`` class.
         // src/AppBundle/Entity/Book.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Constraints as Assert;
         use Doctrine\ORM\Mapping as ORM;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         /**
          * @ORM\Entity

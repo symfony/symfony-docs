@@ -316,8 +316,8 @@ If you use the :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader` you
 have to provide the name of a PHP file which returns a :class:`Symfony\\Component\\Routing\\RouteCollection`::
 
     // RouteProvider.php
-    use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
+    use Symfony\Component\Routing\RouteCollection;
 
     $routes = new RouteCollection();
     $routes->add(
@@ -453,8 +453,8 @@ routes with UTF-8 characters:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('route1', new Route('/category/{name}',
@@ -534,8 +534,8 @@ You can also include UTF-8 strings as routing requirements:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('route2', new Route('/default/{default}',

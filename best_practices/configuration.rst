@@ -137,8 +137,8 @@ whereas they cannot access the container parameters::
 
     namespace AppBundle\Repository;
 
-    use Doctrine\ORM\EntityRepository;
     use AppBundle\Entity\Post;
+    use Doctrine\ORM\EntityRepository;
 
     class PostRepository extends EntityRepository
     {

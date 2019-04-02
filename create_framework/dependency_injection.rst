@@ -97,13 +97,13 @@ container:
 Create a new file to host the dependency injection container configuration::
 
     // example.com/src/container.php
+    use Simplex\Framework;
     use Symfony\Component\DependencyInjection;
     use Symfony\Component\DependencyInjection\Reference;
+    use Symfony\Component\EventDispatcher;
     use Symfony\Component\HttpFoundation;
     use Symfony\Component\HttpKernel;
     use Symfony\Component\Routing;
-    use Symfony\Component\EventDispatcher;
-    use Simplex\Framework;
 
     $containerBuilder = new DependencyInjection\ContainerBuilder();
     $containerBuilder->register('context', Routing\RequestContext::class);

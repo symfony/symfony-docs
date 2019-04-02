@@ -296,6 +296,7 @@ workflow leaves a place::
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\Event;
 
+
     class WorkflowLogger implements EventSubscriberInterface
     {
         public function __construct(LoggerInterface $logger)
@@ -340,8 +341,8 @@ list of the guard event names.
 This example stops any blog post being transitioned to "reviewed" if it is
 missing a title::
 
-    use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Workflow\Event\GuardEvent;
 
     class BlogPostReviewListener implements EventSubscriberInterface
     {

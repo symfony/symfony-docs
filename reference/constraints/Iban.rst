@@ -76,8 +76,8 @@ will contain an International Bank Account Number.
         // src/AppBundle/Entity/Transaction.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Transaction
         {

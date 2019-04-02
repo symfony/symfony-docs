@@ -144,10 +144,10 @@ you can also move the logic for creating the ``name`` field to an
     // src/AppBundle/Form/EventListener/AddNameFieldSubscriber.php
     namespace AppBundle\Form\EventListener;
 
-    use Symfony\Component\Form\FormEvent;
-    use Symfony\Component\Form\FormEvents;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
 
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
@@ -209,11 +209,11 @@ Using an event listener, your form might look like this::
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Form\FormEvents;
-    use Symfony\Component\Form\FormEvent;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
 
     class FriendMessageFormType extends AbstractType
     {
@@ -259,8 +259,8 @@ security helper to fill in the listener logic::
     use AppBundle\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Security\Core\Security;
     // ...
 
@@ -376,11 +376,11 @@ sport like this::
     // src/AppBundle/Form/Type/SportMeetupType.php
     namespace AppBundle\Form\Type;
 
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
-    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
     class SportMeetupType extends AbstractType
@@ -443,9 +443,9 @@ The type would now look like::
     namespace AppBundle\Form\Type;
 
     // ...
-    use Symfony\Component\Form\FormInterface;
-    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use AppBundle\Entity\Sport;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    use Symfony\Component\Form\FormInterface;
 
     class SportMeetupType extends AbstractType
     {
@@ -512,10 +512,10 @@ your application. Assume that you have a sport meetup creation controller::
     // src/AppBundle/Controller/MeetupController.php
     namespace AppBundle\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\HttpFoundation\Request;
     use AppBundle\Entity\SportMeetup;
     use AppBundle\Form\Type\SportMeetupType;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
     // ...
 
     class MeetupController extends Controller

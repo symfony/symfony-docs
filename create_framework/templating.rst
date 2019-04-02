@@ -142,8 +142,8 @@ framework does not need to be modified in any way, just create a new
 ``app.php`` file::
 
     // example.com/src/app.php
-    use Symfony\Component\Routing;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing;
 
     function is_leap_year($year = null) {
         if (null === $year) {

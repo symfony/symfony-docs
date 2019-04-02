@@ -82,8 +82,8 @@ the user's current password:
         // src/AppBundle/Form/Model/ChangePassword.php
         namespace AppBundle\Form\Model;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class ChangePassword
         {

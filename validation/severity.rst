@@ -106,8 +106,8 @@ Use the ``payload`` option to configure the error level for each constraint:
         // src/AppBundle/Entity/User.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class User
         {

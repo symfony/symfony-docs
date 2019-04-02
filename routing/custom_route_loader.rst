@@ -180,8 +180,8 @@ of the ``AppBundle``::
     // src/AppBundle/Controller/ExtraController.php
     namespace AppBundle\Controller;
 
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ExtraController extends Controller
     {

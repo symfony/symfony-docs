@@ -56,8 +56,8 @@ Class
 The first optional argument of the ``Definition`` class is the fully qualified
 class name of the object returned when the service is fetched from the container::
 
-    use AppBundle\Config\UserConfigManager;
     use AppBundle\Config\CustomConfigManager;
+    use AppBundle\Config\UserConfigManager;
     use Symfony\Component\DependencyInjection\Definition;
 
     $definition = new Definition(UserConfigManager::class);

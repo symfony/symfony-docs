@@ -59,10 +59,10 @@ can be retrieved via ``/soap?wsdl``::
 
     namespace AppBundle\Controller;
 
+    use AppBundle\Service\HelloService;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
-    use AppBundle\Service\HelloService;
 
     class HelloServiceController extends Controller
     {

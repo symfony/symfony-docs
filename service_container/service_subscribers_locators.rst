@@ -288,8 +288,8 @@ include as many services as needed in it.
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\ServiceLocator;
         use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\DependencyInjection\ServiceLocator;
 
         // ...
 

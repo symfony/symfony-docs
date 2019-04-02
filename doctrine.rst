@@ -520,8 +520,8 @@ a controller, this is pretty easy. Add the following method to the
 
     // ...
     use AppBundle\Entity\Product;
-    use Symfony\Component\HttpFoundation\Response;
     use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\HttpFoundation\Response;
 
     public function createAction()
     {

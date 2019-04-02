@@ -200,8 +200,8 @@ determine which instance is passed.
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\EventDispatcher\EventDispatcher;
         use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+        use Symfony\Component\EventDispatcher\EventDispatcher;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
         // register the compiler pass that handles the 'kernel.event_listener'
@@ -252,8 +252,8 @@ order. Start by creating this custom event class and documenting it::
 
     namespace Acme\Store\Event;
 
-    use Symfony\Component\EventDispatcher\Event;
     use Acme\Store\Order;
+    use Symfony\Component\EventDispatcher\Event;
 
     /**
      * The order.placed event is dispatched each time an order is created
@@ -295,8 +295,8 @@ method notifies all listeners of the given event. It takes two arguments:
 the name of the event to dispatch and the ``Event`` instance to pass to
 each listener of that event::
 
-    use Acme\Store\Order;
     use Acme\Store\Event\OrderPlacedEvent;
+    use Acme\Store\Order;
 
     // the order is somehow created or retrieved
     $order = new Order();
@@ -333,10 +333,10 @@ Take the following example of a subscriber that subscribes to the
 
     namespace Acme\Store\Event;
 
+    use Acme\Store\Event\OrderPlacedEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
-    use Acme\Store\Event\OrderPlacedEvent;
 
     class StoreSubscriber implements EventSubscriberInterface
     {

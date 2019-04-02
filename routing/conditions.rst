@@ -59,8 +59,8 @@ define arbitrary matching logic, use the ``condition`` routing setting:
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('contact', new Route(

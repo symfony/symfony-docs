@@ -35,8 +35,8 @@ if the service does not exist:
 
         // app/config/services.php
         use AppBundle\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
+        use Symfony\Component\DependencyInjection\Reference;
 
         // ...
 
@@ -93,8 +93,8 @@ call if the service exists and remove the method call if it does not:
 
         // app/config/services.php
         use AppBundle\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
+        use Symfony\Component\DependencyInjection\Reference;
 
         $container
             ->register(NewsletterManager::class)

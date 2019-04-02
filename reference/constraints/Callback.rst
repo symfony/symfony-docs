@@ -78,8 +78,8 @@ Configuration
         // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -210,8 +210,8 @@ You can then use the following configuration to invoke this validator:
         namespace AppBundle\Entity;
 
         use Acme\Validator;
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -238,10 +238,9 @@ constructor of the Callback constraint::
     // src/AppBundle/Entity/Author.php
     namespace AppBundle\Entity;
 
-    use Symfony\Component\Validator\Context\ExecutionContextInterface;
-
-    use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
+    use Symfony\Component\Validator\Mapping\ClassMetadata;
 
     class Author
     {
