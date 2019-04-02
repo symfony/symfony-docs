@@ -11,7 +11,7 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
+        // src/App/Controller/BlogController.php
         use Symfony\Component\Routing\Annotation\Route;
 
         // ...
