@@ -80,9 +80,24 @@ a service like: ``App\Controller\HelloController::index``:
 Invokable Controllers
 ---------------------
 
-If your controller implements the ``__invoke()`` method - popular with the
-Action-Domain-Response (ADR) pattern, you can refer to the service id
-without the method (``App\Controller\HelloController`` for example).
+Controllers can also define a single action using the ``__invoke()`` method,
+which is a common practice when following the `ADR pattern`_
+(Action-Domain-Responder)::
+
+    // src/Controller/Hello.php
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    /**
+     * @Route("/hello/{name}", name="hello")
+     */
+    class Hello
+    {
+        public function __invoke($name = 'World')
+        {
+            return new Response(sprintf('Hello %s!', $name));
+        }
+    }
 
 Alternatives to base Controller Methods
 ---------------------------------------
@@ -141,3 +156,4 @@ If you want to know what type-hints to use for each service, see the
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`ControllerTrait`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`AbstractController`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
+.. _`ADR pattern`: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
