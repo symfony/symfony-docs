@@ -249,8 +249,22 @@ GitHub, click on the **Show all checks** link and finally, click on the
 Build the Documentation Locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Alternatively you can build the documentation on your own computer for testing
-purposes following these steps:
+If you have Docker installed on your machine, run these commands to build the
+docs:
+
+.. code-block:: terminal
+
+    # build the image...
+    $ docker build . -t symfony-docs
+
+    # ...and start the local web server
+    # (if it's already in use, change the '8080' port by any other port)
+    $ docker run --rm -p 8080:80 symfony-docs
+
+You can now read the docs at ``http://127.0.0.1:8080`` (if you use a virtual
+machine, browse its IP instead of localhost; e.g. ``http://192.168.99.100:8080``).
+
+If you don't use Docker, follow these steps to build the docs locally:
 
 #. Install `pip`_ as explained in the `pip installation`_ article;
 
