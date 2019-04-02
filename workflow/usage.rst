@@ -373,7 +373,7 @@ See example to make sure no blog post without title is moved to "review"::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var \App\Entity\BlogPost $post */
+            /** @var App\Entity\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
