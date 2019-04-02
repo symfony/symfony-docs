@@ -291,7 +291,7 @@ This option allows you to move certain choices to the top of your list with a vi
 separator between them and the rest of the options. This option expects an array
 of entity objects::
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
