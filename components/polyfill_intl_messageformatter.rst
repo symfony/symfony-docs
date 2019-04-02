@@ -1,23 +1,22 @@
 .. index::
     single: Polyfill
-    single: ICU
+    single: MessageFormatter
     single: Components; Polyfill
 
-The Symfony Polyfill / Intl ICU Component
-=========================================
+The Symfony Polyfill / Intl MessageFormatter Component
+======================================================
 
-    This component provides a native PHP implementation of several Intl
-    functions and classes to users who run PHP versions without the ``intl``
-    extension.
+    This component provides a fallback implementation for the ``MessageFormatter``
+    class to users who run PHP versions without the ``intl`` extension.
 
 Installation
 ------------
 
 .. code-block:: terminal
 
-    $ composer require symfony/polyfill-intl-icu
+    $ composer require symfony/polyfill-intl-messageformatter
 
-Alternatively, you can clone the `<https://github.com/symfony/polyfill-intl-icu>`_ repository.
+Alternatively, you can clone the `<https://github.com/symfony/polyfill-intl-messageformatter>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -31,18 +30,13 @@ not in your server.
 Provided Classes
 ~~~~~~~~~~~~~~~~
 
-* :phpclass:`Collator`
-* :phpclass:`IntlDateFormatter`
-* :phpclass:`Locale`
-* :phpclass:`NumberFormatter`
+* :phpclass:`IntlException`
+* :phpclass:`MessageFormatter`
 
 Provided Functions
 ~~~~~~~~~~~~~~~~~~
 
-* :phpfunction:`intl_error_name`
-* :phpfunction:`intl_get_error_code`
-* :phpfunction:`intl_get_error_message`
-* :phpfunction:`intl_is_failure`
+* :phpfunction:`msgfmt_format_message`
 
 .. seealso::
 
@@ -50,7 +44,7 @@ Provided Functions
     the Intl PHP extension:
     :doc:`polyfill-intl-grapheme </components/polyfill_intl_grapheme>`,
     :doc:`polyfill-intl-idn </components/polyfill_intl_idn>`,
-    :doc:`polyfill-intl-messageformatter </components/polyfill_intl_messageformatter>`,
+    :doc:`polyfill-intl-icu </components/polyfill_intl_icu>`,
     and :doc:`polyfill-intl-normalizer </components/polyfill_intl_normalizer>`.
 
 .. _`PHP intl extension`: https://secure.php.net/manual/en/book.intl.php
