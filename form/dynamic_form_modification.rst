@@ -237,11 +237,16 @@ The service can be injected into the form via its constructor::
     use Symfony\Component\Security\Core\Security;
     // ...
 
-    private $security;
-
-    public function __construct(Security $security)
+    class FriendMessageFormType extends AbstractType
     {
-        $this->security = $security;
+        private $security;
+
+        public function __construct(Security $security)
+        {
+            $this->security = $security;
+        }
+
+        // ....
     }
 
 Customizing the Form Type
