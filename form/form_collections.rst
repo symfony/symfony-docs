@@ -516,6 +516,7 @@ you will learn about next!).
 
         // src/AppBundle/Entity/Task.php
 
+        // ...
         public function addTag(Tag $tag)
         {
             // for a many-to-many association:
