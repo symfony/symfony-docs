@@ -57,7 +57,7 @@ methods to compose the entire email message::
         ->html('<h1>Lorem ipsum</h1> <p>...</p>')
     ;
 
-This purpose of this component is to create the email messages. Use the
+This only purpose of this component is to create the email messages. Use the
 :doc:`Mailer component </components/mailer>` to actually send them. In Symfony
 applications, it's easier to use the :doc:`Mailer integration </email>`.
 
