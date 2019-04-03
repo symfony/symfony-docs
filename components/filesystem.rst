@@ -26,10 +26,10 @@ endpoint for filesystem operations::
     use Symfony\Component\Filesystem\Filesystem;
     use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
-    $fileSystem = new Filesystem();
+    $filesystem = new Filesystem();
 
     try {
-        $fileSystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
+        $filesystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
     } catch (IOExceptionInterface $exception) {
         echo "An error occurred while creating your directory at ".$exception->getPath();
     }
@@ -53,7 +53,7 @@ mkdir
 On POSIX filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
-    $fileSystem->mkdir('/tmp/photos', 0700);
+    $filesystem->mkdir('/tmp/photos', 0700);
 
 .. note::
 
@@ -79,11 +79,11 @@ presence of one or more files or directories and returns ``false`` if any of
 them is missing::
 
     // if this absolute directory exists, returns true
-    $fileSystem->exists('/tmp/photos');
+    $filesystem->exists('/tmp/photos');
 
     // if rabbit.jpg exists and bottle.png does not exist, returns false
     // non-absolute paths are relative to the directory where the running PHP script is stored
-    $fileSystem->exists(['rabbit.jpg', 'bottle.png']);
+    $filesystem->exists(['rabbit.jpg', 'bottle.png']);
 
 .. note::
 
@@ -100,10 +100,10 @@ source modification date is later than the target. This behavior can be overridd
 by the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
-    $fileSystem->copy('image-ICC.jpg', 'image.jpg');
+    $filesystem->copy('image-ICC.jpg', 'image.jpg');
 
     // image.jpg will be overridden
-    $fileSystem->copy('image-ICC.jpg', 'image.jpg', true);
+    $filesystem->copy('image-ICC.jpg', 'image.jpg', true);
 
 touch
 ~~~~~
@@ -113,11 +113,11 @@ modification time for a file. The current time is used by default. You can set
 your own with the second argument. The third argument is the access time::
 
     // sets modification time to the current timestamp
-    $fileSystem->touch('file.txt');
+    $filesystem->touch('file.txt');
     // sets modification time 10 seconds in the future
-    $fileSystem->touch('file.txt', time() + 10);
+    $filesystem->touch('file.txt', time() + 10);
     // sets access time 10 seconds in the past
-    $fileSystem->touch('file.txt', time(), time() - 10);
+    $filesystem->touch('file.txt', time(), time() - 10);
 
 .. note::
 
@@ -131,9 +131,9 @@ chown
 a file. The third argument is a boolean recursive option::
 
     // sets the owner of the lolcat video to www-data
-    $fileSystem->chown('lolcat.mp4', 'www-data');
+    $filesystem->chown('lolcat.mp4', 'www-data');
     // changes the owner of the video directory recursively
-    $fileSystem->chown('/video', 'www-data', true);
+    $filesystem->chown('/video', 'www-data', true);
 
 .. note::
 
@@ -147,9 +147,9 @@ chgrp
 a file. The third argument is a boolean recursive option::
 
     // sets the group of the lolcat video to nginx
-    $fileSystem->chgrp('lolcat.mp4', 'nginx');
+    $filesystem->chgrp('lolcat.mp4', 'nginx');
     // changes the group of the video directory recursively
-    $fileSystem->chgrp('/video', 'nginx', true);
+    $filesystem->chgrp('/video', 'nginx', true);
 
 .. note::
 
@@ -163,9 +163,9 @@ chmod
 permissions of a file. The fourth argument is a boolean recursive option::
 
     // sets the mode of the video to 0600
-    $fileSystem->chmod('video.ogg', 0600);
+    $filesystem->chmod('video.ogg', 0600);
     // changes the mod of the src directory recursively
-    $fileSystem->chmod('src', 0700, 0000, true);
+    $filesystem->chmod('src', 0700, 0000, true);
 
 .. note::
 
@@ -178,7 +178,7 @@ remove
 :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` deletes files,
 directories and symlinks::
 
-    $fileSystem->remove(['symlink', '/path/to/directory', 'activity.log']);
+    $filesystem->remove(['symlink', '/path/to/directory', 'activity.log']);
 
 .. note::
 
@@ -192,9 +192,9 @@ rename
 of a single file or directory::
 
     // renames a file
-    $fileSystem->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
+    $filesystem->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
     // renames a directory
-    $fileSystem->rename('/tmp/files', '/path/to/store/files');
+    $filesystem->rename('/tmp/files', '/path/to/store/files');
 
 symlink
 ~~~~~~~
@@ -204,10 +204,10 @@ symbolic link from the target to the destination. If the filesystem does not
 support symbolic links, a third boolean argument is available::
 
     // creates a symbolic link
-    $fileSystem->symlink('/path/to/source', '/path/to/destination');
+    $filesystem->symlink('/path/to/source', '/path/to/destination');
     // duplicates the source directory if the filesystem
     // does not support symbolic links
-    $fileSystem->symlink('/path/to/source', '/path/to/destination', true);
+    $filesystem->symlink('/path/to/source', '/path/to/destination', true);
 
 readlink
 ~~~~~~~~
@@ -223,10 +223,10 @@ The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method provid
 by the Filesystem component always behaves in the same way::
 
     // returns the next direct target of the link without considering the existence of the target
-    $fileSystem->readlink('/path/to/link');
+    $filesystem->readlink('/path/to/link');
 
     // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
-    $fileSystem->readlink('/path/to/link', true);
+    $filesystem->readlink('/path/to/link', true);
 
 Its behavior is the following::
 
@@ -247,12 +247,12 @@ makePathRelative
 absolute paths and returns the relative path from the second path to the first one::
 
     // returns '../'
-    $fileSystem->makePathRelative(
+    $filesystem->makePathRelative(
         '/var/lib/symfony/src/Symfony/',
         '/var/lib/symfony/src/Symfony/Component'
     );
     // returns 'videos/'
-    $fileSystem->makePathRelative('/tmp/videos', '/tmp')
+    $filesystem->makePathRelative('/tmp/videos', '/tmp')
 
 mirror
 ~~~~~~
@@ -262,7 +262,7 @@ contents of the source directory into the target one (use the
 :method:`Symfony\\Component\\Filesystem\\Filesystem::copy` method to copy single
 files)::
 
-    $fileSystem->mirror('/path/to/source', '/path/to/target');
+    $filesystem->mirror('/path/to/source', '/path/to/target');
 
 isAbsolutePath
 ~~~~~~~~~~~~~~
@@ -271,13 +271,13 @@ isAbsolutePath
 ``true`` if the given path is absolute, ``false`` otherwise::
 
     // returns true
-    $fileSystem->isAbsolutePath('/tmp');
+    $filesystem->isAbsolutePath('/tmp');
     // returns true
-    $fileSystem->isAbsolutePath('c:\\Windows');
+    $filesystem->isAbsolutePath('c:\\Windows');
     // returns false
-    $fileSystem->isAbsolutePath('tmp');
+    $filesystem->isAbsolutePath('tmp');
     // returns false
-    $fileSystem->isAbsolutePath('../dir');
+    $filesystem->isAbsolutePath('../dir');
 
 tempnam
 ~~~~~~~
@@ -296,7 +296,7 @@ file first and then moves it to the new file location when it's finished.
 This means that the user will always see either the complete old file or
 complete new file (but never a partially-written file)::
 
-    $fileSystem->dumpFile('file.txt', 'Hello World');
+    $filesystem->dumpFile('file.txt', 'Hello World');
 
 The ``file.txt`` file contains ``Hello World`` now.
 
@@ -306,7 +306,7 @@ appendToFile
 :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
 contents at the end of some file::
 
-    $fileSystem->appendToFile('logs.txt', 'Email sent to user@example.com');
+    $filesystem->appendToFile('logs.txt', 'Email sent to user@example.com');
 
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
