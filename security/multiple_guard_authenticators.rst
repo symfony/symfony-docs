@@ -71,7 +71,7 @@ This is how your security configuration can look in action:
                         'entry_point' => '',
                         'authenticators' => [
                             LoginFormAuthenticator::class,
-                            FacebookConnectAuthenticator::class'
+                            FacebookConnectAuthenticator::class,
                         ],
                     ],
                 ],
