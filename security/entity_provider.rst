@@ -345,7 +345,6 @@ This extends :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`,
 so you only need the new interface::
 
     // src/AppBundle/Entity/User.php
-
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
     // ...
 

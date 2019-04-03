@@ -133,7 +133,6 @@ putting *everything* in ``index.php``, create a new ``app/AppKernel.php`` to
 hold the kernel. Now it looks like this::
 
     // app/AppKernel.php
-
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
     use Symfony\Component\Config\Loader\LoaderInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -298,7 +297,6 @@ Finally, you need a front controller to boot and run the application. Create a
 ``web/index.php``::
 
     // web/index.php
-
     use Symfony\Component\HttpFoundation\Request;
 
     require __DIR__.'/../app/AppKernel.php';

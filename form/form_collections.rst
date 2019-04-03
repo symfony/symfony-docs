@@ -649,7 +649,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/AppBundle/Controller/TaskController.php
-
         use AppBundle\Entity\Task;
         use Doctrine\Common\Collections\ArrayCollection;
 

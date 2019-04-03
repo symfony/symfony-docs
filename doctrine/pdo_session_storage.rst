@@ -146,7 +146,6 @@ a second array argument to ``PdoSessionHandler``:
     .. code-block:: php
 
         // app/config/config.php
-
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
         // ...
 
