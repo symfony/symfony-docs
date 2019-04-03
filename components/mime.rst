@@ -109,8 +109,23 @@ Alternatively, you can pass multiple addresses to each method::
 Message Contents
 ----------------
 
-.. TODO
+The text and HTML contents of the email messages can be strings (usually the
+result of rendering some template) or PHP resources::
 
+    $email = (new Email())
+        // ...
+        // simple contents defined as a string
+        ->text('Lorem ipsum...')
+        ->html('<p>Lorem ipsum...</p>')
+
+        // contents obtained from a PHP resource
+        ->text(fopen('/path/to/emails/user_signup.txt', 'r'))
+        ->html(fopen('/path/to/emails/user_signup.html', 'r'))
+    ;
+
+The :doc:`Mailer component </components/mailer>` provides deep integration with
+the :doc:`Twig template engine </templating>` to give you features such as CSS
+style inlining and HTML/CSS frameworks to create complex HTML email messages.
 
 Embedding Images
 ----------------
@@ -161,14 +176,12 @@ with PHP resources::
         ->attach(fopen('/path/to/documents/contract.doc', 'r'))
     ;
 
-Message Headers
----------------
+Creating Raw Email Messages
+---------------------------
 
-.. TODO
-
-
-Raw Message Composition
------------------------
+This is useful for advanced applications that need absolute control over every
+email part. It's not recommended for applications with regular email
+requirements because it adds a considerable complexity for no real gain.
 
 Before continuing, it's important to have a look at the low level structure of
 an email message. Consider a message which includes some content as both text
@@ -195,11 +208,50 @@ This is the purpose of each MIME message part:
   of an aggregate whole. The most common usage is to display images embedded
   in the message contents.
 
-.. TODO
+When using the low-level :class:`Symfony\\Component\\Mime\\Message` class to
+create the email message, you must keep all the above in mind to define the
+different parts of the email by hand::
 
-Learn More
-----------
+    use Symfony\Component\Mime\Header\Headers;
+    use Symfony\Component\Mime\Message;
+    use Symfony\Component\Mime\Part\Multipart\AlternativePart;
+    use Symfony\Component\Mime\Part\TextPart;
 
-.. TODO: link to Twig integration, etc.
+    $headers = (new Headers())
+        ->addMailboxListHeader('From', ['fabien@symfony.com'])
+        ->addMailboxListHeader('To', ['foo@example.com'])
+        ->addTextHeader('Subject', 'Important Notification')
+    ;
+
+    $textContent = new TextPart('Lorem ipsum...');
+    $htmlContent = new TextPart('<h1>Lorem ipsum</h1> <p>...</p>', 'html');
+    $body = new AlternativePart($textContent, $htmlContent);
+
+    $email = new Message($headers, $body);
+
+Embedding images and attaching files is possible by creating the appropriate
+email multiparts::
+
+    // ...
+    use Symfony\Component\Mime\Part\DataPart;
+    use Symfony\Component\Mime\Part\Multipart\MixedPart;
+    use Symfony\Component\Mime\Part\Multipart\RelatedPart;
+
+    // ...
+    $embeddedImage = new DataPart(fopen('/path/to/images/logo.png', 'r'), null, 'image/png');
+    $imageCid = $embeddedImage->getContentId();
+
+    $attachedFile = new DataPart(fopen('/path/to/documents/terms-of-use.pdf', 'r'), null, 'application/pdf');
+
+    $textContent = new TextPart('Lorem ipsum...');
+    $htmlContent = new TextPart(sprintf(
+        '<img src="cid:%s" /> <h1>Lorem ipsum</h1> <p>...</p>', $imageCid
+    ), 'html');
+    $bodyContent = new AlternativePart($textContent, $htmlContent);
+    $body = new RelatedPart($bodyContent, $embeddedImage);
+
+    $messageParts = new MixedPart($body, $attachedFile);
+
+    $email = new Message($headers, $messageParts);
 
 .. _`MIME`: https://en.wikipedia.org/wiki/MIME
