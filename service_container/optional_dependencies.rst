@@ -81,10 +81,6 @@ call if the service exists and remove the method call if it does not:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer">
-                <!-- ... -->
-                </service>
-
                 <service id="AppBundle\Newsletter\NewsletterManager">
                     <call method="setLogger">
                         <argument type="service" id="logger" on-invalid="ignore"/>
