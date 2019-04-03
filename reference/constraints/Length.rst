@@ -19,6 +19,7 @@ Options     - `charset`_
             - `maxMessage`_
             - `min`_
             - `minMessage`_
+            - `normalizer`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Length`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator`
@@ -213,4 +214,5 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
+.. include:: /reference/constraints/_normalizer-option.rst.inc
 .. include:: /reference/constraints/_payload-option.rst.inc
