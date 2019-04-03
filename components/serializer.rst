@@ -799,9 +799,9 @@ Here, we set it to 2 for the ``$child`` property:
 
     .. code-block:: php-annotations
 
-        use Symfony\Component\Serializer\Annotation\MaxDepth;
-
         namespace Acme;
+
+        use Symfony\Component\Serializer\Annotation\MaxDepth;
 
         class MyObj
         {
@@ -979,12 +979,12 @@ When using the component standalone, an implementation of :class:`Symfony\\Compo
 (usually an instance of :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`) must be passed as the 4th
 parameter of the ``ObjectNormalizer``::
 
+    namespace Acme;
+
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-
-    namespace Acme;
 
     class ObjectOuter
     {
