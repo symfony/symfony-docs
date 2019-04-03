@@ -63,7 +63,7 @@ An Invoice entity::
 
     namespace Acme\InvoiceBundle\Entity;
 
-    use Doctrine\ORM\Mapping AS ORM;
+    use Doctrine\ORM\Mapping as ORM;
     use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
 
     /**
