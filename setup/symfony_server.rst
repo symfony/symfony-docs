@@ -283,50 +283,17 @@ autoconfigured):
         # RABBITMQ_DSN
         rabbitmq: ...
 
-If you can't or don't want to update the service names, you must update the
-Symfony application configuration to use the new environment variables. For
-example, if you want to keep a service called ``mysql`` instead of renaming it
-to ``database``, the env var will be called ``MYSQL_URL`` instead of
-``DATABASE_URL``, so you must update the configuration as follows:
+If you can't or don't want to update the service names, you must remap the env
+vars so Symfony can find them. For example, if you want to keep a service called
+``mysql`` instead of renaming it to ``database``, the env var will be called
+``MYSQL_URL`` instead of the ``DATABASE_URL`` env var used in the Symfony
+application, so you add the following to the ``.env.local`` file:
 
-.. configuration-block::
+.. code-block:: bash
 
-    .. code-block:: yaml
-
-        # config/packages/doctrine.yaml
-        doctrine:
-            dbal:
-                url: '%env(MYSQL_URL)%'
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/doctrine.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-            <doctrine:config>
-                <doctrine:dbal
-                    url="%env(MYSQL_URL)%"
-                />
-            </doctrine:config>
-
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'url' => '%env(MYSQL_URL)%',
-            ],
-        ]);
+    # .env.local
+    MYSQL_URL=${DATABASE_URL}
+    # ...
 
 Now you can start the containers and all their services will be exposed. Browse
 any page of your application and check the "Symfony Server" section in the web
