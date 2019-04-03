@@ -311,7 +311,7 @@ some utility methods for Twig templates::
         // ...
 
         // this method defines the path of the Twig template to render
-        ->template('messages/user/signup.html.twig')
+        ->htmlTemplate('messages/user/signup.html.twig')
 
         // this method defines the parameters (name => value) passed to templates
         ->context([
@@ -320,10 +320,11 @@ some utility methods for Twig templates::
         ])
     ;
 
-Once the email object has been created, use the
+Once the email object has been created, you must `set up Twig`_ to define where
+templates are located and then, use the
 :class:`Symfony\\Bridge\\Twig\\Mime\\BodyRenderer` class to render the template
-and update the email message contents with the results. Previously you need to
-`set up Twig`_ to define where templates are located::
+and update the email message contents with the results. All this is done
+automatically when using the component inside a Symfony application::
 
     // ...
     use Symfony\Bridge\Twig\Mime\BodyRenderer;
@@ -358,8 +359,8 @@ method of the ``TemplatedEmail`` class and also to a special variable called
 If you don't define the text content of the message, the ``BodyRenderer()``
 class generates it automatically converting the HTML contents into text. If you
 prefer to define the text content yourself, use the ``text()`` method explained
-in the previous sections or replace the ``template()`` method with these other
-methods::
+in the previous sections or the ``textTemplate()`` method provided by the
+``TemplatedEmail`` class::
 
     use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
@@ -376,68 +377,6 @@ methods::
             // same as before...
         ])
     ;
-
-Embedding Images in Emails with Twig
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Instead of dealing with the ``<img src="cid: ..." />`` syntax explained in the
-previous sections, when using Twig to render email contents you can refer to
-image files as usual. First, define a Twig namespace called ``images`` to
-simplify things later::
-
-    // ...
-
-    $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $templatedLoader->addPath(__DIR__.'/images', 'images');
-    $twig = new Environment($templateLoader);
-
-Now, use the special ``email.image()`` Twig helper to embed the images inside
-the email contents:
-
-.. code-block:: html+twig
-
-    {# '@images/' refers to the Twig namespace defined earlier #}
-    <img src="{{ email.image('@images/logo.png') }}" />
-
-    <h1>Welcome {{ username }}!</h1>
-    {# ... #}
-
-Attaching Files in Emails with Twig
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Similar to embedding images, the first step to attach files using Twig templates
-is to define a dedicated Twig namespace (e.g. ``documents``) to simplify things
-later::
-
-    // ...
-
-    $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $templatedLoader->addPath(__DIR__.'/documents', 'documents');
-    $twig = new Environment($templateLoader);
-
-Now, use the special ``email.attach()`` Twig helper to attach files to the email
-message within the Twig template:
-
-.. code-block:: html+twig
-
-    {# '@documents/' refers to the Twig namespace defined earlier #}
-    {% do email.attach('@documents/terms-of-use.pdf') %}
-
-    <h1>Welcome {{ username }}!</h1>
-    {# ... #}
-
-.. note::
-
-    The `Twig do tag`_ is similar to the ``{{ ... }}`` syntax used to evaluate
-    expressions, but it doesn't generate any output. You can use it to set other
-    email properties:
-
-    .. code-block:: html+twig
-
-        {% do email.priority(3) %}
-
-        <h1>Welcome {{ username }}!</h1>
-        {# ... #}
 
 Inlining CSS Styles in Emails with Twig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
