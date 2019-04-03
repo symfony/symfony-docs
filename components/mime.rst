@@ -254,4 +254,34 @@ email multiparts::
 
     $email = new Message($headers, $messageParts);
 
+Serializing Email Messages
+--------------------------
+
+Email messages created with either the ``Email`` or ``Message`` classes can be
+serialized because they are simple data objects::
+
+    $email = (new Email())
+        ->from('fabien@symfony.com')
+        // ...
+    ;
+
+    $serializedEmail = serialize($email);
+
+If you want to store serialized email messages to recreate them later (e.g. to
+include them in a message sent with the :doc:`Messenger component
+</components/messenger>`) use the ``toString()`` utility method and the
+:class:`Symfony\\Component\\Mime\\RawMessage` class::
+
+    use Symfony\Component\Mime\RawMessage;
+
+    // create the email and serialize it for later reuse
+    $email = (new Email())
+        ->from('fabien@symfony.com')
+        // ...
+    ;
+    $serializedEmail = $email->toString();
+
+    // later, recreate the original message to actually send it
+    $message = new RawMessage($serializedEmail);
+
 .. _`MIME`: https://en.wikipedia.org/wiki/MIME
