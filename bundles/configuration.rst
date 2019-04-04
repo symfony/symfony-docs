@@ -223,7 +223,6 @@ force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
     // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();

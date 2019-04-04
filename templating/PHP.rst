@@ -279,7 +279,6 @@ Here, the ``AppBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
 
     // src/AppBundle/Controller/HelloController.php
-
     class HelloController extends Controller
     {
         public function fancyAction($name, $color)

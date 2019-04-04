@@ -40,7 +40,6 @@ brevity) to explain how to set up and use the ``ResolveTargetEntityListener``.
 A Customer entity::
 
     // src/AppBundle/Entity/Customer.php
-
     namespace AppBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
@@ -60,7 +59,6 @@ A Customer entity::
 An Invoice entity::
 
     // src/Acme/InvoiceBundle/Entity/Invoice.php
-
     namespace Acme\InvoiceBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
@@ -84,7 +82,6 @@ An Invoice entity::
 An InvoiceSubjectInterface::
 
     // src/Acme/InvoiceBundle/Model/InvoiceSubjectInterface.php
-
     namespace Acme\InvoiceBundle\Model;
 
     /**

@@ -51,7 +51,6 @@ Here is how you can configure the Symfony reverse proxy to support the
 ``PURGE`` HTTP method::
 
     // app/AppCache.php
-
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;

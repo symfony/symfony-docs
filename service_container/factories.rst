@@ -72,7 +72,6 @@ configure the service container to use the
     .. code-block:: php
 
         // app/config/services.php
-
         use AppBundle\Email\NewsletterManager;
         use AppBundle\Email\NewsletterManagerStaticFactory;
         // ...
@@ -136,7 +135,6 @@ Configuration of the service container then looks like this:
     .. code-block:: php
 
         // app/config/services.php
-
         use AppBundle\Email\NewsletterManager;
         use AppBundle\Email\NewsletterManagerFactory;
         use Symfony\Component\DependencyInjection\Reference;
@@ -216,7 +214,6 @@ example takes the ``templating`` service as an argument:
     .. code-block:: php
 
         // app/config/services.php
-
         use AppBundle\Email\NewsletterManager;
         use AppBundle\Email\NewsletterManagerFactory;
         use Symfony\Component\DependencyInjection\Reference;

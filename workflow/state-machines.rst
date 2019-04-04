@@ -142,7 +142,6 @@ Below is the configuration for the pull request state machine.
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('framework', [
             // ...
             'workflows' => [

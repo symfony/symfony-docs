@@ -104,7 +104,6 @@ like this:
     .. code-block:: php
 
         // app/config/config.php
-
         $container->loadFromExtension('framework', [
             // ...
             'workflows' => [
