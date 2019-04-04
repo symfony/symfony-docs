@@ -394,7 +394,6 @@ First, install the Console component:
 Create a console application with ``lint:yaml`` as its only command::
 
     // lint.php
-
     use Symfony\Component\Console\Application;
     use Symfony\Component\Yaml\Command\LintCommand;
 

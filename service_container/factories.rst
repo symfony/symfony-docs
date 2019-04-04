@@ -132,6 +132,7 @@ Configuration of the service container then looks like this:
         // config/services.php
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
+        use Symfony\Component\DependencyInjection\Reference;
         // ...
 
         $container->register(NewsletterManagerFactory::class);

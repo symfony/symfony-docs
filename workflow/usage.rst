@@ -117,7 +117,6 @@ like this:
     .. code-block:: php
 
         // config/packages/workflow.php
-
         $container->loadFromExtension('framework', [
             // ...
             'workflows' => [

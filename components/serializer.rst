@@ -245,23 +245,32 @@ The definition of serialization can be specified using annotations, XML
 or YAML. The :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
 that will be used by the normalizer must be aware of the format to use.
 
-Initialize the :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
-like the following::
+The following code shows how to initialize the :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
+for each format:
 
-    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    // For annotations
-    use Doctrine\Common\Annotations\AnnotationReader;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-    // For XML
-    // use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
-    // For YAML
-    // use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
+.. configuration-block::
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-    // For XML
-    // $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
-    // For YAML
-    // $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yaml'));
+    .. code-block:: php-annotations
+
+        use Doctrine\Common\Annotations\AnnotationReader;
+        use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+        use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+
+        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+
+    .. code-block:: yaml
+
+        use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+        use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
+
+        $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yaml'));
+
+    .. code-block:: xml
+
+        use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+        use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
+
+        $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
 .. _component-serializer-attributes-groups-annotations:
 
@@ -966,9 +975,9 @@ Here, we set it to 2 for the ``$child`` property:
 
     .. code-block:: php-annotations
 
-        use Symfony\Component\Serializer\Annotation\MaxDepth;
-
         namespace Acme;
+
+        use Symfony\Component\Serializer\Annotation\MaxDepth;
 
         class MyObj
         {
@@ -1233,12 +1242,12 @@ When using the component standalone, an implementation of :class:`Symfony\\Compo
 (usually an instance of :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`) must be passed as the 4th
 parameter of the ``ObjectNormalizer``::
 
+    namespace Acme;
+
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-
-    namespace Acme;
 
     class ObjectOuter
     {
