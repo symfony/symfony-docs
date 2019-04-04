@@ -282,7 +282,6 @@ Finally, you need a front controller to boot and run the application. Create a
 ``public/index.php``::
 
     // public/index.php
-
     use App\Kernel;
     use Doctrine\Common\Annotations\AnnotationRegistry;
     use Symfony\Component\HttpFoundation\Request;

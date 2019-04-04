@@ -15,6 +15,9 @@ callbacks. This is not necessary if you're using YAML or XML for your mapping.
 
 .. code-block:: php-annotations
 
+    // src/Entity/Product.php
+    use Doctrine\ORM\Mapping as ORM;
+
     /**
      * @ORM\Entity()
      * @ORM\HasLifecycleCallbacks()
@@ -33,6 +36,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
     .. code-block:: php-annotations
 
         // src/Entity/Product.php
+        use Doctrine\ORM\Mapping as ORM;
 
         /**
          * @ORM\PrePersist

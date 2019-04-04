@@ -515,6 +515,7 @@ you will learn about next!).
 
         // src/Entity/Task.php
 
+        // ...
         public function addTag(Tag $tag)
         {
             // for a many-to-many association:
@@ -648,7 +649,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Controller/TaskController.php
-
         use App\Entity\Task;
         use Doctrine\Common\Collections\ArrayCollection;
 

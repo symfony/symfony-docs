@@ -77,7 +77,6 @@ Suppose you need to access the :ref:`EntityManager <doctrine-entity-manager>` ob
 so that you can make a query. First, add this as an argument to your form class::
 
     // src/Form/TaskType.php
-
     use Doctrine\ORM\EntityManagerInterface;
     // ...
 

@@ -236,11 +236,16 @@ service into the form type so you can get the current user object::
     use Symfony\Component\Security\Core\Security;
     // ...
 
-    private $security;
-
-    public function __construct(Security $security)
+    class FriendMessageFormType extends AbstractType
     {
-        $this->security = $security;
+        private $security;
+
+        public function __construct(Security $security)
+        {
+            $this->security = $security;
+        }
+
+        // ....
     }
 
 Customizing the Form Type
@@ -250,7 +255,6 @@ Now that you have all the basics in place you can use the features of the
 security helper to fill in the listener logic::
 
     // src/Form/Type/FriendMessageFormType.php
-
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
