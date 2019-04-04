@@ -226,7 +226,7 @@ you to open the report with details of the sent emails.
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/webprofiler
-                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
+                https://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
 
             <webprofiler:config
                 intercept-redirects="true"

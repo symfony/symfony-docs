@@ -321,7 +321,7 @@ Then, create your groups definition:
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="Acme\MyObj">
                 <attribute name="foo">
@@ -835,7 +835,7 @@ Here, we set it to 2 for the ``$child`` property:
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="Acme\MyObj">
                 <attribute name="child" max-depth="2"/>

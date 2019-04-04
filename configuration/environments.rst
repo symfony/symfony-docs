@@ -74,7 +74,7 @@ accomplished easily and transparently:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/doctrine
-                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <imports>
                 <import resource="config.xml"/>
@@ -120,7 +120,7 @@ configuration file:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/webprofiler
-                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
+                https://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
 
             <imports>
                 <import resource="config.xml"/>
@@ -227,7 +227,7 @@ this code and changing the environment string.
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/doctrine
-                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                    https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
                 <doctrine:dbal logging="%kernel.debug%"/>
 
@@ -316,7 +316,7 @@ The best way to accomplish this is via a new environment called, for example,
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <imports>
                 <import resource="config_prod.xml"/>

@@ -74,7 +74,7 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
       <entity name="AppBundle\Entity\BlogPost" table="blog_post">
         <id name="id" type="bigint" column="id">
           <generator strategy="IDENTITY"/>

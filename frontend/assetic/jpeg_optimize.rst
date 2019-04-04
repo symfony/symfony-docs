@@ -39,7 +39,7 @@ using the ``bin`` option of the ``jpegoptim`` filter:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/assetic
-                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+                https://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <assetic:filter
@@ -96,7 +96,7 @@ to ``true``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/assetic
-                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+                https://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <assetic:filter
@@ -147,7 +147,7 @@ be at the expense of its quality:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/assetic
-                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+                https://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <assetic:filter
@@ -199,7 +199,7 @@ following configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/assetic
-                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+                https://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <assetic:filter
@@ -258,7 +258,7 @@ file:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/assetic
-                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+                https://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <assetic:filter
