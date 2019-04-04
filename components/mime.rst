@@ -133,8 +133,12 @@ Embedding Images
 ----------------
 
 If you want to display images inside your email contents, you must embed them
-instead of adding them as attachments. First, use the ``embed()`` or
-``embedFromPath()`` method to add an image from a file or resource::
+instead of adding them as attachments. When using Twig to render the email
+contents, as explained :ref:`later in this article <embedding-images-in-emails-with-twig>`
+the images are embedded automatically. Otherwise, you need to embed them manually.
+
+First, use the ``embed()`` or ``embedFromPath()`` method to add an image from a
+file or resource::
 
     $email = (new Email())
         // ...
@@ -183,12 +187,13 @@ Creating Raw Email Messages
 
 This is useful for advanced applications that need absolute control over every
 email part. It's not recommended for applications with regular email
-requirements because it adds a considerable complexity for no real gain.
+requirements because it adds complexity for no real gain.
 
 Before continuing, it's important to have a look at the low level structure of
 an email message. Consider a message which includes some content as both text
-and HTML, a single PNG image included in those contents and a PDF file attached
-to it. The MIME standard structures that message as the following tree:
+and HTML, a single PNG image embedded in those contents and a PDF file attached
+to it. The MIME standard allows structuring this message in different ways, but
+the following tree is the one that works on most email clients:
 
 .. code-block:: text
 
@@ -269,10 +274,11 @@ serialized because they are simple data objects::
 
     $serializedEmail = serialize($email);
 
-If you want to store serialized email messages to recreate them later (e.g. to
-include them in a message sent with the :doc:`Messenger component
-</components/messenger>`) use the ``toString()`` utility method and the
-:class:`Symfony\\Component\\Mime\\RawMessage` class::
+A common use case is to store serialized email messages, include them in a
+message sent with the :doc:`Messenger component </components/messenger>` and
+recreate them later when sending them. Use the
+:class:`Symfony\\Component\\Mime\\RawMessage` class to recreate email messages
+from their serialized contents::
 
     use Symfony\Component\Mime\RawMessage;
 
@@ -281,7 +287,7 @@ include them in a message sent with the :doc:`Messenger component
         ->from('fabien@symfony.com')
         // ...
     ;
-    $serializedEmail = $email->toString();
+    $serializedEmail = serialize($email);
 
     // later, recreate the original message to actually send it
     $message = new RawMessage($serializedEmail);
@@ -320,7 +326,7 @@ some utility methods for Twig templates::
         ])
     ;
 
-Once the email object has been created, you must `set up Twig`_ to define where
+Once the email object has been created, you must set up Twig to define where
 templates are located and then, use the
 :class:`Symfony\\Bridge\\Twig\\Mime\\BodyRenderer` class to render the template
 and update the email message contents with the results. All this is done
@@ -333,8 +339,8 @@ automatically when using the component inside a Symfony application::
 
     // when using the Mime component inside a full-stack Symfony application, you
     // don't need to do this Twig setup. You only have to inject the 'twig' service
-    $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $twig = new Environment($templateLoader);
+    $loader = new FilesystemLoader(__DIR__.'/templates');
+    $twig = new Environment($loader);
 
     $renderer = new BodyRenderer($twig);
     // this updates the $email object contents with the result of rendering
@@ -354,13 +360,19 @@ The last step is to create the Twig template used to render the contents:
 
 The Twig template has access to any of the parameters passed in the ``context``
 method of the ``TemplatedEmail`` class and also to a special variable called
-``email`` which gives access to any of the email message properties.
+``email``. This variable is an instance of the
+:class:`Symfony\\Bridge\\Twig\\Mime\\WrappedTemplatedEmail` class which gives
+access to some of the email message properties.
 
-If you don't define the text content of the message, the ``BodyRenderer()``
-class generates it automatically converting the HTML contents into text. If you
-prefer to define the text content yourself, use the ``text()`` method explained
-in the previous sections or the ``textTemplate()`` method provided by the
-``TemplatedEmail`` class::
+When the text content of the message is not defined explicitly, the
+``BodyRenderer()`` class generates it automatically converting the HTML contents
+into text. If you have `league/html-to-markdown`_ installed in your application,
+it uses that to turn HTML into Markdown. Otherwise, it applies the
+:phpfunction:`strip_tags` PHP function to the original HTML contents.
+
+If you prefer to define the text content yourself, use the ``text()`` method
+explained in the previous sections or the ``textTemplate()`` method provided by
+the ``TemplatedEmail`` class::
 
     use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
@@ -377,6 +389,33 @@ in the previous sections or the ``textTemplate()`` method provided by the
             // same as before...
         ])
     ;
+
+.. _embedding-images-in-emails-with-twig:
+
+Embedding Images in Emails with Twig
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of dealing with the ``<img src="cid: ..." />`` syntax explained in the
+previous sections, when using Twig to render email contents you can refer to
+image files as usual. First, define a Twig namespace called ``images`` to
+simplify things later::
+
+    // ...
+
+    $templateLoader = new FilesystemLoader(__DIR__.'/templates');
+    $templatedLoader->addPath(__DIR__.'/images', 'images');
+    $twig = new Environment($templateLoader);
+
+Now, use the special ``email.image()`` Twig helper to embed the images inside
+the email contents:
+
+.. code-block:: html+twig
+
+    {# '@images/' refers to the Twig namespace defined earlier #}
+    <img src="{{ email.image('@images/logo.png') }}" />
+
+    <h1>Welcome {{ username }}!</h1>
+    {# ... #}
 
 Inlining CSS Styles in Emails with Twig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -402,13 +441,11 @@ Now, enable the extension (this is done automatically in Symfony applications)::
     // ...
     use Twig\CssInliner\CssInlinerExtension;
 
-    $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $twig = new Environment($templateLoader);
+    $loader = new FilesystemLoader(__DIR__.'/templates');
+    $twig = new Environment($loader);
     $twig->addExtension(new CssInlinerExtension());
 
-Finally, wrap the entire template contents with the ``inline_css`` filter
-(to do so, it's better to use the `{% filter %} Twig tag`_ instead of the
-traditional ``...|filter`` notation):
+Finally, wrap the entire template contents with the ``inline_css`` filter:
 
 .. code-block:: html+twig
 
@@ -421,7 +458,7 @@ traditional ``...|filter`` notation):
         {# ... #}
     {% endfilter %}
 
-You can also define some or all CSS style in external files and pass them as
+You can also define some or all CSS styles in external files and pass them as
 arguments of the filter:
 
 .. code-block:: html+twig
@@ -456,8 +493,8 @@ Now, enable the extension (this is done automatically in Symfony applications)::
     // ...
     use Twig\Markdown\MarkdownExtension;
 
-    $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $twig = new Environment($templateLoader);
+    $loader = new FilesystemLoader(__DIR__.'/templates');
+    $twig = new Environment($loader);
     $twig->addExtension(new MarkdownExtension());
 
 Finally, use the ``markdown`` filter to convert parts or the entire email
@@ -504,8 +541,8 @@ Now, enable the extension (this is done automatically in Symfony applications)::
     // ...
     use Twig\Inky\InkyExtension;
 
-    $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $twig = new Environment($templateLoader);
+    $loader = new FilesystemLoader(__DIR__.'/templates');
+    $twig = new Environment($loader);
     $twig->addExtension(new InkyExtension());
 
 Finally, use the ``inky`` filter to convert parts or the entire email
@@ -535,7 +572,6 @@ You can combine all filters to create complex email messages:
     {% endfilter %}
 
 .. _`MIME`: https://en.wikipedia.org/wiki/MIME
-.. _`Twig do tag`: https://twig.symfony.com/do
-.. _`{% filter %} Twig tag`: https://twig.symfony.com/doc/2.x/tags/filter.html
+.. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`Markdown syntax`: https://commonmark.org/
 .. _`Inky`: https://foundation.zurb.com/emails.html
