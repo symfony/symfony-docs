@@ -81,9 +81,9 @@ method to return the right project directory::
     {
         // ...
 
-        public function getProjectDir()
+        public function getProjectDir(): string
         {
-            return realpath(__DIR__.'/../');
+            return \dirname(__DIR__);
         }
     }
 
