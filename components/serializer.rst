@@ -252,29 +252,27 @@ that will be used by the normalizer must be aware of the format to use.
 The following code shows how to initialize the :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
 for each format:
 
-.. configuration-block::
+* Annotations in PHP files::
 
-    .. code-block:: php-annotations
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 
-        use Doctrine\Common\Annotations\AnnotationReader;
-        use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-        use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+* XML files::
 
-    .. code-block:: yaml
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
 
-        use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-        use Symfony\Component\Serializer\Mapping\Loader\YamlFileLoader;
+    $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yml'));
 
-        $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yml'));
+* YAML files::
 
-    .. code-block:: xml
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
 
-        use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-        use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
-
-        $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
+    $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
 .. _component-serializer-attributes-groups-annotations:
 
