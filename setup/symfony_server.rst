@@ -256,7 +256,7 @@ use it. First, make sure to expose the container ports:
     services:
         database:
             ports:
-                - "3600"
+                - "3306"
 
         redis:
             ports:
