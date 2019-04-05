@@ -270,8 +270,8 @@ manual steps:
 #. Remove the ``bin/symfony_requirements`` script and if you need a replacement
    for it, use the new `Symfony Requirements Checker`_.
 
-#. Update entry for log directory at ``.gitignore`` and in any other place in order
-   to set ``var/log/``, which previously was ``var/logs/``.
+#. Update the ``.gitignore`` file to replace the existing ``var/logs/`` entry
+   by ``var/log/``, which is the new name for the log directory.
 
 Customizing Flex Paths
 ----------------------
