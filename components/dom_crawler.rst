@@ -74,10 +74,13 @@ tree.
 
 .. note::
 
-    When available, the DomCrawler will use the
-    [html5-php library](https://github.com/Masterminds/html5-php) to parse HTML content.
-    If you need to support specific HTML5 tags ou if you are getting unexpected behaviors
-    using the DomCrawler, you can install the library to fix the problem.
+    If you need better support for HTML5 contents or want to get rid of the
+    inconsistencies of PHP's DOM extension, install the `html5-php library`_.
+    The DomCrawler component uses it automatically when available.
+
+    .. versionadded:: 4.3
+
+        The automatic support of the html5-php library was introduced in Symfony 4.3.
 
 Node Filtering
 ~~~~~~~~~~~~~~
@@ -580,11 +583,12 @@ the whole form or specific field(s)::
     $form->disableValidation();
     $form['country']->select('Invalid value');
 
-.. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
-.. _Packagist: https://packagist.org/packages/symfony/dom-crawler
-
 Learn more
 ----------
 
 * :doc:`/testing`
 * :doc:`/components/css_selector`
+
+.. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
+.. _Packagist: https://packagist.org/packages/symfony/dom-crawler
+.. _`html5-php library`: https://github.com/Masterminds/html5-php
