@@ -183,7 +183,7 @@ If this is the first time you run the proxy, you must follow these additional st
 
 * Open the **network configuration** of your operating system;
 * Find the **proxy settings** and select the **"Automatic Proxy Configuration"**;
-* Set the following URL as its value: ``https://127.0.0.1:7080/proxy.pac``
+* Set the following URL as its value: ``http://127.0.0.1:7080/proxy.pac``
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,7 +202,7 @@ new custom domain.
 
 .. tip::
 
-    Browse the https://127.0.0.1:7080 URL to get the full list of local project
+    Browse the http://127.0.0.1:7080 URL to get the full list of local project
     directories, their custom domains, and port numbers.
 
 When running console commands, add the ``HTTPS_PROXY`` env var to make custom
@@ -210,7 +210,7 @@ domains work:
 
 .. code-block:: terminal
 
-    $ HTTPS_PROXY=https://127.0.0.1:7080 curl https://my-domain.wip
+    $ HTTPS_PROXY=http://127.0.0.1:7080 curl https://my-domain.wip
 
 .. tip::
 
