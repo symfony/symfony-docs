@@ -435,13 +435,15 @@ if you need to use other options during normalization::
         }
     }
 
+To normalize a new allowed value in sub-classes that are being normalized
+in parent classes use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addNormalizer`.
+This way, the ``$value`` argument will receive the previously normalized
+value, otherwise you can prepend the new normalizer by passing ``true`` as
+third argument.
+
 .. versionadded:: 4.3
 
-    To normalize a new allowed value in sub-classes that is being normalized
-    in parent classes use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addNormalizer`.
-    This way, the ``$value`` argument will receive the previously normalized
-    value, otherwise you can prepend the new normalizer by passing ``true`` as
-    third argument.
+    The ``addNormalizer()`` method was introduced in Symfony 4.3.
 
 Default Values that Depend on another Option
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
