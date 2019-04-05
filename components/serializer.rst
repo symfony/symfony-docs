@@ -399,10 +399,6 @@ As for groups, attributes can be selected during both the serialization and dese
 Ignoring Attributes
 -------------------
 
-.. note::
-
-    Using :ref:`attribute groups <component-serializer-attributes-groups>` is considered best practice.
-
 As an option, there's a way to ignore attributes from the origin object.
 To remove those attributes provide an array via the ``ignored_attributes``
 key in the ``context`` parameter of the desired serializer method::
@@ -424,7 +420,9 @@ key in the ``context`` parameter of the desired serializer method::
 
 .. deprecated:: 4.2
 
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes` method was deprecated in Symfony 4.2.
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
+    method that was used as an alternative to the ``ignored_attributes`` option
+    was deprecated in Symfony 4.2.
 
 .. _component-serializer-converting-property-names-when-serializing-and-deserializing:
 
