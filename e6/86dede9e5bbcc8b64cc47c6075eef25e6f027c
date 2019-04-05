@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-02-19T15:10:54Z
+
+@zanbaldwin thanks for providing these docs. They read nicely and we'll merge them when the related code is merged.
+
+A minor comment about the content: we don't mention in the normal text the Symfony version in which features were introduced. Instead, we document the feature without mentioning the version and we add a `.. versionadded:: x.y` directive.
+
+For this specific pull request we should make two changes:
+
+1) Remove *"Starting from Symfony 4.3 .."* from the normal paragraphs.
+2) Include the following at the end of the section that explains the new feature:
+
+```rst
+.. versionadded:: 4.3
+
+    Invokable configurators for services were introduced in Symfony 4.3.
+```
+
+The ending (*"... were introduced in Symfony 4.3."*) is standard for all `versionadded` directives, but you can reword the first part if you want.
+
+If you need any help or have any question about this, please ask. Thanks.
