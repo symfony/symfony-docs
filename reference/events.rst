@@ -76,6 +76,36 @@ their priorities:
 
     $ php bin/console debug:event-dispatcher kernel.controller
 
+``kernel.controller_arguments``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerArgumentsEvent`
+
+This event is dispatched just before a controller is called. It's useful to
+configure the arguments that are going to be passed to the controller.
+Typically, this is used to map URL routing parameters to their corresponding
+named arguments; or pass the current request when the ``Request`` type-hint is
+found::
+
+    public function onKernelControllerArguments(FilterControllerArgumentsEvent $event)
+    {
+        // ...
+
+        // get controller and request arguments
+        $namedArguments = $event->getRequest()->attributes->all();
+        $controllerArguments = $event->getArguments();
+
+        // set the controller arguments to modify the original arguments or add new ones
+        $event->setArguments($newArguments);
+    }
+
+Execute this command to find out which listeners are registered for this event and
+their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel.controller_arguments
+
 ``kernel.view``
 ~~~~~~~~~~~~~~~
 
@@ -142,10 +172,9 @@ their priorities:
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-This event is dispatched after a :ref:`sub request <http-kernel-sub-requests>`
-has finished. It's useful to reset the global state of the application (for
-example, the translator listener resets the translator's locale to the one of
-the parent request)::
+This event is dispatched after the ``kernel.response`` event. It's useful to reset
+the global state of the application (for example, the translator listener resets
+the translator's locale to the one of the parent request)::
 
     public function onKernelFinishRequest(FinishRequestEvent $event)
     {

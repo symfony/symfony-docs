@@ -604,17 +604,18 @@ each event has their own event object:
 
 .. _component-http-kernel-event-table:
 
-=====================  ================================  ===================================================================================
-Name                   ``KernelEvents`` Constant         Argument passed to the listener
-=====================  ================================  ===================================================================================
-kernel.request         ``KernelEvents::REQUEST``         :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
-kernel.controller      ``KernelEvents::CONTROLLER``      :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
-kernel.view            ``KernelEvents::VIEW``            :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
-kernel.response        ``KernelEvents::RESPONSE``        :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
-kernel.finish_request  ``KernelEvents::FINISH_REQUEST``  :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
-kernel.terminate       ``KernelEvents::TERMINATE``       :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
-kernel.exception       ``KernelEvents::EXCEPTION``       :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
-=====================  ================================  ===================================================================================
+===========================  ======================================  ===================================================================================
+Name                         ``KernelEvents`` Constant               Argument passed to the listener
+===========================  ======================================  ===================================================================================
+kernel.request               ``KernelEvents::REQUEST``               :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
+kernel.controller            ``KernelEvents::CONTROLLER``            :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
+kernel.controller_arguments  ``KernelEvents::CONTROLLER_ARGUMENTS``  :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerArgumentsEvent`
+kernel.view                  ``KernelEvents::VIEW``                  :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
+kernel.response              ``KernelEvents::RESPONSE``              :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
+kernel.finish_request        ``KernelEvents::FINISH_REQUEST``        :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
+kernel.terminate             ``KernelEvents::TERMINATE``             :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
+kernel.exception             ``KernelEvents::EXCEPTION``             :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
+===========================  ======================================  ===================================================================================
 
 .. _http-kernel-working-example:
 
