@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-11-10T16:58:12Z
+
+The `kernel.controller_arguments` event is triggered just before a controller is called, and is a hook that allows configuring the arguments that are going to be passed to the controller. Typically, this is used to map URL routing parameters to their corresponding named arguments; or pass the current request when the `Request` type hint is found.
+
+---------------------------------------------------------------------------
+
+by ottaviano at 2018-11-10T22:33:24Z
+
+@nicolas-grekas, it seems that it was not enough as an explication [2 years ago](https://github.com/symfony/symfony-docs/pull/6434)
