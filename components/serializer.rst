@@ -401,24 +401,30 @@ Ignoring Attributes
 
 .. note::
 
-    Using attribute groups instead of the :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
-    method is considered best practice.
+    Using :ref:`attribute groups <component-serializer-attributes-groups>` is considered best practice.
 
-As an option, there's a way to ignore attributes from the origin object. To remove
-those attributes use the
-:method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
-method on the normalizer definition::
+As an option, there's a way to ignore attributes from the origin object.
+To remove those attributes provide an array via the ``ignored_attributes``
+key in the ``context`` parameter of the desired serializer method::
 
+    use Acme\Person;
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+    $person = new Person();
+    $person->setName('foo');
+    $person->setAge(99);
+
     $normalizer = new ObjectNormalizer();
-    $normalizer->setIgnoredAttributes(['age']);
     $encoder = new JsonEncoder();
 
     $serializer = new Serializer([$normalizer], [$encoder]);
-    $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsperson":false}
+    $serializer->serialize($person, 'json', ['ignored_attributes' => 'age']); // Output: {"name":"foo"}
+
+.. deprecated:: 4.2
+
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes` method was deprecated in Symfony 4.2.
 
 .. _component-serializer-converting-property-names-when-serializing-and-deserializing:
 
