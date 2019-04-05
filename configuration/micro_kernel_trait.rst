@@ -185,7 +185,7 @@ hold the kernel. Now it looks like this::
             }
 
             // load the annotation routes
-            $routes->import(__DIR__.'/../src/App/Controller/', '/', 'annotation');
+            $routes->import(__DIR__.'/../src/Controller/', '/', 'annotation');
         }
 
         // optional, to use the standard Symfony cache directory
@@ -252,10 +252,10 @@ because the configuration started to get bigger:
             ],
         ]);
 
-This also loads annotation routes from an ``src/App/Controller/`` directory, which
+This also loads annotation routes from an ``src/Controller/`` directory, which
 has one file in it::
 
-    // src/App/Controller/MicroController.php
+    // src/Controller/MicroController.php
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
