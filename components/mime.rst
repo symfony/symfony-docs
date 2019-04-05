@@ -381,9 +381,9 @@ the ``TemplatedEmail`` class::
         ->textTemplate('messages/user/signup.txt.twig')
         ->htmlTemplate('messages/user/signup.html.twig')
 
-        // this method defines the parameters (name => value) passed to templates
         ->context([
-            // same as before...
+            'expiration_date' => new \DateTime('+7 days'),
+            'username' => 'foo',
         ])
     ;
 
