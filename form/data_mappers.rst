@@ -33,7 +33,7 @@ Creating a Data Mapper
 Suppose that you want to save a set of colors to the database. For this, you're
 using an immutable color object::
 
-    // src/App/Painting/Color.php
+    // src/Painting/Color.php
     namespace App\Painting;
 
     final class Color
@@ -80,7 +80,7 @@ The red, green and blue form fields have to be mapped to the constructor
 arguments and the ``Color`` instance has to be mapped to red, green and blue
 form fields. Recognize a familiar pattern? It's time for a data mapper::
 
-    // src/App/Form/DataMapper/ColorMapper.php
+    // src/Form/DataMapper/ColorMapper.php
     namespace App\Form\DataMapper;
 
     use App\Painting\Color;
@@ -143,7 +143,7 @@ You're ready to use the data mapper for the ``ColorType`` form. Use the
 :method:`Symfony\\Component\\Form\\FormConfigBuilderInterface::setDataMapper`
 method to configure the data mapper::
 
-    // src/App/Form/Type/ColorType.php
+    // src/Form/Type/ColorType.php
     namespace App\Form\Type;
 
     use App\Form\DataMapper\ColorMapper;
