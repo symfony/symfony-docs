@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-01T10:16:29Z
+
+Thanks for this! I agree with the `micro_kernel_trait.rst` changes ... but the changes in the form article are not entirely correct. In 3.4 branch we still use the AppBundle thing ... so instead of removing `App`, we must replace it with `AppBundle`.
+
+Note when merging this up: in 4.2 branch we must remove `AppBundle` and leave only `src/Form/...` so, after you make the `git checkout 4.2 && git merge --log 3.4`, make these changes and then you can do the `git commit -a && git push ...`
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-01T19:10:55Z
+
+Thank you @javiereguiluz, please review again! 👍
