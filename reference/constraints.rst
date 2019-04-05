@@ -33,6 +33,11 @@ Validation Constraints Reference
    constraints/DivisibleBy
    constraints/Unique
 
+   constraints/Positive
+   constraints/PositiveOrZero
+   constraints/Negative
+   constraints/NegativeOrZero
+
    constraints/Date
    constraints/DateTime
    constraints/Time

@@ -39,6 +39,13 @@ Comparison Constraints
 * :doc:`DivisibleBy </reference/constraints/DivisibleBy>`
 * :doc:`Unique </reference/constraints/Unique>`
 
+Number Constraints
+~~~~~~~~~~~~~~~~~~
+* :doc:`Positive </reference/constraints/Positive>`
+* :doc:`PositiveOrZero </reference/constraints/PositiveOrZero>`
+* :doc:`Negative </reference/constraints/Negative>`
+* :doc:`NegativeOrZero </reference/constraints/NegativeOrZero>`
+
 Date Constraints
 ~~~~~~~~~~~~~~~~
 
