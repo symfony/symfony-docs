@@ -5,9 +5,9 @@ Positive
 
     The ``Positive`` constraint was introduced in Symfony 4.3.
 
-Validates that a value is a positive number. To force that a value is positive
-number or equal to zero, see :doc:`/reference/constraints/PositiveOrZero`.
-To force a value is negative, see :doc:`/reference/constraints/Negative`.
+Validates that a value is a positive number. Zero is neither positive nor
+negative, so you must use :doc:`/reference/constraints/PositiveOrZero` if you
+want to allow zero as value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -21,9 +21,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanValid
 Basic Usage
 -----------
 
-The following constraint ensure that:
-
-* the ``income`` of an ``Employee`` is a positive number (greater than zero)
+The following constraint ensures that the ``income`` of an ``Employee`` is a
+positive number (greater than zero):
 
 .. configuration-block::
 

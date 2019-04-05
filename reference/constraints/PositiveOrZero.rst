@@ -5,10 +5,8 @@ PositiveOrZero
 
     The ``PositiveOrZero`` constraint was introduced in Symfony 4.3.
 
-Validates that a value is a positive number or equal to zero. To force that
-a value is only a positiven umber, see :doc:`/reference/constraints/Positive`.
-To force a value is negative or equal to zero,
-see :doc:`/reference/constraints/NegativeOrZero`.
+Validates that a value is a positive number or equal to zero. If you don't
+want to allow zero as value, use :doc:`/reference/constraints/Positive` instead.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -22,9 +20,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqu
 Basic Usage
 -----------
 
-The following constraint ensure that:
-
-* the number of ``siblings`` of a ``Person`` is positive or zero
+The following constraint ensures that the number of ``siblings`` of a ``Person``
+is positive or zero:
 
 .. configuration-block::
 

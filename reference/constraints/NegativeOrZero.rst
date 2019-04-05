@@ -5,10 +5,8 @@ NegativeOrZero
 
     The ``NegativeOrZero`` constraint was introduced in Symfony 4.3.
 
-Validates that a value is a negative number or equal to zero. To force that a value
-is only a negative number, see :doc:`/reference/constraints/Negative`.
-To force a value is positive or equal to zero,
-see :doc:`/reference/constraints/PositiveOrZero`.
+Validates that a value is a negative number or equal to zero. If you don't
+want to allow zero as value, use :doc:`/reference/constraints/Negative` instead.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -22,9 +20,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LesserThanOrEqua
 Basic Usage
 -----------
 
-The following constraint ensure that:
-
-* the ``level`` of a ``UnderGroundGarage`` is a negative number or equal to zero
+The following constraint ensures that the ``level`` of a ``UnderGroundGarage``
+is a negative number or equal to zero:
 
 .. configuration-block::
 

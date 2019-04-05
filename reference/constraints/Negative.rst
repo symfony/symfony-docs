@@ -5,9 +5,9 @@ Negative
 
     The ``Negative`` constraint was introduced in Symfony 4.3.
 
-Validates that a value is a negative number. To force that a value is a negative
-number or equal to zero, see :doc:`/reference/constraints/NegativeOrZero`.
-To force a value is positive, see :doc:`/reference/constraints/Positive`.
+Validates that a value is a negative number. Zero is neither positive nor
+negative, so you must use :doc:`/reference/constraints/NegativeOrZero` if you
+want to allow zero as value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -21,9 +21,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LesserThanValida
 Basic Usage
 -----------
 
-The following constraint ensure that:
-
-* the ``withdraw`` of a  bankaccount ``TransferItem`` is a negative number (lesser than zero)
+The following constraint ensures that the ``withdraw`` of a  bank account
+``TransferItem`` is a negative number (lesser than zero):
 
 .. configuration-block::
 
