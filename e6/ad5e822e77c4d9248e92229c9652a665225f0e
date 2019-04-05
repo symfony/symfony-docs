@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-31T20:14:42Z
+
+Please include your new constraints in [reference/constraints.rst](https://github.com/symfony/symfony-docs/blob/master/reference/constraints.rst), otherwise Sphinx won't be able to build the docs.
