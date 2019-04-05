@@ -72,6 +72,13 @@ tree.
     isn't meant to dump content, you can see the "fixed" version of your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
+.. note::
+
+    When available, the DomCrawler will use the
+    [html5-php library](https://github.com/Masterminds/html5-php) to parse HTML content.
+    If you need to support specific HTML5 tags ou if you are getting unexpected behaviors
+    using the DomCrawler, you can install the library to fix the problem.
+
 Node Filtering
 ~~~~~~~~~~~~~~
 
