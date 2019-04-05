@@ -180,26 +180,24 @@ factory service can be used as a callback::
     Invokable factories for services were introduced in Symfony 4.3.
 
 Services can be created and configured via invokable factories by omitting the
-method name, just as route definitions can reference :ref:`invokable
-controllers <controller-service-invoke>`.
+method name, just as routes can reference
+:ref:`invokable controllers <controller-service-invoke>`.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/services.yml
-
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Email\NewsletterManager:
-                class:     AppBundle\Email\NewsletterManager
-                factory:   '@AppBundle\Email\NewsletterManagerFactory'
+            App\Email\NewsletterManager:
+                class:   App\Email\NewsletterManager
+                factory: '@App\Email\NewsletterManagerFactory'
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
-
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -209,19 +207,18 @@ controllers <controller-service-invoke>`.
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Email\NewsletterManager"
-                         class="AppBundle\Email\NewsletterManager">
-                    <factory service="AppBundle\Email\NewsletterManagerFactory" />
+                <service id="App\Email\NewsletterManager"
+                         class="App\Email\NewsletterManager">
+                    <factory service="App\Email\NewsletterManagerFactory" />
                 </service>
             </services>
         </container>
 
     .. code-block:: php
 
-        // app/config/services.php
-
-        use AppBundle\Email\NewsletterManager;
-        use AppBundle\Email\NewsletterManagerFactory;
+        // config/services.php
+        use App\Email\NewsletterManager;
+        use App\Email\NewsletterManagerFactory;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
