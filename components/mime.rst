@@ -16,8 +16,6 @@ Installation
 
     $ composer require symfony/mime
 
-Alternatively, you can clone the `<https://github.com/symfony/mime>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Introduction
