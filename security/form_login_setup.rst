@@ -74,6 +74,50 @@ class that processes the login submit and 4) updates the main security config fi
         }
     }
 
+Edit the security.yml file in order to allow access to the ``/login`` route:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            access_control:
+                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+            'access_control' => [
+                [
+                    'path' => '^/login',
+                    'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                ],
+                // ...
+            ],
+        ]);
+
 **Step 2.** The template has very little to do with security: it just generates
 a traditional HTML form that submits to ``/login``:
 
