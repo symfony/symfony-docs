@@ -15,8 +15,6 @@ Installation
 
     $ composer require --dev symfony/dotenv
 
-Alternatively, you can clone the `<https://github.com/symfony/dotenv>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

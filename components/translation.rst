@@ -15,8 +15,6 @@ Installation
 
     $ composer require symfony/translation
 
-Alternatively, you can clone the `<https://github.com/symfony/translation>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 .. seealso::

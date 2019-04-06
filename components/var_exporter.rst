@@ -16,8 +16,6 @@ Installation
 
     $ composer require --dev symfony/var-exporter
 
-Alternatively, you can clone the `<https://github.com/symfony/var-exporter>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Exporting/Serializing Variables

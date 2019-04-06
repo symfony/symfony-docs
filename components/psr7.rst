@@ -15,8 +15,6 @@ Installation
 
     $ composer require symfony/psr-http-message-bridge
 
-Alternatively, you can clone the `<https://github.com/symfony/psr-http-message-bridge>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 The bridge also needs a PSR-7 and `PSR-17`_ implementation to convert

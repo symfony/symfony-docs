@@ -15,8 +15,6 @@ Installation
 
     $ composer require symfony/routing
 
-Alternatively, you can clone the `<https://github.com/symfony/routing>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

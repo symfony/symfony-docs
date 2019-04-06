@@ -16,8 +16,6 @@ Installation
 
     $ composer require --dev symfony/var-dumper
 
-Alternatively, you can clone the `<https://github.com/symfony/var-dumper>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 .. note::

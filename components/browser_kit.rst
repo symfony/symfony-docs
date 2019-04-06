@@ -21,8 +21,6 @@ Installation
 
     $ composer require symfony/browser-kit
 
-Alternatively, you can clone the `<https://github.com/symfony/browser-kit>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Basic Usage

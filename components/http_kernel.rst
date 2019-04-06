@@ -18,8 +18,6 @@ Installation
 
     $ composer require symfony/http-kernel
 
-Alternatively, you can clone the `<https://github.com/symfony/http-kernel>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 The Workflow of a Request
