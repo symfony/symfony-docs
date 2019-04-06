@@ -354,6 +354,43 @@ Symfony provides the following env var processors:
                 'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
             ]);
 
+``env(yaml:FOO)``
+    Decodes the content of ``FOO``, which is a YAML encoded string. It returns
+    either an array or ``null``. Mostly useful in combination with
+    ``file``:
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                env(SECRETS_FILE): '/opt/application/.secrets.yaml'
+                database_password: '%env(key:database_password:yaml:file:SECRETS_FILE)%'
+                # if SECRETS_FILE contents are: 'database_password: secret' it returns "secret"
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(SECRETS_FILE)">/opt/application/.secrets.yaml</parameter>
+                    <parameter key="database_password">%env(key:database_password:yaml:file:SECRETS_FILE)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.yaml');
+            $container->setParameter('database_password', '%env(key:database_password:yaml:file:SECRETS_FILE)%');
+
 ``env(resolve:FOO)``
     Replaces the string ``FOO`` by the value of a config parameter with the
     same name:
