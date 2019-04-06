@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-05T14:30:45Z
+
+**Don't merge this yet.** We're debating about a possible rename of the constraint. `NotPwned` -> `NotCompromisedPassword` or something like that.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-06T14:16:41Z
+
+The docs have been updated for the rename proposed in https://github.com/symfony/symfony/pull/30901.
