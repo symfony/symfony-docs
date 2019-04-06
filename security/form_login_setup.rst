@@ -74,7 +74,8 @@ class that processes the login submit and 4) updates the main security config fi
         }
     }
 
-Edit the security.yml file in order to allow access to the ``/login`` route:
+Edit the ``security.yml`` file in order to allow access for anyone to the
+``/login`` route:
 
 .. configuration-block::
 
@@ -85,7 +86,7 @@ Edit the security.yml file in order to allow access to the ``/login`` route:
             # ...
 
             access_control:
-                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+                - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
                 # ...
 
     .. code-block:: xml
@@ -99,7 +100,7 @@ Edit the security.yml file in order to allow access to the ``/login`` route:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
+                <rule path="^/login$" role="IS_AUTHENTICATED_ANONYMOUSLY" />
                 <!-- ... -->
             </config>
         </srv:container>
