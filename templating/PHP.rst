@@ -75,7 +75,7 @@ renders the ``index.html.php`` template::
     // ...
     public function index($name)
     {
-        // template is stored in src/Resources/views/hello/index.html.php
+        // template is stored in templates/hello/index.html.php
         return $this->render('hello/index.html.php', [
             'name' => $name
         ]);
@@ -123,7 +123,7 @@ the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/hello/index.html.php -->
+    <!-- templates/hello/index.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
     Hello <?= $name ?>!
@@ -132,7 +132,7 @@ Now, have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/layout.html.php -->
+    <!-- templates/layout.html.php -->
     <?php $view->extend('base.html.php') ?>
 
     <h1>Hello Application</h1>
@@ -145,7 +145,7 @@ another one:
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/base.html.php -->
+    <!-- templates/base.html.php -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -178,7 +178,7 @@ decorating the template. In the ``index.html.php`` template, define a
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/hello/index.html.php -->
+    <!-- templates/hello/index.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
@@ -189,7 +189,7 @@ The base layout already has the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/base.html.php -->
+    <!-- templates/base.html.php -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
@@ -220,14 +220,14 @@ Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/hello/hello.html.php -->
+    <!-- templates/hello/hello.html.php -->
     Hello <?= $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/hello/index.html.php -->
+    <!-- templates/hello/index.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
     <?= $view->render('hello/hello.html.php', ['name' => $name]) ?>
@@ -250,7 +250,7 @@ If you create a ``fancy`` action, and want to include it into the
 
 .. code-block:: html+php
 
-    <!-- src/Resources/views/hello/index.html.php -->
+    <!-- templates/hello/index.html.php -->
     <?= $view['actions']->render(
         new \Symfony\Component\HttpKernel\Controller\ControllerReference(
             'App\Controller\HelloController::fancy',
@@ -359,7 +359,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 .. code-block:: html+php
 
-    <!-- src/Resources/integer_widget.html.php -->
+    <!-- templates/integer_widget.html.php -->
     <div class="integer_widget">
         <?= $view['form']->block(
             $form,
