@@ -107,6 +107,7 @@ Configuration
 
   * `magic_call`_
   * `throw_exception_on_invalid_index`_
+  * `throw_exception_on_invalid_property_path`_
 
 * `property_info`_
 
@@ -1725,6 +1726,18 @@ throw_exception_on_invalid_index
 
 When enabled, the ``property_accessor`` service throws an exception when you
 try to access an invalid index of an array.
+
+throw_exception_on_invalid_property_path
+........................................
+
+**type**: ``boolean`` **default**: ``true``
+
+.. versionadded:: 4.3
+
+    The ``throw_exception_on_invalid_property_path`` option was introduced in Symfony 4.3.
+
+When enabled, the ``property_accessor`` service throws an exception when you
+try to access an invalid property path of an object.
 
 property_info
 ~~~~~~~~~~~~~
