@@ -1,7 +1,7 @@
 Timezone
 ========
 
-Validates that a value is a valid timezone identifier (ie. ``Europe/Paris``).
+Validates that a value is a valid timezone identifier (e.g. ``Europe/Paris``).
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -15,8 +15,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TimezoneValidato
 Basic Usage
 -----------
 
-Suppose you have a ``UserSettings`` class, with a ``timezone`` field that is a string
-meant to contain a timezone identifier (ie. `America/New_York`):
+Suppose you have a ``UserSettings`` class, with a ``timezone`` field that is a
+string meant to contain a timezone identifier (ie. ``America/New_York``):
 
 .. configuration-block::
 
@@ -31,7 +31,6 @@ meant to contain a timezone identifier (ie. `America/New_York`):
         {
             /**
              * @Assert\Timezone
-             * @var string A timezone identifier
              */
              protected $timezone;
         }
@@ -69,9 +68,6 @@ meant to contain a timezone identifier (ie. `America/New_York`):
 
         class Event
         {
-           /**
-            * @var string A timezone identifier
-            */
             protected $timezone;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -90,9 +86,9 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``This value is not a valid time.``
+**type**: ``string`` **default**: ``This value is not a valid timezone.``
 
-This message is shown if the underlying data is not a valid time.
+This message is shown if the underlying data is not a valid timezone identifier.
 
 You can use the following parameters in this message:
 
@@ -107,7 +103,7 @@ Parameter        Description
 zone
 ~~~~
 
-**type**: ``string`` **default**: ``\DateTimeZone::ALL.``
+**type**: ``string`` **default**: ``\DateTimeZone::ALL``
 
 The geographical zone in which to validate the timezone identifier.
 
@@ -122,6 +118,7 @@ This option must be used only when the ``zone`` option value equals ``\DateTimeZ
 
 The ``countryCode`` option enables to validate the timezone identifier is supported by the country code.
 
-Value must be a valid `ISO 3166-1 alpha-2` country code (ie. `BE`).
+Value must be a valid `ISO 3166-1 alpha-2`_ country code (e.g. ``BE``).
 
-.. _DateTimeZone: https://www.php.net/datetimezone
+.. _`DateTimeZone`: https://www.php.net/datetimezone
+.. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
