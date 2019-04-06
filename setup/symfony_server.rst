@@ -283,11 +283,15 @@ autoconfigured):
         # RABBITMQ_DSN
         rabbitmq: ...
 
-If you can't or don't want to update the service names, you must remap the env
-vars so Symfony can find them. For example, if you want to keep a service called
-``mysql`` instead of renaming it to ``database``, the env var will be called
-``MYSQL_URL`` instead of the ``DATABASE_URL`` env var used in the Symfony
-application, so you add the following to the ``.env.local`` file:
+If you rename environment variables inside the
+``docker-compose.yaml`` then you have to make sure Symfony is aware of this
+change as well. For example if inside your ``docker-compose.yaml`` you define
+``MYSQL_URL`` instead of ``DATABASE_URL``,
+you have to make sure that in your Symfony project all occurences of this
+environment variable are changed as well. A safer alternative to changing the
+environment variable could be to reassign ``MYSQL_URL`` to ``DATABASE_URL``
+inside your ``.env.local`` to ensure that the name Symfony expected is actually
+set:
 
 .. code-block:: bash
 
