@@ -15,8 +15,6 @@ Installation
 
     $ composer require symfony/web-link
 
-Alternatively, you can clone the `<https://github.com/symfony/web-link>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

@@ -24,8 +24,6 @@ Installation
 
     $ composer require symfony/messenger
 
-Alternatively, you can clone the `<https://github.com/symfony/messenger>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Concepts
