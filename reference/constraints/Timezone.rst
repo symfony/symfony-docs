@@ -119,10 +119,15 @@ identifiers to the ones that belong to that geographical zone:
 * ``\DateTimeZone::INDIAN``
 * ``\DateTimeZone::PACIFIC``
 
-The special ``\DateTimeZone::ALL`` zone accepts any timezone.
+The special ``\DateTimeZone::ALL`` zone accepts any timezone excluding deprecated timezones.
 
-countryCode
-~~~~~~~~~~~
+The special ``\DateTimeZone::ALL_WITH_BC`` zone accepts any timezone including deprecated timezones.
+
+The special ``\DateTimeZone::PER_COUNTRY`` zone limits the timezones to a certain country. This zone
+value must be used in combination with the ``country_code`` option.
+
+country_code
+~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
