@@ -283,15 +283,11 @@ autoconfigured):
         # RABBITMQ_DSN
         rabbitmq: ...
 
-If you rename environment variables inside the
-``docker-compose.yaml`` then you have to make sure Symfony is aware of this
-change as well. For example if inside your ``docker-compose.yaml`` you define
-``MYSQL_URL`` instead of ``DATABASE_URL``,
-you have to make sure that in your Symfony project all occurences of this
-environment variable are changed as well. A safer alternative to changing the
-environment variable could be to reassign ``MYSQL_URL`` to ``DATABASE_URL``
-inside your ``.env.local`` to ensure that the name Symfony expected is actually
-set:
+If your ``docker-compose.yaml`` file doesn't use the environment variable names
+expected by Symfony (e.g. you use ``MYSQL_URL`` instead of ``DATABASE_URL``)
+then you need to rename all occurrences of those environment variables in your
+Symfony application. A simpler alternative is to use the ``.env.local`` file to
+reassign the environment variables:
 
 .. code-block:: bash
 
