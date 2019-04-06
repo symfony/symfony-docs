@@ -391,6 +391,10 @@ Symfony provides the following env var processors:
             $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.yaml');
             $container->setParameter('database_password', '%env(key:database_password:yaml:file:SECRETS_FILE)%');
 
+    .. versionadded:: 4.3
+
+        The ``yaml`` processor was introduced in Symfony 4.3.
+
 ``env(resolve:FOO)``
     Replaces the string ``FOO`` by the value of a config parameter with the
     same name:
