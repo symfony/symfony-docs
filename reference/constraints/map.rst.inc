@@ -60,6 +60,7 @@ Choice Constraints
 * :doc:`Language </reference/constraints/Language>`
 * :doc:`Locale </reference/constraints/Locale>`
 * :doc:`Country </reference/constraints/Country>`
+* :doc:`Timezone </reference/constraints/Timezone>`
 
 File Constraints
 ~~~~~~~~~~~~~~~~
