@@ -3,14 +3,14 @@ Timezone
 
 Validates that a value is a valid timezone identifier (e.g. ``Europe/Paris``).
 
-==========  ===================================================================
+==========  ======================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
             - `message`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Timezone`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TimezoneValidator`
-==========  ===================================================================
+==========  ======================================================================
 
 Basic Usage
 -----------
@@ -66,7 +66,7 @@ string meant to contain a timezone identifier (e.g. ``America/New_York``):
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class Event
+        class UserSettings
         {
             protected $timezone;
 
