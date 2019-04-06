@@ -4,7 +4,7 @@ Traverse
 Objects do not validate nested objects by default unless explicitly using
 this constraint.
 If only specific nested objects should be validated by cascade, consider
-using the :doc:`references/constraints/Valid` instead.
+using the :doc:`reference/constraints/Valid` instead.
 
 +----------------+-------------------------------------------------------------------------------------+
 | Applies to     | :ref:`class <validation-class-target>`                                              |
