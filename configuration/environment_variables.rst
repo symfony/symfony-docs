@@ -77,7 +77,7 @@ whenever the corresponding environment variable is *not* found:
 
         # config/services.yaml
         parameters:
-            env(DATABASE_HOST): localhost
+            env(DATABASE_HOST): 'localhost'
 
     .. code-block:: xml
 
@@ -96,6 +96,12 @@ whenever the corresponding environment variable is *not* found:
 
         // config/services.php
         $container->setParameter('env(DATABASE_HOST)', 'localhost');
+
+.. deprecated:: 4.3
+
+    Passing non-string values as default values for environment variables is
+    deprecated since Symfony 4.3. Use :ref:`environment variable processors <env-var-processors>`
+    if you need to transform those string default values into other data types.
 
 .. _configuration-env-var-in-prod:
 
@@ -131,6 +137,8 @@ the following:
     The values of the env vars are also exposed in the web interface of the
     :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
     problem because the web profiler must **never** be enabled in production.
+
+.. _env-var-processors:
 
 Environment Variable Processors
 -------------------------------
