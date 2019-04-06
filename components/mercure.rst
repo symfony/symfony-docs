@@ -20,8 +20,6 @@ Installation
 
     $ composer require symfony/mercure
 
-Alternatively, you can clone the `<https://github.com/symfony/mercure>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage
