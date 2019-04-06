@@ -126,7 +126,7 @@ The special ``\DateTimeZone::ALL`` zone accepts any timezone excluding deprecate
 The special ``\DateTimeZone::ALL_WITH_BC`` zone accepts any timezone including deprecated timezones.
 
 The special ``\DateTimeZone::PER_COUNTRY`` zone limits the timezones to a certain country. This zone
-value must be used in combination with the ``country_code`` option.
+value must be used in combination with the ``countryCode`` option.
 
 countryCode
 ~~~~~~~~~~~
