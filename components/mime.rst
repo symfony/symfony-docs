@@ -549,7 +549,7 @@ contents from Inky to HTML:
         <container>
             <row class="header">
                 <columns>
-                    <spaccer size="16"></spacer>
+                    <spacer size="16"></spacer>
                     <h1 class="text-center">Welcome {{ username }}!</h1>
                 </columns>
 
