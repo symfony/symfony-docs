@@ -16,7 +16,7 @@ Basic Usage
 -----------
 
 Suppose you have a ``UserSettings`` class, with a ``timezone`` field that is a
-string meant to contain a timezone identifier (ie. ``America/New_York``):
+string meant to contain a timezone identifier (e.g. ``America/New_York``):
 
 .. configuration-block::
 
@@ -72,7 +72,7 @@ string meant to contain a timezone identifier (ie. ``America/New_York``):
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('startsAt', new Assert\Timezone());
+                $metadata->addPropertyConstraint('timezone', new Assert\Timezone());
             }
         }
 
