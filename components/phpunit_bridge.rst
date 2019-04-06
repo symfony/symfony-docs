@@ -49,7 +49,7 @@ to register a new `test listener`_ called ``SymfonyTestsListener``:
 
     <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->
@@ -173,7 +173,7 @@ message, enclosed with ``/``. For example, with:
 
     <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->
@@ -500,7 +500,7 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
 
     <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/4.1/phpunit.xsd"
     >
 
         <!-- ... -->
@@ -644,7 +644,7 @@ Add the following configuration to the ``phpunit.xml.dist`` file:
 
     <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->

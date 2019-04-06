@@ -46,7 +46,7 @@ The main configuration file is called ``config.yml``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd
                 http://symfony.com/schema/dic/twig
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
@@ -201,7 +201,7 @@ can also load XML files or PHP files.
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
-                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd
                     http://symfony.com/schema/dic/twig
                     https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
@@ -255,7 +255,7 @@ key:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- ... -->
             <parameters>
@@ -335,7 +335,7 @@ configure DoctrineBundle and other parts of Symfony:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/doctrine
-                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:dbal

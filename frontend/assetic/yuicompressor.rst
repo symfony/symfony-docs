@@ -52,7 +52,7 @@ stylesheets:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/assetic
-                http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
+                https://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
             <assetic:config>
                 <assetic:filter
