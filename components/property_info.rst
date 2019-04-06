@@ -23,8 +23,6 @@ Installation
 
     $ composer require symfony/property-info
 
-Alternatively, you can clone the `<https://github.com/symfony/property-info>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Additional dependencies may be required for some of the

@@ -19,8 +19,6 @@ Installation
 
     $ composer require symfony/lock
 
-Alternatively, you can clone the `<https://github.com/symfony/lock>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

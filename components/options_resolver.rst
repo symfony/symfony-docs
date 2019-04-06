@@ -16,8 +16,6 @@ Installation
 
     $ composer require symfony/options-resolver
 
-Alternatively, you can clone the `<https://github.com/symfony/options-resolver>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

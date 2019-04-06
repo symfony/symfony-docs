@@ -16,8 +16,6 @@ Installation
 
     $ composer require symfony/polyfill-php56
 
-Alternatively, you can clone the `<https://github.com/symfony/polyfill-php56>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

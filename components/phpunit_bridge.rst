@@ -30,8 +30,6 @@ Installation
 
     $ composer require --dev "symfony/phpunit-bridge:*"
 
-Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 .. note::
