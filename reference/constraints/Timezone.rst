@@ -8,6 +8,8 @@ Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
             - `message`_
             - `payload`_
+            - `zone`_
+            - `country_code`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Timezone`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TimezoneValidator`
 ==========  ======================================================================
