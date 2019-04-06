@@ -172,6 +172,10 @@ manual steps:
    If you have defined :doc:`custom config options in your bundles </bundles/configuration>`
    move them to the new ``config/services.yaml`` and ``.env`` files.
 
+#. ``SYMFONY_DEBUG`` and ``SYMFONY_ENV`` environment variables were replaced by
+   ``APP_DEBUG`` and ``APP_ENV``. Copy their values to the new vars and then remove
+   the former ones.
+
 #. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
    update the namespaces of every PHP file to be ``App\...`` (advanced IDEs can do
    this automatically).
