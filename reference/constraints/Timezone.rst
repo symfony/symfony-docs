@@ -9,7 +9,7 @@ Options     - `groups`_
             - `message`_
             - `payload`_
             - `zone`_
-            - `country_code`_
+            - `countryCode`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Timezone`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TimezoneValidator`
 ==========  ======================================================================
@@ -128,8 +128,8 @@ The special ``\DateTimeZone::ALL_WITH_BC`` zone accepts any timezone including d
 The special ``\DateTimeZone::PER_COUNTRY`` zone limits the timezones to a certain country. This zone
 value must be used in combination with the ``country_code`` option.
 
-country_code
-~~~~~~~~~~~~
+countryCode
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
