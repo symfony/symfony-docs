@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-06T13:51:42Z
+
+@dbrumann I appreciate your contribution ... but I made some changes to make it more concise. The "deprecation" notice doesn't look nice when the contents are very long, so that's why I decided to remove the example. I think that your original text description is enough to understand it.
+
+Also, I added a link to "env var processors" which is the solution to this string-only limitation. Thanks!
