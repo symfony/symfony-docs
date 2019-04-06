@@ -11,7 +11,7 @@ using the :doc:`references/constraints/Valid` instead.
 +----------------+-------------------------------------------------------------------------------------+
 | Options        | - `payload`_                                                                        |
 +----------------+-------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\Traverse`                |
+| Class          | :class:`Symfony\Component\Validator\Constraints\Traverse`                           |
 +----------------+-------------------------------------------------------------------------------------+
 
 Basic Usage
