@@ -6,6 +6,11 @@ ready to contribute code or patches, reviewing issues and pull requests (PRs)
 can be a great start to get involved and give back. In fact, people who "triage"
 issues are the backbone to Symfony's success!
 
+.. note::
+
+    Communicating in a way where your words come across as intended can be difficult.
+    Please read through the :doc:`Respectful Review Comments </contributing/community/review-comments>` guidelines.
+
 Why Reviewing Is Important
 --------------------------
 
