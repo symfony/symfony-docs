@@ -6,7 +6,7 @@ The Dotenv Component
 ====================
 
     The Dotenv Component parses ``.env`` files to make environment variables
-    stored in them accessible via ``getenv()``, ``$_ENV`` or ``$_SERVER``.
+    stored in them accessible via ``$_ENV`` or ``$_SERVER``.
 
 Installation
 ------------
@@ -51,10 +51,10 @@ Given the following ``.env`` file content:
     DB_USER=root
     DB_PASS=pass
 
-Access the value with ``getenv()`` in your code::
+Access the value with ``$_ENV`` in your code::
 
-    $dbUser = getenv('DB_USER');
-    // you can also use ``$_ENV`` or ``$_SERVER``
+    $dbUser = $_ENV['DB_USER'];
+    // you can also use ``$_SERVER``
 
 The ``load()`` method never overwrites existing environment variables. Use the
 ``overload()`` method if you need to overwrite them::
