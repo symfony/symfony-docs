@@ -78,3 +78,4 @@ Other Constraints
 * :doc:`Collection </reference/constraints/Collection>`
 * :doc:`Count </reference/constraints/Count>`
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+* :doc:`Traverse </reference/constraints/Traverse>`
