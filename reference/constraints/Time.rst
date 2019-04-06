@@ -20,7 +20,7 @@ that follows a valid ``HH:MM:SS`` format.
 Basic Usage
 -----------
 
-Suppose you have an Event class, with a ``startAt`` field that is the time
+Suppose you have an Event class, with a ``startsAt`` field that is the time
 of the day when the event starts:
 
 .. configuration-block::
