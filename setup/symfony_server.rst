@@ -292,7 +292,7 @@ application, so you add the following to the ``.env.local`` file:
 .. code-block:: bash
 
     # .env.local
-    MYSQL_URL=${DATABASE_URL}
+    DATABASE_URL=${MYSQL_URL}
     # ...
 
 Now you can start the containers and all their services will be exposed. Browse
