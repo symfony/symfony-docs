@@ -28,8 +28,6 @@ Installation
 
     $ composer require symfony/serializer
 
-Alternatively, you can clone the `<https://github.com/symfony/serializer>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 To use the ``ObjectNormalizer``, the :doc:`PropertyAccess component </components/property_access>`

@@ -14,8 +14,6 @@ Installation
 
     $ composer require symfony/css-selector
 
-Alternatively, you can clone the `<https://github.com/symfony/css-selector>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

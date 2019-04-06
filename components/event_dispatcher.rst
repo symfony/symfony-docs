@@ -56,8 +56,6 @@ Installation
 
     $ composer require symfony/event-dispatcher
 
-Alternatively, you can clone the `<https://github.com/symfony/event-dispatcher>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

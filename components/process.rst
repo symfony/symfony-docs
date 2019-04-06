@@ -14,7 +14,6 @@ Installation
 
     $ composer require symfony/process
 
-Alternatively, you can clone the `<https://github.com/symfony/process>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
