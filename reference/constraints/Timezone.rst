@@ -105,20 +105,33 @@ zone
 
 **type**: ``string`` **default**: ``\DateTimeZone::ALL``
 
-The geographical zone in which to validate the timezone identifier.
+Set this option to any of the following constants to restrict the valid timezone
+identifiers to the ones that belong to that geographical zone:
 
-Value must be any of the `DateTimeZone`_ class constants values.
+* ``\DateTimeZone::AFRICA``
+* ``\DateTimeZone::AMERICA``
+* ``\DateTimeZone::ANTARCTICA``
+* ``\DateTimeZone::ARCTIC``
+* ``\DateTimeZone::ASIA``
+* ``\DateTimeZone::ATLANTIC``
+* ``\DateTimeZone::AUSTRALIA``
+* ``\DateTimeZone::EUROPE``
+* ``\DateTimeZone::INDIAN``
+* ``\DateTimeZone::PACIFIC``
+
+The special ``\DateTimeZone::ALL`` zone accepts any timezone.
 
 countryCode
 ~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
-This option must be used only when the ``zone`` option value equals ``\DateTimeZone::PER_COUNTRY``.
+If the ``zone`` option is set to ``\DateTimeZone::PER_COUNTRY``, this option
+restricts the valid timezone identifiers to the ones that belong to the given
+country.
 
-The ``countryCode`` option enables to validate the timezone identifier is supported by the country code.
-
-Value must be a valid `ISO 3166-1 alpha-2`_ country code (e.g. ``BE``).
+The value of this option must be a valid `ISO 3166-1 alpha-2`_ country code
+(e.g. ``CN`` for China).
 
 .. _`DateTimeZone`: https://www.php.net/datetimezone
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
