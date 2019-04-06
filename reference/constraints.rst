@@ -42,6 +42,8 @@ Validation Constraints Reference
    constraints/DateTime
    constraints/Time
 
+   constraints/Timezone
+
    constraints/Choice
    constraints/Collection
    constraints/Count
