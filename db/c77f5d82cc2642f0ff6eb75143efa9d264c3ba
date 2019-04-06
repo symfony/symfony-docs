@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-02T07:13:28Z
+
+Hi 👋
+
+Thank you for your contribution! This should be considered a bugfix and target the `3.4` branch of the docs.
+
+The sentence `You can even suppress the name completely by setting it to an empty string::` does not match the following code example, as it does **not** show how to suppress the name, but shows how to **set a custom name** for the form.
+
+Please keep in mind that we are using `AppBundle` and the `Action`-suffix for controller actions.
+
+---------------------------------------------------------------------------
+
+by wimme002 at 2019-04-02T12:16:49Z
+
+@OskarStark made the changes you proposed
