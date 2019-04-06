@@ -188,7 +188,7 @@ the ``Product`` entity (and getter & setter methods):
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+                https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="App\Entity\Product">
                 <!-- ... -->
@@ -264,7 +264,7 @@ class that will hold these objects:
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+                https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity name="App\Entity\Category">
                 <!-- ... -->
