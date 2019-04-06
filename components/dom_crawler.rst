@@ -74,7 +74,8 @@ tree.
 
     If you need better support for HTML5 contents or want to get rid of the
     inconsistencies of PHP's DOM extension, install the `html5-php library`_.
-    The DomCrawler component uses it automatically when available.
+    The DomCrawler component will use it automatically when the content has
+    an HTML5 doctype.
 
     .. versionadded:: 4.3
 
