@@ -257,6 +257,10 @@ manual steps:
 #. Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
    :doc:`Webpack Encore </frontend>` to manage and compile them.
 
+#. ``SYMFONY_DEBUG`` and ``SYMFONY_ENV`` environment variables were replaced by
+   ``APP_DEBUG`` and ``APP_ENV``. Copy their values to the new vars and then remove
+   the former ones.
+
 #. Create the new ``public/index.php`` front controller
    `copying Symfony's index.php source`_ and, if you made any customization in
    your ``web/app.php`` and ``web/app_dev.php`` files, copy those changes into
@@ -266,6 +270,10 @@ manual steps:
    and changing anything according to your original console script.
 
 #. Remove ``src/AppBundle/``.
+
+#. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
+   update the namespaces of every PHP file to be ``App\...`` (advanced IDEs can do
+   this automatically).
 
 #. Remove the ``bin/symfony_requirements`` script and if you need a replacement
    for it, use the new `Symfony Requirements Checker`_.
