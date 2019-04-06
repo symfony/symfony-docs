@@ -23,6 +23,7 @@ String Constraints
 * :doc:`Json</reference/constraints/Json>`
 * :doc:`Uuid</reference/constraints/Uuid>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
+* :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -85,7 +86,7 @@ Other Constraints
 * :doc:`Expression </reference/constraints/Expression>`
 * :doc:`All </reference/constraints/All>`
 * :doc:`Valid </reference/constraints/Valid>`
+* :doc:`Traverse </reference/constraints/Traverse>`
 * :doc:`Collection </reference/constraints/Collection>`
 * :doc:`Count </reference/constraints/Count>`
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
-* :doc:`Traverse </reference/constraints/Traverse>`

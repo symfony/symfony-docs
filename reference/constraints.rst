@@ -65,6 +65,7 @@ Validation Constraints Reference
    constraints/Expression
    constraints/All
    constraints/UserPassword
+   constraints/NotCompromisedPassword
    constraints/Valid
    constraints/Traverse
 
