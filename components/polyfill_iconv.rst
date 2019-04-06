@@ -16,8 +16,6 @@ Installation
 
     $ composer require symfony/polyfill-iconv
 
-Alternatively, you can clone the `<https://github.com/symfony/polyfill-iconv>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

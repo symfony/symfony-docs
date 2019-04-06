@@ -16,8 +16,6 @@ Installation
 
     $ composer require symfony/polyfill-intl-normalizer
 
-Alternatively, you can clone the `<https://github.com/symfony/polyfill-intl-normalizer>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

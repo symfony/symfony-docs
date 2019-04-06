@@ -15,8 +15,6 @@ Installation
 
     $ composer require symfony/property-access
 
-Alternatively, you can clone the `<https://github.com/symfony/property-access>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

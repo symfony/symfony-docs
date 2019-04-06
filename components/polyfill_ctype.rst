@@ -16,8 +16,6 @@ Installation
 
     $ composer require symfony/polyfill-ctype
 
-Alternatively, you can clone the `<https://github.com/symfony/polyfill-ctype>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

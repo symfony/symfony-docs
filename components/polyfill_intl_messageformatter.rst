@@ -16,8 +16,6 @@ Installation
 
     $ composer require symfony/polyfill-intl-messageformatter
 
-Alternatively, you can clone the `<https://github.com/symfony/polyfill-intl-messageformatter>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

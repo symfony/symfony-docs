@@ -20,8 +20,6 @@ Installation
 
     $ composer require symfony/form
 
-Alternatively, you can clone the `<https://github.com/symfony/form>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Configuration

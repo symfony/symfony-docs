@@ -17,8 +17,6 @@ Installation
 
     $ composer require symfony/polyfill-intl-grapheme
 
-Alternatively, you can clone the `<https://github.com/symfony/polyfill-intl-grapheme>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage
