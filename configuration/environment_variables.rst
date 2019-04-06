@@ -99,32 +99,9 @@ whenever the corresponding environment variable is *not* found:
 
 .. deprecated:: 4.3
 
-    Passing non-string values as default values for environment variables is no longer supported. Any non-string value,
-    e.g. an integer or float must be passed as string.
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        parameters:
-            env(DATABASE_PORT): '3306'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="env(DATABASE_PORT)">3306</parameter>
-            </parameters>
-         </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        $container->setParameter('env(DATABASE_PORT)', '3306');
+    Passing non-string values as default values for environment variables is
+    deprecated since Symfony 4.3. Use :ref:`environment variable processors <env-var-processors>`
+    if you need to transform those string default values into other data types.
 
 .. _configuration-env-var-in-prod:
 
@@ -160,6 +137,8 @@ the following:
     The values of the env vars are also exposed in the web interface of the
     :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
     problem because the web profiler must **never** be enabled in production.
+
+.. _env-var-processors:
 
 Environment Variable Processors
 -------------------------------
