@@ -14,8 +14,6 @@ Installation
 
     $ composer require symfony/mailer
 
-Alternatively, you can clone the `<https://github.com/symfony/mailer>`_ repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage
