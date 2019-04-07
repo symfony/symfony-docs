@@ -10,20 +10,29 @@ developed for high performance.
 
 Basic uses of the cache looks like this::
 
-    if (!$cache->has('my_cache_key')) {
-        // ... do some HTTP request or heavy computations
-        $cache->set('my_cache_key', 'foobar', 3600);
-    }
+    use Symfony\Contracts\Cache\ItemInterface;
 
-    echo $cache->get('my_cache_key'); // 'foobar'
+    // The callable will only be executed on a cache miss.
+    $value = $pool->get('my_cache_key', function (ItemInterface $item) {
+        $item->expiresAfter(3600);
+
+        // ... do some HTTP request or heavy computations
+        $computedValue = 'foobar';
+
+        return $computedValue;
+    });
+
+    echo $value; // 'foobar'
 
     // ... and to remove the cache key
-    $cache->delete('my_cache_key');
-
+    $pool->delete('my_cache_key');
 
 Symfony supports PSR-6 and PSR-16 cache interfaces. You can read more about
 these at the :doc:`component documentation </components/cache>`.
 
+.. versionadded:: 4.2
+
+    The cache contracts were introduced in Symfony 4.2.
 
 Configuring Cache with FrameworkBundle
 --------------------------------------
