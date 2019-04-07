@@ -43,7 +43,7 @@ See :doc:`/frontend/encore/dev-server` for more details.
 JSX Support
 -----------
 
-You can enable `JSX with Vue.js`_ by configuring the 2nd parameter of ``.enableVueLoader`` method:
+You can enable `JSX with Vue.js`_ by configuring the 2nd parameter of the ``.enableVueLoader`` method:
 
 .. code-block:: diff
 
@@ -60,7 +60,7 @@ You can enable `JSX with Vue.js`_ by configuring the 2nd parameter of ``.enableV
     +     })
     ;
 
-Then restart Encore. When you do, it will give you a command you can run to
+Afterwards rebuild your frontend assets with Encore. When you do it will show an error message helping you
 install any missing dependencies. After running that command and restarting
 Encore, you're done!
 
@@ -90,8 +90,10 @@ As a workaround, you can import ``.css``, ``.scss``, ``.less`` and ``.styl`` fil
         }
     }
 
-Note that importing styles like this make them global.
-See the next section for scoping them to your component.
+.. note::
+
+    Importing styles this way make them global.
+    See the next section for scoping them to your component.
 
 Using Scoped Styles
 ~~~~~~~~~~~~~~~~~~~
