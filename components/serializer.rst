@@ -214,15 +214,17 @@ The ``OBJECT_TO_POPULATE`` is only used for the top level object. If that object
 is the root of a tree structure, all child elements that exist in the
 normalized data will be re-created with new instances.
 
-..versionadded:: 4.3
+When the ``AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE`` option is set to
+true, existing children of the root ``OBJECT_TO_POPULATE`` are updated from the
+normalized data, instead of the denormalizer re-creating them. Note that
+``DEEP_OBJECT_TO_POPULATE`` only works for single child objects, but not for
+arrays of objects. Those will still be replaced when present in the normalized
+data.
 
-    Symfony 4.3 introduces a new option ``AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE``.
-    When this flag is set to true, existing children of the root ``OBJECT_TO_POPULATE`` are
-    updated from the normalized data, instead of the denormalizer re-creating them.
+.. versionadded:: 4.3
 
-    Note that ``DEEP_OBJECT_TO_POPULATE`` only works for single child objects,
-    but not for arrays of objects. Those will still be replaces when present in
-    the normalized data.
+    The ``AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE`` option was
+    introduced in Symfony 4.3.
 
 .. _component-serializer-attributes-groups:
 
