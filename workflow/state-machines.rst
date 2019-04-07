@@ -35,7 +35,7 @@ Below is the configuration for the pull request state machine.
                     type: 'state_machine'
                     supports:
                         - App\Entity\PullRequest
-                    initial_place: start
+                    initial_marking: [start]
                     places:
                         - start
                         - coding
@@ -79,7 +79,7 @@ Below is the configuration for the pull request state machine.
 
             <framework:config>
                 <framework:workflow name="pull_request" type="state_machine">
-                    <framework:marking-store type="single_state"/>
+                    <framework:initial-marking>start</framework:initial-marking>
 
                     <framework:support>App\Entity\PullRequest</framework:support>
 
@@ -147,6 +147,7 @@ Below is the configuration for the pull request state machine.
             'workflows' => [
                 'pull_request' => [
                   'type' => 'state_machine',
+                  'initial_marking' => ['start']
                   'supports' => ['App\Entity\PullRequest'],
                   'places' => [
                     'start',
