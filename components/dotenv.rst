@@ -101,7 +101,7 @@ configuration settings for your environments, each of them can be adjusted by us
 
 You can adjust the variable defining the environment, default environment and test
 environments by passing them as additional arguments to ``Dotenv::loadEnv()``
-(see :method:`Symfony\\Component\\Dotenv::loadEnv` for details).
+(see :method:`Symfony\\Component\\Dotenv\\Dotenv::loadEnv` for details).
 
 .. versionadded:: 4.2
 
