@@ -193,12 +193,12 @@ In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.
 
 Doctrine support is not enabled by default in Symfony. So to use Doctrine
-as shown in the examples below you will need to install `Doctrine ORM support`_
+as shown in the examples below you will need to install :doc:`Doctrine ORM support </doctrine>`
 by executing the following command:
 
 .. code-block:: terminal
 
-    $ composer require "symfony/orm-pack"
+    $ composer require symfony/orm-pack
 
 Just like with business logic, we recommend storing Doctrine entities in the
 AppBundle.
@@ -310,7 +310,7 @@ the following command to install the Doctrine fixtures bundle:
 
 .. code-block:: terminal
 
-    $ composer require "doctrine/doctrine-fixtures-bundle"
+    $ composer require doctrine/doctrine-fixtures-bundle
 
 Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
 ``test`` environments::
