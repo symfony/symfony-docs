@@ -127,6 +127,10 @@ of the service whose ID is ``admin_route_loader``. Your service doesn't have to
 extend or implement any special class, but the called method must return a
 :class:`Symfony\\Component\\Routing\\RouteCollection` object.
 
+If you're using :ref:`autoconfigure <services-autoconfigure>`, your service should
+implement the ``RouteLoaderInterface`` interface to be tagged automatically.
+If you're **not using autoconfigure**, tag it manually with ``routing.route_loader``.
+
 .. note::
 
     The routes defined using service route loaders will be automatically
