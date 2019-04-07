@@ -162,13 +162,21 @@ handler level or at the channel level instead of registering it globally
 
 Symfony's MonologBridge provides processors that can be registered inside your application.
 
-* :class:`Symfony\\Bridge\\Monolog\\Processor\\DebugProcessor` adds additional information useful for debugging like a timestamp or an error message to the record.
-* :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor` adds information from the current user's token to the record namely username, roles and whether the user is authenticated.
-* :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor` overrides data from the request using the data inside Symfony's request object.
+:class:`Symfony\\Bridge\\Monolog\\Processor\\DebugProcessor`
+    Adds additional information useful for debugging like a timestamp or an
+    error message to the record.
+
+:class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor`
+    Adds information from the current user's token to the record namely
+    username, roles and whether the user is authenticated.
+
+:class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor`
+    Overrides data from the request using the data inside Symfony's request
+    object.
 
 .. versionadded:: 3.4
 
-    The :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor` class was added in Symfony 3.4.
+    The ``TokenProcessor`` class was introduced in Symfony 3.4.
 
 Registering Processors per Handler
 ----------------------------------
