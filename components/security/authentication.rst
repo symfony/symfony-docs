@@ -302,6 +302,10 @@ failed login attempts.
 Authentication Sensitive Event
 ------------------------------
 
+.. versionadded:: 4.3
+
+    The ``security.authentication.success_sensitive`` event was introduced in Symfony 4.3.
+
 When a user is successfully authenticated, the security component will also
 dispatch a ``security.authentication.success_sensitive`` event just before
 erasing credentials and dispatching the regular success event. The event object
