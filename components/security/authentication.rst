@@ -274,7 +274,7 @@ in) is correct, you can use::
 Authentication Events
 ---------------------
 
-The security component provides 5 related authentication events:
+The security component provides the following authentication events:
 
 =========================================  ==========================================================  ==============================================================================
 Name                                       Event Constant                                              Argument Passed to the Listener
@@ -303,10 +303,10 @@ Authentication Sensitive Event
 ------------------------------
 
 When a user is successfully authenticated, the security component will also
-dispatch a ``security.authentication.success_sensitive`` just before erasing
-credentials and dispatching the regular success event. The event object will
-contain the token used to authenticate, allowing you to act upon its sensitive
-information.
+dispatch a ``security.authentication.success_sensitive`` event just before
+erasing credentials and dispatching the regular success event. The event object
+will contain the token used to authenticate, allowing you to act upon its
+sensitive information.
 
 A common use for this would be to check whether a user's password needs
 rehashing to stay up to date with current encryption standards.
