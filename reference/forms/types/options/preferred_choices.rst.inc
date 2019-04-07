@@ -33,9 +33,9 @@ be especially useful if your values are objects::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month'),
         ],
-        'preferred_choices' => function ($value, $key) {
+        'preferred_choices' => function ($choice, $key, $value) {
             // prefer options within 3 days
-            return $value <= new \DateTime('+3 days');
+            return $choice <= new \DateTime('+3 days');
         },
     ]);
 
