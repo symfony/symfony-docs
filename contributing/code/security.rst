@@ -150,7 +150,7 @@ score for Affected Projects is capped at 4.*
 Score Totals
 ~~~~~~~~~~~~
 
-* Attack Complexity: 1 - 4
+* Attack Complexity: 1 - 5
 * Impact: 1 - 6
 * Affected Projects: 1 - 4
 
