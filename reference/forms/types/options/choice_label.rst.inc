@@ -16,8 +16,8 @@ more control::
             'no' => false,
             'maybe' => null,
         ],
-        'choice_label' => function ($value, $key, $choiceValue) {
-            if (true === $value) {
+        'choice_label' => function ($choice, $key, $value) {
+            if (true === $choice) {
                 return 'Definitely!';
             }
 
@@ -28,8 +28,8 @@ more control::
         },
     ]);
 
-This method is called for *each* choice, passing you the ``$value`` and 
-``$key`` from the choices array (additional ``$choiceValue`` is related to `choice_value`_). 
+This method is called for *each* choice, passing you the ``$choice`` and
+``$key`` from the choices array (additional ``$value`` is related to `choice_value`_).
 This will give you:
 
 .. image:: /_images/reference/form/choice-example2.png
