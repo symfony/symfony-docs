@@ -453,6 +453,51 @@ Symfony provides the following env var processors:
                 'auth' => '%env(file:AUTH_FILE)%',
             ]);
 
+``env(require:FOO)``
+    ``require()`` the PHP file whose path is the value of the ``FOO``
+    env var and return the value returned from it.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(PHP_FILE): '../config/.runtime-evaluated.php'
+            app:
+                auth: '%env(require:PHP_FILE)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(PHP_FILE)">../config/.runtime-evaluated.php</parameter>
+                </parameters>
+
+                <app auth="%env(require:PHP_FILE)%"/>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            $container->setParameter('env(PHP_FILE)', '../config/.runtime-evaluated.php');
+            $container->loadFromExtension('app', [
+                'auth' => '%env(require:AUTH_FILE)%',
+            ]);
+
+    .. versionadded:: 4.3
+
+        The ``require`` processor was introduced in Symfony 4.3.
+
 ``env(trim:FOO)``
     Trims the content of ``FOO`` env var, removing whitespaces from the beginning
     and end of the string. This is especially useful in combination with the
