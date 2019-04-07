@@ -216,8 +216,11 @@ you can get this state machine by injecting the Workflow registry service::
         // ...
     }
 
-Symfony also creates automatically for you a service for each workflow (:class:`Symfony\\Component\\Workflow\\Workflow`) or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you have defined in your configuration.
-This means that you can use respectively ``workflow.pull_request`` or ``state_machine.pull_request`` in your service definition to have directly the proper service::
+Symfony automatically creates a service for each workflow (:class:`Symfony\\Component\\Workflow\\Workflow`)
+or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you
+have defined in your configuration. This means that you can use ``workflow.pull_request``
+or ``state_machine.pull_request`` respectively in your service definitions
+to access the proper service::
 
     // ...
     use Symfony\Component\Workflow\StateMachine;

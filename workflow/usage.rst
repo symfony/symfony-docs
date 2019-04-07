@@ -43,7 +43,7 @@ like this:
                     audit_trail:
                         enabled: true
                     marking_store:
-                        type: 'multiple_state' # or 'single_state', 'method' ('method' was added in 4.3)
+                        type: 'multiple_state' # one of 'single_state', 'multiple_state', 'method'
                         arguments:
                             - 'currentPlace'
                     supports:
@@ -126,7 +126,7 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'multiple_state', // or 'single_state', 'method' ('method' was added in 4.3)
+                        'type' => 'multiple_state', // one of 'single_state', 'multiple_state', 'method'
                         'arguments' => ['currentPlace'],
                     ],
                     'supports' => ['App\Entity\BlogPost'],
@@ -169,6 +169,10 @@ As configured, the following property is used by the marking store::
     The marking store type could be "multiple_state", "single_state" or "method".
     A single state marking store does not support a model being on multiple places
     at the same time.
+
+    versionadded:: 4.3
+
+        The ``method`` marking store type was introduced in Symfony 4.3.
 
 .. tip::
 
@@ -245,14 +249,17 @@ you can get the workflow by injecting the Workflow registry service::
     The :method:`Symfony\\Component\\Workflow\\Registry::all` method was
     introduced in Symfony 4.1.
 
+You can pass some context as the second argument of the ``apply()`` method.
+This can be useful when the subject not only needs to apply a transition,
+but for example you also want to log the context in which the switch happened.
+
+This context is forwarded to the :method:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface::setMarking`
+method of the marking store.
+
 .. versionadded:: 4.3
 
-    The :method:`Symfony\\Component\\Workflow\\Workflow::apply` has now a new parameter ``$context``
-    that is passed to the :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`
-    :method:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface::setMarking` method.
-
-An example of usage with the ``$context`` parameter can be when you need,
-in addition of marking your object in its new place, to contextualize this change.
+    The ``$context`` argument of the :method:`Symfony\\Component\\Workflow\\Workflow::apply`
+    method was introduced in Symfony 4.3.
 
 .. tip::
 
