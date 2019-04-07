@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by Pierstoval at 2019-04-01T21:44:00Z
+
+Should I add examples for every assertion? To me they all seem self-explanatory, but I could be more exhaustive with examples 😄
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2019-04-01T21:44:44Z
+
+Also, to reference this page in a better way in the docs (so it can be easily accessible), I may need some advices and tips on where I could add links to this new page 👍
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-02T06:15:55Z
+
+Hey Alex, thank you for this nice new feature and the documentation so far.
+
+To be honest I am not sure if replacing the explicit example with the shortcuts is the right way.
+I think the user should what is done internally. An idea could be to write it that way:
+```php
+    $this->assertGreaterThan(
+        0,
+        $crawler->filter('html:contains("Hello World")')->count()
+    );
+
+    // or use a shortcut
+    $this->assertSelectorTextContains('html', 'Hello World');
+```
+
+Not sure we should add so many `versionadded` directive (I mean for every new method one). I am for grouping them under a sub-headline. and add only one `versionadded`.
+
+What do you think @symfony/team-symfony-docs ?
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2019-04-02T15:19:27Z
+
+Thanks for the review! I'm a bit busy this week but I'll fix everything as soon as possible 👍
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2019-04-02T19:02:23Z
+
+I fixed many of your reviews, and I think we should also plan to make the assertions compatible with Panther for more flexibility 👍
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2019-04-03T08:06:36Z
+
+@OskarStark Implemented your reviews 😉
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2019-04-03T08:19:18Z
+
+About the Panther compatibility, I think we should update Panther itself first, because of [these lines](https://github.com/symfony/panther/blob/dbbb80b844e5cf9ca22ec9acd68168187bd6f560/src/Client.php#L86-L94) throwing an exception on `getRequest()` and `getResponse()`.
