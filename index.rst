@@ -33,6 +33,7 @@ Topics
     :maxdepth: 1
 
     bundles
+    cache
     console
     doctrine
     debug
