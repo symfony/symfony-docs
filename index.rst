@@ -32,6 +32,7 @@ Topics
     :maxdepth: 1
 
     bundles
+    cache
     console
     doctrine
     deployment
