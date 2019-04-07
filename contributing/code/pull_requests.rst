@@ -376,9 +376,9 @@ to ensure a constructive feedback process.
 If you think someone fails to keep this advice in mind and you want another
 perspective, please join the #contribs channel on `Symfony Slack`_. If you
 receive feedback you find abusive please contact the
-:doc:`CARE team</contributing/code_of_conduct/care_team.rst>`.
+:doc:`CARE team </contributing/code_of_conduct/care_team>`.
 
-The :doc:`core team <contributing/code/core_team>` is responsible for deciding
+The :doc:`core team </contributing/code/core_team>` is responsible for deciding
 which PR gets merged, so their feedback is the most relevant. So do not feel
 pressured to refactor your code immediately when someone provides feedback.
 
