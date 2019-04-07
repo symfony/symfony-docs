@@ -274,16 +274,17 @@ in) is correct, you can use::
 Authentication Events
 ---------------------
 
-The security component provides 4 related authentication events:
+The security component provides 5 related authentication events:
 
-===============================  ================================================  ==============================================================================
-Name                             Event Constant                                    Argument Passed to the Listener
-===============================  ================================================  ==============================================================================
-security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS``  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationEvent`
-security.authentication.failure  ``AuthenticationEvents::AUTHENTICATION_FAILURE``  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationFailureEvent`
-security.interactive_login       ``SecurityEvents::INTERACTIVE_LOGIN``             :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
-security.switch_user             ``SecurityEvents::SWITCH_USER``                   :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`
-===============================  ================================================  ==============================================================================
+=========================================  ==========================================================  ==============================================================================
+Name                                       Event Constant                                              Argument Passed to the Listener
+=========================================  ==========================================================  ==============================================================================
+security.authentication.success_sensitive  ``AuthenticationEvents::AUTHENTICATION_SUCCESS_SENSITIVE``  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationSensitiveEvent`
+security.authentication.success            ``AuthenticationEvents::AUTHENTICATION_SUCCESS``            :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationSuccessEvent`
+security.authentication.failure            ``AuthenticationEvents::AUTHENTICATION_FAILURE``            :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationFailureEvent`
+security.interactive_login                 ``SecurityEvents::INTERACTIVE_LOGIN``                       :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
+security.switch_user                       ``SecurityEvents::SWITCH_USER``                             :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`
+=========================================  ==========================================================  ==============================================================================
 
 Authentication Success and Failure Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -297,6 +298,18 @@ When a provider attempts authentication but fails (i.e. throws an ``Authenticati
 a ``security.authentication.failure`` event is dispatched. You could listen on
 the ``security.authentication.failure`` event, for example, in order to log
 failed login attempts.
+
+Authentication Sensitive Event
+------------------------------
+
+When a user is successfully authenticated, the security component will also
+dispatch a ``security.authentication.success_sensitive`` just before erasing
+credentials and dispatching the regular success event. The event object will
+contain the token used to authenticate, allowing you to act upon its sensitive
+information.
+
+A common use for this would be to check whether a user's password needs
+rehashing to stay up to date with current encryption standards.
 
 Security Events
 ~~~~~~~~~~~~~~~
