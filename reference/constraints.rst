@@ -49,6 +49,7 @@ Validation Constraints Reference
    constraints/Language
    constraints/Locale
    constraints/Country
+   constraints/Timezone
 
    constraints/File
    constraints/Image
