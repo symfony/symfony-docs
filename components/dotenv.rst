@@ -89,9 +89,9 @@ in the following order::
 
 This might look complicated at first glance but it gives you the opportunity to commit
 multiple environment-specific files that can then be adjusted to your local environment
-easily. Given you commit ``.env``, ``.env.test`` and ``.env.test`` to represent different
+easily. Given you commit ``.env``, ``.env.test`` and ``.env.dev`` to represent different
 configuration settings for your environments, each of them can be adjusted by using
-``.env.local``, ``.env.test.local`` and ``.env.test.local`` respectively.
+``.env.local``, ``.env.test.local`` and ``.env.dev.local`` respectively.
 
 .. note::
 
