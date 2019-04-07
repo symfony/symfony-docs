@@ -84,9 +84,9 @@ defined in previously loaded files::
    variable is populated and used to load environment-specific files hereafter. If
    ``APP_ENV`` is not defined in either of the previously mentioned files, ``dev`` is
    assumed for ``APP_ENV`` and populated by default.
+#. If there's a ``.env.local`` representing general local environment variables it's loaded now.
 #. If there's a ``.env.$env.local`` file, this one is loaded. Otherwise, it falls
    back to ``.env.$env``.
-#. If there's a ``.env.local`` it's loaded last.
 
 This might look complicated at first glance but it gives you the opportunity to commit
 multiple environment-specific files that can then be adjusted to your local environment
