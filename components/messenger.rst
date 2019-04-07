@@ -196,7 +196,7 @@ Transports
 In order to send and receive messages, you will have to configure a transport. A
 transport will be responsible for communicating with your message broker or 3rd parties.
 
-.. note:
+.. seealso::
 
     Check out the :doc:`Messenger transports documentation </components/messenger/transports>`.
 
@@ -303,7 +303,7 @@ First, create your receiver::
 Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to receive and send  messages on the same bus and prevent an infinite
+To receive and send messages on the same bus and prevent an infinite
 loop, the message bus will add a :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`
 stamp to the message envelopes and the :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware`
 middleware will know it should not route these messages again to a transport.

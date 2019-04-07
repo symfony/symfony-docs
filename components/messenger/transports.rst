@@ -21,15 +21,15 @@ support for AMQP.
 How it works?
 ~~~~~~~~~~~~~
 
-A DSN protocol that uses ``amqp`` is recognized and sent to the built-in AMQP transport.
-For example::
+A DSN that starts with ``amqp://`` is recognized and used to create
+an instance of the built-in AMQP transport::
 
-    $dsn = 'amqp://user:password@localhost/%2f/messages'
+    $dsn = 'amqp://user:password@localhost/%2f/messages';
 
 The messages will be sent to the ``messages`` exchange bound to the ``messages``
 queue on the ``/`` vhost (the ``%2f`` is a url-encoded ``/``).
 
-.. note:
+.. note::
 
     By default, RabbitMQ uses ``guest`` as a username and ``guest`` as a password
     and has a ``/`` vhost.
@@ -58,7 +58,7 @@ retry mechanism that can be enabled via your DSN::
       &retry[ttl][2]=60000
 
 In the example above, if handling the message fails, it will retry it 3 times. After
-the first failure, it will wait 10 seconds before trying it. After the 2nd failure,
+the first failure, it will wait 10 seconds before trying it. After the second failure,
 it will wait 30 seconds. After the 3rd failure, it will wait a minute. If it still
 fails, the message will be moved to a "dead queue" and you will have to manually
 handle this message.
@@ -88,9 +88,7 @@ Your own sender
 Using the ``SenderInterface``, you can easily create your own message sender.
 Let's say you already have an ``ImportantAction`` message going through the
 message bus and handled by a handler. Now, you also want to send this message as
-an email.
-
-First, create your sender::
+an email via your sender::
 
     namespace App\MessageSender;
 
@@ -137,9 +135,7 @@ application but you can't use an API and need to use a shared CSV file with new
 orders.
 
 You will read this CSV file and dispatch a ``NewOrder`` message. All you need to
-do is to write your custom CSV receiver and Symfony will do the rest.
-
-First, create your receiver::
+do is to write your custom CSV receiver and Symfony will do the rest::
 
     namespace App\MessageReceiver;
 
@@ -177,7 +173,7 @@ Create your Transport Factory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You need to give FrameworkBundle the opportunity to create your transport from a
-DSN. You will need an transport factory::
+DSN. You will need a transport factory::
 
     use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
     use Symfony\Component\Messenger\Transport\TransportInterface;
