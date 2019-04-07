@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by lsmith77 at 2019-04-06T18:28:49Z
+
+added a todo item for the rename/redirect
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-04-06T18:35:04Z
+
+Oh and one more thing: We provide "backwards compatiblity" for section titles. That means that if you change a title "Start working on your patch" to "Start working on your PR", we have to add another anchor for the old title (`_start-working-on-your-patch:` in this example) above it
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2019-04-06T18:44:16Z
+
+@wouterj did I handle the BC for the section titles correctly now?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-04-06T18:48:52Z
+
+> @wouterj did I handle the BC for the section titles correctly now?
+
+Yes. Except that I gave you wrong instructions (turns out the syntax is `.. _old-title:`, but I'm happy to fix that while merging the PR
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2019-04-06T18:53:03Z
+
+@wouterj hopefully its correct now .. hurray for regexp!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-04-06T19:19:41Z
+
+> @wouterj hopefully its correct now .. hurray for regexp!
+
+Perfect!
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2019-04-07T07:53:33Z
+
+renamed the file and added an entry to the redirection map and hopefully updated all the relative links
