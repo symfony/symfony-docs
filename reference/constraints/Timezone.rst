@@ -1,6 +1,10 @@
 Timezone
 ========
 
+.. versionadded:: 4.3
+
+    The ``Timezone`` constraint was introduced in Symfony 4.3.
+
 Validates that a value is a valid timezone identifier (e.g. ``Europe/Paris``).
 
 ==========  ======================================================================
