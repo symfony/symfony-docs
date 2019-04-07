@@ -76,7 +76,7 @@ You can use ``Dotenv::loadEnv()`` to ease this process::
 
 The Dotenv component will then look for the correct ``.env`` file to load
 in the following order whereas the files loaded later override the variables
-defined in previously loaded files::
+defined in previously loaded files:
 
 #. If ``.env`` exists, it is loaded first. In case there's no ``.env`` file but a
    ``.env.dist``, this one will be loaded instead.
