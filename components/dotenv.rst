@@ -107,7 +107,7 @@ environments by passing them as additional arguments to ``Dotenv::loadEnv()``
 
 You should never store a ``.env`` file in your code repository as it might
 contain sensitive information; create a ``.env.dist`` (or multiple environment-
-specific ones as shown above)) file with sensible defaults instead.
+specific ones as shown above) file with sensible defaults instead.
 
 .. note::
 
