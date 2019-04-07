@@ -133,6 +133,15 @@ extend or implement any special class, but the called method must return a
     cached by the framework. So whenever your service should load new routes,
     don't forget to clear the cache.
 
+.. tip::
+
+    If your service is invokable, you don't need to precise the method to use.
+
+.. versionadded:: 4.3
+
+    The support of the ``__invoke()`` method to create invokable route loader
+    services was introduced in Symfony 4.3.
+
 Creating a custom Loader
 ------------------------
 
