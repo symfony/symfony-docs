@@ -98,7 +98,7 @@ and configure the service and method to call:
 
         # config/routes.yaml
         admin_routes:
-            resource: 'admin_route_loader:loadRoutes'
+            resource: 'admin_route_loader::loadRoutes'
             type: service
 
     .. code-block:: xml
@@ -110,7 +110,7 @@ and configure the service and method to call:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="admin_route_loader:loadRoutes" type="service"/>
+            <import resource="admin_route_loader::loadRoutes" type="service"/>
         </routes>
 
     .. code-block:: php
@@ -119,7 +119,7 @@ and configure the service and method to call:
         namespace Symfony\Component\Routing\Loader\Configurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('admin_route_loader:loadRoutes', 'service');
+            $routes->import('admin_route_loader::loadRoutes', 'service');
         };
 
 In this example, the routes are loaded by calling the ``loadRoutes()`` method
