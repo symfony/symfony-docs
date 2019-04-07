@@ -165,8 +165,6 @@ like this:
 
 As configured, the following property is used by the marking store::
 
-.. code-block:: php
-
     class BlogPost
     {
         // This property is used by the marking store
@@ -732,7 +730,7 @@ you a central place to manage the text.
 
 .. versionadded:: 4.1
 
-    The transition blockers were introduced in version 4.1.
+    The transition blockers were introduced in Symfony 4.1.
 
 In Twig templates, metadata is available via the ``workflow_metadata()`` function:
 
