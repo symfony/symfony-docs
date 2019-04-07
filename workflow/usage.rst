@@ -698,7 +698,7 @@ you a central place to manage the text.
 
 .. tip::
 
-    This is a simple example; in production you may prefer to use the :doc:`Translation </components/translation>`
+    This example has been simplified; in production you may prefer to use the :doc:`Translation </components/translation>`
     component to manage messages in one place::
 
         namespace App\Listener\Workflow\Task;
