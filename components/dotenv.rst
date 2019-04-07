@@ -96,7 +96,7 @@ configuration settings for your environments, each of them can be adjusted by us
 
 .. note::
 
-    ``.env.local`` is always ignored in ``test`` env because tests should produce the
+    ``.env.local`` is always ignored in ``test`` environment because tests should produce the
     same results for everyone.
 
 You can adjust the variable defining the environment, default environment and test
@@ -104,11 +104,12 @@ environments by passing them as additional arguments to ``Dotenv::loadEnv()``
 (see :method:`Symfony\\Component\\Dotenv::loadEnv` for details).
 
 .. versionadded:: 4.2
+
     The ``Dotenv::loadEnv()`` method was introduced in Symfony 4.2.
 
 You should never store a ``.env`` file in your code repository as it might
-contain sensitive information; create a ``.env.dist`` (or multiple environment-
-specific ones as shown above) file with sensible defaults instead.
+contain sensitive information; create a ``.env.dist`` file (or multiple environment-
+specific ones as shown above) with sensible defaults instead.
 
 .. note::
 
