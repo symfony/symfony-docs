@@ -6,7 +6,7 @@ Contributing Code
 
     bugs
     reproducer
-    pull_requests
+    patches
     maintenance
     core_team
     security
