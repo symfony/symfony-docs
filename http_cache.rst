@@ -155,7 +155,26 @@ For a full list of the options and their meaning, see the
 
 When you're in debug mode (the second argument of ``Kernel`` constructor in the
 front controller is ``true``), Symfony automatically adds an ``X-Symfony-Cache``
-header to the response. Use this to get information about cache hits and misses.
+header to the response. You can also use the ``trace_level`` config
+option and set it to either ``none``, ``short`` or ``full`` to
+add this information.
+
+``short`` will add the information for the master request only.
+It's written in a concise way that makes it easy to record the
+information in your server log files. For example, in Apache you can
+use ``%{X-Symfony-Cache}o`` in ``LogFormat`` format statements.
+This information can be used to extract general information about
+cache efficiency of your routes.
+
+.. tip::
+
+    You can change the name of the header used for the trace
+    information using the ``trace_header`` config option.
+
+.. versionadded:: 4.3
+
+    The ``trace_level`` and ``trace_header`` configuration options
+    were introduced in Symfony 4.3.
 
 .. _http-cache-symfony-versus-varnish:
 
