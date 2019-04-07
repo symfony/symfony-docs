@@ -62,7 +62,7 @@ The ``load()`` method never overwrites existing environment variables. Use the
     // ...
     $dotenv->overload(__DIR__.'/.env');
 
-As you're working with the ``Dotenv`` component you'll notice that you might want
+As you're working with the Dotenv component you'll notice that you might want
 to have different files depending on the environment you're working in. Typically
 this happens for local development or Continuous Integration where you might
 want to have different files for your ``test`` and ``dev`` environments.
@@ -74,18 +74,19 @@ You can use ``Dotenv::loadEnv()`` to ease this process::
     $dotenv = new Dotenv();
     $dotenv->loadEnv(__DIR__.'/.env');
 
-The ``Dotenv`` component will then look for the correct ``.env`` file to load
-in the following order::
+The Dotenv component will then look for the correct ``.env`` file to load
+in the following order whereas the files loaded later override the variables
+defined in previously loaded files::
 
-1. If ``.env`` exists, it is loaded first. In case there's no ``.env`` file but a
+#. If ``.env`` exists, it is loaded first. In case there's no ``.env`` file but a
    ``.env.dist``, this one will be loaded instead.
-2. If one of the previously mentioned files contains the ``APP_ENV`` variable, the
+#. If one of the previously mentioned files contains the ``APP_ENV`` variable, the
    variable is populated and used to load environment-specific files hereafter. If
    ``APP_ENV`` is not defined in either of the previously mentioned files, ``dev`` is
    assumed for ``APP_ENV`` and populated by default.
-3. If there's a ``.env.$env.local`` file, this one is loaded. Otherwise, it falls
+#. If there's a ``.env.$env.local`` file, this one is loaded. Otherwise, it falls
    back to ``.env.$env``.
-4. If there's a ``.env.local`` it's loaded last.
+#. If there's a ``.env.local`` it's loaded last.
 
 This might look complicated at first glance but it gives you the opportunity to commit
 multiple environment-specific files that can then be adjusted to your local environment
@@ -100,7 +101,7 @@ configuration settings for your environments, each of them can be adjusted by us
 
 You can adjust the variable defining the environment, default environment and test
 environments by passing them as additional arguments to ``Dotenv::loadEnv()``
-(see :method:`Symfony\Component\Dotenv::loadEnv` for details).
+(see :method:`Symfony\\Component\\Dotenv::loadEnv` for details).
 
 .. versionadded:: 4.2
     The ``Dotenv::loadEnv()`` method was introduced in Symfony 4.2.
