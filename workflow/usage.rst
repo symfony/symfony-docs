@@ -164,6 +164,7 @@ like this:
         ]);
 
 As configured, the following property is used by the marking store::
+
 .. code-block:: php
 
     class BlogPost
