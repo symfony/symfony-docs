@@ -204,12 +204,29 @@ component, run:
     $ composer require --dev symfony/css-selector
 
 Now you can use CSS selectors with the crawler. To assert that the phrase
-"Hello World" is on the page at least once, you can use this assertion::
+"Hello World" is present in the page's main title, you can use this assertion::
 
-    $this->assertGreaterThan(
-        0,
-        $crawler->filter('html:contains("Hello World")')->count()
-    );
+    $this->assertSelectorTextContains('html h1.title', 'Hello World');
+
+This assertion will internally call ``$crawler->filter('html h1.title')``, which allows
+you to use CSS selectors to filter any HTML element in the page and check for
+its existence, attributes, text, etc.
+
+The ``assertSelectorTextContains`` method is not a native PHPUnit assertion and is
+available thanks to the ``WebTestCase`` class.
+
+.. versionadded:: 4.3
+
+    The ``WebTestCase`` assertions were introduced in Symfony 4.3
+
+.. seealso::
+
+    Using native PHPUnit methods, the same assertion would look like this::
+
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('html h1.title:contains("Hello World")')->count()
+        );
 
 The crawler can also be used to interact with the page. Click on a link by first
 selecting it with the crawler using either an XPath expression or a CSS selector,
