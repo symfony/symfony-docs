@@ -413,3 +413,4 @@
 /session/sessions_directory /session
 /frontend/encore/legacy-apps /frontend/encore/legacy-applications
 /configuration/external_parameters /configuration/environment_variables
+/contributing/code/patches /contributing/code/pull_requests

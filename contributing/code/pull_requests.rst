@@ -1,10 +1,21 @@
-Submitting a Patch
+Proposing a Change
 ==================
 
-Patches are the best way to provide a bug fix or to propose enhancements to
-Symfony.
+A pull request, "PR" for short, is the best way to provide a bug fix or to
+propose enhancements to Symfony.
 
-Step 1: Setup your Environment
+Step 1: Check existing Issues and Pull Requests
+-----------------------------------------------
+
+Before working on a change, check to see if someone else also raised the topic
+or maybe even started working on a PR by `searching on GitHub`_.
+
+If you are unsure or if you have any questions during this entire process,
+please ask your questions on the #contribs channel on `Symfony Slack`_.
+
+.. _step-1-setup-your-environment:
+
+Step 2: Setup your Environment
 ------------------------------
 
 Install the Software Stack
@@ -90,20 +101,27 @@ Check that the current Tests Pass
 Now that Symfony is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
 
-Step 2: Work on your Patch
---------------------------
+.. tip::
+
+    If tests are failing, check on `Travis-CI`_ if the same test is
+    failing there as well. In that case you do not need to be concerned
+    about the test failing locally.
+
+.. _step-2-work-on-your-patch:
+
+Step 3: Work on your Pull Request
+---------------------------------
 
 The License
 ~~~~~~~~~~~
 
-Before you start, you must know that all the patches you are going to submit
-must be released under the *MIT license*, unless explicitly specified in your
-commits.
+Before you start, you should be aware that all the code you are going to submit
+must be released under the *MIT license*.
 
 Choose the right Branch
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Before working on a patch, you must determine on which branch you need to
+Before working on a PR, you must determine on which branch you need to
 work:
 
 * ``3.4``, if you are fixing a bug for an existing feature or want to make a
@@ -116,28 +134,28 @@ work:
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
-    recent branches on a regular basis. For instance, if you submit a patch
-    for the ``3.4`` branch, the patch will also be applied by the core team on
+    recent branches on a regular basis. For instance, if you submit a PR
+    for the ``3.4`` branch, the PR will also be applied by the core team on
     the ``master`` branch.
 
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
 
-Each time you want to work on a patch for a bug or on an enhancement, create a
+Each time you want to work on a PR for a bug or on an enhancement, create a
 topic branch:
 
 .. code-block:: terminal
 
     $ git checkout -b BRANCH_NAME master
 
-Or, if you want to provide a bugfix for the ``3.4`` branch, first track the remote
+Or, if you want to provide a bug fix for the ``3.4`` branch, first track the remote
 ``3.4`` branch locally:
 
 .. code-block:: terminal
 
     $ git checkout -t origin/3.4
 
-Then create a new branch off the ``3.4`` branch to work on the bugfix:
+Then create a new branch off the ``3.4`` branch to work on the bug fix:
 
 .. code-block:: terminal
 
@@ -167,8 +185,10 @@ uses, and replaces them by symbolic links to the ones in the Git repository.
 Before running the ``link`` command, be sure that the dependencies of the project you
 want to debug are installed by running ``composer install`` inside it.
 
-Work on your Patch
-~~~~~~~~~~~~~~~~~~
+.. _work-on-your-patch:
+
+Work on your Pull Request
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Work on the code as much as you want and commit as much as you want; but keep
 in mind the following:
@@ -181,7 +201,7 @@ in mind the following:
   actually works;
 
 * Try hard to not break backward compatibility (if you must do so, try to
-  provide a compatibility layer to support the old way) -- patches that break
+  provide a compatibility layer to support the old way) -- PRs that break
   backward compatibility have less chance to be merged;
 
 * Do atomic and logically separate commits (use the power of ``git rebase`` to
@@ -210,10 +230,12 @@ in mind the following:
     verb (``fixed ...``, ``added ...``, ...) to start the summary and don't
     add a period at the end.
 
-Prepare your Patch for Submission
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _prepare-your-patch-for-submission:
 
-When your patch is not about a bug fix (when you add a new feature or change
+Prepare your Pull Request for Submission
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When your PR is not about a bug fix (when you add a new feature or change
 an existing one for instance), it must also include the following:
 
 * An explanation of the changes in the relevant ``CHANGELOG`` file(s) (the
@@ -223,16 +245,20 @@ an existing one for instance), it must also include the following:
   ``UPGRADE`` file(s) if the changes break backward compatibility or if you
   deprecate something that will ultimately break backward compatibility.
 
-Step 3: Submit your Patch
--------------------------
+.. _step-4-submit-your-patch:
 
-Whenever you feel that your patch is ready for submission, follow the
+Step 4: Submit your Pull Request
+--------------------------------
+
+Whenever you feel that your PR is ready for submission, follow the
 following steps.
 
-Rebase your Patch
-~~~~~~~~~~~~~~~~~
+.. _rebase-your-patch:
 
-Before submitting your patch, update your branch (needed if it takes you a
+Rebase your Pull Request
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Before submitting your PR, update your branch (needed if it takes you a
 while to finish your changes):
 
 .. code-block:: terminal
@@ -246,7 +272,7 @@ while to finish your changes):
 .. tip::
 
     Replace ``master`` with the branch you selected previously (e.g. ``3.4``)
-    if you are working on a bugfix
+    if you are working on a bug fix.
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
 ``git status`` will show you the *unmerged* files. Resolve all the conflicts,
@@ -273,7 +299,7 @@ You can now make a pull request on the ``symfony/symfony`` GitHub repository.
 .. tip::
 
     Take care to point your pull request towards ``symfony:3.4`` if you want
-    the core team to pull a bugfix based on the ``3.4`` branch.
+    the core team to pull a bug fix based on the ``3.4`` branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
@@ -296,10 +322,10 @@ Some answers to the questions trigger some more requirements:
 * If you answer yes to "New feature?", you must submit a pull request to the
   documentation and reference it under the "Doc PR" section;
 
-* If you answer yes to "BC breaks?", the patch must contain updates to the
+* If you answer yes to "BC breaks?", the PR must contain updates to the
   relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
-* If you answer yes to "Deprecations?", the patch must contain updates to the
+* If you answer yes to "Deprecations?", the PR must contain updates to the
   relevant ``CHANGELOG`` and ``UPGRADE`` files;
 
 * If you answer no to "Tests pass", you must add an item to a todo-list with
@@ -326,7 +352,8 @@ because you want early feedback on your work, add an item to todo-list:
     - [ ] gather feedback for my changes
 
 As long as you have items in the todo-list, please prefix the pull request
-title with "[WIP]".
+title with "[WIP]". If you do not yet want to trigger the automated tests,
+you can also set the PR to `draft status`_.
 
 In the pull request description, give as much details as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
@@ -339,11 +366,29 @@ commit message).
 In addition to this "code" pull request, you must also send a pull request to
 the `documentation repository`_ to update the documentation when appropriate.
 
-Rework your Patch
-~~~~~~~~~~~~~~~~~
+Step 5: Receiving Feedback
+--------------------------
+
+We ask all contributors to follow some
+:doc:`best practices </contributing/community/reviews>`
+to ensure a constructive feedback process.
+
+If you think someone fails to keep this advice in mind and you want another
+perspective, please join the #contribs channel on `Symfony Slack`_. If you
+receive feedback you find abusive please contact the
+:doc:`CARE team</contributing/code_of_conduct/care_team.rst>`.
+
+The :doc:`core team <contributing/code/core_team>` is responsible for deciding
+which PR gets merged, so their feedback is the most relevant. So do not feel
+pressured to refactor your code immediately when someone provides feedback.
+
+.. _rework-your-patch:
+
+Rework your Pull Request
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Based on the feedback on the pull request, you might need to rework your
-patch. Before re-submitting the patch, rebase with ``upstream/master`` or
+PR. Before re-submitting the PR, rebase with ``upstream/master`` or
 ``upstream/3.4``, don't merge; and force the push to the origin:
 
 .. code-block:: terminal
@@ -374,3 +419,7 @@ before merging.
 .. _`fabbot`: https://fabbot.io
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
+.. _`searching on GitHub`: https://github.com/symfony/symfony/issues?q=+is%3Aopen+
+.. _`Symfony Slack`: https://symfony.com/slack-invite
+.. _`Travis-CI`: https://travis-ci.org/symfony/symfony
+.. _`draft status`: https://help.github.com/en/articles/about-pull-requests#draft-pull-requests
