@@ -210,6 +210,20 @@ The serializer can also be used to update an existing object::
 
 This is a common need when working with an ORM.
 
+The ``OBJECT_TO_POPULATE`` is only used for the top level object. If that object
+is the root of a tree structure, all child elements that exist in the
+normalized data will be re-created with new instances.
+
+..versionadded:: 4.3
+
+    Symfony 4.3 introduces a new option ``AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE``.
+    When this flag is set to true, existing children of the root ``OBJECT_TO_POPULATE`` are
+    updated from the normalized data, instead of the denormalizer re-creating them.
+
+    Note that ``DEEP_OBJECT_TO_POPULATE`` only works for single child objects,
+    but not for arrays of objects. Those will still be replaces when present in
+    the normalized data.
+
 .. _component-serializer-attributes-groups:
 
 Attributes Groups
