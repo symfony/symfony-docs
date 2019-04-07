@@ -82,20 +82,53 @@ Controllers can also define a single action using the ``__invoke()`` method,
 which is a common practice when following the `ADR pattern`_
 (Action-Domain-Responder)::
 
-    // src/AppBundle/Controller/Hello.php
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+.. configuration-block::
 
-    /**
-     * @Route("/hello/{name}", name="hello")
-     */
-    class Hello
-    {
-        public function __invoke($name = 'World')
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/Hello.php
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        /**
+         * @Route("/hello/{name}", name="hello")
+         */
+        class Hello
         {
-            return new Response(sprintf('Hello %s!', $name));
+            public function __invoke($name = 'World')
+            {
+                return new Response(sprintf('Hello %s!', $name));
+            }
         }
-    }
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        hello:
+            path:     /hello/{name}
+            defaults: { _controller: app.hello_controller }
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello/{name}">
+                <default key="_controller">app.hello_controller</default>
+            </route>
+
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        $collection->add('hello', new Route('/hello', [
+            '_controller' => 'app.hello_controller',
+        ]));
 
 Alternatives to base Controller Methods
 ---------------------------------------
