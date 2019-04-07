@@ -62,9 +62,54 @@ The ``load()`` method never overwrites existing environment variables. Use the
     // ...
     $dotenv->overload(__DIR__.'/.env');
 
+As you're working with the Dotenv component you'll notice that you might want
+to have different files depending on the environment you're working in. Typically
+this happens for local development or Continuous Integration where you might
+want to have different files for your ``test`` and ``dev`` environments.
+
+You can use ``Dotenv::loadEnv()`` to ease this process::
+
+    use Symfony\Component\Dotenv\Dotenv;
+
+    $dotenv = new Dotenv();
+    $dotenv->loadEnv(__DIR__.'/.env');
+
+The Dotenv component will then look for the correct ``.env`` file to load
+in the following order whereas the files loaded later override the variables
+defined in previously loaded files::
+
+#. If ``.env`` exists, it is loaded first. In case there's no ``.env`` file but a
+   ``.env.dist``, this one will be loaded instead.
+#. If one of the previously mentioned files contains the ``APP_ENV`` variable, the
+   variable is populated and used to load environment-specific files hereafter. If
+   ``APP_ENV`` is not defined in either of the previously mentioned files, ``dev`` is
+   assumed for ``APP_ENV`` and populated by default.
+#. If there's a ``.env.local`` representing general local environment variables it's loaded now.
+#. If there's a ``.env.$env.local`` file, this one is loaded. Otherwise, it falls
+   back to ``.env.$env``.
+
+This might look complicated at first glance but it gives you the opportunity to commit
+multiple environment-specific files that can then be adjusted to your local environment
+easily. Given you commit ``.env``, ``.env.test`` and ``.env.dev`` to represent different
+configuration settings for your environments, each of them can be adjusted by using
+``.env.local``, ``.env.test.local`` and ``.env.dev.local`` respectively.
+
+.. note::
+
+    ``.env.local`` is always ignored in ``test`` environment because tests should produce the
+    same results for everyone.
+
+You can adjust the variable defining the environment, default environment and test
+environments by passing them as additional arguments to ``Dotenv::loadEnv()``
+(see :method:`Symfony\\Component\\Dotenv\\Dotenv::loadEnv` for details).
+
+.. versionadded:: 4.2
+
+    The ``Dotenv::loadEnv()`` method was introduced in Symfony 4.2.
+
 You should never store a ``.env`` file in your code repository as it might
-contain sensitive information; create a ``.env.dist`` file with sensible
-defaults instead.
+contain sensitive information; create a ``.env.dist`` file (or multiple
+environment-specific ones as shown above) with sensible defaults instead.
 
 .. note::
 
