@@ -43,13 +43,12 @@ like this:
                     audit_trail:
                         enabled: true
                     marking_store:
-                        type: 'method'
-                        arguments:
-                            - false
-                            - 'currentPlace'
+                        # Method will become the default value in Symfony 5.0
+                        type: method
+                        property: currentPlace
                     supports:
                         - App\Entity\BlogPost
-                    initial_places: [draft]
+                    initial_marking: [draft]
                     places:
                         - draft
                         - review
@@ -81,10 +80,9 @@ like this:
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:audit-trail enabled="true"/>
 
-                    <framework:marking-store type="method">
-                      <framework:argument>false</framework:argument>
-                      <framework:argument>currentPlace</framework:argument>
-                    </framework:marking-store>
+                    <framework:initial-marking>draft</framework:initial-marking>
+                    <!-- Method will become the default value in Symfony 5.0 -->
+                    <framework:marking-store type="method" property="state" />
 
                     <framework:support>App\Entity\BlogPost</framework:support>
 
@@ -129,14 +127,12 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
+                        // Method will become the default value in Symfony 5.0
                         'type' => 'method',
-                        'arguments' => [
-                            false,
-                            'currentPlace',
-                        ],
+                        'property' => 'currentPlace',
                     ],
                     'supports' => ['App\Entity\BlogPost'],
-                    'initial_places' => ['draft'],
+                    'initial_marking' => ['draft'],
                     'places' => [
                         'draft',
                         'review',
@@ -174,14 +170,18 @@ As configured, the following property is used by the marking store::
 .. note::
 
     The Workflow Component supports workflows that can be in one or multiple places
-    (states) at the same time. To restrict a workflow to a single state, set the first
-    argument to ``true`` when defining the ``marking_store``.
+    (states) at the same time.
+
+    If the subject can be in only on state: use a state machine. In that case, the
+    property (named ``marking`` by default) will be a string.
+
+    If the subject can be in many places: use a workflow. In that case, the property will be an array.
 
 .. tip::
 
-    The ``type`` (default value ``method``) and ``arguments`` (default
-    values ``false`` and ``marking``) attributes of the ``marking_store`` option are optional.
-    If omitted, their default values will be used.
+    The ``type`` (default value ``method``) and ``property`` (default
+    value ``marking``) attributes of the ``marking_store`` option are optional.
+    If omitted, the default values will be used.
 
 .. tip::
 
