@@ -77,7 +77,7 @@ buses. For the example, the middleware must be loaded for both the command and e
 
     .. code-block:: xml
 
-        <!-- config/packages/cache.xml -->
+        <!-- config/packages/messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
