@@ -28,7 +28,7 @@ these at the :doc:`component documentation </components/cache>`.
 Configuring Cache with FrameworkBundle
 --------------------------------------
 
-When configuring the the cache component there are a few concepts you should know
+When configuring the cache component there are a few concepts you should know
 of:
 
 **Pool**
@@ -398,9 +398,9 @@ Clearing the Cache
 ------------------
 
 To clear the cache you can use the ``bin/console cache:pool:clear [pool]`` command.
-That will remove all the entries from your storage and you wil have to recalcuate
+That will remove all the entries from your storage and you wil have to recalculate
 all values. You can also group your pools into "cache clearers". There are 3 cache
-clearer by default:
+clearers by default:
 
 * ``cache.global_clearer``
 * ``cache.system_clearer``
