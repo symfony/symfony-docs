@@ -317,7 +317,7 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
             ],
         ]);
 
-Custom provider options
+Custom Provider Options
 -----------------------
 
 Some providers have specific options that could be configured. The
@@ -332,7 +332,6 @@ the pool.
     .. code-block:: yaml
 
         # config/packages/cache.yaml
-
         framework:
             cache:
                 pools:
