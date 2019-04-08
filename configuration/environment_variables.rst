@@ -373,7 +373,8 @@ Symfony provides the following env var processors:
             # config/packages/sentry.yaml
             parameters:
                 env(HOST): '10.0.0.1'
-                env(SENTRY_DSN): 'http://%env(HOST)%/project'
+                sentry_host: '%env(HOST)%'
+                env(SENTRY_DSN): 'http://%sentry_host%/project'
             sentry:
                 dsn: '%env(resolve:SENTRY_DSN)%'
 
@@ -388,7 +389,8 @@ Symfony provides the following env var processors:
 
                 <parameters>
                     <parameter key="env(HOST)">10.0.0.1</parameter>
-                    <parameter key="env(SENTRY_DSN)">http://%env(HOST)%/project</parameter>
+                    <parameter key="sentry_host">%env(HOST)%</parameter>
+                    <parameter key="env(SENTRY_DSN)">http://%sentry_host%/project</parameter>
                 </parameters>
 
                 <sentry:config dsn="%env(resolve:SENTRY_DSN)%"/>
@@ -398,7 +400,8 @@ Symfony provides the following env var processors:
 
             // config/packages/sentry.php
             $container->setParameter('env(HOST)', '10.0.0.1');
-            $container->setParameter('env(SENTRY_DSN)', 'http://%env(HOST)%/project');
+            $container->setParameter('sentry_host', '%env(HOST)%');
+            $container->setParameter('env(SENTRY_DSN)', 'http://%sentry_host%/project');
             $container->loadFromExtension('sentry', [
                 'dsn' => '%env(resolve:SENTRY_DSN)%',
             ]);
