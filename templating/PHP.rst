@@ -23,6 +23,12 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
+.. deprecated:: 4.3
+
+    The integration of the Templating component in FrameworkBundle has been
+    deprecated since version 4.3 and will be removed in 5.0. PHP templates will
+    no longer be supported and you'll need to use Twig instead.
+
 If you want to use the PHP templating engine, first install the templating component:
 
 .. code-block:: terminal
