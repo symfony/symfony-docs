@@ -33,7 +33,7 @@ Twig functions from WebpackEncoreBundle, you don't need to do anything else! The
 functions automatically read this file and render as many ``script`` or ``link``
 tags as needed:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {#
         May now render multiple script tags:

@@ -146,7 +146,7 @@ One of the best features of Twig is its extensibility via tags, filters
 and functions. Take a look at the following sample template that uses filters
 extensively to modify the information before displaying it to the user:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <h1>{{ article.title|capitalize }}</h1>
 
@@ -170,7 +170,7 @@ create a new template fragment that can then be included from other templates.
 Imagine that we want to display ads on some pages of our application. First,
 create a ``banner.html.twig`` template:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# app/Resources/views/ads/banner.html.twig #}
     <div id="ad-banner">
@@ -256,7 +256,7 @@ Including Assets: Images, JavaScripts and Stylesheets
 What would the Internet be without images, JavaScripts and stylesheets?
 Symfony provides the ``asset()`` function to deal with them easily:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <link href="{{ asset('css/blog.css') }}" rel="stylesheet" type="text/css"/>
 

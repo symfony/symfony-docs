@@ -286,7 +286,7 @@ texts* and complex expressions:
     that your translated message is *not* output escaped, you must apply
     the ``raw`` filter after the translation filter:
 
-    .. code-block:: twig
+    .. code-block:: html+twig
 
         {# text translated between tags is never escaped #}
         {% trans %}
