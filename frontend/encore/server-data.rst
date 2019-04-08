@@ -6,7 +6,7 @@ In Symfony applications, you may find that you need to pass some dynamic data
 dynamic configuration is by storing information in ``data`` attributes and reading
 them later in JavaScript. For example:
 
-.. code-block:: html-twig
+.. code-block:: html+twig
 
     <div class="js-user-rating" data-is-authenticated="{{ app.user ? 'true' : 'false' }}">
         <!-- ... -->
