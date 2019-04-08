@@ -46,7 +46,7 @@ the user's current password:
              *     message = "Wrong value for your current password"
              * )
              */
-             protected $oldPassword;
+            protected $oldPassword;
         }
 
     .. code-block:: yaml

@@ -112,8 +112,6 @@ If your valid choice list is simple, you can pass them in directly via the
 
         class Author
         {
-            protected $genre;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint(

@@ -153,9 +153,6 @@ stores an ``Address`` instance in the ``$address`` property::
 
         class Address
         {
-            protected $street;
-            protected $zipCode;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
@@ -172,10 +169,6 @@ stores an ``Address`` instance in the ``$address`` property::
 
         class Author
         {
-            protected $firstName;
-            protected $lastName;
-            protected $address;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
@@ -238,8 +231,6 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
         class Author
         {
-            protected $address;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('address', new Assert\Valid());
