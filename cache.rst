@@ -206,9 +206,9 @@ You can also create more customized pools. All you need is an adapter:
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.array" />
-                  <framework:pool name="cache.acme" adapter="cache.adapter.memcached" />
-                  <framework:pool name="cache.foobar" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com" />
+                  <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
+                  <framework:pool name="cache.acme" adapter="cache.adapter.memcached"/>
+                  <framework:pool name="cache.foobar" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -273,9 +273,9 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
 
             <framework:config>
                 <framework:cache>
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com" />
-                  <framework:pool name="cache.short_cache" adapter="my_cache_pool" default_lifetime="604800" />
-                  <framework:pool name="cache.long_cache" adapter="my_cache_pool" default_lifetime="604800" />
+                  <framework:pool name="my_cache_pool" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
+                  <framework:pool name="cache.short_cache" adapter="my_cache_pool" default_lifetime="604800"/>
+                  <framework:pool name="cache.long_cache" adapter="my_cache_pool" default_lifetime="604800"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -346,17 +346,17 @@ case the value needs to be recalculated.
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
-                  <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter" />
-                  <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com" />
+                  <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter"/>
+                  <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
                 </framework:cache>
             </framework:config>
 
             <services>
                 <service id="app.my_cache_chain_adapter" class="Symfony\Component\Cache\Adapter\ChainAdapter">
                     <argument type="collection">
-                        <argument type="service" value="cache.adapter.array" />
-                        <argument type="service" value="cache.my_redis" />
-                        <argument type="service" value="cache.adapter.file" />
+                        <argument type="service" value="cache.adapter.array"/>
+                        <argument type="service" value="cache.my_redis"/>
+                        <argument type="service" value="cache.adapter.file"/>
                     </argument>
                     <argument>31536000</argument>
                 </service>
