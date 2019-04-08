@@ -419,6 +419,12 @@ The global clearer clears all the cache in every pool. The system cache clearer
 is used in the ``bin/console cache:clear`` command. The app clearer is the default
 clearer.
 
+To see all available cache pools:
+
+.. code-block:: terminal
+
+    $ php bin/console cache:pool:list
+
 Clear one pool:
 
 .. code-block:: terminal
