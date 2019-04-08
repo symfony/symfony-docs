@@ -27,9 +27,8 @@ Preloading Assets
 
 Imagine that your application includes a web page like this:
 
-.. code-block:: twig
+.. code-block:: html
 
-    {# templates/homepage.html.twig #}
     <!DOCTYPE html>
     <html>
     <head>
@@ -39,7 +38,7 @@ Imagine that your application includes a web page like this:
     </head>
     <body>
         <main role="main" class="container">
-            {# ... some content here ... #}
+            <!-- ... -->
         </main>
     </body>
     </html>
@@ -58,10 +57,10 @@ To do that, first install the WebLink component:
 Now, update the template to use the ``preload()`` Twig function provided by
 WebLink:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <head>
-       {# ... #}
+        <!-- ... -->
         <link rel="stylesheet" href="{{ preload('/app.css') }}">
     </head>
 
@@ -72,10 +71,10 @@ requested the HTML page.
 Additionally, according to `the Priority Hints specification`_, you can signal
 the priority of the resource to download using the ``importance`` attribute:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <head>
-       {# ... #}
+        <!-- ... -->
         <link rel="stylesheet" href="{{ preload('/app.css', { importance: 'low' }) }}">
     </head>
 
@@ -102,10 +101,10 @@ improve performance of your applications in production right now.
 If you want to prevent the push but let the browser preload the resource by
 issuing an early separate HTTP request, use the ``nopush`` option:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <head>
-       {# ... #}
+        <!-- ... -->
         <link rel="stylesheet" href="{{ preload('/app.css', { nopush: true }) }}">
     </head>
 
@@ -135,12 +134,12 @@ The component also supports sending HTTP links not related to performance and
 any link implementing the `PSR-13`_ standard. For instance, any
 `link defined in the HTML specification`_:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <head>
-       {# ... #}
+        <!-- ... -->
         <link rel="alternate" href="{{ link('/index.jsonld', 'alternate') }}">
-        <link rel="stylesheet" href="{{ preload('/app.css', {nopush: true}) }}">
+        <link rel="stylesheet" href="{{ preload('/app.css', { nopush: true }) }}">
     </head>
 
 The previous snippet will result in this HTTP header being sent to the client:

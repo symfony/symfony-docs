@@ -83,7 +83,7 @@ Congrats! You now have three new files:
 Next, include these in your base layout file. Two Twig helpers from WebpackEncoreBundle
 can do most of the work for you:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# templates/base.html.twig #}
     <!DOCTYPE html>

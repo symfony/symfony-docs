@@ -66,7 +66,7 @@ configuration:
 If you prefer to apply the Bootstrap styles on a form to form basis, include the
 ``form_theme`` tag in the templates where those forms are used:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# ... #}
     {# this tag only applies to the forms defined in this template #}
