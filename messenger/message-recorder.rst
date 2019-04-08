@@ -53,7 +53,7 @@ sure ``dispatch_after_current_bus`` is registered before ``doctrine_transaction`
 in the middleware chain.
 
 **Note:** The ``dispatch_after_current_bus`` middleware must be loaded for *all* of the
-buses. For the example, the middleware must be loaded for both the command and event buses.
+buses. For the example, the middleware must be loaded for both the command and event bus.
 
 .. configuration-block::
 
@@ -75,6 +75,47 @@ buses. For the example, the middleware must be loaded for both the command and e
                             - validation
                             - doctrine_transaction
 
+    .. code-block:: xml
+
+        <!-- config/packages/cache.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger default_bus="messenger.bus.command">
+                  <framework:bus name="messenger.bus.command">
+                      <framework:middleware id="validation">
+                      <framework:middleware id="doctrine_transaction">
+                  </framework:bus>
+                  <framework:bus name="messenger.bus.command" default_middleware="allow_no_handlers">
+                      <framework:middleware id="validation">
+                      <framework:middleware id="doctrine_transaction">
+                  </framework:bus>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'default_bus' => 'messenger.bus.command',
+                'buses' => [
+                    'messenger.bus.command' => [
+                        'middleware' => ['validation', 'doctrine_transaction'],
+                    ],
+                    'messenger.bus.event' => [
+                        'default_middleware' => 'allow_no_handlers',
+                        'middleware' => ['validation', 'doctrine_transaction'],
+                    ],
+                ],
+            ],
+        ]);
 
 .. code-block:: php
 
