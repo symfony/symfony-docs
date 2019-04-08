@@ -195,7 +195,7 @@ This test will check if the current choice is equal to the ``selected_value``
 or if the current choice is in the array (when ``selected_value`` is an
 array).
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
 
@@ -247,7 +247,7 @@ of variables. By default, these blocks live inside `form_div_layout.html.twig`_.
 
 Look at the ``form_label`` as an example:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% block form_label %}
         {% if not compound %}
