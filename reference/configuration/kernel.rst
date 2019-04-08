@@ -28,7 +28,7 @@ exposed via the ``kernel.charset`` configuration parameter and the
 :method:`Symfony\\Component\\HttpKernel\\Kernel::getCharset` method.
 
 To change this value, override the ``getCharset()`` method and return another
-charset:
+charset::
 
     // app/AppKernel.php
 
