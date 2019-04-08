@@ -144,7 +144,6 @@ inside:
 .. code-block:: html+twig
 
     {# app/Resources/views/lucky/number.html.twig #}
-
     <h1>Your lucky number is {{ number }}</h1>
 
 The ``{{ number }}`` syntax is used to *print* variables in Twig. Refresh your browser
