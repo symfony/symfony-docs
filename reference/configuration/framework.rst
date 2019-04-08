@@ -1997,7 +1997,7 @@ default_doctrine_provider
 **type**: ``string``
 
 The service name to use as your default Doctrine provider. The provider is
-available as the ``cache.doctrine`` service.
+available as the ``cache.default_doctrine_provider`` service.
 
 default_psr6_provider
 .....................
@@ -2005,14 +2005,14 @@ default_psr6_provider
 **type**: ``string``
 
 The service name to use as your default PSR-6 provider. It is available as
-the ``cache.psr6`` service.
+the ``cache.default_psr6_provider`` service.
 
 default_redis_provider
 ......................
 
 **type**: ``string`` **default**: ``redis://localhost``
 
-The DSN to use by the Redis provider. The provider is available as the ``cache.redis``
+The DSN to use by the Redis provider. The provider is available as the ``cache.default_redis_provider``
 service.
 
 default_memcached_provider
@@ -2024,7 +2024,7 @@ default_memcached_provider
 
 **type**: ``string`` **default**: ``memcached://localhost``
 
-The DSN to use by the Memcached provider. The provider is available as the ``cache.memcached``
+The DSN to use by the Memcached provider. The provider is available as the ``cache.default_memcached_provider``
 service.
 
 pools
