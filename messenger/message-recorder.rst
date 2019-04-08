@@ -175,7 +175,7 @@ buses. For the example, the middleware must be loaded for both the command and e
             $this->em = $em;
         }
 
-        public function __invoke(UserSignedUp $eent)
+        public function __invoke(UserSignedUp $event)
         {
             $user = $this->em->getRepository(User::class)->find(new User($event->getUuid()));
 
