@@ -322,7 +322,7 @@ Custom Provider Options
 
 Some providers have specific options that could be configured. The
 :doc:`RedisAdapter </components/cache/adapters/redis_adapter>` allows you to create
-providers with option ``lazy``, ``timeout`` etc. To use these options with non-default
+providers with option  ``timeout``, ``retry_interval`` etc. To use these options with non-default
 values you need to create your own ``\Redis`` provider and use that when configuring
 the pool.
 
@@ -344,7 +344,7 @@ the pool.
                 factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
                 arguments:
                     - 'redis://localhost'
-                    - [ lazy: true, timeout: 10 ]
+                    - [ retry_interval: 2, timeout: 10 ]
 
 .. code-block:: xml
 
@@ -366,7 +366,7 @@ the pool.
                 <service id="app.my_custom_redis_provider" class="\Redis">
                     <argument>redis://localhost</argument>
                     <argument type="collection">
-                        <argument name="lazy">true</argument>
+                        <argument name="retry_interval">2</argument>
                         <argument name="timeout">10</argument>
                     </argument>
                 </service>
@@ -390,7 +390,7 @@ the pool.
         $container->getDefinition('app.my_custom_redis_provider', \Redis::class)
             ->addArgument('redis://localhost')
             ->addArgument([
-                'lazy' => true,
+                'retry_interval' => 2,
                 'timeout' => 10
             ]);
 
