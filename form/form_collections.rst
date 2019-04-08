@@ -295,7 +295,7 @@ new "tag" forms. To render it, make the following change to your template:
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
 
-    .. code-block:: html+twig
+    .. code-block:: twig
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
 

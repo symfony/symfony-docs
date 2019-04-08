@@ -114,7 +114,7 @@ some or all of its fragments.
 For example, when the widget of an ``integer`` type field is rendered, an ``input``
 ``number`` field is generated
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form_widget(form.age) }}
 
@@ -272,7 +272,7 @@ Now that you've created the customized form block, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the template via the ``form_theme`` tag:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% form_theme form 'form/fields.html.twig' %}
 
@@ -288,7 +288,7 @@ Multiple Templates
 A form can also be customized by applying several templates. To do this, pass the
 name of all the templates as an array using the ``with`` keyword:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% form_theme form with ['common.html.twig', 'form/fields.html.twig'] %}
 
@@ -307,7 +307,7 @@ of Symfony applications (and so you can't control what themes are defined global
 
 You can do this by including the ``only`` keyword after the list of form themes:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% form_theme form with ['common.html.twig', 'form/fields.html.twig'] only %}
 
@@ -321,7 +321,7 @@ You can do this by including the ``only`` keyword after the list of form themes:
     yourself, or extend one of the built-in form themes with Twig's ``use``
     keyword instead of ``extends`` to re-use the original theme contents.
 
-    .. code-block:: html+twig
+    .. code-block:: twig
 
         {# app/Resources/views/common.html.twig #}
         {% use "form_div_layout.html.twig" %}
@@ -333,14 +333,14 @@ Child Forms
 
 You can also apply a form theme to a specific child of your form:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% form_theme form.a_child_form 'form/fields.html.twig' %}
 
 This is useful when you want to have a custom theme for a nested form that's
 different than the one of your main form. Just specify both your themes:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% form_theme form 'form/fields.html.twig' %}
 
@@ -503,7 +503,7 @@ resource to use such a layout:
 If you only want to make the change in one template, add the following line to
 your template file rather than adding the template as a resource:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% form_theme form 'form_table_layout.html.twig' %}
 

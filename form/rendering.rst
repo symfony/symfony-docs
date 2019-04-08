@@ -7,7 +7,7 @@ How to Control the Rendering of a Form
 So far, you've seen how an entire form can be rendered with just one line
 of code. Of course, you'll usually need much more flexibility when rendering:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# app/Resources/views/default/new.html.twig #}
     {{ form_start(form) }}
@@ -79,7 +79,7 @@ used the ``form_row()`` helper:
 If the auto-generated label for a field isn't quite right, you can explicitly
 specify it:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form_label(form.task, 'Task Description') }}
 
@@ -89,7 +89,7 @@ option is ``attr``, which allows you to modify attributes on the form element.
 The following would add the ``task_field`` class to the rendered input text
 field:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
 
@@ -97,14 +97,14 @@ If you need to render form fields "by hand" then you can access individual
 values for fields such as the ``id``, ``name`` and ``label``. For example
 to get the ``id``:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form.task.vars.id }}
 
 To get the value used for the form field's name attribute you need to use
 the ``full_name`` value:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form.task.vars.full_name }}
 

@@ -144,7 +144,7 @@ done by passing a special form "view" object to your template (notice the
 ``$form->createView()`` in the controller above) and using a set of form
 helper functions:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# app/Resources/views/default/new.html.twig #}
     {{ form_start(form) }}
@@ -409,7 +409,7 @@ Validation is a very powerful feature of Symfony and has its own
     but are being prevented by your browser from, for example, submitting
     blank fields.
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# app/Resources/views/default/new.html.twig #}
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
