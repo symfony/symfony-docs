@@ -184,6 +184,7 @@ Configuration
 * `validation`_
 
   * :ref:`cache <reference-validation-cache>`
+  * :ref:`disable_not_compromised_password <reference-validation-disable_not_compromised_password>`
   * `email_validation_mode`_
   * :ref:`enable_annotations <reference-validation-enable_annotations>`
   * :ref:`enabled <reference-validation-enabled>`
@@ -1776,6 +1777,26 @@ has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\Cach
 
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
 cache provide from the Doctrine project.
+
+.. _reference-validation-disable_not_compromised_password:
+
+disable_not_compromised_password
+................................
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.3
+
+    The ``disable_not_compromised_password`` option was introduced in Symfony 4.3.
+
+The :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
+constraint makes HTTP requests to a public API to check if the given password
+has been compromised in a data breach.
+
+If you set this option to ``true``, no HTTP requests will be made and the given
+password will be considered valid. This is useful when you don't want or can't
+make HTTP requests, such as in ``dev`` and ``test`` environments or in
+continuous integration servers.
 
 .. _reference-validation-enable_annotations:
 

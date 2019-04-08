@@ -97,6 +97,12 @@ For example, if the password is ``test``, the entire SHA-1 hash is
 ``a94a8fe5ccb19ba61c4c0873d391e987982fbbd3`` but the validator only sends
 ``a94a8`` to the ``haveibeenpwned.com`` API.
 
+.. seealso::
+
+    When using this constraint inside a Symfony application, define the
+    :ref:`disable_not_compromised_password <reference-validation-disable_not_compromised_password>`
+    option to avoid making HTTP requests in the ``dev`` and ``test`` environments.
+
 Available Options
 -----------------
 
