@@ -821,7 +821,6 @@ If you need to generate a URL from a service, type-hint the :class:`Symfony\\Com
 service::
 
     // src/Service/SomeService.php
-
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
     class SomeService
