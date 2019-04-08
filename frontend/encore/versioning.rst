@@ -67,7 +67,7 @@ like normal:
 
 .. code-block:: twig
 
-    <img src="{{ asset('build/images/logo.png') }}">
+    <img src="{{ asset('build/images/logo.png') }}"/>
 
 Learn more
 ----------

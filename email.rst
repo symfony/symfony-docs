@@ -151,7 +151,7 @@ template might look something like this:
     Thanks!
 
     {# Makes an absolute URL to the /images/logo.png file #}
-    <img src="{{ absolute_url(asset('images/logo.png')) }}">
+    <img src="{{ absolute_url(asset('images/logo.png')) }}"/>
 
 The ``$message`` object supports many more options, such as including attachments,
 adding HTML content, and much more. Fortunately, Swift Mailer covers the topic

@@ -1185,7 +1185,7 @@ Now you can use the ``avatars`` package in your templates:
 
 .. code-block:: html+twig
 
-    <img src="{{ asset('...', 'avatars') }}">
+    <img src="{{ asset('...', 'avatars') }}"/>
 
 Each package can configure the following options:
 

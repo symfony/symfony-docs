@@ -18,7 +18,7 @@ To reference an image tag from inside a JavaScript file, *require* the file:
     // path is relative to this file - e.g. assets/images/logo.png
     const logoPath = require('../images/logo.png');
 
-    var html = `<img src="${logoPath}">`;
+    var html = `<img src="${logoPath}"/>`;
 
 When you ``require`` (or ``import``) an image file, Webpack copies it into your
 output directory and returns the final, *public* path to that file.
@@ -60,10 +60,10 @@ To render inside Twig, use the ``asset()`` function:
 .. code-block:: html+twig
 
     {# assets/images/logo.png was copied to web/build/logo.png #}
-    <img src="{{ asset('build/logo.png') }}">
+    <img src="{{ asset('build/logo.png') }}"/>
 
     {# assets/images/subdir/logo.png was copied to web/build/subdir/logo.png #}
-    <img src="{{ asset('build/subdir/logo.png') }}">
+    <img src="{{ asset('build/subdir/logo.png') }}"/>
 
 Make sure you've enabled the :ref:`json_manifest_path <load-manifest-files>` option,
 which tells the ``asset()`` function to read the final paths from the ``manifest.json``
