@@ -38,7 +38,7 @@ Tone of Voice
 We don't expect you to be completely formal, or to even write error-free
 English. Just remember this: don't swear, and be respectful to others.
 
-Don't reply in anger or with an aggressive tone. You're angry, we understand
+Don't reply in anger or with an aggressive tone. If you're angry, we understand
 that, but swearing/cursing and name calling doesn't really encourage anyone to
 help you. Take a deep breath, count to 10 and try to *clearly* explain what problems
 you encounter.
@@ -149,6 +149,17 @@ you don't have to use "Please" all the time. But it wouldn't hurt.
 It may not seem like much, but saying "Thank you" does make others feel
 more welcome.
 
+
+Preventing Escalations
+----------------------
+
+Sometimes when people receive feedback they may get defensive.
+In that case, it is better to try to approach the discussion in
+a different way, to not escalate further.
+
+If you want someone to mediate, please join the #contribs channel on `Symfony Slack`_,
+to have a safe environment and keep working together on the common goals.
+
 Using Humor
 -----------
 
@@ -176,3 +187,5 @@ But don't say it "just because", if your apology is not really meant
 you *will* lose credibility and respect from other developers.
 
 *Do unto others as you would have them do unto you.*
+
+.. _`Symfony Slack`: https://symfony.com/slack-invite
