@@ -101,7 +101,7 @@ buses. For the example, the middleware must be loaded for both the command and e
 
     .. code-block:: php
 
-        // config/packages/cache.php
+        // config/packages/messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'default_bus' => 'messenger.bus.command',
