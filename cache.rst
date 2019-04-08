@@ -4,7 +4,7 @@
 Cache
 =====
 
-Using cache is a great way of making you application run quicker. The Symfony cache
+Using cache is a great way of making your application run quicker. The Symfony cache
 component is shipped with many adapters to different storages. Every adapter is
 developed for high performance.
 
