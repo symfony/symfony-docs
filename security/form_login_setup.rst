@@ -122,7 +122,7 @@ Edit the ``security.yml`` file in order to allow access for anyone to the
 **Step 2.** The template has very little to do with security: it just generates
 a traditional HTML form that submits to ``/login``:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% extends 'base.html.twig' %}
 

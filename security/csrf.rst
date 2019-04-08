@@ -128,7 +128,7 @@ Consider a simple HTML form created to allow deleting items. First, use the
 :ref:`csrf_token() Twig function <reference-twig-function-csrf-token>` to
 generate a CSRF token in the template and store it as a hidden form field:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
         {# the argument of csrf_token() is an arbitrary string used to generate the token #}
