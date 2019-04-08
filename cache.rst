@@ -37,7 +37,9 @@ of:
 **Adapter**
     An adapter is a *template* that you use to create Pools.
 **Provider**
-    A provider is the DSN connection to the actual storage.
+    A provider is a service that some adapters are using to connect to the storage.
+    Redis and Memcached are example of such adapters. If a DSN is used as the
+    provider then a service is automatically created.
 
 There are two pools that are always enabled by default. They are ``cache.app`` and
 ``cache.system``. The system cache is use for things like annotations, serializer,
@@ -314,6 +316,85 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
                 ],
             ],
         ]);
+
+Custom provider options
+-----------------------
+
+Some providers have specific options that could be configured. The
+:doc:`RedisAdapter </components/cache/adapters/redis_adapter>` allows you do create
+providers with option ``lazy`` and ``timeout`` etc. To use these options with non-default
+values you need to create your own ``\Redis`` provider and use that when configuring
+the pool.
+
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+
+        framework:
+            cache:
+                pools:
+                    cache.my_redis:
+                        adapter: cache.adapter.redis
+                        provider: app.my_custom_redis_provider
+
+        services:
+            app.my_custom_redis_provider:
+                class: \Redis
+                factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
+                arguments:
+                    - 'redis://localhost'
+                    - [ lazy: true, timeout: 10 ]
+
+.. code-block:: xml
+
+        <!-- config/packages/cache.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <framework:config>
+                <framework:cache>
+                  <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="app.my_custom_redis_provider"/>
+                </framework:cache>
+            </framework:config>
+
+            <services>
+                <service id="app.my_custom_redis_provider" class="\Redis">
+                    <argument>redis://localhost</argument>
+                    <argument type="collection">
+                        <argument name="lazy">true</argument>
+                        <argument name="timeout">10</argument>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        $container->loadFromExtension('framework', [
+            'cache' => [
+                'pools' => [
+                    'cache.my_redis' => [
+                        'adapter' => 'cache.adapter.redis',
+                        'provider' => 'app.my_custom_redis_provider',
+                    ],
+                ],
+            ],
+        ]);
+
+        $container->getDefinition('app.my_custom_redis_provider', \Redis::class)
+            ->addArgument([
+                'redis://localhost',
+                [ 'lazy' => true, 'timeout' => 10 ],
+            ])
+            ->addArgument(31536000);
 
 Creating a Cache Chain
 ----------------------
