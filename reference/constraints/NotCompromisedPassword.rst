@@ -5,7 +5,7 @@ NotCompromisedPassword
 
     The ``NotCompromisedPassword`` constraint was introduced in Symfony 4.3.
 
-Validates that the given password has not been compromised by checking that is
+Validates that the given password has not been compromised by checking that it is
 not included in any of the public data breaches tracked by `haveibeenpwned.com`_.
 
 ==========  ===================================================================
