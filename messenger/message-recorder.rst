@@ -14,15 +14,15 @@ such as:
 - If the message is dispatched to a different bus, then the dispatched message can still
   be handled even if the original handler encounters an exception.
 
-An Example ``SignUpUser`` Process
----------------------------------
+An Example ``RegisterUser`` Process
+-----------------------------------
 
 Let's take the example of an application with both a *command* and an *event* bus. The application
-dispatches a command named ``SignUpUser`` to the command bus. The command is handled by the
-``SignUpUserHandler`` which creates a ``User`` object, stores that object to a database and
-dispatches a ``UserSignedUp`` event to the event bus.
+dispatches a command named ``RegisterUser`` to the command bus. The command is handled by the
+``RegisterUserHandler`` which creates a ``User`` object, stores that object to a database and
+dispatches a ``UserRegistered`` event to the event bus.
 
-There are many subscribers to the ``UserSignedUp`` event, one subscriber may send
+There are many subscribers to the ``UserRegistered`` event, one subscriber may send
 a welcome email to the new user. We are using the ``DoctrineTransactionMiddleware``
 to wrap all database queries in one database transaction.
 
@@ -41,9 +41,9 @@ to `only` be handled after the handler finishes. This can be by using the
 ``DispatchAfterCurrentBusMiddleware`` middleware and adding a ``DispatchAfterCurrentBusStamp``
 stamp to `the message Envelope </components/messenger#adding-metadata-to-messages-envelopes>`_.
 
-Referencing the above example, this means that the ``UserSignedUp`` event would not be handled
-until *after* the ``SignUpUserHandler`` had completed and the new ``User`` was persisted to the
-database. If the ``SignUpUserHandler`` encounters an exception, the ``UserSignedUp`` event will
+Referencing the above example, this means that the ``UserRegistered`` event would not be handled
+until *after* the ``RegisterUserHandler`` had completed and the new ``User`` was persisted to the
+database. If the ``RegisterUserHandler`` encounters an exception, the ``UserRegistered`` event will
 never be handled and if an exception is thrown while sending the welcome email, the Doctrine
 transaction will not be rolled back.
 
@@ -122,17 +122,17 @@ buses. For the example, the middleware must be loaded for both the command and e
     namespace App\Messenger\CommandHandler;
 
     use App\Entity\User;
-    use App\Messenger\Command\SignUpUser;
-    use App\Messenger\Event\UserSignedUp;
+    use App\Messenger\Command\RegisterUser;
+    use App\Messenger\Event\UserRegistered;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
     use Symfony\Component\Messenger\MessageBusInterface;
 
-    class SignUpUserHandler
+    class RegisterUserHandler
     {
-        private $em;
         private $eventBus;
+        private $em;
 
         public function __construct(MessageBusInterface $eventBus, EntityManagerInterface $em)
         {
@@ -140,7 +140,7 @@ buses. For the example, the middleware must be loaded for both the command and e
             $this->em = $em;
         }
 
-        public function __invoke(SignUpUser $command)
+        public function __invoke(RegisterUser $command)
         {
             $user = new User($command->getUuid(), $command->getName(), $command->getEmail());
             $this->em->persist($user);
@@ -148,7 +148,7 @@ buses. For the example, the middleware must be loaded for both the command and e
             // The DispatchAfterCurrentBusStamp marks the event message to be handled
             // only if this handler does not throw an exception.
 
-            $event = new UserSignedUp($command->getUuid());
+            $event = new UserRegistered($command->getUuid());
             $this->eventBus->dispatch(
                 (new Envelope($event))
                     ->with(new DispatchAfterCurrentBusStamp())
@@ -161,28 +161,32 @@ buses. For the example, the middleware must be loaded for both the command and e
     namespace App\Messenger\EventSubscriber;
 
     use App\Entity\User;
-    use App\Messenger\Event\UserSignedUp;
+    use App\Messenger\Event\UserRegistered;
     use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\RawMessage;
 
-    class WhenUserSignedUpThenSendWelcomeEmail
+    class WhenUserRegisteredThenSendWelcomeEmail
     {
-        private $em;
         private $mailer;
+        private $em;
 
-        public function __construct(MyMailer $mailer, EntityManagerInterface $em)
+        public function __construct(MailerInterface $mailer, EntityManagerInterface $em)
         {
             $this->mailer = $mailer;
             $this->em = $em;
         }
 
-        public function __invoke(UserSignedUp $event)
+        public function __invoke(UserRegistered $event)
         {
             $user = $this->em->getRepository(User::class)->find(new User($event->getUuid()));
 
-            $this->mailer->sendWelcomeEmail($user);
+            $this->mailer->send(new RawMessage('Welcome '.$user->getFirstName()));
         }
     }
 
-**Note:** If ``WhenUserSignedUpThenSendWelcomeEmail`` throws an exception, that exception
-will be wrapped into a ``DelayedMessageHandlingException``. Using ``DelayedMessageHandlingException::getExceptions``
-will give you all exceptions that are thrown while handing a message with the ``DispatchAfterCurrentBusStamp``.
+.. note::
+
+    If ``WhenUserRegisteredThenSendWelcomeEmail`` throws an exception, that exception
+    will be wrapped into a ``DelayedMessageHandlingException``. Using ``DelayedMessageHandlingException::getExceptions``
+    will give you all exceptions that are thrown while handing a message with the ``DispatchAfterCurrentBusStamp``.
