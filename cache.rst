@@ -321,11 +321,10 @@ Custom Provider Options
 -----------------------
 
 Some providers have specific options that could be configured. The
-:doc:`RedisAdapter </components/cache/adapters/redis_adapter>` allows you do create
-providers with option ``lazy`` and ``timeout`` etc. To use these options with non-default
+:doc:`RedisAdapter </components/cache/adapters/redis_adapter>` allows you to create
+providers with option ``lazy``, ``timeout`` etc. To use these options with non-default
 values you need to create your own ``\Redis`` provider and use that when configuring
 the pool.
-
 
 .. configuration-block::
 
@@ -389,11 +388,11 @@ the pool.
         ]);
 
         $container->getDefinition('app.my_custom_redis_provider', \Redis::class)
+            ->addArgument('redis://localhost')
             ->addArgument([
-                'redis://localhost',
-                [ 'lazy' => true, 'timeout' => 10 ],
-            ])
-            ->addArgument(31536000);
+                'lazy' => true,
+                'timeout' => 10
+            ]);
 
 Creating a Cache Chain
 ----------------------
