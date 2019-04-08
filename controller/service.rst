@@ -80,7 +80,7 @@ Invokable Controllers
 
 Controllers can also define a single action using the ``__invoke()`` method,
 which is a common practice when following the `ADR pattern`_
-(Action-Domain-Responder)::
+(Action-Domain-Responder):
 
 .. configuration-block::
 
