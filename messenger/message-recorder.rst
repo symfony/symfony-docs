@@ -1,7 +1,7 @@
 .. index::
     single: Messenger; Record messages; Transaction messages
 
-Transactional Messages: Handle Events After CommandHandler Is Done
+Transactional Messages: Handle Events After CommandHandler is Done
 ==================================================================
 
 A message handler can ``dispatch`` new messages during execution, to either the same or
