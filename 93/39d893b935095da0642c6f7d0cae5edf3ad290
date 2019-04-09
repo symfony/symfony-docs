@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by dmaicher at 2019-04-06T10:19:35Z
+
+Code PR was merged :blush:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-06T15:23:28Z
+
+The related code was finally merged a few days ago, so this one is ready to merge.
+
+@wouterj if you agree, you could solve the conflict while merging. Also, we must add a `versionadded:: 4.3` telling that `RouteProcessor` and `ConsoleCommandProcessors` are new.
+
+---------------------------------------------------------------------------
+
+by trakos at 2019-04-06T16:58:08Z
+
+I've added an issue some time ago: https://github.com/symfony/symfony-docs/issues/11185 because I'm not sure how I should fix the conflict. There used to be mentions of WebProcessor and TokenProcessor on this page, but now those mentions seems to have been removed. So now I'm not sure if the built-in processors should be mentioned on this page.
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2019-04-06T19:50:51Z
+
+I think my PR #11328 could help with solving the conflict. I introduced the section for the existing processors outside of the tip. Hopefully you can just add the remaining ones when that PR gets merged.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-04-07T10:38:05Z
+
+Fyi, @dbrumann's PR is just merged, so you should be able to rebase this PR and extend the list he added to the docs. Please then also add a `versionadded` directive telling these processors were introduced in Symfony 4.3.
+
+---------------------------------------------------------------------------
+
+by trakos at 2019-04-09T09:51:56Z
+
+@wouterj thanks, I've updated this PR and added the versionadded directive
