@@ -588,31 +588,6 @@ transition was blocked::
         }
     }
 
-You can access the message from a Twig template as follows:
-
-.. code-block:: html+twig
-
-    <h2>Publication was blocked because:</h2>
-    <ul>
-        {% for transition in workflow_all_transitions(article) %}
-            {% if not workflow_can(article, transition.name) %}
-                <li>
-                    <strong>{{ transition.name }}</strong>:
-                    <ul>
-                    {% for blocker in workflow_transition_blockers(article, transition.name) %}
-                        <li>
-                            {{ blocker.message }}
-                            {% if blocker.parameters.expression is defined %}
-                                <code>{{ blocker.parameters.expression }}</code>
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-
 Don't need a human-readable message? You can still use::
 
     $event->setBlocked('true');
