@@ -321,10 +321,10 @@ Custom Provider Options
 -----------------------
 
 Some providers have specific options that could be configured. The
-:doc:`RedisAdapter </components/cache/adapters/redis_adapter>` allows you to create
-providers with option  ``timeout``, ``retry_interval`` etc. To use these options with non-default
-values you need to create your own ``\Redis`` provider and use that when configuring
-the pool.
+:doc:`RedisAdapter </components/cache/adapters/redis_adapter>` allows you to
+create providers with option ``timeout``, ``retry_interval``. etc. To use these
+options with non-default values you need to create your own ``\Redis`` provider
+and use that when configuring the pool.
 
 .. configuration-block::
 
