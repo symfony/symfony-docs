@@ -613,6 +613,11 @@ You can access the message from a Twig template as follows:
         {% endfor %}
     </ul>
 
+.. versionadded:: 4.3
+
+    The ``workflow_transition_blockers()`` Twig function was introduced in
+    Symfony 4.3.
+
 Don't need a human-readable message? You can still use::
 
     $event->setBlocked('true');
