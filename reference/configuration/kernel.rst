@@ -70,7 +70,7 @@ Root Directory
 **type**: ``string`` **default**: the directory of ``AppKernel``
 
 This returns the absolute path of the directory where your kernel class is
-stored. If you use the Symfony Standard edition, this is the ``app/`` directory
+located. If you use the Symfony Standard edition, this is the ``app/`` directory
 of your project.
 
 This value is exposed via the ``kernel.root_dir`` configuration parameter and
