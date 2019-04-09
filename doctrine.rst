@@ -505,9 +505,7 @@ for you automatically! First, install the bundle in case you don't have it:
 Now, simplify your controller::
 
     // src/Controller/ProductController.php
-
     use App\Entity\Product;
-    // ...
 
     /**
      * @Route("/product/{id}", name="product_show")
