@@ -179,6 +179,52 @@ will be autocompleted as the user types::
         $bundleName = $helper->ask($input, $output, $question);
     }
 
+In more complex use cases, it may be necessary to generate suggestions on the
+fly, for instance if you wish to autocomplete a file path. In that case, you can
+provide a callback function to dynamically generate suggestions::
+
+    use Symfony\Component\Console\Question\Question;
+
+    // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // This function is called whenever the input changes and new
+        // suggestions are needed.
+        $callback = function (string $input): array {
+            // Strip any characters from the last slash to the end of the
+            // string - this is considered a complete path and should populate
+            // our autocomplete suggestions.
+            $inputPath = preg_replace(
+                '%(/|^)[^/]*$%',
+                '$1',
+                $input
+            );
+
+            // All suggestions should start with the input the user has already
+            // provided (existing path), followed in this case by the contents
+            // of the referenced directory. Some suggestions may be ignored
+            // because they don't match the full string provided by the user,
+            // but the autocomplete helper will take care of that for us.
+            return array_map(
+                function ($suggestion) use ($inputPath) {
+                    return $inputPath . $suggestion;
+                },
+                @scandir($inputPath === '' ? '.' : $inputPath) ?: []
+            );
+        };
+
+        $question = new Question('Please provide the full path of a file to parse');
+        $question->setAutocompleterCallback($callback);
+
+        $filePath = $this->output->askQuestion($question);
+    }
+
+.. caution::
+
+    This example code allows unrestricted access to the host filesystem, and
+    should only ever be used in a local context, such as in a script being
+    manually invoked from the command line on a server you control.
+
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
