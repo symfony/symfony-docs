@@ -30,7 +30,7 @@ The next step is to use the :ref:`form_start() <reference-forms-twig-start>`,
 :ref:`form_row() <reference-forms-twig-row>` Twig functions to render the
 different form parts so you can customize them adding HTML elements and attributes:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {{ form_start(form) }}
         <div class="my-custom-class-for-errors">
