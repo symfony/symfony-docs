@@ -280,7 +280,7 @@ forget to add the new ``use`` statement that imports this ``Request`` class)::
 In a template, you can also access the ``Request`` object via the special
 ``app.request`` variable automatically provided by Symfony:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ app.request.query.get('page') }}
 

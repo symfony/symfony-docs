@@ -42,7 +42,7 @@ The ``form_row`` form fragment is used when rendering most fields via the
 fragment defined above, add the following to the top of the template that
 renders the form:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# app/Resources/views/default/new.html.twig #}
     {% form_theme form 'form/fields.html.twig' %}
@@ -225,7 +225,7 @@ to define form output.
     In Twig, you can also customize a form block right inside the template
     where that customization is needed:
 
-    .. code-block:: html+twig
+    .. code-block:: twig
 
         {% extends 'base.html.twig' %}
 
