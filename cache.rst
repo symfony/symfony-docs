@@ -366,8 +366,8 @@ the pool.
                 <service id="app.my_custom_redis_provider" class="\Redis">
                     <argument>redis://localhost</argument>
                     <argument type="collection">
-                        <argument name="retry_interval">2</argument>
-                        <argument name="timeout">10</argument>
+                        <argument key="retry_interval">2</argument>
+                        <argument key="timeout">10</argument>
                     </argument>
                 </service>
             </services>
