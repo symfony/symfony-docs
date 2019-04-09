@@ -37,7 +37,7 @@ Basic Usage
              *     canonicalize = true
              * )
              */
-             protected $locale;
+            protected $locale;
         }
 
     .. code-block:: yaml

@@ -212,13 +212,11 @@ following code:
 
         class Author
         {
-            // ...
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('headshot', new Assert\Image([
-                    'allowLandscape'    => false,
-                    'allowPortrait'     => false,
+                    'allowLandscape' => false,
+                    'allowPortrait' => false,
                 ]));
             }
         }

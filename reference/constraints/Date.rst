@@ -31,7 +31,7 @@ Basic Usage
              * @Assert\Date
              * @var string A "Y-m-d" formatted value
              */
-             protected $birthday;
+            protected $birthday;
         }
 
     .. code-block:: yaml

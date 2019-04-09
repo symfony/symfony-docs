@@ -89,8 +89,8 @@ you might add the following:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('height', new Assert\Range([
-                    'min'        => 120,
-                    'max'        => 180,
+                    'min' => 120,
+                    'max' => 180,
                     'minMessage' => 'You must be at least {{ limit }}cm tall to enter',
                     'maxMessage' => 'You cannot be taller than {{ limit }}cm to enter',
                 ]));

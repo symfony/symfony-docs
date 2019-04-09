@@ -34,7 +34,7 @@ of the day when the event starts:
              * @Assert\Time
              * @var string A "H:i:s" formatted value
              */
-             protected $startsAt;
+            protected $startsAt;
         }
 
     .. code-block:: yaml

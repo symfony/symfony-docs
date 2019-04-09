@@ -36,7 +36,7 @@ Basic Usage
              *     checkMX = true
              * )
              */
-             protected $email;
+            protected $email;
         }
 
     .. code-block:: yaml

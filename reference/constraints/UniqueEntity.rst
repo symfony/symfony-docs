@@ -47,14 +47,10 @@ between all of the constraints in your user table:
         class Author
         {
             /**
-             * @var string $email
-             *
              * @ORM\Column(name="email", type="string", length=255, unique=true)
              * @Assert\Email
              */
             protected $email;
-
-            // ...
         }
 
     .. code-block:: yaml
@@ -100,7 +96,7 @@ between all of the constraints in your user table:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addConstraint(new UniqueEntity([
-                    'fields'  => 'email',
+                    'fields' => 'email',
                 ]));
 
                 $metadata->addPropertyConstraint('email', new Assert\Email());
@@ -227,9 +223,9 @@ Consider this example:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addConstraint(new UniqueEntity([
-                    'fields'    => ['host', 'port'],
+                    'fields' => ['host', 'port'],
                     'errorPath' => 'port',
-                    'message'   => 'This port is already in use on that host.',
+                    'message' => 'This port is already in use on that host.',
                 ]));
             }
         }
