@@ -367,7 +367,7 @@ case the value needs to be recalculated.
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
-                <framework:cache default_memcached_provider="memcached://localhost">
+                <framework:cache>
                   <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter"/>
                   <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
                 </framework:cache>
@@ -415,6 +415,135 @@ case the value needs to be recalculated.
     In this configuration there is a ``cache.my_redis`` pool that is used as an
     adapter in the ``app.my_cache_chain_adapter``
 
+
+Using Cache Tags
+----------------
+
+In applications with many cache keys it could be useful to organize the data stored
+to be able to invalidate the cache more efficient. One way to achieve that is to
+use cache tags. One or more tags could be added to the cache item. All items with
+the same key could be invalidate with one function call::
+
+    use Symfony\Contracts\Cache\ItemInterface;
+
+    $value0 = $pool->get('item_0', function (ItemInterface $item) {
+        $item->tag(['foo', 'bar'])
+
+        return 'debug';
+    });
+
+    $value1 = $pool->get('item_1', function (ItemInterface $item) {
+        $item->tag('foo')
+
+        return 'debug';
+    });
+
+    // Remove all cache keys tagged with "bar"
+    $pool->invalidateTags(['bar']);
+
+The cache adapter needs to implement :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface``
+to enable this feature. This could be added by using the following configuration.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                pools:
+                    my_cache_pool:
+                        adapter: cache.adapter.redis
+                        tags: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/cache.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <framework:config>
+                <framework:cache>
+                  <framework:pool name="my_cache_pool" adapter="cache.adapter.redis" tags="true"/>
+                </framework:cache>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        $container->loadFromExtension('framework', [
+            'cache' => [
+                'pools' => [
+                    'my_cache_pool' => [
+                        'adapter' => 'cache.adapter.redis',
+                        'tags' => true,
+                    ],
+                ],
+            ],
+        ]);
+
+Tags are stored in the same pool by default. This is good in most scenarios. But
+sometimes it might be better to store the tags in a different pool. That could be
+achieved by specifying the adapter.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                pools:
+                    my_cache_pool:
+                        adapter: cache.adapter.redis
+                        tags: tag_pool
+                    tag_pool:
+                        adapter: cache.adapter.apcu
+
+    .. code-block:: xml
+
+        <!-- config/packages/cache.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <framework:config>
+                <framework:cache>
+                  <framework:pool name="my_cache_pool" adapter="cache.adapter.redis" tags="tag_pool"/>
+                  <framework:pool name="tag_pool" adapter="cache.adapter.apcu"/>
+                </framework:cache>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        $container->loadFromExtension('framework', [
+            'cache' => [
+                'pools' => [
+                    'my_cache_pool' => [
+                        'adapter' => 'cache.adapter.redis',
+                        'tags' => 'tag_pool',
+                    ],
+                    'tag_pool' => [
+                        'adapter' => 'cache.adapter.apcu',
+                    ],
+                ],
+            ],
+        ]);
+
+.. note::
+
+    The interface :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface`` is
+    autowired to the ``cache.app`` service.
 
 Clearing the Cache
 ------------------
