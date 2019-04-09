@@ -122,7 +122,7 @@ A form can also be customized by applying several themes. To do this, pass the
 path of all the Twig templates as an array using the ``with`` keyword (their
 order is important, because each theme overrides all the previous ones):
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# apply multiple form themes but only to the form of this template #}
     {% form_theme form with [

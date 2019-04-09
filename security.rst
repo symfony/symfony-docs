@@ -963,7 +963,7 @@ Frequently Asked Questions
     To see if this is an issue, check your log file (``var/log/dev.log``) for
     the log message:
 
-    > Cannot refresh token because user has changed.
+**Cannot refresh token because user has changed**
 
     If you see this, there are two possible causes. First, there may be a problem
     loading your User from the session. See :ref:`user_session_refresh`. Second,
