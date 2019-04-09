@@ -253,7 +253,7 @@ information in :ref:`templating-pages`.
 absolute_url
 ~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ absolute_url(path) }}
 
@@ -264,7 +264,7 @@ Returns the absolute URL from the passed relative path. For example, assume
 you're on the following page in your app:
 ``http://example.com/products/hover-board``.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ absolute_url('/human.txt') }}
     {# http://example.com/human.txt #}
@@ -275,7 +275,7 @@ you're on the following page in your app:
 relative_path
 ~~~~~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ relative_path(path) }}
 
@@ -286,7 +286,7 @@ Returns the relative path from the passed absolute URL. For example, assume
 you're on the following page in your app:
 ``http://example.com/products/hover-board``.
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {{ relative_path('http://example.com/human.txt') }}
     {# ../human.txt #}
@@ -619,7 +619,7 @@ This will set the default domain in the current template.
 stopwatch
 ~~~~~~~~~
 
-.. code-block:: jinja
+.. code-block:: twig
 
     {% stopwatch 'name' %}...{% endstopwatch %}
 

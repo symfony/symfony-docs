@@ -324,8 +324,6 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
             ],
         ]);
 
-
-
 Creating a Cache Chain
 ----------------------
 
