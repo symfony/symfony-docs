@@ -69,7 +69,7 @@ within a template is typically to prepare some data in a custom controller,
 this is probably only useful if you'd like to cache this page partial (see
 :ref:`templating-no-controller-caching`).
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ render(url('acme_privacy')) }}
 

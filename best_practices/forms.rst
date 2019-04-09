@@ -177,7 +177,7 @@ One of the simplest ways - which is especially useful during development -
 is to render the form tags and use the ``form_widget()`` function to render
 all of the fields:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {{ form_start(form, {attr: {class: 'my-form-class'} }) }}
         {{ form_widget(form) }}

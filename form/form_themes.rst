@@ -144,7 +144,7 @@ You can also apply a form theme to a specific child of your form:
 This is useful when you want to have a custom theme for a nested form that's
 different than the one of your main form. Specify both your themes:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% form_theme form 'form/my_custom_theme.html.twig' %}
     {% form_theme form.a_child_form 'form/my_other_theme.html.twig' %}

@@ -10,7 +10,7 @@ is that dynamic content could break the HTML of the resulting page or allow
 a malicious user to perform a `Cross Site Scripting`_ (XSS) attack. Consider
 this classic example:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     Hello {{ name }}
 
