@@ -183,7 +183,7 @@ If this is the first time you run the proxy, you must follow these additional st
 
 * Open the **network configuration** of your operating system;
 * Find the **proxy settings** and select the **"Automatic Proxy Configuration"**;
-* Set the following URL as its value: ``https://127.0.0.1:7080/proxy.pac``
+* Set the following URL as its value: ``http://127.0.0.1:7080/proxy.pac``
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -202,7 +202,7 @@ new custom domain.
 
 .. tip::
 
-    Browse the https://127.0.0.1:7080 URL to get the full list of local project
+    Browse the http://127.0.0.1:7080 URL to get the full list of local project
     directories, their custom domains, and port numbers.
 
 When running console commands, add the ``HTTPS_PROXY`` env var to make custom
@@ -210,7 +210,7 @@ domains work:
 
 .. code-block:: terminal
 
-    $ HTTPS_PROXY=https://127.0.0.1:7080 curl https://my-domain.wip
+    $ HTTPS_PROXY=http://127.0.0.1:7080 curl https://my-domain.wip
 
 .. tip::
 
@@ -243,6 +243,72 @@ server provides a ``run`` command to wrap them as follows:
 
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
+
+Docker Integration
+------------------
+
+The local Symfony server provides full `Docker`_ integration for projects that
+use it. First, make sure to expose the container ports:
+
+.. code-block:: yaml
+
+    # docker-compose.override.yaml
+    services:
+        database:
+            ports:
+                - "3306"
+
+        redis:
+            ports:
+                - "6379"
+
+        # ...
+
+Then, check your service names and update them if needed (Symfony creates
+environment variables following the name of the services so they can be
+autoconfigured):
+
+.. code-block:: yaml
+
+    # docker-compose.yaml
+    services:
+        # DATABASE_URL
+        database: ...
+        # MONGODB_DATABASE, MONGODB_SERVER
+        mongodb: ...
+        # REDIS_URL
+        redis: ...
+        # ELASTISEARCH_HOST, ELASTICSEARCH_PORT
+        elasticsearch: ...
+        # RABBITMQ_DSN
+        rabbitmq: ...
+
+If your ``docker-compose.yaml`` file doesn't use the environment variable names
+expected by Symfony (e.g. you use ``MYSQL_URL`` instead of ``DATABASE_URL``)
+then you need to rename all occurrences of those environment variables in your
+Symfony application. A simpler alternative is to use the ``.env.local`` file to
+reassign the environment variables:
+
+.. code-block:: bash
+
+    # .env.local
+    DATABASE_URL=${MYSQL_URL}
+    # ...
+
+Now you can start the containers and all their services will be exposed. Browse
+any page of your application and check the "Symfony Server" section in the web
+debug toolbar. You'll see that "Docker Compose" is "Up".
+
+SymfonyCloud Integration
+------------------------
+
+The local Symfony server provides full, but optional, integration with
+`SymfonyCloud`_, a service optimized to run your Symfony applications on the
+cloud. It provides features such as creating environments, backups/snapshots,
+and even access to a copy of the production data from your local machine to help
+debug any issues.
+
+`Read SymfonyCloud technical docs`_.
 
 Bonus Features
 --------------
@@ -282,18 +348,8 @@ commands from the Symfony server:
     # creates a new project based on the Symfony Demo application
     $ symfony new --demo my_project_name
 
-SymfonyCloud Integration
-------------------------
-
-The local Symfony server provides full, but optional, integration with
-`SymfonyCloud`_, a service optimized to run your Symfony applications on the
-cloud. It provides features such as creating environments, backups/snapshots,
-and even access to a copy of the production data from your local machine to help
-debug any issues.
-
-`Read SymfonyCloud technical docs`_.
-
 .. _`symfony.com/download`: https://symfony.com/download
 .. _`different ways of installing Symfony`: https://symfony.com/download
+.. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
