@@ -154,7 +154,7 @@ done by passing a special form "view" object to your template (notice the
 ``$form->createView()`` in the controller above) and using a set of
 :ref:`form helper functions <reference-form-twig-functions>`:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# templates/task/new.html.twig #}
     {{ form(form) }}
@@ -412,7 +412,7 @@ Validation is a very powerful feature of Symfony and has its own
     but are being prevented by your browser from, for example, submitting
     blank fields.
 
-    .. code-block:: html+twig
+    .. code-block:: twig
 
         {# templates/task/new.html.twig #}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
@@ -697,7 +697,7 @@ the choice is ultimately up to you.
         use AppBundle\Form\TaskType;
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-        class DefaultController extends AbstractController 
+        class DefaultController extends AbstractController
         {
             public function newAction()
             {
