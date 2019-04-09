@@ -35,7 +35,7 @@ Basic Usage
             /**
              * @Assert\DateTime
              */
-             protected $createdAt;
+            protected $createdAt;
         }
 
     .. code-block:: yaml

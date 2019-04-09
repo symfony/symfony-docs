@@ -33,7 +33,7 @@ Basic Usage
             /**
              * @Assert\Language
              */
-             protected $preferredLanguage;
+            protected $preferredLanguage;
         }
 
     .. code-block:: yaml

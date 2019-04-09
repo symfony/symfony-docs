@@ -84,8 +84,6 @@ on an object that will contain a credit card number.
 
         class Transaction
         {
-            protected $cardNumber;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme([

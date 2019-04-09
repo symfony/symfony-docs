@@ -87,6 +87,11 @@ Configuration
             {
                 $metadata->addConstraint(new Assert\Callback('validate'));
             }
+
+            public function validate(ExecutionContextInterface $context, $payload)
+            {
+                // ...
+            }
         }
 
 The Callback Method

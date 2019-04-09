@@ -56,7 +56,7 @@ Then you can constrain this method with ``IsTrue``.
             protected $token;
 
             /**
-             * @Assert\IsTrue(message="The token is invalid")
+             * @Assert\IsTrue(message="The token is invalid.")
              */
             public function isTokenValid()
             {
@@ -100,8 +100,6 @@ Then you can constrain this method with ``IsTrue``.
 
         class Author
         {
-            protected $token;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('tokenValid', new IsTrue([

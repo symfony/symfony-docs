@@ -35,7 +35,7 @@ Basic Usage
             /**
              * @Assert\Url
              */
-             protected $bioUrl;
+            protected $bioUrl;
         }
 
     .. code-block:: yaml
@@ -115,7 +115,7 @@ You can use the following parameters in this message:
              *    message = "The url '{{ value }}' is not a valid url",
              * )
              */
-             protected $bioUrl;
+            protected $bioUrl;
         }
 
     .. code-block:: yaml
@@ -187,7 +187,7 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
              *    protocols = {"http", "https", "ftp"}
              * )
              */
-             protected $bioUrl;
+            protected $bioUrl;
         }
 
     .. code-block:: yaml
@@ -265,7 +265,7 @@ option to the value of any of the ``CHECK_DNS_TYPE_*`` constants in the
              *    checkDNS = "ANY"
              * )
              */
-             protected $bioUrl;
+            protected $bioUrl;
         }
 
     .. code-block:: yaml
@@ -338,7 +338,7 @@ DNS check failed.
              *    dnsMessage = "The host '{{ value }}' could not be resolved."
              * )
              */
-             protected $bioUrl;
+            protected $bioUrl;
         }
 
     .. code-block:: yaml

@@ -37,7 +37,7 @@ Basic Usage
             /**
              * @Assert\Locale
              */
-             protected $locale;
+            protected $locale;
         }
 
     .. code-block:: yaml

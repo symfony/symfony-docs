@@ -141,8 +141,6 @@ following:
 
         class Author
         {
-            private $options = [];
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection([
@@ -208,7 +206,7 @@ you can do the following:
              *     }
              * )
              */
-             protected $profileData = ['personal_email'];
+            protected $profileData = ['personal_email'];
         }
 
     .. code-block:: yaml
@@ -272,9 +270,10 @@ you can do the following:
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection([
                     'fields' => [
-                        'personal_email'  => new Assert\Required(
-                            [new Assert\NotBlank(), new Assert\Email()]
-                        ),
+                        'personal_email'  => new Assert\Required([
+                            new Assert\NotBlank(),
+                            new Assert\Email(),
+                        ]),
                         'alternate_email' => new Assert\Optional(new Assert\Email()),
                     ],
                 ]));

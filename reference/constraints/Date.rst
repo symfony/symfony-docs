@@ -34,7 +34,7 @@ Basic Usage
             /**
              * @Assert\Date
              */
-             protected $birthday;
+            protected $birthday;
         }
 
     .. code-block:: yaml

@@ -37,7 +37,7 @@ of the day when the event starts:
             /**
              * @Assert\Time
              */
-             protected $startsAt;
+            protected $startsAt;
         }
 
     .. code-block:: yaml
