@@ -26,12 +26,6 @@ by the normal `webpack-dev-server`_. For example:
 
 This will start a server at ``https://localhost:9000``.
 
-.. note::
-
-    This Webpack server is independent from
-    :doc:`Symfony's development web server </setup/built_in_web_server>` and
-    you need to run both separately.
-
 Using dev-server inside a VM
 ----------------------------
 
