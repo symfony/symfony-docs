@@ -629,14 +629,15 @@ When serializing, you can set a callback to format a specific object property::
     use Symfony\Component\Serializer\Serializer;
 
     $encoder = new JsonEncoder();
-    $normalizer = new GetSetMethodNormalizer();
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $dateCallback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
         return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ISO8601) : '';
     };
 
-    $normalizer->setCallbacks(['createdAt' => $callback]);
+    $normalizer = new GetSetMethodNormalizer(null, null, null, null, null, null, $defaultContext = [
+        AbstractNormalizer::CALLBACKS => ['createdAt' => $dateCallback]
+    ]);
 
     $serializer = new Serializer([$normalizer], [$encoder]);
 
@@ -647,6 +648,11 @@ When serializing, you can set a callback to format a specific object property::
 
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
+.. deprecated:: 4.2
+
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCallbacks` is deprecated since
+    Symfony 4.2, use the "callbacks" key of the context instead.
 
 .. _component-serializer-normalizers:
 
@@ -918,15 +924,15 @@ when such a case is encountered::
 
     echo $serializer->serialize($organization, 'json'); // Throws a CircularReferenceException
 
-The ``setCircularReferenceLimit()`` method of this normalizer sets the number
-of times it will serialize the same object before considering it a circular
-reference. Its default value is ``1``.
-
 .. deprecated:: 4.2
 
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCircularReferenceHandler`
-    method is deprecated since Symfony 4.2. Use the ``circular_reference_handler``
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCircularReferenceLimit`
+    method is deprecated since Symfony 4.2. Use the ``circular_reference_limit``
     key of the context instead.
+
+The key ``circular_reference_limit`` in the defaultContext, sets the number of times it will serialize the
+same object before considering it a circular reference.
+In the ``$defaultContext`` the default value is ``1``.
 
 Instead of throwing an exception, circular references can also be handled
 by custom callables. This is especially useful when serializing entities
@@ -943,6 +949,12 @@ having unique identifiers::
     $serializer = new Serializer([$normalizer], [$encoder]);
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
+
+.. deprecated:: 4.2
+
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCircularReferenceHandler`
+    method is deprecated since Symfony 4.2. Use the ``circular_reference_handler``
+    key of the context instead.
 
 Handling Serialization Depth
 ----------------------------
@@ -1071,11 +1083,15 @@ having unique identifiers::
     $level2->child = $level3;
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-    $normalizer = new ObjectNormalizer($classMetadataFactory);
+
     // all callback parameters are optional (you can omit the ones you don't use)
-    $normalizer->setMaxDepthHandler(function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $maxDepthHandler = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
         return '/foos/'.$innerObject->id;
-    });
+    };
+
+    $normalizer = new ObjectNormalizer($classMetadataFactory, null, null, null, null, null, [
+        AbstractObjectNormalizer::MAX_DEPTH_HANDLER => $maxDepthHandler
+    ]);
 
     $serializer = new Serializer([$normalizer]);
 
@@ -1089,6 +1105,12 @@ having unique identifiers::
         ],
     ];
     */
+
+.. deprecated:: 4.2
+
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setMaxDepthHandler`
+    method is deprecated since Symfony 4.2. Use the ``max_depth_handler``
+    key of the context instead
 
 Handling Arrays
 ---------------
