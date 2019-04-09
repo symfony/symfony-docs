@@ -412,12 +412,12 @@ injection::
             # the ``App\Util\UppercaseTransformer`` service will be
             # injected when an ``App\Util\TransformerInterface``
             # type-hint for a ``$shoutyTransformer`` argument is detected.
-            App\Util\TransformerInterface: '@App\Util\Rot13Transformer'
+            App\Util\TransformerInterface $shoutyTransformer: '@App\Util\UppercaseTransformer'
 
             # If the argument used for injection does not match, but the
             # type-hint still matches, the ``App\Util\Rot13Transformer``
             # service will be injected.
-            App\Util\TransformerInterface $shoutyTransformer: '@App\Util\UppercaseTransformer'
+            App\Util\TransformerInterface: '@App\Util\Rot13Transformer'
 
             App\Service\TwitterClient:
                 # the Rot13Transformer will be passed as the $transformer argument
