@@ -67,6 +67,8 @@ To change this setting, override the ``getName()`` method. Alternatively, move
 your kernel into a different directory. For example, if you moved the kernel
 into a ``foo/`` directory (instead of ``src/``), the kernel name will be ``foo``.
 
+.. _configuration-kernel-project-directory:
+
 Project Directory
 ~~~~~~~~~~~~~~~~~
 
