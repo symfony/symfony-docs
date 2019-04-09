@@ -50,7 +50,7 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
 
     .. code-block:: yaml
 
-        # config/packages/cache.yaml
+        # app/config/config.yml
         framework:
             cache:
                 app: cache.adapter.filesystem
@@ -58,7 +58,7 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
 
     .. code-block:: xml
 
-        <!-- config/packages/cache.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -75,7 +75,7 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
 
     .. code-block:: php
 
-        // config/packages/cache.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'cache' => [
                 'app' => 'cache.adapter.filesystem',
@@ -109,7 +109,7 @@ will create pool with service id of ``cache.[type]``
 
     .. code-block:: yaml
 
-        # config/packages/cache.yaml
+        # app/config/config.yml
         framework:
             cache:
                 directory: '%kernel.cache_dir%/pools' # Only used with cache.adapter.filesystem
@@ -127,7 +127,7 @@ will create pool with service id of ``cache.[type]``
 
     .. code-block:: xml
 
-        <!-- config/packages/cache.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -155,7 +155,7 @@ will create pool with service id of ``cache.[type]``
 
     .. code-block:: php
 
-        // config/packages/cache.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'cache' => [
                 // Only used with cache.adapter.filesystem
@@ -183,7 +183,7 @@ You can also create more customized pools. All you need is an adapter:
 
     .. code-block:: yaml
 
-        # config/packages/cache.yaml
+        # app/config/config.yml
         framework:
             cache:
                 default_memcached_provider: 'memcached://localhost'
@@ -198,7 +198,7 @@ You can also create more customized pools. All you need is an adapter:
 
     .. code-block:: xml
 
-        <!-- config/packages/cache.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -217,7 +217,7 @@ You can also create more customized pools. All you need is an adapter:
 
     .. code-block:: php
 
-        // config/packages/cache.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'cache' => [
                 'default_memcached_provider' => 'memcached://localhost',
@@ -249,7 +249,7 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
 
     .. code-block:: yaml
 
-        # config/packages/cache.yaml
+        # app/config/config.yml
         framework:
             cache:
                 app: my_configured_app_cache
@@ -270,7 +270,7 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
 
     .. code-block:: xml
 
-        <!-- config/packages/cache.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -291,7 +291,7 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
 
     .. code-block:: php
 
-        // config/packages/cache.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'cache' => [
                 'app' => 'my_configured_app_cache',
@@ -330,7 +330,7 @@ and use that when configuring the pool.
 
     .. code-block:: yaml
 
-        # config/packages/cache.yaml
+        # app/config/config.yml
         framework:
             cache:
                 pools:
@@ -348,7 +348,7 @@ and use that when configuring the pool.
 
 .. code-block:: xml
 
-        <!-- config/packages/cache.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -375,7 +375,7 @@ and use that when configuring the pool.
 
     .. code-block:: php
 
-        // config/packages/cache.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'cache' => [
                 'pools' => [
@@ -407,7 +407,7 @@ case the value needs to be recalculated.
 
     .. code-block:: yaml
 
-        # config/packages/cache.yaml
+        # app/config/config.yml
         framework:
             cache:
                 pools:
@@ -426,7 +426,7 @@ case the value needs to be recalculated.
 
     .. code-block:: xml
 
-        <!-- config/packages/cache.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -455,7 +455,7 @@ case the value needs to be recalculated.
 
     .. code-block:: php
 
-        // config/packages/cache.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'cache' => [
                 'pools' => [

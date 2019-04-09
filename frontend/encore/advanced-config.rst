@@ -104,7 +104,7 @@ Next, define the output directories of each build:
 
 .. code-block:: yaml
 
-    # config/packages/webpack_encore.yaml
+    # app/config/config.yml
     webpack_encore:
         output_path: '%kernel.public_dir%/web/default_build'
         builds:

@@ -30,13 +30,13 @@ configuration:
 
     .. code-block:: yaml
 
-        # config/packages/twig.yaml
+        # app/config/config.yml
         twig:
             form_themes: ['bootstrap_4_layout.html.twig']
 
     .. code-block:: xml
 
-        <!-- config/packages/twig.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -54,7 +54,7 @@ configuration:
 
     .. code-block:: php
 
-        // config/packages/twig.php
+        // app/config/config.php
         $container->loadFromExtension('twig', [
             'form_themes' => [
                 'bootstrap_4_layout.html.twig',

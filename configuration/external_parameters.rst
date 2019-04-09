@@ -157,14 +157,14 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
 
     .. code-block:: yaml
 
-        # config/packages/framework.yaml
+        # app/config/config.yml
         framework:
             router:
                 http_port: env(int:HTTP_PORT)
 
     .. code-block:: xml
 
-        <!-- config/packages/framework.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -181,7 +181,7 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
 
     .. code-block:: php
 
-        // config/packages/framework.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'router' => [
                 'http_port' => '%env(int:HTTP_PORT)%',
@@ -197,7 +197,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/framework.yaml
+            # app/config/config.yml
             parameters:
                 env(SECRET): 'some_secret'
             framework:
@@ -205,7 +205,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: xml
 
-            <!-- config/packages/framework.xml -->
+            <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -224,7 +224,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-            // config/packages/framework.php
+            // app/config/config.php
             $container->setParameter('env(SECRET)', 'some_secret');
             $container->loadFromExtension('framework', [
                 'secret' => '%env(string:SECRET)%',
@@ -237,7 +237,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/framework.yaml
+            # app/config/config.yml
             parameters:
                 env(HTTP_METHOD_OVERRIDE): 'true'
             framework:
@@ -245,7 +245,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: xml
 
-            <!-- config/packages/framework.xml -->
+            <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -264,7 +264,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-            // config/packages/framework.php
+            // app/config/config.php
             $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
             $container->loadFromExtension('framework', [
                 'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
@@ -283,7 +283,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/security.yaml
+            # app/config/config.yml
             parameters:
                 env(HEALTH_CHECK_METHOD): 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD'
             security:
@@ -292,7 +292,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: xml
 
-            <!-- config/packages/security.xml -->
+            <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -311,7 +311,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-            // config/packages/security.php
+            // app/config/config.php
             $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
             $container->loadFromExtension('security', [
                 'access_control' => [
@@ -333,7 +333,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/framework.yaml
+            # app/config/config.yml
             parameters:
                 env(TRUSTED_HOSTS): '["10.0.0.1", "10.0.0.2"]'
             framework:
@@ -341,7 +341,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: xml
 
-            <!-- config/packages/framework.xml -->
+            <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -360,7 +360,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-            // config/packages/framework.php
+            // app/config/config.php
             $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
             $container->loadFromExtension('framework', [
                 'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
@@ -374,7 +374,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/sentry.yaml
+            # app/config/config.yml
             parameters:
                 env(HOST): '10.0.0.1'
                 sentry_host: '%env(HOST)%'
@@ -384,7 +384,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: xml
 
-            <!-- config/packages/sentry.xml -->
+            <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -402,7 +402,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-            // config/packages/sentry.php
+            // app/config/config.php
             $container->setParameter('env(HOST)', '10.0.0.1');
             $container->setParameter('sentry_host', '%env(HOST)%');
             $container->setParameter('env(SENTRY_DSN)', 'http://%sentry_host%/project');
@@ -417,7 +417,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/framework.yaml
+            # app/config/config.yml
             parameters:
                 env(AUTH_FILE): '../config/auth.json'
             google:
@@ -425,7 +425,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: xml
 
-            <!-- config/packages/framework.xml -->
+            <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -444,7 +444,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: php
 
-            // config/packages/framework.php
+            // app/config/config.php
             $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
             $container->loadFromExtension('google', [
                 'auth' => '%env(file:AUTH_FILE)%',
