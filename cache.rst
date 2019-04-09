@@ -259,6 +259,7 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
         # config/packages/cache.yaml
         framework:
             cache:
+                app: my_configured_app_cache
                 pools:
                     my_cache_pool:
                         adapter: cache.adapter.memcached
@@ -269,6 +270,10 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
                     cache.long_cache:
                         adapter: my_cache_pool
                         default_lifetime: 604800
+                    my_configured_app_cache:
+                        # "cache.adapter.filesystem" is the default for "cache.app"
+                        adapter: cache.adapter.filesystem
+                        default_lifetime: 3600
 
     .. code-block:: xml
 
@@ -281,10 +286,12 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
-                <framework:cache>
+                <framework:cache app="my_cache_pool">
                   <framework:pool name="my_cache_pool" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
                   <framework:pool name="cache.short_cache" adapter="my_cache_pool" default_lifetime="604800"/>
                   <framework:pool name="cache.long_cache" adapter="my_cache_pool" default_lifetime="604800"/>
+                  <!-- "cache.adapter.filesystem" is the default for "cache.app" -->
+                  <framework:pool name="my_configured_app_cache" adapter="cache.adapter.filesystem" default_lifetime="3600"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -294,6 +301,7 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
         // config/packages/cache.php
         $container->loadFromExtension('framework', [
             'cache' => [
+                'app' => 'my_configured_app_cache',
                 'pools' => [
                     'my_cache_pool' => [
                         'adapter' => 'cache.adapter.memcached',
@@ -306,6 +314,11 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
                     'cache.long_cache' => [
                         'adapter' => 'cache.adapter.memcached',
                         'default_lifetime' => 604800,
+                    ],
+                    'my_configured_app_cache' => [
+                        // "cache.adapter.filesystem" is the default for "cache.app"
+                        'adapter' => 'cache.adapter.filesystem',
+                        'default_lifetime' => 3600,
                     ],
                 ],
             ],
