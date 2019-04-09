@@ -46,6 +46,65 @@ This component includes *two* different approaches to caching:
     Doctrine caches. See :doc:`/components/cache/psr6_psr16_adapters` and
     :doc:`/components/cache/adapters/doctrine_adapter`.
 
+Cache Contract
+--------------
+
+All adapters supports the  Cache Contract. It contains only two methods; ``get`` and
+``delete``. The first thing you need is to instantiate a cache adapter. The
+:class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache` is used in this example::
+
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+
+    $cache = new FilesystemAdapter();
+
+Now you can retrieve and delete cached data using this object::
+
+    use Symfony\Contracts\Cache\ItemInterface;
+
+    // The callable will only be executed on a cache miss.
+    $value = $cache->get('my_cache_key', function (ItemInterface $item) {
+        $item->expiresAfter(3600);
+
+        // ... do some HTTP request or heavy computations
+        $computedValue = 'foobar';
+
+        return $computedValue;
+    });
+
+    echo $value; // 'foobar'
+
+    // ... and to remove the cache key
+    $cache->delete('my_cache_key');
+
+.. note::
+
+    Use tags to clear more than one key at the time. Read more at
+    :doc:`/components/cache/cache_invalidation`.
+
+The Cache Contracts also comes with built in `Stampede prevention`_. This will
+remove CPU spikes at the moments when the cache is cold. If an example application
+spends 5 seconds to compute data that is cached for 1 hour. This data is accessed
+10 times every second. This means that you mostly have cache hits and everything
+is fine. But after one hour, we get 10 new requests to a cold cache. So we start
+to compute that data again. The next second the same thing happens. So we start
+to compute that data about 50 times before the cache is warm again. This is where
+you need stampede prevention.
+
+The solution is to recompute the value before the cache expires. The algorithm
+randomly fakes a cache miss for one user while others still is served the cached
+value. The third parameter to ``CacheInterface::get`` is a beta value. The default
+is ``1.0`` which works well in practice. A higher value means earlier recompute.::
+
+    use Symfony\Contracts\Cache\ItemInterface;
+
+    $beta = 1.0;
+    $value = $cache->get('my_cache_key', function (ItemInterface $item) {
+        $item->expiresAfter(3600);
+        $item->tag(['tag_0', 'tag_1');
+
+        return '...';
+    }, $beta);
+
 Available Cache Adapters
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -134,5 +193,7 @@ Advanced Usage
     cache/*
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
+.. _`Cache Contract`: https://github.com/symfony/contracts/blob/v1.0.0/Cache/CacheInterface.php
 .. _`PSR-16`: http://www.php-fig.org/psr/psr-16/
 .. _Doctrine Cache: https://www.doctrine-project.org/projects/cache.html
+.. _Stampede prevention: https://en.wikipedia.org/wiki/Cache_stampede
