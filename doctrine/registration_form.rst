@@ -185,7 +185,7 @@ register.html.twig
 
 The template renders the form:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {% extends 'base.html.twig' %}
 
