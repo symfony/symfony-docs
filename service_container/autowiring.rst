@@ -363,9 +363,40 @@ If you register this as a service, you now have *two* services that implement th
 which one to use. Remember, autowiring isn't magic; it looks for a service
 whose id matches the type-hint. So you need to choose one by creating an alias
 from the type to the correct service id (see :ref:`autowiring-interface-alias`).
+Additionally, you can define several named aliases if you want to use
+one implementation in some cases, and another implementation in some
+other cases.
 
-If you want ``Rot13Transformer`` to be the service that's used for autowiring, create
-that alias:
+
+For instance, you may want to use by default the ``Rot13Transformer``
+implementation by default when the ``TransformerInterface`` interface is
+type hinted, but use the ``UppercaseTransformer`` implementation in some
+specific cases. To do so, you can create a normal alias from the
+``TransformerInterface`` interface to ``Rot13Transformer``, and then
+create a *named alias* from a special string containing the interface
+followed by a variable name matching the one you use when doing the
+injection::
+
+    namespace App\Service;
+
+    use App\Util\TransformerInterface;
+
+    class MastodonClient
+    {
+        private $transformer;
+
+        public function __construct(TransformerInterface $shoutyTransformer)
+        {
+            $this->transformer = $shoutyTransformer;
+        }
+
+        public function toot($user, $key, $status)
+        {
+            $transformedStatus = $this->transformer->transform($status);
+
+            // ... connect to Mastodon and send the transformed status
+        }
+    }
 
 .. configuration-block::
 
@@ -378,15 +409,22 @@ that alias:
             App\Util\Rot13Transformer: ~
             App\Util\UppercaseTransformer: ~
 
-            # the ``App\Util\Rot13Transformer`` service will be injected when
-            # a ``App\Util\TransformerInterface`` type-hint is detected
+            # the ``App\Util\UppercaseTransformer`` service will be
+            # injected when an ``App\Util\TransformerInterface``
+            # type-hint for a ``$shoutyTransformer`` argument is detected.
             App\Util\TransformerInterface: '@App\Util\Rot13Transformer'
+
+            # If the argument used for injection does not match, but the
+            # type-hint still matches, the ``App\Util\Rot13Transformer``
+            # service will be injected.
+            App\Util\TransformerInterface $shoutyTransformer: '@App\Util\UppercaseTransformer'
 
             App\Service\TwitterClient:
                 # the Rot13Transformer will be passed as the $transformer argument
                 autowire: true
 
-                # If you wanted to choose the non-default service, wire it manually
+                # If you wanted to choose the non-default service and
+                # do not want to use a named alias, wire it manually
                 # arguments:
                 #     $transformer: '@App\Util\UppercaseTransformer'
                 # ...
@@ -405,6 +443,9 @@ that alias:
                 <service id="App\Util\UppercaseTransformer"/>
 
                 <service id="App\Util\TransformerInterface" alias="App\Util\Rot13Transformer"/>
+                <service
+                    id="App\Util\TransformerInterface $shoutyTransformer"
+                    alias="App\Util\UppercaseTransformer"/>
 
                 <service id="App\Service\TwitterClient" autowire="true">
                     <!-- <argument key="$transformer" type="service" id="App\Util\UppercaseTransformer"/> -->
@@ -418,20 +459,32 @@ that alias:
         use App\Util\Rot13Transformer;
         use App\Util\UppercaseTransformer;
         use App\Util\TransformerInterface;
+        use App\Service\MastodonClient;
         use App\Service\TwitterClient;
 
         // ...
         $container->autowire(Rot13Transformer::class);
         $container->autowire(UppercaseTransformer::class);
         $container->setAlias(TransformerInterface::class, Rot13Transformer::class);
+        $container->setAlias(
+            TransformerInterface::class.' $shoutyTransformer',
+            UppercaseTransformer::class
+        );
         $container->autowire(TwitterClient::class)
             //->setArgument('$transformer', new Reference(UppercaseTransformer::class))
         ;
+        $container->autowire(MastodonClient::class);
 
 Thanks to the ``App\Util\TransformerInterface`` alias, any argument type-hinted
 with this interface will be passed the ``App\Util\Rot13Transformer`` service.
-But, you can also manually wire the *other* service by specifying the argument
+If the argument is named ``$shoutyTransformer``,
+``App\Util\UppercaseTransformer`` will be used instead.
+But, you can also manually wire any *other* service by specifying the argument
 under the arguments key.
+
+.. versionadded:: 4.2
+
+    Named aliases have been introduced in Symfony 4.2.
 
 Fixing Non-Autowireable Arguments
 ---------------------------------
