@@ -26,7 +26,6 @@ a service like: ``App\Controller\HelloController::index``:
     .. code-block:: php-annotations
 
         // src/Controller/HelloController.php
-
         use Symfony\Component\Routing\Annotation\Route;
 
         class HelloController

@@ -145,7 +145,6 @@ binding capabilities to clarify which bus will be injected based on the argument
     .. code-block:: php
 
         // config/services.php
-
         $container->bind('$commandBus', 'messenger.bus.commands');
         $container->bind('$queryBus', 'messenger.bus.queries');
         $container->bind('$eventBus', 'messenger.bus.events');
@@ -185,7 +184,6 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
     .. code-block:: php
 
         // config/services.php
-
         $container->services()
             ->set(App\MessageHandler\SomeCommandHandler::class)
             ->tag('messenger.message_handler', ['bus' => 'messenger.bus.commands']);
