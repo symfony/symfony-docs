@@ -346,7 +346,7 @@ and use that when configuring the pool.
                     - 'redis://localhost'
                     - [ retry_interval: 2, timeout: 10 ]
 
-.. code-block:: xml
+    .. code-block:: xml
 
         <!-- config/packages/cache.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
