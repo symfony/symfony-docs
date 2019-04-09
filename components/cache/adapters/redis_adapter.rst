@@ -80,6 +80,16 @@ Below are common examples of valid DSNs showing a combination of available value
     // socket "/var/run/redis.sock" and SASL user "user1" and pass "bad-pass"
     RedisAdapter::createConnection('redis://user1:bad-pass@/var/run/redis.sock');
 
+    // a single DSN can define multiple servers using the following syntax:
+    // host[hostname-or-IP:port] (where port is optional). Sockets must include a trailing ':'
+    RedisAdapter::createConnection(
+        'redis:?host[localhost]&host[localhost:6379]&host[/var/run/redis.sock:]=3'
+    );
+
+.. versionadded:: 4.2
+
+    The option to define multiple servers in a single DSN was introduced in Symfony 4.2.
+
 Configure the Options
 ---------------------
 
