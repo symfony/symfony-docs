@@ -2091,7 +2091,8 @@ default_pdo_provider
 **type**: ``string`` **default**: ``doctrine.dbal.default_connection``
 
 The service id of the database connection, which should be either a PDO or a
-Doctrine DBAL instance.
+Doctrine DBAL instance. The provider is available as the ``cache.default_pdo_provider``
+service.
 
 pools
 .....
