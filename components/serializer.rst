@@ -925,7 +925,8 @@ reference. Its default value is ``1``.
 .. deprecated:: 4.2
 
     The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCircularReferenceHandler`
-    method is deprecated since Symfony 4.2, use the "circular_reference_handler" key of the context instead.
+    method is deprecated since Symfony 4.2. Use the ``circular_reference_handler``
+    key of the context instead.
 
 Instead of throwing an exception, circular references can also be handled
 by custom callables. This is especially useful when serializing entities
@@ -933,10 +934,10 @@ having unique identifiers::
 
     $encoder = new JsonEncoder();
     $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getName();
-            }
-        ];
+        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+            return $object->getName();
+        },
+    ];
     $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
 
     $serializer = new Serializer([$normalizer], [$encoder]);
