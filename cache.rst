@@ -42,7 +42,7 @@ of:
     provider then a service is automatically created.
 
 There are two pools that are always enabled by default. They are ``cache.app`` and
-``cache.system``. The system cache is use for things like annotations, serializer,
+``cache.system``. The system cache is used for things like annotations, serializer,
 and validation. The ``cache.app`` can be used in your code. You can configure which
 adapter (template) they use by using the ``app`` and ``system`` key like:
 
@@ -320,7 +320,7 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
 Custom Provider Options
 -----------------------
 
-Some providers have specific options that could be configured. The
+Some providers have specific options that can be configured. The
 :doc:`RedisAdapter </components/cache/adapters/redis_adapter>` allows you to
 create providers with option ``timeout``, ``retry_interval``. etc. To use these
 options with non-default values you need to create your own ``\Redis`` provider
@@ -397,7 +397,7 @@ and use that when configuring the pool.
 Creating a Cache Chain
 ----------------------
 
-Different cache adapters has different strengths and weaknesses. Some might be really
+Different cache adapters have different strengths and weaknesses. Some might be really
 quick but small and some may be able to contain a lot of data but are quite slow.
 To get the best of both worlds you may use a chain of adapters. The idea is to
 first look at the quick adapter and then move on to slower adapters. In the worst
