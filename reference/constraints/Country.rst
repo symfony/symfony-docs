@@ -29,7 +29,7 @@ Basic Usage
             /**
              * @Assert\Country
              */
-             protected $country;
+            protected $country;
         }
 
     .. code-block:: yaml

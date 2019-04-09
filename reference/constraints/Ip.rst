@@ -32,7 +32,7 @@ Basic Usage
             /**
              * @Assert\Ip
              */
-             protected $ipAddress;
+            protected $ipAddress;
         }
 
     .. code-block:: yaml

@@ -34,7 +34,7 @@ Basic Usage
             /**
              * @Assert\Uuid
              */
-             protected $identifier;
+            protected $identifier;
         }
 
     .. code-block:: yaml

@@ -32,7 +32,7 @@ Basic Usage
             /**
              * @Assert\Issn
              */
-             protected $issn;
+            protected $issn;
         }
 
     .. code-block:: yaml
@@ -92,7 +92,7 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 message
 ~~~~~~~
 
-**type**: ``String`` default: ``This value is not a valid ISSN.``
+**type**: ``string`` default: ``This value is not a valid ISSN.``
 
 The message shown if the given value is not a valid ISSN.
 

@@ -52,10 +52,10 @@ method returns **false**:
              *     message = "You've entered an invalid state."
              * )
              */
-             public function isStateInvalid()
-             {
+            public function isStateInvalid()
+            {
                 // ...
-             }
+            }
         }
 
     .. code-block:: yaml
@@ -96,8 +96,15 @@ method returns **false**:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('stateInvalid', new Assert\IsFalse());
+                $metadata->addGetterConstraint('stateInvalid', new Assert\IsFalse([
+                    'message' => 'You've entered an invalid state.',
+                ]));
             }
+        }
+
+        public function isStateInvalid()
+        {
+            // ...
         }
 
 Options
