@@ -83,7 +83,7 @@ Below are common examples of valid DSNs showing a combination of available value
     // a single DSN can define multiple servers using the following syntax:
     // host[hostname-or-IP:port] (where port is optional). Sockets must include a trailing ':'
     RedisAdapter::createConnection(
-        'redis:?host[localhost]&host[localhost:6379]&host[/var/run/redis.sock:]=3'
+        'redis:?host[localhost]&host[localhost:6379]&host[/var/run/redis.sock:]&auth=my-password'
     );
 
 .. versionadded:: 4.2
