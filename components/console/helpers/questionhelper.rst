@@ -191,39 +191,30 @@ provide a callback function to dynamically generate suggestions::
         // This function is called whenever the input changes and new
         // suggestions are needed.
         $callback = function (string $input): array {
-            // Strip any characters from the last slash to the end of the
-            // string - this is considered a complete path and should populate
-            // our autocomplete suggestions.
-            $inputPath = preg_replace(
-                '%(/|^)[^/]*$%',
-                '$1',
-                $input
-            );
+            // Strip any characters from the last slash to the end of the string
+            // to keep only the last directory and generate suggestions for it
+            $inputPath = preg_replace('%(/|^)[^/]*$%', '$1', $userInput);
+            $inputPath = '' === $inputPath ? '.' : $inputPath;
 
-            // All suggestions should start with the input the user has already
-            // provided (existing path), followed in this case by the contents
-            // of the referenced directory. Some suggestions may be ignored
-            // because they don't match the full string provided by the user,
-            // but the autocomplete helper will take care of that for us.
-            return array_map(
-                function ($suggestion) use ($inputPath) {
-                    return $inputPath . $suggestion;
-                },
-                @scandir($inputPath === '' ? '.' : $inputPath) ?: []
-            );
+            // CAUTION - this example code allows unrestricted access to the
+            // entire filesystem. In real applications, restrict the directories
+            // where files and dirs can be found
+            $foundFilesAndDirs = @scandir($inputPath) ?: [];
+
+            return array_map(function ($dirOrFile) use ($inputPath) {
+                return $inputPath.$dirOrFile;
+            }, $foundFilesAndDirs);
         };
 
         $question = new Question('Please provide the full path of a file to parse');
         $question->setAutocompleterCallback($callback);
 
-        $filePath = $this->output->askQuestion($question);
+        $filePath = $helper->ask($input, $output, $question);
     }
 
-.. caution::
+.. versionadded:: 4.3
 
-    This example code allows unrestricted access to the host filesystem, and
-    should only ever be used in a local context, such as in a script being
-    manually invoked from the command line on a server you control.
+    The ``setAutocompleterCallback()`` method was introduced in Symfony 4.3.
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
