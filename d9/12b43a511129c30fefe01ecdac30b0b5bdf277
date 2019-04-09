@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-09T10:25:59Z
+
+@l-vo there's a problem with the pull request. Also, 4.1 branch is no longer maintained, so pull requests can only be created against 3.4, or 4.2 or master. Thanks!
+
+---------------------------------------------------------------------------
+
+by l-vo at 2019-04-09T11:19:15Z
+
+@javiereguiluz thank you, I thought that the PR should target the branch where the error was introduced, if the branch is still visible in the online docs version selector.
+
+So I changed target branch to 4.2 :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-09T14:12:55Z
+
+@l-vo your reasoning was almost correct: bug fixes should go to the oldest, but still maintained, branch that contains the bug.
+
+This is sometimes tricky, and that's why we list maintained versions here: https://symfony.com/roadmap
+
+In any case, your PR is now perfect and we thank you for that!
