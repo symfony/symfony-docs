@@ -100,7 +100,7 @@ Thanks to Flex, after one command, you can start using Twig immediately:
 By extending ``AbstractController``, you now have access to a number of shortcut
 methods and tools, like ``render()``. Create the new template:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# templates/default/index.html.twig #}
     <h1>Hello {{ name }}</h1>
@@ -112,7 +112,7 @@ its syntax and power later.
 But, right now, the page *only* contains the ``h1`` tag. To give it an HTML layout,
 extend ``base.html.twig``:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# templates/default/index.html.twig #}
     {% extends 'base.html.twig' %}

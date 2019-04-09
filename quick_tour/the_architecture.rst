@@ -200,7 +200,7 @@ that extends ``AbstractExtension``::
 
 After creating just *one* file, you can use this immediately:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# templates/default/index.html.twig #}
     {# Will print something like "Hey Symfony!" #}
