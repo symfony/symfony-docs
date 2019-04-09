@@ -12,7 +12,7 @@ Installing & Setting up the Symfony Framework
 
 To create your new Symfony application, first make sure you're using PHP 7.1 or higher
 and have `Composer`_ installed. If you don't, start by :doc:`installing Composer globally </setup/composer>`
-on your system. If you want to use a virtual machine (VM), check out :doc:`Homestead </setup/homestead>`.
+on your system.
 
 Create your new project by running:
 
@@ -33,17 +33,19 @@ In other words, your new app is ready!
     .. code-block:: terminal
 
         $ composer create-project symfony/skeleton my-project
-
-        # optional: install the web server bundle (explained next)
         $ cd my-project
-        $ composer require --dev symfony/web-server-bundle
 
 Running your Symfony Application
 --------------------------------
 
 On production, you should use a web server like Nginx or Apache
 (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
-But for development, it's convenient to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`.
+But for development, it's convenient to use the :doc:`Symfony Local Web Server <setup/symfony_server>`.
+
+.. note::
+
+    If you want to use a virtual machine (VM) with Vagrant, check out
+    :doc:`Homestead </setup/homestead>`.
 
 Move into your new project and start the server:
 
