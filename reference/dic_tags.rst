@@ -794,6 +794,11 @@ templating.helper
 
 **Purpose**: Make your service available in PHP templates
 
+.. deprecated:: 4.3
+
+    The ``templating.helper`` tag is deprecated since version 4.3 and will be
+    removed in 5.0; use Twig instead.
+
 To enable a custom template helper, add it as a regular service in one
 of your configuration, tag it with ``templating.helper`` and define an
 ``alias`` attribute (the helper will be accessible via this alias in the

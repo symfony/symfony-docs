@@ -67,7 +67,7 @@ in your application configuration:
         # config/packages/framework.yaml
         framework:
             # ...
-            templating:
+            fragments:
                 hinclude_default_template: hinclude.html.twig
 
     .. code-block:: xml
@@ -83,7 +83,7 @@ in your application configuration:
 
             <!-- ... -->
             <framework:config>
-                <framework:templating hinclude-default-template="hinclude.html.twig"/>
+                <framework:fragments hinclude-default-template="hinclude.html.twig"/>
             </framework:config>
         </container>
 
@@ -92,12 +92,18 @@ in your application configuration:
         // config/packages/framework.php
         $container->loadFromExtension('framework', [
             // ...
-            'templating' => [
+            'fragments' => [
                 'hinclude_default_template' => [
                     'hinclude.html.twig',
                 ],
             ],
         ]);
+
+.. versionadded:: 4.3
+
+    The ``framework.fragments.hinclude_default_template`` option was introduced
+    in Symfony 4.3. In previous Symfony versions it was called
+    ``framework.templating.hinclude_default_template``.
 
 You can define default templates per ``render()`` function (which will override
 any global default template that is defined):

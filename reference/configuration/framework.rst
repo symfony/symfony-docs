@@ -1559,6 +1559,12 @@ resources
 
 **type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
 
+.. deprecated:: 4.3
+
+    The integration of the Templating component in FrameworkBundle has been
+    deprecated since version 4.3 and will be removed in 5.0. Form theming with
+    PHP templates will no longer be supported and you'll need to use Twig instead.
+
 A list of all resources for form theming in PHP. This setting is not required
 if you're :ref:`using the Twig format for your themes <forms-theming-twig>`.
 

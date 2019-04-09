@@ -185,8 +185,6 @@ link for details), create a ``shipping_widget`` block to handle this:
     rules). Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
-    When using Twig this is:
-
     .. configuration-block::
 
         .. code-block:: yaml
@@ -219,51 +217,6 @@ link for details), create a ``shipping_widget`` block to handle this:
             $container->loadFromExtension('twig', [
                 'form_themes' => [
                     'form/fields.html.twig',
-                ],
-            ]);
-
-    For the PHP templating engine, your configuration should look like this:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/packages/framework.yaml
-            framework:
-                templating:
-                    form:
-                        resources:
-                            - ':form:fields.html.php'
-
-        .. code-block:: xml
-
-            <!-- config/packages/framework.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-                <framework:config>
-                    <framework:templating>
-                        <framework:form>
-                            <framework:resource>:form:fields.html.php</twig:resource>
-                        </framework:form>
-                    </framework:templating>
-                </framework:config>
-            </container>
-
-        .. code-block:: php
-
-            // config/packages/framework.php
-            $container->loadFromExtension('framework', [
-                'templating' => [
-                    'form' => [
-                        'resources' => [
-                            ':form:fields.html.php',
-                        ],
-                    ],
                 ],
             ]);
 
