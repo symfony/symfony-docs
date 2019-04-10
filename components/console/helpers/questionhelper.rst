@@ -190,7 +190,7 @@ provide a callback function to dynamically generate suggestions::
     {
         // This function is called whenever the input changes and new
         // suggestions are needed.
-        $callback = function (string $input): array {
+        $callback = function (string $userInput): array {
             // Strip any characters from the last slash to the end of the string
             // to keep only the last directory and generate suggestions for it
             $inputPath = preg_replace('%(/|^)[^/]*$%', '$1', $userInput);
