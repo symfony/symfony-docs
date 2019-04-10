@@ -2044,7 +2044,7 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
 
     .. code-block:: yaml
 
-        # config/packages/framework.yaml
+        # app/config/config.yml
         framework:
             cache:
                 pools:
@@ -2054,7 +2054,7 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
 
     .. code-block:: xml
 
-        <!-- config/packages/framework.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -2077,7 +2077,7 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
 
     .. code-block:: php
 
-        // config/packages/framework.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'cache' => [
                 'pools' => [
@@ -2191,7 +2191,7 @@ A list of workflows to be created by the framework extension:
 
     .. code-block:: yaml
 
-        # config/packages/workflow.yaml
+        # app/config/config.yml
         framework:
             workflows:
                 my_workflow:
@@ -2199,7 +2199,7 @@ A list of workflows to be created by the framework extension:
 
     .. code-block:: xml
 
-        <!-- config/packages/workflow.xml -->
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -2219,7 +2219,7 @@ A list of workflows to be created by the framework extension:
 
     .. code-block:: php
 
-        // config/packages/workflow.php
+        // app/config/config.php
         $container->loadFromExtension('framework', [
             'workflows' => [
                 'my_workflow' => // ...
