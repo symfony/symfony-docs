@@ -644,6 +644,10 @@ To see all available cache pools:
 
     $ php bin/console cache:pool:list
 
+.. versionadded:: 4.3
+
+    The ``cache:pool:list`` command was introduced in Symfony 4.3.
+
 Clear one pool:
 
 .. code-block:: terminal
