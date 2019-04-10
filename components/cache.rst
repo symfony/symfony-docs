@@ -46,8 +46,8 @@ This component includes *two* different approaches to caching:
     Doctrine caches. See :doc:`/components/cache/psr6_psr16_adapters` and
     :doc:`/components/cache/adapters/doctrine_adapter`.
 
-Cache Contract
---------------
+Cache Contracts
+---------------
 
 All adapters supports the  Cache Contract. It contains only two methods; ``get`` and
 ``delete``. The first thing you need is to instantiate a cache adapter. The
