@@ -24,6 +24,8 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
+.. _cache-psr-6-versus-simple-cache-psr-16:
+
 Cache Contracts versus PSR-6
 ----------------------------
 
@@ -51,7 +53,7 @@ This component includes *two* different approaches to caching:
 Cache Contracts
 ---------------
 
-All adapters supports the  Cache Contract. It contains only two methods; ``get`` and
+All adapters supports the Cache Contract. It contains only two methods; ``get`` and
 ``delete``. The first thing you need is to instantiate a cache adapter. The
 :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache` is used in this example::
 
@@ -87,10 +89,10 @@ The Cache Contracts also comes with built in `Stampede prevention`_. This will
 remove CPU spikes at the moments when the cache is cold. If an example application
 spends 5 seconds to compute data that is cached for 1 hour. This data is accessed
 10 times every second. This means that you mostly have cache hits and everything
-is fine. But after one hour, we get 10 new requests to a cold cache. So we start
-to compute that data again. The next second the same thing happens. So we start
-to compute that data about 50 times before the cache is warm again. This is where
-you need stampede prevention.
+is fine. But after one hour, we get 10 new requests to a cold cache. So the data
+is computed again. The next second the same thing happens. So the data is computed
+about 50 times before the cache is warm again. This is where you need stampede
+prevention
 
 The solution is to recompute the value before the cache expires. The algorithm
 randomly fakes a cache miss for one user while others still is served the cached
