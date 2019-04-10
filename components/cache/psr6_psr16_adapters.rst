@@ -6,7 +6,7 @@
 Adapters For Interoperability between PSR-6 and PSR-16 Cache
 ============================================================
 
-Sometimes, you may have a Cache object that implements the :ref:`PSR-16 <cache-component-psr16-caching>`
+Sometimes, you may have a Cache object that implements the `PSR-16`_
 standard, but need to pass it to an object that expects a :ref:`PSR-6 <cache-component-psr6-caching>`
 cache adapter. Or, you might have the opposite situation. The cache component contains
 two classes for bidirectional interoperability between PSR-6 and PSR-16 caches.
@@ -84,3 +84,5 @@ this use-case::
 
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr16Cache);
+
+.. _`PSR-16`: http://www.php-fig.org/psr/psr-16/
