@@ -5,10 +5,8 @@ Summarized, Encore generates the Webpack configuration that's used in your
 ``webpack.config.js`` file. Encore doesn't support adding all of Webpack's
 `configuration options`_, because many can be added on your own.
 
-For example, suppose you need to set `Webpack's watchOptions`_ setting. To do that,
-modify the config after fetching it from Encore:
-
-.. TODO update the following config example when https://github.com/symfony/webpack-encore/pull/486 is merged and configureWatchOptions() is introduced
+For example, suppose you need to resolve automatically a new extension.
+To do that, modify the config after fetching it from Encore:
 
 .. code-block:: javascript
 
@@ -20,14 +18,9 @@ modify the config after fetching it from Encore:
 
     // fetch the config, then modify it!
     var config = Encore.getWebpackConfig();
-    // if you run 'encore dev --watch'
-    config.watchOptions = { poll: true, ignored: /node_modules/ };
-    // if you run 'encore dev-server'
-    config.devServer.watchOptions = { poll: true, ignored: /node_modules/ };
 
-    // other examples: add an alias or extension
-    // config.resolve.alias.local = path.resolve(__dirname, './resources/src');
-    // config.resolve.extensions.push('json');
+    // add an extension
+    config.resolve.extensions.push('json');
 
     // export the final config
     module.exports = config;
@@ -212,6 +205,5 @@ The following loaders are configurable with ``configureLoaderRule()``:
   - ``handlebars``
 
 .. _`configuration options`: https://webpack.js.org/configuration/
-.. _`Webpack's watchOptions`: https://webpack.js.org/configuration/watch/#watchoptions
 .. _`array of configurations`: https://github.com/webpack/docs/wiki/configuration#multiple-configurations
 .. _`Karma`: https://karma-runner.github.io
