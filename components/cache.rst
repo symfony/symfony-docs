@@ -187,6 +187,8 @@ Now you can create, retrieve, update and delete items using this cache pool::
 
 For a list of all of the supported adapters, see :doc:`/components/cache/cache_pools`.
 
+.. _advanced-usage-psr-6:
+
 Advanced Usage
 --------------
 
