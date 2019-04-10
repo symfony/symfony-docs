@@ -46,6 +46,8 @@ This component includes *two* different approaches to caching:
     Doctrine caches. See :doc:`/components/cache/psr6_psr16_adapters` and
     :doc:`/components/cache/adapters/doctrine_adapter`.
 
+.. _cache-component-contracts:
+
 Cache Contracts
 ---------------
 
