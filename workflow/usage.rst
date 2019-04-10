@@ -415,7 +415,7 @@ workflow leaves a place::
         public function onLeave(Event $event)
         {
             $this->logger->alert(sprintf(
-                'Blog post (id: "%s") performed transaction "%s" from "%s" to "%s"',
+                'Blog post (id: "%s") performed transition "%s" from "%s" to "%s"',
                 $event->getSubject()->getId(),
                 $event->getTransition()->getName(),
                 implode(', ', array_keys($event->getMarking()->getPlaces())),
@@ -439,7 +439,7 @@ Guard Events
 There are a special kind of events called "Guard events". Their event listeners
 are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or
 ``Workflow::getEnabledTransitions`` is executed. With the guard events you may
-add custom logic to decide what transitions that are valid or not. Here is a list
+add custom logic to decide what transitions are valid or not. Here is a list
 of the guard event names.
 
 * ``workflow.guard``
@@ -460,7 +460,8 @@ See example to make sure no blog post without title is moved to "review"::
             $title = $post->title;
 
             if (empty($title)) {
-                // Posts with no title should not be allowed
+                // Posts without title are not allowed
+                // to perform the transition "to_review"
                 $event->setBlocked(true);
             }
         }
@@ -468,7 +469,7 @@ See example to make sure no blog post without title is moved to "review"::
         public static function getSubscribedEvents()
         {
             return [
-                'workflow.blogpost.guard.to_review' => ['guardReview'],
+                'workflow.blog_publishing.guard.to_review' => ['guardReview'],
             ];
         }
     }
@@ -583,7 +584,7 @@ transition was blocked::
         public static function getSubscribedEvents()
         {
             return [
-                'workflow.blogpost.guard.publish' => ['guardPublish'],
+                'workflow.blog_publishing.guard.publish' => ['guardPublish'],
             ];
         }
     }
@@ -618,6 +619,6 @@ You can access the message from a Twig template as follows:
     The ``workflow_transition_blockers()`` Twig function was introduced in
     Symfony 4.3.
 
-Don't need a human-readable message? You can still use::
+Don't need a human-readable message? You can also block a transition via a guard event using::
 
     $event->setBlocked('true');
