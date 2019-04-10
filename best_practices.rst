@@ -87,6 +87,14 @@ application behavior.
 :ref:`Use env vars in your project <config-env-vars>` to define these options
 and create multiple ``.env`` files to :ref:`configure env vars per environment <config-dot-env>`.
 
+Use Secret for Sensitive Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+These are the options used to store sensitive information like passwords,
+tokens, api key
+
+:ref:`Use secrets <secrets-set>` to define these options in an easy and secure way.
+
 Use Parameters for Application Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
