@@ -624,6 +624,59 @@ Symfony provides the following env var processors:
 
         The ``query_string`` processor was introduced in Symfony 4.3.
 
+``env(secret:FOO)``
+    Reads a secret value stored in the app's vault, :ref:`see how to set Secrets<secrets-set>`.
+
+    .. code-block:: terminal
+
+        $ php bin/console secrets:set DATABASE_PASSWORD -
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/database.yaml
+            doctrine:
+                dbal:
+                    # by convention the env var names are always uppercase
+                    url: '%env(DATABASE_URL)%'
+                    password: '%env(secret:DATABASE_PASSWORD)%'
+
+        .. code-block:: xml
+
+        <!-- config/packages/doctrine.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <doctrine:config>
+                <!-- by convention the env var names are always uppercase -->
+                <doctrine:dbal url="%env(DATABASE_URL)%" password="%env(secret:DATABASE_PASSWORD)%"/>
+            </doctrine:config>
+
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/doctrine.php
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
+                // by convention the env var names are always uppercase
+                'url' => '%env(DATABASE_URL)%',
+                'password' => '%env(secret:DATABASE_PASSWORD)%',
+            ]
+        ]);
+
+
+    .. versionadded:: 4.4
+
+        The ``secret`` processor was introduced in Symfony 4.4.
+
 It is also possible to combine any number of processors:
 
 .. code-block:: yaml
