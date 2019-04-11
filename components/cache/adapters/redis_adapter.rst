@@ -92,7 +92,7 @@ Below are common examples of valid DSNs showing a combination of available value
 
 .. note::
 
-    See the :class:`Symfony\Component\Cache\Traits\RedisTrait` for more options
+    See the :class:`Symfony\\Component\\Cache\\Traits\\RedisTrait` for more options
     you can pass as DSN parameters.
 
 Configure the Options
