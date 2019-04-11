@@ -104,7 +104,7 @@ Type-hints and Auto-wiring
 
 Auto-wiring is a great feature that allows you to reduce the amount of configuration
 required for your service container to be created. By using ``MessageBusInterface``
-as argument typehint in your services, the default configured bus will be injected
+as argument type-hint in your services, the default configured bus will be injected
 (i.e ``messenger.bus.commands`` in above examples).
 
 When working with multiple buses, you can use the ``DependencyInjection`` component's
