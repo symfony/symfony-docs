@@ -595,7 +595,7 @@ class, which can make this even easier::
 .. versionadded:: 3.2
 
     The :method:`Symfony\\Component\\HttpFoundation\\JsonResponse::fromJsonString`
-    method was added in Symfony 3.2.
+    method was introduced in Symfony 3.2.
 
 The ``JsonResponse`` class sets the ``Content-Type`` header to
 ``application/json`` and encodes your data to JSON when needed.

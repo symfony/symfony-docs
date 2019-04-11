@@ -157,7 +157,7 @@ and many others that you'll learn about next.
 
 .. versionadded:: 3.3
 
-    The ``AbstractController`` class was added in Symfony 3.3.
+    The ``AbstractController`` class was introduced in Symfony 3.3.
 
 .. index::
    single: Controller; Redirecting
@@ -252,7 +252,7 @@ Fetching Services as Controller Arguments
 .. versionadded:: 3.3
 
     The ability to type-hint a controller argument in order to receive a service
-    was added in Symfony 3.3.
+    was introduced in Symfony 3.3.
 
 Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
