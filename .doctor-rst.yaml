@@ -1,13 +1,16 @@
 rules:
+    no_inheritdoc: ~
+    avoid_repetetive_words: ~
     blank_line_after_directive: ~
     short_array_syntax: ~
     no_app_console: ~
     typo: ~
     replacement: ~
     composer_dev_option_not_at_the_end: ~
+    no_composer_req: ~
     yarn_dev_option_at_the_end: ~
     versionadded_directive_should_have_version: ~
-    no_composer_req: ~
+    deprecated_directive_should_have_version: ~
     no_php_open_tag_in_code_block_php_directive: ~
     no_blank_line_after_filepath_in_php_code_block: ~
     no_blank_line_after_filepath_in_yaml_code_block: ~
@@ -24,13 +27,17 @@ rules:
     ordered_use_statements: ~
     no_namespace_after_use_statements: ~
     use_https_xsd_urls: ~
+    correct_code_block_directive_based_on_the_content: ~
+    not_many_blank_lines:
+        max: 2
+    replace_code_block_types: ~
 
     #   3.4
     versionadded_directive_major_version:
-        'major_version': 3
+        major_version: 3
 
     versionadded_directive_min_version:
-        'min_version': '3.0'
+        min_version: '3.0'
 
 # do not report as violation
 whitelist:
