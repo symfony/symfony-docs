@@ -53,6 +53,7 @@ Date Constraints
 * :doc:`Date </reference/constraints/Date>`
 * :doc:`DateTime </reference/constraints/DateTime>`
 * :doc:`Time </reference/constraints/Time>`
+* :doc:`Timezone </reference/constraints/Timezone>`
 
 Choice Constraints
 ~~~~~~~~~~~~~~~~~~
@@ -61,7 +62,6 @@ Choice Constraints
 * :doc:`Language </reference/constraints/Language>`
 * :doc:`Locale </reference/constraints/Locale>`
 * :doc:`Country </reference/constraints/Country>`
-* :doc:`Timezone </reference/constraints/Timezone>`
 
 File Constraints
 ~~~~~~~~~~~~~~~~

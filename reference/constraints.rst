@@ -41,6 +41,7 @@ Validation Constraints Reference
    constraints/Date
    constraints/DateTime
    constraints/Time
+   constraints/Timezone
 
    constraints/Choice
    constraints/Collection
@@ -49,7 +50,6 @@ Validation Constraints Reference
    constraints/Language
    constraints/Locale
    constraints/Country
-   constraints/Timezone
 
    constraints/File
    constraints/Image
