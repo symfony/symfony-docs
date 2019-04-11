@@ -78,7 +78,9 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('locale', new Assert\Locale(['canonicalize' => true]));
+                $metadata->addPropertyConstraint('locale', new Assert\Locale([
+                    'canonicalize' => true,
+                ]));
             }
         }
 
