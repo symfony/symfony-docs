@@ -1420,7 +1420,7 @@ and return ``true`` when
 :method:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface::hasCacheableSupportsMethod`
 is called.
 
- .. note::
+.. note::
 
     All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
     as well the ones included in `API Platform`_ natively implement this interface.
