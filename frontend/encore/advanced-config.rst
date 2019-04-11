@@ -38,6 +38,20 @@ But be careful not to accidentally override any config from Encore:
     // BAD - this replaces any extensions added by Encore
     // config.resolve.extensions = ['json'];
 
+Configuring Watching Options and Polling
+----------------------------------------
+
+Encore provides the method ``configureWatchOptions()`` to configure
+`Watching Options`_ when running ``encore dev --watch`` or ``encore dev-server``:
+
+.. code-block:: javascript
+
+    Encore.configureWatchOptions(function(watchOptions) {
+        // enable polling and check for changes every 250ms
+        // polling is useful when running Encore inside a Virtual Machine
+        watchOptions.poll = 250;
+    });
+
 Defining Multiple Webpack Configurations
 ----------------------------------------
 
@@ -207,3 +221,4 @@ The following loaders are configurable with ``configureLoaderRule()``:
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`array of configurations`: https://github.com/webpack/docs/wiki/configuration#multiple-configurations
 .. _`Karma`: https://karma-runner.github.io
+.. _`Watching Options`: https://webpack.js.org/configuration/watch/#watchoptions
