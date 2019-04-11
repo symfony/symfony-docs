@@ -78,18 +78,23 @@ one of the values is changed.
 
 The red, green and blue form fields have to be mapped to the constructor
 arguments and the ``Color`` instance has to be mapped to red, green and blue
-form fields. Recognize a familiar pattern? It's time for a data mapper::
+form fields. Recognize a familiar pattern? It's time for a data mapper. The
+easiest way to create one is by implementing :class:`Symfony\\Component\\Form\\DataMapperInterface`
+in your form type::
 
-    // src/Form/DataMapper/ColorMapper.php
-    namespace App\Form\DataMapper;
+    // src/Form/ColorType.php
+    namespace App\Form;
 
     use App\Painting\Color;
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\DataMapperInterface;
     use Symfony\Component\Form\Exception\UnexpectedTypeException;
     use Symfony\Component\Form\FormInterface;
 
-    final class ColorMapper implements DataMapperInterface
+    final class ColorType extends AbstractType implements DataMapperInterface
     {
+        // ...
+
         /**
          * @param Color|null $data
          */
@@ -139,20 +144,19 @@ form fields. Recognize a familiar pattern? It's time for a data mapper::
 Using the Mapper
 ----------------
 
-You're ready to use the data mapper for the ``ColorType`` form. Use the
-:method:`Symfony\\Component\\Form\\FormConfigBuilderInterface::setDataMapper`
-method to configure the data mapper::
+After creating the data mapper, you need to configure the form to use it. This is
+achieved using the :method:`Symfony\\Component\\Form\\FormConfigBuilderInterface::setDataMapper`
+method::
 
     // src/Form/Type/ColorType.php
     namespace App\Form\Type;
 
-    use App\Form\DataMapper\ColorMapper;
-    use Symfony\Component\Form\AbstractType;
+    // ...
     use Symfony\Component\Form\Extension\Core\Type\IntegerType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    final class ColorType extends AbstractType
+    final class ColorType extends AbstractType implements DataMapperInterface
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
@@ -168,7 +172,8 @@ method to configure the data mapper::
                 ->add('blue', IntegerType::class, [
                     'empty_data' => '0',
                 ])
-                ->setDataMapper(new ColorMapper())
+                // configure the data mapper for this FormType
+                ->setDataMapper($this)
             ;
         }
 
@@ -177,19 +182,41 @@ method to configure the data mapper::
             // when creating a new color, the initial data should be null
             $resolver->setDefault('empty_data', null);
         }
+
+        // ...
     }
 
-Cool! When using the ``ColorType`` form, the custom ``ColorMapper`` will create
-a new ``Color`` object now.
+Cool! When using the ``ColorType`` form, the custom data mapper methods will
+create a new ``Color`` object now.
 
 .. caution::
 
     When a form has the ``inherit_data`` option set to ``true``, it does not use the data mapper and
     lets its parent map inner values.
 
-.. tip::
+.. sidebar:: Stateful Data Mappers
 
-    You can also implement the ``DataMapperInterface`` in the ``ColorType`` and add
-    the ``mapDataToForms()`` and ``mapFormsToData()`` in the form type directly
-    to avoid creating a new class. You'll then have to call
-    ``$builder->setDataMapper($this)``.
+    Sometimes, data mappers need to access services or need to maintain their
+    state. In this case, you cannot implement the methods in the form type
+    itself. Create a separate class implementing ``DataMapperInterface`` and
+    initialize it in your form type::
+
+        // src/Form/Type/ColorType.php
+
+        // ...
+        use App\Form\DataMapper\ColorMapper;
+
+        final class ColorType extends AbstractType
+        {
+            public function buildForm(FormBuilderInterface $builder, array $options)
+            {
+                $builder
+                    // ...
+
+                    // Initialize the data mapper class and e.g. pass some state
+                    ->setDataMapper(new ColorMapper($options['opacity']))
+                ;
+            }
+
+            // ...
+        }
