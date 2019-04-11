@@ -149,6 +149,8 @@ array to its YAML representation::
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
 
+.. _components-yaml-array-inlining:
+
 Array Expansion and Inlining
 ............................
 
@@ -185,6 +187,8 @@ representation to the inline one::
         foo: bar
         bar: baz
 
+.. _components-yaml-indentation:
+
 Indentation
 ...........
 
@@ -219,6 +223,8 @@ add underscores to improve their readability:
 During the parsing of the YAML contents, all the ``_`` characters are removed
 from the numeric literal contents, so there is not a limit in the number of
 underscores you can include or the way you group contents.
+
+.. _components-yaml-flags:
 
 Advanced Usage: Flags
 ---------------------

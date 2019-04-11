@@ -741,6 +741,9 @@ Built-in Encoders
 
 The Serializer component provides several built-in encoders:
 
+:class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
+    This encoder encodes and decodes data in CSV_.
+
 :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
     This class encodes and decodes data in JSON_.
 
@@ -751,22 +754,17 @@ The Serializer component provides several built-in encoders:
     This encoder encodes and decodes data in YAML_. This encoder requires the
     :doc:`Yaml Component </components/yaml>`.
 
-:class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
-    This encoder encodes and decodes data in CSV_.
-
 All these encoders are enabled by default when using the Serializer component
 in a Symfony application.
 
-The ``JsonEncoder``
-~~~~~~~~~~~~~~~~~~~
-
-The ``JsonEncoder`` encodes to and decodes from JSON strings, based on the PHP
-:phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
-
 The ``CsvEncoder``
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
-The ``CsvEncoder`` encodes to and decodes from CSV.
+The ``CsvEncoder`` encodes to and decodes from CSV using PHP's
+:phpfunction:`fgetcsv` and :phpfunction:`fputcsv` functions.
+
+When decoding, the first line is considered the headers of the columns.
+
 
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
@@ -775,16 +773,89 @@ always as a collection.
 
     Relying on the default value ``false`` is deprecated since Symfony 4.2.
 
+Context
+.......
+
+The ``encode()`` and ``encode()`` methods define an optional ``$context``
+argument to set the following configuration options:
+
+``csv_delimiter`` (for ``encode()`` and ``decode()``)
+    **type**: ``string`` **default**: ``','``
+    Sets the character used between fields to delimiter when a field ends. It
+    must be a single character.
+
+``csv_enclosure`` (for ``encode()`` and ``decode()``)
+    **type**: ``string`` **default**: ``'"'``
+    The character used to wrap the field contents. It must be a single character
+    and it's not added to all fields but only added when needed (e.g. when the
+    field content is a string with white spaces inside it).
+
+``csv_escape_char`` (for ``encode()`` and ``decode()``)
+    **type**: ``string`` **default**: ``'\\'``
+    Sets the character used to escape contents. It must be a single character.
+    Set it to an empty string to disable the escape mechanism.
+
+``csv_headers`` (for ``encode()`` only)
+    **type**: ``array`` or ``null`` **default**: ``[]``
+    Sets the headers to include in the encoded CSV result. The data associated
+    with other headers won't be included.
+
+``csv_key_separator`` (for ``encode()`` and ``decode()``)
+    **type**: ``string`` **default**: ``'.'``
+    Sets the character used to concatenate headers when flattening the given PHP
+    nested array into the flat structure needed for the CSV file. For example,
+    if the original content is this PHP array::
+
+        $data = [
+            'foo' => 'aaa',
+            'bar' => [
+                ['id' => 111, 1 => 'bbb'],
+                ['lorem' => 'ipsum'],
+            ]
+        ];
+
+    The encoded CSV result will be:
+
+    .. code-block:: text
+
+        foo,bar.0.id,bar.0.1,bar.1.lorem
+        aaa,111,bbb,ipsum
+
+The ``JsonEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+The ``JsonEncoder`` transforms JSON contents into PHP variables and vice versa
+using PHP's :phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
+
+Context
+~~~~~~~
+
+The ``encode()`` and ``encode()`` methods define an optional ``$context``
+argument to set the following configuration options:
+
+``json_decode_associative`` (for ``encode()`` and ``decode()``)
+    **type**: ``boolean`` **default**: the default set in ``JsonDecode::__construct()``
+
+``json_decode_options`` (for ``decode()`` only)
+    **type**: ``integer`` **default**: ``0``
+    Sets a bitmask of options to use when decoding JSON contents, as defined
+    in PHP's :phpfunction:`json_decode` function.
+
+``json_decode_recursion_depth`` (for ``encode()`` and ``decode()``)
+    **type**: ``integer`` **default**: the default set in ``JsonDecode::__construct()``
+    Sets the maximum recursion depth supported when encoding/decoding contents.
+
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
 
-This encoder transforms arrays into XML and vice versa.
-
-For example, take an object normalized as following::
+This encoder transforms PHP arrays into XML and vice versa. For example, take an
+object normalized as following::
 
     ['foo' => [1, 2], 'bar' => true];
 
-The ``XmlEncoder`` will encode this object like that::
+The ``XmlEncoder`` encodes this object as follows:
+
+.. code-block:: xml
 
     <?xml version="1.0"?>
     <response>
@@ -793,19 +864,26 @@ The ``XmlEncoder`` will encode this object like that::
         <bar>1</bar>
     </response>
 
-Be aware that this encoder will consider keys beginning with ``@`` as attributes, and will use
-the key  ``#comment`` for encoding XML comments::
+The array keys beginning with ``@`` are considered XML attributes::
 
-    $encoder = new XmlEncoder();
-    $encoder->encode([
-        'foo' => ['@bar' => 'value'],
-        'qux' => ['#comment' => 'A comment'],
-    ], 'xml');
-    // will return:
+    ['foo' => ['@bar' => 'value']];
+
+    // is encoded as follows:
     // <?xml version="1.0"?>
     // <response>
     //     <foo bar="value"/>
-    //     <qux><!-- A comment --!><qux>
+    // </response>
+
+Use the special ``#`` key to define the data of a node::
+
+    ['foo' => ['@bar' => 'value', '#' => 'baz']];
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value">
+    //        baz
+    //     </foo>
     // </response>
 
 You can pass the context key ``as_collection`` in order to have the results
@@ -821,11 +899,72 @@ always as a collection.
     changed with the optional ``$encoderIgnoredNodeTypes`` argument of the
     ``XmlEncoder`` class constructor.
 
+Context
+.......
+
+The ``encode()`` and ``encode()`` methods define an optional ``$context``
+argument to set the following configuration options:
+
+``xml_format_output``
+    **type**: ``boolean`` **default**: ``false``
+    If set to ``true`, formats the generated XML with line breaks and indentation.
+
+``xml_version``
+    **type**: ``string`` **default**: ``'1.1'``
+    Sets the XML version attribute.
+
+``xml_encoding``
+    **type**: ``string`` **default**: ``'utf-8'``
+    Sets the XML encoding attribute.
+
+``xml_standalone``
+    **type**: ``boolean`` **default**: ``true``
+    Adds standalone attribute in the generated XML.
+
+``xml_root_node_name``
+    **type**: ``string`` **default**: ``'response'``
+    Sets the root node name.
+
+``remove_empty_tags``
+    **type**: ``boolean`` **default**: ``false``
+    If set to ``true``, removes all empty tags in the generated XML.
+
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
-This encoder requires the :doc:`Yaml Component </components/yaml>` and
-transforms from and to Yaml.
+This encoder transforms YAML contents into PHP variables and vice versa using
+the Symfony :doc:`Yaml component </components/yaml>`. For example, take an
+object normalized as following::
+
+    ['foo' => [1, 2], 'bar' => true];
+
+The ``YamlEncoder`` encodes this object as follows:
+
+.. code-block:: yaml
+
+    .. TODO
+
+Context
+.......
+
+The ``encode()`` and ``encode()`` methods define an optional ``$context``
+argument to set the following configuration options:
+
+``yaml_flags`` (for ``encode()`` and ``decode()``)
+    **type**: ``integer`` **default**: ``0``
+    A bitmask of the :ref:`Yaml component flags <components-yaml-flags>`
+    (e.g. ``Yaml::DUMP_OBJECT | Yaml::PARSE_DATETIME``).
+
+``yaml_indent`` (for ``encode()`` only)
+    **type**: ``integer`` **default**: ``0``
+    Sets the number of spaces to use to indent nested YAML nodes, as explained
+    in the :ref:`Yaml component indentation <components-yaml-indentation>` section.
+
+``yaml_inline`` (for ``encode()`` only)
+    **type**: ``integer`` **default**: ``0``
+    Sets the nesting level where the YAML contents should be output inline
+    instead of nested, as explained in the
+    :ref:`array inlining <components-yaml-array-inlining>` section.
 
 Skipping ``null`` Values
 ------------------------
@@ -1131,6 +1270,9 @@ you indicate that you're expecting an array instead of a single object::
 
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
+
+
+json_decode_associative
 
 The ``XmlEncoder``
 ------------------
