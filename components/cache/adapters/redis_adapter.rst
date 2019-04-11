@@ -90,7 +90,7 @@ Below are common examples of valid DSNs showing a combination of available value
 
     The option to define multiple servers in a single DSN was introduced in Symfony 4.2.
 
-.. Note::
+.. note::
 
     See the :class:`Symfony\Component\Cache\Traits\RedisTrait` for more options
     you can pass as DSN parameters.
