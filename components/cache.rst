@@ -53,15 +53,23 @@ This component includes *two* different approaches to caching:
 Cache Contracts
 ---------------
 
-All adapters supports the Cache Contract. It contains only two methods; ``get`` and
-``delete``. The first thing you need is to instantiate a cache adapter. The
-:class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache` is used in this example::
+All adapters supports the Cache Contract. It contains only two methods:
+``get()`` and ``delete()``. There's no ``set()`` method because the ``get()``
+method both gets and sets the cache values.
+
+The first thing you need is to instantiate a cache adapter. The
+:class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache` is used in this
+example::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
     $cache = new FilesystemAdapter();
 
-Now you can retrieve and delete cached data using this object::
+Now you can retrieve and delete cached data using this object. The first
+argument of the ``get()`` method is a key, an arbitrary string that you
+associate to the cached value so you can retrieve it later. The second argument
+is a PHP callable which is executed to generate the value (and store it in the
+cache) when it's not found in the cache::
 
     use Symfony\Contracts\Cache\ItemInterface;
 
@@ -82,7 +90,7 @@ Now you can retrieve and delete cached data using this object::
 
 .. note::
 
-    Use tags to clear more than one key at the time. Read more at
+    Use cache tags to delete more than one key at the time. Read more at
     :doc:`/components/cache/cache_invalidation`.
 
 The Cache Contracts also comes with built in `Stampede prevention`_. This will
@@ -96,8 +104,12 @@ prevention
 
 The solution is to recompute the value before the cache expires. The algorithm
 randomly fakes a cache miss for one user while others still is served the cached
-value. The third parameter to ``CacheInterface::get`` is a beta value. The default
-is ``1.0`` which works well in practice. A higher value means earlier recompute.::
+value. You can control its behavior with the third optional parameter of
+``CacheInterface::get()``, which is a float value called "beta".
+
+By default the beta is ``1.0`` and higher values mean earlier recompute. Set it
+to ``0`` to disable the recompute and set it to ``INF`` to trigger an immediate
+recompute::
 
     use Symfony\Contracts\Cache\ItemInterface;
 
