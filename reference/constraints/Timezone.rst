@@ -38,7 +38,7 @@ string meant to contain a timezone identifier (e.g. ``America/New_York``):
             /**
              * @Assert\Timezone
              */
-             protected $timezone;
+            protected $timezone;
         }
 
     .. code-block:: yaml
@@ -125,12 +125,13 @@ identifiers to the ones that belong to that geographical zone:
 * ``\DateTimeZone::INDIAN``
 * ``\DateTimeZone::PACIFIC``
 
-The special ``\DateTimeZone::ALL`` zone accepts any timezone excluding deprecated timezones.
+In addition, there are some special zone values:
 
-The special ``\DateTimeZone::ALL_WITH_BC`` zone accepts any timezone including deprecated timezones.
-
-The special ``\DateTimeZone::PER_COUNTRY`` zone limits the timezones to a certain country. This zone
-value must be used in combination with the ``countryCode`` option.
+* ``\DateTimeZone::ALL`` accepts any timezone excluding deprecated timezones;
+* ``\DateTimeZone::ALL_WITH_BC`` accepts any timezone including deprecated
+  timezones;
+* ``\DateTimeZone::PER_COUNTRY`` restricts the valid timezones to a certain
+  country (which is defined using the ``countryCode`` option).
 
 countryCode
 ~~~~~~~~~~~
