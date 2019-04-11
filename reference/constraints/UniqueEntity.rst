@@ -31,7 +31,7 @@ between all of the constraints in your user table:
 
     .. code-block:: php-annotations
 
-        // src/Entity/Author.php
+        // src/Entity/User.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -44,7 +44,7 @@ between all of the constraints in your user table:
          * @ORM\Entity
          * @UniqueEntity("email")
          */
-        class Author
+        class User
         {
             /**
              * @ORM\Column(name="email", type="string", length=255, unique=true)
@@ -56,7 +56,7 @@ between all of the constraints in your user table:
     .. code-block:: yaml
 
         # config/validator/validation.yaml
-        App\Entity\Author:
+        App\Entity\User:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
             properties:
@@ -71,7 +71,7 @@ between all of the constraints in your user table:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="App\Entity\Author">
+            <class name="App\Entity\User">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">email</option>
                 </constraint>
@@ -83,7 +83,7 @@ between all of the constraints in your user table:
 
     .. code-block:: php
 
-        // src/Entity/Author.php
+        // src/Entity/User.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -91,7 +91,7 @@ between all of the constraints in your user table:
         // DON'T forget this use statement!!!
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-        class Author
+        class User
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
