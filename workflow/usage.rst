@@ -501,11 +501,12 @@ transition was blocked::
         public static function getSubscribedEvents()
         {
             return [
-                'workflow.blogpost.guard.publish' => ['guardPublish'],
+                'workflow.blog_publishing.guard.publish' => ['guardPublish'],
             ];
         }
     }
 
-Don't need a human-readable message? You can still use::
+Don't need a human-readable message? You can also block a transition via a guard
+event using::
 
     $event->setBlocked('true');
