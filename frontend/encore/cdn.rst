@@ -39,6 +39,9 @@ pages also use the CDN. Fortunately, the
 :ref:`entrypoints.json <encore-entrypointsjson-simple-description>` paths are updated
 to include the full URL to the CDN.
 
-If you are using ``Encore.enableIntegrityHashes()`` and your CDN and your domain are not the [same-origin](https://en.wikipedia.org/wiki/Same-origin_policy)
-then you might need to set the ``crossorigin`` configuration value in your webpack_encore.yaml configuration 
-to ``anonymous`` or ``use-credentials`` to overcome CORS errors.
+If you are using ``Encore.enableIntegrityHashes()`` and your CDN and your domain
+are not the `same-origin`_, you may need to set the ``crossorigin`` option in
+your webpack_encore.yaml configuration to ``anonymous`` or ``use-credentials``
+to overcome CORS errors.
+
+.. _`same-origin`: https://en.wikipedia.org/wiki/Same-origin_policy
