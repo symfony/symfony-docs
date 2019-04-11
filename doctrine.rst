@@ -393,6 +393,13 @@ directly inside the ``Product`` class via DocBlock annotations:
 
 .. note::
 
+    If you are using an SQLite database, you'll see the following error:
+    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
+    column with default value NULL*. Add a ``nullable=true`` option to the
+    ``description`` property to fix the problem.
+
+.. note::
+
     A bundle can accept only one metadata definition format. For example, it's
     not possible to mix YAML metadata definitions with annotated PHP entity
     class definitions.
