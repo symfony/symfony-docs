@@ -43,7 +43,8 @@ See :doc:`/frontend/encore/dev-server` for more details.
 JSX Support
 -----------
 
-You can enable `JSX with Vue.js`_ by configuring the 2nd parameter of the ``.enableVueLoader()`` method:
+You can enable `JSX with Vue.js`_ by configuring the second parameter of the
+``.enableVueLoader()`` method:
 
 .. code-block:: diff
 
@@ -60,8 +61,8 @@ You can enable `JSX with Vue.js`_ by configuring the 2nd parameter of the ``.ena
     +     })
     ;
 
-Next, run or restart Encore. When you do, you will see an error message helping you
-install any missing dependencies. After running that command and restarting
+Next, run or restart Encore. When you do, you will see an error message helping
+you install any missing dependencies. After running that command and restarting
 Encore, you're done!
 
 Your ``.jsx`` files will now be transformed through ``@vue/babel-preset-jsx``.
@@ -69,8 +70,8 @@ Your ``.jsx`` files will now be transformed through ``@vue/babel-preset-jsx``.
 Using styles
 ~~~~~~~~~~~~
 
-You can't use ``<style>`` in ``.jsx`` files.
-As a workaround, you can import ``.css``, ``.scss``, etc, files manually:
+You can't use ``<style>`` in ``.jsx`` files. As a workaround, you can import
+``.css``, ``.scss``, etc. files manually:
 
 .. code-block:: javascript
 
@@ -91,14 +92,15 @@ As a workaround, you can import ``.css``, ``.scss``, etc, files manually:
 
 .. note::
 
-    Importing styles this way make them global.
-    See the next section for scoping them to your component.
+    Importing styles this way makes them global. See the next section for
+    scoping them to your component.
 
 Using Scoped Styles
 ~~~~~~~~~~~~~~~~~~~
 
-You also can't use `Scoped Styles`_ (``<style scoped>``) in ``.jsx`` files.
-As a workaround, you can use `CSS Modules`_ by suffixing import paths with ``?module``:
+You can't use `Scoped Styles`_ (``<style scoped>``) either in ``.jsx`` files. As
+a workaround, you can use `CSS Modules`_ by suffixing import paths with
+``?module``:
 
 .. code-block:: javascript
 
@@ -132,8 +134,8 @@ The output will be something like ``<h1 class="h1_a3dKp">Hello World</h1>``.
 Using images
 ~~~~~~~~~~~~
 
-You can't use ``<img src="./image.png">`` in ``.jsx`` files.
-As a workaround, you can import them with ``require()`` function:
+You can't use ``<img src="./image.png">`` in ``.jsx`` files. As a workaround,
+you can import them with ``require()`` function:
 
 .. code-block:: javascript
 
