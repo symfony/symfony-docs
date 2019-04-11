@@ -21,7 +21,7 @@ Installation
 .. note::
 
     If using it inside a Symfony application, make sure that the DebugBundle has
-    been installed (or run ``composer require symfony/debug-bundle`` to install it).
+    been installed (or run ``composer require --dev symfony/debug-bundle`` to install it).
 
 .. _components-var-dumper-dump:
 
