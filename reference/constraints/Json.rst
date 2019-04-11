@@ -35,7 +35,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
              *     message = "You've entered an invalid Json."
              * )
              */
-             private $chapters;
+            private $chapters;
         }
 
     .. code-block:: yaml
@@ -74,8 +74,6 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
 
         class Book
         {
-            private $chapters;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('chapters', new Assert\Json([
