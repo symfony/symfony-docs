@@ -1271,9 +1271,6 @@ you indicate that you're expecting an array instead of a single object::
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
-
-json_decode_associative
-
 The ``XmlEncoder``
 ------------------
 
