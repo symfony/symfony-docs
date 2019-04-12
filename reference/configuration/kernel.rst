@@ -154,7 +154,7 @@ Since the ``container.build_time`` value will change every time you compile the
 application, the build will not be strictly reproducible. If you care about
 this, the solution is to use another configuration parameter called
 ``kernel.container_build_time`` and set it to a non-changing build time to
-achieve a strict reproducible build::
+achieve a strict reproducible build:
 
 .. configuration-block::
 
