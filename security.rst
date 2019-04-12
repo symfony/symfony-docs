@@ -602,8 +602,8 @@ For more information, see the `FrameworkExtraBundle documentation`_.
 Access Control in Templates
 ...........................
 
-If you want to check if the current access inside a template, use
-the built-in ``is_granted()`` helper function:
+If you want to check if the current user has a certain role, you can use
+the built-in ``is_granted()`` helper function in any Twig template:
 
 .. code-block:: html+twig
 
