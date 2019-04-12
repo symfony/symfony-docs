@@ -38,14 +38,14 @@ the data stored in the cache item::
 
     // storing a simple integer
     $productsCount->set(4711);
-    $cache->save($productsCount);
+    $cache->set($productsCount);
 
     // storing an array
     $productsCount->set(array(
         'category1' => 4711,
         'category2' => 2387,
-    ));
-    $cache->save($productsCount);
+    ]);
+    $cache->set($productsCount);
 
 The key and the value of any given cache item can be obtained with the
 corresponding *getter* methods::
@@ -108,7 +108,7 @@ for cache hits::
     if (!$latestNews->isHit()) {
         // do some heavy computation
         $news = ...;
-        $cache->save($latestNews->set($news));
+        $cache->set($latestNews->set($news));
     } else {
         $news = $latestNews->get();
     }
