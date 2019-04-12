@@ -163,6 +163,20 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
     Confused why the price is an integer? Don't worry: this is just an example.
     But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
 
+.. note::
+
+    If you are using an SQLite database, you'll see the following error:
+    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
+    column with default value NULL*. Add a ``nullable=true`` option to the
+    ``description`` property to fix the problem.
+
+.. note::
+
+    A bundle can accept only one metadata definition format. For example, it's
+    not possible to mix YAML metadata definitions with annotated PHP entity
+    class definitions.
+>>>>>>> 3.4
+
 .. caution::
 
     There is a `limit of 767 bytes for the index key prefix`_ when using
