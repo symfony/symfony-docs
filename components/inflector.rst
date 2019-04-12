@@ -52,7 +52,7 @@ singular/plural::
     Inflector::pluralize('bacterium'); // 'bacteria'
 
 Sometimes it's not possible to determine a unique singular/plural form for the
-given word. In those cases, the methods returns an array with all the possible
+given word. In those cases, the methods return an array with all the possible
 forms::
 
     use Symfony\Component\Inflector\Inflector;
