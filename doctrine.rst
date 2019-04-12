@@ -170,13 +170,6 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
     column with default value NULL*. Add a ``nullable=true`` option to the
     ``description`` property to fix the problem.
 
-.. note::
-
-    A bundle can accept only one metadata definition format. For example, it's
-    not possible to mix YAML metadata definitions with annotated PHP entity
-    class definitions.
->>>>>>> 3.4
-
 .. caution::
 
     There is a `limit of 767 bytes for the index key prefix`_ when using
