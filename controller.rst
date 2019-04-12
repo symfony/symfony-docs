@@ -185,18 +185,8 @@ Templating and Twig are explained more in the
 .. _controller-accessing-services:
 .. _accessing-other-services:
 
-<<<<<<< HEAD
 Fetching Services
 ~~~~~~~~~~~~~~~~~
-=======
-Fetching Services as Controller Arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-
-    The ability to type-hint a controller argument in order to receive a service
-    was introduced in Symfony 3.3.
->>>>>>> 3.4
 
 Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
