@@ -60,5 +60,5 @@ forms::
     Inflector::singularize('indices'); // ['index', 'indix', 'indice']
     Inflector::singularize('leaves');  // ['leaf', 'leave', 'leaff']
 
-    Inflector::singularize('matrix');  // ['matricies', 'matrixes']
-    Inflector::singularize('person');  // ['persons', 'people']
+    Inflector::pluralize('matrix');    // ['matricies', 'matrixes']
+    Inflector::pluralize('person');    // ['persons', 'people']
