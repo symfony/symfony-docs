@@ -43,13 +43,13 @@ singular/plural::
 
     use Symfony\Component\Inflector\Inflector;
 
-    Inflector::singularize('alumni');  // 'alumnus'
-    Inflector::singularize('knives');  // 'knife'
-    Inflector::singularize('mice');    // 'mouse'
+    Inflector::singularize('alumni');   // 'alumnus'
+    Inflector::singularize('knives');   // 'knife'
+    Inflector::singularize('mice');     // 'mouse'
 
-    Inflector::pluralize('granchild'); // 'grandchildren'
-    Inflector::pluralize('news');      // 'news'
-    Inflector::pluralize('bacterium'); // 'bacteria'
+    Inflector::pluralize('grandchild'); // 'grandchildren'
+    Inflector::pluralize('news');       // 'news'
+    Inflector::pluralize('bacterium');  // 'bacteria'
 
 Sometimes it's not possible to determine a unique singular/plural form for the
 given word. In those cases, the methods return an array with all the possible
