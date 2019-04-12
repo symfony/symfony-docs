@@ -14,8 +14,8 @@ A set of places and transitions creates a **definition**. A workflow needs
 a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
 
-Consider the following example for a blog post. A post can have places:
-'draft', 'review', 'rejected', 'published'. You can define the workflow
+Consider the following example for a blog post. A post can have these places:
+``draft``, ``reviewed``, ``rejected``, ``published``. You can define the workflow
 like this:
 
 .. configuration-block::
@@ -38,18 +38,18 @@ like this:
                     initial_place: draft
                     places:
                         - draft
-                        - review
+                        - reviewed
                         - rejected
                         - published
                     transitions:
                         to_review:
                             from: draft
-                            to:   review
+                            to:   reviewed
                         publish:
-                            from: review
+                            from: reviewed
                             to:   published
                         reject:
-                            from: review
+                            from: reviewed
                             to:   rejected
 
     .. code-block:: xml
@@ -74,24 +74,24 @@ like this:
                     <framework:support>AppBundle\Entity\BlogPost</framework:support>
 
                     <framework:place>draft</framework:place>
-                    <framework:place>review</framework:place>
+                    <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
                     <framework:place>published</framework:place>
 
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
 
-                        <framework:to>review</framework:to>
+                        <framework:to>reviewed</framework:to>
                     </framework:transition>
 
                     <framework:transition name="publish">
-                        <framework:from>review</framework:from>
+                        <framework:from>reviewed</framework:from>
 
                         <framework:to>published</framework:to>
                     </framework:transition>
 
                     <framework:transition name="reject">
-                        <framework:from>review</framework:from>
+                        <framework:from>reviewed</framework:from>
 
                         <framework:to>rejected</framework:to>
                     </framework:transition>
@@ -119,21 +119,21 @@ like this:
                     'supports' => ['AppBundle\Entity\BlogPost'],
                     'places' => [
                         'draft',
-                        'review',
+                        'reviewed',
                         'rejected',
                         'published',
                     ],
                     'transitions' => [
                         'to_review' => [
                             'from' => 'draft',
-                            'to' => 'review',
+                            'to' => 'reviewed',
                         ],
                         'publish' => [
-                            'from' => 'review',
+                            'from' => 'reviewed',
                             'to' => 'published',
                         ],
                         'reject' => [
-                            'from' => 'review',
+                            'from' => 'reviewed',
                             'to' => 'rejected',
                         ],
                     ],
@@ -210,7 +210,7 @@ When a state transition is initiated, the events are dispatched in the following
 order:
 
 ``workflow.guard``
-    Validate whether the transition is allowed at all (:ref:`see below <workflow-usage-guard-events>`).
+    Validate whether the transition is blocked or not (:ref:`see below <workflow-usage-guard-events>` and :ref:`using guards <workflow-usage-using-guards>`).
 
     The three events being dispatched are:
 
@@ -322,14 +322,14 @@ Guard Events
 There are a special kind of events called "Guard events". Their event listeners
 are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or
 ``Workflow::getEnabledTransitions`` is executed. With the guard events you may
-add custom logic to decide what transitions are valid or not. Here is a list
+add custom logic to decide what transitions should be blocked or not. Here is a list
 of the guard event names.
 
 * ``workflow.guard``
 * ``workflow.[workflow name].guard``
 * ``workflow.[workflow name].guard.[transition name]``
 
-See example to make sure no blog post without title is moved to "review"::
+See example to make sure no blog post without title is moved to "reviewed"::
 
     use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -343,8 +343,8 @@ See example to make sure no blog post without title is moved to "review"::
             $title = $post->title;
 
             if (empty($title)) {
-                // Posts without title are not allowed
-                // to perform the transition "to_review"
+                // Block the transition "to_review"
+                // if the post has no title defined
                 $event->setBlocked(true);
             }
         }
@@ -387,6 +387,48 @@ This class has two more methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::setBlocked`
     Sets the blocked value.
+
+.. _workflow-usage-using-guards:
+
+Using Guards
+------------
+
+The component has a guard logic to control the execution of your workflow on top of your configuration.
+
+It allows you to execute your custom logic to decide if the transition is blocked or not, before actually
+applying this transition.
+
+You have multiple optional ways to use guards in your workflow.
+
+The first way is :ref:`with the guard event <workflow-usage-guard-events>`, which allows you to implement
+any desired feature.
+
+Another one is via the configuration and its specific entry `guard` on a transition.
+
+This `guard` entry allows any expression that is valid for the Expression Language component:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # previous configuration
+                    transitions:
+                        to_review:
+                            guard: "is_granted('ROLE_REVIEWER')" # the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                            from: draft
+                            to:   reviewed
+                        publish:
+                            guard: "is_authenticated" # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                            from: reviewed
+                            to:   published
+                        reject:
+                            guard: "has_role("ROLE_ADMIN") and subject.isStatusReviewed()" # or any valid expression language with "subject" refering to the post
+                            from: reviewed
+                            to:   rejected
 
 Usage in Twig
 -------------
@@ -434,7 +476,7 @@ The following example shows these functions in action:
     {% endfor %}
 
     {# Check if the object is in some specific place #}
-    {% if workflow_has_marked_place(post, 'review') %}
+    {% if workflow_has_marked_place(post, 'reviewed') %}
         <p>This post is ready for review.</p>
     {% endif %}
 
