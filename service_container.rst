@@ -775,15 +775,7 @@ For more details about autowiring, check out :doc:`/service_container/autowiring
 The autoconfigure Option
 ------------------------
 
-<<<<<<< HEAD
 Above, the ``services.yaml`` file has ``autoconfigure: true`` in the ``_defaults``
-=======
-.. versionadded:: 3.3
-
-    The ``autoconfigure`` option was introduced in Symfony 3.3.
-
-Above, the ``services.yml`` file has ``autoconfigure: true`` in the ``_defaults``
->>>>>>> 3.4
 section so that it applies to all services defined in that file. With this setting,
 the container will automatically apply certain configuration to your services, based
 on your service's *class*. This is mostly used to *auto-tag* your services.
