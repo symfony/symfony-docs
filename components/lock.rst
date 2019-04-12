@@ -155,6 +155,10 @@ to reset the TTL to its original value::
         // refresh the lock for 600 seconds (next refresh() call will be 30 seconds again)
         $lock->refresh(600);
 
+This component also provides two useful methods related to expiring locks:
+``getExpiringDate()`` (which returns ``null`` or a ``\DateTimeImmutable``
+object) and ``isExpired()`` (which returns a boolean).
+
 Available Stores
 ----------------
 
