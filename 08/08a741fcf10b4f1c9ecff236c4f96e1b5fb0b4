@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-04-09T19:56:59Z
+
+I got even bolder with this PR. I removed the "user" stuff because it is invalid.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-04-10T15:08:31Z
+
+@nicolas-grekas Could you verify the correctness of these docs?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-04-10T15:22:51Z
+
+We could need more details about the supported DSN for multi-hosts, but this is a very good start, thanks!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-04-11T09:31:03Z
+
+I've updated the PR to show some more examples with options.
+
+I think it makes sense to show off how to configure the DSN since this will also be used with the framework bundle. If you are using the stand alone component you are more likely to pass an array of options as the second argument of `createConnection`.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-04-11T11:38:19Z
+
+Thank you for the reviews. I promise that I will make at least one PR without any syntax errors this month.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-04-11T11:40:49Z
+
+No worries, that's teamwork: round-robin errors and fixes ;)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-11T11:51:56Z
+
+Yes if you write the docs we are happy to fix the syntax 💥✌🏻
