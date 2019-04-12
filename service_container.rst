@@ -50,7 +50,7 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
 
 .. versionadded:: 3.3
 
-    The ability to type-hint a service in order to receive it was added in Symfony 3.3.
+    The ability to type-hint a service in order to receive it was introduced in Symfony 3.3.
     See the :ref:`controller chapter <controller-service-arguments-tag>` for more
     details.
 
@@ -794,7 +794,7 @@ The autoconfigure Option
 
 .. versionadded:: 3.3
 
-    The ``autoconfigure`` option was added in Symfony 3.3.
+    The ``autoconfigure`` option was introduced in Symfony 3.3.
 
 Above, the ``services.yml`` file has ``autoconfigure: true`` in the ``_defaults``
 section so that it applies to all services defined in that file. With this setting,

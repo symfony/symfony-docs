@@ -201,7 +201,7 @@ above, it is possible to have multiple connection arrays (containing a ``driver`
 
 .. versionadded:: 3.3
 
-    The ``castToArray()`` helper was added in Symfony 3.3.
+    The ``castToArray()`` helper was introduced in Symfony 3.3.
 
 Sometimes, to improve the user experience of your application or bundle, you may
 allow to use a simple string or numeric value where an array value is required.

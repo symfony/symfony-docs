@@ -425,7 +425,7 @@ been run, use::
 
 .. versionadded:: 3.2
 
-    The option to prioritize compiler passes was added in Symfony 3.2.
+    The option to prioritize compiler passes was introduced in Symfony 3.2.
 
 You can also control the order in which compiler passes are run for each
 compilation phase. Use the optional third argument of ``addCompilerPass()`` to

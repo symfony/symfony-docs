@@ -421,7 +421,7 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     .. versionadded:: 3.1
 
         The ability to pass a callback to these methods when output is disabled
-        was added in Symfony 3.1.
+        was introduced in Symfony 3.1.
 
 Finding the Executable PHP Binary
 ---------------------------------

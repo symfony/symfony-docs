@@ -644,7 +644,7 @@ There are several types of normalizers available:
 
     .. versionadded:: 3.4
 
-        The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
+        The ``DateIntervalNormalizer`` normalizer was introduced in Symfony 3.4.
 
 .. _component-serializer-encoders:
 
