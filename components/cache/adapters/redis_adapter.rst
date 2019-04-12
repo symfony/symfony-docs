@@ -53,8 +53,8 @@ helper method allows creating and configuring the Redis client class instance us
         'redis://localhost'
     );
 
-The DSN can specify either an IP/host (and an optional port) or a socket path, as well as a user
-and password and a database index.
+The DSN can specify either an IP/host (and an optional port) or a socket path, as well as a
+password and a database index.
 
 .. note::
 
@@ -62,7 +62,7 @@ and password and a database index.
 
     .. code-block:: text
 
-        redis://[user:pass@][ip|host|socket[:port]][/db-index]
+        redis://[pass@][ip|host|socket[:port]][/db-index]
 
 Below are common examples of valid DSNs showing a combination of available values::
 
@@ -74,11 +74,26 @@ Below are common examples of valid DSNs showing a combination of available value
     // host "my.server.com" and port "6379" and database index "20"
     RedisAdapter::createConnection('redis://my.server.com:6379/20');
 
-    // host "localhost" and SASL use "rmf" and pass "abcdef"
-    RedisAdapter::createConnection('redis://rmf:abcdef@localhost');
+    // host "localhost", auth "abcdef" and timeout 5 seconds
+    RedisAdapter::createConnection('redis://abcdef@localhost?timeout=5');
 
-    // socket "/var/run/redis.sock" and SASL user "user1" and pass "bad-pass"
-    RedisAdapter::createConnection('redis://user1:bad-pass@/var/run/redis.sock');
+    // socket "/var/run/redis.sock" and auth "bad-pass"
+    RedisAdapter::createConnection('redis://bad-pass@/var/run/redis.sock');
+
+    // a single DSN can define multiple servers using the following syntax:
+    // host[hostname-or-IP:port] (where port is optional). Sockets must include a trailing ':'
+    RedisAdapter::createConnection(
+        'redis:?host[localhost]&host[localhost:6379]&host[/var/run/redis.sock:]&auth=my-password&redis_cluster=1'
+    );
+
+.. versionadded:: 4.2
+
+    The option to define multiple servers in a single DSN was introduced in Symfony 4.2.
+
+.. note::
+
+    See the :class:`Symfony\\Component\\Cache\\Traits\\RedisTrait` for more options
+    you can pass as DSN parameters.
 
 Configure the Options
 ---------------------
