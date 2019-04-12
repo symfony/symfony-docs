@@ -32,7 +32,7 @@ create your own encoder that uses the
             return Yaml::dump($data);
         }
 
-        public function supportsEncoding($format)
+        public function supportsEncoding($format, array $context = [])
         {
             return 'yaml' === $format;
         }
@@ -42,7 +42,7 @@ create your own encoder that uses the
             return Yaml::parse($data);
         }
 
-        public function supportsDecoding($format)
+        public function supportsDecoding($format, array $context = [])
         {
             return 'yaml' === $format;
         }
