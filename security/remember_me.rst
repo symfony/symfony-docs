@@ -126,7 +126,7 @@ The ``remember_me`` firewall defines the following configuration options:
 
 ``token_provider`` (default value: ``null``)
     Defines the service id of a token provider to use. If you want to store tokens
-    in the database, see :ref:`token_in_database`.
+    in the database, see :ref:`remember-me-token-in-database`.
 
 Forcing the User to Opt-Out of the Remember Me Feature
 ------------------------------------------------------
@@ -258,17 +258,17 @@ your controller using annotations::
 For more information on securing services or methods in this way,
 see :doc:`/security/securing_services`.
 
-.. _token_in_database:
+.. _remember-me-token-in-database:
 
 Storing Remember Me Tokens in the Database
 ------------------------------------------
 
-By default, tokens are stored in a cookie. You can choose to store the token in a database,
-to not have a (hashed) version of the password in a cookie.
-The DoctrineBridge comes with a
-:class:`Symfony\\Bridge\\Doctrine\\Security\\RememberMe\\DoctrineTokenProvider` class
-that you can use. In order to use the ``DoctrineTokenProvider``, you first
-need to register it as a service:
+The token contents, including the hashed version of the user password, are
+stored by default in cookies. If you prefer to store them in a database, use the
+:class:`Symfony\\Bridge\\Doctrine\\Security\\RememberMe\\DoctrineTokenProvider`
+class provided by the Doctrine Bridge.
+
+First, you need to register ``DoctrineTokenProvider`` as a service:
 
 .. configuration-block::
 
@@ -300,8 +300,8 @@ need to register it as a service:
 
         $container->register(DoctrineTokenProvider::class);
 
-The ``DoctrineTokenProvider`` makes use of a database table to store the tokens.
-You need to ensure the following table exists in your database:
+Then you need to create a table with the following structure in your database
+so ``DoctrineTokenProvider`` can store the tokens:
 
 .. code-block:: sql
 
@@ -313,8 +313,8 @@ You need to ensure the following table exists in your database:
         `username` varchar(200) NOT NULL
     );
 
-Then you need to set the ``token_provider`` option of the ``remember_me`` config
-to the service you just created:
+Finally, set the ``token_provider`` option of the ``remember_me`` config to the
+service you just created:
 
 .. configuration-block::
 
@@ -365,7 +365,7 @@ to the service you just created:
                     // ...
                     'remember_me' => [
                         // ...
-                        'token_provider'     => '@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider',
+                        'token_provider' => '@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider',
                     ],
                 ],
             ],
