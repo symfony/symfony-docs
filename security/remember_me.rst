@@ -125,12 +125,8 @@ The ``remember_me`` firewall defines the following configuration options:
     end user.
 
 ``token_provider`` (default value: ``null``)
-    Defines the service id of a token provider to use. By default, tokens are
-    stored in a cookie. For example, you might want to store the token in a
-    database, to not have a (hashed) version of the password in a cookie. The
-    DoctrineBridge comes with a
-    ``Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider`` that
-    you can use.
+    Defines the service id of a token provider to use. If you want to store tokens
+    in the database, see :ref:`token_in_database`.
 
 Forcing the User to Opt-Out of the Remember Me Feature
 ------------------------------------------------------
@@ -261,3 +257,116 @@ your controller using annotations::
 
 For more information on securing services or methods in this way,
 see :doc:`/security/securing_services`.
+
+.. _token_in_database:
+
+Storing Remember Me Tokens in the Database
+------------------------------------------
+
+By default, tokens are stored in a cookie. You can choose to store the token in a database,
+to not have a (hashed) version of the password in a cookie.
+The DoctrineBridge comes with a
+:class:`Symfony\\Bridge\\Doctrine\\Security\\RememberMe\\DoctrineTokenProvider` class
+that you can use. In order to use the ``DoctrineTokenProvider``, you first
+need to register it as a service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider: ~
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
+
+        $container->register(DoctrineTokenProvider::class);
+
+The ``DoctrineTokenProvider`` makes use of a database table to store the tokens.
+You need to ensure the following table exists in your database:
+
+.. code-block:: sql
+
+    CREATE TABLE `rememberme_token` (
+        `series`   char(88)     UNIQUE PRIMARY KEY NOT NULL,
+        `value`    char(88)     NOT NULL,
+        `lastUsed` datetime     NOT NULL,
+        `class`    varchar(100) NOT NULL,
+        `username` varchar(200) NOT NULL
+    );
+
+Then you need to set the ``token_provider`` option of the ``remember_me`` config
+to the service you just created:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    remember_me:
+                        # ...
+                        token_provider: '@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+
+                    <remember-me
+                        token_profider="@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
+                        />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', [
+            // ...
+
+            'firewalls' => [
+                'main' => [
+                    // ...
+                    'remember_me' => [
+                        // ...
+                        'token_provider'     => '@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider',
+                    ],
+                ],
+            ],
+        ]);
