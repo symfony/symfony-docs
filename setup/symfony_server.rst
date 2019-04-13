@@ -55,7 +55,7 @@ run the Symfony server in the background:
 Enabling TLS
 ------------
 
-Browsing the secure version of your apps locally is important to detect
+Browsing the secure version of your applications locally is important to detect
 problems with mixed content early, and to run libraries that only run in HTTPS.
 Traditionally this has been painful and complicated to set up, but the Symfony
 server automates everything. First, run this command:

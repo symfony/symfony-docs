@@ -144,7 +144,7 @@ you can import them with ``require()`` function:
         render() {
             return (
                 <div>
-                    <img src={require("./image.png")} />
+                    <img src={require("./image.png")}/>
                 </div>
             )
         }
