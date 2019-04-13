@@ -74,8 +74,6 @@ string meant to contain a timezone identifier (e.g. ``America/New_York``):
 
         class UserSettings
         {
-            protected $timezone;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('timezone', new Assert\Timezone());
