@@ -74,6 +74,7 @@ Guides
 * :doc:`webpack-dev-server and Hot Module Replacement (HMR) </frontend/encore/dev-server>`
 * :doc:`Adding custom loaders & plugins </frontend/encore/custom-loaders-plugins>`
 * :doc:`Advanced Webpack Configuration </frontend/encore/advanced-config>`
+* :doc:`Using Encore in a Virtual Machine </frontend/encore/virtual-machine>`
 
 Issues & Questions
 ..................
