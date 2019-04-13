@@ -156,7 +156,7 @@ images inside the HTML contents::
         ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo')
         ->embedFromPath('/path/to/images/signature.gif', 'footer-signature')
         // reference images using the syntax 'cid:' + "image embed name"
-        ->html('<img src="cid:logo" /> ... <img src="cid:footer-signature" /> ...')
+        ->html('<img src="cid:logo"/> ... <img src="cid:footer-signature"/> ...')
     ;
 
 File Attachments
@@ -251,7 +251,7 @@ email multiparts::
 
     $textContent = new TextPart('Lorem ipsum...');
     $htmlContent = new TextPart(sprintf(
-        '<img src="cid:%s" /> <h1>Lorem ipsum</h1> <p>...</p>', $imageCid
+        '<img src="cid:%s"/> <h1>Lorem ipsum</h1> <p>...</p>', $imageCid
     ), 'html');
     $bodyContent = new AlternativePart($textContent, $htmlContent);
     $body = new RelatedPart($bodyContent, $embeddedImage);
@@ -390,7 +390,7 @@ the ``TemplatedEmail`` class::
 Embedding Images in Emails with Twig
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of dealing with the ``<img src="cid: ..." />`` syntax explained in the
+Instead of dealing with the ``<img src="cid: ..."/>`` syntax explained in the
 previous sections, when using Twig to render email contents you can refer to
 image files as usual. First, define a Twig namespace called ``images`` to
 simplify things later::
@@ -407,7 +407,7 @@ the email contents:
 .. code-block:: html+twig
 
     {# '@images/' refers to the Twig namespace defined earlier #}
-    <img src="{{ email.image('@images/logo.png') }}" />
+    <img src="{{ email.image('@images/logo.png') }}"/>
 
     <h1>Welcome {{ username }}!</h1>
     {# ... #}
@@ -495,7 +495,7 @@ Now, enable the extension (this is done automatically in Symfony applications)::
 Finally, use the ``markdown`` filter to convert parts or the entire email
 contents from Markdown to HTML:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% filter markdown %}
         Welcome {{ username }}!
@@ -560,7 +560,7 @@ contents from Inky to HTML:
 
 You can combine all filters to create complex email messages:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% filter inky|inline_css(source('@zurb/stylesheets/main.css')) %}
         {# ... #}

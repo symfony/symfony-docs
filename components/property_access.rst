@@ -176,7 +176,7 @@ Accessing a non Existing Property Path
 
 By default a :class:`Symfony\\Component\\PropertyAccess\\Exception\\NoSuchPropertyException`
 is thrown if the property path passed to :method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
-does not exist. You can change this behaviour using the
+does not exist. You can change this behavior using the
 :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::disableExceptionOnInvalidPropertyPath`
 method::
 

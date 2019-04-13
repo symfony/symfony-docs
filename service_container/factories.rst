@@ -202,14 +202,14 @@ method name, just as routes can reference
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... -->
 
                 <service id="App\Email\NewsletterManager"
                          class="App\Email\NewsletterManager">
-                    <factory service="App\Email\NewsletterManagerFactory" />
+                    <factory service="App\Email\NewsletterManagerFactory"/>
                 </service>
             </services>
         </container>
