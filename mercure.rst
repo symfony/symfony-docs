@@ -115,7 +115,7 @@ publish:
     }
 
 Because the array is empty, the Symfony app will only be authorized to publish
-public updates (see the authorization_ section for further informations).
+public updates (see the authorization_ section for further information).
 
 .. tip::
 
