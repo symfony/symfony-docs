@@ -230,11 +230,18 @@ method or the ``transchoice`` tag/filter in your :ref:`template <translation-tag
 For much more information, see :ref:`component-translation-pluralization`
 in the Translation component documentation.
 
+
 .. deprecated:: 4.2
 
     In Symfony 4.2 the ``Translator::transChoice()`` method was deprecated in
     favor of using ``Translator::trans()`` with ``%count%`` as the parameter
     driving plurals.
+    
+    
+.. tip::
+
+    Since Symfony 4.3 you can pass the ``kernel.debug`` parameter to the last parameter of ``Translator::trans()``
+    to avoid getting an exception when trying to translate a pluralized content with missing parts.
 
 Translations in Templates
 -------------------------
