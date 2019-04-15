@@ -10,7 +10,8 @@ The PHPUnit Bridge
 
 It comes with the following features:
 
-* Forces the tests to use a consistent locale (``C``);
+* Forces the tests to use a consistent locale (``C``) (if you create
+  locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
 
 * Auto-register ``class_exists`` to load Doctrine annotations (when used);
 
@@ -513,7 +514,7 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
             </listener>
         </listeners>
     </phpunit>
-    
+
 Under the hood, a PHPUnit listener injects the mocked functions in the tested
 classes' namespace. In order to work as expected, the listener has to run before
 the tested class ever runs. By default, the mocked functions are created when the
