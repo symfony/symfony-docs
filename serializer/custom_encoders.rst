@@ -32,7 +32,7 @@ create your own encoder that uses the
             return Yaml::dump($data);
         }
 
-        public function supportsEncoding($format, array $context = [])
+        public function supportsEncoding($format)
         {
             return 'yaml' === $format;
         }
@@ -42,12 +42,18 @@ create your own encoder that uses the
             return Yaml::parse($data);
         }
 
-        public function supportsDecoding($format, array $context = [])
+        public function supportsDecoding($format)
         {
             return 'yaml' === $format;
         }
     }
 
+.. tip::
+
+    If you need access to ``$context`` in your ``supportsDecoding`` or ``supportsEncoding`` method, make sure
+    to implements ``Symfony\Component\Serializer\Encoder\ContextAwareEncoderInterface`` or ``Symfony\Component\Serializer\Encoder\ContextAwareEncoderInterface`` interface
+    
+    
 Registering it in your app
 --------------------------
 
