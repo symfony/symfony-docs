@@ -439,14 +439,14 @@ Guard Events
 There are a special kind of events called "Guard events". Their event listeners
 are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or
 ``Workflow::getEnabledTransitions`` is executed. With the guard events you may
-add custom logic to decide what transitions should be blocked or not. Here is a list
+add custom logic to decide which transitions should be blocked or not. Here is a list
 of the guard event names.
 
 * ``workflow.guard``
 * ``workflow.[workflow name].guard``
 * ``workflow.[workflow name].guard.[transition name]``
 
-See example to make sure no blog post without title is moved to "reviewed"::
+This example stops any blog post being transitioned to "reviewed" if it is missing a title::
 
     use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -461,7 +461,7 @@ See example to make sure no blog post without title is moved to "reviewed"::
 
             if (empty($title)) {
                 // Block the transition "to_review"
-                // if the post has no title defined
+                // if the post has no title
                 $event->setBlocked(true);
             }
         }
@@ -516,9 +516,9 @@ You have multiple optional ways to use guards in your workflow.
 The first way is :ref:`with the guard event <workflow-usage-guard-events>`, which allows you to implement
 any desired feature.
 
-Another one is via the configuration and its specific entry `guard` on a transition.
+Another one is via the configuration and its specific entry ``guard`` on a transition.
 
-This `guard` entry allows any expression that is valid for the Expression Language component:
+This ``guard`` entry allows any expression that is valid for the Expression Language component:
 
 .. configuration-block::
 
@@ -531,15 +531,18 @@ This `guard` entry allows any expression that is valid for the Expression Langua
                     # previous configuration
                     transitions:
                         to_review:
-                            guard: "is_granted('ROLE_REVIEWER')" # the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                            # the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                            guard: "is_granted('ROLE_REVIEWER')"
                             from: draft
                             to:   reviewed
                         publish:
-                            guard: "is_authenticated" # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                            # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                            guard: "is_authenticated"
                             from: reviewed
                             to:   published
                         reject:
-                            guard: "has_role("ROLE_ADMIN") and subject.isStatusReviewed()" # or any valid expression language with "subject" refering to the post
+                            # or any valid expression language with "subject" refering to the post
+                            guard: "has_role("ROLE_ADMIN") and subject.isStatusReviewed()"
                             from: reviewed
                             to:   rejected
 
