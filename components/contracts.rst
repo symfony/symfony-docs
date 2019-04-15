@@ -3,7 +3,7 @@
    single: Components; Contracts
 
 The Contracts Component
-=========================
+=======================
 
     The Contracts component provides a set of abstractions extracted out of the
     Symfony components. They can be used to build on semantics that the Symfony
