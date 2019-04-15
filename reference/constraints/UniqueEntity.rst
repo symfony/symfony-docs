@@ -114,6 +114,12 @@ your user table:
     this validation has passed and before this entity is actually persisted in
     the database.
 
+.. caution::
+
+    This constraint cannot deal with duplicates found in a collection of items
+    that haven't been persisted as entities yet. You'll need to create your own
+    validator to handle that case.
+
 Options
 -------
 
