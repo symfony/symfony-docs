@@ -336,7 +336,7 @@ object.
 
     .. code-block:: yaml
 
-        # config/validation.yaml
+        # config/validator/validation.yaml
         App\Entity\Task:
             properties:
                 task:
