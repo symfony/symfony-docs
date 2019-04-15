@@ -60,7 +60,7 @@ section of their ``composer.json`` file, using the
 Frequently Asked Questions
 --------------------------
 
-How is This Different from PHP-FIG's PSRs?
+How Is this Different From PHP-FIG's PSRs?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When applicable, the provided contracts are built on top of `PHP-FIG`_'s PSRs.
@@ -68,7 +68,7 @@ However, PHP-FIG has different goals and different processes. Symfony Contracts
 focuses  on providing abstractions that are useful on their own while still
 compatible with implementations provided by Symfony.
 
-Why isn't This Package Split into Several Packages?
+Why Isn't this Package Split into Several Packages?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Putting all interfaces in one package eases discoverability and dependency
