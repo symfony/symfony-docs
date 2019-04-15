@@ -5,13 +5,19 @@ How to Check for Known Security Vulnerabilities in Your Dependencies
 ====================================================================
 
 When using lots of dependencies in your Symfony projects, some of them may
-contain security vulnerabilities. That's why Symfony includes a command called
-``security:check`` that checks your ``composer.lock`` file to find any known
-security vulnerability in your installed dependencies:
+contain security vulnerabilities. That's why the Symfony client includes a
+command called ``security:check`` that checks your ``composer.lock`` file to
+find known security vulnerabilities in your installed dependencies:
 
 .. code-block:: terminal
 
-    $ php bin/console security:check
+    $ symfony security:check
+
+.. tip::
+
+   The Symfony client is distributed as a free installable binary without any
+   dependency and support for Linux, macOS and Windows. Go to `symfony.com/download`_
+   and follow the instructions for your operating system.
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,
@@ -25,24 +31,10 @@ FriendsOfPHP organization.
     This way you can add it to your project build process and your continuous
     integration workflows to make them fail when there are vulnerabilities.
 
-.. note::
-
-    To enable the ``security:check`` command, make sure the
-    `SensioDistributionBundle`_ is installed and enabled in your application.
-
-.. note::
-
-    Make sure that the installed version of the security checker package is at
-    least 5.0 (run ``composer show sensiolabs/security-checker`` to show it).
-    Older versions checked the security vulnerabilities using a URL that is no
-    longer available and the command execution will result in an error.
-
 .. tip::
 
-    The security checker is also available as an independent console application
-    and distributed as a PHAR file so you can use it in any PHP application.
-    Check out the `Security Checker repository`_ for more details.
+    The security check is done locally: the `security advisories database`_ is
+    cloned and your ``composer.lock`` file is not sent on the network.
 
+.. _`symfony.com/download`: https://symfony.com/download
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
-.. _`SensioDistributionBundle`: https://github.com/sensiolabs/SensioDistributionBundle
-.. _`Security Checker repository`: https://github.com/sensiolabs/security-checker
