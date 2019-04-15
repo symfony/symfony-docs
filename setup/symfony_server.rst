@@ -264,24 +264,25 @@ use it. First, make sure to expose the container ports:
 
         # ...
 
-Then, check your service names and update them if needed (Symfony creates
-environment variables following the name of the services so they can be
-autoconfigured):
+.. note::
 
-.. code-block:: yaml
+    Symfony creates environment variables following the **name of the ``docker-compose`` services**.
 
-    # docker-compose.yaml
-    services:
-        # DATABASE_URL
-        database: ...
-        # MONGODB_DATABASE, MONGODB_SERVER
-        mongodb: ...
-        # REDIS_URL
-        redis: ...
-        # ELASTISEARCH_HOST, ELASTICSEARCH_PORT
-        elasticsearch: ...
-        # RABBITMQ_DSN
-        rabbitmq: ...
+    Here is the list of services you can autoconfigure with their environment variable name:
+
+    .. code-block:: yaml
+
+        # docker-compose.yaml
+        services:
+            database: # DATABASE_URL
+
+            mongodb: # MONGODB_DATABASE, MONGODB_SERVER
+
+            redis: # REDIS_URL
+
+            elasticsearch: # ELASTISEARCH_HOST, ELASTICSEARCH_PORT
+
+            rabbitmq: # RABBITMQ_DSN
 
 If your ``docker-compose.yaml`` file doesn't use the environment variable names
 expected by Symfony (e.g. you use ``MYSQL_URL`` instead of ``DATABASE_URL``)
