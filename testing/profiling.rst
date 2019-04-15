@@ -62,6 +62,9 @@ you need the profiler just in a few tests, you can keep it disabled globally and
 enable the profiler individually on each test by calling
 ``$client->enableProfiler()``.
 
+Beware, the profiler is not available if debug mode is set to ``false`` in your test
+environment.
+
 Testing the Profiler Information
 --------------------------------
 
