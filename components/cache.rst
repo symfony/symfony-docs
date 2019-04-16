@@ -116,7 +116,7 @@ recompute::
     $beta = 1.0;
     $value = $cache->get('my_cache_key', function (ItemInterface $item) {
         $item->expiresAfter(3600);
-        $item->tag(['tag_0', 'tag_1');
+        $item->tag(['tag_0', 'tag_1']);
 
         return '...';
     }, $beta);
