@@ -201,7 +201,6 @@ achieve a strict reproducible build:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Reference;
 
         // ...
         $container->setParameter('kernel.container_build_time', '1234567890');
