@@ -339,7 +339,7 @@ Using a Logger inside a Service
 -------------------------------
 
 If your application uses :ref:`service autoconfiguration <services-autoconfigure>`,
-any service whose class implements :class:`Psr\Log\LoggerAwareInterface` will
+any service whose class implements ``Psr\Log\LoggerAwareInterface`` will
 receive a call to its method ``setLogger()`` with the default logger service
 passed as a service.
 
