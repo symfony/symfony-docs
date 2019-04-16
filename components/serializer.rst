@@ -39,9 +39,11 @@ Usage
 
 .. seealso::
 
-    This article explains how to use the Serializer features as an independent
-    component in any PHP application. Read the :doc:`/serializer` article to
-    learn about how to use it in Symfony applications.
+    This article explains the philosophy of the Serializer and gets you familiar
+    with the concepts of normalizers and encoders. The code examples assume
+    that you use the Serializer as an independent component. If you are using
+    the Serializer in a Symfony application, read :doc:`/serializer` after you
+    finish this article.
 
 To use the Serializer component, set up the
 :class:`Symfony\\Component\\Serializer\\Serializer` specifying which encoders
