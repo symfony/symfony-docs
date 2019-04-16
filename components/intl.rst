@@ -209,125 +209,152 @@ locale will be merged. In order to suppress this behavior, the last parameter
 Accessing ICU Data
 ------------------
 
-The ICU data is located in several "resource bundles". You can access a PHP
-wrapper of these bundles through the static
-:class:`Symfony\\Component\\Intl\\Intl` class. At the moment, the following
-data is supported:
+This component provides the following ICU data:
 
 * `Language and Script Names`_
-* `Country Names`_
+* `Country and Region Names`_
 * `Locales`_
 * `Currencies`_
 
 Language and Script Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The translations of language and script names can be found in the language
-bundle::
+The ``Languages`` class provides access to the name of all languages::
 
-    use Symfony\Component\Intl\Intl;
+    use Symfony\Component\Intl\Languages;
 
     \Locale::setDefault('en');
 
-    $languages = Intl::getLanguageBundle()->getLanguageNames();
+    $languages = Languages::getNames();
     // => ['ab' => 'Abkhazian', ...]
 
-    $language = Intl::getLanguageBundle()->getLanguageName('de');
+    $language = Languages::getName('de');
     // => 'German'
 
-    $language = Intl::getLanguageBundle()->getLanguageName('de', 'AT');
+    $language = Languages::getName('de', 'AT');
     // => 'Austrian German'
-
-    $scripts = Intl::getLanguageBundle()->getScriptNames();
-    // => ['Arab' => 'Arabic', ...]
-
-    $script = Intl::getLanguageBundle()->getScriptName('Hans');
-    // => 'Simplified'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
-    $languages = Intl::getLanguageBundle()->getLanguageNames('de');
+    $languages = Languages::getNames('de');
     // => ['ab' => 'Abchasisch', ...]
 
-Country Names
-~~~~~~~~~~~~~
+.. versionadded:: 4.3
 
-The translations of country names can be found in the region bundle::
+    The ``Languages`` class was introduced in Symfony 4.3.
 
-    use Symfony\Component\Intl\Intl;
+The ``Scripts`` class provides access to the optional four-letter script code
+that can follow the language code according to the `Unicode ISO 15924 Registry`_
+(e.g. ``HANS`` in ``zh_HANS`` for simplified Chinese and ``HANT`` in ``zh_HANT``
+for traditional Chinese)::
+
+    use Symfony\Component\Intl\Scripts;
 
     \Locale::setDefault('en');
 
-    $countries = Intl::getRegionBundle()->getCountryNames();
+    $scripts = Scripts::getNames();
+    // => ['Arab' => 'Arabic', ...]
+
+    $script = Scripts::getName('Hans');
+    // => 'Simplified'
+
+.. versionadded:: 4.3
+
+    The ``Scrcipts`` class was introduced in Symfony 4.3.
+
+.. _country-names:
+
+Country and Region Names
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the world there are some territorial disputes that make it hard to define
+what a country is. That's why the Intl component provides a ``Regions`` class
+instead of a ``Countries`` class::
+
+    use Symfony\Component\Intl\Regions;
+
+    \Locale::setDefault('en');
+
+    $countries = Regions::getNames();
     // => ['AF' => 'Afghanistan', ...]
 
-    $country = Intl::getRegionBundle()->getCountryName('GB');
+    $country = Regions::getName('GB');
     // => 'United Kingdom'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
-    $countries = Intl::getRegionBundle()->getCountryNames('de');
+    $countries = Regions::getNames('de');
     // => ['AF' => 'Afghanistan', ...]
+
+.. versionadded:: 4.3
+
+    The ``Regions`` class was introduced in Symfony 4.3.
 
 Locales
 ~~~~~~~
 
-The translations of locale names can be found in the locale bundle::
+A locale is the combination of a language and a region. For example, "Chinese"
+is the language and ``zh_Hans_MO`` is the locale for "Chinese" (language) +
+"Simplified" (script) + "Macau SAR China" (region). The ``Locales`` class
+provides access to the name of all locales::
 
-    use Symfony\Component\Intl\Intl;
+    use Symfony\Component\Intl\Locales;
 
     \Locale::setDefault('en');
 
-    $locales = Intl::getLocaleBundle()->getLocaleNames();
+    $locales = Locales::getNames();
     // => ['af' => 'Afrikaans', ...]
 
-    $locale = Intl::getLocaleBundle()->getLocaleName('zh_Hans_MO');
+    $locale = Locales::getName('zh_Hans_MO');
     // => 'Chinese (Simplified, Macau SAR China)'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
-    $locales = Intl::getLocaleBundle()->getLocaleNames('de');
+    $locales = Locales::getNames('de');
     // => ['af' => 'Afrikaans', ...]
+
+.. versionadded:: 4.3
+
+    The ``Locales`` class was introduced in Symfony 4.3.
 
 Currencies
 ~~~~~~~~~~
 
-The translations of currency names and other currency-related information can
-be found in the currency bundle::
+The ``Currencies`` class provides access to the name of all currencies as well
+as some of their information (symbol, fraction digits, etc.)::
 
-    use Symfony\Component\Intl\Intl;
+    use Symfony\Component\Intl\Currencies;
 
     \Locale::setDefault('en');
 
-    $currencies = Intl::getCurrencyBundle()->getCurrencyNames();
+    $currencies = Currencies::getNames();
     // => ['AFN' => 'Afghan Afghani', ...]
 
-    $currency = Intl::getCurrencyBundle()->getCurrencyName('INR');
+    $currency = Currencies::getName('INR');
     // => 'Indian Rupee'
 
-    $symbol = Intl::getCurrencyBundle()->getCurrencySymbol('INR');
+    $symbol = Currencies::getSymbol('INR');
     // => '₹'
 
-    $fractionDigits = Intl::getCurrencyBundle()->getFractionDigits('INR');
+    $fractionDigits = Currencies::getFractionDigits('INR');
     // => 2
 
-    $roundingIncrement = Intl::getCurrencyBundle()->getRoundingIncrement('INR');
+    $roundingIncrement = Currencies::getRoundingIncrement('INR');
     // => 0
 
-All methods (except for
-:method:`Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface::getFractionDigits`
-and
-:method:`Symfony\\Component\\Intl\\ResourceBundle\\CurrencyBundleInterface::getRoundingIncrement`)
-accept the translation locale as the last, optional parameter, which defaults
-to the current default locale::
+All methods (except for ``getFractionDigits()`` and ``getRoundingIncrement()``)
+accept the translation locale as the last, optional parameter, which defaults to
+the current default locale::
 
-    $currencies = Intl::getCurrencyBundle()->getCurrencyNames('de');
+    $currencies = Currencies::getNames('de');
     // => ['AFN' => 'Afghanische Afghani', ...]
 
-That's all you need to know for now. Have fun coding!
+.. versionadded:: 4.3
+
+    The ``Currencies`` class was introduced in Symfony 4.3.
 
 Learn more
 ----------
@@ -346,3 +373,4 @@ Learn more
 .. _intl extension: https://php.net/manual/en/book.intl.php
 .. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
+.. _`Unicode ISO 15924 Registry`: http://www.unicode.org/iso15924/iso15924-codes.html
