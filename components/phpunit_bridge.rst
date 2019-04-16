@@ -10,7 +10,8 @@ The PHPUnit Bridge
 
 It comes with the following features:
 
-* Forces the tests to use a consistent locale (``C``);
+* Forces the tests to use a consistent locale (``C``) (if you create
+  locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
 
 * Auto-register ``class_exists`` to load Doctrine annotations (when used);
 
