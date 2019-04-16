@@ -39,10 +39,10 @@ Usage
 .. seealso::
 
     This article explains the philosophy of the Serializer and gets you familiar
-    with the concepts of normalizers and encoders. The examples provided assume 
-    that you use the Serializer as an independent component. If you intend to use
-    the Serializer in the Symfony application, please read :doc:`/serializer`
-    after you finish this article.
+    with the concepts of normalizers and encoders. The code examples assume
+    that you use the Serializer as an independent component. If you are using
+    the Serializer in a Symfony application, read :doc:`/serializer` after you
+    finish this article.
 
 Using the Serializer component is really simple. You just need to set up
 the :class:`Symfony\\Component\\Serializer\\Serializer` specifying
