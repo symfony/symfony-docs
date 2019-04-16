@@ -52,8 +52,7 @@ want a command to create a user::
 Configuring the Command
 -----------------------
 
-First of all, you must configure the name of the command in the ``configure()``
-method. Then you can optionally define a help message and the
+You can optionally define a description, help message and the
 :doc:`input options and arguments </console/input>`::
 
     // ...
