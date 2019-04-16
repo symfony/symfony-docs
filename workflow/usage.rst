@@ -210,7 +210,9 @@ When a state transition is initiated, the events are dispatched in the following
 order:
 
 ``workflow.guard``
-    Validate whether the transition is blocked or not (:ref:`see below <workflow-usage-guard-events>` and :ref:`using guards <workflow-usage-using-guards>`).
+    Validate whether the transition is blocked or not (see
+    :ref:`guard events <workflow-usage-guard-events>` and
+    :ref:`blocking transitions <workflow-blocking-transitions>`).
 
     The three events being dispatched are:
 
@@ -329,7 +331,8 @@ of the guard event names.
 * ``workflow.[workflow name].guard``
 * ``workflow.[workflow name].guard.[transition name]``
 
-This example stops any blog post being transitioned to "reviewed" if it is missing a title::
+This example stops any blog post being transitioned to "reviewed" if it is
+missing a title::
 
     use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -343,8 +346,7 @@ This example stops any blog post being transitioned to "reviewed" if it is missi
             $title = $post->title;
 
             if (empty($title)) {
-                // Block the transition "to_review"
-                // if the post has no title
+                // Block the transition "to_review" if the post has no title
                 $event->setBlocked(true);
             }
         }
@@ -388,24 +390,19 @@ This class has two more methods:
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::setBlocked`
     Sets the blocked value.
 
-.. _workflow-usage-using-guards:
+.. _workflow-blocking-transitions:
 
-Using Guards
-------------
+Blocking Transitions
+--------------------
 
-The component has a guard logic to control the execution of your workflow on top of your configuration.
+The execution of the workflow can be controlled by executing custom logic to
+decide if the current transition is blocked or allowed before applying it. This
+feature is provided by "guards", which can be used in two ways.
 
-It allows you to execute your custom logic to decide if the transition is blocked or not, before actually
-applying this transition.
-
-You have multiple optional ways to use guards in your workflow.
-
-The first way is :ref:`with the guard event <workflow-usage-guard-events>`, which allows you to implement
-any desired feature.
-
-Another one is via the configuration and its specific entry ``guard`` on a transition.
-
-This ``guard`` entry allows any expression that is valid for the Expression Language component:
+First, you can listen to :ref:`the guard events <workflow-usage-guard-events>`.
+Alternatively, you can define a ``guard`` configuration option for the
+transition. The value of this option is any valid expression created with the
+:doc:`ExpressionLanguage component </components/expression_language>`:
 
 .. configuration-block::
 
@@ -428,7 +425,7 @@ This ``guard`` entry allows any expression that is valid for the Expression Lang
                             from: reviewed
                             to:   published
                         reject:
-                            # or any valid expression language with "subject" refering to the post
+                            # or any valid expression language with "subject" referring to the post
                             guard: "has_role("ROLE_ADMIN") and subject.isStatusReviewed()"
                             from: reviewed
                             to:   rejected
