@@ -433,7 +433,7 @@ for each bus looks like this:
 #. ``logging`` middleware. Responsible for logging the beginning and the end of the
    message within the bus;
 
-#. _Your own collection of middleware_;
+#. Your own collection of middleware_;
 
 #. ``send_message`` middleware. Will route the messages you configured to their
    corresponding sender and stop the middleware chain;
