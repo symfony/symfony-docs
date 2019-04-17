@@ -14,6 +14,16 @@ install the workflow feature before using it:
 
     $ composer require symfony/workflow
 
+Configuration
+-------------
+
+To see all configuration options, if you are using the component inside a
+Symfony project run this command:
+
+.. code-block:: terminal
+
+    $ php bin/console config:dump-reference framework workflows
+
 Creating a Workflow
 -------------------
 
@@ -665,3 +675,222 @@ Don't need a human-readable message? You can also block a transition via a guard
 event using::
 
     $event->setBlocked('true');
+
+Storing Metadata
+----------------
+
+.. versionadded:: 4.1
+
+    The feature to store metadata in workflows was introduced in Symfony 4.1.
+
+In case you need it, you can store arbitrary metadata in workflows, their
+places, and their transitions using the ``metadata`` option. This metadata can
+be as simple as the title of the workflow or as complex as your own application
+requires:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    metadata:
+                        title: 'Blog Publishing Workflow'
+                    # ...
+                    places:
+                        draft:
+                            metadata:
+                                max_num_of_words: 500
+                        # ...
+                    transitions:
+                        to_review:
+                            from: draft
+                            to:   review
+                            metadata:
+                                priority: 0.5
+                        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+
+            <framework:config>
+                <framework:workflow name="blog_publishing">
+                    <framework:metadata>
+                        <framework:title>Blog Publishing Workflow</framework:title>
+                    </framework:metadata>
+                    <!-- ... -->
+
+                    <framework:place name="draft">
+                        <framework:metadata>
+                            <framework:max-num-of-words>500</framework:max-num-of-words>
+                        </framework:metadata>
+                    </framework:place>
+                    <!-- ... -->
+
+                    <framework:transition name="to_review">
+                        <framework:from>draft</framework:from>
+                        <framework:to>review</framework:to>
+                        <framework:metadata>
+                            <framework:priority>0.5</framework:priority>
+                        </framework:metadata>
+                    </framework:transition>
+                    <!-- ... -->
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+
+        $container->loadFromExtension('framework', [
+            // ...
+            'workflows' => [
+                'blog_publishing' => [
+                    'metadata' => [
+                        'title' => 'Blog Publishing Workflow',
+                    ],
+                    // ...
+                    'places' => [
+                        'draft' => [
+                            'metadata' => [
+                                'max_num_of_words' => 500,
+                            ],
+                        ],
+                        // ...
+                    ],
+                    'transitions' => [
+                        'to_review' => [
+                            'from' => 'draft',
+                            'to' => 'review',
+                            'metadata' => [
+                                'priority' => 0.5,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Then you can access this metadata in your controller as follows::
+
+    public function myController(Registry $registry, Article $article)
+    {
+        $workflow = $registry->get($article);
+
+        $title = $workflow
+            ->getMetadataStore()
+            ->getWorkflowMetadata()['title'] ?? false
+        ;
+
+        // or
+        $title = $workflow->getMetadataStore()
+            ->getWorkflowMetadata()['title'] ?? false
+        ;
+
+        // or
+        $aTransition = $workflow->getDefinition()->getTransitions()[0];
+        $transitionTitle = $workflow
+            ->getMetadataStore()
+            ->getTransitionMetadata($aTransition)['title'] ?? false
+        ;
+    }
+
+There is a shortcut that works with everything::
+
+    $title = $workflow->getMetadataStore()->getMetadata('title');
+
+In a :ref:`flash message <flash-messages>` in your controller::
+
+    // $transition = ...; (an instance of Transition)
+
+    // $workflow is a Workflow instance retrieved from the Registry (see above)
+    $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
+    $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
+
+Metadata can also be accessed in a Listener, from the Event object.
+
+Using transition blockers you can return a user-friendly error message when you
+stop a transition from happening. The example gets this message from the
+:class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving you a
+central place to manage the text.
+
+.. tip::
+
+    This example has been simplified; in production you may prefer to use the
+    :doc:`Translation </components/translation>` component to manage messages in
+    one place::
+
+        namespace App\Listener\Workflow\Task;
+
+        use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+        use Symfony\Component\Workflow\Event\GuardEvent;
+        use Symfony\Component\Workflow\TransitionBlocker;
+
+        class OverdueGuard implements EventSubscriberInterface
+        {
+            public function guardPublish(GuardEvent $event)
+            {
+                $timeLimit = $event->getMetadata('time_limit', $event->getTransition());
+
+                if (date('Hi') <= $timeLimit) {
+                    return;
+                }
+
+                $explanation = $event->getMetadata('explanation', $event->getTransition());
+                $event->addTransitionBlocker(new TransitionBlocker($explanation , 0));
+            }
+
+            public static function getSubscribedEvents()
+            {
+                return [
+                    'workflow.task.guard.done' => 'guardPublish',
+                ];
+            }
+        }
+
+.. versionadded:: 4.1
+
+    The transition blockers were introduced in Symfony 4.1.
+
+In Twig templates, metadata is available via the ``workflow_metadata()`` function:
+
+.. code-block:: html+twig
+
+    <h2>Metadata</h2>
+    <p>
+        <strong>Workflow</strong>:<br >
+        <code>{{ workflow_metadata(article, 'title') }}</code>
+    </p>
+    <p>
+        <strong>Current place(s)</strong>
+        <ul>
+            {% for place in workflow_marked_places(article) %}
+                <li>
+                    {{ place }}:
+                    <code>{{ workflow_metadata(article, 'max_num_of_words', place) ?: 'Unlimited'}}</code>
+                </li>
+            {% endfor %}
+        </ul>
+    </p>
+    <p>
+        <strong>Enabled transition(s)</strong>
+        <ul>
+            {% for transition in workflow_transitions(article) %}
+                <li>
+                    {{ transition.name }}:
+                    <code>{{ workflow_metadata(article, 'priority', transition) ?: '0' }}</code>
+                </li>
+            {% endfor %}
+        </ul>
+    </p>
