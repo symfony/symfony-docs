@@ -45,10 +45,15 @@ State Machines
 --------------
 
 A state machine is a subset of a workflow and its purpose is to hold a state of
-your model. The most important difference is that a state machine cannot be in
-more than one place simultaneously. Another difference is that workflows usually
-don't have cyclic paths in the definition graph, but it's common for state
-machines.
+your model. The most important differences between them are:
+
+* Workflows can be in more than one place at the same time, whereas state
+  machines can't;
+* Workflows usually don't have cyclic paths in the definition graph, but it's
+  common for state machines;
+* In order to apply a transition, worflows require that the object is in all the
+  previous places of the transition, whereas state machines only require that
+  the object is at least in one of those places.
 
 Example
 ~~~~~~~
