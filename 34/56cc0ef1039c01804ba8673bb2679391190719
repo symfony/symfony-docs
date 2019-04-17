@@ -1,0 +1,82 @@
+---------------------------------------------------------------------------
+
+by pbowyer at 2019-03-23T15:24:27Z
+
+@HeahDude re "specific formatting" I've noticed the file uses a mix of `array( ... )` and `[ ... ]`. Which should be used?
+
+When I took Javier's commits the branch ended up being created against `symfony-docs/master`. Can you make it be against the right branch when you merge?
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2019-03-23T15:28:40Z
+
+>I've noticed the file uses a mix of array( ... ) and [ ... ]. Which should be used?
+
+Now we use the new short syntax, since the lowest supported version is 3.4 having PHP 5.5 as minimum.
+
+>When I took Javier's commits the branch ended up being created against symfony-docs/master. Can you make it be against the right branch when you merge?
+
+4.1 was master back then, now we need to merge into 4.2 but we can do it on merge thanks to the CLI tool we use to maintain the docs.
+Thanks!
+
+---------------------------------------------------------------------------
+
+by pbowyer at 2019-03-27T08:38:43Z
+
+Re the code style comment above which is outstanding: Is there a linter for code examples? An automated formatter?
+
+I imagine we stick to Symfony's code style, but as Phpstorm's Symfony2 preset seems to differ in small ways from the current Symfony format, it would be good to have a definitive formatter to use.
+
+---------------------------------------------------------------------------
+
+by pbowyer at 2019-04-07T09:08:07Z
+
+@OskarStark Your code review is showing as "Changes requested" - are you satisfied with the changes that were applied?
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2019-04-07T09:14:34Z
+
+@pbowyer This PR conflicts. Could you try to rebase it and fix the conflict? Thanks
+
+---------------------------------------------------------------------------
+
+by pbowyer at 2019-04-07T09:17:02Z
+
+@lyrixx Of course. 4.2 is the correct one to rebase onto, I believe?
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2019-04-07T09:23:02Z
+
+Exactly :+1: You need to rebase on top of 4.2 and update the target branch on github
+Thanks again
+
+---------------------------------------------------------------------------
+
+by pbowyer at 2019-04-07T09:42:03Z
+
+@lyrixx There we go 😁
+
+---------------------------------------------------------------------------
+
+by pbowyer at 2019-04-07T09:45:36Z
+
+There may be one newline missing:
+```
+As configured, the following property is used by the marking store::
+.. code-block:: php
+```
+I think there should be a blank line between the two?
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-04-10T22:03:39Z
+
+Ref to https://github.com/symfony/symfony-docs/issues/9475
+
+---------------------------------------------------------------------------
+
+by pbowyer at 2019-04-16T07:07:56Z
+
+Can we merge this please? There are more PRs for Workflow coming to fruition, and if they all get approved/merged at the same time, there will be a number of conflicts...
