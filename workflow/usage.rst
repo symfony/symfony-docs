@@ -17,11 +17,12 @@ install the workflow feature before using it:
 Configuration
 -------------
 
-To see all configuration options, if you are using the component inside a Symfony project run this command:
+To see all configuration options, if you are using the component inside a
+Symfony project run this command:
 
 .. code-block:: terminal
 
-    $ bin/console config:dump-reference framework workflows
+    $ php bin/console config:dump-reference framework workflows
 
 Creating a Workflow
 -------------------
@@ -670,23 +671,23 @@ requires:
 
 Then you can access this metadata in your controller as follows::
 
-    public function myControllerAction(Registry $registry, Article $article)
+    public function myController(Registry $registry, Article $article)
     {
         $workflow = $registry->get($article);
 
-        $workflow
+        $title = $workflow
             ->getMetadataStore()
             ->getWorkflowMetadata()['title'] ?? false
         ;
 
         // or
-        $workflow->getMetadataStore()
+        $title = $workflow->getMetadataStore()
             ->getWorkflowMetadata()['title'] ?? false
         ;
 
         // or
         $aTransition = $workflow->getDefinition()->getTransitions()[0];
-        $workflow
+        $transitionTitle = $workflow
             ->getMetadataStore()
             ->getTransitionMetadata($aTransition)['title'] ?? false
         ;
@@ -694,12 +695,9 @@ Then you can access this metadata in your controller as follows::
 
 There is a shortcut that works with everything::
 
-    $workflow
-        ->getMetadataStore()
-        ->getMetadata('title')
-    ;
+    $title = $workflow->getMetadataStore()->getMetadata('title');
 
-In a Flash message in your Controller::
+In a :ref:`flash message <flash-messages>` in your controller::
 
     // $transition = ...; (an instance of Transition)
 
@@ -709,15 +707,16 @@ In a Flash message in your Controller::
 
 Metadata can also be accessed in a Listener, from the Event object.
 
-Using transition blockers you can
-return a user-friendly error message when you stop a transition from happening. In the example we
-get this message from the :class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving
-you a central place to manage the text.
+Using transition blockers you can return a user-friendly error message when you
+stop a transition from happening. The example gets this message from the
+:class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving you a
+central place to manage the text.
 
 .. tip::
 
-    This example has been simplified; in production you may prefer to use the :doc:`Translation </components/translation>`
-    component to manage messages in one place::
+    This example has been simplified; in production you may prefer to use the
+    :doc:`Translation </components/translation>` component to manage messages in
+    one place::
 
         namespace App\Listener\Workflow\Task;
 
