@@ -373,4 +373,4 @@ Learn more
 .. _intl extension: https://php.net/manual/en/book.intl.php
 .. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
-.. _`Unicode ISO 15924 Registry`: http://www.unicode.org/iso15924/iso15924-codes.html
+.. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
