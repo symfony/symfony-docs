@@ -197,10 +197,6 @@ As configured, the following property is used by the marking store::
     Setting the ``audit_trail.enabled`` option to ``true`` makes the application
     generate detailed log messages for the workflow activity.
 
-    .. versionadded:: 3.3
-
-        The ``audit_trail`` option was introduced in Symfony 3.3.
-
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
 
@@ -406,10 +402,6 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getWorkflowName`
     Returns a string with the name of the workflow that triggered the event.
 
-    .. versionadded:: 3.3
-
-        The ``getWorkflowName()`` method was introduced in Symfony 3.3.
-
 For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`.
 This class has two more methods:
 
@@ -474,11 +466,6 @@ of domain logic in your templates:
 
 ``workflow_has_marked_place()``
     Returns ``true`` if the marking of the given object has the given state.
-
-.. versionadded:: 3.3
-
-    The ``workflow_marked_places()`` and ``workflow_has_marked_place()``
-    functions were introduced in Symfony 3.3.
 
 The following example shows these functions in action:
 
