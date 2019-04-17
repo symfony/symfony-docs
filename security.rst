@@ -124,8 +124,8 @@ command will pre-configure this for you:
             encoders:
                 # use your user class name here
                 App\Entity\User:
-                    # bcrypt or argon2i are recommended
-                    # argon2i is more secure, but requires PHP 7.2 or the Sodium extension
+                    # bcrypt or sodium are recommended
+                    # sodium is more secure, but requires PHP 7.2 or the Sodium extension
                     algorithm: bcrypt
                     cost: 12
 

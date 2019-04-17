@@ -137,12 +137,12 @@ encoding algorithm. Also, each algorithm defines different config options:
                     algorithm: 'bcrypt'
                     cost:      15
 
-                # Argon2i encoder with default options
-                App\Entity\User: 'argon2i'
+                # Sodium encoder with default options
+                App\Entity\User: 'sodium'
 
-                # Argon2i encoder with custom options
+                # Sodium encoder with custom options
                 App\Entity\User:
-                    algorithm:   'argon2i'
+                    algorithm:   'sodium'
                     memory_cost:  16384 # Amount in KiB. (16384 = 16 MiB)
                     time_cost:    2     # Number of iterations
                     threads:      4     # Number of parallel threads
@@ -175,19 +175,19 @@ encoding algorithm. Also, each algorithm defines different config options:
                     cost="15"
                 />
 
-                <!-- Argon2i encoder with default options -->
+                <!-- Sodium encoder with default options -->
                 <encoder
                     class="App\Entity\User"
-                    algorithm="argon2i"
+                    algorithm="sodium"
                 />
 
-                <!-- Argon2i encoder with custom options -->
+                <!-- Sodium encoder with custom options -->
                 <!-- memory_cost: amount in KiB. (16384 = 16 MiB)
                      time_cost: number of iterations
                      threads: number of parallel threads -->
                 <encoder
                     class="App\Entity\User"
-                    algorithm="argon2i"
+                    algorithm="sodium"
                     memory_cost="16384"
                     time_cost="2"
                     threads="4"
@@ -220,14 +220,14 @@ encoding algorithm. Also, each algorithm defines different config options:
                     'cost'      => 15,
                 ],
 
-                // Argon2i encoder with default options
+                // Sodium encoder with default options
                 User::class => [
-                    'algorithm' => 'argon2i',
+                    'algorithm' => 'sodium',
                 ],
 
-                // Argon2i encoder with custom options
+                // Sodium encoder with custom options
                 User::class => [
-                    'algorithm' => 'argon2i',
+                    'algorithm' => 'sodium',
                     'memory_cost' => 16384, // Amount in KiB. (16384 = 16 MiB)
                     'time_cost' => 2,       // Number of iterations
                     'threads' => 4,         // Number of parallel threads
@@ -246,10 +246,11 @@ encoding algorithm. Also, each algorithm defines different config options:
     select a different password encoder for each user instance. Read
     :doc:`this article </security/named_encoders>` for more details.
 
-.. _reference-security-argon2i:
+.. _reference-security-sodium:
+.. _using-the-argon2i-password-encoder:
 
-Using the Argon2i Password Encoder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the Sodium Password Encoder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It uses the `Argon2 key derivation function`_ and it's the encoder recommended
 by Symfony. Argon2 support was introduced in PHP 7.2, but if you use an earlier
@@ -267,7 +268,7 @@ Using the BCrypt Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It uses the `bcrypt password hashing function`_ and it's recommended to use it
-when it's not possible to use Argon2i. The encoded passwords are ``60``
+when it's not possible to use Sodium. The encoded passwords are ``60``
 characters long, so make sure to allocate enough space for them to be persisted.
 Also, passwords include the `cryptographic salt`_ inside them (it's generated
 automatically for each new password) so you don't have to deal with it.
@@ -294,7 +295,7 @@ Using the PBKDF2 Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using the `PBKDF2`_ encoder is no longer recommended since PHP added support for
-Argon2i and bcrypt. Legacy application still using it are encouraged to upgrade
+Sodium and bcrypt. Legacy application still using it are encouraged to upgrade
 to those newer encoding algorithms.
 
 firewalls
