@@ -1,18 +1,62 @@
-.. index::
-    single: Workflow; Workflows as State Machines
+Workflows and State Machines
+============================
 
-Workflows as State Machines
-===========================
+Worflows
+--------
 
-The workflow component is modelled after a *Workflow net* which is a subclass
-of a `Petri net`_. By adding further restrictions you can get a state machine.
-The most important one being that a state machine cannot be in more than
-one place simultaneously. It is also worth noting that a workflow does not
-commonly have cyclic path in the definition graph, but it is common for a state
-machine.
+A workflow is a model of a process in your application. It may be the process of
+how a blog post goes from draft to review and publish. Another example is when a
+user submits a series of different forms to complete a task. Such processes are
+best kept away from your models and should be defined in configuration.
 
-Example of a State Machine
---------------------------
+A **definition** of a workflow consist of places and actions to get from one
+place to another. The actions are called **transitions**. A workflow does also
+need to know each object's position in the workflow. That **marking store**
+writes to a property of the object to remember the current place.
+
+.. note::
+
+    The terminology above is commonly used when discussing workflows and
+    `Petri nets`_
+
+Examples
+~~~~~~~~
+
+The simplest workflow looks like this. It contains two places and one transition.
+
+.. image:: /_images/components/workflow/simple.png
+
+Workflows could be more complicated when they describe a real business case. The
+workflow below describes the process to fill in a job application.
+
+.. image:: /_images/components/workflow/job_application.png
+
+When you fill in a job application in this example there are 4 to 7 steps
+depending on the what job you are applying for. Some jobs require personality
+tests, logic tests and/or formal requirements to be answered by the user. Some
+jobs don't. The ``GuardEvent`` is used to decide what next steps are allowed for
+a specific application.
+
+By defining a workflow like this, there is an overview how the process looks
+like. The process logic is not mixed with the controllers, models or view. The
+order of the steps can be changed by changing the configuration only.
+
+State Machines
+--------------
+
+A state machine is a subset of a workflow and its purpose is to hold a state of
+your model. The most important differences between them are:
+
+* Workflows can be in more than one place at the same time, whereas state
+  machines can't;
+* Workflows usually don't have cyclic paths in the definition graph, but it's
+  common for state machines;
+* In order to apply a transition, worflows require that the object is in all the
+  previous places of the transition, whereas state machines only require that
+  the object is at least in one of those places.
+
+Example
+~~~~~~~
 
 A pull request starts in an initial "start" state, a state for e.g. running
 tests on Travis. When this is finished, the pull request is in the "review"
@@ -215,4 +259,4 @@ you can get this state machine by injecting the Workflow registry service::
         // ...
     }
 
-.. _Petri net: https://en.wikipedia.org/wiki/Petri_net
+.. _`Petri nets`: https://en.wikipedia.org/wiki/Petri_net

@@ -2302,8 +2302,9 @@ type
 
 **type**: ``string`` **possible values**: ``'workflow'`` or ``'state_machine'``
 
-Defines the kind fo workflow that is going to be created, which can be either
-a :doc:`normal workflow </workflow/usage>` or a :doc:`state machine </workflow/state-machines>`.
+Defines the kind of workflow that is going to be created, which can be either
+a normal workflow or a state machine. Read :doc:`this article </workflow/introduction>`
+to know their differences.
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

@@ -414,3 +414,5 @@
 /frontend/encore/legacy-apps /frontend/encore/legacy-applications
 /configuration/external_parameters /configuration/environment_variables
 /contributing/code/patches /contributing/code/pull_requests
+/workflow/state-machines /workflow/introduction
+/workflow/usage /workflow
