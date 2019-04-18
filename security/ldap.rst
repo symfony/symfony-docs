@@ -313,12 +313,11 @@ providers with different ``base_dn``. The value of this option must be a valid
 search string (e.g. ``uid="{username}"``). The placeholder value will be
 replaced by the actual username.
 
-When this option is used, ``dn_string`` has to be updated accordingly. Following
-the previous example, if your users have the following two DN:
+When this option is used, ``query_string`` will search in the DN specified by ``dn_string``
+and the DN resulted of the ``query_string`` will be used to authenticate the user with
+their password. Following the previous example, if your users have the following two DN:
 ``dc=companyA,dc=example,dc=com`` and ``dc=companyB,dc=example,dc=com``, then
-``dn_string`` should be ``dc=example,dc=com``. If the ``query_string`` option is
-``uid="{username}"``, then the authentication provider can authenticate users
-from both DN.
+``dn_string`` should be ``dc=example,dc=com``.
 
 Bear in mind that usernames must be unique across both DN, as the authentication
 provider won't be able to select the correct user for the bind process if more
