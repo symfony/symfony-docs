@@ -329,7 +329,7 @@ service you just created:
                     # ...
                     remember_me:
                         # ...
-                        token_provider: '@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
+                        token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
     .. code-block:: xml
 
@@ -348,7 +348,7 @@ service you just created:
                     <!-- ... -->
 
                     <remember-me
-                        token_profider="@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
+                        token_profider="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
                         />
                 </firewall>
             </config>
@@ -365,7 +365,7 @@ service you just created:
                     // ...
                     'remember_me' => [
                         // ...
-                        'token_provider' => '@Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider',
+                        'token_provider' => 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider',
                     ],
                 ],
             ],
