@@ -608,6 +608,19 @@ path
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
 
+hinclude_default_template
+.........................
+
+**type**: ``string`` **default**: ``null``
+
+Sets the content shown during the loading of the fragment or when JavaScript
+is disabled. This can be either a template name or the content itself.
+
+.. seealso::
+
+    See :doc:`/templating/hinclude` for more information about hinclude.
+
+
 profiler
 ~~~~~~~~
 
@@ -1536,18 +1549,6 @@ package:
 
 templating
 ~~~~~~~~~~
-
-hinclude_default_template
-.........................
-
-**type**: ``string`` **default**: ``null``
-
-Sets the content shown during the loading of the fragment or when JavaScript
-is disabled. This can be either a template name or the content itself.
-
-.. seealso::
-
-    See :doc:`/templating/hinclude` for more information about hinclude.
 
 .. _reference-templating-form:
 
