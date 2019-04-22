@@ -1534,6 +1534,68 @@ package:
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
 
+
+json_manifest_allow_missing
+...........................
+
+**type**: ``boolean`` **default**: ``false``
+
+If set the true and the manifest file is *not found*, no error will be thrown.
+
+This option can only be set globally:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+       framework:
+            assets:
+                # this manifest is applied to every asset (including packages)
+                json_manifest_allow_missing: true
+                    bar_package:
+                        # this package uses the global manifest (the default file is used)
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- if the manifest is missing nothing will be return -->
+                <framework:assets json-manifest-allow-missing="trye">
+                    <framework:package
+                        name="bar_package"
+                        base-path="/images"/>
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'assets' => [
+                // if the manifest is missing nothing will be return
+                'json_manifest_allow_missing' => 'true',
+                'packages' => [
+                    'bar_package' => [
+                        // this package uses the global manifest (the default file is used)
+                        'base_path' => '/images',
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 4.3
+
+
 templating
 ~~~~~~~~~~
 
