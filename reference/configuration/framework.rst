@@ -85,6 +85,7 @@ Configuration
 * `fragments`_
 
   * :ref:`enabled <reference-fragments-enabled>`
+  * `hinclude_default_template`_
   * :ref:`path <reference-fragments-path>`
 
 * `http_method_override`_
@@ -167,7 +168,6 @@ Configuration
 
     * `resources`_
 
-  * `hinclude_default_template`_
   * `loaders`_
 
 * `test`_
@@ -353,7 +353,7 @@ need to escape the percent signs (``%``) by doubling them.
         // as /path/to/host/.../file on the host
         // and /var/www/app/ as /projects/my_project/ also
         'myide://%%f:%%l&/path/to/guest/>/path/to/host/&/var/www/app/>/projects/my_project/&...'
-        
+
         // example for PhpStorm
         'phpstorm://open?file=%%f&line=%%l&/var/www/app/>/projects/my_project/'
 
@@ -598,6 +598,24 @@ used to render ESI fragments independently of the rest of the page.
 This setting is automatically set to ``true`` when one of the child settings
 is configured.
 
+hinclude_default_template
+.........................
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 4.3
+
+    The ``framework.fragments.hinclude_default_template`` option was introduced
+    in Symfony 4.3. In previous Symfony versions it was defined under
+    ``framework.templating.hinclude_default_template``.
+
+Sets the content shown during the loading of the fragment or when JavaScript
+is disabled. This can be either a template name or the content itself.
+
+.. seealso::
+
+    See :doc:`/templating/hinclude` for more information about hinclude.
+
 .. _reference-fragments-path:
 
 path
@@ -607,19 +625,6 @@ path
 
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
-
-hinclude_default_template
-.........................
-
-**type**: ``string`` **default**: ``null``
-
-Sets the content shown during the loading of the fragment or when JavaScript
-is disabled. This can be either a template name or the content itself.
-
-.. seealso::
-
-    See :doc:`/templating/hinclude` for more information about hinclude.
-
 
 profiler
 ~~~~~~~~
