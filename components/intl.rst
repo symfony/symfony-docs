@@ -226,19 +226,20 @@ The ``Languages`` class provides access to the name of all languages::
     \Locale::setDefault('en');
 
     $languages = Languages::getNames();
-    // => ['ab' => 'Abkhazian', ...]
+    // ('languageCode' => 'languageName')
+    // => ['ab' => 'Abkhazian', 'ace' => 'Achinese', ...]
 
-    $language = Languages::getName('de');
-    // => 'German'
-
-    $language = Languages::getName('de', 'AT');
-    // => 'Austrian German'
+    $language = Languages::getName('fr');
+    // => 'French'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $languages = Languages::getNames('de');
-    // => ['ab' => 'Abchasisch', ...]
+    // => ['ab' => 'Abchasisch', 'ace' => 'Aceh', ...]
+
+    $language = Languages::getName('fr', 'de');
+    // => 'Französisch'
 
 You can also check if a given language code is valid::
 
@@ -258,10 +259,20 @@ for traditional Chinese)::
     \Locale::setDefault('en');
 
     $scripts = Scripts::getNames();
-    // => ['Arab' => 'Arabic', ...]
+    // ('scriptCode' => 'scriptName')
+    // => ['Adlm' => 'Adlam', 'Afak' => 'Afaka', ...]
 
     $script = Scripts::getName('Hans');
     // => 'Simplified'
+
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
+
+    $languages = Scripts::getNames('de');
+    // => ['Adlm' => 'Adlam', 'Afak' => 'Afaka', ...]
+
+    $language = Scripts::getName('Hans', 'de');
+    // => 'Vereinfacht'
 
 You can also check if a given script code is valid::
 
@@ -269,7 +280,7 @@ You can also check if a given script code is valid::
 
 .. versionadded:: 4.3
 
-    The ``Scrcipts`` class was introduced in Symfony 4.3.
+    The ``Scripts`` class was introduced in Symfony 4.3.
 
 .. _country-names:
 
@@ -285,7 +296,8 @@ instead of a ``Countries`` class::
     \Locale::setDefault('en');
 
     $countries = Regions::getNames();
-    // => ['AF' => 'Afghanistan', ...]
+    // ('regionCode' => 'regionName')
+    // => ['AF' => 'Afghanistan', 'AX' => 'Åland Islands', ...]
 
     $country = Regions::getName('GB');
     // => 'United Kingdom'
@@ -294,7 +306,10 @@ All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $countries = Regions::getNames('de');
-    // => ['AF' => 'Afghanistan', ...]
+    // => ['AF' => 'Afghanistan', 'EG' => 'Ägypten', ...]
+
+    $country = Regions::getName('GB', 'de');
+    // => 'Vereinigtes Königreich'
 
 You can also check if a given region code is valid::
 
@@ -317,7 +332,8 @@ provides access to the name of all locales::
     \Locale::setDefault('en');
 
     $locales = Locales::getNames();
-    // => ['af' => 'Afrikaans', ...]
+    // ('localeCode' => 'localeName')
+    // => ['af' => 'Afrikaans', 'af_NA' => 'Afrikaans (Namibia)', ...]
 
     $locale = Locales::getName('zh_Hans_MO');
     // => 'Chinese (Simplified, Macau SAR China)'
@@ -326,7 +342,10 @@ All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $locales = Locales::getNames('de');
-    // => ['af' => 'Afrikaans', ...]
+    // => ['af' => 'Afrikaans', 'af_NA' => 'Afrikaans (Namibia)', ...]
+
+    $locale = Locales::getName('zh_Hans_MO', 'de');
+    // => 'Chinesisch (Vereinfacht, Sonderverwaltungsregion Macau)'
 
 You can also check if a given locale code is valid::
 
@@ -347,7 +366,8 @@ as some of their information (symbol, fraction digits, etc.)::
     \Locale::setDefault('en');
 
     $currencies = Currencies::getNames();
-    // => ['AFN' => 'Afghan Afghani', ...]
+    // ('currencyCode' => 'currencyName')
+    // => ['AFN' => 'Afghan Afghani', 'ALL' => 'Albanian Lek', ...]
 
     $currency = Currencies::getName('INR');
     // => 'Indian Rupee'
@@ -366,7 +386,10 @@ accept the translation locale as the last, optional parameter, which defaults to
 the current default locale::
 
     $currencies = Currencies::getNames('de');
-    // => ['AFN' => 'Afghanische Afghani', ...]
+    // => ['AFN' => 'Afghanischer Afghani', 'EGP' => 'Ägyptisches Pfund', ...]
+
+    $currency = Currencies::getName('INR', 'de');
+    // => 'Indische Rupie'
 
 You can also check if a given currency code is valid::
 
