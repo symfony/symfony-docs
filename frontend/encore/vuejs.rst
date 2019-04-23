@@ -129,7 +129,7 @@ a workaround, you can use `CSS Modules`_ by suffixing import paths with
         color: red
     }
 
-The output will be something like ``<h1 class="h1_a3dKp">Hello World</h1>``.
+The output will be something like ``<h1 class="title_a3dKp">Hello World</h1>``.
 
 Using images
 ~~~~~~~~~~~~
