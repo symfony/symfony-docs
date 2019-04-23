@@ -278,7 +278,7 @@ one of your forms::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('shipping_code', ShippingType::class, [
+            $builder->add('shippingCode', ShippingType::class, [
                 'placeholder' => 'Choose a delivery option',
             ]);
         }

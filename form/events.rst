@@ -271,7 +271,7 @@ method of the ``FormFactory``::
 
     $form = $formFactory->createBuilder()
         ->add('username', TextType::class)
-        ->add('show_email', CheckboxType::class)
+        ->add('showEmail', CheckboxType::class)
         ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
             $user = $event->getData();
             $form = $event->getForm();
@@ -283,7 +283,7 @@ method of the ``FormFactory``::
             // checks whether the user has chosen to display their email or not.
             // If the data was submitted previously, the additional value that is
             // included in the request variables needs to be removed.
-            if (true === $user['show_email']) {
+            if (true === $user['showEmail']) {
                 $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
@@ -312,7 +312,7 @@ callback for better readability::
         {
             $builder
                 ->add('username', TextType::class)
-                ->add('show_email', CheckboxType::class)
+                ->add('showEmail', CheckboxType::class)
                 ->addEventListener(
                     FormEvents::PRE_SET_DATA,
                     [$this, 'onPreSetData']
@@ -379,7 +379,7 @@ Consider the following example of a form event subscriber::
             // checks whether the user has chosen to display their email or not.
             // If the data was submitted previously, the additional value that
             // is included in the request variables needs to be removed.
-            if (true === $user['show_email']) {
+            if (true === $user['showEmail']) {
                 $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
@@ -398,7 +398,7 @@ To register the event subscriber, use the ``addEventSubscriber()`` method::
 
     $form = $formFactory->createBuilder()
         ->add('username', TextType::class)
-        ->add('show_email', CheckboxType::class)
+        ->add('showEmail', CheckboxType::class)
         ->addEventSubscriber(new AddEmailFieldListener())
         ->getForm();
 
