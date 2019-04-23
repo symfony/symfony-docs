@@ -119,10 +119,9 @@ charset
 
 **type**: ``string``  **default**: ``UTF-8``
 
-The charset to be used when computing value's length. The
-:phpfunction:`grapheme_strlen` PHP function is used if available. If not,
-the :phpfunction:`mb_strlen` PHP function is used if available. If neither
-are available, the :phpfunction:`strlen` PHP function is used.
+The charset to be used when computing value's length with the
+:phpfunction:`mb_check_encoding` and :phpfunction:`mb_strlen`
+PHP functions.
 
 charsetMessage
 ~~~~~~~~~~~~~~

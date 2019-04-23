@@ -309,7 +309,7 @@ type::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('favorite_cities', CollectionType::class, [
+    $builder->add('favoriteCities', CollectionType::class, [
         'entry_type'   => ChoiceType::class,
         'entry_options'  => [
             'choices'  => [
