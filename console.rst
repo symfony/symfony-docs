@@ -84,7 +84,7 @@ available in the ``configure()`` method::
             parent::__construct();
         }
 
-        public function configure()
+        protected function configure()
         {
             $this
                 // ...
