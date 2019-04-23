@@ -42,6 +42,22 @@ Symfony ships with the following value resolvers in the HttpKernel component:
     argument list. When the action is called, the last (variadic) argument will
     contain all the values of this array.
 
+Functionality Shipped with Additional Bundles
+---------------------------------------------
+
+The SecurityBundle:
+
+:class:`Symfony\\Bundle\\SecurityBundle\\SecurityUserValueResolver`
+    Injects the user object of the current logged in user if type-hinted
+    with ``UserInterface``. Default value can be set to ``null`` in case
+    the controller can be accessed by non logged in users.
+
+The SensioFrameworkExtraBundle:
+
+``Psr7ServerRequestResolver``
+    Injects a PSR-7 compliant version of the current request if type-hinted with
+    ``RequestInterface``, ``MessageInterface`` or ``ServerRequestInterface``.
+
 Adding a Custom Value Resolver
 ------------------------------
 
