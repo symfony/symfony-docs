@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-20T07:17:55Z
+
+Was the bug related to snake_case/camelCase?
+
+---------------------------------------------------------------------------
+
+by Korbeil at 2019-04-20T08:07:54Z
+
+I made a DTO witch camelCase attributes (like every class we usely do) and my form having snake_case widget names so error mapping was incorrect :/ So kind of yes.
+The idea is just to enforce people using camelCase to have correct error mapping 😉
