@@ -142,9 +142,9 @@ charset
 
 **type**: ``string``  **default**: ``UTF-8``
 
-The charset to be used when computing value's length. The
+The charset to be used when computing value's length with the
 :phpfunction:`mb_check_encoding` and :phpfunction:`mb_strlen`
-PHP functions are used.
+PHP functions.
 
 minMessage
 ~~~~~~~~~~
