@@ -612,7 +612,7 @@ Then you can access this metadata in your controller as follows::
         ;
 
         // or
-        $max_num_of_words = $workflow->getMetadataStore()
+        $maxNumOfWords = $workflow->getMetadataStore()
             ->getPlaceMetadata('draft')['max_num_of_words'] ?? false
         ;
 
@@ -627,7 +627,7 @@ Then you can access this metadata in your controller as follows::
 There is a shortcut that works with everything::
 
     $title = $workflow->getMetadataStore()->getMetadata()['title'];
-    $max_num_of_words = $workflow->getMetadataStore()->getMetadata('draft')['max_num_of_words'];
+    $maxNumOfWords = $workflow->getMetadataStore()->getMetadata('draft')['max_num_of_words'];
     $priority = $workflow->getMetadataStore()->getMetadata($aTransition)['priority'];
     
 
