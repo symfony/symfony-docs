@@ -240,6 +240,10 @@ which defaults to the current default locale::
     $languages = Languages::getNames('de');
     // => ['ab' => 'Abchasisch', ...]
 
+You can also check if a given language code is valid::
+
+    $isValidLanguage = Languages::exists($languageCode);
+
 .. versionadded:: 4.3
 
     The ``Languages`` class was introduced in Symfony 4.3.
@@ -258,6 +262,10 @@ for traditional Chinese)::
 
     $script = Scripts::getName('Hans');
     // => 'Simplified'
+
+You can also check if a given script code is valid::
+
+    $isValidScript = Scripts::exists($scriptCode);
 
 .. versionadded:: 4.3
 
@@ -288,6 +296,10 @@ which defaults to the current default locale::
     $countries = Regions::getNames('de');
     // => ['AF' => 'Afghanistan', ...]
 
+You can also check if a given region code is valid::
+
+    $isValidRegion = Regions::exists($regionCode);
+
 .. versionadded:: 4.3
 
     The ``Regions`` class was introduced in Symfony 4.3.
@@ -315,6 +327,10 @@ which defaults to the current default locale::
 
     $locales = Locales::getNames('de');
     // => ['af' => 'Afrikaans', ...]
+
+You can also check if a given locale code is valid::
+
+    $isValidLocale = Locales::exists($localeCode);
 
 .. versionadded:: 4.3
 
@@ -351,6 +367,10 @@ the current default locale::
 
     $currencies = Currencies::getNames('de');
     // => ['AFN' => 'Afghanische Afghani', ...]
+
+You can also check if a given currency code is valid::
+
+    $isValidCurrency = Currencies::exists($currencyCode);
 
 .. versionadded:: 4.3
 
