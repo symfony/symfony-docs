@@ -39,7 +39,7 @@ remain resistant to brute-force search attacks.
 
 .. note::
 
-    :ref:`Argon2i <reference-security-argon2i>` is the hashing algorithm as
+    :ref:`Sodium <reference-security-sodium>` is the hashing algorithm as
     recommended by industry standards, but this won't be available to you unless
     you are using PHP 7.2+ or have the `libsodium`_ extension installed.
     ``bcrypt`` is sufficient for most applications.
