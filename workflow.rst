@@ -612,21 +612,24 @@ Then you can access this metadata in your controller as follows::
         ;
 
         // or
-        $title = $workflow->getMetadataStore()
-            ->getWorkflowMetadata()['title'] ?? false
+        $max_num_of_words = $workflow->getMetadataStore()
+            ->getPlaceMetadata('draft')['max_num_of_words'] ?? false
         ;
 
         // or
         $aTransition = $workflow->getDefinition()->getTransitions()[0];
-        $transitionTitle = $workflow
+        $priority = $workflow
             ->getMetadataStore()
-            ->getTransitionMetadata($aTransition)['title'] ?? false
+            ->getTransitionMetadata($aTransition)['priority'] ?? false
         ;
     }
 
 There is a shortcut that works with everything::
 
-    $title = $workflow->getMetadataStore()->getMetadata('title');
+    $title = $workflow->getMetadataStore()->getMetadata()['title'];
+    $max_num_of_words = $workflow->getMetadataStore()->getMetadata('draft')['max_num_of_words'];
+    $priority = $workflow->getMetadataStore()->getMetadata($aTransition)['priority'];
+    
 
 In a :ref:`flash message <flash-messages>` in your controller::
 
