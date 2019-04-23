@@ -215,6 +215,7 @@ This component provides the following ICU data:
 * `Country and Region Names`_
 * `Locales`_
 * `Currencies`_
+* `Timezones`_
 
 Language and Script Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -375,6 +376,38 @@ You can also check if a given currency code is valid::
 .. versionadded:: 4.3
 
     The ``Currencies`` class was introduced in Symfony 4.3.
+
+Timezones
+~~~~~~~~~
+
+The ``Timezones`` class provides access to the name and values of all timezones::
+
+    use Symfony\Component\Intl\Timezones;
+
+    \Locale::setDefault('en');
+
+    $timezones = Timezones::getNames();
+    // => ['America/Eirunepe' => 'Acre Time (Eirunepe)', ...]
+
+    $timezone = Timezones::getName('Africa/Nairobi');
+    // => 'East Africa Time (Nairobi)'
+
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
+
+    $timezones = Timezones::getNames('de');
+    // => ['America/Eirunepe' => 'Acre-Zeit (Eirunepe)', ...]
+
+    $timezone = Timezones::getName('Africa/Nairobi', 'de');
+    // => 'Ostafrikanische Zeit (Nairobi)'
+
+You can also check if a given timezone name is valid::
+
+    $isValidTimezone = Timezones::exists($timezoneName);
+
+.. versionadded:: 4.3
+
+    The ``Timezones`` class was introduced in Symfony 4.3.
 
 Learn more
 ----------
