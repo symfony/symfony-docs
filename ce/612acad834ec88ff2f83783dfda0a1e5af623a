@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-23T08:11:03Z
+
+@vertisan good catch! This can be verified in the related Symfony code: https://github.com/symfony/symfony/blob/e479b6902e2f3be2c802f846f220eeb119a82aa0/src/Symfony/Bundle/SecurityBundle/DependencyInjection/Security/Factory/RememberMeFactory.php#L65-L69  Thank you!
+
+By the way, there's no need to create another PR for the 'master' branch. We always "upmerge" pull requests from lower branches up to master.
