@@ -119,9 +119,9 @@ Notice that you embed a collection of ``TagType`` forms using the
 
     use AppBundle\Entity\Task;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
     class TaskType extends AbstractType
     {
@@ -148,11 +148,11 @@ In your controller, you'll create a new form from the ``TaskType``::
     // src/AppBundle/Controller/TaskController.php
     namespace AppBundle\Controller;
 
-    use AppBundle\Entity\Task;
     use AppBundle\Entity\Tag;
+    use AppBundle\Entity\Task;
     use AppBundle\Form\Type\TaskType;
-    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\Request;
 
     class TaskController extends Controller
     {

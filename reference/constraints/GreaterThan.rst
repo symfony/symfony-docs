@@ -90,8 +90,8 @@ The following constraints ensure that:
         // src/AppBundle/Entity/Person.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Person
         {
@@ -157,8 +157,8 @@ that a date must at least be the next day:
         // src/AppBundle/Entity/Order.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Order
         {
@@ -216,8 +216,8 @@ dates. If you want to fix the timezone, append it to the date string:
         // src/AppBundle/Entity/Order.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Order
         {
@@ -276,8 +276,8 @@ current time:
         // src/AppBundle/Entity/Order.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Order
         {

@@ -37,10 +37,10 @@ To use this component, create a new
 :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor` instance and
 provide it with a set of information extractors::
 
-    use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+    use Example\Namespace\YourAwesomeCoolClass;
     use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-    use Example\Namespace\YourAwesomeCoolClass;
+    use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 
     // a full list of extractors is shown further below
     $phpDocExtractor = new PhpDocExtractor();

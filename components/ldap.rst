@@ -117,8 +117,8 @@ Creating or Updating Entries
 The Ldap component provides means to create new LDAP entries, update or even
 delete existing ones::
 
-    use Symfony\Component\Ldap\Ldap;
     use Symfony\Component\Ldap\Entry;
+    use Symfony\Component\Ldap\Ldap;
     // ...
 
     $entry = new Entry('cn=Fabien Potencier,dc=symfony,dc=com', [

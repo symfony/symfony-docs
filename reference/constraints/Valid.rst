@@ -148,8 +148,8 @@ stores an ``Address`` instance in the ``$address`` property::
         // src/AppBundle/Entity/Address.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Address
         {
@@ -164,8 +164,8 @@ stores an ``Address`` instance in the ``$address`` property::
         // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -226,8 +226,8 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
         // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {

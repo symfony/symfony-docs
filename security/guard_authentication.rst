@@ -22,8 +22,8 @@ property they use to access their account via the API::
     // src/AppBundle/Entity/User.php
     namespace AppBundle\Entity;
 
-    use Symfony\Component\Security\Core\User\UserInterface;
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * @ORM\Entity
@@ -160,14 +160,14 @@ This requires you to implement several methods::
     // src/AppBundle/Security/TokenAuthenticator.php
     namespace AppBundle\Security;
 
-    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Security\Core\User\UserInterface;
-    use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
@@ -510,9 +510,9 @@ and add the following logic::
     // src/AppBundle/Security/ExampleFormAuthenticator.php
     // ...
 
-    use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-    use Symfony\Component\Security\Csrf\CsrfToken;
     use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+    use Symfony\Component\Security\Csrf\CsrfToken;
+    use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
     use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 
     class ExampleFormAuthenticator extends AbstractFormLoginAuthenticator

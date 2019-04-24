@@ -15,10 +15,10 @@ By adding a handler, you can customize the `Cloners`_, `Dumpers`_ and `Casters`_
 as explained below. A simple implementation of a handler function might look
 like this::
 
-    use Symfony\Component\VarDumper\VarDumper;
     use Symfony\Component\VarDumper\Cloner\VarCloner;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+    use Symfony\Component\VarDumper\VarDumper;
 
     VarDumper::setHandler(function ($var) {
         $cloner = new VarCloner();

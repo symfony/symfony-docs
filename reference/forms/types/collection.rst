@@ -304,8 +304,8 @@ as your `entry_type`_ option (e.g. for a collection of drop-down menus),
 then you'd need to at least pass the ``choices`` option to the underlying
 type::
 
-    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
     // ...
 
     $builder->add('favoriteCities', CollectionType::class, [

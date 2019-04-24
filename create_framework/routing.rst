@@ -80,8 +80,8 @@ of default values for route attributes (``['name' => 'World']``).
 Based on the information stored in the ``RouteCollection`` instance, a
 ``UrlMatcher`` instance can match URL paths::
 
-    use Symfony\Component\Routing\RequestContext;
     use Symfony\Component\Routing\Matcher\UrlMatcher;
+    use Symfony\Component\Routing\RequestContext;
 
     $context = new RequestContext();
     $context->fromRequest($request);

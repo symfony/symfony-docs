@@ -66,8 +66,8 @@ a valid currency, you could do the following:
         // src/AppBundle/Entity/Order.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Order
         {

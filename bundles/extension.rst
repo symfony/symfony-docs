@@ -93,8 +93,8 @@ the extension!
 For instance, assume you have a file called ``services.xml`` in the
 ``Resources/config`` directory of your bundle, your ``load()`` method looks like::
 
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
     // ...
     public function load(array $configs, ContainerBuilder $container)

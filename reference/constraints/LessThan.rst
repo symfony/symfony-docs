@@ -90,8 +90,8 @@ The following constraints ensure that:
         // src/AppBundle/Entity/Person.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Person
         {
@@ -157,8 +157,8 @@ that a date must be in the past like this:
         // src/AppBundle/Entity/Person.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Person
         {
@@ -216,8 +216,8 @@ dates. If you want to fix the timezone, append it to the date string:
         // src/AppBundle/Entity/Person.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Person
         {
@@ -275,8 +275,8 @@ can check that a person must be at least 18 years old like this:
         // src/AppBundle/Entity/Person.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Person
         {

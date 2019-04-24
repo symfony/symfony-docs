@@ -20,9 +20,9 @@ In your bundle class, write the following code to register the compiler pass.
 This one is written for the CmfRoutingBundle, so parts of it will need to
 be adapted for your case::
 
+    use Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass;
     use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
     use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
-    use Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass;
     use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
     use Symfony\Cmf\RoutingBundle\Model;
 
@@ -115,9 +115,9 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
     ``DoctrineOrmMappingsPass`` and adapted to use the ``DefaultFileLocator``
     instead of the ``SymfonyFileLocator``::
 
+        use AppBundle\Model;
         use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
         use Doctrine\ORM\Mapping\Driver\XmlDriver;
-        use AppBundle\Model;
 
         // ...
         private function buildMappingCompilerPass()

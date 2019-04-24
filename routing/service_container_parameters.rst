@@ -64,8 +64,8 @@ inside your routing configuration:
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('contact', new Route('/{_locale}/contact', [
@@ -154,8 +154,8 @@ path):
     .. code-block:: php
 
         // app/config/routing.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('some_route', new Route('/%app.route_prefix%/contact', [

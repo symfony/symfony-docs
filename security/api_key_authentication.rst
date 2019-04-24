@@ -32,8 +32,8 @@ value and then a User object is created::
     use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
 
@@ -166,10 +166,10 @@ The ``$userProvider`` might look something like this::
     // src/AppBundle/Security/ApiKeyUserProvider.php
     namespace AppBundle\Security;
 
-    use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Symfony\Component\Security\Core\User\User;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+    use Symfony\Component\Security\Core\User\UserProviderInterface;
 
     class ApiKeyUserProvider implements UserProviderInterface
     {
@@ -254,11 +254,11 @@ you can use to create an error ``Response``::
     // src/AppBundle/Security/ApiKeyAuthenticator.php
     namespace AppBundle\Security;
 
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
     use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\Request;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
     {
@@ -580,8 +580,8 @@ current URL is before creating the token in ``createToken()``::
     // src/AppBundle/Security/ApiKeyAuthenticator.php
 
     // ...
-    use Symfony\Component\Security\Http\HttpUtils;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Http\HttpUtils;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {

@@ -56,9 +56,9 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
 
     use AppBundle\Entity\Product;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class ProductType extends AbstractType
     {
@@ -99,12 +99,12 @@ Finally, you need to update the code of the controller that handles the form::
     // src/AppBundle/Controller/ProductController.php
     namespace AppBundle\Controller;
 
+    use AppBundle\Entity\Product;
+    use AppBundle\Form\ProductType;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
-    use AppBundle\Entity\Product;
-    use AppBundle\Form\ProductType;
 
     class ProductController extends Controller
     {
@@ -290,8 +290,8 @@ Then, define a service for this class:
 Now you're ready to use this service in the controller::
 
     // src/AppBundle/Controller/ProductController.php
-    use Symfony\Component\HttpFoundation\Request;
     use AppBundle\Service\FileUploader;
+    use Symfony\Component\HttpFoundation\Request;
 
     // ...
     public function newAction(Request $request, FileUploader $fileUploader)
@@ -320,12 +320,12 @@ automatically move the file when persisting the entity::
     // src/AppBundle/EventListener/BrochureUploadListener.php
     namespace AppBundle\EventListener;
 
-    use Symfony\Component\HttpFoundation\File\UploadedFile;
-    use Symfony\Component\HttpFoundation\File\File;
-    use Doctrine\ORM\Event\LifecycleEventArgs;
-    use Doctrine\ORM\Event\PreUpdateEventArgs;
     use AppBundle\Entity\Product;
     use AppBundle\Service\FileUploader;
+    use Doctrine\ORM\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PreUpdateEventArgs;
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     class BrochureUploadListener
     {

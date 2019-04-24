@@ -115,9 +115,9 @@ event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
     namespace AppBundle\EventSubscriber;
 
     use AppBundle\Controller\TokenAuthenticatedController;
-    use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-    use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+    use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\HttpKernel\KernelEvents;
 
     class TokenSubscriber implements EventSubscriberInterface

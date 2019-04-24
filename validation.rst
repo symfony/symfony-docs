@@ -86,8 +86,8 @@ following:
         // src/AppBundle/Entity/Author.php
 
         // ...
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -119,8 +119,8 @@ constraints. If validation fails, a non-empty list of errors
 returned. Take this simple example from inside a controller::
 
     // ...
-    use Symfony\Component\HttpFoundation\Response;
     use AppBundle\Entity\Author;
+    use Symfony\Component\HttpFoundation\Response;
 
     // ...
     public function authorAction()
@@ -370,8 +370,8 @@ literature genre mostly associated with the author, which can be set to either
         // src/AppBundle/Entity/Author.php
 
         // ...
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -451,8 +451,8 @@ options can be specified in this way.
         // src/AppBundle/Entity/Author.php
 
         // ...
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -571,8 +571,8 @@ class to have at least 3 characters.
         // src/AppBundle/Entity/Author.php
 
         // ...
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -656,8 +656,8 @@ this method must return ``true``:
         // src/AppBundle/Entity/Author.php
 
         // ...
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {

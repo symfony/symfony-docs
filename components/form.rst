@@ -88,8 +88,8 @@ object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
     :class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\\HttpFoundationExtension`
     to your form factory::
 
-        use Symfony\Component\Form\Forms;
         use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
+        use Symfony\Component\Form\Forms;
 
         $formFactory = Forms::createFormFactoryBuilder()
             ->addExtension(new HttpFoundationExtension())
@@ -118,12 +118,12 @@ use the built-in support, first install the Security CSRF component:
 
 The following snippet adds CSRF protection to the form factory::
 
+    use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\HttpFoundation\Session\Session;
-    use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
-    use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
-    use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
     use Symfony\Component\Security\Csrf\CsrfTokenManager;
+    use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
+    use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
 
     // creates a Session object from the HttpFoundation component
     $session = new Session();
@@ -179,10 +179,11 @@ that help you render the HTML widget, label and error for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
-    use Symfony\Component\Form\Forms;
+
     use Symfony\Bridge\Twig\Extension\FormExtension;
-    use Symfony\Component\Form\FormRenderer;
     use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+    use Symfony\Component\Form\FormRenderer;
+    use Symfony\Component\Form\Forms;
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
     use Twig\RuntimeLoader\FactoryRuntimeLoader;
@@ -264,10 +265,10 @@ installed:
 Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
 to your ``Twig\\Environment`` instance::
 
-    use Symfony\Component\Form\Forms;
-    use Symfony\Component\Translation\Translator;
-    use Symfony\Component\Translation\Loader\XliffFileLoader;
     use Symfony\Bridge\Twig\Extension\TranslationExtension;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Translation\Loader\XliffFileLoader;
+    use Symfony\Component\Translation\Translator;
 
     // creates the Translator
     $translator = new Translator('en');
@@ -314,8 +315,8 @@ errors are then mapped to the correct field and rendered.
 
 Your integration with the Validation component will look something like this::
 
-    use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+    use Symfony\Component\Form\Forms;
     use Symfony\Component\Validator\Validation;
 
     $vendorDirectory = realpath(__DIR__.'/../vendor');

@@ -14,8 +14,8 @@ executes the ``registerContainerConfiguration()`` method of the ``AppKernel``
 class::
 
     // app/AppKernel.php
-    use Symfony\Component\HttpKernel\Kernel;
     use Symfony\Component\Config\Loader\LoaderInterface;
+    use Symfony\Component\HttpKernel\Kernel;
 
     class AppKernel extends Kernel
     {
@@ -90,8 +90,8 @@ To make this work, change the code of the
 method::
 
     // app/AppKernel.php
-    use Symfony\Component\HttpKernel\Kernel;
     use Symfony\Component\Config\Loader\LoaderInterface;
+    use Symfony\Component\HttpKernel\Kernel;
 
     class AppKernel extends Kernel
     {
@@ -187,8 +187,8 @@ Again, change the code of the ``registerContainerConfiguration()`` method to
 make Symfony aware of the new file organization::
 
     // app/AppKernel.php
-    use Symfony\Component\HttpKernel\Kernel;
     use Symfony\Component\Config\Loader\LoaderInterface;
+    use Symfony\Component\HttpKernel\Kernel;
 
     class AppKernel extends Kernel
     {

@@ -210,8 +210,8 @@ as a service, you can use normal dependency injection. Imagine you have a
 ``AppBundle\Service\UserManager`` service that you want to access::
 
     // ...
-    use Symfony\Component\Console\Command\Command;
     use AppBundle\Service\UserManager;
+    use Symfony\Component\Console\Command\Command;
 
     class CreateUserCommand extends Command
     {

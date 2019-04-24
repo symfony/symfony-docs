@@ -116,8 +116,8 @@ the name of the encoder to use::
     // src/Acme/UserBundle/Entity/User.php
     namespace Acme\UserBundle\Entity;
 
-    use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+    use Symfony\Component\Security\Core\User\UserInterface;
 
     class User implements UserInterface, EncoderAwareInterface
     {

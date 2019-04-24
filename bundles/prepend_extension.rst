@@ -28,9 +28,9 @@ To give an Extension the power to do this, it needs to implement
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
     namespace Acme\HelloBundle\DependencyInjection;
 
-    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-    use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
     class AcmeHelloExtension extends Extension implements PrependExtensionInterface
     {

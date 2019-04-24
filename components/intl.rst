@@ -90,8 +90,8 @@ resulting .txt file can be converted to a binary .res file with the
 :class:`Symfony\\Component\\Intl\\ResourceBundle\\Compiler\\BundleCompiler`
 class::
 
-    use Symfony\Component\Intl\ResourceBundle\Writer\TextBundleWriter;
     use Symfony\Component\Intl\ResourceBundle\Compiler\BundleCompiler;
+    use Symfony\Component\Intl\ResourceBundle\Writer\TextBundleWriter;
 
     $writer = new TextBundleWriter();
     $writer->write('/path/to/bundle', 'en', [

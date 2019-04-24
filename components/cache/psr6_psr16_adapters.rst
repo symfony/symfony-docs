@@ -36,8 +36,8 @@ instead. No problem! The Cache component provides the
 :class:`Symfony\\Component\\Cache\\Adapter\\SimpleCacheAdapter` class for exactly
 this use-case::
 
-    use Symfony\Component\Cache\Simple\FilesystemCache;
     use Symfony\Component\Cache\Adapter\SimpleCacheAdapter;
+    use Symfony\Component\Cache\Simple\FilesystemCache;
 
     // the PSR-16 cache object that you want to use
     $psr16Cache = new FilesystemCache();

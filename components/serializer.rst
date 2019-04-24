@@ -48,10 +48,11 @@ Using the Serializer component is really simple. You just need to set up
 the :class:`Symfony\\Component\\Serializer\\Serializer` specifying
 which encoders and normalizer are going to be available::
 
-    use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $encoders = [new XmlEncoder(), new JsonEncoder()];
     $normalizers = [new ObjectNormalizer()];
@@ -335,8 +336,8 @@ Then, create your groups definition:
 
 You are now able to serialize only attributes in the groups you want::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $obj = new MyObj();
     $obj->foo = 'foo';
@@ -365,8 +366,8 @@ Selecting Specific Attributes
 
 It is also possible to serialize only a set of specific attributes::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class User
     {
@@ -413,9 +414,9 @@ those attributes use the
 :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setIgnoredAttributes`
 method on the normalizer definition::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $normalizer = new ObjectNormalizer();
     $normalizer->setIgnoredAttributes(['age']);
@@ -989,9 +990,9 @@ parameter of the ``ObjectNormalizer``::
     namespace Acme;
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class ObjectOuter
     {

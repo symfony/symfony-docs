@@ -112,8 +112,8 @@ One way to accomplish this is with the Expression constraint:
         // src/AppBundle/Model/BlogPost.php
         namespace AppBundle\Model;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class BlogPost
         {

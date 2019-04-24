@@ -65,8 +65,8 @@ You can also match any route with the HTTP *host* of the incoming request.
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('mobile_homepage', new Route('/', [
@@ -147,8 +147,8 @@ you can use placeholders in your hostname:
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('project_homepage', new Route('/', [
@@ -236,8 +236,8 @@ instance, if you want to match both ``m.example.com`` and
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('mobile_homepage', new Route('/', [
@@ -329,8 +329,8 @@ instance, if you want to match both ``m.example.com`` and
 
         .. code-block:: php
 
-            use Symfony\Component\Routing\RouteCollection;
             use Symfony\Component\Routing\Route;
+            use Symfony\Component\Routing\RouteCollection;
 
             $routes = new RouteCollection();
             $routes->add('mobile_homepage', new Route('/', [

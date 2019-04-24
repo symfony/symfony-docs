@@ -146,8 +146,8 @@ After creating the strategy PHP class, register it as a Symfony service.
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
         use AppBundle\Asset\VersionStrategy\GulpBusterVersionStrategy;
+        use Symfony\Component\DependencyInjection\Definition;
 
         $container->autowire(GulpBusterVersionStrategy::class)
             ->setArguments(

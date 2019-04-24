@@ -26,8 +26,8 @@ which already implements that interface and provides some utilities::
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class ShippingType extends AbstractType
     {
@@ -255,9 +255,9 @@ of the type in one of your forms::
     // src/AppBundle/Form/Type/OrderType.php
     namespace AppBundle\Form\Type;
 
+    use AppBundle\Form\Type\ShippingType;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\Type\ShippingType;
 
     class OrderType extends AbstractType
     {

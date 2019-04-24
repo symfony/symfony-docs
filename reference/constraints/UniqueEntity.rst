@@ -38,11 +38,12 @@ your user table:
         // src/AppBundle/Entity/User.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Constraints as Assert;
         use Doctrine\ORM\Mapping as ORM;
 
-        // DON'T forget this use statement!!!
+        // DON'T forget the following use statement!!!
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
 
         /**
          * @ORM\Entity
@@ -90,10 +91,10 @@ your user table:
         // src/AppBundle/Entity/User.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        // DON'T forget this use statement!!!
+        // DON'T forget the following use statement!!!
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class User
         {
@@ -276,8 +277,8 @@ Consider this example:
         // src/AppBundle/Entity/Service.php
         namespace AppBundle\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Service
         {

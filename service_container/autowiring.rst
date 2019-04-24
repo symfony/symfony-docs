@@ -419,10 +419,10 @@ that alias:
 
     .. code-block:: php
 
-        use AppBundle\Util\Rot13Transformer;
-        use AppBundle\Util\UppercaseTransformer;
-        use AppBundle\Util\TransformerInterface;
         use AppBundle\Service\TwitterClient;
+        use AppBundle\Util\Rot13Transformer;
+        use AppBundle\Util\TransformerInterface;
+        use AppBundle\Util\UppercaseTransformer;
 
         // ...
         $container->autowire(Rot13Transformer::class);

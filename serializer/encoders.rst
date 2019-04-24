@@ -13,9 +13,9 @@ decoding (format to array).
 
 You can add new encoders to a Serializer instance by using its second constructor argument::
 
-    use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+    use Symfony\Component\Serializer\Serializer;
 
     $encoders = [new XmlEncoder(), new JsonEncoder()];
     $serializer = new Serializer([], $encoders);

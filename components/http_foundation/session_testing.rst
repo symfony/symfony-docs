@@ -40,8 +40,8 @@ For unit testing where it is not necessary to persist the session, you should
 simply swap out the default storage engine with
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockArraySessionStorage`::
 
-    use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
     use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
     $session = new Session(new MockArraySessionStorage());
 

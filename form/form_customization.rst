@@ -547,8 +547,8 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
     name ``_product_name_widget`` you can set the ``block_name`` option in your
     form type::
 
-        use Symfony\Component\Form\FormBuilderInterface;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\FormBuilderInterface;
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {

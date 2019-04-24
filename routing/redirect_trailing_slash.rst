@@ -80,8 +80,8 @@ system, as explained below:
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add(

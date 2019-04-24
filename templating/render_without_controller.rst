@@ -39,8 +39,8 @@ can do this without creating a controller:
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('acme_privacy', new Route('/privacy', [
@@ -101,8 +101,8 @@ other variables in your route, you can control exactly how your page is cached:
 
     .. code-block:: php
 
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
         $routes->add('acme_privacy', new Route('/privacy', [
