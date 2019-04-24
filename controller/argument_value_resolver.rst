@@ -45,13 +45,24 @@ Symfony ships with the following value resolvers in the
     argument list. When the action is called, the last (variadic) argument will
     contain all the values of this array.
 
-In addition, some official bundles provide other value resolvers:
+In addition, some components and official bundles provide other value resolvers:
+
+:class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`
+    Injects the object that represents the current logged in user if type-hinted
+    with ``UserInterface``. Default value can be set to ``null`` in case
+    the controller can be accessed by anonymous users. It requires installing
+    the :doc:`Security component </components/security>`.
 
 :class:`Symfony\\Bundle\\SecurityBundle\\SecurityUserValueResolver`
     Injects the object that represents the current logged in user if type-hinted
     with ``UserInterface``. Default value can be set to ``null`` in case
     the controller can be accessed by anonymous users. It requires installing
     the `SecurityBundle`_.
+
+.. deprecated:: 4.1
+
+    The ``SecurityUserValueResolver`` was deprecated in Symfony 4.1 in favor of
+    :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`.
 
 ``Psr7ServerRequestResolver``
     Injects a `PSR-7`_ compliant version of the current request if type-hinted
