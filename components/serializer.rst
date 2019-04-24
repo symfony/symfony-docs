@@ -731,9 +731,9 @@ for encoding (array to format) and
 
 You can add new encoders to a Serializer instance by using its second constructor argument::
 
-    use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+    use Symfony\Component\Serializer\Serializer;
 
     $encoders = [new XmlEncoder(), new JsonEncoder()];
     $serializer = new Serializer([], $encoders);
@@ -1045,11 +1045,11 @@ maximum depth is reached. This is especially useful when serializing entities
 having unique identifiers::
 
     use Doctrine\Common\Annotations\AnnotationReader;
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Annotation\MaxDepth;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class Foo
     {
@@ -1211,8 +1211,8 @@ If the class constructor defines arguments, as usually happens with
 arguments are missing. In those cases, use the ``default_constructor_arguments``
 context option::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class MyObj
     {
@@ -1331,8 +1331,8 @@ this is already set up and you only need to provide the configuration. Otherwise
 
     // ...
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
-    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
     use Symfony\Component\Serializer\Mapping\ClassDiscriminatorFromClassMetadata;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 

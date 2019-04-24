@@ -156,8 +156,8 @@ Are you building an API? You can already return JSON easily from any controller:
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
-    use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
     {
