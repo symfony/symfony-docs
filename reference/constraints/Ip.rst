@@ -98,6 +98,7 @@ Parameter        Description
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 version

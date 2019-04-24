@@ -1,10 +1,13 @@
 normalizer
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``null``
+**type**: a `PHP callable`_ **default**: ``null``
 
-This option allows a ``callable`` to be passed in order to normalize the given
-value while checking if it is valid.
+This option allows to define the PHP callable applied to the given value before
+checking if it is valid.
 
-For example, you may want to use :phpfunction:`trim` to ignore leading and
-trailing whitespace during validation.
+For example, you may want to pass the ``'trim'`` string to apply the
+:phpfunction:`trim` PHP function in order to ignore leading and trailing
+whitespace during validation.
+
+.. _`PHP callable`: https://www.php.net/callable

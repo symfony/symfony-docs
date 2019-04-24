@@ -289,4 +289,5 @@ PHP function). However, if `match`_ is set to false, then validation will
 fail if the input string *does* match this pattern.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
+
 .. include:: /reference/constraints/_payload-option.rst.inc

@@ -169,6 +169,7 @@ html5
 This matches the pattern used for the `HTML5 email input element`_.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
