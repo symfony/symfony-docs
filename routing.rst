@@ -26,11 +26,10 @@ you want one route that matches ``/blog`` exactly and another more dynamic
 route that can match *any* URL like ``/blog/my-post`` or
 ``/blog/all-about-symfony``.
 
-Routes can be configured in YAML, XML, PHP or annotations. All formats provide
-the same features and performance, so choose the one you prefer. If you choose
-PHP annotations, run this command once in your application to add support for
-them (``SensioFrameworkExtraBundle`` wraps the required dependencies and
-provides many useful annotations for cache, security and more!):
+Routes can be configured in YAML, XML, PHP or using annotations. All formats
+provide the same features and performance, so choose the one you prefer. If you
+choose PHP annotations, run this command once in your application to add support
+for them:
 
 .. code-block:: terminal
 
