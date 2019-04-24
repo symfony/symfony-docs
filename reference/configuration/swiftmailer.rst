@@ -380,8 +380,9 @@ alternatives based on the :ref:`service binding <services-binding>` feature:
 
         // config/services.php
         use App\Some\Service;
-        use Symfony\Component\DependencyInjection\Reference;
         use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Reference;
+
 
         $container->register(Service::class)
             ->setPublic(true)

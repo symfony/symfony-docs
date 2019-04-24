@@ -152,8 +152,8 @@ ______________
 Use the entry manager's :method:`Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\EntryManager::applyOperations`
 method to update multiple attributes at once::
 
-    use Symfony\Component\Ldap\Ldap;
     use Symfony\Component\Ldap\Entry;
+    use Symfony\Component\Ldap\Ldap;
     // ...
 
     $entry = new Entry('cn=Fabien Potencier,dc=symfony,dc=com', [

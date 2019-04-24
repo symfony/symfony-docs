@@ -260,8 +260,8 @@ based on your form type name (e.g. ``ProductType`` equates to ``product``). If
 you're not sure what your form name is, look at the HTML code rendered for your
 form. You can also define this value explicitly with the ``block_name`` option::
 
-    use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

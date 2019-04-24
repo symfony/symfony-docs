@@ -259,13 +259,11 @@ you can pass the class name and the method as an array.
         namespace App\Entity;
 
         use App\Entity\Genre;
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
-            protected $genre;
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('genre', new Assert\Choice([

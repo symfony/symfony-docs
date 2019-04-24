@@ -1087,8 +1087,8 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
 
     .. code-block:: php
 
-        use App\Twig\AppExtension;
         use App\Twig\AnotherExtension;
+        use App\Twig\AppExtension;
 
         $container
             ->register(AppExtension::class)
@@ -1229,7 +1229,6 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
     .. code-block:: php
 
         use App\Twig\AppExtension;
-        use App\Twig\AnotherExtension;
 
         $container
             ->register(AppExtension::class)
