@@ -14,8 +14,7 @@ the available blog posts for this imaginary blog application:
         // src/Controller/BlogController.php
         use Symfony\Component\Routing\Annotation\Route;
 
-        // ...
-        class BlogController extends AbstractController
+        class BlogController
         {
             /**
              * @Route("/blog")
