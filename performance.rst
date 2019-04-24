@@ -59,32 +59,6 @@ it's recommended to change these settings as follows:
     ; maximum number of files that can be stored in the cache
     opcache.max_accelerated_files=20000
 
-.. _performance-dont-check-timestamps:
-
-Don't Check PHP Files Timestamps
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In production servers, PHP files should never change, unless a new application
-version is deployed. However, by default OPcache checks if cached files have
-changed their contents since they were cached. This check introduces some
-overhead that can be avoided as follows:
-
-.. code-block:: ini
-
-    ; php.ini
-    opcache.validate_timestamps=0
-
-After each deploy, you must empty and regenerate the cache of OPcache. Otherwise
-you won't see the updates made in the application. Given that in PHP, the CLI
-and the web processes don't share the same OPcache, you cannot clear the web
-server OPcache by executing some command in your terminal. These are some of the
-possible solutions:
-
-1. Restart the web server;
-2. Call the ``apc_clear_cache()`` or ``opcache_reset()`` functions via the
-   web server (i.e. by having these in a script that you execute over the web);
-3. Use the `cachetool`_ utility to control APC and OPcache from the CLI.
-
 .. _performance-configure-realpath-cache:
 
 Configure the PHP realpath Cache
@@ -103,6 +77,12 @@ such as Symfony projects, should use at least these values:
     ; save the results for 10 minutes (600 seconds)
     realpath_cache_ttl=600
 
+.. tip::
+
+    A `realpath_cache_size` of `4096K` is the default value as of PHP 7.2.
+    Yet, you might want to check you don't have an explicit configuration 
+    setting lower than that.
+    
 .. note::
 
     PHP disables the ``realpath`` cache when the `open_basedir`_ config option
