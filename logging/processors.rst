@@ -173,10 +173,6 @@ Symfony's MonologBridge provides processors that can be registered inside your a
     Overrides data from the request using the data inside Symfony's request
     object.
 
-.. versionadded:: 3.4
-
-    The ``TokenProcessor`` class was introduced in Symfony 3.4.
-
 Registering Processors per Handler
 ----------------------------------
 
