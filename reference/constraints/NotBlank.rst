@@ -11,6 +11,7 @@ Applies to  :ref:`property or method <validation-property-target>`
 Options     - `allowNull`_
             - `groups`_
             - `message`_
+            - `normalizer`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotBlank`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotBlankValidator`
@@ -109,5 +110,16 @@ Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
+
+normalizer
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+If the given value is a ``string``, this option can be used to normalize it while
+checking if it is valid. A ``callable`` must be passed.
+
+For example, you may want to use :phpfunction:`trim` to ignore leading and
+trailing whitespace during validation.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

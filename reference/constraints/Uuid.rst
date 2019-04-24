@@ -10,6 +10,7 @@ UUID versions can also be restricted using a whitelist.
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
             - `message`_
+            - `normalizer`_
             - `payload`_
             - `strict`_
             - `versions`_
@@ -98,6 +99,7 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
+.. include:: /reference/constraints/_normalizer-option.rst.inc
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 strict
