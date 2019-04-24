@@ -61,8 +61,8 @@ In addition, some components and official bundles provide other value resolvers:
 
 .. deprecated:: 4.1
 
-    The resolver was deprecated in Symfony 4.1 in favor of
-    `Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`.
+    The ``SecurityUserValueResolver`` was deprecated in Symfony 4.1 in favor of
+    :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`.
 
 ``Psr7ServerRequestResolver``
     Injects a `PSR-7`_ compliant version of the current request if type-hinted
