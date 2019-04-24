@@ -693,8 +693,8 @@ the choice is ultimately up to you.
     The form name is automatically generated from the type class name. If you want
     to modify it, use the :method:`Symfony\\Component\\Form\\FormFactoryInterface::createNamed` method::
 
-        // src/AppBundle/Controller/DefaultController.php
-        use AppBundle\Form\TaskType;
+        // src/Controller/DefaultController.php
+        use App\Form\TaskType;
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
         class DefaultController extends AbstractController
