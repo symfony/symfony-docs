@@ -67,9 +67,8 @@ You can also match any route with the HTTP *host* of the incoming request.
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\MainController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('mobile_homepage', '/')
@@ -153,9 +152,8 @@ you can use placeholders in your hostname:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\MainController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('project_homepage', '/')
@@ -245,9 +243,8 @@ instance, if you want to match both ``m.example.com`` and
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\MainController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('mobile_homepage', '/')
@@ -344,9 +341,8 @@ instance, if you want to match both ``m.example.com`` and
         .. code-block:: php
 
             // config/routes.php
-            namespace Symfony\Component\Routing\Loader\Configurator;
-
             use App\Controller\MainController;
+            use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
             return function (RoutingConfigurator $routes) {
                 $routes->add('mobile_homepage', '/')
@@ -417,7 +413,7 @@ You can also set the host option on imported routes:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import("@AcmeHelloBundle/Resources/config/routing.php")

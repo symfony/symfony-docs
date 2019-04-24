@@ -61,7 +61,7 @@ This can be done by importing routing resources from the main routing file:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // loads routes from the given routing file stored in some bundle
@@ -128,7 +128,7 @@ instead of ``/blog/{slug}``):
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller/', 'annotation')
@@ -175,9 +175,8 @@ be prefixed with the string ``/site``.
         .. code-block:: php
 
             // config/routes.php
-            namespace Symfony\Component\Routing\Loader\Configurator;
-
             use App\Controller\ArticleController;
+            use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
             return function (RoutingConfigurator $routes) {
                 $routes->import('../src/Controller/', 'annotation')
@@ -244,7 +243,7 @@ a controller class or imported from a configuration file:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller/', 'annotation')
