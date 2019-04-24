@@ -410,7 +410,7 @@ The ``Timezones`` class provides access to the name and values of all timezones:
     \Locale::setDefault('en');
 
     $timezones = Timezones::getNames();
-    // ('timezoneName' => 'timezoneValue')
+    // ('timezoneID' => 'timezoneValue')
     // => ['America/Eirunepe' => 'Acre Time (Eirunepe)', 'America/Rio_Branco' => 'Acre Time (Rio Branco)', ...]
 
     $timezone = Timezones::getName('Africa/Nairobi');
@@ -425,9 +425,9 @@ which defaults to the current default locale::
     $timezone = Timezones::getName('Africa/Nairobi', 'de');
     // => 'Ostafrikanische Zeit (Nairobi)'
 
-You can also check if a given timezone name is valid::
+You can also check if a given timezone ID is valid::
 
-    $isValidTimezone = Timezones::exists($timezoneName);
+    $isValidTimezone = Timezones::exists($timezoneId);
 
 .. versionadded:: 4.3
 
