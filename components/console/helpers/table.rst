@@ -271,8 +271,8 @@ Spanning Multiple Columns and Rows
 To make a table cell that spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
 
     use Symfony\Component\Console\Helper\Table;
-    use Symfony\Component\Console\Helper\TableSeparator;
     use Symfony\Component\Console\Helper\TableCell;
+    use Symfony\Component\Console\Helper\TableSeparator;
 
     $table = new Table($output);
     $table

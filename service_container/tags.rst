@@ -253,10 +253,10 @@ container for any services with the ``app.mail_transport`` tag::
     // src/DependencyInjection/Compiler/MailTransportPass.php
     namespace App\DependencyInjection\Compiler;
 
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\Reference;
     use App\Mail\TransportChain;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Reference;
 
     class MailTransportPass implements CompilerPassInterface
     {
@@ -418,8 +418,8 @@ To answer this, change the service declaration:
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
 
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
     class TransportCompilerPass implements CompilerPassInterface

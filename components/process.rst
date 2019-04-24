@@ -26,8 +26,8 @@ escaping arguments to prevent security issues. It replaces PHP functions like
 :phpfunction:`exec`, :phpfunction:`passthru`, :phpfunction:`shell_exec` and
 :phpfunction:`system`::
 
-    use Symfony\Component\Process\Process;
     use Symfony\Component\Process\Exception\ProcessFailedException;
+    use Symfony\Component\Process\Process;
 
     $process = new Process(['ls', '-lsa']);
     $process->run();

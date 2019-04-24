@@ -101,12 +101,12 @@ not take many steps. You create an
 (explained below). To complete your working kernel, you'll add more event
 listeners to the events discussed below::
 
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+    use Symfony\Component\HttpKernel\HttpKernel;
 
     // create the Request object
     $request = Request::createFromGlobals();

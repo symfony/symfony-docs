@@ -56,9 +56,9 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
 
     use App\Entity\Product;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class ProductType extends AbstractType
     {
@@ -99,12 +99,12 @@ Finally, you need to update the code of the controller that handles the form::
     // src/Controller/ProductController.php
     namespace App\Controller;
 
+    use App\Entity\Product;
+    use App\Form\ProductType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
-    use App\Entity\Product;
-    use App\Form\ProductType;
 
     class ProductController extends AbstractController
     {
@@ -308,8 +308,8 @@ Then, define a service for this class:
 Now you're ready to use this service in the controller::
 
     // src/Controller/ProductController.php
-    use Symfony\Component\HttpFoundation\Request;
     use App\Service\FileUploader;
+    use Symfony\Component\HttpFoundation\Request;
 
     // ...
     public function new(Request $request, FileUploader $fileUploader)
@@ -338,12 +338,12 @@ automatically move the file when persisting the entity::
     // src/EventListener/BrochureUploadListener.php
     namespace App\EventListener;
 
-    use Symfony\Component\HttpFoundation\File\UploadedFile;
-    use Symfony\Component\HttpFoundation\File\File;
-    use Doctrine\ORM\Event\LifecycleEventArgs;
-    use Doctrine\ORM\Event\PreUpdateEventArgs;
     use App\Entity\Product;
     use App\Service\FileUploader;
+    use Doctrine\ORM\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PreUpdateEventArgs;
+    use Symfony\Component\HttpFoundation\File\File;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     class BrochureUploadListener
     {

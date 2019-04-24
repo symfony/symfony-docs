@@ -31,8 +31,8 @@ uses an :class:`Symfony\\Component\\Cache\\Adapter\\ArrayAdapter`). You can
 customize this by creating a custom cache pool or using one of the available
 ones and injecting this using the constructor::
 
-    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
     use Symfony\Component\Cache\Adapter\RedisAdapter;
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
     $cache = new RedisAdapter(...);
     $expressionLanguage = new ExpressionLanguage($cache);

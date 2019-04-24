@@ -13,11 +13,11 @@ an *authenticated* token if the supplied credentials were found to be valid.
 The listener should then store the authenticated token using
 :class:`the token storage <Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface>`::
 
-    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-    use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+    use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
     class SomeAuthenticationListener implements ListenerInterface
     {
@@ -127,9 +127,9 @@ to create a hash of the password and returns an authenticated token if the
 password was valid::
 
     use Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider;
-    use Symfony\Component\Security\Core\User\UserChecker;
-    use Symfony\Component\Security\Core\User\InMemoryUserProvider;
     use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+    use Symfony\Component\Security\Core\User\InMemoryUserProvider;
+    use Symfony\Component\Security\Core\User\UserChecker;
 
     $userProvider = new InMemoryUserProvider(
         [
