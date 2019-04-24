@@ -79,7 +79,7 @@ such as Symfony projects, should use at least these values:
 
 .. tip::
 
-    A `realpath_cache_size` of `4096K` is the default value as of PHP 7.2.
+    A ``realpath_cache_size`` of ``4096K`` is the default value as of PHP 7.2.
     Yet, you might want to check you don't have an explicit configuration 
     setting lower than that.
     
