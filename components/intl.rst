@@ -387,7 +387,8 @@ The ``Timezones`` class provides access to the name and values of all timezones:
     \Locale::setDefault('en');
 
     $timezones = Timezones::getNames();
-    // => ['America/Eirunepe' => 'Acre Time (Eirunepe)', ...]
+    // ('timezoneName' => 'timezoneValue')
+    // => ['America/Eirunepe' => 'Acre Time (Eirunepe)', 'America/Rio_Branco' => 'Acre Time (Rio Branco)', ...]
 
     $timezone = Timezones::getName('Africa/Nairobi');
     // => 'East Africa Time (Nairobi)'
@@ -396,7 +397,7 @@ All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $timezones = Timezones::getNames('de');
-    // => ['America/Eirunepe' => 'Acre-Zeit (Eirunepe)', ...]
+    // => ['America/Eirunepe' => 'Acre-Zeit (Eirunepe)', 'America/Rio_Branco' => 'Acre-Zeit (Rio Branco)', ...]
 
     $timezone = Timezones::getName('Africa/Nairobi', 'de');
     // => 'Ostafrikanische Zeit (Nairobi)'
