@@ -27,7 +27,7 @@ The directory structure will look like this:
 
 .. code-block:: text
 
-    libs/
+    lib/
         ClassLoader/
             Psr4ClassLoader.php
             ...
