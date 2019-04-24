@@ -33,9 +33,9 @@ Suppose you have a Task form with a tags ``text`` type::
     namespace App\Form\Type;
 
     use App\Entity\Task;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     // ...
     class TaskType extends AbstractType
@@ -66,8 +66,8 @@ class::
     namespace App\Form\Type;
 
     use Symfony\Component\Form\CallbackTransformer;
-    use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
     // ...
 
     class TaskType extends AbstractType

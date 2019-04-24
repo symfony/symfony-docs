@@ -6,8 +6,8 @@ Using the Translator
 
 Imagine you want to translate the string *"Symfony is great"* into French::
 
-    use Symfony\Component\Translation\Translator;
     use Symfony\Component\Translation\Loader\ArrayLoader;
+    use Symfony\Component\Translation\Translator;
 
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
@@ -453,8 +453,8 @@ When using the standalone Translation component, call the ``setMetadata()``
 method of the catalogue and pass the notes as arrays. This is for example the
 code needed to generate the previous XLIFF file::
 
-    use Symfony\Component\Translation\MessageCatalogue;
     use Symfony\Component\Translation\Dumper\XliffFileDumper;
+    use Symfony\Component\Translation\MessageCatalogue;
 
     $catalogue = new MessageCatalogue('en_US');
     $catalogue->add([

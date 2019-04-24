@@ -346,9 +346,9 @@ and save it::
     namespace App\Controller;
 
     // ...
-    use Symfony\Component\HttpFoundation\Response;
-
     use App\Entity\Product;
+    use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ProductController extends AbstractController
     {

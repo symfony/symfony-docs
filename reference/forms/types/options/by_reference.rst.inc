@@ -10,9 +10,9 @@ called in all cases.
 
 To explain this further, here's a simple example::
 
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
     use Symfony\Component\Form\Extension\Core\Type\FormType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
     // ...
 
     $builder = $this->createFormBuilder($article);

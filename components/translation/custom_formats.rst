@@ -30,8 +30,8 @@ new class that implements the
 method will get a filename and parse it into an array. Then, it will
 create the catalog that will be returned::
 
-    use Symfony\Component\Translation\MessageCatalogue;
     use Symfony\Component\Translation\Loader\LoaderInterface;
+    use Symfony\Component\Translation\MessageCatalogue;
 
     class MyFormatLoader implements LoaderInterface
     {
@@ -80,8 +80,8 @@ must be created. To write the dump contents into a file, extending the
 :class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` class
 will save a few lines::
 
-    use Symfony\Component\Translation\MessageCatalogue;
     use Symfony\Component\Translation\Dumper\FileDumper;
+    use Symfony\Component\Translation\MessageCatalogue;
 
     class MyFormatDumper extends FileDumper
     {

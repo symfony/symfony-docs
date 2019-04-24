@@ -52,8 +52,8 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
 
     namespace Acme\DatabaseConfiguration;
 
-    use Symfony\Component\Config\Definition\ConfigurationInterface;
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+    use Symfony\Component\Config\Definition\ConfigurationInterface;
 
     class DatabaseConfiguration implements ConfigurationInterface
     {
@@ -838,9 +838,9 @@ any value is not of the expected type, is mandatory and yet undefined, or
 could not be validated in some other way, an exception will be thrown.
 Otherwise the result is a clean array of configuration values::
 
-    use Symfony\Component\Yaml\Yaml;
-    use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
+    use Symfony\Component\Config\Definition\Processor;
+    use Symfony\Component\Yaml\Yaml;
 
     $config = Yaml::parse(
         file_get_contents(__DIR__.'/src/Matthias/config/config.yaml')

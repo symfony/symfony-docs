@@ -57,10 +57,10 @@ added but are processed when the container's ``compile()`` method is called.
 
 A very simple extension may just load configuration files into the container::
 
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-    use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
     use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
     class AcmeDemoExtension implements ExtensionInterface
     {
@@ -113,8 +113,8 @@ If this file is loaded into the configuration then the values in it are
 only processed when the container is compiled at which point the Extensions
 are loaded::
 
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
     $containerBuilder = new ContainerBuilder();

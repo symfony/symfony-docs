@@ -92,8 +92,8 @@ Then you can constrain this method with ``IsTrue``.
         // src/Entity/Author.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\IsTrue;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {

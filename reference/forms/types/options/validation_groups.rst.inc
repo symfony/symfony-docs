@@ -62,8 +62,8 @@ like when you pass multiple groups in an array, but with the difference that
 a group is only validated if the previous groups pass without errors.
 Here's an example::
 
-    use Symfony\Component\Validator\Constraints\GroupSequence;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Validator\Constraints\GroupSequence;
     // ...
 
     class MyType extends AbstractType

@@ -59,8 +59,8 @@ This is how your security configuration can look in action:
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\LoginFormAuthenticator;
         use App\Security\FacebookConnectAuthenticator;
+        use App\Security\LoginFormAuthenticator;
 
         $container->loadFromExtension('security', [
             // ...

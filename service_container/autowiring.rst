@@ -456,11 +456,11 @@ injection::
     .. code-block:: php
 
         // config/services.php
-        use App\Util\Rot13Transformer;
-        use App\Util\UppercaseTransformer;
-        use App\Util\TransformerInterface;
         use App\Service\MastodonClient;
         use App\Service\TwitterClient;
+        use App\Util\Rot13Transformer;
+        use App\Util\TransformerInterface;
+        use App\Util\UppercaseTransformer;
 
         // ...
         $container->autowire(Rot13Transformer::class);
