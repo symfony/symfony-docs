@@ -151,19 +151,40 @@ controllers if you type-hint an argument with
             // gets an attribute by name
             $foo = $session->get('foo');
 
-            // uses a default value if the attribute doesn't exist
+            // the second argument is the value returned when the attribute doesn't exist
             $filters = $session->get('filters', []);
 
             // ...
         }
     }
 
-Stored attributes remain in the session for the remainder of that user's session.
-
 .. tip::
 
     Every ``SessionInterface`` implementation is supported. If you have your
     own implementation, type-hint this in the argument instead.
+
+Stored attributes remain in the session for the remainder of that user's session.
+By default, session attributes are key-value pairs managed with the
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
+class.
+
+If your application needs are complex, you may prefer to use
+:ref:`namespaced session attributes <namespaced-attributes>` which are managed with the
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
+class. Before using them, override the ``session`` service definition to replace
+the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        session:
+            class: Symfony\Component\HttpFoundation\Session\Session
+            arguments: ['@session.storage', '@session.namespacedattributebag', '@session.flash_bag']
+
+        session.namespacedattributebag:
+            class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
 
 .. _session-avoid-start:
 
@@ -201,6 +222,5 @@ More about Sessions
     session/locale_sticky_session
     session/php_bridge
     session/proxy_examples
-    session/attribute_bag
 
 .. _`HttpFoundation component`: https://symfony.com/components/HttpFoundation
