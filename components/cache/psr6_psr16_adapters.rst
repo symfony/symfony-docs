@@ -11,10 +11,6 @@ standard, but need to pass it to an object that expects a :ref:`PSR-6 <cache-com
 cache adapter. Or, you might have the opposite situation. The cache component contains
 two classes for bidirectional interoperability between PSR-6 and PSR-16 caches.
 
-.. versionadded:: 4.3
-
-    The ``Psr16Adapter`` and ``Psr16Cache`` classes mentioned below were added in Symfony 4.3.
-
 Using a PSR-16 Cache Object as a PSR-6 Cache
 --------------------------------------------
 
@@ -49,6 +45,10 @@ this use-case::
 
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr6Cache);
+
+.. versionadded:: 4.3
+
+    The ``Psr16Adapter`` class was introduced in Symfony 4.3.
 
 Using a PSR-6 Cache Object as a PSR-16 Cache
 --------------------------------------------
@@ -86,5 +86,9 @@ this use-case::
 
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr16Cache);
+
+.. versionadded:: 4.3
+
+    The ``Psr16Cache`` class was introduced in Symfony 4.3.
 
 .. _`PSR-16`: http://www.php-fig.org/psr/psr-16/
