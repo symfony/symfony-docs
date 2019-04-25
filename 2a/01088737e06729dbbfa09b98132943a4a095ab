@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-02-28T15:38:59Z
+
+Please note that while joining seems like a performance optimalization, it makes hydration of doctrine way more complex for *..n relations. This often reduces performance instead of optimizing it: https://tideways.com/profiler/blog/5-doctrine-orm-performance-traps-you-should-avoid
