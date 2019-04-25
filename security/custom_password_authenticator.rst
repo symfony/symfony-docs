@@ -151,7 +151,7 @@ the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthen
 Configuration
 -------------
 
-Now, make sure your ``TimeAuthenticator`` is registered as as service. If you're
+Now, make sure your ``TimeAuthenticator`` is registered as a service. If you're
 using the :ref:`default services.yml configuration <service-container-services-load-example>`,
 that happens automatically.
 

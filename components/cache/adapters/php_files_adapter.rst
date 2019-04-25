@@ -37,7 +37,7 @@ file similar to the following::
 
     If you have configured OPcache to
     :ref:`not check the file timestamps <performance-dont-check-timestamps>`
-    the cached items will not not be invalidated unless you clear OPcache.
+    the cached items will not be invalidated unless you clear OPcache.
 
 The PhpFilesAdapter can optionally be provided a namespace, default cache lifetime, and cache
 directory path as constructor arguments::

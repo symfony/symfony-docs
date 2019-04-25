@@ -110,7 +110,7 @@ matcher::
         }
     }
 
-Then, you'll need to make sure your class is defined as as service. If you're using
+Then, you'll need to make sure your class is defined as a service. If you're using
 the :ref:`default services.yml configuration <service-container-services-load-example>`,
 you don't need to do anything!
 
