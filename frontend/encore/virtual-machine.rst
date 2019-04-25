@@ -1,15 +1,15 @@
 Using Encore in a Virtual Machine
 =================================
 
-You may encounter some issues when using Encore in a virtual machine, like VirtualBox or VMWare.
+Encore is compatible with virtual machines such as `VirtualBox`_ and `VMWare`_
+but you may need to make some changes to your configuration to make it work.
 
-Fix watching issues
--------------------
+File Watching Issues
+--------------------
 
-When using a virtual machine, your project root directory is shared with the virtual machine with `NFS`_.
-This is really useful, but it introduces some issues with files watching.
-
-You must enable `polling`_ option to make it work:
+When using a virtual machine, your project root directory is shared with the
+virtual machine using `NFS`_. This introduces issues with files watching, so
+you must enable the `polling`_ option to make it work:
 
 .. code-block:: javascript
 
@@ -19,21 +19,23 @@ You must enable `polling`_ option to make it work:
 
     // will be applied for `encore dev --watch` and `encore dev-server` commands
     Encore.configureWatchOptions(watchOptions => {
-        watchOptions.poll = 250; // check for changes every 250 ms
+        watchOptions.poll = 250; // check for changes every 250 milliseconds
     });
 
-Fix development server
-----------------------
+Development Server Issues
+-------------------------
 
-Configure public path
-~~~~~~~~~~~~~~~~~~~~~
+Configure the Public Path
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
 
-    You can skip this sub-section if your app is running on ``http://localhost``
-    and not a custom local domain-name like ``http://app.vm``.
+    You can skip this section if your application is running on
+    ``http://localhost`` instead a custom local domain-name like
+    ``http://app.vm``.
 
-When running the development server, you will probably face the following errors in the web console:
+When running the development server, you will probably see the following errors
+in the web console:
 
 .. code-block:: text
 
@@ -41,8 +43,9 @@ When running the development server, you will probably face the following errors
     GET http://localhost:8080/build/runtime.js net::ERR_CONNECTION_REFUSED
     ...
 
-If your Symfony application is running on ``http://app.vm``, you must configure the public path explicitly
-in your ``package.json``:
+If your Symfony application is running on a custom domain (e.g.
+``http://app.vm``), you must configure the public path explicitly in your
+``package.json``:
 
 .. code-block:: diff
 
@@ -55,20 +58,23 @@ in your ``package.json``:
         }
     }
 
-After restarting Encore and reloading your web page, you will probably face different issues:
+After restarting Encore and reloading your web page, you will probably see
+different issues in the web console:
 
 .. code-block:: text
 
     GET http://app.vm:8080/build/vendors~app.css net::ERR_CONNECTION_REFUSED
     GET http://app.vm:8080/build/runtime.js net::ERR_CONNECTION_REFUSED
 
-Encore understood our modification but it's still not working. There is still two things to do.
+You still need to make other configuration changes, as explained in the
+following sections.
 
-Allow external access
+Allow External Access
 ~~~~~~~~~~~~~~~~~~~~~
 
-You must configure how you run the `webpack-dev-server`_.
-This can easily be done in your ``package.json`` by adding ``--host 0.0.0.0`` argument:
+Add the ``--host 0.0.0.0`` argument to the ``dev-server`` configuration in your
+``package.json`` file to make the development server accept all incoming
+connections:
 
 .. code-block:: diff
 
@@ -81,16 +87,16 @@ This can easily be done in your ``package.json`` by adding ``--host 0.0.0.0`` ar
         }
     }
 
-.. warning::
+.. caution::
 
-    Using ``--host 0.0.0.0`` makes your development server accept all incoming connections.
-    Be sure to run the development server inside your virtual machine and not outside, otherwise other computers can have access to it.
+    Make sure to run the development server inside your virtual machine only;
+    otherwise other computers can have access to it.
 
-Fix "Invalid Host header" issue
+Fix "Invalid Host header" Issue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Webpack will respond ``Invalid Host header`` when trying to access files from the dev-server.
-To fix this, add the argument ``--disable-host-check``:
+Webpack will respond ``Invalid Host header`` when trying to access files from
+the dev-server. To fix this, add the argument ``--disable-host-check``:
 
 .. code-block:: diff
 
@@ -103,10 +109,13 @@ To fix this, add the argument ``--disable-host-check``:
         }
     }
 
-.. warning::
+.. caution::
 
-    This is usually not recommended to disable host checking, `more information here <https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck>`_.
+    Beware that `it's not recommended to disable host checking`_ in general, but
+    here it's required to solve the issue when using Encore in a virtual machine.
 
+.. _`VirtualBox`: https://www.virtualbox.org/
+.. _`VMWare`: https://www.vmware.com
 .. _`NFS`: https://en.wikipedia.org/wiki/Network_File_System
 .. _`polling`: https://webpack.js.org/configuration/watch/#watchoptionspoll
-.. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
+.. _`it's not recommended to disable host checking`: https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck
