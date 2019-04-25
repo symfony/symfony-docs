@@ -694,10 +694,10 @@ Create your Transport Factory
 You need to give FrameworkBundle the opportunity to create your transport from a
 DSN. You will need a transport factory::
 
-    use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
-    use Symfony\Component\Messenger\Transport\TransportInterface;
     use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
     use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+    use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
+    use Symfony\Component\Messenger\Transport\TransportInterface;
 
     class YourTransportFactory implements TransportFactoryInterface
     {

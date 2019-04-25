@@ -255,8 +255,8 @@ In your extension, you can load this and dynamically set its arguments::
     // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
     // ...
 
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
     public function load(array $configs, ContainerBuilder $container)
     {

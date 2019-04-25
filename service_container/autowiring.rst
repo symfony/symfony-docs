@@ -363,19 +363,18 @@ If you register this as a service, you now have *two* services that implement th
 which one to use. Remember, autowiring isn't magic; it looks for a service
 whose id matches the type-hint. So you need to choose one by creating an alias
 from the type to the correct service id (see :ref:`autowiring-interface-alias`).
-Additionally, you can define several named aliases if you want to use
+Additionally, you can define several named autowiring aliases if you want to use
 one implementation in some cases, and another implementation in some
 other cases.
-
 
 For instance, you may want to use by default the ``Rot13Transformer``
 implementation by default when the ``TransformerInterface`` interface is
 type hinted, but use the ``UppercaseTransformer`` implementation in some
 specific cases. To do so, you can create a normal alias from the
 ``TransformerInterface`` interface to ``Rot13Transformer``, and then
-create a *named alias* from a special string containing the interface
-followed by a variable name matching the one you use when doing the
-injection::
+create a *named autowiring alias* from a special string containing the
+interface followed by a variable name matching the one you use when doing
+the injection::
 
     namespace App\Service;
 
@@ -423,9 +422,8 @@ injection::
                 # the Rot13Transformer will be passed as the $transformer argument
                 autowire: true
 
-                # If you wanted to choose the non-default service and
-                # do not want to use a named alias, wire it manually
-                # arguments:
+                # If you wanted to choose the non-default service and do not
+                # want to use a named autowiring alias, wire it manually:
                 #     $transformer: '@App\Util\UppercaseTransformer'
                 # ...
 
@@ -456,11 +454,11 @@ injection::
     .. code-block:: php
 
         // config/services.php
-        use App\Util\Rot13Transformer;
-        use App\Util\UppercaseTransformer;
-        use App\Util\TransformerInterface;
         use App\Service\MastodonClient;
         use App\Service\TwitterClient;
+        use App\Util\Rot13Transformer;
+        use App\Util\TransformerInterface;
+        use App\Util\UppercaseTransformer;
 
         // ...
         $container->autowire(Rot13Transformer::class);
@@ -484,7 +482,7 @@ under the arguments key.
 
 .. versionadded:: 4.2
 
-    Named aliases have been introduced in Symfony 4.2.
+    Named autowiring aliases have been introduced in Symfony 4.2.
 
 Fixing Non-Autowireable Arguments
 ---------------------------------

@@ -114,8 +114,8 @@ could listen to the ``mailer.post_send`` event and change the method's return va
     // src/EventSubscriber/MailPostSendSubscriber.php
     namespace App\EventSubscriber;
 
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use App\Event\AfterSendMailEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     class MailPostSendSubscriber implements EventSubscriberInterface
     {

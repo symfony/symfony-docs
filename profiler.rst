@@ -218,4 +218,4 @@ event::
 
 .. _`Single-page applications`: https://en.wikipedia.org/wiki/Single-page_application
 .. _`Stopwatch component`: https://symfony.com/components/Stopwatch
-.. _`Blackfire`: https://blackfire.io/
+.. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=profiler

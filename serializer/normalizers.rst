@@ -12,8 +12,8 @@ denormalizing (array to object).
 
 Normalizers are enabled in the serializer passing them as its first argument::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $normalizers = [new ObjectNormalizer()];
     $serializer = new Serializer($normalizers);

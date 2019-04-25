@@ -82,8 +82,8 @@ are configured for you:
 Example::
 
     use App\Message\MyMessage;
-    use Symfony\Component\Messenger\MessageBus;
     use Symfony\Component\Messenger\Handler\HandlersLocator;
+    use Symfony\Component\Messenger\MessageBus;
     use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 
     $bus = new MessageBus([
@@ -155,9 +155,9 @@ Instead of dealing directly with the messages in the middleware you receive the 
 Hence you can inspect the envelope content and its stamps, or add any::
 
     use App\Message\Stamp\AnotherStamp;
-    use Symfony\Component\Messenger\Stamp\ReceivedStamp;
     use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
     use Symfony\Component\Messenger\Middleware\StackInterface;
+    use Symfony\Component\Messenger\Stamp\ReceivedStamp;
 
     class MyOwnMiddleware implements MiddlewareInterface
     {
@@ -210,8 +210,8 @@ First, create your sender::
     namespace App\MessageSender;
 
     use App\Message\ImportantAction;
-    use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
     use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
 
     class ImportantActionToEmailSender implements SenderInterface
     {
@@ -264,9 +264,9 @@ First, create your receiver::
     namespace App\MessageReceiver;
 
     use App\Message\NewOrder;
+    use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
     use Symfony\Component\Serializer\SerializerInterface;
-    use Symfony\Component\Messenger\Envelope;
 
     class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {

@@ -128,8 +128,8 @@ interface only requires one method: ``loadUserByUsername($username)``::
     // src/Repository/UserRepository.php
     namespace App\Repository;
 
-    use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
     use Doctrine\ORM\EntityRepository;
+    use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
     class UserRepository extends EntityRepository implements UserLoaderInterface
     {
@@ -480,8 +480,8 @@ and want to inject in your ``LoginFormAuthenticator`` a user provider of type
     // src/Security/LoginFormAuthenticator.php
     namespace App\Security;
 
-    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
     use Symfony\Component\Security\Core\User\InMemoryUserProvider;
+    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 
     class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     {

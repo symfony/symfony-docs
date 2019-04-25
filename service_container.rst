@@ -701,8 +701,8 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
 
         // config/services.php
         use App\Controller\LuckyController;
-        use Symfony\Component\DependencyInjection\Reference;
         use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Reference;
 
         $container->register(LuckyController::class)
             ->setPublic(true)
@@ -1038,8 +1038,8 @@ admin email. In this case, each needs to have a unique service id:
     .. code-block:: php
 
         // config/services.php
-        use App\Updates\SiteUpdateManager;
         use App\Service\MessageGenerator;
+        use App\Updates\SiteUpdateManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('site_update_manager.superadmin', SiteUpdateManager::class)

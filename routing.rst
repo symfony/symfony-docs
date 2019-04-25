@@ -26,8 +26,16 @@ you want one route that matches ``/blog`` exactly and another more dynamic
 route that can match *any* URL like ``/blog/my-post`` or
 ``/blog/all-about-symfony``.
 
-Routes can be configured in YAML, XML, PHP or annotations. All formats provide
-the same features and performance, so choose the one you prefer:
+Routes can be configured in YAML, XML, PHP or using annotations. All formats
+provide the same features and performance, so choose the one you prefer. If you
+choose PHP annotations, run this command once in your application to add support
+for them:
+
+.. code-block:: terminal
+
+    $ composer require annotations
+
+Now you can configure the routes:
 
 .. configuration-block::
 
@@ -217,8 +225,12 @@ Symfony provides a handy way to declare localized routes without duplication.
         use App\Controller\CompanyController;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('about_us', ['nl' => '/over-ons', 'en' => '/about-us'])
-                ->controller([CompanyController::class, 'about']);
+            $routes->add('about_us', [
+                'nl' => '/over-ons',
+                'en' => '/about-us',
+            ])
+                ->controller([CompanyController::class, 'about'])
+            ;
         };
 
 When a localized route is matched Symfony automatically knows which locale
@@ -601,7 +613,7 @@ As your app grows, you'll eventually have a *lot* of routes! To see them all, ru
     ------------------------------ -------- -------------------------------------
      Name                           Method   Path
     ------------------------------ -------- -------------------------------------
-     app_lucky_number              ANY    /lucky/number/{max}
+     app_lucky_number               ANY      /lucky/number/{max}
      ...
     ------------------------------ -------- -------------------------------------
 

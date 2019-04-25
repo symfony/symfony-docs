@@ -35,8 +35,8 @@ method of the validator builder::
 In this example, the validation metadata is retrieved executing the
 ``loadValidatorMetadata()`` method of the class::
 
-    use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Mapping\ClassMetadata;
 
     class User
     {

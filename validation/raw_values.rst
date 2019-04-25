@@ -45,8 +45,8 @@ section.
 
 Validation of arrays is possible using the ``Collection`` constraint::
 
-    use Symfony\Component\Validator\Validation;
     use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidator();
 
