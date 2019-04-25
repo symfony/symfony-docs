@@ -46,27 +46,27 @@ and some regular CSS and JavaScript application files (called ``main.css`` and
 
     web/assets/
     ├── css
-    │   ├── main.css
-    │   └── code-highlight.css
+    │   ├── main.css
+    │   └── code-highlight.css
     ├── js
-    │   ├── bootstrap.js
-    │   ├── jquery.js
-    │   └── main.js
+    │   ├── bootstrap.js
+    │   ├── jquery.js
+    │   └── main.js
     └── scss
         ├── bootstrap
-        │   ├── _alerts.scss
-        │   ├── ...
-        │   ├── _variables.scss
-        │   ├── _wells.scss
-        │   └── mixins
-        │       ├── _alerts.scss
-        │       ├── ...
-        │       └── _vendor-prefixes.scss
+        │   ├── _alerts.scss
+        │   ├── ...
+        │   ├── _variables.scss
+        │   ├── _wells.scss
+        │   └── mixins
+        │       ├── _alerts.scss
+        │       ├── ...
+        │       └── _vendor-prefixes.scss
         ├── bootstrap.scss
         ├── font-awesome
-        │   ├── _animated.scss
-        │   ├── ...
-        │   └── _variables.scss
+        │   ├── _animated.scss
+        │   ├── ...
+        │   └── _variables.scss
         └── font-awesome.scss
 
 Combining and Minimizing CSS Files and Compiling SCSS Files

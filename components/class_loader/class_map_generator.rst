@@ -19,12 +19,12 @@ manually. For example, imagine a library with the following directory structure:
 
     library/
     ├── bar/
-    │   ├── baz/
-    │   │   └── Boo.php
-    │   └── Foo.php
+    │   ├── baz/
+    │   │   └── Boo.php
+    │   └── Foo.php
     └── foo/
         ├── bar/
-        │   └── Foo.php
+        │   └── Foo.php
         └── Bar.php
 
 These files contain the following classes:

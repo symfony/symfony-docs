@@ -238,7 +238,7 @@ to the tag like so:
 
 .. note::
 
-    Marking an event listener as ``lazy`` has nothing to do with lazy service
+    Marking an event listener as ``lazy`` has nothing to do with lazy service
     definitions which are described :doc:`in their own article </service_container/lazy_services>`
 
 Priorities for Event Listeners

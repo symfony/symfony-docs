@@ -5,7 +5,7 @@ LockHandler
 
     The ``LockHandler`` class was deprecated in Symfony 3.4 and it will be
     removed in Symfony 4.0. Use :ref:`SemaphoreStore <lock-store-semaphore>`
-    or :ref:`FlockStore <lock-store-flock>` from the Lock component instead.
+    or :ref:`FlockStore <lock-store-flock>` from the Lock component instead.
 
 What is a Lock?
 ---------------
