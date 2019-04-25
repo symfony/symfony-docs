@@ -6,14 +6,14 @@ This documentation is rendered online at https://symfony.com/doc/current/
 Contributing
 ------------
 
+We love contributors! For more information on how you can contribute to the
+Symfony documentation, please read
+[Contributing to the Documentation](https://symfony.com/doc/current/contributing/documentation/overview.html)
+
 > **Note**
 > Unless you're documenting a feature that was introduced *after* Symfony 3.4
 > (e.g. in Symfony 4.2), all pull requests must be based off of the **3.4** branch,
 > **not** the master or older branches.
-
-We love contributors! For more information on how you can contribute to the
-Symfony documentation, please read
-[Contributing to the Documentation](https://symfony.com/doc/current/contributing/documentation/overview.html)
 
 SymfonyCloud
 ------------
