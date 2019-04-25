@@ -274,7 +274,7 @@ that defaults to the project directory.
 Each custom pool becomes a service where the service id is the name of the pool
 (e.g. ``custom_thing.cache``). An autowiring alias is also created for each pool
 using the camel case version of its name - e.g. ``custom_thing.cache`` can be
-injected automatically by naming the argument ``$forecastCache`` and type-hinting it
+injected automatically by naming the argument ``$customThingCache`` and type-hinting it
 with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
 ``Psr\\Cache\\CacheItemPoolInterface``::
 
