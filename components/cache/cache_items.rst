@@ -9,6 +9,7 @@ Cache Items
 Cache items are the information units stored in the cache as a key/value pair.
 In the Cache component they are represented by the
 :class:`Symfony\\Component\\Cache\\CacheItem` class.
+They are used in both the Cache Contracts and the PSR-6 interfaces.
 
 Cache Item Keys and Values
 --------------------------
@@ -27,14 +28,22 @@ arrays and objects.
 Creating Cache Items
 --------------------
 
-Cache items are created with the ``getItem($key)`` method of the cache pool. The
-argument is the key of the item::
+The only way to create cache items is via cache pools. When using the Cache
+Contracts, they are passed as arguments to the recomputation callback::
+
+    // $cache pool object was created before
+    $productsCount = $cache->get('stats.products_count', function (ItemInterface $item) {
+        // [...]
+    });
+
+When using PSR-6, they are created with the ``getItem($key)`` method of the cache
+pool::
 
     // $cache pool object was created before
     $productsCount = $cache->getItem('stats.products_count');
 
-Then, use the ``Psr\\Cache\\CacheItemInterface::set`` method to set
-the data stored in the cache item::
+Then, use the ``Psr\\Cache\\CacheItemInterface::set`` method to set the data stored
+in the cache item (this step is done automatically when using the Cache Contracts)::
 
     // storing a simple integer
     $productsCount->set(4711);
@@ -67,7 +76,6 @@ lifespan. Consider for example an application which caches the latest news just
 for one minute. In those cases, use the ``expiresAfter()`` method to set the
 number of seconds to cache the item::
 
-    $latestNews = $cache->getItem('latest_news');
     $latestNews->expiresAfter(60);  // 60 seconds = 1 minute
 
     // this method also accepts \DateInterval instances
@@ -76,23 +84,22 @@ number of seconds to cache the item::
 Cache items define another related method called ``expiresAt()`` to set the
 exact date and time when the item will expire::
 
-    $mostPopularNews = $cache->getItem('popular_news');
     $mostPopularNews->expiresAt(new \DateTime('tomorrow'));
 
 Cache Item Hits and Misses
 --------------------------
 
 Using a cache mechanism is important to improve the application performance, but
-it should not be required to make the application work. In fact, the PSR-6
-standard states that caching errors should not result in application failures.
+it should not be required to make the application work. In fact, the PSR-6 document
+wisely states that caching errors should not result in application failures.
 
-In practice this means that the ``getItem()`` method always returns an object
-which implements the ``Psr\Cache\CacheItemInterface`` interface, even when the
-cache item doesn't exist. Therefore, you don't have to deal with ``null`` return
+In practice with PSR-6, this means that the ``getItem()`` method always returns an
+object which implements the ``Psr\Cache\CacheItemInterface`` interface, even when
+the cache item doesn't exist. Therefore, you don't have to deal with ``null`` return
 values and you can safely store in the cache values such as ``false`` and ``null``.
 
-In order to decide if the returned object is correct or not, caches use the
-concept of hits and misses:
+In order to decide if the returned object represents a value coming from the storage
+or not, caches use the concept of hits and misses:
 
 * **Cache Hits** occur when the requested item is found in the cache, its value
   is not corrupted or invalid and it hasn't expired;

@@ -27,8 +27,8 @@ Basic uses of the cache looks like this::
     // ... and to remove the cache key
     $pool->delete('my_cache_key');
 
-Symfony supports PSR-6 and PSR-16 cache interfaces. You can read more about
-these at the :doc:`component documentation </components/cache>`.
+Symfony supports the Cache Contracts, PSR-6/16 and Doctrine Cache interfaces.
+You can read more about these at the :doc:`component documentation </components/cache>`.
 
 .. versionadded:: 4.2
 
@@ -92,7 +92,7 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
             ],
         ]);
 
-The Cache component comes with a series of adapters already created:
+The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
 * :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
@@ -100,16 +100,8 @@ The Cache component comes with a series of adapters already created:
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
 * :doc:`cache.adapter.pdo </components/cache/adapters/pdo_doctrine_dbal_adapter>`
+* :doc:`cache.adapter.psr6 </components/cache/adapters/proxy_adapter>`
 * :doc:`cache.adapter.redis </components/cache/adapters/redis_adapter>`
-* :doc:`PHPFileAdapter </components/cache/adapters/php_files_adapter>`
-* :doc:`PHPArrayAdapter </components/cache/adapters/php_array_cache_adapter>`
-
-* :doc:`ChainAdapter </components/cache/adapters/chain_adapter>`
-* :doc:`ProxyAdapter </components/cache/adapters/proxy_adapter>`
-* ``cache.adapter.psr6``
-
-* ``cache.adapter.system``
-* ``NullAdapter``
 
 Some of these adapters could be configured via shortcuts. Using these shortcuts
 will create pool with service id of ``cache.[type]``
@@ -183,10 +175,10 @@ will create pool with service id of ``cache.[type]``
             ],
         ]);
 
-Creating Custom Pools
----------------------
+Creating Custom (Namespaced) Pools
+----------------------------------
 
-You can also create more customized pools. All you need is an adapter:
+You can also create more customized pools:
 
 .. configuration-block::
 
@@ -196,14 +188,33 @@ You can also create more customized pools. All you need is an adapter:
         framework:
             cache:
                 default_memcached_provider: 'memcached://localhost'
+
                 pools:
+                    # creates a "custom_thing.cache" service
+                    # autowireable via "CacheInterface $customThingCache"
+                    # uses the "app" cache configuration
+                    custom_thing.cache:
+                        adapter: cache.app
+
+                    # creates a "my_cache_pool" service
+                    # autowireable via "CacheInterface $myCachePool"
                     my_cache_pool:
                         adapter: cache.adapter.array
-                    cache.acme:
+
+                    # uses the default_memcached_provider from above
+                    acme.cache:
                         adapter: cache.adapter.memcached
-                    cache.foobar:
+
+                    # control adapter's configuration
+                    foobar.cache:
                         adapter: cache.adapter.memcached
                         provider: 'memcached://user:password@example.com'
+
+                    # uses the "foobar.cache" pool as its backend but controls
+                    # the lifetime and (like all pools) has a separate cache namespace
+                    short_cache:
+                        adapter: cache.foobar
+                        default_lifetime: 60
 
     .. code-block:: xml
 
@@ -217,9 +228,11 @@ You can also create more customized pools. All you need is an adapter:
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
+                  <framework:pool name="custom_thing.cache" adapter="cache.app"/>
                   <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
-                  <framework:pool name="cache.acme" adapter="cache.adapter.memcached"/>
-                  <framework:pool name="cache.foobar" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
+                  <framework:pool name="acme.cache" adapter="cache.adapter.memcached"/>
+                  <framework:pool name="foobar.cache" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
+                  <framework:pool name="short_cache" adapter="foobar.cache" default_lifetime="60"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -231,100 +244,53 @@ You can also create more customized pools. All you need is an adapter:
             'cache' => [
                 'default_memcached_provider' => 'memcached://localhost',
                 'pools' => [
+                    'custom_thing.cache' => [
+                        'adapter' => 'cache.app',
+                    ],
                     'my_cache_pool' => [
                         'adapter' => 'cache.adapter.array',
                     ],
-                    'cache.acme' => [
+                    'acme.cache' => [
                         'adapter' => 'cache.adapter.memcached',
                     ],
-                    'cache.foobar' => [
+                    'foobar.cache' => [
                         'adapter' => 'cache.adapter.memcached',
                         'provider' => 'memcached://user:password@example.com',
                     ],
-                ],
-            ],
-        ]);
-
-
-The configuration above will create 3 services: ``my_cache_pool``, ``cache.acme``
-and ``cache.foobar``.  The ``my_cache_pool`` pool is using the ArrayAdapter
-and the other two are using the :doc:`MemcachedAdapter </components/cache/adapters/memcached_adapter>`.
-The ``cache.acme`` pool is using the Memcached server on localhost and ``cache.foobar``
-is using the Memcached server at example.com.
-
-For advanced configurations it could sometimes be useful to use a pool as an adapter.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/cache.yaml
-        framework:
-            cache:
-                app: my_configured_app_cache
-                pools:
-                    my_cache_pool:
-                        adapter: cache.adapter.memcached
-                        provider: 'memcached://user:password@example.com'
-                    cache.short_cache:
-                        adapter: my_cache_pool
-                        default_lifetime: 60
-                    cache.long_cache:
-                        adapter: my_cache_pool
-                        default_lifetime: 604800
-                    my_configured_app_cache:
-                        # "cache.adapter.filesystem" is the default for "cache.app"
-                        adapter: cache.adapter.filesystem
-                        default_lifetime: 3600
-
-    .. code-block:: xml
-
-        <!-- config/packages/cache.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <framework:config>
-                <framework:cache app="my_cache_pool">
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
-                  <framework:pool name="cache.short_cache" adapter="my_cache_pool" default_lifetime="604800"/>
-                  <framework:pool name="cache.long_cache" adapter="my_cache_pool" default_lifetime="604800"/>
-                  <!-- "cache.adapter.filesystem" is the default for "cache.app" -->
-                  <framework:pool name="my_configured_app_cache" adapter="cache.adapter.filesystem" default_lifetime="3600"/>
-                </framework:cache>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'app' => 'my_configured_app_cache',
-                'pools' => [
-                    'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.memcached',
-                        'provider' => 'memcached://user:password@example.com',
-                    ],
-                    'cache.short_cache' => [
-                        'adapter' => 'cache.adapter.memcached',
+                    'short_cache' => [
+                        'adapter' => 'foobar.cache',
                         'default_lifetime' => 60,
                     ],
-                    'cache.long_cache' => [
-                        'adapter' => 'cache.adapter.memcached',
-                        'default_lifetime' => 604800,
-                    ],
-                    'my_configured_app_cache' => [
-                        // "cache.adapter.filesystem" is the default for "cache.app"
-                        'adapter' => 'cache.adapter.filesystem',
-                        'default_lifetime' => 3600,
-                    ],
                 ],
             ],
         ]);
+
+Each pool manages a set of independent cache keys: keys of different pools
+*never* collide, even if they share the same backend. This is achieved by prefixing
+keys with a namespace that's generated by hashing the name of the pool, the name
+of the compiled container class and a :ref:`configurable seed<reference-cache-prefix-seed>`
+that defaults to the project directory.
+
+Each custom pool becomes a service where the service id is the name of the pool
+(e.g. ``custom_thing.cache``). An autowiring alias is also created for each pool
+using the camel case version of its name - e.g. ``custom_thing.cache`` can be
+injected automatically by naming the argument ``$customThingCache`` and type-hinting it
+with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
+``Psr\\Cache\\CacheItemPoolInterface``::
+
+    use Symfony\Contracts\Cache\CacheInterface;
+
+    // from a controller method
+    public function listProducts(CacheInterface $customThingCache)
+    {
+        // ...
+    }
+
+    // in a service
+    public function __construct(CacheInterface $customThingCache)
+    {
+        // ...
+    }
 
 Custom Provider Options
 -----------------------

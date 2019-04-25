@@ -189,7 +189,7 @@ There may be lots of other things that you need to do, depending on your
 setup:
 
 * Running any database migrations
-* Clearing your APC cache
+* Clearing your APCu cache
 * Add/edit CRON jobs
 * :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
 * Pushing assets to a CDN
