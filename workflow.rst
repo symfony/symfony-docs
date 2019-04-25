@@ -317,6 +317,8 @@ workflow leaves a place::
 
     class WorkflowLogger implements EventSubscriberInterface
     {
+        private $logger;
+        
         public function __construct(LoggerInterface $logger)
         {
             $this->logger = $logger;
@@ -601,6 +603,8 @@ requires:
         ]);
 
 Then you can access this metadata in your controller as follows::
+
+    use Symfony\Component\Workflow\Registry;
 
     public function myController(Registry $registry, Article $article)
     {
