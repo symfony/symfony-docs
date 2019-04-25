@@ -6,7 +6,8 @@ Php Array Cache Adapter
 =======================
 
 This adapter is a high performance cache for static data (e.g. application configuration)
-that is optimized and preloaded into OPcache memory storage::
+that is optimized and preloaded into OPcache memory storage. It is suited for any data that
+is mostly read-only after warmup::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\PhpArrayAdapter;
@@ -34,5 +35,4 @@ that is optimized and preloaded into OPcache memory storage::
 
 .. note::
 
-    This adapter requires PHP 7.x and should be used with the php.ini setting
-    ``opcache.enable`` on.
+    This adapter requires turning on the ``opcache.enable`` php.ini setting.

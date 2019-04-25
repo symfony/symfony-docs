@@ -2151,6 +2151,8 @@ The cache clearer used to clear your PSR-6 cache.
 
     For more information, see :class:`Symfony\\Component\\HttpKernel\\CacheClearer\\Psr6CacheClearer`.
 
+.. _reference-cache-prefix-seed:
+
 prefix_seed
 ...........
 

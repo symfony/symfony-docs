@@ -1,6 +1,6 @@
 .. index::
     single: Cache Pool
-    single: APC Cache, APCu Cache
+    single: APCu Cache
     single: Array Cache
     single: Chain Cache
     single: Doctrine Cache
@@ -26,8 +26,9 @@ Creating Cache Pools
 --------------------
 
 Cache Pools are created through the **cache adapters**, which are classes that
-implement :class:`Symfony\\Component\\Cache\\Adapter\\AdapterInterface`. This
-component provides several adapters ready to use in your applications.
+implement both :class:`Symfony\\Contracts\\Cache\\CacheInterface` and
+``Psr\\Cache\\CacheItemPoolInterface``. This component provides several adapters
+ready to use in your applications.
 
 .. toctree::
     :glob:
@@ -35,8 +36,53 @@ component provides several adapters ready to use in your applications.
 
     adapters/*
 
+
+Using the Cache Contracts
+-------------------------
+
+The :class:`Symfony\\Contracts\\Cache\\CacheInterface` allows fetching, storing
+and deleting cache items using only two methods and a callback::
+
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+    use Symfony\Contracts\Cache\ItemInterface;
+
+    $cache = new FilesystemAdapter();
+
+    // The callable will only be executed on a cache miss.
+    $value = $cache->get('my_cache_key', function (ItemInterface $item) {
+        $item->expiresAfter(3600);
+
+        // ... do some HTTP request or heavy computations
+        $computedValue = 'foobar';
+
+        return $computedValue;
+    });
+
+    echo $value; // 'foobar'
+
+    // ... and to remove the cache key
+    $cache->delete('my_cache_key');
+
+Out of the box, using this interface provides stampede protection via locking
+and early expiration. Early expiration can be controlled via the third "beta"
+argument of the :method:`Symfony\\Contracts\\Cache\\CacheInterface::get()` method.
+See the :doc:`/components/cache` article for more information.
+
+Early expiration can be detected inside the callback by calling the
+:method:`Symfony\\Contracts\\Cache\\ItemInterface::isHit()` method: if this
+returns ``true``, it means we are currently recomputing a value ahead of its
+expiration date.
+
+For advanced use cases, the callback can accept a second ``bool &$save``
+argument passed by reference. By setting ``$save`` to ``false`` inside the
+callback, you can instruct the cache pool that the returned value *should not*
+be stored in the backend.
+
+Using PSR-6
+-----------
+
 Looking for Cache Items
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Cache Pools define three methods to look for cache items. The most common method
 is ``getItem($key)``, which returns the cache item identified by the given key::
@@ -66,7 +112,7 @@ returns ``true`` if there is a cache item identified by the given key::
     $hasBadges = $cache->hasItem('user_'.$userId.'_badges');
 
 Saving Cache Items
-------------------
+~~~~~~~~~~~~~~~~~~
 
 The most common method to save cache items is
 ``Psr\\Cache\\CacheItemPoolInterface::save``, which stores the
@@ -100,7 +146,7 @@ method returns ``true`` when all the pending items are successfully saved or
 ``false`` otherwise.
 
 Removing Cache Items
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Cache Pools include methods to delete a cache item, some of them or all of them.
 The most common is ``Psr\\Cache\\CacheItemPoolInterface::deleteItem``,

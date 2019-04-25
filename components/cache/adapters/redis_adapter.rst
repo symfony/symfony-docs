@@ -7,7 +7,7 @@
 Redis Cache Adapter
 ===================
 
-This adapter stores the values in-memory using  one (or more) `Redis server`_ instances.
+This adapter stores the values in-memory using one (or more) `Redis server`_ instances.
 Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
 :ref:`Memcached adapter <memcached-adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment. The ability
