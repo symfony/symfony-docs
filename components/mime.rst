@@ -198,10 +198,10 @@ the following tree is the one that works on most email clients:
 
     multipart/mixed
     ├── multipart/related
-    │   ├── multipart/alternative
-    │   │   ├── text/plain
-    │   │   └── text/html
-    │   └── image/png
+    │   ├── multipart/alternative
+    │   │   ├── text/plain
+    │   │   └── text/html
+    │   └── image/png
     └── application/pdf
 
 This is the purpose of each MIME message part:
