@@ -13,7 +13,7 @@ two classes for bidirectional interoperability between PSR-6 and PSR-16 caches.
 
 .. versionadded:: 4.3
 
-    The ``Psr16Adapter`` and ``Psr16Cache`` classes mentionned below were added in Symfony 4.3.
+    The ``Psr16Adapter`` and ``Psr16Cache`` classes mentioned below were added in Symfony 4.3.
 
 Using a PSR-16 Cache Object as a PSR-6 Cache
 --------------------------------------------
