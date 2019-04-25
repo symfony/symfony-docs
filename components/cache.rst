@@ -99,15 +99,14 @@ is computed again. The next second the same thing happens. So the data is comput
 about 50 times before the cache is warm again. This is where you need stampede
 prevention
 
-The first solution is locking: on a per-host basis, only one PHP process is
-allowed to compute a specific key at a time. Locking is built in by default so
-that you don't have anything specific to do other than leveraging the Cache
-Contracts.
+The first solution is to use locking: only allow one PHP process (on a per-host basis)
+to compute a specific key at a time. Locking is built-in by default, so
+you don't need to do anything beyond leveraging the Cache Contracts.
 
-The second solution is also built in when using the Cache Contracts: instead of
-waiting for the full delay before expiring a value, it is recomputed ahead of its
-expiration date: the `Probabilistic early expiration`_ algorithm randomly fakes a
-cache miss for one user while others still are served the cached value. You can
+The second solution is also built-in when using the Cache Contracts: instead of
+waiting for the full delay before expiring a value, recompute it ahead of its
+expiration date. The `Probabilistic early expiration`_ algorithm randomly fakes a
+cache miss for one user while others are still served the cached value. You can
 control its behavior with the third optional parameter of
 :method:`Symfony\\Contracts\\Cache\\CacheInterface::get`,
 which is a float value called "beta".
