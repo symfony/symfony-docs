@@ -41,7 +41,7 @@ Using the Cache Contracts
 -------------------------
 
 The :class:`Symfony\\Contracts\\Cache\\CacheInterface` allows fetching, storing
-and deleting cache items using two methods::
+and deleting cache items using only two methods and a callback::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Contracts\Cache\ItemInterface;
