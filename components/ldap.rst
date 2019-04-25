@@ -40,7 +40,7 @@ following options:
     The encryption protocol: ``ssl``, ``tls`` or ``none`` (default)
 
 ``connection_string``
-    You may use this option instead of ``host`` and ``port`` to connect to the
+    You may use this option instead of ``host`` and ``port`` to connect to the
     LDAP server
 
 ``optReferrals``

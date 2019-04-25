@@ -460,7 +460,7 @@ Symfony provides the following env var processors:
             parameters:
                 env(SECRETS_FILE): '/opt/application/.secrets.json'
                 database_password: '%env(key:database_password:json:file:SECRETS_FILE)%'
-                # if SECRETS_FILE contents are: {"database_password": "secret"} it returns "secret"
+                # if SECRETS_FILE contents are: {"database_password": "secret"} it returns "secret"
 
         .. code-block:: xml
 
