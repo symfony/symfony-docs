@@ -229,6 +229,18 @@ Call an anonymous function on each node of the list::
 The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
+When using nested crawler, beware that ``filterXPath()`` is evaluated in the
+context of the crawler::
+
+    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i) {
+        // DON'T DO THIS: direct child can not be found
+        $subCrawler = $parentCrawler->filterXPath('sub-tag/sub-child-tag');
+
+        // DO THIS: specify the parent tag too
+        $subCrawler = $parentCrawler->filterXPath('parent/sub-tag/sub-child-tag');
+        $subCrawler = $parentCrawler->filterXPath('node()/sub-tag/sub-child-tag');
+  });
+
 Adding the Content
 ~~~~~~~~~~~~~~~~~~
 
