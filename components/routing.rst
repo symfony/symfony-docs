@@ -319,7 +319,7 @@ have to provide the name of a PHP file which returns a callable handling a :clas
 This class allows to chain imports, collections or simple route definition calls::
 
     // RouteProvider.php
-    namespace Symfony\Component\Routing\Loader\Configurator;
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
     return function (RoutingConfigurator $routes) {
         $routes->add('route_name', '/foo')
@@ -444,9 +444,8 @@ routes with UTF-8 characters:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\DefaultController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('route1', '/category/{name}')
@@ -565,9 +564,8 @@ You can also include UTF-8 strings as routing requirements:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\DefaultController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('route2', '/category/{name}')

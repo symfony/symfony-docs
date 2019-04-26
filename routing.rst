@@ -112,9 +112,8 @@ Now you can configure the routes:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // Matches /blog exactly
@@ -220,9 +219,8 @@ Symfony provides a handy way to declare localized routes without duplication.
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\CompanyController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('about_us', [
@@ -280,7 +278,7 @@ with a locale. This can be done by defining a different prefix for each locale
     .. code-block:: php
 
         // config/routes/annotations.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller/', 'annotation')
@@ -370,9 +368,8 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page}')
@@ -440,9 +437,8 @@ concise, but it can decrease route readability when requirements are complex:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page<\d+>}')
@@ -521,9 +517,8 @@ So how can you make ``blog_list`` once again match when the user visits
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page}')
@@ -595,9 +590,8 @@ placeholder:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page<\d+>?1}')
@@ -704,9 +698,8 @@ With all of this in mind, check out this advanced example:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\ArticleController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('article_show', '/articles/{_locale}/{year}/{slug}.{_format}')

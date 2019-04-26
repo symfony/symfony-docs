@@ -177,7 +177,7 @@ automatically when installing Twig support):
     .. code-block:: php
 
         // config/routes/dev/twig.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('@TwigBundle/Resources/config/routing/errors.xml')

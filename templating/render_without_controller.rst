@@ -46,9 +46,8 @@ can do this without creating a controller:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('acme_privacy', '/privacy')
@@ -117,9 +116,8 @@ exactly how your page is cached:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('acme_privacy', '/privacy')

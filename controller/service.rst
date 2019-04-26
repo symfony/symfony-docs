@@ -63,13 +63,12 @@ a service like: ``App\Controller\HelloController::index``:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\HelloController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('hello', '/hello')
-                ->controller(['HelloController::class, 'index'])
+                ->controller([HelloController::class, 'index'])
                 ->methods(['GET'])
             ;
         };

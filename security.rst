@@ -837,7 +837,7 @@ Next, you'll need to create a route for this URL (but not a controller):
     ..  code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('logout', '/logout')
