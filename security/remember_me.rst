@@ -289,7 +289,7 @@ First, you need to register ``DoctrineTokenProvider`` as a service:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider" />
+                <service id="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"/>
             </services>
         </container>
 
