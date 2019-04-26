@@ -34,6 +34,8 @@ You can read more about these at the :doc:`component documentation </components/
 
     The cache contracts were introduced in Symfony 4.2.
 
+.. _cache-configuration-with-frameworkbundle:
+
 Configuring Cache with FrameworkBundle
 --------------------------------------
 
