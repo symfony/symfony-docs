@@ -317,6 +317,8 @@ workflow leaves a place::
 
     class WorkflowLogger implements EventSubscriberInterface
     {
+        private $logger;
+        
         public function __construct(LoggerInterface $logger)
         {
             $this->logger = $logger;
@@ -445,7 +447,7 @@ transition. The value of this option is any valid expression created with the
                         to:   published
                     reject:
                         # or any valid expression language with "subject" referring to the post
-                        guard: "has_role("ROLE_ADMIN") and subject.isStatusReviewed()"
+                        guard: "has_role('ROLE_ADMIN') and subject.isStatusReviewed()"
                         from: reviewed
                         to:   rejected
 
@@ -601,6 +603,8 @@ requires:
         ]);
 
 Then you can access this metadata in your controller as follows::
+
+    use Symfony\Component\Workflow\Registry;
 
     public function myController(Registry $registry, Article $article)
     {
