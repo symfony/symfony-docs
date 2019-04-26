@@ -24,6 +24,7 @@ Basic uses of the cache looks like this::
 Symfony supports PSR-6 and PSR-16 cache interfaces. You can read more about
 these at the :doc:`component documentation </components/cache>`.
 
+.. _cache-configuration-with-frameworkbundle:
 
 Configuring Cache with FrameworkBundle
 --------------------------------------

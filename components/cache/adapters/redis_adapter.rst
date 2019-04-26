@@ -7,6 +7,13 @@
 Redis Cache Adapter
 ===================
 
+.. seealso::
+
+    This article explains how to configure the Redis adapter when using the
+    Cache as an independent component in any PHP application. Read the
+    :ref:`Symfony Cache configuration <cache-configuration-with-frameworkbundle>`
+    article if you are using it in a Symfony application.
+
 This adapter stores the values in-memory using  one (or more) `Redis server`_ instances.
 Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
 :ref:`Memcached adapter <memcached-adapter>`, it is not limited to the current server's
