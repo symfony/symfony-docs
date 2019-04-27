@@ -174,7 +174,8 @@ the message inside your `templates <Translations in Templates>`.
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To actually translate the message, Symfony uses the following process:
+To actually translate the message, Symfony uses the following process when
+using the ``trans()`` method:
 
 * The ``locale`` of the current user, which is stored on the request is determined;
 
@@ -188,32 +189,20 @@ To actually translate the message, Symfony uses the following process:
 * If the message is located in the catalog, the translation is returned. If
   not, the translator returns the original message.
 
-When using the ``trans()`` method, Symfony looks for the exact string inside
-the appropriate message catalog and returns it (if it exists).
+.. _message-placeholders:
+.. _pluralization:
 
-Message Placeholders
---------------------
+Message Format
+--------------
 
 Sometimes, a message containing a variable needs to be translated::
 
-    use Symfony\Contracts\Translation\TranslatorInterface;
+    // ...
+    $translated = $translator->trans('Hello '.$name);
 
-    public function index(TranslatorInterface $translator, $name)
-    {
-        $translated = $translator->trans('Hello '.$name);
-
-        // ...
-    }
-
-However, creating a translation for this string is impossible since the translator
-will try to look up the exact message, including the variable portions
+However, creating a translation for this string is impossible since the
+translator will try to look up the message including the variable portions
 (e.g. *"Hello Ryan"* or *"Hello Fabien"*).
-
-For details on how to handle this situation, see :ref:`component-translation-placeholders`
-in the components documentation. For how to do this in templates, see :ref:`translation-tags`.
-
-Pluralization
--------------
 
 Another complication is when you have translations that may or may not be
 plural, based on some variable:
@@ -223,17 +212,15 @@ plural, based on some variable:
     There is one apple.
     There are 5 apples.
 
-To handle this, use the :method:`Symfony\\Component\\Translation\\Translator::transChoice`
-method or the ``transchoice`` tag/filter in your :ref:`template <translation-tags>`.
+To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
+using PHP's :phpclass:`MessageFormatter` class. Read more about this in
+:doc:`/translation/message_format`.
 
-For much more information, see :ref:`component-translation-pluralization`
-in the Translation component documentation.
+.. versionadded:: 4.2
 
-.. deprecated:: 4.2
-
-    In Symfony 4.2 the ``Translator::transChoice()`` method was deprecated in
-    favor of using ``Translator::trans()`` with ``%count%`` as the parameter
-    driving plurals.
+   Support for ICU MessageFormat was introduced in Symfony 4.2. Prior to this,
+   pluralization was managed by the
+   :method:`Symfony\\Component\\Translation\\Translator::transChoice` method.
 
 Translations in Templates
 -------------------------
@@ -436,10 +423,8 @@ Summary
 With the Symfony Translation component, creating an internationalized application
 no longer needs to be a painful process and boils down to these steps:
 
-* Abstract messages in your application by wrapping each in either the
-  :method:`Symfony\\Component\\Translation\\Translator::trans` or
-  :method:`Symfony\\Component\\Translation\\Translator::transChoice` methods
-  (learn about this in :doc:`/components/translation/usage`);
+* Abstract messages in your application by wrapping each in the
+  :method:`Symfony\\Component\\Translation\\Translator::trans` method;
 
 * Translate each message into multiple locales by creating translation message
   files. Symfony discovers and processes each file because its name follows
@@ -454,12 +439,14 @@ Learn more
 .. toctree::
     :maxdepth: 1
 
+    translation/message_format
     translation/templates
     translation/locale
     translation/debug
     translation/lint
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
+.. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
