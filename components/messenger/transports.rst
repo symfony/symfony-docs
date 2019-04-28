@@ -87,7 +87,7 @@ Your own Sender
 Using the ``SenderInterface``, you can create your own message sender.
 You already have an ``ImportantAction`` message going through the
 message bus and handled by a handler. Now, you also want to send this message as
-an email via your sender::
+an email via your sender:
 
 .. code-block:: php
 
