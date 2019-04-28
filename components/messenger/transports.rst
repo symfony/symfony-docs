@@ -49,9 +49,8 @@ Retry
 When receiving a message from a broker, it might happen that some exceptions will
 arise. Typically, a 3rd party provider is down or your system is under heavy load
 and can't really process some messages. To handle this scenario, there is a built-in
-retry mechanism that can be enabled via your DSN:
+retry mechanism that can be enabled via your DSN::
 
-.. code-block:: bash
     amqp://guest:guest@localhost/%2f/messages
       ?retry[attempts]=3
       &retry[ttl][0]=10000
