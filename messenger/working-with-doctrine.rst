@@ -6,8 +6,8 @@ Working with Doctrine
 
 If your message handlers writes to a database it is a good idea to wrap all those
 writes in a single Doctrine transaction. This make sure that if one of your database
-query fails, then all queries are rolled back and give you a change to handle the
-exception knowing that your database was not changed by your message handler.
+query fails, then all queries are rolled back and give you a chance to handle the
+exception knowing that your database was not changed by your message handler(s).
 
 Next thing you need to do is to add the middleware to your bus configuration.
 
