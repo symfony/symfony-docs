@@ -8,7 +8,7 @@ To send and receive messages via message brokers, the Messenger component has
 "transports". Transports are responsible for routing messages to and from
 the message brokers.
 
-Every transport is configurable using a DSN. This DSN allows you to chose the
+Every transport is configurable using a DSN. This DSN allows you to choose the
 transport layer as well as configure it.
 
 AMQP
@@ -18,7 +18,7 @@ The most famous message broker protocol is probably AMQP, which is most
 commonly implemented with RabbitMQ. The Messenger component has built-in
 support for AMQP.
 
-How it works?
+How Does it Works?
 ~~~~~~~~~~~~~
 
 A DSN that starts with ``amqp://`` is recognized and used to create
@@ -34,11 +34,11 @@ queue on the ``/`` vhost (the ``%2f`` is a url-encoded ``/``).
     By default, RabbitMQ uses ``guest`` as a username and ``guest`` as a password
     and has a ``/`` vhost.
 
-Error handling
+Error Handling
 ~~~~~~~~~~~~~~
 
 If something wrong happens (i.e. an exception is thrown) while handling your message,
-the default behaviour is that your message will be "NACK" and requeued.
+the default behavior is that your message will be "NACK" and requeued.
 
 However, if your exception implements the ``RejectMessageExceptionInterface`` interface,
 the message will be rejected from the queue.
@@ -51,6 +51,7 @@ arise. Typically, a 3rd party provider is down or your system is under heavy loa
 and can't really process some messages. To handle this scenario, there is a built-in
 retry mechanism that can be enabled via your DSN::
 
+.. code-block:: bash
     amqp://guest:guest@localhost/%2f/messages
       ?retry[attempts]=3
       &retry[ttl][0]=10000
@@ -63,7 +64,7 @@ it will wait 30 seconds. After the 3rd failure, it will wait a minute. If it sti
 fails, the message will be moved to a "dead queue" and you will have to manually
 handle this message.
 
-DSN configuration reference
+DSN Configuration Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The options available in the DSN are documented on the ``Connection`` class
@@ -76,19 +77,22 @@ Probably one of the most famous PHP queue-broker libraries, Enqueue, has 10+ ada
 with brokers like Kafka, Google Pub/Sub, AWS SQS and more. Check out the transport
 documentation in `Enqueue's official repository`_.
 
-Your own transport
+Your own Transport
 ------------------
 
-If there is no available transport for your message broker, you can easily
-create your own.
+If there is no available transport for your message broker, you can create your own.
 
-Your own sender
+Your own Sender
 ~~~~~~~~~~~~~~~
 
-Using the ``SenderInterface``, you can easily create your own message sender.
-Let's say you already have an ``ImportantAction`` message going through the
+Using the ``SenderInterface``, you can create your own message sender.
+You already have an ``ImportantAction`` message going through the
 message bus and handled by a handler. Now, you also want to send this message as
 an email via your sender::
+
+.. code-block:: php
+
+    // src/MessageSender/ImportantActionToEmailSender.php
 
     namespace App\MessageSender;
 
@@ -129,7 +133,7 @@ Your own receiver
 A receiver is responsible for receiving messages from a source and dispatching
 them to the application.
 
-Let's say you already processed some "orders" in your application using a
+You already processed some "orders" in your application using a
 ``NewOrder`` message. Now you want to integrate with a 3rd party or a legacy
 application but you can't use an API and need to use a shared CSV file with new
 orders.
