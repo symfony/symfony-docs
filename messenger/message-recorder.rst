@@ -11,8 +11,8 @@ such as:
 
 - If using the ``DoctrineTransactionMiddleware`` and a dispatched message throws an exception,
   then any database transactions in the original handler will be rolled back.
-- If the message is dispatched to a different bus, then the dispatched message can still
-  be handled even if the original handler encounters an exception.
+- If the message is dispatched to a different bus, then dispatched message will be
+  handled even if the current handler throws an exception.
 
 An Example ``RegisterUser`` Process
 -----------------------------------
@@ -68,12 +68,10 @@ buses. For the example, the middleware must be loaded for both the command and e
                     messenger.bus.command:
                         middleware:
                             - validation
-                            - doctrine_transaction
                     messenger.bus.event:
                         default_middleware: allow_no_handlers
                         middleware:
                             - validation
-                            - doctrine_transaction
 
     .. code-block:: xml
 
@@ -153,6 +151,8 @@ buses. For the example, the middleware must be loaded for both the command and e
                 (new Envelope($event))
                     ->with(new DispatchAfterCurrentBusStamp())
             );
+
+            // ...
         }
     }
 
