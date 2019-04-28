@@ -727,7 +727,7 @@ There are several types of normalizers available:
     with a timezone that may not be the default timezone if the time-string has timezone
     information embedded or the time-string is a UNIX timestamp representation.
 
-	A setting of `FORCE_CONTEXT_TIMEZONE` = false is considered deprecated from Symfony 4.2.
+    A setting of `FORCE_CONTEXT_TIMEZONE` = false is considered deprecated from Symfony 4.2.
 	To use the default PHP behavior, set `TIMEZONE_KEY` = null.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
