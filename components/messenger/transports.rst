@@ -19,7 +19,7 @@ commonly implemented with RabbitMQ. The Messenger component has built-in
 support for AMQP.
 
 How Does it Works?
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 A DSN that starts with ``amqp://`` is recognized and used to create
 an instance of the built-in AMQP transport::
