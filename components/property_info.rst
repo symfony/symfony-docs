@@ -229,27 +229,18 @@ This is based on how :doc:`PropertyAccess </components/property_access>` works,
 so it even looks for adder/remover methods and can transform between singular
 and plural property names::
 
+    use Acme\Entity\Analysis;
+
     class SomeClass
     {
         private $analyses;
-        private $feet;
 
-        public function addAnalyse(Dummy $analyse)
+        public function addAnalysis(Analysis $analysis)
         {
             // ...
         }
 
-        public function removeAnalyse(Dummy $analyse)
-        {
-            // ...
-        }
-
-        public function addFoot(Dummy $foot)
-        {
-            // ...
-        }
-
-        public function removeFoot(Dummy $foot)
+        public function removeAnalysis(Analysis $analysis)
         {
             // ...
         }
@@ -257,7 +248,6 @@ and plural property names::
 
     // to be writable, both the adder and the remover methods must be defined
     $propertyInfo->isWritable(SomeClass::class, 'analyses'); // returns true
-    $propertyInfo->isWritable(SomeClass::class, 'feet');     // returns true
 
 .. versionadded:: 3.2
 
