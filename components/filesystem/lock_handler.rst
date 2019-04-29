@@ -82,7 +82,7 @@ PHP code will wait indefinitely until the lock is released by another process.
 
         use Symfony\Component\Filesystem\LockHandler;
 
-         if (!(new LockHandler('hello.lock'))->lock()) {
+        if (!(new LockHandler('hello.lock'))->lock()) {
             // the resource "hello" is already locked by another process
 
             return 0;

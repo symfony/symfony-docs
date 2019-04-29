@@ -61,5 +61,5 @@ when rendering the field:
     .. code-block:: php
 
         <?= $view['form']->widget($form['publishAt'], [
-                  'separator' => '====='
+            'separator' => '=====',
         ]) ?>

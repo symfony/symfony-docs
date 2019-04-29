@@ -402,12 +402,12 @@ With all of this in mind, check out this advanced example:
 
         # app/config/routing.yml
         article_show:
-          path:     /articles/{_locale}/{year}/{slug}.{_format}
-          defaults: { _controller: AppBundle:Article:show, _format: html }
-          requirements:
-              _locale:  en|fr
-              _format:  html|rss
-              year:     \d+
+            path:     /articles/{_locale}/{year}/{slug}.{_format}
+            defaults: { _controller: AppBundle:Article:show, _format: html }
+            requirements:
+                _locale:  en|fr
+                _format:  html|rss
+                year:     \d+
 
     .. code-block:: xml
 

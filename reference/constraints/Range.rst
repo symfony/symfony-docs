@@ -44,7 +44,7 @@ you might add the following:
              *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
              * )
              */
-             protected $height;
+            protected $height;
         }
 
     .. code-block:: yaml
