@@ -121,7 +121,7 @@ like this:
     Content-Type: text/html
 
     <html>
-      <!-- ... HTML for the xkcd comic -->
+        <!-- ... HTML for the xkcd comic -->
     </html>
 
 The HTTP response contains the requested resource (the HTML content in this

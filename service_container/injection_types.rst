@@ -41,7 +41,7 @@ service container configuration:
 
     .. code-block:: yaml
 
-       services:
+        services:
             # ...
 
             AppBundle\Mail\NewsletterManager:
@@ -120,7 +120,7 @@ that accepts the dependency::
 
     .. code-block:: yaml
 
-       services:
+        services:
             # ...
 
             app.newsletter_manager:
@@ -192,7 +192,7 @@ Another possibility is just setting public fields of the class directly::
 
     .. code-block:: yaml
 
-       services:
+        services:
             # ...
 
             app.newsletter_manager:

@@ -152,11 +152,11 @@ listen to the same ``kernel.exception`` event::
         {
             // return the subscribed events, their methods and priorities
             return [
-               KernelEvents::EXCEPTION => [
-                   ['processException', 10],
-                   ['logException', 0],
-                   ['notifyException', -10],
-               ]
+                KernelEvents::EXCEPTION => [
+                    ['processException', 10],
+                    ['logException', 0],
+                    ['notifyException', -10],
+                ],
             ];
         }
 
