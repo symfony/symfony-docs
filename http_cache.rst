@@ -77,22 +77,37 @@ but is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-Each application comes with a caching kernel (``AppCache``) that wraps the
-default one (``AppKernel``). The caching Kernel *is* the reverse proxy.
+To enable the proxy, first create a caching kernel::
 
-To enable caching, modify the code of your front controller. You can also make these
-changes to ``app_dev.php`` to add caching to the ``dev`` environment::
+    // src/CacheKernel.php
+    namespace App;
 
-    // web/app.php
-    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+
+    class CacheKernel extends HttpCache
+    {
+    }
+
+Modify the code of your front controller to wrap the default kernel into the
+caching kernel:
+
+.. code-block:: diff
+
+    // public/index.php
+
+    + use App\CacheKernel;
+    use App\Kernel;
 
     // ...
-    $kernel = new AppKernel('prod', false);
-    $kernel->loadClassCache();
+    $env = $_SERVER['APP_ENV'] ?? 'dev';
+    $debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
+    // ...
+    $kernel = new Kernel($env, $debug);
 
-    // add (or uncomment) this new line!
-    // wrap the default AppKernel with the AppCache one
-    $kernel = new AppCache($kernel);
+    + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
+    + if ('prod' === $env) {
+    +     $kernel = new CacheKernel($kernel);
+    + }
 
     $request = Request::createFromGlobals();
     // ...
@@ -114,15 +129,17 @@ from your application and returning them to the client.
 
         error_log($kernel->getLog());
 
-The ``AppCache`` object has a sensible default configuration, but it can be
+The ``CacheKernel`` object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the
 :method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
 method::
 
-    // app/AppCache.php
+    // src/CacheKernel.php
+    namespace App;
+
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-    class AppCache extends HttpCache
+    class CacheKernel extends HttpCache
     {
         protected function getOptions()
         {
@@ -136,10 +153,9 @@ method::
 For a full list of the options and their meaning, see the
 :method:`HttpCache::__construct() documentation <Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::__construct>`.
 
-When you're in debug mode (either because your booting a ``debug`` kernel, like
-in ``app_dev.php`` *or* you manually set the ``debug`` option to true), Symfony
-automatically adds an ``X-Symfony-Cache`` header to the response. Use this to get
-information about cache hits and misses.
+When you're in debug mode (the second argument of ``Kernel`` constructor in the
+front controller is ``true``), Symfony automatically adds an ``X-Symfony-Cache``
+header to the response. Use this to get information about cache hits and misses.
 
 .. _http-cache-symfony-versus-varnish:
 
