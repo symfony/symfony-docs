@@ -162,7 +162,7 @@ requests and the specific headers for each request::
     // of the same header if defined globally by the HTTP client
     $response = $httpClient->request('POST', 'https://...', [
         'headers' => [
-            'Content-type' => 'text/plain',
+            'Content-Type' => 'text/plain',
         ],
     ]);
 
@@ -190,7 +190,8 @@ processed automatically when making the requests::
     ]);
 
 When uploading data with the ``POST`` method, if you don't define the
-``Content-Type`` HTTP header explicitly, Symfony adds the required
+``Content-Type`` HTTP header explicitly, Symfony assumes that you're uploading
+form data and adds the required
 ``'Content-Type: application/x-www-form-urlencoded'`` header for you.
 
 When uploading JSON payloads, use the ``json`` option instead of ``body``. The
@@ -270,7 +271,7 @@ response sequentially instead of waiting for the entire response::
         // optional: if you don't want to buffer the response in memory
         'buffer' => false,
         // optional: to display details about the response progress
-        'on_progress' => function (int $dlNow, int $dlSize, array $info) {
+        'on_progress' => function (int $dlNow, int $dlSize, array $info): void {
             // ...
         },
     ]);
@@ -290,10 +291,11 @@ response sequentially instead of waiting for the entire response::
 Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
 
-When an HTTP error happens (status code 3xx, 4xx or 5xx) your code is expected
-to handle it by checking the status code of the response. If you don't do that,
-the ``getHeaders()`` and ``getContent()`` methods throw an appropriate exception::
+When the HTTP status code of the response is not in the 200-299 range (i.e. 3xx,
+4xx or 5xx) your code is expected to handle it. If you don't do that, the
+``getHeaders()`` and ``getContent()`` methods throw an appropriate exception::
 
+    // the response of this request will be a 403 HTTP error
     $response = $httpClient->request('GET', 'https://httpbin.org/status/403');
 
     // this code results in a Symfony\Component\HttpClient\Exception\ClientException
@@ -506,7 +508,7 @@ responses dynamically when it's called::
     use Symfony\Component\HttpClient\Response\MockResponse;
 
     $callback = function ($method, $url, $options) {
-        return new MockResponse('...';
+        return new MockResponse('...');
     };
 
     $client = new MockHttpClient($callback);
@@ -514,7 +516,7 @@ responses dynamically when it's called::
 
 The responses provided to the mock client don't have to be instances of
 ``MockResponse``. Any class implementing ``ResponseInterface`` will work (e.g.
-``$this->getMockBuilder(ResponseInterface::class)->getMock()``).
+``$this->createMock(ResponseInterface::class)``).
 
 However, using ``MockResponse`` allows simulating chunked responses and timeouts::
 
