@@ -90,7 +90,8 @@ Configuration
 
 * `http_client`_
 
-  * `auth`_
+  * `auth_basic`_
+  * `auth_bearer`_
   * `base_uri`_
   * `bindto`_
   * `buffer`_
@@ -690,14 +691,22 @@ consume APIs):
                 github:
                     # ...
 
-auth
-....
+auth_basic
+..........
 
-**type**: ``string``
+**type**: ``array``
 
 The username and password used to create the ``Authorization`` HTTP header
 used in HTTP Basic authentication. The value of this option must follow the
-format ``'username:password'`` (a colon separates both values).
+format ``['username', 'password']``.
+
+auth_bearer
+...........
+
+**type**: ``string``
+
+The token used to create the ``Authorization`` HTTP header used in HTTP Bearer
+authentication (also called token authentication).
 
 base_uri
 ........

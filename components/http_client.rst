@@ -258,7 +258,7 @@ following methods::
     // you can get individual info too
     $startTime = $response->getInfo('start_time');
 
-.. _http-client-streaming-responses::
+.. _http-client-streaming-responses:
 
 Streaming Responses
 ~~~~~~~~~~~~~~~~~~~
