@@ -211,7 +211,7 @@ shifts the burden of fixing that deprecation to any contributor that
 happens to submit a pull request shortly after a new vendor release is
 made with that deprecation. To mitigate this, you can either use tighter
 requirements, in the hope that dependencies will not introduce
-deprecations in a patch version, or even commit the Composer lock file,
+deprecations in a patch version, or even commit the ``composer.lock`` file,
 which would create another class of issues. Libraries will often use
 ``SYMFONY_DEPRECATIONS_HELPER=max[total]=999999`` because of this. This
 has the drawback of allowing contributions that introduce deprecations
@@ -226,7 +226,7 @@ be accounted for seperately, while deprecations triggered from a library
 inside it will not (unless you reach 999999 of these), giving you
 the best of both worlds.
 
-Direct and indirect deprecations
+Direct and Indirect Deprecations
 ................................
 
 When working on a project, you might be more interested in
@@ -257,7 +257,7 @@ Here is a summary that should help you pick the right configuration:
 |                        | cannot afford to use one of the modes above.        |
 +------------------------+-----------------------------------------------------+
 
-Disabling the verbose output
+Disabling the Verbose Output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the bridge will display a detailed output with the number of

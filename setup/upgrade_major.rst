@@ -112,7 +112,11 @@ done!
             </php>
         </phpunit>
 
-    (you can also execute the command like ``SYMFONY_DEPRECATIONS_HELPER=max[total]=999999 phpunit``).
+    You can also execute the command like:
+
+    .. code-block:: terminal
+
+        $ SYMFONY_DEPRECATIONS_HELPER=max[total]=999999 phpunit
 
 .. _upgrade-major-symfony-composer:
 
