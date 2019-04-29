@@ -730,8 +730,8 @@ There are several types of normalizers available:
     embedded (e.g. 2010-01-28T15:00:00+02:00) or the time parameter is a UNIX timestamp
     (e.g. @946684800). To use the default PHP behavior, set ``TIMEZONE_KEY`` to ``null``.
 
-    Setting ``FORCE_CONTEXT_TIMEZONE`` to ``false`` is considered deprecated from
-    Symfony ``.. deprecated::4.2``.
+    To ensure backwards compatibility, ``FORCE_CONTEXT_TIMEZONE`` can be set to ``false``,
+    but this is deprecated.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
