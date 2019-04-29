@@ -97,14 +97,14 @@ caching kernel:
 
     + use App\CacheKernel;
     use App\Kernel;
+    use Symfony\Component\Debug\Debug;
+    use Symfony\Component\HttpFoundation\Request;
 
     // ...
-    $env = $_SERVER['APP_ENV'] ?? 'dev';
-    $debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
-    // ...
-    $kernel = new Kernel($env, $debug);
+    $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
 
     + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
+    + $env = $_SERVER['APP_ENV'] ?? 'dev';
     + if ('prod' === $env) {
     +     $kernel = new CacheKernel($kernel);
     + }
