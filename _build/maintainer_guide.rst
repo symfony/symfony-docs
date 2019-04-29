@@ -13,9 +13,9 @@ All the recommendations of the `Symfony's respectful review comments`_ apply,
 but there are extra things to keep in mind for maintainers:
 
 * Always be nice in all interactions with all contributors.
-* Be extra-patient with new contributors (they show a special badge on GitHub).
-* Don't assume that contributors know what you think it's obvious to contribute
-  (e.g. lots of people don't know what to "squash commits" means).
+* Be extra-patient with new contributors (GitHub shows a special badge for them).
+* Don't assume that contributors know what you think is obvious (e.g. lots of
+  them don't know what to "squash commits" means).
 * Don't use acronyms like IMO, IIRC, etc. or complex English words (most
   contributors are not native in English and it's intimidating for them).
 * Never engage in a heated discussion. Lock it right away using GitHub.
@@ -32,7 +32,8 @@ make minor typos.
 
 Even if your intention is good, if you add lots of comments when reviewing a
 first contribution, that person will probably not contribute again. It's better
-to fix the minor errors and typos yourself while merging.
+to fix the minor errors and typos yourself while merging. If that person
+contributes again, it's OK to mention some of the minor issues to educate them.
 
 .. code-block:: terminal
 
@@ -62,8 +63,9 @@ Technical Requirements
 ~~~~~~~~~~~~~~~~~~~~~~
 
 * `Git`_ installed and properly configured.
-* ``gh`` tool installed. This is a proprietary CLI tool which only Symfony team
-  members have access to.
+* ``gh`` tool fully installed according to its installation instructions
+  (GitHub token configured, Git remote configured, etc.)
+  This is a proprietary CLI tool which only Symfony team members have access to.
 * Some previous Git experience, specially merging pull requests.
 
 First Setup
@@ -92,7 +94,7 @@ Merging Process
 ~~~~~~~~~~~~~~~
 
 At first it's common to make mistakes and merge things badly. Don't worry. This
-has happened to all of us and we'll always been able to recover from any mistake.
+has happened to all of us and we've always been able to recover from any mistake.
 
 Step 1: Select the right branch to merge
 ........................................
@@ -122,9 +124,10 @@ We require 2 approval votes from team members before merging a PR, except if
 it's a typo, a small change or an obvious error.
 
 If a PR contains lots of commits, there's no need to ask the contributor to
-squash them. The ``gh`` tool does that automatically. The only exception is
-when commits are made by more than one person. ``gh`` can't squash that, so it's
-better to ask to the original contributor.
+squash them. The ``gh`` tool does that automatically. The only exceptions are
+when commits are made by more than one person and when there's a merge commit.
+``gh`` can't squash commits in those cases, so it's better to ask to the
+original contributor.
 
 .. code-block:: terminal
 
@@ -138,9 +141,7 @@ better to ask to the original contributor.
     # merge any PR passing its GitHub number as argument
     $ gh merge 11159
 
-    # the gh tool will ask you some questions. The only important thing to
-    # consider for Symfony Docs is that the merge category is always 'minor'
-    # no matter if the PR is a bug fix, a new feature, etc. Always choose 'minor'
+    # the gh tool will ask you some questions...
 
     # push your changes (you can merge several PRs and push once at the end)
     $ git push origin
@@ -154,8 +155,6 @@ the ``-s`` option:
 
     # e.g. this PR was sent against 'master', but it's merged in '3.4'
     $ gh merge 11160 -s 3.4
-    $ git push origin
-    $ git push upstream
 
 Sometimes, when changing the branch, you may face rebase issues, but they are
 usually simple to fix:
@@ -224,6 +223,11 @@ maintained branches until ``master``. Imagine that you are merging a PR against
 
 .. tip::
 
+    If you followed the full ``gh`` installation instructions you can remove the
+    ``--log`` option in the above commands.
+
+.. tip::
+
     When the support of a Symfony branch ends, it's recommended to delete your
     local branch to avoid merging in it unawarely:
 
@@ -263,6 +267,9 @@ local branch and check it out again:
     $ git checkout master
     $ git branch -D 3.4
     $ git checkout 3.4 upstream/3.4
+
+If you did push the wrong branch merge, ask for help in the documentation
+mergers chat and we'll help solve the problem.
 
 Solving merge conflicts
 .......................
@@ -316,7 +323,9 @@ were modified by the PR but no longer exist in newer branches:
       modified in 3.4. Version 3.4 of service_container/scopes.rst left in tree.
       Auto-merging service_container.rst
 
-The solution is to remove those non-existent files:
+If the contents of the deleted file were moved to a different file in newer
+branches, redo the changes in the new file. Then, delete the file that Git left
+in the tree as follows:
 
 .. code-block:: terminal
 
