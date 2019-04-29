@@ -19,9 +19,6 @@ Installation
 
     $ composer require symfony/http-client
 
-Alternatively, you can clone the `<https://github.com/symfony/http-client>`_
-repository.
-
 .. include:: /components/require_autoload.rst.inc
 
 Basic Usage
@@ -92,12 +89,29 @@ method to perform all kinds of HTTP requests::
     $response = $httpClient->request('PUT', 'https://...');
     // ...
 
+Responses are always asynchronous, so they are ready as soon as the response
+HTTP headers are received, instead of waiting to receive the entire response
+contents::
+
+    $response = $httpClient->request('GET', 'http://releases.ubuntu.com/18.04.2/ubuntu-18.04.2-desktop-amd64.iso');
+
+    // code execution continues immediately; it doesn't wait to receive the response
+    // you can get the value of any HTTP response header
+    $contentType = $response->getHeaders()['content-type'][0];
+
+    // trying to get the response contents will block the execution until
+    // the full response contents are received
+    $contents = $response->getContent();
+
+This component also supports :ref:`streaming responses <http-client-streaming-responses>`
+for full asynchronous applications.
+
 Authentication
 ~~~~~~~~~~~~~~
 
 The HTTP client supports different authentication mechanisms. They can be
 defined globally when creating the client (to apply it to all requests) and to
-each request (which overrides any global authentication, if defined)::
+each request (which overrides any global authentication)::
 
     // Use the same authentication for all requests
     $httpClient = HttpClient::create([
@@ -219,13 +233,6 @@ Concurrent Requests
 .. TODO
 
 
-Asynchronous Requests
-~~~~~~~~~~~~~~~~~~~~~
-
-
-.. TODO  see https://gist.github.com/tgalopin/a84a11ece0621b8a79ed923afe015b3c
-
-
 Processing Responses
 --------------------
 
@@ -244,11 +251,13 @@ following methods::
     // gets the response body as a string
     $content = $response->getContent();
 
-    // returns info coming from the transport layer, such as "raw_headers",
+    // returns info coming from the transport layer, such as "response_headers",
     // "redirect_count", "start_time", "redirect_url", etc.
     $httpInfo = $response->getInfo();
     // you can get individual info too
     $startTime = $response->getInfo('start_time');
+
+.. _http-client-streaming-responses::
 
 Streaming Responses
 ~~~~~~~~~~~~~~~~~~~
@@ -415,8 +424,7 @@ the available config options:
             max_redirects: 7
             max_host_connections: 10
 
-If you want to define multiple HTTP and API clients, use this other expanded
-configuration:
+If you want to define multiple HTTP clients, use this other expanded configuration:
 
 .. code-block:: yaml
 
@@ -431,11 +439,6 @@ configuration:
                 default:
                     max_host_connections: 10
                     max_redirects: 7
-
-            api_clients:
-                github:
-                    base_uri: 'https://api.github.com'
-                    headers: [{ 'Accept': 'application/vnd.github.v3+json' }]
 
 Injecting the HTTP Client Into Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -458,8 +461,7 @@ service by type-hinting a constructor argument with the
 
 If you have several clients, you must use any of the methods defined by Symfony
 to ref:`choose a specific service <services-wire-specific-service>`. Each client
-has a service associated with it whose name follows the pattern
-``client type + client name`` (e.g. ``http_client.crawler``, ``api_client.github``).
+has a unique service named after its configuration.
 
 .. code-block:: yaml
 
@@ -467,8 +469,8 @@ has a service associated with it whose name follows the pattern
     services:
         # ...
 
-        # whenever a service type-hints ApiClientInterface, inject the GitHub client
-        Symfony\Contracts\HttpClient\ApiClientInterface: '@api_client.github'
+        # whenever a service type-hints HttpClientInterface, inject the GitHub client
+        Symfony\Contracts\HttpClient\HttpClientInterface: '@api_client.github'
 
         # inject the HTTP client called 'crawler' into this argument of this service
         App\Some\Service:
