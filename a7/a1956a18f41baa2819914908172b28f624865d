@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-04-28T21:32:45Z
+
+@javiereguiluz do you think you'll be able to move this PR forward soonish?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-29T08:04:57Z
+
+@nicolas-grekas as we discussed, I've finished most of this PR. I've added most of reviewer's suggestions too. The pending suggestions are the ones still visible (the fixed ones has been marked as "resolved"). This is now ready for you! Thanks.
