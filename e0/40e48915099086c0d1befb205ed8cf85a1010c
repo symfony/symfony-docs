@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-16T05:01:55Z
+
+I always read this article but will do in detail again, later today 👍🏻
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-29T10:33:54Z
+
+@javiereguiluz why is this file in the `_build` dir?
+
+```
+_build/maintainer_guide.rst
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-29T09:04:47Z
+
+@OskarStark the article has been created in `_build` because it's completely internal. We don't need (or want) regular contributors to find it ... and we won't render it on symfony.com.
