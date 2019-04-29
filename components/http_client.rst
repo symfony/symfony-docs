@@ -227,12 +227,13 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
         'max_redirects' => 0,
     ]);
 
-Concurrent Requests
-~~~~~~~~~~~~~~~~~~~
-
-
+.. Concurrent Requests
+.. ~~~~~~~~~~~~~~~~~~~
+..
+..
 .. TODO
-
+..
+..
 
 Processing Responses
 --------------------
@@ -315,9 +316,11 @@ requests and their responses. The actual HTTP caching is implemented using the
 :doc:`HttpKernel component </components/http_kernel>`, so make sure it's
 installed in your application.
 
-.. TODO:  check the PHPdoc of the class:
-.. https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpClient/CachingHttpClient.php
+..
+.. TODO:
 .. Show some example of caching requests+responses
+..
+..
 
 Scoping Client
 --------------
