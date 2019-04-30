@@ -42,11 +42,11 @@ Run this command from inside your controller via::
             $application->setAutoExit(false);
 
             $input = new ArrayInput([
-               'command' => 'swiftmailer:spool:send',
-               // (optional) define the value of command arguments
-               'fooArgument' => 'barValue',
-               // (optional) pass options to the command
-               '--message-limit' => $messages,
+                'command' => 'swiftmailer:spool:send',
+                // (optional) define the value of command arguments
+                'fooArgument' => 'barValue',
+                // (optional) pass options to the command
+                '--message-limit' => $messages,
             ]);
 
             // You can use NullOutput() if you don't need the output

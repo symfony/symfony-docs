@@ -434,19 +434,19 @@ loaded/dumped when using this component inside a Symfony application:
     <?xml version="1.0" encoding="UTF-8"?>
     <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
            srcLang="fr-FR" trgLang="en-US">
-      <file id="messages.en_US">
-        <unit id="LCa0a2j" name="original-content">
-          <notes>
-            <note category="state">new</note>
-            <note category="approved">true</note>
-            <note category="section" priority="1">user login</note>
-          </notes>
-          <segment>
-            <source>original-content</source>
-            <target>translated-content</target>
-          </segment>
-        </unit>
-      </file>
+        <file id="messages.en_US">
+            <unit id="LCa0a2j" name="original-content">
+                <notes>
+                    <note category="state">new</note>
+                    <note category="approved">true</note>
+                    <note category="section" priority="1">user login</note>
+                </notes>
+                <segment>
+                    <source>original-content</source>
+                    <target>translated-content</target>
+                </segment>
+            </unit>
+        </file>
     </xliff>
 
 When using the standalone Translation component, call the ``setMetadata()``

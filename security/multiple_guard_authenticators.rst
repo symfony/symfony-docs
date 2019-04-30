@@ -24,7 +24,7 @@ This is how your security configuration can look in action:
 
         # config/packages/security.yaml
         security:
-             # ...
+            # ...
             firewalls:
                 default:
                     anonymous: ~
