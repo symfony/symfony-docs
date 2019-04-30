@@ -158,10 +158,11 @@ role::
     $roleHierarchyVoter = new RoleHierarchyVoter($roleHierarchy);
 
 ExpressionVoter
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\ExpressionVoter`
 supports :class:`Symfony\\Component\\ExpressionLanguage\\Expression` attributes
-and grants access based on the evaluation of expression (See :doc:`/security/expressions` )
+and grants access based on the evaluation of expression (see :doc:`/security/expressions` )
 
 .. code-block:: php
 
