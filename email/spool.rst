@@ -53,7 +53,7 @@ this spool, use the following configuration:
 
         // config/packages/swiftmailer.php
         $container->loadFromExtension('swiftmailer', [
-             // ...
+            // ...
             'spool' => ['type' => 'memory'],
         ]);
 
@@ -103,7 +103,7 @@ In order to use the spool with files, use the following configuration:
 
         // config/packages/swiftmailer.php
         $container->loadFromExtension('swiftmailer', [
-             // ...
+            // ...
 
             'spool' => [
                 'type' => 'file',

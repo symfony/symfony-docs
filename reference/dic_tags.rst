@@ -80,11 +80,11 @@ services:
 
             <services>
                 <service id="app.mysql_lock" public="false"
-                         class="App\Lock\MysqlLock"/>
+                    class="App\Lock\MysqlLock"/>
                 <service id="app.postgresql_lock" public="false"
-                         class="App\Lock\PostgresqlLock"/>
+                    class="App\Lock\PostgresqlLock"/>
                 <service id="app.sqlite_lock" public="false"
-                         class="App\Lock\SqliteLock"/>
+                    class="App\Lock\SqliteLock"/>
             </services>
         </container>
 
@@ -131,11 +131,11 @@ the generic ``app.lock`` service can be defined as follows:
 
             <services>
                 <service id="app.mysql_lock" public="false"
-                         class="App\Lock\MysqlLock"/>
+                    class="App\Lock\MysqlLock"/>
                 <service id="app.postgresql_lock" public="false"
-                         class="App\Lock\PostgresqlLock"/>
+                    class="App\Lock\PostgresqlLock"/>
                 <service id="app.sqlite_lock" public="false"
-                         class="App\Lock\SqliteLock"/>
+                    class="App\Lock\SqliteLock"/>
 
                 <service id="app.lock">
                     <tag name="auto_alias" format="app.%database_type%_lock"/>

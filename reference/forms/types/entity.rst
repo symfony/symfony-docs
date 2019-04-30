@@ -186,8 +186,8 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
         // ...
 
         $builder->add('genre', EntityType::class, [
-           'class' => Genre::class,
-           'choice_label' => 'translations[en].name',
+            'class' => Genre::class,
+            'choice_label' => 'translations[en].name',
         ]);
 
 class

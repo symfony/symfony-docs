@@ -90,7 +90,7 @@ whenever the corresponding environment variable is *not* found:
             <parameters>
                 <parameter key="env(DATABASE_HOST)">localhost</parameter>
             </parameters>
-         </container>
+        </container>
 
     .. code-block:: php
 

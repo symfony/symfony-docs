@@ -472,10 +472,10 @@ start with ``/admin``, you can:
                     // ...
                 ],
             ],
-           'access_control' => [
-               // require ROLE_ADMIN for /admin*
-               ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
-           ],
+            'access_control' => [
+                // require ROLE_ADMIN for /admin*
+                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+            ],
         ]);
 
 You can define as many URL patterns as you need - each is a regular expression.
