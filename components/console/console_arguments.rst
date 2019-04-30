@@ -39,7 +39,7 @@ Have a look at the following command that has three options::
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-           // ...
+            // ...
         }
     }
 

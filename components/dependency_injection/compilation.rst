@@ -325,7 +325,7 @@ compilation::
     {
         public function process(ContainerBuilder $container)
         {
-           // ... do something during the compilation
+            // ... do something during the compilation
         }
 
         // ...
@@ -379,7 +379,7 @@ class implementing the ``CompilerPassInterface``::
     {
         public function process(ContainerBuilder $container)
         {
-           // ... do something during the compilation
+            // ... do something during the compilation
         }
     }
 

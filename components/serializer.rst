@@ -1048,11 +1048,11 @@ because it is deeper than the configured maximum depth of 2::
     $result = [
         'foo' => 'level1',
         'child' => [
-                'foo' => 'level2',
-                'child' => [
-                        'child' => null,
-                    ],
+            'foo' => 'level2',
+            'child' => [
+                'child' => null,
             ],
+        ],
     ];
     */
 
@@ -1310,7 +1310,7 @@ parameter of the ``ObjectNormalizer``::
 
     $obj = $serializer->denormalize(
         ['inner' => ['foo' => 'foo', 'bar' => 'bar'], 'date' => '1988/01/21'],
-         'Acme\ObjectOuter'
+        'Acme\ObjectOuter'
     );
 
     dump($obj->getInner()->foo); // 'foo'

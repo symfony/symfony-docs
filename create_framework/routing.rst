@@ -95,25 +95,25 @@ The ``match()`` method takes a request path and returns an array of attributes
 
     print_r($matcher->match('/bye'));
     /* Gives:
-    array (
-      '_route' => 'bye',
-    );
+    [
+        '_route' => 'bye',
+    ];
     */
 
     print_r($matcher->match('/hello/Fabien'));
     /* Gives:
-    array (
-      'name' => 'Fabien',
-      '_route' => 'hello',
-    );
+    [
+        'name' => 'Fabien',
+        '_route' => 'hello',
+    ];
     */
 
     print_r($matcher->match('/hello'));
     /* Gives:
-    array (
-      'name' => 'World',
-      '_route' => 'hello',
-    );
+    [
+        'name' => 'World',
+        '_route' => 'hello',
+    ];
     */
 
 .. note::
@@ -165,23 +165,23 @@ There are a few new things in the code:
 
 * Request attributes are extracted to keep our templates simple::
 
-      <!-- example.com/src/pages/hello.php -->
-      Hello <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
+    // example.com/src/pages/hello.php
+    Hello <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
 * Route configuration has been moved to its own file::
 
-      // example.com/src/app.php
-      use Symfony\Component\Routing;
+    // example.com/src/app.php
+    use Symfony\Component\Routing;
 
-      $routes = new Routing\RouteCollection();
-      $routes->add('hello', new Routing\Route('/hello/{name}', ['name' => 'World']));
-      $routes->add('bye', new Routing\Route('/bye'));
+    $routes = new Routing\RouteCollection();
+    $routes->add('hello', new Routing\Route('/hello/{name}', ['name' => 'World']));
+    $routes->add('bye', new Routing\Route('/bye'));
 
-      return $routes;
+    return $routes;
 
-  We now have a clear separation between the configuration (everything
-  specific to our application in ``app.php``) and the framework (the generic
-  code that powers our application in ``front.php``).
+We now have a clear separation between the configuration (everything
+specific to our application in ``app.php``) and the framework (the generic
+code that powers our application in ``front.php``).
 
 With less than 30 lines of code, we have a new framework, more powerful and
 more flexible than the previous one. Enjoy!

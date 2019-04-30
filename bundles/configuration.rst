@@ -71,11 +71,11 @@ can add some configuration that looks like this:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-           <acme-social:config>
-               <acme-social:twitter client-id="123" client-secret="your_secret"/>
-           </acme-social:config>
+            <acme-social:config>
+                <acme-social:twitter client-id="123" client-secret="your_secret"/>
+            </acme-social:config>
 
-           <!-- ... -->
+            <!-- ... -->
         </container>
 
     .. code-block:: php

@@ -663,15 +663,15 @@ With all of this in mind, check out this advanced example:
 
         # config/routes.yaml
         article_show:
-          path:     /articles/{_locale}/{year}/{slug}.{_format}
-          controller: App\Controller\ArticleController::show
-          defaults:
-              _locale: en
-              _format: html
-          requirements:
-              _locale:  en|fr
-              _format:  html|rss
-              year:     \d+
+            path:     /articles/{_locale}/{year}/{slug}.{_format}
+            controller: App\Controller\ArticleController::show
+            defaults:
+                _locale: en
+                _format: html
+            requirements:
+                _locale:  en|fr
+                _format:  html|rss
+                year:     \d+
 
     .. code-block:: xml
 
