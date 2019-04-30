@@ -721,17 +721,19 @@ There are several types of normalizers available:
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default it uses the RFC3339_ format.
 
-    The normalizer attempts to denormalize all time strings with a default timezone
-    if the defaultContext sets a ``TIMEZONE_KEY`` and ``FORCE_CONTEXT_TIMEZONE`` is
-    set to ``true``.
-
     PHP :phpclass:`DateTimeInterface` constructor will return a result with a timezone
     that may not be the default timezone if the time parameter has timezone information
     embedded (e.g. 2010-01-28T15:00:00+02:00) or the time parameter is a UNIX timestamp
-    (e.g. @946684800). To use the default PHP behavior, set ``TIMEZONE_KEY`` to ``null``.
+    (e.g. @946684800). To use the default PHP behavior, set ``ALWAYS_USER_TIMEZONE_KEY``
+    to ``false``.
 
-    To ensure backwards compatibility, ``FORCE_CONTEXT_TIMEZONE`` can be set to ``false``,
-    but this is deprecated.
+    The denormalizer breaks the default PHP behavior when the context sets a ``TIMEZONE_KEY``
+    and ``ALWAYS_USER_TIMEZONE_KEY`` is set to ``true``, by always returning the
+    :phpclass:`DateTimeInterface` with the timezone replaced by the timezone represented
+    in the ``TIMEZONE_KEY``.
+
+    To ensure backwards compatibility, ``ALWAYS_USER_TIMEZONE_KEY`` is assumed to be ``false``,
+    unless it is explicitly set to ``true``.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
