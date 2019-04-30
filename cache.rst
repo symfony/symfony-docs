@@ -230,11 +230,11 @@ You can also create more customized pools:
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
-                  <framework:pool name="custom_thing.cache" adapter="cache.app"/>
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
-                  <framework:pool name="acme.cache" adapter="cache.adapter.memcached"/>
-                  <framework:pool name="foobar.cache" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
-                  <framework:pool name="short_cache" adapter="foobar.cache" default_lifetime="60"/>
+                    <framework:pool name="custom_thing.cache" adapter="cache.app"/>
+                    <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
+                    <framework:pool name="acme.cache" adapter="cache.adapter.memcached"/>
+                    <framework:pool name="foobar.cache" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
+                    <framework:pool name="short_cache" adapter="foobar.cache" default_lifetime="60"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -335,7 +335,7 @@ and use that when configuring the pool.
 
             <framework:config>
                 <framework:cache>
-                  <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="app.my_custom_redis_provider"/>
+                    <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="app.my_custom_redis_provider"/>
                 </framework:cache>
             </framework:config>
 
@@ -413,8 +413,8 @@ case the value needs to be recalculated.
 
             <framework:config>
                 <framework:cache>
-                  <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter"/>
-                  <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
+                    <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter"/>
+                    <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
                 </framework:cache>
             </framework:config>
 

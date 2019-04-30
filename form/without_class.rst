@@ -87,15 +87,15 @@ but here's a short example::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('firstName', TextType::class, [
-               'constraints' => new Length(['min' => 3]),
-           ])
-           ->add('lastName', TextType::class, [
-               'constraints' => [
-                   new NotBlank(),
-                   new Length(['min' => 3]),
-               ],
-           ])
+            ->add('firstName', TextType::class, [
+                'constraints' => new Length(['min' => 3]),
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 3]),
+                ],
+            ])
         ;
     }
 

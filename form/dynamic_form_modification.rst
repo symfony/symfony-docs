@@ -10,7 +10,7 @@ how to customize your form based on three common use-cases:
 1) :ref:`form-events-underlying-data`
 
    Example: you have a "Product" form and need to modify/add/remove a field
-    based on the data on the underlying Product being edited.
+   based on the data on the underlying Product being edited.
 
 2) :ref:`form-events-user-data`
 

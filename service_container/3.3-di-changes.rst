@@ -629,10 +629,10 @@ Now you're ready to default all services to be private:
     # ...
 
     services:
-         _defaults:
-             autowire: true
-             autoconfigure: true
-    +          public: false
+        _defaults:
+            autowire: true
+            autoconfigure: true
+    +       public: false
 
 Thanks to this, any services created in this file cannot be fetched directly from
 the container. But, since the old service id's are aliases in a separate file (``legacy_aliases.yaml``),
