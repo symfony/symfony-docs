@@ -261,10 +261,10 @@ user to be logged in to access this URL:
                     // ...
                 ],
             ],
-           'access_control' => [
-               // require ROLE_ADMIN for /admin*
+            'access_control' => [
+                // require ROLE_ADMIN for /admin*
                 ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
-           ],
+            ],
         ]);
 
 .. note::
@@ -749,10 +749,10 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
                     // ...
                 ],
             ],
-           'access_control' => [
-               // require ROLE_ADMIN for /admin*
-               ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
-           ],
+            'access_control' => [
+                // require ROLE_ADMIN for /admin*
+                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+            ],
         ]);
 
 This is great for securing entire sections, but you'll also probably want

@@ -164,8 +164,8 @@ mapping type:
         # app/config/config.yml
         doctrine:
             dbal:
-               mapping_types:
-                  enum: string
+                mapping_types:
+                    enum: string
 
     .. code-block:: xml
 
@@ -180,7 +180,7 @@ mapping type:
 
             <doctrine:config>
                 <doctrine:dbal>
-                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
+                    <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -190,9 +190,9 @@ mapping type:
         // app/config/config.php
         $container->loadFromExtension('doctrine', [
             'dbal' => [
-               'mapping_types' => [
-                  'enum'  => 'string',
-               ],
+                'mapping_types' => [
+                    'enum'  => 'string',
+                ],
             ],
         ]);
 

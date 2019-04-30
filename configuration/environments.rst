@@ -214,9 +214,9 @@ this code and changing the environment string.
         .. code-block:: yaml
 
             doctrine:
-               dbal:
-                   logging: '%kernel.debug%'
-                   # ...
+                dbal:
+                    logging: '%kernel.debug%'
+                    # ...
 
         .. code-block:: xml
 

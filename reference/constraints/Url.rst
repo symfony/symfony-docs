@@ -379,7 +379,7 @@ DNS check failed.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url([
-                     'dnsMessage' => 'The host "{{ value }}" could not be resolved.',
+                    'dnsMessage' => 'The host "{{ value }}" could not be resolved.',
                 ]));
             }
         }

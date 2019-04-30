@@ -68,14 +68,14 @@ on its type:
 
     {# 1. Simple variables #}
     {# $this->render('template.html.twig', [
-           'name' => 'Fabien',
-       ]) #}
+        'name' => 'Fabien',
+    ]) #}
     {{ name }}
 
     {# 2. Arrays #}
     {# $this->render('template.html.twig', [
-           'user' => ['name' => 'Fabien']
-       ]) #}
+        'user' => ['name' => 'Fabien'],
+    ]) #}
     {{ user.name }}
 
     {# alternative syntax for arrays #}
@@ -83,8 +83,8 @@ on its type:
 
     {# 3. Objects #}
     {# $this->render('template.html.twig', [
-           'user' => new User('Fabien')
-       ]) #}
+        'user' => new User('Fabien'),
+    ]) #}
     {{ user.name }}
     {{ user.getName }}
 

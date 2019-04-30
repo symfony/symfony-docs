@@ -87,7 +87,7 @@ will be used whenever the corresponding environment variable is *not* found:
                 <parameter key="database_host">%env(DATABASE_HOST)%</parameter>
                 <parameter key="env(DATABASE_HOST)">localhost</parameter>
             </parameters>
-         </container>
+        </container>
 
     .. code-block:: php
 

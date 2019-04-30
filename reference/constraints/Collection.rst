@@ -80,10 +80,10 @@ following:
              *     allowMissingFields = true
              * )
              */
-             protected $profileData = [
-                 'personal_email' => '...',
-                 'short_bio' => '...',
-             ];
+            protected $profileData = [
+                'personal_email' => '...',
+                'short_bio' => '...',
+            ];
         }
 
     .. code-block:: yaml
