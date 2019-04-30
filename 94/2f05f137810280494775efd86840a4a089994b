@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-29T06:33:17Z
+
+I think there's been a mistake here. "Analyze" is a verb, not a noun. "Analyzes" is the third-person form of the verb or the plural of a [misspelling of analysis](https://en.wiktionary.org/wiki/analyzis#English).
+
+In American English it's OK to call it "analysis" (singular) / "analyses" (plural).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-29T08:37:48Z
+
+Looking at the original code ... it looks like it's wrong too. It should be:
+
+* Property in singular `private $analysis`
+* Methods in plural: `addAnalyses()`, `removeAnalyses()`
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-29T08:39:41Z
+
+> Looking at the original code ... it looks like it's wrong too. It should be:
+
+Yes, I think the same, I need to dive into this topic twice today to find the right approach, but I think you are right 👍
+
+Shall I fix it in this PR?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-29T08:49:39Z
+
+> Property in singular private $analysis
+
+I think the property needs to be plural, , the adder/remover needs to be singular, the argument needs to be singular, right?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-29T09:23:20Z
+
+I wonder if we still need the `foot / feet` example. It looks like the usual "silly" and forced example that you can find in some programming books. We already show an irregular transformation "analyses/analysis", so that may be enough.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-04-29T09:32:25Z
+
+I removed it
