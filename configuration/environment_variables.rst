@@ -148,7 +148,7 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
         # config/packages/framework.yaml
         framework:
             router:
-                http_port: env(int:HTTP_PORT)
+                http_port: '%env(int:HTTP_PORT)%'
 
     .. code-block:: xml
 
