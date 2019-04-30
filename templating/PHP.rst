@@ -482,9 +482,9 @@ form is rendered.
                         'AppBundle:Form',
                     ],
                 ],
-             ],
+            ],
 
-             // ...
+            // ...
         ]);
 
 By default, the PHP engine uses a *div* layout when rendering forms. Some people,

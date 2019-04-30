@@ -209,9 +209,9 @@ You can also create more customized pools. All you need is an adapter:
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
-                  <framework:pool name="cache.acme" adapter="cache.adapter.memcached"/>
-                  <framework:pool name="cache.foobar" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
+                    <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
+                    <framework:pool name="cache.acme" adapter="cache.adapter.memcached"/>
+                    <framework:pool name="cache.foobar" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -281,11 +281,11 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
 
             <framework:config>
                 <framework:cache app="my_cache_pool">
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
-                  <framework:pool name="cache.short_cache" adapter="my_cache_pool" default_lifetime="604800"/>
-                  <framework:pool name="cache.long_cache" adapter="my_cache_pool" default_lifetime="604800"/>
-                  <!-- "cache.adapter.filesystem" is the default for "cache.app" -->
-                  <framework:pool name="my_configured_app_cache" adapter="cache.adapter.filesystem" default_lifetime="3600"/>
+                    <framework:pool name="my_cache_pool" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
+                    <framework:pool name="cache.short_cache" adapter="my_cache_pool" default_lifetime="604800"/>
+                    <framework:pool name="cache.long_cache" adapter="my_cache_pool" default_lifetime="604800"/>
+                    <!-- "cache.adapter.filesystem" is the default for "cache.app" -->
+                    <framework:pool name="my_configured_app_cache" adapter="cache.adapter.filesystem" default_lifetime="3600"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -359,7 +359,7 @@ and use that when configuring the pool.
 
             <framework:config>
                 <framework:cache>
-                  <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="app.my_custom_redis_provider"/>
+                    <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="app.my_custom_redis_provider"/>
                 </framework:cache>
             </framework:config>
 
@@ -437,8 +437,8 @@ case the value needs to be recalculated.
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
-                  <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter"/>
-                  <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
+                    <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter"/>
+                    <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
                 </framework:cache>
             </framework:config>
 

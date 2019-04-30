@@ -296,7 +296,7 @@ helper:
 .. code-block:: html+twig
 
     {% stylesheets 'bundles/App/css/*' filter='uglifycss' filter='cssrewrite' %}
-         <link rel="stylesheet" href="{{ asset_url }}"/>
+        <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
 
 Just like with the ``uglifyjs2`` filter, if you prefix the filter name with

@@ -24,7 +24,7 @@ This is how your security configuration can look in action:
 
         # app/config/security.yml
         security:
-             # ...
+            # ...
             firewalls:
                 default:
                     anonymous: ~

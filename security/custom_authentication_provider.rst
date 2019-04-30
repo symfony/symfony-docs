@@ -555,10 +555,10 @@ the ``addConfiguration()`` method::
 
         public function addConfiguration(NodeDefinition $node)
         {
-          $node
-            ->children()
-                ->scalarNode('lifetime')->defaultValue(300)
-            ->end();
+            $node
+                ->children()
+                    ->scalarNode('lifetime')->defaultValue(300)
+                ->end();
         }
     }
 

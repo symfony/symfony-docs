@@ -338,31 +338,31 @@ This behavior is best illustrated with examples::
 
     $crawler->filterXPath('//span[contains(@id, "article-")]')->evaluate('substring-after(@id, "-")');
     /* array:3 [
-        0 => "100",
-        1 => "101",
-        2 => "102",
+      0 => "100"
+      1 => "101"
+      2 => "102"
     ]
-     */
+    */
 
     $crawler->evaluate('substring-after(//span[contains(@id, "article-")]/@id, "-")');
     /* array:1 [
-        0 => "100",
+      0 => "100"
     ]
-     */
+    */
 
     $crawler->filterXPath('//span[@class="article"]')->evaluate('count(@id)');
     /* array:3 [
-        0 => 1.0,
-        1 => 1.0,
-        2 => 1.0,
+      0 => 1.0
+      1 => 1.0
+      2 => 1.0
     ]
-     */
+    */
 
     $crawler->evaluate('count(//span[@class="article"])');
     /* array:1 [
-        0 => 3.0,
+      0 => 3.0
     ]
-     */
+    */
 
     $crawler->evaluate('//span[1]');
     // A Symfony\Component\DomCrawler\Crawler instance
