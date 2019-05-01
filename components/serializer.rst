@@ -721,19 +721,33 @@ There are several types of normalizers available:
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default it uses the RFC3339_ format.
 
-    PHP :phpclass:`DateTimeInterface` constructor will return a result with a timezone
-    that may not be the default timezone if the time parameter has timezone information
-    embedded (e.g. 2010-01-28T15:00:00+02:00) or the time parameter is a UNIX timestamp
-    (e.g. @946684800). To use the default PHP behavior, set ``ALWAYS_USER_TIMEZONE_KEY``
-    to ``false``.
+    The context for the
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` allows
+    setting of:
 
-    The denormalizer breaks the default PHP behavior when the context sets a ``TIMEZONE_KEY``
-    and ``ALWAYS_USER_TIMEZONE_KEY`` is set to ``true``, by always returning the
-    :phpclass:`DateTimeInterface` with the timezone replaced by the timezone represented
-    in the ``TIMEZONE_KEY``.
+    + ``FORMAT_KEY`` specifies the format of the datetime string to be returned by
+      the normalizer, and the format of the datetime string supplied to the
+      denormalizer.
+    + ``TIMEZONE_KEY`` the timezone that the normalizer and denormalizer use to return
+      the datetime result. **NB:** Legacy operation may vary for the denormalizer as
+      detailed below.
+    + ``PRESERVE_CONTEXT_TIMEZONE`` is a boolean flag to allow use of **legacy**
+      denormalizer functionality.
 
-    To ensure backwards compatibility, ``ALWAYS_USER_TIMEZONE_KEY`` is assumed to be ``false``,
-    unless it is explicitly set to ``true``.
+    **Legacy**
+
+    PHP :phpclass:`DateTimeInterface` constructor and createFromFormat() method will
+    return a result with a timezone that may not be the default timezone if the time
+    parameter has timezone information embedded (e.g. 2010-01-28T15:00:00+02:00) or the
+    time parameter is a UNIX timestamp (e.g. @946684800).
+
+    To use default PHP (legacy) behavior in the denormalizer, set
+    ``PRESERVE_CONTEXT_TIMEZONE`` to ``false``.
+
+    ``.. deprecated: 4.2``
+
+    Not setting the ``PRESERVE_CONTEXT_TIMEZONE`` is deprecated since Symfony 4.2.  This
+    flag will be retired in Symfony 5.0 and legacy behavior will be retired.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
