@@ -747,7 +747,7 @@ There are several types of normalizers available:
     ``.. deprecated: 4.2``
 
     Not setting the ``PRESERVE_CONTEXT_TIMEZONE`` is deprecated since Symfony 4.2.  This
-    flag will be retired in Symfony 5.0 and legacy behavior will be retired.
+    flag and legacy behavior will be retired in Symfony 5.0.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
