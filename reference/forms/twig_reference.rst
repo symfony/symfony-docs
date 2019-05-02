@@ -215,7 +215,7 @@ This test will check if the current ``form`` does not have a parent form view.
         {{ form_errors(form) }}
     {% endif %}
 
-   {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
+    {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
 
     {% if form is rootform %}
         {{ form_errors(form) }}

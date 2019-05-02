@@ -56,7 +56,7 @@ configure the service container to use the
 
             <services>
                 <service id="AppBundle\Email\NewsletterManager"
-                         class="AppBundle\Email\NewsletterManager">
+                    class="AppBundle\Email\NewsletterManager">
                     <!-- call the static method that creates the object -->
                     <factory class="AppBundle\Email\NewsletterManagerStaticFactory" method="createNewsletterManager"/>
 
@@ -123,7 +123,8 @@ Configuration of the service container then looks like this:
                 <service id="AppBundle\Email\NewsletterManagerFactory"/>
 
                 <service id="AppBundle\Email\NewsletterManager"
-                         class="AppBundle\Email\NewsletterManager">
+                    class="AppBundle\Email\NewsletterManager">
+
                     <!-- call a method on the specified factory service -->
                     <factory service="AppBundle\Email\NewsletterManagerFactory"
                         method="createNewsletterManager"
@@ -204,7 +205,7 @@ example takes the ``templating`` service as an argument:
                 <!-- ... -->
 
                 <service id="AppBundle\Email\NewsletterManager"
-                         class="AppBundle\Email\NewsletterManager">
+                    class="AppBundle\Email\NewsletterManager">
                     <factory service="AppBundle\Email\NewsletterManagerFactory" method="createNewsletterManager"/>
                     <argument type="service" id="templating"/>
                 </service>

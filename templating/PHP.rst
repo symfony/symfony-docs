@@ -536,7 +536,7 @@ resource to use such a layout:
                 ],
             ],
 
-             // ...
+            // ...
         ]);
 
 If you only want to make the change in one template, add the following line to

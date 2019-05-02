@@ -1328,7 +1328,7 @@ individually for each asset package:
     .. code-block:: yaml
 
         # app/config/config.yml
-       framework:
+        framework:
             assets:
                 # this strategy is applied to every asset (including packages)
                 version_strategy: 'app.asset.my_versioning_strategy'
@@ -1430,7 +1430,7 @@ package:
     .. code-block:: yaml
 
         # app/config/config.yml
-       framework:
+        framework:
             assets:
                 # this manifest is applied to every asset (including packages)
                 json_manifest_path: "%kernel.project_dir%/web/assets/manifest.json"

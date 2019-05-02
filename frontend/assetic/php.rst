@@ -108,10 +108,10 @@ First, configure a new ``scssphp`` Assetic filter:
         // app/config/config.php
         $container->loadFromExtension('assetic', [
             'filters' => [
-                 'scssphp' => [
-                     'formatter' => 'Leafo\ScssPhp\Formatter\Compressed',
-                 ],
-                 // ...
+                'scssphp' => [
+                    'formatter' => 'Leafo\ScssPhp\Formatter\Compressed',
+                ],
+                // ...
             ],
         ]);
 
@@ -181,8 +181,8 @@ First, configure a new ``jsqueeze`` Assetic filter as follows:
         // app/config/config.php
         $container->loadFromExtension('assetic', [
             'filters' => [
-                 'jsqueeze' => null,
-                 // ...
+                'jsqueeze' => null,
+                // ...
             ],
         ]);
 

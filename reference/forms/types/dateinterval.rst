@@ -6,7 +6,7 @@ DateIntervalType Field
 
 .. versionadded:: 3.2
 
-   The DateIntervalType field type was introduced in Symfony 3.2.
+    The DateIntervalType field type was introduced in Symfony 3.2.
 
 This field allows the user to select an *interval* of time. For example, if you want to
 allow the user to choose *how often* they receive a status email, they could use this
