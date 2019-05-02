@@ -219,11 +219,12 @@ label you want to display as the second argument.
     {{ form_label(form.name) }}
 
     {# The two following syntaxes are equivalent #}
-    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}}) }}
+    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}, 'label_raw': true}) }}
 
     {{ form_label(form.name, null, {
         'label': 'Your name',
-        'label_attr': {'class': 'foo'}
+        'label_attr': {'class': 'foo'},
+        'label_raw': true
     }) }}
 
 See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
@@ -409,6 +410,7 @@ Variable                Usage
 ``id``                  The ``id`` HTML attribute to be rendered.
 ``label``               The string label that will be rendered.
 ``label_attr``          A key-value array that will be rendered as HTML attributes on the label.
+``label_raw``           If ``true`` the twig raw filter will be used to render the label text.
 ``method``              The method of the current form (POST, GET, etc.).
 ``multipart``           If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.
 ``name``                The name of the field (e.g. ``title``) - but not the ``name``
