@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2018-10-25T12:33:27Z
+
+Some questions:
+
+* Is this really necessary? None of the bundles in my `vendor` dir has it:
+> By convention, the getName() method of the bundle class should return the class name.
+
+* It also works without an alias. For configuration in `services.yaml`, it's recommended (with autowiring) to use just the service namespace as id. So is this still relevant at all? Or just in some (which?) cases?
+> Each bundle has an alias, which is the lower-cased short version of the bundle name using underscores (acme_blog for AcmeBlogBundle). This alias is used to enforce uniqueness within a project and for defining bundle's configuration options (see below for some usage examples).
