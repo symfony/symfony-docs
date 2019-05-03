@@ -348,7 +348,7 @@ need to escape the percent signs (``%``) by doubling them.
         // as /path/to/host/.../file on the host
         // and /var/www/app/ as /projects/my_project/ also
         'myide://%%f:%%l&/path/to/guest/>/path/to/host/&/var/www/app/>/projects/my_project/&...'
-        
+
         // example for PhpStorm
         'phpstorm://open?file=%%f&line=%%l&/var/www/app/>/projects/my_project/'
 
@@ -1325,7 +1325,7 @@ individually for each asset package:
     .. code-block:: yaml
 
         # config/packages/framework.yaml
-       framework:
+        framework:
             assets:
                 # this strategy is applied to every asset (including packages)
                 version_strategy: 'app.asset.my_versioning_strategy'
@@ -1423,7 +1423,7 @@ package:
     .. code-block:: yaml
 
         # config/packages/framework.yaml
-       framework:
+        framework:
             assets:
                 # this manifest is applied to every asset (including packages)
                 json_manifest_path: "%kernel.project_dir%/public/build/manifest.json"

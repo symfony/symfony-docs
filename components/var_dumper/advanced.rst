@@ -64,6 +64,10 @@ you can configure these limits:
     items will be cloned. The default value is ``1``, which is consistent
     with older Symfony versions.
 
+    .. versionadded:: 3.4
+
+        The ``setMinDepth()`` method was introduced in Symfony 3.4.
+
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
     Configures the maximum number of characters that will be cloned before
     cutting overlong strings.  Specifying ``-1`` removes the limit.

@@ -113,7 +113,7 @@ with alternating ``odd``, ``even`` classes:
 
     {% for i in 1..10 %}
         <div class="{{ cycle(['even', 'odd'], i) }}">
-          <!-- some HTML here -->
+            <!-- some HTML here -->
         </div>
     {% endfor %}
 
