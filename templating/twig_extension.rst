@@ -34,11 +34,11 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
         public function getFilters()
         {
             return [
-                new TwigFilter('price', [$this, 'formatPrice']),
+                new TwigFilter('price', [$this, 'priceFilter']),
             ];
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
