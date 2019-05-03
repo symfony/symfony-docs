@@ -93,23 +93,23 @@ The ``match()`` method takes a request path and returns an array of attributes
 (notice that the matched route is automatically stored under the special
 ``_route`` attribute)::
 
-    print_r($matcher->match('/bye'));
-    /* Gives:
+    $matcher->match('/bye');
+    /* Result:
     [
         '_route' => 'bye',
     ];
     */
 
-    print_r($matcher->match('/hello/Fabien'));
-    /* Gives:
+    $matcher->match('/hello/Fabien');
+    /* Result:
     [
         'name' => 'Fabien',
         '_route' => 'hello',
     ];
     */
 
-    print_r($matcher->match('/hello'));
-    /* Gives:
+    $matcher->match('/hello');
+    /* Result:
     [
         'name' => 'World',
         '_route' => 'hello',

@@ -557,8 +557,8 @@ the correct values of a number of field options.
 
 .. caution::
 
-  These field options are *only* guessed if you're using Symfony to guess
-  the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
+    These field options are *only* guessed if you're using Symfony to guess
+    the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
 
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::

@@ -166,8 +166,8 @@ flag:
 
 .. tip::
 
-     You can also declare a one-letter shortcut that you can call with a single
-     dash, like ``-i``::
+    You can also declare a one-letter shortcut that you can call with a single
+    dash, like ``-i``::
 
         $this
             // ...

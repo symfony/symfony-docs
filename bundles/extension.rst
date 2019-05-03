@@ -141,7 +141,7 @@ I/O operations and increases the application performance.
 
 .. versionadded:: 3.2
 
-   The ``addAnnotatedClassesToCompile()`` method was introduced in Symfony 3.2.
+    The ``addAnnotatedClassesToCompile()`` method was introduced in Symfony 3.2.
 
 Your bundles can also add their own classes into this file thanks to the
 ``addClassesToCompile()`` and ``addAnnotatedClassesToCompile()`` methods (both
@@ -178,7 +178,7 @@ class names::
 
 .. versionadded:: 3.2
 
-   The option to add classes to compile using patterns was introduced in Symfony 3.2.
+    The option to add classes to compile using patterns was introduced in Symfony 3.2.
 
 The classes to compile can also be added using file path patterns::
 

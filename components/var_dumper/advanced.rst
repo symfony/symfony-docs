@@ -59,14 +59,14 @@ you can configure these limits:
     items. Specifying ``-1`` removes the limit.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth`
-    .. versionadded:: 3.4
-
-        The ``setMinDepth()`` method was introduced in Symfony 3.4.
-
     Configures the minimum tree depth where we are guaranteed to clone
     all the items. After this depth is reached, only ``setMaxItems``
     items will be cloned. The default value is ``1``, which is consistent
     with older Symfony versions.
+
+    .. versionadded:: 3.4
+
+        The ``setMinDepth()`` method was introduced in Symfony 3.4.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
     Configures the maximum number of characters that will be cloned before
@@ -85,11 +85,11 @@ Before dumping it, you can further limit the resulting
     Removes internal objects' handles for sparser output (useful for tests).
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek`
+    Selects only subparts of already cloned arrays, objects or resources.
+
     .. versionadded:: 3.2
 
         The ``seek()`` method was introduced in Symfony 3.2.
-
-    Selects only subparts of already cloned arrays, objects or resources.
 
 Unlike the previous limits on cloners that remove data on purpose, these can
 be changed back and forth before dumping since they do not affect the

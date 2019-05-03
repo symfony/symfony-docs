@@ -19,15 +19,15 @@ it is possible to remove this need by declaring a single command application::
     use Symfony\Component\Console\Output\OutputInterface;
 
     (new Application('echo', '1.0.0'))
-      ->register('echo')
-          ->addArgument('foo', InputArgument::OPTIONAL, 'The directory')
-          ->addOption('bar', null, InputOption::VALUE_REQUIRED)
-          ->setCode(function(InputInterface $input, OutputInterface $output) {
-              // output arguments and options
-          })
-      ->getApplication()
-      ->setDefaultCommand('echo', true) // Single command application
-      ->run();
+        ->register('echo')
+            ->addArgument('foo', InputArgument::OPTIONAL, 'The directory')
+            ->addOption('bar', null, InputOption::VALUE_REQUIRED)
+            ->setCode(function(InputInterface $input, OutputInterface $output) {
+                // output arguments and options
+            })
+        ->getApplication()
+        ->setDefaultCommand('echo', true) // Single command application
+        ->run();
 
 The method :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
 accepts a boolean as second parameter. If true, the command ``echo`` will then

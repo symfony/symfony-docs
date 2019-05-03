@@ -74,15 +74,18 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 .. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
-    <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-      <entity name="AppBundle\Entity\BlogPost" table="blog_post">
-        <id name="id" type="bigint" column="id">
-          <generator strategy="IDENTITY"/>
-        </id>
-        <field name="title" type="string" column="title" length="100" nullable="false"/>
-        <field name="content" type="text" column="content" nullable="false"/>
-        <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
-      </entity>
+    <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+            https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+        <entity name="AppBundle\Entity\BlogPost" table="blog_post">
+            <id name="id" type="bigint" column="id">
+                <generator strategy="IDENTITY"/>
+            </id>
+            <field name="title" type="string" column="title" length="100" nullable="false"/>
+            <field name="content" type="text" column="content" nullable="false"/>
+            <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
+        </entity>
     </doctrine-mapping>
 
 Once the metadata files are generated, you can ask Doctrine to build related

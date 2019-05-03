@@ -40,7 +40,7 @@ Platform.sh how to deploy your application (read more about
     # The type of the application to build.
     type: php:5.6
     build:
-      flavor: composer
+        flavor: composer
 
     # The relationships of the application with services or other applications.
     # The left-hand side is the name of the relationship as it will be exposed
@@ -68,10 +68,10 @@ Platform.sh how to deploy your application (read more about
     # The hooks that will be performed when the package is deployed.
     hooks:
         build: |
-          rm web/app_dev.php
-          php bin/console --env=prod assetic:dump --no-debug
+            rm web/app_dev.php
+            php bin/console --env=prod assetic:dump --no-debug
         deploy: |
-          php bin/console --env=prod cache:clear
+            php bin/console --env=prod cache:clear
 
 For best practices, you should also add a ``.platform`` folder at the root of
 your Git repository which contains the following files:
@@ -111,7 +111,7 @@ following file (it's your role to add this file to your code base)::
 
     foreach ($relationships['database'] as $endpoint) {
         if (empty($endpoint['query']['is_master'])) {
-          continue;
+            continue;
         }
 
         $container->setParameter('database_driver', 'pdo_' . $endpoint['scheme']);
