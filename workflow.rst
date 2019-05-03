@@ -533,6 +533,7 @@ requires:
                             metadata:
                                 priority: 0.5
                         # ...
+
     .. code-block:: xml
 
         <!-- config/packages/workflow.xml -->
