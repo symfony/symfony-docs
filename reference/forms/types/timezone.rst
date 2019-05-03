@@ -65,8 +65,13 @@ input
 The format of the *input* data - i.e. the format that the timezone is stored
 on your underlying object. Valid values are:
 
+* ``datetimezone`` (a ``\DateTimeZone`` object)
+* ``intltimezone`` (an ``\IntlTimeZone`` object)
 * ``string`` (e.g. ``America/New_York``)
-* ``datetimezone`` (a ``DateTimeZone`` object)
+
+.. versionadded:: 4.3
+
+    The ``intltimezone`` input type was introduced in Symfony 4.3.
 
 regions
 ~~~~~~~
