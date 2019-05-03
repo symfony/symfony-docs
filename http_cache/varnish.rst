@@ -134,10 +134,8 @@ using Varnish 3:
     .. code-block:: varnish3
 
         sub vcl_fetch {
-            /*
-                By default, Varnish3 ignores Cache-Control: no-cache and private
-                https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control
-            */
+            // By default, Varnish3 ignores Cache-Control: no-cache and private
+            // https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control
             if (beresp.http.Cache-Control ~ "private" ||
                 beresp.http.Cache-Control ~ "no-cache" ||
                 beresp.http.Cache-Control ~ "no-store"
