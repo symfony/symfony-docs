@@ -35,7 +35,7 @@ Cache Contracts versus PSR-6
 This component includes *two* different approaches to caching:
 
 :ref:`PSR-6 Caching <cache-component-psr6-caching>`:
-     A generic cache system, which involves cache "pools" and cache "items".
+    A generic cache system, which involves cache "pools" and cache "items".
 
 :ref:`Cache Contracts <cache-component-contracts>`:
     A simpler yet more powerful way to cache values based on recomputation callbacks.

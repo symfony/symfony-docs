@@ -92,7 +92,7 @@ like this:
                     <framework:audit-trail enabled="true"/>
 
                     <framework:marking-store type="single_state">
-                      <framework:argument>currentPlace</framework:argument>
+                        <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
 
                     <framework:support>AppBundle\Entity\BlogPost</framework:support>
@@ -104,19 +104,16 @@ like this:
 
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
-
                         <framework:to>reviewed</framework:to>
                     </framework:transition>
 
                     <framework:transition name="publish">
                         <framework:from>reviewed</framework:from>
-
                         <framework:to>published</framework:to>
                     </framework:transition>
 
                     <framework:transition name="reject">
                         <framework:from>reviewed</framework:from>
-
                         <framework:to>rejected</framework:to>
                     </framework:transition>
 

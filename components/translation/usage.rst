@@ -433,7 +433,7 @@ loaded/dumped when using this component inside a Symfony application:
 
     <?xml version="1.0" encoding="UTF-8"?>
     <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
-           srcLang="fr-FR" trgLang="en-US">
+        srcLang="fr-FR" trgLang="en-US">
         <file id="messages.en_US">
             <unit id="LCa0a2j" name="original-content">
                 <notes>
