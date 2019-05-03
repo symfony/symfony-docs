@@ -111,10 +111,10 @@ that will do the required processing for your message::
 
     class MyMessageHandler
     {
-       public function __invoke(MyMessage $message)
-       {
-           // Message processing...
-       }
+        public function __invoke(MyMessage $message)
+        {
+            // Message processing...
+        }
     }
 
 Adding Metadata to Messages (Envelopes)
@@ -215,34 +215,34 @@ First, create your sender::
 
     class ImportantActionToEmailSender implements SenderInterface
     {
-       private $mailer;
-       private $toEmail;
+        private $mailer;
+        private $toEmail;
 
-       public function __construct(\Swift_Mailer $mailer, string $toEmail)
-       {
-           $this->mailer = $mailer;
-           $this->toEmail = $toEmail;
-       }
+        public function __construct(\Swift_Mailer $mailer, string $toEmail)
+        {
+            $this->mailer = $mailer;
+            $this->toEmail = $toEmail;
+        }
 
-       public function send(Envelope $envelope): Envelope
-       {
-           $message = $envelope->getMessage();
+        public function send(Envelope $envelope): Envelope
+        {
+            $message = $envelope->getMessage();
 
-           if (!$message instanceof ImportantAction) {
-               throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', ImportantAction::class));
-           }
+            if (!$message instanceof ImportantAction) {
+                throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', ImportantAction::class));
+            }
 
-           $this->mailer->send(
-               (new \Swift_Message('Important action made'))
-                   ->setTo($this->toEmail)
-                   ->setBody(
-                       '<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>',
-                       'text/html'
-                   )
-           );
+            $this->mailer->send(
+                (new \Swift_Message('Important action made'))
+                    ->setTo($this->toEmail)
+                    ->setBody(
+                        '<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>',
+                        'text/html'
+                    )
+            );
 
-           return $envelope;
-       }
+            return $envelope;
+        }
     }
 
 Your own Receiver
@@ -270,30 +270,30 @@ First, create your receiver::
 
     class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
-       private $serializer;
-       private $filePath;
+        private $serializer;
+        private $filePath;
 
-       public function __construct(SerializerInterface $serializer, string $filePath)
-       {
+        public function __construct(SerializerInterface $serializer, string $filePath)
+        {
            $this->serializer = $serializer;
            $this->filePath = $filePath;
-       }
+        }
 
-       public function receive(callable $handler): void
-       {
-           $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
+        public function receive(callable $handler): void
+        {
+            $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
-           foreach ($ordersFromCsv as $orderFromCsv) {
-               $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
+            foreach ($ordersFromCsv as $orderFromCsv) {
+                $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
 
-               $handler(new Envelope($order));
-           }
-       }
+                $handler(new Envelope($order));
+            }
+        }
 
-       public function stop(): void
-       {
-           // noop
-       }
+        public function stop(): void
+        {
+            // noop
+        }
     }
 
 Receiver and Sender on the same Bus

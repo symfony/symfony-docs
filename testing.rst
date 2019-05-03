@@ -716,7 +716,7 @@ Use the ``submitForm()`` method to submit the form that contains the given butto
     $client->request('GET', '/post/hello-world');
 
     $crawler = $client->submitForm('Add comment', [
-       'comment_form[content]' => '...',
+        'comment_form[content]' => '...',
     ]);
 
 The first argument of ``submitForm()`` is the text content, ``id``, ``value`` or
