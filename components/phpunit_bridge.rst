@@ -256,10 +256,10 @@ to a regular expression matching the deprecation message.
 
 For example, if the following deprecation notice is thrown:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        1x: Doctrine\Common\ClassLoader is deprecated.
-          1x in EntityTypeTest::setUp from Symfony\Bridge\Doctrine\Tests\Form\Type
+    1x: Doctrine\Common\ClassLoader is deprecated.
+      1x in EntityTypeTest::setUp from Symfony\Bridge\Doctrine\Tests\Form\Type
 
 Running the following command will display the full stack trace:
 
