@@ -625,7 +625,7 @@ You can register your own MIME type guesser by creating a class that implements
         public function isGuesserSupported(): bool
         {
             // return true when the guesser is supported (might depend on the OS for instance)
-             return true;
+            return true;
         }
 
         public function guessMimeType(string $path): ?string
