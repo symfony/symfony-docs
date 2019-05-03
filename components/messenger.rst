@@ -199,13 +199,12 @@ transport will be responsible for communicating with your message broker or 3rd 
 Your own Sender
 ~~~~~~~~~~~~~~~
 
-Using the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`,
-you can create your own message sender.
 Imagine that you already have an ``ImportantAction`` message going through the
 message bus and being handled by a handler. Now, you also want to send this
 message as an email.
 
-First, create your sender::
+Using the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`,
+you can create your own message sender::
 
     namespace App\MessageSender;
 
@@ -257,9 +256,7 @@ application but you can't use an API and need to use a shared CSV file with new
 orders.
 
 You will read this CSV file and dispatch a ``NewOrder`` message. All you need to
-do is to write your custom CSV receiver and Symfony will do the rest.
-
-First, create your receiver::
+do is to write your own CSV receiver::
 
     namespace App\MessageReceiver;
 
