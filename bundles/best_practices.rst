@@ -517,9 +517,12 @@ The ``composer.json`` file should include at least the following metadata:
 
 ``autoload``
     This information is used by Symfony to load the classes of the bundle. It's
-    recommended to use the `PSR-4`_ autoload standard. Use the namespace as key,
+    recommended to use the `PSR-4`_ autoload standard: use the namespace as key,
     and the location of the bundle's main class (relative to ``composer.json``)
-    as value, example: ``"autoload": { "psr-4": { "JohnSmith\\BlogBundle\\": "" } }``
+    as value. For example, if the main class is located in the bundle root
+    directory: ``"autoload": { "psr-4": { "SomeVendor\\BlogBundle\\": "" } }``.
+    If the main class is located in the ``src/`` directory of the bundle:
+    ``"autoload": { "psr-4": { "SomeVendor\\BlogBundle\\": "src/" } }``.
 
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
