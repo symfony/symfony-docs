@@ -24,6 +24,12 @@ The ``transchoice`` tag automatically gets the ``%count%`` variable from
 the current context and passes it to the translator. This mechanism only
 works when you use a placeholder following the ``%var%`` pattern.
 
+.. deprecated:: 4.2
+
+    The ``transchoice`` tag is deprecated since Symfony 4.2 and will be
+    removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
+    the ``trans`` tag instead.
+
 .. caution::
 
     The ``%var%`` notation of placeholders is required when translating in
@@ -63,6 +69,12 @@ texts* and complex expressions:
     {{ message|trans({'%name%': 'Fabien'}, 'app') }}
 
     {{ message|transchoice(5, {'%name%': 'Fabien'}, 'app') }}
+
+.. deprecated:: 4.2
+
+    The ``transchoice`` filter is deprecated since Symfony 4.2 and will be
+    removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
+    the ``trans`` filter instead.
 
 .. tip::
 
