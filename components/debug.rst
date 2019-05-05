@@ -88,4 +88,33 @@ Using the ``DebugClassLoader`` is done by calling its static
 
     DebugClassLoader::enable();
 
+The ``DebugClassLoader`` also does lightweight static code analysis on the
+classes it loads, in order to generate some useful notice messages. For example,
+if one of your class extends a Symfony class that is marked with ``@internal``,
+a message to advise you to not do so will be generated.
+
+For some cases, if the checked class is considered as "in the same vendor"
+than another linked responsible class, no message is generated. For example,
+a Symfony class that extends another marked ``@internal`` Symfony class is
+perfectly fine. Since both classes are in the same vendor : no message is
+generated.
+
+By default, two classes are considered in the same vendor if their root
+namespaces are the same. However, you can alter this behavior by passing a
+remapping array when you enable the ``DebugClassLoader``::
+
+    use Symfony\Component\Debug\DebugClassLoader;
+
+    DebugClassLoader::enable([
+        'Foo\Bar' => 'Baz',
+        // Any classes in the Foo\Bar namespace and all its sub-namespaces will
+        // actually be considered as in the Baz namespace for the "same vendor"
+        // comparison.
+    ]);
+
+The keys of the remapping array are the original namespaces, of the depth you
+want. The values are their replacements that will be used for the "same vendor"
+comparison. Concretely, thanks to this remapping, you can move sub-namespaces
+out of their root one to force the generation of messages.
+
 .. _Packagist: https://packagist.org/packages/symfony/debug
