@@ -221,7 +221,7 @@ Configuration
   * :ref:`not_compromised_password <reference-validation-not-compromised-password>`
 
     * :ref:`enabled <reference-validation-not-compromised-password-enabled>`
-    * :ref:`endpoint`
+    * `endpoint`_
 
   * `static_method`_
   * `strict_email`_
