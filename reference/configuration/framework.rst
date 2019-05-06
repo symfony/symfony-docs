@@ -211,13 +211,17 @@ Configuration
 * `validation`_
 
   * :ref:`cache <reference-validation-cache>`
-  * :ref:`disable_not_compromised_password <reference-validation-disable_not_compromised_password>`
   * `email_validation_mode`_
   * :ref:`enable_annotations <reference-validation-enable_annotations>`
   * :ref:`enabled <reference-validation-enabled>`
   * :ref:`mapping <reference-validation-mapping>`
 
     * :ref:`paths <reference-validation-mapping-paths>`
+
+  * :ref:`not_compromised_password <reference-validation-not-compromised-password>`
+
+    * :ref:`enabled <reference-validation-not-compromised-password-enabled>`
+    * :ref:`endpoint`
 
   * `static_method`_
   * `strict_email`_
@@ -2084,26 +2088,6 @@ has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\Cach
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
 cache provide from the Doctrine project.
 
-.. _reference-validation-disable_not_compromised_password:
-
-disable_not_compromised_password
-................................
-
-**type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 4.3
-
-    The ``disable_not_compromised_password`` option was introduced in Symfony 4.3.
-
-The :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
-constraint makes HTTP requests to a public API to check if the given password
-has been compromised in a data breach.
-
-If you set this option to ``true``, no HTTP requests will be made and the given
-password will be considered valid. This is useful when you don't want or can't
-make HTTP requests, such as in ``dev`` and ``test`` environments or in
-continuous integration servers.
-
 .. _reference-validation-enable_annotations:
 
 enable_annotations
@@ -2120,6 +2104,46 @@ translation_domain
 
 The translation domain that is used when translating validation constraint
 error messages.
+
+.. _reference-validation-not-compromised-password:
+
+not_compromised_password
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
+constraint makes HTTP requests to a public API to check if the given password
+has been compromised in a data breach.
+
+.. _reference-validation-not-compromised-password-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.3
+
+    The ``enabled`` option was introduced in Symfony 4.3.
+
+If you set this option to ``true``, no HTTP requests will be made and the given
+password will be considered valid. This is useful when you don't want or can't
+make HTTP requests, such as in ``dev`` and ``test`` environments or in
+continuous integration servers.
+
+endpoint
+........
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 4.3
+
+    The ``endpoint`` option was introduced in Symfony 4.3.
+
+By default, the :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
+constraint uses the public API provided by `haveibeenpwned.com`_. This option
+allows to define a different, but compatible, API endpoint to make the password
+checks. It's useful for example when the Symfony application is run in an
+intranet without public access to Internet.
 
 static_method
 .............
@@ -2717,3 +2741,4 @@ to know their differences.
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`default_socket_timeout`: https://php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
+.. _`haveibeenpwned.com`: https://haveibeenpwned.com/
