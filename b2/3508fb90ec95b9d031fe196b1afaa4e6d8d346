@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-04-25T12:39:27Z
+
+friendly ping @lyrixx as codeowner of workflow, reviews/comments appreciated :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-25T13:36:44Z
+
+@noniagriconomie thanks for working on this! Sadly, we cannot reorder the options as proposed. We should keep the alphabetical sorting, which is what we use in all listings of config options across the docs.
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-04-25T13:41:48Z
+
+@javiereguiluz ha ok, understood, i reordered them as "config priority"
+I will revert no problem
+
+edit : reverted @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-05-05T18:06:49Z
+
+@OskarStark I am currently in vacations
+Feel free to commit your suggestions and advance the PR 👍🏻
+Edit : I will do the 4.3 version when this is merged
+Thanks
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-06T06:11:46Z
+
+> Feel free to commit your suggestions and advance the PR 👍🏻
+
+Enjoy your vacation 🌴 ☀️ , we can apply the changes when merging this PR!
+
+👍 from my side @javiereguiluz
