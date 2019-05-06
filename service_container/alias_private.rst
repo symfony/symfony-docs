@@ -241,7 +241,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
     .. code-block:: yaml
 
         AppBundle\Service\OldService:
-            deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
+            deprecated: The "%service_id%" service is deprecated since foo-org/bar-bundle 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
 
@@ -252,7 +252,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
             <services>
                 <service id="AppBundle\Service\OldService">
-                    <deprecated>The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.</deprecated>
+                    <deprecated>The "%service_id%" service is deprecated since foo-org/bar-bundle 2.8 and will be removed in 3.0.</deprecated>
                 </service>
             </services>
         </container>
@@ -265,7 +265,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             ->register(OldService::class)
             ->setDeprecated(
                 true,
-                'The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.'
+                'The "%service_id%" service is deprecated since foo-org/bar-bundle 2.8 and will be removed in 3.0.'
             )
         ;
 
