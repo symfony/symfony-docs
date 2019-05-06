@@ -512,7 +512,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
 .. versionadded:: 3.3
 
-    The ability to configure an argument by its name (``$adminEmail``) was added
+    The ability to configure an argument by its name (``$adminEmail``) was introduced
     in Symfony 3.3. Previously, you could configure it only by its index (``2`` in
     this case) or by using empty quotes for the other arguments.
 
