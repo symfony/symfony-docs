@@ -2250,12 +2250,18 @@ Name of the workflow you want to create.
 audit_trail
 """""""""""
 
-**type**: ``array``
+**type**: ``bool``
+
+If set to ``true``, the :class:`Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener`
+will be enabled.
 
 initial_place
 """""""""""""
 
 **type**: ``string`` **default**: ``null``
+
+One of the ``places`` or ``null``. If not null and the supported object is not
+already initialized via the workflow, this place will be set.
 
 marking_store
 """""""""""""
@@ -2274,10 +2280,15 @@ places
 
 **type**: ``array``
 
+All available places (**type**: ``string``) for the workflow configuration.
+
 supports
 """"""""
 
 **type**: ``string`` | ``array``
+
+The FQCN (fully-qualified class name) of the object supported by the workflow
+configuration or an array of FQCN if multiple objects are supported.
 
 support_strategy
 """"""""""""""""
@@ -2291,11 +2302,13 @@ transitions
 
 Each marking store can define any of these options:
 
-* ``from`` (**type**: ``string``)
-* ``guard`` (**type**: ``string``) a :doc:`ExpressionLanguage </components/expression_language>`
-  compatible expression to block the transition
-* ``name`` (**type**: ``string``)
-* ``to`` (**type**: ``string``)
+* ``from`` (**type**: ``string`` or ``array``) value from the ``places``,
+  multiple values are allowed for both ``workflow`` and ``state_machine``;
+* ``guard`` (**type**: ``string``) an :doc:`ExpressionLanguage </components/expression_language>`
+  compatible expression to block the transition;
+* ``name`` (**type**: ``string``) the name of the transition;
+* ``to`` (**type**: ``string`` or ``array``) value from the ``places``,
+  multiple values are allowed only for ``workflow``.
 
 .. _reference-workflows-type:
 
