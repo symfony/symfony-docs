@@ -877,9 +877,9 @@ cookie_secure
 
 **type**: ``boolean`` or ``string`` **default**: ``false``
 
-This determines whether cookies should only be sent over secure connections.
-Setting this value to ``auto`` means ``true`` for HTTPS requests and ``false`` for
-HTTP requests.
+This determines whether cookies should only be sent over secure connections. In
+addition to ``true`` and ``false``, there's a special ``'auto'`` value that
+means ``true`` for HTTPS requests and ``false`` for HTTP requests.
 
 cookie_httponly
 ...............
