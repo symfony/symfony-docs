@@ -308,7 +308,7 @@ some utility methods for Twig templates::
 
     $email = (new TemplatedEmail())
         ->from('fabien@symfony.com')
-        ->fo('foo@example.com')
+        ->to('foo@example.com')
         // ...
 
         // this method defines the path of the Twig template to render
@@ -373,7 +373,7 @@ the ``TemplatedEmail`` class::
 
     $email = (new TemplatedEmail())
         ->from('fabien@symfony.com')
-        ->fo('foo@example.com')
+        ->to('foo@example.com')
         // ...
 
         ->textTemplate('messages/user/signup.txt.twig')
