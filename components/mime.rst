@@ -50,7 +50,7 @@ methods to compose the entire email message::
         ->cc('bar@example.com')
         ->bcc('baz@example.com')
         ->replyTo('fabien@symfony.com')
-        ->priority(1)
+        ->priority(Email::PRIORITY_HIGH)
         ->subject('Important Notification')
         ->text('Lorem ipsum...')
         ->html('<h1>Lorem ipsum</h1> <p>...</p>')
