@@ -276,14 +276,15 @@ Authentication Events
 
 The security component provides 4 related authentication events:
 
-===============================  ================================================  ==============================================================================
-Name                             Event Constant                                    Argument Passed to the Listener
-===============================  ================================================  ==============================================================================
-security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS``  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationEvent`
-security.authentication.failure  ``AuthenticationEvents::AUTHENTICATION_FAILURE``  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationFailureEvent`
-security.interactive_login       ``SecurityEvents::INTERACTIVE_LOGIN``             :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
-security.switch_user             ``SecurityEvents::SWITCH_USER``                   :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`
-===============================  ================================================  ==============================================================================
+===============================  ================================================================= ==============================================================================
+Name                             Event Constant                                                    Argument Passed to the Listener
+===============================  ================================================================= ==============================================================================
+security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationEvent`
+security.authentication.failure  ``AuthenticationEvents::AUTHENTICATION_FAILURE``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationFailureEvent`
+security.interactive_login       ``SecurityEvents::INTERACTIVE_LOGIN``                             :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
+security.switch_user             ``SecurityEvents::SWITCH_USER``                                   :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`
+security.logout_on_change        ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent``    :class:`Symfony\Component\Security\Http\EventDeauthenticatedEvent`
+===============================  ================================================================= ==============================================================================
 
 Authentication Success and Failure Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -313,6 +314,13 @@ order to give your user a welcome flash message every time they log in.
 
 The ``security.switch_user`` event is triggered every time you activate
 the ``switch_user`` firewall listener.
+
+The ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent`` event is triggered when a token has been deauthenticated
+because of a user change, it can help you doing some clean-up task when a logout has been triggered.
+
+.. versionadded:: 4.3
+
+    The ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent`` event was introduced in Symfony 4.3.
 
 .. seealso::
 
