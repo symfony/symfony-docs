@@ -1,7 +1,7 @@
 .. index::
    single: Symfony versus Flat PHP
 
-.. _symfony-versus-flat-php:
+.. _symfony2-versus-flat-php:
 
 Symfony versus Flat PHP
 =======================
@@ -523,7 +523,7 @@ allowing HTTP headers and content to be added via an object-oriented interface.
 And while the responses in this application are simple, this flexibility
 will pay dividends as your application grows.
 
-.. _the-sample-application-in-symfony:
+.. _the-sample-application-in-symfony2:
 
 The Sample Application in Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
