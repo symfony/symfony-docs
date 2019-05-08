@@ -398,7 +398,7 @@ simplify things later::
     // ...
 
     $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $templatedLoader->addPath(__DIR__.'/images', 'images');
+    $templateLoader->addPath(__DIR__.'/images', 'images');
     $twig = new Environment($templateLoader);
 
 Now, use the special ``email.image()`` Twig helper to embed the images inside
