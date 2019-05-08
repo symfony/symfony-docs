@@ -28,7 +28,7 @@ Symfony includes the following normalizers but you can also
   normalize PHP object using the :doc:`PropertyAccessor component </components/property_access>`;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer` to
   normalize PHP object using an object that implements
-  ``:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface``;
+  :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` to
   normalize PHP object using the getter and setter methods of the object;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer` to
