@@ -83,7 +83,7 @@ by the routing system using the special ``_locale`` parameter:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/{_locale}/contact">
-                controller="App\Controller\ContactContorller::index">
+                controller="App\Controller\ContactController::index">
                 <requirement key="_locale">en|fr|de</requirement>
             </route>
         </routes>
