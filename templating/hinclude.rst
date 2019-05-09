@@ -93,9 +93,7 @@ in your application configuration:
         $container->loadFromExtension('framework', [
             // ...
             'templating' => [
-                'hinclude_default_template' => [
-                    'hinclude.html.twig',
-                ],
+                'hinclude_default_template' => 'hinclude.html.twig',
             ],
         ]);
 
