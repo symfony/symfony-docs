@@ -131,15 +131,13 @@ that can help writing some of your tests for PHPUnit.
 
 This will provide you with two new assertions:
 
-:method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals`
-    verifies that the dump of the variable given as the second argument matches
-    the expected dump provided as a string in the first argument.
-
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpMatchesFormat`
     is like the previous method but accepts placeholders in the expected dump,
     based on the ``assertStringMatchesFormat()`` method provided by PHPUnit.
 
-Example::
+:method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals`
+    verifies that the dump of the variable given as the second argument matches
+    the expected dump provided as a string in the first argument::
 
     use PHPUnit\Framework\TestCase;
 
