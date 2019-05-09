@@ -94,9 +94,19 @@ Below are common examples of valid DSNs showing a combination of available value
         'redis:?host[localhost]&host[localhost:6379]&host[/var/run/redis.sock:]&auth=my-password&redis_cluster=1'
     );
 
+    // Redis Sentinel is also supported in the same way
+    // set the redis_sentinel parameter to the name of your service group
+    RedisAdapter::createConnection(
+        'redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster'
+    );
+
 .. versionadded:: 4.2
 
     The option to define multiple servers in a single DSN was introduced in Symfony 4.2.
+
+.. versionadded:: 4.3
+
+    Redis Sentinel support was introduced in Symfony 4.3.
 
 .. note::
 
