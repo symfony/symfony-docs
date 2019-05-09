@@ -614,11 +614,6 @@ Then you can access this metadata in your controller as follows::
         ;
 
         // or
-        $title = $workflow->getMetadataStore()
-            ->getWorkflowMetadata()['title'] ?? false
-        ;
-
-        // or
         $aTransition = $workflow->getDefinition()->getTransitions()[0];
         $transitionTitle = $workflow
             ->getMetadataStore()
