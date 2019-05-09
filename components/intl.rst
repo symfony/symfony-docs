@@ -212,7 +212,7 @@ Accessing ICU Data
 This component provides the following ICU data:
 
 * `Language and Script Names`_
-* `Country and Region Names`_
+* `Country Names`_
 * `Locales`_
 * `Currencies`_
 * `Timezones`_
@@ -283,42 +283,40 @@ You can also check if a given script code is valid::
 
     The ``Scripts`` class was introduced in Symfony 4.3.
 
-.. _country-names:
+Country Names
+~~~~~~~~~~~~~
 
-Country and Region Names
-~~~~~~~~~~~~~~~~~~~~~~~~
+The ``Countries`` class provides access to the name of all countries according
+to the `ISO 3166-1 alpha-2`_ list of officially recognized countries and
+territories::
 
-In the world there are some territorial disputes that make it hard to define
-what a country is. That's why the Intl component provides a ``Regions`` class
-instead of a ``Countries`` class::
-
-    use Symfony\Component\Intl\Regions;
+    use Symfony\Component\Intl\Countries;
 
     \Locale::setDefault('en');
 
-    $countries = Regions::getNames();
-    // ('regionCode' => 'regionName')
+    $countries = Countries::getNames();
+    // ('countryCode' => 'countryName')
     // => ['AF' => 'Afghanistan', 'AX' => 'Åland Islands', ...]
 
-    $country = Regions::getName('GB');
+    $country = Countries::getName('GB');
     // => 'United Kingdom'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
-    $countries = Regions::getNames('de');
+    $countries = Countries::getNames('de');
     // => ['AF' => 'Afghanistan', 'EG' => 'Ägypten', ...]
 
-    $country = Regions::getName('GB', 'de');
+    $country = Countries::getName('GB', 'de');
     // => 'Vereinigtes Königreich'
 
-You can also check if a given region code is valid::
+You can also check if a given country code is valid::
 
-    $isValidRegion = Regions::exists($regionCode);
+    $isValidCountry = Countries::exists($countryCode);
 
 .. versionadded:: 4.3
 
-    The ``Regions`` class was introduced in Symfony 4.3.
+    The ``Countries`` class was introduced in Symfony 4.3.
 
 Locales
 ~~~~~~~
@@ -451,3 +449,4 @@ Learn more
 .. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
+.. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
