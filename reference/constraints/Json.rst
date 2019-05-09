@@ -69,8 +69,8 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
         // src/Entity/Book.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Book
         {
