@@ -138,17 +138,10 @@ like this:
 
     class BlogPost
     {
-        // This property is used by the marking store. If the current object is managed by a state machine, this property is a string, else if it's managed by a workflow it's an array.
         public $currentPlace;
         public $title;
         public $content;
     }
-
-.. note::
-
-    The marking store type could be "multiple_state" or "single_state".
-    A single state marking store does not support a model being on multiple places
-    at the same time.
 
 .. tip::
 
@@ -158,6 +151,10 @@ like this:
     
 .. note::
 
+    The marking store type could be "multiple_state" or "single_state".
+    A single state marking store does not support a model being on multiple places
+    at the same time.
+    
     If a ``multiple_state`` is used, the attribute should be an ``array``, 
     using Doctrine, you can use ``json``. 
 
