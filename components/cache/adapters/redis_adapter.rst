@@ -96,6 +96,7 @@ Below are common examples of valid DSNs showing a combination of available value
 
     // Redis Sentinel is also supported in the same way
     // set the redis_sentinel parameter to the name of your service group
+    // Sentinel support also requires the Predis library
     RedisAdapter::createConnection(
         'redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster'
     );
@@ -104,9 +105,9 @@ Below are common examples of valid DSNs showing a combination of available value
 
     The option to define multiple servers in a single DSN was introduced in Symfony 4.2.
 
-.. versionadded:: 4.3
+.. versionadded:: 4.4
 
-    Redis Sentinel support was introduced in Symfony 4.3.
+    Redis Sentinel support was introduced in Symfony 4.4.
 
 .. note::
 
