@@ -138,7 +138,7 @@ like this:
 
     class BlogPost
     {
-        // This property is used by the marking store, by default, Symfony set the marking as an array.
+        // This property is used by the marking store. If the current object is managed by a state machine, this property is a string, else if it's managed by a workflow it's an array.
         public $currentPlace;
         public $title;
         public $content;
