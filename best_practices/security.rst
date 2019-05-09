@@ -356,7 +356,7 @@ via the even easier shortcut in a controller::
         $this->denyAccessUnlessGranted('edit', $post);
 
         // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-        // use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+        // use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         //
         // ...
         //
