@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-09T06:59:29Z
+
+@Art4 thanks for this contribution, but I'm afraid that 2.8 branch is no longer supported. It's supported for security issues ... but that's not considered "active support" anymore. Here you can find the currently maintained versions: https://symfony.com/roadmap  So, this PR should be rebased against 3.4. Thanks
+
+---------------------------------------------------------------------------
+
+by Art4 at 2019-05-09T07:02:21Z
+
+Oh, I see. Will do that.
+
+---------------------------------------------------------------------------
+
+by Art4 at 2019-05-09T07:11:54Z
+
+I've changed the branch to 3.4
