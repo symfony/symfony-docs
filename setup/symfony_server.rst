@@ -348,6 +348,17 @@ commands from the Symfony server:
     # creates a new project based on the Symfony Demo application
     $ symfony new --demo my_project_name
 
+You can create a project depending on a **development** version as well (note
+that Composer will also set the stability to ``dev`` for all root dependencies):
+
+.. code-block:: terminal
+
+    # creates a new project based on Symfony's master branch
+    $ symfony new --version=dev-master my_project_name
+
+    # creates a new project based on Symfony's 4.3 dev branch
+    $ symfony new --version=4.3.x-dev my_project_name
+
 .. _`symfony.com/download`: https://symfony.com/download
 .. _`different ways of installing Symfony`: https://symfony.com/download
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
