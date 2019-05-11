@@ -138,9 +138,9 @@ transports communicate with your application via queuing systems or third partie
 
 There are the following built-in transports:
 
- - AMQP
- - Doctrine
- - Redis
+- `AMQP`_
+- Doctrine
+- `Redis`_
 
 .. note::
 
@@ -199,7 +199,7 @@ This will also configure the following services for you:
 Now define the ``MESSENGER_TRANSPORT_DSN`` in the ``.env`` file.
 See examples beneath how to configure the DSN for different transports.
 
-Amqp
+AMQP
 ~~~~
 
 .. code-block:: bash
@@ -220,6 +220,10 @@ This is enough to allow you to route your message to the ``amqp`` transport.
 
 Redis
 ~~~~~
+
+.. versionadded:: 4.3
+
+    The Redis transport was introduced in Symfony 4.3.
 
 The Redis transport will use `streams`_ to queue messages.
 
