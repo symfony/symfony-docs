@@ -272,8 +272,8 @@ do is to write your own CSV receiver::
 
         public function __construct(SerializerInterface $serializer, string $filePath)
         {
-           $this->serializer = $serializer;
-           $this->filePath = $filePath;
+            $this->serializer = $serializer;
+            $this->filePath = $filePath;
         }
 
         public function receive(callable $handler): void
