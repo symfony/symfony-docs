@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-10T08:47:58Z
+
+I agree that the original wording is not perfectly clear ... but the new proposed wording isn't much better to me. @OskarStark what do you think about this? Thanks.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-10T08:57:00Z
+
+I agree with Shrey and with you, what about:
+
+```diff
+- This article explains how to create and load those bundle services files.
++ This article explains how to create and load service files from the bundle directory structure.
+```
+
+---------------------------------------------------------------------------
+
+by shreypuranik at 2019-05-10T09:53:20Z
+
+I really like this @OskarStark. Only minor suggestion from me would be:
+
+- From your suggestion: This article explains how to create and load service files from the bundle directory structure.
++ To: This article explains how to create and load service files using the bundle directory structure.
+
+How is that? //cc @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-10T10:34:10Z
+
+Yes, I like the new proposals. The latest from @shreypuranik sound better to me, but both are great. Thank you!
+
+---------------------------------------------------------------------------
+
+by shreypuranik at 2019-05-10T10:45:17Z
+
+Thanks @javiereguiluz .
+
+@OskarStark  are you happy for me to amend the PR with this re-phrasing?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-10T11:49:27Z
+
+> @OskarStark are you happy for me to amend the PR with this re-phrasing?
+
+Yes, thank you 👍
+
+---------------------------------------------------------------------------
+
+by shreypuranik at 2019-05-10T12:28:43Z
+
+Thanks @OskarStark @javiereguiluz . I have updated the Pull Request with the re-phrasing.
