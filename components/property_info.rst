@@ -149,13 +149,13 @@ containing each property name as a string::
 
     $properties = $propertyInfo->getProperties($class);
     /*
-      Example Result
-      --------------
-      array(3) {
-        [0] => string(8) "username"
-        [1] => string(8) "password"
-        [2] => string(6) "active"
-      }
+        Example Result
+        --------------
+        array(3) {
+            [0] => string(8) "username"
+            [1] => string(8) "password"
+            [2] => string(6) "active"
+        }
     */
 
 .. _property-info-type:
@@ -168,21 +168,20 @@ provide :ref:`extensive data type information <components-property-info-type>`
 for a property::
 
     $types = $propertyInfo->getTypes($class, $property);
-
     /*
-      Example Result
-      --------------
-      array(1) {
-        [0] =>
-        class Symfony\Component\PropertyInfo\Type (6) {
-          private $builtinType          => string(6) "string"
-          private $nullable             => bool(false)
-          private $class                => NULL
-          private $collection           => bool(false)
-          private $collectionKeyType    => NULL
-          private $collectionValueType  => NULL
+        Example Result
+        --------------
+        array(1) {
+            [0] =>
+                class Symfony\Component\PropertyInfo\Type (6) {
+                private $builtinType          => string(6) "string"
+                private $nullable             => bool(false)
+                private $class                => NULL
+                private $collection           => bool(false)
+                private $collectionKeyType    => NULL
+                private $collectionValueType  => NULL
+            }
         }
-      }
     */
 
 See :ref:`components-property-info-type` for info about the ``Type`` class.
@@ -198,18 +197,18 @@ strings::
 
     $title = $propertyInfo->getShortDescription($class, $property);
     /*
-      Example Result
-      --------------
-      string(41) "This is the first line of the DocComment."
+        Example Result
+        --------------
+        string(41) "This is the first line of the DocComment."
     */
 
     $paragraph = $propertyInfo->getLongDescription($class, $property);
     /*
-      Example Result
-      --------------
-      string(79):
-        These is the subsequent paragraph in the DocComment.
-        It can span multiple lines.
+        Example Result
+        --------------
+        string(79):
+            These is the subsequent paragraph in the DocComment.
+            It can span multiple lines.
     */
 
 .. _property-info-access:
