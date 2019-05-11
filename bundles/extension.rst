@@ -7,7 +7,8 @@ How to Load Service Configuration inside a Bundle
 
 Services created by bundles are not defined in the main ``config/services.yaml``
 file used by the application but in the bundles themselves. This article
-explains how to create and load those bundle services files.
+explains how to create and load service files using the bundle directory
+structure.
 
 Creating an Extension Class
 ---------------------------
