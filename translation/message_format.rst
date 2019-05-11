@@ -1,7 +1,7 @@
 .. index::
     single: Translation; Message Format
 
-How to translate messages using the ICU MessageFormat
+How to Translate Messages using the ICU MessageFormat
 =====================================================
 
 .. versionadded:: 4.2
@@ -9,7 +9,7 @@ How to translate messages using the ICU MessageFormat
    Support for ICU MessageFormat was introduced in Symfony 4.2.
 
 Messages (i.e. strings) in applications are almost never completely static.
-They contain variables or other complexer logic like pluralization. In order to
+They contain variables or other complex logic like pluralization. In order to
 handle this, the Translator component supports the `ICU MessageFormat`_ syntax.
 
 Using the ICU Message Format
@@ -34,7 +34,7 @@ All messages in this file will now be processed by the
 Message Placeholders
 --------------------
 
-The basic usage of the MessageFormat allows you to use placeholder (called
+The basic usage of the MessageFormat allows you to use placeholders (called
 *arguments* in ICU MessageFormat) in your messages:
 
 .. configuration-block::
@@ -67,17 +67,19 @@ The basic usage of the MessageFormat allows you to use placeholder (called
         ];
 
 Everything within the curly braces (``{...}``) is processed by the formatter
-and replaced by it's placeholder::
+and replaced by its placeholder::
 
-    // ...
-    echo $translator->trans('say_hello', ['name' => 'Fabien']); // Hello Fabien!
-    echo $translator->trans('say_hello', ['name' => 'Symfony']); // Hello Symfony!
+    // prints "Hello Fabien!"
+    echo $translator->trans('say_hello', ['name' => 'Fabien']);
+
+    // prints "Hello Symfony!"
+    echo $translator->trans('say_hello', ['name' => 'Symfony']);
 
 Selecting Different Messages Based on a Condition
 -------------------------------------------------
 
 The curly brace syntax allows to "modify" the output of the variable. One of
-these functions is the ``switch`` function. It acts like PHP's `switch statement`_
+these functions is the ``select`` function. It acts like PHP's `switch statement`_
 and allows to use different strings based on the value of the variable. A
 typical usage of this is gender:
 
@@ -102,7 +104,7 @@ typical usage of this is gender:
                 <body>
                     <trans-unit id="invitation_title">
                         <source>invitation_title</source>
-                        <target>{organizer_gender, select, female {{organizer_name} has invited you for her party!} male   {{organizer_name} has invited you for his party!} other {{organizer_name} have invited you for their party!}}</target>
+                        <target>{organizer_gender, select, female {{organizer_name} has invited you for her party!} male {{organizer_name} has invited you for his party!} other {{organizer_name} have invited you for their party!}}</target>
                     </trans-unit>
                 </body>
             </file>
@@ -120,11 +122,10 @@ typical usage of this is gender:
         ];
 
 This might look very complex. The basic syntax for all functions is
-``{variable_name, function_name, function_statement}``. In this case, the
-function name is ``select`` and its statement contains the "cases" of this
+``{variable_name, function_name, function_statement}`` (where, as you see
+later, ``function_statement`` is optional for some functions). In this case,
+the function name is ``select`` and its statement contains the "cases" of this
 select. This function is applied over the ``organizer_gender`` variable::
-
-    // ...
 
     // prints "Ryan has invited you for his party!"
     echo $translator->trans('invition_title', [
@@ -154,23 +155,23 @@ you to use literal text in the select statements:
     in the switch statement, it is better to use "complex arguments" at the
     outermost structure of the message. The strings are in this way better
     readable for translators and, as you can see in the ``other`` case, other
-    parts of the sentence mgith be influenced by the variable.
+    parts of the sentence might be influenced by the variables.
 
 Pluralization
 -------------
 
 Another interesting function is ``plural``. It allows you to
 handle pluralization in your messages (e.g. ``There are 3 apples`` vs
-``There is one apple``). The function looks very similair to the ``select`` function:
+``There is one apple``). The function looks very similar to the ``select`` function:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # translations/messages.en.yaml
-        nr_of_apples: >
+        num_of_apples: >
             {apples, plural,
-                =0    {There are no apples :(}
+                =0    {There are no apples}
                 one   {There is one apple...}
                 other {There are # apples!}
             }
@@ -182,9 +183,9 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="nr_of_apples">
-                        <source>nr_of_apples</source>
-                        <target>{apples, plural, =0 {There are no apples :(} one {There is one apple...} other {There are # apples!}}</target>
+                    <trans-unit id="num_of_apples">
+                        <source>num_of_apples</source>
+                        <target>{apples, plural, =0 {There are no apples} one {There is one apple...} other {There are # apples!}}</target>
                     </trans-unit>
                 </body>
             </file>
@@ -194,43 +195,32 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
 
         // translations/messages.en.php
         return [
-            'nr_of_apples' => '{apples, plural,
-                =0    {There are no apples :(}
+            'num_of_apples' => '{apples, plural,
+                =0    {There are no apples}
                 one   {There is one apple...}
                 other {There are # apples!}
             }',
         ];
 
 Pluralization rules are actually quite complex and differ for each language.
-For instance, here is the mathematical representation of the Russian
-pluralization rules::
+For instance, Russian uses different plural forms for numbers ending with 1;
+numbers ending with 2, 3 or 4; numbers ending with 5, 6, 7, 8 or 9; and even
+some exceptions of this!
 
-    (($number % 10 == 1) && ($number % 100 != 11))
-        ? 0
-        : ((($number % 10 >= 2)
-            && ($number % 10 <= 4)
-            && (($number % 100 < 10)
-            || ($number % 100 >= 20)))
-                ? 1
-                : 2
-    );
-
-In order to facilitate this, the possible cases in the ``plural`` function are
-also different for each language. For instance, Russian has ``one``, ``few``,
-``many`` and ``other``, while English has only ``one`` and ``other``. The full
-list of possible cases can be found in Unicode's `Language Plural Rules`_
-document. By prefixing with ``=``, you can match exact values (like ``0`` in
-the above example).
+In order to properly translate this, the possible cases in the ``plural``
+function are also different for each language. For instance, Russian has
+``one``, ``few``, ``many`` and ``other``, while English has only ``one`` and
+``other``. The full list of possible cases can be found in Unicode's
+`Language Plural Rules`_ document. By prefixing with ``=``, you can match exact
+values (like ``0`` in the above example).
 
 Usage of this string is the same as with variables and select::
 
-    // ...
-
     // prints "There is one apple..."
-    echo $translator->trans('nr_of_apples', ['apples' => 1]);
+    echo $translator->trans('num_of_apples', ['apples' => 1]);
 
     // prints "There are 23 apples!"
-    echo $translator->trans('nr_of_apples', ['apples' => 23]);
+    echo $translator->trans('num_of_apples', ['apples' => 23]);
 
 .. note::
 
@@ -269,15 +259,15 @@ Usage of this string is the same as with variables and select::
             }
         }
 
-Other Placeholder Functions
----------------------------
+Additional Placeholder Functions
+--------------------------------
 
-Besides these, the MessageFormat comes with a couple other interesting functions.
+Besides these, the ICU MessageFormat comes with a couple other interesting functions.
 
 Ordinal
 ~~~~~~~
 
-Similair to ``plural``, ``selectordinal`` allows you to use numbers as ordinal scale:
+Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal scale:
 
 .. configuration-block::
 
@@ -286,11 +276,15 @@ Similair to ``plural``, ``selectordinal`` allows you to use numbers as ordinal s
         # translations/messages.en.yaml
         finish_place: >
             You finished {place, selectordinal,
-                one {#st}
-                two {#nd}
-                few {#rd}
+                one   {#st}
+                two   {#nd}
+                few   {#rd}
                 other {#th}
             }!
+
+        # when only formatting the number as ordinal (like above), you can also
+        # use the `ordinal` function:
+        finish_place: You finished {place, ordinal}!
 
     .. code-block:: xml
 
@@ -301,7 +295,14 @@ Similair to ``plural``, ``selectordinal`` allows you to use numbers as ordinal s
                 <body>
                     <trans-unit id="finish_place">
                         <source>finish_place</source>
-                        <target>{apples, plural, =0 {There are no apples :(} one {There is one apple...} other {There are # apples!}}</target>
+                        <target>You finished {place, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}!</target>
+                    </trans-unit>
+
+                    <!-- when only formatting the number as ordinal (like
+                         above), you can also use the `ordinal` function: -->
+                    <trans-unit id="finish_place">
+                        <source>finish_place</source>
+                        <target>You finished {place, ordinal}!</target>
                     </trans-unit>
                 </body>
             </file>
@@ -317,11 +318,13 @@ Similair to ``plural``, ``selectordinal`` allows you to use numbers as ordinal s
                 few {#rd}
                 other {#th}
             }!',
+
+            // when only formatting the number as ordinal (like above), you can
+            // also use the `ordinal` function:
+            'finish_place' => 'You finished {place, ordinal}!',
         ];
 
 .. code-block:: php
-
-    // ...
 
     // prints "You finished 1st!"
     echo $translator->trans('finish_place', ['place' => 1]);
@@ -345,7 +348,7 @@ using the :phpclass:`IntlDateFormatter`:
     .. code-block:: yaml
 
         # translations/messages.en.yaml
-        published_at: 'Published at {time, date} - {time, time, short}'
+        published_at: 'Published at {publication_date, date} - {publication_date, time, short}'
 
     .. code-block:: xml
 
@@ -356,7 +359,7 @@ using the :phpclass:`IntlDateFormatter`:
                 <body>
                     <trans-unit id="published_at">
                         <source>published_at</source>
-                        <target>Published at {time, date} - {time, time, short}</target>
+                        <target>Published at {publication_date, date} - {publication_date, time, short}</target>
                     </trans-unit>
                 </body>
             </file>
@@ -366,15 +369,16 @@ using the :phpclass:`IntlDateFormatter`:
 
         // translations/messages.en.php
         return [
-            'published_at' => 'Published at {time, date} - {time, time, short}',
+            'published_at' => 'Published at {publication_date, date} - {publication_date, time, short}',
         ];
+
+The "function statement" for the ``time`` and ``date`` functions can be one of
+short, medium, long or full, as documented on PHP.net.
 
 .. code-block:: php
 
-    // ...
-
     // prints "Published at Jan 25, 2019 - 11:30 AM"
-    echo $translator->trans('published_at', ['time' => new \DateTime('2019-01-25 11:30:00')]);
+    echo $translator->trans('published_at', ['publication_date' => new \DateTime('2019-01-25 11:30:00')]);
 
 Numbers
 ~~~~~~~
@@ -418,8 +422,6 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
         ];
 
 .. code-block:: php
-
-    // ...
 
     // prints "82% of the work is done"
     echo $translator->trans('progress', ['progress' => 0.82]);

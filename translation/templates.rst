@@ -103,7 +103,7 @@ texts* and complex expressions:
 
     .. code-block:: twig
 
-           {% trans_default_domain 'app' %}
+       {% trans_default_domain 'app' %}
 
     Note that this only influences the current template, not any "included"
     template (in order to avoid side effects).
