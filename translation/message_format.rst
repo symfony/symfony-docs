@@ -12,6 +12,10 @@ Messages (i.e. strings) in applications are almost never completely static.
 They contain variables or other complex logic like pluralization. In order to
 handle this, the Translator component supports the `ICU MessageFormat`_ syntax.
 
+.. tip::
+
+    You can test out examples of the ICU MessageFormatter in this `online editor`_.
+
 Using the ICU Message Format
 ----------------------------
 
@@ -433,6 +437,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
     // "9 988 776,65 €"
     echo $translator->trans('value_of_object', ['value' => 9988776.65]);
 
+.. _`online editor`: http://format-message.github.io/icu-message-format-for-translators/
 .. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
 .. _`switch statement`: https://php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
