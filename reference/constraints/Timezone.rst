@@ -69,8 +69,8 @@ string meant to contain a timezone identifier (e.g. ``America/New_York``):
         // src/Entity/UserSettings.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class UserSettings
         {

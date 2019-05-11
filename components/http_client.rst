@@ -52,8 +52,8 @@ including concurrent requests, HTTP/2 is only supported when using cURL.
 is enabled and falls back to PHP streams otherwise. If you prefer to select
 the transport explicitly, use the following classes to create the client::
 
-    use Symfony\Component\HttpClient\NativeHttpClient;
     use Symfony\Component\HttpClient\CurlHttpClient;
+    use Symfony\Component\HttpClient\NativeHttpClient;
 
     // uses native PHP streams
     $httpClient = new NativeHttpClient();
