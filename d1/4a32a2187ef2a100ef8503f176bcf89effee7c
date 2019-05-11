@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-11T06:36:48Z
+
+You are right:
+https://github.com/symfony/mercure/blob/master/src/Jwt/StaticJwtProvider.php
+
+Thank you 🙏
