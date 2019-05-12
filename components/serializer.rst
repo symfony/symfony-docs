@@ -416,7 +416,7 @@ key in the ``context`` parameter of the desired serializer method::
     $encoder = new JsonEncoder();
 
     $serializer = new Serializer([$normalizer], [$encoder]);
-    $serializer->serialize($person, 'json', ['ignored_attributes' => 'age']); // Output: {"name":"foo"}
+    $serializer->serialize($person, 'json', ['ignored_attributes' => ['age']]); // Output: {"name":"foo"}
 
 .. deprecated:: 4.2
 
