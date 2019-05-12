@@ -84,8 +84,8 @@ objects::
 
 Then, create a form class so that a ``Tag`` object can be modified by the user::
 
-    // src/AppBundle/Form/Type/TagType.php
-    namespace AppBundle\Form\Type;
+    // src/AppBundle/Form/TagType.php
+    namespace AppBundle\Form;
 
     use AppBundle\Entity\Tag;
     use Symfony\Component\Form\AbstractType;
@@ -114,8 +114,8 @@ form itself, create a form for the ``Task`` class.
 Notice that you embed a collection of ``TagType`` forms using the
 :doc:`CollectionType </reference/forms/types/collection>` field::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form;
 
     use AppBundle\Entity\Task;
     use Symfony\Component\Form\AbstractType;
@@ -150,7 +150,7 @@ In your controller, you'll create a new form from the ``TaskType``::
 
     use AppBundle\Entity\Tag;
     use AppBundle\Entity\Task;
-    use AppBundle\Form\Type\TaskType;
+    use AppBundle\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
 
@@ -254,7 +254,7 @@ type expects to receive exactly two, otherwise an error will be thrown:
 ``This form should not contain extra fields``. To make this flexible,
 add the ``allow_add`` option to your collection field::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/AppBundle/Form/TaskType.php
 
     // ...
     use Symfony\Component\Form\FormBuilderInterface;
@@ -419,7 +419,7 @@ for the tags in the ``Task`` class::
 
 Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false``::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/AppBundle/Form/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -551,7 +551,7 @@ The solution is similar to allowing tags to be added.
 
 Start by adding the ``allow_delete`` option in the form Type::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/AppBundle/Form/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
