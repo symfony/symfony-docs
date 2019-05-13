@@ -111,8 +111,8 @@ information. By convention, this information is usually configured in an
             ]);
 
     By separating the database information into a separate file, you can
-    easily keep different versions of the file on each server. You can also
-    easily store database configuration (or any sensitive information) outside
+    keep different versions of the file on each server. You can also
+    store database configuration (or any sensitive information) outside
     of your project, like inside your Apache configuration, for example. For
     more information, see :doc:`/configuration/external_parameters`.
 
@@ -666,7 +666,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
     about in the :ref:`doctrine-queries` section.
 
 You can also take advantage of the useful ``findBy()`` and ``findOneBy()`` methods
-to easily fetch objects based on multiple conditions::
+to fetch objects based on multiple conditions::
 
     $repository = $this->getDoctrine()->getRepository(Product::class);
 
@@ -800,7 +800,7 @@ result, you can use ``getOneOrNullResult()``::
 
     $product = $query->setMaxResults(1)->getOneOrNullResult();
 
-The DQL syntax is incredibly powerful, allowing you to easily join between
+The DQL syntax is incredibly powerful, allowing you to join between
 entities (the topic of :doc:`relations </doctrine/associations>` will be
 covered later), group, etc. For more information, see the official
 `Doctrine Query Language`_ documentation.

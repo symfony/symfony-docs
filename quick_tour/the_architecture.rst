@@ -88,7 +88,7 @@ for your application.
 All the code you write for your application is organized in bundles. In
 Symfony speak, a bundle is a structured set of files (PHP files, stylesheets,
 JavaScripts, images, ...) that implements a single feature (a blog, a forum,
-...) and which can be easily shared with other developers.
+...) and which can be shared with other developers.
 
 Bundles are first-class citizens in Symfony. This gives you the flexibility
 to use pre-built features packaged in third-party bundles or to distribute

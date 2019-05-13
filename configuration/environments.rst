@@ -51,10 +51,10 @@ As you can see, when Symfony is loaded, it uses the given environment to
 determine which configuration file to load. This accomplishes the goal of
 multiple environments in an elegant, powerful and transparent way.
 
-Of course, in reality, each environment differs only somewhat from others.
+However, in practice each environment differs only somewhat from others.
 Generally, all environments will share a large base of common configuration.
 Opening the ``config_dev.yml`` configuration file, you can see how this is
-accomplished easily and transparently:
+accomplished:
 
 .. configuration-block::
 
@@ -420,7 +420,7 @@ includes the following:
 
 .. note::
 
-    You can easily change the directory location and name. For more information
+    You can change the directory location and name. For more information
     read the article :doc:`/configuration/override_dir_structure`.
 
 Going further

@@ -20,7 +20,7 @@ Understanding the Fundamentals
 ------------------------------
 
 One of the main goals of a framework is to keep your code organized and
-to allow your application to evolve easily over time by avoiding the mixing
+to allow your application to evolve over time by avoiding the mixing
 of database calls, HTML tags and other PHP code in the same script. To achieve
 this goal with Symfony, you'll first need to learn a few fundamental concepts.
 

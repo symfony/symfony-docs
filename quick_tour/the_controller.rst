@@ -294,7 +294,7 @@ object that represents the client (be it a real person using a browser,
 a bot, or a web service). Between two requests, Symfony stores the attributes
 in a cookie by using native PHP sessions.
 
-Storing and retrieving information from the session can be easily achieved
+Storing and retrieving information from the session can be achieved
 from any controller::
 
     use Symfony\Component\HttpFoundation\Session\Session;

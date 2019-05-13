@@ -17,8 +17,9 @@ The API Key Authenticator
 -------------------------
 
 Authenticating a user based on the Request information should be done via a
-pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Http\\Authentication\\SimplePreAuthenticatorInterface`
-allows you to implement such a scheme really easily.
+pre-authentication mechanism using the
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\SimplePreAuthenticatorInterface`
+class.
 
 Your exact situation may differ, but in this example, a token is read
 from an ``apikey`` query parameter, the proper username is loaded from that
