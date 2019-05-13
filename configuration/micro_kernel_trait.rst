@@ -74,11 +74,12 @@ Next, create an ``index.php`` file that creates a kernel class and executes it::
     $response->send();
     $kernel->terminate($request, $response);
 
-That's it! To test it, you can start the built-in web server:
+That's it! To test it, start the :doc:`Symfony Local Web Server
+</setup/symfony_server>`:
 
 .. code-block:: terminal
 
-    $ php -S localhost:8000
+    $ symfony server:start
 
 Then see the JSON response in your browser:
 
@@ -335,12 +336,13 @@ this:
     ├─ composer.json
     └─ composer.lock
 
-As before you can use PHP built-in server:
+As before you can use the :doc:`Symfony Local Web Server
+</setup/symfony_server>`:
 
 .. code-block:: terminal
 
     cd web/
-    $ php -S localhost:8000
+    $ symfony server:start
 
 Then see webpage in browser:
 
