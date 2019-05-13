@@ -276,7 +276,7 @@ License
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
 
-.. _`PHP CS Fixer tool`: http://cs.sensiolabs.org/
+.. _`PHP CS Fixer tool`: https://cs.symfony.com/
 .. _`PSR-0`: https://www.php-fig.org/psr/psr-0/
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
