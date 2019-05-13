@@ -321,7 +321,7 @@ and use that when configuring the pool.
                 factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
                 arguments:
                     - 'redis://localhost'
-                    - [ retry_interval: 2, timeout: 10 ]
+                    - { retry_interval: 2, timeout: 10 }
 
     .. code-block:: xml
 
