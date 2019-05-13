@@ -119,7 +119,7 @@ Throughout this article, template examples will be shown in both Twig and PHP.
     Twig templates are meant to be simple and won't process PHP tags. This
     is by design: the Twig template system is meant to express presentation,
     not program logic. The more you use Twig, the more you'll appreciate
-    and benefit from this distinction. And of course, you'll be loved by
+    and benefit from this distinction. And you'll be loved by
     web designers everywhere.
 
     Twig can also do things that PHP can't, such as whitespace control,
@@ -633,7 +633,7 @@ Linking to Assets
 ~~~~~~~~~~~~~~~~~
 
 Templates also commonly refer to images, JavaScript, stylesheets and other
-assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
+assets. You could hard-code the path to these assets (e.g. ``/images/logo.png``),
 but Symfony provides a more dynamic option via the ``asset()`` Twig function:
 
 .. code-block:: html+twig
@@ -728,7 +728,7 @@ page. From inside that contact page's template, do the following:
     {# ... #}
 
 In the child template, you simply override the ``stylesheets`` block and
-put your new stylesheet tag inside of that block. Of course, since you want
+put your new stylesheet tag inside of that block. Since you want
 to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
 block of the base template.

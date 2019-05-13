@@ -335,7 +335,7 @@ the argument by its name:
             ])
         ;
 
-You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
+You can also use normal :ref:`constructor injection <services-constructor-injection>`
 in your controllers.
 
 .. caution::

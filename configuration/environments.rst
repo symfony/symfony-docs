@@ -283,7 +283,7 @@ Creating a new Environment
 --------------------------
 
 By default, a Symfony application has three environments that handle most
-cases. Of course, since an environment is nothing more than a string that
+cases. However, since an environment is nothing more than a string that
 corresponds to a set of configuration, creating a new environment is quite
 easy.
 

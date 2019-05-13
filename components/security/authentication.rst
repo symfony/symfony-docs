@@ -90,7 +90,7 @@ authentication providers, each supporting a different type of token.
 
 .. note::
 
-    You may of course write your own authentication manager, it only has
+    You may write your own authentication manager, it only has
     to implement :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationManagerInterface`.
 
 .. _authentication_providers:

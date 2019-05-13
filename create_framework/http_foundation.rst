@@ -86,9 +86,9 @@ reading this book now and go back to whatever code you were working on before.
 
 .. note::
 
-    Of course, using a framework should give you more than just security and
-    testability, but the more important thing to keep in mind is that the
-    framework you choose must allow you to write better code faster.
+    Using a framework should give you more than just security and testability,
+    but the more important thing to keep in mind is that the framework you
+    choose must allow you to write better code faster.
 
 Going OOP with the HttpFoundation Component
 -------------------------------------------

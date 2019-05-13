@@ -104,8 +104,8 @@ The error controller reads as follows::
         }
     }
 
-Voilà! Clean and customizable error management without efforts. And of course,
-if your controller throws an exception, HttpKernel will handle it nicely.
+*Voilà!* Clean and customizable error management without efforts. And if your
+controller throws an exception, HttpKernel will handle it nicely.
 
 In chapter two, we talked about the ``Response::prepare()`` method, which
 ensures that a Response is compliant with the HTTP specification. It is

@@ -476,10 +476,10 @@ Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You now have a usable ``Product`` class with mapping information so that
-Doctrine knows exactly how to persist it. Of course, you don't yet have the
-corresponding ``product`` table in your database. Fortunately, Doctrine can
-automatically create all the database tables needed for every known entity
-in your application. To do this, run:
+Doctrine knows exactly how to persist it. You don't yet have the corresponding
+``product`` table in your database. Fortunately, Doctrine can automatically
+create all the database tables needed for every known entity in your
+application. To do this, run:
 
 .. code-block:: terminal
 
@@ -662,7 +662,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
 
 .. note::
 
-    Of course, you can also issue complex queries, which you'll learn more
+    You can also issue complex queries, which you'll learn more
     about in the :ref:`doctrine-queries` section.
 
 You can also take advantage of the useful ``findBy()`` and ``findOneBy()`` methods
@@ -759,10 +759,10 @@ without any work::
     $product = $repository->find($productId);
     $product = $repository->findOneByName('Keyboard');
 
-Of course, Doctrine also allows you to write more complex queries using the
-Doctrine Query Language (DQL). DQL is similar to SQL except that you should
-imagine that you're querying for one or more objects of an entity class (e.g. ``Product``)
-instead of querying for rows on a table (e.g. ``product``).
+Doctrine also allows you to write more complex queries using the Doctrine Query
+Language (DQL). DQL is similar to SQL except that you should imagine that you're
+querying for one or more objects of an entity class (e.g. ``Product``) instead
+of querying for rows on a table (e.g. ``product``).
 
 When querying in Doctrine, you have two main options: writing pure DQL queries
 or using Doctrine's Query Builder.

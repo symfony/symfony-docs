@@ -15,7 +15,7 @@ Embedding a Single Object
 -------------------------
 
 Suppose that each ``Task`` belongs to a simple ``Category`` object. Start,
-of course, by creating the ``Category`` object::
+by creating the ``Category`` object::
 
     // src/AppBundle/Entity/Category.php
     namespace AppBundle\Entity;

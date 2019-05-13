@@ -290,7 +290,7 @@ can also make use of the provided resolver, an instance of
 :class:`Symfony\\Component\\Config\\Loader\\LoaderResolver`, to load secondary
 routing resources.
 
-Of course you still need to implement
+You still need to implement
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
 Whenever you want to load another resource - for instance a YAML routing

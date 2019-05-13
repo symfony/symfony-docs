@@ -172,7 +172,7 @@ access the online **Kudu** tool by browsing to the following URL:
 
 **Kudu** is a set of tools to manage your application. It comes with a file
 explorer, a command line prompt, a log stream and a configuration settings summary
-page. Of course, this section can only be accessed if you're logged in to
+page. This section can only be accessed if you're logged in to
 your main Azure Website account.
 
 .. image:: /_images/deployment/azure-website/step-09.png
@@ -336,7 +336,7 @@ make them appear.
    :alt: MySQL database settings
 
 The displayed MySQL database settings should be something similar to the code
-below. Of course, each value depends on what you've already configured.
+below. Each value depends on what you've already configured.
 
 .. code-block:: text
 
