@@ -30,7 +30,7 @@ then ``jquery`` would be packaged into *both* files, which is wasteful. By makin
 *no longer* be packaged into any other files. The same is true for any CSS.
 
 Because ``app.js`` contains all the common code that other entry files depend on,
-it's obvious that its script (and link) tag must be on every page.
+its script (and link) tag must be on every page.
 
 .. tip::
 

@@ -149,7 +149,7 @@ In this specific example, the following things happen in ``authenticateToken()``
 
 The goal is ultimately to use the ``$apiKey`` to find or create a ``User``
 object. *How* you do this (e.g. query a database) and the exact class for
-your ``User`` object may vary. Those differences will be most obvious in your
+your ``User`` object may vary. Those differences will be most notable in your
 user provider.
 
 The User Provider

@@ -9,10 +9,9 @@ top of the Symfony components is better than creating a framework from scratch.
 
 .. note::
 
-    We won't talk about the obvious and traditional benefits of using a
-    framework when working on big applications with more than a few
-    developers; the Internet has already plenty of good resources on that
-    topic.
+    We won't talk about the traditional benefits of using a framework when
+    working on big applications with more than a few developers; the Internet
+    has already plenty of good resources on that topic.
 
 Even if the "application" we wrote in the previous chapter was simple enough,
 it suffers from a few problems::
