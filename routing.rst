@@ -661,8 +661,7 @@ is a bidirectional system: mapping the URL to a controller and
 a route back to a URL.
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
-and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
-route. With this information, any URL can easily be generated::
+and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that route::
 
     class MainController extends Controller
     {

@@ -92,7 +92,7 @@ Configuring the latest PHP Runtime
 
 Even though Symfony only requires PHP 5.5.9 to run, it's always recommended
 to use the most recent PHP version whenever possible. Earlier versions are no longer
-supported by the PHP core team, but you can update it easily in Azure.
+supported by the PHP core team, but you can update it in Azure.
 
 To update your PHP version on Azure, go to the **Application settings** under
 **SETTINGS** and select the version you want.
@@ -132,7 +132,7 @@ directory (``site/wwwroot``).
     upload_max_filesize = 10M
 
 None of these settings *needs* to be overridden. The default PHP configuration
-is already pretty good, so this is just an example to show how you can easily
+is already pretty good, so this is just an example to show how you can
 tweak PHP internal settings by uploading your custom ``.ini`` file.
 
 You can either manually create this file on your Azure Website FTP server under
@@ -172,7 +172,7 @@ access the online **Kudu** tool by browsing to the following URL:
 
 **Kudu** is a set of tools to manage your application. It comes with a file
 explorer, a command line prompt, a log stream and a configuration settings summary
-page. Of course, this section can only be accessed if you're logged in to
+page. This section can only be accessed if you're logged in to
 your main Azure Website account.
 
 .. image:: /_images/deployment/azure-website/step-09.png
@@ -336,7 +336,7 @@ make them appear.
    :alt: MySQL database settings
 
 The displayed MySQL database settings should be something similar to the code
-below. Of course, each value depends on what you've already configured.
+below. Each value depends on what you've already configured.
 
 .. code-block:: text
 
@@ -363,7 +363,7 @@ the host-name and credentials of some other third-party mailing service if
 your application needs to send emails.
 
 Your Symfony application is now configured and should be almost operational. The
-final step is to build the database schema. This can easily be done with the
+final step is to build the database schema. This can be done with the
 command line interface if you're using Doctrine. In the online **Console** tool
 of the Kudu application, run the following command to mount the tables into your
 MySQL database.
@@ -391,7 +391,7 @@ Configure the Web Server
 
 At this point, the Symfony application has been deployed and works perfectly on
 the Azure Website. However, the ``web`` folder is still part of the URL, which
-you definitely don't want. But don't worry! You can easily configure the web
+you definitely don't want. But don't worry! You can configure the web
 server to point to the ``web`` folder and remove the ``web`` in the URL (and
 guarantee that nobody can access files outside of the ``web`` directory.)
 
@@ -446,7 +446,7 @@ Conclusion
 ----------
 
 Nice work! You've now deployed your Symfony application to the Microsoft
-Azure Website Cloud platform. You also saw that Symfony can be easily configured
+Azure Website Cloud platform. You also saw that Symfony can be configured
 and executed on a Microsoft IIS web server. The process is simple and easy
 to implement. And as a bonus, Microsoft is continuing to reduce the number
 of steps needed so that deployment becomes even easier.

@@ -369,9 +369,9 @@ objects).
     Remember that you can see all of the queries made during a request via
     the web debug toolbar.
 
-Of course, if you know up front that you'll need to access both objects, you
-can avoid the second query by issuing a join in the original query. Add the
-following method to the ``ProductRepository`` class::
+If you know up front that you'll need to access both objects, you can avoid the
+second query by issuing a join in the original query. Add the following method
+to the ``ProductRepository`` class::
 
     // src/AppBundle/Repository/ProductRepository.php
     public function findOneByIdJoinedToCategory($productId)

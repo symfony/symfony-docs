@@ -148,8 +148,8 @@ distributed among developers, with a slight preference towards YAML.
 Both formats have the same performance, so this is ultimately a matter of
 personal taste.
 
-We recommend YAML because it's friendly to newcomers and concise. You can
-of course use whatever format you like.
+We recommend YAML because it's friendly to newcomers and concise, but you can
+use whatever format you like.
 
 Service: No Class Parameter
 ---------------------------
@@ -218,8 +218,7 @@ The three entities defined by our sample blog application are a good example:
 
 .. tip::
 
-    If you're more advanced, you can of course store them under your own
-    namespace in ``src/``.
+    If you're more advanced, you can store them under your own namespace in ``src/``.
 
 Doctrine Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

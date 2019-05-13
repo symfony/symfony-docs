@@ -83,9 +83,8 @@ both for backup purposes, and so that other developers can collaborate on
 the project.
 
 The easiest way to store your project on a remote server is via a web-based
-hosting service like `GitHub`_ or `Bitbucket`_. Of course, there are more
-services out there, you can start your research with a
-`comparison of hosting services`_.
+hosting service like `GitHub`_ or `Bitbucket`_. There are more services out
+there, you can start your research with a `comparison of hosting services`_.
 
 Alternatively, you can store your Git repository on any server by creating
 a `barebones repository`_ and then pushing to it. One library that helps

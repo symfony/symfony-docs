@@ -227,7 +227,7 @@ permission. While this effectively also allows the user to perform any
 operation such as view, edit, etc. on the domain object, there are cases where
 you may want to grant these permissions explicitly.
 
-The ``MaskBuilder`` can be used for creating bit masks easily by combining
+The ``MaskBuilder`` can be used for creating bit masks by combining
 several base permissions::
 
     $builder = new MaskBuilder();

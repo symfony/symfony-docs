@@ -248,8 +248,8 @@ will be passed two parameters:
     A :class:`\\Symfony\\Component\\HttpKernel\\Log\\DebugLoggerInterface`
     instance which may be ``null`` in some circumstances.
 
-Instead of creating a new exception controller from scratch you can, of course,
-also extend the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
+Instead of creating a new exception controller from scratch you can also extend
+the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
 In that case, you might want to override one or both of the ``showAction()`` and
 ``findTemplate()`` methods. The latter one locates the template to be used.
 

@@ -128,9 +128,9 @@ as its default value::
         ]);
     }
 
-Obviously, when you support several request formats, you have to provide
-a template for each of the supported formats. In this case, you should create
-a new ``hello.xml.twig`` template:
+When you support several request formats, you have to provide a template for
+each of the supported formats. In this case, you should create a new
+``hello.xml.twig`` template:
 
 .. code-block:: xml+php
 
@@ -294,7 +294,7 @@ object that represents the client (be it a real person using a browser,
 a bot, or a web service). Between two requests, Symfony stores the attributes
 in a cookie by using native PHP sessions.
 
-Storing and retrieving information from the session can be easily achieved
+Storing and retrieving information from the session can be achieved
 from any controller::
 
     use Symfony\Component\HttpFoundation\Session\Session;

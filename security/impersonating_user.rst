@@ -126,7 +126,7 @@ over the user's roles until you find one that is a ``SwitchUserRole`` object::
         }
     }
 
-Of course, this feature needs to be made available to a small group of users.
+This feature needs to be made available to a small group of users.
 By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
 role. The name of this role can be modified via the ``role`` setting. For
 extra security, you can also change the query parameter name via the ``parameter``

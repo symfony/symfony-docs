@@ -5,7 +5,7 @@
 The Form Component
 ==================
 
-    The Form component allows you to easily create, process and reuse forms.
+    The Form component allows you to create, process and reuse forms.
 
 The Form component is a tool to help you solve the problem of allowing end-users
 to interact with the data and modify the data in your application. And though
@@ -162,10 +162,10 @@ You can disable CSRF protection per form using the ``csrf_protection`` option::
 Twig Templating
 ~~~~~~~~~~~~~~~
 
-If you're using the Form component to process HTML forms, you'll need a way
-to easily render your form as HTML form fields (complete with field values,
-errors, and labels). If you use `Twig`_ as your template engine, the Form
-component offers a rich integration.
+If you're using the Form component to process HTML forms, you'll need a way to
+render your form as HTML form fields (complete with field values, errors, and
+labels). If you use `Twig`_ as your template engine, the Form component offers a
+rich integration.
 
 To use the integration, you'll need the twig bridge, which provides integration
 between Twig and several Symfony components:
