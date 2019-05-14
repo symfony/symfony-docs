@@ -158,7 +158,7 @@ each time you ask for it.
                 # this creates a service per class whose id is the fully-qualified class name
                 App\:
                     resource: '../src/*'
-                    exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+                    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
                 # ...
 
@@ -175,7 +175,7 @@ each time you ask for it.
                     <!-- Default configuration for services in *this* file -->
                     <defaults autowire="true" autoconfigure="true" public="false"/>
 
-                    <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
+                    <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
                 </services>
             </container>
 
@@ -194,7 +194,7 @@ each time you ask for it.
             ;
 
             // $this is a reference to the current loader
-            $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
+            $this->registerClasses($definition, 'App\\', '../src/*', '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
 
     .. tip::
 
