@@ -18,6 +18,11 @@ The Symfony server is distributed as a free installable binary without any
 dependency and support for Linux, macOS and Windows. Go to `symfony.com/download`_
 and follow the instructions for your operating system.
 
+.. note::
+
+    If you want to report a bug or suggest a new feature, please create an issue
+    on `symfony/cli`_.
+
 Getting Started
 ---------------
 
@@ -360,6 +365,7 @@ that Composer will also set the stability to ``dev`` for all root dependencies):
     $ symfony new --version=4.3.x-dev my_project_name
 
 .. _`symfony.com/download`: https://symfony.com/download
+.. _`symfony/cli`: https://github.com/symfony/cli
 .. _`different ways of installing Symfony`: https://symfony.com/download
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
