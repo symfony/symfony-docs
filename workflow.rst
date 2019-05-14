@@ -58,7 +58,7 @@ like this:
                         arguments:
                             - 'currentPlace'
                     supports:
-                        - AppBundle\Entity\BlogPost
+                        - App\Entity\BlogPost
                     initial_place: draft
                     places:
                         - draft
@@ -95,7 +95,7 @@ like this:
                         <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
 
-                    <framework:support>AppBundle\Entity\BlogPost</framework:support>
+                    <framework:support>App\Entity\BlogPost</framework:support>
 
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
@@ -137,7 +137,7 @@ like this:
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => ['currentPlace']
                     ],
-                    'supports' => ['AppBundle\Entity\BlogPost'],
+                    'supports' => ['App\Entity\BlogPost'],
                     'places' => [
                         'draft',
                         'reviewed',
@@ -197,7 +197,7 @@ As configured, the following property is used by the marking store::
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
 
-    $post = new AppBundle\Entity\BlogPost();
+    $post = new App\Entity\BlogPost();
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
@@ -365,7 +365,7 @@ missing a title::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var AppBundle\Entity\BlogPost $post */
+            /** @var App\Entity\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
