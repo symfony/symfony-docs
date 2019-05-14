@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-05-14T07:49:12Z
+
+@nicoweb This looks good. 👍 But could you also update the XML and PHP config examples?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-14T07:52:16Z
+
+This is correct according to the latest recipe: https://github.com/symfony/recipes/blob/3b19bd94886555df1997b441b6cf6a1fab088f3a/symfony/framework-bundle/4.2/config/services.yaml#L18
+
+Thanks @nicoweb.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-14T08:05:37Z
+
+Please note, that `Kernel.php` is also missing in the XML and PHP definitions 😃
