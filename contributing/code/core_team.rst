@@ -50,10 +50,6 @@ In addition, there are other groups created to manage specific topics:
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
 
-.. role:: leader
-.. role:: merger
-.. role:: decider
-
 * **Project Leader**:
 
   * **Fabien Potencier** (`fabpot`_).
