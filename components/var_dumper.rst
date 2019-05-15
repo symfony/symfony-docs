@@ -244,10 +244,11 @@ This will provide you with two new assertions:
 Example::
 
     use PHPUnit\Framework\TestCase;
+    use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
     class ExampleTest extends TestCase
     {
-        use \Symfony\Component\VarDumper\Test\VarDumperTestTrait;
+        use VarDumperTestTrait;
 
         public function testWithDumpEquals()
         {
