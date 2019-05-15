@@ -303,8 +303,8 @@ When the HTTP status code of the response is not in the 200-299 range (i.e. 3xx,
     // because it doesn't check the status code of the response
     $content = $response->getContent();
 
-    // pass FALSE as the optional argument to not throw an exception and
-    // return instead an empty string
+    // pass FALSE as the optional argument to not throw an exception and return
+    // instead the original response content (even if it's an error message)
     $content = $response->getContent(false);
 
 Caching Requests and Responses
