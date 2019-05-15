@@ -78,7 +78,7 @@ projects. The process works as follows:
    date for a joint release (there is no guarantee that all releases will
    be at the same time but we will try hard to make them at about the same
    time). When the issue is not known to be exploited in the wild, a period
-   of two weeks seems like a reasonable amount of time.
+   of two weeks is considered a reasonable amount of time.
 
 The list of downstream projects participating in this process is kept as small
 as possible in order to better manage the flow of confidential information
