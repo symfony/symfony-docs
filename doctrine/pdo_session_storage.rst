@@ -28,7 +28,7 @@ To use it, first register a new handler service:
 
                     # If you're using Doctrine & want to re-use that connection, then:
                     # comment-out the above 2 lines and uncomment the line below
-                    # - !service { class: PDO, factory: 'database_connection:getWrappedConnection' }
+                    # - !service { class: PDO, factory: ['@database_connection', 'getWrappedConnection'] }
                     # If you get transaction issues (e.g. after login) uncomment the line below
                     # - { lock_mode: 1 }
 
@@ -69,7 +69,7 @@ To use it, first register a new handler service:
 .. tip::
 
     Configure the database credentials
-    :doc:`using environment variables in the config file </configuration/environment_variables>`
+    :ref:`using environment variables in the config file <config-env-vars>`
     to make your application more secure.
 
 Next, tell Symfony to use your service as the session handler:

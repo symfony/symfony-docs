@@ -241,7 +241,7 @@ Available Options
 
 ``server_failure_limit`` (type: ``int``, default: ``0``)
     Specifies the failure limit for server connection attempts before marking
-    the server as "dead". The server will remaining in the server pool unless
+    the server as "dead". The server will remain in the server pool unless
     ``auto_eject_hosts`` is enabled.
 
     Valid option values include *any positive integer*.

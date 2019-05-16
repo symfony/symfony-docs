@@ -103,14 +103,14 @@ which is a common practice when following the `ADR pattern`_
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         hello:
             path:     /hello/{name}
             defaults: { _controller: app.hello_controller }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

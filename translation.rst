@@ -12,13 +12,11 @@ wrapping each with a function capable of translating the text (or "message")
 into the language of the user::
 
     // text will *always* print out in English
-    dump('Hello World');
-    die();
+    echo 'Hello World';
 
     // text can be translated into the end-user's language or
     // default to English
-    dump($translator->trans('Hello World'));
-    die();
+    echo $translator->trans('Hello World');
 
 .. note::
 
@@ -163,7 +161,7 @@ different formats, XLIFF being the recommended format:
 
         // translations/messages.fr.php
         return [
-            'Symfony is great' => 'J\'aime Symfony',
+            'Symfony is great' => "J'aime Symfony",
         ];
 
 For information on where these files should be located, see
@@ -171,12 +169,13 @@ For information on where these files should be located, see
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
-the message inside your :ref:`templates <translation-tags>`.
+the message inside your `templates <Translations in Templates>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To actually translate the message, Symfony uses the following process:
+To actually translate the message, Symfony uses the following process when
+using the ``trans()`` method:
 
 * The ``locale`` of the current user, which is stored on the request is determined;
 
@@ -184,37 +183,26 @@ To actually translate the message, Symfony uses the following process:
   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
   :ref:`fallback locale <translation-fallback>` are also loaded and
   added to the catalog if they don't already exist. The end result is a large
-  "dictionary" of translations.
+  "dictionary" of translations. This catalog is cached in production to
+  minimize performance impact.
 
 * If the message is located in the catalog, the translation is returned. If
   not, the translator returns the original message.
 
-When using the ``trans()`` method, Symfony looks for the exact string inside
-the appropriate message catalog and returns it (if it exists).
+.. _message-placeholders:
+.. _pluralization:
 
-Message Placeholders
---------------------
+Message Format
+--------------
 
 Sometimes, a message containing a variable needs to be translated::
 
-    use Symfony\Contracts\Translation\TranslatorInterface;
+    // ...
+    $translated = $translator->trans('Hello '.$name);
 
-    public function index(TranslatorInterface $translator, $name)
-    {
-        $translated = $translator->trans('Hello '.$name);
-
-        // ...
-    }
-
-However, creating a translation for this string is impossible since the translator
-will try to look up the exact message, including the variable portions
+However, creating a translation for this string is impossible since the
+translator will try to look up the message including the variable portions
 (e.g. *"Hello Ryan"* or *"Hello Fabien"*).
-
-For details on how to handle this situation, see :ref:`component-translation-placeholders`
-in the components documentation. For how to do this in templates, see :ref:`translation-tags`.
-
-Pluralization
--------------
 
 Another complication is when you have translations that may or may not be
 plural, based on some variable:
@@ -224,128 +212,28 @@ plural, based on some variable:
     There is one apple.
     There are 5 apples.
 
-To handle this, use the :method:`Symfony\\Component\\Translation\\Translator::transChoice`
-method or the ``transchoice`` tag/filter in your :ref:`template <translation-tags>`.
+To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
+using PHP's :phpclass:`MessageFormatter` class. Read more about this in
+:doc:`/translation/message_format`.
 
-For much more information, see :ref:`component-translation-pluralization`
-in the Translation component documentation.
+.. versionadded:: 4.2
 
-.. deprecated:: 4.2
-
-    In Symfony 4.2 the ``Translator::transChoice()`` method was deprecated in
-    favor of using ``Translator::trans()`` with ``%count%`` as the parameter
-    driving plurals.
+   Support for ICU MessageFormat was introduced in Symfony 4.2. Prior to this,
+   pluralization was managed by the
+   :method:`Symfony\\Component\\Translation\\Translator::transChoice` method.
 
 Translations in Templates
 -------------------------
 
 Most of the time, translation occurs in templates. Symfony provides native
-support for both Twig and PHP templates.
+support for both Twig and PHP templates:
 
-.. _translation-tags:
+.. code-block:: html+twig
 
-Twig Templates
-~~~~~~~~~~~~~~
+    <h1>{% trans %}Symfony is great!{% endtrans %}</h1>
 
-Symfony provides specialized Twig tags (``trans`` and ``transchoice``) to
-help with message translation of *static blocks of text*:
-
-.. code-block:: twig
-
-    {% trans %}Hello %name%{% endtrans %}
-
-    {% transchoice count %}
-        {0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples
-    {% endtranschoice %}
-
-The ``transchoice`` tag automatically gets the ``%count%`` variable from
-the current context and passes it to the translator. This mechanism only
-works when you use a placeholder following the ``%var%`` pattern.
-
-.. caution::
-
-    The ``%var%`` notation of placeholders is required when translating in
-    Twig templates using the tag.
-
-.. tip::
-
-    If you need to use the percent character (``%``) in a string, escape it by
-    doubling it: ``{% trans %}Percent: %percent%%%{% endtrans %}``
-
-You can also specify the message domain and pass some additional variables:
-
-.. code-block:: twig
-
-    {% trans with {'%name%': 'Fabien'} from 'app' %}Hello %name%{% endtrans %}
-
-    {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
-
-    {% transchoice count with {'%name%': 'Fabien'} from 'app' %}
-        {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
-    {% endtranschoice %}
-
-.. _translation-filters:
-
-The ``trans`` and ``transchoice`` filters can be used to translate *variable
-texts* and complex expressions:
-
-.. code-block:: twig
-
-    {{ message|trans }}
-
-    {{ message|transchoice(5) }}
-
-    {{ message|trans({'%name%': 'Fabien'}, 'app') }}
-
-    {{ message|transchoice(5, {'%name%': 'Fabien'}, 'app') }}
-
-.. tip::
-
-    Using the translation tags or filters have the same effect, but with
-    one subtle difference: automatic output escaping is only applied to
-    translations using a filter. In other words, if you need to be sure
-    that your translated message is *not* output escaped, you must apply
-    the ``raw`` filter after the translation filter:
-
-    .. code-block:: html+twig
-
-        {# text translated between tags is never escaped #}
-        {% trans %}
-            <h3>foo</h3>
-        {% endtrans %}
-
-        {% set message = '<h3>foo</h3>' %}
-
-        {# strings and variables translated via a filter are escaped by default #}
-        {{ message|trans|raw }}
-        {{ '<h3>bar</h3>'|trans|raw }}
-
-.. tip::
-
-    You can set the translation domain for an entire Twig template with a single tag:
-
-    .. code-block:: twig
-
-        {% trans_default_domain 'app' %}
-
-    Note that this only influences the current template, not any "included"
-    template (in order to avoid side effects).
-
-PHP Templates
-~~~~~~~~~~~~~
-
-The translator service is accessible in PHP templates through the
-``translator`` helper:
-
-.. code-block:: html+php
-
-    <?= $view['translator']->trans('Symfony is great') ?>
-
-    <?= $view['translator']->transChoice(
-        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
-        10,
-        ['%count%' => 10]
-    ) ?>
+Read :doc:`/translation/templates` for more information about the Twig tags and
+filters for translation.
 
 Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
@@ -357,22 +245,26 @@ with these tasks:
 
 .. code-block:: terminal
 
-    # updates the French translation file with the missing strings found in templates/
+    # updates the French translation file with the missing strings for that locale
     $ php bin/console translation:update --dump-messages --force fr
 
-    # updates the English translation file with the missing strings found in AppBundle
-    $ php bin/console translation:update --dump-messages --force en AppBundle
+The ``translation:update`` command looks for missing translations in:
+
+* Templates stored in the ``templates/`` directory (or any other directory
+  defined in the :ref:`twig.default_path <config-twig-default-path>` and
+  :ref:`twig.paths <config-twig-paths>` config options);
+* Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
+  the ``translator`` service and makes calls to the ``trans()`` function.
+
+.. versionadded:: 4.3
+
+    The extraction of missing translation strings from PHP files was introduced
+    in Symfony 4.3.
 
 .. note::
 
     If you want to see the missing translation strings without actually updating
     the translation files, remove the ``--force`` option from the command above.
-
-.. tip::
-
-    If you need to extract translation strings from other sources, such as
-    controllers, forms and flash messages, consider using the more advanced
-    third-party `TranslationBundle`_.
 
 .. _translation-resource-locations:
 
@@ -381,11 +273,9 @@ Translation Resource/File Names and Locations
 
 Symfony looks for message files (i.e. translations) in the following default locations:
 
-* the ``translations/`` directory (at the root of the project);
-
-* the ``src/Resources/<bundle name>/translations/`` directory;
-
-* the ``Resources/translations/`` directory inside of any bundle.
+#. the ``translations/`` directory (at the root of the project);
+#. the ``src/Resources/<bundle name>/translations/`` directory;
+#. the ``Resources/translations/`` directory inside of any bundle.
 
 .. deprecated:: 4.2
 
@@ -476,15 +366,18 @@ For more options, see :ref:`component-translator-message-catalogs`.
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
     See the :ref:`dic-tags-translation-loader` tag for more information.
 
-.. caution::
+.. versionadded:: 4.3
 
-    Each time you create a *new* translation resource (or install a bundle
-    that includes a translation resource), be sure to clear your cache so
-    that Symfony can discover the new translation resources:
+    Starting from Symfony 4.3, when you create a new translation file (or
+    install a bundle that includes translation files), you don't have to clear
+    the cache with the command ``php bin/console cache:clear`` as you had to do
+    in previous Symfony versions.
 
-    .. code-block:: terminal
+Handling the User's Locale
+--------------------------
 
-        $ php bin/console cache:clear
+Translating happens based on the user's locale. Read :doc:`/translation/locale`
+to learn more about how to handle it.
 
 .. _translation-fallback:
 
@@ -510,12 +403,6 @@ checks translation resources for several locales:
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 
-Handling the User's Locale
---------------------------
-
-Translating happens based on the user's locale. Read :doc:`/translation/locale`
-to learn more about how to handle it.
-
 Translating Database Content
 ----------------------------
 
@@ -537,10 +424,8 @@ Summary
 With the Symfony Translation component, creating an internationalized application
 no longer needs to be a painful process and boils down to these steps:
 
-* Abstract messages in your application by wrapping each in either the
-  :method:`Symfony\\Component\\Translation\\Translator::trans` or
-  :method:`Symfony\\Component\\Translation\\Translator::transChoice` methods
-  (learn about this in :doc:`/components/translation/usage`);
+* Abstract messages in your application by wrapping each in the
+  :method:`Symfony\\Component\\Translation\\Translator::trans` method;
 
 * Translate each message into multiple locales by creating translation message
   files. Symfony discovers and processes each file because its name follows
@@ -555,13 +440,15 @@ Learn more
 .. toctree::
     :maxdepth: 1
 
+    translation/message_format
+    translation/templates
     translation/locale
     translation/debug
     translation/lint
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
+.. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
-.. _`TranslationBundle`: https://github.com/php-translation/symfony-bundle

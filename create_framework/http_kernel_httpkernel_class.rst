@@ -104,8 +104,8 @@ The error controller reads as follows::
         }
     }
 
-Voilà! Clean and customizable error management without efforts. And
-if your ``ErrorController`` throws an exception, HttpKernel will handle it nicely.
+*Voilà!* Clean and customizable error management without efforts. And if your
+``ErrorController`` throws an exception, HttpKernel will handle it nicely.
 
 In chapter two, we talked about the ``Response::prepare()`` method, which
 ensures that a Response is compliant with the HTTP specification. It is
@@ -154,11 +154,11 @@ only if needed::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+    use Symfony\Component\HttpKernel\Event\ViewEvent;
 
     class StringResponseListener implements EventSubscriberInterface
     {
-        public function onView(GetResponseForControllerResultEvent $event)
+        public function onView(ViewEvent $event)
         {
             $response = $event->getControllerResult();
 

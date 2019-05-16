@@ -69,8 +69,8 @@ the ``_controller`` route attribute::
         $response = new Response('An error occurred', 500);
     }
 
-A route can now be associated with any controller and within a
-controller, you can still use the ``render_template()`` to render a template::
+A route can now be associated with any controller and within a controller, you
+can still use the ``render_template()`` to render a template::
 
     $routes->add('hello', new Routing\Route('/hello/{name}', [
         'name' => 'World',

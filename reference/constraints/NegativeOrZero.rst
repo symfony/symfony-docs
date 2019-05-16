@@ -46,7 +46,7 @@ is a negative number or equal to zero:
         App\Entity\UnderGroundGarage:
             properties:
                 level:
-                    - NegativeOrZero
+                    - NegativeOrZero: ~
 
     .. code-block:: xml
 

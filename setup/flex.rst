@@ -51,6 +51,8 @@ SwiftmailerBundle and returns the "recipe" for it.
 Flex keeps tracks of the recipes it installed in a ``symfony.lock`` file, which
 must be committed to your code repository.
 
+.. _flex-recipe:
+
 Symfony Flex Recipes
 ~~~~~~~~~~~~~~~~~~~~
 

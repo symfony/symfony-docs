@@ -139,8 +139,8 @@ extend or implement any special class, but the called method must return a
 
 .. versionadded:: 4.3
 
-    The support of the ``__invoke()`` method to create invokable route loader
-    services was introduced in Symfony 4.3.
+    The support of the ``__invoke()`` method to create invokable service route
+    loaders was introduced in Symfony 4.3.
 
 Creating a custom Loader
 ------------------------

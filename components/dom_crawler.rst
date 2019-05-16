@@ -34,7 +34,7 @@ The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods
 to query and manipulate HTML and XML documents.
 
 An instance of the Crawler represents a set of :phpclass:`DOMElement` objects,
-which are basically nodes that you can traverse::
+which are nodes that can be traversed as follows::
 
     use Symfony\Component\DomCrawler\Crawler;
 
@@ -362,30 +362,34 @@ This behavior is best illustrated with examples::
     $crawler->addHtmlContent($html);
 
     $crawler->filterXPath('//span[contains(@id, "article-")]')->evaluate('substring-after(@id, "-")');
-    /* array:3 [
-      0 => "100"
-      1 => "101"
-      2 => "102"
-    ]
+    /* Result:
+    [
+        0 => '100',
+        1 => '101',
+        2 => '102',
+    ];
     */
 
     $crawler->evaluate('substring-after(//span[contains(@id, "article-")]/@id, "-")');
-    /* array:1 [
-      0 => "100"
+    /* Result:
+    [
+        0 => '100',
     ]
     */
 
     $crawler->filterXPath('//span[@class="article"]')->evaluate('count(@id)');
-    /* array:3 [
-      0 => 1.0
-      1 => 1.0
-      2 => 1.0
+    /* Result:
+    [
+        0 => 1.0,
+        1 => 1.0,
+        2 => 1.0,
     ]
     */
 
     $crawler->evaluate('count(//span[@class="article"])');
-    /* array:1 [
-      0 => 3.0
+    /* Result:
+    [
+        0 => 3.0,
     ]
     */
 

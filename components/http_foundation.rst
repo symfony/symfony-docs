@@ -413,7 +413,7 @@ attribute::
 
     use Symfony\Component\HttpFoundation\Cookie;
 
-    $response->headers->setCookie(new Cookie('foo', 'bar'));
+    $response->headers->setCookie(Cookie::create('foo', 'bar'));
 
 The
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::setCookie`
@@ -565,6 +565,26 @@ whether or not the ``X-Sendfile-Type`` header should be trusted and call
 if it should::
 
     BinaryFileResponse::trustXSendfileTypeHeader();
+
+.. note::
+
+    The ``BinaryFileResponse`` will only handle ``X-Sendfile`` if the particular header is present.
+    For Apache, this is not the default case.
+
+    To add the header use the ``mod_headers`` Apache module and add the following to the Apache configuration:
+
+    .. code-block:: apache
+
+        <IfModule mod_xsendfile.c>
+          # This is already present somewhere...
+          XSendFile on
+          XSendFilePath ...some path...
+
+          # This needs to be added:
+          <IfModule mod_headers.c>
+            RequestHeader set X-Sendfile-Type X-Sendfile
+          </IfModule>
+        </IfModule>
 
 With the ``BinaryFileResponse``, you can still set the ``Content-Type`` of the sent file,
 or change its ``Content-Disposition``::

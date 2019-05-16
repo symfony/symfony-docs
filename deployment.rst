@@ -63,8 +63,8 @@ manually taking other steps (see `Common Post-Deployment Tasks`_).
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony app
-quickly and easily. There are many PaaS - below are a few that work well with Symfony:
+Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony
+app quickly. There are many PaaS - below are a few that work well with Symfony:
 
 * `Symfony Cloud`_
 * `Heroku`_

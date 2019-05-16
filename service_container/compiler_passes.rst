@@ -68,7 +68,7 @@ and process the services inside the ``process()`` method::
 Working with Compiler Passes in Bundles
 ---------------------------------------
 
-`Bundles </bundles>`_ can define compiler passes in the ``build()`` method of
+:doc:`Bundles </bundles>` can define compiler passes in the ``build()`` method of
 the main bundle class (this is not needed when implementing the ``process()``
 method in the extension)::
 

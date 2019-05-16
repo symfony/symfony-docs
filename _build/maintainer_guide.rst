@@ -93,7 +93,7 @@ interface. Then:
 Merging Process
 ~~~~~~~~~~~~~~~
 
-At first it's common to make mistakes and merge things badly. Don't worry. This
+At first, it's common to make mistakes and merge things badly. Don't worry. This
 has happened to all of us and we've always been able to recover from any mistake.
 
 Step 1: Select the right branch to merge
@@ -120,8 +120,8 @@ Step 2: Merge the pull request
 Never use GitHub's web interface (or desktop clients) to merge PRs or to solve
 merge conflicts. Always use the ``gh`` tool for anything related to merges.
 
-We require 2 approval votes from team members before merging a PR, except if
-it's a typo, a small change or an obvious error.
+We require two approval votes from team members before merging a PR, except if
+it's a typo, a small change or clearly an error.
 
 If a PR contains lots of commits, there's no need to ask the contributor to
 squash them. The ``gh`` tool does that automatically. The only exceptions are

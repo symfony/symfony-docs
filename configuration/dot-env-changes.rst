@@ -18,12 +18,12 @@ important changes:
 * A) The ``.env.dist`` file no longer exists. Its contents should be moved to your
   ``.env`` file (see the next point).
 
-* B) The ``.env`` file **is** now commited to your repository. It was previously ignored
+* B) The ``.env`` file **is** now committed to your repository. It was previously ignored
   via the ``.gitignore`` file (the updated recipe does not ignore this file). Because
   this file is committed, it should contain non-sensitive, default values. Basically,
   the ``.env.dist`` file was moved to ``.env``.
 
-* C) A ``.env.local`` file can now be created to *override* environment variables for
+* C) A ``.env.local`` file can now be created to *override* values in ``.env`` for
   your machine. This file is ignored in the new ``.gitignore``.
 
 * D) When testing, your ``.env`` file is now read, making it consistent with all
@@ -79,8 +79,8 @@ changes can be made to any Symfony 3.4 or higher app:
        $ git mv .env.dist .env
 
        # Windows
-       $ mv .env .env.local
-       $ git mv .env.dist .env
+       C:\> move .env .env.local
+       C:\> git mv .env.dist .env
 
    You can also update the `comment on the top of .env`_ to reflect the new changes.
 

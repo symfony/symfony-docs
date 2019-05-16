@@ -13,7 +13,7 @@ Caching on the Shoulders of Giants
 ----------------------------------
 
 With HTTP Caching, you cache the full output of a page (i.e. the response) and bypass
-your application *entirely* on subsequent requests. Of course, caching entire responses
+your application *entirely* on subsequent requests. Caching entire responses
 isn't always possible for highly dynamic sites, or is it? With
 :doc:`Edge Side Includes (ESI) </http_cache/esi>`, you can use the power of HTTP caching
 on only *fragments* of your site.
@@ -322,7 +322,7 @@ two things:
   and mutating your application.
 
 * POST requests are generally considered uncacheable, but `they can be cached`_
-  when they include explicit freshness information. However POST caching is not
+  when they include explicit freshness information. However, POST caching is not
   widely implemented, so you should avoid it if possible.
 
 * You should *never* change the state of your application (e.g. update a blog post)

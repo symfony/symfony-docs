@@ -129,7 +129,13 @@ work:
   </contributing/code/maintenance>` (you may have to choose a higher branch if
   the feature you are fixing was introduced in a later version);
 
- * ``master``, if you are adding a new feature.
+* ``master``, if you are adding a new feature.
+
+  The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
+  (4.0, 5.0, etc.) comes out every two years. Because of the
+  :ref:`special development process <major-version-development>` of those versions,
+  you need to use the previous minor version for the features (e.g. use ``3.4``
+  instead of ``4.0``, use ``4.4`` instead of ``5.0``, etc.)
 
 .. note::
 
@@ -355,7 +361,7 @@ As long as you have items in the todo-list, please prefix the pull request
 title with "[WIP]". If you do not yet want to trigger the automated tests,
 you can also set the PR to `draft status`_.
 
-In the pull request description, give as much details as possible about your
+In the pull request description, give as much detail as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
 your pull request is about adding a new feature or modifying an existing one,
 explain the rationale for the changes. The pull request description helps the
@@ -423,3 +429,4 @@ before merging.
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
 .. _`draft status`: https://help.github.com/en/articles/about-pull-requests#draft-pull-requests
+.. _`Symfony Roadmap`: https://symfony.com/roadmap

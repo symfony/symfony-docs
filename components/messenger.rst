@@ -79,6 +79,11 @@ are configured for you:
 #. :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware` (enables asynchronous processing)
 #. :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware` (calls the registered handler(s))
 
+.. deprecated:: 4.3
+
+    The ``LoggingMiddleware`` is deprecated since Symfony 4.3 and will be
+    removed in 5.0. Pass a logger to ``SendMessageMiddleware`` instead.
+
 Example::
 
     use App\Message\MyMessage;
@@ -201,7 +206,8 @@ Your own Sender
 
 Imagine that you already have an ``ImportantAction`` message going through the
 message bus and being handled by a handler. Now, you also want to send this
-message as an email.
+message as an email (using the :doc:`Mime </components/mime>` and
+:doc:`Mailer </components/mailer>` components).
 
 Using the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`,
 you can create your own message sender::
@@ -209,15 +215,17 @@ you can create your own message sender::
     namespace App\MessageSender;
 
     use App\Message\ImportantAction;
+    use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+    use Symfony\Component\Mime\Email;
 
     class ImportantActionToEmailSender implements SenderInterface
     {
         private $mailer;
         private $toEmail;
 
-        public function __construct(\Swift_Mailer $mailer, string $toEmail)
+        public function __construct(MailerInterface $mailer, string $toEmail)
         {
             $this->mailer = $mailer;
             $this->toEmail = $toEmail;
@@ -232,12 +240,10 @@ you can create your own message sender::
             }
 
             $this->mailer->send(
-                (new \Swift_Message('Important action made'))
-                    ->setTo($this->toEmail)
-                    ->setBody(
-                        '<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>',
-                        'text/html'
-                    )
+                (new Email())
+                    ->to($this->toEmail)
+                    ->subject('Important action made')
+                    ->html('<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>')
             );
 
             return $envelope;
@@ -276,22 +282,37 @@ do is to write your own CSV receiver::
             $this->filePath = $filePath;
         }
 
-        public function receive(callable $handler): void
+        public function get(): void
         {
             $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
             foreach ($ordersFromCsv as $orderFromCsv) {
                 $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
 
-                $handler(new Envelope($order));
+                $envelope = new Envelope($order);
+
+                $handler($envelope);
             }
+
+            return [$envelope];
         }
 
-        public function stop(): void
+        public function ack(Envelope $envelope): void
         {
-            // noop
+            // Add information about the handled message
+        }
+
+        public function reject(Envelope $envelope): void
+        {
+            // Reject the message if needed
         }
     }
+
+.. versionadded:: 4.3
+
+    In Symfony 4.3, the ``ReceiverInterface`` has changed its methods as shown
+    in the example above. You may need to update your code if you used this
+    interface in previous Symfony versions.
 
 Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -312,4 +333,4 @@ Learn more
     /messenger/*
 
 .. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
-.. _SimpleBus project: http://simplebus.io
+.. _SimpleBus project: http://docs.simplebus.io/en/latest/

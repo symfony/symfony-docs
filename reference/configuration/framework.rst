@@ -90,30 +90,51 @@ Configuration
 
 * `http_client`_
 
-  * `auth_basic`_
-  * `auth_bearer`_
-  * `base_uri`_
-  * `bindto`_
-  * `buffer`_
-  * `cafile`_
-  * `capath`_
-  * `capture_peer_cert_chain`_
-  * `ciphers`_
-  * `headers`_
-  * `http_version`_
-  * `local_cert`_
-  * `local_pk`_
+  * :ref:`default_options <reference-http-client-default-options>`
+
+    * `bindto`_
+    * `cafile`_
+    * `capath`_
+    * `ciphers`_
+    * `headers`_
+    * `http_version`_
+    * `local_cert`_
+    * `local_pk`_
+    * `max_redirects`_
+    * `no_proxy`_
+    * `passphrase`_
+    * `peer_fingerprint`_
+    * `proxy`_
+    * `resolve`_
+    * `timeout`_
+    * `verify_host`_
+    * `verify_peer`_
+
   * `max_host_connections`_
-  * `max_redirects`_
-  * `no_proxy`_
-  * `passphrase`_
-  * `peer_fingerprint`_
-  * `proxy`_
-  * `query`_
-  * `resolve`_
-  * `timeout`_
-  * `verify_host`_
-  * `verify_peer`_
+  * :ref:`scoped_clients <reference-http-client-scoped-clients>`
+
+    * `scope`_
+    * `auth_basic`_
+    * `auth_bearer`_
+    * `base_uri`_
+    * `bindto`_
+    * `cafile`_
+    * `capath`_
+    * `ciphers`_
+    * `headers`_
+    * `http_version`_
+    * `local_cert`_
+    * `local_pk`_
+    * `max_redirects`_
+    * `no_proxy`_
+    * `passphrase`_
+    * `peer_fingerprint`_
+    * `proxy`_
+    * `query`_
+    * `resolve`_
+    * `timeout`_
+    * `verify_host`_
+    * `verify_peer`_
 
 * `http_method_override`_
 * `ide`_
@@ -168,6 +189,7 @@ Configuration
 
 * `session`_
 
+  * `cache_limiter`_
   * `cookie_domain`_
   * `cookie_httponly`_
   * `cookie_lifetime`_
@@ -233,8 +255,9 @@ Configuration
   * :ref:`name <reference-workflows-name>`
 
     * `audit_trail`_
-    * `initial_place`_
+    * `initial_marking`_
     * `marking_store`_
+    * `metadata`_
     * `places`_
     * `supports`_
     * `support_strategy`_
@@ -662,8 +685,13 @@ when the request starts with this path.
 http_client
 ~~~~~~~~~~~
 
-If there's only one HTTP client defined in the app, you can configure it
-directly under the ``framework.http_client`` option:
+When the HttpClient component is installed, an HTTP client is available
+as a service named ``http_client`` or using the autowiring alias
+:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`.
+
+.. _reference-http-client-default-options:
+
+This service can be configured using ``framework.http_client.default_options``:
 
 .. code-block:: yaml
 
@@ -671,14 +699,17 @@ directly under the ``framework.http_client`` option:
     framework:
         # ...
         http_client:
-            headers: [{ 'X-Powered-By': 'ACME App' }]
             max_host_connections: 10
-            max_redirects: 7
+            default_options:
+                headers: { 'X-Powered-By': 'ACME App' }
+                max_redirects: 7
 
-If the app defines multiple HTTP clients, you must give them a unique name and
-define them under the type of HTTP client you are creating (``http_clients`` for
-regular clients and ``api_clients`` for clients that include utilities to
-consume APIs):
+.. _reference-http-client-scoped-clients:
+
+Multiple pre-configured HTTP client services can be defined, each with its
+service name defined as a key under ``scoped_clients``. Scoped clients inherit
+the default options defined for the ``http_client`` service. You can override
+these options and can define a few others:
 
 .. code-block:: yaml
 
@@ -686,23 +717,29 @@ consume APIs):
     framework:
         # ...
         http_client:
-            http_clients:
-                crawler:
+            scoped_clients:
+                my_api.client:
+                    auth_bearer: secret_bearer_token
                     # ...
-                default:
-                    # ...
-            api_clients:
-                github:
-                    # ...
+
+Options defined for scoped clients apply only to URLs that match either their
+`base_uri`_ or the `scope`_ option when it is defined. Non-matching URLs always
+use default options.
+
+Each scoped client also defines a corresponding named autowiring alias.
+If you use for example
+``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
+as the type and name of an argument, autowiring will inject the ``my_api.client``
+service into your autowired classes.
 
 auth_basic
 ..........
 
-**type**: ``array``
+**type**: ``string``
 
 The username and password used to create the ``Authorization`` HTTP header
 used in HTTP Basic authentication. The value of this option must follow the
-format ``['username', 'password']``.
+format ``username:password``.
 
 auth_bearer
 ...........
@@ -743,15 +780,6 @@ bindto
 A network interface name, IP address, a host name or a UNIX socket to use as the
 outgoing network interface.
 
-buffer
-......
-
-**type**: ``boolean``
-
-.. TODO: improve this useless description
-
-Indicates if the response should be buffered or not.
-
 cafile
 ......
 
@@ -766,14 +794,6 @@ capath
 **type**: ``string``
 
 The path to a directory that contains one or more certificate authority files.
-
-capture_peer_cert_chain
-.......................
-
-**type**: ``boolean``
-
-If ``true``, the response includes a ``peer_certificate_chain`` attribute with
-the peer certificates (OpenSSL X.509 resources).
 
 ciphers
 .......
@@ -887,17 +907,27 @@ resolve
 
 A list of hostnames and their IP addresses to pre-populate the DNS cache used by
 the HTTP client in order to avoid a DNS lookup for those hosts. This option is
-useful both to improve performance and to make your tests easier.
+useful to improve security when IPs are checked before the URL is passed to the
+client and to make your tests easier.
 
 The value of this option is an associative array of ``domain => IP address``
 (e.g ``['symfony.com' => '46.137.106.254', ...]``).
+
+scope
+.....
+
+**type**: ``string``
+
+For scoped clients only: the regular expression that the URL must match before
+applying all other non-default options. By default, the scope is derived from
+`base_uri`_.
 
 timeout
 .......
 
 **type**: ``float`` **default**: depends on your PHP config
 
-Time, in seconds, to wait for a response. If the response takes longer, a
+Time, in seconds, to wait for a response. If the response stales for longer, a
 :class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
 Its default value is the same as the value of PHP's `default_socket_timeout`_
 config option.
@@ -1143,7 +1173,7 @@ name
 
 **type**: ``string`` **default**: ``null``
 
-This specifies the name of the session cookie. By default it will use the
+This specifies the name of the session cookie. By default, it will use the
 cookie name which is defined in the ``php.ini`` with the ``session.name``
 directive.
 
@@ -1162,15 +1192,59 @@ cookie_path
 
 **type**: ``string`` **default**: ``/``
 
-This determines the path to set in the session cookie. By default it will
+This determines the path to set in the session cookie. By default, it will
 use ``/``.
+
+cache_limiter
+.............
+
+**type**: ``string`` or ``int`` **default**: ``''``
+
+If set to ``0``, Symfony won't set any particular header related to the cache
+and it will rely on the cache control method configured in the
+`session.cache-limiter`_ PHP.ini option.
+
+Unlike the other session options, ``cache_limiter`` is set as a regular
+:ref:`container parameter <configuration-parameters>`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        parameters:
+            session.storage.options:
+                cache_limiter: 0
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="session.storage.options" type="collection">
+                    <parameter key="cache_limiter">0</parameter>
+                </parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        $container->setParameter('session.storage.options', [
+            'cache_limiter' => 0,
+        ]);
 
 cookie_domain
 .............
 
 **type**: ``string`` **default**: ``''``
 
-This determines the domain to set in the session cookie. By default it's
+This determines the domain to set in the session cookie. By default, it's
 blank, meaning the host name of the server which generated the cookie according
 to the cookie specification.
 
@@ -1381,7 +1455,7 @@ use_cookies
 **type**: ``boolean`` **default**: ``null``
 
 This specifies if the session ID is stored on the client side using cookies or
-not. By default it will use the value defined in the ``php.ini`` with the
+not. By default, it will use the value defined in the ``php.ini`` with the
 ``session.use_cookies`` directive.
 
 assets
@@ -1850,6 +1924,12 @@ package:
 templating
 ~~~~~~~~~~
 
+.. deprecated:: 4.3
+
+    The integration of the Templating component in FrameworkBundle has been
+    deprecated since version 4.3 and will be removed in 5.0. That's why all the
+    configuration options defined under ``framework.templating`` are deprecated too.
+
 .. _reference-templating-form:
 
 form
@@ -2119,13 +2199,13 @@ has been compromised in a data breach.
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
 .. versionadded:: 4.3
 
     The ``enabled`` option was introduced in Symfony 4.3.
 
-If you set this option to ``true``, no HTTP requests will be made and the given
+If you set this option to ``false``, no HTTP requests will be made and the given
 password will be considered valid. This is useful when you don't want or can't
 make HTTP requests, such as in ``dev`` and ``test`` environments or in
 continuous integration servers.
@@ -2657,12 +2737,12 @@ audit_trail
 If set to ``true``, the :class:`Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener`
 will be enabled.
 
-initial_place
-"""""""""""""
+initial_marking
+"""""""""""""""
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string`` | ``array``
 
-One of the ``places`` or ``null``. If not null and the supported object is not
+One of the ``places`` or ``empty``. If not null and the supported object is not
 already initialized via the workflow, this place will be set.
 
 marking_store
@@ -2674,8 +2754,16 @@ Each marking store can define any of these options:
 
 * ``arguments`` (**type**: ``array``)
 * ``service`` (**type**: ``string``)
-* ``type`` (**type**: ``string`` **possible values**: ``'multiple_state'`` or
-  ``'single_state'``)
+* ``type`` (**type**: ``string`` **allow value**: ``'method'``)
+
+metadata
+""""""""
+
+**type**: ``array``
+
+Metadata available for the workflow configuration.
+Note that ``places`` and ``transitions`` can also have their own
+``metadata`` entry.
 
 places
 """"""
@@ -2742,3 +2830,4 @@ to know their differences.
 .. _`default_socket_timeout`: https://php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
+.. _`session.cache-limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter

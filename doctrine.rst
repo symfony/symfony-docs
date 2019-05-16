@@ -242,9 +242,9 @@ your production database up-to-date.
 Migrations & Adding more Fields
 -------------------------------
 
-But what if you need to add a new field property to ``Product``, like a ``description``?
-You can edit the class to add the new property. But, you can also use ``make:entity``
-again:
+But what if you need to add a new field property to ``Product``, like a
+``description``? You can edit the class to add the new property. But, you can
+also use ``make:entity`` again:
 
 .. code-block:: terminal
 
@@ -353,12 +353,12 @@ and save it::
     class ProductController extends AbstractController
     {
         /**
-         * @Route("/product", name="product")
+         * @Route("/product", name="create_product")
          */
-        public function index()
+        public function createProduct(): Response
         {
             // you can fetch the EntityManager via $this->getDoctrine()
-            // or you can add an argument to your action: index(EntityManagerInterface $entityManager)
+            // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
             $entityManager = $this->getDoctrine()->getManager();
 
             $product = new Product();
@@ -417,6 +417,76 @@ Take a look at the previous example in more detail:
 
 Whether you're creating or updating objects, the workflow is always the same: Doctrine
 is smart enough to know if it should INSERT or UPDATE your entity.
+
+Validating Objects
+------------------
+
+:doc:`The Symfony validator </validation>` reuses Doctrine metadata to perform
+some basic validation tasks::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use App\Entity\Product;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
+    // ...
+
+    class ProductController extends AbstractController
+    {
+        /**
+         * @Route("/product", name="create_product")
+         */
+        public function createProduct(ValidatorInterface $validator): Response
+        {
+            $product = new Product();
+            // This will trigger an error: the column isn't nullable in the database
+            $product->setName(null);
+            // This will trigger a type mismatch error: an integer is expected
+            $product->setPrice('1999');
+
+            // ...
+
+            $errors = $validator->validate($product);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, 400);
+            }
+
+            // ...
+        }
+    }
+
+Although the ``Product`` entity doesn't define any explicit
+:doc:`validation configuration </validation>`, Symfony introspects the Doctrine
+mapping configuration to infer some validation rules. For example, given that
+the ``name`` property can't be ``null`` in the database, a
+:doc:`NotNull constraint </reference/constraints/NotNull>` is added automatically
+to the property (if it doesn't contain that constraint already).
+
+The following table summarizes the mapping between Doctrine metadata and
+the corresponding validation constraints added automatically by Symfony:
+
+==================  =========================================================  =====
+Doctrine attribute  Validation constraint                                      Notes
+==================  =========================================================  =====
+``nullable=false``  :doc:`NotNull </reference/constraints/NotNull>`            Requires installing the :doc:`PropertyInfo component </components/property_info>`
+``type``            :doc:`Type </reference/constraints/Type>`                  Requires installing the :doc:`PropertyInfo component </components/property_info>`
+``unique=true``     :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+``length``          :doc:`Length </reference/constraints/Length>`
+==================  =========================================================  =====
+
+Because :doc:`the Form component </forms>` as well as `API Platform`_ internally
+use the Validator component, all your forms and web APIs will also automatically
+benefit from these automatic validation constraints.
+
+This automatic validation is a nice feature to improve your productivity, but it
+doesn't replace the validation configuration entirely. You still need to add
+some :doc:`validation constraints </reference/constraints>` to ensure that data
+provided by the user is correct.
+
+.. versionadded:: 4.3
+
+    The automatic validation has been added in Symfony 4.3.
 
 Fetching Objects from the Database
 ----------------------------------
@@ -599,11 +669,11 @@ But what if you need a more complex query? When you generated your entity with
 
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-    use Symfony\Bridge\Doctrine\RegistryInterface;
+    use Doctrine\Common\Persistence\ManagerRegistry;
 
     class ProductRepository extends ServiceEntityRepository
     {
-        public function __construct(RegistryInterface $registry)
+        public function __construct(ManagerRegistry $registry)
         {
             parent::__construct($registry, Product::class);
         }
@@ -621,7 +691,7 @@ a new method for this to your repository::
     // ...
     class ProductRepository extends ServiceEntityRepository
     {
-        public function __construct(RegistryInterface $registry)
+        public function __construct(ManagerRegistry $registry)
         {
             parent::__construct($registry, Product::class);
         }
@@ -816,3 +886,4 @@ Learn more
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
+.. _`API Platform`: https://api-platform.com/docs/core/validation/

@@ -153,12 +153,12 @@ web root directory:
 Now, configure your web server root directory to point to ``web/`` and all
 other files won't be accessible from the client anymore.
 
-To test your changes in a browser (``http://localhost:4321/hello?name=Fabien``), run
-the PHP built-in server:
+To test your changes in a browser (``http://localhost:4321/hello?name=Fabien``),
+run the :doc:`Symfony Local Web Server </setup/symfony_server>`:
 
 .. code-block:: terminal
 
-    $ php -S 127.0.0.1:4321 -t web/ web/front.php
+    $ symfony server:start --port=4321 --passthru=front.php
 
 .. note::
 
@@ -220,7 +220,7 @@ We have the first version of our framework::
 
     $response->send();
 
-Adding a new page is a two step process: add an entry in the map and create a
+Adding a new page is a two-step process: add an entry in the map and create a
 PHP template in ``src/pages/``. From a template, get the Request data via the
 ``$request`` variable and tweak the Response headers via the ``$response``
 variable.

@@ -74,7 +74,7 @@ a PSR-11 ``ContainerInterface``::
     use App\CommandHandler\BarHandler;
     use App\CommandHandler\FooHandler;
     use Psr\Container\ContainerInterface;
-    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+    use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
     class CommandBus implements ServiceSubscriberInterface
     {
@@ -375,9 +375,8 @@ will share identical locators amongst all the services referencing them::
 Service Subscriber Trait
 ------------------------
 
-The :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberTrait`
-provides an implementation for
-:class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`
+The :class:`Symfony\\Contracts\\Service\\ServiceSubscriberTrait` provides an
+implementation for :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`
 that looks through all methods in your class that have no arguments and a return
 type. It provides a ``ServiceLocator`` for the services of those return types.
 The service id is ``__METHOD__``. This allows you to add dependencies to your
@@ -387,9 +386,9 @@ services based on type-hinted helper methods::
     namespace App\Service;
 
     use Psr\Log\LoggerInterface;
-    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
-    use Symfony\Component\DependencyInjection\ServiceSubscriberTrait;
     use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\ServiceSubscriberInterface;
+    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {
@@ -444,8 +443,8 @@ and compose your services with them::
     // src/Service/MyService.php
     namespace App\Service;
 
-    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
-    use Symfony\Component\DependencyInjection\ServiceSubscriberTrait;
+    use Symfony\Contracts\Service\ServiceSubscriberInterface;
+    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {

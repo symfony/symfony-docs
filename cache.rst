@@ -215,7 +215,7 @@ You can also create more customized pools:
                     # uses the "foobar.cache" pool as its backend but controls
                     # the lifetime and (like all pools) has a separate cache namespace
                     short_cache:
-                        adapter: cache.foobar
+                        adapter: foobar.cache
                         default_lifetime: 60
 
     .. code-block:: xml
@@ -278,7 +278,7 @@ Each custom pool becomes a service where the service id is the name of the pool
 using the camel case version of its name - e.g. ``custom_thing.cache`` can be
 injected automatically by naming the argument ``$customThingCache`` and type-hinting it
 with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
-``Psr\\Cache\\CacheItemPoolInterface``::
+``Psr\Cache\CacheItemPoolInterface``::
 
     use Symfony\Contracts\Cache\CacheInterface;
 
@@ -389,16 +389,22 @@ case the value needs to be recalculated.
             cache:
                 pools:
                     my_cache_pool:
-                        adapter: app.my_cache_chain_adapter
+                        adapter: cache.adapter.psr6
+                        provider: app.my_cache_chain_adapter
                     cache.my_redis:
                         adapter: cache.adapter.redis
                         provider: 'redis://user:password@example.com'
+                    cache.apcu:
+                        adapter: cache.adapter.apcu
+                    cache.array:
+                        adapter: cache.adapter.array
+
 
         services:
             app.my_cache_chain_adapter:
                 class: Symfony\Component\Cache\Adapter\ChainAdapter
                 arguments:
-                    - ['cache.adapter.array', 'cache.my_redis', 'cache.adapter.file']
+                    - ['@cache.array', '@cache.apcu', '@cache.my_redis']
                     - 31536000 # One year
 
     .. code-block:: xml
@@ -413,17 +419,19 @@ case the value needs to be recalculated.
 
             <framework:config>
                 <framework:cache>
-                    <framework:pool name="my_cache_pool" adapter="app.my_cache_chain_adapter"/>
+                    <framework:pool name="my_cache_pool" adapter="cache.adapter.psr6" provider="app.my_cache_chain_adapter"/>
                     <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
+                    <framework:pool name="cache.apcu" adapter="cache.adapter.apcu"/>
+                    <framework:pool name="cache.array" adapter="cache.adapter.array"/>
                 </framework:cache>
             </framework:config>
 
             <services>
                 <service id="app.my_cache_chain_adapter" class="Symfony\Component\Cache\Adapter\ChainAdapter">
                     <argument type="collection">
-                        <argument type="service" value="cache.adapter.array"/>
+                        <argument type="service" value="cache.array"/>
+                        <argument type="service" value="cache.apcu"/>
                         <argument type="service" value="cache.my_redis"/>
-                        <argument type="service" value="cache.adapter.file"/>
                     </argument>
                     <argument>31536000</argument>
                 </service>
@@ -437,11 +445,18 @@ case the value needs to be recalculated.
             'cache' => [
                 'pools' => [
                     'my_cache_pool' => [
-                        'adapter' => 'app.my_cache_chain_adapter',
+                        'adapter' => 'cache.adapter.psr6',
+                        'provider' => 'app.my_cache_chain_adapter',
                     ],
                     'cache.my_redis' => [
                         'adapter' => 'cache.adapter.redis',
                         'provider' => 'redis://user:password@example.com',
+                    ],
+                    'cache.apcu' => [
+                        'adapter' => 'cache.adapter.apcu',
+                    ],
+                    'cache.array' => [
+                        'adapter' => 'cache.adapter.array',
                     ],
                 ],
             ],
@@ -449,16 +464,18 @@ case the value needs to be recalculated.
 
         $container->getDefinition('app.my_cache_chain_adapter', \Symfony\Component\Cache\Adapter\ChainAdapter::class)
             ->addArgument([
-                new Reference('cache.adapter.array'),
+                new Reference('cache.array'),
+                new Reference('cache.apcu'),
                 new Reference('cache.my_redis'),
-                new Reference('cache.adapter.file'),
             ])
             ->addArgument(31536000);
 
 .. note::
 
-    In this configuration there is a ``cache.my_redis`` pool that is used as an
-    adapter in the ``app.my_cache_chain_adapter``
+    In this configuration the ``my_cache_pool`` pool is using the ``cache.adapter.psr6``
+    adapter and the ``app.my_cache_chain_adapter`` service as a provider. That is
+    because ``ChainAdapter`` does not support the ``cache.pool`` tag. So it is decorated
+    with the ``ProxyAdapter``.
 
 
 Using Cache Tags
@@ -594,7 +611,7 @@ Clearing the Cache
 ------------------
 
 To clear the cache you can use the ``bin/console cache:pool:clear [pool]`` command.
-That will remove all the entries from your storage and you wil have to recalculate
+That will remove all the entries from your storage and you will have to recalculate
 all values. You can also group your pools into "cache clearers". There are 3 cache
 clearers by default:
 

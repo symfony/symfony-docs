@@ -46,7 +46,7 @@ is positive or zero:
         App\Entity\Person:
             properties:
                 siblings:
-                    - PositiveOrZero
+                    - PositiveOrZero: ~
 
     .. code-block:: xml
 

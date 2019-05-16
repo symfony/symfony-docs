@@ -157,7 +157,7 @@ values are ``plain``, ``login``, ``cram-md5``, or ``null``.
 spool
 ~~~~~
 
-For details on email spooling, see :doc:`/email/spool`.
+For details on email spooling, see :doc:`/mailer`.
 
 type
 ....
@@ -256,7 +256,7 @@ the information will be available in the profiler.
     The following options can be set via environment variables: ``url``,
     ``transport``, ``username``, ``password``, ``host``, ``port``, ``timeout``,
     ``source_ip``, ``local_domain``, ``encryption``, ``auth_mode``. For details,
-    see: :doc:`/configuration/environment_variables`.
+    see: :ref:`config-env-vars`.
 
 Using Multiple Mailers
 ----------------------
@@ -388,7 +388,7 @@ alternatives based on the :ref:`service binding <services-binding>` feature:
             ->setPublic(true)
             ->setBindings([
                 // this injects the second mailer when this service type-hints constructor arguments with \Swift_Mailer
-                \Swift_Mailer => '@swiftmailer.mailer.second_mailer',
+                \Swift_Mailer::class => '@swiftmailer.mailer.second_mailer',
                 // this injects the second mailer when this service has a constructor argument called $specialMailer
                 '$specialMailer' => '@swiftmailer.mailer.second_mailer',
             ])

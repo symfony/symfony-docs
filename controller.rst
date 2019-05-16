@@ -21,7 +21,7 @@ to render the content of a page.
 A Simple Controller
 -------------------
 
-While a controller can be any PHP callable (a function, method on an object,
+While a controller can be any PHP callable (function, method on an object,
 or a ``Closure``), a controller is usually a method inside a controller
 class::
 
@@ -46,7 +46,7 @@ class::
         }
     }
 
-The controller is the ``number()`` method, which lives inside a
+The controller is the ``number()`` method, which lives inside the
 controller class ``LuckyController``.
 
 This controller is pretty straightforward:
@@ -91,9 +91,9 @@ For more information on routing, see :doc:`/routing`.
 The Base Controller Class & Services
 ------------------------------------
 
-To make life nicer, Symfony comes with an optional base controller class called
+To aid development, Symfony comes with an optional base controller class called
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`.
-You can extend it to get access to some `helper methods`_.
+It can be extended to gain access to helper methods.
 
 Add the ``use`` statement atop your controller class and then modify
 ``LuckyController`` to extend it:
@@ -289,6 +289,7 @@ new controller class:
     $ php bin/console make:controller BrandNewController
 
     created: src/Controller/BrandNewController.php
+    created: templates/brandnew/index.html.twig
 
 If you want to generate an entire CRUD from a Doctrine :doc:`entity </doctrine>`,
 use:
@@ -296,6 +297,15 @@ use:
 .. code-block:: terminal
 
     $ php bin/console make:crud Product
+    
+    created: src/Controller/ProductController.php
+    created: src/Form/ProductType.php
+    created: templates/product/_delete_form.html.twig
+    created: templates/product/_form.html.twig
+    created: templates/product/edit.html.twig
+    created: templates/product/index.html.twig
+    created: templates/product/new.html.twig
+    created: templates/product/show.html.twig
 
 .. versionadded:: 1.2
 
@@ -354,8 +364,8 @@ The Request object as a Controller Argument
 -------------------------------------------
 
 What if you need to read query parameters, grab a request header or get access
-to an uploaded file? All of that information is stored in Symfony's ``Request``
-object. To get it in your controller, add it as an argument and
+to an uploaded file? That information is stored in Symfony's ``Request``
+object. To access it in your controller, add it as an argument and
 **type-hint it with the Request class**::
 
     use Symfony\Component\HttpFoundation\Request;
@@ -531,13 +541,13 @@ the ``Request`` class::
 The ``Request`` class has several public properties and methods that return any
 information you need about the request.
 
-Like the ``Request``, the ``Response`` object has also a public ``headers`` property.
-This is a :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag` that has
-some nice methods for getting and setting response headers. The header names are
-normalized so that using ``Content-Type`` is equivalent to ``content-type`` or even
-``content_type``.
+Like the ``Request``, the ``Response`` object has a public ``headers`` property.
+This object is of the type :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag`
+and provides methods for getting and setting response headers. The header names are
+normalized. As a result, the name ``Content-Type`` is equivalent to
+the name ``content-type`` or ``content_type``.
 
-The only requirement for a controller is to return a ``Response`` object::
+In Symfony, a controller is required to return a ``Response`` object::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -548,15 +558,29 @@ The only requirement for a controller is to return a ``Response`` object::
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
-There are special classes that make certain kinds of responses easier. Some of these
-are mentioned below. To learn more about the ``Request`` and ``Response`` (and special
-``Response`` classes), see the :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+To facilitate this, different response objects are included to address different
+response types.  Some of these are mentioned below. To learn more about the
+``Request`` and ``Response`` (and different ``Response`` classes), see the
+:ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+
+Accessing Configuration Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To get the value of any :ref:`configuration parameter <configuration-parameters>`
+from a controller, use the ``getParameter()`` helper method::
+
+    // ...
+    public function index()
+    {
+        $contentsDir = $this->getParameter('kernel.project_dir').'/contents';
+        // ...
+    }
 
 Returning JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To return JSON from a controller, use the ``json()`` helper method. This returns a
-special ``JsonResponse`` object that encodes the data automatically::
+``JsonResponse`` object that encodes the data automatically::
 
     // ...
     public function index()
@@ -606,13 +630,16 @@ The ``file()`` helper provides some arguments to configure its behavior::
 Final Thoughts
 --------------
 
-Whenever you create a page, you'll ultimately need to write some code that
-contains the logic for that page. In Symfony, this is called a controller,
-and it's a PHP function where you can do anything in order to return the
-final ``Response`` object that will be returned to the user.
+In Symfony, a controller is usually a class method which is used to accept
+requests, and return a ``Response`` object. When mapped with a URL, a controller
+becomes accessible and its response can be viewed.
 
-To make life easier, you'll probably extend the base ``AbstractController`` class because
-this gives access to shortcut methods (like ``render()`` and ``redirectToRoute()``).
+To facilitate the development of controllers, Symfony provides an
+``AbstractController``.  It can be used to extend the controller class allowing
+access to some frequently used utilities such as ``render()`` and
+``redirectToRoute()``. The ``AbstractController`` also provides the
+``createNotFoundException()`` utility which is used to return a page not found
+response.
 
 In other articles, you'll learn how to use specific services from inside your controller
 that will help you persist and fetch objects from a database, process form submissions,
@@ -637,6 +664,5 @@ Learn more about Controllers
 
     controller/*
 
-.. _`helper methods`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`Symfony Maker`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect

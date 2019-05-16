@@ -5,11 +5,11 @@
 Understanding how the Front Controller, Kernel and Environments Work together
 =============================================================================
 
-The section :doc:`/configuration/environments` explained the basics on how
-Symfony uses environments to run your application with different configuration
-settings. This section will explain a bit more in-depth what happens when your
-application is bootstrapped. To hook into this process, you need to understand
-three parts that work together:
+The :ref:`configuration environments <configuration-environments>` section
+explained the basics on how Symfony uses environments to run your application
+with different configuration settings. This section will explain a bit more
+in-depth what happens when your application is bootstrapped. To hook into this
+process, you need to understand three parts that work together:
 
 * `The Front Controller`_
 * `The Kernel Class`_
@@ -101,9 +101,9 @@ This class uses the name of the environment - which is passed to the Kernel's
 method and is available via :method:`Symfony\\Component\\HttpKernel\\Kernel::getEnvironment` -
 to decide which bundles to enable. The logic for that is in ``registerBundles()``.
 
-You are, of course, free to create your own, alternative or additional
-``Kernel`` variants. All you need is to adapt your (or add a new) front
-controller to make use of the new kernel.
+You are free to create your own, alternative or additional ``Kernel`` variants.
+All you need is to adapt your (or add a new) front controller to make use of the
+new kernel.
 
 .. note::
 
@@ -120,6 +120,77 @@ controller to make use of the new kernel.
     But odds are high that you don't need to change things like this on the
     fly by having several ``Kernel`` implementations.
 
+.. index::
+   single: Configuration; Debug mode
+
+Debug Mode
+~~~~~~~~~~
+
+The second argument to the ``Kernel`` constructor specifies if the application
+should run in "debug mode". Regardless of the
+:ref:`configuration environment <configuration-environments>`, a Symfony
+application can be run with debug mode set to ``true`` or ``false``.
+
+This affects many things in the application, such as displaying stacktraces on
+error pages or if cache files are dynamically rebuilt on each request. Though
+not a requirement, debug mode is generally set to ``true`` for the ``dev`` and
+``test`` environments and ``false`` for the ``prod`` environment.
+
+Similar to :ref:`configuring the environment <selecting-the-active-environment>`
+you can also enable/disable the debug mode using :ref:`the .env file <config-dot-env>`:
+
+.. code-block:: bash
+
+    # .env
+    # set it to 1 to enable the debug mode
+    APP_DEBUG=0
+
+This value can be overridden for commands by passing the ``APP_DEBUG`` value
+before running them:
+
+.. code-block:: terminal
+
+    # Use the debug mode defined in the .env file
+    $ php bin/console command_name
+
+    # Ignore the .env file and enable the debug mode for this command
+    $ APP_DEBUG=1 php bin/console command_name
+
+Internally, the value of the debug mode becomes the ``kernel.debug``
+parameter used inside the :doc:`service container </service_container>`.
+If you look inside the application configuration file, you'll see the
+parameter used, for example, to turn Twig's debug mode on:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            debug: '%kernel.debug%'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config debug="%kernel.debug%"/>
+
+        </container>
+
+    .. code-block:: php
+
+        $container->loadFromExtension('twig', [
+            'debug' => '%kernel.debug%',
+            // ...
+        ]);
+
 The Environments
 ----------------
 
@@ -128,9 +199,9 @@ As mentioned above, the ``Kernel`` has to implement another method -
 This method is responsible for loading the application's configuration from the
 right *environment*.
 
-Environments have been covered extensively :doc:`in the previous article
-</configuration/environments>`, and you probably remember that the Symfony uses
-by default three of them - ``dev``, ``prod`` and ``test``.
+:ref:`Configuration environments <configuration-environments>` allow to execute
+the same code using different configuration. Symfony provides three environments
+by default called ``dev``, ``prod`` and ``test``.
 
 More technically, these names are nothing more than strings passed from the
 front controller to the ``Kernel``'s constructor. This name can then be used in
@@ -141,5 +212,53 @@ config files found on ``config/packages/*`` and then, the files found on
 ``config/packages/ENVIRONMENT_NAME/``. You are free to implement this method
 differently if you need a more sophisticated way of loading your configuration.
 
-.. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
-.. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
+.. index::
+   single: Environments; Cache directory
+
+Environments and the Cache Directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony takes advantage of caching in many ways: the application configuration,
+routing configuration, Twig templates and more are cached to PHP objects
+stored in files on the filesystem.
+
+By default, these cached files are largely stored in the ``var/cache/`` directory.
+However, each environment caches its own set of files:
+
+.. code-block:: text
+
+    your-project/
+    ├─ var/
+    │  ├─ cache/
+    │  │  ├─ dev/   # cache directory for the *dev* environment
+    │  │  └─ prod/  # cache directory for the *prod* environment
+    │  ├─ ...
+
+Sometimes, when debugging, it may be helpful to inspect a cached file to
+understand how something is working. When doing so, remember to look in
+the directory of the environment you're using (most commonly ``dev/`` while
+developing and debugging). While it can vary, the ``var/cache/dev/`` directory
+includes the following:
+
+``appDevDebugProjectContainer.php``
+    The cached "service container" that represents the cached application
+    configuration.
+
+``appDevUrlGenerator.php``
+    The PHP class generated from the routing configuration and used when
+    generating URLs.
+
+``appDevUrlMatcher.php``
+    The PHP class used for route matching - look here to see the compiled regular
+    expression logic used to match incoming URLs to different routes.
+
+``twig/``
+    This directory contains all the cached Twig templates.
+
+.. note::
+
+    You can change the cache directory location and name. For more information
+    read the article :doc:`/configuration/override_dir_structure`.
+
+.. _`front controller`: https://en.wikipedia.org/wiki/Front_Controller_pattern
+.. _`decorate`: https://en.wikipedia.org/wiki/Decorator_pattern

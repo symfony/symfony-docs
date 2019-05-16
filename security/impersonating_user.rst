@@ -195,25 +195,81 @@ also adjust the query parameter name via the ``parameter`` setting:
 Limiting User Switching
 -----------------------
 
-If you need more control over user switching, but don't require the complexity
-of a full ACL implementation, you can use a security voter. For example, you
-may want to allow employees to be able to impersonate a user with the
-``ROLE_CUSTOMER`` role without giving them the ability to impersonate a more
-elevated user such as an administrator.
+If you need more control over user switching, you can use a security voter. First,
+configure ``switch_user`` to check for some new, custom attribute. This can be
+anything, but *cannot* start with ``ROLE_`` (to enforce that only your voter will)
+be called:
 
-Create the voter class::
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    switch_user: { role: CAN_SWITCH_USER }
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <switch-user role="CAN_SWITCH_USER"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+
+            'firewalls' => [
+                'main'=> [
+                    // ...
+                    'switch_user' => [
+                        'role' => 'CAN_SWITCH_USER',
+                    ],
+                ],
+            ],
+        ]);
+
+Then, create a voter class that responds to this role and includes whatever custom
+logic you want::
 
     namespace App\Security\Voter;
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+    use Symfony\Component\Security\Core\Security;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     class SwitchToCustomerVoter extends Voter
     {
+        private $security;
+
+        public function __construct(Security $security)
+        {
+            $this->security = $security;
+        }
+
         protected function supports($attribute, $subject)
         {
-            return in_array($attribute, ['ROLE_ALLOWED_TO_SWITCH'])
+            return in_array($attribute, ['CAN_SWITCH_USER'])
                 && $subject instanceof UserInterface;
         }
 
@@ -225,27 +281,29 @@ Create the voter class::
                 return false;
             }
 
-            if (in_array('ROLE_CUSTOMER', $subject->getRoles())
-                && in_array('ROLE_SWITCH_TO_CUSTOMER', $token->getRoleNames(), true)) {
+            // you can still check for ROLE_ALLOWED_TO_SWITCH
+            if ($this->security->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
                 return true;
             }
+
+            // check for any roles you want
+            if ($this->security->isGranted('ROLE_TECH_SUPPORT')) {
+                return true;
+            }
+
+            /*
+             * or use some custom data from your User object
+            if ($user->isAllowedToSwitch()) {
+                return true;
+            }
+            */
 
             return false;
         }
     }
 
-.. versionadded:: 4.3
-
-    The ``getRoleNames()`` method was introduced in Symfony 4.3.
-
-To enable the new voter in the app, register it as a service and
-:doc:`tag it </service_container/tags>` with the ``security.voter``
-tag. If you're using the
-:ref:`default services.yaml configuration <service-container-services-load-example>`,
-this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
-
-Now a user who has the ``ROLE_SWITCH_TO_CUSTOMER`` role can switch to a user who
-has the ``ROLE_CUSTOMER`` role, but not other users.
+That's it! When switching users, your voter now has full control over whether or
+not this is allowed. If your voter isn't called, see :ref:`declaring-the-voter-as-a-service`.
 
 Events
 ------
@@ -271,7 +329,7 @@ you switch users, add an event subscriber on this event::
         {
             $request = $event->getRequest();
 
-            if ($request->hasSession() && ($session = $request->getSession)) {
+            if ($request->hasSession() && ($session = $request->getSession())) {
                 $session->set(
                     '_locale',
                     // assuming your User has some getLocale() method

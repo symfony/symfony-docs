@@ -42,8 +42,10 @@ Topics
     frontend
     http_cache
     logging
+    mailer
     mercure
     messenger
+    migration
     performance
     profiler
     routing

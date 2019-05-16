@@ -13,7 +13,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/dotenv
+    $ composer require symfony/dotenv
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -88,11 +88,12 @@ defined in previously loaded files:
 #. If there's a ``.env.$env.local`` file, this one is loaded. Otherwise, it falls
    back to ``.env.$env``.
 
-This might look complicated at first glance but it gives you the opportunity to commit
-multiple environment-specific files that can then be adjusted to your local environment
-easily. Given you commit ``.env``, ``.env.test`` and ``.env.dev`` to represent different
-configuration settings for your environments, each of them can be adjusted by using
-``.env.local``, ``.env.test.local`` and ``.env.dev.local`` respectively.
+This might look complicated at first glance but it gives you the opportunity to
+commit multiple environment-specific files that can then be adjusted to your
+local environment. Given you commit ``.env``, ``.env.test`` and ``.env.dev`` to
+represent different configuration settings for your environments, each of them
+can be adjusted by using ``.env.local``, ``.env.test.local`` and
+``.env.dev.local`` respectively.
 
 .. note::
 
@@ -139,6 +140,14 @@ Use environment variables in values by prefixing variables with ``$``:
 
     DB_USER=root
     DB_PASS=${DB_USER}pass # Include the user as a password prefix
+
+.. note::
+
+    The order is important when some env var depends on the value of other env
+    vars. In the above example, ``DB_PASS`` must be defined after ``DB_USER``.
+    Moreover, if you define multiple ``.env`` files and put ``DB_PASS`` first,
+    its value will depend on the ``DB_USER`` value defined in other files
+    instead of the value defined in this file.
 
 Embed commands via ``$()`` (not supported on Windows):
 

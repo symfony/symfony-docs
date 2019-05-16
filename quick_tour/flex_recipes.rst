@@ -145,13 +145,13 @@ and performance data!
 Oh, and as you install more libraries, you'll get more tools (like a web debug toolbar
 icon that shows database queries).
 
-You can now directly use the profiler because it configured *itself* thanks to the recipe.
-What else can we install this easily?
+You can now directly use the profiler because it configured *itself* thanks to
+the recipe. What else can we install?
 
 Rich API Support
 ----------------
 
-Are you building an API? You can already return JSON easily from any controller::
+Are you building an API? You can already return JSON from any controller::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
@@ -239,8 +239,10 @@ me? List your routes by running:
      ...
     ------------------------------ -------- -------------------------------------
 
-Easily Remove Recipes
----------------------
+.. _ easily-remove-recipes:
+
+Removing Recipes
+----------------
 
 Not convinced yet? No problem: remove the library:
 

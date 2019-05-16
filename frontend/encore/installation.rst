@@ -8,21 +8,22 @@ Symfony application or not.
 Installing Encore in Symfony Applications
 -----------------------------------------
 
-If your application is using :doc:`Symfony Flex </setup/flex>`, run the
-following commands:
+Run these commands to install both the PHP and JavaScript dependencies in your
+project:
 
 .. code-block:: terminal
 
-    $ composer require encore
+    $ composer require symfony/webpack-encore-bundle
     $ yarn install
 
-This will install and enable the `WebpackEncoreBundle`_, add the ``assets/``
-directory, create a ``webpack.config.js`` file, and add ``node_modules/`` to
-``.gitignore``. If you are not using Symfony Flex, you'll need to create all
-this by yourself following the instructions shown in the next section.
+If you are using :doc:`Symfony Flex </setup/flex>`, this will install and enable
+the `WebpackEncoreBundle`_, create the ``assets/`` directory, add a
+``webpack.config.js`` file, and add ``node_modules/`` to ``.gitignore``. You can
+skip the rest of this article and go write your first JavaScript and CSS by
+reading :doc:`/frontend/encore/simple-example`!
 
-Nice work! You can skip the rest of this article and go write your first
-JavaScript and CSS by reading :doc:`/frontend/encore/simple-example`!
+If you are not using Symfony Flex, you'll need to create all these directories
+and files by yourself following the instructions shown in the next section.
 
 Installing Encore in non Symfony Applications
 ---------------------------------------------
@@ -70,7 +71,7 @@ is the main config file for both Webpack and Webpack Encore:
          * (including one that's included on every page - e.g. "app")
          *
          * Each entry will result in one JavaScript file (e.g. app.js)
-         * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
+         * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
          */
         .addEntry('app', './assets/js/app.js')
         //.addEntry('page1', './assets/js/page1.js')

@@ -46,7 +46,7 @@ like this:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/framework.yaml
         framework:
             workflows:
                 blog_publishing:
@@ -54,12 +54,12 @@ like this:
                     audit_trail:
                         enabled: true
                     marking_store:
-                        type: 'multiple_state' # or 'single_state'
-                        arguments:
+                        type: 'method'
+                        property:
                             - 'currentPlace'
                     supports:
                         - App\Entity\BlogPost
-                    initial_place: draft
+                    initial_marking: draft
                     places:
                         - draft
                         - reviewed
@@ -90,35 +90,28 @@ like this:
             <framework:config>
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:audit-trail enabled="true"/>
-
                     <framework:marking-store type="single_state">
                         <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
-
                     <framework:support>App\Entity\BlogPost</framework:support>
-
+                    <framework:initial_marking>draft</framework:initial_marking>
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
                     <framework:place>published</framework:place>
-
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
                         <framework:to>reviewed</framework:to>
                     </framework:transition>
-
                     <framework:transition name="publish">
                         <framework:from>reviewed</framework:from>
                         <framework:to>published</framework:to>
                     </framework:transition>
-
                     <framework:transition name="reject">
                         <framework:from>reviewed</framework:from>
                         <framework:to>rejected</framework:to>
                     </framework:transition>
-
                 </framework:workflow>
-
             </framework:config>
         </container>
 
@@ -134,10 +127,11 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'multiple_state', // or 'single_state'
-                        'arguments' => ['currentPlace']
+                        'type' => 'method'
+                        'property' => ['currentPlace']
                     ],
                     'supports' => ['App\Entity\BlogPost'],
+                    'initial_marking' => 'draft',
                     'places' => [
                         'draft',
                         'reviewed',
@@ -177,18 +171,6 @@ As configured, the following property is used by the marking store::
         public $content;
     }
 
-.. note::
-
-    The marking store type could be "multiple_state" or "single_state". A single
-    state marking store does not support a model being on multiple places at the
-    same time.
-
-.. tip::
-
-    The ``type`` (default value ``single_state``) and ``arguments`` (default
-    value ``marking``) attributes of the ``marking_store`` option are optional.
-    If omitted, their default values will be used.
-
 .. tip::
 
     Setting the ``audit_trail.enabled`` option to ``true`` makes the application
@@ -197,21 +179,24 @@ As configured, the following property is used by the marking store::
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
 
-    $post = new App\Entity\BlogPost();
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Exception\LogicException;
+
+    $blogPost = BlogPost();
 
     $workflow = $this->container->get('workflow.blog_publishing');
-    $workflow->can($post, 'publish'); // False
-    $workflow->can($post, 'to_review'); // True
+    $workflow->can($blogPost, 'publish'); // False
+    $workflow->can($blogPost, 'to_review'); // True
 
     // Update the currentState on the post
     try {
-        $workflow->apply($post, 'to_review');
+        $workflow->apply($blogPost, 'to_review');
     } catch (LogicException $exception) {
         // ...
     }
 
     // See all the available transitions for the post in the current state
-    $transitions = $workflow->getEnabledTransitions($post);
+    $transitions = $workflow->getEnabledTransitions($blogPost);
 
 Using Events
 ------------
@@ -365,9 +350,9 @@ missing a title::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var App\Entity\BlogPost $post */
-            $post = $event->getSubject();
-            $title = $post->title;
+            /** @var App\Entity\BlogPost $blogPost */
+            $blogPost = $event->getSubject();
+            $title = $blogPost->title;
 
             if (empty($title)) {
                 // Block the transition "to_review" if the post has no title
@@ -401,6 +386,9 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getWorkflowName`
     Returns a string with the name of the workflow that triggered the event.
 
+:method:`Symfony\\Component\\Workflow\\Event\\Event::getMetadata`
+    Returns a metadata.
+
 For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`.
 This class has two more methods:
 
@@ -409,6 +397,13 @@ This class has two more methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::setBlocked`
     Sets the blocked value.
+
+:method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::getTransitionBlockerList`
+    Returns the event :class:`Symfony\\Component\\Workflow\\TransitionBlockerList`.
+    See :ref:`blocking transitions <workflow-blocking-transitions>`.
+
+:method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::addTransitionBlocker`
+    Add a :class:`Symfony\\Component\\Workflow\\TransitionBlocker` instance.
 
 .. _workflow-blocking-transitions:
 
@@ -438,15 +433,60 @@ transition. The value of this option is any valid expression created with the
                         from: draft
                         to:   reviewed
                     publish:
-                        # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                        # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted", "is_valid"
                         guard: "is_authenticated"
                         from: reviewed
                         to:   published
                     reject:
-                        # or any valid expression language with "subject" referring to the post
-                        guard: "has_role('ROLE_ADMIN') and subject.isStatusReviewed()"
+                        # or any valid expression language with "subject" referring to the supported object
+                        guard: "has_role('ROLE_ADMIN') and subject.isRejectable()"
                         from: reviewed
                         to:   rejected
+
+You can also use transition blockers to block and return a user-friendly error
+message when you stop a transition from happening.
+In the example we get this message from the
+:class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving you a
+central place to manage the text.
+
+This example has been simplified; in production you may prefer to use the
+:doc:`Translation </components/translation>` component to manage messages in one
+place::
+
+    namespace App\Listener\Workflow\Task;
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Workflow\Event\GuardEvent;
+    use Symfony\Component\Workflow\TransitionBlocker;
+
+    class BlogPostPublishListener implements EventSubscriberInterface
+    {
+        public function guardPublish(GuardEvent $event)
+        {
+            $eventTransition = $event->getTransition();
+            $hourLimit = $event->getMetadata('hour_limit', $eventTransition);
+
+            if ((int) date('H') <= (int) $hourLimit) {
+                return;
+            }
+
+            // Block the transition "publish" if it is more than 8 PM
+            // with the message for end user
+            $explanation = $event->getMetadata('explanation', $eventTransition);
+            $event->addTransitionBlocker(new TransitionBlocker($explanation , 0));
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                'workflow.blog_publishing.guard.publish' => ['guardPublish'],
+            ];
+        }
+    }
+
+.. versionadded:: 4.1
+
+    The transition blockers were introduced in Symfony 4.1.
 
 Usage in Twig
 -------------
@@ -470,15 +510,15 @@ The following example shows these functions in action:
 
 .. code-block:: html+twig
 
-    <h3>Actions</h3>
+    <h3>Actions on Blog Post</h3>
     {% if workflow_can(post, 'publish') %}
-        <a href="...">Publish article</a>
+        <a href="...">Publish</a>
     {% endif %}
     {% if workflow_can(post, 'to_review') %}
         <a href="...">Submit to review</a>
     {% endif %}
     {% if workflow_can(post, 'reject') %}
-        <a href="...">Reject article</a>
+        <a href="...">Reject</a>
     {% endif %}
 
     {# Or loop through the enabled transitions #}
@@ -494,8 +534,8 @@ The following example shows these functions in action:
     {% endif %}
 
     {# Check if some place has been marked on the object #}
-    {% if 'waiting_some_approval' in workflow_marked_places(post) %}
-        <span class="label">PENDING</span>
+    {% if 'reviewed' in workflow_marked_places(post) %}
+        <span class="label">Reviewed</span>
     {% endif %}
 
 Storing Metadata
@@ -532,7 +572,12 @@ requires:
                             to:   review
                             metadata:
                                 priority: 0.5
-                        # ...
+                        publish:
+                            from: reviewed
+                            to:   published
+                            metadata:
+                                hour_limit: 20
+                                explanation: 'You can not publish after 8 PM.'
 
     .. code-block:: xml
 
@@ -563,7 +608,14 @@ requires:
                             <framework:priority>0.5</framework:priority>
                         </framework:metadata>
                     </framework:transition>
-                    <!-- ... -->
+                    <framework:transition name="publish">
+                        <framework:from>reviewed</framework:from>
+                        <framework:to>published</framework:to>
+                        <framework:metadata>
+                            <framework:hour_limit>20</framework:hour_limit>
+                            <framework:explanation>You can not publish after 8 PM.</framework:explanation>
+                        </framework:metadata>
+                    </framework:transition>
                 </framework:workflow>
             </framework:config>
         </container>
@@ -595,6 +647,14 @@ requires:
                                 'priority' => 0.5,
                             ],
                         ],
+                        'publish' => [
+                            'from' => 'reviewed',
+                            'to' => 'published',
+                            'metadata' => [
+                                'hour_limit' => 20,
+                                'explanation' => 'You can not publish after 8 PM.',
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -602,28 +662,31 @@ requires:
 
 Then you can access this metadata in your controller as follows::
 
+    use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
+    use App\Entity\BlogPost;
 
-    public function myController(Registry $registry, Article $article)
+    public function myController(Registry $registry, BlogPost $blogPost)
     {
-        $workflow = $registry->get($article);
+        $workflow = $registry->get($blogPost);
 
         $title = $workflow
             ->getMetadataStore()
-            ->getWorkflowMetadata()['title'] ?? false
+            ->getWorkflowMetadata()['title'] ?? 'Default title'
         ;
 
         // or
         $aTransition = $workflow->getDefinition()->getTransitions()[0];
         $transitionTitle = $workflow
             ->getMetadataStore()
-            ->getTransitionMetadata($aTransition)['title'] ?? false
+            ->getTransitionMetadata($aTransition)['priority'] ?? 0
         ;
     }
 
-There is a shortcut that works with everything::
+There is a shortcut that works with every metadata level::
 
     $title = $workflow->getMetadataStore()->getMetadata('title');
+    $priority = $workflow->getMetadataStore()->getMetadata('priority');
 
 In a :ref:`flash message <flash-messages>` in your controller::
 
@@ -633,65 +696,24 @@ In a :ref:`flash message <flash-messages>` in your controller::
     $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
     $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
-Metadata can also be accessed in a Listener, from the Event object.
-
-Using transition blockers you can return a user-friendly error message when you
-stop a transition from happening. In the example we get this message from the
-:class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving you a
-central place to manage the text.
-
-This example has been simplified; in production you may prefer to use the
-:doc:`Translation </components/translation>` component to manage messages in one
-place::
-
-    namespace App\Listener\Workflow\Task;
-
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Workflow\Event\GuardEvent;
-    use Symfony\Component\Workflow\TransitionBlocker;
-
-    class OverdueGuard implements EventSubscriberInterface
-    {
-        public function guardPublish(GuardEvent $event)
-        {
-            $timeLimit = $event->getMetadata('time_limit', $event->getTransition());
-
-            if (date('Hi') <= $timeLimit) {
-                return;
-            }
-
-            $explanation = $event->getMetadata('explanation', $event->getTransition());
-            $event->addTransitionBlocker(new TransitionBlocker($explanation , 0));
-        }
-
-        public static function getSubscribedEvents()
-        {
-            return [
-                'workflow.task.guard.done' => 'guardPublish',
-            ];
-        }
-    }
-
-.. versionadded:: 4.1
-
-    The transition blockers were introduced in Symfony 4.1.
+Metadata can also be accessed in a Listener, from the :class:`Symfony\\Component\\Workflow\\Event\\Event` object.
 
 In Twig templates, metadata is available via the ``workflow_metadata()`` function:
 
 .. code-block:: html+twig
 
-    <h2>Metadata</h2>
+    <h2>Metadata of Blog Post</h2>
     <p>
-        <strong>Workflow</strong>:<br >
-        <code>{{ workflow_metadata(article, 'title') }}</code>
+        <strong>Workflow</strong>:<br>
+        <code>{{ workflow_metadata(blog_post, 'title') }}</code>
     </p>
     <p>
         <strong>Current place(s)</strong>
         <ul>
-            {% for place in workflow_marked_places(article) %}
+            {% for place in workflow_marked_places(blog_post) %}
                 <li>
                     {{ place }}:
-                    <code>{{ workflow_metadata(article, 'max_num_of_words', place) ?: 'Unlimited'}}</code>
+                    <code>{{ workflow_metadata(blog_post, 'max_num_of_words', place) ?: 'Unlimited'}}</code>
                 </li>
             {% endfor %}
         </ul>
@@ -699,10 +721,10 @@ In Twig templates, metadata is available via the ``workflow_metadata()`` functio
     <p>
         <strong>Enabled transition(s)</strong>
         <ul>
-            {% for transition in workflow_transitions(article) %}
+            {% for transition in workflow_transitions(blog_post) %}
                 <li>
                     {{ transition.name }}:
-                    <code>{{ workflow_metadata(article, 'priority', transition) ?: '0' }}</code>
+                    <code>{{ workflow_metadata(blog_post, 'priority', transition) ?: '0' }}</code>
                 </li>
             {% endfor %}
         </ul>

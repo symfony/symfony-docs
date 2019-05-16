@@ -10,9 +10,10 @@ The BrowserKit Component
 
 .. note::
 
-    The BrowserKit component can only make internal requests to your application.
-    If you need to make requests to external sites and applications, consider
-    using `Goutte`_, a simple web scraper based on Symfony Components.
+    In Symfony versions prior to 4.3, the BrowserKit component could only make
+    internal requests to your application. Starting from Symfony 4.3, this
+    component can also :ref:`make HTTP requests to any public site <component-browserkit-external-requests>`
+    when using it in combination with the :doc:`HttpClient component </components/http_client>`.
 
 Installation
 ------------
@@ -105,7 +106,7 @@ simulate the link click::
 
 If you need the :class:`Symfony\\Component\\DomCrawler\\Link` object that
 provides access to the link properties (e.g. ``$link->getMethod()``,
-``$link->getUri()``), use this other method:
+``$link->getUri()``), use this other method::
 
     // ...
     $crawler = $client->request('GET', '/product/123');
@@ -278,6 +279,41 @@ also delete all the cookies::
 
     // reset the client (history and cookies are cleared too)
     $client->restart();
+
+.. _component-browserkit-external-requests:
+
+Making External HTTP Requests
+-----------------------------
+
+So far, all the examples in this article have assumed that you are making
+internal requests to your own application. However, you can run the exact same
+examples when making HTTP requests to external web sites and applications.
+
+First, install and configure the :doc:`HttpClient component </components/http_client>`.
+Then, use the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` to create
+the client that will make the external HTTP requests::
+
+    use Symfony\Component\BrowserKit\HttpBrowser;
+    use Symfony\Component\HttpClient\HttpClient;
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+You can now use any of the methods shown in this article to extract information,
+click links, submit forms, etc. This means that you no longer need to use a
+dedicated web crawler or scraper such as `Goutte`_::
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+    $browser->request('GET', 'https://github.com');
+    $browser->clickLink('Sign in');
+    $browser->submitForm('Sign in', ['login' => '...', 'password' => '...']);
+    $openPullRequests = trim($browser->clickLink('Pull requests')->filter(
+        '.table-list-header-toggle a:nth-child(1)'
+    )->text());
+
+.. versionadded:: 4.3
+
+    The feature to make external HTTP requests was introduced in Symfony 4.3.
 
 Learn more
 ----------

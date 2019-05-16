@@ -92,6 +92,9 @@ Active Core Members
 
   * **Samuel Rozé** (`sroze`_) can merge into the Messenger_ component.
 
+  * **Yonel Ceruto** (`yceruto`_) can merge into the ErrorRenderer_,
+    OptionsResolver_, and Form_ components and TwigBundle_.
+
 * **Deciders Team** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
@@ -207,6 +210,7 @@ discretion of the **Project Leader**.
 .. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
 .. _EventDispatcher: https://github.com/symfony/event-dispatcher
 .. _DomCrawler: https://github.com/symfony/dom-crawler
+.. _ErrorRenderer: https://github.com/symfony/error-renderer
 .. _Form: https://github.com/symfony/form
 .. _HttpFoundation: https://github.com/symfony/http-foundation
 .. _HttpKernel: https://github.com/symfony/http-kernel
@@ -227,6 +231,7 @@ discretion of the **Project Leader**.
 .. _SecurityBundle: https://github.com/symfony/security-bundle
 .. _Stopwatch: https://github.com/symfony/stopwatch
 .. _TwigBridge: https://github.com/symfony/twig-bridge
+.. _TwigBundle: https://github.com/symfony/twig-bundle
 .. _Validator: https://github.com/symfony/validator
 .. _VarDumper: https://github.com/symfony/var-dumper
 .. _Workflow: https://github.com/symfony/workflow
@@ -253,6 +258,7 @@ discretion of the **Project Leader**.
 .. _`ogizanagi`: https://github.com/ogizanagi/
 .. _`Nyholm`: https://github.com/Nyholm
 .. _`sroze`: https://github.com/sroze
+.. _`yceruto`: https://github.com/yceruto
 .. _`michaelcullum`: https://github.com/michaelcullum
 .. _`wouterj`: https://github.com/wouterj
 .. _`HeahDude`: https://github.com/HeahDude

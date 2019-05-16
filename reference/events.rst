@@ -28,7 +28,7 @@ following information:
 ``kernel.request``
 ~~~~~~~~~~~~~~~~~~
 
-**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\RequestEvent`
 
 This event is dispatched very early in Symfony, before the controller is
 determined. It's useful to add information to the Request or return a Response
@@ -48,16 +48,16 @@ their priorities:
 ``kernel.controller``
 ~~~~~~~~~~~~~~~~~~~~~
 
-**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent`
 
 This event is dispatched after the controller to be executed has been resolved
 but before executing it. It's useful to initialize things later needed by the
 controller, such as `param converters`_, and even to change the controller
 entirely::
 
-    use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+    use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         // ...
 
@@ -79,7 +79,7 @@ their priorities:
 ``kernel.controller_arguments``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerArgumentsEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerArgumentsEvent`
 
 This event is dispatched just before a controller is called. It's useful to
 configure the arguments that are going to be passed to the controller.
@@ -87,7 +87,7 @@ Typically, this is used to map URL routing parameters to their corresponding
 named arguments; or pass the current request when the ``Request`` type-hint is
 found::
 
-    public function onKernelControllerArguments(FilterControllerArgumentsEvent $event)
+    public function onKernelControllerArguments(ControllerArgumentsEvent $event)
     {
         // ...
 
@@ -109,7 +109,7 @@ their priorities:
 ``kernel.view``
 ~~~~~~~~~~~~~~~
 
-**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ViewEvent`
 
 This event is dispatched after the controller has been executed but *only* if
 the controller does *not* return a :class:`Symfony\\Component\\HttpFoundation\\Response`
@@ -117,9 +117,9 @@ object. It's useful to transform the returned value (e.g. a string with some
 HTML contents) into the ``Response`` object needed by Symfony::
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+    use Symfony\Component\HttpKernel\Event\ViewEvent;
 
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public function onKernelView(ViewEvent $event)
     {
         $value = $event->getControllerResult();
         $response = new Response();
@@ -143,13 +143,13 @@ their priorities:
 ``kernel.response``
 ~~~~~~~~~~~~~~~~~~~
 
-**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ResponseEvent`
 
 This event is dispatched after the controller or any ``kernel.view`` listener
 returns a ``Response`` object. It's useful to modify or replace the response
 before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         $response = $event->getResponse();
 
@@ -196,7 +196,7 @@ their priorities:
 ``kernel.terminate``
 ~~~~~~~~~~~~~~~~~~~~
 
-**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\TerminateEvent`
 
 This event is dispatched after the response has been sent (after the execution
 of the :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method).
@@ -219,16 +219,16 @@ their priorities:
 ``kernel.exception``
 ~~~~~~~~~~~~~~~~~~~~
 
-**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 
 This event is dispatched as soon as an error occurs during the handling of the
 HTTP request. It's useful to recover from errors or modify the exception details
 sent as response::
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+    use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event)
     {
         $exception = $event->getException();
         $response = new Response();
@@ -265,7 +265,7 @@ response:
 
     If you want to overwrite the status code of the exception response, which
     you should not without a good reason, call
-    ``GetResponseForExceptionEvent::allowCustomResponseCode()`` first and then
+    ``ExceptionEvent::allowCustomResponseCode()`` first and then
     set the status code on the response::
 
         $event->allowCustomResponseCode();

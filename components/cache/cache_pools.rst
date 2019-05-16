@@ -16,7 +16,7 @@ Cache Pools and Supported Adapters
 
 Cache Pools are the logical repositories of cache items. They perform all the
 common operations on items, such as saving them or looking for them. Cache pools
-are independent from the actual cache implementation. Therefore, applications
+are independent of the actual cache implementation. Therefore, applications
 can keep using the same cache pool even if the underlying cache mechanism
 changes from a file system based cache to a Redis or database based cache.
 
@@ -27,7 +27,7 @@ Creating Cache Pools
 
 Cache Pools are created through the **cache adapters**, which are classes that
 implement both :class:`Symfony\\Contracts\\Cache\\CacheInterface` and
-``Psr\\Cache\\CacheItemPoolInterface``. This component provides several adapters
+``Psr\Cache\CacheItemPoolInterface``. This component provides several adapters
 ready to use in your applications.
 
 .. toctree::
@@ -115,7 +115,7 @@ Saving Cache Items
 ~~~~~~~~~~~~~~~~~~
 
 The most common method to save cache items is
-``Psr\\Cache\\CacheItemPoolInterface::save``, which stores the
+``Psr\Cache\CacheItemPoolInterface::save``, which stores the
 item in the cache immediately (it returns ``true`` if the item was saved or
 ``false`` if some error occurred)::
 
@@ -126,9 +126,9 @@ item in the cache immediately (it returns ``true`` if the item was saved or
 
 Sometimes you may prefer to not save the objects immediately in order to
 increase the application performance. In those cases, use the
-``Psr\\Cache\\CacheItemPoolInterface::saveDeferred`` method to mark cache
+``Psr\Cache\CacheItemPoolInterface::saveDeferred`` method to mark cache
 items as "ready to be persisted" and then call to
-``Psr\\Cache\\CacheItemPoolInterface::commit`` method when you are ready
+``Psr\Cache\CacheItemPoolInterface::commit`` method when you are ready
 to persist them all::
 
     // ...
@@ -149,14 +149,14 @@ Removing Cache Items
 ~~~~~~~~~~~~~~~~~~~~
 
 Cache Pools include methods to delete a cache item, some of them or all of them.
-The most common is ``Psr\\Cache\\CacheItemPoolInterface::deleteItem``,
+The most common is ``Psr\Cache\CacheItemPoolInterface::deleteItem``,
 which deletes the cache item identified by the given key (it returns ``true``
 when the item is successfully deleted or doesn't exist and ``false`` otherwise)::
 
     // ...
     $isDeleted = $cache->deleteItem('user_'.$userId);
 
-Use the ``Psr\\Cache\\CacheItemPoolInterface::deleteItems`` method to
+Use the ``Psr\Cache\CacheItemPoolInterface::deleteItems`` method to
 delete several cache items simultaneously (it returns ``true`` only if all the
 items have been deleted, even when any or some of them don't exist)::
 
@@ -164,7 +164,7 @@ items have been deleted, even when any or some of them don't exist)::
     $areDeleted = $cache->deleteItems(['category1', 'category2']);
 
 Finally, to remove all the cache items stored in the pool, use the
-``Psr\\Cache\\CacheItemPoolInterface::clear`` method (which returns ``true``
+``Psr\Cache\CacheItemPoolInterface::clear`` method (which returns ``true``
 when all items are successfully deleted)::
 
     // ...
@@ -205,7 +205,7 @@ Pruning Cache Items
 Some cache pools do not include an automated mechanism for pruning expired cache items.
 For example, the :ref:`FilesystemAdapter <component-cache-filesystem-adapter>` cache
 does not remove expired cache items *until an item is explicitly requested and determined to
-be expired*, for example, via a call to ``Psr\\Cache\\CacheItemPoolInterface::getItem``.
+be expired*, for example, via a call to ``Psr\Cache\CacheItemPoolInterface::getItem``.
 Under certain workloads, this can cause stale cache entries to persist well past their
 expiration, resulting in a sizable consumption of wasted disk or memory space from excess,
 expired cache items.

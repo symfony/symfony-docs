@@ -5,8 +5,8 @@ How to Dump Workflows
 =====================
 
 To help you debug your workflows, you can dump a representation of your workflow
-or state machine with the use of a ``DumperInterface``. Symfony provides 2
-different dumpers both based on Dot.
+or state machine with the use of a ``DumperInterface``. Symfony provides two
+different dumpers, both based on Dot (see below).
 
 Use the ``GraphvizDumper`` or ``StateMachineGraphvizDumper`` to create DOT
 files, or use ``PlantUmlDumper`` for PlantUML files. Both types can be converted
@@ -24,17 +24,20 @@ Images of the workflow defined above::
 
 .. code-block:: terminal
 
+    # dump DOT file in PNG image:
     $ php dump-graph-dot.php | dot -Tpng -o dot_graph.png
-    $ php dump-graph-puml.php | java -jar plantuml.jar -p  > puml_graph.png
 
-    # run this command if you prefer SVG images:
+    # dump DOT file in SVG image:
     # $ php dump-graph-dot.php | dot -Tsvg -o dot_graph.svg
+
+    # dump PlantUML in PNG image:
+    $ php dump-graph-puml.php | java -jar plantuml.jar -p  > puml_graph.png
 
 The DOT result will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
 
-The PUML result:
+The PlantUML result:
 
 .. image:: /_images/components/workflow/blogpost_puml.png
 
@@ -43,8 +46,9 @@ Inside a Symfony application, you can dump the files with those commands using
 
 .. code-block:: terminal
 
-    $ php bin/console workflow:dump name | dot -Tsvg -o graph.svg
-    $ php bin/console workflow:dump name --dump-format=puml | java -jar plantuml.jar -p  > workflow.png
+    $ php bin/console workflow:dump workflow_name | dot -Tpng -o workflow_name.png
+    $ php bin/console workflow:dump workflow_name | dot -Tsvg -o workflow_name.svg
+    $ php bin/console workflow:dump workflow_name --dump-format=puml | java -jar plantuml.jar -p  > workflow_name.png
 
 .. note::
 

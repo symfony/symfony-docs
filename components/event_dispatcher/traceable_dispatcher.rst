@@ -38,7 +38,7 @@ to register event listeners and dispatch events::
 
     // dispatches an event
     $event = ...;
-    $traceableEventDispatcher->dispatch('event.the_name', $event);
+    $traceableEventDispatcher->dispatch($event, 'event.the_name');
 
 After your application has been processed, you can use the
 :method:`Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcherInterface::getCalledListeners`

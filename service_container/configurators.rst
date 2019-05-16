@@ -136,10 +136,10 @@ all the classes are already loaded as services. All you need to do is specify th
 
             # override the services to set the configurator
             App\Mail\NewsletterManager:
-                configurator: 'App\Mail\EmailConfigurator:configure'
+                configurator: ['@App\Mail\EmailConfigurator', 'configure']
 
             App\Mail\GreetingCardManager:
-                configurator: 'App\Mail\EmailConfigurator:configure'
+                configurator: ['@App\Mail\EmailConfigurator', 'configure']
 
     .. code-block:: xml
 
@@ -183,17 +183,6 @@ all the classes are already loaded as services. All you need to do is specify th
 
         $container->getDefinition(GreetingCardManager::class)
             ->setConfigurator([new Reference(EmailConfigurator::class), 'configure']);
-
-The traditional configurator syntax in YAML files used an array to define
-the service id and the method name:
-
-.. code-block:: yaml
-
-    app.newsletter_manager:
-        # new syntax
-        configurator: 'App\Mail\EmailConfigurator:configure'
-        # old syntax
-        configurator: ['@App\Mail\EmailConfigurator', configure]
 
 .. _configurators-invokable:
 

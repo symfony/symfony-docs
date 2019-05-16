@@ -1,153 +1,19 @@
 .. index::
-    single: Environment Variables; env vars
-
-How to Configure Symfony With Environment Variables
-===================================================
-
-In :doc:`/configuration`, you learned how to manage your application
-configuration. In this article you'll learn how to use environment variables (or
-"env vars" for short) to configure some of those options, which is a common
-practice to configure sensitive options such as credentials and passwords.
-
-.. _config-env-vars:
-
-Referencing Env Vars in Configuration Files
--------------------------------------------
-
-First, define the value of the env var, using your shell environment or the
-``.env`` file at the project root directory. For example, consider the
-``DATABASE_URL`` env var defined when installing the ``doctrine`` recipe (by
-convention the env var names are always uppercase):
-
-.. code-block:: bash
-
-    # .env
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
-
-Then, you can reference those env vars in any configuration option enclosing
-their names with ``env()``. Their actual values will be resolved at runtime
-(once per request), so that dumped containers can be reconfigured dynamically
-even after being compiled:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/doctrine.yaml
-        doctrine:
-            dbal:
-                url: '%env(DATABASE_URL)%'
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/doctrine.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-            <doctrine:config>
-                <doctrine:dbal
-                    url="%env(DATABASE_URL)%"
-                />
-            </doctrine:config>
-
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'url' => '%env(DATABASE_URL)%',
-            ]
-        ]);
-
-You can also give the ``env()`` parameters a default value, which will be used
-whenever the corresponding environment variable is *not* found:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        parameters:
-            env(DATABASE_HOST): 'localhost'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="env(DATABASE_HOST)">localhost</parameter>
-            </parameters>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        $container->setParameter('env(DATABASE_HOST)', 'localhost');
-
-.. deprecated:: 4.3
-
-    Passing non-string values as default values for environment variables is
-    deprecated since Symfony 4.3. Use :ref:`environment variable processors <env-var-processors>`
-    if you need to transform those string default values into other data types.
-
-.. _configuration-env-var-in-prod:
-
-Configuring Environment Variables in Production
------------------------------------------------
-
-During development, you'll use the ``.env`` file to configure your environment
-variables. On your production server, it is recommended to configure these at
-the web server level. If you're using Apache or Nginx, you can use e.g. one of
-the following:
-
-.. configuration-block::
-
-    .. code-block:: apache
-
-        <VirtualHost *:80>
-            # ...
-
-            SetEnv DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name"
-        </VirtualHost>
-
-    .. code-block:: nginx
-
-        fastcgi_param DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name";
-
-.. caution::
-
-    Beware that dumping the contents of the ``$_SERVER`` and ``$_ENV`` variables
-    or outputting the ``phpinfo()`` contents will display the values of the
-    environment variables, exposing sensitive information such as the database
-    credentials.
-
-    The values of the env vars are also exposed in the web interface of the
-    :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
-    problem because the web profiler must **never** be enabled in production.
+    single: Environment Variable Processors; env vars
 
 .. _env-var-processors:
 
 Environment Variable Processors
--------------------------------
+===============================
 
-The values of environment variables are considered strings by default.
-However, your code may expect other data types, like integers or booleans.
-Symfony solves this problem with *processors*, which modify the contents of the
-given environment variables. The following example uses the integer processor to
-turn the value of the ``HTTP_PORT`` env var into an integer:
+:ref:`Using env vars to configure Symfony applications <config-env-vars>` is a
+common practice to make your applications truly dynamic.
+
+The main issue of env vars is that their values can only be strings and your
+application may need other data types (integer, boolean, etc.). Symfony solves
+this problem with "env var processors", which transform the original contents of
+the given environment variables. The following example uses the integer
+processor to turn the value of the ``HTTP_PORT`` env var into an integer:
 
 .. configuration-block::
 
@@ -183,6 +49,9 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
                 'http_port' => '%env(int:HTTP_PORT)%',
             ],
         ]);
+
+Built-In Environment Variable Processors
+----------------------------------------
 
 Symfony provides the following env var processors:
 
@@ -506,6 +375,43 @@ Symfony provides the following env var processors:
     and end of the string. This is especially useful in combination with the
     ``file`` processor, as it'll remove newlines at the end of a file.
 
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(AUTH_FILE): '../config/auth.json'
+            google:
+                auth: '%env(trim:file:AUTH_FILE)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(AUTH_FILE)">../config/auth.json</parameter>
+                </parameters>
+
+                <google auth="%env(trim:file:AUTH_FILE)%"/>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
+            $container->loadFromExtension('google', [
+                'auth' => '%env(trim:file:AUTH_FILE)%',
+            ]);
+
     .. versionadded:: 4.3
 
         The ``trim`` processor was introduced in Symfony 4.3.
@@ -732,7 +638,7 @@ It is also possible to combine any number of processors:
         auth: '%env(json:file:resolve:AUTH_FILE)%'
 
 Custom Environment Variable Processors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 It's also possible to add your own processors for environment variables. First,
 create a class that implements
@@ -762,29 +668,3 @@ To enable the new processor in the app, register it as a service and
 tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
-
-Constants
----------
-
-The container also has support for setting PHP constants as parameters.
-See :ref:`component-di-parameters-constants` for more details.
-
-Miscellaneous Configuration
----------------------------
-
-You can mix whatever configuration format you like (YAML, XML and PHP) in
-``config/packages/``.  Importing a PHP file gives you the flexibility to add
-whatever is needed in the container. For instance, you can create a
-``drupal.php`` file in which you set a database URL based on Drupal's database
-configuration::
-
-    // config/packages/drupal.php
-
-    // import Drupal's configuration
-    include_once('/path/to/drupal/sites/default/settings.php');
-
-    // set a app.database_url parameter
-    $container->setParameter('app.database_url', $db_url);
-
-.. _`SetEnv`: http://httpd.apache.org/docs/current/env.html
-.. _`fastcgi_param`: http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_param

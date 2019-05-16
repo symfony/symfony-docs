@@ -159,6 +159,51 @@ This component also provides two useful methods related to expiring locks:
 ``getExpiringDate()`` (which returns ``null`` or a ``\DateTimeImmutable``
 object) and ``isExpired()`` (which returns a boolean).
 
+The Owner of The Lock
+---------------------
+
+Locks that are acquired for the first time are owned[1]_ by the ``Lock`` instance that acquired
+it. If you need to check whether the current ``Lock`` instance is (still) the owner of
+a lock, you can use the ``isAcquired()`` method::
+
+    if ($lock->isAcquired()) {
+        // We (still) own the lock
+    }
+
+Because of the fact that some lock stores have expiring locks (as seen and explained
+above), it is possible for an instance to lose the lock it acquired automatically::
+
+    // If we cannot acquire ourselves, it means some other process is already working on it
+    if (!$lock->acquire()) {
+        return;
+    }
+
+    $this->beginTransaction();
+
+    // Perform a very long process that might exceed TTL of the lock
+
+    if ($lock->isAcquired()) {
+        // Still all good, no other instance has acquired the lock in the meantime, we're safe
+        $this->commit();
+    } else {
+        // Bummer! Our lock has apparently exceeded TTL and another process has started in
+        // the meantime so it's not safe for us to commit.
+        $this->rollback();
+        throw new \Exception('Process failed');
+    }
+
+.. caution::
+
+    A common pitfall might be to use the ``isAcquired()`` method to check if
+    a lock has already been acquired by any process. As you can see in this example
+    you have to use ``acquire()`` for this. The ``isAcquired()`` method is used to check
+    if the lock has been acquired by the **current process** only!
+
+.. [1] Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
+    not ``Lock``. But from a user perspective, ``Key`` is internal and you will likely only be working
+    with the ``Lock`` instance so it's easier to think of the ``Lock`` instance as being the one that
+    is the owner of the lock.
+
 Available Stores
 ----------------
 
@@ -171,7 +216,6 @@ Store                                         Scope   Blocking  Expiring
 ============================================  ======  ========  ========
 :ref:`FlockStore <lock-store-flock>`          local   yes       no
 :ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes
-:ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes
 :ref:`PdoStore <lock-store-pdo>`              remote  no        yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
@@ -217,39 +261,6 @@ support blocking, and expects a TTL to avoid stalled locks::
 .. note::
 
     Memcached does not support TTL lower than 1 second.
-
-.. _lock-store-mongodb:
-
-MongoDbStore
-~~~~~~~~~~~~
-
-.. versionadded:: 4.3
-
-    The ``MongoDbStore`` was introduced in Symfony 4.3.
-
-The MongoDbStore saves locks on a MongoDB server, it requires a
-``\MongoDB\Client`` connection from `mongodb/mongodb`_. This store does not
-support blocking and expects a TTL to avoid stalled locks::
-
-    use Symfony\Component\Lock\Store\MongoDbStore;
-
-    $mongoClient = new \MongoDB\Client('mongo://localhost/');
-
-    $options = [
-        'database' => 'my-app',
-    ];
-
-    $store = new MongoDbStore($mongoClient, $options);
-
-The ``MongoDbStore`` takes the following ``$options``:
-
-============  =========  ========================================================================
-Option        Default    Description
-============  =========  ========================================================================
-database                 The name of the database [Mandatory]
-collection    ``lock``   The name of the collection
-gcProbablity  ``0.001``  Should a TTL Index be created expressed as a probability from 0.0 to 1.0
-============  =========  ========================================================================
 
 .. _lock-store-pdo:
 
@@ -387,7 +398,7 @@ Remote Stores
 ~~~~~~~~~~~~~
 
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
-:ref:`MongoDbStore <lock-store-mongodb>`, :ref:`PdoStore <lock-store-pdo>`,
+:ref:`PdoStore <lock-store-pdo>`,
 :ref:`RedisStore <lock-store-redis>` and
 :ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
 the true owner of the lock. This token is stored in the
@@ -412,7 +423,7 @@ Expiring Stores
 ~~~~~~~~~~~~~~~
 
 Expiring stores (:ref:`MemcachedStore <lock-store-memcached>`,
-:ref:`MongoDbStore <lock-store-mongodb>`, :ref:`PdoStore <lock-store-pdo>` and
+:ref:`PdoStore <lock-store-pdo>` and
 :ref:`RedisStore <lock-store-redis>`)
 guarantee that the lock is acquired only for the defined duration of time. If
 the task takes longer to be accomplished, then the lock can be released by the
@@ -529,46 +540,6 @@ method uses the Memcached's ``flush()`` method which purges and removes everythi
 
     The method ``flush()`` must not be called, or locks should be stored in a
     dedicated Memcached service away from Cache.
-
-MongoDbStore
-~~~~~~~~~~~~
-
-.. caution::
-
-    The locked resource name is indexed in the ``_id`` field of the lock
-    collection. Beware that in MongoDB an indexed field's value can be
-    `a maximum of 1024 bytes in length`_ inclusive of structural overhead.
-
-A TTL index MUST BE used on MongoDB 2.2+ to automatically clean up expired locks.
-Such an index can be created manually:
-
-.. code-block:: javascript
-
-    db.lock.ensureIndex(
-        { "expires_at": 1 },
-        { "expireAfterSeconds": 0 }
-    )
-
-Alternatively, the method ``MongoDbStore::createTtlIndex(int $expireAfterSeconds = 0)``
-can be called once to create the TTL index during database setup. Read more
-about `Expire Data from Collections by Setting TTL`_ in MongoDB.
-
-.. tip::
-
-    ``MongoDbStore`` will attempt to automatically create a TTL index on MongoDB
-    2.2+. It's recommended to set constructor option ``gcProbablity = 0.0`` to
-    disable this behavior if you have manually dealt with TTL index creation.
-
-.. caution::
-
-    This store relies on all PHP application and database nodes to have
-    synchronized clocks for lock expiry to occur at the correct time. To ensure
-    locks don't expire prematurely; the lock TTL should be set with enough extra
-    time in ``expireAfterSeconds`` to account for any clock drift between nodes.
-
-``writeConcern``, ``readConcern`` and ``readPreference`` are not specified by
-MongoDbStore meaning the collection's settings will take effect. Read more
-about `Replica Set Read and Write Semantics`_ in MongoDB.
 
 PdoStore
 ~~~~~~~~~~
@@ -690,13 +661,9 @@ are still running.
 
 .. _`ACID`: https://en.wikipedia.org/wiki/ACID
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
-.. _`mongodb/mongodb`: https://packagist.org/packages/mongodb/mongodb
 .. _Packagist: https://packagist.org/packages/symfony/lock
-.. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
+.. _`PHP semaphore functions`: https://php.net/manual/en/book.sem.php
 .. _`PDO`: https://php.net/pdo
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`ZooKeeper`: https://zookeeper.apache.org/
-.. _`a maximum of 1024 bytes in length`: https://docs.mongodb.com/manual/reference/limits/#Index-Key-Limit
-.. _`Expire Data from Collections by Setting TTL`: https://docs.mongodb.com/manual/tutorial/expire-data/
-.. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/

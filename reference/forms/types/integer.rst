@@ -96,7 +96,7 @@ scale
 
 This specifies how many decimals will be allowed until the field rounds the
 submitted value (via ``rounding_mode``). This option inherits from
-:doc:`number </reference/forms/types/number>` type and is overriden to ``0`` for
+:doc:`number </reference/forms/types/number>` type and is overridden to ``0`` for
 ``IntegerType``.
 
 Inherited Options

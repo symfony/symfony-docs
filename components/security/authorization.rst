@@ -157,10 +157,45 @@ role::
 
     $roleHierarchyVoter = new RoleHierarchyVoter($roleHierarchy);
 
+ExpressionVoter
+~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\ExpressionVoter`
+grants access based on the evaluation of expressions created with the
+:doc:`ExpressionLanguage component </components/expression_language>`. These
+expressions have access to a number of
+:ref:`special security variables <security-expression-variables>`::
+
+    use Symfony\Component\ExpressionLanguage\Expression;
+    use Symfony\Component\Security\Core\Authorization\Voter\ExpressionVoter;
+
+    // Symfony\Component\Security\Core\Authorization\ExpressionLanguage;
+    $expressionLanguage = ...;
+
+    // instance of Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface
+    $trustResolver = ...;
+
+    // Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+    $authorizationChecker = ...;
+
+    $expressionVoter = new ExpressionVoter($expressionLanguage, $trustResolver, $authorizationChecker);
+
+    // instance of Symfony\Component\Security\Core\Authentication\Token\TokenInterface
+    $token = ...;
+
+    // any object
+    $object = ...;
+
+    $expression = new Expression(
+        '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+    )
+
+    $vote = $expressionVoter->vote($token, $object, [$expression]);
+
 .. note::
 
-    When you make your own voter, you can use its constructor
-    to inject any dependencies it needs to come to a decision.
+    When you make your own voter, you can use its constructor to inject any
+    dependencies it needs to come to a decision.
 
 Roles
 -----

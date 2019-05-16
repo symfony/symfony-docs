@@ -291,14 +291,52 @@ and type-hint the new class::
         // ...
     }
 
-That's it! As long as you're using :ref:`autowire <services-autowire>` and
-:ref:`autoconfigure <services-autoconfigure>`, Symfony will automatically
-know to pass your ``TaskType`` an instance of the ``IssueToNumberTransformer``.
+Whenever the transformer throws an exception, the ``invalid_message`` is shown
+to the user. Instead of showing the same message every time, you can set the
+end-user error message in the data transformer using the
+``setInvalidMessage()`` method. It also allows you to include user values::
 
-.. tip::
+    // src/Form/DataTransformer/IssueToNumberTransformer.php
+    namespace App\Form\DataTransformer;
 
-    For more information about defining form types as services, read
-    :doc:`register your form type as a service </form/form_dependencies>`.
+    use Symfony\Component\Form\DataTransformerInterface;
+    use Symfony\Component\Form\Exception\TransformationFailedException;
+
+    class IssueToNumberTransformer implements DataTransformerInterface
+    {
+        // ...
+
+        public function reverseTransform($issueNumber)
+        {
+            // ...
+
+            if (null === $issue) {
+                $privateErrorMessage = sprintf('An issue with number "%s" does not exist!', $issueNumber);
+                $publicErrorMessage = 'The given "{{ value }}" value is not a valid issue number.';
+
+                $failure = new TransformationFailedException($privateErrorMessage);
+                $failure->setInvalidMessage($publicErrorMessage, [
+                    '{{ value }}' => $issueNumber,
+                ]);
+
+                throw $failure;
+            }
+
+            return $issue;
+        }
+    }
+
+.. versionadded:: 4.3
+
+    The ``setInvalidMessage()`` method was introduced in Symfony 4.3.
+
+That's it! If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+Symfony will automatically know to pass your ``TaskType`` an instance of the
+``IssueToNumberTransformer`` thanks to :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`.
+Otherwise, :ref:`register the form class as a service <service-container-creating-service>`
+and :doc:`tag it </service_container/tags>` with the ``form.type`` tag.
 
 Now, you can use your ``TaskType``::
 
@@ -308,7 +346,7 @@ Now, you can use your ``TaskType``::
     // ...
 
 Cool, you're done! Your user will be able to enter an issue number into the
-text field and it will be transformed back into an Issue object. This means
+text field, which will be transformed back into an Issue object. This means
 that, after a successful submission, the Form component will pass a real
 ``Issue`` object to ``Task::setIssue()`` instead of the issue number.
 

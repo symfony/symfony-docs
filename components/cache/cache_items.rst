@@ -42,7 +42,7 @@ pool::
     // $cache pool object was created before
     $productsCount = $cache->getItem('stats.products_count');
 
-Then, use the ``Psr\\Cache\\CacheItemInterface::set`` method to set the data stored
+Then, use the ``Psr\Cache\CacheItemInterface::set`` method to set the data stored
 in the cache item (this step is done automatically when using the Cache Contracts)::
 
     // storing a simple integer
@@ -67,7 +67,7 @@ corresponding *getter* methods::
 Cache Item Expiration
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default cache items are stored permanently. In practice, this "permanent
+By default, cache items are stored permanently. In practice, this "permanent
 storage" can vary greatly depending on the type of cache being used, as
 explained in the :doc:`/components/cache/cache_pools` article.
 

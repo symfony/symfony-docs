@@ -124,7 +124,7 @@ Throughout this article, template examples will be shown in both Twig and PHP.
     Twig templates are meant to be simple and won't process PHP tags. This
     is by design: the Twig template system is meant to express presentation,
     not program logic. The more you use Twig, the more you'll appreciate
-    and benefit from this distinction. And of course, you'll be loved by
+    and benefit from this distinction. And you'll be loved by
     web designers everywhere.
 
     Twig can also do things that PHP can't, such as whitespace control,
@@ -747,8 +747,8 @@ template.
 
 You can also include assets located in your bundles' ``Resources/public/`` folder.
 You will need to run the ``php bin/console assets:install target [--symlink]``
-command, which copies (or symlinks) files into the correct location. (target
-is by default the "public/" directory of your application).
+command, which copies (or symlinks) files into the correct location. (By default,
+the target is the ``public/`` directory of your application.)
 
 .. code-block:: html+twig
 

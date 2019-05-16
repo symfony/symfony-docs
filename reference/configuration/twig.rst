@@ -56,7 +56,7 @@ Configuration
 auto_reload
 ~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If ``true``, whenever a template is rendered, Symfony checks first if its source
 code has changed since it was compiled. If it has changed, the template is
@@ -112,7 +112,7 @@ called to determine the default escaping applied to the template.
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'Twig\\Template'``
+**type**: ``string`` **default**: ``'Twig\Template'``
 
 Twig templates are compiled into PHP classes before using them to render
 contents. This option defines the base class from which all the template classes
@@ -176,7 +176,7 @@ specific timezone is passed as argument.
 debug
 ~~~~~
 
-**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If ``true``, the compiled templates include a ``__toString()`` method that can
 be used to display their nodes.
@@ -300,6 +300,8 @@ By default, this option is ``-1``, which means that all optimizations are turned
 on. Set it to ``0`` to disable all the optimizations. You can even enable or
 disable these optimizations selectively, as explained in the Twig documentation
 about `the optimizer extension`_.
+
+.. _config-twig-default-path:
 
 default_path
 ~~~~~~~~~~~~

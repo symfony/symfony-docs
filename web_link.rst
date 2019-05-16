@@ -55,13 +55,14 @@ To do that, first install the WebLink component:
     $ composer require symfony/web-link
 
 Now, update the template to use the ``preload()`` Twig function provided by
-WebLink:
+WebLink. The `"as" attribute`_ is mandatory because browsers need it to apply
+correct prioritization and the content security policy:
 
 .. code-block:: html+twig
 
     <head>
         <!-- ... -->
-        <link rel="stylesheet" href="{{ preload('/app.css') }}">
+        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style' }) }}">
     </head>
 
 If you reload the page, the perceived performance will improve because the
@@ -75,21 +76,15 @@ the priority of the resource to download using the ``importance`` attribute:
 
     <head>
         <!-- ... -->
-        <link rel="stylesheet" href="{{ preload('/app.css', { importance: 'low' }) }}">
+        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style', importance: 'low' }) }}">
     </head>
-
-.. tip::
-
-    Google Chrome provides an interface to debug HTTP/2 connections. Browse
-    ``chrome://net-internals/#http2`` to see all the details.
 
 How does it work?
 ~~~~~~~~~~~~~~~~~
 
 The WebLink component manages the ``Link`` HTTP headers added to the response.
 When using the ``preload()`` function in the previous example, the following
-header was added to the response: ``Link </app.css>; rel="preload"``
-
+header was added to the response: ``Link </app.css>; rel="preload"; as="style"``
 According to `the Preload specification`_, when an HTTP/2 server detects that
 the original (HTTP 1.x) response contains this HTTP header, it will
 automatically trigger a push for the related file in the same HTTP/2 connection.
@@ -105,7 +100,7 @@ issuing an early separate HTTP request, use the ``nopush`` option:
 
     <head>
         <!-- ... -->
-        <link rel="stylesheet" href="{{ preload('/app.css', { nopush: true }) }}">
+        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
     </head>
 
 Resource Hints
@@ -139,7 +134,7 @@ any link implementing the `PSR-13`_ standard. For instance, any
     <head>
         <!-- ... -->
         <link rel="alternate" href="{{ link('/index.jsonld', 'alternate') }}">
-        <link rel="stylesheet" href="{{ preload('/app.css', { nopush: true }) }}">
+        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
     </head>
 
 The previous snippet will result in this HTTP header being sent to the client:
@@ -164,7 +159,7 @@ You can also add links to the HTTP response directly from controllers and servic
 
             // alternative if you don't want to use the addLink() shortcut
             $linkProvider = $request->attributes->get('_links', new GenericLinkProvider());
-            $request->attributes->set('_links', $linkProvider->withLink(new Link('preload', '/app.css')));
+            $request->attributes->set('_links', $linkProvider->withLink(new Link('preload', '/app.css', ['as' : 'style'])));
 
             return $this->render('...');
         }
@@ -179,6 +174,7 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
 .. _`preload`: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
+.. _`"as" attribute`: https://w3c.github.io/preload/#as-attribute
 .. _`the Priority Hints specification`: https://wicg.github.io/priority-hints/
 .. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-(http/2)
 .. _`Cloudflare`: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
@@ -186,4 +182,4 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`Akamai`: https://blogs.akamai.com/2017/03/http2-server-push-the-what-how-and-why.html
 .. _`this great article`: https://www.shimmercat.com/en/blog/articles/whats-push/
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
-.. _`PSR-13`: http://www.php-fig.org/psr/psr-13/
+.. _`PSR-13`: https://www.php-fig.org/psr/psr-13/

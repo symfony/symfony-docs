@@ -24,16 +24,16 @@ an **event bus**. The event bus could have zero or more subscribers.
         framework:
             messenger:
                 # The bus that is going to be injected when injecting MessageBusInterface
-                default_bus: messenger.bus.commands
+                default_bus: command.bus
                 buses:
-                    messenger.bus.commands:
+                    command.bus:
                         middleware:
                             - validation
                             - doctrine_transaction
-                    messenger.bus.queries:
+                    query.bus:
                         middleware:
                             - validation
-                    messenger.bus.events:
+                    event.bus:
                         default_middleware: allow_no_handlers
                         middleware:
                             - validation
@@ -52,15 +52,15 @@ an **event bus**. The event bus could have zero or more subscribers.
 
             <framework:config>
                 <!-- The bus that is going to be injected when injecting MessageBusInterface -->
-                <framework:messenger default-bus="messenger.bus.commands">
-                    <framework:bus name="messenger.bus.commands">
+                <framework:messenger default-bus="command.bus">
+                    <framework:bus name="command.bus">
                         <framework:middleware id="validation"/>
                         <framework:middleware id="doctrine_transaction"/>
                     <framework:bus>
-                    <framework:bus name="messenger.bus.queries">
+                    <framework:bus name="query.bus">
                         <framework:middleware id="validation"/>
                     <framework:bus>
-                    <framework:bus name="messenger.bus.events" default-middleware="allow_no_handlers">
+                    <framework:bus name="event.bus" default-middleware="allow_no_handlers">
                         <framework:middleware id="validation"/>
                     <framework:bus>
                 </framework:messenger>
@@ -73,20 +73,20 @@ an **event bus**. The event bus could have zero or more subscribers.
         $container->loadFromExtension('framework', [
             'messenger' => [
                 // The bus that is going to be injected when injecting MessageBusInterface
-                'default_bus' => 'messenger.bus.commands',
+                'default_bus' => 'command.bus',
                 'buses' => [
-                    'messenger.bus.commands' => [
+                    'command.bus' => [
                         'middleware' => [
                             'validation',
                             'doctrine_transaction',
                         ],
                     ],
-                    'messenger.bus.queries' => [
+                    'query.bus' => [
                         'middleware' => [
                             'validation',
                         ],
                     ],
-                    'messenger.bus.events' => [
+                    'event.bus' => [
                         'default_middleware' => 'allow_no_handlers',
                         'middleware' => [
                             'validation',
@@ -96,58 +96,14 @@ an **event bus**. The event bus could have zero or more subscribers.
             ],
         ]);
 
-This will generate the ``messenger.bus.commands``, ``messenger.bus.queries``
-and ``messenger.bus.events`` services that you can inject in your services.
+This will create three new services:
 
-Type-hints and Auto-wiring
---------------------------
+* ``command.bus``: autowireable with the :class:`Symfony\\Component\\Messenger\\MessageBusInterface`
+  type-hint (because this is the ``default_bus``);
 
-Auto-wiring is a great feature that allows you to reduce the amount of configuration
-required for your service container to be created. By using ``MessageBusInterface``
-as argument type-hint in your services, the default configured bus will be injected
-(i.e ``messenger.bus.commands`` in above examples).
+* ``query.bus``: autowireable with ``MessageBusInterface $queryBus``;
 
-When working with multiple buses, you can use the ``DependencyInjection`` component's
-binding capabilities to clarify which bus will be injected based on the argument's name:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            _defaults:
-                # ...
-
-                bind:
-                    $commandBus: '@messenger.bus.commands'
-                    $queryBus: '@messenger.bus.queries'
-                    $eventBus: '@messenger.bus.events'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults>
-                   <bind key="$commandBus" type="service" id="messenger.bus.commands"/>
-                   <bind key="$queryBus" type="service" id="messenger.bus.queries"/>
-                   <bind key="$eventBus" type="service" id="messenger.bus.events"/>
-                </defaults>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        $container->bind('$commandBus', 'messenger.bus.commands');
-        $container->bind('$queryBus', 'messenger.bus.queries');
-        $container->bind('$eventBus', 'messenger.bus.events');
+* ``event.bus``: autowireable with ``MessageBusInterface $eventBus``.
 
 Restrict Handlers per Bus
 -------------------------
@@ -163,7 +119,10 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
         # config/services.yaml
         services:
             App\MessageHandler\SomeCommandHandler:
-                tags: [{ name: messenger.message_handler, bus: messenger.bus.commands }]
+                tags: [{ name: messenger.message_handler, bus: command.bus }]
+                # prevent handlers from being registered twice (or you can remove
+                # the MessageHandlerInterface that autoconfigure uses to find handlers)
+                autoconfigure: false
 
     .. code-block:: xml
 
@@ -176,7 +135,7 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
 
             <services>
                 <service id="App\MessageHandler\SomeCommandHandler">
-                    <tag name="messenger.message_handler" bus="messenger.bus.commands"/>
+                    <tag name="messenger.message_handler" bus="command.bus"/>
                 </service>
             </services>
         </container>
@@ -186,10 +145,10 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
         // config/services.php
         $container->services()
             ->set(App\MessageHandler\SomeCommandHandler::class)
-            ->tag('messenger.message_handler', ['bus' => 'messenger.bus.commands']);
+            ->tag('messenger.message_handler', ['bus' => 'command.bus']);
 
 This way, the ``App\MessageHandler\SomeCommandHandler`` handler will only be
-known by the ``messenger.bus.commands`` bus.
+known by the ``command.bus`` bus.
 
 You can also automatically add this tag to a number of classes by following
 a naming convention and registering all of the handler services by name with
@@ -201,18 +160,20 @@ the correct tag:
 
         # config/services.yaml
 
-        # put this after the `App\` line that registers all your services
+        # put this after the "App\" line that registers all your services
         command_handlers:
             namespace: App\MessageHandler\
             resource: '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php'
+            autoconfigure: false
             tags:
-                - { name: messenger.message_handler, bus: messenger.bus.commands }
+                - { name: messenger.message_handler, bus: command.bus }
 
         query_handlers:
             namespace: App\MessageHandler\
             resource: '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php'
+            autoconfigure: false
             tags:
-                - { name: messenger.message_handler, bus: messenger.bus.queries }
+                - { name: messenger.message_handler, bus: query.bus }
 
     .. code-block:: xml
 
@@ -225,12 +186,12 @@ the correct tag:
 
             <services>
                 <!-- command handlers -->
-                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php">
-                    <tag name="messenger.message_handler" bus="messenger.bus.commands"/>
+                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php" autoconfigure="false">
+                    <tag name="messenger.message_handler" bus="command.bus"/>
                 </service>
                 <!-- query handlers -->
-                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php">
-                    <tag name="messenger.message_handler" bus="messenger.bus.queries"/>
+                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php" autoconfigure="false">
+                    <tag name="messenger.message_handler" bus="query.bus"/>
                 </service>
             </services>
         </container>
@@ -242,12 +203,14 @@ the correct tag:
         // Command handlers
         $container->services()
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php')
-            ->tag('messenger.message_handler', ['bus' => 'messenger.bus.commands']);
+            ->autoconfigure(false)
+            ->tag('messenger.message_handler', ['bus' => 'command.bus']);
 
         // Query handlers
         $container->services()
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php')
-            ->tag('messenger.message_handler', ['bus' => 'messenger.bus.queries']);
+            ->autoconfigure(false)
+            ->tag('messenger.message_handler', ['bus' => 'query.bus']);
 
 Debugging the Buses
 -------------------
@@ -262,8 +225,8 @@ You can also restrict the list to a specific bus by providing its name as argume
       Messenger
       =========
 
-      messenger.bus.commands
-      ----------------------
+      command.bus
+      -----------
 
        The following messages can be dispatched:
 
@@ -274,8 +237,8 @@ You can also restrict the list to a specific bus by providing its name as argume
             handled by App\MessageHandler\MultipleBusesMessageHandler
        ---------------------------------------------------------------------------------------
 
-      messenger.bus.queries
-      ---------------------
+      query.bus
+      ---------
 
        The following messages can be dispatched:
 

@@ -94,7 +94,7 @@ The generated PHP classes now have properties and annotation metadata, but they
 do *not* have any getter or setter methods. If you generated XML or YAML metadata,
 you don't even have the PHP classes!
 
-To generate the missing getter/setter methods (or to *create* the classes if neceesary),
+To generate the missing getter/setter methods (or to *create* the classes if necessary),
 run:
 
 .. code-block:: terminal
@@ -111,5 +111,4 @@ run:
 
 The generated entities are now ready to be used. Have fun!
 
-.. _`Doctrine tools documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/tools.html#reverse-engineering
-.. _`doctrine/doctrine#729`: https://github.com/doctrine/DoctrineBundle/issues/729
+.. _`Doctrine tools documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/tools.html#reverse-engineering

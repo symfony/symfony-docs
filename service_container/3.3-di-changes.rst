@@ -373,12 +373,12 @@ create the class::
     // ...
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
 
     class SetHeaderSusbcriber implements EventSubscriberInterface
     {
-        public function onKernelResponse(FilterResponseEvent $event)
+        public function onKernelResponse(ResponseEvent $event)
         {
             $event->getResponse()->headers->set('X-SYMFONY-3.3', 'Less config');
         }
@@ -403,8 +403,8 @@ In this case, you've created a class that implements ``EventSubscriberInterface`
 and registered it as a service. This is more than enough for the container to know
 that you want this to be used as an event subscriber: more configuration is not needed.
 And the tags system is its own, Symfony-specific mechanism. And you can
-always set ``autoconfigure`` to ``false`` in ``services.yaml``, or disable it for a specific
-service.
+always set ``autoconfigure`` to ``false`` in ``services.yaml``, or disable it
+for a specific service.
 
     Does this mean tags are dead? Does this work for all tags?
 

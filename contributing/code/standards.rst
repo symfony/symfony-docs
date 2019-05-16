@@ -209,7 +209,7 @@ Naming Conventions
 
 * Prefix all abstract classes with ``Abstract`` except PHPUnit ``*TestCase``.
   Please note some early Symfony classes do not follow this convention and
-  have not been renamed for backward compatibility reasons. However all new
+  have not been renamed for backward compatibility reasons. However, all new
   abstract classes must follow this naming convention;
 
 * Suffix interfaces with ``Interface``;
@@ -268,7 +268,7 @@ Documentation
 * When adding a new class or when making significant changes to an existing class,
   an ``@author`` tag with personal contact information may be added, or expanded.
   Please note it is possible to have the personal contact information updated or
-  removed per request to the doc:`core team </contributing/code/core_team>`.
+  removed per request to the :doc:`core team </contributing/code/core_team>`.
 
 License
 ~~~~~~~

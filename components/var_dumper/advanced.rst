@@ -188,7 +188,7 @@ method to use a light theme::
 
 The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` limits string
 length and nesting depth of the output to make it more readable. These options
-can be overriden by the third optional parameter of the
+can be overridden by the third optional parameter of the
 :method:`dump(Data $data) <Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface::dump>`
 method::
 
@@ -259,7 +259,7 @@ similar to PHP's short array notation::
     // ]
 
 If you would like to use both options, then you can combine them by
-using a the logical OR operator ``|``::
+using the logical OR operator ``|``::
 
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;

@@ -19,7 +19,7 @@ method::
         {
             // dispatch an event before the method
             $event = new BeforeSendMailEvent($subject, $message);
-            $this->dispatcher->dispatch('mailer.pre_send', $event);
+            $this->dispatcher->dispatch($event, 'mailer.pre_send');
 
             // get $foo and $bar from the event, they may have been modified
             $subject = $event->getSubject();
@@ -30,7 +30,7 @@ method::
 
             // do something after the method
             $event = new AfterSendMailEvent($returnValue);
-            $this->dispatcher->dispatch('mailer.post_send', $event);
+            $this->dispatcher->dispatch($event, 'mailer.post_send');
 
             return $event->getReturnValue();
         }
@@ -44,7 +44,7 @@ events. For example, ``BeforeSendMailEvent`` might look like this::
     // src/Event/BeforeSendMailEvent.php
     namespace App\Event;
 
-    use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Contracts\EventDispatcher\Event;
 
     class BeforeSendMailEvent extends Event
     {
@@ -83,7 +83,7 @@ And the ``AfterSendMailEvent`` even like this::
     // src/Event/AfterSendMailEvent.php
     namespace App\Event;
 
-    use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Contracts\EventDispatcher\Event;
 
     class AfterSendMailEvent extends Event
     {

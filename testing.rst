@@ -259,7 +259,7 @@ some form values and submit the corresponding form::
     of form fields (e.g. ``select()`` and ``tick()``). For details, see the
     `Forms`_ section below.
 
-Now that you can easily navigate through an application, use assertions to test
+Now that you can navigate through an application, use assertions to test
 that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM::
 
@@ -480,7 +480,7 @@ or perform more complex requests. Some useful examples::
     );
 
 Last but not least, you can force each request to be executed in its own PHP
-process to avoid any side-effects when working with several clients in the same
+process to avoid any side effects when working with several clients in the same
 script::
 
     $client->insulate();
@@ -669,7 +669,7 @@ narrow down your node selection by chaining the method calls::
     $crawler
         ->filter('h1')
         ->reduce(function ($node, $i) {
-            if (!$node->getAttribute('class')) {
+            if (!$node->attr('class')) {
                 return false;
             }
         })
@@ -716,7 +716,7 @@ given text (or the first clickable image with that ``alt`` attribute)::
 
 If you need access to the :class:`Symfony\\Component\\DomCrawler\\Link` object
 that provides helpful methods specific to links (such as ``getMethod()`` and
-``getUri()``), use the ``selectLink()`` method instead:
+``getUri()``), use the ``selectLink()`` method instead::
 
     $client = static::createClient();
     $crawler = $client->request('GET', '/post/hello-world');

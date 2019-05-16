@@ -8,8 +8,8 @@ Unit testing Doctrine repositories in a Symfony project is not recommended.
 When you're dealing with a repository, you're really dealing with something
 that's meant to be tested against a real database connection.
 
-Fortunately, you can easily test your queries against a real database, as
-described below.
+Fortunately, you can test your queries against a real database, as described
+below.
 
 Functional Testing
 ------------------

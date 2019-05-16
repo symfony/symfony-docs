@@ -381,7 +381,7 @@ Providing an XML Schema
 
 XML has a very useful feature called `XML schema`_. This allows you to
 describe all possible elements and attributes and their values in an XML Schema
-Definition (an xsd file). This XSD file is used by IDEs for auto completion and
+Definition (an XSD file). This XSD file is used by IDEs for auto completion and
 it is used by the Config component to validate the elements.
 
 In order to use the schema, the XML configuration file must provide an

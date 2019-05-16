@@ -135,7 +135,7 @@ Files and Directories
 * When referencing file extensions explicitly, you should include a leading dot
   for every extension (e.g. "XML files use the ``.xml`` extension").
 * When you list a Symfony file/directory hierarchy, use ``your-project/`` as the
-  top level directory. E.g.
+  top-level directory. E.g.
 
   .. code-block:: text
 
@@ -172,6 +172,24 @@ In addition, documentation follows these rules:
   * his or her, use their
   * his or hers, use theirs
   * himself or herself, use themselves
+
+* **Avoid belittling words**: People read documentation because they know very
+  little about a specific topic or are even completely new to it. Things that
+  seem "obvious" or "simple" for the person documenting it, can be the exact
+  opposite for the reader. To make sure everybody feels comfortable when reading
+  the documentation, try to avoid words like:
+
+  * basically
+  * clearly
+  * easy/easily
+  * just
+  * logically
+  * merely
+  * obviously
+  * of course
+  * quick/quickly
+  * simply
+  * trivial
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: https://twig.symfony.com/doc/2.x/coding_standards.html

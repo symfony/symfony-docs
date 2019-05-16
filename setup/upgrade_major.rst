@@ -37,7 +37,7 @@ using these deprecated features in the last version before the major (e.g.
 
 To help you with this, deprecation notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
-:doc:`dev environment </configuration/environments>`
+:ref:`dev environment <configuration-environments>`
 in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /_images/install/deprecations-in-profiler.png
@@ -97,9 +97,9 @@ done!
 
     Sometimes, you can't fix all deprecations (e.g. something was deprecated
     in 3.4 and you still need to support 3.3). In these cases, you can still
-    use the bridge to fix as many deprecations as possible and then switch
-    to the weak test mode to make your tests pass again. You can do this by
-    using the ``SYMFONY_DEPRECATIONS_HELPER`` env variable:
+    use the bridge to fix as many deprecations as possible and then allow
+    more of them to make your tests pass again. You can do this by using the
+    ``SYMFONY_DEPRECATIONS_HELPER`` env variable:
 
     .. code-block:: xml
 
@@ -108,11 +108,15 @@ done!
             <!-- ... -->
 
             <php>
-                <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+                <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[total]=999999"/>
             </php>
         </phpunit>
 
-    (you can also execute the command like ``SYMFONY_DEPRECATIONS_HELPER=weak phpunit``).
+    You can also execute the command like:
+
+    .. code-block:: terminal
+
+        $ SYMFONY_DEPRECATIONS_HELPER=max[total]=999999 php ./bin/phpunit
 
 .. _upgrade-major-symfony-composer:
 

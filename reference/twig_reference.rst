@@ -175,7 +175,8 @@ is_granted
 
 Returns ``true`` if the current user has the given role. If several roles are
 passed in an array, ``true`` is returned if the user has at least one of
-them.
+them or all of them, depending on the
+:ref:`Access Decision Manager strategy <security-access-control-enforcement-options>`.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
@@ -358,6 +359,12 @@ Translates the text into the current language. More information in
 
 transchoice
 ~~~~~~~~~~~
+
+.. deprecated:: 4.2
+
+   The ``transchoice`` filter is deprecated since Symfony 4.2 and will be
+   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
+   the ``trans`` filter instead.
 
 .. code-block:: twig
 
@@ -587,6 +594,12 @@ Renders the translation of the content. More information in :ref:`translation-ta
 
 transchoice
 ~~~~~~~~~~~
+
+.. deprecated:: 4.2
+
+   The ``transchoice`` tag is deprecated since Symfony 4.2 and will be
+   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
+   the ``trans`` tag instead.
 
 .. code-block:: twig
 
