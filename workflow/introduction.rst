@@ -79,7 +79,7 @@ Below is the configuration for the pull request state machine.
                     type: 'state_machine'
                     supports:
                         - App\Entity\PullRequest
-                    initial_place: start
+                    initial_marking: start
                     places:
                         - start
                         - coding

@@ -54,12 +54,12 @@ like this:
                     audit_trail:
                         enabled: true
                     marking_store:
-                        type: 'multiple_state' # or 'single_state'
-                        arguments:
+                        type: 'method'
+                        property:
                             - 'currentPlace'
                     supports:
                         - App\Entity\BlogPost
-                    initial_place: draft
+                    initial_marking: draft
                     places:
                         - draft
                         - reviewed
@@ -134,8 +134,8 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'multiple_state', // or 'single_state'
-                        'arguments' => ['currentPlace']
+                        'type' => 'method'
+                        'property' => ['currentPlace']
                     ],
                     'supports' => ['App\Entity\BlogPost'],
                     'places' => [
@@ -176,18 +176,6 @@ As configured, the following property is used by the marking store::
         public $title;
         public $content;
     }
-
-.. note::
-
-    The marking store type could be "multiple_state" or "single_state". A single
-    state marking store does not support a model being on multiple places at the
-    same time.
-
-.. tip::
-
-    The ``type`` (default value ``single_state``) and ``arguments`` (default
-    value ``marking``) attributes of the ``marking_store`` option are optional.
-    If omitted, their default values will be used.
 
 .. tip::
 
