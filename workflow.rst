@@ -182,7 +182,7 @@ what actions are allowed on a blog post::
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Exception\LogicException;
 
-    $post = BlogPost();
+    $post = new BlogPost();
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
@@ -664,6 +664,7 @@ Then you can access this metadata in your controller as follows::
 
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
+    use App\Entity\BlogPost;
 
     public function myController(Registry $registry, BlogPost $post)
     {
