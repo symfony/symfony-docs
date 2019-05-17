@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by Simperfit at 2019-05-13T08:35:28Z
+
+see  https://github.com/symfony/symfony/pull/31217 too
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-13T12:08:02Z
+
+I am not sure that replacing the php built in webserver is the right decision. 👍 for promoting the Symfony Local Web Server more, but maybe we should show both options like we do for the different config formats (YAML, XML, PHP).
+
+Ok there is a bug right now which prevents using PHP 7.3, but this should be fixed shortly (hopefully) and other libs could have bugs, too. Removing it completely should not be the first step.
+
+Another point to me is, that Symfony is open (recommend only a Symfony tool for this could lead to the meaning that it gets more and more "closed") and usable with the PHP built in webserver and works for a lot of people using PHP < 7.3.
+
+I would not hesitate to merge this PR and go this direction, but would like to hear some other comments first.
+
+@javiereguiluz what do you think of showing both options side by side?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-05-17T10:39:30Z
+
+Whenever you show something side by side in the docs, you have to explain when to choose one over the other. I can't think of a reason to show the build-in PHP server?
+
+I'm :+1: on using the Symfony local server here, it's designed specially for the cases where you're developing a Symfony app locally and don't have any nginx/apache installed.
