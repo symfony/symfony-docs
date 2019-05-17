@@ -101,14 +101,13 @@ start with the simplest web application we can think of in PHP::
 
     printf('Hello %s', $name);
 
-You can use the PHP built-in server to test this great application in a browser
-(``http://localhost:4321/index.php?name=Fabien``):
+You can use the :doc:`Symfony Local Web Server </setup/symfony_server>` to test
+this great application in a browser
+(``http://localhost:8000/index.php?name=Fabien``):
 
 .. code-block:: terminal
 
-    $ php -S 127.0.0.1:4321
-
-Otherwise, you can always use your own server (Apache, Nginx, etc.).
+    $ symfony server:start
 
 In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
 introduce the HttpFoundation Component and see what it brings us.
