@@ -76,16 +76,19 @@ are trying to use it with::
 Usage
 -----
 
-When you have configured a ``Registry`` with your workflows, you may use it as follows::
+When you have configured a ``Registry`` with your workflows,
+you can retreive a workflow from it and use it as follows::
 
     // ...
+    // Consider that $post is in state "draft" by default
     $post = new BlogPost();
     $workflow = $registry->get($post);
 
     $workflow->can($post, 'publish'); // False
     $workflow->can($post, 'to_review'); // True
 
-    $workflow->apply($post, 'to_review');
+    $workflow->apply($post, 'to_review'); // $post is now in state "review"
+
     $workflow->can($post, 'publish'); // True
     $workflow->getEnabledTransitions($post); // ['publish', 'reject']
 
