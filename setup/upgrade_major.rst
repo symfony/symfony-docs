@@ -116,7 +116,7 @@ done!
 
     .. code-block:: terminal
 
-        $ SYMFONY_DEPRECATIONS_HELPER=max[total]=999999 phpunit
+        $ SYMFONY_DEPRECATIONS_HELPER=max[total]=999999 php ./bin/phpunit
 
 .. _upgrade-major-symfony-composer:
 
