@@ -626,7 +626,7 @@ narrow down your node selection by chaining the method calls::
     $crawler
         ->filter('h1')
         ->reduce(function ($node, $i) {
-            if (!$node->getAttribute('class')) {
+            if (!$node->attr('class')) {
                 return false;
             }
         })
