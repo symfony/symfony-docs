@@ -257,6 +257,7 @@ Configuration
     * `audit_trail`_
     * `initial_marking`_
     * `marking_store`_
+    * `metadata`_
     * `places`_
     * `supports`_
     * `support_strategy`_
@@ -2754,6 +2755,15 @@ Each marking store can define any of these options:
 * ``arguments`` (**type**: ``array``)
 * ``service`` (**type**: ``string``)
 * ``type`` (**type**: ``string`` **allow value**: ``'method'``)
+
+metadata
+""""""""
+
+**type**: ``array``
+
+Metadata available for the workflow configuration.
+Note that ``places`` and ``transitions`` can also have their own
+``metadata`` entry.
 
 places
 """"""
