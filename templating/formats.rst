@@ -4,9 +4,9 @@
 How to Work with Different Output Formats in Templates
 ======================================================
 
-Templates are a generic way to render content in *any* format. While in
-most cases you'll use templates to render HTML content, a template can just
-as easily generate JavaScript, CSS, XML or any other format you can dream of.
+Templates are a generic way to render content in *any* format. While in most
+cases you'll use templates to render HTML content, a template can generate
+JavaScript, CSS, XML or any other format you can dream of.
 
 For example, the same "resource" is often rendered in several formats.
 To render an article index page in XML, simply include the format in the

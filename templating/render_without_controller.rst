@@ -53,7 +53,7 @@ can do this without creating a controller:
 The ``FrameworkBundle:Template:template`` controller will simply render whatever
 template you've passed as the ``template`` default value.
 
-You can of course also use this trick when rendering embedded controllers
+You can also use this trick when rendering embedded controllers
 from within a template. But since the purpose of rendering a controller from
 within a template is typically to prepare some data in a custom controller,
 this is probably only useful if you'd like to cache this page partial (see

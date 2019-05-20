@@ -111,8 +111,8 @@ information. By convention, this information is usually configured in an
             ]);
 
     By separating the database information into a separate file, you can
-    easily keep different versions of the file on each server. You can also
-    easily store database configuration (or any sensitive information) outside
+    keep different versions of the file on each server. You can also
+    store database configuration (or any sensitive information) outside
     of your project, like inside your Apache configuration, for example. For
     more information, see :doc:`/configuration/external_parameters`.
 
@@ -476,10 +476,10 @@ Creating the Database Tables/Schema
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You now have a usable ``Product`` class with mapping information so that
-Doctrine knows exactly how to persist it. Of course, you don't yet have the
-corresponding ``product`` table in your database. Fortunately, Doctrine can
-automatically create all the database tables needed for every known entity
-in your application. To do this, run:
+Doctrine knows exactly how to persist it. You don't yet have the corresponding
+``product`` table in your database. Fortunately, Doctrine can automatically
+create all the database tables needed for every known entity in your
+application. To do this, run:
 
 .. code-block:: terminal
 
@@ -662,11 +662,11 @@ Once you have a repository object, you can access all sorts of helpful methods::
 
 .. note::
 
-    Of course, you can also issue complex queries, which you'll learn more
+    You can also issue complex queries, which you'll learn more
     about in the :ref:`doctrine-queries` section.
 
 You can also take advantage of the useful ``findBy()`` and ``findOneBy()`` methods
-to easily fetch objects based on multiple conditions::
+to fetch objects based on multiple conditions::
 
     $repository = $this->getDoctrine()->getRepository(Product::class);
 
@@ -759,10 +759,10 @@ without any work::
     $product = $repository->find($productId);
     $product = $repository->findOneByName('Keyboard');
 
-Of course, Doctrine also allows you to write more complex queries using the
-Doctrine Query Language (DQL). DQL is similar to SQL except that you should
-imagine that you're querying for one or more objects of an entity class (e.g. ``Product``)
-instead of querying for rows on a table (e.g. ``product``).
+Doctrine also allows you to write more complex queries using the Doctrine Query
+Language (DQL). DQL is similar to SQL except that you should imagine that you're
+querying for one or more objects of an entity class (e.g. ``Product``) instead
+of querying for rows on a table (e.g. ``product``).
 
 When querying in Doctrine, you have two main options: writing pure DQL queries
 or using Doctrine's Query Builder.
@@ -800,7 +800,7 @@ result, you can use ``getOneOrNullResult()``::
 
     $product = $query->setMaxResults(1)->getOneOrNullResult();
 
-The DQL syntax is incredibly powerful, allowing you to easily join between
+The DQL syntax is incredibly powerful, allowing you to join between
 entities (the topic of :doc:`relations </doctrine/associations>` will be
 covered later), group, etc. For more information, see the official
 `Doctrine Query Language`_ documentation.

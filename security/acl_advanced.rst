@@ -23,7 +23,7 @@ objectives:
 
 - providing a way to efficiently retrieve a large amount of ACLs/ACEs for your
   domain objects, and to modify them;
-- providing a way to easily make decisions of whether a person is allowed to
+- providing a way to make decisions of whether a person is allowed to
   perform an action on a domain object or not.
 
 As indicated by the first point, one of the main capabilities of Symfony's

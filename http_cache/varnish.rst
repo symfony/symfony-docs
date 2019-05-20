@@ -5,7 +5,7 @@ How to Use Varnish to Speed up my Website
 =========================================
 
 Because Symfony's cache uses the standard HTTP cache headers, the
-:ref:`symfony-gateway-cache` can easily be replaced with any other reverse
+:ref:`symfony-gateway-cache` can be replaced with any other reverse
 proxy. `Varnish`_ is a powerful, open-source, HTTP accelerator capable of serving
 cached content fast and including support for :doc:`Edge Side Includes </http_cache/esi>`.
 

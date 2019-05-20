@@ -63,7 +63,7 @@ going to need to build a form. But before you begin, first focus on the generic
 This class is a "plain-old-PHP-object" because, so far, it has nothing
 to do with Symfony or any other library. It's a normal PHP object that
 directly solves a problem inside *your* application (i.e. the need to
-represent a task in your application). Of course, by the end of this article,
+represent a task in your application). By the end of this article,
 you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
 its data and persist it to the database.
 
@@ -682,7 +682,7 @@ choice is ultimately up to you.
         use AppBundle\Form\TaskType;
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-        class DefaultController extends AbstractController 
+        class DefaultController extends AbstractController
         {
             public function newAction()
             {

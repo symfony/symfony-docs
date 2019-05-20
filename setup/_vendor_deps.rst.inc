@@ -52,7 +52,7 @@ script to ensure that all of the needed vendor libraries are downloaded.
     upgrading Symfony means simply upgrading each of these files to match
     their state in the latest Symfony Standard Edition.
 
-    Of course, if you've added new entries to ``composer.json``, be sure
+    If you've added new entries to ``composer.json``, be sure
     to replace only the original parts (i.e. be sure not to also delete any of
     your custom entries).
 

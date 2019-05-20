@@ -305,7 +305,7 @@ you more about those.
 Using Template Helpers
 ----------------------
 
-The Symfony templating system can be easily extended via helpers. Helpers are
+The Symfony templating system can be extended via helpers. Helpers are
 PHP objects that provide features useful in a template context. ``actions`` and
 ``slots`` are two of the built-in Symfony helpers.
 
@@ -314,7 +314,7 @@ Creating Links between Pages
 
 Speaking of web applications, creating links between pages is a must. Instead
 of hardcoding URLs in templates, the ``router`` helper knows how to generate
-URLs based on the routing configuration. That way, all your URLs can be easily
+URLs based on the routing configuration. That way, all your URLs can be
 updated by changing the configuration:
 
 .. code-block:: html+php
@@ -339,7 +339,7 @@ Using Assets: Images, JavaScripts and Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 What would the Internet be without images, JavaScripts, and stylesheets?
-Symfony provides the ``assets`` tag to deal with them easily:
+Symfony provides the ``assets`` tag to deal with them:
 
 .. code-block:: html+php
 
