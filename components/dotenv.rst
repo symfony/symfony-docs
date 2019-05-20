@@ -88,11 +88,12 @@ defined in previously loaded files:
 #. If there's a ``.env.$env.local`` file, this one is loaded. Otherwise, it falls
    back to ``.env.$env``.
 
-This might look complicated at first glance but it gives you the opportunity to commit
-multiple environment-specific files that can then be adjusted to your local environment
-easily. Given you commit ``.env``, ``.env.test`` and ``.env.dev`` to represent different
-configuration settings for your environments, each of them can be adjusted by using
-``.env.local``, ``.env.test.local`` and ``.env.dev.local`` respectively.
+This might look complicated at first glance but it gives you the opportunity to
+commit multiple environment-specific files that can then be adjusted to your
+local environment. Given you commit ``.env``, ``.env.test`` and ``.env.dev`` to
+represent different configuration settings for your environments, each of them
+can be adjusted by using ``.env.local``, ``.env.test.local`` and
+``.env.dev.local`` respectively.
 
 .. note::
 

@@ -159,8 +159,8 @@ role::
 
 .. note::
 
-    When you make your own voter, you can use its constructor
-    to inject any dependencies it needs to come to a decision.
+    When you make your own voter, you can use its constructor to inject any
+    dependencies it needs to come to a decision.
 
 Roles
 -----

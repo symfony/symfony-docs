@@ -133,7 +133,7 @@ of *your* code that processes user input and prepares the response.
 
 In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
-easily change *just* the template file if you needed to render the blog
+change *just* the template file if you needed to render the blog
 entries in some other format (e.g. ``list.json.php`` for JSON format).
 
 Isolating the Application (Domain) Logic
@@ -243,9 +243,8 @@ the ``templates/layout.php``:
 You now have a setup that will allow you to reuse the layout.
 Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
-uses a :doc:`Templating </components/templating>` component
-that allows this to be accomplished cleanly and easily. You'll see it in
-action shortly.
+solves this using a :doc:`Templating </components/templating>` component.
+You'll see it in action shortly.
 
 Adding a Blog "show" Page
 -------------------------
@@ -307,7 +306,7 @@ Creating the second page now requires very little work and no code is duplicated
 this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid ``id`` query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
-but this can't really be done easily yet.
+but this can't really be done yet.
 
 Another major problem is that each individual controller file must include
 the ``model.php`` file. What if each controller file suddenly needed to include

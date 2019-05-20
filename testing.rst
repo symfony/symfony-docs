@@ -242,7 +242,7 @@ some form values and submit the corresponding form::
     of form fields (e.g. ``select()`` and ``tick()``). For details, see the
     `Forms`_ section below.
 
-Now that you can easily navigate through an application, use assertions to test
+Now that you can navigate through an application, use assertions to test
 that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM::
 

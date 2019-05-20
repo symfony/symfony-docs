@@ -633,8 +633,8 @@ of a role::
         // ...
     }
 
-You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like ``access_control``
-or in Twig.
+You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
+``access_control`` or in Twig.
 
 ``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
 user that has logged in will have this. Actually, there are 3 special attributes
