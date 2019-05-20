@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by BackEndTea at 2019-05-15T11:55:23Z
+
+I like the removals of the usages of 'obvious' and 'of course'.
+
+I'm not so sure about removing 'easily' everywhere. In some cases it is there to tell the user that something will in face be easier then the 'normal' way or the native php way.
+
+For example right here: https://github.com/symfony/symfony-docs/pull/11568/files#diff-3e14f8d0c6a18bdad98baec449d3285dR8
+The 'easily' part is what somewhat 'sells' the form component to the users.
+
+From what i can see most of the easily can indeed be removed, but there are a few, like the one i just mentioned where it may be kept. Or maybe another word can be used that is more fitting. What do you think?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-20T07:14:54Z
+
+@BackEndTea I've reviewed again all removals of "easily" and I still think we should remove all of them. For the "Form" component specially, I would never associate "easy" / "easily" with it (I would associate to it other positive words such as "powerful", "comprehensive", etc.).
