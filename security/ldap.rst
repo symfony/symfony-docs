@@ -102,7 +102,7 @@ An LDAP client can be simply configured using the built-in
         use Symfony\Component\Ldap\Ldap;
 
         $container->register(Ldap::class)
-            ->addArgument(new Reference(Adapter::class);
+            ->addArgument(new Reference(Adapter::class));
 
         $container
             ->register(Adapter::class)
