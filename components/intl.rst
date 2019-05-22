@@ -288,6 +288,7 @@ Learn more
     /reference/forms/types/currency
     /reference/forms/types/language
     /reference/forms/types/locale
+    /reference/forms/types/timezone
 
 .. _Packagist: https://packagist.org/packages/symfony/intl
 .. _Icu component: https://packagist.org/packages/symfony/icu
