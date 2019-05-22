@@ -13,7 +13,7 @@ several cached items, keeping them in sync can be difficult.
 The Symfony Cache component provides two mechanisms to help solving this problem:
 
 * :ref:`Tags-based invalidation <cache-component-tags>` for managing data dependencies;
-* :ref:`Expiration based invalidation <cache-component-expiration>` for time related dependencies.
+* :ref:`Expiration based invalidation <cache-component-expiration>` for time-related dependencies.
 
 .. _cache-component-tags:
 
@@ -25,28 +25,27 @@ each cached item. Each tag is a plain string identifier that you can use at any
 time to trigger the removal of all items associated with this tag.
 
 To attach tags to cached items, you need to use the
-:method:`Symfony\\Component\\Cache\\CacheItem::tag` method that is implemented by
-cache items, as returned by cache adapters::
+:method:`Symfony\\Contracts\\Cache\\ItemInterface::tag` method that is implemented by
+cache items::
 
-    $item = $cache->getItem('cache_key');
-    // ...
-    // add one or more tags
-    $item->tag('tag_1');
-    $item->tag(['tag_2', 'tag_3']);
-    $cache->save($item);
+    $item = $cache->get('cache_key', function (ItemInterface $item) {
+        // [...]
+        // add one or more tags
+        $item->tag('tag_1');
+        $item->tag(['tag_2', 'tag_3']);
 
-If ``$cache`` implements :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface`,
+        return $cachedValue;
+    });
+
+If ``$cache`` implements :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface`,
 you can invalidate the cached items by calling
-:method:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface::invalidateTags`::
+:method:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface::invalidateTags`::
 
     // invalidate all items related to `tag_1` or `tag_3`
     $cache->invalidateTags(['tag_1', 'tag_3']);
 
     // if you know the cache key, you can also delete the item directly
-    $cache->deleteItem('cache_key');
-
-    // If you don't remember the item key, you can use the getKey() method
-    $cache->deleteItem($item->getKey());
+    $cache->delete('cache_key');
 
 Using tags invalidation is very useful when tracking cache keys becomes difficult.
 
@@ -55,7 +54,7 @@ Tag Aware Adapters
 
 To store tags, you need to wrap a cache adapter with the
 :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter` class or implement
-:class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface` and its only
+:class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface` and its
 :method:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface::invalidateTags`
 method.
 
@@ -69,9 +68,9 @@ in the same place. By using two adapters, you can e.g. store some big cached ite
 on the filesystem or in the database and keep tags in a Redis database to sync all
 your fronts and have very fast invalidation checks::
 
-    use Symfony\Component\Cache\Adapter\TagAwareAdapter;
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\RedisAdapter;
+    use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 
     $cache = new TagAwareAdapter(
         // Adapter for cached items

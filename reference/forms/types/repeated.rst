@@ -43,8 +43,8 @@ Example Usage
 
 .. code-block:: php
 
-    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+    use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
     // ...
 
     $builder->add('password', RepeatedType::class, [

@@ -136,17 +136,17 @@ following directory structure, which is the same used by default in Symfony 4:
     your-project/
     ├── assets/
     ├── bin/
-    │   └── console
+    │   └── console
     ├── config/
-    │   ├── bundles.php
-    │   ├── packages/
-    │   ├── routes.yaml
-    │   └── services.yaml
+    │   ├── bundles.php
+    │   ├── packages/
+    │   ├── routes.yaml
+    │   └── services.yaml
     ├── public/
-    │   └── index.php
+    │   └── index.php
     ├── src/
-    │   ├── ...
-    │   └── Kernel.php
+    │   ├── ...
+    │   └── Kernel.php
     ├── templates/
     ├── tests/
     ├── translations/

@@ -138,8 +138,8 @@ Constants can be used for example in your Twig templates thanks to the
         Displaying the {{ constant('NUMBER_OF_ITEMS', post) }} most recent results.
     </p>
 
-And Doctrine entities and repositories can now easily access these values,
-whereas they cannot access the container parameters::
+And Doctrine entities and repositories can access these values too, whereas they
+cannot access the container parameters::
 
     namespace App\Repository;
 
@@ -155,7 +155,7 @@ whereas they cannot access the container parameters::
     }
 
 The only notable disadvantage of using constants for this kind of configuration
-values is that you cannot redefine them easily in your tests.
+values is that it's complicated to redefine their values in your tests.
 
 Parameter Naming
 ----------------

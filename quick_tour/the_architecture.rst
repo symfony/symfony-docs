@@ -25,8 +25,8 @@ use the logger in a controller, add a new argument type-hinted with ``LoggerInte
     namespace App\Controller;
 
     use Psr\Log\LoggerInterface;
-    use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
     {
@@ -110,8 +110,8 @@ Great! You can use this immediately in your controller::
 
     use App\GreetingGenerator;
     use Psr\Log\LoggerInterface;
-    use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
     {

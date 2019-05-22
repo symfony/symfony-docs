@@ -19,7 +19,7 @@ This can be done by importing routing resources from the main routing file:
         # config/routes.yaml
         app_file:
             # loads routes from the given routing file stored in some bundle
-            resource: '@AcmeOtherBundle/Resources/config/routing.yaml'
+            resource: '@AcmeBundle/Resources/config/routing.yaml'
 
         app_annotations:
             # loads routes from the PHP annotations of the controllers found in that directory
@@ -46,7 +46,7 @@ This can be done by importing routing resources from the main routing file:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- loads routes from the given routing file stored in some bundle -->
-            <import resource="@AcmeOtherBundle/Resources/config/routing.yaml"/>
+            <import resource="@AcmeBundle/Resources/config/routing.yaml"/>
 
             <!-- loads routes from the PHP annotations of the controllers found in that directory -->
             <import resource="../src/Controller/" type="annotation"/>
@@ -61,11 +61,11 @@ This can be done by importing routing resources from the main routing file:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // loads routes from the given routing file stored in some bundle
-            $routes->import('@AcmeOtherBundle/Resources/config/routing.yaml');
+            $routes->import('@AcmeBundle/Resources/config/routing.yaml');
 
             // loads routes from the PHP annotations of the controllers found in that directory
             $routes->import('../src/Controller/', 'annotation');
@@ -74,7 +74,7 @@ This can be done by importing routing resources from the main routing file:
             $routes->import('../legacy/routing/', 'directory');
 
             // loads routes from the YAML or XML files found in some bundle directory
-            $routes->import('@AcmeOtherBundle/Resources/config/routing/public/', 'directory');
+            $routes->import('@AcmeOtherBundle/Resources/config/routing/', 'directory');
         };
 
 .. note::
@@ -88,8 +88,8 @@ Prefixing the URLs of Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
-suppose you want to prefix all application routes with ``/site`` (e.g.
-``/site/blog/{slug}`` instead of ``/blog/{slug}``):
+to prefix all application routes with ``/site`` (e.g. ``/site/blog/{slug}``
+instead of ``/blog/{slug}``):
 
 .. configuration-block::
 
@@ -128,7 +128,7 @@ suppose you want to prefix all application routes with ``/site`` (e.g.
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller/', 'annotation')
@@ -166,8 +166,7 @@ be prefixed with the string ``/site``.
                 xsi:schemaLocation="http://symfony.com/schema/routing
                     https://symfony.com/schema/routing/routing-1.0.xsd">
 
-                <import
-                    resource="../src/Controller/"
+                <import resource="../src/Controller/"
                     type="annotation"
                     prefix="/site"
                     trailing-slash-on-root="false"/>
@@ -176,9 +175,8 @@ be prefixed with the string ``/site``.
         .. code-block:: php
 
             // config/routes.php
-            namespace Symfony\Component\Routing\Loader\Configurator;
-
             use App\Controller\ArticleController;
+            use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
             return function (RoutingConfigurator $routes) {
                 $routes->import('../src/Controller/', 'annotation')
@@ -201,7 +199,7 @@ a controller class or imported from a configuration file:
         /**
          * @Route(name="blog_")
          */
-        class BlogController extends AbstractController
+        class BlogController
         {
             /**
              * @Route("/blog", name="index")
@@ -237,8 +235,7 @@ a controller class or imported from a configuration file:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import
-                resource="../src/Controller/"
+            <import resource="../src/Controller/"
                 type="annotation"
                 name-prefix="blog_"/>
         </routes>
@@ -246,7 +243,7 @@ a controller class or imported from a configuration file:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller/', 'annotation')

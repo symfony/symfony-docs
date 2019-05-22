@@ -39,11 +39,12 @@ between all of the constraints in your user table:
         // src/Entity/User.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Constraints as Assert;
         use Doctrine\ORM\Mapping as ORM;
 
-        // DON'T forget this use statement!!!
+        // DON'T forget the following use statement!!!
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
 
         /**
          * @ORM\Entity
@@ -91,10 +92,10 @@ between all of the constraints in your user table:
         // src/Entity/User.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        // DON'T forget this use statement!!!
+        // DON'T forget the following use statement!!!
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class User
         {
@@ -223,8 +224,8 @@ Consider this example:
         // src/Entity/Service.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Service
         {

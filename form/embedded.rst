@@ -94,8 +94,8 @@ inside the task form itself. To accomplish this, add a ``category`` field
 to the ``TaskType`` object whose type is an instance of the new ``CategoryType``
 class::
 
-    use Symfony\Component\Form\FormBuilderInterface;
     use App\Form\CategoryType;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

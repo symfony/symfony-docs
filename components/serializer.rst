@@ -49,10 +49,10 @@ To use the Serializer component, set up the
 :class:`Symfony\\Component\\Serializer\\Serializer` specifying which encoders
 and normalizer are going to be available::
 
-    use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $encoders = [new XmlEncoder(), new JsonEncoder()];
     $normalizers = [new ObjectNormalizer()];
@@ -347,8 +347,8 @@ Then, create your groups definition:
 
 You are now able to serialize only attributes in the groups you want::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $obj = new MyObj();
     $obj->foo = 'foo';
@@ -377,8 +377,8 @@ Selecting Specific Attributes
 
 It is also possible to serialize only a set of specific attributes::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class User
     {
@@ -420,9 +420,9 @@ To remove those attributes provide an array via the ``ignored_attributes``
 key in the ``context`` parameter of the desired serializer method::
 
     use Acme\Person;
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $person = new Person();
     $person->setName('foo');
@@ -432,7 +432,7 @@ key in the ``context`` parameter of the desired serializer method::
     $encoder = new JsonEncoder();
 
     $serializer = new Serializer([$normalizer], [$encoder]);
-    $serializer->serialize($person, 'json', ['ignored_attributes' => 'age']); // Output: {"name":"foo"}
+    $serializer->serialize($person, 'json', ['ignored_attributes' => ['age']]); // Output: {"name":"foo"}
 
 .. deprecated:: 4.2
 
@@ -747,9 +747,9 @@ for encoding (array to format) and
 
 You can add new encoders to a Serializer instance by using its second constructor argument::
 
-    use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+    use Symfony\Component\Serializer\Serializer;
 
     $encoders = [new XmlEncoder(), new JsonEncoder()];
     $serializer = new Serializer([], $encoders);
@@ -1048,11 +1048,11 @@ because it is deeper than the configured maximum depth of 2::
     $result = [
         'foo' => 'level1',
         'child' => [
-                'foo' => 'level2',
-                'child' => [
-                        'child' => null,
-                    ],
+            'foo' => 'level2',
+            'child' => [
+                'child' => null,
             ],
+        ],
     ];
     */
 
@@ -1061,11 +1061,11 @@ maximum depth is reached. This is especially useful when serializing entities
 having unique identifiers::
 
     use Doctrine\Common\Annotations\AnnotationReader;
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Annotation\MaxDepth;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class Foo
     {
@@ -1227,8 +1227,8 @@ If the class constructor defines arguments, as usually happens with
 arguments are missing. In those cases, use the ``default_constructor_arguments``
 context option::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class MyObj
     {
@@ -1269,9 +1269,9 @@ parameter of the ``ObjectNormalizer``::
     namespace Acme;
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     class ObjectOuter
     {
@@ -1310,7 +1310,7 @@ parameter of the ``ObjectNormalizer``::
 
     $obj = $serializer->denormalize(
         ['inner' => ['foo' => 'foo', 'bar' => 'bar'], 'date' => '1988/01/21'],
-         'Acme\ObjectOuter'
+        'Acme\ObjectOuter'
     );
 
     dump($obj->getInner()->foo); // 'foo'
@@ -1347,8 +1347,8 @@ this is already set up and you only need to provide the configuration. Otherwise
 
     // ...
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
-    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
     use Symfony\Component\Serializer\Mapping\ClassDiscriminatorFromClassMetadata;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 

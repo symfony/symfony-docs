@@ -26,8 +26,8 @@ The most common way to listen to an event is to register an **event listener**::
     // src/EventListener/ExceptionListener.php
     namespace App\EventListener;
 
-    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
     class ExceptionListener
@@ -160,11 +160,11 @@ listen to the same ``kernel.exception`` event::
         {
             // return the subscribed events, their methods and priorities
             return [
-               KernelEvents::EXCEPTION => [
-                   ['processException', 10],
-                   ['logException', 0],
-                   ['notifyException', -10],
-               ]
+                KernelEvents::EXCEPTION => [
+                    ['processException', 10],
+                    ['logException', 0],
+                    ['notifyException', -10],
+                ],
             ];
         }
 

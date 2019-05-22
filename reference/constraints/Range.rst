@@ -41,7 +41,7 @@ you might add the following:
              *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
              * )
              */
-             protected $height;
+            protected $height;
         }
 
     .. code-block:: yaml
@@ -81,8 +81,8 @@ you might add the following:
         // src/Entity/Participant.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Participant
         {
@@ -158,8 +158,8 @@ date must lie within the current year like this:
         // src/Entity/Event.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Event
         {
@@ -228,8 +228,8 @@ dates. If you want to fix the timezone, append it to the date string:
         // src/Entity/Person.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Event
         {
@@ -298,8 +298,8 @@ can check that a delivery date starts within the next five hours like this:
         // src/Entity/Order.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Order
         {

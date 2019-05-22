@@ -91,8 +91,8 @@ The error controller reads as follows::
     // example.com/src/Calendar/Controller/ErrorController.php
     namespace Calendar\Controller;
 
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Debug\Exception\FlattenException;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ErrorController
     {
@@ -104,8 +104,8 @@ The error controller reads as follows::
         }
     }
 
-Voilà! Clean and customizable error management without efforts. And
-if your ``ErrorController`` throws an exception, HttpKernel will handle it nicely.
+*Voilà!* Clean and customizable error management without efforts. And if your
+``ErrorController`` throws an exception, HttpKernel will handle it nicely.
 
 In chapter two, we talked about the ``Response::prepare()`` method, which
 ensures that a Response is compliant with the HTTP specification. It is
@@ -153,8 +153,8 @@ only if needed::
     namespace Simplex;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 
     class StringResponseListener implements EventSubscriberInterface
     {

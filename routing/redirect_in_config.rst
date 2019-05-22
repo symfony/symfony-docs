@@ -64,9 +64,8 @@ action to redirect to this new url:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // load some routes - one should ultimately have the path "/app"
@@ -140,9 +139,8 @@ action:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // redirecting the homepage
@@ -238,8 +236,8 @@ permanent redirects use ``308`` code instead of ``301``:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
 

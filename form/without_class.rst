@@ -79,23 +79,23 @@ The answer is to setup the constraints yourself, and attach them to the individu
 fields. The overall approach is covered a bit more in :doc:`this validation article </validation/raw_values>`,
 but here's a short example::
 
-    use Symfony\Component\Validator\Constraints\Length;
-    use Symfony\Component\Validator\Constraints\NotBlank;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints\NotBlank;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-           ->add('firstName', TextType::class, [
-               'constraints' => new Length(['min' => 3]),
-           ])
-           ->add('lastName', TextType::class, [
-               'constraints' => [
-                   new NotBlank(),
-                   new Length(['min' => 3]),
-               ],
-           ])
+            ->add('firstName', TextType::class, [
+                'constraints' => new Length(['min' => 3]),
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['min' => 3]),
+                ],
+            ])
         ;
     }
 

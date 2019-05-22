@@ -82,8 +82,8 @@ are configured for you:
 Example::
 
     use App\Message\MyMessage;
-    use Symfony\Component\Messenger\MessageBus;
     use Symfony\Component\Messenger\Handler\HandlersLocator;
+    use Symfony\Component\Messenger\MessageBus;
     use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 
     $bus = new MessageBus([
@@ -111,10 +111,10 @@ that will do the required processing for your message::
 
     class MyMessageHandler
     {
-       public function __invoke(MyMessage $message)
-       {
-           // Message processing...
-       }
+        public function __invoke(MyMessage $message)
+        {
+            // Message processing...
+        }
     }
 
 Adding Metadata to Messages (Envelopes)
@@ -155,9 +155,9 @@ Instead of dealing directly with the messages in the middleware you receive the 
 Hence you can inspect the envelope content and its stamps, or add any::
 
     use App\Message\Stamp\AnotherStamp;
-    use Symfony\Component\Messenger\Stamp\ReceivedStamp;
     use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
     use Symfony\Component\Messenger\Middleware\StackInterface;
+    use Symfony\Component\Messenger\Stamp\ReceivedStamp;
 
     class MyOwnMiddleware implements MiddlewareInterface
     {
@@ -199,50 +199,49 @@ transport will be responsible for communicating with your message broker or 3rd 
 Your own Sender
 ~~~~~~~~~~~~~~~
 
-Using the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`,
-you can create your own message sender.
 Imagine that you already have an ``ImportantAction`` message going through the
 message bus and being handled by a handler. Now, you also want to send this
 message as an email.
 
-First, create your sender::
+Using the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`,
+you can create your own message sender::
 
     namespace App\MessageSender;
 
     use App\Message\ImportantAction;
-    use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
     use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
 
     class ImportantActionToEmailSender implements SenderInterface
     {
-       private $mailer;
-       private $toEmail;
+        private $mailer;
+        private $toEmail;
 
-       public function __construct(\Swift_Mailer $mailer, string $toEmail)
-       {
-           $this->mailer = $mailer;
-           $this->toEmail = $toEmail;
-       }
+        public function __construct(\Swift_Mailer $mailer, string $toEmail)
+        {
+            $this->mailer = $mailer;
+            $this->toEmail = $toEmail;
+        }
 
-       public function send(Envelope $envelope): Envelope
-       {
-           $message = $envelope->getMessage();
+        public function send(Envelope $envelope): Envelope
+        {
+            $message = $envelope->getMessage();
 
-           if (!$message instanceof ImportantAction) {
-               throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', ImportantAction::class));
-           }
+            if (!$message instanceof ImportantAction) {
+                throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', ImportantAction::class));
+            }
 
-           $this->mailer->send(
-               (new \Swift_Message('Important action made'))
-                   ->setTo($this->toEmail)
-                   ->setBody(
-                       '<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>',
-                       'text/html'
-                   )
-           );
+            $this->mailer->send(
+                (new \Swift_Message('Important action made'))
+                    ->setTo($this->toEmail)
+                    ->setBody(
+                        '<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>',
+                        'text/html'
+                    )
+            );
 
-           return $envelope;
-       }
+            return $envelope;
+        }
     }
 
 Your own Receiver
@@ -257,43 +256,41 @@ application but you can't use an API and need to use a shared CSV file with new
 orders.
 
 You will read this CSV file and dispatch a ``NewOrder`` message. All you need to
-do is to write your custom CSV receiver and Symfony will do the rest.
-
-First, create your receiver::
+do is to write your own CSV receiver::
 
     namespace App\MessageReceiver;
 
     use App\Message\NewOrder;
+    use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
     use Symfony\Component\Serializer\SerializerInterface;
-    use Symfony\Component\Messenger\Envelope;
 
     class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
-       private $serializer;
-       private $filePath;
+        private $serializer;
+        private $filePath;
 
-       public function __construct(SerializerInterface $serializer, string $filePath)
-       {
-           $this->serializer = $serializer;
-           $this->filePath = $filePath;
-       }
+        public function __construct(SerializerInterface $serializer, string $filePath)
+        {
+            $this->serializer = $serializer;
+            $this->filePath = $filePath;
+        }
 
-       public function receive(callable $handler): void
-       {
-           $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
+        public function receive(callable $handler): void
+        {
+            $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
-           foreach ($ordersFromCsv as $orderFromCsv) {
-               $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
+            foreach ($ordersFromCsv as $orderFromCsv) {
+                $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
 
-               $handler(new Envelope($order));
-           }
-       }
+                $handler(new Envelope($order));
+            }
+        }
 
-       public function stop(): void
-       {
-           // noop
-       }
+        public function stop(): void
+        {
+            // noop
+        }
     }
 
 Receiver and Sender on the same Bus
@@ -306,6 +303,7 @@ middleware will know it should not route these messages again to a transport.
 
 Learn more
 ----------
+
 .. toctree::
     :maxdepth: 1
     :glob:

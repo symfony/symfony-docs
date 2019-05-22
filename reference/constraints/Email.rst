@@ -11,6 +11,7 @@ Options     - `checkHost`_
             - `groups`_
             - `message`_
             - `mode`_
+            - `normalizer`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Email`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\EmailValidator`
@@ -72,8 +73,8 @@ Basic Usage
         // src/Entity/Author.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -166,6 +167,8 @@ html5
 .....
 
 This matches the pattern used for the `HTML5 email input element`_.
+
+.. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

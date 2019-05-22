@@ -34,4 +34,9 @@ third parameters::
         $defaultLifetime = 0
     );
 
+.. tip::
+
+    A :class:`Symfony\\Component\\Cache\\DoctrineProvider` class is also provided by the
+    component to use any PSR6-compatible implementations with Doctrine-compatible classes.
+
 .. _`Doctrine Cache`: https://github.com/doctrine/cache

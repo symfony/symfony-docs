@@ -329,9 +329,9 @@ is being acquired, it forwards the call to all the managed stores, and it
 collects their responses. If a simple majority of stores have acquired the lock,
 then the lock is considered as acquired; otherwise as not acquired::
 
-    use Symfony\Component\Lock\Strategy\ConsensusStrategy;
     use Symfony\Component\Lock\Store\CombinedStore;
     use Symfony\Component\Lock\Store\RedisStore;
+    use Symfony\Component\Lock\Strategy\ConsensusStrategy;
 
     $stores = [];
     foreach (['server1', 'server2', 'server3'] as $server) {

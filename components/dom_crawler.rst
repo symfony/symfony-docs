@@ -34,7 +34,7 @@ The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods
 to query and manipulate HTML and XML documents.
 
 An instance of the Crawler represents a set of :phpclass:`DOMElement` objects,
-which are basically nodes that you can traverse::
+which are nodes that can be traversed as follows::
 
     use Symfony\Component\DomCrawler\Crawler;
 
@@ -252,6 +252,18 @@ Call an anonymous function on each node of the list::
 The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
+When using nested crawler, beware that ``filterXPath()`` is evaluated in the
+context of the crawler::
+
+    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i) {
+        // DON'T DO THIS: direct child can not be found
+        $subCrawler = $parentCrawler->filterXPath('sub-tag/sub-child-tag');
+
+        // DO THIS: specify the parent tag too
+        $subCrawler = $parentCrawler->filterXPath('parent/sub-tag/sub-child-tag');
+        $subCrawler = $parentCrawler->filterXPath('node()/sub-tag/sub-child-tag');
+    });
+
 Adding the Content
 ~~~~~~~~~~~~~~~~~~
 
@@ -351,31 +363,31 @@ This behavior is best illustrated with examples::
 
     $crawler->filterXPath('//span[contains(@id, "article-")]')->evaluate('substring-after(@id, "-")');
     /* array:3 [
-         0 => "100"
-         1 => "101"
-         2 => "102"
-       ]
-     */
+      0 => "100"
+      1 => "101"
+      2 => "102"
+    ]
+    */
 
     $crawler->evaluate('substring-after(//span[contains(@id, "article-")]/@id, "-")');
     /* array:1 [
-         0 => "100"
-       ]
-     */
+      0 => "100"
+    ]
+    */
 
     $crawler->filterXPath('//span[@class="article"]')->evaluate('count(@id)');
     /* array:3 [
-         0 => 1.0
-         1 => 1.0
-         2 => 1.0
-       ]
-     */
+      0 => 1.0
+      1 => 1.0
+      2 => 1.0
+    ]
+    */
 
     $crawler->evaluate('count(//span[@class="article"])');
     /* array:1 [
-         0 => 3.0
-       ]
-     */
+      0 => 3.0
+    ]
+    */
 
     $crawler->evaluate('//span[1]');
     // A Symfony\Component\DomCrawler\Crawler instance

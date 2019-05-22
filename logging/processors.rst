@@ -172,20 +172,17 @@ Symfony's MonologBridge provides processors that can be registered inside your a
 :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor`
     Overrides data from the request using the data inside Symfony's request
     object.
-	
+
 :class:`Symfony\\Bridge\\Monolog\\Processor\\RouteProcessor`
     Adds information about current route (controller, action, route parameters).
-	
+
 :class:`Symfony\\Bridge\\Monolog\\Processor\\ConsoleCommandProcessor`
     Adds information about current console command.
 
-.. versionadded:: 3.4
-
-    The ``TokenProcessor`` class was introduced in Symfony 3.4.
-	
 .. versionadded:: 4.3
 
-	The ``RouteProcessor`` and the ``ConsoleCommandProcessor`` were introduced in Symfony 4.3.
+    The ``RouteProcessor`` and the ``ConsoleCommandProcessor`` were introduced
+    in Symfony 4.3.
 
 Registering Processors per Handler
 ----------------------------------

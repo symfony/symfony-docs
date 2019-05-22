@@ -9,7 +9,7 @@ how a blog post goes from draft to review and publish. Another example is when a
 user submits a series of different forms to complete a task. Such processes are
 best kept away from your models and should be defined in configuration.
 
-A **definition** of a workflow consist of places and actions to get from one
+A **definition** of a workflow consists of places and actions to get from one
 place to another. The actions are called **transitions**. A workflow does also
 need to know each object's position in the workflow. That **marking store**
 writes to a property of the object to remember the current place.
@@ -32,7 +32,7 @@ workflow below describes the process to fill in a job application.
 .. image:: /_images/components/workflow/job_application.png
 
 When you fill in a job application in this example there are 4 to 7 steps
-depending on the what job you are applying for. Some jobs require personality
+depending on the job you are applying for. Some jobs require personality
 tests, logic tests and/or formal requirements to be answered by the user. Some
 jobs don't. The ``GuardEvent`` is used to decide what next steps are allowed for
 a specific application.
@@ -58,11 +58,11 @@ your model. The most important differences between them are:
 Example
 ~~~~~~~
 
-A pull request starts in an initial "start" state, a state for e.g. running
-tests on Travis. When this is finished, the pull request is in the "review"
+A pull request starts in an initial "start" state, then a state "test" for e.g. running
+tests on continuous integration stack. When this is finished, the pull request is in the "review"
 state, where contributors can require changes, reject or accept the
 pull request. At any time, you can also "update" the pull request, which
-will result in another Travis run.
+will result in another continuous integration run.
 
 .. image:: /_images/components/workflow/pull_request.png
 
@@ -83,19 +83,19 @@ Below is the configuration for the pull request state machine.
                     places:
                         - start
                         - coding
-                        - travis
+                        - test
                         - review
                         - merged
                         - closed
                     transitions:
                         submit:
                             from: start
-                            to: travis
+                            to: test
                         update:
-                            from: [coding, travis, review]
-                            to: travis
+                            from: [coding, test, review]
+                            to: test
                         wait_for_review:
-                            from: travis
+                            from: test
                             to: review
                         request_change:
                             from: review
@@ -129,7 +129,7 @@ Below is the configuration for the pull request state machine.
 
                     <framework:place>start</framework:place>
                     <framework:place>coding</framework:place>
-                    <framework:place>travis</framework:place>
+                    <framework:place>test</framework:place>
                     <framework:place>review</framework:place>
                     <framework:place>merged</framework:place>
                     <framework:place>closed</framework:place>
@@ -137,19 +137,19 @@ Below is the configuration for the pull request state machine.
                     <framework:transition name="submit">
                         <framework:from>start</framework:from>
 
-                        <framework:to>travis</framework:to>
+                        <framework:to>test</framework:to>
                     </framework:transition>
 
                     <framework:transition name="update">
                         <framework:from>coding</framework:from>
-                        <framework:from>travis</framework:from>
+                        <framework:from>test</framework:from>
                         <framework:from>review</framework:from>
 
-                        <framework:to>travis</framework:to>
+                        <framework:to>test</framework:to>
                     </framework:transition>
 
                     <framework:transition name="wait_for_review">
-                        <framework:from>travis</framework:from>
+                        <framework:from>test</framework:from>
 
                         <framework:to>review</framework:to>
                     </framework:transition>
@@ -195,7 +195,7 @@ Below is the configuration for the pull request state machine.
                   'places' => [
                     'start',
                     'coding',
-                    'travis',
+                    'test',
                     'review',
                     'merged',
                     'closed',
@@ -203,14 +203,14 @@ Below is the configuration for the pull request state machine.
                   'transitions' => [
                     'submit'=> [
                       'from' => 'start',
-                      'to' => 'travis',
+                      'to' => 'test',
                     ],
                     'update'=> [
-                      'from' => ['coding','travis','review'],
-                      'to' => 'travis',
+                      'from' => ['coding', 'test', 'review'],
+                      'to' => 'test',
                     ],
                     'wait_for_review'=> [
-                      'from' => 'travis',
+                      'from' => 'test',
                       'to' => 'review',
                     ],
                     'request_change'=> [

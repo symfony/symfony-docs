@@ -69,8 +69,8 @@ the ``_controller`` route attribute::
         $response = new Response('An error occurred', 500);
     }
 
-A route can now be associated with any controller and within a
-controller, you can still use the ``render_template()`` to render a template::
+A route can now be associated with any controller and within a controller, you
+can still use the ``render_template()`` to render a template::
 
     $routes->add('hello', new Routing\Route('/hello/{name}', [
         'name' => 'World',
@@ -142,8 +142,8 @@ framework does not need to be modified in any way, create a new
 ``app.php`` file::
 
     // example.com/src/app.php
-    use Symfony\Component\Routing;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing;
 
     function is_leap_year($year = null) {
         if (null === $year) {

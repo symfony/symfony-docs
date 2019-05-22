@@ -35,8 +35,8 @@ if the service does not exist:
 
         // config/services.php
         use App\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
+        use Symfony\Component\DependencyInjection\Reference;
 
         // ...
 
@@ -92,8 +92,8 @@ call if the service exists and remove the method call if it does not:
 
         // config/services.php
         use App\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
+        use Symfony\Component\DependencyInjection\Reference;
 
         $container
             ->register(NewsletterManager::class)
@@ -111,8 +111,8 @@ call if the service exists and remove the method call if it does not:
     them is missing, those elements are removed but the method call is still
     made with the remaining elements of the collection.
 
-In YAML, the special ``@?`` syntax tells the service container that the dependency
-is optional. The ``NewsletterManager`` must also be rewritten by
+In YAML, the special ``@?`` syntax tells the service container that the
+dependency is optional. The ``NewsletterManager`` must also be rewritten by
 adding a ``setLogger()`` method::
 
         public function setLogger(LoggerInterface $logger)

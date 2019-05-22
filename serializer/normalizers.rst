@@ -12,8 +12,8 @@ denormalizing (array to object).
 
 Normalizers are enabled in the serializer passing them as its first argument::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $normalizers = [new ObjectNormalizer()];
     $serializer = new Serializer($normalizers);
@@ -28,7 +28,7 @@ Symfony includes the following normalizers but you can also
   normalize PHP object using the :doc:`PropertyAccessor component </components/property_access>`;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer` to
   normalize PHP object using an object that implements
-  ``:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface``;
+  :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` to
   normalize PHP object using the getter and setter methods of the object;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer` to

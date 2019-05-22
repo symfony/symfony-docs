@@ -121,7 +121,7 @@ like this:
     Content-Type: text/html
 
     <html>
-      <!-- ... HTML for the xkcd comic -->
+        <!-- ... HTML for the xkcd comic -->
     </html>
 
 The HTTP response contains the requested resource (the HTML content in this
@@ -275,11 +275,11 @@ and more.
     that you can use in *any* PHP project. This also contains classes for handling
     sessions, file uploads and more.
 
-If Symfony offered nothing else, you would already have a toolkit for conveniently
-accessing request information and an object-oriented interface for creating
-the response. Even as you learn the many powerful features in Symfony, keep
-in mind that the goal of your application is always *to interpret a request
-and create the appropriate response based on your application logic*.
+If Symfony offered nothing else, you would already have a toolkit for accessing
+request information and an object-oriented interface for creating the response.
+Even as you learn the many powerful features in Symfony, keep in mind that the
+goal of your application is always *to interpret a request and create the
+appropriate response based on your application logic*.
 
 The Journey from the Request to the Response
 --------------------------------------------

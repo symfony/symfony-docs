@@ -124,7 +124,7 @@ that accepts the dependency::
     .. code-block:: yaml
 
         # config/services.yaml
-       services:
+        services:
             # ...
 
             app.newsletter_manager:
@@ -199,7 +199,7 @@ Another possibility is setting public fields of the class directly::
     .. code-block:: yaml
 
         # config/services.yaml
-       services:
+        services:
             # ...
 
             app.newsletter_manager:

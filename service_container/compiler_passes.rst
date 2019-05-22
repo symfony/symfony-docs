@@ -75,9 +75,9 @@ method in the extension)::
     // src/MyBundle/MyBundle.php
     namespace App\MyBundle;
 
-    use Symfony\Component\HttpKernel\Bundle\Bundle;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use App\DependencyInjection\Compiler\CustomPass;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\HttpKernel\Bundle\Bundle;
 
     class MyBundle extends Bundle
     {

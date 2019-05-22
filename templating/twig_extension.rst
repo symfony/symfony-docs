@@ -133,7 +133,7 @@ be significant.
 
 That's why Twig allows to decouple the extension definition from its
 implementation. Following the same example as before, the first change would be
-to remove the ``priceFilter()`` method from the extension and update the PHP
+to remove the ``formatPrice()`` method from the extension and update the PHP
 callable defined in ``getFilters()``::
 
     // src/Twig/AppExtension.php
@@ -149,14 +149,14 @@ callable defined in ``getFilters()``::
         {
             return [
                 // the logic of this filter is now implemented in a different class
-                new TwigFilter('price', [AppRuntime::class, 'priceFilter']),
+                new TwigFilter('price', [AppRuntime::class, 'formatPrice']),
             ];
         }
     }
 
 Then, create the new ``AppRuntime`` class (it's not required but these classes
 are suffixed with ``Runtime`` by convention) and include the logic of the
-previous ``priceFilter()`` method::
+previous ``formatPrice()`` method::
 
     // src/Twig/AppRuntime.php
     namespace App\Twig;
@@ -171,7 +171,7 @@ previous ``priceFilter()`` method::
             // extensions, you'll need to inject services using this constructor
         }
 
-        public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;

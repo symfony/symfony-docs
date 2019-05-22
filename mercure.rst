@@ -249,8 +249,8 @@ it will be handled automatically::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Messenger\MessageBusInterface;
     use Symfony\Component\Mercure\Update;
+    use Symfony\Component\Messenger\MessageBusInterface;
 
     class PublishController
     {

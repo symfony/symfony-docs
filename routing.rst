@@ -26,8 +26,16 @@ you want one route that matches ``/blog`` exactly and another more dynamic
 route that can match *any* URL like ``/blog/my-post`` or
 ``/blog/all-about-symfony``.
 
-Routes can be configured in YAML, XML, PHP or annotations. All formats provide
-the same features and performance, so choose the one you prefer:
+Routes can be configured in YAML, XML, PHP or using annotations. All formats
+provide the same features and performance, so choose the one you prefer. If you
+choose PHP annotations, run this command once in your application to add support
+for them:
+
+.. code-block:: terminal
+
+    $ composer require annotations
+
+Now you can configure the routes:
 
 .. configuration-block::
 
@@ -104,9 +112,8 @@ the same features and performance, so choose the one you prefer:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // Matches /blog exactly
@@ -212,13 +219,16 @@ Symfony provides a handy way to declare localized routes without duplication.
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\CompanyController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('about_us', ['nl' => '/over-ons', 'en' => '/about-us'])
-                ->controller([CompanyController::class, 'about']);
+            $routes->add('about_us', [
+                'nl' => '/over-ons',
+                'en' => '/about-us',
+            ])
+                ->controller([CompanyController::class, 'about'])
+            ;
         };
 
 When a localized route is matched Symfony automatically knows which locale
@@ -268,7 +278,7 @@ with a locale. This can be done by defining a different prefix for each locale
     .. code-block:: php
 
         // config/routes/annotations.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller/', 'annotation')
@@ -358,9 +368,8 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page}')
@@ -428,9 +437,8 @@ concise, but it can decrease route readability when requirements are complex:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page<\d+>}')
@@ -509,9 +517,8 @@ So how can you make ``blog_list`` once again match when the user visits
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page}')
@@ -583,9 +590,8 @@ placeholder:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page<\d+>?1}')
@@ -610,7 +616,7 @@ As your app grows, you'll eventually have a *lot* of routes! To see them all, ru
     ------------------------------ -------- -------------------------------------
      Name                           Method   Path
     ------------------------------ -------- -------------------------------------
-     app_lucky_number              ANY    /lucky/number/{max}
+     app_lucky_number               ANY      /lucky/number/{max}
      ...
     ------------------------------ -------- -------------------------------------
 
@@ -657,15 +663,15 @@ With all of this in mind, check out this advanced example:
 
         # config/routes.yaml
         article_show:
-          path:     /articles/{_locale}/{year}/{slug}.{_format}
-          controller: App\Controller\ArticleController::show
-          defaults:
-              _locale: en
-              _format: html
-          requirements:
-              _locale:  en|fr
-              _format:  html|rss
-              year:     \d+
+            path:     /articles/{_locale}/{year}/{slug}.{_format}
+            controller: App\Controller\ArticleController::show
+            defaults:
+                _locale: en
+                _format: html
+            requirements:
+                _locale:  en|fr
+                _format:  html|rss
+                year:     \d+
 
     .. code-block:: xml
 
@@ -692,9 +698,8 @@ With all of this in mind, check out this advanced example:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\ArticleController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('article_show', '/articles/{_locale}/{year}/{slug}.{_format}')

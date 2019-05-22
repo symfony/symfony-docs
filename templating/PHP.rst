@@ -460,9 +460,9 @@ form is rendered.
                         'App:Form',
                     ],
                 ],
-             ],
+            ],
 
-             // ...
+            // ...
         ]);
 
 By default, the PHP engine uses a *div* layout when rendering forms. Some people,
@@ -514,7 +514,7 @@ resource to use such a layout:
                 ],
             ],
 
-             // ...
+            // ...
         ]);
 
 If you only want to make the change in one template, add the following line to

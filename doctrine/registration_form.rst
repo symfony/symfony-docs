@@ -77,8 +77,8 @@ The form class for the registration form will look something like this::
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Validator\Constraints\NotBlank;
     use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints\NotBlank;
 
     class RegistrationFormType extends AbstractType
     {
@@ -215,9 +215,9 @@ To do this, add a ``termsAccepted`` field to your form, but set its
 
     // src/Form/UserType.php
     // ...
-    use Symfony\Component\Validator\Constraints\IsTrue;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Validator\Constraints\IsTrue;
 
     class UserType extends AbstractType
     {

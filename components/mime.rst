@@ -50,7 +50,7 @@ methods to compose the entire email message::
         ->cc('bar@example.com')
         ->bcc('baz@example.com')
         ->replyTo('fabien@symfony.com')
-        ->priority(1)
+        ->priority(Email::PRIORITY_HIGH)
         ->subject('Important Notification')
         ->text('Lorem ipsum...')
         ->html('<h1>Lorem ipsum</h1> <p>...</p>')
@@ -198,10 +198,10 @@ the following tree is the one that works on most email clients:
 
     multipart/mixed
     ├── multipart/related
-    │   ├── multipart/alternative
-    │   │   ├── text/plain
-    │   │   └── text/html
-    │   └── image/png
+    │   ├── multipart/alternative
+    │   │   ├── text/plain
+    │   │   └── text/html
+    │   └── image/png
     └── application/pdf
 
 This is the purpose of each MIME message part:
@@ -308,7 +308,7 @@ some utility methods for Twig templates::
 
     $email = (new TemplatedEmail())
         ->from('fabien@symfony.com')
-        ->fo('foo@example.com')
+        ->to('foo@example.com')
         // ...
 
         // this method defines the path of the Twig template to render
@@ -373,7 +373,7 @@ the ``TemplatedEmail`` class::
 
     $email = (new TemplatedEmail())
         ->from('fabien@symfony.com')
-        ->fo('foo@example.com')
+        ->to('foo@example.com')
         // ...
 
         ->textTemplate('messages/user/signup.txt.twig')
@@ -398,7 +398,7 @@ simplify things later::
     // ...
 
     $templateLoader = new FilesystemLoader(__DIR__.'/templates');
-    $templatedLoader->addPath(__DIR__.'/images', 'images');
+    $templateLoader->addPath(__DIR__.'/images', 'images');
     $twig = new Environment($templateLoader);
 
 Now, use the special ``email.image()`` Twig helper to embed the images inside
@@ -625,7 +625,7 @@ You can register your own MIME type guesser by creating a class that implements
         public function isGuesserSupported(): bool
         {
             // return true when the guesser is supported (might depend on the OS for instance)
-             return true;
+            return true;
         }
 
         public function guessMimeType(string $path): ?string

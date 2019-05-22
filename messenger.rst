@@ -135,8 +135,12 @@ Transports
 By default, messages are processed as soon as they are dispatched. If you prefer
 to process messages asynchronously, you must configure a transport. These
 transports communicate with your application via queuing systems or third parties.
-The built-in AMQP transport allows you to communicate with most of the AMQP
-brokers such as RabbitMQ.
+
+There are the following built-in transports:
+
+- `AMQP`_
+- Doctrine
+- `Redis`_
 
 .. note::
 
@@ -155,7 +159,7 @@ the messenger component, the following configuration should have been created:
         framework:
             messenger:
                 transports:
-                    amqp: "%env(MESSENGER_TRANSPORT_DSN)%"
+                    your_transport: "%env(MESSENGER_TRANSPORT_DSN)%"
 
     .. code-block:: xml
 
@@ -171,7 +175,7 @@ the messenger component, the following configuration should have been created:
 
             <framework:config>
                 <framework:messenger>
-                    <framework:transport name="amqp" dsn="%env(MESSENGER_TRANSPORT_DSN)%"/>
+                    <framework:transport name="your_transport" dsn="%env(MESSENGER_TRANSPORT_DSN)%"/>
                 </framework:messenger>
             </framework:config>
         </container>
@@ -182,32 +186,66 @@ the messenger component, the following configuration should have been created:
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'transports' => [
-                    'amqp' => '%env(MESSENGER_TRANSPORT_DSN)%',
+                    'your_transport' => '%env(MESSENGER_TRANSPORT_DSN)%',
                 ],
             ],
         ]);
 
+This will also configure the following services for you:
+
+#. A ``messenger.sender.your_transport`` sender to be used when routing messages;
+#. A ``messenger.receiver.your_transport`` receiver to be used when consuming messages.
+
+Now define the ``MESSENGER_TRANSPORT_DSN`` in the ``.env`` file.
+See examples beneath how to configure the DSN for different transports.
+
+AMQP
+~~~~
+
 .. code-block:: bash
 
     # .env
-    ###> symfony/messenger ###
     MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
-    ###< symfony/messenger ###
 
 This is enough to allow you to route your message to the ``amqp`` transport.
-This will also configure the following services for you:
-
-#. A ``messenger.sender.amqp`` sender to be used when routing messages;
-#. A ``messenger.receiver.amqp`` receiver to be used when consuming messages.
 
 .. note::
 
     In order to use Symfony's built-in AMQP transport, you will need the AMQP
-    PHP extension and the Serializer Component. Ensure that they are installed with:
+    PHP extension and the Serializer component. Ensure that they are installed with:
 
     .. code-block:: terminal
 
         $ composer require symfony/amqp-pack
+
+Redis
+~~~~~
+
+.. versionadded:: 4.3
+
+    The Redis transport was introduced in Symfony 4.3.
+
+The Redis transport will use `streams`_ to queue messages.
+
+.. code-block:: bash
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
+
+This is enough to allow you to route your message to the Redis transport.
+
+If you have multiple systems to receive the same messages you could use different groups
+to achieve this:
+
+.. code-block:: bash
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages/group1/consumer1
+
+.. note::
+
+    In order to use Symfony's built-in Redis transport, you will need the Redis
+    PHP extension (^4.2), a running Redis server (^5.0) and the Serializer component.
 
 Routing
 -------
@@ -225,7 +263,7 @@ configuration:
         framework:
             messenger:
                 routing:
-                    'My\Message\Message':  amqp # The name of the defined transport
+                    'My\Message\Message':  your_transport # The name of the defined transport
 
     .. code-block:: xml
 
@@ -242,7 +280,7 @@ configuration:
             <framework:config>
                 <framework:messenger>
                     <framework:routing message-class="My\Message\Message">
-                        <framework:sender service="amqp"/>
+                        <framework:sender service="your_transport"/>
                     </framework:routing>
                 </framework:messenger>
             </framework:config>
@@ -254,7 +292,7 @@ configuration:
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'routing' => [
-                    'My\Message\Message' => 'amqp',
+                    'My\Message\Message' => 'your_transport',
                 ],
             ],
         ]);
@@ -274,7 +312,7 @@ instead of a class name:
             messenger:
                 routing:
                     'My\Message\MessageAboutDoingOperationalWork': another_transport
-                    '*': amqp
+                    '*': your_transport
 
     .. code-block:: xml
 
@@ -294,7 +332,7 @@ instead of a class name:
                         <framework:sender service="another_transport"/>
                     </framework:routing>
                     <framework:routing message-class="*">
-                        <framework:sender service="amqp"/>
+                        <framework:sender service="your_transport"/>
                     </framework:routing>
                 </framework:messenger>
             </framework:config>
@@ -307,7 +345,7 @@ instead of a class name:
             'messenger' => [
                 'routing' => [
                     'My\Message\Message' => 'another_transport',
-                    '*' => 'amqp',
+                    '*' => 'your_transport',
                 ],
             ],
         ]);
@@ -322,7 +360,7 @@ A class of messages can also be routed to multiple senders by specifying a list:
         framework:
             messenger:
                 routing:
-                    'My\Message\ToBeSentToTwoSenders': [amqp, audit]
+                    'My\Message\ToBeSentToTwoSenders': [your_transport, audit]
 
     .. code-block:: xml
 
@@ -339,7 +377,7 @@ A class of messages can also be routed to multiple senders by specifying a list:
             <framework:config>
                 <framework:messenger>
                     <framework:routing message-class="My\Message\ToBeSentToTwoSenders">
-                        <framework:sender service="amqp"/>
+                        <framework:sender service="your_transport"/>
                         <framework:sender service="audit"/>
                     </framework:routing>
                 </framework:messenger>
@@ -352,7 +390,7 @@ A class of messages can also be routed to multiple senders by specifying a list:
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'routing' => [
-                    'My\Message\ToBeSentToTwoSenders' => ['amqp', 'audit'],
+                    'My\Message\ToBeSentToTwoSenders' => ['your_transport', 'audit'],
                 ],
             ],
         ]);
@@ -369,7 +407,7 @@ while still having them passed to their respective handler:
             messenger:
                 routing:
                     'My\Message\ThatIsGoingToBeSentAndHandledLocally':
-                         senders: [amqp]
+                         senders: [your_transport]
                          send_and_handle: true
 
     .. code-block:: xml
@@ -387,7 +425,7 @@ while still having them passed to their respective handler:
             <framework:config>
                 <framework:messenger>
                     <framework:routing message-class="My\Message\ThatIsGoingToBeSentAndHandledLocally" send-and-handle="true">
-                        <framework:sender service="amqp"/>
+                        <framework:sender service="your_transport"/>
                     </framework:routing>
                 </framework:messenger>
             </framework:config>
@@ -400,7 +438,7 @@ while still having them passed to their respective handler:
             'messenger' => [
                 'routing' => [
                     'My\Message\ThatIsGoingToBeSentAndHandledLocally' => [
-                        'senders' => ['amqp'],
+                        'senders' => ['your_transport'],
                         'send_and_handle' => true,
                     ],
                 ],
@@ -415,7 +453,7 @@ most of the cases. To do so, use the ``messenger:consume`` command like this:
 
 .. code-block:: terminal
 
-    $ php bin/console messenger:consume amqp
+    $ php bin/console messenger:consume your_transport
 
 The first argument is the receiver's service name. It might have been created by
 your ``transports`` configuration or it can be your own receiver.
@@ -698,10 +736,10 @@ Create your Transport Factory
 You need to give FrameworkBundle the opportunity to create your transport from a
 DSN. You will need a transport factory::
 
-    use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
-    use Symfony\Component\Messenger\Transport\TransportInterface;
     use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
     use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+    use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
+    use Symfony\Component\Messenger\Transport\TransportInterface;
 
     class YourTransportFactory implements TransportFactoryInterface
     {
@@ -827,6 +865,7 @@ will give you access to the following services:
 
 Learn more
 ----------
+
 .. toctree::
     :maxdepth: 1
     :glob:
@@ -834,3 +873,4 @@ Learn more
     /messenger/*
 
 .. _`enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
+.. _`streams`: https://redis.io/topics/streams-intro

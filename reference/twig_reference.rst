@@ -18,7 +18,7 @@ describe these extra features.
 
 .. tip::
 
-    Technically, most of the extensions live in the `Twig Bridge`_. That code
+    Technically, most of the extensions live in the `Twig Bridge`_. That code
     might give you some ideas when you need to write your own Twig extension
     as described in :doc:`/templating/twig_extension`.
 
@@ -30,7 +30,7 @@ describe these extra features.
 
 .. tip::
 
-    The `Twig Extensions repository`_ contains some additional Twig extensions
+    The `Twig Extensions repository`_ contains some additional Twig extensions
     that do not belong to the Twig core, so you might want to have a look at
     the `Twig Extensions documentation`_.
 

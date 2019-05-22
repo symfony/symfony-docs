@@ -36,9 +36,9 @@ of predefined statuses (`draft`, `review`, `rejected`, `published`). In a workfl
 these statuses are called **places**. You can define the workflow like this::
 
     use Symfony\Component\Workflow\DefinitionBuilder;
+    use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
     use Symfony\Component\Workflow\Transition;
     use Symfony\Component\Workflow\Workflow;
-    use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
 
     $definitionBuilder = new DefinitionBuilder();
     $definition = $definitionBuilder->addPlaces(['draft', 'review', 'rejected', 'published'])
@@ -61,10 +61,10 @@ which is an object that stores and provides access to different workflows.
 A registry will also help you to decide if a workflow supports the object you
 are trying to use it with::
 
-    use Symfony\Component\Workflow\Registry;
-    use Symfony\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
     use Acme\Entity\BlogPost;
     use Acme\Entity\Newsletter;
+    use Symfony\Component\Workflow\Registry;
+    use Symfony\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
 
     $blogWorkflow = ...
     $newsletterWorkflow = ...
@@ -76,16 +76,19 @@ are trying to use it with::
 Usage
 -----
 
-When you have configured a ``Registry`` with your workflows, you may use it as follows::
+When you have configured a ``Registry`` with your workflows,
+you can retreive a workflow from it and use it as follows::
 
     // ...
+    // Consider that $post is in state "draft" by default
     $post = new BlogPost();
     $workflow = $registry->get($post);
 
     $workflow->can($post, 'publish'); // False
     $workflow->can($post, 'to_review'); // True
 
-    $workflow->apply($post, 'to_review');
+    $workflow->apply($post, 'to_review'); // $post is now in state "review"
+
     $workflow->can($post, 'publish'); // True
     $workflow->getEnabledTransitions($post); // ['publish', 'reject']
 

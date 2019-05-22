@@ -12,10 +12,13 @@ in order to be recognized. This is done via the
 creating and registering custom argument value resolvers, you can extend this
 functionality.
 
-Functionality Shipped with the HttpKernel
------------------------------------------
+.. _functionality-shipped-with-the-httpkernel:
 
-Symfony ships with the following value resolvers in the HttpKernel component:
+Built-In Value Resolvers
+------------------------
+
+Symfony ships with the following value resolvers in the
+:doc:`HttpKernel component </components/http_kernel>`:
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
@@ -41,6 +44,30 @@ Symfony ships with the following value resolvers in the HttpKernel component:
     Verifies if the request data is an array and will add all of them to the
     argument list. When the action is called, the last (variadic) argument will
     contain all the values of this array.
+
+In addition, some components and official bundles provide other value resolvers:
+
+:class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`
+    Injects the object that represents the current logged in user if type-hinted
+    with ``UserInterface``. Default value can be set to ``null`` in case
+    the controller can be accessed by anonymous users. It requires installing
+    the :doc:`Security component </components/security>`.
+
+:class:`Symfony\\Bundle\\SecurityBundle\\SecurityUserValueResolver`
+    Injects the object that represents the current logged in user if type-hinted
+    with ``UserInterface``. Default value can be set to ``null`` in case
+    the controller can be accessed by anonymous users. It requires installing
+    the `SecurityBundle`_.
+
+.. deprecated:: 4.1
+
+    The ``SecurityUserValueResolver`` was deprecated in Symfony 4.1 in favor of
+    :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`.
+
+``Psr7ServerRequestResolver``
+    Injects a `PSR-7`_ compliant version of the current request if type-hinted
+    with ``RequestInterface``, ``MessageInterface`` or ``ServerRequestInterface``.
+    It requires installing the `SensioFrameworkExtraBundle`_.
 
 Adding a Custom Value Resolver
 ------------------------------
@@ -233,3 +260,6 @@ subrequests.
 
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`yield`: http://php.net/manual/en/language.generators.syntax.php
+.. _`SecurityBundle`: https://github.com/symfony/security-bundle
+.. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
+.. _`SensioFrameworkExtraBundle`: https://github.com/sensiolabs/SensioFrameworkExtraBundle

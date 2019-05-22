@@ -9,6 +9,7 @@ IPv6 and many other combinations.
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
             - `message`_
+            - `normalizer`_
             - `payload`_
             - `version`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Ip`
@@ -63,8 +64,8 @@ Basic Usage
         // src/Entity/Author.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
@@ -95,6 +96,8 @@ Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
+
+.. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

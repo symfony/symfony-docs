@@ -84,8 +84,8 @@ objects::
 
 Then, create a form class so that a ``Tag`` object can be modified by the user::
 
-    // src/Form/Type/TagType.php
-    namespace App\Form\Type;
+    // src/Form/TagType.php
+    namespace App\Form;
 
     use App\Entity\Tag;
     use Symfony\Component\Form\AbstractType;
@@ -114,14 +114,14 @@ form itself, create a form for the ``Task`` class.
 Notice that you embed a collection of ``TagType`` forms using the
 :doc:`CollectionType </reference/forms/types/collection>` field::
 
-    // src/Form/Type/TaskType.php
-    namespace App\Form\Type;
+    // src/Form/TaskType.php
+    namespace App\Form;
 
     use App\Entity\Task;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
     class TaskType extends AbstractType
     {
@@ -148,11 +148,11 @@ In your controller, you'll create a new form from the ``TaskType``::
     // src/Controller/TaskController.php
     namespace App\Controller;
 
-    use App\Entity\Task;
     use App\Entity\Tag;
-    use App\Form\Type\TaskType;
-    use Symfony\Component\HttpFoundation\Request;
+    use App\Entity\Task;
+    use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
 
     class TaskController extends AbstractController
     {
@@ -254,7 +254,7 @@ type expects to receive exactly two, otherwise an error will be thrown:
 ``This form should not contain extra fields``. To make this flexible,
 add the ``allow_add`` option to your collection field::
 
-    // src/Form/Type/TaskType.php
+    // src/Form/TaskType.php
 
     // ...
     use Symfony\Component\Form\FormBuilderInterface;
@@ -418,7 +418,7 @@ for the tags in the ``Task`` class::
 
 Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false``::
 
-    // src/Form/Type/TaskType.php
+    // src/Form/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -550,7 +550,7 @@ The solution is similar to allowing tags to be added.
 
 Start by adding the ``allow_delete`` option in the form Type::
 
-    // src/Form/Type/TaskType.php
+    // src/Form/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)

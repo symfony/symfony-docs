@@ -80,11 +80,11 @@ services:
 
             <services>
                 <service id="app.mysql_lock" public="false"
-                         class="App\Lock\MysqlLock"/>
+                    class="App\Lock\MysqlLock"/>
                 <service id="app.postgresql_lock" public="false"
-                         class="App\Lock\PostgresqlLock"/>
+                    class="App\Lock\PostgresqlLock"/>
                 <service id="app.sqlite_lock" public="false"
-                         class="App\Lock\SqliteLock"/>
+                    class="App\Lock\SqliteLock"/>
             </services>
         </container>
 
@@ -131,11 +131,11 @@ the generic ``app.lock`` service can be defined as follows:
 
             <services>
                 <service id="app.mysql_lock" public="false"
-                         class="App\Lock\MysqlLock"/>
+                    class="App\Lock\MysqlLock"/>
                 <service id="app.postgresql_lock" public="false"
-                         class="App\Lock\PostgresqlLock"/>
+                    class="App\Lock\PostgresqlLock"/>
                 <service id="app.sqlite_lock" public="false"
-                         class="App\Lock\SqliteLock"/>
+                    class="App\Lock\SqliteLock"/>
 
                 <service id="app.lock">
                     <tag name="auto_alias" format="app.%database_type%_lock"/>
@@ -1087,8 +1087,8 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
 
     .. code-block:: php
 
-        use App\Twig\AppExtension;
         use App\Twig\AnotherExtension;
+        use App\Twig\AppExtension;
 
         $container
             ->register(AppExtension::class)
@@ -1229,7 +1229,6 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
     .. code-block:: php
 
         use App\Twig\AppExtension;
-        use App\Twig\AnotherExtension;
 
         $container
             ->register(AppExtension::class)

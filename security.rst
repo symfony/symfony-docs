@@ -472,10 +472,10 @@ start with ``/admin``, you can:
                     // ...
                 ],
             ],
-           'access_control' => [
-               // require ROLE_ADMIN for /admin*
-               ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
-           ],
+            'access_control' => [
+                // require ROLE_ADMIN for /admin*
+                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+            ],
         ]);
 
 You can define as many URL patterns as you need - each is a regular expression.
@@ -633,8 +633,8 @@ of a role::
         // ...
     }
 
-You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like ``access_control``
-or in Twig.
+You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
+``access_control`` or in Twig.
 
 ``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
 user that has logged in will have this. Actually, there are 3 special attributes
@@ -837,7 +837,7 @@ Next, you'll need to create a route for this URL (but not a controller):
     ..  code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('logout', '/logout')

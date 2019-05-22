@@ -62,7 +62,7 @@ Take these lines from the ``routes.yaml``:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller', 'annotation');
@@ -116,7 +116,7 @@ and configure the service and method to call:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('admin_route_loader::loadRoutes', 'service');
@@ -208,8 +208,8 @@ have to create an ``extra()`` method in the ``ExtraController``::
     // src/Controller/ExtraController.php
     namespace App\Controller;
 
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ExtraController extends AbstractController
     {
@@ -294,7 +294,7 @@ What remains to do is adding a few lines to the routing configuration:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('.', 'extra');

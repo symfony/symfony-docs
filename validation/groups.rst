@@ -103,8 +103,8 @@ user registers and when a user updates their contact information later:
         // src/Entity/User.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class User
         {
@@ -182,6 +182,6 @@ as the third argument to the ``validate()`` method::
 If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.
 
-In a full stack Symfony project, you'll usually work with validation indirectly through the form
-library. For information on how to use validation groups inside forms, see
-:doc:`/form/validation_groups`.
+In a full stack Symfony project, you'll usually work with validation indirectly
+through the form library. For information on how to use validation groups inside
+forms, see :doc:`/form/validation_groups`.

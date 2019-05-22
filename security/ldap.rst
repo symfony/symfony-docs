@@ -108,11 +108,11 @@ An LDAP client can be configured using the built-in
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\Ldap\Ldap;
         use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
+        use Symfony\Component\Ldap\Ldap;
 
         $container->register(Ldap::class)
-            ->addArgument(new Reference(Adapter::class);
+            ->addArgument(new Reference(Adapter::class));
 
         $container
             ->register(Adapter::class)
@@ -284,7 +284,7 @@ load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 If you pass ``null`` as the value of this option, the default filter is used
 ``({uid_key}={username})``.
 
-The username will be escaped, in order to prevent `LDAP injection`_.
+In order to prevent `LDAP injection`_, the username will be escaped.
 
 The syntax for the ``filter`` key is defined by `RFC4515`_.
 
@@ -330,12 +330,12 @@ providers with different ``base_dn``. The value of this option must be a valid
 search string (e.g. ``uid="{username}"``). The placeholder value will be
 replaced by the actual username.
 
-When this option is used, ``dn_string`` has to be updated accordingly. Following
-the previous example, if your users have the following two DN:
-``dc=companyA,dc=example,dc=com`` and ``dc=companyB,dc=example,dc=com``, then
-``dn_string`` should be ``dc=example,dc=com``. If the ``query_string`` option is
-``uid="{username}"``, then the authentication provider can authenticate users
-from both DN.
+When this option is used, ``query_string`` will search in the DN specified by
+``dn_string`` and the DN resulted of the ``query_string`` will be used to
+authenticate the user with their password. Following the previous example, if
+your users have the following two DN: ``dc=companyA,dc=example,dc=com`` and
+``dc=companyB,dc=example,dc=com``, then ``dn_string`` should be
+``dc=example,dc=com``.
 
 Bear in mind that usernames must be unique across both DN, as the authentication
 provider won't be able to select the correct user for the bind process if more

@@ -19,6 +19,7 @@ Options     - `charset`_
             - `maxMessage`_
             - `min`_
             - `minMessage`_
+            - `normalizer`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Length`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator`
@@ -93,8 +94,8 @@ and "50", you might add the following:
         // src/Entity/Participant.php
         namespace App\Entity;
 
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Participant
         {
@@ -211,5 +212,7 @@ Parameter          Description
 ``{{ limit }}``    The expected minimum length
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
+
+.. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc

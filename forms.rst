@@ -93,10 +93,10 @@ from inside a controller::
 
     use App\Entity\Task;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\HttpFoundation\Request;
 
     class TaskController extends AbstractController
     {
@@ -368,9 +368,9 @@ object.
     .. code-block:: php
 
         // src/Entity/Task.php
-        use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Task
         {
@@ -572,8 +572,8 @@ the correct values of a number of field options.
 
 .. caution::
 
-  These field options are *only* guessed if you're using Symfony to guess
-  the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
+    These field options are *only* guessed if you're using Symfony to guess
+    the field type (i.e. omit or pass ``null`` as the second argument to ``add()``).
 
 If you'd like to change one of the guessed values, you can override it by
 passing the option in the options field array::
@@ -597,8 +597,8 @@ that will house the logic for building the task form::
     namespace App\Form;
 
     use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+    use Symfony\Component\Form\FormBuilderInterface;
 
     class TaskType extends AbstractType
     {
@@ -693,8 +693,8 @@ the choice is ultimately up to you.
     The form name is automatically generated from the type class name. If you want
     to modify it, use the :method:`Symfony\\Component\\Form\\FormFactoryInterface::createNamed` method::
 
-        // src/AppBundle/Controller/DefaultController.php
-        use AppBundle\Form\TaskType;
+        // src/Controller/DefaultController.php
+        use App\Form\TaskType;
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
         class DefaultController extends AbstractController
@@ -722,6 +722,7 @@ There's a lot more to learn and a lot of *powerful* tricks in the form system.
 
 Learn more
 ----------
+
 .. toctree::
     :maxdepth: 1
     :glob:

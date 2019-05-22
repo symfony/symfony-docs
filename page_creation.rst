@@ -41,7 +41,7 @@ Creating a Page: Route and Controller
     article and can access your new Symfony app in the browser.
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
-random) number and prints it. To do that, create a "Controller class" and a
+random) number and prints it. To do that, create a "Controller" class and a
 "controller" method inside of it::
 
     <?php
@@ -264,8 +264,8 @@ Great news! You've already worked inside the most important directories in your
 project:
 
 ``config/``
-    Contains... configuration of course!. You will configure routes, :doc:`services </service_container>`
-    and packages.
+    Contains... configuration!. You will configure routes,
+    :doc:`services </service_container>` and packages.
 
 ``src/``
     All your PHP code lives here.

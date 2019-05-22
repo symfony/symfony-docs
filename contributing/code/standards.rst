@@ -67,7 +67,7 @@ short example containing most features described below::
          */
         public function someDeprecatedMethod()
         {
-            @trigger_error(sprintf('The %s() method is deprecated since version 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('The %s() method is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
 
             return Baz::someMethod();
         }
@@ -276,7 +276,7 @@ License
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
 
-.. _`PHP CS Fixer tool`: http://cs.sensiolabs.org/
+.. _`PHP CS Fixer tool`: https://cs.symfony.com/
 .. _`PSR-0`: https://www.php-fig.org/psr/psr-0/
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/

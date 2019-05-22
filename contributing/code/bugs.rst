@@ -26,7 +26,7 @@ If your problem definitely looks like a bug, report it using the official bug
 * Describe the steps needed to reproduce the bug with short code examples
   (providing a unit test that illustrates the bug is best);
 
-* If the bug you experienced is not obvious or affects more than one layer,
+* If the bug you experienced is not simple or affects more than one layer,
   providing a simple failing unit test may not be sufficient. In this case,
   please :doc:`provide a reproducer </contributing/code/reproducer>`;
 

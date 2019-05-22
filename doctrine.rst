@@ -242,9 +242,9 @@ your production database up-to-date.
 Migrations & Adding more Fields
 -------------------------------
 
-But what if you need to add a new field property to ``Product``, like a ``description``?
-You can edit the class to add the new property. But, you can also use ``make:entity``
-again:
+But what if you need to add a new field property to ``Product``, like a
+``description``? You can edit the class to add the new property. But, you can
+also use ``make:entity`` again:
 
 .. code-block:: terminal
 
@@ -346,9 +346,9 @@ and save it::
     namespace App\Controller;
 
     // ...
-    use Symfony\Component\HttpFoundation\Response;
-
     use App\Entity\Product;
+    use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ProductController extends AbstractController
     {

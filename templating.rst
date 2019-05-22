@@ -113,7 +113,7 @@ with alternating ``odd``, ``even`` classes:
 
     {% for i in 1..10 %}
         <div class="{{ cycle(['even', 'odd'], i) }}">
-          <!-- some HTML here -->
+            <!-- some HTML here -->
         </div>
     {% endfor %}
 
@@ -124,7 +124,7 @@ Throughout this article, template examples will be shown in both Twig and PHP.
     Twig templates are meant to be simple and won't process PHP tags. This
     is by design: the Twig template system is meant to express presentation,
     not program logic. The more you use Twig, the more you'll appreciate
-    and benefit from this distinction. And of course, you'll be loved by
+    and benefit from this distinction. And you'll be loved by
     web designers everywhere.
 
     Twig can also do things that PHP can't, such as whitespace control,
@@ -530,9 +530,8 @@ configuration:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\WelcomeController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('welcome', '/')
@@ -596,9 +595,8 @@ route:
     .. code-block:: php
 
         // config/routes.php
-        namespace Symfony\Component\Routing\Loader\Configurator;
-
         use App\Controller\ArticleController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('article_show', '/articles/{slug}')

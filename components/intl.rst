@@ -79,8 +79,8 @@ resulting .txt file can be converted to a binary .res file with the
 :class:`Symfony\\Component\\Intl\\ResourceBundle\\Compiler\\BundleCompiler`
 class::
 
-    use Symfony\Component\Intl\ResourceBundle\Writer\TextBundleWriter;
     use Symfony\Component\Intl\ResourceBundle\Compiler\BundleCompiler;
+    use Symfony\Component\Intl\ResourceBundle\Writer\TextBundleWriter;
 
     $writer = new TextBundleWriter();
     $writer->write('/path/to/bundle', 'en', [
@@ -212,9 +212,10 @@ Accessing ICU Data
 This component provides the following ICU data:
 
 * `Language and Script Names`_
-* `Country and Region Names`_
+* `Country Names`_
 * `Locales`_
 * `Currencies`_
+* `Timezones`_
 
 Language and Script Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -226,19 +227,20 @@ The ``Languages`` class provides access to the name of all languages::
     \Locale::setDefault('en');
 
     $languages = Languages::getNames();
-    // => ['ab' => 'Abkhazian', ...]
+    // ('languageCode' => 'languageName')
+    // => ['ab' => 'Abkhazian', 'ace' => 'Achinese', ...]
 
-    $language = Languages::getName('de');
-    // => 'German'
-
-    $language = Languages::getName('de', 'AT');
-    // => 'Austrian German'
+    $language = Languages::getName('fr');
+    // => 'French'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $languages = Languages::getNames('de');
-    // => ['ab' => 'Abchasisch', ...]
+    // => ['ab' => 'Abchasisch', 'ace' => 'Aceh', ...]
+
+    $language = Languages::getName('fr', 'de');
+    // => 'Französisch'
 
 You can also check if a given language code is valid::
 
@@ -258,10 +260,20 @@ for traditional Chinese)::
     \Locale::setDefault('en');
 
     $scripts = Scripts::getNames();
-    // => ['Arab' => 'Arabic', ...]
+    // ('scriptCode' => 'scriptName')
+    // => ['Adlm' => 'Adlam', 'Afak' => 'Afaka', ...]
 
     $script = Scripts::getName('Hans');
     // => 'Simplified'
+
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
+
+    $languages = Scripts::getNames('de');
+    // => ['Adlm' => 'Adlam', 'Afak' => 'Afaka', ...]
+
+    $language = Scripts::getName('Hans', 'de');
+    // => 'Vereinfacht'
 
 You can also check if a given script code is valid::
 
@@ -269,40 +281,42 @@ You can also check if a given script code is valid::
 
 .. versionadded:: 4.3
 
-    The ``Scrcipts`` class was introduced in Symfony 4.3.
+    The ``Scripts`` class was introduced in Symfony 4.3.
 
-.. _country-names:
+Country Names
+~~~~~~~~~~~~~
 
-Country and Region Names
-~~~~~~~~~~~~~~~~~~~~~~~~
+The ``Countries`` class provides access to the name of all countries according
+to the `ISO 3166-1 alpha-2`_ list of officially recognized countries and
+territories::
 
-In the world there are some territorial disputes that make it hard to define
-what a country is. That's why the Intl component provides a ``Regions`` class
-instead of a ``Countries`` class::
-
-    use Symfony\Component\Intl\Regions;
+    use Symfony\Component\Intl\Countries;
 
     \Locale::setDefault('en');
 
-    $countries = Regions::getNames();
-    // => ['AF' => 'Afghanistan', ...]
+    $countries = Countries::getNames();
+    // ('countryCode' => 'countryName')
+    // => ['AF' => 'Afghanistan', 'AX' => 'Åland Islands', ...]
 
-    $country = Regions::getName('GB');
+    $country = Countries::getName('GB');
     // => 'United Kingdom'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
-    $countries = Regions::getNames('de');
-    // => ['AF' => 'Afghanistan', ...]
+    $countries = Countries::getNames('de');
+    // => ['AF' => 'Afghanistan', 'EG' => 'Ägypten', ...]
 
-You can also check if a given region code is valid::
+    $country = Countries::getName('GB', 'de');
+    // => 'Vereinigtes Königreich'
 
-    $isValidRegion = Regions::exists($regionCode);
+You can also check if a given country code is valid::
+
+    $isValidCountry = Countries::exists($countryCode);
 
 .. versionadded:: 4.3
 
-    The ``Regions`` class was introduced in Symfony 4.3.
+    The ``Countries`` class was introduced in Symfony 4.3.
 
 Locales
 ~~~~~~~
@@ -317,7 +331,8 @@ provides access to the name of all locales::
     \Locale::setDefault('en');
 
     $locales = Locales::getNames();
-    // => ['af' => 'Afrikaans', ...]
+    // ('localeCode' => 'localeName')
+    // => ['af' => 'Afrikaans', 'af_NA' => 'Afrikaans (Namibia)', ...]
 
     $locale = Locales::getName('zh_Hans_MO');
     // => 'Chinese (Simplified, Macau SAR China)'
@@ -326,7 +341,10 @@ All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
     $locales = Locales::getNames('de');
-    // => ['af' => 'Afrikaans', ...]
+    // => ['af' => 'Afrikaans', 'af_NA' => 'Afrikaans (Namibia)', ...]
+
+    $locale = Locales::getName('zh_Hans_MO', 'de');
+    // => 'Chinesisch (Vereinfacht, Sonderverwaltungsregion Macau)'
 
 You can also check if a given locale code is valid::
 
@@ -347,7 +365,8 @@ as some of their information (symbol, fraction digits, etc.)::
     \Locale::setDefault('en');
 
     $currencies = Currencies::getNames();
-    // => ['AFN' => 'Afghan Afghani', ...]
+    // ('currencyCode' => 'currencyName')
+    // => ['AFN' => 'Afghan Afghani', 'ALL' => 'Albanian Lek', ...]
 
     $currency = Currencies::getName('INR');
     // => 'Indian Rupee'
@@ -366,7 +385,10 @@ accept the translation locale as the last, optional parameter, which defaults to
 the current default locale::
 
     $currencies = Currencies::getNames('de');
-    // => ['AFN' => 'Afghanische Afghani', ...]
+    // => ['AFN' => 'Afghanischer Afghani', 'EGP' => 'Ägyptisches Pfund', ...]
+
+    $currency = Currencies::getName('INR', 'de');
+    // => 'Indische Rupie'
 
 You can also check if a given currency code is valid::
 
@@ -375,6 +397,39 @@ You can also check if a given currency code is valid::
 .. versionadded:: 4.3
 
     The ``Currencies`` class was introduced in Symfony 4.3.
+
+Timezones
+~~~~~~~~~
+
+The ``Timezones`` class provides access to the name and values of all timezones::
+
+    use Symfony\Component\Intl\Timezones;
+
+    \Locale::setDefault('en');
+
+    $timezones = Timezones::getNames();
+    // ('timezoneID' => 'timezoneValue')
+    // => ['America/Eirunepe' => 'Acre Time (Eirunepe)', 'America/Rio_Branco' => 'Acre Time (Rio Branco)', ...]
+
+    $timezone = Timezones::getName('Africa/Nairobi');
+    // => 'East Africa Time (Nairobi)'
+
+All methods accept the translation locale as the last, optional parameter,
+which defaults to the current default locale::
+
+    $timezones = Timezones::getNames('de');
+    // => ['America/Eirunepe' => 'Acre-Zeit (Eirunepe)', 'America/Rio_Branco' => 'Acre-Zeit (Rio Branco)', ...]
+
+    $timezone = Timezones::getName('Africa/Nairobi', 'de');
+    // => 'Ostafrikanische Zeit (Nairobi)'
+
+You can also check if a given timezone ID is valid::
+
+    $isValidTimezone = Timezones::exists($timezoneId);
+
+.. versionadded:: 4.3
+
+    The ``Timezones`` class was introduced in Symfony 4.3.
 
 Learn more
 ----------
@@ -394,3 +449,4 @@ Learn more
 .. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
+.. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
