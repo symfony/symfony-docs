@@ -17,3 +17,34 @@ was writable. But that is no longer true! In Symfony 4, everything works automat
   and be writable by your web server user and terminal user. One way this can
   be done is by using ``chmod -R 777 var/log/``. Be aware that your logs are
   readable by any user on your production system.
+
+Filesystem-based cache
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using a filesystem-based cache such as Doctrine's query result cache, with ``APP_DEBUG`` is ``0`` you have to
+change the umask so that the cache directory is group-writable or world-writable (depending
+if the web server user and the command line user are in the same group or not).
+
+To achieve this, update ``bin/console``, and ``public/index.php`` files:
+
+find this section::
+
+    if ($_SERVER['APP_DEBUG']) {
+        umask(0000);
+
+        Debug::enable();
+    }
+
+..
+
+Exemple to force groupe-writable when ``APP_DEBUG`` is ``0``::
+
+    if ($_SERVER['APP_DEBUG']) {
+        umask(0000);
+
+        Debug::enable();
+    } else {
+        umask(0002);
+    }
+
+..
