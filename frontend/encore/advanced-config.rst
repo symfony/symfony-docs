@@ -63,8 +63,8 @@ state of the current configuration to build a new one:
 
     // define the first configuration
     Encore
-        .setOutputPath('web/build/')
-        .setPublicPath('/build')
+        .setOutputPath('web/build/first_build/')
+        .setPublicPath('/build/first_build')
         .addEntry('app', './assets/js/app.js')
         .addStyleEntry('global', './assets/css/global.scss')
         .enableSassLoader()
@@ -83,8 +83,8 @@ state of the current configuration to build a new one:
 
     // define the second configuration
     Encore
-        .setOutputPath('web/build/')
-        .setPublicPath('/build')
+        .setOutputPath('web/build/second_build/')
+        .setPublicPath('/build/second_build')
         .addEntry('mobile', './assets/js/mobile.js')
         .addStyleEntry('mobile', './assets/css/mobile.less')
         .enableLessLoader()
@@ -113,10 +113,10 @@ Next, define the output directories of each build:
 
     # app/config/config.yml
     webpack_encore:
-        output_path: '%kernel.public_dir%/web/default_build'
+        output_path: '%kernel.project_dir%/web/default_build'
         builds:
-            firstConfig: '%kernel.public_dir%/web/first_build'
-            secondConfig: '%kernel.public_dir%/web/second_build'
+            firstConfig: '%kernel.project_dir%/web/first_build'
+            secondConfig: '%kernel.project_dir%/web/second_build'
 
 Finally, use the third optional parameter of the ``encore_entry_*_tags()``
 functions to specify which build to use:
