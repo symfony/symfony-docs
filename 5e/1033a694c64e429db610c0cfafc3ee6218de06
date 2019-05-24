@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-04T14:50:20Z
+
+@Nyholm thanks for this contribution! Lately in the Symfony Docs we're trying to not add new articles when they are too short. So, do you think we could move this article to a section inside an existing article? If there is no article where we can put this ... or if such article is already super long, we could consider creating this new article. Thanks!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-07-04T14:55:33Z
+
+Thank you. I agree.
+
+I did not want my PR's to build on each other. At the same time, the message recorder has not been merged yet (Im not sure that it will).
+
+#10013 is blocking. When #10013 is merged I will put this text into that article.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-08-26T16:23:45Z
+
+Thank you for the review. I've updated the PR accordingly
+
+---------------------------------------------------------------------------
+
+by gubler at 2019-02-24T14:03:14Z
+
+The current PR symfony/symfony#28849 replaces the RecordsMessages middleware and recorder with a `HandleMessageInNewTransaction` middleware. I have did a rewrite of the documentation but I'm not sure how to request a merge into an existing merge request.
+
+My rewrite is here: https://github.com/gubler/messenger-transaction-test/blob/master/docs/transactional-messages.rst
+
+I tried to take into account previous comments on this request. Feel free to take whatever is useful from my rewrite.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-02-24T15:03:09Z
+
+Thank you @gubler Could you open a PR to my [fork](https://github.com/Nyholm/symfony-docs/tree/message-recorder)?
+
+---------------------------------------------------------------------------
+
+by gubler at 2019-02-24T15:15:54Z
+
+Done - though its the first time I've done this, so I apologize if I messed anything up :/
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-03-17T10:14:04Z
+
+We should not forget this: https://github.com/symfony/symfony/pull/28849#discussion_r265639129
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-03-17T10:45:56Z
+
+I did some updates to the docs to keep up-to-date with the symfony PR.
+
+I also added some screenshots to this PR description. I hope they will address any questions about the functionality and to help you (everyone) to help me explain this in the docs.
+
+---------------------------------------------------------------------------
+
+by sroze at 2019-03-20T13:42:28Z
+
+Thank you @Nyholm!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-04-08T17:48:04Z
+
+@sroze could you add your review?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-04-28T07:14:27Z
+
+Thank you for the review. I've updated accordingly
