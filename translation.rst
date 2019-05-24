@@ -357,22 +357,25 @@ with these tasks:
 
 .. code-block:: terminal
 
-    # updates the French translation file with the missing strings found in templates/
+    # updates the French translation file with the missing strings for that locale
     $ php bin/console translation:update --dump-messages --force fr
 
-    # updates the English translation file with the missing strings found in AppBundle
-    $ php bin/console translation:update --dump-messages --force en AppBundle
+The ``translation:update`` command looks for missing translations in:
+
+* Templates stored in any of the directories defined in the
+  :ref:`twig.paths <config-twig-paths>` config option;
+* Any PHP file/class that injects or :doc:`autowires </services/autowiring>` the
+  ``translator`` service and makes calls to the ``trans()`` function.
+
+.. versionadded:: 4.3
+
+    The extraction of missing translation strings from PHP files was introduced
+    in Symfony 4.3.
 
 .. note::
 
     If you want to see the missing translation strings without actually updating
     the translation files, remove the ``--force`` option from the command above.
-
-.. tip::
-
-    If you need to extract translation strings from other sources, such as
-    controllers, forms and flash messages, consider using the more advanced
-    third-party `TranslationBundle`_.
 
 .. _translation-resource-locations:
 
@@ -564,4 +567,3 @@ Learn more
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
-.. _`TranslationBundle`: https://github.com/php-translation/symfony-bundle
