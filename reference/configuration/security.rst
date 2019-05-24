@@ -240,6 +240,12 @@ encoding algorithm. Also, each algorithm defines different config options:
             ],
         ]);
 
+.. deprecated:: 4.3
+
+    The ``threads`` configuration option was deprecated in Symfony 4.3. No
+    alternative is provided because starting from Symfony 5.0 this value will be
+    hardcoded to ``1`` (one thread).
+
 .. versionadded:: 4.3
 
     The ``sodium`` algorithm was introduced in Symfony 4.3. In previous Symfony
