@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by alexander-schranz at 2019-04-07T10:48:07Z
+
+Should we create for each transport a own documentation file?
+
+In this case we should also create a documentation file about the amqp implementation.
+And make a list in https://symfony.com/doc/current/messenger.html#transports
+
+/cc @sroze
+
+#EU-FOSSA
