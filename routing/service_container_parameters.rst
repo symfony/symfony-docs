@@ -166,6 +166,36 @@ path):
             ;
         };
 
+Now make sure that the ``app.route_prefix`` parameter is set somewhere in your
+container:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            app.route_prefix: 'foo'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="app.route_prefix">foo</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        $container->setParameter('app.route_prefix', 'foo');
+
 .. note::
 
     Just like in normal service container configuration files, if you actually
