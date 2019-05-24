@@ -13,7 +13,7 @@ following commands:
 
 .. code-block:: terminal
 
-    $ composer require encore
+    $ composer require symfony/webpack-encore-bundle
     $ yarn install
 
 This will install and enable the `WebpackEncoreBundle`_, add the ``assets/``
