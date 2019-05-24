@@ -28,7 +28,10 @@ with the ``WorkflowDumpCommand``:
 
 .. code-block:: terminal
 
+    # Dump the workflow
     $ php bin/console workflow:dump name | dot -Tsvg -o graph.svg
+    # Dump the workflow while highlighing place1 and place2
+    $ php bin/console workflow:dump name place1 place2 | dot -Tsvg -o graph.svg
 
 .. note::
 
