@@ -83,6 +83,7 @@ in case a specific other bundle is not registered::
 
         // process the configuration of AcmeHelloExtension
         $configs = $container->getExtensionConfig($this->getAlias());
+        $configs = $container->getParameterBag()->resolveValue($configs);
         // use the Configuration class to generate a config array with
         // the settings "acme_hello"
         $config = $this->processConfiguration(new Configuration(), $configs);
