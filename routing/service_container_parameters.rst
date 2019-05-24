@@ -169,13 +169,13 @@ container:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         parameters:
             app.route_prefix: 'foo'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -189,7 +189,7 @@ container:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         $container->setParameter('app.route_prefix', 'foo');
 
 .. note::
