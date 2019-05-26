@@ -216,6 +216,30 @@ provide a callback function to dynamically generate suggestions::
 
     The ``setAutocompleterCallback()`` method was introduced in Symfony 4.3.
 
+Do not Trim the Answer
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can also specify if you want to not trim the answer by setting it directly with
+:method:`Symfony\\Component\\Console\\Question\\Question::setTrimmable`::
+
+    use Symfony\Component\Console\Question\Question;
+
+    // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $helper = $this->getHelper('question');
+
+        $question = new Question('What is the name of the child?');
+        $question->setTrimmable(false);
+        // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
+        $name = $helper->ask($input, $output, $question);
+    }
+
+.. versionadded:: 4.4
+
+    The ``setTrimmable()`` method was introduced in Symfony 4.4.
+
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
