@@ -1,10 +1,9 @@
-## How to Force HTTPS ON HEROKU SERVER (APACHE) 
-
+How to Force HTTPS ON HEROKU SERVER (APACHE) 
+============================================
 
 Heroku sets his own ORIGINAL ORIGINAL head of traffic, your HTACCESS file must be configured as below:
 
-```
-<IfModule mod_rewrite.c>
+``<IfModule mod_rewrite.c>
 
 	# SSL with Heroku 
 	RewriteEngine On
@@ -16,6 +15,4 @@ Heroku sets his own ORIGINAL ORIGINAL head of traffic, your HTACCESS file must b
 	RewriteRule ^(.*)$ index.php [QSA,L]
 
 
-</IfModule>
-        
-```
+</IfModule>``
