@@ -90,35 +90,28 @@ like this:
             <framework:config>
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:audit-trail enabled="true"/>
-
                     <framework:marking-store type="single_state">
                         <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
-
                     <framework:support>App\Entity\BlogPost</framework:support>
-
+                    <framework:initial_marking>draft</framework:initial_marking>
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
                     <framework:place>published</framework:place>
-
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
                         <framework:to>reviewed</framework:to>
                     </framework:transition>
-
                     <framework:transition name="publish">
                         <framework:from>reviewed</framework:from>
                         <framework:to>published</framework:to>
                     </framework:transition>
-
                     <framework:transition name="reject">
                         <framework:from>reviewed</framework:from>
                         <framework:to>rejected</framework:to>
                     </framework:transition>
-
                 </framework:workflow>
-
             </framework:config>
         </container>
 
@@ -138,6 +131,7 @@ like this:
                         'property' => ['currentPlace']
                     ],
                     'supports' => ['App\Entity\BlogPost'],
+                    'initial_marking' => 'draft',
                     'places' => [
                         'draft',
                         'reviewed',
@@ -618,8 +612,8 @@ requires:
                         <framework:from>reviewed</framework:from>
                         <framework:to>published</framework:to>
                         <framework:metadata>
-                            <framework:hour_limit>20</framework:priority>
-                            <framework:explanation>You can not publish after 8 PM.</framework:priority>
+                            <framework:hour_limit>20</framework:hour_limit>
+                            <framework:explanation>You can not publish after 8 PM.</framework:explanation>
                         </framework:metadata>
                     </framework:transition>
                 </framework:workflow>
