@@ -46,7 +46,7 @@ like this:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/framework.yaml
         framework:
             workflows:
                 blog_publishing:
