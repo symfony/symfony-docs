@@ -17,11 +17,11 @@ your projects really need:
 
 .. code-block:: terminal
 
-    $ composer require symfony/cache-implementation
-    $ composer require symfony/event-dispatcher-implementation
-    $ composer require symfony/http-client-implementation
-    $ composer require symfony/service-implementation
-    $ composer require symfony/translation-implementation
+    $ composer require symfony/cache-contracts
+    $ composer require symfony/event-dispatcher-contracts
+    $ composer require symfony/http-client-contracts
+    $ composer require symfony/service-contracts
+    $ composer require symfony/translation-contracts
 
 .. include:: /components/require_autoload.rst.inc
 
