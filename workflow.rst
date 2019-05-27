@@ -197,8 +197,8 @@ As configured, the following property is used by the marking store::
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
 
-    use Symfony\Component\Workflow\Exception\LogicException;
     use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Exception\LogicException;
 
     $post = BlogPost();
 
@@ -680,8 +680,8 @@ requires:
 
 Then you can access this metadata in your controller as follows::
 
-    use Symfony\Component\Workflow\Registry;
     use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Registry;
 
     public function myController(Registry $registry, BlogPost $post)
     {
