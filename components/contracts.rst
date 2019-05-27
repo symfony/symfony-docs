@@ -12,9 +12,16 @@ The Contracts Component
 Installation
 ------------
 
+Contracts are provided as separate packages, so you can install only the ones
+your projects really need:
+
 .. code-block:: terminal
 
-    $ composer require symfony/contracts
+    $ composer require symfony/cache-implementation
+    $ composer require symfony/event-dispatcher-implementation
+    $ composer require symfony/http-client-implementation
+    $ composer require symfony/service-implementation
+    $ composer require symfony/translation-implementation
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -45,15 +52,15 @@ Design Principles
 * Contracts must be backward compatible with existing Symfony components.
 
 Packages that implement specific contracts should list them in the ``provide``
-section of their ``composer.json`` file, using the
-``symfony/*-contracts-implementation`` convention. For example:
+section of their ``composer.json`` file, using the ``symfony/*-implementation``
+convention. For example:
 
 .. code-block:: javascript
 
     {
         "...": "...",
         "provide": {
-            "symfony/cache-contracts-implementation": "1.0"
+            "symfony/cache-implementation": "1.0"
         }
     }
 
