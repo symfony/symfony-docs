@@ -75,23 +75,4 @@ However, PHP-FIG has different goals and different processes. Symfony Contracts
 focuses  on providing abstractions that are useful on their own while still
 compatible with implementations provided by Symfony.
 
-Why Isn't this Package Split into Several Packages?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Putting all interfaces in one package eases discoverability and dependency
-management. Instead of dealing with a myriad of small packages and the
-corresponding matrix of versions, you only deal with one package and one
-version. Also when using IDE autocompletion or reading the source code, it makes
-it easier to figure out which contracts are provided.
-
-There are two downsides to this approach:
-
-* You may have unused files in your ``vendor/`` directory. This has no impact in
-  practice because the file sizes are very small and there is no performance
-  overhead at all since they are never loaded.
-* In the future, it will be impossible to use two different sub-namespaces in
-  different major versions of the package. However, this package follows the
-  :doc:`Symfony BC + deprecation </contributing/code/bc>` policies, with an
-  additional restriction to never remove deprecated interfaces.
-
 .. _`PHP-FIG`: https://www.php-fig.org/
