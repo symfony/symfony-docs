@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-28T15:41:07Z
+
+In the official standard we can confirm that it's mandatory: https://w3c.github.io/preload/#as-attribute
+
+@tristanbes thanks for fixing this error. We're going to merge in 3.4 branch and then in the other branches too.
