@@ -125,7 +125,7 @@ that a date must be today or in the past like this:
             /**
              * @Assert\LessThanOrEqual("today")
              */
-            protected $age;
+            protected $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -133,7 +133,7 @@ that a date must be today or in the past like this:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
-                age:
+                dateOfBirth:
                     - LessThanOrEqual: today
 
     .. code-block:: xml
@@ -145,7 +145,7 @@ that a date must be today or in the past like this:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
-                <property name="age">
+                <property name="dateOfBirth">
                     <constraint name="LessThanOrEqual">today</constraint>
                 </property>
             </class>
@@ -163,7 +163,7 @@ that a date must be today or in the past like this:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('age', new Assert\LessThanOrEqual('today'));
+                $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThanOrEqual('today'));
             }
         }
 
@@ -184,7 +184,7 @@ dates. If you want to fix the timezone, append it to the date string:
             /**
              * @Assert\LessThanOrEqual("today UTC")
              */
-            protected $age;
+            protected $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -192,7 +192,7 @@ dates. If you want to fix the timezone, append it to the date string:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
-                age:
+                dateOfBirth:
                     - LessThanOrEqual: today UTC
 
     .. code-block:: xml
@@ -204,7 +204,7 @@ dates. If you want to fix the timezone, append it to the date string:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
-                <property name="age">
+                <property name="dateOfBirth">
                     <constraint name="LessThanOrEqual">today UTC</constraint>
                 </property>
             </class>
@@ -222,7 +222,7 @@ dates. If you want to fix the timezone, append it to the date string:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('age', new Assert\LessThanOrEqual('today UTC'));
+                $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThanOrEqual('today UTC'));
             }
         }
 
@@ -243,7 +243,7 @@ can check that a person must be at least 18 years old like this:
             /**
              * @Assert\LessThanOrEqual("-18 years")
              */
-            protected $age;
+            protected $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -251,7 +251,7 @@ can check that a person must be at least 18 years old like this:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
-                age:
+                dateOfBirth:
                     - LessThanOrEqual: -18 years
 
     .. code-block:: xml
@@ -263,7 +263,7 @@ can check that a person must be at least 18 years old like this:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
-                <property name="age">
+                <property name="dateOfBirth">
                     <constraint name="LessThanOrEqual">-18 years</constraint>
                 </property>
             </class>
@@ -281,7 +281,7 @@ can check that a person must be at least 18 years old like this:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('age', new Assert\LessThanOrEqual('-18 years'));
+                $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThanOrEqual('-18 years'));
             }
         }
 
