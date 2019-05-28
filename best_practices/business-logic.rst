@@ -309,7 +309,7 @@ the following command to install the Doctrine fixtures bundle:
 
 .. code-block:: terminal
 
-    $ composer require doctrine/doctrine-fixtures-bundle
+    $ composer require --dev doctrine/doctrine-fixtures-bundle
 
 Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
 ``test`` environments::
