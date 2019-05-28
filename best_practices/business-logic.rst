@@ -235,7 +235,7 @@ the following command to install the Doctrine fixtures bundle:
 
 .. code-block:: terminal
 
-    $ composer require doctrine/doctrine-fixtures-bundle
+    $ composer require --dev doctrine/doctrine-fixtures-bundle
 
 Then, this bundle is enabled automatically, but only for the ``dev`` and
 ``test`` environments::
