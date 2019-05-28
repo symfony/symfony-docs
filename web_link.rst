@@ -55,7 +55,8 @@ To do that, first install the WebLink component:
     $ composer require symfony/web-link
 
 Now, update the template to use the ``preload()`` Twig function provided by
-WebLink:
+WebLink. The `"as" attribute`_ is mandatory because browsers need it to apply
+correct prioritization and the content security policy:
 
 .. code-block:: html+twig
 
@@ -174,6 +175,7 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
 .. _`preload`: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
+.. _`"as" attribute`: https://w3c.github.io/preload/#as-attribute
 .. _`the Priority Hints specification`: https://wicg.github.io/priority-hints/
 .. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-(http/2)
 .. _`Cloudflare`: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
