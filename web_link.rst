@@ -88,7 +88,7 @@ How does it work?
 
 The WebLink component manages the ``Link`` HTTP headers added to the response.
 When using the ``preload()`` function in the previous example, the following
-header was added to the response: ``Link </app.css>; rel="preload; as="style""``
+header was added to the response: ``Link </app.css>; rel="preload"; as="style"``
 According to `the Preload specification`_, when an HTTP/2 server detects that
 the original (HTTP 1.x) response contains this HTTP header, it will
 automatically trigger a push for the related file in the same HTTP/2 connection.
