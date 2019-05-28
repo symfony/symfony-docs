@@ -183,7 +183,7 @@ using the ``trans()`` method:
   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
   :ref:`fallback locale <translation-fallback>` are also loaded and
   added to the catalog if they don't already exist. The end result is a large
-  "dictionary" of translations. This catalog is cached in production, to
+  "dictionary" of translations. This catalog is cached in production to
   minimize performance impact.
 
 * If the message is located in the catalog, the translation is returned. If

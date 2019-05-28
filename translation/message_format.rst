@@ -20,7 +20,7 @@ Using the ICU Message Format
 ----------------------------
 
 In order to use the ICU Message Format, the :ref:`message domain
-<using-message-domains>` has to be suffixed with ``intl-icu``:
+<using-message-domains>` has to be suffixed with ``+intl-icu``:
 
 ======================  ===============================
 Normal file name        ICU Message Format filename
@@ -45,12 +45,12 @@ The basic usage of the MessageFormat allows you to use placeholders (called
 
     .. code-block:: yaml
 
-        # translations/messages.en.yaml
+        # translations/messages+intl-icu.en.yaml
         say_hello: 'Hello {name}!'
 
     .. code-block:: xml
 
-        <!-- translations/messages.en.xlf -->
+        <!-- translations/messages+intl-icu.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -65,7 +65,7 @@ The basic usage of the MessageFormat allows you to use placeholders (called
 
     .. code-block:: php
 
-        // translations/messages.en.php
+        // translations/messages+intl-icu.en.php
         return [
             'say_hello' => "Hello {name}!",
         ];
@@ -91,7 +91,7 @@ typical usage of this is gender:
 
     .. code-block:: yaml
 
-        # translations/messages.en.yaml
+        # translations/messages+intl-icu.en.yaml
         invitation_title: >
             {organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
@@ -101,7 +101,7 @@ typical usage of this is gender:
 
     .. code-block:: xml
 
-        <!-- translations/messages.en.xlf -->
+        <!-- translations/messages+intl-icu.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -116,7 +116,7 @@ typical usage of this is gender:
 
     .. code-block:: php
 
-        // translations/messages.en.php
+        // translations/messages+intl-icu.en.php
         return [
             'invitation_title' => '{organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
@@ -172,7 +172,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
 
     .. code-block:: yaml
 
-        # translations/messages.en.yaml
+        # translations/messages+intl-icu.en.yaml
         num_of_apples: >
             {apples, plural,
                 =0    {There are no apples}
@@ -182,7 +182,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
 
     .. code-block:: xml
 
-        <!-- translations/messages.en.xlf -->
+        <!-- translations/messages+intl-icu.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -197,7 +197,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
 
     .. code-block:: php
 
-        // translations/messages.en.php
+        // translations/messages+intl-icu.en.php
         return [
             'num_of_apples' => '{apples, plural,
                 =0    {There are no apples}
@@ -277,7 +277,7 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
 
     .. code-block:: yaml
 
-        # translations/messages.en.yaml
+        # translations/messages+intl-icu.en.yaml
         finish_place: >
             You finished {place, selectordinal,
                 one   {#st}
@@ -292,7 +292,7 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
 
     .. code-block:: xml
 
-        <!-- translations/messages.en.xlf -->
+        <!-- translations/messages+intl-icu.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -314,7 +314,7 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
 
     .. code-block:: php
 
-        // translations/messages.en.php
+        // translations/messages+intl-icu.en.php
         return [
             'finish_place' => 'You finished {place, selectordinal,
                 one {#st}
@@ -351,12 +351,12 @@ using the :phpclass:`IntlDateFormatter`:
 
     .. code-block:: yaml
 
-        # translations/messages.en.yaml
+        # translations/messages+intl-icu.en.yaml
         published_at: 'Published at {publication_date, date} - {publication_date, time, short}'
 
     .. code-block:: xml
 
-        <!-- translations/messages.en.xlf -->
+        <!-- translations/messages+intl-icu.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -371,7 +371,7 @@ using the :phpclass:`IntlDateFormatter`:
 
     .. code-block:: php
 
-        // translations/messages.en.php
+        // translations/messages+intl-icu.en.php
         return [
             'published_at' => 'Published at {publication_date, date} - {publication_date, time, short}',
         ];
@@ -393,13 +393,13 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
 
     .. code-block:: yaml
 
-        # translations/messages.en.yaml
+        # translations/messages+intl-icu.en.yaml
         progress: '{progress, number, percent} of the work is done'
         value_of_object: 'This artifact is worth {value, number, currency}'
 
     .. code-block:: xml
 
-        <!-- translations/messages.en.xlf -->
+        <!-- translations/messages+intl-icu.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -419,7 +419,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
 
     .. code-block:: php
 
-        // translations/messages.en.php
+        // translations/messages+intl-icu.en.php
         return [
             'progress' => '{progress, number, percent} of the work is done',
             'value_of_object' => 'This artifact is worth {value, number, currency}',
