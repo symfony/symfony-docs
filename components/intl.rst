@@ -247,7 +247,8 @@ You can also check if a given currency code is valid::
 Timezones
 ~~~~~~~~~
 
-The ``Timezones`` class provides access to the name and values of all timezones::
+The ``Timezones`` class provides several utilities related to timezones. First,
+it provides the name and values of all timezones in all languages::
 
     use Symfony\Component\Intl\Timezones;
 
@@ -269,7 +270,37 @@ which defaults to the current default locale::
     $timezone = Timezones::getName('Africa/Nairobi', 'de');
     // => 'Ostafrikanische Zeit (Nairobi)'
 
-You can also check if a given timezone ID is valid::
+You can also get all the timezones that exist in a given country. The
+``forCountryCode()`` method returns one or more timezone IDs, which you can
+translate into any locale with the ``getName()`` method shown earlier::
+
+    $timezones = Timezones::forCountryCode('CL'); // CL = Chile
+    // => ['America/Punta_Arenas', 'America/Santiago', 'Pacific/Easter']
+
+The reverse lookup is also possible thanks to the ``getCountryCode()`` method,
+which returns the code of the country where the given timzeone ID belongs to::
+
+    $countryCode = Timezones::getCountryCode('America/Vancouver')
+    // => $countryCode = 'CA'
+
+The `UTC time offsets`_ of all timezones are available via the ``getRawOffset()``
+and ``getGmtOffset()``. The difference between these two methods is that
+.............. ::
+
+    $offset = Timezones::getRawOffset('Etc/UTC');              // $offset = 0
+    $offset = Timezones::getRawOffset('America/Buenos_Aires'); // $offset = -10800
+    $offset = Timezones::getRawOffset('Asia/Katmandu');        // $offset = 20700
+
+    $offset = Timezones::getGmtOffset('Etc/UTC');              // $offset = 'GMT+00:00'
+    $offset = Timezones::getGmtOffset('America/Buenos_Aires'); // $offset = 'GMT-03:00'
+    $offset = Timezones::getGmtOffset('Asia/Katmandu');        // $offset = 'GMT+05:45'
+
+These methods define an optional second argument to pass a timestamp which is
+......... ::
+
+.. TODO: add examples with the timestamp
+
+Finally, you can also check if a given timezone ID is valid::
 
     $isValidTimezone = Timezones::exists($timezoneId);
 
@@ -297,3 +328,4 @@ Learn more
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+.. _`UTC time offsets`: https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
