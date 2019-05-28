@@ -94,9 +94,10 @@ Below are common examples of valid DSNs showing a combination of available value
         'redis:?host[localhost]&host[localhost:6379]&host[/var/run/redis.sock:]&auth=my-password&redis_cluster=1'
     );
 
-    // Redis Sentinel is also supported in the same way
-    // set the redis_sentinel parameter to the name of your service group
-    // Sentinel support also requires the Predis library
+`Redis Sentinel`_, which provides high availability for Redis, is also supported
+when using the Predis library. Use the ``redis_sentinel`` parameter to set the
+name of your service group::
+
     RedisAdapter::createConnection(
         'redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster'
     );
@@ -195,3 +196,4 @@ Available Options
 .. _`Predis`: https://packagist.org/packages/predis/predis
 .. _`Predis Connection Parameters`: https://github.com/nrk/predis/wiki/Connection-Parameters#list-of-connection-parameters
 .. _`TCP-keepalive`: https://redis.io/topics/clients#tcp-keepalive
+.. _`Redis Sentinel`: https://redis.io/topics/sentinel
