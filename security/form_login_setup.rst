@@ -74,7 +74,7 @@ class that processes the login submit and 4) updates the main security config fi
         }
     }
 
-Edit the ``security.yml`` file in order to allow access for anyone to the
+Edit the ``security.yaml`` file in order to allow access for anyone to the
 ``/login`` route:
 
 .. configuration-block::
