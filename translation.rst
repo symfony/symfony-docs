@@ -362,8 +362,9 @@ with these tasks:
 
 The ``translation:update`` command looks for missing translations in:
 
-* Templates stored in any of the directories defined in the
-  :ref:`twig.paths <config-twig-paths>` config option;
+* Templates stored in the ``templates/`` directory (or any other directory
+  defined in the :ref:`twig.default_path <config-twig-default-path>` and
+  :ref:`twig.paths <config-twig-paths>` config options);
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
   the ``translator`` service and makes calls to the ``trans()`` function.
 
