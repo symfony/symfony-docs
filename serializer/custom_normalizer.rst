@@ -47,7 +47,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
             return $data;
         }
 
-        public function supportsNormalization($data, $format = null, array $context = [])
+        public function supportsNormalization($data, $format = null)
         {
             return $data instanceof Topic;
         }
