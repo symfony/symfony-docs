@@ -639,6 +639,12 @@ and ``remove``.
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
 
+.. deprecated:: 4.2
+
+    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCallbacks`
+    method is deprecated since Symfony 4.2. Use the ``callbacks``
+    key of the context instead.
+
 When serializing, you can set a callback to format a specific object property::
 
     use App\Model\Person;
@@ -647,14 +653,19 @@ When serializing, you can set a callback to format a specific object property::
     use Symfony\Component\Serializer\Serializer;
 
     $encoder = new JsonEncoder();
-    $normalizer = new GetSetMethodNormalizer();
 
     // all callback parameters are optional (you can omit the ones you don't use)
     $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
         return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ISO8601) : '';
     };
 
-    $normalizer->setCallbacks(['createdAt' => $callback]);
+    $defaultContext = [
+        AbstractNormalizer::CALLBACKS => [
+            'createdAt' => $callback,
+        ],
+    ];
+    
+    $normalizer = new GetSetMethodNormalizer(null, null, null, null, null, $defaultContext);
 
     $serializer = new Serializer([$normalizer], [$encoder]);
 
