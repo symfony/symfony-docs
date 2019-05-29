@@ -192,9 +192,6 @@ Configuration
   * :ref:`cache <reference-templating-cache>`
   * `engines`_
   * :ref:`form <reference-templating-form>`
-
-    * `resources`_
-
   * `loaders`_
 
 * `test`_
