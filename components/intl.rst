@@ -274,18 +274,20 @@ You can also get all the timezones that exist in a given country. The
 ``forCountryCode()`` method returns one or more timezone IDs, which you can
 translate into any locale with the ``getName()`` method shown earlier::
 
-    $timezones = Timezones::forCountryCode('CL'); // CL = Chile
+    // unlike locale codes, country codes are always uppercase (CL = Chile)
+    $timezones = Timezones::forCountryCode('CL');
     // => ['America/Punta_Arenas', 'America/Santiago', 'Pacific/Easter']
 
 The reverse lookup is also possible thanks to the ``getCountryCode()`` method,
-which returns the code of the country where the given timzeone ID belongs to::
+which returns the code of the country where the given timezone ID belongs to::
 
     $countryCode = Timezones::getCountryCode('America/Vancouver')
-    // => $countryCode = 'CA'
+    // => $countryCode = 'CA' (CA = Canada)
 
-The `UTC time offsets`_ of all timezones are available via the ``getRawOffset()``
-and ``getGmtOffset()``. The difference between these two methods is that
-.............. ::
+The `UTC/GMT time offsets`_ of all timezones are provided by ``getRawOffset()``
+(which returns an integer representing the offset in seconds) and
+``getGmtOffset()`` (which returns a string representation of the offset to
+display it to users)::
 
     $offset = Timezones::getRawOffset('Etc/UTC');              // $offset = 0
     $offset = Timezones::getRawOffset('America/Buenos_Aires'); // $offset = -10800
@@ -295,10 +297,16 @@ and ``getGmtOffset()``. The difference between these two methods is that
     $offset = Timezones::getGmtOffset('America/Buenos_Aires'); // $offset = 'GMT-03:00'
     $offset = Timezones::getGmtOffset('Asia/Katmandu');        // $offset = 'GMT+05:45'
 
-These methods define an optional second argument to pass a timestamp which is
-......... ::
+The timezone offset can vary in time because of the `daylight saving time (DST)`_
+practice. By default these methods use the ``time()`` PHP function to get the
+current timezone offset value, but you can pass a timestamp as their second
+arguments to get the offset at any given point in time::
 
-.. TODO: add examples with the timestamp
+    // In 2019, the DST period in Madrid (Spain) went from March 31 to October 27
+    $offset = Timezones::getRawOffset('Europe/Madrid', strtotime('March 31, 2019'));   // $offset = 3600
+    $offset = Timezones::getRawOffset('Europe/Madrid', strtotime('April 1, 2019'));    // $offset = 7200
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 27, 2019')); // $offset = 'GMT+02:00'
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019')); // $offset = 'GMT+01:00'
 
 Finally, you can also check if a given timezone ID is valid::
 
@@ -328,4 +336,5 @@ Learn more
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-.. _`UTC time offsets`: https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
+.. _`UTC/GMT time offsets`: https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
+.. _`daylight saving time (DST)`: https://en.wikipedia.org/wiki/Daylight_saving_time
