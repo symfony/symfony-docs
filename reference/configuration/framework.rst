@@ -720,8 +720,8 @@ Options defined for scoped clients apply only to URLs that match either their
 `base_uri`_ or the `scope`_ option when it is defined. Non-matching URLs always
 use default options.
 
-Each scoped client also define a corresponding named autowiring alias.
-E.g. if you use
+Each scoped client also defines a corresponding named autowiring alias.
+If you use for example
 ``Symfony\Constracts\HttpClient\HttpClientInterface $myApiClient``
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
