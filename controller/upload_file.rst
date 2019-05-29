@@ -182,18 +182,12 @@ There are some important things to consider in the code of the above controller:
    users. This also applies to the files uploaded by your visitors. The ``UploadedFile``
    class provides methods to get the original file extension
    (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getExtension`),
-   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientSize`)
+   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize`)
    and the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`).
    However, they are considered *not safe* because a malicious user could tamper
    that information. That's why it's always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
-
-.. deprecated:: 4.1
-
-    The :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientSize`
-    method was deprecated in Symfony 4.1 and will be removed in Symfony 5.0.
-    Use ``getSize()`` instead.
 
 You can use the following code to link to the PDF brochure of a product:
 

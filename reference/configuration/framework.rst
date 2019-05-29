@@ -187,16 +187,6 @@ Configuration
   * `storage_id`_
   * `use_cookies`_
 
-* `templating`_
-
-  * :ref:`cache <reference-templating-cache>`
-  * `engines`_
-  * :ref:`form <reference-templating-form>`
-
-    * `resources`_
-
-  * `loaders`_
-
 * `test`_
 * `translator`_
 
@@ -224,7 +214,6 @@ Configuration
     * `endpoint`_
 
   * `static_method`_
-  * `strict_email`_
   * `translation_domain`_
 
 * `workflows`_
@@ -1847,119 +1836,6 @@ package:
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
 
-templating
-~~~~~~~~~~
-
-.. _reference-templating-form:
-
-form
-....
-
-resources
-"""""""""
-
-**type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
-
-.. deprecated:: 4.3
-
-    The integration of the Templating component in FrameworkBundle has been
-    deprecated since version 4.3 and will be removed in 5.0. Form theming with
-    PHP templates will no longer be supported and you'll need to use Twig instead.
-
-A list of all resources for form theming in PHP. This setting is not required
-if you're :ref:`using the Twig format for your themes <forms-theming-twig>`.
-
-Assume you have custom global form themes in ``templates/form_themes/``, you can
-configure this like:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            templating:
-                form:
-                    resources:
-                        - 'form_themes'
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:templating>
-                    <framework:form>
-                        <framework:resource>form_themes</framework:resource>
-                    </framework:form>
-                </framework:templating>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'templating' => [
-                'form' => [
-                    'resources' => [
-                        'form_themes',
-                    ],
-                ],
-            ],
-        ]);
-
-.. note::
-
-    The default form templates from ``FrameworkBundle:Form`` will always
-    be included in the form resources.
-
-.. seealso::
-
-    See :ref:`forms-theming-global` for more information.
-
-.. _reference-templating-cache:
-
-cache
-.....
-
-**type**: ``string``
-
-The path to the cache directory for templates. When this is not set, caching
-is disabled.
-
-.. note::
-
-    When using Twig templating, the caching is already handled by the
-    TwigBundle and doesn't need to be enabled for the FrameworkBundle.
-
-engines
-.......
-
-**type**: ``string[]`` / ``string`` **required**
-
-The Templating Engine to use. This can either be a string (when only one
-engine is configured) or an array of engines.
-
-At least one engine is required.
-
-loaders
-.......
-
-**type**: ``string[]``
-
-An array (or a string when configuring just one loader) of service ids for
-templating loaders. Templating loaders are used to find and load templates
-from a resource (e.g. a filesystem or database). Templating loaders must
-implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
-
 translator
 ~~~~~~~~~~
 
@@ -2154,20 +2030,6 @@ Defines the name of the static method which is called to load the validation
 metadata of the class. You can define an array of strings with the names of
 several methods. In that case, all of them will be called in that order to load
 the metadata.
-
-strict_email
-............
-
-**type**: ``Boolean`` **default**: ``false``
-
-.. deprecated:: 4.1
-
-    The ``strict_email`` option was deprecated in Symfony 4.1. Use the new
-    ``email_validation_mode`` option instead.
-
-If this option is enabled, the `egulias/email-validator`_ library will be
-used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
-the validator uses a simple regular expression to validate email addresses.
 
 email_validation_mode
 .....................

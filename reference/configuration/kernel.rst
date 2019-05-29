@@ -12,11 +12,16 @@ Configuration
 -------------
 
 * `Charset`_
-* `Kernel Name`_
 * `Project Directory`_
 * `Cache Directory`_
 * `Log Directory`_
 * `Container Build Time`_
+
+In previous Symfony versions there was another configuration option to define
+the "kernel name", which is only important when
+:doc:`using applications with multiple kernels </configuration/multiple_kernels>`.
+If you need a unique ID for your kernels use the ``kernel.container_class``
+parameter or the ``Kernel::getContainerClass()`` method.
 
 .. _configuration-kernel-charset:
 
@@ -43,29 +48,6 @@ charset::
             return 'ISO-8859-1';
         }
     }
-
-Kernel Name
-~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``src`` (i.e. the directory name holding
-the kernel class)
-
-.. deprecated:: 4.2
-
-    The ``kernel.name`` parameter and the ``Kernel::getName()`` method were
-    deprecated in Symfony 4.2. If you need a unique ID for your kernels use the
-    ``kernel.container_class`` parameter or the ``Kernel::getContainerClass()`` method.
-
-The name of the kernel isn't usually directly important - it's used in the
-generation of cache files - and you probably will only change it when
-:doc:`using applications with multiple kernels </configuration/multiple_kernels>`.
-
-This value is exposed via the ``kernel.name`` configuration parameter and the
-:method:`Symfony\\Component\\HttpKernel\\Kernel::getName` method.
-
-To change this setting, override the ``getName()`` method. Alternatively, move
-your kernel into a different directory. For example, if you moved the kernel
-into a ``foo/`` directory (instead of ``src/``), the kernel name will be ``foo``.
 
 .. _configuration-kernel-project-directory:
 
