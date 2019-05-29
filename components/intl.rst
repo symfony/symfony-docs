@@ -248,7 +248,7 @@ Timezones
 ~~~~~~~~~
 
 The ``Timezones`` class provides several utilities related to timezones. First,
-it provides the name and values of all timezones in all languages::
+you can get the name and values of all timezones in all languages::
 
     use Symfony\Component\Intl\Timezones;
 
