@@ -215,7 +215,7 @@ You can also create more customized pools:
                     # uses the "foobar.cache" pool as its backend but controls
                     # the lifetime and (like all pools) has a separate cache namespace
                     short_cache:
-                        adapter: cache.foobar
+                        adapter: foobar.cache
                         default_lifetime: 60
 
     .. code-block:: xml
