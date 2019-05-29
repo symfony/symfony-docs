@@ -53,17 +53,6 @@ In addition, some components and official bundles provide other value resolvers:
     the controller can be accessed by anonymous users. It requires installing
     the :doc:`Security component </components/security>`.
 
-:class:`Symfony\\Bundle\\SecurityBundle\\SecurityUserValueResolver`
-    Injects the object that represents the current logged in user if type-hinted
-    with ``UserInterface``. Default value can be set to ``null`` in case
-    the controller can be accessed by anonymous users. It requires installing
-    the `SecurityBundle`_.
-
-.. deprecated:: 4.1
-
-    The ``SecurityUserValueResolver`` was deprecated in Symfony 4.1 in favor of
-    :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`.
-
 ``Psr7ServerRequestResolver``
     Injects a `PSR-7`_ compliant version of the current request if type-hinted
     with ``RequestInterface``, ``MessageInterface`` or ``ServerRequestInterface``.

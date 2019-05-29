@@ -74,11 +74,6 @@ Defines the ``format`` option that will be passed down to the date field.
 See the :ref:`DateType's format option <reference-forms-type-date-format>`
 for more details.
 
-.. deprecated:: 4.3
-
-    Using the ``date_format`` option when the form is rendered as an HTML 5
-    datetime input is deprecated since Symfony 4.3.
-
 date_label
 ~~~~~~~~~~
 
@@ -97,11 +92,6 @@ date_widget
 ~~~~~~~~~~~
 
 .. include:: /reference/forms/types/options/date_widget_description.rst.inc
-
-.. deprecated:: 4.3
-
-    Using the ``date_widget`` option when the ``widget`` option is set to
-    ``single_text`` is deprecated since Symfony 4.3.
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
@@ -143,11 +133,6 @@ as a datetime string. It defaults to the `datetime local`_ format which is
 used by the HTML5 ``datetime-local`` field. Keeping the default value will
 cause the field to be rendered as an ``input`` field with ``type="datetime-local"``.
 For more information on valid formats, see `Date/Time Format Syntax`_.
-
-.. deprecated:: 4.3
-
-    Using the ``format`` option when the ``html5`` option is enabled is deprecated
-    since Symfony 4.3.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
 
@@ -207,11 +192,6 @@ time_widget
 **type**: ``string`` **default**: ``choice``
 
 Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/time>`.
-
-.. deprecated:: 4.3
-
-    Using the ``time_widget`` option when the ``widget`` option is set to
-    ``single_text`` is deprecated since Symfony 4.3.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 

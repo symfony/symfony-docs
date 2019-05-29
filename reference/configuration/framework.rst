@@ -224,7 +224,6 @@ Configuration
     * `endpoint`_
 
   * `static_method`_
-  * `strict_email`_
   * `translation_domain`_
 
 * `workflows`_
@@ -1855,75 +1854,10 @@ templating
 form
 ....
 
-resources
-"""""""""
+.. caution::
 
-**type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
-
-.. deprecated:: 4.3
-
-    The integration of the Templating component in FrameworkBundle has been
-    deprecated since version 4.3 and will be removed in 5.0. Form theming with
-    PHP templates will no longer be supported and you'll need to use Twig instead.
-
-A list of all resources for form theming in PHP. This setting is not required
-if you're :ref:`using the Twig format for your themes <forms-theming-twig>`.
-
-Assume you have custom global form themes in ``templates/form_themes/``, you can
-configure this like:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            templating:
-                form:
-                    resources:
-                        - 'form_themes'
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:templating>
-                    <framework:form>
-                        <framework:resource>form_themes</framework:resource>
-                    </framework:form>
-                </framework:templating>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'templating' => [
-                'form' => [
-                    'resources' => [
-                        'form_themes',
-                    ],
-                ],
-            ],
-        ]);
-
-.. note::
-
-    The default form templates from ``FrameworkBundle:Form`` will always
-    be included in the form resources.
-
-.. seealso::
-
-    See :ref:`forms-theming-global` for more information.
+    Form theming with PHP templates is no longer supported in Symfony 5.0 and
+    you need to use Twig instead.
 
 .. _reference-templating-cache:
 
@@ -2154,20 +2088,6 @@ Defines the name of the static method which is called to load the validation
 metadata of the class. You can define an array of strings with the names of
 several methods. In that case, all of them will be called in that order to load
 the metadata.
-
-strict_email
-............
-
-**type**: ``Boolean`` **default**: ``false``
-
-.. deprecated:: 4.1
-
-    The ``strict_email`` option was deprecated in Symfony 4.1. Use the new
-    ``email_validation_mode`` option instead.
-
-If this option is enabled, the `egulias/email-validator`_ library will be
-used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
-the validator uses a simple regular expression to validate email addresses.
 
 email_validation_mode
 .....................

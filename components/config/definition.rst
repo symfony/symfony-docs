@@ -68,10 +68,6 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
         }
     }
 
-.. deprecated:: 4.2
-
-    Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
-
 Adding Node Definitions to the Tree
 -----------------------------------
 
