@@ -187,13 +187,6 @@ Configuration
   * `storage_id`_
   * `use_cookies`_
 
-* `templating`_
-
-  * :ref:`cache <reference-templating-cache>`
-  * `engines`_
-  * :ref:`form <reference-templating-form>`
-  * `loaders`_
-
 * `test`_
 * `translator`_
 
@@ -1842,54 +1835,6 @@ package:
 
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
-
-templating
-~~~~~~~~~~
-
-.. _reference-templating-form:
-
-form
-....
-
-.. caution::
-
-    Form theming with PHP templates is no longer supported in Symfony 5.0 and
-    you need to use Twig instead.
-
-.. _reference-templating-cache:
-
-cache
-.....
-
-**type**: ``string``
-
-The path to the cache directory for templates. When this is not set, caching
-is disabled.
-
-.. note::
-
-    When using Twig templating, the caching is already handled by the
-    TwigBundle and doesn't need to be enabled for the FrameworkBundle.
-
-engines
-.......
-
-**type**: ``string[]`` / ``string`` **required**
-
-The Templating Engine to use. This can either be a string (when only one
-engine is configured) or an array of engines.
-
-At least one engine is required.
-
-loaders
-.......
-
-**type**: ``string[]``
-
-An array (or a string when configuring just one loader) of service ids for
-templating loaders. Templating loaders are used to find and load templates
-from a resource (e.g. a filesystem or database). Templating loaders must
-implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
 
 translator
 ~~~~~~~~~~
