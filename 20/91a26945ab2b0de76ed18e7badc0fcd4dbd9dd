@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by ro0NL at 2019-05-28T16:24:27Z
+
+hi @javiereguiluz
+
+the offset represents the timezone compared to GMT, so `Europe/Amsterdam` is e.g. `GMT+01:00`  (raw 3600) or `GMT+02:00` (raw 7200). The difference is based on time, depending on a active DST transition. Hence the extra argument, to get the value at a certain point in time, defaulting to "now/today".
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-29T07:39:20Z
+
+Roland, thanks a lot for your help. Everything is more clear now and I could complete the docs.
