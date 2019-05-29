@@ -90,30 +90,51 @@ Configuration
 
 * `http_client`_
 
-  * `auth_basic`_
-  * `auth_bearer`_
-  * `base_uri`_
-  * `bindto`_
-  * `buffer`_
-  * `cafile`_
-  * `capath`_
-  * `capture_peer_cert_chain`_
-  * `ciphers`_
-  * `headers`_
-  * `http_version`_
-  * `local_cert`_
-  * `local_pk`_
+  * `default_options`_
+
+      * `bindto`_
+      * `cafile`_
+      * `capath`_
+      * `ciphers`_
+      * `headers`_
+      * `http_version`_
+      * `local_cert`_
+      * `local_pk`_
+      * `max_redirects`_
+      * `no_proxy`_
+      * `passphrase`_
+      * `peer_fingerprint`_
+      * `proxy`_
+      * `resolve`_
+      * `timeout`_
+      * `verify_host`_
+      * `verify_peer`_
+
   * `max_host_connections`_
-  * `max_redirects`_
-  * `no_proxy`_
-  * `passphrase`_
-  * `peer_fingerprint`_
-  * `proxy`_
-  * `query`_
-  * `resolve`_
-  * `timeout`_
-  * `verify_host`_
-  * `verify_peer`_
+  * `scoped_clients`_
+
+      * `scope`_
+      * `auth_basic`_
+      * `auth_bearer`_
+      * `base_uri`_
+      * `bindto`_
+      * `cafile`_
+      * `capath`_
+      * `ciphers`_
+      * `headers`_
+      * `http_version`_
+      * `local_cert`_
+      * `local_pk`_
+      * `max_redirects`_
+      * `no_proxy`_
+      * `passphrase`_
+      * `peer_fingerprint`_
+      * `proxy`_
+      * `query`_
+      * `resolve`_
+      * `timeout`_
+      * `verify_host`_
+      * `verify_peer`_
 
 * `http_method_override`_
 * `ide`_
@@ -662,8 +683,11 @@ when the request starts with this path.
 http_client
 ~~~~~~~~~~~
 
-If there's only one HTTP client defined in the app, you can configure it
-directly under the ``framework.http_client`` option:
+When the HttpClient component is installed, an HTTP client is available
+as a service named ``http_client`` or using the autowiring alias
+:class:`Symfony\\Constracts\\HttpClient\\HttpClientInterface`.
+
+This service can be configured using ``framework.http_client.default_options``:
 
 .. code-block:: yaml
 
@@ -671,14 +695,15 @@ directly under the ``framework.http_client`` option:
     framework:
         # ...
         http_client:
-            headers: [{ 'X-Powered-By': 'ACME App' }]
             max_host_connections: 10
-            max_redirects: 7
+            default_options:
+                headers: [{ 'X-Powered-By': 'ACME App' }]
+                max_redirects: 7
 
-If the app defines multiple HTTP clients, you must give them a unique name and
-define them under the type of HTTP client you are creating (``http_clients`` for
-regular clients and ``api_clients`` for clients that include utilities to
-consume APIs):
+Multiple pre-configured HTTP client services can be defined, each with its
+service name defined as a key under ``scoped_clients``. Scoped clients inherit
+the default options defined for the ``http_client`` service. You can override
+these options and can define a few others:
 
 .. code-block:: yaml
 
@@ -686,14 +711,20 @@ consume APIs):
     framework:
         # ...
         http_client:
-            http_clients:
-                crawler:
+            scoped_clients:
+                my_api.client:
+                    auth_bearer: secret_bearer_token
                     # ...
-                default:
-                    # ...
-            api_clients:
-                github:
-                    # ...
+
+Options defined for scoped clients apply only to URLs that match either their
+`base_uri`_ or the `scope`_ option when it is defined. Non-matching URLs always
+use default options.
+
+Each scoped client also defines a corresponding named autowiring alias.
+If you use for example
+``Symfony\Constracts\HttpClient\HttpClientInterface $myApiClient``
+as the type and name of an argument, autowiring will inject the ``my_api.client``
+service into your autowired classes.
 
 auth_basic
 ..........
@@ -743,15 +774,6 @@ bindto
 A network interface name, IP address, a host name or a UNIX socket to use as the
 outgoing network interface.
 
-buffer
-......
-
-**type**: ``boolean``
-
-.. TODO: improve this useless description
-
-Indicates if the response should be buffered or not.
-
 cafile
 ......
 
@@ -766,14 +788,6 @@ capath
 **type**: ``string``
 
 The path to a directory that contains one or more certificate authority files.
-
-capture_peer_cert_chain
-.......................
-
-**type**: ``boolean``
-
-If ``true``, the response includes a ``peer_certificate_chain`` attribute with
-the peer certificates (OpenSSL X.509 resources).
 
 ciphers
 .......
@@ -887,17 +901,27 @@ resolve
 
 A list of hostnames and their IP addresses to pre-populate the DNS cache used by
 the HTTP client in order to avoid a DNS lookup for those hosts. This option is
-useful both to improve performance and to make your tests easier.
+useful to improve security when IPs are checked before the URL is passed to the
+client and to make your tests easier.
 
 The value of this option is an associative array of ``domain => IP address``
 (e.g ``['symfony.com' => '46.137.106.254', ...]``).
+
+scope
+.....
+
+**type**: ``string``
+
+For scoped clients only: the regular expression that the URL must match before
+applying all other non-default options. By default, the scope is derived from
+`base_uri`_.
 
 timeout
 .......
 
 **type**: ``float`` **default**: depends on your PHP config
 
-Time, in seconds, to wait for a response. If the response takes longer, a
+Time, in seconds, to wait for a response. If the response stales for longer, a
 :class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
 Its default value is the same as the value of PHP's `default_socket_timeout`_
 config option.
