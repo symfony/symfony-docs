@@ -53,10 +53,6 @@ html5
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 4.3
-
-    The ``html5`` option was introduced in Symfony 4.3.
-
 If set to ``true``, the HTML input will be rendered as a native HTML5 ``type="number"``
 form.
 
@@ -64,10 +60,6 @@ input
 ~~~~~
 
 **type**: ``string`` **default**: ``number``
-
-.. versionadded:: 4.3
-
-    The ``input`` option was introduced in Symfony 4.3.
 
 The format of the input data - i.e. the format that the number is stored on
 your underlying object. Valid values are ``number`` and ``string``. Setting

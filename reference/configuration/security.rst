@@ -246,11 +246,6 @@ encoding algorithm. Also, each algorithm defines different config options:
     alternative is provided because starting from Symfony 5.0 this value will be
     hardcoded to ``1`` (one thread).
 
-.. versionadded:: 4.3
-
-    The ``sodium`` algorithm was introduced in Symfony 4.3. In previous Symfony
-    versions it was called ``argon2i``.
-
 .. tip::
 
     You can also create your own password encoders as services and you can even
@@ -262,11 +257,6 @@ encoding algorithm. Also, each algorithm defines different config options:
 
 Using the Sodium Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.3
-
-    The ``SodiumPasswordEncoder`` was introduced in Symfony 4.3. In previous
-    Symfony versions it was called ``Argon2iPasswordEncoder``.
 
 It uses the `Argon2 key derivation function`_ and it's the encoder recommended
 by Symfony. Argon2 support was introduced in PHP 7.2, but if you use an earlier

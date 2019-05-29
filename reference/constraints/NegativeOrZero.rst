@@ -1,10 +1,6 @@
 NegativeOrZero
 ==============
 
-.. versionadded:: 4.3
-
-    The ``NegativeOrZero`` constraint was introduced in Symfony 4.3.
-
 Validates that a value is a negative number or equal to zero. If you don't
 want to allow zero as value, use :doc:`/reference/constraints/Negative` instead.
 

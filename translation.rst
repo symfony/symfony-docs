@@ -368,11 +368,6 @@ The ``translation:update`` command looks for missing translations in:
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
   the ``translator`` service and makes calls to the ``trans()`` function.
 
-.. versionadded:: 4.3
-
-    The extraction of missing translation strings from PHP files was introduced
-    in Symfony 4.3.
-
 .. note::
 
     If you want to see the missing translation strings without actually updating

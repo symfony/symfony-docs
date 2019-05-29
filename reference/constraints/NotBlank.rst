@@ -90,10 +90,6 @@ allowNull
 If set to ``true``, ``null`` values are considered valid and won't trigger a
 constraint violation.
 
-.. versionadded:: 4.3
-
-    The ``allowNull`` option was introduced in Symfony 4.3.
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 message

@@ -150,10 +150,6 @@ rules to exclude files and directories from the results with the
     // excludes files/directories matching the .gitignore patterns
     $finder->ignoreVCSIgnored(true);
 
-.. versionadded:: 4.3
-
-    The ``ignoreVCSIgnored()`` method was introduced in Symfony 4.3.
-
 File Name
 ~~~~~~~~~
 
@@ -249,11 +245,6 @@ Multiple paths can be excluded by chaining calls or passing an array::
 
     // same as above
     $finder->notPath(['first/dir', 'other/dir']);
-
-.. versionadded:: 4.2
-
-    Support for passing arrays to ``notPath()`` was introduced in Symfony
-    4.2
 
 File Size
 ~~~~~~~~~

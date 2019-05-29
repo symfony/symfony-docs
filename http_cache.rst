@@ -167,11 +167,6 @@ cache efficiency of your routes.
     You can change the name of the header used for the trace
     information using the ``trace_header`` config option.
 
-.. versionadded:: 4.3
-
-    The ``trace_level`` and ``trace_header`` configuration options
-    were introduced in Symfony 4.3.
-
 .. _http-cache-symfony-versus-varnish:
 
 .. sidebar:: Changing from one Reverse Proxy to another

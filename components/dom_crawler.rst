@@ -77,10 +77,6 @@ tree.
     The DomCrawler component will use it automatically when the content has
     an HTML5 doctype.
 
-    .. versionadded:: 4.3
-
-        The automatic support of the html5-php library was introduced in Symfony 4.3.
-
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -216,10 +212,6 @@ Access the value of the first node of the current selection::
     // avoid the exception passing an argument that text() returns when node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
-.. versionadded:: 4.3
-
-    The default argument of ``text()`` was introduced in Symfony 4.3.
-
 Access the attribute value of the first node of the current selection::
 
     $class = $crawler->filterXPath('//body/p')->attr('class');
@@ -235,10 +227,6 @@ Extract attribute and/or node values from the list of nodes::
 
     Special attribute ``_text`` represents a node value, while ``_name``
     represents the element name (the HTML tag name).
-
-    .. versionadded:: 4.3
-
-        The special attribute ``_name`` was introduced in Symfony 4.3.
 
 Call an anonymous function on each node of the list::
 
@@ -332,10 +320,6 @@ and :phpclass:`DOMNode` objects::
 
         // avoid the exception passing an argument that html() returns when node does not exist
         $html = $crawler->html('Default <strong>HTML</strong> content');
-
-    .. versionadded:: 4.3
-
-        The default argument of ``html()`` was introduced in Symfony 4.3.
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~

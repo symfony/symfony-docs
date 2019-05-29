@@ -322,10 +322,6 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-.. versionadded:: 4.3
-
-    The ``{{ choices }}`` parameter was introduced in Symfony 4.3.
-
 message
 ~~~~~~~
 
@@ -369,10 +365,6 @@ Parameter          Description
 ``{{ choices }}``  A comma-separated list of available choices
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
-
-.. versionadded:: 4.3
-
-    The ``{{ choices }}`` parameter was introduced in Symfony 4.3.
 
 multiple
 ~~~~~~~~

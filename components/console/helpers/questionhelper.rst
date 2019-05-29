@@ -212,10 +212,6 @@ provide a callback function to dynamically generate suggestions::
         $filePath = $helper->ask($input, $output, $question);
     }
 
-.. versionadded:: 4.3
-
-    The ``setAutocompleterCallback()`` method was introduced in Symfony 4.3.
-
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

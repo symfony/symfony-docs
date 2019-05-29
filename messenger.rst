@@ -221,10 +221,6 @@ This is enough to allow you to route your message to the ``amqp`` transport.
 Redis
 ~~~~~
 
-.. versionadded:: 4.3
-
-    The Redis transport was introduced in Symfony 4.3.
-
 The Redis transport will use `streams`_ to queue messages.
 
 .. code-block:: bash
@@ -459,11 +455,6 @@ The first argument is the receiver's service name. It might have been created by
 your ``transports`` configuration or it can be your own receiver.
 It also requires a ``--bus`` option in case you have multiple buses configured,
 which is the name of the bus to which received messages should be dispatched.
-
-.. versionadded:: 4.3
-
-    The ``messenger:consume`` command was renamed in Symfony 4.3 (previously it
-    was called ``messenger:consume-messages``).
 
 Middleware
 ----------

@@ -426,10 +426,6 @@ disallow_search_engine_index
 
 **type**: ``boolean`` **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
-.. versionadded:: 4.3
-
-    The ``disallow_search_engine_index`` option was introduced in Symfony 4.3.
-
 If ``true``, Symfony adds a ``X-Robots-Tag: noindex`` HTTP tag to all responses
 (unless your own app adds that header, in which case it's not modified). This
 `X-Robots-Tag HTTP header`_ tells search engines to not index your web site.
@@ -633,12 +629,6 @@ hinclude_default_template
 .........................
 
 **type**: ``string`` **default**: ``null``
-
-.. versionadded:: 4.3
-
-    The ``framework.fragments.hinclude_default_template`` option was introduced
-    in Symfony 4.3. In previous Symfony versions it was defined under
-    ``framework.templating.hinclude_default_template``.
 
 Sets the content shown during the loading of the fragment or when JavaScript
 is disabled. This can be either a template name or the content itself.
@@ -2043,10 +2033,6 @@ throw_exception_on_invalid_property_path
 
 **type**: ``boolean`` **default**: ``true``
 
-.. versionadded:: 4.3
-
-    The ``throw_exception_on_invalid_property_path`` option was introduced in Symfony 4.3.
-
 When enabled, the ``property_accessor`` service throws an exception when you
 try to access an invalid property path of an object.
 
@@ -2121,10 +2107,6 @@ enabled
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 4.3
-
-    The ``enabled`` option was introduced in Symfony 4.3.
-
 If you set this option to ``true``, no HTTP requests will be made and the given
 password will be considered valid. This is useful when you don't want or can't
 make HTTP requests, such as in ``dev`` and ``test`` environments or in
@@ -2134,10 +2116,6 @@ endpoint
 ........
 
 **type**: ``string`` **default**: ``null``
-
-.. versionadded:: 4.3
-
-    The ``endpoint`` option was introduced in Symfony 4.3.
 
 By default, the :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 constraint uses the public API provided by `haveibeenpwned.com`_. This option

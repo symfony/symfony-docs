@@ -8,10 +8,6 @@ The HttpClient Component
     The HttpClient component is a low-level HTTP client with support for both
     PHP stream wrappers and cURL. It also provides utilities to consume APIs.
 
-.. versionadded:: 4.3
-
-    The HttpClient component was introduced in Symfony 4.3.
-
 Installation
 ------------
 

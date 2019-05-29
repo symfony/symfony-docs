@@ -92,10 +92,6 @@ You can also check if a given language code is valid::
 
     $isValidLanguage = Languages::exists($languageCode);
 
-.. versionadded:: 4.3
-
-    The ``Languages`` class was introduced in Symfony 4.3.
-
 The ``Scripts`` class provides access to the optional four-letter script code
 that can follow the language code according to the `Unicode ISO 15924 Registry`_
 (e.g. ``HANS`` in ``zh_HANS`` for simplified Chinese and ``HANT`` in ``zh_HANT``
@@ -124,10 +120,6 @@ which defaults to the current default locale::
 You can also check if a given script code is valid::
 
     $isValidScript = Scripts::exists($scriptCode);
-
-.. versionadded:: 4.3
-
-    The ``Scripts`` class was introduced in Symfony 4.3.
 
 Country Names
 ~~~~~~~~~~~~~
@@ -160,10 +152,6 @@ You can also check if a given country code is valid::
 
     $isValidCountry = Countries::exists($countryCode);
 
-.. versionadded:: 4.3
-
-    The ``Countries`` class was introduced in Symfony 4.3.
-
 Locales
 ~~~~~~~
 
@@ -195,10 +183,6 @@ which defaults to the current default locale::
 You can also check if a given locale code is valid::
 
     $isValidLocale = Locales::exists($localeCode);
-
-.. versionadded:: 4.3
-
-    The ``Locales`` class was introduced in Symfony 4.3.
 
 Currencies
 ~~~~~~~~~~
@@ -240,10 +224,6 @@ You can also check if a given currency code is valid::
 
     $isValidCurrency = Currencies::exists($currencyCode);
 
-.. versionadded:: 4.3
-
-    The ``Currencies`` class was introduced in Symfony 4.3.
-
 Timezones
 ~~~~~~~~~
 
@@ -272,10 +252,6 @@ which defaults to the current default locale::
 You can also check if a given timezone ID is valid::
 
     $isValidTimezone = Timezones::exists($timezoneId);
-
-.. versionadded:: 4.3
-
-    The ``Timezones`` class was introduced in Symfony 4.3.
 
 Learn more
 ----------
