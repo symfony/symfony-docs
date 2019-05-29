@@ -41,7 +41,7 @@ configure the service container to use the
 
             App\Email\NewsletterManager:
                 # call the static method
-                factory: ['App\Email\NewsletterManagerStaticFactory', createNewsletterManager]
+                factory: ['App\Email\NewsletterManagerStaticFactory', 'createNewsletterManager']
 
     .. code-block:: xml
 
@@ -104,7 +104,7 @@ Configuration of the service container then looks like this:
 
             App\Email\NewsletterManager:
                 # call a method on the specified factory service
-                factory: ['@App\Email\NewsletterManagerFactory', createNewsletterManager]
+                factory: ['@App\Email\NewsletterManagerFactory', 'createNewsletterManager']
 
     .. code-block:: xml
 

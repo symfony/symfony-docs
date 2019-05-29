@@ -136,10 +136,10 @@ all the classes are already loaded as services. All you need to do is specify th
 
             # override the services to set the configurator
             App\Mail\NewsletterManager:
-                configurator: ['@App\Mail\EmailConfigurator', configure]
+                configurator: ['@App\Mail\EmailConfigurator', 'configure']
 
             App\Mail\GreetingCardManager:
-                configurator: ['@App\Mail\EmailConfigurator', configure]
+                configurator: ['@App\Mail\EmailConfigurator', 'configure']
 
     .. code-block:: xml
 
