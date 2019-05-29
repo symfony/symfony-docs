@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-05-21T20:35:00Z
+
+First comments addressed, ready for merge if you're OK with fixing the TODOs later.
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-05-22T20:17:25Z
+
+Just asking, is there some benchmarks comparing this httpclient with others php ones? Thank you
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-24T06:45:51Z
+
+@noniagriconomie I found this recently: https://twitter.com/jderusse/status/1115333801419399170
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-05-28T10:45:36Z
+
+@OskarStark yes i found it to once, but i mean real benchmarks
