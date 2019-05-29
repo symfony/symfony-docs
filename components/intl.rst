@@ -274,7 +274,7 @@ You can also get all the timezones that exist in a given country. The
 ``forCountryCode()`` method returns one or more timezone IDs, which you can
 translate into any locale with the ``getName()`` method shown earlier::
 
-    // unlike locale codes, country codes are always uppercase (CL = Chile)
+    // unlike language codes, country codes are always uppercase (CL = Chile)
     $timezones = Timezones::forCountryCode('CL');
     // => ['America/Punta_Arenas', 'America/Santiago', 'Pacific/Easter']
 
@@ -307,6 +307,12 @@ arguments to get the offset at any given point in time::
     $offset = Timezones::getRawOffset('Europe/Madrid', strtotime('April 1, 2019'));    // $offset = 7200
     $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 27, 2019')); // $offset = 'GMT+02:00'
     $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019')); // $offset = 'GMT+01:00'
+
+The string representation of the GMT offset can vary depending on the locale, so
+you can pass the locale as the third optional argument::
+
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'ar')); // $offset = 'غرينتش+01:00'
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'dz')); // $offset = 'ཇི་ཨེམ་ཏི་+01:00'
 
 Finally, you can also check if a given timezone ID is valid::
 
