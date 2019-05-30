@@ -96,8 +96,14 @@ an **event bus**. The event bus could have zero or more subscribers.
             ],
         ]);
 
-This will generate the ``messenger.bus.commands``, ``messenger.bus.queries``
-and ``messenger.bus.events`` services that you can inject in your services.
+This will create three new services:
+
+* ``messenger.bus.commands``: autowireable with the :class:`Symfony\\Component\\Messenger\\MessageBusInterface`
+  type-hint (because this is the ``default_bus``);
+
+* ``messenger.bus.queries``: autowireable with the ``MessageBusInterface $messengerBusQueries``;
+
+* ``messenger.bus.queries``: autowireable with the ``MessageBusInterface $messengerBusEvents``.
 
 Type-hints and Auto-wiring
 --------------------------
