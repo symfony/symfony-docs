@@ -79,6 +79,11 @@ are configured for you:
 #. :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware` (enables asynchronous processing)
 #. :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware` (calls the registered handler(s))
 
+.. deprecated:: 4.3
+
+    The ``LoggingMiddleware`` is deprecated since Symfony 4.3 and will be
+    removed in 5.0. Pass a logger to ``SendMessageMiddleware`` instead.
+
 Example::
 
     use App\Message\MyMessage;
