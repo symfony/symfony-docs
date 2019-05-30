@@ -205,10 +205,6 @@ The message is actually a message template, which replaces occurrences of the
 ``%alias_id%`` placeholder by the service alias id. You **must** have at least
 one occurrence of the ``%alias_id%`` placeholder in your template.
 
-.. versionadded:: 4.3
-
-    The ``deprecated`` option for service aliases was introduced in Symfony 4.3.
-
 Anonymous Services
 ------------------
 

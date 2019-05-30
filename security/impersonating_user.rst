@@ -98,10 +98,6 @@ to show a link to exit impersonation:
 Finding the Original User
 -------------------------
 
-.. versionadded:: 4.3
-
-    The ``SwitchUserToken`` class was introduced in Symfony 4.3.
-
 In some cases, you may need to get the object that represents the impersonator
 user rather than the impersonated user. When a user is impersonated the token
 stored in the token storage will be a ``SwitchUserToken`` instance. Use the
@@ -233,10 +229,6 @@ Create the voter class::
             return false;
         }
     }
-
-.. versionadded:: 4.3
-
-    The ``getRoleNames()`` method was introduced in Symfony 4.3.
 
 To enable the new voter in the app, register it as a service and
 :doc:`tag it </service_container/tags>` with the ``security.voter``

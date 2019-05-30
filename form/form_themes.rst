@@ -294,10 +294,6 @@ field without having to :doc:`create a custom form type </form/create_custom_fie
         ]);
     }
 
-.. versionadded:: 4.3
-
-    The ``block_prefix`` option was introduced in Symfony 4.3.
-
 Now you can use ``wrapped_text_row``, ``wrapped_text_widget``, etc. as the block
 names.
 

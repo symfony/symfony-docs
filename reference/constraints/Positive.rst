@@ -1,10 +1,6 @@
 Positive
 ========
 
-.. versionadded:: 4.3
-
-    The ``Positive`` constraint was introduced in Symfony 4.3.
-
 Validates that a value is a positive number. Zero is neither positive nor
 negative, so you must use :doc:`/reference/constraints/PositiveOrZero` if you
 want to allow zero as value.

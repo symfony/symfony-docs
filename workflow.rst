@@ -318,7 +318,7 @@ workflow leaves a place::
     class WorkflowLogger implements EventSubscriberInterface
     {
         private $logger;
-        
+
         public function __construct(LoggerInterface $logger)
         {
             $this->logger = $logger;
@@ -502,10 +502,6 @@ place::
         }
     }
 
-.. versionadded:: 4.1
-
-    The transition blockers were introduced in Symfony 4.1.
-
 Usage in Twig
 -------------
 
@@ -558,10 +554,6 @@ The following example shows these functions in action:
 
 Storing Metadata
 ----------------
-
-.. versionadded:: 4.1
-
-    The feature to store metadata in workflows was introduced in Symfony 4.1.
 
 In case you need it, you can store arbitrary metadata in workflows, their
 places, and their transitions using the ``metadata`` option. This metadata can

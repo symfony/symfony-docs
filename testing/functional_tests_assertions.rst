@@ -4,11 +4,6 @@
 Functional Test specific Assertions
 ===================================
 
-.. versionadded:: 4.3
-
-    The shortcut methods for assertions using ``WebTestCase`` were introduced
-    in Symfony 4.3.
-
 When doing functional tests, sometimes you need to make complex assertions in
 order to check whether the ``Request``, the ``Response`` or the ``Crawler``
 contain the expected information to make your test succeed.

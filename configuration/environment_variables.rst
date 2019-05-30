@@ -497,18 +497,10 @@ Symfony provides the following env var processors:
                 'auth' => '%env(require:AUTH_FILE)%',
             ]);
 
-    .. versionadded:: 4.3
-
-        The ``require`` processor was introduced in Symfony 4.3.
-
 ``env(trim:FOO)``
     Trims the content of ``FOO`` env var, removing whitespaces from the beginning
     and end of the string. This is especially useful in combination with the
     ``file`` processor, as it'll remove newlines at the end of a file.
-
-    .. versionadded:: 4.3
-
-        The ``trim`` processor was introduced in Symfony 4.3.
 
 ``env(key:FOO:BAR)``
     Retrieves the value associated with the key ``FOO`` from the array whose
@@ -591,10 +583,6 @@ Symfony provides the following env var processors:
     When the fallback parameter is omitted (e.g. ``env(default::API_KEY)``), the
     value returned is ``null``.
 
-    .. versionadded:: 4.3
-
-        The ``default`` processor was introduced in Symfony 4.3.
-
 ``env(url:FOO)``
     Parses an absolute URL and returns its components as an associative array.
 
@@ -664,10 +652,6 @@ Symfony provides the following env var processors:
         In order to ease extraction of the resource from the URL, the leading
         ``/`` is trimmed from the ``path`` component.
 
-    .. versionadded:: 4.3
-
-        The ``url`` processor was introduced in Symfony 4.3.
-
 ``env(query_string:FOO)``
     Parses the query string part of the given URL and returns its components as
     an associative array.
@@ -713,10 +697,6 @@ Symfony provides the following env var processors:
                     ],
                 ],
             ]);
-
-    .. versionadded:: 4.3
-
-        The ``query_string`` processor was introduced in Symfony 4.3.
 
 It is also possible to combine any number of processors:
 

@@ -102,14 +102,6 @@ name of your service group::
         'redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster'
     );
 
-.. versionadded:: 4.2
-
-    The option to define multiple servers in a single DSN was introduced in Symfony 4.2.
-
-.. versionadded:: 4.4
-
-    Redis Sentinel support was introduced in Symfony 4.4.
-
 .. note::
 
     See the :class:`Symfony\\Component\\Cache\\Traits\\RedisTrait` for more options

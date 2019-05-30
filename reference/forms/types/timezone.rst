@@ -69,10 +69,6 @@ on your underlying object. Valid values are:
 * ``intltimezone`` (an ``\IntlTimeZone`` object)
 * ``string`` (e.g. ``America/New_York``)
 
-.. versionadded:: 4.3
-
-    The ``intltimezone`` input type was introduced in Symfony 4.3.
-
 regions
 ~~~~~~~
 

@@ -223,11 +223,6 @@ normalized data, instead of the denormalizer re-creating them. Note that
 arrays of objects. Those will still be replaced when present in the normalized
 data.
 
-.. versionadded:: 4.3
-
-    The ``AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE`` option was
-    introduced in Symfony 4.3.
-
 .. _component-serializer-attributes-groups:
 
 Attributes Groups
@@ -664,7 +659,7 @@ When serializing, you can set a callback to format a specific object property::
             'createdAt' => $callback,
         ],
     ];
-    
+
     $normalizer = new GetSetMethodNormalizer(null, null, null, null, null, $defaultContext);
 
     $serializer = new Serializer([$normalizer], [$encoder]);

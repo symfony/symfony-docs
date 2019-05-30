@@ -9,10 +9,6 @@ The HttpClient Component
     PHP stream wrappers and cURL. It provides utilities to consume APIs and
     supports synchronous and asynchronous operations.
 
-.. versionadded:: 4.3
-
-    The HttpClient component was introduced in Symfony 4.3.
-
 .. TODO
 .. tell about implementation vs abstraction
 .. tell there are more options

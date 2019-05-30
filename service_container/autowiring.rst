@@ -480,10 +480,6 @@ If the argument is named ``$shoutyTransformer``,
 But, you can also manually wire any *other* service by specifying the argument
 under the arguments key.
 
-.. versionadded:: 4.2
-
-    Named autowiring aliases have been introduced in Symfony 4.2.
-
 Fixing Non-Autowireable Arguments
 ---------------------------------
 

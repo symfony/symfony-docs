@@ -30,10 +30,6 @@ Basic uses of the cache looks like this::
 Symfony supports the Cache Contracts, PSR-6/16 and Doctrine Cache interfaces.
 You can read more about these at the :doc:`component documentation </components/cache>`.
 
-.. versionadded:: 4.2
-
-    The cache contracts were introduced in Symfony 4.2.
-
 .. _cache-configuration-with-frameworkbundle:
 
 Configuring Cache with FrameworkBundle
@@ -611,10 +607,6 @@ To see all available cache pools:
 .. code-block:: terminal
 
     $ php bin/console cache:pool:list
-
-.. versionadded:: 4.3
-
-    The ``cache:pool:list`` command was introduced in Symfony 4.3.
 
 Clear one pool:
 

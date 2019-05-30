@@ -318,10 +318,6 @@ the ``switch_user`` firewall listener.
 The ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent`` event is triggered when a token has been deauthenticated
 because of a user change, it can help you doing some clean-up task when a logout has been triggered.
 
-.. versionadded:: 4.3
-
-    The ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent`` event was introduced in Symfony 4.3.
-
 .. seealso::
 
     For more information on switching users, see

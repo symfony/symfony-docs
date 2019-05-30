@@ -179,11 +179,6 @@ Symfony's MonologBridge provides processors that can be registered inside your a
 :class:`Symfony\\Bridge\\Monolog\\Processor\\ConsoleCommandProcessor`
     Adds information about current console command.
 
-.. versionadded:: 4.3
-
-    The ``RouteProcessor`` and the ``ConsoleCommandProcessor`` were introduced
-    in Symfony 4.3.
-
 Registering Processors per Handler
 ----------------------------------
 

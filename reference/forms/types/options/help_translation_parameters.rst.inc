@@ -3,10 +3,6 @@ help_translation_parameters
 
 **type**: ``array`` **default**: ``[]``
 
-.. versionadded:: 4.3
-
-    The ``help_translation_parameters`` option was introduced in Symfony 4.3.
-
 The content of the `help`_ option is translated before displaying it, so it
 can contain :ref:`translation placeholders <component-translation-placeholders>`.
 This option defines the values used to replace those placeholders.

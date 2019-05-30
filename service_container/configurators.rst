@@ -186,10 +186,6 @@ all the classes are already loaded as services. All you need to do is specify th
 
 .. _configurators-invokable:
 
-.. versionadded:: 4.3
-
-    Invokable configurators for services were introduced in Symfony 4.3.
-
 Services can be configured via invokable configurators (replacing the
 ``configure()`` method with ``__invoke()``) by omitting the method name, just as
 routes can reference :ref:`invokable controllers <controller-service-invoke>`.

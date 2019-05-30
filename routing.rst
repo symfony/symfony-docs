@@ -535,11 +535,6 @@ If you want to always include some default value in the generated URL (for
 example to force the generation of ``/blog/1`` instead of ``/blog`` in the
 previous example) add the ``!`` character before the placeholder name: ``/blog/{!page}``
 
-.. versionadded:: 4.3
-
-    The feature to force the inclusion of default values in generated URLs was
-    introduced in Symfony 4.3.
-
 As it happens with requirements, default values can also be inlined in each
 placeholder using the syntax ``{placeholder_name?default_value}``. This feature
 is compatible with inlined requirements, so you can inline both in a single
@@ -844,10 +839,6 @@ You can also use special attributes to configure them (except ``_fragment``):
         };
 
 These attributes can also be used for route imports.
-
-.. versionadded:: 4.3
-
-    The special attributes were introduced in Symfony 4.3.
 
 .. _routing-trailing-slash-redirection:
 
