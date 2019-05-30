@@ -29,6 +29,8 @@ Introduction
 Usage
 -----
 
+The Mailer component has two main classes: a ``Transport`` and the ``Mailer`` itself::
+
     use Symfony\Component\Mailer\Mailer;
     use Symfony\Component\Mailer\Transport\Smtp\SmtpTransport;
 
@@ -38,12 +40,13 @@ Usage
 
 Refer :doc:`Mime component </components/mime>` how to create `$email` object.
 
-
 Transport
 ---------
 
 By default, the only transport available in the mailer component is Smtp.
+
 Below is the list of other popular providers with built in support.
+
 - Amazon SES  : symfony/amazon-mailer
 - Google Gmail : symfony/google-mailer
 - Mandrill : symfony/mailchimp-mailer
@@ -57,24 +60,24 @@ For example to use google's gmail as a transport you need to install symfony/goo
 
     $ composer require symfony/google-mailer
 
-.. include:: /components/require_autoload.rst.inc
-
-
+.. code-block:: php
     use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
 
     $transport = new GmailTransport('user', 'pass');
-    $transport->send($email);
+    $mailer = new Mailer($transport);
+    $mailer->send($email);
 
 Use a Dsn
 ---------
 
-The mailer component provides a convenient way to create transport object from dsn string.
+The mailer component provides a convenient way to create transport object from dsn string::
 
     use Symfony\Component\Mailer\Transport;
 
     $transport = Transport::fromDsn($dsn);
 
-Where `$dns` as one of the form below.
+Where ``$dns`` as one of the form below.
+
 - smtp://user:pass@gmail
 - smtp://key@sendgrid
 - smtp://null
@@ -88,37 +91,32 @@ Easily switch from SMTP in dev to a "real" provider in production with same API.
 Failover transport
 ------------------
 
-You can create failover transport with the help of `||` operator.
-
-Eg : 
+You can create failover transport with the help of `||` operator::
 
     $dsn = 'api://id@postmark || smtp://key@sendgrid';
 
-So if it fails at one transport, the mailer will attempt to send through the other transport.
+So if the first transport fails, the mailer will attempt to send through the second transport.
 
-RoundRobin
-----------
+Round Robin
+-----------
 
-If you want to send mails via multiple transports, you can use the `&&` operator between the transports.
+If you want to send emails by using multiple transports in a round-robin fashion, you can use the
+``&&`` operator between the transports::
 
-Eg :
-    
     $dsn = 'api://id@postmark && smtp://key@sendgrid'
-
 
 Async
 -----
 
-If you want to use the async functionality you need to install `messenger` component.
-By default, `$bus` is null and if it is not configured, mailer is always using sync functionality.
-And async when `$bus` is configured for EnvelopedMessage.
+If you want to use the async functionality you need to install the ``messenger`` component.
 
 .. code-block:: terminal
 
     $ composer require symfony/messenger
 
-.. include:: /components/require_autoload.rst.inc
+Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
 
+.. code-block:: php
     use Symfony\Component\Mailer\Mailer;
     use Symfony\Component\Mailer\Messenger\MessageHandler;
     use Symfony\Component\Mailer\Messenger\SendEmailMessage;
@@ -135,7 +133,7 @@ And async when `$bus` is configured for EnvelopedMessage.
 
     $bus = new MessageBus([
         new HandleMessageMiddleware(new HandlersLocator([
-            SendEmailMessage::class => ['message_hander' => $handler],
+            SendEmailMessage::class => [$handler],
         ])),
     ]);
 
