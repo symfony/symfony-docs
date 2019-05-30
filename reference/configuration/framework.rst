@@ -685,7 +685,7 @@ http_client
 
 When the HttpClient component is installed, an HTTP client is available
 as a service named ``http_client`` or using the autowiring alias
-:class:`Symfony\\Constracts\\HttpClient\\HttpClientInterface`.
+:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`.
 
 This service can be configured using ``framework.http_client.default_options``:
 
@@ -722,7 +722,7 @@ use default options.
 
 Each scoped client also defines a corresponding named autowiring alias.
 If you use for example
-``Symfony\Constracts\HttpClient\HttpClientInterface $myApiClient``
+``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
