@@ -90,7 +90,7 @@ Configuration
 
 * `http_client`_
 
-  * `default_options`_
+  * :ref:`default_options <reference-http-client-default-options>`
 
       * `bindto`_
       * `cafile`_
@@ -111,7 +111,7 @@ Configuration
       * `verify_peer`_
 
   * `max_host_connections`_
-  * `scoped_clients`_
+  * :ref:`scoped_clients <reference-http-client-scoped-clients>`
 
       * `scope`_
       * `auth_basic`_
@@ -687,6 +687,8 @@ When the HttpClient component is installed, an HTTP client is available
 as a service named ``http_client`` or using the autowiring alias
 :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`.
 
+.. _reference-http-client-default-options:
+
 This service can be configured using ``framework.http_client.default_options``:
 
 .. code-block:: yaml
@@ -699,6 +701,8 @@ This service can be configured using ``framework.http_client.default_options``:
             default_options:
                 headers: [{ 'X-Powered-By': 'ACME App' }]
                 max_redirects: 7
+
+.. _reference-http-client-scoped-clients:
 
 Multiple pre-configured HTTP client services can be defined, each with its
 service name defined as a key under ``scoped_clients``. Scoped clients inherit
