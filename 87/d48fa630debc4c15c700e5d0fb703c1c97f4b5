@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-31T13:44:46Z
+
+The code is merged, so I removed the label.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2019-03-31T15:44:57Z
+
+Still needs https://github.com/doctrine/DoctrineBundle/issues/938 before merge.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-04-06T14:12:36Z
+
+I think it would be nicer to move this new section to a complete new article, linked at the bottom of the guide. It's not really a base feature we should explain in Doctrine imo. Ideally, we should make the main guides as short as possible.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2019-04-06T14:21:28Z
+
+@wouterj But it will be enabled by default. Shouldn't we at least reference it in this guide?
+@OskarStark I'll do the change as soon as I'll be back from vacations, thanks for the review!!
+
+---------------------------------------------------------------------------
+
+by sylfabre at 2019-05-09T06:47:42Z
+
+@dunglas thank you for this new feature.
+Do you plan to add more documentation on how to extend it?
+
+My use-case:
+- we have developed at AssoConnect a similar logic to valid our DTOs and entities
+- we have custom Doctrine types (like email, iban, ...) to enforce consistency in the database structure
+- we use these custom types for validation as well (like `email` => `EmailValidator`)
+- we would like to switch to your feature as soon as Symfony 4.3 is released
+
+---------------------------------------------------------------------------
+
+by dunglas at 2019-05-09T09:29:20Z
+
+@sylfabre thanks! Unfortunately I don't think I'll have the time to add such docs anytime soon, but I'll be glad to help someone writing it.
+In a nutshell, you have to implement [the `LoaderInterface` interface](https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Mapping/Loader/LoaderInterface.php) and to register this loader with the `validator.auto_mapper` tag.
+
+You can see how it's done for Doctrine:
+
+* the loader: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Doctrine/Validator/DoctrineLoader.php
+* the DI wiring in DoctrineBundle: https://github.com/doctrine/DoctrineBundle/blob/master/DependencyInjection/DoctrineExtension.php#L797-L807
+
+I hope this helps.
