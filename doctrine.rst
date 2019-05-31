@@ -353,9 +353,9 @@ and save it::
     class ProductController extends AbstractController
     {
         /**
-         * @Route("/product", name="product")
+         * @Route("/product", name="create_product")
          */
-        public function index()
+        public function createProduct(): Response
         {
             // you can fetch the EntityManager via $this->getDoctrine()
             // or you can add an argument to your action: index(EntityManagerInterface $entityManager)
@@ -417,6 +417,76 @@ Take a look at the previous example in more detail:
 
 Whether you're creating or updating objects, the workflow is always the same: Doctrine
 is smart enough to know if it should INSERT or UPDATE your entity.
+
+Validating Objects
+------------------
+
+:doc:`The Symfony validator </validation>` reuses Doctrine metadata
+to perform some basic validation tasks::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+    use App\Entity\Product;
+
+    class ProductController extends AbstractController
+    {
+        /**
+         * @Route("/product", name="create_product")
+         */
+        public function createProduct(ValidatorInterface $validator): Response
+        {
+            $product = new Product();
+            $product->setName(null); // The column in database isn't nullable
+            $product->setPrice('1999'); // Type mismatch, an integer is expected
+
+            // ...
+
+            $errors = $validator->validate($product);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, 400);
+            }
+
+            // Will not be reached in this example
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();
+
+            return new Response('Saved new product with id '.$product->getId());
+        }
+    }
+
+The following table summarizes the mapping between Doctrine metadata and
+the corresponding validation constraints:
+
++--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
+| Doctrine attribute | Validation constraint                                     | Notes                                                                   |
++====================+===========================================================+=========================================================================+
+| ``nullable=true``  | :doc:`NotNull </reference/constraints/NotNull>`           | Relies on :doc:`the PropertyInfo component </components/property_info>` |
++--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
+| ``type``           | :doc:`Type </reference/constraints/Type>`                 | Relies on :doc:`the PropertyInfo component </components/property_info>` |
++--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
+| ``unique=true``    | :doc:`UniqueEntity </reference/constraints/UniqueEntity>` |                                                                         |
++--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
+| ``length``         | :doc:`Length </reference/constraints/Length>`             |                                                                         |
++--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
+
+Because :doc:`the Form component </forms>` as well as `API Platform`_
+internally use the Validator Component, all your forms
+and web APIs will also automatically benefit from these default constraints.
+
+.. versionadded:: 4.3
+
+    The automatic validation has been added in Symfony 4.3.
+
+.. tip::
+
+    Don't forget to add :doc:`more precise validation constraints </reference/constraints>`
+    to ensure that data provided by the user is correct.
 
 Fetching Objects from the Database
 ----------------------------------
@@ -816,3 +886,4 @@ Learn more
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
+.. _`API Platform`: https://api-platform.com/docs/core/validation/
