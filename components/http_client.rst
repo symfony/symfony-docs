@@ -265,6 +265,10 @@ following methods::
     // you can get individual info too
     $startTime = $response->getInfo('start_time');
 
+.. tip::
+
+    Call ``$response->getInfo('debug')`` to get detailed logs about the HTTP transaction.
+
 .. _http-client-streaming-responses:
 
 Streaming Responses
@@ -316,17 +320,25 @@ When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
 Caching Requests and Responses
 ------------------------------
 
-This component provides a special HTTP client via the
-:class:`Symfony\\Component\\HttpClient\\CachingHttpClient` class to cache
-requests and their responses. The actual HTTP caching is implemented using the
-:doc:`HttpKernel component </components/http_kernel>`, so make sure it's
-installed in your application.
+This component provides a :class:`Symfony\\Component\\HttpClient\\CachingHttpClient`
+decorator that allows caching responses and serving them from the local storage
+for next requests. The implementation leverages the
+:class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache` class under the hood
+so that the :doc:`HttpKernel component </components/http_kernel>` needs to be
+installed in your application::
 
-..
-.. TODO:
-.. Show some example of caching requests+responses
-..
-..
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpClient\CachingHttpClient;
+    use Symfony\Component\HttpKernel\HttpCache\Store;
+
+    $store = new Store('/path/to/cache/storage/');
+    $client = HttpClient::create();
+    $client = new CachingHttpClient($client, $store);
+
+    // this won't hit the network if the resource is already in the cache
+    $response = $client->request('GET', 'https://example.com/cacheable-resource');
+
+``CachingHttpClient`` accepts a third argument to set the options of the ``HttpCache``.
 
 Scoping Client
 --------------
