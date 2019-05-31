@@ -368,7 +368,7 @@ Handling Messages Synchronously
 
 If a message doesn't :ref:`match any routing rules <messenger-routing>`, it won't
 be sent to any transport and will be handled immediately. In some cases (like
-when :ref:`sending handlers to different transports<messenger-handlers-different-transports>`),
+when `binding handlers to different transports`_),
 it's easier or more flexible to handle this explicitly: by creating a ``sync``
 transport and "sending" messages there to be handled immediately:
 
@@ -709,7 +709,11 @@ to retry them:
     $ php bin/console messenger:failed:retry 20 30 --force
 
     # remove a message without retrying it
-    $ php bin/console messenger:failed:retry 20
+    $ php bin/console messenger:failed:remove 20
+
+If the messages fails again, it will be re-sent back to the failure transport
+due to the normal `retry rules <Retries & Failures>`_. Once the max retry has
+been hit, the message will be discarded permanently.
 
 .. _messenger-transports-config:
 
@@ -773,12 +777,17 @@ a table named ``messenger_messages`` (this is configurable) when the transport i
 first used. You can disable that with the ``auto_setup`` option and set the table
 up manually by calling the ``messenger:setup-transports`` command.
 
-.. caution::
+.. tip::
 
-    If you use Doctrine Migrations, each generated migration will try to drop
-    the ``messenger_messages`` table and needs to be removed manually. You
-    cannot (yet) use ``doctrine.dbal.schema_filter`` to avoid. See
-    https://github.com/symfony/symfony/issues/31623.
+    To avoid tools like Doctrine Migrations from trying to remove this table because
+    it's not part of your normal schema, you can set the ``schema_filter`` option:
+
+    .. code-block:: yaml
+
+        # config/packages/doctrine.yaml
+        doctrine:
+            dbal:
+                schema_filter: '~^(?!messenger_messages)~'
 
 The transport has a number of options:
 
@@ -842,14 +851,14 @@ Options defined under ``options`` take precedence over ones defined in the DSN.
 ==================  =================================== =======
 table_name          Name of the table                   messenger_messages
 queue_name          Name of the queue (a column in the  default
-                    table, to use-use one table for
+                    table, to use one table for
                     multiple transports)
 redeliver_timeout   Timeout before retrying a messages  3600
                     that's in the queue but in the
                     "handling" state (if a worker died
                     for some reason, this will occur,
                     eventually you should retry the
-                    message)
+                    message) - in seconds.
 auto_setup          Whether the table should be created
                     automatically during send / get.    true
 ==================  =================================== =======
@@ -875,7 +884,7 @@ a running Redis server (^5.0).
 
     The Redis transport does not support "delayed" messages.
 
-A number of options can be configured via the DSN of via the ``options`` key
+A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
 ==================  =================================== =======
@@ -1065,9 +1074,7 @@ A handler class can handle multiple messages or configure itself by implementing
         }
     }
 
-.. _messenger-handlers-different-transports:
-
-Sending Handlers to Different Transports
+Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Each message can have multiple handlers, and when a message is consumed
@@ -1239,17 +1246,18 @@ collection of middleware (and their order). By default, the middleware configure
 for each bus looks like this:
 
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
-   message was dispatched into.
+   message was dispatched into;
 
-#. ``dispatch_after_current_bus``- see :doc:`/messenger/message-recorder`.
+#. ``dispatch_after_current_bus``- see :doc:`/messenger/message-recorder`;
 
-#. ``failed_message_processing_middleware`` - sends failed messages to the
-   :ref:`failure transport <messenger-failure-transport>`.
+#. ``failed_message_processing_middleware`` - processes messages that are being
+   retried via the :ref:`failure transport <messenger-failure-transport>` to make
+   them properly function as if they were being received from their original transport;
 
 #. Your own collection of middleware_;
 
 #. ``send_message`` - if routing is configured for the transport, this sends
-   messages to that transport and stops the middleware chain.
+   messages to that transport and stops the middleware chain;
 
 #. ``handle_message`` - calls the message handler(s) for the given message.
 
