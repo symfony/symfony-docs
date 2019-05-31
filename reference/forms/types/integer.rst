@@ -20,7 +20,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 |             | - `rounding_mode`_                                                    |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
-| options     | - `scale`_                                                            |
+| options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
@@ -83,21 +83,6 @@ Overridden Options
 ------------------
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
-
-scale
-~~~~~
-
-**type**: ``integer`` **default**: ``0``
-
-.. deprecated:: 4.2
-
-    The ``scale`` option is deprecated since Symfony 4.2 and will be removed
-    in 5.0.
-
-This specifies how many decimals will be allowed until the field rounds the
-submitted value (via ``rounding_mode``). This option inherits from
-:doc:`number </reference/forms/types/number>` type and is overriden to ``0`` for
-``IntegerType``.
 
 Inherited Options
 -----------------

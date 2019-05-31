@@ -97,11 +97,11 @@ whenever the corresponding environment variable is *not* found:
         // config/services.php
         $container->setParameter('env(DATABASE_HOST)', 'localhost');
 
-.. deprecated:: 4.3
+.. note::
 
-    Passing non-string values as default values for environment variables is
-    deprecated since Symfony 4.3. Use :ref:`environment variable processors <env-var-processors>`
-    if you need to transform those string default values into other data types.
+    The default values of environment variables must be strings, but you can use
+    :ref:`environment variable processors <env-var-processors>` to transform
+    them into other data types.
 
 .. _configuration-env-var-in-prod:
 

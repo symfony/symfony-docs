@@ -18,7 +18,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `input`_                                                             |
-|             | - `regions`_                                                           |
+|             |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
@@ -68,17 +68,6 @@ on your underlying object. Valid values are:
 * ``datetimezone`` (a ``\DateTimeZone`` object)
 * ``intltimezone`` (an ``\IntlTimeZone`` object)
 * ``string`` (e.g. ``America/New_York``)
-
-regions
-~~~~~~~
-
-**type**: ``int`` **default**: ``\DateTimeZone::ALL``
-
-.. deprecated:: 4.2
-
-    This option was deprecated in Symfony 4.2.
-
-The available regions in the timezone choice list. For example: ``DateTimeZone::AMERICA | DateTimeZone::EUROPE``
 
 Overridden Options
 ------------------

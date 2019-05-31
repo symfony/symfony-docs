@@ -36,7 +36,6 @@ Tag Name                                  Usage
 `serializer.encoder`_                     Register a new encoder in the ``serializer`` service
 `serializer.normalizer`_                  Register a new normalizer in the ``serializer`` service
 `swiftmailer.default.plugin`_             Register a custom SwiftMailer Plugin
-`templating.helper`_                      Make your service available in PHP templates
 `translation.loader`_                     Register a custom service that loads translations
 `translation.extractor`_                  Register a custom service that extracts translation messages from a file
 `translation.dumper`_                     Register a custom service that dumps translation messages
@@ -788,53 +787,6 @@ For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
 
 Several SwiftMailer plugins are core to Symfony and can be activated via
 different configuration. For details, see :doc:`/reference/configuration/swiftmailer`.
-
-templating.helper
------------------
-
-**Purpose**: Make your service available in PHP templates
-
-.. deprecated:: 4.3
-
-    The ``templating.helper`` tag is deprecated since version 4.3 and will be
-    removed in 5.0; use Twig instead.
-
-To enable a custom template helper, add it as a regular service in one
-of your configuration, tag it with ``templating.helper`` and define an
-``alias`` attribute (the helper will be accessible via this alias in the
-templates):
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            App\Templating\AppHelper:
-                tags:
-                    - { name: templating.helper, alias: alias_name }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Templating\AppHelper">
-                    <tag name="templating.helper" alias="alias_name"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        use App\Templating\AppHelper;
-
-        $container->register(AppHelper::class)
-            ->addTag('templating.helper', ['alias' => 'alias_name'])
-        ;
 
 .. _dic-tags-translation-loader:
 

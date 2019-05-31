@@ -6,9 +6,7 @@ cast to a string before being validated.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `checkHost`_
-            - `checkMX`_
-            - `groups`_
+Options     - `groups`_
             - `message`_
             - `mode`_
             - `normalizer`_
@@ -33,8 +31,7 @@ Basic Usage
         {
             /**
              * @Assert\Email(
-             *     message = "The email '{{ value }}' is not a valid email.",
-             *     checkMX = true
+             *     message = "The email '{{ value }}' is not a valid email."
              * )
              */
             protected $email;
@@ -48,7 +45,6 @@ Basic Usage
                 email:
                     - Email:
                         message: The email "{{ value }}" is not a valid email.
-                        checkMX: true
 
     .. code-block:: xml
 
@@ -62,7 +58,6 @@ Basic Usage
                 <property name="email">
                     <constraint name="Email">
                         <option name="message">The email "{{ value }}" is not a valid email.</option>
-                        <option name="checkMX">true</option>
                     </constraint>
                 </property>
             </class>
@@ -82,7 +77,6 @@ Basic Usage
             {
                 $metadata->addPropertyConstraint('email', new Assert\Email([
                     'message' => 'The email "{{ value }}" is not a valid email.',
-                    'checkMX' => true,
                 ]));
             }
         }
@@ -91,36 +85,6 @@ Basic Usage
 
 Options
 -------
-
-checkHost
-~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. deprecated:: 4.2
-
-    This option was deprecated in Symfony 4.2.
-
-If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
-check the validity of the MX *or* the A *or* the AAAA record of the host
-of the given email.
-
-checkMX
-~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. deprecated:: 4.2
-
-    This option was deprecated in Symfony 4.2.
-
-If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
-check the validity of the MX record of the host of the given email.
-
-.. caution::
-
-    This option is not reliable because it depends on the network conditions
-    and some valid servers refuse to respond to those requests.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
