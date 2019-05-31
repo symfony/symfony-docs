@@ -788,3 +788,89 @@ configuration::
 
 .. _`SetEnv`: http://httpd.apache.org/docs/current/env.html
 .. _`fastcgi_param`: http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_param
+
+Debugging Variables
+---------------------------
+
+.. versionadded:: 4.3
+
+    Environment variables debugging was introduced in Symfony 4.3.
+
+You can find out which environment variables are used by the container using the
+console. To show all variables and their values, run:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --env-vars
+
+    ---------------- ----------------- ---------------------------------------------
+     Name             Default value     Real value
+    ---------------- ----------------- ---------------------------------------------
+     APP_SECRET       n/a               "471a62e2d601a8952deb186e44186cb3"
+     FOO              "[1, "2.5", 3]"   n/a
+     BAR              null              n/a
+    ---------------- ----------------- ---------------------------------------------
+
+    // Note real values might be different between web and CLI.
+
+.. note::
+     Default values will exist only if they are configured for (see :ref:`config-env-vars`)
+
+If some variables used by the container are not defined, you will see a warning with the list of all the
+missing variables.
+
+You can also filter the variables by their name:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --env-var bar
+
+    Symfony Container Environment Variables
+    =======================================
+
+     // Displaying detailed environment variable usage matching bar
+
+    %env(float:key:1:json:BAR)%
+    ---------------------------
+
+     ----------------- -----------------
+      Default value     n/a
+      Real value        "[1, "2.5", 3]"
+      Processed value   2.5
+     ----------------- -----------------
+
+    %env(int:key:1:json:BAR)%
+    -------------------------
+
+     ----------------- -----------------
+      Default value     n/a
+      Real value        "[1, "2.5", 3]"
+      Processed value   2
+     ----------------- -----------------
+
+    %env(json:BAR)%
+    ---------------
+
+     ----------------- -----------------
+      Default value     n/a
+      Real value        "[1, "2.5", 3]"
+      Processed value   [
+                          1,
+                          "2.5",
+                          3
+                        ]
+     ----------------- -----------------
+
+    %env(key:1:json:BAR)%
+    ---------------------
+
+     ----------------- -----------------
+      Default value     n/a
+      Real value        "[1, "2.5", 3]"
+      Processed value   "2.5"
+     ----------------- -----------------
+
+     // Note real values might be different between web and CLI.
+
+.. note::
+    The only ouput format supported for these commands is `txt`, using any other one will throw en exception.
