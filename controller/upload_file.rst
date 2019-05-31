@@ -120,7 +120,7 @@ Finally, you need to update the code of the controller that handles the form::
             if ($form->isSubmitted() && $form->isValid()) {
                 // $file stores the uploaded PDF file
                 /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-                $file = $product->getBrochure();
+                $file = $form->get('brochure')->getData();
 
                 $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
