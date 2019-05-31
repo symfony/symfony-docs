@@ -1850,7 +1850,7 @@ package:
 templating
 ~~~~~~~~~~
 
-.. versionadded:: 4.3
+.. deprecated:: 4.3
 
     The integration of the Templating component in FrameworkBundle has been
     deprecated since version 4.3 and will be removed in 5.0. That's why all the
