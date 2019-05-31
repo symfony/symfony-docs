@@ -266,6 +266,7 @@ following methods::
     $startTime = $response->getInfo('start_time');
 
 .. tip::
+
     Call ``$response->getInfo('debug')`` to get detailed logs about the HTTP transaction.
 
 .. _http-client-streaming-responses:
