@@ -42,12 +42,12 @@ By default, the only transport available in the mailer component is Smtp.
 
 Below is the list of other popular providers with built in support.
 
-- Amazon SES  : symfony/amazon-mailer
-- Google Gmail : symfony/google-mailer
-- Mandrill : symfony/mailchimp-mailer
-- Mailgun : symfony/mailgun-mailer
-- Postmark : symfony/postmark-mailer
-- Sendgrid : symfony/sendgrid-mailer
+- Amazon SES: ``symfony/amazon-mailer``
+- Google Gmail: ``symfony/google-mailer``
+- Mandrill: ``symfony/mailchimp-mailer``
+- Mailgun: ``symfony/mailgun-mailer``
+- Postmark: ``symfony/postmark-mailer``
+- Sendgrid: ``symfony/sendgrid-mailer``
 
 For example to use google's gmail as a transport you need to install symfony/google-mailer.
 
@@ -56,6 +56,7 @@ For example to use google's gmail as a transport you need to install symfony/goo
     $ composer require symfony/google-mailer
 
 .. code-block:: php
+
     use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
 
     $transport = new GmailTransport('user', 'pass');
@@ -73,12 +74,12 @@ The mailer component provides a convenient way to create transport object from d
 
 Where ``$dns`` as one of the form below.
 
-- smtp://user:pass@gmail
-- smtp://key@sendgrid
-- smtp://null
-- smtp://user:pass@mailgun
-- http://key:domain@mailgun
-- api://id@postmark
+- ``smtp://user:pass@gmail``
+- ``smtp://key@sendgrid``
+- ``smtp://null``
+- ``smtp://user:pass@mailgun``
+- ``http://key:domain@mailgun``
+- ``api://id@postmark``
 
 This provides a unified behaviour across all providers.
 Easily switch from SMTP in dev to a "real" provider in production with same API.
@@ -103,7 +104,7 @@ If you want to send emails by using multiple transports in a round-robin fashion
 Async
 -----
 
-If you want to use the async functionality you need to install the ``messenger`` component.
+If you want to use the async functionality you need to install the :doc:`Messenger component </components/messenger>`.
 
 .. code-block:: terminal
 
@@ -111,7 +112,6 @@ If you want to use the async functionality you need to install the ``messenger``
 
 Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
 
-.. code-block:: php
     use Symfony\Component\Mailer\Mailer;
     use Symfony\Component\Mailer\Messenger\MessageHandler;
     use Symfony\Component\Mailer\Messenger\SendEmailMessage;
@@ -121,8 +121,9 @@ Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
     use Symfony\Component\Messenger\MessageBus;
     use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
     use Symfony\Component\Mime\Address;
-    
-    // .. $dsn = 'smtp://null';
+
+    $dsn = 'change-dsn-accordingly';
+
     $transport = Transport::fromDsn($dsn);
     $handler = new MessageHandler($transport);
 
