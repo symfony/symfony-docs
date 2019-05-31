@@ -131,7 +131,7 @@ If you want to modify that title, use this alternative syntax:
 
 .. code-block:: rst
 
-    :doc:`Spooling Email </email/spool>`
+    :doc:`Doctrine Associations </doctrine/associations>`
 
 .. note::
 

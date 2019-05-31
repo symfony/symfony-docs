@@ -21,7 +21,7 @@ their code. Instead, you can execute the command directly.
     overhead.
 
 Imagine you want to send spooled Swift Mailer messages by
-:doc:`using the swiftmailer:spool:send command </email/spool>`.
+:doc:`using the swiftmailer:spool:send command </email>`.
 Run this command from inside your controller via::
 
     // src/Controller/SpoolController.php

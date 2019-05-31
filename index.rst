@@ -42,6 +42,7 @@ Topics
     frontend
     http_cache
     logging
+    mailer
     mercure
     messenger
     performance
