@@ -2147,13 +2147,13 @@ has been compromised in a data breach.
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
 .. versionadded:: 4.3
 
     The ``enabled`` option was introduced in Symfony 4.3.
 
-If you set this option to ``true``, no HTTP requests will be made and the given
+If you set this option to ``false``, no HTTP requests will be made and the given
 password will be considered valid. This is useful when you don't want or can't
 make HTTP requests, such as in ``dev`` and ``test`` environments or in
 continuous integration servers.
