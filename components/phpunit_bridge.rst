@@ -192,55 +192,53 @@ Making Tests Fail
 By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation
 notices will make tests fail. Alternatively, you can configure an
 arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
-``max[total]=320`` for instance.  It will make the tests fails only if a
+``max[total]=320`` for instance. It will make the tests fails only if a
 higher number of deprecation notices is reached (``0`` is the default
 value).
 
 You can have even finer-grained control by using other keys of the ``max``
 array, which are ``self``, ``direct``, and ``indirect``. The
-``SYMFONY_DEPRECATIONS_HELPER`` environment variable accept a
-url-encoded string, meaning you can combine thresholds and any other
-configuration setting, like this:
-``SYMFONY_DEPRECATIONS_HELPER=max[total]=42&max[self]=0&verbose=0``
+``SYMFONY_DEPRECATIONS_HELPER`` environment variable accepts an URL-encoded
+string, meaning you can combine thresholds and any other configuration setting,
+like this: ``SYMFONY_DEPRECATIONS_HELPER=max[total]=42&max[self]=0&verbose=0``
 
 Internal deprecations
 .....................
 
-When you maintain a library, having the test suite fail as soon as a
-dependency introduces a new deprecation is not desirable, because it
-shifts the burden of fixing that deprecation to any contributor that
-happens to submit a pull request shortly after a new vendor release is
-made with that deprecation. To mitigate this, you can either use tighter
-requirements, in the hope that dependencies will not introduce
-deprecations in a patch version, or even commit the ``composer.lock`` file,
-which would create another class of issues. Libraries will often use
-``SYMFONY_DEPRECATIONS_HELPER=max[total]=999999`` because of this. This
-has the drawback of allowing contributions that introduce deprecations
-but:
+When you maintain a library, having the test suite fail as soon as a dependency
+introduces a new deprecation is not desirable, because it shifts the burden of
+fixing that deprecation to any contributor that happens to submit a pull request
+shortly after a new vendor release is made with that deprecation.
+
+To mitigate this, you can either use tighter requirements, in the hope that
+dependencies will not introduce deprecations in a patch version, or even commit
+the ``composer.lock`` file, which would create another class of issues.
+Libraries will often use ``SYMFONY_DEPRECATIONS_HELPER=max[total]=999999``
+because of this. This has the drawback of allowing contributions that introduce
+deprecations but:
 
 * forget to fix the deprecated calls if there are any;
 * forget to mark appropriate tests with the ``@group legacy`` annotations.
 
-By using ``SYMFONY_DEPRECATIONS_HELPER=max[self]=0``,
-deprecations that are triggered outside the ``vendors`` directory will
-be accounted for seperately, while deprecations triggered from a library
-inside it will not (unless you reach 999999 of these), giving you
-the best of both worlds.
+By using ``SYMFONY_DEPRECATIONS_HELPER=max[self]=0``, deprecations that are
+triggered outside the ``vendors`` directory will be accounted for seperately,
+while deprecations triggered from a library inside it will not (unless you reach
+999999 of these), giving you the best of both worlds.
 
 Direct and Indirect Deprecations
 ................................
 
-When working on a project, you might be more interested in
-``max[direct]``. Let's say you want to fix deprecations as soon as
-they appear. A problem many people experience is that some dependencies
-they have tend to lag behind their own dependencies, meaning they do not
-fix deprecations as soon as possible, which means you should create a pull
-request on the outdated vendor, and ignore these deprecations until your
-pull request is merged. This key allows you to put a threshold on direct
-deprecations only,allowing you to notice when *your code* is using
-deprecated APIs, and to keep up with the changes. You can of course
-still use ``max[indirect]`` if you want to keep indirect deprecations
-under a given threshold.
+When working on a project, you might be more interested in ``max[direct]``.
+Let's say you want to fix deprecations as soon as they appear. A problem many
+developers experience is that some dependencies they have tend to lag behind
+their own dependencies, meaning they do not fix deprecations as soon as
+possible, which means you should create a pull request on the outdated vendor,
+and ignore these deprecations until your pull request is merged.
+
+The ``max[direct]`` config allows you to put a threshold on direct deprecations
+only, allowing you to notice when *your code* is using deprecated APIs, and to
+keep up with the changes. You can still use ``max[indirect]`` if you want to
+keep indirect deprecations under a given threshold.
 
 Here is a summary that should help you pick the right configuration:
 
@@ -262,17 +260,16 @@ Disabling the Verbose Output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the bridge will display a detailed output with the number of
-deprecations and where they arise. If this is too much for you, you can
-use ``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn the verbose output
-off.
+deprecations and where they arise. If this is too much for you, you can use
+``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn the verbose output off.
 
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to
-``disabled=1`` to completely disable the deprecation helper. This is
-useful to make use of the rest of features provided by this component
-without getting errors or messages related to deprecations.
+Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled=1``
+to completely disable the deprecation helper. This is useful to make use of the
+rest of features provided by this component without getting errors or messages
+related to deprecations.
 
 .. _write-assertions-about-deprecations:
 
