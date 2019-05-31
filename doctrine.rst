@@ -358,7 +358,7 @@ and save it::
         public function createProduct(): Response
         {
             // you can fetch the EntityManager via $this->getDoctrine()
-            // or you can add an argument to your action: index(EntityManagerInterface $entityManager)
+            // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
             $entityManager = $this->getDoctrine()->getManager();
 
             $product = new Product();
@@ -421,8 +421,8 @@ is smart enough to know if it should INSERT or UPDATE your entity.
 Validating Objects
 ------------------
 
-:doc:`The Symfony validator </validation>` reuses Doctrine metadata
-to perform some basic validation tasks::
+:doc:`The Symfony validator </validation>` reuses Doctrine metadata to perform
+some basic validation tasks::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -441,8 +441,10 @@ to perform some basic validation tasks::
         public function createProduct(ValidatorInterface $validator): Response
         {
             $product = new Product();
-            $product->setName(null); // The column in database isn't nullable
-            $product->setPrice('1999'); // Type mismatch, an integer is expected
+            // This will trigger an error: the column isn't nullable in the database
+            $product->setName(null);
+            // This will trigger a type mismatch error: an integer is expected
+            $product->setPrice('1999');
 
             // ...
 
@@ -451,42 +453,41 @@ to perform some basic validation tasks::
                 return new Response((string) $errors, 400);
             }
 
-            // Will not be reached in this example
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-            return new Response('Saved new product with id '.$product->getId());
+            // ...
         }
     }
 
+Although the ``Product`` entity doesn't define any explicit
+:doc:`validation configuration </validation>`, Symfony introspects the Doctrine
+mapping configuration to infer some validation rules. For example, given that
+the ``name`` property can't be ``null`` in the database, a
+:doc:`NotNull constraint </reference/constraints/NotNull>` is added automatically
+to the property (if it doesn't contain that constraint already).
+
 The following table summarizes the mapping between Doctrine metadata and
-the corresponding validation constraints:
+the corresponding validation constraints added automatically by Symfony:
 
-+--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
-| Doctrine attribute | Validation constraint                                     | Notes                                                                   |
-+====================+===========================================================+=========================================================================+
-| ``nullable=true``  | :doc:`NotNull </reference/constraints/NotNull>`           | Relies on :doc:`the PropertyInfo component </components/property_info>` |
-+--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
-| ``type``           | :doc:`Type </reference/constraints/Type>`                 | Relies on :doc:`the PropertyInfo component </components/property_info>` |
-+--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
-| ``unique=true``    | :doc:`UniqueEntity </reference/constraints/UniqueEntity>` |                                                                         |
-+--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
-| ``length``         | :doc:`Length </reference/constraints/Length>`             |                                                                         |
-+--------------------+-----------------------------------------------------------+-------------------------------------------------------------------------+
+==================  =========================================================  =====
+Doctrine attribute  Validation constraint                                      Notes
+==================  =========================================================  =====
+``nullable=false``  :doc:`NotNull </reference/constraints/NotNull>`            Requires installing the :doc:`PropertyInfo component </components/property_info>`
+``type``            :doc:`Type </reference/constraints/Type>`                  Requires installing the :doc:`PropertyInfo component </components/property_info>`
+``unique=true``     :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+``length``          :doc:`Length </reference/constraints/Length>`
+==================  =========================================================  =====
 
-Because :doc:`the Form component </forms>` as well as `API Platform`_
-internally use the Validator Component, all your forms
-and web APIs will also automatically benefit from these default constraints.
+Because :doc:`the Form component </forms>` as well as `API Platform`_ internally
+use the Validator component, all your forms and web APIs will also automatically
+benefit from these automatic validation constraints.
+
+This automatic validation is a nice feature to improve your productivity, but it
+doesn't replace the validation configuration entirely. You still need to add
+some :doc:`validation constraints </reference/constraints>` to ensure that data
+provided by the user is correct.
 
 .. versionadded:: 4.3
 
     The automatic validation has been added in Symfony 4.3.
-
-.. tip::
-
-    Don't forget to add :doc:`more precise validation constraints </reference/constraints>`
-    to ensure that data provided by the user is correct.
 
 Fetching Objects from the Database
 ----------------------------------
