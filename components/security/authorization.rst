@@ -161,10 +161,10 @@ ExpressionVoter
 ~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\ExpressionVoter`
-supports :class:`Symfony\\Component\\ExpressionLanguage\\Expression` attributes
-and grants access based on the evaluation of expression (see :doc:`/security/expressions` )
-
-.. code-block:: php
+grants access based on the evaluation of expressions created with the
+:doc:`ExpressionLanguage component </components/expression_language>`. These
+expressions have access to a number of
+:ref:`special security variables <security-expression-variables>`::
 
     use Symfony\Component\ExpressionLanguage\Expression;
     use Symfony\Component\Security\Core\Authorization\Voter\ExpressionVoter;
@@ -190,7 +190,7 @@ and grants access based on the evaluation of expression (see :doc:`/security/exp
         '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
     )
 
-    $vote = $expressionVoter->vote($token, $object, array($expression));
+    $vote = $expressionVoter->vote($token, $object, [$expression]);
 
 .. note::
 
