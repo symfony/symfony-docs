@@ -359,6 +359,12 @@ Translates the text into the current language. More information in
 transchoice
 ~~~~~~~~~~~
 
+.. deprecated:: 4.2
+
+   The ``transchoice`` filter is deprecated since Symfony 4.2 and will be
+   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
+   the ``trans`` filter instead.
+
 .. code-block:: twig
 
     {{ message|transchoice(count, arguments = [], domain = null, locale = null) }}
@@ -587,6 +593,12 @@ Renders the translation of the content. More information in :ref:`translation-ta
 
 transchoice
 ~~~~~~~~~~~
+
+.. deprecated:: 4.2
+
+   The ``transchoice`` tag is deprecated since Symfony 4.2 and will be
+   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
+   the ``trans`` tag instead.
 
 .. code-block:: twig
 
