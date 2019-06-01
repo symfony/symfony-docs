@@ -51,7 +51,7 @@ the ``test`` environment)::
 
 If a test fails because of profiling data (too many DB queries for instance),
 you might want to use the Web Profiler to analyze the request after the tests
-finish. It can be achived by embedding the token in the error message::
+finish. It can be achieved by embedding the token in the error message::
 
     $this->assertLessThan(
         30,
