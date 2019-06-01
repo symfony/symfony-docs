@@ -43,11 +43,12 @@ are like this:
         "...": "...",
     }
 
-At the bottom of your ``composer.json`` file, in the `extra`` block you can
+At the bottom of your ``composer.json`` file, in the ``extra`` block you can
 find a data setting for the symfony version. Make sure to also upgrade
-this one.
+this one. For instance, update it to ``4.3.*`` to upgrade to Symfony 4.3:
 
 .. code-block:: json
+
     "extra": {
         "symfony": {
             "allow-contrib": false,
