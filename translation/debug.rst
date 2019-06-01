@@ -12,14 +12,10 @@ command helps you to find these missing or unused translation messages templates
 
 .. code-block:: twig
 
-    {# messages can be found when using the trans/transchoice filters and tags #}
+    {# messages can be found when using the trans filter and tag #}
     {% trans %}Symfony is great{% endtrans %}
 
     {{ 'Symfony is great'|trans }}
-
-    {{ 'Symfony is great'|transchoice(1) }}
-
-    {% transchoice 1 %}Symfony is great{% endtranschoice %}
 
 .. caution::
 

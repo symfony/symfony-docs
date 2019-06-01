@@ -157,7 +157,7 @@ values are ``plain``, ``login``, ``cram-md5``, or ``null``.
 spool
 ~~~~~
 
-For details on email spooling, see :doc:`/email/spool`.
+For details on email spooling, see :doc:`/mailer`.
 
 type
 ....
