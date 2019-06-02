@@ -281,7 +281,7 @@ Twig: HTML & CSS
 
 The Mime component integrates with the :doc:`Twig template engine </templating>`
 to provide advanced features such as CSS style inlining and support for HTML/CSS
-frameworks to create complex HTML email messages. First, make sure Twig is instaled:
+frameworks to create complex HTML email messages. First, make sure Twig is installed:
 
 .. code-block:: terminal
 

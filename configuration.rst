@@ -253,7 +253,7 @@ The ``.env`` file is special, because it defines the values that usually change
 on each server. For example, the database credentials on your local development
 machine might be different from your workmates. The ``.env`` file should contain
 sensible, non-secret *default* values for all of your environment variables and
-*should* be commited to your repository.
+*should* be committed to your repository.
 
 To override these variables with machine-specific or sensitive values, create a
 ``.env.local`` file. This file is **not committed to the shared repository** and
