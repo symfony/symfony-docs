@@ -18,7 +18,7 @@ important changes:
 * A) The ``.env.dist`` file no longer exists. Its contents should be moved to your
   ``.env`` file (see the next point).
 
-* B) The ``.env`` file **is** now commited to your repository. It was previously ignored
+* B) The ``.env`` file **is** now committed to your repository. It was previously ignored
   via the ``.gitignore`` file (the updated recipe does not ignore this file). Because
   this file is committed, it should contain non-sensitive, default values. Basically,
   the ``.env.dist`` file was moved to ``.env``.
