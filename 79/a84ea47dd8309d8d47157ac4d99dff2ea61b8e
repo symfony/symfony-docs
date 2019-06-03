@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-24T12:07:25Z
+
+Hmm, but it should, according to the aliases named here:
+https://github.com/symfony/recipes/blob/master/symfony/webpack-encore-bundle/1.0/manifest.json
+
+encore, webpack and webpack-encore
+
+//cc @weaverryan
+
+---------------------------------------------------------------------------
+
+by janmyszkier at 2019-05-24T13:11:06Z
+
+:thinking: so this should be bug submitted somewhere else? if this is the case, @OskarStark can you please create a bug in the correct place and add a link to it in this thread. thank you in advance.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-05-30T22:38:34Z
+
+Symfony uses `symfony/flex` to "ease" installation of bundles/integrations into the framework. It's a Composer plugin that you need to include as a dependency in the project if you want to use it.
+
+Once you install it, you can use "package aliases" to install stuff. `encore` is such an alias (all aliases are listed on https://symfony.sh). Besides that, it also adds more great features like recipes (which create some bootstrap code related to packages you install). See https://symfony.com/doc/current/setup/flex.html for more information.
+
+However, to not confuse people not using Flex (like I assume the project you're working on), I think we decided not to use aliases in the documentation. So 👍 on this change!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-31T06:29:31Z
+
+I agree with being more clear here 👍🏻
+Let’s merge
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-05-31T08:16:26Z
+
+I'm afraid I disagree here. I think that installing the bundle it's not equivalent to running the recipe, because several files and dirs are created too by the recipe.
+
+Also, I don't think the current doc is confusing. It shows two different ways of installing this and the first one continuously mentions "Symfony Flex" and gives you some hints when you are not using that. This is how the doc is designed:
+
+![image](https://user-images.githubusercontent.com/73419/58691732-148e2c80-838d-11e9-8ece-b3dfd779a3b3.png)
+
+---------------------------------------------------------------------------
+
+by janmyszkier at 2019-05-31T09:43:41Z
+
+The thing is this IS Symfony 3.4 application (so I'm reading correct doc page I guess), except it is not using flex.
+Therefore,  It does not fall into the "non Symfony Applications" category. And this is counterintuitive.
+Maybe, in that case, add another section for old-style package installing without flex but still within symfony?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-05-31T18:58:36Z
+
+Ref: https://github.com/symfony/symfony-docs/issues/9693
