@@ -590,7 +590,7 @@ Clearing the Cache
 ------------------
 
 To clear the cache you can use the ``bin/console cache:pool:clear [pool]`` command.
-That will remove all the entries from your storage and you wil have to recalculate
+That will remove all the entries from your storage and you will have to recalculate
 all values. You can also group your pools into "cache clearers". There are 3 cache
 clearers by default:
 
