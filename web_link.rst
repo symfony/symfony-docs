@@ -79,11 +79,6 @@ the priority of the resource to download using the ``importance`` attribute:
         <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style', importance: 'low' }) }}">
     </head>
 
-.. tip::
-
-    Google Chrome provides an interface to debug HTTP/2 connections. Browse
-    ``chrome://net-internals/#http2`` to see all the details.
-
 How does it work?
 ~~~~~~~~~~~~~~~~~
 
