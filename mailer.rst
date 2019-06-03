@@ -64,7 +64,7 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
     # .env
 
     SENDGRID_KEY=
-    MAILER_DSN=smtp://$SENDGRID_KEY@sendgrid
+    MAILER_DSN=smtp://SENDGRID_KEY@sendgrid
 
 The ``MAILER_DSN`` isn't a *real* SMTP address: it's a simple format that offloads
 most of the configuration work to mailer. The ``@sendgrid`` part of the address
