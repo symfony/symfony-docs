@@ -33,7 +33,7 @@ for them:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 Now you can configure the routes:
 
