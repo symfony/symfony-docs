@@ -711,7 +711,7 @@ to retry them:
     # remove a message without retrying it
     $ php bin/console messenger:failed:remove 20
 
-If the messages fails again, it will be re-sent back to the failure transport
+If the message fails again, it will be re-sent back to the failure transport
 due to the normal `retry rules <Retries & Failures>`_. Once the max retry has
 been hit, the message will be discarded permanently.
 
