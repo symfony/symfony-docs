@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-03T06:39:04Z
+
+@Guikingone the current docs were contributed/reviewed by @nicolas-grekas, so they are probably right. Maybe it's a bug in the code that doesn't generate the intended service names?
+
+---------------------------------------------------------------------------
+
+by Guikingone at 2019-06-03T07:00:03Z
+
+@javiereguiluz Yes, I think that @nicolas-grekas is right, here's the configuration that cause this case:
+
+```yaml
+framework:
+    secret: '%env(APP_SECRET)%'
+    session:
+        handler_id: ~
+        cookie_secure: auto
+        cookie_samesite: lax
+    php_errors:
+        log: true
+    http_client:
+        scoped_clients:
+            github.client:
+                base_uri: '%env(OAUTH_GITHUB_API_URL)%'
+                http_version: '2.0'
+```
+
+Here's the container dump:
+
+```xml
+    <service id="github.client" class="Symfony\Component\HttpClient\ScopingHttpClient">
+      <argument type="service" id="http_client"/>
+      <argument>%env(OAUTH_GITHUB_API_URL)%</argument>
+      <argument type="collection">
+        <argument key="base_uri">%env(OAUTH_GITHUB_API_URL)%</argument>
+        <argument key="http_version">2.0</argument>
+        <argument key="query" type="collection"/>
+        <argument key="headers" type="collection"/>
+        <argument key="resolve" type="collection"/>
+      </argument>
+      <factory class="Symfony\Component\HttpClient\ScopingHttpClient" method="forBaseUri"/>
+    </service>
+```
+
+I've searched for `http_client.github` but nothing :/
