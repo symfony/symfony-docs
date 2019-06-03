@@ -479,11 +479,11 @@ has a unique service named after its configuration.
         # ...
 
         # whenever a service type-hints HttpClientInterface, inject the GitHub client
-        Symfony\Contracts\HttpClient\HttpClientInterface: '@api_client.github'
+        Symfony\Contracts\HttpClient\HttpClientInterface: '@some_api.client'
 
         # inject the HTTP client called 'crawler' into this argument of this service
         App\Some\Service:
-            $someArgument: '@http_client.crawler'
+            $someArgument: '@crawler.client'
 
 Testing HTTP Clients and Responses
 ----------------------------------
