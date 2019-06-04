@@ -42,11 +42,11 @@ several - install whichever you want:
 Service             Install with
 ==================  =============================================
 Amazon SES          ``composer require symfony/amazon-mailer``
+Gmail               ``composer require symfony/google-mailer``
 MailChimp           ``composer require symfony/mailchimp-mailer``
 Mailgun             ``composer require symfony/mailgun-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
-Gmail               ``composer require symfony/google-mailer``
 ==================  =============================================
 
 Each library includes a :ref:`Flex recipe <flex-recipe>` that will add example configuration
