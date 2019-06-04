@@ -699,7 +699,7 @@ This service can be configured using ``framework.http_client.default_options``:
         http_client:
             max_host_connections: 10
             default_options:
-                headers: [{ 'X-Powered-By': 'ACME App' }]
+                headers: { 'X-Powered-By': 'ACME App' }
                 max_redirects: 7
 
 .. _reference-http-client-scoped-clients:
