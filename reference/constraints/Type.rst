@@ -18,8 +18,10 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 Basic Usage
 -----------
 
-This will check if ``firstName`` is of type ``string`` and that ``age`` is an
-``integer``.
+This will check if ``firstName`` is of type ``string`` (using :phpfunction:`is_string`
+PHP function), ``age`` is an ``integer`` (using :phpfunction:`is_int` PHP
+function) and ``accessCode`` contains either only letters or only digits (using
+:phpfunction:`ctype_alpha` and :phpfunction:`ctype_digit` PHP functions).
 
 .. configuration-block::
 
@@ -44,6 +46,11 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
              * )
              */
             protected $age;
+
+            /**
+             * @Assert\Type(type={"alpha", "digit"})
+             */
+            protected $accessCode;
         }
 
     .. code-block:: yaml
@@ -58,6 +65,10 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
                     - Type:
                         type: integer
                         message: The value {{ value }} is not a valid {{ type }}.
+
+                accessCode:
+                    - Type:
+                        type: [alpha, digit]
 
     .. code-block:: xml
 
@@ -77,6 +88,14 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
                     <constraint name="Type">
                         <option name="type">integer</option>
                         <option name="message">The value {{ value }} is not a valid {{ type }}.</option>
+                    </constraint>
+                </property>
+                <property name="accessCode">
+                    <constraint name="Type">
+                        <option name="type">
+                            <value>alpha</value>
+                            <value>digit</value>
+                        </option>
                     </constraint>
                 </property>
             </class>
@@ -100,8 +119,17 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
                     'type' => 'integer',
                     'message' => 'The value {{ value }} is not a valid {{ type }}.',
                 ]));
+
+                $metadata->addPropertyConstraint('accessCode', new Assert\Type([
+                    'type' => ['alpha', 'digit'],
+                ]));
             }
         }
+
+.. versionadded:: 4.4
+
+    The feature to define multiple types in the ``type`` option was introduced
+    in Symfony 4.4.
 
 Options
 -------
@@ -131,10 +159,16 @@ Parameter        Description
 type
 ~~~~
 
-**type**: ``string`` [:ref:`default option <validation-default-option>`]
+**type**: ``string`` or ``array`` [:ref:`default option <validation-default-option>`]
 
-This required option is the fully qualified class name or one of the PHP
-datatypes as determined by PHP's ``is_()`` functions.
+.. versionadded:: 4.4
+
+    The feature to define multiple types in the ``type`` option was introduced
+    in Symfony 4.4.
+
+This required option defines the type or collection of types allowed for the
+given value. Each type is defined as the fully qualified class name or one of
+the PHP datatypes as determined by PHP's ``is_*()`` functions.
 
 * :phpfunction:`array <is_array>`
 * :phpfunction:`bool <is_bool>`
@@ -153,7 +187,7 @@ datatypes as determined by PHP's ``is_()`` functions.
 * :phpfunction:`scalar <is_scalar>`
 * :phpfunction:`string <is_string>`
 
-Also, you can use ``ctype_()`` functions from corresponding
+Also, you can use ``ctype_*()`` functions from corresponding
 `built-in PHP extension`_. Consider `a list of ctype functions`_:
 
 * :phpfunction:`alnum <ctype_alnum>`
