@@ -47,7 +47,7 @@ The following constraint ensures that the ``withdraw`` of a  bank account
         App\Entity\TransferItem:
             properties:
                 withdraw:
-                    - Negative
+                    - Negative: ~
 
     .. code-block:: xml
 
