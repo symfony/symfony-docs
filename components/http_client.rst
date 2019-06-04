@@ -237,7 +237,7 @@ Advanced Options
 
 The :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface` defines all the
 options you might need to take full control of the way the request is performed,
-including progress monitoring, DSN pre-resolution, timeout, SSL parameters, etc.
+including progress monitoring, DNS pre-resolution, timeout, SSL parameters, etc.
 
 Processing Responses
 --------------------
@@ -266,7 +266,7 @@ following methods::
 .. note::
 
     ``$response->getInfo()`` is non-blocking: it returns *live* information
-    about the response. Some of them might not be know yet (e.g. ``http_code``)
+    about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
 
 .. tip::
@@ -358,7 +358,7 @@ But maybe the 2nd response came back before the 1st? Fully asynchronous operatio
 require being able to deal with the responses in whatever order they come back.
 
 In order to do so, the ``stream()`` method of HTTP clients accepts a list of
-responses to monitor. As mentionned :ref:`previously <http-client-streaming-responses>`,
+responses to monitor. As mentioned :ref:`previously <http-client-streaming-responses>`,
 this method yields response chunks as they arrive from the network. By replacing
 the "foreach" in the snippet with this one, the code becomes fully async::
 
@@ -396,7 +396,7 @@ option::
 
 The ``default_socket_timeout`` PHP ini setting is used if the option is not set.
 
-The option can be overriden by using the 2nd argument of the ``stream()`` method.
+The option can be overridden by using the 2nd argument of the ``stream()`` method.
 This allows monitoring several responses at once and applying the timeout to all
 of them in a group. If all responses become inactive for the given duration, the
 method will yield a special chunk whose ``isTimeout()`` will return ``true``::
@@ -416,14 +416,14 @@ response and get remaining contents that might come back in a new timeout, etc.
 
 .. note::
 
-    Timeouts control how long one is willing to wait *while the HTTP transation
+    Timeouts control how long one is willing to wait *while the HTTP transaction
     is idle*. Big responses can last as long as needed to complete, provided they
     remain active during the transfer and never pause for longer than specified.
 
 Dealing with Network Errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Network errors (broken pipe, failed DSN resolution, etc.) are thrown as instances
+Network errors (broken pipe, failed DNS resolution, etc.) are thrown as instances
 of :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`.
 
 First of all, you don't *have* to deal with them: letting errors bubble to your
@@ -618,7 +618,7 @@ into any services by type-hinting a constructor argument with the
     }
 
 If you have several clients, you must use any of the methods defined by Symfony
-to ref:`choose a specific service <services-wire-specific-service>`. Each client
+to :ref:`choose a specific service <services-wire-specific-service>`. Each client
 has a unique service named after its configuration.
 
 Each scoped client also defines a corresponding named autowiring alias.
