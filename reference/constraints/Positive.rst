@@ -43,7 +43,7 @@ positive number (greater than zero):
         App\Entity\Employee:
             properties:
                 income:
-                    - Positive
+                    - Positive: ~
 
     .. code-block:: xml
 
