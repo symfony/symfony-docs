@@ -403,6 +403,7 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
 
     use App\MyClass;
     use PHPUnit\Framework\TestCase;
+    use Symfony\Bridge\PhpUnit\ClockMock; 
 
     /**
      * @group time-sensitive
