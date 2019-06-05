@@ -733,11 +733,11 @@ service into your autowired classes.
 auth_basic
 ..........
 
-**type**: ``array``
+**type**: ``string``
 
 The username and password used to create the ``Authorization`` HTTP header
 used in HTTP Basic authentication. The value of this option must follow the
-format ``['username', 'password']``.
+format ``username:password``.
 
 auth_bearer
 ...........
