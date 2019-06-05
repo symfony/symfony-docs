@@ -222,7 +222,7 @@ be called:
 
                 <firewall name="main">
                     <!-- ... -->
-                    <switch-user role="CAN_SWITCH_USER" />
+                    <switch-user role="CAN_SWITCH_USER"/>
                 </firewall>
             </config>
         </srv:container>
