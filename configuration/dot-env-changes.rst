@@ -23,7 +23,7 @@ important changes:
   this file is committed, it should contain non-sensitive, default values. Basically,
   the ``.env.dist`` file was moved to ``.env``.
 
-* C) A ``.env.local`` file can now be created to *override* environment variables for
+* C) A ``.env.local`` file can now be created to *override* values in ``.env`` for
   your machine. This file is ignored in the new ``.gitignore``.
 
 * D) When testing, your ``.env`` file is now read, making it consistent with all
