@@ -380,6 +380,23 @@ the "foreach" in the snippet with this one, the code becomes fully async::
     Use the ``user_data`` option combined with ``$response->getInfo('user_data')``
     to track the identity of the responses in your foreach loops.
 
+Canceling Responses
+~~~~~~~~~~~~~~~~~~~
+
+Responses can be canceled at any moment before they are completed using the
+``cancel()`` method::
+
+    foreach ($client->stream($responses) as $response => $chunk) {
+        // ...
+
+        // if some condition happens, cancel the response
+        $response->cancel();
+    }
+
+.. versionadded:: 4.4
+
+    The ``cancel()`` method was introduced in Symfony 4.4.
+
 Dealing with Network Timeouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
