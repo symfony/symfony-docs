@@ -306,26 +306,15 @@ following standardized instructions in your ``README.md`` file.
         ### Step 2: Enable the Bundle
 
         Then, enable the bundle by adding it to the list of registered bundles
-        in the `app/AppKernel.php` file of your project:
+        in the `config/bundles.php` file of your project:
 
         ```php
-        // app/AppKernel.php
+        // config/bundles.php
 
-        // ...
-        class AppKernel extends Kernel
-        {
-            public function registerBundles()
-            {
-                $bundles = [
-                    // ...
-                    new <vendor>\<bundle-name>\<bundle-long-name>(),
-                ];
-
-                // ...
-            }
-
+        return [
             // ...
-        }
+            <vendor>\<bundle-name>\<bundle-long-name>::class => ['all' => true],
+        ];
         ```
 
     .. code-block:: rst
@@ -362,26 +351,14 @@ following standardized instructions in your ``README.md`` file.
         ~~~~~~~~~~~~~~~~~~~~~~~~~
 
         Then, enable the bundle by adding it to the list of registered bundles
-        in the ``app/AppKernel.php`` file of your project::
+        in the ``config/bundles.php`` file of your project::
 
-            // app/AppKernel.php
+            // config/bundles.php
 
-            // ...
-            class AppKernel extends Kernel
-            {
-                public function registerBundles()
-                {
-                    $bundles = [
-                        // ...
-
-                        new <vendor>\<bundle-name>\<bundle-long-name>(),
-                    ];
-
-                    // ...
-                }
-
+            return [
                 // ...
-            }
+                <vendor>\<bundle-name>\<bundle-long-name>::class => ['all' => true],
+            ];
 
         .. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
 
