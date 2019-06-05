@@ -25,9 +25,9 @@ In order to use the ICU Message Format, the :ref:`message domain
 ======================  ===============================
 Normal file name        ICU Message Format filename
 ======================  ===============================
-``messages.en.yml``     ``messages+intl-icu.en.yml``
+``messages.en.yaml``    ``messages+intl-icu.en.yaml``
 ``messages.fr_FR.xlf``  ``messages+intl-icu.fr_FR.xlf``
-``admin.en.yml``        ``admin+intl-icu.en.yml``
+``admin.en.yaml``       ``admin+intl-icu.en.yaml``
 ======================  ===============================
 
 All messages in this file will now be processed by the
@@ -43,11 +43,6 @@ The basic usage of the MessageFormat allows you to use placeholders (called
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # translations/messages+intl-icu.en.yaml
-        say_hello: 'Hello {name}!'
-
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
@@ -62,6 +57,11 @@ The basic usage of the MessageFormat allows you to use placeholders (called
                 </body>
             </file>
         </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages+intl-icu.en.yaml
+        say_hello: 'Hello {name}!'
 
     .. code-block:: php
 
@@ -89,16 +89,6 @@ typical usage of this is gender:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # translations/messages+intl-icu.en.yaml
-        invitation_title: >
-            {organizer_gender, select,
-                female {{organizer_name} has invited you for her party!}
-                male   {{organizer_name} has invited you for his party!}
-                other  {{organizer_name} have invited you for their party!}
-            }
-
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
@@ -113,6 +103,16 @@ typical usage of this is gender:
                 </body>
             </file>
         </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages+intl-icu.en.yaml
+        invitation_title: >
+            {organizer_gender, select,
+                female {{organizer_name} has invited you for her party!}
+                male   {{organizer_name} has invited you for his party!}
+                other  {{organizer_name} have invited you for their party!}
+            }
 
     .. code-block:: php
 
@@ -170,16 +170,6 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # translations/messages+intl-icu.en.yaml
-        num_of_apples: >
-            {apples, plural,
-                =0    {There are no apples}
-                one   {There is one apple...}
-                other {There are # apples!}
-            }
-
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
@@ -194,6 +184,16 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
                 </body>
             </file>
         </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages+intl-icu.en.yaml
+        num_of_apples: >
+            {apples, plural,
+                =0    {There are no apples}
+                one   {There is one apple...}
+                other {There are # apples!}
+            }
 
     .. code-block:: php
 
@@ -275,21 +275,6 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # translations/messages+intl-icu.en.yaml
-        finish_place: >
-            You finished {place, selectordinal,
-                one   {#st}
-                two   {#nd}
-                few   {#rd}
-                other {#th}
-            }!
-
-        # when only formatting the number as ordinal (like above), you can also
-        # use the `ordinal` function:
-        finish_place: You finished {place, ordinal}!
-
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
@@ -311,6 +296,21 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
                 </body>
             </file>
         </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages+intl-icu.en.yaml
+        finish_place: >
+            You finished {place, selectordinal,
+                one   {#st}
+                two   {#nd}
+                few   {#rd}
+                other {#th}
+            }!
+
+        # when only formatting the number as ordinal (like above), you can also
+        # use the `ordinal` function:
+        finish_place: You finished {place, ordinal}!
 
     .. code-block:: php
 
@@ -349,11 +349,6 @@ using the :phpclass:`IntlDateFormatter`:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # translations/messages+intl-icu.en.yaml
-        published_at: 'Published at {publication_date, date} - {publication_date, time, short}'
-
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
@@ -368,6 +363,11 @@ using the :phpclass:`IntlDateFormatter`:
                 </body>
             </file>
         </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages+intl-icu.en.yaml
+        published_at: 'Published at {publication_date, date} - {publication_date, time, short}'
 
     .. code-block:: php
 
@@ -391,12 +391,6 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # translations/messages+intl-icu.en.yaml
-        progress: '{progress, number, percent} of the work is done'
-        value_of_object: 'This artifact is worth {value, number, currency}'
-
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
@@ -416,6 +410,12 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
                 </body>
             </file>
         </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages+intl-icu.en.yaml
+        progress: '{progress, number, percent} of the work is done'
+        value_of_object: 'This artifact is worth {value, number, currency}'
 
     .. code-block:: php
 
