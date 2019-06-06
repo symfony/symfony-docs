@@ -376,7 +376,7 @@ image files as usual. First, to simplify things, define a Twig namespace called
 
         paths:
             # point this wherever your images live
-            images: '%kernel.project_dir%/assets/images'
+            '%kernel.project_dir%/assets/images': images
 
 Now, use the special ``email.image()`` Twig helper to embed the images inside
 the email contents:
