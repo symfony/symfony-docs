@@ -25,9 +25,9 @@ In order to use the ICU Message Format, the :ref:`message domain
 ======================  ===============================
 Normal file name        ICU Message Format filename
 ======================  ===============================
-``messages.en.yml``     ``messages+intl-icu.en.yml``
+``messages.en.yaml``    ``messages+intl-icu.en.yaml``
 ``messages.fr_FR.xlf``  ``messages+intl-icu.fr_FR.xlf``
-``admin.en.yml``        ``admin+intl-icu.en.yml``
+``admin.en.yaml``       ``admin+intl-icu.en.yaml``
 ======================  ===============================
 
 All messages in this file will now be processed by the
