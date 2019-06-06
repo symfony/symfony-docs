@@ -453,7 +453,7 @@ called ``css`` that points to the directory where ``email.css`` lives:
 
         paths:
             # point this wherever your css files live
-            css: '%kernel.project_dir%/assets/css'
+            '%kernel.project_dir%/assets/css': css
 
 .. _mailer-markdown:
 
