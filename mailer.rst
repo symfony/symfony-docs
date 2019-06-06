@@ -414,7 +414,7 @@ with the ``inline_css`` filter:
 
 .. code-block:: html+twig
 
-    {% filter inline_css %}
+    {% apply inline_css %}
         <style>
             {# here, define your CSS styles as usual #}
             h1 {
@@ -424,7 +424,7 @@ with the ``inline_css`` filter:
 
         <h1>Welcome {{ email.toName }}!</h1>
         {# ... #}
-    {% endfilter %}
+    {% endapply %}
 
 Using External CSS Files
 ........................
@@ -434,10 +434,10 @@ arguments to the filter:
 
 .. code-block:: html+twig
 
-    {% filter inline_css(source('@css/email.css')) %}
+    {% apply inline_css(source('@css/email.css')) %}
         <h1>Welcome {{ username }}!</h1>
         {# ... #}
-    {% endfilter %}
+    {% endapply %}
 
 You can pass unlimited number of arguments to ``inline_css()`` to load multiple
 CSS files. For this example to work, you also need to define a new Twig namespace
@@ -475,7 +475,7 @@ the entire email contents from Markdown to HTML:
 
 .. code-block:: twig
 
-    {% filter markdown %}
+    {% apply markdown %}
         Welcome {{ email.toName }}!
         ===========================
 
@@ -483,7 +483,7 @@ the entire email contents from Markdown to HTML:
         `{{ email.to[0].address }}`
 
         [Click here to activate your account]({{ url('...') }})
-    {% endfilter %}
+    {% endapply %}
 
 .. _mailer-inky:
 
@@ -516,7 +516,7 @@ entire email contents from Inky to HTML:
 
 .. code-block:: html+twig
 
-    {% filter inky %}
+    {% apply inky %}
         <container>
             <row class="header">
                 <columns>
@@ -527,15 +527,15 @@ entire email contents from Inky to HTML:
                 {# ... #}
             </row>
         </container>
-    {% endfilter %}
+    {% endapply %}
 
 You can combine all filters to create complex email messages:
 
 .. code-block:: twig
 
-    {% filter inky|inline_css(source('@css/foundation-emails.css')) %}
+    {% apply inky|inline_css(source('@css/foundation-emails.css')) %}
         {# ... #}
-    {% endfilter %}
+    {% endapply %}
 
 This makes use of the :ref:`css Twig namespace <mailer-css-namespace>` we created
 earlier. You could, for example, `download the foundation-emails.css file`_
