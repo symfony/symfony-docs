@@ -51,7 +51,7 @@ you've already setup some translations for the ``fr`` locale inside an AcmeDemoB
 
     .. code-block:: xml
 
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.xliff -->
+        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -82,7 +82,7 @@ and for the ``en`` locale:
 
     .. code-block:: xml
 
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.en.xliff -->
+        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
