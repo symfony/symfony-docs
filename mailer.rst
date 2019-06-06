@@ -2,6 +2,7 @@ Sending Emails with Mailer
 ==========================
 
 .. versionadded:: 4.3
+
     The Mailer component was added in Symfony 4.3 and is currently experimental.
     The previous solution - Swift Mailer - is still valid: :doc:`Swift Mailer</email>`.
 
@@ -62,7 +63,6 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
 .. code-block:: bash
 
     # .env
-
     SENDGRID_KEY=
     MAILER_DSN=smtp://$SENDGRID_KEY@sendgrid
 
@@ -376,7 +376,7 @@ image files as usual. First, to simplify things, define a Twig namespace called
 
         paths:
             # point this wherever your images live
-            images: '%kernel.project_dir%/assets/images'
+            '%kernel.project_dir%/assets/images': images
 
 Now, use the special ``email.image()`` Twig helper to embed the images inside
 the email contents:

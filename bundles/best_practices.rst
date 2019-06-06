@@ -354,7 +354,6 @@ following standardized instructions in your ``README.md`` file.
         in the ``config/bundles.php`` file of your project::
 
             // config/bundles.php
-
             return [
                 // ...
                 <vendor>\<bundle-name>\<bundle-long-name>::class => ['all' => true],
