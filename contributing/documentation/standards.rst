@@ -175,26 +175,23 @@ In addition, documentation follows these rules:
   * his or hers, use theirs
   * himself or herself, use themselves
 
-Moreover, we try to avoid belittling words as much as possible. Usually, the people
-that write documentation write about a topic they are very familiar with. Thus, they
-tend to include words like "simply" or "obviously" as things may seem simple or obvious
-to them. However, the future reader is going to read the documentation because they
-know very little about a specific topic or are even completely new to it which means
-they might feel the exact opposite.
-To make sure everybody feels comfortable when reading the documentation, try to avoid
-words like:
+* **Avoid belittling words**: People read documentation because they know very little about
+   a specific topic or are even completely new to it. Things that seem "obvious" or "simple"
+   for the person documenting it, can be the exact opposite for the reader. To make sure everybody
+   feels comfortable when reading the documentation, try to avoid words like:
 
-* simply
-* just
-* easy/easily
-* quick/quickly
-* of course
-* logically
-* clearly
-* obviously
-* merely
-* basically
-* trivial
+  * simply
+  * just
+  * easy/easily
+  * quick/quickly
+  * of course
+  * logically
+  * clearly
+  * obviously
+  * merely
+  * basically
+  * trivial
+
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
 .. _`Twig Coding Standards`: https://twig.symfony.com/doc/2.x/coding_standards.html
