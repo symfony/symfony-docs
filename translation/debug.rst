@@ -38,7 +38,7 @@ you've already setup some translations for the ``fr`` locale:
 
     .. code-block:: xml
 
-        <!-- translations/messages.fr.xliff -->
+        <!-- translations/messages.fr.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -69,7 +69,7 @@ and for the ``en`` locale:
 
     .. code-block:: xml
 
-        <!-- translations/messages.en.xliff -->
+        <!-- translations/messages.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
