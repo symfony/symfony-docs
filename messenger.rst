@@ -947,6 +947,7 @@ Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 4.3
+
     The default serializer changed in 4.3 from the Symfony serializer to the
     native PHP serializer. Existing applications should configure their transports
     to use the Symfony serializer to avoid losing already-queued messages after
