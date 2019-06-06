@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-06-05T14:36:26Z
+
+an array works too :)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-06-05T14:37:13Z
+
+oh no, not using configuration!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-06T06:34:05Z
+
+Are we 100% sure about this? It as a string at first but then was changed to an array, right?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-06T06:44:19Z
+
+> Are we 100% sure about this?
+
+Yes, https://github.com/symfony/symfony/blob/4.4/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php#L1411
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-06-06T06:44:39Z
+
+It's pretty straightforward to confirm:
+https://github.com/symfony/symfony/blob/d3055814ad9680e00f2fb00e291aafa986002ad9/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php#L1411-L1413
