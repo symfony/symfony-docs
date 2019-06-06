@@ -129,7 +129,7 @@ work:
   </contributing/code/maintenance>` (you may have to choose a higher branch if
   the feature you are fixing was introduced in a later version);
 
- * ``master``, if you are adding a new feature.
+* ``master``, if you are adding a new feature.
 
 .. note::
 
