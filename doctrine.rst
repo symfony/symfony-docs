@@ -427,11 +427,10 @@ some basic validation tasks::
     // src/Controller/ProductController.php
     namespace App\Controller;
 
-    // ...
+    use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
-
-    use App\Entity\Product;
+    // ...
 
     class ProductController extends AbstractController
     {
