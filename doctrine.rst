@@ -484,10 +484,6 @@ doesn't replace the validation configuration entirely. You still need to add
 some :doc:`validation constraints </reference/constraints>` to ensure that data
 provided by the user is correct.
 
-.. versionadded:: 4.3
-
-    The automatic validation has been added in Symfony 4.3.
-
 Fetching Objects from the Database
 ----------------------------------
 

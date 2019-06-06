@@ -295,10 +295,6 @@ class autoloading time. This can be disabled with the ``debug-class-loader`` opt
         </listener>
     </listeners>
 
-.. versionadded:: 4.2
-
-    The ``DebugClassLoader`` integration was introduced in Symfony 4.2.
-
 Write Assertions about Deprecations
 -----------------------------------
 
