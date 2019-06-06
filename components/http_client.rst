@@ -13,11 +13,6 @@ The HttpClient Component
 
     The HttpClient component was introduced in Symfony 4.3.
 
-.. TODO
-.. tell about implementation vs abstraction
-.. tell there are more options
-.. tell chunked + compression are supported out of the box
-
 Installation
 ------------
 
@@ -71,17 +66,16 @@ When using this component in a full-stack Symfony application, this behavior is
 not configurable and cURL will be used automatically if the cURL PHP extension
 is installed and enabled. Otherwise, the native PHP streams will be used.
 
-Enabling HTTP/2 Support
------------------------
+HTTP/2 Support
+--------------
 
-HTTP/2 is only supported when using the cURL-based transport and the libcurl
-version is >= 7.36.0. If you meet these requirements, HTTP/2 will be used by
-default when the request protocol is ``https``. If you need it for ``http``,
-you must enable it explicitly via the ``http_version`` option::
+When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.36
+is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
+the ``http_version`` option::
 
     $httpClient = HttpClient::create(['http_version' => '2.0']);
 
-Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61.0 is used with
+Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61 is used with
 PHP >= 7.2.17 / 7.3.4: pushed responses are put into a temporary cache and are
 used when a subsequent request is triggered for the corresponding URLs.
 
@@ -111,6 +105,11 @@ immediately instead of waiting to receive the response::
 
 This component also supports :ref:`streaming responses <http-client-streaming-responses>`
 for full asynchronous applications.
+
+.. note::
+
+    HTTP compression and chunked transfer encoding are automatically enabled when
+    both your PHP runtime and the remote server support them.
 
 Authentication
 ~~~~~~~~~~~~~~
@@ -233,13 +232,12 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
         'max_redirects' => 0,
     ]);
 
-.. Concurrent Requests
-.. ~~~~~~~~~~~~~~~~~~~
-..
-..
-.. TODO
-..
-..
+Advanced Options
+~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface` defines all the
+options you might need to take full control of the way the request is performed,
+including progress monitoring, DNS pre-resolution, timeout, SSL parameters, etc.
 
 Processing Responses
 --------------------
@@ -264,6 +262,12 @@ following methods::
     $httpInfo = $response->getInfo();
     // you can get individual info too
     $startTime = $response->getInfo('start_time');
+
+.. note::
+
+    ``$response->getInfo()`` is non-blocking: it returns *live* information
+    about the response. Some of them might not be known yet (e.g. ``http_code``)
+    when you'll call it.
 
 .. tip::
 
@@ -316,6 +320,163 @@ When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
     // pass FALSE as the optional argument to not throw an exception and return
     // instead the original response content (even if it's an error message)
     $content = $response->getContent(false);
+
+Concurrent Requests
+-------------------
+
+Thanks to responses being lazy, requests are always managed concurrently.
+On a fast enough network, the following code makes 379 requests in less than
+half a second when cURL is used::
+
+    use Symfony\Component\HttpClient\CurlHttpClient;
+
+    $client = new CurlHttpClient();
+
+    $responses = [];
+
+    for ($i = 0; $i < 379; ++$i) {
+        $uri = "https://http2.akamai.com/demo/tile-$i.png";
+        $responses[] = $client->request('GET', $uri);
+    }
+
+    foreach ($responses as $response) {
+        $content = $response->getContent();
+        // ...
+    }
+
+As you can read in the first "for" loop, requests are issued but are not consumed
+yet. That's the trick when concurrency is desired: requests should be sent
+first and be read later on. This will allow the client to monitor all pending
+requests while your code waits for a specific one, as done in each iteration of
+the above "foreach" loop.
+
+Multiplexing Responses
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you look again at the snippet above, responses are read in requests' order.
+But maybe the 2nd response came back before the 1st? Fully asynchronous operations
+require being able to deal with the responses in whatever order they come back.
+
+In order to do so, the ``stream()`` method of HTTP clients accepts a list of
+responses to monitor. As mentioned :ref:`previously <http-client-streaming-responses>`,
+this method yields response chunks as they arrive from the network. By replacing
+the "foreach" in the snippet with this one, the code becomes fully async::
+
+    foreach ($client->stream($responses) as $response => $chunk) {
+        if ($chunk->isFirst()) {
+            // headers of $response just arrived
+            // $response->getHeaders() is now a non-blocking call
+        } elseif ($chunk->isLast()) {
+            // the full content of $response just completed
+            // $response->getContent() is now a non-blocking call
+        } else {
+            // $chunk->getContent() will return a piece
+            // of the response body that just arrived
+        }
+    }
+
+.. tip::
+
+    Use the ``user_data`` option combined with ``$response->getInfo('user_data')``
+    to track the identity of the responses in your foreach loops.
+
+Canceling Responses
+~~~~~~~~~~~~~~~~~~~
+
+Responses can be canceled at any moment before they are completed using the
+``cancel()`` method::
+
+    foreach ($client->stream($responses) as $response => $chunk) {
+        // ...
+
+        // if some condition happens, cancel the response
+        $response->cancel();
+    }
+
+.. versionadded:: 4.4
+
+    The ``cancel()`` method was introduced in Symfony 4.4.
+
+Dealing with Network Timeouts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This component allows dealing with both request and response timeouts.
+
+A timeout can happen when e.g. DNS resolution takes too much time, when the TCP
+connection cannot be opened in the given time budget, or when the response
+content pauses for too long. This can be configured with the ``timeout`` request
+option::
+
+    // A TransportExceptionInterface will be issued if nothing
+    // happens for 2.5 seconds when accessing from the $response
+    $response = $client->request('GET', 'https://...', ['timeout' => 2.5]);
+
+The ``default_socket_timeout`` PHP ini setting is used if the option is not set.
+
+The option can be overridden by using the 2nd argument of the ``stream()`` method.
+This allows monitoring several responses at once and applying the timeout to all
+of them in a group. If all responses become inactive for the given duration, the
+method will yield a special chunk whose ``isTimeout()`` will return ``true``::
+
+    foreach ($client->stream($responses, 1.5) as $response => $chunk) {
+        if ($chunk->isTimeout()) {
+            // $response staled for more than 1.5 seconds
+        }
+    }
+
+A timeout is not necessarily an error: you can decide to stream again the
+response and get remaining contents that might come back in a new timeout, etc.
+
+.. tip::
+
+    Passing ``0`` as timeout allows monitoring responses in a non-blocking way.
+
+.. note::
+
+    Timeouts control how long one is willing to wait *while the HTTP transaction
+    is idle*. Big responses can last as long as needed to complete, provided they
+    remain active during the transfer and never pause for longer than specified.
+
+Dealing with Network Errors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Network errors (broken pipe, failed DNS resolution, etc.) are thrown as instances
+of :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`.
+
+First of all, you don't *have* to deal with them: letting errors bubble to your
+generic exception-handling stack might be really fine in most use cases.
+
+If you want to handle them, here is what you need to know:
+
+To catch errors, you need to wrap calls to ``$client->request()`` but also calls
+to any methods of the returned responses. This is because responses are lazy, so
+that network errors can happen when calling e.g. ``getStatusCode()`` too::
+
+    try {
+        // both lines can potentially throw
+        $response = $client->request(...);
+        $headers = $response->getHeaders();
+        // ...
+    } catch (TransportExceptionInterface $e) {
+        // ...
+    }
+
+.. note::
+
+    Because ``$response->getInfo()`` is non-blocking, it shouldn't throw by design.
+
+When multiplexing responses, you can deal with errors for individual streams by
+catching ``TransportExceptionInterface`` in the foreach loop::
+
+    foreach ($client->stream($responses) as $response => $chunk) {
+        try {
+            if ($chunk->isLast()) {
+                // ... do something with $response
+            }
+        } catch (TransportExceptionInterface $e) {
+            // ...
+        }
+    }
 
 Caching Requests and Responses
 ------------------------------
@@ -435,8 +596,9 @@ the available config options:
     framework:
         # ...
         http_client:
-            max_redirects: 7
             max_host_connections: 10
+            default_options:
+                max_redirects: 7
 
 If you want to define multiple HTTP clients, use this other expanded configuration:
 
@@ -448,16 +610,16 @@ If you want to define multiple HTTP clients, use this other expanded configurati
         http_client:
             scoped_clients:
                 crawler.client:
-                    headers: [{ 'X-Powered-By': 'ACME App' }]
+                    headers: { 'X-Powered-By': 'ACME App' }
                     http_version: '1.0'
                 some_api.client:
-                    max_redirects: 7
+                    max_redirects: 5
 
-Injecting the HTTP Client Into Services
+Injecting the HTTP Client into Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your application only defines one HTTP client, you can inject it into any
-service by type-hinting a constructor argument with the
+If your application only needs one HTTP client, you can inject the default one
+into any services by type-hinting a constructor argument with the
 :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`::
 
     use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -473,21 +635,14 @@ service by type-hinting a constructor argument with the
     }
 
 If you have several clients, you must use any of the methods defined by Symfony
-to ref:`choose a specific service <services-wire-specific-service>`. Each client
+to :ref:`choose a specific service <services-wire-specific-service>`. Each client
 has a unique service named after its configuration.
 
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        # ...
-
-        # whenever a service type-hints HttpClientInterface, inject the GitHub client
-        Symfony\Contracts\HttpClient\HttpClientInterface: '@api_client.github'
-
-        # inject the HTTP client called 'crawler' into this argument of this service
-        App\Some\Service:
-            $someArgument: '@http_client.crawler'
+Each scoped client also defines a corresponding named autowiring alias.
+If you use for example
+``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
+as the type and name of an argument, autowiring will inject the ``my_api.client``
+service into your autowired classes.
 
 Testing HTTP Clients and Responses
 ----------------------------------
@@ -496,8 +651,8 @@ This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
 use them in tests that need an HTTP client which doesn't make actual HTTP
 requests.
 
-The first way of using ``MockHttpClient`` is to configure the set of responses
-to return using its constructor::
+The first way of using ``MockHttpClient`` is to pass a list of responses to its
+constructor. These will be yielded in order when requests are made::
 
     use Symfony\Component\HttpClient\MockHttpClient;
     use Symfony\Component\HttpClient\Response\MockResponse;

@@ -77,7 +77,7 @@ Usage
 -----
 
 When you have configured a ``Registry`` with your workflows,
-you can retreive a workflow from it and use it as follows::
+you can retrieve a workflow from it and use it as follows::
 
     // ...
     // Consider that $post is in state "draft" by default
