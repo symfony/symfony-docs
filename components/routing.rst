@@ -463,17 +463,31 @@ routes with UTF-8 characters:
 
         .. code-block:: php-annotations
 
-            route1:
-                path:       /category/{name}
-                controller: App\Controller\DefaultController::category
-                options:    { utf8: true }
+            namespace App\Controller;
+
+            use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+            use Symfony\Component\Routing\Annotation\Route;
+
+            class DefaultController extends AbstractController
+            {
+                /**
+                 * @Route(
+                 *     "/category/{name}",
+                 *     name="route1",
+                 *     options={"utf8": true}
+                 * )
+                 */
+                public function category()
+                {
+                    // ...
+                }
 
         .. code-block:: yaml
 
             route1:
                 path:       /category/{name}
                 controller: App\Controller\DefaultController::category
-                utf8:       true
+                options:    { utf8: true }
 
         .. code-block:: xml
 
