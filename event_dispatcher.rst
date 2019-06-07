@@ -207,7 +207,7 @@ or a "sub request"::
     // src/EventListener/RequestListener.php
     namespace App\EventListener;
 
-    use \Symfony\Component\HttpKernel\Event\ExceptionEvent;
+    use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
     class RequestListener
     {
