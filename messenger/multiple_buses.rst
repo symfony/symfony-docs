@@ -213,12 +213,14 @@ the correct tag:
         command_handlers:
             namespace: App\MessageHandler\
             resource: '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php'
+            autoconfigure: false
             tags:
                 - { name: messenger.message_handler, bus: messenger.bus.commands }
 
         query_handlers:
             namespace: App\MessageHandler\
             resource: '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php'
+            autoconfigure: false
             tags:
                 - { name: messenger.message_handler, bus: messenger.bus.queries }
 
@@ -250,11 +252,13 @@ the correct tag:
         // Command handlers
         $container->services()
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php')
+            ->autoconfigure(false)
             ->tag('messenger.message_handler', ['bus' => 'messenger.bus.commands']);
 
         // Query handlers
         $container->services()
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php')
+            ->autoconfigure(false)
             ->tag('messenger.message_handler', ['bus' => 'messenger.bus.queries']);
 
 Debugging the Buses
