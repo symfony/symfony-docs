@@ -457,52 +457,8 @@ routes with UTF-8 characters:
 .. versionadded:: 4.3
 
     The ``utf8`` option/method has been introduced in Symfony 4.3.
-    Before you had to use the ``options`` setting to define this value:
-
-    .. configuration-block::
-
-        .. code-block:: php-annotations
-
-            route1:
-                path:       /category/{name}
-                controller: App\Controller\DefaultController::category
-                options:    { utf8: true }
-
-        .. code-block:: yaml
-
-            route1:
-                path:       /category/{name}
-                controller: App\Controller\DefaultController::category
-                utf8:       true
-
-        .. code-block:: xml
-
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <routes xmlns="http://symfony.com/schema/routing"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/routing
-                    https://symfony.com/schema/routing/routing-1.0.xsd">
-
-                <route id="route1"
-                    path="/category/{name}"
-                    controller="App\Controller\DefaultController::category">
-                    <option key="utf8">true</option>
-                </route>
-            </routes>
-
-        .. code-block:: php
-
-            // config/routes.php
-            namespace Symfony\Component\Routing\Loader\Configurator;
-
-            use App\Controller\DefaultController;
-
-            return function (RoutingConfigurator $routes) {
-                $routes->add('route1', '/category/{name}')
-                    ->controller([DefaultController::class, 'category'])
-                    ->options(['utf8' => true])
-                ;
-            };
+    Before you had to use the ``options`` setting to define this value (for
+    example, when using annotations: ``options={"utf8": true}``).
 
 In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
 ``.`` requirement to match any UTF-8 characters instead of just a single
