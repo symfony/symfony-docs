@@ -27,12 +27,12 @@ The most common way to listen to an event is to register an **event listener**::
     namespace App\EventListener;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+    use Symfony\Component\HttpKernel\Event\ExceptionEvent;
     use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
     class ExceptionListener
     {
-        public function onKernelException(GetResponseForExceptionEvent $event)
+        public function onKernelException(ExceptionEvent $event)
         {
             // You get the exception object from the received event
             $exception = $event->getException();
@@ -63,7 +63,7 @@ The most common way to listen to an event is to register an **event listener**::
 .. tip::
 
     Each event receives a slightly different type of ``$event`` object. For
-    the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
+    the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`.
     Check out the :doc:`Symfony events reference </reference/events>` to see
     what type of object each event provides.
 
@@ -207,11 +207,11 @@ or a "sub request"::
     // src/EventListener/RequestListener.php
     namespace App\EventListener;
 
-    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+    use \Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
     class RequestListener
     {
-        public function onKernelRequest(GetResponseEvent $event)
+        public function onKernelRequest(ExceptionEvent $event)
         {
             if (!$event->isMasterRequest()) {
                 // don't do anything if it's not the master request
