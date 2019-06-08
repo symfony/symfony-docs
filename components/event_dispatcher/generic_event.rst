@@ -4,7 +4,7 @@
 The Generic Event Object
 ========================
 
-The base :class:`Symfony\\Component\\EventDispatcher\\Event` class provided
+The base :class:`Symfony\\Contracts\\EventDispatcher\\Event` class provided
 by the EventDispatcher component is deliberately sparse to allow the creation
 of API specific event objects by inheritance using OOP. This allows for
 elegant and readable code in complex applications.
@@ -18,7 +18,7 @@ arguments.
 
 :class:`Symfony\\Component\\EventDispatcher\\GenericEvent` adds some more
 methods in addition to the base class
-:class:`Symfony\\Component\\EventDispatcher\\Event`
+:class:`Symfony\\Contracts\\EventDispatcher\\Event`
 
 * :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::__construct`:
   Constructor takes the event subject and any arguments;
