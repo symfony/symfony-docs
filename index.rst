@@ -45,6 +45,7 @@ Topics
     mailer
     mercure
     messenger
+    migration
     performance
     profiler
     routing
