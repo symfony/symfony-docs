@@ -200,7 +200,7 @@ known by the ``messenger.bus.commands`` bus.
 .. tip::
 
     If you manually restrict handlers be sure to have ``autoconfigure`` disabled,
-    or not implement the ``Symfony\Component\Messenger\MessageHandlerInterface``
+    or not implement the ``Symfony\Component\Messenger\Handler\MessageHandlerInterface``
     as this might cause your handler to be registered twice.
 
     See :ref:`autoconfigure <services-autoconfigure>` for more information.
