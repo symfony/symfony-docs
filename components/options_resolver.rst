@@ -733,6 +733,12 @@ method::
     somewhere, either its value is provided by the user or the option is evaluated
     within closures of lazy options and normalizers.
 
+.. note::
+
+    If you use your own deprecated option within your own library and need to fix it, 
+    pass ``false`` as second argument of the :method:`Symfony\\Component\\OptionsResolver\\Options::offsetGet()` method 
+    so as not to trigger the deprecation warning.
+
 Instead of passing the message, you may also pass a closure which returns
 a string (the deprecation message) or an empty string to ignore the deprecation.
 This closure is useful to only deprecate some of the allowed types or values of
