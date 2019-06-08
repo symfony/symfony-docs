@@ -44,6 +44,7 @@ Topics
     logging
     mercure
     messenger
+    migration
     performance
     profiler
     routing
