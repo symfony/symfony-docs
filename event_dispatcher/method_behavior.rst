@@ -44,7 +44,7 @@ events. For example, ``BeforeSendMailEvent`` might look like this::
     // src/Event/BeforeSendMailEvent.php
     namespace App\Event;
 
-    use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Contracts\EventDispatcher\Event;
 
     class BeforeSendMailEvent extends Event
     {
@@ -83,7 +83,7 @@ And the ``AfterSendMailEvent`` even like this::
     // src/Event/AfterSendMailEvent.php
     namespace App\Event;
 
-    use Symfony\Component\EventDispatcher\Event;
+    use Symfony\Contracts\EventDispatcher\Event;
 
     class AfterSendMailEvent extends Event
     {
