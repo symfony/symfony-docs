@@ -643,6 +643,21 @@ environment:
                 $sender: null
                 $recipients: ['youremail@example.com']
 
+
+Save Messages in Files
+----------------------
+
+While running integration tests, you may want to save messages in the filesystem.
+You can do this by forcing Mailer to use the ``FileTransport`` in only the ``test``
+environment:
+
+.. code-block:: yaml
+
+    # config/packages/test/mailer.yaml
+    framework:
+        mailer:
+            dsn: 'file://%kernel.project_dir%/var/emails'
+
 .. _`download the foundation-emails.css file`: https://github.com/zurb/foundation-emails/blob/develop/dist/foundation-emails.css
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`Markdown syntax`: https://commonmark.org/
