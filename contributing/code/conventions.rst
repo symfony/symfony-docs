@@ -124,7 +124,7 @@ between the namespace and the use declarations, like in this example from
     /**
      * @author Adrien Brault <adrien.brault@gmail.com>
      *
-     * @deprecated ArrayParserCache class is deprecated since version 3.2 and will be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.
+     * @deprecated since Symfony 3.2, to be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.
      */
     class ArrayParserCache implements ParserCacheInterface
 
