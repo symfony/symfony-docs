@@ -197,7 +197,7 @@ known by the ``messenger.bus.commands`` bus.
     or not implement the ``Symfony\Component\Messenger\Handler\MessageHandlerInterface``
     as this might cause your handler to be registered twice.
 
-    See :ref:`autoconfigure <services-autoconfigure>` for more information.
+    See :ref:`service autoconfiguration <services-autoconfigure>` for more information.
 
 You can also automatically add this tag to a number of classes by following
 a naming convention and registering all of the handler services by name with
