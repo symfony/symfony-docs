@@ -19,7 +19,7 @@ install the serializer before using it:
 
 .. code-block:: terminal
 
-    $ composer require symfony/serializer
+    $ composer require serializer
 
 Using the Serializer Service
 ----------------------------
@@ -67,6 +67,13 @@ As well as the following normalizers:
   to deal with objects implementing the :phpclass:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
   denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
+
+.. note::
+
+    If you installed the serializer directly through `composer require symfony/serializer`,
+    the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` will
+    not be available without `composer require symfony/property-access`.
+
 
 Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
