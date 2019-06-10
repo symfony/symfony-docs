@@ -13,7 +13,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/dotenv
+    $ composer require symfony/dotenv
 
 .. include:: /components/require_autoload.rst.inc
 
