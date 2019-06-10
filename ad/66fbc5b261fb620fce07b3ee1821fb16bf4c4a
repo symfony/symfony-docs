@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-06-07T08:58:21Z
+
+Seems like they support 3.4 in all their versions currently: https://packagist.org/packages/friendsofsymfony/ckeditor-bundle so let's do 3.4
+
+---------------------------------------------------------------------------
+
+by jderusse at 2019-06-07T09:01:59Z
+
+I can handle the rebase. Or you prefer to switch the branch by yourself?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-07T09:12:40Z
+
+Thanks Jérémy, but we can switch the branch while merging.
