@@ -389,10 +389,6 @@ Responses can be canceled at any moment before they are completed using the
         $response->cancel();
     }
 
-.. versionadded:: 4.4
-
-    The ``cancel()`` method was introduced in Symfony 4.4.
-
 Dealing with Network Timeouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -216,12 +216,6 @@ To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
 
-.. versionadded:: 4.2
-
-   Support for ICU MessageFormat was introduced in Symfony 4.2. Prior to this,
-   pluralization was managed by the
-   :method:`Symfony\\Component\\Translation\\Translator::transChoice` method.
-
 Translations in Templates
 -------------------------
 
