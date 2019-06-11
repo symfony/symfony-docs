@@ -325,7 +325,7 @@ you switch users, add an event subscriber on this event::
         {
             $request = $event->getRequest();
 
-            if ($request->hasSession() && ($session = $request->getSession)) {
+            if ($request->hasSession() && ($session = $request->getSession())) {
                 $session->set(
                     '_locale',
                     // assuming your User has some getLocale() method
