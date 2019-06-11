@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-06-05T06:21:11Z
+
+When merging this into 4.4, don't miss removing the changes done in https://github.com/symfony/symfony-docs/pull/11663
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-06-07T05:32:36Z
+
+This can merged now :)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-06-09T15:53:29Z
+
+Comments addressed, thank you all!
