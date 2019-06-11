@@ -371,17 +371,17 @@ To abort a request (e.g. because it didn't complete in due time, or you want to
 fetch only the first bytes of the response, etc.), you can either use the
 ``cancel()`` method of ``ResponseInterface``::
 
-      $response->cancel()
+    $response->cancel()
 
 Or throw an exception from a progress callback::
 
-      $response = $client->request('GET', 'https://...', [
+    $response = $client->request('GET', 'https://...', [
         'on_progress' => function (int $dlNow, int $dlSize, array $info): void {
             // ...
 
             throw new \MyException();
         },
-      ]);
+    ]);
 
 The exception will be wrapped in an instance of ``TransportExceptionInterface``
 and will abort the request.
@@ -462,23 +462,6 @@ the "foreach" in the snippet with this one, the code becomes fully async::
 
     Use the ``user_data`` option combined with ``$response->getInfo('user_data')``
     to track the identity of the responses in your foreach loops.
-
-Canceling Responses
-~~~~~~~~~~~~~~~~~~~
-
-Responses can be canceled at any moment before they are completed using the
-``cancel()`` method::
-
-    foreach ($client->stream($responses) as $response => $chunk) {
-        // ...
-
-        // if some condition happens, cancel the response
-        $response->cancel();
-    }
-
-.. versionadded:: 4.4
-
-    The ``cancel()`` method was introduced in Symfony 4.4.
 
 Dealing with Network Timeouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
