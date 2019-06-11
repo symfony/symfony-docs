@@ -15,7 +15,3 @@ with regard to the ``$startDate`` property of the same object, use
     ``{{ compared_value_path }}`` placeholder. Although it's not intended to
     include it in the error messages displayed to end users, it's useful when
     using APIs for doing any mapping logic on client-side.
-
-    .. versionadded:: 4.4
-
-        The ``{{ compared_value_path }}`` placeholder was introduced in Symfony 4.4.

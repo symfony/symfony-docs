@@ -4,10 +4,6 @@
 How to Translate Messages using the ICU MessageFormat
 =====================================================
 
-.. versionadded:: 4.2
-
-   Support for ICU MessageFormat was introduced in Symfony 4.2.
-
 Messages (i.e. strings) in applications are almost never completely static.
 They contain variables or other complex logic like pluralization. In order to
 handle this, the Translator component supports the `ICU MessageFormat`_ syntax.
