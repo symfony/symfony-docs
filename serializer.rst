@@ -19,7 +19,7 @@ install the serializer before using it:
 
 .. code-block:: terminal
 
-    $ composer require symfony/serializer
+    $ composer require symfony/serializer-pack
 
 Using the Serializer Service
 ----------------------------
