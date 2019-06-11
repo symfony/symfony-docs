@@ -29,8 +29,10 @@ The most common way to listen to an event is to register an **event listener**::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\KernelEvents;
 
-    class ExceptionListener
+    class ExceptionListener implements EventSubscriberInterface
     {
         public function onKernelException(GetResponseForExceptionEvent $event)
         {
@@ -57,6 +59,15 @@ The most common way to listen to an event is to register an **event listener**::
 
             // sends the modified response object to the event
             $event->setResponse($response);
+        }
+        
+        public static function getSubscribedEvents()
+        {
+            return [
+                KernelEvents::EXCEPTION => [
+                    ['onKernelException', 128],
+                ],
+            ];
         }
     }
 
