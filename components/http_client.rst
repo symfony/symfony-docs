@@ -182,7 +182,7 @@ processed automatically when making the requests::
         'body' => ['parameter1' => 'value1', '...'],
 
         // using a closure to generate the uploaded data
-        'body' => function () {
+        'body' => function (int $size): string {
             // ...
         },
 
@@ -195,12 +195,39 @@ When uploading data with the ``POST`` method, if you don't define the
 form data and adds the required
 ``'Content-Type: application/x-www-form-urlencoded'`` header for you.
 
-When uploading JSON payloads, use the ``json`` option instead of ``body``. The
-given content will be JSON-encoded automatically and the request will add the
-``Content-Type: application/json`` automatically too::
+When the ``body`` option is set as a closure, it will be called several times until
+it returns the empty string, which signals the end of the body. Each time, the
+closure should return a string smaller than the amount requested as argument.
 
-    $response = $httpClient->request('POST', 'https://...', [
-        'json' => ['param1' => 'value1', '...'],
+A generator or any ``Traversable`` can also be used instead of a closure.
+
+.. tip::
+
+    When uploading JSON payloads, use the ``json`` option instead of ``body``. The
+    given content will be JSON-encoded automatically and the request will add the
+    ``Content-Type: application/json`` automatically too::
+
+        $response = $httpClient->request('POST', 'https://...', [
+            'json' => ['param1' => 'value1', '...'],
+        ]);
+
+        $decodedPayload = $response->toArray();
+
+To submit a form with file uploads, it is your responsibility to encode the body
+according to the ``multipart/form-data`` content-type. The
+:doc:`Symfony Mime </components/mime>` component makes it a few lines of code::
+
+    use Symfony\Component\Mime\Part\DataPart;
+    use Symfony\Component\Mime\Part\Multipart\FormDataPart;
+
+    $formFields = [
+        'regular_field' => 'some value',
+        'file_field' => DataPart::fromPath('/path/to/uploaded/file'),
+    ];
+    $formData = new FormDataPart($formFields);
+    $client->request('POST', 'https://...', [
+        'headers' => $formData->getPreparedHeaders()->toArray(),
+        'body' => $formData->bodyToIterable(),
     ]);
 
 Cookies
@@ -228,12 +255,47 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
         'max_redirects' => 0,
     ]);
 
+HTTP Proxies
+~~~~~~~~~~~~
+
+By default, this component honors the standard environment variables that your
+Operating System defines to direct the HTTP traffic through your local proxy.
+This means there is usually nothing to configure to have the client work with
+proxies, provided these env vars are properly configured.
+
+You can still set or override these settings using the ``proxy`` and ``no_proxy``
+options:
+
+* ``proxy`` should be set to the ``http://...`` URL of the proxy to get through
+
+* ``no_proxy`` disables the proxy for a comma-separated list of hosts that do not
+  require it to get reached.
+
+Progress Callback
+~~~~~~~~~~~~~~~~~
+
+By providing a callable to the ``on_progress`` option, one can track
+uploads/downloads as they complete. This callback is guaranteed to be called on
+DNS resolution, on arrival of headers and on completion; additionally it is
+called when new data is uploaded or downloaded and at least once per second::
+
+    $response = $httpClient->request('GET', 'https://...', [
+        'on_progress' => function (int $dlNow, int $dlSize, array $info): void {
+            // $dlNow is the number of bytes downloaded so far
+            // $dlSize is the total size to be downloaded or -1 if it is unknown
+            // $info is what $response->getInfo() would return at this very time
+        },
+    ];
+
+Any exceptions thrown from the callback will be wrapped in an instance of
+``TransportExceptionInterface`` and will abort the request.
+
 Advanced Options
 ~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface` defines all the
 options you might need to take full control of the way the request is performed,
-including progress monitoring, DNS pre-resolution, timeout, SSL parameters, etc.
+including DNS pre-resolution, SSL parameters, public key pinning, etc.
 
 Processing Responses
 --------------------
@@ -252,6 +314,9 @@ following methods::
 
     // gets the response body as a string
     $content = $response->getContent();
+
+    // cancels the request/response
+    $response->cancel();
 
     // returns info coming from the transport layer, such as "response_headers",
     // "redirect_count", "start_time", "redirect_url", etc.
@@ -281,10 +346,6 @@ response sequentially instead of waiting for the entire response::
     $response = $httpClient->request('GET', $url, [
         // optional: if you don't want to buffer the response in memory
         'buffer' => false,
-        // optional: to display details about the response progress
-        'on_progress' => function (int $dlNow, int $dlSize, array $info): void {
-            // ...
-        },
     ]);
 
     // Responses are lazy: this code is executed as soon as headers are received
@@ -298,6 +359,28 @@ response sequentially instead of waiting for the entire response::
     foreach ($httpClient->stream($response) as $chunk) {
         fwrite($fileHandler, $chunk->getContent());
     }
+
+Canceling Responses
+~~~~~~~~~~~~~~~~~~~
+
+To abort a request (e.g. because it didn't complete in due time, or you want to
+fetch only the first bytes of the response, etc.), you can either use the
+``cancel()`` method of ``ResponseInterface``::
+
+    $response->cancel()
+
+Or throw an exception from a progress callback::
+
+    $response = $client->request('GET', 'https://...', [
+        'on_progress' => function (int $dlNow, int $dlSize, array $info): void {
+            // ...
+
+            throw new \MyException();
+        },
+    ]);
+
+The exception will be wrapped in an instance of ``TransportExceptionInterface``
+and will abort the request.
 
 Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
@@ -375,19 +458,6 @@ the "foreach" in the snippet with this one, the code becomes fully async::
 
     Use the ``user_data`` option combined with ``$response->getInfo('user_data')``
     to track the identity of the responses in your foreach loops.
-
-Canceling Responses
-~~~~~~~~~~~~~~~~~~~
-
-Responses can be canceled at any moment before they are completed using the
-``cancel()`` method::
-
-    foreach ($client->stream($responses) as $response => $chunk) {
-        // ...
-
-        // if some condition happens, cancel the response
-        $response->cancel();
-    }
 
 Dealing with Network Timeouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -538,7 +608,7 @@ PSR-18 Compatibility
 --------------------
 
 This component uses and implements abstractions defined by the
-``symfony/contracts`` package. It also implements the `PSR-18`_ (HTTP Client)
+``symfony/http-client-contracts``. It also implements the `PSR-18`_ (HTTP Client)
 specifications via the :class:`Symfony\\Component\\HttpClient\\Psr18Client`
 class, which is an adapter to turn a Symfony ``HttpClientInterface`` into a
 PSR-18 ``ClientInterface``.
