@@ -4,63 +4,55 @@
 How to Dump Workflows
 =====================
 
-To help you debug your workflows, you can dump a representation of your workflow
-or state machine with the use of a ``DumperInterface``. Symfony provides two
-different dumpers, both based on Dot (see below).
+To help you debug your workflows, you can generate a visual representation of
+them as SVG or PNG images. First, install any of these free and open source
+applications needed to generate the images:
 
-Use the ``GraphvizDumper`` or ``StateMachineGraphvizDumper`` to create DOT
-files, or use ``PlantUmlDumper`` for PlantUML files. Both types can be converted
-to PNG or SVG images.
+* `Graphviz`_, provides the ``dot`` command;
+* `PlantUML`_, provides the ``plantuml.jar`` file (which requires Java).
 
-Images of the workflow defined above::
-
-    // dump-graph-dot.php
-    $dumper = new GraphvizDumper();
-    echo $dumper->dump($definition);
-
-    // dump-graph-puml.php
-    $dumper = new PlantUmlDumper();
-    echo $dumper->dump($definition);
+If you are defining the workflow inside a Symfony application, run this command
+to dump it as an image:
 
 .. code-block:: terminal
 
-    # dump DOT file in PNG image:
-    $ php dump-graph-dot.php | dot -Tpng -o dot_graph.png
+    # using Graphviz's 'dot' and SVG images
+    $ php bin/console workflow:dump workflow-name | dot -Tsvg -o graph.svg
 
-    # dump DOT file in SVG image:
-    # $ php dump-graph-dot.php | dot -Tsvg -o dot_graph.svg
+    # using Graphviz's 'dot' and PNG images
+    $ php bin/console workflow:dump workflow-name | dot -Tpng -o graph.png
 
-    # dump PlantUML in PNG image:
-    $ php dump-graph-puml.php | java -jar plantuml.jar -p  > puml_graph.png
+    # using PlantUML's 'plantuml.jar'
+    $ php bin/console workflow:dump workflow_name --dump-format=puml | java -jar plantuml.jar -p  > graph.png
 
-The DOT result will look like this:
+    # highlight 'place1' and 'place2' in the dumped workflow
+    $ php bin/console workflow:dump workflow-name place1 place2 | dot -Tsvg -o graph.svg
+
+The DOT image will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
 
-The PlantUML result:
+The PlantUML image will look like this:
 
 .. image:: /_images/components/workflow/blogpost_puml.png
 
-Inside a Symfony application, you can dump the files with those commands using
-``workflow:dump`` command:
+If you are creating workflows outside of a Symfony application, use the
+``GraphvizDumper`` or ``StateMachineGraphvizDumper`` class to create the DOT
+files and ``PlantUmlDumper`` to create the PlantUML files::
+
+    // Add this code to a PHP script; for example: dump-graph.php
+    $dumper = new GraphvizDumper();
+    echo $dumper->dump($definition);
+
+    # if you prefer PlantUML, use this code:
+    # $dumper = new PlantUmlDumper();
+    # echo $dumper->dump($definition);
 
 .. code-block:: terminal
 
-    $ php bin/console workflow:dump workflow_name | dot -Tpng -o workflow_name.png
-    $ php bin/console workflow:dump workflow_name | dot -Tsvg -o workflow_name.svg
-    $ php bin/console workflow:dump workflow_name --dump-format=puml | java -jar plantuml.jar -p  > workflow_name.png
+    # replace 'dump-graph.php' by the name of your PHP script
+    $ php dump-graph.php | dot -Tsvg -o graph.svg
+    $ php dump-graph.php | java -jar plantuml.jar -p  > graph.png
 
-    # highlight 'place1' and 'place2' in the dumped workflow
-    $ php bin/console workflow:dump name place1 place2 | dot -Tsvg -o graph.svg
-
-.. note::
-
-    The ``dot`` command is part of Graphviz. You can download it and read
-    more about it on `Graphviz.org`_.
-
-    The ``plantuml.jar`` command is part of PlantUML. You can download it and
-    read more about it on `PlantUML.com`_.
-
-
-.. _Graphviz.org: http://www.graphviz.org
-.. _PlantUML.com: http://plantuml.com/
+.. _`Graphviz`: http://www.graphviz.org
+.. _`PlantUML`: http://plantuml.com/
