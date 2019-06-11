@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-06-09T22:58:28Z
+
+Thank you for the quick PR! Can you please also update the code examples to use `tagged_iterator`?
+
+---------------------------------------------------------------------------
+
+by jschaedl at 2019-06-11T07:35:24Z
+
+@wouterj Code examples updated > 712d0f4
