@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2019-06-08T13:37:28Z
+
+This is the use case for this note:
+```php
+$resolver->setDefaults([
+    'foo' => null,
+    'bar' => function (Options $options) {
+        // needed to keep BC,
+        // and do not use $options['foo'] here, it'll trigger the deprecation
+        return $options->offsetGet('foo', false); // does not trigger the deprecation
+    },
+]);
+$resolver->setDeprecated('foo', 'The "foo" option is deprecated, use "bar" instead.');
+```
