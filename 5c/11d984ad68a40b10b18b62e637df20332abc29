@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-11T15:28:59Z
+
+@acrnogor good catch! Thanks for fixing this bug! We merged it in 4.2 branch (the oldest maintained branch that contains the error) and we'll merge in the other branches automatically. GitHub shows this as "closed" instead of "merged" because of this branch change, but it's "merged".
+
+Also, congrats on your first Symfony Docs contribution!
