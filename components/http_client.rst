@@ -371,17 +371,17 @@ To abort a request (e.g. because it didn't complete in due time, or you want to
 fetch only the first bytes of the response, etc.), you can either use the
 ``cancel()`` method of ``ResponseInterface``::
 
-      $response->cancel()
+    $response->cancel()
 
 Or throw an exception from a progress callback::
 
-      $response = $client->request('GET', 'https://...', [
+    $response = $client->request('GET', 'https://...', [
         'on_progress' => function (int $dlNow, int $dlSize, array $info): void {
             // ...
 
             throw new \MyException();
         },
-      ]);
+    ]);
 
 The exception will be wrapped in an instance of ``TransportExceptionInterface``
 and will abort the request.
