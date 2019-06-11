@@ -735,9 +735,10 @@ method::
 
 .. note::
 
-    If you use your own deprecated option within your own library and need to fix it, 
-    pass ``false`` as second argument of the :method:`Symfony\\Component\\OptionsResolver\\Options::offsetGet()` method 
-    so as not to trigger the deprecation warning.
+    When using an option deprecated by you in your own library, you can pass
+    ``false`` as the second argument of the
+    :method:`Symfony\\Component\\OptionsResolver\\Options::offsetGet()` method
+    to not trigger the deprecation warning.
 
 Instead of passing the message, you may also pass a closure which returns
 a string (the deprecation message) or an empty string to ignore the deprecation.
