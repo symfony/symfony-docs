@@ -456,6 +456,10 @@ compiler pass just for that.
 In the following example, all services tagged with ``app.handler`` are passed as
 first  constructor argument to the ``App\HandlerCollection`` service:
 
+.. deprecated:: 4.4
+
+    ``tagged`` has been deprecated since version 4.4 and will be removed in 5.0. Use ``tagged_iterator`` instead.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -470,7 +474,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
             App\HandlerCollection:
                 # inject all services tagged with app.handler as first argument
-                arguments: [!tagged app.handler]
+                arguments: [!tagged_iterator app.handler]
 
     .. code-block:: xml
 
@@ -492,7 +496,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
                 <service id="App\HandlerCollection">
                     <!-- inject all services tagged with app.handler as first argument -->
-                    <argument type="tagged" tag="app.handler"/>
+                    <argument type="tagged_iterator" tag="app.handler"/>
                 </service>
             </services>
         </container>
