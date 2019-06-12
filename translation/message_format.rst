@@ -128,13 +128,13 @@ the function name is ``select`` and its statement contains the "cases" of this
 select. This function is applied over the ``organizer_gender`` variable::
 
     // prints "Ryan has invited you for his party!"
-    echo $translator->trans('invition_title', [
+    echo $translator->trans('invitation_title', [
         'organizer_name' => 'Ryan',
         'organizer_gender' => 'male',
     ]);
 
     // prints "John & Jane have invited you for their party!"
-    echo $translator->trans('invition_title', [
+    echo $translator->trans('invitation_title', [
         'organizer_name' => 'John & Jane',
         'organizer_gender' => 'not_applicable',
     ]);
