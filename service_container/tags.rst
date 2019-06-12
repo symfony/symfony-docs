@@ -562,3 +562,55 @@ application handlers::
                 ->addTag('app.handler', ['priority' => 20]);
 
     Note that any other custom attributes will be ignored by this feature.
+
+    You can also prioritized services implementing a static method for it.
+    The name of the method must be defined on the handler collection service:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                App\HandlerCollection:
+                    # inject all services tagged with app.handler and ordered by the result of the getDefaultPriority
+                    arguments: [!tagged { key: 'app.handler', default_priority_method: 'getDefaultPriority']
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="App\HandlerCollection">
+                        <!-- inject all services tagged with app.handler and ordered by the result of the getDefaultPriority-->
+                        <argument type="tagged" tag="app.handler"/>
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+            $container->register(App\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->addArgument(new TaggedIteratorArgument('app.handler'));
+
+    Now you can define the priority on the service class::
+
+        // src/Handler/One.php
+        namespace App\Handler;
+
+        class One
+        {
+            public static function getDefaultPriorityMethod(): int
+            {
+                return 10;
+            }
+        }
