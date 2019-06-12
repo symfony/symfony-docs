@@ -17,7 +17,7 @@ customize error pages, so run this command to make sure the bundle is installed:
 
     $ composer require twig
 
-In the :doc:`development environment </configuration/environments>`,
+In the :ref:`development environment <configuration-environments>`,
 Symfony catches all the exceptions and displays a special **exception page**
 with lots of debug information to help you discover the root problem:
 
