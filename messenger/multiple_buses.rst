@@ -103,7 +103,7 @@ This will create three new services:
 
 * ``messenger.bus.queries``: autowireable with the ``MessageBusInterface $messengerBusQueries``;
 
-* ``messenger.bus.queries``: autowireable with the ``MessageBusInterface $messengerBusEvents``.
+* ``messenger.bus.events``: autowireable with the ``MessageBusInterface $messengerBusEvents``.
 
 Type-hints and Auto-wiring
 --------------------------
