@@ -37,7 +37,7 @@ using these deprecated features in the last version before the major (e.g.
 
 To help you with this, deprecation notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
-:doc:`dev environment </configuration/environments>`
+:ref:`dev environment <configuration-environments>`
 in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /_images/install/deprecations-in-profiler.png
