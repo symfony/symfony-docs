@@ -18,7 +18,7 @@ SecurityBundle, DebugBundle, etc.) They are also used to add new features in
 your application via `third-party bundles`_.
 
 Bundles used in your applications must be enabled per
-:doc:`environment </configuration/environments>` in the ``config/bundles.php``
+:ref:`environment <configuration-environments>` in the ``config/bundles.php``
 file::
 
     // config/bundles.php
