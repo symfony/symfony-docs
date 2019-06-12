@@ -588,7 +588,7 @@ application handlers::
                 <services>
                     <service id="App\HandlerCollection">
                         <!-- inject all services tagged with app.handler and ordered by the result of the getDefaultPriority-->
-                        <argument type="tagged" tag="app.handler"/>
+                        <argument type="tagged" tag="app.handler" default-priority-method="getDefaultPriority"/>
                     </service>
                 </services>
             </container>
@@ -600,7 +600,7 @@ application handlers::
 
             $container->register(App\HandlerCollection::class)
                 // inject all services tagged with app.handler as first argument
-                ->addArgument(new TaggedIteratorArgument('app.handler'));
+                ->addArgument(new TaggedIteratorArgument('app.handler', null, null, false, 'getDefaultPriority'));
 
     Now you can define the priority on the service class::
 
