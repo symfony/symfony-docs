@@ -877,7 +877,7 @@ The Redis transport uses `streams`_ to queue messages.
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
 
-To use the Redis transport, you will need the Redis PHP extension (^4.2) and
+To use the Redis transport, you will need the Redis PHP extension (^4.3) and
 a running Redis server (^5.0).
 
 .. caution::
