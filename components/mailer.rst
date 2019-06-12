@@ -25,6 +25,9 @@ Installation
 Introduction
 ------------
 
+Symfony mailer is an experimental component introduced in 4.3 which
+will eventually replace swiftmailer.
+
 
 Usage
 -----
@@ -47,14 +50,18 @@ By default, the only transport available in the mailer component is Smtp.
 
 Below is the list of other popular providers with built in support.
 
-- Amazon SES: ``symfony/amazon-mailer``
-- Google Gmail: ``symfony/google-mailer``
-- Mandrill: ``symfony/mailchimp-mailer``
-- Mailgun: ``symfony/mailgun-mailer``
-- Postmark: ``symfony/postmark-mailer``
-- Sendgrid: ``symfony/sendgrid-mailer``
+==================  =============================================
+Service             Install with
+==================  =============================================
+Amazon SES          ``composer require symfony/amazon-mailer``
+Gmail               ``composer require symfony/google-mailer``
+MailChimp           ``composer require symfony/mailchimp-mailer``
+Mailgun             ``composer require symfony/mailgun-mailer``
+Postmark            ``composer require symfony/postmark-mailer``
+SendGrid            ``composer require symfony/sendgrid-mailer``
+==================  =============================================
 
-For example to use google's gmail as a transport you need to install symfony/google-mailer.
+For example, suppose you want to use Google's Gmail. First, install it:
 
 .. code-block:: terminal
 
@@ -68,16 +75,16 @@ For example to use google's gmail as a transport you need to install symfony/goo
     $mailer = new Mailer($transport);
     $mailer->send($email);
 
-Use a Dsn
+Use a DSN
 ---------
 
-The mailer component provides a convenient way to create transport object from dsn string::
+The mailer component provides a convenient way to create transport object from DSN string::
 
     use Symfony\Component\Mailer\Transport;
 
     $transport = Transport::fromDsn($dsn);
 
-Where ``$dns`` as one of the form below.
+Where ``$dsn`` as one of the form below.
 
 - ``smtp://user:pass@gmail``
 - ``smtp://key@sendgrid``
@@ -87,7 +94,7 @@ Where ``$dns`` as one of the form below.
 - ``api://id@postmark``
 
 This provides a unified behaviour across all providers.
-Easily switch from SMTP in dev to a "real" provider in production with same API.
+Easily switch from SMTP in development to a "real" provider in production with same API.
 
 Failover transport
 ------------------
