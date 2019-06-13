@@ -133,6 +133,13 @@ work:
 
 .. note::
 
+    A new **Symfony major version** (e.g. 3.0, 4.0) comes out every *two years*.
+    It is a very special case when new features must go to development branch.
+
+    Check `Symfony Roadmap`_ for latest development branch and not to ``master``
+
+.. note::
+
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a PR
     for the ``3.4`` branch, the PR will also be applied by the core team on
@@ -423,3 +430,4 @@ before merging.
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
 .. _`draft status`: https://help.github.com/en/articles/about-pull-requests#draft-pull-requests
+.. _`Symfony Roadmap`: https://symfony.com/roadmap
