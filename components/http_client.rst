@@ -555,8 +555,8 @@ so that the :doc:`HttpKernel component </components/http_kernel>` needs to be
 installed in your application::
 
     use Symfony\Component\HttpClient\CachingHttpClient;
-    use Symfony\Component\HttpKernel\HttpCache\Store;
     use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpKernel\HttpCache\Store;
 
     $store = new Store('/path/to/cache/storage/');
     $client = HttpClient::create();
