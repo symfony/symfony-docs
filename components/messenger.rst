@@ -214,15 +214,17 @@ you can create your own message sender::
     namespace App\MessageSender;
 
     use App\Message\ImportantAction;
+    use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+    use Symfony\Component\Mime\Email;
 
     class ImportantActionToEmailSender implements SenderInterface
     {
         private $mailer;
         private $toEmail;
 
-        public function __construct(\Swift_Mailer $mailer, string $toEmail)
+        public function __construct(MailerInterface $mailer, string $toEmail)
         {
             $this->mailer = $mailer;
             $this->toEmail = $toEmail;
@@ -237,12 +239,10 @@ you can create your own message sender::
             }
 
             $this->mailer->send(
-                (new \Swift_Message('Important action made'))
-                    ->setTo($this->toEmail)
-                    ->setBody(
-                        '<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>',
-                        'text/html'
-                    )
+                (new Email())
+                    ->to($this->toEmail)
+                    ->subject('Important action made')
+                    ->html('<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>')
             );
 
             return $envelope;
