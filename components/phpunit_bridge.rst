@@ -601,9 +601,7 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     preferred method as it can be committed to your version control repository.
 
     It's also possible to set ``SYMFONY_PHPUNIT_VERSION`` as a real env var
-    (not defined in a :doc:`dotenv </components/dotenv>` file).
-
-    It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+    (not defined in a :ref:`dotenv file <config-dot-env>`).
 
 .. tip::
 
