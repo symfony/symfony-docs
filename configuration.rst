@@ -20,16 +20,17 @@ directory, which has this default structure:
 The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
 the ``services.yaml`` file configures the services of the
 :doc:`service container </service_container>`; the ``bundles.php`` file enables/
-disables packages in your application and is managed automatically by
-:doc:`Symfony Flex </setup/flex>`.
+disables packages in your application.
 
 You'll be working most in the ``config/packages/`` directory. This directory
 stores the configuration of every package installed in your application.
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
 
-Most packages add a configuration file in ``config/packages/``. For example,
-this is the default file for the "API Platform" package:
+When using :doc:`Symfony Flex </setup/flex>`, which is enabled by default in
+Symfony applications, packages update the ``bundles.php`` file and create new
+files in ``config/packages/`` automatically during their installation. For
+example, this is the default file created by the "API Platform" package:
 
 .. code-block:: yaml
 
