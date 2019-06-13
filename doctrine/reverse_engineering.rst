@@ -94,7 +94,7 @@ The generated PHP classes now have properties and annotation metadata, but they
 do *not* have any getter or setter methods. If you generated XML or YAML metadata,
 you don't even have the PHP classes!
 
-To generate the missing getter/setter methods (or to *create* the classes if neceesary),
+To generate the missing getter/setter methods (or to *create* the classes if necessary),
 run:
 
 .. code-block:: terminal
