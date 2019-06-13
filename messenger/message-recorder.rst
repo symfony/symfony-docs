@@ -52,8 +52,8 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
     use App\Messenger\Event\UserRegistered;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\Messenger\Envelope;
-    use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
     use Symfony\Component\Messenger\MessageBusInterface;
+    use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 
     class RegisterUserHandler
     {
