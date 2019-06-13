@@ -230,7 +230,7 @@ Usage of this string is the same as with variables and select::
 
     You can also set an ``offset`` variable to determine whether the
     pluralization should be offset (e.g. in sentences like ``You and # other people``
-    / ``You and # other person``). 
+    / ``You and # other person``).
 
 .. tip::
 
@@ -239,23 +239,23 @@ Usage of this string is the same as with variables and select::
 
     .. code-block:: text
 
-		{gender_of_host, select, 
+		{gender_of_host, select,
             female {
-                {num_guests, plural, offset:1 
+                {num_guests, plural, offset:1
                 =0    {{host} does not give a party.}
                 =1    {{host} invites {guest} to her party.}
                 =2    {{host} invites {guest} and one other person to her party.}
                 other {{host} invites {guest} and # other people to her party.}}
             }
             male {
-                {num_guests, plural, offset:1 
+                {num_guests, plural, offset:1
                 =0    {{host} does not give a party.}
                 =1    {{host} invites {guest} to his party.}
                 =2    {{host} invites {guest} and one other person to his party.}
                 other {{host} invites {guest} and # other people to his party.}}
             }
             other {
-                {num_guests, plural, offset:1 
+                {num_guests, plural, offset:1
                 =0    {{host} does not give a party.}
                 =1    {{host} invites {guest} to their party.}
                 =2    {{host} invites {guest} and one other person to their party.}
@@ -377,9 +377,8 @@ using the :phpclass:`IntlDateFormatter`:
         ];
 
 The "function statement" for the ``time`` and ``date`` functions can be one of
-short, medium, long or full, as documented on PHP.net.
-
-.. code-block:: php
+``short``, ``medium``, ``long`` or ``full``, which correspond to the
+`constants defined by the IntlDateFormatter class`_::
 
     // prints "Published at Jan 25, 2019 - 11:30 AM"
     echo $translator->trans('published_at', ['publication_date' => new \DateTime('2019-01-25 11:30:00')]);
@@ -441,3 +440,4 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
 .. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
 .. _`switch statement`: https://php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
+.. _`constants defined by the IntlDateFormatter class`: https://php.net/manual/en/class.intldateformatter.php
