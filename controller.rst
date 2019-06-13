@@ -534,7 +534,7 @@ information you need about the request.
 Like the ``Request``, the ``Response`` object has a public ``headers`` property.
 This object is of the type :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag`
 and provides methods for getting and setting response headers. The header names are
-normalized. As a result, the name ``Content-Type`` is equivalent to 
+normalized. As a result, the name ``Content-Type`` is equivalent to
 the name ``content-type`` or ``content_type``.
 
 In Symfony, a controller is required to return a ``Response`` object::
@@ -548,9 +548,10 @@ In Symfony, a controller is required to return a ``Response`` object::
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
-To facilitate this, different response objects are included to address different response types. 
-Some of these are mentioned below. To learn more about the ``Request`` and ``Response`` (and different
-``Response`` classes), see the :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
+To facilitate this, different response objects are included to address different
+response types.  Some of these are mentioned below. To learn more about the
+``Request`` and ``Response`` (and different ``Response`` classes), see the
+:ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
 Returning JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -606,15 +607,16 @@ The ``file()`` helper provides some arguments to configure its behavior::
 Final Thoughts
 --------------
 
-In Symfony, a controller is usually a class method which is used to accept requests,
-and return a ``Response`` object. When mapped with a url, a controller becomes accessible
-and its response can be viewed.
+In Symfony, a controller is usually a class method which is used to accept
+requests, and return a ``Response`` object. When mapped with a URL, a controller
+becomes accessible and its response can be viewed.
 
-To facilitate the development of controllers, Symfony provides an  ``AbstractController``.  It
-can be used to extend the controller class allowing access to some frequently used utilities 
-such as ``render`` and ``redirectToRoute``. The ``AbstractController`` also 
-provides the ``createNotFoundException`` utility which is used to return a page
-not found response.
+To facilitate the development of controllers, Symfony provides an
+``AbstractController``.  It can be used to extend the controller class allowing
+access to some frequently used utilities such as ``render()`` and
+``redirectToRoute()``. The ``AbstractController`` also provides the
+``createNotFoundException()`` utility which is used to return a page not found
+response.
 
 In other articles, you'll learn how to use specific services from inside your controller
 that will help you persist and fetch objects from a database, process form submissions,
