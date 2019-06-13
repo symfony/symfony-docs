@@ -377,9 +377,7 @@ using the :phpclass:`IntlDateFormatter`:
         ];
 
 The "function statement" for the ``time`` and ``date`` functions can be one of
-short, medium, long or full, as documented on PHP.net.
-
-.. code-block:: php
+short, medium, long or full, as documented on PHP.net::
 
     // prints "Published at Jan 25, 2019 - 11:30 AM"
     echo $translator->trans('published_at', ['publication_date' => new \DateTime('2019-01-25 11:30:00')]);
