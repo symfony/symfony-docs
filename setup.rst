@@ -37,31 +37,36 @@ In other words, your new app is ready!
 Running your Symfony Application
 --------------------------------
 
-On production, you should use a web server like Nginx or Apache
-(see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
-But for development, it's convenient to use the :doc:`Symfony Local Web Server <setup/symfony_server>`.
+On production, you should use a web server like Nginx or Apache (see
+:doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
+But for development, it's more convenient to use the
+:doc:`Symfony Local Web Server <setup/symfony_server>`.
 
-.. note::
+This local server provides support for HTTP/2, TLS/SSL, automatic generation of
+security certificates and many other features. It works with any PHP application,
+not only Symfony projects, so it's a very useful development tool.
 
-    If you want to use a virtual machine (VM) with Vagrant, check out
-    :doc:`Homestead </setup/homestead>`.
-
-Move into your new project and start the server:
+Once installed, move into your new project and start the local web server:
 
 .. code-block:: terminal
 
     $ cd my-project
     $ symfony server:start
 
-Open your browser and navigate to ``http://localhost:8000/``. If everything is working,
-you'll see a welcome page. Later, when you are finished working, stop the server
-by pressing ``Ctrl+C`` from your terminal.
+Open your browser and navigate to ``http://localhost:8000/``. If everything is
+working, you'll see a welcome page. Later, when you are finished working, stop
+the server by pressing ``Ctrl+C`` from your terminal.
 
 .. tip::
 
     If you're having any problems running Symfony, your system may be missing
     some technical requirements. Use the :doc:`Symfony Requirements Checker </reference/requirements>`
     tool to make sure your system is set up.
+
+.. note::
+
+    If you want to use a virtual machine (VM) with Vagrant, check out
+    :doc:`Homestead </setup/homestead>`.
 
 .. tip::
 
