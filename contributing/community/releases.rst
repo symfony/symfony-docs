@@ -84,6 +84,23 @@ adds a new preferred one along side. Read the
 :ref:`conventions <contributing-code-conventions-deprecations>` document to
 learn more about how deprecations are handled in Symfony.
 
+.. _major-version-development:
+
+This deprecation policy also requires a custom development process for major
+versions (4.0, 5.0, 6.0, etc.) In those cases, Symfony develops at the same time
+two versions: the new major one (e.g. 4.0) and the latest version of the
+previous branch (e.g. 3.4).
+
+Both versions have the same new features, but they differ in the deprecated
+features. The oldest version (3.4 in this example) contains all the deprecated
+features whereas the new version (4.0 in this example) removes all of them.
+
+This allows you to upgrade your projects to the latest minor version (e.g. 3.4),
+see all the deprecation messages and fix them. Once you have fixed all those
+deprecations, you can upgrade to the new major version (e.g. 4.0) without
+effort, because it contains the same features (the only difference are the
+deprecated features, which your project no longer uses).
+
 Rationale
 ---------
 
