@@ -131,6 +131,12 @@ work:
 
 * ``master``, if you are adding a new feature.
 
+  The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
+  (4.0, 5.0, etc.) comes out every two years. Because of the
+  :ref:`special development process <major-version-development>` of those versions,
+  you need to use the previous minor version for the features (e.g. use ``3.4``
+  instead of ``4.0``, use ``4.4`` instead of ``5.0``, etc.)
+
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
@@ -423,3 +429,4 @@ before merging.
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
 .. _`draft status`: https://help.github.com/en/articles/about-pull-requests#draft-pull-requests
+.. _`Symfony Roadmap`: https://symfony.com/roadmap
