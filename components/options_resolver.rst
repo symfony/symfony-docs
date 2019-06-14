@@ -5,9 +5,10 @@
 The OptionsResolver Component
 =============================
 
-    The OptionsResolver component is :phpfunction:`array_replace` on steroids.
-    It allows you to create an options system with required options, defaults,
-    validation (type, value), normalization and more.
+    The OptionsResolver component is an improved replacement for the
+    :phpfunction:`array_replace` PHP function. It allows you to create an
+    options system with required options, defaults, validation (type, value),
+    normalization and more.
 
 Installation
 ------------
