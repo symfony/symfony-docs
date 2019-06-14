@@ -131,12 +131,11 @@ work:
 
 * ``master``, if you are adding a new feature.
 
-.. note::
-
-    A new **Symfony major version** (e.g. 3.0, 4.0) comes out every *two years*.
-    It is a very special case when new features must go to development branch.
-
-    Check `Symfony Roadmap`_ for latest development branch and not to ``master``
+  The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
+  (4.0, 5.0, etc.) comes out every two years. Because of the
+  :ref:`special development process <major-version-development>` of those versions,
+  you need to use the previous minor version for the features (e.g. use ``3.4``
+  instead of ``4.0``, use ``4.4`` instead of ``5.0``, etc.)
 
 .. note::
 
