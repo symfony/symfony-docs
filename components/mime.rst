@@ -6,7 +6,7 @@
 The Mime Component
 ==================
 
-    The MIME component allows manipulating the MIME messages used to send emails
+    The Mime component allows manipulating the MIME messages used to send emails
     and provides utilities related to MIME types.
 
 Installation

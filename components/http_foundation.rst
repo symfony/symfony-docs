@@ -413,7 +413,7 @@ attribute::
 
     use Symfony\Component\HttpFoundation\Cookie;
 
-    $response->headers->setCookie(new Cookie('foo', 'bar'));
+    $response->headers->setCookie(Cookie::create('foo', 'bar'));
 
 The
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::setCookie`
