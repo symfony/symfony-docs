@@ -597,7 +597,7 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
     It's possible to change the base version of PHPUnit by setting the
     ``SYMFONY_PHPUNIT_VERSION`` env var in the ``phpunit.xml.dist`` file (e.g.
-    ``<server name="SYMFONY_PHPUNIT_VERSION" value="5.5" />``). This is the
+    ``<server name="SYMFONY_PHPUNIT_VERSION" value="5.5"/>``). This is the
     preferred method as it can be committed to your version control repository.
 
     It's also possible to set ``SYMFONY_PHPUNIT_VERSION`` as a real env var
