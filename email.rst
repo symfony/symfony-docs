@@ -78,8 +78,8 @@ sending an email is pretty straightforward::
                 ),
                 'text/html'
             )
-            /*
-             * If you also want to include a plaintext version of the message
+
+            // you can remove the following code if you don't define a text version for your emails
             ->addPart(
                 $this->renderView(
                     'emails/registration.txt.twig',
@@ -87,7 +87,6 @@ sending an email is pretty straightforward::
                 ),
                 'text/plain'
             )
-            */
         ;
 
         $mailer->send($message);
