@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-13T13:12:48Z
+
+I don't like the original content ... but I'm not fan either of the proposal based on "diff" (because it makes the example too long). Here's another proposal for your consideration:
+
+1. Uncomment the `addPart()` code
+2. Add something like this comment above that code: `// you can remove the following code if you don't define a text version for your emails`
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-14T05:45:55Z
+
+Thanks Javier, I really like your feedback and will rework it 👍🏻
