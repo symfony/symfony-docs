@@ -15,7 +15,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/options-resolver
+    $ composer require symfony/options-resolver:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

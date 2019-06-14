@@ -17,7 +17,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/console
+    $ composer require symfony/console:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

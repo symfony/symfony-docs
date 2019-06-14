@@ -54,7 +54,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/event-dispatcher
+    $ composer require symfony/event-dispatcher:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

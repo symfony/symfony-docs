@@ -44,7 +44,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/asset
+    $ composer require symfony/asset:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -153,7 +153,7 @@ corresponding output file:
         "...": "..."
     }
 
-In those cases, use the 
+In those cases, use the
 :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`::
 
     use Symfony\Component\Asset\Package;

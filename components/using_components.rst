@@ -24,7 +24,7 @@ Using the Finder Component
 
 .. code-block:: terminal
 
-    $ composer require symfony/finder
+    $ composer require symfony/finder:^3.4
 
 The name ``symfony/finder`` is written at the top of the documentation for
 whatever component you want.
@@ -64,7 +64,7 @@ them one by one, you can include the ``symfony/symfony`` package:
 
 .. code-block:: terminal
 
-    $ composer require symfony/symfony
+    $ composer require symfony/symfony:^3.4
 
 This will also include the Bundle and Bridge libraries, which you may or
 may not actually need.

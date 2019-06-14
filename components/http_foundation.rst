@@ -21,7 +21,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/http-foundation
+    $ composer require symfony/http-foundation:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

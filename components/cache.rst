@@ -23,7 +23,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/cache
+    $ composer require symfony/cache:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

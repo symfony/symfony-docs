@@ -18,7 +18,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/templating
+    $ composer require symfony/templating:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

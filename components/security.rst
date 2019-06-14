@@ -16,7 +16,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/security
+    $ composer require symfony/security:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

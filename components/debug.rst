@@ -12,7 +12,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/debug
+    $ composer require symfony/debug:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

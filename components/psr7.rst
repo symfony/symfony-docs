@@ -13,7 +13,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/psr-http-message-bridge
+    $ composer require symfony/psr-http-message-bridge:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

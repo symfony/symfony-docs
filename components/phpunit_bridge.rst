@@ -29,7 +29,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require --dev "symfony/phpunit-bridge:*"
+    $ composer require --dev "symfony/phpunit-bridge::^3.4"
 
 .. include:: /components/require_autoload.rst.inc
 
