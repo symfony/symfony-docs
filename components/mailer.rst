@@ -7,6 +7,11 @@ The Mailer Component
 
     The Mailer component helps sending emails.
 
+.. versionadded:: 4.3
+
+    The Mailer component was introduced in Symfony 4.3 and it's still
+    considered an :doc:`experimental feature </contributing/code/experimental>`.
+
 Installation
 ------------
 

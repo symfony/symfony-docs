@@ -6,8 +6,13 @@
 The Mime Component
 ==================
 
-    The MIME component allows manipulating the MIME messages used to send emails
+    The Mime component allows manipulating the MIME messages used to send emails
     and provides utilities related to MIME types.
+
+.. versionadded:: 4.3
+
+    The Mime component was introduced in Symfony 4.3 and it's still
+    considered an :doc:`experimental feature </contributing/code/experimental>`.
 
 Installation
 ------------
