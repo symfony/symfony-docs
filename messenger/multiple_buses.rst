@@ -235,11 +235,11 @@ the correct tag:
 
             <services>
                 <!-- command handlers -->
-                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php">
+                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php" autoconfigure="false">
                     <tag name="messenger.message_handler" bus="messenger.bus.commands"/>
                 </service>
                 <!-- query handlers -->
-                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php">
+                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php" autoconfigure="false">
                     <tag name="messenger.message_handler" bus="messenger.bus.queries"/>
                 </service>
             </services>
