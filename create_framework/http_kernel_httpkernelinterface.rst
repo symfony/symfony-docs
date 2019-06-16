@@ -28,7 +28,7 @@ come with it for free.
 
 Update your framework so that it implements this interface::
 
-    // example.com/src/Framework.php
+    // example.com/src/Simplex/Framework.php
 
     // ...
     use Symfony\Component\HttpKernel\HttpKernelInterface;
