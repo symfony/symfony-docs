@@ -1,0 +1,27 @@
+# Console
+/console* @chalasr
+/components/console* @chalasr
+
+# Form
+/forms.rst @xabbuh
+/components/form* @xabbuh
+/reference/forms* @xabbuh
+
+# PropertyInfo
+/components/property_info* @dunglas
+
+# Security
+/security* @chalasr
+/components/security* @chalasr
+
+# Validator
+/validation/*
+/components/validator* @xabbuh
+/reference/constraints* @xabbuh
+
+# Workflow
+/workflow* @lyrixx
+/components/workflow* @lyrixx
+
+# Yaml
+/components/yaml* @xabbuh
