@@ -623,6 +623,12 @@ But, you can control this and pass in a different logger:
 This tells the container that the ``$logger`` argument to ``__construct`` should use
 service whose id is ``monolog.logger.request``.
 
+.. tip::
+
+    The ``@`` symbol is important: that's what tells the container you want to pass
+    the *service* whose id is ``monolog.logger.request``, and not just the *string*
+    ``monolog.logger.request``.
+
 .. _container-debug-container:
 
 For a full list of *all* possible services in the container, run:
