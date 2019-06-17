@@ -96,7 +96,8 @@ following:
                 profileData:
                     - Collection:
                         fields:
-                            personal_email: Email
+                            personal_email: 
+                                - Email: ~
                             short_bio:
                                 - NotBlank: ~
                                 - Length:
