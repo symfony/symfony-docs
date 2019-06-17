@@ -68,17 +68,6 @@ the server by pressing ``Ctrl+C`` from your terminal.
     If you want to use a virtual machine (VM) with Vagrant, check out
     :doc:`Homestead </setup/homestead>`.
 
-.. tip::
-
-    If you're using a VM, you may need to tell the server to bind to all IP addresses:
-
-    .. code-block:: terminal
-
-        $ php bin/console server:start 0.0.0.0:8000
-
-    You should **NEVER** listen to all interfaces on a computer that is
-    directly accessible from the Internet.
-
 Storing your Project in git
 ---------------------------
 
