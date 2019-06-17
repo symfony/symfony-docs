@@ -71,7 +71,7 @@ configure the locations of these files::
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
-        ->addYamlMapping('config/validation.yaml')
+        ->addYamlMapping('validator/validation.yaml')
         ->getValidator();
 
 .. note::
@@ -136,7 +136,7 @@ multiple mappings::
     $validator = Validation::createValidatorBuilder()
         ->enableAnnotationMapping()
         ->addMethodMapping('loadValidatorMetadata')
-        ->addXmlMapping('config/validation.xml')
+        ->addXmlMapping('validator/validation.xml')
         ->getValidator();
 
 Caching
