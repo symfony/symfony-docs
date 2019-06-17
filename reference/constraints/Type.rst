@@ -126,11 +126,6 @@ function) and ``accessCode`` contains either only letters or only digits (using
             }
         }
 
-.. versionadded:: 4.4
-
-    The feature to define multiple types in the ``type`` option was introduced
-    in Symfony 4.4.
-
 Options
 -------
 
@@ -160,11 +155,6 @@ type
 ~~~~
 
 **type**: ``string`` or ``array`` [:ref:`default option <validation-default-option>`]
-
-.. versionadded:: 4.4
-
-    The feature to define multiple types in the ``type`` option was introduced
-    in Symfony 4.4.
 
 This required option defines the type or collection of types allowed for the
 given value. Each type is defined as the fully qualified class name or one of
