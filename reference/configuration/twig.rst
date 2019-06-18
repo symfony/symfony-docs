@@ -56,7 +56,7 @@ Configuration
 auto_reload
 ~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If ``true``, whenever a template is rendered, Symfony checks first if its source
 code has changed since it was compiled. If it has changed, the template is
@@ -176,7 +176,7 @@ specific timezone is passed as argument.
 debug
 ~~~~~
 
-**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If ``true``, the compiled templates include a ``__toString()`` method that can
 be used to display their nodes.
