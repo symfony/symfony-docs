@@ -156,11 +156,6 @@ before running them:
     # Ignore the .env file and enable the debug mode for this command
     $ APP_DEBUG=1 php bin/console command_name
 
-.. deprecated:: 4.2
-
-    In previous Symfony versions you could configure the debug mode with the
-    ``--no-debug`` command option, which was deprecated in Symfony 4.2.
-
 Internally, the value of the debug mode becomes the ``kernel.debug``
 parameter used inside the :doc:`service container </service_container>`.
 If you look inside the application configuration file, you'll see the

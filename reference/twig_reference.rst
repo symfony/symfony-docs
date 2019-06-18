@@ -356,33 +356,6 @@ trans
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.
 
-transchoice
-~~~~~~~~~~~
-
-.. deprecated:: 4.2
-
-   The ``transchoice`` filter is deprecated since Symfony 4.2 and will be
-   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
-   the ``trans`` filter instead.
-
-.. code-block:: twig
-
-    {{ message|transchoice(count, arguments = [], domain = null, locale = null) }}
-
-``message``
-    **type**: ``string``
-``count``
-    **type**: ``integer``
-``arguments`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
-``domain`` *(optional)*
-    **type**: ``string`` **default**: ``null``
-``locale`` *(optional)*
-    **type**: ``string`` **default**: ``null``
-
-Translates the text with pluralization support. More information in
-:ref:`Translation Filters <translation-filters>`.
-
 yaml_encode
 ~~~~~~~~~~~
 
@@ -590,31 +563,6 @@ trans
     **type**: ``string`` **default**: ``string``
 
 Renders the translation of the content. More information in :ref:`translation-tags`.
-
-transchoice
-~~~~~~~~~~~
-
-.. deprecated:: 4.2
-
-   The ``transchoice`` tag is deprecated since Symfony 4.2 and will be
-   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
-   the ``trans`` tag instead.
-
-.. code-block:: twig
-
-    {% transchoice count with vars from domain into locale %}{% endtranschoice %}
-
-``count``
-    **type**: ``integer``
-``vars`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
-``domain`` *(optional)*
-    **type**: ``string`` **default**: ``null``
-``locale`` *(optional)*
-    **type**: ``string`` **default**: ``null``
-
-Renders the translation of the content with pluralization support, more
-information in :ref:`translation-tags`.
 
 trans_default_domain
 ~~~~~~~~~~~~~~~~~~~~

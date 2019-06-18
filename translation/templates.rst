@@ -9,26 +9,12 @@ Twig Templates
 Using Twig Tags
 ~~~~~~~~~~~~~~~
 
-Symfony provides specialized Twig tags (``trans`` and ``transchoice``) to
-help with message translation of *static blocks of text*:
+Symfony provides a specialized Twig tag ``trans`` to help with message
+translation of *static blocks of text*:
 
 .. code-block:: twig
 
     {% trans %}Hello %name%{% endtrans %}
-
-    {% transchoice count %}
-        {0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples
-    {% endtranschoice %}
-
-The ``transchoice`` tag automatically gets the ``%count%`` variable from
-the current context and passes it to the translator. This mechanism only
-works when you use a placeholder following the ``%var%`` pattern.
-
-.. deprecated:: 4.2
-
-    The ``transchoice`` tag is deprecated since Symfony 4.2 and will be
-    removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
-    the ``trans`` tag instead.
 
 .. caution::
 
@@ -48,33 +34,18 @@ You can also specify the message domain and pass some additional variables:
 
     {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
 
-    {% transchoice count with {'%name%': 'Fabien'} from 'app' %}
-        {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
-    {% endtranschoice %}
-
 .. _translation-filters:
 
 Using Twig Filters
 ~~~~~~~~~~~~~~~~~~
 
-The ``trans`` and ``transchoice`` filters can be used to translate *variable
-texts* and complex expressions:
+The ``trans`` filter can be used to translate *variable texts* and complex expressions:
 
 .. code-block:: twig
 
     {{ message|trans }}
 
-    {{ message|transchoice(5) }}
-
     {{ message|trans({'%name%': 'Fabien'}, 'app') }}
-
-    {{ message|transchoice(5, {'%name%': 'Fabien'}, 'app') }}
-
-.. deprecated:: 4.2
-
-    The ``transchoice`` filter is deprecated since Symfony 4.2 and will be
-    removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
-    the ``trans`` filter instead.
 
 .. tip::
 
@@ -116,8 +87,3 @@ The translator service is accessible in PHP templates through the
 
     <?= $view['translator']->trans('Symfony is great') ?>
 
-    <?= $view['translator']->transChoice(
-        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
-        10,
-        ['%count%' => 10]
-    ) ?>

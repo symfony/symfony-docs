@@ -660,11 +660,6 @@ When serializing, you can set a callback to format a specific object property::
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
 
-.. deprecated:: 4.2
-
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCallbacks` is deprecated since
-    Symfony 4.2, use the "callbacks" key of the context instead.
-
 .. _component-serializer-normalizers:
 
 Normalizers
@@ -951,12 +946,6 @@ having unique identifiers::
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
-.. deprecated:: 4.2
-
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setCircularReferenceHandler`
-    method is deprecated since Symfony 4.2. Use the ``circular_reference_handler``
-    key of the context instead.
-
 Handling Serialization Depth
 ----------------------------
 
@@ -1107,12 +1096,6 @@ having unique identifiers::
         ],
     ];
     */
-
-.. deprecated:: 4.2
-
-    The :method:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer::setMaxDepthHandler`
-    method is deprecated since Symfony 4.2. Use the ``max_depth_handler``
-    key of the context instead.
 
 Handling Arrays
 ---------------
