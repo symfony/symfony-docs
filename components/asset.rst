@@ -153,7 +153,7 @@ corresponding output file:
         "...": "..."
     }
 
-In those cases, use the 
+In those cases, use the
 :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`::
 
     use Symfony\Component\Asset\Package;
@@ -372,6 +372,9 @@ document inside a template::
 
 Learn more
 ----------
+
+* :doc:`How to manage CSS and JavaScript assets in Symfony applications </frontend>`
+* :doc:`WebLink component </components/web_link>` to preload assets using HTTP/2.
 
 .. _Packagist: https://packagist.org/packages/symfony/asset
 .. _`Webpack`: https://webpack.js.org/
