@@ -624,8 +624,9 @@ its ``bin/simple-phpunit`` command. It has the following features:
 
 * Does not embed ``symfony/yaml`` nor ``prophecy`` to prevent any conflicts with
   these dependencies;
-* Uses PHPUnit 4.8 when run with PHP <=5.5, PHPUnit 5.7 when run with PHP >=5.6
-  and PHPUnit 6.5 when run with PHP >=7.2;
+* Uses PHPUnit 4.8 when run with PHP <=5.5, PHPUnit 5.7 when run with PHP 5.6,
+  PHPUnit 6.5 when run with PHP 7.0, PHPUnit 7.5 when run with PHP 7.1 and
+  PHPUnit 8.2 when run with PHP >=7.2;
 * Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
   env var is defined: the env var should specify a file name that will be used for
   storing skipped tests on a first run, and replay them on the second run;
