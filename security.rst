@@ -125,7 +125,8 @@ command will pre-configure this for you:
                 # use your user class name here
                 App\Entity\User:
                     # Use native password encoder
-                    # This value auto-selects the best possible hashing algorithm.
+                    # This value auto-selects the best possible hashing algorithm
+                    # (i.e. Sodium when available).
                     algorithm: auto
 
     .. code-block:: xml
@@ -142,7 +143,7 @@ command will pre-configure this for you:
                 <!-- ... -->
 
                 <encoder class="App\Entity\User"
-                    algorithm="bcrypt"
+                    algorithm="auto"
                     cost="12"/>
 
                 <!-- ... -->
@@ -157,7 +158,7 @@ command will pre-configure this for you:
 
             'encoders' => [
                 'App\Entity\User' => [
-                    'algorithm' => 'bcrypt',
+                    'algorithm' => 'auto',
                     'cost' => 12,
                 ]
             ],
