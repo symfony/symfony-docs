@@ -85,6 +85,11 @@ managers that use this connection.
             ->addTag('doctrine.event_subscriber', ['connection' => 'default'])
         ;
 
+.. tip::
+
+    If you're using Doctrine with MongoDB, you should use ``doctrine_mongodb.odm.event_listener``
+    as the tag name for the event listener service.
+
 Creating the Listener Class
 ---------------------------
 
