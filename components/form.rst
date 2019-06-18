@@ -223,7 +223,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
 
 .. versionadded:: 1.30
 
-    The ``Twig\\RuntimeLoader\\FactoryRuntimeLoader`` was introduced in Twig 1.30.
+    The ``Twig\RuntimeLoader\FactoryRuntimeLoader`` was introduced in Twig 1.30.
 
 The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
@@ -263,7 +263,7 @@ installed:
     $ composer require symfony/translation symfony/config
 
 Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
-to your ``Twig\\Environment`` instance::
+to your ``Twig\Environment`` instance::
 
     use Symfony\Bridge\Twig\Extension\TranslationExtension;
     use Symfony\Component\Form\Forms;

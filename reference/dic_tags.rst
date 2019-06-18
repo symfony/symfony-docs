@@ -199,7 +199,7 @@ assetic.formula_loader
 **Purpose**: Add a formula loader to the current asset manager
 
 A Formula loader is a class implementing
-``Assetic\\Factory\Loader\\FormulaLoaderInterface`` interface. This class
+``Assetic\Factory\Loader\FormulaLoaderInterface`` interface. This class
 is responsible for loading assets from a particular kind of resources (for
 instance, twig template). Assetic ships loaders for PHP and Twig templates.
 
