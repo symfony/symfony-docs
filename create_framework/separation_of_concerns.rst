@@ -13,7 +13,7 @@ simple principle: the logic is about creating the Response associated with a
 Request.
 
 Let's create our very own namespace for our framework: ``Simplex``. Move the
-request handling logic into its own ``Simplex\\Framework`` class::
+request handling logic into its own ``Simplex\Framework`` class::
 
     // example.com/src/Simplex/Framework.php
     namespace Simplex;
