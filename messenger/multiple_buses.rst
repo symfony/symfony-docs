@@ -209,7 +209,7 @@ the correct tag:
 
         # config/services.yaml
 
-        # put this after the `App\` line that registers all your services
+        # put this after the "App\" line that registers all your services
         command_handlers:
             namespace: App\MessageHandler\
             resource: '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php'
