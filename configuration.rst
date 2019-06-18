@@ -17,9 +17,9 @@ directory, which has this default structure:
     │  └─ services.yaml
     ├─ ...
 
-The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
+The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`
 the ``services.yaml`` file configures the services of the
-:doc:`service container </service_container>`; the ``bundles.php`` file enables/
+:doc:`service container </service_container>` the ``bundles.php`` file enables/
 disables packages in your application.
 
 You'll be working most in the ``config/packages/`` directory. This directory
@@ -65,9 +65,9 @@ YAML is used by default when installing packages because it's concise and very
 readable. These are the main advantages and disadvantages of each format:
 
 * :doc:`YAML </components/yaml/yaml_format>`: simple, clean and readable, but
-  requires using a dedicated parser;
+  requires using a dedicated parser.
 * *XML*: supports IDE autocompletion/validation and is parsed natively by PHP,
-  but sometimes it generates too verbose configuration;
+  but sometimes it generates too verbose configuration.
 * *PHP*: very powerful and it allows to create dynamic configuration, but the
   resulting configuration is less readable than the other formats.
 
@@ -255,7 +255,7 @@ Configuration Environments
 You have just one application, but whether you realize it or not, you need it
 to behave differently at different times:
 
-* While **developing**, you want to log everything and expose nice debugging tools;
+* While **developing**, you want to log everything and expose nice debugging tools.
 * After deploying to **production**, you want that same application to be
   optimized for speed and only log errors.
 
@@ -270,16 +270,16 @@ development), ``prod`` (for production servers) and ``test`` (for
 the configuration files in this order (the last files can override the values
 set in the previous ones):
 
-#. ``config/packages/*.yaml`` (and ``.xml`` and ``*.php`` files too);
-#. ``config/packages/<environment-name>/*.yaml`` (and ``.xml`` and ``*.php`` files too);
-#. ``config/packages/services.yaml`` (and ``services.xml`` and ``services.php`` files too);
+#. ``config/packages/*.yaml`` (and ``.xml`` and ``*.php`` files too)
+#. ``config/packages/<environment-name>/*.yaml`` (and ``.xml`` and ``*.php`` files too)
+#. ``config/packages/services.yaml`` (and ``services.xml`` and ``services.php`` files too)
 
 Take the ``framework`` package, installed by default, as an example:
 
 * First, ``config/packages/framework.yaml`` is loaded in all environments and
-  it configures the framework with some options;
+  it configures the framework with some options.
 * In the **prod** environment, nothing extra will be set as there is no
-  ``config/packages/prod/framework.yaml`` file;
+  ``config/packages/prod/framework.yaml`` file.
 * In the **dev** environment, there is no file either (
   ``config/packages/dev/framework.yaml`` does not exist).
 * In the **test** environment, the ``config/packages/test/framework.yaml`` file
@@ -339,11 +339,11 @@ define a ``staging`` environment where the client can test the project before
 going to production:
 
 #. Create a configuration directory with the same name as the environment (in
-   this case, ``config/packages/staging/``);
+   this case, ``config/packages/staging/``).
 #. Add the needed configuration files in ``config/packages/staging/`` to
    define the behavior of the new environment. Symfony loads first the files in
    ``config/packages/*.yaml``, so you must only configure the differences with
-   those files;
+   those files.
 #. Select the ``staging`` environment using the ``APP_ENV`` env var as explained
    in the previous section.
 
@@ -489,11 +489,11 @@ vars. These are the files in priority order (an env var found in one file
 overrides the same env var for all the files below):
 
 * ``.env.<environment>.local`` (e.g. ``.env.test.local``): defines/overrides
-  env vars only for some environment and only in your local machine;
+  env vars only for some environment and only in your local machine.
 * ``.env.<environment>`` (e.g. ``.env.test``): defines/overrides env vars for
-  some environment and for all machines;
+  some environment and for all machines.
 * ``.env.local``: defines/overrides env vars for all environments but only in
-  your local machine;
+  your local machine.
 * ``.env``: defines the default value of env vars.
 
 The ``.env`` and ``.env.<environment>`` files should be committed to the shared
