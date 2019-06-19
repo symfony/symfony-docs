@@ -9,7 +9,7 @@ percentage data. If your percentage data is stored as a decimal (e.g. ``0.95``),
 you can use this field out-of-the-box. If you store your data as a number
 (e.g. ``95``), you should set the ``type`` option to ``integer``.
 
-When ``symbol`` is ``true``, the field will add a percentage sign "``%``" after
+When ``symbol`` is not ``false``, the field will render the given string after
 the input.
 
 +-------------+-----------------------------------------------------------------------+
@@ -59,7 +59,7 @@ use this option.
 symbol
 ~~~~~~
 
-**type**: ``boolean`` or ``string`` **default**: ``true``
+**type**: ``boolean`` or ``string`` **default**: ``%``
 
 By default, fields are rendered with a percentage sign ``%`` after the input.
 Setting the value to ``false`` will not display the percentage sign. Setting the
