@@ -285,7 +285,7 @@ called when new data is uploaded or downloaded and at least once per second::
             // $dlSize is the total size to be downloaded or -1 if it is unknown
             // $info is what $response->getInfo() would return at this very time
         },
-    ];
+    ]);
 
 Any exceptions thrown from the callback will be wrapped in an instance of
 ``TransportExceptionInterface`` and will abort the request.
