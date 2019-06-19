@@ -424,3 +424,4 @@
 /email/dev_environment /mailer
 /email/spool /mailer
 /email/testing /mailer
+/contributing/community/other /contributing/community
