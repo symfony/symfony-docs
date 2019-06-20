@@ -405,3 +405,4 @@
 /console/logging /console
 /reference/forms/twig_reference /form/form_customization
 /form/rendering /form/form_customization
+/profiler/storage /profiler
