@@ -28,11 +28,11 @@ to create files and execute the following commands:
 .. code-block:: terminal
 
     $ cd projects/
-    $ symfony new blog
+    $ symfony new blog 3.4
 
     # Windows
     c:\> cd projects/
-    c:\projects\> php symfony new blog
+    c:\projects\> php symfony new blog 3.4
 
 .. note::
 
