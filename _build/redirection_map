@@ -425,3 +425,4 @@
 /email/spool /mailer
 /email/testing /mailer
 /contributing/community/other /contributing/community
+/profiler/storage /profiler
