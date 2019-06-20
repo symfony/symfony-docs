@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-06-17T07:08:07Z
+
+@OskarStark I like this idea. You can also add me for form and validator related files.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-17T07:13:40Z
+
+> @OskarStark I like this idea. You can also add me for form and validator related files.
+
+done
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2019-06-17T08:02:32Z
+
+Of course ! Thanks for the idea
+
+Be careful, the file should be on master (this is a bit weird btw)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-17T08:03:58Z
+
+> Be careful, the file should be on master (this is a bit weird btw)
+
+It will be upmerged to the upper branches after the merge, or what do you mean? 🤔
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2019-06-17T08:21:51Z
+
+Oh Yes! they updated their workflow. (https://help.github.com/en/articles/about-code-owners)
+
+During the initial release, they **always** took the CODEOWER file in the default branch (master), even if the PR were submitted to another branch (3.4).
+
+This is not the case anymore, this is much better
+
+---------------------------------------------------------------------------
+
+by chalasr at 2019-06-17T08:35:11Z
+
+👍 @OskarStark Please also add me for the console component reference + guides.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-17T08:37:38Z
+
+> 👍 @OskarStark Please also add me for the console component reference + guides.
+
+Thank you, done 👍
+
+---------------------------------------------------------------------------
+
+by dunglas at 2019-06-17T13:39:21Z
+
+Please add me too! Can we use https://github.com/symfony/symfony/blob/4.4/.github/CODEOWNERS as reference?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-17T13:48:59Z
+
+Sure we can for the initial things, but it’s quite different and not possible to use it 1:1 overall. Let’s go step by step 😊 I will try to keep things up to date.
