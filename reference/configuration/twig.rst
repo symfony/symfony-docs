@@ -112,7 +112,7 @@ called to determine the default escaping applied to the template.
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'Twig\\Template'``
+**type**: ``string`` **default**: ``'Twig\Template'``
 
 Twig templates are compiled into PHP classes before using them to render
 contents. This option defines the base class from which all the template classes

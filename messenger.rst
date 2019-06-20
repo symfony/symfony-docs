@@ -249,7 +249,7 @@ you can configure them to be sent to a transport:
             ],
         ]);
 
-Thanks to this, the ``App\\Message\\SmsNotification`` will be sent to the ``async``
+Thanks to this, the ``App\Message\SmsNotification`` will be sent to the ``async``
 transport and its handler(s) will *not* be called immediately. Any messages not
 matched under ``routing`` will still be handled immediately.
 
