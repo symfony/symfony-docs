@@ -372,6 +372,43 @@ Symfony provides the following env var processors:
     and end of the string. This is especially useful in combination with the
     ``file`` processor, as it'll remove newlines at the end of a file.
 
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(AUTH_FILE): '../config/auth.json'
+            google:
+                auth: '%env(trim:file:AUTH_FILE)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(AUTH_FILE)">../config/auth.json</parameter>
+                </parameters>
+
+                <google auth="%env(trim:file:AUTH_FILE)%"/>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
+            $container->loadFromExtension('google', [
+                'auth' => '%env(trim:file:AUTH_FILE)%',
+            ]);
+
 ``env(key:FOO:BAR)``
     Retrieves the value associated with the key ``FOO`` from the array whose
     contents are stored in the ``BAR`` env var:
