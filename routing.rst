@@ -290,6 +290,8 @@ with a locale. This can be done by defining a different prefix for each locale
             ;
         };
 
+If you're not defining routes with annotations - see :doc:`/routing/external_resources`.
+
 .. _routing-requirements:
 
 Adding {wildcard} Requirements
