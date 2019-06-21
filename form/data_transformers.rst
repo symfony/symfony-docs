@@ -291,6 +291,45 @@ and type-hint the new class::
         // ...
     }
 
+Whenever the transformer throws an exception, the ``invalid_message`` is shown
+to the user. Instead of showing the same message every time, you can set the
+end-user error message in the data transformer using the
+``setInvalidMessage()`` method. It also allows you to include user values::
+
+    // src/Form/DataTransformer/IssueToNumberTransformer.php
+    namespace App\Form\DataTransformer;
+
+    use Symfony\Component\Form\DataTransformerInterface;
+    use Symfony\Component\Form\Exception\TransformationFailedException;
+
+    class IssueToNumberTransformer implements DataTransformerInterface
+    {
+        // ...
+
+        public function reverseTransform($issueNumber)
+        {
+            // ...
+
+            if (null === $issue) {
+                $privateErrorMessage = sprintf('An issue with number "%s" does not exist!', $issueNumber);
+                $publicErrorMessage = 'The given "{{ value }}" value is not a valid issue number.';
+
+                $failure = new TransformationFailedException($privateErrorMessage);
+                $failure->setInvalidMessage($publicErrorMessage, [
+                    '{{ value }}' => $issueNumber,
+                ]);
+
+                throw $failure;
+            }
+
+            return $issue;
+        }
+    }
+
+.. versionadded:: 4.3
+
+    The ``setInvalidMessage()`` method was introduced in Symfony 4.3.
+
 That's it! As long as you're using :ref:`autowire <services-autowire>` and
 :ref:`autoconfigure <services-autoconfigure>`, Symfony will automatically
 know to pass your ``TaskType`` an instance of the ``IssueToNumberTransformer``.
