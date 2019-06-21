@@ -1204,7 +1204,7 @@ and it will rely on the cache control method configured in the
 `session.cache-limiter`_ PHP.ini option.
 
 Unlike the other session options, ``cache_limiter`` is set as a regular
-:doc:`container parameter </service_container/parameters>`:
+:ref:`container parameter <configuration-parameters>`:
 
 .. configuration-block::
 
