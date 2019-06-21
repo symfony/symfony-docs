@@ -291,9 +291,10 @@ and type-hint the new class::
         // ...
     }
 
-Instead of defining the same ``invalid_message`` every time the form type is
-used, you can set the end-user error message in the data transformer using the
-``setInvalidMessage()`` method::
+Whenever the transformer throws an exception, the ``invalid_message`` is shown
+to the user. Instead of showing the same message every time, you can set the
+end-user error message in the data transformer using the
+``setInvalidMessage()`` method. It also allows you to include user values::
 
     // src/Form/DataTransformer/IssueToNumberTransformer.php
     namespace App\Form\DataTransformer;
