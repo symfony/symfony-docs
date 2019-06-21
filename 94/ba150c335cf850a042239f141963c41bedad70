@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-06-14T17:02:58Z
+
+`TransformationFailedException`  should be used when transformation failed. Data mappers shouldn't transform data, DataTransformers should. DataMappers should only map (the transformed) data to the subject (entity, DTO, array, etc).
+
+So 👍 for documenting this feature, but please add it to the DataTransformer article to not advocate wrong usage
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-17T07:35:19Z
+
+Wouter, thanks for the review ... I've reverted the changes to explain this in the data transformers article.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-06-19T10:12:07Z
+
+@javiereguiluz Could you reword the commit message to talk about data transformers instead of data mappers? Might be less confusing for some future reader of the git history. :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-06-19T10:13:10Z
+
+Ah, maybe that's not necessary. I edited the PR title and during merge we will squash anyway (which should take the PR title as the commit message if I am not mistaken)
