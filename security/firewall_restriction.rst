@@ -4,27 +4,29 @@
 How to Restrict Firewalls to a Specific Request
 ===============================================
 
-When using the Security component, firewalls will decide whether they handle a request based on the
-result of a request matcher: the first firewall matching the request will handle it.
+When using the Security component, firewalls will decide whether they handle a
+request based on the result of a request matcher: the first firewall matching
+the request will handle it.
 
-The last firewall can be configured without any matcher to handle every incoming request.
+The last firewall can be configured without any matcher to handle every incoming
+request.
 
 Restricting by Configuration
 ----------------------------
 
-Most of the time you don't need to create matchers yourself as Symfony can do it for you based on the
-firewall configuration.
+Most of the time you don't need to create matchers yourself as Symfony can do it
+for you based on the firewall configuration.
 
 .. note::
 
-    You can use any of the following restrictions individually or mix them together to get
-    your desired firewall configuration.
+    You can use any of the following restrictions individually or mix them
+    together to get your desired firewall configuration.
 
 Restricting by Path
 ~~~~~~~~~~~~~~~~~~~
 
-This is the default restriction and restricts a firewall to only be initialized if the request path
-matches the configured ``pattern``.
+This is the default restriction and restricts a firewall to only be initialized
+if the request path matches the configured ``pattern``.
 
 .. configuration-block::
 
@@ -201,7 +203,7 @@ If the above options don't fit your needs you can configure any service implemen
 
     .. code-block:: yaml
 
-        # config/packages/security.yaml
+        # app/config/security.yaml
 
         # ...
         security:
@@ -212,7 +214,7 @@ If the above options don't fit your needs you can configure any service implemen
 
     .. code-block:: xml
 
-        <!-- config/packages/security.xml -->
+        <!-- app/config/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -230,7 +232,7 @@ If the above options don't fit your needs you can configure any service implemen
 
     .. code-block:: php
 
-        // config/packages/security.php
+        // app/config/security.php
 
         // ...
         $container->loadFromExtension('security', [
