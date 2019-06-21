@@ -146,6 +146,7 @@ are ``null``, so they display the "humanized version" of the child names (``Inve
         'invert' => null,
         'years' => null,
         'months' => null,
+        'weeks' => null,
         'days' => null,
         'hours' => null,
         'minutes' => null,
