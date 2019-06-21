@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by MatTheCat at 2019-05-14T08:43:05Z
+
+@OskarStark thanks for the suggestions! Do you know why the `Add suggestion to batch` is greyed? :thinking:
+
+![suggestion](https://user-images.githubusercontent.com/1898254/57683941-0625de00-7635-11e9-99a8-8ee5bd4b1ed0.png)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-14T09:07:57Z
+
+> @OskarStark thanks for the suggestions! Do you know why the Add suggestion to batch is greyed? 🤔
+
+No, I don't know, but you can apply them one by one and squash the commits into one later. We can do this for you too when merging 👍
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2019-05-14T09:17:23Z
+
+Okay I'm not squashing yet as I guess there will be more reviews coming.
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2019-05-31T07:25:39Z
+
+Updated based on https://github.com/symfony/symfony-docs/pull/11574#discussion_r289199817 and https://github.com/symfony/symfony-docs/pull/11574#discussion_r289200081
+
+I let you review once again!
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2019-05-31T07:27:14Z
+
+BTW I don't see the SymfonyCloud check mentionned in https://symfony.com/doc/current/contributing/documentation/overview.html#review-your-changes
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-05-31T07:53:01Z
+
+Now you can see the CI Step, sometimes it’s lacking a bit behind 😊
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2019-05-31T07:53:40Z
+
+Oh yeah I see it now :sweat_smile:
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2019-06-02T18:19:58Z
+
+Squashed and rebased.
