@@ -15,8 +15,8 @@ the channel).
 .. note::
 
     Each channel corresponds to a logger service (``monolog.logger.XXX``)
-    in the container (use the ``debug:container`` command to see a full list)
-    and those are injected into different services.
+    in the container (use the ``php bin/console debug:container monolog`` command
+    to see a full list) and those are injected into different services.
 
 .. _logging-channel-handler:
 
