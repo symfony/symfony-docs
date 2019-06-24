@@ -609,14 +609,57 @@ regular expression applied to relative URLs::
         'https://api\.github\.com/'
     );
 
-PSR-18 Compatibility
---------------------
+Interoperability
+----------------
 
-This component uses and implements abstractions defined by the
-``symfony/http-client-contracts``. It also implements the `PSR-18`_ (HTTP Client)
-specifications via the :class:`Symfony\\Component\\HttpClient\\Psr18Client`
-class, which is an adapter to turn a Symfony ``HttpClientInterface`` into a
-PSR-18 ``ClientInterface``.
+The component is interoperable with 3 different abstractions for HTTP clients:
+`Symfony Contracts`_, `PSR-18`_ and `HTTPlug`_ v1 and v2. If your app uses
+libraries that need any of them, the component is compatible with them.
+They also benefit from autowiring aliases when the
+:ref:`framework bundle <framework-bundle-configuration>` is used.
+
+If you are writing or maintaining a library that makes HTTP requests, you can
+decouple it from any specific HTTP client implementations by coding against
+either Symfony Contracts (recommended) or PSR-18 (which superseded HTTPlug).
+
+Symfony Contracts
+~~~~~~~~~~~~~~~~~
+
+The interfaces found in the ``symfony/http-client-contracts`` package define
+the primary abstractions implemented by the component. Its entry point is the
+:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`. That's the
+interface you need to code against when a client is needed::
+
+    use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+    class MyApiLayer
+    {
+        private $client;
+
+        public function __construct(HttpClientInterface $client)
+        {
+            $this->client = $client
+        }
+
+        // [...]
+    }
+
+All request options mentionned above (e.g. timeout management) are also defined
+in the wordings of the interface, so that any compliant implementations (like this
+component) is guaranteed to provide them. That's a major difference with the
+PSR-18 abstraction, which provides none related to the transport itself.
+
+Another major feature covered by the Symfony Contracts is async/multiplexing,
+as described in the previous sections.
+
+PSR-18 and PSR-17
+~~~~~~~~~~~~~~~~~
+
+This component implements the `PSR-18`_ (HTTP Client) specifications via the
+:class:`Symfony\\Component\\HttpClient\\Psr18Client` class, which is an adapter
+to turn a Symfony ``HttpClientInterface`` into a PSR-18 ``ClientInterface``.
+This class also implements the relevant methods of `PSR-17`_ to ease creating
+request objects.
 
 To use it, you need the ``psr/http-client`` package and a `PSR-17`_ implementation:
 
@@ -631,17 +674,72 @@ To use it, you need the ``psr/http-client`` package and a `PSR-17`_ implementati
 
 Now you can make HTTP requests with the PSR-18 client as follows::
 
-    use Nyholm\Psr7\Factory\Psr17Factory;
     use Symfony\Component\HttpClient\Psr18Client;
 
-    $psr17Factory = new Psr17Factory();
-    $psr18Client = new Psr18Client();
+    $client = new Psr18Client();
 
     $url = 'https://symfony.com/versions.json';
-    $request = $psr17Factory->createRequest('GET', $url);
-    $response = $psr18Client->sendRequest($request);
+    $request = $client->createRequest('GET', $url);
+    $response = $client->sendRequest($request);
 
     $content = json_decode($response->getBody()->getContents(), true);
+
+.. versionadded:: 4.4
+
+    The PSR-17 factory methods have been added to ``Psr18Client`` in Symfony 4.4.
+
+HTTPlug
+~~~~~~~
+
+.. versionadded:: 4.4
+
+    Support for HTTPlug was added in Symfony 4.4.
+
+The `HTTPlug`_ specification pre-dates and is superseded by PSR-18. As such, you
+should not use it in newly written code. Yet, many libraries still require v1 or
+v2 of it. The component is interoperable with them thanks to the ``HttplugClient``
+adapter class that it provides. Similarly to ``Psr18Client`` implementing
+relevant parts of PSR-17, ``HttplugClient`` also implements the factory methods
+defined in the related ``php-http/message-factory`` package.
+
+Internally, the implementation relies on the ``Psr18Client``, so that the
+``psr/http-client`` package is needed to use this class::
+
+.. code-block:: terminal
+
+    # Let's suppose php-http/httplug is already required by the lib you want to use
+
+    # installs the PSR-18 ClientInterface
+    $ composer require psr/http-client
+
+    # installs an efficient implementation of response and stream factories
+    # with autowiring aliases provided by Symfony Flex
+    $ composer require nyholm/psr7
+
+Let's say you want to instantiate a class with the following constructor,
+that requires HTTPlug dependencies::
+
+    use Http\Client\HttpClient;
+    use Http\Message\RequestFactory;
+    use Http\Message\StreamFactory;
+
+    class SomeSdk
+    {
+        public function __construct(
+            HttpClient $httpClient,
+            RequestFactory $requestFactory,
+            StreamFactory $streamFactory
+        )
+        // [...]
+    }
+
+Because ``HttplugClient`` implements the 3 interfaces, you can use it this way::
+
+    use Symfony\Component\HttpClient\HttplugClient;
+
+    $httpClient = new HttplugClient();
+
+    $apiClient = new SomeSdk($httpClient, $httpClient, $httpClient);
 
 Symfony Framework Integration
 -----------------------------
@@ -765,3 +863,5 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 .. _`cURL PHP extension`: https://php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
+.. _`HTTPlug`: https://github.com/php-http/httplug/#readme
+.. _`Symfony Contracts`: https://github.com/symfony/contracts
