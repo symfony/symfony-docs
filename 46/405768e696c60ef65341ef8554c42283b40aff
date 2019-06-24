@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-24T11:07:05Z
+
+I like the idea of not even mentioning the `--env` and `--no-debug` options. They are not deprecated, but we don't want people to use them (unless they discover them somehow and consciously want to use them). Thanks.
