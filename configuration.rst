@@ -325,11 +325,6 @@ can override it for commands by setting the ``APP_ENV`` value before running the
     # Ignore the .env file and run this command in production
     $ APP_ENV=prod php bin/console command_name
 
-.. deprecated:: 4.2
-
-    In previous Symfony versions you could configure the environment with the
-    ``--env`` command option, which was deprecated in Symfony 4.2.
-
 Creating a New Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
