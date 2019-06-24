@@ -135,9 +135,8 @@ applications with `Composer`_, the dependency manager used by modern PHP
 applications.
 
 If you don't have Composer installed in your computer, start by
-:doc:`installing Composer globally </setup/composer>`. Then, execute the
-``create-project`` command to create a new Symfony application based on its
-latest stable version:
+`installing Composer`_. Then, execute the ``create-project`` command to create a
+new Symfony application based on its latest stable version:
 
 .. code-block:: terminal
 
@@ -315,11 +314,11 @@ Go Deeper with Setup
     setup/new_project_git
     setup/built_in_web_server
     setup/web_server_configuration
-    setup/composer
     setup/*
 
 .. _`Joyful Development with Symfony`: https://symfonycasts.com/screencast/symfony3
 .. _`Composer`: https://getcomposer.org/
+.. _`installing Composer`: https://getcomposer.org/download/
 .. _`Phar extension`: https://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`The Symfony Demo application`: https://github.com/symfony/demo
