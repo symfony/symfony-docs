@@ -11,8 +11,7 @@ Installing & Setting up the Symfony Framework
     screencast series.
 
 To create your new Symfony application, first make sure you're using PHP 7.1 or
-higher and have `Composer`_ installed. If you don't, start by
-:doc:`installing Composer globally </setup/composer>` on your system.
+higher and have `Composer`_ installed. If you don't, start by `installing Composer`_.
 
 Create your new project by running:
 
@@ -149,11 +148,11 @@ Go Deeper with Setup
     setup/homestead
     setup/built_in_web_server
     setup/web_server_configuration
-    setup/composer
     setup/*
 
 .. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
+.. _`installing Composer`: https://getcomposer.org/download/
 .. _`the Security Checker`: https://github.com/sensiolabs/security-checker#integration
 .. _`The Symfony Demo application`: https://github.com/symfony/demo
 .. _`symfony/symfony-demo`: https://github.com/symfony/demo
