@@ -87,7 +87,7 @@ Dependency Management
 
 To install the Symfony Components that you need for your framework, you are going
 to use `Composer`_, a project dependency manager for PHP. If you don't have it
-yet, :doc:`download and install Composer </setup/composer>` now.
+yet, `download and install Composer`_ now.
 
 Our Project
 -----------
@@ -114,3 +114,4 @@ introduce the HttpFoundation Component and see what it brings us.
 
 .. _`Symfony`: https://symfony.com/
 .. _`Composer`: http://packagist.org/about-composer
+.. _`download and install Composer`: https://getcomposer.org/download/
