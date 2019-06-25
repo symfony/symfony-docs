@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-06-24T17:52:05Z
+
+I've updated the PR.
+
+I tested the new config and it works perfectly.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-06-25T07:52:29Z
+
+@Nyholm can you please confirm that this must go to 4.3 branch and not to 3.4 or 4.2? Thanks.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-06-25T07:54:02Z
+
+Sorry, no. This is equally true for 3.4. All active versions of the docs should be updated with this PR.
