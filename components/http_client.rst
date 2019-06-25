@@ -50,7 +50,7 @@ The component is built for maximum HTTP performance. By design, it is compatible
 with HTTP/2 and with doing concurrent asynchronous streamed and multiplexed
 requests/responses. Even when doing regular synchronous calls, this design
 allows keeping connections to remote hosts open between requests, improving
-performance by saving repetitive DNS resolution, SSL negociation, etc.
+performance by saving repetitive DNS resolution, SSL negotiation, etc.
 To leverage all these design benefits, the cURL extension is needed.
 
 Enabling cURL Support
@@ -622,10 +622,10 @@ regular expression applied to relative URLs::
 Interoperability
 ----------------
 
-The component is interoperable with 2 different abstractions for HTTP clients:
-`Symfony Contracts`_ and `PSR-18`_. If your app uses
-libraries that need any of them, the component is compatible with them.
-They also benefit from autowiring aliases when the
+The component is interoperable with two different abstractions for HTTP clients:
+`Symfony Contracts`_ and `PSR-18`_. If your application uses libraries that need
+any of them, the component is compatible with both. They also benefit from
+:ref:`autowiring aliases <service-autowiring-alias>` when the
 :ref:`framework bundle <framework-bundle-configuration>` is used.
 
 If you are writing or maintaining a library that makes HTTP requests, you can
@@ -654,10 +654,10 @@ interface you need to code against when a client is needed::
         // [...]
     }
 
-All request options mentionned above (e.g. timeout management) are also defined
-in the wordings of the interface, so that any compliant implementations (like this
-component) is guaranteed to provide them. That's a major difference with the
-PSR-18 abstraction, which provides none related to the transport itself.
+All request options mentioned above (e.g. timeout management) are also defined
+in the wordings of the interface, so that any compliant implementations (like
+this component) is guaranteed to provide them. That's a major difference with
+the PSR-18 abstraction, which provides none related to the transport itself.
 
 Another major feature covered by the Symfony Contracts is async/multiplexing,
 as described in the previous sections.
