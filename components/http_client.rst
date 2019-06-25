@@ -38,8 +38,18 @@ low-level HTTP client that makes requests, like the following ``GET`` request::
     $content = $response->toArray();
     // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
 
+Performance
+-----------
+
+The component is built for maximum HTTP performance. By design, it is compatible
+with HTTP/2 and with doing concurrent asynchronous streamed and multiplexed
+requests/responses. Even when doing regular synchronous calls, this design
+allows keeping connections to remote hosts open between requests, improving
+performance by saving repetitive DNS resolution, SSL negotiation, etc.
+To leverage all these design benefits, the cURL extension is needed.
+
 Enabling cURL Support
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 This component supports both the native PHP streams and cURL to make the HTTP
 requests. Although both are interchangeable and provide the same features,
@@ -63,7 +73,7 @@ not configurable and cURL will be used automatically if the cURL PHP extension
 is installed and enabled. Otherwise, the native PHP streams will be used.
 
 HTTP/2 Support
---------------
+~~~~~~~~~~~~~~
 
 When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.36
 is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
@@ -604,14 +614,55 @@ regular expression applied to relative URLs::
         'https://api\.github\.com/'
     );
 
-PSR-18 Compatibility
---------------------
+Interoperability
+----------------
 
-This component uses and implements abstractions defined by the
-``symfony/http-client-contracts``. It also implements the `PSR-18`_ (HTTP Client)
-specifications via the :class:`Symfony\\Component\\HttpClient\\Psr18Client`
-class, which is an adapter to turn a Symfony ``HttpClientInterface`` into a
-PSR-18 ``ClientInterface``.
+The component is interoperable with two different abstractions for HTTP clients:
+`Symfony Contracts`_ and `PSR-18`_. If your application uses libraries that need
+any of them, the component is compatible with both. They also benefit from
+:ref:`autowiring aliases <service-autowiring-alias>` when the
+:ref:`framework bundle <framework-bundle-configuration>` is used.
+
+If you are writing or maintaining a library that makes HTTP requests, you can
+decouple it from any specific HTTP client implementations by coding against
+either Symfony Contracts (recommended) or PSR-18.
+
+Symfony Contracts
+~~~~~~~~~~~~~~~~~
+
+The interfaces found in the ``symfony/http-client-contracts`` package define
+the primary abstractions implemented by the component. Its entry point is the
+:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`. That's the
+interface you need to code against when a client is needed::
+
+    use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+    class MyApiLayer
+    {
+        private $client;
+
+        public function __construct(HttpClientInterface $client)
+        {
+            $this->client = $client
+        }
+
+        // [...]
+    }
+
+All request options mentioned above (e.g. timeout management) are also defined
+in the wordings of the interface, so that any compliant implementations (like
+this component) is guaranteed to provide them. That's a major difference with
+the PSR-18 abstraction, which provides none related to the transport itself.
+
+Another major feature covered by the Symfony Contracts is async/multiplexing,
+as described in the previous sections.
+
+PSR-18
+~~~~~~
+
+This component implements the `PSR-18`_ (HTTP Client) specifications via the
+:class:`Symfony\\Component\\HttpClient\\Psr18Client` class, which is an adapter
+to turn a Symfony ``HttpClientInterface`` into a PSR-18 ``ClientInterface``.
 
 To use it, you need the ``psr/http-client`` package and a `PSR-17`_ implementation:
 
@@ -760,3 +811,4 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 .. _`cURL PHP extension`: https://php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
+.. _`Symfony Contracts`: https://github.com/symfony/contracts
