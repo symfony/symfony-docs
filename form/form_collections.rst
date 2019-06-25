@@ -710,6 +710,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     elements of the collection. More advanced functionality like moving or duplicating
     an element in the collection and customizing the buttons is also possible.
 
-.. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
