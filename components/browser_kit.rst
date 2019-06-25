@@ -105,7 +105,7 @@ simulate the link click::
 
 If you need the :class:`Symfony\\Component\\DomCrawler\\Link` object that
 provides access to the link properties (e.g. ``$link->getMethod()``,
-``$link->getUri()``), use this other method:
+``$link->getUri()``), use this other method::
 
     // ...
     $crawler = $client->request('GET', '/product/123');
