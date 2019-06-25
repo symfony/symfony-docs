@@ -92,49 +92,49 @@ Configuration
 
   * :ref:`default_options <reference-http-client-default-options>`
 
-      * `bindto`_
-      * `cafile`_
-      * `capath`_
-      * `ciphers`_
-      * `headers`_
-      * `http_version`_
-      * `local_cert`_
-      * `local_pk`_
-      * `max_redirects`_
-      * `no_proxy`_
-      * `passphrase`_
-      * `peer_fingerprint`_
-      * `proxy`_
-      * `resolve`_
-      * `timeout`_
-      * `verify_host`_
-      * `verify_peer`_
+    * `bindto`_
+    * `cafile`_
+    * `capath`_
+    * `ciphers`_
+    * `headers`_
+    * `http_version`_
+    * `local_cert`_
+    * `local_pk`_
+    * `max_redirects`_
+    * `no_proxy`_
+    * `passphrase`_
+    * `peer_fingerprint`_
+    * `proxy`_
+    * `resolve`_
+    * `timeout`_
+    * `verify_host`_
+    * `verify_peer`_
 
   * `max_host_connections`_
   * :ref:`scoped_clients <reference-http-client-scoped-clients>`
 
-      * `scope`_
-      * `auth_basic`_
-      * `auth_bearer`_
-      * `base_uri`_
-      * `bindto`_
-      * `cafile`_
-      * `capath`_
-      * `ciphers`_
-      * `headers`_
-      * `http_version`_
-      * `local_cert`_
-      * `local_pk`_
-      * `max_redirects`_
-      * `no_proxy`_
-      * `passphrase`_
-      * `peer_fingerprint`_
-      * `proxy`_
-      * `query`_
-      * `resolve`_
-      * `timeout`_
-      * `verify_host`_
-      * `verify_peer`_
+    * `scope`_
+    * `auth_basic`_
+    * `auth_bearer`_
+    * `base_uri`_
+    * `bindto`_
+    * `cafile`_
+    * `capath`_
+    * `ciphers`_
+    * `headers`_
+    * `http_version`_
+    * `local_cert`_
+    * `local_pk`_
+    * `max_redirects`_
+    * `no_proxy`_
+    * `passphrase`_
+    * `peer_fingerprint`_
+    * `proxy`_
+    * `query`_
+    * `resolve`_
+    * `timeout`_
+    * `verify_host`_
+    * `verify_peer`_
 
 * `http_method_override`_
 * `ide`_
