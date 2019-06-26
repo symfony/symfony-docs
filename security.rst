@@ -928,11 +928,6 @@ For example, in a controller extending from the :ref:`base controller <the-base-
     :doc:`security voter </security/voters>` that looks for the user roles
     in the database.
 
-Checking for Security Vulnerabilities in your Dependencies
-----------------------------------------------------------
-
-See :doc:`/security/security_checker`.
-
 Frequently Asked Questions
 --------------------------
 
@@ -964,7 +959,6 @@ Frequently Asked Questions
     the log message:
 
 **Cannot refresh token because user has changed**
-
     If you see this, there are two possible causes. First, there may be a problem
     loading your User from the session. See :ref:`user_session_refresh`. Second,
     if certain user information was changed in the database since the last page
@@ -1005,7 +999,6 @@ Authorization (Denying Access)
     security/access_denied_handler
     security/acl
     security/force_https
-    security/security_checker
 
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

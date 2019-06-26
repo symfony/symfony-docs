@@ -662,7 +662,7 @@ are still running.
 .. _`ACID`: https://en.wikipedia.org/wiki/ACID
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
-.. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
+.. _`PHP semaphore functions`: https://php.net/manual/en/book.sem.php
 .. _`PDO`: https://php.net/pdo
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name

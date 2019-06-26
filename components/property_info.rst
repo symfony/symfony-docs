@@ -315,9 +315,16 @@ a collection - a non-scalar value capable of containing other values. Currently
 this returns ``true`` if:
 
 * The :ref:`built-in PHP data type <components-property-info-type-builtin>`
-  is ``array``, or
+  is ``array``;
 * The mutator method the property is derived from has a prefix of ``add``
-  or ``remove`` (which are defined as the list of array mutator prefixes).
+  or ``remove`` (which are defined as the list of array mutator prefixes);
+* The `phpDocumentor`_ annotation is of type "collection" (e.g.
+  ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
+  ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
+
+.. versionadded:: 4.2
+
+    The support of phpDocumentor collection types was introduced in Symfony 4.2.
 
 Type::getCollectionKeyType() & Type::getCollectionValueType()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -351,8 +358,9 @@ ReflectionExtractor
 
 Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
 provides list, type and access information from setter and accessor methods.
-It can also give the type of a property, and if it is initializable through the
-constructor. It supports return and scalar types for PHP 7::
+It can also give the type of a property (even extracting it from the constructor
+arguments), and if it is initializable through the constructor. It supports
+return and scalar types for PHP 7::
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
@@ -370,6 +378,11 @@ constructor. It supports return and scalar types for PHP 7::
 
     // Initializable information
     $reflectionExtractor->isInitializable($class, $property);
+
+.. versionadded:: 4.1
+
+    The feature to extract the property types from constructor arguments was
+    introduced in Symfony 4.1.
 
 .. note::
 
@@ -487,7 +500,8 @@ service by defining it as a service with one or more of the following
 .. _Packagist: https://packagist.org/packages/symfony/property-info
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
-.. _`Doctrine ORM`: http://www.doctrine-project.org/projects/orm.html
+.. _`Doctrine ORM`: https://www.doctrine-project.org/projects/orm.html
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
 .. _`doctrine/orm`: https://packagist.org/packages/doctrine/orm
+.. _`phpDocumentor`: https://www.phpdoc.org/

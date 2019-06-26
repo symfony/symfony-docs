@@ -480,7 +480,7 @@ or perform more complex requests. Some useful examples::
     );
 
 Last but not least, you can force each request to be executed in its own PHP
-process to avoid any side-effects when working with several clients in the same
+process to avoid any side effects when working with several clients in the same
 script::
 
     $client->insulate();
@@ -716,7 +716,7 @@ given text (or the first clickable image with that ``alt`` attribute)::
 
 If you need access to the :class:`Symfony\\Component\\DomCrawler\\Link` object
 that provides helpful methods specific to links (such as ``getMethod()`` and
-``getUri()``), use the ``selectLink()`` method instead:
+``getUri()``), use the ``selectLink()`` method instead::
 
     $client = static::createClient();
     $crawler = $client->request('GET', '/post/hello-world');

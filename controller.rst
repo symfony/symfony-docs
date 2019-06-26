@@ -93,7 +93,7 @@ The Base Controller Class & Services
 
 To aid development, Symfony comes with an optional base controller class called
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`.
-It can be extended to gain access to `helper methods`_.
+It can be extended to gain access to helper methods.
 
 Add the ``use`` statement atop your controller class and then modify
 ``LuckyController`` to extend it:
@@ -289,6 +289,7 @@ new controller class:
     $ php bin/console make:controller BrandNewController
 
     created: src/Controller/BrandNewController.php
+    created: templates/brandnew/index.html.twig
 
 If you want to generate an entire CRUD from a Doctrine :doc:`entity </doctrine>`,
 use:
@@ -296,6 +297,15 @@ use:
 .. code-block:: terminal
 
     $ php bin/console make:crud Product
+    
+    created: src/Controller/ProductController.php
+    created: src/Form/ProductType.php
+    created: templates/product/_delete_form.html.twig
+    created: templates/product/_form.html.twig
+    created: templates/product/edit.html.twig
+    created: templates/product/index.html.twig
+    created: templates/product/new.html.twig
+    created: templates/product/show.html.twig
 
 .. versionadded:: 1.2
 
@@ -553,6 +563,19 @@ response types.  Some of these are mentioned below. To learn more about the
 ``Request`` and ``Response`` (and different ``Response`` classes), see the
 :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
+Accessing Configuration Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To get the value of any :ref:`configuration parameter <configuration-parameters>`
+from a controller, use the ``getParameter()`` helper method::
+
+    // ...
+    public function index()
+    {
+        $contentsDir = $this->getParameter('kernel.project_dir').'/contents';
+        // ...
+    }
+
 Returning JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -641,6 +664,5 @@ Learn more about Controllers
 
     controller/*
 
-.. _`helper methods`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`Symfony Maker`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect

@@ -45,7 +45,7 @@ environment variable in the ``.env`` file:
     MAILER_URL=null://localhost
 
     # use this to configure a traditional SMTP server
-    MAILER_URL=smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=
+    MAILER_URL=smtp://localhost:465?encryption=ssl&auth_mode=login&username=&password=
 
 .. caution::
 
@@ -82,6 +82,7 @@ sending an email is pretty straightforward::
             // you can remove the following code if you don't define a text version for your emails
             ->addPart(
                 $this->renderView(
+                    // templates/emails/registration.txt.twig
                     'emails/registration.txt.twig',
                     ['name' => $name]
                 ),
@@ -260,7 +261,8 @@ Now, suppose you're sending an email to ``recipient@example.com`` in a controlle
             ->setTo('recipient@example.com')
             ->setBody(
                 $this->renderView(
-                    'HelloBundle:Hello:email.txt.twig',
+                    // templates/hello/email.txt.twig
+                    'hello/email.txt.twig',
                     ['name' => $name]
                 )
             )

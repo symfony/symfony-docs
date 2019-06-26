@@ -88,7 +88,9 @@ which defaults to the current default locale::
     $language = Languages::getName('fr', 'de');
     // => 'Französisch'
 
-You can also check if a given language code is valid::
+If the given locale doesn't exist, the methods trigger a
+:class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
+to catching the exception, you can also check if a given language code is valid::
 
     $isValidLanguage = Languages::exists($languageCode);
 
@@ -121,7 +123,9 @@ which defaults to the current default locale::
     $language = Scripts::getName('Hans', 'de');
     // => 'Vereinfacht'
 
-You can also check if a given script code is valid::
+If the given script code doesn't exist, the methods trigger a
+:class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
+to catching the exception, you can also check if a given script code is valid::
 
     $isValidScript = Scripts::exists($scriptCode);
 
@@ -156,7 +160,9 @@ which defaults to the current default locale::
     $country = Countries::getName('GB', 'de');
     // => 'Vereinigtes Königreich'
 
-You can also check if a given country code is valid::
+If the given country code doesn't exist, the methods trigger a
+:class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
+to catching the exception, you can also check if a given country code is valid::
 
     $isValidCountry = Countries::exists($countryCode);
 
@@ -192,7 +198,9 @@ which defaults to the current default locale::
     $locale = Locales::getName('zh_Hans_MO', 'de');
     // => 'Chinesisch (Vereinfacht, Sonderverwaltungsregion Macau)'
 
-You can also check if a given locale code is valid::
+If the given locale code doesn't exist, the methods trigger a
+:class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
+to catching the exception, you can also check if a given locale code is valid::
 
     $isValidLocale = Locales::exists($localeCode);
 
@@ -236,13 +244,17 @@ the current default locale::
     $currency = Currencies::getName('INR', 'de');
     // => 'Indische Rupie'
 
-You can also check if a given currency code is valid::
+If the given currency code doesn't exist, the methods trigger a
+:class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
+to catching the exception, you can also check if a given currency code is valid::
 
     $isValidCurrency = Currencies::exists($currencyCode);
 
 .. versionadded:: 4.3
 
     The ``Currencies`` class was introduced in Symfony 4.3.
+
+.. _component-intl-timezones:
 
 Timezones
 ~~~~~~~~~
@@ -314,7 +326,9 @@ you can pass the locale as the third optional argument::
     $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'ar')); // $offset = 'غرينتش+01:00'
     $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'dz')); // $offset = 'ཇི་ཨེམ་ཏི་+01:00'
 
-Finally, you can also check if a given timezone ID is valid::
+If the given timezone ID doesn't exist, the methods trigger a
+:class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
+to catching the exception, you can also check if a given timezone ID is valid::
 
     $isValidTimezone = Timezones::exists($timezoneId);
 

@@ -322,7 +322,7 @@ two things:
   and mutating your application.
 
 * POST requests are generally considered uncacheable, but `they can be cached`_
-  when they include explicit freshness information. However POST caching is not
+  when they include explicit freshness information. However, POST caching is not
   widely implemented, so you should avoid it if possible.
 
 * You should *never* change the state of your application (e.g. update a blog post)

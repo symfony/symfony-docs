@@ -282,22 +282,37 @@ do is to write your own CSV receiver::
             $this->filePath = $filePath;
         }
 
-        public function receive(callable $handler): void
+        public function get(): void
         {
             $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
             foreach ($ordersFromCsv as $orderFromCsv) {
                 $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
 
-                $handler(new Envelope($order));
+                $envelope = new Envelope($order);
+
+                $handler($envelope);
             }
+
+            return [$envelope];
         }
 
-        public function stop(): void
+        public function ack(Envelope $envelope): void
         {
-            // noop
+            // Add information about the handled message
+        }
+
+        public function reject(Envelope $envelope): void
+        {
+            // Reject the message if needed
         }
     }
+
+.. versionadded:: 4.3
+
+    In Symfony 4.3, the ``ReceiverInterface`` has changed its methods as shown
+    in the example above. You may need to update your code if you used this
+    interface in previous Symfony versions.
 
 Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -318,4 +333,4 @@ Learn more
     /messenger/*
 
 .. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
-.. _SimpleBus project: http://simplebus.io
+.. _SimpleBus project: http://docs.simplebus.io/en/latest/

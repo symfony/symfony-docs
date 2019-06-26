@@ -1,7 +1,7 @@
 Select Tag, Checkboxes or Radio Buttons
 ---------------------------------------
 
-This field may be rendered as one of several different HTML fields, depending
+This field may be rendered as one of several HTML fields, depending
 on the ``expanded`` and ``multiple`` options:
 
 ========================================  =========  =========

@@ -16,10 +16,11 @@ name to the ``setDefaultCommand()`` method::
 
     class HelloWorldCommand extends Command
     {
+        protected static $defaultName = 'hello:world';
+
         protected function configure()
         {
-            $this->setName('hello:world')
-                ->setDescription('Outputs \'Hello World\'');
+            $this->setDescription('Outputs "Hello World"');
         }
 
         protected function execute(InputInterface $input, OutputInterface $output)

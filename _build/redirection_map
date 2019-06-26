@@ -427,3 +427,5 @@
 /contributing/community/other /contributing/community
 /profiler/storage /profiler
 /setup/composer /setup
+/security/security_checker /setup
+/service_container/parameters /configuration

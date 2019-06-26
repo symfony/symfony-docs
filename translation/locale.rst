@@ -18,7 +18,7 @@ To set the user's locale, you may want to create a custom event listener so
 that it's set before any other parts of the system (i.e. the translator) need
 it::
 
-        public function onKernelRequest(GetResponseEvent $event)
+        public function onKernelRequest(RequestEvent $event)
         {
             $request = $event->getRequest();
 
