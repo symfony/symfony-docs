@@ -50,7 +50,7 @@ Once installed, move into your new project and start the local web server:
 .. code-block:: terminal
 
     $ cd my-project
-    $ symfony server:start
+    $ php bin/console server:start
 
 Open your browser and navigate to ``http://localhost:8000/``. If everything is
 working, you'll see a welcome page. Later, when you are finished working, stop
