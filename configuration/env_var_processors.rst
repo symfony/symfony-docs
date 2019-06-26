@@ -380,8 +380,8 @@ Symfony provides the following env var processors:
 
         The ``trim`` processor was introduced in Symfony 4.3.
 
-``env(split:FOO,BAR)``
-    Split the content of ``FOO,BAR`` env var, retrieving a php array.
+``env(split:FOO)``
+    Split the content by ``,`` of ``FOO`` env var, retrieving a php array.
 
 ``env(key:FOO:BAR)``
     Retrieves the value associated with the key ``FOO`` from the array whose
