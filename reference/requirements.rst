@@ -41,7 +41,7 @@ Run this command to install the tool:
     $ composer require symfony/requirements-checker
 
 Beware that PHP may use different configurations for the command console and
-the web server, so you need to check requirements in both environments.
+the web server, so you need to check the requirements in both environments.
 
 Checking Requirements for the Web Server
 ----------------------------------------
