@@ -153,6 +153,7 @@ Go Deeper with Setup
 .. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
 .. _`installing Composer`: https://getcomposer.org/download/
+.. _`Download the Symfony client`: https://symfony.com/download
 .. _`the Security Checker`: https://github.com/sensiolabs/security-checker#integration
 .. _`The Symfony Demo application`: https://github.com/symfony/demo
 .. _`symfony/symfony-demo`: https://github.com/symfony/demo
