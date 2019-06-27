@@ -96,30 +96,30 @@ in your form type::
         // ...
 
         /**
-         * @param Color|null $data
+         * @param Color|null $viewData
          */
-        public function mapDataToForms($data, $forms)
+        public function mapDataToForms($viewData, $forms)
         {
             // there is no data yet, so nothing to prepopulate
-            if (null === $data) {
+            if (null === $viewData) {
                 return;
             }
 
             // invalid data type
-            if (!$data instanceof Color) {
-                throw new UnexpectedTypeException($data, Color::class);
+            if (!$viewData instanceof Color) {
+                throw new UnexpectedTypeException($viewData, Color::class);
             }
 
             /** @var FormInterface[] $forms */
             $forms = iterator_to_array($forms);
 
             // initialize form field values
-            $forms['red']->setData($data->getRed());
-            $forms['green']->setData($data->getGreen());
-            $forms['blue']->setData($data->getBlue());
+            $forms['red']->setData($viewData->getRed());
+            $forms['green']->setData($viewData->getGreen());
+            $forms['blue']->setData($viewData->getBlue());
         }
 
-        public function mapFormsToData($forms, &$data)
+        public function mapFormsToData($forms, &$viewData)
         {
             /** @var FormInterface[] $forms */
             $forms = iterator_to_array($forms);
@@ -127,7 +127,7 @@ in your form type::
             // as data is passed by reference, overriding it will change it in
             // the form object as well
             // beware of type inconsistency, see caution below
-            $data = new Color(
+            $viewData = new Color(
                 $forms['red']->getData(),
                 $forms['green']->getData(),
                 $forms['blue']->getData()
