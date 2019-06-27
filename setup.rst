@@ -45,11 +45,12 @@ This local server provides support for HTTP/2, TLS/SSL, automatic generation of
 security certificates and many other features. It works with any PHP application,
 not only Symfony projects, so it's a very useful development tool.
 
-Once installed, move into your new project and start the local web server:
+`Download the Symfony local web server`_, install it, move into your new project
+directory and start the local web server as follows:
 
 .. code-block:: terminal
 
-    $ cd my-project
+    $ cd my-project/
     $ symfony server:start
 
 Open your browser and navigate to ``http://localhost:8000/``. If everything is
@@ -153,6 +154,7 @@ Go Deeper with Setup
 .. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
 .. _`installing Composer`: https://getcomposer.org/download/
+.. _`Download the Symfony local web server`: https://symfony.com/download
 .. _`the Security Checker`: https://github.com/sensiolabs/security-checker#integration
 .. _`The Symfony Demo application`: https://github.com/symfony/demo
 .. _`symfony/symfony-demo`: https://github.com/symfony/demo
