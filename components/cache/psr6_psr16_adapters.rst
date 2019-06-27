@@ -80,7 +80,7 @@ this use-case::
     $psr6Cache = new FilesystemAdapter();
 
     // a PSR-16 cache that uses your cache internally!
-    $psr16Cache = new Psr6Cache($psr6Cache);
+    $psr16Cache = new Psr16Cache($psr6Cache);
 
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr16Cache);
