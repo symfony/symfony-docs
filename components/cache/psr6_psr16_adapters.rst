@@ -74,13 +74,13 @@ the class instead. No problem! The Cache component provides the
 this use-case::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-    use Symfony\Component\Cache\Simple\Psr6Cache;
+    use Symfony\Component\Cache\Simple\Psr16Cache;
 
     // the PSR-6 cache object that you want to use
     $psr6Cache = new FilesystemAdapter();
 
     // a PSR-16 cache that uses your cache internally!
-    $psr16Cache = new Psr6Cache($psr6Cache);
+    $psr16Cache = new Psr16Cache($psr6Cache);
 
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr16Cache);
