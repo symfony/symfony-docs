@@ -74,7 +74,7 @@ the class instead. No problem! The Cache component provides the
 this use-case::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-    use Symfony\Component\Cache\Simple\Psr6Cache;
+    use Symfony\Component\Cache\Simple\Psr16Cache;
 
     // the PSR-6 cache object that you want to use
     $psr6Cache = new FilesystemAdapter();
