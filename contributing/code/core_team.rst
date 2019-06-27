@@ -92,7 +92,7 @@ Active Core Members
 
   * **Samuel Rozé** (`sroze`_) can merge into the Messenger_ component.
 
-  * **Yonel Ceruto** (`yceruto`_) can merge into the ErrorHandler_,
+  * **Yonel Ceruto** (`yceruto`_) can merge into the ErrorCatcher_,
     OptionsResolver_, and Form_ components and TwigBundle_.
 
 * **Deciders Team** (``@symfony/deciders`` on GitHub):
@@ -210,7 +210,7 @@ discretion of the **Project Leader**.
 .. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
 .. _EventDispatcher: https://github.com/symfony/event-dispatcher
 .. _DomCrawler: https://github.com/symfony/dom-crawler
-.. _ErrorHandler: https://github.com/symfony/error-handler
+.. _ErrorCatcher: https://github.com/symfony/error-catcher
 .. _Form: https://github.com/symfony/form
 .. _HttpFoundation: https://github.com/symfony/http-foundation
 .. _HttpKernel: https://github.com/symfony/http-kernel
