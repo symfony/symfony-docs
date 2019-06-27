@@ -39,7 +39,7 @@ Running your Symfony Application
 On production, you should use a web server like Nginx or Apache (see
 :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
 But for development, it's more convenient to use the
-:doc:`Symfony Local Web Server <setup/symfony_server>`.
+:doc:`Symfony Local Web Server </setup/symfony_server>`.
 
 This local server provides support for HTTP/2, TLS/SSL, automatic generation of
 security certificates and many other features. It works with any PHP application,
