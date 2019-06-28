@@ -330,14 +330,13 @@ end-user error message in the data transformer using the
 
     The ``setInvalidMessage()`` method was introduced in Symfony 4.3.
 
-That's it! As long as you're using :ref:`autowire <services-autowire>` and
-:ref:`autoconfigure <services-autoconfigure>`, Symfony will automatically
-know to pass your ``TaskType`` an instance of the ``IssueToNumberTransformer``.
-
-.. tip::
-
-    For more information about defining form types as services, read
-    :doc:`register your form type as a service </form/form_dependencies>`.
+That's it! If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+Symfony will automatically know to pass your ``TaskType`` an instance of the
+``IssueToNumberTransformer`` thanks to :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`.
+Otherwise, :ref:`register the form class as a service <service-container-creating-service>`
+and :doc:`tag it </service_container/tags>` with the ``form.type`` tag.
 
 Now, you can use your ``TaskType``::
 
