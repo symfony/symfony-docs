@@ -4,23 +4,30 @@
 How to Create a Custom Form Field Type
 ======================================
 
-Symfony comes with a bunch of core field types available for building forms.
-However there are situations where you may want to create a custom form field
-type for a specific purpose. This article assumes you need a field definition
-that holds a shipping option, based on the existing choice field. This section
-explains how the field is defined and how you can customize its layout.
+Symfony comes with :doc:`tens of form types </reference/forms/types>` (called
+"form fields" in other projects) ready to use in your applications. However,
+it's common to create custom form types to solve specific purposes in your
+projects.
 
-Defining the Field Type
------------------------
+Creating Form Types Based on Symfony Built-in Types
+---------------------------------------------------
 
-In order to create the custom field type, first you have to create the class
-representing the field. In this situation the class holding the field type
-will be called ``ShippingType`` and the file will be stored in the default location
-for form fields, which is ``App\Form\Type``.
+The easiest way to create a form type is to base it on one of the
+:doc:`existing form types </reference/forms/types>`. Imagine that your project
+displays a list of "shipping options" as a ``<select>`` HTML element. This can
+be implemented with a :doc:`ChoiceType </reference/forms/types/choice>` where the
+``choices`` option is set to the list of available shipping options.
 
-All field types must implement the :class:`Symfony\\Component\\Form\\FormTypeInterface`,
+However, if you use the same form type in several forms, repeating the list of
+``choices`` everytime you use it quickly becomes boring. In this example, a
+better solution is to create a custom form type based on ``ChoiceType``. The
+custom type looks and behaves like a ``ChoiceType`` but the list of choices is
+already populated with the shipping options so you don't need to define them.
+
+Form types are PHP classes that implement :class:`Symfony\\Component\\Form\\FormTypeInterface`,
 but you should instead extend from :class:`Symfony\\Component\\Form\\AbstractType`,
-which already implements that interface and provides some utilities::
+which already implements that interface and provides some utilities.
+By convention they are stored in the ``src/Form/Type/`` directory::
 
     // src/Form/Type/ShippingType.php
     namespace App\Form\Type;
@@ -48,15 +55,13 @@ which already implements that interface and provides some utilities::
         }
     }
 
-.. tip::
+The ``configureOptions()`` method, which is explained later in this article,
+defines the options that can be configured for the form type and sets the
+default value of those options.
 
-    The location of this file is not important - the ``Form\Type`` directory
-    is just a convention.
-
-Here, the return value of the ``getParent()`` function indicates that you're
-extending the ``ChoiceType`` field. This means that, by default, you inherit
-all of the logic and rendering of that field type. To see some of the logic,
-check out the `ChoiceType`_ class.
+The ``getParent()`` method defines which is the form type used as the base of
+this type. In this case, the type extends from ``ChoiceType`` to reuse all of
+the logic and rendering of that field type.
 
 .. note::
 
@@ -66,206 +71,7 @@ check out the `ChoiceType`_ class.
     extend from ``AbstractType`` is only a convenience way of implementing the
     required ``FormTypeInterface``.
 
-There are three methods that are particularly important:
-
-.. _form-type-methods-explanation:
-
-``buildForm()``
-    Each field type has a ``buildForm()`` method, which is where
-    you configure and build any field(s). Notice that this is the same method
-    you use to setup *your* forms, and it works the same here.
-
-``buildView()``
-    This method is used to set any extra variables you'll
-    need when rendering your field in a template. For example, in `ChoiceType`_,
-    a ``multiple`` variable is set and used in the template to set (or not
-    set) the ``multiple`` attribute on the ``select`` field. See
-    `Creating a Template for the Field`_ for more details.
-
-``configureOptions()``
-    This defines options for your form type that
-    can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-    options common to all fields (see :doc:`/reference/forms/types/form`),
-    but you can create any others that you need here.
-
-.. tip::
-
-    If you're creating a field that consists of many fields, then be sure
-    to set your "parent" type as ``form`` or something that extends ``form``.
-    Also, if you need to modify the "view" of any of your child types from
-    your parent type, use the ``finishView()`` method.
-
-The goal of this field was to extend the choice type to enable selection of the
-shipping type. This is achieved by fixing the ``choices`` to a list of available
-shipping options.
-
-.. tip::
-
-    Run the following command to verify that the form type was successfully
-    registered in the application:
-
-    .. code-block:: terminal
-
-        $ php bin/console debug:form
-
-Creating a Template for the Field
----------------------------------
-
-Each field type is rendered by a template fragment whose name is determined in
-part by the class name of your type. Read the :ref:`from fragment naming <form-fragment-naming>`
-rules for more details.
-
-.. note::
-
-    The first part of the prefix (e.g. ``shipping``) comes from the class name
-    (``ShippingType`` -> ``shipping``). This can be controlled by overriding ``getBlockPrefix()``
-    in ``ShippingType``.
-
-.. caution::
-
-    When the name of your form class matches any of the built-in field types,
-    your form might not be rendered correctly. A form type named
-    ``App\Form\PasswordType`` will have the same block name as the
-    built-in ``PasswordType`` and won't be rendered correctly. Override the
-    ``getBlockPrefix()`` method to return a unique block prefix (e.g.
-    ``app_password``) to avoid collisions.
-
-In this case, since the parent field is ``ChoiceType``, you don't *need* to do
-any work as the custom field type will automatically be rendered like a ``ChoiceType``.
-But for the sake of this example, suppose that when your field is "expanded"
-(i.e. radio buttons or checkboxes, instead of a select field), you want to
-always render it in a ``ul`` element. In your form theme template (see above
-link for details), create a ``shipping_widget`` block to handle this:
-
-.. code-block:: html+twig
-
-    {# templates/form/fields.html.twig #}
-    {% block shipping_widget %}
-        {% spaceless %}
-            {% if expanded %}
-                <ul {{ block('widget_container_attributes') }}>
-                    {% for child in form if not child.rendered %}
-                        <li>
-                            {{ form_widget(child) }}
-                            {{ form_label(child) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                {# let the choice widget render the select tag #}
-                {{ block('choice_widget') }}
-            {% endif %}
-        {% endspaceless %}
-    {% endblock %}
-
-.. note::
-
-    Symfony 4.2 deprecated calling ``FormRenderer::searchAndRenderBlock`` for
-    fields that have already been rendered. That's why the previous example
-    includes the ``... if not child.rendered`` statement.
-
-.. tip::
-
-    You can further customize the template used to render each children of the
-    choice type. The block to override in that case is named "block name" +
-    ``_entry_`` + "element name" (``label``, ``errors`` or ``widget``) (e.g. to
-    customize the labels of the children of the Shipping widget you'd need to
-    define ``{% block shipping_entry_label %} ... {% endblock %}``).
-
-.. note::
-
-    Make sure the correct widget prefix is used. In this example the name should
-    be ``shipping_widget`` (see :ref:`form fragment naming <form-fragment-naming>`
-    rules). Further, the main config file should point to the custom form template
-    so that it's used when rendering all forms.
-
-    When using Twig this is:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/packages/twig.yaml
-            twig:
-                form_themes:
-                    - 'form/fields.html.twig'
-
-        .. code-block:: xml
-
-            <!-- config/packages/twig.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:twig="http://symfony.com/schema/dic/twig"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/twig
-                    https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-                <twig:config>
-                    <twig:form-theme>form/fields.html.twig</twig:form-theme>
-                </twig:config>
-            </container>
-
-        .. code-block:: php
-
-            // config/packages/twig.php
-            $container->loadFromExtension('twig', [
-                'form_themes' => [
-                    'form/fields.html.twig',
-                ],
-            ]);
-
-    For the PHP templating engine, your configuration should look like this:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/packages/framework.yaml
-            framework:
-                templating:
-                    form:
-                        resources:
-                            - ':form:fields.html.php'
-
-        .. code-block:: xml
-
-            <!-- config/packages/framework.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-                <framework:config>
-                    <framework:templating>
-                        <framework:form>
-                            <framework:resource>:form:fields.html.php</twig:resource>
-                        </framework:form>
-                    </framework:templating>
-                </framework:config>
-            </container>
-
-        .. code-block:: php
-
-            // config/packages/framework.php
-            $container->loadFromExtension('framework', [
-                'templating' => [
-                    'form' => [
-                        'resources' => [
-                            ':form:fields.html.php',
-                        ],
-                    ],
-                ],
-            ]);
-
-Using the Field Type
---------------------
-
-You can now use your custom field type by creating a new instance of the type in
-one of your forms::
+Now you can add this form type when :doc:`creating Symfony forms </forms>`::
 
     // src/Form/Type/OrderType.php
     namespace App\Form\Type;
@@ -278,32 +84,379 @@ one of your forms::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('shippingCode', ShippingType::class, [
-                'placeholder' => 'Choose a delivery option',
-            ]);
+            $builder
+                // ...
+                ->add('shipping', ShippingType::class)
+            ;
+        }
+
+        // ...
+    }
+
+That's all. The ``shipping`` form field will be rendered correctly in any
+template because it reuses the templating logic defined by its parent type
+``ChoiceType``. If you prefer, you can also define a template for your custom
+types, as explained later in this article.
+
+Creating Form Types Created From Scratch
+----------------------------------------
+
+Some form types are so specific to your projects that they cannot be based on
+any :doc:`existing form types </reference/forms/types>` because they are too
+different. Consider an application that wants to reuse in different forms the
+following set of fields as the "postal address":
+
+.. raw:: html
+
+    <object data="../_images/form/form-custom-type-postal-address.svg" type="image/svg+xml"></object>
+
+As explained above, form types are PHP classes that implement
+:class:`Symfony\\Component\\Form\\FormTypeInterface`, although it's more
+convenient to extend instead from :class:`Symfony\\Component\\Form\\AbstractType`::
+
+    // src/Form/Type/PostalAddressType.php
+    namespace App\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\FormType;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    class PostalAddressType extends AbstractType
+    {
+        // ...
+    }
+
+When a form type doesn't extend from another specific type, there's no need to
+implement the ``getParent()`` method (Symfony will make the type extend from the
+generic :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`,
+which is the parent of all the other types).
+
+These are the most important methods that a form type class can define:
+
+.. _form-type-methods-explanation:
+
+``buildForm()``
+    It adds and configures other types into this type. It's the same method used
+    when :ref:`creating Symfony form classes <form-creating-form-classes>`.
+
+``buildView()``
+    It sets any extra variables you'll need when rendering the field in a template.
+
+``configureOptions()``
+    It defines the options configurable when using the form type, which are also
+    the options that can be used in ``buildForm()`` and ``buildView()`` methods.
+
+``finishView()``
+    When creating a form type that consists of many fields, this method allows
+    to modify the "view" of any of those fields. For any other use case, it's
+    recommended to use instead the ``buildView()`` method.
+
+Defining the Form Type
+~~~~~~~~~~~~~~~~~~~~~~
+
+Start by adding the ``buildForm()`` method to configure all the types included
+in the postal address. For the moment, all fields are of type ``TextType``::
+
+    // src/Form/Type/PostalAddressType.php
+    namespace App\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    class PostalAddressType extends AbstractType
+    {
+        // ...
+
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                ->add('addressLine1', TextType::class, [
+                    'help' => 'Street address, P.O. box, company name',
+                ])
+                ->add('addressLine2', TextType::class, [
+                    'help' => 'Apartment, suite, unit, building, floor',
+                ])
+                ->add('city', TextType::class)
+                ->add('state', TextType::class, [
+                    'label' => 'State',
+                ])
+                ->add('zipCode', TextType::class, [
+                    'label' => 'ZIP Code',
+                ])
+            ;
         }
     }
 
-But this only works because the ``ShippingType()`` is very simple. What if
-the shipping codes were stored in configuration or in a database? The next
-section explains how more complex field types solve this problem.
+.. tip::
 
-.. _form-field-service:
-.. _creating-your-field-type-as-a-service:
+    Run the following command to verify that the form type was successfully
+    registered in the application:
 
-Accessing Services and Config
------------------------------
+    .. code-block:: terminal
 
-If you need to access :doc:`services </service_container>` from your form class,
-add a ``__construct()`` method like normal::
+        $ php bin/console debug:form
 
-    // src/Form/Type/ShippingType.php
+This form type is ready to use it inside other forms and all its fields will be
+correctly rendered in any template::
+
+    // src/Form/Type/OrderType.php
     namespace App\Form\Type;
 
-    // ...
-    use Doctrine\ORM\EntityManagerInterface;
+    use App\Form\Type\PostalAddressType;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
 
-    class ShippingType extends AbstractType
+    class OrderType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                // ...
+                ->add('address', PostalAddressType::class)
+            ;
+        }
+
+        // ...
+    }
+
+However, the real power of custom form types is achieved with custom form
+options (to make them flexible) and with custom templates (to make them look
+better).
+
+.. _form-type-config-options:
+
+Adding Configuration Options for the Form Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Imagine that your project requires to make the ``PostalAddressType``
+configurable in two ways:
+
+* In addition to "address line 1" and "address line 2", some addresses should be
+  allowed to display an "address line 3" to store extended address information;
+* Instead of displaying a free text input, some addresses should be able to
+  restrict the possible states to a given list.
+
+This is solved with "form type options", which allow to configure the behavior
+of the form types. The options are defined in the ``configureOptions()`` method
+and you can use all the :doc:`OptionsResolver component features </components/options_resolver>`
+to define, validate and process their values::
+
+    // src/Form/Type/PostalAddressType.php
+    namespace App\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\OptionsResolver\Options;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    class PostalAddressType extends AbstractType
+    {
+        // ...
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // this defines the available options and their default values when
+            // they are not configured explicitly when using the form type
+            $resolver->setDefaults([
+                'allowed_states' => null,
+                'is_extended_address' => false,
+            ]);
+
+            // optionally you can also restrict the options type or types (to get
+            // automatic type validation and useful error messages for end users)
+            $resolver->setAllowedTypes('allowed_states', ['null', 'string', 'array']);
+            $resolver->setAllowedTypes('is_extended_address', 'bool');
+
+            // optionally you can transform the given values for the options to
+            // simplify the further processing of those options
+            $resolver->setNormalizer('allowed_states', static function (Options $options, $states) {
+                if (null === $states) {
+                    return $states;
+                }
+
+                if (is_string($states)) {
+                    $states = (array) $states;
+                }
+
+                return array_combine(array_values($states), array_values($states));
+            });
+        }
+    }
+
+Now you can configure these options when using the form type::
+
+    // src/Form/Type/OrderType.php
+    // ...
+
+    class OrderType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                // ...
+                ->add('address', PostalAddressType::class, [
+                    'is_extended_address' => true,
+                    'allowed_states' => ['CA', 'FL', 'TX'],
+                    // in this example, this config would also be valid:
+                    // 'allowed_states' => 'CA',
+                ])
+            ;
+        }
+
+        // ...
+    }
+
+The last step is to use these options when building the form::
+
+    // src/Form/Type/PostalAddressType.php
+    // ...
+
+    class PostalAddressType extends AbstractType
+    {
+        // ...
+
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            // ...
+
+            if (true === $options['is_extended_address']) {
+                $builder->add('addressLine3', TextType::class, [
+                    'help' => 'Extended address info',
+                ]);
+            }
+
+            if (null !== $options['allowed_states']) {
+                $builder->add('state', ChoiceType::class, [
+                    'choices' => $options['allowed_states'],
+                ]);
+            } else {
+                $builder->add('state', TextType::class, [
+                    'label' => 'State/Province/Region',
+                ]);
+            }
+        }
+    }
+
+Creating the Form Type Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, custom form types will be rendered using the
+:doc:`form themes </form/form_themes>` configured in the application. However,
+for some types you may prefer to create a custom template in order to customize
+how they look or their HTML structure.
+
+First, create a new Twig template anywhere in the application to store the
+fragments used to render the types:
+
+.. code-block:: twig
+
+    {# templates/form/custom_types.html.twig #}
+
+    {# ... here you will add the Twig code ... #}
+
+Then, update the :ref:`form_themes option <reference-twig-tag-form-theme>` to
+add this new template at the beginning of the list (the first one overrides the
+rest of files):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            form_themes:
+                - 'form/custom_types.html.twig'
+                - '...'
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:form-theme>form/custom_types.html.twig</twig:form-theme>
+                <twig:form-theme>...</twig:form-theme>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        $container->loadFromExtension('twig', [
+            'form_themes' => [
+                'form/custom_types.html.twig',
+                '...',
+            ],
+        ]);
+
+The last step is to create the actual Twig template that will render the type.
+The template contents depend on which HTML, CSS and JavaScript frameworks and
+libraries are used in your application:
+
+.. code-block:: twig
+
+    {# templates/form/custom_types.html.twig #}
+    {% block postal_address_row %}
+        {% for child in form.children if not child.rendered %}
+            <div class="form-group">
+                {{ form_label(child) }}
+                {{ form_widget(child) }}
+                {{ form_help(child) }}
+                {{ form_errors(child) }}
+            </div>
+        {% endfor %}
+    {% endblock %}
+
+.. note::
+
+    Symfony 4.2 deprecated calling ``FormRenderer::searchAndRenderBlock`` for
+    fields that have already been rendered. That's why the previous example
+    includes the ``... if not child.rendered`` statement.
+
+The first part of the Twig block name (e.g. ``postal_address``) comes from the
+class name (``PostalAddressType`` -> ``postal_address``). This can be controlled
+by overriding the ``getBlockPrefix()`` method in ``PostalAddressType``. The
+second part of the Twig block name (e.g. ``_row``) defines which form type part
+is being rendered (row, widget, help, errors, etc.)
+
+The article about form themes explains the
+:ref:`form fragment naming rules <form-fragment-naming>` in detail. The
+following diagram shows some of the Twig block names defined in this example:
+
+.. raw:: html
+
+    <object data="../_images/form/form-custom-type-postal-address-fragment-names.svg" type="image/svg+xml"></object>
+
+.. caution::
+
+    When the name of your form class matches any of the built-in field types,
+    your form might not be rendered correctly. A form type named
+    ``App\Form\PasswordType`` will have the same block name as the built-in
+    ``PasswordType`` and won't be rendered correctly. Override the
+    ``getBlockPrefix()`` method to return a unique block prefix (e.g.
+    ``app_password``) to avoid collisions.
+
+Passing Variables to the Form Type Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony passes a series of variables to the template used to render the form
+type. You can also pass your own variables, which can be based on the options
+defined by the form or be completely independent::
+
+
+    // src/Form/Type/PostalAddressType.php
+    use Doctrine\ORM\EntityManagerInterface;
+    // ...
+
+    class PostalAddressType extends AbstractType
     {
         private $entityManager;
 
@@ -312,19 +465,39 @@ add a ``__construct()`` method like normal::
             $this->entityManager = $entityManager;
         }
 
-        // use $this->entityManager down anywhere you want ...
+        // ...
+
+        public function buildView(FormView $view, FormInterface $form, array $options)
+        {
+            // pass the form type option directly to the template
+            $view->vars['isExtendedAddress'] = $options['is_extended_address'];
+
+            // make a database query to find possible notifications related to postal addresses (e.g. to
+            // display dynamic messages such as 'Delivery to XX and YY states will be added next week!')
+            $view->vars['notification'] = $this->entityManager->find('...');
+        }
     }
 
-If you're using the default ``services.yaml`` configuration (i.e. services from the
-``Form/`` are loaded and ``autoconfigure`` is enabled), this will already work!
-See :ref:`service-container-creating-service` for more details.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+this example will already work! Otherwise, :ref:`create a service <service-container-creating-service>`
+for this form class and :doc:`tag it </service_container/tags>` with ``form.type``.
 
-.. tip::
+The variables added in ``buildView()`` are available in the form type template
+as any other regular Twig variable:
 
-    If you're not using :ref:`autoconfigure <services-autoconfigure>`, make sure
-    to :doc:`tag </service_container/tags>` your service with ``form.type``.
+.. code-block:: twig
 
-Have fun!
+    {# templates/form/custom_types.html.twig #}
+    {% block postal_address_row %}
+        {# ... #}
 
-.. _`ChoiceType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/ChoiceType.php
-.. _`FieldType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/FieldType.php
+        {% if isExtendedAddress %}
+            {# ... #}
+        {% endif %}
+
+        {% if notification is not empty %}
+            <div class="alert alert-primary" role="alert">
+                {{ notification }}
+            </div>
+        {% endif %}
+    {% endblock %}

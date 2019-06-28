@@ -60,8 +60,9 @@ For more information on what those methods do, see the
 Registering your Form Type Extension as a Service
 -------------------------------------------------
 
-Form type extensions must be registered as services and :doc:`tagged </service_container/tags>`
-with the ``form.type_extension`` tag. If you're using the
+Form type extensions must be :ref:`registered as services <service-container-creating-service>`
+and :doc:`tagged </service_container/tags>` with the ``form.type_extension`` tag.
+If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
