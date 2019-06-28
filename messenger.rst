@@ -855,7 +855,7 @@ table_name          Name of the table                   messenger_messages
 queue_name          Name of the queue (a column in the  default
                     table, to use one table for
                     multiple transports)
-redeliver_timeout   Timeout before retrying a messages  3600
+redeliver_timeout   Timeout before retrying a message 3600
                     that's in the queue but in the
                     "handling" state (if a worker died
                     for some reason, this will occur,
