@@ -713,7 +713,7 @@ relevant parts of PSR-17, ``HttplugClient`` also implements the factory methods
 defined in the related ``php-http/message-factory`` package.
 
 Internally, the implementation relies on the ``Psr18Client``, so that the
-``psr/http-client`` package is needed to use this class::
+``psr/http-client`` package is needed to use this class:
 
 .. code-block:: terminal
 
