@@ -326,10 +326,11 @@ security helper to fill in the listener logic::
 Using the Form
 ~~~~~~~~~~~~~~
 
-If you're using :ref:`autowire <services-autowire>` and
-:ref:`autoconfigure <services-autoconfigure>`, your form is ready to be used!
-Otherwise, see :doc:`/form/form_dependencies` to learn how to register your form
-type as a service.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+your form is ready to be used thanks to :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`.
+Otherwise, :ref:`register the form class as a service <service-container-creating-service>`
+and :doc:`tag it </service_container/tags>` with the ``form.type`` tag.
 
 In a controller, create the form like normal::
 
