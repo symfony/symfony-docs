@@ -110,7 +110,7 @@ using a special "tag":
 .. note::
 
     There is an optional tag attribute called ``method`` which defines which method
-    to execute when the event is triggered. By default the name of the method is
+    to execute when the event is triggered. By default, the name of the method is
     ``on`` + "camel-cased event name". If the event is ``kernel.exception`` the
     method executed by default is ``onKernelException()``.
 

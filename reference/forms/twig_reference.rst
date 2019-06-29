@@ -22,7 +22,7 @@ Form Rendering Functions
 ------------------------
 
 This reference manual covers all the possible Twig functions available for
-rendering forms. There are several different functions available and
+rendering forms. There are several functions available and
 each is responsible for rendering a different part of a form (e.g. labels,
 errors, widgets, etc).
 

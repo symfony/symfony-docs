@@ -60,7 +60,7 @@ Next, add a new ``category`` property to the ``Task`` class::
 .. tip::
 
     The ``Valid`` Constraint has been added to the property ``category``. This
-    cascades the validation to the corresponding entity. If you omit this constraint
+    cascades the validation to the corresponding entity. If you omit this constraint,
     the child entity would not be validated.
 
 Now that your application has been updated to reflect the new requirements,

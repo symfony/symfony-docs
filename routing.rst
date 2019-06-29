@@ -143,7 +143,7 @@ match).
 
 .. caution::
 
-    However the slash ``/`` is ignored by default in placeholder values because
+    However, the slash ``/`` is ignored by default in placeholder values because
     the router uses it as separator between different placeholders.
     To learn more about this, you can read
     :ref:`routing/slash_in_parameter`.

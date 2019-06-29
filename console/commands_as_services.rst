@@ -10,7 +10,7 @@ recommended setup.
 
 Symfony also looks in the ``Command/`` directory of each bundle for commands
 non registered as a service and automatically registers those classes as
-commands. However this auto-registration was deprecated in Symfony 3.4. In
+commands. However, this auto-registration was deprecated in Symfony 3.4. In
 Symfony 4.0, commands won't be auto-registered anymore.
 
 .. note::

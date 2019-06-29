@@ -163,7 +163,7 @@ To sum up, here is the new file layout:
         └── front.php
 
 That's it! Our application has now four different layers and each of them has
-a well defined goal:
+a well-defined goal:
 
 * ``web/front.php``: The front controller; the only exposed PHP code that
   makes the interface with the client (it gets the Request and sends the

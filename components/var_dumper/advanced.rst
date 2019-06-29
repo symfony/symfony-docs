@@ -278,8 +278,8 @@ similar to PHP's short array notation::
     //   0 => "test"
     // ]
 
-If you would like to use both options, then you can just    combine them by
-using a the logical OR operator ``|``::
+If you would like to use both options, then you can just combine them by
+using the logical OR operator ``|``::
 
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;

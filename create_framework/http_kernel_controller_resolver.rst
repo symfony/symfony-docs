@@ -28,7 +28,7 @@ Update the route definition accordingly::
     ]));
 
 The move is pretty straightforward and makes a lot of sense as soon as you
-create more pages but you might have noticed a non-desirable side-effect...
+create more pages but you might have noticed a non-desirable side effect...
 The ``LeapYearController`` class is *always* instantiated, even if the
 requested URL does not match the ``leap_year`` route. This is bad for one main
 reason: performance wise, all controllers for all routes must now be

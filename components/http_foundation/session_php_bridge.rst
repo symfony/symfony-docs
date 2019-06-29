@@ -12,7 +12,7 @@ As stated elsewhere, Symfony Sessions are designed to replace the use of
 PHP's native ``session_*()`` functions and use of the ``$_SESSION``
 superglobal. Additionally, it is mandatory for Symfony to start the session.
 
-However when there really are circumstances where this is not possible, you
+However, when there really are circumstances where this is not possible, you
 can use a special storage bridge
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PhpBridgeSessionStorage`
 which is designed to allow Symfony to work with a session started outside of
@@ -46,4 +46,3 @@ of your application to Symfony sessions.
     cannot access arbitrary keys in ``$_SESSION`` that may be set by the legacy
     application, although all the ``$_SESSION`` contents will be saved when
     the session is saved.
-
