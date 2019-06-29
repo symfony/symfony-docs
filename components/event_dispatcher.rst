@@ -303,7 +303,7 @@ each listener of that event::
 
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
-    $dispatcher->dispatch(OrderPlacedEvent::NAME, $event);
+    $dispatcher->dispatch($event, OrderPlacedEvent::NAME);
 
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed``
