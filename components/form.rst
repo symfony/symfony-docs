@@ -91,9 +91,15 @@ object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 
         use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
         use Symfony\Component\Form\Forms;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\RequestStack;
+        use Symfony\Component\HttpFoundation\UrlHelper;
+        
+        $requestStack = new RequestStack();
+        $requestStack->push(Request::createFromGlobals());
 
         $formFactory = Forms::createFormFactoryBuilder()
-            ->addExtension(new HttpFoundationExtension())
+            ->addExtension(new HttpFoundationExtension(new UrlHelper($requestStack)))
             ->getFormFactory();
 
     Now, when you process a form, you can pass the :class:`Symfony\\Component\\HttpFoundation\\Request`
