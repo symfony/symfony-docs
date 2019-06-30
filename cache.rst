@@ -234,7 +234,7 @@ You can also create more customized pools:
                     <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
                     <framework:pool name="acme.cache" adapter="cache.adapter.memcached"/>
                     <framework:pool name="foobar.cache" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
-                    <framework:pool name="short_cache" adapter="foobar.cache" default_lifetime="60"/>
+                    <framework:pool name="short_cache" adapter="foobar.cache" default-lifetime="60"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -380,6 +380,10 @@ To get the best of both worlds you may use a chain of adapters. The idea is to
 first look at the quick adapter and then move on to slower adapters. In the worst
 case the value needs to be recalculated.
 
+.. versionadded:: 4.4
+
+    Support for configuring a chain using ``framework.cache.pools`` was introduced in Symfony 4.4.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -389,23 +393,11 @@ case the value needs to be recalculated.
             cache:
                 pools:
                     my_cache_pool:
-                        adapter: cache.adapter.psr6
-                        provider: app.my_cache_chain_adapter
-                    cache.my_redis:
-                        adapter: cache.adapter.redis
-                        provider: 'redis://user:password@example.com'
-                    cache.apcu:
-                        adapter: cache.adapter.apcu
-                    cache.array:
-                        adapter: cache.adapter.array
-
-
-        services:
-            app.my_cache_chain_adapter:
-                class: Symfony\Component\Cache\Adapter\ChainAdapter
-                arguments:
-                    - ['@cache.array', '@cache.apcu', '@cache.my_redis']
-                    - 31536000 # One year
+                        default_lifetime: 31536000  # One year
+                        adapters:
+                          - cache.adapter.array
+                          - cache.adapter.apcu
+                          - {name: cache.adapter.redis, provider: 'redis://user:password@example.com'}
 
     .. code-block:: xml
 
@@ -419,23 +411,13 @@ case the value needs to be recalculated.
 
             <framework:config>
                 <framework:cache>
-                    <framework:pool name="my_cache_pool" adapter="cache.adapter.psr6" provider="app.my_cache_chain_adapter"/>
-                    <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
-                    <framework:pool name="cache.apcu" adapter="cache.adapter.apcu"/>
-                    <framework:pool name="cache.array" adapter="cache.adapter.array"/>
+                    <framework:pool name="my_cache_pool" default-lifetime="31536000">
+                        <framework:adapter name="cache.adapter.array" />
+                        <framework:adapter name="cache.adapter.apcu" />
+                        <framework:adapter name="cache.adapter.redis" provider="redis://user:password@example.com" />
+                    </framework:pool>
                 </framework:cache>
             </framework:config>
-
-            <services>
-                <service id="app.my_cache_chain_adapter" class="Symfony\Component\Cache\Adapter\ChainAdapter">
-                    <argument type="collection">
-                        <argument type="service" value="cache.array"/>
-                        <argument type="service" value="cache.apcu"/>
-                        <argument type="service" value="cache.my_redis"/>
-                    </argument>
-                    <argument>31536000</argument>
-                </service>
-            </services>
         </container>
 
     .. code-block:: php
@@ -445,38 +427,16 @@ case the value needs to be recalculated.
             'cache' => [
                 'pools' => [
                     'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.psr6',
-                        'provider' => 'app.my_cache_chain_adapter',
-                    ],
-                    'cache.my_redis' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'provider' => 'redis://user:password@example.com',
-                    ],
-                    'cache.apcu' => [
-                        'adapter' => 'cache.adapter.apcu',
-                    ],
-                    'cache.array' => [
-                        'adapter' => 'cache.adapter.array',
+                        'default_lifetime' => 31536000, // One year
+                        'adapters' => [
+                            'cache.adapter.array',
+                            'cache.adapter.apcu',
+                            ['name' => 'cache.adapter.redis', 'provider' => 'redis://user:password@example.com'],
+                        ],
                     ],
                 ],
             ],
         ]);
-
-        $container->getDefinition('app.my_cache_chain_adapter', \Symfony\Component\Cache\Adapter\ChainAdapter::class)
-            ->addArgument([
-                new Reference('cache.array'),
-                new Reference('cache.apcu'),
-                new Reference('cache.my_redis'),
-            ])
-            ->addArgument(31536000);
-
-.. note::
-
-    In this configuration the ``my_cache_pool`` pool is using the ``cache.adapter.psr6``
-    adapter and the ``app.my_cache_chain_adapter`` service as a provider. That is
-    because ``ChainAdapter`` does not support the ``cache.pool`` tag. So it is decorated
-    with the ``ProxyAdapter``.
-
 
 Using Cache Tags
 ----------------
