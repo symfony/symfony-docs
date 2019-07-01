@@ -541,6 +541,98 @@ This makes use of the :ref:`css Twig namespace <mailer-css-namespace>` we create
 earlier. You could, for example, `download the foundation-emails.css file`_
 directly from GitHub and save it in ``assets/css``.
 
+Signing and Encrypting Messages
+-------------------------------
+
+.. versionadded:: 4.4
+
+    The option to sign and/or encrypt messages was introduced in Symfony 4.4.
+
+It's possible to sign and/or encrypt email messages applying the `S/MIME`_
+standard to increase their integrity/security. Both options can be combined (to
+encrypt a signed message and to sign an encrypted message) and they require to
+have the `OpenSSL PHP extension`_ properly installed and configured.
+
+Signing Messages
+~~~~~~~~~~~~~~~~
+
+When signing a message, a cryptographic hash is generated for the entire content
+of the message (including attachments). This hash is added as an attachment so
+the recipient can validate the integrity of the received message. However, the
+contents of the original message are still readable for mailing agents not
+supporting signed messages, so you must also encrypt the message if you want to
+hide its contents::
+
+    use Symfony\Component\Mime\Crypto\SMimeSigner;
+    use Symfony\Component\Mime\Email;
+
+    $email = (new Email())
+        ->from('hello@example.com')
+        // ...
+        ->html('...');
+
+    $signer = new SMimeSigner('/path/to/certificate.crt', '/path/to/certificate-private-key.key');
+    // if the private key has a passphrase, pass it as the third argument
+    // new SMimeSigner('/path/to/certificate.crt', '/path/to/certificate-private-key.key', 'the-passphrase');
+
+    $signedEmail = $signer->sign($email);
+    // now use the Mailer component to send this $signedEmail instead of the original email
+
+The certificate and private key must be `PEM encoded`_, and can be either
+created using for example OpenSSL or obtained at an official Certificate
+Authority (CA). The email recipient must have the CA certificate in the list of
+trusted issuers in order to verify the signature.
+
+.. tip::
+
+    When using OpenSSL to generate certificates, make sure to add the
+    ``-addtrust emailProtection`` command option.
+
+.. tip::
+
+    The ``SMimeSigner`` class defines other optional arguments to pass
+    intermediate certificates and to configure the signing process using a
+    bitwise operator options for :phpfunction:`openssl_pkcs7_sign` PHP function.
+
+Encrypting Messages
+~~~~~~~~~~~~~~~~~~~
+
+When encrypting a message, the entire message (including attachments) is
+encrypted using a certificate. Therefore, only the recipients that have the
+corresponding private key can read the original message contents::
+
+    use Symfony\Component\Mime\Crypto\SMimeEncrypter;
+    use Symfony\Component\Mime\Email;
+
+    $email = (new Email())
+        ->from('hello@example.com')
+        // ...
+        ->html('...');
+
+    $encrypter = new SMimeEncrypter('/path/to/certificate.crt');
+    $encryptedEmail = $encrypter->encrypt($email);
+    // now use the Mailer component to send this $encryptedEmail instead of the original email
+
+You can pass more than one certificate to the ``SMimeEncrypter()`` constructor
+and it will select the appropriate certificate depending on the ``To`` option::
+
+    $firstEmail = (new Email())
+        // ...
+        ->to('jane@example.com');
+
+    $secondEmail = (new Email())
+        // ...
+        ->to('john@example.com');
+
+    $encrypter = new SMimeEncrypter([
+        // key = email recipient; value = path to the certificate file
+        'jane@example.com' => '/path/to/first-certificate.crt',
+        'john@example.com' => '/path/to/second-certificate.crt',
+    ]);
+
+    $firstEncryptedEmail = $encrypter->encrypt($firstEmail);
+    $secondEncryptedEmail = $encrypter->encrypt($secondEmail);
+
 Sending Messages Async
 ----------------------
 
@@ -647,3 +739,6 @@ environment:
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`Markdown syntax`: https://commonmark.org/
 .. _`Inky`: https://foundation.zurb.com/emails.html
+.. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`OpenSSL PHP extension`: https://php.net/manual/en/book.openssl.php
+.. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
