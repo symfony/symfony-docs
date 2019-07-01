@@ -747,8 +747,8 @@ template.
 
 You can also include assets located in your bundles' ``Resources/public/`` folder.
 You will need to run the ``php bin/console assets:install target [--symlink]``
-command, which copies (or symlinks) files into the correct location. (target
-is by default the "public/" directory of your application).
+command, which copies (or symlinks) files into the correct location. (By default,
+the target is the ``public/`` directory of your application.)
 
 .. code-block:: html+twig
 
