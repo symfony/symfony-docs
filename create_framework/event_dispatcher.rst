@@ -76,7 +76,7 @@ the Response instance::
             }
 
             // dispatch a response event
-            $this->dispatcher->dispatch('response', new ResponseEvent($response, $request));
+            $this->dispatcher->dispatch(new ResponseEvent($response, $request), 'response');
 
             return $response;
         }
@@ -88,9 +88,9 @@ now dispatched::
     // example.com/src/Simplex/ResponseEvent.php
     namespace Simplex;
 
-    use Symfony\Component\EventDispatcher\Event;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Contracts\EventDispatcher\Event;
 
     class ResponseEvent extends Event
     {

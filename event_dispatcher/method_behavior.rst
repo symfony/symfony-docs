@@ -19,7 +19,7 @@ method::
         {
             // dispatch an event before the method
             $event = new BeforeSendMailEvent($subject, $message);
-            $this->dispatcher->dispatch('mailer.pre_send', $event);
+            $this->dispatcher->dispatch($event, 'mailer.pre_send');
 
             // get $foo and $bar from the event, they may have been modified
             $subject = $event->getSubject();
@@ -30,7 +30,7 @@ method::
 
             // do something after the method
             $event = new AfterSendMailEvent($returnValue);
-            $this->dispatcher->dispatch('mailer.post_send', $event);
+            $this->dispatcher->dispatch($event, 'mailer.post_send');
 
             return $event->getReturnValue();
         }
