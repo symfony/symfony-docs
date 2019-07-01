@@ -55,7 +55,7 @@ just one line:
     {{ form(form) }}
 
 The remainder of this recipe will explain how every part of the form's markup
-can be modified at several different levels. For more information about form
+can be modified at several levels. For more information about form
 rendering in general, see :doc:`/form/rendering`.
 
 .. _form-customization-form-themes:
@@ -613,7 +613,7 @@ Part of the Form  Block Name
 Other common Customizations
 ---------------------------
 
-So far, this recipe has shown you several different ways to customize a single
+So far, this recipe has shown you several ways to customize a single
 piece of how a form is rendered. The key is to customize a specific fragment that
 corresponds to the portion of the form you want to control (see
 :ref:`naming form blocks <form-customization-sidebar>`).
@@ -632,8 +632,8 @@ Customizing Error Output
     are determined by the validation constraints you apply to your objects.
     For more information, see the article on :doc:`validation </validation>`.
 
-There are many different ways to customize how errors are rendered when a
-form is submitted with errors. The error messages for a field are rendered
+There are many ways to customize how errors are rendered when a form is
+submitted with errors. The error messages for a field are rendered
 when you use the ``form_errors()`` helper:
 
 .. code-block:: twig

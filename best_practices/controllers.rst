@@ -6,8 +6,8 @@ means that controllers should hold just the thin layer of *glue-code*
 needed to coordinate the different parts of the application.
 
 As a rule of thumb, you should follow the 5-10-20 rule, where controllers should
-only define 5 variables or less, contain 10 actions or less and include 20 lines
-of code or less in each action. This isn't an exact science, but it should
+only define 5 variables or fewer, contain 10 actions or fewer and include 20 lines
+of code or fewer in each action. This isn't an exact science, but it should
 help you realize when code should be refactored out of the controller and
 into a service.
 

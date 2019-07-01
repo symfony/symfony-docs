@@ -259,7 +259,7 @@ dir
 ...
 
 Path to the mapping or entity files (depending on the driver). If this path
-is relative it is assumed to be relative to the bundle root. This only works
+is relative, it is assumed to be relative to the bundle root. This only works
 if the name of your mapping is a bundle name. If you want to use this option
 to specify absolute paths you should prefix the path with the kernel parameters
 that exist in the DIC (for example ``%kernel.project_dir%``).

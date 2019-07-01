@@ -62,7 +62,7 @@ Your custom theme does not have to override all the blocks. When rendering a blo
 which is not overridden in your custom theme, the theming engine will fall back
 to the global theme (defined at the bundle level).
 
-If several custom themes are provided they will be searched in the listed order
+If several custom themes are provided, they will be searched in the listed order
 before falling back to the global theme.
 
 To customize any portion of a form, you just need to override the appropriate
@@ -88,7 +88,7 @@ In Twig, every block needed is defined in a single template file (e.g.
 file, you can see every block needed to render a form and every default field
 type.
 
-In PHP, the fragments are individual template files. By default they are located in
+In PHP, the fragments are individual template files. By default, they are located in
 the ``Resources/views/Form`` directory of the FrameworkBundle (`view on GitHub`_).
 
 Each fragment name follows the same basic pattern and is broken up into two pieces,

@@ -361,7 +361,7 @@ As long as you have items in the todo-list, please prefix the pull request
 title with "[WIP]". If you do not yet want to trigger the automated tests,
 you can also set the PR to `draft status`_.
 
-In the pull request description, give as much details as possible about your
+In the pull request description, give as much detail as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
 your pull request is about adding a new feature or modifying an existing one,
 explain the rationale for the changes. The pull request description helps the

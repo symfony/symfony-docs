@@ -528,7 +528,7 @@ User object to make sure that they represent the same user. For example, if
 the ``username`` on the 2 User objects doesn't match for some reason, then
 the user will be logged out for security reasons.
 
-Even though this all happens automatically, there are a few important side-effects.
+Even though this all happens automatically, there are a few important side effects.
 
 First, the :phpclass:`Serializable` interface and its ``serialize()`` and ``unserialize()``
 methods have been added to allow the ``User`` class to be serialized

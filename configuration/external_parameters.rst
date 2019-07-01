@@ -125,7 +125,7 @@ of the following:
     .. deprecated:: 3.3
 
         The support of the special ``SYMFONY__`` environment variables was
-        deprecated in Symfony 3.3 and it will be removed in 4.0. Instead of
+        deprecated in Symfony 3.3 and will be removed in 4.0. Instead of
         using those variables, define regular environment variables and get
         their values using the ``%env(...)%`` syntax in your config files.
 

@@ -156,7 +156,7 @@ Enabling the PHP intl Extension
 no longer necessary.** You can check if the ``intl`` extension is enabled in the
 :phpfunction:`phpinfo` page.
 
-However if the ``intl`` extension is not enabled you can follow these steps.
+However, if the ``intl`` extension is not enabled you can follow these steps.
 
 This is the tricky part of the guide! To enable the ``intl`` extension, there is
 no need to upload any DLL files as the ``php_intl.dll`` file already exists on

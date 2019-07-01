@@ -215,8 +215,8 @@ checks whether the user has any of them.
 
 .. note::
 
-    You can define up to 32 base permissions (depending on your OS PHP might
-    vary between 30 to 32). In addition, you can also define cumulative
+    You can define up to 32 base permissions (depending on your OS, PHP might
+    vary between 30 and 32). In addition, you can also define cumulative
     permissions.
 
 Cumulative Permissions

@@ -137,7 +137,7 @@ Files and Directories
 * When referencing file extensions explicitly, you should include a leading dot
   for every extension (e.g. "XML files use the ``.xml`` extension").
 * When you list a Symfony file/directory hierarchy, use ``your-project/`` as the
-  top level directory. E.g.
+  top-level directory. E.g.
 
   .. code-block:: text
 

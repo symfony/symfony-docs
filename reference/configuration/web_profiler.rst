@@ -52,7 +52,7 @@ position
 
 .. deprecated:: 3.4
 
-    The ``position`` option was deprecated in Symfony 3.4 and it will be removed
+    The ``position`` option was deprecated in Symfony 3.4 and will be removed
     in Symfony 4.0, where the toolbar is always displayed in the ``bottom`` position.
 
 **type**: ``string`` **default**: ``bottom``
@@ -79,10 +79,10 @@ excluded_ajax_paths
 
 **type**: ``string`` **default**: ``'^/(app(_[\\w]+)?\\.php/)?_wdt'``
 
-When the toolbar logs Ajax requests, it matches their URLs against this regular
+When the toolbar logs AJAX requests, it matches their URLs against this regular
 expression. If the URL matches, the request is not displayed in the toolbar. This
-is useful when the application makes lots of Ajax requests or they are heavy and
-you want to exclude some of them.
+is useful when the application makes lots of AJAX requests, or if they are heavy
+and you want to exclude some of them.
 
 verbose
 ~~~~~~~

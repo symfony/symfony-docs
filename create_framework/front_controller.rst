@@ -220,7 +220,7 @@ We have the first version of our framework::
 
     $response->send();
 
-Adding a new page is a two step process: add an entry in the map and create a
+Adding a new page is a two-step process: add an entry in the map and create a
 PHP template in ``src/pages/``. From a template, get the Request data via the
 ``$request`` variable and tweak the Response headers via the ``$response``
 variable.

@@ -203,7 +203,7 @@ asset tags of your templates to tell Assetic to use the ``uglifyjs2`` filter:
 
     The above example assumes that you have a bundle called AppBundle and your
     JavaScript files are in the ``Resources/public/js`` directory under your
-    bundle. However you can include your JavaScript files no matter where they are.
+    bundle. However, you can include your JavaScript files no matter where they are.
 
 With the addition of the ``uglifyjs2`` filter to the asset tags above, you
 should now see minified JavaScripts coming over the wire much faster.
