@@ -305,7 +305,7 @@ Symfony applications come with a file called ``.env`` located at the project
 root directory. This file is used to define the value of environment variables
 and it's explained in detail :ref:`later in this article <config-dot-env>`.
 
-Open the ``.env`` file (or better, the ``.env.local`` file if you define one)
+Open the ``.env`` file (or better, the ``.env.local`` file if you created one)
 and edit the value of the ``APP_ENV`` variable to change the environment in
 which the application runs. For example, to run the application in production:
 
