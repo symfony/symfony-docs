@@ -96,7 +96,7 @@ from the ``security`` channel:
 
 .. caution::
 
-    The ``channels`` configuration only works for top level handlers. Handlers
+    The ``channels`` configuration only works for top-level handlers. Handlers
     that are nested inside a group, buffer, filter, fingers crossed or other
     such handler will ignore this configuration and will process every message
     passed to them.

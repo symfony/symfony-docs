@@ -1150,7 +1150,7 @@ name
 
 **type**: ``string`` **default**: ``null``
 
-This specifies the name of the session cookie. By default it will use the
+This specifies the name of the session cookie. By default, it will use the
 cookie name which is defined in the ``php.ini`` with the ``session.name``
 directive.
 
@@ -1169,7 +1169,7 @@ cookie_path
 
 **type**: ``string`` **default**: ``/``
 
-This determines the path to set in the session cookie. By default it will
+This determines the path to set in the session cookie. By default, it will
 use ``/``.
 
 cookie_domain
@@ -1177,7 +1177,7 @@ cookie_domain
 
 **type**: ``string`` **default**: ``''``
 
-This determines the domain to set in the session cookie. By default it's
+This determines the domain to set in the session cookie. By default, it's
 blank, meaning the host name of the server which generated the cookie according
 to the cookie specification.
 
@@ -1388,7 +1388,7 @@ use_cookies
 **type**: ``boolean`` **default**: ``null``
 
 This specifies if the session ID is stored on the client side using cookies or
-not. By default it will use the value defined in the ``php.ini`` with the
+not. By default, it will use the value defined in the ``php.ini`` with the
 ``session.use_cookies`` directive.
 
 assets

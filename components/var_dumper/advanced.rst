@@ -259,7 +259,7 @@ similar to PHP's short array notation::
     // ]
 
 If you would like to use both options, then you can combine them by
-using a the logical OR operator ``|``::
+using the logical OR operator ``|``::
 
     use Symfony\Component\VarDumper\Dumper\AbstractDumper;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
