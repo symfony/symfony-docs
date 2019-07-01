@@ -1,5 +1,4 @@
 .. index::
-
     single: Environment Variable Processors; env vars
 
 .. _env-var-processors:
