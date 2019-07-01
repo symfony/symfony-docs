@@ -53,7 +53,7 @@ Passing a subject::
     use Symfony\Component\EventDispatcher\GenericEvent;
 
     $event = new GenericEvent($subject);
-    $dispatcher->dispatch('foo', $event);
+    $dispatcher->dispatch($event, 'foo');
 
     class FooListener
     {
@@ -74,7 +74,7 @@ access the event arguments::
         $subject,
         ['type' => 'foo', 'counter' => 0]
     );
-    $dispatcher->dispatch('foo', $event);
+    $dispatcher->dispatch($event, 'foo');
 
     class FooListener
     {
@@ -93,7 +93,7 @@ Filtering data::
     use Symfony\Component\EventDispatcher\GenericEvent;
 
     $event = new GenericEvent($subject, ['data' => 'Foo']);
-    $dispatcher->dispatch('foo', $event);
+    $dispatcher->dispatch($event, 'foo');
 
     class FooListener
     {
