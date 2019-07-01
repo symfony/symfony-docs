@@ -291,8 +291,8 @@ Dispatch the Event
 
 The :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`
 method notifies all listeners of the given event. It takes two arguments:
-the name of the event to dispatch and the ``Event`` instance to pass to
-each listener of that event::
+the ``Event`` instance to pass to each listener of that event and the name
+of the event to dispatch and ::
 
     use Acme\Store\Event\OrderPlacedEvent;
     use Acme\Store\Order;
@@ -303,7 +303,7 @@ each listener of that event::
 
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
-    $dispatcher->dispatch(OrderPlacedEvent::NAME, $event);
+    $dispatcher->dispatch($event, OrderPlacedEvent::NAME);
 
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed``
@@ -423,7 +423,7 @@ It is possible to detect if an event was stopped by using the
 method which returns a boolean value::
 
     // ...
-    $dispatcher->dispatch('foo.event', $event);
+    $dispatcher->dispatch($event, 'foo.event');
     if ($event->isPropagationStopped()) {
         // ...
     }
@@ -440,36 +440,6 @@ The ``EventDispatcher`` always passes the dispatched event, the event's
 name and a reference to itself to the listeners. This can lead to some advanced
 applications of the ``EventDispatcher`` including dispatching other events inside
 listeners, chaining events or even lazy loading listeners into the dispatcher object.
-
-.. index::
-   single: EventDispatcher; Dispatcher shortcuts
-
-.. _event_dispatcher-shortcuts:
-
-Dispatcher Shortcuts
-~~~~~~~~~~~~~~~~~~~~
-
-If you do not need a custom event object, you can rely on a plain
-:class:`Symfony\\Contracts\\EventDispatcher\\Event` object. You do not even
-need to pass this to the dispatcher as it will create one by default unless you
-specifically pass one::
-
-    $dispatcher->dispatch('order.placed');
-
-Moreover, the event dispatcher always returns whichever event object that
-was dispatched, i.e. either the event that was passed or the event that
-was created internally by the dispatcher. This allows for nice shortcuts::
-
-    if (!$dispatcher->dispatch('foo.event')->isPropagationStopped()) {
-        // ...
-    }
-
-Or::
-
-    $event = new OrderPlacedEvent($order);
-    $order = $dispatcher->dispatch('bar.event', $event)->getOrder();
-
-and so on.
 
 .. index::
    single: EventDispatcher; Event name introspection
