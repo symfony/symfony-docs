@@ -41,7 +41,7 @@ On production, you should use a web server like Nginx or Apache (see
 But for development, it's more convenient to use the
 :doc:`Symfony Local Web Server </setup/symfony_server>`.
 
-This local server provides support for HTTP/2, TLS/SSL, automatic generation of
+This local server provides support for HTTP/2, [TLS/SSL](https://hosting.review/web-hosting-glossary/#12), automatic generation of
 security certificates and many other features. It works with any PHP application,
 not only Symfony projects, so it's a very useful development tool.
 
