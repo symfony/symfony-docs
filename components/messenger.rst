@@ -282,22 +282,36 @@ do is to write your own CSV receiver::
             $this->filePath = $filePath;
         }
 
-        public function receive(callable $handler): void
+        public function get(): void
         {
             $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
             foreach ($ordersFromCsv as $orderFromCsv) {
                 $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
+                
+                $envelope = new Envelope($order);
 
-                $handler(new Envelope($order));
+                $handler($envelope);
             }
+            
+            return [$envelope];
+        }
+        
+        public function ack(Envelope $envelope): void 
+        {
+            // Add information about the handled message
         }
 
-        public function stop(): void
+        public function reject(Envelope $envelope): void
         {
-            // noop
+            // Reject the message if needed
         }
     }
+
+.. versionadded:: 4.3
+
+    The ``ReceiverInterface`` has been upgraded to act as most libraries 
+    does, be sure to adapt your existing code according to the newly added methods.
 
 Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
