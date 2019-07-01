@@ -31,7 +31,7 @@ for the individual translation, and can be the message in the main locale (e.g.
 *"Symfony is great"*) of your application or a unique identifier (e.g.
 ``symfony.great`` - see the sidebar below).
 
-Translation files can be created in several different formats, XLIFF being the
+Translation files can be created in several formats, XLIFF being the
 recommended format. These files are parsed by one of the loader classes.
 
 .. configuration-block::

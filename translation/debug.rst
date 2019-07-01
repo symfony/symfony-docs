@@ -165,7 +165,7 @@ You can see that the translations of the message are identical in the ``fr``
 and ``en`` locales which means this message was probably copied from French
 to English and maybe you forgot to translate it.
 
-By default all domains are inspected, but it is possible to specify a single
+By default, all domains are inspected, but it is possible to specify a single
 domain:
 
 .. code-block:: terminal
