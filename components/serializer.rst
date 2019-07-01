@@ -719,7 +719,7 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
     This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
-    By default it uses the RFC3339_ format.
+    By default, it uses the RFC3339_ format.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
@@ -727,7 +727,7 @@ There are several types of normalizers available:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
     This normalizer converts :phpclass:`DateInterval` objects into strings.
-    By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
+    By default, it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
     This normalizer converts objects that implement

@@ -93,7 +93,7 @@ interface. Then:
 Merging Process
 ~~~~~~~~~~~~~~~
 
-At first it's common to make mistakes and merge things badly. Don't worry. This
+At first, it's common to make mistakes and merge things badly. Don't worry. This
 has happened to all of us and we've always been able to recover from any mistake.
 
 Step 1: Select the right branch to merge

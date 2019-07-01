@@ -63,7 +63,7 @@ you're done! Symfony will automatically know about the event subscriber and call
 the ``onKernelRequest`` method on each request.
 
 To see it working, either set the ``_locale`` key on the session manually (e.g.
-via some "Change Locale" route & controller), or create a route with a the :ref:`_locale default <translation-locale-url>`.
+via some "Change Locale" route & controller), or create a route with the :ref:`_locale default <translation-locale-url>`.
 
 .. sidebar:: Explicitly Configure the Subscriber
 

@@ -531,7 +531,7 @@ For all nodes:
 Appending Sections
 ------------------
 
-If you have a complex configuration to validate then the tree can grow to
+If you have a complex configuration to validate, then the tree can grow to
 be large and you may want to split it up into sections. You can do this
 by making a section a separate node and then appending it into the main
 tree with ``append()``::
@@ -702,8 +702,8 @@ and sometimes only:
 
     <connection>default</connection>
 
-By default ``connection`` would be an array in the first case and a string
-in the second making it difficult to validate. You can ensure it is always
+By default, ``connection`` would be an array in the first case and a string
+in the second, making it difficult to validate. You can ensure it is always
 an array with ``fixXmlConfig()``.
 
 You can further control the normalization process if you need to. For example,

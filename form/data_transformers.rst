@@ -307,7 +307,7 @@ Now, you can use your ``TaskType``::
     // ...
 
 Cool, you're done! Your user will be able to enter an issue number into the
-text field and it will be transformed back into an Issue object. This means
+text field, which will be transformed back into an Issue object. This means
 that, after a successful submission, the Form component will pass a real
 ``Issue`` object to ``Task::setIssue()`` instead of the issue number.
 

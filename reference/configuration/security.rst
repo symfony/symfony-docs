@@ -589,9 +589,9 @@ For even more details, see :doc:`/security/ldap`.
 **Authentication**
 
 You can authenticate to an LDAP server using the LDAP variants of the
-``form_login``, ``http_basic`` and ``json_login`` authentication providers. Simply use
-``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap``, which will attempt to
-``bind`` against a LDAP server instead of using password comparison.
+``form_login``, ``http_basic`` and ``json_login`` authentication providers. Use
+``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap``, which will
+attempt to ``bind`` against an LDAP server instead of using password comparison.
 
 Both authentication providers have the same arguments as their normal
 counterparts, with the addition of two configuration keys:
@@ -627,7 +627,7 @@ statically using the ``dn_string`` config option.
 **User provider**
 
 Users will still be fetched from the configured user provider. If you wish to
-fetch your users from a LDAP server, you will need to use the
+fetch your users from an LDAP server, you will need to use the
 :doc:`LDAP User Provider </security/ldap>` and any of these authentication
 providers: ``form_login_ldap`` or ``http_basic_ldap`` or ``json_login_ldap``.
 
@@ -719,11 +719,11 @@ providers
 ---------
 
 This options defines how the application users are loaded (from a database,
-a LDAP server, a configuration file, etc.) Read the following articles to learn
+an LDAP server, a configuration file, etc.) Read the following articles to learn
 more about each of those providers:
 
 * :ref:`Load users from a database <security-entity-user-provider>`
-* :ref:`Load users from a LDAP server <security-ldap-user-provider>`
+* :ref:`Load users from an LDAP server <security-ldap-user-provider>`
 * :ref:`Load users from a configuration file <security-memory-user-provider>`
 * :ref:`Create your own user provider <custom-user-provider>`
 
