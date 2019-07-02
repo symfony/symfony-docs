@@ -149,6 +149,7 @@ use the ``ldap`` user provider.
                         search_password: password
                         default_roles: ROLE_USER
                         uid_key: uid
+                        extra_fields: ['email']
 
     .. code-block:: xml
 
@@ -189,6 +190,7 @@ use the ``ldap`` user provider.
                         'search_password' => 'password',
                         'default_roles' => 'ROLE_USER',
                         'uid_key' => 'uid',
+                        'extra_fields' => ['email'],
                     ],
                 ],
             ],
@@ -267,6 +269,15 @@ implementation. Commonly used values are:
 
 If you pass ``null`` as the value of this option, the default UID key is used
 ``sAMAccountName``.
+
+extra_fields
+............
+
+**type**: ``array`` **default**: ``null``
+
+This is the custom fields to pull from the LDAP server. If the fields does not
+exists it will throw an \InvalidArgumentException.
+
 
 filter
 ......
