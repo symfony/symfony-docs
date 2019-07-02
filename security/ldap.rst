@@ -149,6 +149,7 @@ use the ``ldap`` user provider.
                         search_password: password
                         default_roles: ROLE_USER
                         uid_key: uid
+                        extra_fields: ['email']
 
     .. code-block:: xml
 
@@ -189,6 +190,7 @@ use the ``ldap`` user provider.
                         'search_password' => 'password',
                         'default_roles' => 'ROLE_USER',
                         'uid_key' => 'uid',
+                        'extra_fields' => ['email'],
                     ],
                 ],
             ],
@@ -267,6 +269,18 @@ implementation. Commonly used values are:
 
 If you pass ``null`` as the value of this option, the default UID key is used
 ``sAMAccountName``.
+
+extra_fields
+............
+
+**type**: ``array`` **default**: ``null``
+
+.. versionadded:: 4.4
+
+    The ``extra_fields`` option was introduced in Symfony 4.4.
+
+Defines the custom fields to pull from the LDAP server. If any field does not
+exist, an ``\InvalidArgumentException`` will be thrown.
 
 filter
 ......
