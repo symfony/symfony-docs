@@ -12,7 +12,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/debug
+    $ composer require --dev symfony/debug
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -26,50 +26,16 @@ Enable all of them by calling this method::
 
     Debug::enable();
 
-The :method:`Symfony\\Component\\Debug\\Debug::enable` method registers an
-error handler, an exception handler and
-:ref:`a special class loader <component-debug-class-loader>`.
-
-Read the following sections for more information about the different available
-tools.
-
 .. caution::
 
     You should never enable the debug tools, except for the error handler, in a
     production environment as they might disclose sensitive information to the user.
 
-Enabling the Error Handler
---------------------------
+.. deprecated:: 4.4
 
-The :class:`Symfony\\Component\\Debug\\ErrorHandler` class catches PHP errors
-and converts them to exceptions (of class :phpclass:`ErrorException` or
-:class:`Symfony\\Component\\Debug\\Exception\\FatalErrorException` for PHP
-fatal errors)::
-
-    use Symfony\Component\Debug\ErrorHandler;
-
-    ErrorHandler::register();
-
-This error handler is enabled by default in the production environment when the
-application uses the FrameworkBundle because it generates better error logs.
-
-Enabling the Exception Handler
-------------------------------
-
-The :class:`Symfony\\Component\\Debug\\ExceptionHandler` class catches
-uncaught PHP exceptions and converts them to a nice PHP response. It is useful
-in debug mode to replace the default PHP/XDebug output with something prettier
-and more useful::
-
-    use Symfony\Component\Debug\ExceptionHandler;
-
-    ExceptionHandler::register();
-
-.. note::
-
-    If the :doc:`HttpFoundation component </components/http_foundation>` is
-    available, the handler uses a Symfony Response object; if not, it falls
-    back to a regular PHP response.
+    In Symfony versions before 4.4, this component also provided error and
+    exception handlers. In Symfony 4.4 they were deprecated in favor of their
+    equivalent handlers included in the new :doc:`ErrorCatcher component </components/error_catcher>`.
 
 .. _component-debug-class-loader:
 
@@ -87,5 +53,3 @@ Using the ``DebugClassLoader`` is done by calling its static
     use Symfony\Component\Debug\DebugClassLoader;
 
     DebugClassLoader::enable();
-
-.. _Packagist: https://packagist.org/packages/symfony/debug
