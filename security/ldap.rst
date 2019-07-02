@@ -275,9 +275,12 @@ extra_fields
 
 **type**: ``array`` **default**: ``null``
 
-This is the custom fields to pull from the LDAP server. If the fields does not
-exists it will throw an \InvalidArgumentException.
+.. versionadded:: 4.4
 
+    The ``extra_fields`` option was introduced in Symfony 4.4.
+
+Defines the custom fields to pull from the LDAP server. If any field does not
+exist, an ``\InvalidArgumentException`` will be thrown.
 
 filter
 ......
