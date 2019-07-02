@@ -445,6 +445,32 @@ In order to define the actual values of env vars, Symfony proposes different
 solutions depending if the application is running in production or in your local
 development machine.
 
+Independent from the way you set environmnet variables, you may need to run the
+``debug:container`` command with the ``--env-vars`` option to verify that they
+are defined and have the expected values:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --env-vars
+
+    ---------------- ----------------- ---------------------------------------------
+     Name             Default value     Real value
+    ---------------- ----------------- ---------------------------------------------
+     APP_SECRET       n/a               "471a62e2d601a8952deb186e44186cb3"
+     FOO              "[1, "2.5", 3]"   n/a
+     BAR              null              n/a
+    ---------------- ----------------- ---------------------------------------------
+
+    # you can also filter the list of env vars by name:
+    $ php bin/console debug:container --env-vars foo
+
+    # run this command to show all the details for a specific env var:
+    $ php bin/console debug:container --env-var=FOO
+
+.. versionadded:: 4.3
+
+    The option to debug environment variables was introduced in Symfony 4.3.
+
 .. _configuration-env-var-in-dev:
 .. _config-dot-env:
 
