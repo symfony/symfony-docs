@@ -47,7 +47,7 @@ this suffix is neither required nor recommended, so you can safely remove it.
 Routing Configuration
 ---------------------
 
-To load routes defined as annotations in your controllers, run the following command :
+To load routes defined as annotations in your controllers, run the following command:
 
 .. code-block:: terminal
 
