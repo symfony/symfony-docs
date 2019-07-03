@@ -18,13 +18,14 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `input`_                                                             |
-|             |                                                                        |
+|             | - `intl`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
+|             | - `choice_translation_domain`_                                         |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
 |             | - `placeholder`_                                                       |
@@ -69,6 +70,24 @@ on your underlying object. Valid values are:
 * ``intltimezone`` (an ``\IntlTimeZone`` object)
 * ``string`` (e.g. ``America/New_York``)
 
+intl
+~~~~
+
+*type**: ``boolean`` **default**: ``false``
+
+If this option is set to ``true``, the timezone selector will display the
+timezones from the `ICU Project`_ via the :doc:`Intl component </components/intl>`
+instead of the regular PHP timezones.
+
+Although both sets of timezones are pretty similar, only the ones from the Intl
+component can be translated to any language. To do so, set the desired locale
+with the ``choice_translation_locale`` option.
+
+.. note::
+
+    The :doc:`Timezone constraint </reference/constraints/Timezone>` can validate
+    both timezone sets and adapts to the selected set automatically.
+
 Overridden Options
 ------------------
 
@@ -89,6 +108,8 @@ Inherited Options
 -----------------
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
+
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
@@ -137,3 +158,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. _`ICU Project`: http://site.icu-project.org/
