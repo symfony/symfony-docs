@@ -124,7 +124,7 @@ The Base Controller Classes & Services
 For convenience, Symfony comes with two optional base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` and
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`
-classes. You can extend either to get access to a number of `helper methods`_.
+classes. You can extend either to get access to a number of helper methods.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify
 ``LuckyController`` to extend it::
@@ -747,5 +747,4 @@ Learn more about Controllers
 
     controller/*
 
-.. _`helper methods`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect
