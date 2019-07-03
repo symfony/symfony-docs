@@ -878,6 +878,8 @@ The Redis transport uses `streams`_ to queue messages.
 
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
+    # Full DSN Example
+    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1
 
 To use the Redis transport, you will need the Redis PHP extension (^4.3) and
 a running Redis server (^5.0).
@@ -895,6 +897,8 @@ under the transport in ``messenger.yaml``:
 stream              The Redis stream name               messages
 group               The Redis consumer group name       symfony
 consumer            Consumer name used in Redis         consumer
+auto_setup          Will auto create the Redis group.   true
+auth                The password used for Redis         
 serializer          How to serialize the final payload  ``Redis::SERIALIZER_PHP``
                     in Redis (the
                     ``Redis::OPT_SERIALIZER`` option)
