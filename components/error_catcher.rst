@@ -69,24 +69,24 @@ Rendering PHP Errors and Exceptions
 Another feature provided by this component are the "error renderers", which
 converts PHP errors and exceptions into other formats such as JSON and HTML::
 
-    use Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRenderer;
-    use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
-    use Symfony\Component\ErrorHandler\ErrorRenderer\JsonErrorRenderer;
+    use Symfony\Component\ErrorCatcher\ErrorRenderer\ErrorRenderer;
+    use Symfony\Component\ErrorCatcher\ErrorRenderer\HtmlErrorRenderer;
+    use Symfony\Component\ErrorCatcher\ErrorRenderer\JsonErrorRenderer;
 
     $renderers = [
         new HtmlErrorRenderer(),
         new JsonErrorRenderer(),
         // ...
     ];
-    $errorRenderer = new ErrorRenderer($renderers);
+    $errorFormatter = new ErrorFormatter($renderers);
 
-    /** @var Symfony\Component\ErrorHandler\Exception\FlattenException */
+    /** @var Symfony\Component\ErrorCatcher\Exception\FlattenException */
     $exception = ...;
     /** @var Symfony\Component\HttpFoundation\Request */
     $request = ...;
 
     return new Response(
-        $errorRenderer->render($exception, $request->getRequestFormat()),
+        $errorFormatter->render($exception, $request->getRequestFormat()),
         $exception->getStatusCode(),
         $exception->getHeaders()
     );
@@ -96,29 +96,28 @@ Built-in Error Renderers
 
 This component provides error renderers for the most common needs:
 
-  * :class:`Symfony\\Component\\ErrorHandler\\ErrorRenderer\\HtmlErrorRenderer`
+  * :class:`Symfony\\Component\\ErrorCatcher\\ErrorRenderer\\HtmlErrorRenderer`
     renders errors in HTML format;
-  * :class:`Symfony\\Component\\ErrorHandler\\ErrorRenderer\\JsonErrorRenderer`
-    renders errors in JsonErrorRenderer format and it's compliant with the
-    `RFC 7807`_ standard;
-  * :class:`Symfony\\Component\\ErrorHandler\\ErrorRenderer\\XmlErrorRenderer`
+  * :class:`Symfony\\Component\\ErrorCatcher\\ErrorRenderer\\JsonErrorRenderer`
+    renders errors in JSON format and it's compliant with the `RFC 7807`_ standard;
+  * :class:`Symfony\\Component\\ErrorCatcher\\ErrorRenderer\\XmlErrorRenderer`
     renders errors in XML and Atom formats. It's compliant with the `RFC 7807`_
     standard;
-  * :class:`Symfony\\Component\\ErrorHandler\\ErrorRenderer\\TxtErrorRenderer`
-    renders errors in regular text format.
+  * :class:`Symfony\\Component\\ErrorCatcher\\ErrorRenderer\\TxtErrorRenderer`
+    renders errors in plain text format.
 
 Adding a Custom Error Renderer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Error renderers are PHP classes that implement the
-:class:`Symfony\\Component\\ErrorHandler\\ErrorRenderer\\ErrorRendererInterface`.
+:class:`Symfony\\Component\\ErrorCatcher\\ErrorRenderer\\ErrorRendererInterface`.
 For example, if you need to render errors in `JSON-LD format`_, create this
 class anywhere in your project::
 
-    namespace App\ErrorHandler\ErrorRenderer;
+    namespace App\ErrorCatcher;
 
-    use Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
-    use Symfony\Component\ErrorHandler\Exception\FlattenException;
+    use Symfony\Component\ErrorCatcher\ErrorRenderer\ErrorRendererInterface;
+    use Symfony\Component\ErrorCatcher\Exception\FlattenException;
 
     class JsonLdErrorRenderer implements ErrorRendererInterface
     {
@@ -162,7 +161,7 @@ class anywhere in your project::
 
 To enable the new error renderer in the application,
 :ref:`register it as a service <service-container-creating-service>` and
-:doc:`tag it </service_container/tags>` with the ``error_handler.renderer``
+:doc:`tag it </service_container/tags>` with the ``error_catcher.renderer``
 tag.
 
 .. configuration-block::
@@ -171,9 +170,9 @@ tag.
 
         # config/services.yaml
         services:
-            App\ErrorHandler\ErrorRenderer\JsonLdErrorRenderer:
+            App\ErrorCatcher\JsonLdErrorRenderer:
                 arguments: ['%kernel.debug%']
-                tags: ['error_handler.renderer']
+                tags: ['error_catcher.renderer']
 
     .. code-block:: xml
 
@@ -185,9 +184,9 @@ tag.
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\ErrorHandler\ErrorRenderer\JsonLdErrorRenderer">
+                <service id="App\ErrorCatcher\JsonLdErrorRenderer">
                     <argument>true</argument>
-                    <tag name="error_handler.renderer"/>
+                    <tag name="error_catcher.renderer"/>
                 </service>
             </services>
         </container>
@@ -195,11 +194,11 @@ tag.
     .. code-block:: php
 
         // config/services.php
-        use App\ErrorHandler\ErrorRenderer\JsonLdErrorRenderer;
+        use App\ErrorCatcher\JsonLdErrorRenderer;
 
         $container->register(JsonLdErrorRenderer::class)
             ->setArguments([true]);
-            ->addTag('error_handler.renderer');
+            ->addTag('error_catcher.renderer');
 
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
 .. _`JSON-LD format`: https://en.wikipedia.org/wiki/JSON-LD
