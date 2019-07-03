@@ -891,18 +891,18 @@ a running Redis server (^5.0).
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-==================  =================================== =======
-     Option               Description                   Default
-==================  =================================== =======
-stream              The Redis stream name               messages
-group               The Redis consumer group name       symfony
-consumer            Consumer name used in Redis         consumer
-auto_setup          Will auto create the Redis group.   true
-auth                The password used for Redis         
-serializer          How to serialize the final payload  ``Redis::SERIALIZER_PHP``
+==================  =====================================  =======
+     Option               Description                      Default
+==================  =====================================  =======
+stream              The Redis stream name                  messages
+group               The Redis consumer group name          symfony
+consumer            Consumer name used in Redis            consumer
+auto_setup          Create the Redis group automatically?  true
+auth                The Redis password
+serializer          How to serialize the final payload     ``Redis::SERIALIZER_PHP``
                     in Redis (the
                     ``Redis::OPT_SERIALIZER`` option)
-==================  =================================== =======
+==================  =====================================  =======
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
