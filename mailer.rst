@@ -3,16 +3,11 @@ Sending Emails with Mailer
 
 .. versionadded:: 4.3
 
-    The Mailer component was added in Symfony 4.3 and is currently experimental.
-    The previous solution - Swift Mailer - is still valid: :doc:`Swift Mailer</email>`.
+    The Mailer component was introduced in Symfony 4.3. The previous solution,
+    called Swift Mailer, is still valid: :doc:`Swift Mailer</email>`.
 
 Installation
 ------------
-
-.. caution::
-
-    The Mailer component is experimental in Symfony 4.3: some backwards compatibility
-    breaks could occur before 4.4.
 
 Symfony's Mailer & :doc:`Mime </components/mime>` components form a *powerful* system
 for creating and sending emails - complete with support for multipart messages, Twig
