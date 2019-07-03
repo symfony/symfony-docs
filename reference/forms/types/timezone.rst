@@ -73,7 +73,7 @@ on your underlying object. Valid values are:
 intl
 ~~~~
 
-*type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If this option is set to ``true``, the timezone selector will display the
 timezones from the `ICU Project`_ via the :doc:`Intl component </components/intl>`
