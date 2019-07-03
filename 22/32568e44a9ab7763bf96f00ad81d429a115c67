@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-03T08:31:31Z
+
+Oskar, you are right! The "versionadded" directives must be maintained in all minor versions of the same branch, so 4.4 contains "added in 4.3". We must remove them in master, which is 5.0.
