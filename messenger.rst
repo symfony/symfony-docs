@@ -865,6 +865,8 @@ The Redis transport uses `streams`_ to queue messages.
 
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
+    # Full DSN Example
+    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1
 
 To use the Redis transport, you will need the Redis PHP extension (^4.3) and
 a running Redis server (^5.0).
@@ -876,20 +878,22 @@ a running Redis server (^5.0).
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-==================  ===================================  =========================
-     Option               Description                    Default
-==================  ===================================  =========================
-stream              The Redis stream name                messages
-group               The Redis consumer group name        symfony
-consumer            Consumer name used in Redis          consumer
-serializer          How to serialize the final payload   ``Redis::SERIALIZER_PHP``
+==================  =====================================  =========================
+     Option               Description                      Default
+==================  =====================================  =========================
+stream              The Redis stream name                  messages
+group               The Redis consumer group name          symfony
+consumer            Consumer name used in Redis            consumer
+auto_setup          Create the Redis group automatically?  true
+auth                The Redis password
+serializer          How to serialize the final payload     ``Redis::SERIALIZER_PHP``
                     in Redis (the
                     ``Redis::OPT_SERIALIZER`` option)
-stream_max_entries  The maximum number of entries which  ``0`` (which means "no trimming")
+stream_max_entries  The maximum number of entries which    ``0`` (which means "no trimming")
                     the stream will be trimmed to. Set
                     it to a large enough number to
                     avoid losing pending messages
-==================  ===================================  =========================
+==================  =====================================  =========================
 
 .. versionadded:: 4.4
 
