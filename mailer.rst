@@ -539,10 +539,6 @@ directly from GitHub and save it in ``assets/css``.
 Signing and Encrypting Messages
 -------------------------------
 
-.. versionadded:: 4.4
-
-    The option to sign and/or encrypt messages was introduced in Symfony 4.4.
-
 It's possible to sign and/or encrypt email messages applying the `S/MIME`_
 standard to increase their integrity/security. Both options can be combined (to
 encrypt a signed message and to sign an encrypted message) and they require to
