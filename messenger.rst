@@ -889,16 +889,21 @@ a running Redis server (^5.0).
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-==================  =================================== =======
+==================  =================================== =========================
      Option               Description                   Default
-==================  =================================== =======
+==================  =================================== =========================
 stream              The Redis stream name               messages
 group               The Redis consumer group name       symfony
 consumer            Consumer name used in Redis         consumer
 serializer          How to serialize the final payload  ``Redis::SERIALIZER_PHP``
                     in Redis (the
                     ``Redis::OPT_SERIALIZER`` option)
-==================  =================================== =======
+stream_max_entries  The maximum number of entries which 0 (= no trimming)
+                    the stream will be trimmed to. Be
+                    careful with the configured number
+                    because it might cause a loss of
+                    pending messages
+==================  =================================== =========================
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
