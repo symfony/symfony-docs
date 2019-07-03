@@ -78,7 +78,7 @@ on your underlying object. Valid values are:
 intl
 ~~~~
 
-*type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 4.3
 
