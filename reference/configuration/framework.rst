@@ -116,6 +116,7 @@ Configuration
     * `scope`_
     * `auth_basic`_
     * `auth_bearer`_
+    * `auth_ntlm`_
     * `base_uri`_
     * `bindto`_
     * `cafile`_
@@ -746,6 +747,20 @@ auth_bearer
 
 The token used to create the ``Authorization`` HTTP header used in HTTP Bearer
 authentication (also called token authentication).
+
+auth_ntlm
+.........
+
+**type**: ``string``
+
+.. versionadded:: 4.3
+
+    The ``auth_ntlm`` option was introduced in Symfony 4.4.
+
+The username and password used to create the ``Authorization`` HTTP header used
+in the `Microsoft NTLM authentication protocol`_. The value of this option must
+follow the format ``username:password``. This authentication mechanism requires
+using the CURL-based transport.
 
 base_uri
 ........
@@ -2776,3 +2791,4 @@ to know their differences.
 .. _`default_socket_timeout`: https://php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
+.. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/desktop/secauthn/microsoft-ntlm
