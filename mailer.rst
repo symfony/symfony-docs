@@ -4,11 +4,6 @@ Sending Emails with Mailer
 Installation
 ------------
 
-.. caution::
-
-    The Mailer component is experimental in Symfony 4.3: some backwards compatibility
-    breaks could occur before 4.4.
-
 Symfony's Mailer & :doc:`Mime </components/mime>` components form a *powerful* system
 for creating and sending emails - complete with support for multipart messages, Twig
 integration, CSS inlining, file attachments and a lot more. Get them installed with:
