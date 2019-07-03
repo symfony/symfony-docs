@@ -900,6 +900,29 @@ serializer          How to serialize the final payload  ``Redis::SERIALIZER_PHP`
                     ``Redis::OPT_SERIALIZER`` option)
 ==================  =================================== =======
 
+.. tip::
+
+    At some point you'll likely want to scale the number of workers working on your queue.
+    Make sure you assign the correct ``consumer`` and ``group`` values in that case.
+    The more likely case is that each worker shall work on the queue independently, reducing
+    the time needed to process the pending messages. In that case, every single worker
+    must have a different ``consumer`` configuration value. When working with Docker
+    containers one idea might be to use the ``HOSTNAME`` environment variable:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/messenger.yaml
+            framework:
+                messenger:
+                    transports:
+                        redis: 'redis://localhost:6379/messages/symfony/%env(HOSTNAME)%'
+
+    The less likely case would be if you wanted to have every single worker to process every single message.
+    That means messages would be processed multiple times. In that case, you must have different ``group``
+    configurations.
+
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
 
