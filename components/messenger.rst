@@ -288,16 +288,16 @@ do is to write your own CSV receiver::
 
             foreach ($ordersFromCsv as $orderFromCsv) {
                 $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
-                
+
                 $envelope = new Envelope($order);
 
                 $handler($envelope);
             }
-            
+
             return [$envelope];
         }
-        
-        public function ack(Envelope $envelope): void 
+
+        public function ack(Envelope $envelope): void
         {
             // Add information about the handled message
         }
@@ -310,8 +310,9 @@ do is to write your own CSV receiver::
 
 .. versionadded:: 4.3
 
-    The ``ReceiverInterface`` has been upgraded to act as most libraries 
-    does, be sure to adapt your existing code according to the newly added methods.
+    In Symfony 4.3, the ``ReceiverInterface`` has changed its methods as shown
+    in the example above. You may need to update your code if you used this
+    interface in previous Symfony versions.
 
 Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
