@@ -3,15 +3,10 @@ Length
 
 Validates that a given string length is *between* some minimum and maximum value.
 
-.. caution::
-
-    ``null`` and empty strings are not handled by this constraint. You need to
-    also add the :doc:`/reference/constraints/NotBlank` or :doc:`/reference/constraints/NotNull`
-    constraints to validate against these.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `charset`_
+Options     - `allowEmptyString`_
+            - `charset`_
             - `charsetMessage`_
             - `exactMessage`_
             - `groups`_
@@ -114,6 +109,20 @@ and "50", you might add the following:
 
 Options
 -------
+
+allowEmptyString
+~~~~~~~~~~~~~~~~
+
+**type**: ``boolean``  **default**: ``true``
+
+.. versionadded:: 4.4
+
+    The ``allowEmptyString`` option was introduced in Symfony 4.4.
+
+When using the ``min`` option, it's mandatory to also define this option. If
+set to ``true``, empty strings are considered valid (which is the same behavior
+as previous Symfony versions). Set it to ``false`` to consider empty strings not
+valid.
 
 charset
 ~~~~~~~
