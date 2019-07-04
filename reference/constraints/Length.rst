@@ -113,16 +113,11 @@ Options
 allowEmptyString
 ~~~~~~~~~~~~~~~~
 
-**type**: ``boolean``  **default**: ``true``
+**type**: ``boolean``  **default**: ``false``
 
-.. versionadded:: 4.4
-
-    The ``allowEmptyString`` option was introduced in Symfony 4.4.
-
-When using the ``min`` option, it's mandatory to also define this option. If
-set to ``true``, empty strings are considered valid (which is the same behavior
-as previous Symfony versions). Set it to ``false`` to consider empty strings not
-valid.
+If set to ``true``, empty strings are considered valid (which is the same
+behavior as previous Symfony versions). The default ``false`` value considers
+empty strings not valid.
 
 charset
 ~~~~~~~
