@@ -59,7 +59,7 @@ ones are considered **standard versions**:
 =======================  =====================  ================================
 Version Type             Bugs are fixed for...  Security issues are fixed for...
 =======================  =====================  ================================
-Standard                 8 months               14 months
+Standard                 8 months               8 months
 Long-Term Support (LTS)  3 years                4 years
 =======================  =====================  ================================
 
