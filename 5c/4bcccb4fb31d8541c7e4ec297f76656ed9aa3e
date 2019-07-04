@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-04T10:44:41Z
+
+If the default value changes in 5.0, we should emphasize this here IMO.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-04T11:29:35Z
+
+@xabbuh maybe ... the trick here is that when using the `min` option, you MUST add this option explicitly too ... so when upgrading to Symfony 5.0 there can't be any surprises ... it doesn't matter (much) if the default value changes, because you don't rely on the default value because you were forced to add this option.
+
+But if you really think we should mention this, let's do it. Thanks.
