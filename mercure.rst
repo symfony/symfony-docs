@@ -400,7 +400,7 @@ And here is the controller::
             $username = $this->getUser()->getUsername(); // Retrieve the username of the current user
             $token = (new Builder())
                 // set other appropriate JWT claims, such as an expiration date
-                ->set('mercure', ['subscribe' => "http://example.com/user/$username"]) // could also include the security roles, or anything else
+                ->set('mercure', ['subscribe' => ["http://example.com/user/$username"]]) // could also include the security roles, or anything else
                 ->sign(new Sha256(), $this->getParameter('mercure_secret_key')) // don't forget to set this parameter! Test value: aVerySecretKey
                 ->getToken();
 
