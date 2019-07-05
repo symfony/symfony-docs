@@ -639,9 +639,20 @@ its ``bin/simple-phpunit`` command. It has the following features:
 
 The script writes the modified PHPUnit it builds in a directory that can be
 configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
-the ``simple-phpunit`` if it is not provided.
+the ``simple-phpunit`` if it is not provided. It's also possible to set this
+env var in the ``phpunit.xml.dist`` file.
 
-It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+By default, these are the PHPUnit versions used depending on the installed PHP versions:
+
+=====================  ===============================
+Installed PHP version  PHPUnit version used by default
+=====================  ===============================
+PHP <= 5.5             PHPUnit 4.8
+PHP 5.6                PHPUnit 5.7
+PHP 7.0                PHPUnit 6.5
+PHP 7.1                PHPUnit 7.5
+PHP >= 7.2             PHPUnit 8.2
+=====================  ===============================
 
 If you have installed the bridge through Composer, you can run it by calling e.g.:
 
