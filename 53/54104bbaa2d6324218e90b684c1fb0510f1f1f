@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-18T08:15:50Z
+
+Are you using ORM and ODM in the same project?
+
+---------------------------------------------------------------------------
+
+by JonathanHolvey at 2019-06-18T08:29:33Z
+
+No I'm not. It's there specific dimension for event listeners when using the ODM?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-18T08:34:25Z
+
+I am not quite sure, I thought that `doctrine.*` is always an alias for the configured one, in your case `doctrine_mongodb.odm.*`
+
+maybe @alcaeus can help us out here, but he is currently on holiday ☀️
+
+---------------------------------------------------------------------------
+
+by alcaeus at 2019-06-18T15:05:55Z
+
+That’s a 👎 from me: the tutorial covers using Doctrine ORM. The MongoDB ODM docs are found elsewhere: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
+
+If anything at all, the main documentation page should mention that the guide covers ORM and maybe link to the ODM docs, but nothing else. If you’re adding ODM documentation there, you’ll have to add it to other parts (e.g. query builders, mapping, etc. as well which would definitely go too far IMO).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-06-18T20:41:46Z
+
+I agree with @alcaeus here.
