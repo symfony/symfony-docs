@@ -6,7 +6,8 @@ The PHPUnit Bridge
 ==================
 
     The PHPUnit Bridge provides utilities to report legacy tests and usage of
-    deprecated code and a helper for time-sensitive tests.
+    deprecated code and helpers for mocking native functions related to time,
+    DNS and class existence.
 
 It comes with the following features:
 
@@ -19,10 +20,13 @@ It comes with the following features:
 
 * Displays the stack trace of a deprecation on-demand;
 
-* Provides a ``ClockMock`` and ``DnsMock`` helper classes for time or network-sensitive tests.
+* Provides a ``ClockMock``, ``DnsMock`` and ``ClassExistsMock`` classes for tests
+  sensitive to time, network or class existence.
 
-* Provides a modified version of PHPUnit that does not embed ``symfony/yaml`` nor
-  ``prophecy`` to prevent any conflicts with these dependencies.
+* Provides a modified version of PHPUnit that allows 1. separating the
+  dependencies of your app from those of phpunit to prevent any unwanted
+  constraints to apply; 2. running tests in parallel when a test suite is split
+  in several phpunit.xml files; 3. recording and replaying skipped tests.
 
 Installation
 ------------
@@ -570,8 +574,8 @@ Modified PHPUnit script
 This bridge provides a modified version of PHPUnit that you can call by using
 its ``bin/simple-phpunit`` command. It has the following features:
 
-* Does not embed ``symfony/yaml`` nor ``prophecy`` to prevent any conflicts with
-  these dependencies;
+* Works with a standalone vendor directory that doesn't conflict with yours;
+* Does not embed ``prophecy`` to prevent any conflicts with its dependencies;
 * Uses PHPUnit 4.8 when run with PHP <=5.5, PHPUnit 5.7 when run with PHP >=5.6
   and PHPUnit 6.5 when run with PHP >=7.2;
 * Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
