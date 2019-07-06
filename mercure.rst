@@ -101,7 +101,7 @@ to the Mercure Hub to be authorized to publish updates.
 
 This JWT should be stored in the ``MERCURE_JWT_SECRET`` environment variable.
 
-The JWT must be signed with the same secret key than the one used by
+The JWT must be signed with the same secret key as the one used by
 the Hub to verify the JWT (``aVerySecretKey`` in our example).
 Its payload must contain at least the following structure to be allowed to
 publish:
