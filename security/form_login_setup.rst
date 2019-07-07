@@ -204,7 +204,7 @@ a traditional HTML form that submits to ``/login``:
         public function supports(Request $request)
         {
             return 'app_login' === $request->attributes->get('_route')
-                && $request->isMethod('POST');
+                && $request->isMethod(Request::METHOD_POST);
         }
 
         public function getCredentials(Request $request)
