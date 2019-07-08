@@ -250,6 +250,8 @@ MIME types and file name extensions::
 These methods return arrays with one or more elements. The element position
 indicates its priority, so the first returned extension is the preferred one.
 
+.. _components-mime-type-guess:
+
 Guessing the MIME Type
 ~~~~~~~~~~~~~~~~~~~~~~
 
