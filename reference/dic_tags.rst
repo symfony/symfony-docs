@@ -26,7 +26,7 @@ Tag Name                                  Usage
 `kernel.event_subscriber`_                To subscribe to a set of different events/hooks in Symfony
 `kernel.fragment_renderer`_               Add new HTTP content rendering strategies
 `kernel.reset`_                           Allows to clean up services between requests
-`mime.mime_type_guesser`_                 Add your own logic for "mime type guessing"
+`mime.mime_type_guesser`_                 Add your own logic for guessing MIME types
 `monolog.logger`_                         Logging with a custom logging channel
 `monolog.processor`_                      Add a custom processor for logging
 `routing.loader`_                         Register a custom service that loads routes
@@ -472,16 +472,15 @@ of the profiler to delete all their information.
 mime.mime_type_guesser
 ----------------------
 
-**Purpose**: Add your own logic for "mime type guessing"
+**Purpose**: Add your own logic for guessing MIME types
 
-This tag allows you to add your own logic to the :ref:`mime type guessing <components-mime-guessing-the-mime-type>`
-process. By default, mime type guessing is done by "guessers" based on the PHP FileInfo extension (if installed) 
-and the file command (if available).
+This tag is used to register your own :ref:`MIME type guessers <components-mime-type-guess>`
+in case the guessers provided by the :doc:`Mime component </components/mime>`
+don't fit your needs.
 
-.. seealso::
+.. versionadded:: 4.3
 
-    For information on how to create your own mime type guesser, see
-    :doc:`/components/mime/guessing-the-mime-type`.
+    The ``mime.mime_type_guesser`` tag was introduced in Symfony 4.3.
 
 .. _dic_tags-monolog:
 
