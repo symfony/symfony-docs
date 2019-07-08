@@ -623,6 +623,32 @@ config and start your workers:
 
 See the `Supervisor docs`_ for more details.
 
+
+.. tip::
+
+    To get a deterministic worker name like for e.g. the Redis transport, you may pass the process number as an
+    environment variable.
+
+    .. code-block:: ini
+
+        ;/etc/supervisor/conf.d/messenger-worker.conf
+        [program:messenger-consume]
+        […]
+        environment = REDIS_CONSUMER=consumer-%(process_num)d
+
+    You can then use it in your messenger configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/messenger.yaml
+            framework:
+                messenger:
+                    transports:
+                        redis: 'redis://localhost:6379/messages/symfony/%env(REDIS_CONSUMER)%'
+
+
 .. _messenger-retries-failures:
 
 Retries & Failures
@@ -907,29 +933,30 @@ serializer          How to serialize the final payload  ``Redis::SERIALIZER_PHP`
     The more likely case is that you want every worker to work on the queue independently, reducing
     the time needed to process the pending messages. In that case, every single worker
     must have a different ``consumer`` option value so Redis can identify the different workers.
-    When working with Docker containers one idea might be to use the ``HOSTNAME`` environment variable:
+    Your workers should thus be configured e.g. as follows:
 
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/packages/messenger.yaml
-            framework:
-                messenger:
-                    transports:
-                        redis: 'redis://localhost:6379/messages/symfony/%env(HOSTNAME)%'
+    * Worker 1: redis://localhost:6379/messages/symfony/consumer-1
+    * Worker 2: redis://localhost:6379/messages/symfony/consumer-2
+    * Worker 3: redis://localhost:6379/messages/symfony/consumer-3
+    * […]
 
     The less likely case would be if you wanted to have every single worker to process every single message.
     That means messages would be processed multiple times. In that case, you must have different ``group``
-    configurations.
+    configurations:
+
+    * Worker 1: redis://localhost:6379/messages/symfony-1/consumer
+    * Worker 2: redis://localhost:6379/messages/symfony-2/consumer
+    * Worker 3: redis://localhost:6379/messages/symfony-3/consumer
+    * […]
 
 .. caution::
 
-    Be careful when using the ``HOSTNAME`` environment variable in orchestrated environments such as Kubernetes or
-    Docker Swarm. It usually contains a random unique identifier which means if you destroy a container while it was
+    Be careful about the ``consumer`` and ``group`` names you choose. It might be tempting to use e.g. the ``HOSTNAME``
+    environment variable in orchestrated, containerized environments (Docker Swarm, Kubernetes, etc.) to get a unique
+    host name. However, they usually contain a random unique identifier which means if you destroy a container while it was
     working on a message, this message will remain in pending state forever as it is very unlikely there's ever going
     to be another worker with exactly the same ``HOSTNAME`` as the one you destroyed. In other words, you have to
-    make sure you're using deterministic ``HOSTNAME`` values such as ``worker-1``, ``worker-2`` etc.
+    make sure you're using deterministic values such as ``worker-1``, ``worker-2`` etc.
     In case you are using Kubernetes to orchestrate your containers, consider using a ``StatefulSet`` rather than
     a ``Deployment`` for example.
 
