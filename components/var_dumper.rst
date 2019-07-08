@@ -223,6 +223,8 @@ option. Read more about this and other options in
     search box appear. All the common shortcuts to navigate the search results
     are supported (``Ctrl. + G`` or ``Cmd. + G``, ``F3``, etc.) When
     finished, press ``Esc.`` to hide the box again.
+    Hitting ``Ctrl. + F`` or ``Cmd. + F`` while already having focus on the
+    search input will trigger browser search instead.
 
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
