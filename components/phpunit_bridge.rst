@@ -517,6 +517,7 @@ constraint to test the validity of the email domain::
             $result = $validator->validate('foo@example.com', $constraint);
 
             // ...
+        }
     }
 
 In order to avoid making a real network connection, add the ``@dns-sensitive``
@@ -541,6 +542,7 @@ the data you expect to get for the given hosts::
             $result = $validator->validate('foo@example.com', $constraint);
 
             // ...
+        }
     }
 
 The ``withMockedHosts()`` method configuration is defined as an array. The keys
