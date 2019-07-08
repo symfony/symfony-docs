@@ -57,23 +57,21 @@ files and ``PlantUmlDumper`` to create the PlantUML files::
 Styling
 -------
 
-You can use `metadata` with the following keys to style the workflow:
+You can use ``metadata`` with the following keys to style the workflow:
 
 * for places:
-  * `bg_color`: a color
-  * `description`: a string that describe the state
+  * ``bg_color``: a color;
+  * ``description``: a string that describes the state.
 * for transitions:
-  * `label`: a string that replace the name of the transition
-  * `color`: a color
-  * `arrow_color`: a color
+  * ``label``: a string that replaces the name of the transition;
+  * ``color``: a color;
+  * ``arrow_color``: a color.
 
-Colors can be:
+Strings can include ``\n`` characters to display the contents in multiple lines.
+Colors can be defined as:
 
-* a color name from `PlantUML's color list`_
-* HEX value `#AABBCC`
-* short HEX value `#ABC`
-
-You can use `\n` to insert a line return.
+* a color name from `PlantUML's color list`_;
+* an hexadecimal color (both ``#AABBCC`` and ``#ABC`` formats are supported).
 
 Below is the configuration for the pull request state machine with styling added.
 
