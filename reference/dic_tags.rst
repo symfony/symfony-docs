@@ -26,6 +26,7 @@ Tag Name                                  Usage
 `kernel.event_subscriber`_                To subscribe to a set of different events/hooks in Symfony
 `kernel.fragment_renderer`_               Add new HTTP content rendering strategies
 `kernel.reset`_                           Allows to clean up services between requests
+`mime.mime_type_guesser`_                 Add your own logic for guessing MIME types
 `monolog.logger`_                         Logging with a custom logging channel
 `monolog.processor`_                      Add a custom processor for logging
 `routing.loader`_                         Register a custom service that loads routes
@@ -465,6 +466,21 @@ This is mostly useful when running your projects in application servers that
 reuse the Symfony application between requests to improve performance. This tag
 is applied for example to the built-in :doc:`data collectors </profiler/data_collector>`
 of the profiler to delete all their information.
+
+.. _dic_tags-mime:
+
+mime.mime_type_guesser
+----------------------
+
+**Purpose**: Add your own logic for guessing MIME types
+
+This tag is used to register your own :ref:`MIME type guessers <components-mime-type-guess>`
+in case the guessers provided by the :doc:`Mime component </components/mime>`
+don't fit your needs.
+
+.. versionadded:: 4.3
+
+    The ``mime.mime_type_guesser`` tag was introduced in Symfony 4.3.
 
 .. _dic_tags-monolog:
 
