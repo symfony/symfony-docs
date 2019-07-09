@@ -321,20 +321,29 @@ Bonus Features
 In addition to being a local web server, the Symfony server provides other
 useful features:
 
+.. _security-checker:
+
 Looking for Security Vulnerabilities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of installing the :doc:`Symfony Security Checker </security/security_checker>`
-as a dependency of your projects, you can run the following command:
+Run the following command to check whether your project's dependencies contain
+any known security vulnerability:
 
 .. code-block:: terminal
 
     $ symfony security:check
 
-This command uses the same vulnerability database as the Symfony Security
-Checker but it does not make HTTP calls to the official API endpoint. Everything
-(except cloning the public database) is done locally, which is the best for CI
-(*continuous integration*) scenarios.
+A good security practice is to execute this command regularly to be able to
+update or replace compromised dependencies as soon as possible. The security
+check is done locally by cloning the public `PHP security advisories database`_,
+so your ``composer.lock`` file is not sent on the network.
+
+.. tip::
+
+    The ``security:check`` command terminates with a non-zero exit code if
+    any of your dependencies is affected by a known security vulnerability.
+    This way you can add it to your project build process and your continuous
+    integration workflows to make them fail when there are vulnerabilities.
 
 Creating Symfony Projects
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -370,3 +379,4 @@ that Composer will also set the stability to ``dev`` for all root dependencies):
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
+.. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories

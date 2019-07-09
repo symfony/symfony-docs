@@ -169,7 +169,8 @@ Security Advisories
 .. tip::
 
     You can check your Symfony application for known security vulnerabilities
-    using the ``security:check`` command (see :doc:`/security/security_checker`).
+    using the ``security:check`` command provided by the
+    :ref:`Symfony security checker <security-checker>`.
 
 Check the `Security Advisories`_ blog category for a list of all security
 vulnerabilities that were fixed in Symfony releases, starting from Symfony
