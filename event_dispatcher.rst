@@ -67,6 +67,12 @@ The most common way to listen to an event is to register an **event listener**::
     Check out the :doc:`Symfony events reference </reference/events>` to see
     what type of object each event provides.
 
+.. versionadded::
+
+    The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` class was
+    introduced in Symfony 4.3. In previous versions it was called
+    ``Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent``.
+
 Now that the class is created, you need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
 using a special "tag":
@@ -186,12 +192,6 @@ listen to the same ``kernel.exception`` event::
 
 That's it! Your ``services.yaml`` file should already be setup to load services from
 the ``EventSubscriber`` directory. Symfony takes care of the rest.
-
-.. tip::
-
-    Since Symfony 4.3 you can subscribe to events using the FQCN of the event.
-    For example ``ExceptionEvent::class`` instead of ``KernelEvents::EXCEPTION``. 
-    This allows you to develop code based on pure PHP classes instead of inventing arbitrary strings to name events.
 
 .. _ref-event-subscriber-configuration:
 
