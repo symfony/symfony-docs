@@ -97,14 +97,14 @@ which provides utilities to profile code and displays the results on the
 
 When using :ref:`autowiring <services-autowire>`, type-hint any argument with
 the :class:`Symfony\\Component\\Stopwatch\\Stopwatch` class and Symfony will
-inject the Stopwatch service. Then, use the ``start()``, ``lapse()`` and
+inject the Stopwatch service. Then, use the ``start()``, ``lap()`` and
 ``stop()`` methods to measure time::
 
     // a user signs up and the timer starts...
     $stopwatch->start('user-sign-up');
 
     // ...do things to sign up the user...
-    $stopwatch->lapse('user-sign-up');
+    $stopwatch->lap('user-sign-up');
 
     // ...the sign up process is finished
     $stopwatch->stop('user-sign-up');
