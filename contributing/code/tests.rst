@@ -47,7 +47,7 @@ what's going on and if the tests are broken because of the new code.
 
     .. code-block:: terminal
 
-        $ php ./phpunit src/Symfony/Component/Finder/
+        $ php ./phpunit src/Symfony/Component/Finder/Tests
 
 .. tip::
 
