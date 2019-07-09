@@ -224,6 +224,13 @@ option. Read more about this and other options in
     are supported (``Ctrl. + G`` or ``Cmd. + G``, ``F3``, etc.) When
     finished, press ``Esc.`` to hide the box again.
 
+    If you want to use your browser search input, press ``Ctrl. + F`` or
+    ``Cmd. + F`` again while having focus on VarDumper's search input.
+
+    .. versionadded:: 4.4
+
+        The feature to use the browser search input was introduced in Symfony 4.4.
+
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
 
