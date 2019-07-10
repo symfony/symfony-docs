@@ -13,19 +13,13 @@ configure your handler to use it:
 
     .. code-block:: yaml
 
-        # config/services.yaml
-        services:
-            # ...
-
-            Monolog\Formatter\JsonFormatter: ~
-
         # config/packages/prod/monolog.yaml (and/or config/packages/dev/monolog.yaml)
         monolog:
             handlers:
                 file:
                     type: stream
                     level: debug
-                    formatter: Monolog\Formatter\JsonFormatter
+                    formatter: '@monolog.formatter.json'
 
     .. code-block:: xml
 
@@ -39,17 +33,13 @@ configure your handler to use it:
                 http://symfony.com/schema/dic/monolog
                 https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
-            <services>
-                <service id="Monolog\Formatter\JsonFormatter"/>
-            </services>
-
             <!-- config/packages/prod/monolog.xml (and/or config/packages/dev/monolog.xml) -->
             <monolog:config>
                 <monolog:handler
                     name="file"
                     type="stream"
                     level="debug"
-                    formatter="Monolog\Formatter\JsonFormatter"
+                    formatter="monolog.formatter.json"
                 />
             </monolog:config>
         </container>
@@ -59,15 +49,13 @@ configure your handler to use it:
         // config/services.php
         use Monolog\Formatter\JsonFormatter;
 
-        $container->register(JsonFormatter::class);
-
         // config/packages/prod/monolog.php (and/or config/packages/dev/monolog.php)
         $container->loadFromExtension('monolog', [
             'handlers' => [
                 'file' => [
                     'type'      => 'stream',
                     'level'     => 'debug',
-                    'formatter' => JsonFormatter::class,
+                    'formatter' => 'monolog.formatter.json',
                 ],
             ],
         ]);
