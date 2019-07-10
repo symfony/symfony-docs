@@ -10,28 +10,42 @@ Installing & Setting up the Symfony Framework
     Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
     screencast series.
 
-To create your new Symfony application, first make sure you're using PHP 7.1 or
-higher and have `Composer`_ installed. If you don't, start by `installing Composer`_.
+Installing Symfony
+------------------
 
-Create your new project by running:
+Before creating your first Symfony application, make sure to meet the following
+requirements:
+
+* Your server has PHP 7.1 or higher installed (and :doc:`these PHP extensions </reference/requirements>`
+  which are installed and enabled by default by PHP);
+* You have `installed Composer`_, which is used to install PHP packages;
+* You have installed the :doc:`Symfony local web server </setup/symfony_server>`,
+  which provides all the tools you need to develop your application locally.
+
+Once these requirements are installed, open your terminal and run any of these
+commands to create the Symfony application:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/website-skeleton my-project
+    # run this if you are building a traditional web application
+    $ symfony new --full my_project
 
-This will create a new ``my-project`` directory, download some dependencies into
-it and even generate the basic directories and files you'll need to get started.
-In other words, your new app is ready!
+    # run this if you are building a microservice, console application or API
+    $ symfony new my-project
 
-.. tip::
+The only difference between these two commands is the number of packages
+installed. The ``--full`` option installs all the packages that you usually
+need to build web apps. Therefore, the installation size will be much bigger.
 
-    The ``website-skeleton`` is optimized for traditional web applications. If
-    you are building microservices, console applications or APIs, consider
-    using the much simpler ``skeleton`` project:
+Both commands will create a new ``my-project/`` directory, download some
+dependencies into it and even generate the basic directories and files you'll
+need to get started. In other words, your new app is ready!
 
-    .. code-block:: terminal
+.. seealso::
 
-        $ composer create-project symfony/skeleton my-project
+    If you can't use the ``symfony`` command provided by the Symfony local web
+    server, use the alternative installation commands based on Composer and
+    displayed on the `Symfony download page`_.
 
 Running your Symfony Application
 --------------------------------
@@ -39,14 +53,14 @@ Running your Symfony Application
 On production, you should use a web server like Nginx or Apache (see
 :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
 But for development, it's more convenient to use the
-:doc:`Symfony Local Web Server </setup/symfony_server>`.
+:doc:`Symfony Local Web Server </setup/symfony_server>` installed earlier.
 
 This local server provides support for HTTP/2, TLS/SSL, automatic generation of
 security certificates and many other features. It works with any PHP application,
 not only Symfony projects, so it's a very useful development tool.
 
-`Download the Symfony local web server`_, install it, move into your new project
-directory and start the local web server as follows:
+Open your terminal, move into your new project directory and start the local web
+server as follows:
 
 .. code-block:: terminal
 
@@ -113,13 +127,6 @@ command which displays information about the app:
 
     $ php bin/console about
 
-Checking for Security Vulnerabilities
--------------------------------------
-
-Symfony provides a utility called the "Security Checker" to check whether your
-project's dependencies contain any known security vulnerability. Check out
-the integration instructions for `the Security Checker`_ to set it up.
-
 The Symfony Demo application
 ----------------------------
 
@@ -153,8 +160,9 @@ Go Deeper with Setup
 
 .. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
-.. _`installing Composer`: https://getcomposer.org/download/
+.. _`installed Composer`: https://getcomposer.org/download/
 .. _`Download the Symfony local web server`: https://symfony.com/download
+.. _`Symfony download page`: https://symfony.com/download
 .. _`the Security Checker`: https://github.com/sensiolabs/security-checker#integration
 .. _`The Symfony Demo application`: https://github.com/symfony/demo
 .. _`symfony/symfony-demo`: https://github.com/symfony/demo
