@@ -760,7 +760,7 @@ auth_ntlm
 The username and password used to create the ``Authorization`` HTTP header used
 in the `Microsoft NTLM authentication protocol`_. The value of this option must
 follow the format ``username:password``. This authentication mechanism requires
-using the CURL-based transport.
+using the cURL-based transport.
 
 base_uri
 ........
