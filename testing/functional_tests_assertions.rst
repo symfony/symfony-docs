@@ -72,12 +72,10 @@ Crawler
 - ``assertInputValueSame()``
 - ``assertInputValueNotSame()``
 
-Troubleshooting
----------------
+.. versionadded:: 4.4
 
-These assertions will not work with `symfony/panther`_ as they use the
-``Request`` and ``Response`` objects from the ``HttpFoundation``
-component, and the ``KernelBrowser`` from the ``FrameworkBundle``.
-Panther only uses the ``BrowserKit`` component.
+    Starting from Symfony 4.4, when using `symfony/panther`_ for end-to-end
+    testing, you can use all the above assertions except the ones related to
+    the :doc:`Crawler </components/dom_crawler>`.
 
 .. _`symfony/panther`: https://github.com/symfony/panther
