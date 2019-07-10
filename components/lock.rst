@@ -208,8 +208,10 @@ Available Stores
 ----------------
 
 Locks are created and managed in ``Stores``, which are classes that implement
-:class:`Symfony\\Component\\Lock\\StoreInterface`. The component includes the
-following built-in store types:
+:class:`Symfony\\Component\\Lock\\PersistStoreInterface` and, optionally,
+:class:`Symfony\\Component\\Lock\\BlockingStoreInterface`.
+
+The component includes the following built-in store types:
 
 ============================================  ======  ========  ========
 Store                                         Scope   Blocking  Expiring
@@ -221,6 +223,12 @@ Store                                         Scope   Blocking  Expiring
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
 :ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no
 ============================================  ======  ========  ========
+
+.. versionadded:: 4.4
+
+    The ``PersistStoreInterface`` and ``BlockingStoreInterface`` interfaces were
+    introduced in Symfony 4.4. In previous versions there was only one interface
+    called ``Symfony\Component\Lock\StoreInterface``.
 
 .. _lock-store-flock:
 
