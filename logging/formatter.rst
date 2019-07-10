@@ -17,7 +17,7 @@ configure your handler to use it:
         services:
             # ...
 
-            Monolog\Formatter\JsonFormatter: ~
+            Monolog\Formatter\JsonFormatter: '@monolog.formatter.json'
 
         # app/config/config_prod.yml (and/or config_dev.yml)
         monolog:
