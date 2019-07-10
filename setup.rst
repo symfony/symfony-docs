@@ -154,7 +154,6 @@ Go Deeper with Setup
     :glob:
 
     setup/homestead
-    setup/built_in_web_server
     setup/web_server_configuration
     setup/*
 
