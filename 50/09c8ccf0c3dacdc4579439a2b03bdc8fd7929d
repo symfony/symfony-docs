@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-04-05T14:39:46Z
+
+Should we remove the whole service instead and use `monolog.formatter.json` in the config below instead?
+
+---------------------------------------------------------------------------
+
+by B-Galati at 2019-04-05T18:48:19Z
+
+This solution leverage autowiring which can be "cool" to showcase in the doc.
+
+---------------------------------------------------------------------------
+
+by B-Galati at 2019-04-05T18:51:36Z
+
+I updated base branch to 3.4
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-24T09:11:24Z
+
+We need some Monolog expert to review this. Thanks!
+
+---------------------------------------------------------------------------
+
+by B-Galati at 2019-07-04T07:02:04Z
+
+Friendly ping @Seldaek @lyrixx @stof
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2019-07-04T07:58:10Z
+
+This change [is valid](https://github.com/symfony/monolog-bundle/blob/master/Resources/config/monolog.xml#L30), but I have the same concern as @xabbuh
+
+anyway :+1:
