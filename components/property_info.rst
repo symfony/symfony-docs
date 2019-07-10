@@ -351,8 +351,9 @@ ReflectionExtractor
 
 Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
 provides list, type and access information from setter and accessor methods.
-It can also give the type of a property, and if it is initializable through the
-constructor. It supports return and scalar types for PHP 7::
+It can also give the type of a property (even extracting it from the constructor
+arguments), and if it is initializable through the constructor. It supports
+return and scalar types for PHP 7::
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
@@ -370,6 +371,11 @@ constructor. It supports return and scalar types for PHP 7::
 
     // Initializable information
     $reflectionExtractor->isInitializable($class, $property);
+
+.. versionadded:: 4.1
+
+    The feature to extract the property types from constructor arguments was
+    introduced in Symfony 4.1.
 
 .. note::
 
