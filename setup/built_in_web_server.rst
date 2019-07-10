@@ -4,15 +4,16 @@
 How to Use PHP's built-in Web Server
 ====================================
 
+.. caution::
+
+    This article explains how to use the web server based on the WebServerBundle.
+    This is no longer recommended in new Symfony applications. Instead, use the
+    :doc:`Symfony Local Web Server </setup/symfony_server>`.
+
 The PHP CLI SAPI comes with a `built-in web server`_. It can be used to run your
 PHP applications locally during development, for testing or for application
 demonstrations. This way, you don't have to bother configuring a full-featured
 web server such as :doc:`Apache or Nginx </setup/web_server_configuration>`.
-
-.. tip::
-
-    The preferred way to develop your Symfony application is to use
-    :doc:`Symfony Local Web Server </setup/symfony_server>`.
 
 .. caution::
 
