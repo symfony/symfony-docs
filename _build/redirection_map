@@ -428,3 +428,4 @@
 /profiler/storage /profiler
 /setup/composer /setup
 /security/security_checker /setup
+/setup/built_in_web_server /setup/symfony_server
