@@ -24,16 +24,21 @@ Locks are used to guarantee exclusive access to some shared resource. In
 Symfony applications, you can use locks for example to ensure that a command is
 not executed more than once at the same time (on the same or different servers).
 
-Locks are created using a :class:`Symfony\\Component\\Lock\\Factory` class,
+Locks are created using a :class:`Symfony\\Component\\Lock\\LockFactory` class,
 which in turn requires another class to manage the storage of locks::
 
-    use Symfony\Component\Lock\Factory;
+    use Symfony\Component\Lock\LockFactory;
     use Symfony\Component\Lock\Store\SemaphoreStore;
 
     $store = new SemaphoreStore();
-    $factory = new Factory($store);
+    $factory = new LockFactory($store);
 
-The lock is created by calling the :method:`Symfony\\Component\\Lock\\Factory::createLock`
+.. versionadded:: 4.4
+
+    The ``Symfony\Component\Lock\LockFactory`` class was introduced in Symfony
+    4.4. In previous versions it was called ``Symfony\Component\Lock\Factory``.
+
+The lock is created by calling the :method:`Symfony\\Component\\Lock\\LockFactory::createLock`
 method. Its first argument is an arbitrary string that represents the locked
 resource. Then, a call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
 method will try to acquire the lock::
@@ -56,7 +61,7 @@ method can be safely called repeatedly, even if the lock is already acquired.
     Unlike other implementations, the Lock Component distinguishes locks
     instances even when they are created for the same resource. If a lock has
     to be used by several services, they should share the same ``Lock`` instance
-    returned by the ``Factory::createLock`` method.
+    returned by the ``LockFactory::createLock`` method.
 
 .. tip::
 
@@ -77,13 +82,13 @@ until the lock is acquired.
 Some of the built-in ``Store`` classes support this feature. When they don't,
 they can be decorated with the ``RetryTillSaveStore`` class::
 
-    use Symfony\Component\Lock\Factory;
+    use Symfony\Component\Lock\LockFactory;
     use Symfony\Component\Lock\Store\RedisStore;
     use Symfony\Component\Lock\Store\RetryTillSaveStore;
 
     $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
     $store = new RetryTillSaveStore($store);
-    $factory = new Factory($store);
+    $factory = new LockFactory($store);
 
     $lock = $factory->createLock('notification-flush');
     $lock->acquire(true);
@@ -208,8 +213,10 @@ Available Stores
 ----------------
 
 Locks are created and managed in ``Stores``, which are classes that implement
-:class:`Symfony\\Component\\Lock\\StoreInterface`. The component includes the
-following built-in store types:
+:class:`Symfony\\Component\\Lock\\PersistStoreInterface` and, optionally,
+:class:`Symfony\\Component\\Lock\\BlockingStoreInterface`.
+
+The component includes the following built-in store types:
 
 ============================================  ======  ========  ========
 Store                                         Scope   Blocking  Expiring
@@ -221,6 +228,12 @@ Store                                         Scope   Blocking  Expiring
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
 :ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no
 ============================================  ======  ========  ========
+
+.. versionadded:: 4.4
+
+    The ``PersistStoreInterface`` and ``BlockingStoreInterface`` interfaces were
+    introduced in Symfony 4.4. In previous versions there was only one interface
+    called ``Symfony\Component\Lock\StoreInterface``.
 
 .. _lock-store-flock:
 
