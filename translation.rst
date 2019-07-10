@@ -59,8 +59,8 @@ Configuration
 -------------
 
 The previous command creates an initial config file where you can define the
-default locale of the app and the :ref:`fallback locales <translation-fallback>`
-that will be used if Symfony can't find some translation:
+default locale of the application and the directory where the translation files
+are located:
 
 .. configuration-block::
 
@@ -70,8 +70,7 @@ that will be used if Symfony can't find some translation:
         framework:
             default_locale: 'en'
             translator:
-                fallbacks: ['en']
-                # ...
+                default_path: '%kernel.project_dir%/translations'
 
     .. code-block:: xml
 
@@ -87,7 +86,7 @@ that will be used if Symfony can't find some translation:
 
             <framework:config default-locale="en">
                 <framework:translator>
-                    <framework:fallback>en</framework:fallback>
+                    <framework:default-path>'%kernel.project_dir%/translations'</framework:default-path>
                     <!-- ... -->
                 </framework:translator>
             </framework:config>
@@ -98,7 +97,7 @@ that will be used if Symfony can't find some translation:
         // config/packages/translation.php
         $container->loadFromExtension('framework', [
             'default_locale' => 'en',
-            'translator' => ['fallbacks' => ['en']],
+            'translator' => ['default_path' => '%kernel.project_dir%/translations'],
             // ...
         ]);
 
@@ -379,8 +378,52 @@ checks translation resources for several locales:
 #. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
    resource (e.g. ``messages.fr.xlf``);
 
-#. If the translation still isn't found, Symfony uses the ``fallbacks`` configuration
-   parameter, which defaults to ``en`` (see `Configuration`_).
+#. If the translation still isn't found, Symfony uses the ``fallbacks`` option,
+   which can be configured as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            translator:
+                fallbacks: ['en']
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/translation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator>
+                    <framework:fallback>en</framework:fallback>
+                    <!-- ... -->
+                </framework:translator>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/translation.php
+        $container->loadFromExtension('framework', [
+            'translator' => ['fallbacks' => ['en']],
+            // ...
+        ]);
+
+.. deprecated:: 4.4
+
+    In Symfony versions before 4.4, the ``fallbacks`` option was initialized to
+    ``en`` (English) when not configured explicitly. Starting from Symfony 4.4,
+    this option is initialized to the same value as the ``default_locale`` option.
 
 .. note::
 

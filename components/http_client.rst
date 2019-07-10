@@ -126,14 +126,18 @@ each request (which overrides any global authentication)::
 
     // Use the same authentication for all requests
     $httpClient = HttpClient::create([
-        // HTTP Basic authentication with only the username and not a password
+        // HTTP Basic authentication (there are multiple ways of configuring it)
         'auth_basic' => ['the-username'],
-
-        // HTTP Basic authentication with a username and a password
         'auth_basic' => ['the-username', 'the-password'],
+        'auth_basic' => 'the-username:the-password',
 
         // HTTP Bearer authentication (also called token authentication)
         'auth_bearer' => 'the-bearer-token',
+
+        // Microsoft NTLM authentication (there are multiple ways of configuring it)
+        'auth_ntlm' => ['the-username'],
+        'auth_ntlm' => ['the-username', 'the-password'],
+        'auth_ntlm' => 'the-username:the-password',
     ]);
 
     $response = $httpClient->request('GET', 'https://...', [
@@ -142,6 +146,14 @@ each request (which overrides any global authentication)::
 
         // ...
     ]);
+
+.. note::
+
+    The NTLM authentication mechanism requires using the cURL transport.
+
+.. versionadded:: 4.4
+
+    The ``auth_ntlm`` option was introduced in Symfony 4.4.
 
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
