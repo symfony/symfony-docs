@@ -9,8 +9,10 @@ Options     - `groups`_
             - `invalidMessage`_
             - `max`_
             - `maxMessage`_
+            - `maxPropertyPath`_
             - `min`_
             - `minMessage`_
+            - `minPropertyPath`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Range`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator`
@@ -358,6 +360,28 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
+maxPropertyPath
+~~~~~~~~~~~~~~~
+
+**type**: ``string``
+
+.. versionadded:: 4.4
+
+    The ``maxPropertyPath`` option was introduced in Symfony 4.4.
+
+It defines the object property whose value is used as ``max`` option.
+
+For example, if you want to compare the ``$submittedDate`` property of some object
+with regard to the ``$deadline`` property of the same object, use
+``maxPropertyPath="deadline"`` in the range constraint of ``$submittedDate``.
+
+.. tip::
+
+    When using this option, its value is available in error messages as the
+    ``{{ max_limit_path }}`` placeholder. Although it's not intended to
+    include it in the error messages displayed to end users, it's useful when
+    using APIs for doing any mapping logic on client-side.
+
 min
 ~~~
 
@@ -382,6 +406,28 @@ Parameter        Description
 ``{{ limit }}``  The lower limit
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
+
+minPropertyPath
+~~~~~~~~~~~~~~~
+
+**type**: ``string``
+
+.. versionadded:: 4.4
+
+    The ``minPropertyPath`` option was introduced in Symfony 4.4.
+
+It defines the object property whose value is used as ``min`` option.
+
+For example, if you want to compare the ``$endDate`` property of some object
+with regard to the ``$startDate`` property of the same object, use
+``minPropertyPath="startDate"`` in the range constraint of ``$endDate``.
+
+.. tip::
+
+    When using this option, its value is available in error messages as the
+    ``{{ min_limit_path }}`` placeholder. Although it's not intended to
+    include it in the error messages displayed to end users, it's useful when
+    using APIs for doing any mapping logic on client-side.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
