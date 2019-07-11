@@ -44,8 +44,8 @@ application. The goal of validation is to tell you if the data
 of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules are usually defined using PHP code or
-annotations but they can also be defined as a ``validation.yaml`` or
-``validation.xml`` file inside the ``config/validator/`` directory:
+annotations but they can also be defined as ``.yaml`` or
+``.xml`` files inside the ``config/validator/`` directory:
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
@@ -276,6 +276,53 @@ previous configuration by the following:
         $container->loadFromExtension('framework', [
             'validation' => [
                 'enable_annotations' => true,
+            ],
+        ]);
+
+By default, config files are located in the ``config/validator/`` directory.
+It is possible to define an array of paths with files or directories where the component will look for additional validation files:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            validation:
+                mapping:
+                    paths:
+                        - "%kernel.project_dir%/validation/"
+                        
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation>
+                    <framework:mapping>
+                        <framework:path>%kernel.project_dir%/validation</framework:path>
+                    </framework:mapping>
+                </framework:validation>
+            </framework:config>
+        </container>
+        
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'validation' => [
+                'mapping' => [
+                    'paths' => [
+                        '%kernel.project_dir%/validation',
+                    ],
+                ],
             ],
         ]);
 
