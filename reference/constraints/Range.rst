@@ -427,10 +427,6 @@ notInRangeMessage
 
 **type**: ``string`` **default**: ``This value should be between {{ min }} and {{ max }}.``
 
-.. versionadded:: 4.4
-
-    The ``notInRangeMessage`` option was introduced in Symfony 4.4.
-
 The message that will be shown if the underlying value is less than the
 `min`_ option and more than the `max`_ option.
 
