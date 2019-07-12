@@ -430,11 +430,6 @@ with regard to the ``$startDate`` property of the same object, use
     include it in the error messages displayed to end users, it's useful when
     using APIs for doing any mapping logic on client-side.
 
-.. include:: /reference/constraints/_payload-option.rst.inc
-
-.. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
-.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php
-
 notInRangeMessage
 ~~~~~~~~~~~~~~~~~
 
@@ -456,3 +451,8 @@ Parameter        Description
 ``{{ min }}``    The lower limit
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
+.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php
