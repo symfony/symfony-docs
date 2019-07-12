@@ -480,5 +480,5 @@ whether `TTY`_ is supported on the current operating system::
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
-.. _`PHP streams`: http://www.php.net/manual/en/book.stream.php
+.. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
 .. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)
