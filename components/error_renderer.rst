@@ -155,7 +155,7 @@ class anywhere in your project::
 
 .. tip::
 
-    If the ``getformat()`` method of your error renderer matches one of formats
+    If the ``getFormat()`` method of your error renderer matches one of formats
     supported by the built-in renderers, the built-in renderer is replaced by
     your custom renderer.
 
