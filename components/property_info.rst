@@ -322,10 +322,6 @@ this returns ``true`` if:
   ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
   ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
 
-.. versionadded:: 4.2
-
-    The support of phpDocumentor collection types was introduced in Symfony 4.2.
-
 Type::getCollectionKeyType() & Type::getCollectionValueType()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
