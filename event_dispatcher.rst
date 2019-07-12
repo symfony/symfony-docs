@@ -67,7 +67,7 @@ The most common way to listen to an event is to register an **event listener**::
     Check out the :doc:`Symfony events reference </reference/events>` to see
     what type of object each event provides.
 
-.. versionadded::
+.. versionadded:: 4.3
 
     The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` class was
     introduced in Symfony 4.3. In previous versions it was called
