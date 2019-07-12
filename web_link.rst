@@ -178,4 +178,4 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`Akamai`: https://blogs.akamai.com/2017/03/http2-server-push-the-what-how-and-why.html
 .. _`this great article`: https://www.shimmercat.com/en/blog/articles/whats-push/
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
-.. _`PSR-13`: http://www.php-fig.org/psr/psr-13/
+.. _`PSR-13`: https://www.php-fig.org/psr/psr-13/
