@@ -85,8 +85,7 @@ Bundle Directory Structure
 
 The directory structure of a bundle is meant to help to keep code consistent
 between all Symfony bundles. It follows a set of conventions, but is flexible
-to be adjusted if needed. Take a look at AcmeDemoBundle, as it contains some
-of the most common elements of a bundle:
+to be adjusted if needed:
 
 ``Controller/``
     Contains the controllers of the bundle (e.g. ``RandomController.php``).
@@ -117,6 +116,35 @@ As you move through the guides, you'll learn how to persist objects to a
 database, create and validate forms, create translations for your application,
 write tests and much more. Each of these has their own place and role within
 the bundle.
+
+Overridding the Bundle Directory Structure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some of the bundle directories are conventions that can be overridden if needed.
+For example, the **public directory**, which by default is located at
+``<your-bundle>/Resources/public/``, can be changed by defining the
+``getPublicDir()`` method in the bundle class::
+
+    // src/Acme/TestBundle/AcmeTestBundle.php
+    namespace App\Acme\TestBundle;
+
+    use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+    class AcmeTestBundle extends Bundle
+    {
+        // ...
+
+        // the returned value must be relative to the bundle root directory
+        // (public dir is now <your-bundle>/public/ instead of <your-bundle>/Resources/public/)
+        public function getPublicDir(): string
+        {
+            return 'public/';
+        }
+    }
+
+.. versionadded:: 4.4
+
+    The ``getPublicDir()`` method was introduced in Symfony 4.4.
 
 Learn more
 ----------
