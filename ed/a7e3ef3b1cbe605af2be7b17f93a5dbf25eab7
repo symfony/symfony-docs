@@ -1,0 +1,181 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-03-15T08:14:03Z
+
+I think there has been some confusion here. The controller defined in `exception_controller` is a custom controller created by the reader of the docs (`App\Controller\ExceptionController`) ... so we can use any method name, right?
+
+To implement this, you need to create both the controller (`App\Controller\ExceptionController`) and the method (`showException()`). Is it more clear now, or maybe the error is different and I am missing something?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-03-15T09:35:56Z
+
+I think you are right Javier and by the way if this change is valid, xml and php code examples needs the same change
+
+---------------------------------------------------------------------------
+
+by brandinchiu at 2019-03-15T12:03:45Z
+
+@javiereguiluz I'm comfortable with what the documentation is describing.  The overall concept is clear.
+
+The goal of this section on error pages is to override the native functionality of the Twig ExceptionController in the TwigBundle of Symfony.
+
+However, that controller does not have a "showException" method to override.  This is confusing, as the method responsible for rendering and managing the exception behaviour is **Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction()**.
+
+It seems then that I should expect, as someone attempting to override the native functionality, that I can declare my own controller in the twig config, wire up my service (if needed), and restart my page, that there should be no changes at all (assuming that I have made no changes and simply inherit from twig's ExceptionController).
+
+Following the example's explicitly will instead produce an error complaining that there is no showException() method, and that I should be calling showAction() instead.
+
+If this assumption is _incorrect_, then the documentation needs to include information about what the showException() method in our overriding class should do (return values, parent methods to call), because as it stands, there is no parent functionality in that method at all from the base class.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-03-16T18:42:42Z
+
+The section is indeed talking about *overriding the controller*, which meant: Create a new controller (Extending from nothing or just the `AbstractController`) and implement your own action.
+
+Maybe we should make it more explicit (by showing an example action) that error handling is just another controller returning a nice Response. I.e:
+```php
+// src/Controller/ExceptionController.php
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\HttpFoundation\Request;
+use Psr\Log\LoggerInterface;
+
+class ExceptionController extends AbstractController
+{
+    public function showException(Request $request, FlattenException $exception, LoggerInterface $logger = null)
+    {
+        $message = ...; // create a nice message based on $exception
+
+        // return a Response that is sent to the browser
+        return $this->render('error.html.twig', ['message' => $message]);
+    }
+}
+```
+
+If you agree, please update this PR, so we can give you full credits! :smiley: Thanks for your very detailed explanation of your "documentation experience".
+
+---------------------------------------------------------------------------
+
+by brandinchiu at 2019-03-17T02:52:49Z
+
+In that case, perhaps changing the language used in the section would be prudent.
+
+The title of the passage is
+> Overriding the Default ExceptionController
+
+What is being explaining above I would consider "replacing" the default ExceptionController (as "Overriding" as the operative word has a _very specific meaning_).
+
+Additionally, if you're simply going to be _replacing_ the default ExceptionController and not _extending_ it in any way, it doesn't really feel like this course of action is any different than just building an event listener and catching the kernel.exception event yourself (which is given significantly more detail in the next section of the documentation).
+
+In that case, I think it makes more sense to dedicate this middle portion to actually _extending_ the ExceptionController provided by Symfony, instead of starting from scratch and assuming you understand what it should be doing.
+
+This flow seems to make more sense as well within the scope of the documentation, as the processes go from the simplest solution where developers have the least control, to the most complicated and most control.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-16T17:18:54Z
+
+@javiereguiluz how can we proceed here?
+
+@brandinchiu are you willing to finish this PR then?
+
+---------------------------------------------------------------------------
+
+by brandinchiu at 2019-06-17T12:51:04Z
+
+I totally forgot about this since it hasn't really had any movement in the last few months. I have no problems appending any changes, but I also want to make sure that what I proposed on March 16th actually makes sense to people.
+
+The initial comment from @javiereguiluz seems to indicate that my understanding of what the documentation is trying to explain is incorrect, and therefore no change should be needed at all. If that's the case, We can simply close this issue.
+
+Otherwise, I'd like to have some kind of confirmation that my interpretation and suggestion have some value before committing anything.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2019-06-17T13:45:49Z
+
+> This appears to be a typo, as showException gives an error on Symfony 4.2 that reports confusion between showAction and showException.
+
+Hmm, can you show exactly what is that error?
+
+> What is being explaining above I would consider "replacing" the default ExceptionController (as "Overriding" as the operative word has a very specific meaning).
+
+I agree that "Replacing" is better than "Overriding" for this case.
+
+Also I'd suggest to remove the `Exception` suffix of the method name (if your controller class is already named `ExceptionController`).
+
+---------------------------------------------------------------------------
+
+by brandinchiu at 2019-06-17T15:46:56Z
+
+> Hmm, can you show exactly what is that error?
+
+Starting from a blank Symfony 4.3 project and following the instructions on the [page](https://symfony.com/doc/current/controller/error_pages.html#overriding-the-default-exceptioncontroller), I've made only the following changes:
+
+> If you need a little more flexibility beyond just overriding the template, then you can change the controller that renders the error page. For example, you might need to pass some additional variables into your template.
+> To do this, create a new controller anywhere in your application and set the twig.exception_controller configuration option to point to it:
+
+`config/packages/twig.yaml`
+```yml
+twig:
+    ...
+    exception_controller: App\Controller\ExceptionController:showException
+```
+>In case of extending the ExceptionController you may configure a service to pass the Twig environment and the debug flag to the constructor.
+
+`config/services.yaml`
+```yaml
+...
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Controller\ExceptionController:
+        public: true
+        arguments:
+            $debug: '%kernel.debug%'
+```
+
+> Instead of creating a new exception controller from scratch you can also extend the default ExceptionController. In that case, you might want to override one or both of the showAction() and findTemplate() methods. The latter one locates the template to be used.
+
+`src/Controller/ExceptionController.php`
+```php
+<?php
+namespace App\Controller;
+
+use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+
+/**
+ * Class ExceptionController
+ * @package App\Controller
+ */
+class ExceptionController extends \Symfony\Bundle\TwigBundle\Controller\ExceptionController
+{
+    public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
+    {
+        return parent::showAction($request, $exception, $logger); // TODO: Change the autogenerated stub
+    }
+
+    public function findTemplate(Request $request, $format, $code, $showException)
+    {
+        return parent::findTemplate($request, $format, $code, $showException); // TODO: Change the autogenerated stub
+    }
+}
+```
+
+If I then simply throw any exception from my default route, I'm greeted with this error:
+> Expected method "showException" on class "App\Controller\ExceptionController", did you mean "showAction"?
+https://i.imgur.com/1xrJGvO.png
+
+This is of course because the twig configuration is telling me to do one thing, and the paragraphs immediately after it are telling me to do something else.  This is the part that's confusing. The section is called:
+
+> Overriding the Default ExceptionController
+
+And the first step is modifying the twig config. The example shows me using the `showException()` method. If I'm overriding an existing controller, I'm expecting that function to already exist. This is made more confusing by the paragraph beneath telling us to extend the existing one, and modify the `showAction()` and `findTemplate()` methods to suit our needs.  In that case, the `showException()` method we included earlier is even less useful because now we've made changes to `showAction()` and `findTemplate()` that will never be called.
+
+The proposition here is only a change in language. The part that I'd like to know is if senior contributors of the documentation even agree with this interpretation at all, and if so, from which angle they would like to address it?
+* Do we update the the documentation to correctly reference the overridden Twig ExceptionController's `showAction()` method in our new twig config? Or;
+* do we extend the existing documentation to explain that the `showException()` method needs to be implemented by us?
