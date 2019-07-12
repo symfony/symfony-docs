@@ -13,6 +13,7 @@ Options     - `groups`_
             - `min`_
             - `minMessage`_
             - `minPropertyPath`_
+            - `notInRangeMessage`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Range`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator`
@@ -420,6 +421,28 @@ with regard to the ``$startDate`` property of the same object, use
     ``{{ min_limit_path }}`` placeholder. Although it's not intended to
     include it in the error messages displayed to end users, it's useful when
     using APIs for doing any mapping logic on client-side.
+
+notInRangeMessage
+~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be between {{ min }} and {{ max }}.``
+
+.. versionadded:: 4.4
+
+    The ``notInRangeMessage`` option was introduced in Symfony 4.4.
+
+The message that will be shown if the underlying value is less than the
+`min`_ option and more than the `max`_ option.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ max }}``    The upper limit
+``{{ min }}``    The lower limit
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
