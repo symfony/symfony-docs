@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-02T14:22:41Z
+
+@popy-dev I know that you implemented this feature a long ago (thanks for that!) but, could you please review if this proposed change is correct? Thanks.
+
+---------------------------------------------------------------------------
+
+by popy-dev at 2019-07-03T13:50:03Z
+
+Hi @javiereguiluz
+
+It seems fine to me. Maybe you could give more "open" example (the Iterator class can, in fact, be any class, and collection values also), but I guess that's nitpicking :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-03T14:20:28Z
+
+@popy-dev thanks for reviewing!
+
+I have some problems trying to fully understand this feature so ... could you please show me some valid examples that don't use the `Iterator` class? Thanks!
+
+---------------------------------------------------------------------------
+
+by popy-dev at 2019-07-05T13:09:09Z
+
+> I have some problems trying to fully understand this feature
+
+The idea is to be able to give more details about a property type. If you have an array of Items, you can use the `@var Item[]` notation to give more information than just `@var array`. But this notation does not covers the case of nexted arrays, neither the case of Traversable objects. That's what the notation `@var Class<key,value>`covers. It's expected that "Class" implements the Traversable interface, so it could be any class implementing Iterator, or IteratorAggregate, or it could be a Generator. And as it's mostly a matter of convention, one could argue that it does not even need to be a Traversable. I hope I'm clearer than it looks :D
+
+As an actual example, if you're familiar with doctrine collection, you could annotate a OneToMany collection with :
+
+```
+/**
+ * @var Doctrine\Common\Collections\Collection<App\Entity\Item>
+ */
+protected $items;
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-12T13:09:29Z
+
+@popy-dev thanks a lot for your great and detailed explanation. I can fully understand this now and I've updated the explanation to show better examples. Thanks!
