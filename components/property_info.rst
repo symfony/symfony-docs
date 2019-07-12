@@ -315,9 +315,16 @@ a collection - a non-scalar value capable of containing other values. Currently
 this returns ``true`` if:
 
 * The :ref:`built-in PHP data type <components-property-info-type-builtin>`
-  is ``array``, or
+  is ``array``;
 * The mutator method the property is derived from has a prefix of ``add``
-  or ``remove`` (which are defined as the list of array mutator prefixes).
+  or ``remove`` (which are defined as the list of array mutator prefixes);
+* The `phpDocumentor`_ annotation is of type "collection" (e.g.
+  ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
+  ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
+
+.. versionadded:: 4.2
+
+    The support of phpDocumentor collection types was introduced in Symfony 4.2.
 
 Type::getCollectionKeyType() & Type::getCollectionValueType()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -497,3 +504,4 @@ service by defining it as a service with one or more of the following
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
 .. _`doctrine/orm`: https://packagist.org/packages/doctrine/orm
+.. _`phpDocumentor`: https://www.phpdoc.org/
