@@ -810,6 +810,12 @@ Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of ``/admin`` (without the ``^``)
 would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
 
+.. note::
+
+    If you have multiple firewalls, you must use the internal pattern
+    in your firewall, otherwise, all the paths you define in your firewalls will interfere
+    with each other. See `firewalls (Security Configuration Reference)`_.
+
 .. _security-access-control-explanation:
 
 .. sidebar:: Understanding how ``access_control`` Works
@@ -1327,3 +1333,4 @@ Other Security Related Topics
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony3-security
+.. _`firewalls (Security Configuration Reference)`: https://symfony.com/doc/3.4/reference/configuration/security.html#firewalls
