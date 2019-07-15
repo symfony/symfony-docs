@@ -142,7 +142,7 @@ different formats, XLIFF being the recommended format:
         <!-- translations/messages.fr.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-            <file source-language="en" datatype="plaintext" original="file.ext">
+            <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
                 <body>
                     <trans-unit id="symfony_is_great">
                         <source>Symfony is great</source>
