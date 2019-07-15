@@ -370,7 +370,7 @@ maxPropertyPath
 
     The ``maxPropertyPath`` option was introduced in Symfony 4.4.
 
-It defines the object property whose value is used as ``max`` option.
+It defines the object property whose value is used as `max`_ option.
 
 For example, if you want to compare the ``$submittedDate`` property of some object
 with regard to the ``$deadline`` property of the same object, use
@@ -417,7 +417,7 @@ minPropertyPath
 
     The ``minPropertyPath`` option was introduced in Symfony 4.4.
 
-It defines the object property whose value is used as ``min`` option.
+It defines the object property whose value is used as `min`_ option.
 
 For example, if you want to compare the ``$endDate`` property of some object
 with regard to the ``$startDate`` property of the same object, use
