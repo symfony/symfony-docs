@@ -16,6 +16,7 @@ Installing Symfony
 Before creating your first Symfony application, make sure to meet the following
 requirements:
 
+* Installed :doc:`Symfony client <https://symfony.com/download>`
 * Your server has PHP 7.1 or higher installed (and :doc:`these PHP extensions </reference/requirements>`
   which are installed and enabled by default by PHP);
 * You have `installed Composer`_, which is used to install PHP packages;
