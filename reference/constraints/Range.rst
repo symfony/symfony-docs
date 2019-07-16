@@ -428,7 +428,7 @@ notInRangeMessage
 **type**: ``string`` **default**: ``This value should be between {{ min }} and {{ max }}.``
 
 The message that will be shown if the underlying value is less than the
-`min`_ option and more than the `max`_ option.
+`min`_ option or greater than the `max`_ option.
 
 You can use the following parameters in this message:
 

@@ -45,7 +45,7 @@ environment variable in the ``.env`` file:
     MAILER_URL=null://localhost
 
     # use this to configure a traditional SMTP server
-    MAILER_URL=smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=
+    MAILER_URL=smtp://localhost:465?encryption=ssl&auth_mode=login&username=&password=
 
 .. caution::
 
