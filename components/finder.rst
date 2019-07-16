@@ -58,7 +58,7 @@ the Finder instance.
 
     The ``Finder`` object doesn't reset its internal state automatically.
     This means that you need to create a new instance if you do not want
-    get mixed results.
+    to get mixed results.
 
 .. caution::
 
