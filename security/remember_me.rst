@@ -168,7 +168,7 @@ visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
 before accessing certain resources. For example, you might not allow "remember me"
-users to change their password. You can do this by leveraing a few special "roles"::
+users to change their password. You can do this by leveraging a few special "roles"::
 
     // src/Controller/AccountController.php
     // ...
