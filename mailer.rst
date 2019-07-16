@@ -190,6 +190,8 @@ Use the ``attachFromPath()`` method to attach files that exist on your file syst
         ->attachFromPath('/path/to/documents/privacy.pdf', 'Privacy Policy')
         // optionally you can provide an explicit MIME type (otherwise it's guessed)
         ->attachFromPath('/path/to/documents/contract.doc', 'Contract', 'application/msword')
+        // you can also use an absolute url
+        ->attachFromPath('http://example.com/path/to/documents/contract.doc', 'Contract', 'application/msword')
     ;
 
 Alternatively you can use the ``attach()`` method to attach contents from a stream::
