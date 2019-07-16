@@ -21,7 +21,7 @@ correct locale however you want::
     namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+    use Symfony\Component\HttpKernel\Event\RequestEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
 
     class LocaleSubscriber implements EventSubscriberInterface
@@ -33,7 +33,7 @@ correct locale however you want::
             $this->defaultLocale = $defaultLocale;
         }
 
-        public function onKernelRequest(GetResponseEvent $event)
+        public function onKernelRequest(RequestEvent $event)
         {
             $request = $event->getRequest();
             if (!$request->hasPreviousSession()) {
