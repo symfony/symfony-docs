@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-07-04T07:07:21Z
+
+@OskarStark any change to do?
+can be merged with https://github.com/symfony/symfony-docs/pull/11845? (2 PRs as i propose PR from sf doc page)
+
+Also, can you take a look at https://github.com/symfony/symfony-docs/pull/11580 ?
+
+Many thanks
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-04T13:13:48Z
+
+@javiereguiluz is this the right target branch? 🤔
