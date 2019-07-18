@@ -7,7 +7,7 @@ Messenger: Sync & Queued Message Handling
 Messenger provides a message bus with the ability to send messages and then
 handle them immediately in your application or send them through transports
 (e.g. queues) to be handled later. To learn more deeply about it, read the
-:doc:`Messenger component docs </components/messenger>` docs.
+:doc:`Messenger component docs </components/messenger>`.
 
 Installation
 ------------
@@ -619,7 +619,7 @@ config and start your workers:
 
     $ sudo supervisorctl update
 
-    $ sudo supervisorctl start messenger-consume
+    $ sudo supervisorctl start messenger-consume:*
 
 See the `Supervisor docs`_ for more details.
 

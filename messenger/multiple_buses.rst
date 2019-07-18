@@ -120,6 +120,9 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
         services:
             App\MessageHandler\SomeCommandHandler:
                 tags: [{ name: messenger.message_handler, bus: messenger.bus.commands }]
+                # prevent handlers from being registered twice (or you can remove
+                # the MessageHandlerInterface that autoconfigure uses to find handlers)
+                autoconfigure: false
 
     .. code-block:: xml
 
@@ -146,14 +149,6 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
 
 This way, the ``App\MessageHandler\SomeCommandHandler`` handler will only be
 known by the ``messenger.bus.commands`` bus.
-
-.. tip::
-
-    If you manually restrict handlers be sure to have ``autoconfigure`` disabled,
-    or not implement the ``Symfony\Component\Messenger\Handler\MessageHandlerInterface``
-    as this might cause your handler to be registered twice.
-
-    See :ref:`service autoconfiguration <services-autoconfigure>` for more information.
 
 You can also automatically add this tag to a number of classes by following
 a naming convention and registering all of the handler services by name with

@@ -107,7 +107,7 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 
         public function __invoke(UserRegistered $event)
         {
-            $user = $this->em->getRepository(User::class)->find(new User($event->getUuid()));
+            $user = $this->em->getRepository(User::class)->find($event->getUuid());
 
             $this->mailer->send(new RawMessage('Welcome '.$user->getFirstName()));
         }
