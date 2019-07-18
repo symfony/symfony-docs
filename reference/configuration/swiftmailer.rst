@@ -388,7 +388,7 @@ alternatives based on the :ref:`service binding <services-binding>` feature:
             ->setPublic(true)
             ->setBindings([
                 // this injects the second mailer when this service type-hints constructor arguments with \Swift_Mailer
-                \Swift_Mailer => '@swiftmailer.mailer.second_mailer',
+                \Swift_Mailer::class => '@swiftmailer.mailer.second_mailer',
                 // this injects the second mailer when this service has a constructor argument called $specialMailer
                 '$specialMailer' => '@swiftmailer.mailer.second_mailer',
             ])
