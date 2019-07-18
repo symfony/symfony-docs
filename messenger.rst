@@ -619,7 +619,7 @@ config and start your workers:
 
     $ sudo supervisorctl update
 
-    $ sudo supervisorctl start messenger-consume
+    $ sudo supervisorctl start messenger-consume:*
 
 See the `Supervisor docs`_ for more details.
 
