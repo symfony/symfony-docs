@@ -322,7 +322,7 @@ Compiling Only a CSS File
 .. caution::
 
     Using ``addStyleEntry()`` is supported, but not recommended. A better option
-    is to use follow the pattern above: use ``addEntry()`` to point to a JavaScript
+    is to follow the pattern above: use ``addEntry()`` to point to a JavaScript
     file, then require the CSS needed from inside of that.
 
 If you want to only compile a CSS file, that's possible via ``addStyleEntry()``:
