@@ -959,7 +959,6 @@ Frequently Asked Questions
     the log message:
 
 **Cannot refresh token because user has changed**
-
     If you see this, there are two possible causes. First, there may be a problem
     loading your User from the session. See :ref:`user_session_refresh`. Second,
     if certain user information was changed in the database since the last page
