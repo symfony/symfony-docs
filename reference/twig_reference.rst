@@ -294,7 +294,8 @@ is_granted
 
 Returns ``true`` if the current user has the given role. If several roles are
 passed in an array, ``true`` is returned if the user has at least one of
-them.
+them or all of them, depending on the
+:ref:`Access Decision Manager strategy <security-access-control-enforcement-options>`.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
