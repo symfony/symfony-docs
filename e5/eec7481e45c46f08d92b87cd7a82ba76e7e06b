@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by gregurco at 2019-07-18T14:37:34Z
+
+Hello.
+
+I guess this PR should be for version 4.2 following this rule:
+> Fixes should always be based on the **oldest maintained branch** which contains the error.
+
+4.0 is not maintained version.
+
+Ref: https://symfony.com/doc/current/contributing/documentation/overview.html
