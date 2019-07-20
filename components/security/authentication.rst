@@ -283,7 +283,7 @@ security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS`
 security.authentication.failure  ``AuthenticationEvents::AUTHENTICATION_FAILURE``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationFailureEvent`
 security.interactive_login       ``SecurityEvents::INTERACTIVE_LOGIN``                             :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 security.switch_user             ``SecurityEvents::SWITCH_USER``                                   :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`
-security.logout_on_change        ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent``    :class:`Symfony\\Component\\Security\\Http\\EventDeauthenticatedEvent`
+security.logout_on_change        ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent``    :class:`Symfony\\Component\\Security\\Http\\Event\\DeauthenticatedEvent`
 ===============================  ================================================================= ==============================================================================
 
 Authentication Success and Failure Events
