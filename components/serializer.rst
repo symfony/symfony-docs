@@ -1045,6 +1045,8 @@ will be thrown. The type enforcement of the properties can be disabled by settin
 the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
 to ``true``.
 
+Be aware that disabling type enforcement when denormalizing will not throw any exception if you try to cast a non well formatted datetime string into a real ``DateTimeInterface`` !
+
 Learn more
 ----------
 
