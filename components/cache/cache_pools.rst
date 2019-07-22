@@ -27,7 +27,7 @@ Creating Cache Pools
 
 Cache Pools are created through the **cache adapters**, which are classes that
 implement both :class:`Symfony\\Contracts\\Cache\\CacheInterface` and
-``Psr\\Cache\\CacheItemPoolInterface``. This component provides several adapters
+``Psr\Cache\CacheItemPoolInterface``. This component provides several adapters
 ready to use in your applications.
 
 .. toctree::
