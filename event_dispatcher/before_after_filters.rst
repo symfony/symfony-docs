@@ -115,7 +115,7 @@ event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
 
     use App\Controller\TokenAuthenticatedController;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+    use Symfony\Component\HttpKernel\Event\ControllerEvent;
     use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -128,7 +128,7 @@ event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
             $this->tokens = $tokens;
         }
 
-        public function onKernelController(FilterControllerEvent $event)
+        public function onKernelController(ControllerEvent $event)
         {
             $controller = $event->getController();
 
@@ -188,7 +188,7 @@ For example, take the ``TokenSubscriber`` from the previous example and first
 record the authentication token inside the request attributes. This will
 serve as a basic flag that this request underwent token authentication::
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         // ...
 
@@ -208,9 +208,9 @@ This will look for the ``auth_token`` flag on the request object and set a custo
 header on the response if it's found::
 
     // add the new use statement at the top of your file
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         // check to see if onKernelController marked this as a token "auth'ed" request
         if (!$token = $event->getRequest()->attributes->get('auth_token')) {
