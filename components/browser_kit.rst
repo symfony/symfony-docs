@@ -311,10 +311,6 @@ dedicated web crawler or scraper such as `Goutte`_::
         '.table-list-header-toggle a:nth-child(1)'
     )->text());
 
-.. versionadded:: 4.3
-
-    The feature to make external HTTP requests was introduced in Symfony 4.3.
-
 Learn more
 ----------
 

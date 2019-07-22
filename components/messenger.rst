@@ -302,12 +302,6 @@ do is to write your own CSV receiver::
         }
     }
 
-.. versionadded:: 4.3
-
-    In Symfony 4.3, the ``ReceiverInterface`` has changed its methods as shown
-    in the example above. You may need to update your code if you used this
-    interface in previous Symfony versions.
-
 Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

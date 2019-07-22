@@ -732,10 +732,6 @@ auth_ntlm
 
 **type**: ``string``
 
-.. versionadded:: 4.3
-
-    The ``auth_ntlm`` option was introduced in Symfony 4.4.
-
 The username and password used to create the ``Authorization`` HTTP header used
 in the `Microsoft NTLM authentication protocol`_. The value of this option must
 follow the format ``username:password``. This authentication mechanism requires

@@ -33,11 +33,6 @@ which in turn requires another class to manage the storage of locks::
     $store = new SemaphoreStore();
     $factory = new LockFactory($store);
 
-.. versionadded:: 4.4
-
-    The ``Symfony\Component\Lock\LockFactory`` class was introduced in Symfony
-    4.4. In previous versions it was called ``Symfony\Component\Lock\Factory``.
-
 The lock is created by calling the :method:`Symfony\\Component\\Lock\\LockFactory::createLock`
 method. Its first argument is an arbitrary string that represents the locked
 resource. Then, a call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
@@ -228,12 +223,6 @@ Store                                         Scope   Blocking  Expiring
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
 :ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no
 ============================================  ======  ========  ========
-
-.. versionadded:: 4.4
-
-    The ``PersistStoreInterface`` and ``BlockingStoreInterface`` interfaces were
-    introduced in Symfony 4.4. In previous versions there was only one interface
-    called ``Symfony\Component\Lock\StoreInterface``.
 
 .. _lock-store-flock:
 

@@ -895,10 +895,6 @@ stream_max_entries  The maximum number of entries which    ``0`` (which means "n
                     avoid losing pending messages
 ==================  =====================================  =========================
 
-.. versionadded:: 4.4
-
-    The ``stream_max_entries`` option was introduced in Symfony 4.4.
-
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
 

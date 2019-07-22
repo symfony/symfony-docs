@@ -142,10 +142,6 @@ For example, the **public directory**, which by default is located at
         }
     }
 
-.. versionadded:: 4.4
-
-    The ``getPublicDir()`` method was introduced in Symfony 4.4.
-
 Learn more
 ----------
 
