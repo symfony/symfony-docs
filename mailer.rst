@@ -546,9 +546,13 @@ Signing and Encrypting Messages
     The option to sign and/or encrypt messages was introduced in Symfony 4.4.
 
 It's possible to sign and/or encrypt email messages applying the `S/MIME`_
-standard to increase their integrity/security. Both options can be combined (to
-encrypt a signed message and to sign an encrypted message) and they require to
-have the `OpenSSL PHP extension`_ properly installed and configured.
+standard to increase their integrity/security. Both options can be combined to
+encrypt a signed message and/or to sign an encrypted message.
+
+Before signing/encrypting messages, make sure to have:
+
+* The `OpenSSL PHP extension`_ properly installed and configured;
+* A valid security certificate (you can get it for free from `Let's Encrypt project`_).
 
 Signing Messages
 ~~~~~~~~~~~~~~~~
@@ -738,4 +742,5 @@ environment:
 .. _`Inky`: https://foundation.zurb.com/emails.html
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
 .. _`OpenSSL PHP extension`: https://php.net/manual/en/book.openssl.php
+.. _`Let's Encrypt project`: https://letsencrypt.org/
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
