@@ -180,6 +180,7 @@ the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
 
         # config/services.yaml
         session:
+            public: true
             class: Symfony\Component\HttpFoundation\Session\Session
             arguments: ['@session.storage', '@session.namespacedattributebag', '@session.flash_bag']
 
