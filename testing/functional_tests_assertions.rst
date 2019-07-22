@@ -57,6 +57,11 @@ Browser
 Crawler
 ~~~~~~~
 
+.. note::
+
+    You cannot use the :doc:`Crawler </components/dom_crawler>` assertions,
+    when using `symfony/panther`_ for end-to-end testing.
+
 - ``assertSelectorExists()``
 - ``assertSelectorNotExists()``
 - ``assertSelectorTextContains()``
@@ -66,11 +71,5 @@ Crawler
 - ``assertPageTitleContains()``
 - ``assertInputValueSame()``
 - ``assertInputValueNotSame()``
-
-.. versionadded:: 4.4
-
-    Starting from Symfony 4.4, when using `symfony/panther`_ for end-to-end
-    testing, you can use all the above assertions except the ones related to
-    the :doc:`Crawler </components/dom_crawler>`.
 
 .. _`symfony/panther`: https://github.com/symfony/panther
