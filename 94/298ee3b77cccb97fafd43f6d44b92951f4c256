@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-22T09:59:31Z
+
+Do we have other examples with default string values? Do we quote them?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-22T10:50:54Z
+
+Yes here: https://github.com/symfony/symfony-docs/blob/4.2/reference/configuration/twig.rst#base_template_class
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-22T13:07:18Z
+
+Then I'd do the same here too.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-23T06:07:00Z
+
+Ok, RTM 👍
