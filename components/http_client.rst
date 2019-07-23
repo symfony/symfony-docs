@@ -151,10 +151,6 @@ each request (which overrides any global authentication)::
 
     The NTLM authentication mechanism requires using the cURL transport.
 
-.. versionadded:: 4.4
-
-    The ``auth_ntlm`` option was introduced in Symfony 4.4.
-
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -701,16 +697,8 @@ Now you can make HTTP requests with the PSR-18 client as follows::
 
     $content = json_decode($response->getBody()->getContents(), true);
 
-.. versionadded:: 4.4
-
-    The PSR-17 factory methods of ``Psr18Client`` were introduced in Symfony 4.4.
-
 HTTPlug
 ~~~~~~~
-
-.. versionadded:: 4.4
-
-    Support for HTTPlug was introduced in Symfony 4.4.
 
 The `HTTPlug`_ specification was published before PSR-18 and is superseded by
 it. As such, you should not use it in newly written code. Yet, many libraries

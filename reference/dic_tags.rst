@@ -477,10 +477,6 @@ This tag is used to register your own :ref:`MIME type guessers <components-mime-
 in case the guessers provided by the :doc:`Mime component </components/mime>`
 don't fit your needs.
 
-.. versionadded:: 4.3
-
-    The ``mime.mime_type_guesser`` tag was introduced in Symfony 4.3.
-
 .. _dic_tags-monolog:
 
 monolog.logger
