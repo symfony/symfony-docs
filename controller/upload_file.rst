@@ -357,7 +357,7 @@ The previous versions of this article explained how to handle file uploads using
 is no longer recommended, because Doctrine events shouldn't be used for your
 domain logic.
 
-Moreover, Doctrine listeners are often dependent on internal Doctrine behaviour
+Moreover, Doctrine listeners are often dependent on internal Doctrine behavior
 which may change in future versions. Also, they can introduce performance issues
 unawarely (because your listener persists entities which cause other entities to
 be changed and persisted).
