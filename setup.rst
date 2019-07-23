@@ -35,7 +35,7 @@ commands to create the Symfony application:
 
 The only difference between these two commands is the number of packages
 installed. The ``--full`` option installs all the packages that you usually
-need to build web apps. Therefore, the installation size will be much bigger.
+need to build web applications. Therefore, the installation size will be much bigger.
 
 Both commands will create a new ``my-project/`` directory, download some
 dependencies into it and even generate the basic directories and files you'll

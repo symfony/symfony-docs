@@ -401,7 +401,7 @@ The last step is to create the actual Twig template that will render the type.
 The template contents depend on which HTML, CSS and JavaScript frameworks and
 libraries are used in your application:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# templates/form/custom_types.html.twig #}
     {% block postal_address_row %}
@@ -479,7 +479,7 @@ for this form class and :doc:`tag it </service_container/tags>` with ``form.type
 The variables added in ``buildView()`` are available in the form type template
 as any other regular Twig variable:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# templates/form/custom_types.html.twig #}
     {% block postal_address_row %}
