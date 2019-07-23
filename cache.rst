@@ -278,7 +278,7 @@ Each custom pool becomes a service where the service id is the name of the pool
 using the camel case version of its name - e.g. ``custom_thing.cache`` can be
 injected automatically by naming the argument ``$customThingCache`` and type-hinting it
 with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
-``Psr\\Cache\\CacheItemPoolInterface``::
+``Psr\Cache\CacheItemPoolInterface``::
 
     use Symfony\Contracts\Cache\CacheInterface;
 
