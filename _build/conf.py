@@ -125,7 +125,7 @@ config_block = {
 primary_domain = 'php'
 
 # set url for API links
-api_url = 'http://api.symfony.com/master/%s'
+api_url = 'http://api.symfony.com/tree/master/%s'
 
 
 # -- Options for HTML output ---------------------------------------------------
