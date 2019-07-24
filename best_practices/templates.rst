@@ -119,4 +119,4 @@ be used as a Twig extension.
 Next: :doc:`/best_practices/forms`
 
 .. _`Twig`: https://twig.symfony.com/
-.. _`Parsedown`: http://parsedown.org/
+.. _`Parsedown`: https://parsedown.org/
