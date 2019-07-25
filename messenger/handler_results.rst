@@ -26,7 +26,7 @@ The :method:`Symfony\\Component\\Messenger\\HandleTrait::handle` method ensures
 there is exactly one handler registered and returns its result.
 
 Working with Command & Query Buses
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Messenger component can be used in CQRS architectures where command & query
 buses are central pieces of the application. Read Martin Fowler's
