@@ -75,6 +75,23 @@ defaults instead.
     it's recommended to configure real environment variables to avoid the
     performance overhead of parsing the ``.env`` file for every request.
 
+
+To make sure that there are some required variables loaded into ``$_ENV``, you
+can use ``Dotenv::checkRequired()`` which will throw ``\RuntimeException`` when
+at least one of defined variables is missing::
+
+    use Symfony\Component\Dotenv\Dotenv;
+
+    $dotenv = new Dotenv();
+    $dotenv->load(__DIR__.'/.env');
+
+    //pass all important environment variables as an array in first argument
+    $dotenv->checkRequired(['DB_PASS', 'API_SECRET_KEY']);
+
+.. note::
+
+    Remember to call ``load()`` before validation to ensure that variables are populated.
+
 As a ``.env`` file is a regular shell script, you can ``source`` it in your own
 shell scripts:
 
