@@ -24,6 +24,7 @@ For example, suppose you want to log something from within your command::
 
     class SunshineCommand extends Command
     {
+        protected static $defaultName = 'app:sunshine';
         private $logger;
 
         public function __construct(LoggerInterface $logger)
@@ -37,7 +38,6 @@ For example, suppose you want to log something from within your command::
         protected function configure()
         {
             $this
-                ->setName('app:sunshine')
                 ->setDescription('Good morning!');
         }
 
