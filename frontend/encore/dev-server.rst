@@ -39,5 +39,24 @@ option:
 HMR currently works for :doc:`Vue.js </frontend/encore/vuejs>`, but does *not* work
 for styles anywhere at this time.
 
+For Hot Module Replacement, CORS-errors can appear (Cross Origin Resource Sharing). To handle this, add the --disable-host-check and --port options to your command:
+
+.. code-block:: terminal
+
+    $ yarn encore dev-server --port 8080 --disable-host-check --hot
+
+Or, alternatively, you can add the options to your package.json
+
+.. code-block:: package.json
+
+        "dev-server": "encore dev-server --port 8080 --disable-host-check",
+
+and run the yarn command as normal:
+
+.. code-block:: terminal
+
+    $ yarn dev-server --hot
+
+
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
 .. _`HMR`: https://webpack.js.org/concepts/hot-module-replacement/
