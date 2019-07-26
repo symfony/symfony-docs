@@ -260,7 +260,8 @@ Now, suppose you're sending an email to ``recipient@example.com`` in a controlle
             ->setTo('recipient@example.com')
             ->setBody(
                 $this->renderView(
-                    'HelloBundle:Hello:email.txt.twig',
+                    // templates/hello/email.txt.twig
+                    'hello/email.txt.twig',
                     ['name' => $name]
                 )
             )
