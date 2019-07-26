@@ -93,6 +93,7 @@ Configuration
   * :ref:`default_options <reference-http-client-default-options>`
 
     * `bindto`_
+    * `buffer`_
     * `cafile`_
     * `capath`_
     * `ciphers`_
@@ -118,6 +119,7 @@ Configuration
     * `auth_bearer`_
     * `base_uri`_
     * `bindto`_
+    * `buffer`_
     * `cafile`_
     * `capath`_
     * `ciphers`_
@@ -778,6 +780,16 @@ bindto
 
 A network interface name, IP address, a host name or a UNIX socket to use as the
 outgoing network interface.
+
+buffer
+......
+
+**type**: ``bool`` | ``string``
+
+Option that allows to buffer the content of the response and access it multiple times without performing the request again. 
+If boolean value given, request will be buffered or not according to the boolean value. If a string is given, this should 
+be a regex matching the response content-types that
+should be buffered
 
 cafile
 ......
