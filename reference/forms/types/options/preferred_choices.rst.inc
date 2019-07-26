@@ -3,9 +3,9 @@ preferred_choices
 
 **type**: ``array``, ``callable`` or ``string`` **default**: ``[]``
 
-This option allows you to move certain choices to the top of your list with a visual
-separator between them and the rest of the options. If you have a form of languages,
-you can list the most popular on top, like Bork Bork and Pirate::
+This option allows you to display certain choices at the top of your list with a
+visual separator between them and the complete list of options. If you have a
+form of languages, you can list the most popular on top, like Bork Bork and Pirate::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
@@ -19,6 +19,12 @@ you can list the most popular on top, like Bork Bork and Pirate::
         ],
         'preferred_choices' => ['muppets', 'arr'],
     ]);
+
+.. versionadded:: 4.4
+
+    Starting from Symfony 4.4, the preferred choices are displayed both at the
+    top of the list and at their original locations on the list. In prior
+    Symfony versions, they were only displayed at the top of the list.
 
 This options can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
