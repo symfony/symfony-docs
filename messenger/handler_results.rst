@@ -2,7 +2,7 @@
     single: Messenger; Getting results / Working with command & query buses
 
 Getting Results from your Handler
----------------------------------
+=================================
 
 When a message is handled, the :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware`
 adds a :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp` for each object that handled the message.
