@@ -20,12 +20,6 @@ form of languages, you can list the most popular on top, like Bork Bork and Pira
         'preferred_choices' => ['muppets', 'arr'],
     ]);
 
-.. versionadded:: 4.4
-
-    Starting from Symfony 4.4, the preferred choices are displayed both at the
-    top of the list and at their original locations on the list. In prior
-    Symfony versions, they were only displayed at the top of the list.
-
 This options can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
 
