@@ -14,9 +14,9 @@ PHP application and even with HTML/SPA (single page applications).
 Installation
 ------------
 
-The Symfony server is distributed as a free installable binary, without any
-dependency, and has support for Linux, macOS and Windows. Go to `symfony.com/download`_
-and follow the instructions for your operating system.
+The Symfony server is distributed as a free installable binary and has support
+for Linux, macOS and Windows. Go to `symfony.com/download`_ and follow the
+instructions for your operating system.
 
 .. note::
 
