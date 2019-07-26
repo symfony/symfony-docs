@@ -44,10 +44,11 @@ You can rely on the logger to use this dependency inside a command::
 
     class MyCommand extends Command
     {
+        protected static $defaultName = 'my:command';
+
         protected function configure()
         {
             $this
-                ->setName('my:command')
                 ->setDescription(
                     'Use an external dependency requiring a PSR-3 logger'
                 )
