@@ -92,7 +92,7 @@ Active Core Members
 
   * **Samuel Rozé** (`sroze`_) can merge into the Messenger_ component.
 
-  * **Yonel Ceruto** (`yceruto`_) can merge into the ErrorRenderer,
+  * **Yonel Ceruto** (`yceruto`_) can merge into the ErrorRenderer_,
     OptionsResolver_, and Form_ components and TwigBundle_.
 
 * **Deciders Team** (``@symfony/deciders`` on GitHub):
