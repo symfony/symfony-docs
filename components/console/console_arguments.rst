@@ -23,10 +23,11 @@ Have a look at the following command that has three options::
 
     class DemoArgsCommand extends Command
     {
+        protected static $defaultName = 'demo:args';
+
         protected function configure()
         {
             $this
-                ->setName('demo:args')
                 ->setDescription('Describe args behaviors')
                 ->setDefinition(
                     new InputDefinition([

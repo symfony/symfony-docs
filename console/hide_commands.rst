@@ -18,10 +18,11 @@ In those cases, you can define the command as **hidden** by setting the
 
     class LegacyCommand extends Command
     {
+        protected static $defaultName = 'app:legacy';
+
         protected function configure()
         {
             $this
-                ->setName('app:legacy')
                 ->setHidden(true)
                 // ...
             ;
