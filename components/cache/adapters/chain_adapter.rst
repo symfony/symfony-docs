@@ -15,7 +15,7 @@ given adapters. This exposes a simple and efficient method for creating a layere
 The ChainAdapter must be provided an array of adapters and optionally a maximum cache
 lifetime as its constructor arguments::
 
-    use Symfony\Component\Cache\Adapter\ApcuAdapter;
+    use Symfony\Component\Cache\Adapter\ChainAdapter;
 
     $cache = new ChainAdapter(
         // The ordered list of adapters used to fetch cached items
