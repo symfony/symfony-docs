@@ -63,6 +63,7 @@ configuration:
 
 
 .. caution::
+
     Combining ``excluded_404s`` with a ``passthru_level`` lower than
     ``error`` (i.e. ``debug``, ``info``, ``notice`` or ``warning``) will not
     actually exclude log messages for the URL(s) listed in ``excluded_404s``
