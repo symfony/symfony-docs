@@ -110,4 +110,24 @@ Parameter                      Description
 ``{{ value }}``                The repeated value
 =============================  ================================================
 
+Example : 
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            /**
+             * @Assert\Unique(message="The {{ value }} email exist.") 
+             */
+            protected $contactEmails;
+        }
+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
