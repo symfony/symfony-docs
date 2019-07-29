@@ -365,15 +365,12 @@ For more options, see :ref:`component-translator-message-catalogs`.
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
     See the :ref:`dic-tags-translation-loader` tag for more information.
 
-.. caution::
+.. versionadded:: 4.3
 
-    Each time you create a *new* translation resource (or install a bundle
-    that includes a translation resource), be sure to clear your cache so
-    that Symfony can discover the new translation resources:
-
-    .. code-block:: terminal
-
-        $ php bin/console cache:clear
+    Starting from Symfony 4.3, when you create a new translation file (or
+    install a bundle that includes translation files), you don't have to clear
+    the cache with the command ``php bin/console cache:clear`` as you had to do
+    in previous Symfony versions.
 
 Handling the User's Locale
 --------------------------
