@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-16T10:18:42Z
+
+Denis, thanks for contributing this content. I have a comment and a question.
+
+Question: How many jobs are run in parallel? Is it configurable? Is it automatic based on the number of cores/threads?
+
+Comment: I appreciate your detailed explanation ... but I'd prefer to remove all mentions to "parallel" and the example shown for it. I think it's out of the scope of the Symfony Docs and not adding that would simplify future maintenance. We could, however, mention explicitly that, when using PhpUnitBridge, you don't have to install any external tools, like "parallel", to achieve this. What do others think? @xabbuh?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2019-07-16T15:14:22Z
+
+That makes sense, I mainly put it there as a reference as this is how symfony/symfony parallelizes the suites and people who look at the `.travis.yml` might be interested to know what's happening in there. I agree though that it complicates the section a bit and is not really tied to the PhpUnitBridge.
+
+As far as I can tell, there is no way to configure how parallelization is done. The script collects all subfolders containing a `phpunit.xml.dist` and then loops over the results spawning a process for each one and then waits for all of them to finish; see: https://github.com/symfony/symfony/blob/4.4/src/Symfony/Bridge/PhpUnit/bin/simple-phpunit.php#L207-L222
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-19T09:08:46Z
+
+I agree with Javier. I would also only keep the PHPUnit bridge related part.
