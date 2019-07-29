@@ -94,3 +94,11 @@ to always use ``http``.
     to secure an "area" of your website (all URLs under ``/admin``) or when
     you want to secure URLs defined in a third party bundle (see
     :doc:`/security/force_https` for more details).
+
+.. note::
+
+    When a script is running in CLI mode (e.g Symfony commands or messenger workers)
+    the router context is not defined and you may want to force the router to always
+    generate https or http urls. This can be achieved with specifying
+    ``router.request_context.scheme: 'https'`` in your parameters. (see
+    :doc:`/console/request_context.rst` for more details).
