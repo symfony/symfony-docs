@@ -527,20 +527,19 @@ functions:
 Use Case
 ~~~~~~~~
 
-Consider the following example that uses the ``checkMX`` option of the ``Email``
-constraint to test the validity of the email domain::
+Consider the following example that tests a custom class called ``DomainValidator``
+which defines a ``checkDnsRecord`` option to also validate that a domain is
+associated to a valid host::
 
+    use App\Validator\DomainValidator;
     use PHPUnit\Framework\TestCase;
-    use Symfony\Component\Validator\Constraints\Email;
 
     class MyTest extends TestCase
     {
         public function testEmail()
         {
-            $validator = ...
-            $constraint = new Email(['checkMX' => true]);
-
-            $result = $validator->validate('foo@example.com', $constraint);
+            $validator = new DomainValidator(['checkDnsRecord' => true]);
+            $isValid = $validator->validate('example.com');
 
             // ...
         }
@@ -550,22 +549,23 @@ In order to avoid making a real network connection, add the ``@dns-sensitive``
 annotation to the class and use the ``DnsMock::withMockedHosts()`` to configure
 the data you expect to get for the given hosts::
 
+    use App\Validator\DomainValidator;
     use PHPUnit\Framework\TestCase;
-    use Symfony\Component\Validator\Constraints\Email;
+    use Symfony\Bridge\PhpUnit\DnsMock;
 
     /**
      * @group dns-sensitive
      */
-    class MyTest extends TestCase
+    class DomainValidatorTest extends TestCase
     {
         public function testEmails()
         {
-            DnsMock::withMockedHosts(['example.com' => [['type' => 'MX']]]);
+            DnsMock::withMockedHosts([
+                'example.com' => [['type' => 'A', 'ip' => '1.2.3.4']],
+            ]);
 
-            $validator = ...
-            $constraint = new Email(['checkMX' => true]);
-
-            $result = $validator->validate('foo@example.com', $constraint);
+            $validator = new DomainValidator(['checkDnsRecord' => true]);
+            $isValid = $validator->validate('example.com');
 
             // ...
         }
