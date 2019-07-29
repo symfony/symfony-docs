@@ -124,6 +124,32 @@ The summary includes:
             <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
         </listeners>
 
+Running Tests in Parallel
+-------------------------
+
+The modified PHPUnit script allows running tests in parallel by providing
+a directory containing multiple suites with their own ``phpunit.xml.dist``.
+
+.. code-block:: terminal
+
+    ├── tests
+    │   ├── Functional
+    │   │   ├── ...
+    │   │   └── phpunit.xml.dist
+    │   ├── Unit
+    │   │   ├── ...
+    │   │   └── phpunit.xml.dist
+
+.. code-block:: terminal
+
+    $ ./vendor/bin/simple-phpunit tests/
+
+The modified PHPUnit script will recursively go through the provided directory,
+up to a depth of 3 subfolders or the value specified by the environment variable
+``SYMFONY_PHPUNIT_MAX_DEPTH``, looking for ``phpunit.xml.dist`` files and then
+run each suite it finds in parallel, collecting their output and display each
+suites test results in their own section.
+
 Trigger Deprecation Notices
 ---------------------------
 
