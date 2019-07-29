@@ -148,7 +148,7 @@ The modified PHPUnit script will recursively go through the provided directory,
 up to a depth of 3 subfolders or the value specified by the environment variable
 ``SYMFONY_PHPUNIT_MAX_DEPTH``, looking for ``phpunit.xml.dist`` files and then
 running each suite it finds in parallel, collecting their output and displaying
-each test suite results in their own section.
+each test suite's results in their own section.
 
 Trigger Deprecation Notices
 ---------------------------
