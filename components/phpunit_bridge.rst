@@ -128,15 +128,15 @@ Running Tests in Parallel
 -------------------------
 
 The modified PHPUnit script allows running tests in parallel by providing
-a directory containing multiple suites with their own ``phpunit.xml.dist``.
+a directory containing multiple test suites with their own ``phpunit.xml.dist``.
 
 .. code-block:: terminal
 
-    ├── tests
-    │   ├── Functional
+    ├── tests/
+    │   ├── Functional/
     │   │   ├── ...
     │   │   └── phpunit.xml.dist
-    │   ├── Unit
+    │   ├── Unit/
     │   │   ├── ...
     │   │   └── phpunit.xml.dist
 
@@ -147,8 +147,8 @@ a directory containing multiple suites with their own ``phpunit.xml.dist``.
 The modified PHPUnit script will recursively go through the provided directory,
 up to a depth of 3 subfolders or the value specified by the environment variable
 ``SYMFONY_PHPUNIT_MAX_DEPTH``, looking for ``phpunit.xml.dist`` files and then
-run each suite it finds in parallel, collecting their output and display each
-suites test results in their own section.
+running each suite it finds in parallel, collecting their output and displaying
+each test suite results in their own section.
 
 Trigger Deprecation Notices
 ---------------------------
