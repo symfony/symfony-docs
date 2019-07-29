@@ -486,6 +486,8 @@ Configuration example for form login and query_string
                         service: Symfony\Component\Ldap\Ldap
                         dn_string: 'dc=example,dc=com'
                         query_string: '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))'
+                        search_dn: '...'
+                        search_password: 'the-raw-password'
 
     .. code-block:: xml
 
@@ -502,7 +504,9 @@ Configuration example for form login and query_string
                     <form-login-ldap
                             service="Symfony\Component\Ldap\Ldap"
                             dn-string="dc=example,dc=com"
-                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))"/>
+                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))"
+                            search-dn="..."
+                            search-password="the-raw-password"/>
                 </firewall>
             </config>
         </srv:container>
@@ -519,11 +523,18 @@ Configuration example for form login and query_string
                         'service' => Ldap::class,
                         'dn_string' => 'dc=example,dc=com',
                         'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
+                        'search_dn' => '...',
+                        'search_password' => 'the-raw-password',
                         // ...
                     ],
                 ],
             ]
         ]);
+
+.. deprecated:: 4.4
+
+    Using the ``query_string`` config option without defining ``search_dn`` and
+    ``search_password`` is deprecated since Symfony 4.4.
 
 .. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
