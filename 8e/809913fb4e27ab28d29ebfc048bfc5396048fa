@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-22T11:43:19Z
+
+Friendly ping @nicolas-grekas for a review 😄
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-22T13:54:25Z
+
+I remember merging a few PRs updating this ... and closing other ones for already having done the proposed changes. Please, double check that what you are changing isn't already changed in the latest version of 4.3 branch. Thanks!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-23T06:08:32Z
+
+Thanks for you approval Nicolas 👍
+
+> I remember merging a few PRs updating this ... and closing other ones for already having done the proposed changes. Please, double check that what you are changing isn't already changed in the latest version of 4.3 branch. Thanks!
+
+I remembered the same, but didn't found the PR's. Anyway I updated the 4.3 branch to the latest remote version before creating this PR 👍
+
+What is still open: `versionadded` directives? If yes, where
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-29T06:44:49Z
+
+I added the deprecation here: https://github.com/symfony/symfony-docs/pull/12007/commits/d20e0df389ab05583541d99788e2c88f5aa7dab1
+
+Ready to merge from my side!
