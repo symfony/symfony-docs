@@ -18,7 +18,7 @@ To do this, first add a file that executes your bootstrap work::
         ));
     }
 
-    require __DIR__.'/../vendor/autoload.php';
+    require __DIR__.'/../config/bootstrap.php';
 
 Then, configure ``phpunit.xml.dist`` to execute this ``bootstrap.php`` file
 before running the tests:
