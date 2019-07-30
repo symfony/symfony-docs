@@ -376,10 +376,6 @@ To get the best of both worlds you may use a chain of adapters. The idea is to
 first look at the quick adapter and then move on to slower adapters. In the worst
 case the value needs to be recalculated.
 
-.. versionadded:: 4.4
-
-    Support for configuring a chain using ``framework.cache.pools`` was introduced in Symfony 4.4.
-
 .. configuration-block::
 
     .. code-block:: yaml

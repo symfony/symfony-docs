@@ -254,11 +254,6 @@ The ``VarDumperTestTrait`` also includes these other methods:
     is called automatically after each case to reset the custom configuration
     made in ``setUpVarDumper()``.
 
-.. versionadded:: 4.4
-
-    The ``setUpVarDumper()`` and ``tearDownVarDumper()`` methods were introduced
-    in Symfony 4.4.
-
 Example::
 
     use PHPUnit\Framework\TestCase;
