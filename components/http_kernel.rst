@@ -615,19 +615,6 @@ kernel.terminate             ``KernelEvents::TERMINATE``             :class:`Sym
 kernel.exception             ``KernelEvents::EXCEPTION``             :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 ===========================  ======================================  ========================================================================
 
-.. deprecated:: 4.3
-
-    Since Symfony 4.3, most of the event classes were renamed.
-    The following old classes were deprecated:
-
-    * `GetResponseEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\RequestEvent`
-    * `FilterControllerEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent`
-    * `FilterControllerArgumentsEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerArgumentsEvent`
-    * `GetResponseForControllerResultEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ViewEvent`
-    * `FilterResponseEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ResponseEvent`
-    * `PostResponseEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\TerminateEvent`
-    * `GetResponseForExceptionEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
-
 .. _http-kernel-working-example:
 
 A full Working Example
