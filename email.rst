@@ -82,6 +82,7 @@ sending an email is pretty straightforward::
             // you can remove the following code if you don't define a text version for your emails
             ->addPart(
                 $this->renderView(
+                    // templates/emails/registration.txt.twig
                     'emails/registration.txt.twig',
                     ['name' => $name]
                 ),
