@@ -84,7 +84,7 @@ you need a ``Product`` object to represent those products.
 You can use the ``make:entity`` command to create this class and any fields you
 need. The command will ask you some questions - answer them like done below:
 
-.. code-block:: terminal
+.. code-block:: console
 
     $ php bin/console make:entity
 
@@ -246,7 +246,7 @@ But what if you need to add a new field property to ``Product``, like a
 ``description``? You can edit the class to add the new property. But, you can
 also use ``make:entity`` again:
 
-.. code-block:: terminal
+.. code-block:: console
 
     $ php bin/console make:entity
 
