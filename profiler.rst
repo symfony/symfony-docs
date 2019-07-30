@@ -197,11 +197,11 @@ production. To do that, create an :doc:`event subscriber </event_dispatcher>`
 and listen to the :ref:`kernel.response<component-http-kernel-kernel-response>`
 event::
 
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
     // ...
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (!$this->getKernel()->isDebug()) {
             return;

@@ -100,7 +100,7 @@ is responsible for fielding requests to the firewall and calling the authenticat
 provider. A listener must be an instance of
 :class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`.
 A security listener should handle the
-:class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent` event, and
+:class:`Symfony\\Component\\HttpKernel\\Event\\RequestEvent` event, and
 set an authenticated token in the token storage if successful::
 
     // src/Security/Firewall/WsseListener.php
@@ -108,7 +108,7 @@ set an authenticated token in the token storage if successful::
 
     use App\Security\Authentication\Token\WsseUserToken;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+    use Symfony\Component\HttpKernel\Event\RequestEvent;
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -125,7 +125,7 @@ set an authenticated token in the token storage if successful::
             $this->authenticationManager = $authenticationManager;
         }
 
-        public function handle(GetResponseEvent $event)
+        public function handle(RequestEvent $event)
         {
             $request = $event->getRequest();
 
