@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-08T10:53:20Z
+
+I think we should merge this in 3.4, because `config/bootstrap.php` was created in 3.3. See https://github.com/symfony/recipes/tree/master/symfony/framework-bundle/3.3/config  @OskarStark @xabbuh what do you think? Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-08T11:40:45Z
+
+That's tricky because our setup guidelines don't make use of Flex so you won't get this file without doing so explicitly, right?
+
+---------------------------------------------------------------------------
+
+by gregurco at 2019-07-08T20:09:42Z
+
+@xabbuh yes, I use Flex and it's new project.
+
+---------------------------------------------------------------------------
+
+by gregurco at 2019-07-15T12:50:09Z
+
+@xabbuh do you have any questions? Is it ready to be merged or I have to change something?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-15T18:01:05Z
+
+Well, I still think that this does not really fit the 3.4 docs if people following the setup guide not using Flex will run into errors when following this change (because they do not have the `bootstrap.php` file).
+
+---------------------------------------------------------------------------
+
+by gregurco at 2019-07-15T20:57:21Z
+
+@xabbuh I did a PR in 4.3, not in 3.4.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-15T21:23:12Z
+
+Yes, but Javier asked whether we should merge into the `3.4` branch.
+
+---------------------------------------------------------------------------
+
+by gregurco at 2019-07-15T21:30:31Z
+
+I think it's not related to 3.4. I also started project with 3.4 and I didn't remember such a problem there.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-16T06:29:16Z
+
+If 3.4 is OK, then we'll merge in 4.2 Thanks.
+
+---------------------------------------------------------------------------
+
+by gregurco at 2019-07-16T08:45:55Z
+
+@javiereguiluz right now I created new Symfony 3.4 project and in phpunit.xml.dist I found:
+```
+bootstrap="vendor/autoload.php"
+```
+
+So, it's not relevant for SF 3.4. Changes can be merged.
+
+---------------------------------------------------------------------------
+
+by gregurco at 2019-07-25T13:00:48Z
+
+ping @javiereguiluz
+could you please merge this PR?
