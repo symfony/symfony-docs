@@ -154,11 +154,11 @@ only if needed::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+    use Symfony\Component\HttpKernel\Event\ViewEvent;
 
     class StringResponseListener implements EventSubscriberInterface
     {
-        public function onView(GetResponseForControllerResultEvent $event)
+        public function onView(ViewEvent $event)
         {
             $response = $event->getControllerResult();
 

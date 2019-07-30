@@ -373,12 +373,12 @@ create the class::
     // ...
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
 
     class SetHeaderSusbcriber implements EventSubscriberInterface
     {
-        public function onKernelResponse(FilterResponseEvent $event)
+        public function onKernelResponse(ResponseEvent $event)
         {
             $event->getResponse()->headers->set('X-SYMFONY-3.3', 'Less config');
         }

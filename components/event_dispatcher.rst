@@ -111,7 +111,7 @@ Often times, data about a specific event needs to be passed along with the
 case, a special subclass that has additional methods for retrieving and
 overriding information can be passed when dispatching an event. For example,
 the ``kernel.response`` event uses a
-:class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`, which
+:class:`Symfony\\Component\\HttpKernel\\Event\\ResponseEvent`, which
 contains methods to get and even replace the ``Response`` object.
 
 The Dispatcher
@@ -334,7 +334,7 @@ Take the following example of a subscriber that subscribes to the
 
     use Acme\Store\Event\OrderPlacedEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
 
     class StoreSubscriber implements EventSubscriberInterface
@@ -350,12 +350,12 @@ Take the following example of a subscriber that subscribes to the
             ];
         }
 
-        public function onKernelResponsePre(FilterResponseEvent $event)
+        public function onKernelResponsePre(ResponseEvent $event)
         {
             // ...
         }
 
-        public function onKernelResponsePost(FilterResponseEvent $event)
+        public function onKernelResponsePost(ResponseEvent $event)
         {
             // ...
         }
