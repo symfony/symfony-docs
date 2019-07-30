@@ -444,6 +444,12 @@ you will learn about next!).
     otherwise the form will still use ``setTag()`` even if ``by_reference`` is ``false``.
     You'll learn more about the ``removeTag()`` method later in this article.
 
+.. caution::
+
+    Symfony can only make the plural-to-singular conversion (e.g. from the
+    ``tags`` property to the ``addTag()`` method) for English words. Code
+    written in any other language won't work as expected.
+
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
     To save the new tags with Doctrine, you need to consider a couple more
