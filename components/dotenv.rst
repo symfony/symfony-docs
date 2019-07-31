@@ -137,6 +137,14 @@ Use environment variables in values by prefixing variables with ``$``:
     DB_USER=root
     DB_PASS=${DB_USER}pass # Include the user as a password prefix
 
+.. note::
+
+    The order is important when some env var depends on the value of other env
+    vars. In the above example, ``DB_PASS`` must be defined after ``DB_USER``.
+    Moreover, if you define multiple ``.env`` files and put ``DB_PASS`` first,
+    its value will depend on the ``DB_USER`` value defined in other files
+    instead of the value defined in this file.
+
 Embed commands via ``$()`` (not supported on Windows):
 
 .. code-block:: terminal
