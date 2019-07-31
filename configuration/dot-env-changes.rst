@@ -79,8 +79,8 @@ changes can be made to any Symfony 3.4 or higher app:
        $ git mv .env.dist .env
 
        # Windows
-       $ mv .env .env.local
-       $ git mv .env.dist .env
+       C:\> move .env .env.local
+       C:\> git mv .env.dist .env
 
    You can also update the `comment on the top of .env`_ to reflect the new changes.
 
