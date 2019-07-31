@@ -112,7 +112,7 @@ which starts, advances and finishes the progress bar automatically::
 
 If ``$iterable = [1, 2]``, the previous code will output the following:
 
-.. code-block:: terminal
+.. code-block:: console
 
      0/2 [>---------------------------]   0%
      1/2 [==============>-------------]  50%
