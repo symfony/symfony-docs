@@ -589,6 +589,78 @@ conditions::
         ],
     ]);
 
+Class Existence Based Tests
+---------------------------
+
+Tests that behave differently depending on existing classes, for example Composer's
+development dependencies, are often hard to test for the alternate case. For that
+reason, this component also provides mocks for these PHP functions:
+
+* :phpfunction:`class_exists`
+* :phpfunction:`interface_exists`
+* :phpfunction:`trait_exists`
+
+Use Case
+~~~~~~~~
+
+Consider the following example that relies on the ``Vendor\DependencyClass`` to
+toggle a behavior::
+
+    use Vendor\DependencyClass;
+
+    class MyClass
+    {
+        public function hello(): string
+        {
+            if (class_exists(DependencyClass::class)) {
+                return 'The dependency bahavior.';
+            }
+
+            return 'The default behavior.';
+        }
+    }
+
+A regular test case for ``MyClass`` (assuming the development dependencies
+are installed during tests) would look like::
+
+    use MyClass;
+    use PHPUnit\Framework\TestCase;
+
+    class MyClassTest extends TestCase
+    {
+        public function testHello()
+        {
+            $class = new MyClass();
+            $result = $class->hello(); // "The dependency bahavior."
+
+            // ...
+        }
+    }
+
+In order to test the default behavior instead use the
+``ClassExistsMock::withMockedClasses()`` to configure the expected
+classes, interfaces and/or traits for the code to run::
+
+    use MyClass;
+    use PHPUnit\Framework\TestCase;
+    use Vendor\DependencyClass;
+
+    class MyClassTest extends TestCase
+    {
+        // ...
+
+        public function testHelloDefault()
+        {
+            ClassExistsMock::register(MyClass::class);
+            ClassExistsMock::withMockedClasses([DependencyClass::class => false]);
+
+            $class = new MyClass();
+            $result = $class->hello(); // "The default bahavior."
+
+            // ...
+        }
+    }
+
 Troubleshooting
 ---------------
 

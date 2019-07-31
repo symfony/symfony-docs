@@ -234,6 +234,8 @@ to catching the exception, you can also check if a given currency code is valid:
 
     $isValidCurrency = Currencies::exists($currencyCode);
 
+.. _component-intl-timezones:
+
 Timezones
 ~~~~~~~~~
 
