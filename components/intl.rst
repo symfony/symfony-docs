@@ -254,6 +254,8 @@ to catching the exception, you can also check if a given currency code is valid:
 
     The ``Currencies`` class was introduced in Symfony 4.3.
 
+.. _component-intl-timezones:
+
 Timezones
 ~~~~~~~~~
 
