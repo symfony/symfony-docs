@@ -60,9 +60,3 @@ incompatible adapters are silently ignored::
 
     // prune will proxy the call to FilesystemAdapter while silently skip ApcuAdapter
     $cache->prune();
-
-.. versionadded:: 3.4
-
-    Since Symfony 3.4, this adapter implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
-    allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
-    calling its ``prune()`` method.
