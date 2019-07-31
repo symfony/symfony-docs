@@ -488,33 +488,12 @@ This example shows how to configure the database connection using an env var:
 The next step is to define the value of those env vars in your shell, your web
 server, etc. This is explained in the following sections, but to protect your
 application from undefined env vars, you can give them a default value using the
-``parameters`` key:
+``.env`` file:
 
-.. configuration-block::
+.. code-block:: bash
 
-    .. code-block:: yaml
-
-        # config/services.yaml
-        parameters:
-            env(DATABASE_URL): 'sqlite:///%kernel.project_dir%/var/data.db'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="env(DATABASE_URL)">sqlite:///%kernel.project_dir%/var/data.db</parameter>
-            </parameters>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        $container->setParameter('env(DATABASE_URL)', 'sqlite:///%kernel.project_dir%/var/data.db');
+    # .env
+    DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db
 
 .. seealso::
 
