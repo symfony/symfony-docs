@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-30T07:18:50Z
+
+Thanks for the review Roland. I've reworded most of it.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-30T08:34:01Z
+
+I think we should the reordering in `3.4` branch to avoid merge conflicts between branches.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-30T08:47:41Z
+
+@xabbuh but this article was introduced in Symfony 4.3 version, right? 🙈
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-30T09:05:14Z
+
+Sorry, I missed that the constraint was added in 4.3. 🙈
