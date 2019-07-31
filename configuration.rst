@@ -291,7 +291,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
     by adding another ``%`` so Symfony doesn't consider it a reference to a
     parameter name:
 
-        .. configuration-block::
+    .. configuration-block::
 
         .. code-block:: yaml
 
