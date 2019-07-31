@@ -4,6 +4,9 @@
 Configuring Symfony
 ===================
 
+Configuration Files
+-------------------
+
 Symfony applications are configured with the files stored in the ``config/``
 directory, which has this default structure:
 
@@ -50,7 +53,7 @@ to change these files after package installation
     ``config:dump-reference`` command.
 
 Configuration Formats
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Unlike other frameworks, Symfony doesn't impose you a specific format to
 configure your applications. Symfony lets you choose between YAML, XML and PHP
@@ -64,18 +67,18 @@ there's not even any performance difference between them.
 YAML is used by default when installing packages because it's concise and very
 readable. These are the main advantages and disadvantages of each format:
 
-* :doc:`YAML </components/yaml/yaml_format>`: simple, clean and readable, but
-  requires using a dedicated parser;
-* *XML*: supports IDE autocompletion/validation and is parsed natively by PHP,
-  but sometimes it generates too verbose configuration;
-* *PHP*: very powerful and it allows to create dynamic configuration, but the
+* **YAML**: simple, clean and readable, but not all IDEs support autocompletion
+  and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
+* **XML**:autocompleted/validated by most IDEs and is parsed natively by PHP,
+  but sometimes it generates too verbose configuration. `Learn the XML syntax`_;
+* **PHP**: very powerful and it allows to create dynamic configuration, but the
   resulting configuration is less readable than the other formats.
 
 Importing Configuration Files
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony loads configuration files using the :doc:`Config component
-</components/config>`, which provides advanced features such as importing
+</components/config>`, which provides advanced features such as importing other
 configuration files, even if they use a different format:
 
 .. configuration-block::
@@ -126,15 +129,9 @@ configuration files, even if they use a different format:
 
         // ...
 
-.. tip::
-
-    If you use any other configuration format, you have to define your own loader
-    class extending it from :class:`Symfony\\Component\\DependencyInjection\\Loader\\FileLoader`.
-    In addition, you can define your own services to load configurations from
-    databases or web services.
-
 .. _config-parameter-intro:
 .. _config-parameters-yml:
+.. _configuration-parameters:
 
 Configuration Parameters
 ------------------------
@@ -152,8 +149,20 @@ reusable configuration value. By convention, parameters are defined under the
         parameters:
             # the parameter name is an arbitrary string (the 'app.' prefix is recommended
             # to better differentiate your parameters from Symfony parameters).
-            # the parameter value can be any valid scalar (numbers, strings, booleans, arrays)
             app.admin_email: 'something@example.com'
+
+            # boolean parameters
+            app.enable_v2_protocol: true
+
+            # array/collection parameters
+            app.supported_locales: ['en', 'es', 'fr']
+
+            # binary content parameters (encode the contents with base64_encode())
+            app.some_parameter: !!binary VGhpcyBpcyBhIEJlbGwgY2hhciAH
+
+            # PHP constants as parameter values
+            app.some_constant: !php/const GLOBAL_CONSTANT
+            app.another_constant: !php/const App\Entity\BlogPost::MAX_ITEMS
 
         # ...
 
@@ -171,9 +180,27 @@ reusable configuration value. By convention, parameters are defined under the
 
             <parameters>
                 <!-- the parameter name is an arbitrary string (the 'app.' prefix is recommended
-                     to better differentiate your parameters from Symfony parameters).
-                     the parameter value can be any valid scalar (numbers, strings, booleans, arrays) -->
+                     to better differentiate your parameters from Symfony parameters). -->
                 <parameter key="app.admin_email">something@example.com</parameter>
+
+                <!-- boolean parameters -->
+                <parameter key="app.enable_v2_protocol">true</parameter>
+                <!-- if you prefer to store the boolean value as a string in the parameter -->
+                <parameter key="app.enable_v2_protocol" type="string">true</parameter>
+
+                <!-- array/collection parameters -->
+                <parameter key="app.supported_locales" type="collection">
+                    <parameter>en</parameter>
+                    <parameter>es</parameter>
+                    <parameter>fr</parameter>
+                </parameter>
+
+                <!-- binary content parameters (encode the contents with base64_encode()) -->
+                <parameter key="app.some_parameter" type="binary">VGhpcyBpcyBhIEJlbGwgY2hhciAH</parameter>
+
+                <!-- PHP constants as parameter values -->
+                <parameter key="app.some_constant" type="constant">GLOBAL_CONSTANT</parameter>
+                <parameter key="app.another_constant" type="constant">App\Entity\BlogPost::MAX_ITEMS</parameter>
             </parameters>
 
             <!-- ... -->
@@ -184,9 +211,36 @@ reusable configuration value. By convention, parameters are defined under the
         // config/services.php
         // the parameter name is an arbitrary string (the 'app.' prefix is recommended
         // to better differentiate your parameters from Symfony parameters).
-        // the parameter value can be any valid scalar (numbers, strings, booleans, arrays)
         $container->setParameter('app.admin_email', 'something@example.com');
+
+        // boolean parameters
+        $container->setParameter('app.enable_v2_protocol', true);
+
+        // array/collection parameters
+        $container->setParameter('app.supported_locales', ['en', 'es', 'fr']);
+
+        // binary content parameters (use the PHP escape sequences)
+        $container->setParameter('app.some_parameter', 'This is a Bell char: \x07');
+
+        // PHP constants as parameter values
+        use App\Entity\BlogPost;
+
+        $container->setParameter('app.some_constant', GLOBAL_CONSTANT);
+        $container->setParameter('app.another_constant', BlogPost::MAX_ITEMS);
+
         // ...
+
+.. caution::
+
+    When using XML configuration, the values between ``<parameter>`` tags are
+    not trimmed. This means that the value of the following parameter will be
+    ``'\n    something@example.com\n'``:
+
+    .. code-block:: xml
+
+        <parameter key="app.admin_email">
+            something@example.com
+        </parameter>
 
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
@@ -231,6 +285,33 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             // ...
         ]);
 
+.. note::
+
+    If some parameter value includes the ``%`` character, you need to escape it
+    by adding another ``%`` so Symfony doesn't consider it a reference to a
+    parameter name:
+
+        .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                # Parsed as 'https://symfony.com/?foo=%s&amp;bar=%d'
+                url_pattern: 'https://symfony.com/?foo=%%s&amp;bar=%%d'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <parameters>
+                <parameter key="url_pattern">http://symfony.com/?foo=%%s&amp;bar=%%d</parameter>
+            </parameters>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
+
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
 Configuration parameters are very common in Symfony applications. Some packages
@@ -239,8 +320,8 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 
 .. seealso::
 
-    Read the :ref:`service parameters <service-container-parameters>` article to
-    learn about how to use these configuration parameters in services and controllers.
+    Read the `Accessing Configuration Values`_ section of this article to learn
+    about how to use these configuration parameters in services and controllers.
 
 .. index::
    single: Environments; Introduction
@@ -493,38 +574,6 @@ In addition to your own env vars, this ``.env`` file also contains the env vars
 defined by the third-party packages installed in your application (they are
 added automatically by :doc:`Symfony Flex </setup/flex>` when installing packages).
 
-Managing Multiple .env Files
-............................
-
-The ``.env`` file defines the default values for all env vars. However, it's
-common to override some of those values depending on the environment (e.g. to
-use a different database for tests) or depending on the machine (e.g. to use a
-different OAuth token in your local machine while developing).
-
-That's why you can define multiple ``.env`` files which override the default env
-vars. These are the files in priority order (an env var found in one file
-overrides the same env var for all the files below):
-
-* ``.env.<environment>.local`` (e.g. ``.env.test.local``): defines/overrides
-  env vars only for some environment and only in your local machine;
-* ``.env.<environment>`` (e.g. ``.env.test``): defines/overrides env vars for
-  some environment and for all machines;
-* ``.env.local``: defines/overrides env vars for all environments but only in
-  your local machine;
-* ``.env``: defines the default value of env vars.
-
-The ``.env`` and ``.env.<environment>`` files should be committed to the shared
-repository because they are the same for all developers. However, the
-``.env.local`` and ``.env.<environment>.local`` and files **should not be
-committed** because only you will use them. In fact, the ``.gitignore`` file
-that comes with Symfony prevents them from being committed.
-
-.. caution::
-
-    Applications created before November 2018 had a slightly different system,
-    involving a ``.env.dist`` file. For information about upgrading, see:
-    :doc:`configuration/dot-env-changes`.
-
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
@@ -548,6 +597,17 @@ will load the parsed file instead of parsing the ``.env`` files again:
     Update your deployment tools/workflow to run the ``dump-env`` command after
     each deploy to improve the application performance.
 
+.. _configuration-env-var-web-server:
+
+Creating ``.env`` files is the easiest way of using env vars in Symfony
+applications. However, you can also configure real env vars in your servers and
+operating systems.
+
+.. tip::
+
+    SymfonyCloud, the cloud service optimized for Symfony applications, defines
+    some `utilities to manage env vars`_ in production.
+
 .. caution::
 
     Beware that dumping the contents of the ``$_SERVER`` and ``$_ENV`` variables
@@ -559,31 +619,194 @@ will load the parsed file instead of parsing the ``.env`` files again:
     :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
     problem because the web profiler must **never** be enabled in production.
 
-Defining Environment Variables in the Web Server
-................................................
+Managing Multiple .env Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using the ``.env`` files explained earlier is the recommended way of using env
-vars in Symfony applications. However, you can also define env vars in the web
-server configuration if you prefer that:
+The ``.env`` file defines the default values for all env vars. However, it's
+common to override some of those values depending on the environment (e.g. to
+use a different database for tests) or depending on the machine (e.g. to use a
+different OAuth token on your local machine while developing).
+
+That's why you can define multiple ``.env`` files to override env vars. The
+following list shows the files loaded in all environments. The ``.env`` file is
+the only mandatory file and each file content overrides the previous one:
+
+* ``.env``: defines the default values of the env vars needed by the application;
+* ``.env.local``: defines machine-specific overrides for env vars on all
+  environments. This file is not committed to the repository, so these overrides
+  only apply to the machine which contains the file (your local computer,
+  production server, etc.);
+* ``.env.<environment>`` (e.g. ``.env.test``): overrides env vars only for some
+  environment but for all machines;
+* ``.env.<environment>.local`` (e.g. ``.env.test.local``): defines machine-specific
+  env vars overrides only for some environment. It's similar to ``.env.local``,
+  but the overrides only apply to some particular environment.
+
+.. note::
+
+    The real environment variables defined in the server always win over the
+    env vars created by the ``.env`` files.
+
+The ``.env`` and ``.env.<environment>`` files should be committed to the shared
+repository because they are the same for all developers and machines. However,
+the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.local``)
+**should not be committed** because only you will use them. In fact, the
+``.gitignore`` file that comes with Symfony prevents them from being committed.
+
+.. caution::
+
+    Applications created before November 2018 had a slightly different system,
+    involving a ``.env.dist`` file. For information about upgrading, see:
+    :doc:`configuration/dot-env-changes`.
+
+Accessing Configuration Values
+------------------------------
+
+Controllers and services can access all the configuration parameters. This
+includes both the :ref:`parameters defined by yourself <configuration-parameters>`
+and the parameters created by packages/bundles. Run the following command to see
+all the parameters that exist in your application:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --parameters
+
+Parameters are injected in services as arguments to their constructors.
+:doc:`Service autowiring </service_container/autowiring>` doesn't work for
+parameters. Instead, inject them explicitly:
 
 .. configuration-block::
 
-    .. code-block:: apache
+    .. code-block:: yaml
 
-        <VirtualHost *:80>
+        # config/services.yaml
+        parameters:
+            app.contents_dir: '...'
+
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    $contentsDir: '%app.contents_dir%'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="app.contents_dir">...</parameter>
+            </parameters>
+
+            <services>
+                <service id="App\Service\MessageGenerator">
+                    <argument key="$contentsDir">%app.contents_dir%</argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\Service\MessageGenerator;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->setParameter('app.contents_dir', '...');
+
+        $container->getDefinition(MessageGenerator::class)
+            ->setArgument('$contentsDir', '%app.contents_dir%');
+
+If you inject the same parameters over and over again, use instead the
+``services._defaults.bind`` option. The arguments defined in that option are
+injected automatically whenever a service constructor or controller action
+define an argument with that exact name. For example, to inject the value of the
+:ref:`kernel.project_dir parameter <configuration-kernel-project-directory>`
+whenever a service/controller defines a ``$projectDir`` argument, use this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _defaults:
+                bind:
+                    # pass this value to any $projectDir argument for any service
+                    # that's created in this file (including controller arguments)
+                    $projectDir: '%kernel.project_dir%'
+
             # ...
 
-            SetEnv DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name"
-        </VirtualHost>
+    .. code-block:: xml
 
-    .. code-block:: nginx
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        fastcgi_param DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name";
+            <services>
+                <defaults autowire="true" autoconfigure="true" public="false">
+                    <!-- pass this value to any $projectDir argument for any service
+                         that's created in this file (including controller arguments) -->
+                    <bind key="$projectDir">%kernel.project_dir%</bind>
+                </defaults>
 
-.. tip::
+                <!-- ... -->
+            </services>
+        </container>
 
-    SymfonyCloud, the cloud service optimized for Symfony applications, defines
-    some `utilities to manage env vars`_ in production.
+    .. code-block:: php
+
+        // config/services.php
+        use App\Controller\LuckyController;
+        use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register(LuckyController::class)
+            ->setPublic(true)
+            ->setBindings([
+                // pass this value to any $projectDir argument for any service
+                // that's created in this file (including controller arguments)
+                '$projectDir' => '%kernel.project_dir%',
+            ])
+        ;
+
+.. seealso::
+
+    Read the article about :ref:`binding arguments by name and/or type <services-binding>`
+    to learn more about this powerful feature.
+
+Finally, if some service needs to access to lots of parameters, instead of
+injecting each of them individually, you can inject all the application
+parameters at once by type-hinting any of its constructor arguments with the
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`::
+
+    // src/Service/MessageGenerator.php
+    // ...
+
+    use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+
+    class MessageGenerator
+    {
+        private $params;
+
+        public function __construct(ContainerBagInterface $params)
+        {
+            $this->params = $params;
+        }
+
+        public function someMethod()
+        {
+            // get any container parameter from $this->params, which stores all of them
+            $sender = $this->params->get('mailer_sender');
+            // ...
+        }
+    }
 
 Keep Going!
 -----------
@@ -598,10 +821,7 @@ part of Symfony individually by following the guides. Check out:
 * :doc:`/email`
 * :doc:`/logging`
 
-And the many other topics.
-
-Learn more
-----------
+And all the other topics related to configuration:
 
 .. toctree::
     :maxdepth: 1
@@ -609,6 +829,7 @@ Learn more
 
     configuration/*
 
+.. _`Learn the XML syntax`: https://en.wikipedia.org/wiki/XML
 .. _`environment variables`: https://en.wikipedia.org/wiki/Environment_variable
 .. _`symbolic links`: https://en.wikipedia.org/wiki/Symbolic_link
 .. _`utilities to manage env vars`: https://symfony.com/doc/master/cloud/cookbooks/env.html

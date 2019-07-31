@@ -460,23 +460,29 @@ Service Parameters
 ------------------
 
 In addition to holding service objects, the container also holds configuration,
-called ``parameters``. To create a parameter, add it under the ``parameters`` key
-and reference it with the ``%parameter_name%`` syntax:
+called **parameters**. The main article about Symfony configuration explains the
+:ref:`configuration parameters <configuration-parameters>` in detail and shows
+all their types (string, boolean, array, binary and PHP constant parameters).
+
+However, there is another type of parameter related to services. In YAML config,
+any string which starts with ``@`` is considered as the ID of a service, instead
+of a regular string. In XML config, use the ``type="service"`` type for the
+parameter and in PHP config use the ``Reference`` class:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/services.yaml
-        parameters:
-            admin_email: manager@example.com
-
         services:
-            # ...
+            App\Service\MessageGenerator:
+                # this is not a string, but a reference to a service called 'logger'
+                arguments: ['@logger']
 
-            App\Updates\SiteUpdateManager:
-                arguments:
-                    $adminEmail: '%admin_email%'
+                # if the value of a string parameter starts with '@', you need to escape
+                # it by adding another '@' so Symfony doesn't consider it a service
+                # (this will be parsed as the string '@securepassword')
+                mailer_password: '@@securepassword'
 
     .. code-block:: xml
 
@@ -487,15 +493,9 @@ and reference it with the ``%parameter_name%`` syntax:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <parameters>
-                <parameter key="admin_email">manager@example.com</parameter>
-            </parameters>
-
             <services>
-                <!-- ... -->
-
-                <service id="App\Updates\SiteUpdateManager">
-                    <argument key="$adminEmail">%admin_email%</argument>
+                <service id="App\Service\MessageGenerator">
+                    <argument type="service" id="logger"/>
                 </service>
             </services>
         </container>
@@ -503,45 +503,38 @@ and reference it with the ``%parameter_name%`` syntax:
     .. code-block:: php
 
         // config/services.php
-        use App\Updates\SiteUpdateManager;
-        $container->setParameter('admin_email', 'manager@example.com');
+        use App\Service\MessageGenerator;
+        use Symfony\Component\DependencyInjection\Reference;
 
-        $container->autowire(SiteUpdateManager::class)
-            // ...
-            ->setArgument('$adminEmail', '%admin_email%');
+        $container->autowire(MessageGenerator::class)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+            ->setArgument(0, new Reference('logger'));
 
-Actually, once you define a parameter, it can be referenced via the
-``%parameter_name%`` syntax in *any* other configuration file. Many parameters
-are defined in the ``config/services.yaml`` file.
+Working with container parameters is straightforward using the container's
+accessor methods for parameters::
 
-You can then fetch the parameter in the service::
+    // checks if a parameter is defined (parameter names are case-sensitive)
+    $container->hasParameter('mailer.transport');
 
-    class SiteUpdateManager
-    {
-        // ...
+    // gets value of a parameter
+    $container->getParameter('mailer.transport');
 
-        private $adminEmail;
+    // adds a new parameter
+    $container->setParameter('mailer.transport', 'sendmail');
 
-        public function __construct($adminEmail)
-        {
-            $this->adminEmail = $adminEmail;
-        }
-    }
+.. caution::
 
-You can also fetch parameters directly from the container::
+    The used ``.`` notation is a
+    :ref:`Symfony convention <service-naming-conventions>` to make parameters
+    easier to read. Parameters are flat key-value elements, they can't
+    be organized into a nested array
 
-    public function new()
-    {
-        // ...
+.. note::
 
-        // this shortcut ONLY works if you extend the base AbstractController
-        $adminEmail = $this->getParameter('admin_email');
-
-        // this is the equivalent code of the previous shortcut:
-        // $adminEmail = $this->container->get('parameter_bag')->get('admin_email');
-    }
-
-For more info about parameters, see :doc:`/service_container/parameters`.
+    You can only set a parameter before the container is compiled, not at run-time.
+    To learn more about compiling the container see
+    :doc:`/components/dependency_injection/compilation`.
 
 .. _services-wire-specific-service:
 
@@ -723,39 +716,6 @@ argument for *any* service defined in this file! You can bind arguments by name
 
 The ``bind`` config can also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).
-
-Getting Container Parameters as a Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If some service or controller needs lots of container parameters, there's an
-easier alternative to binding all of them with the ``services._defaults.bind``
-option. Type-hint any of its constructor arguments with the
-:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBagInterface`
-or the new :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`
-and the service will get all container parameters in a
-:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag` object::
-
-    // src/Service/MessageGenerator.php
-    // ...
-
-    use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
-    class MessageGenerator
-    {
-        private $params;
-
-        public function __construct(ParameterBagInterface $params)
-        {
-            $this->params = $params;
-        }
-
-        public function someMethod()
-        {
-            // get any param from $this->params, which stores all container parameters
-            $sender = $this->params->get('mailer_sender');
-            // ...
-        }
-    }
 
 .. _services-autowire:
 

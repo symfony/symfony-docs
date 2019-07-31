@@ -553,6 +553,19 @@ response types.  Some of these are mentioned below. To learn more about the
 ``Request`` and ``Response`` (and different ``Response`` classes), see the
 :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
+Accessing Configuration Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To get the value of any :ref:`configuration parameter <configuration-parameters>`
+from a controller, use the ``getParameter()`` helper method::
+
+    // ...
+    public function index()
+    {
+        $contentsDir = $this->getParameter('kernel.project_dir').'/contents';
+        // ...
+    }
+
 Returning JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~
 
