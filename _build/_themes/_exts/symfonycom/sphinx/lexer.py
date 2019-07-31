@@ -10,7 +10,7 @@ class TerminalLexer(RegexLexer):
     tokens = {
         'root': [
             ('^\$', Generic.Prompt, 'bash-prompt'),
-            ('^[^\n>]+>', Generic.Prompt, 'dos-prompt'),
+            ('^C:\\[^\n>]+>', Generic.Prompt, 'dos-prompt'),
             ('^#.+$', Comment.Single),
             ('^.+$', Generic.Output),
         ],
