@@ -289,6 +289,7 @@ new controller class:
     $ php bin/console make:controller BrandNewController
 
     created: src/Controller/BrandNewController.php
+    created: templates/brandnew/index.html.twig
 
 If you want to generate an entire CRUD from a Doctrine :doc:`entity </doctrine>`,
 use:
@@ -296,6 +297,15 @@ use:
 .. code-block:: terminal
 
     $ php bin/console make:crud Product
+    
+    created: src/Controller/ProductController.php
+    created: src/Form/ProductType.php
+    created: templates/product/_delete_form.html.twig
+    created: templates/product/_form.html.twig
+    created: templates/product/edit.html.twig
+    created: templates/product/index.html.twig
+    created: templates/product/new.html.twig
+    created: templates/product/show.html.twig
 
 .. versionadded:: 1.2
 
