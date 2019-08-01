@@ -148,3 +148,9 @@ Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
             new Address('recepient@example.com'),
         ]
     ));
+
+
+Learn More
+-----------
+
+To learn more about how to use the mailer component, refer to the :doc:`Symfony Framework Mailer documentation </mailer>`.
