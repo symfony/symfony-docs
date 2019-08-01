@@ -283,7 +283,7 @@ method of the ``FormFactory``::
             // checks whether the user has chosen to display their email or not.
             // If the data was submitted previously, the additional value that is
             // included in the request variables needs to be removed.
-            if (true === $user['showEmail']) {
+            if (isset($user['showEmail']) && $user['showEmail']) {
                 $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
@@ -379,7 +379,7 @@ Consider the following example of a form event subscriber::
             // checks whether the user has chosen to display their email or not.
             // If the data was submitted previously, the additional value that
             // is included in the request variables needs to be removed.
-            if (true === $user['showEmail']) {
+            if (isset($user['showEmail']) && $user['showEmail']) {
                 $form->add('email', EmailType::class);
             } else {
                 unset($user['email']);
