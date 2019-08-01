@@ -36,7 +36,7 @@ The Mailer component has two main classes: a ``Transport`` and the ``Mailer`` it
     $mailer = new Mailer($transport);
     $mailer->send($email);
 
-Refer :doc:`Mime component </components/mime>` how to create `$email` object.
+The `$email` object is created via the :doc:`Mime component </components/mime>`.
 
 Transport
 ---------
