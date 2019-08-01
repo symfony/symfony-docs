@@ -644,7 +644,7 @@ When serializing, you can set a callback to format a specific object property::
 
     $defaultContext = [
         AbstractNormalizer::CALLBACKS => [
-            'createdAt' => $callback,
+            'createdAt' => $dateCallback,
         ],
     ];
 
