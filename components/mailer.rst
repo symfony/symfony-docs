@@ -41,7 +41,7 @@ The `$email` object is created via the :doc:`Mime component </components/mime>`.
 Transport
 ---------
 
-By default, the only transport available in the mailer component is Smtp.
+The only transport that comes pre-installed with mailer is Smtp.
 
 Below is the list of other popular providers with built in support.
 
