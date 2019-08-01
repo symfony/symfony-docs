@@ -149,7 +149,6 @@ Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
         ]
     ));
 
-
 Learn More
 -----------
 
