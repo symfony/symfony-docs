@@ -25,14 +25,21 @@ Now that everything is correctly set up, you can create a new project based on
 Symfony. In your command console, browse to a directory where you have permission
 to create files and execute the following commands:
 
+**Linux and macOS systems**:
+
+.. class:: command-linux
 .. code-block:: terminal
 
     $ cd projects/
     $ symfony new blog 3.4
 
-    # Windows
-    c:\> cd projects/
-    c:\projects\> php symfony new blog 3.4
+**Windows systems**:
+
+.. class:: command-windows
+.. code-block:: terminal
+
+    > cd projects/
+    > php symfony new blog 3.4
 
 .. note::
 
