@@ -7,8 +7,7 @@ Environment Variable Processors
 ===============================
 
 :ref:`Using env vars to configure Symfony applications <config-env-vars>` is a
-common practice to hide sensitive configuration (e.g. database credentials) and
-to make your applications truly dynamic.
+common practice to make your applications truly dynamic.
 
 The main issue of env vars is that their values can only be strings and your
 application may need other data types (integer, boolean, etc.). Symfony solves
