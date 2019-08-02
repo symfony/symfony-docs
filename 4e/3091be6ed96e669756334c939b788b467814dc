@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-23T07:18:41Z
+
+Could you please squash your commits into one? We cannot squash merge it with our tool if there is a merge commit.
+
+Thank you!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-24T07:30:00Z
+
+@OskarStark the branch name `patch-1` is usually associated with quick edits via gitHub's web interface ... so "squashing" is not possible in a simple way.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-24T08:13:09Z
+
+I know but how does the merge commit goes in then? 🧐
+
+---------------------------------------------------------------------------
+
+by Lctrs at 2019-07-25T21:48:50Z
+
+The merge commit is from the built in merge conflict tool of GitHub.
+
+I'm currently on holidays. Will do it when I come back home on august, 1st.
+
+---------------------------------------------------------------------------
+
+by Lctrs at 2019-08-02T10:00:51Z
+
+@OskarStark Should be good now.
