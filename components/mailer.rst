@@ -19,14 +19,6 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
-
-Introduction
-------------
-
-Symfony mailer is an experimental component introduced in 4.3 which
-will eventually replace swiftmailer.
-
-
 Usage
 -----
 
@@ -39,7 +31,7 @@ The Mailer component has two main classes: a ``Transport`` and the ``Mailer`` it
     $mailer = new Mailer($transport);
     $mailer->send($email);
 
-The `$email` object is created via the :doc:`Mime component </components/mime>`.
+The ``$email`` object is created via the :doc:`Mime component </components/mime>`.
 
 Transport
 ---------
@@ -76,7 +68,8 @@ For example, suppose you want to use Google's Gmail. First, install it:
 Use a DSN
 ---------
 
-The mailer component provides a convenient way to create transport object from DSN string::
+The mailer component provides a convenient way to create transport object from
+DSN string::
 
     use Symfony\Component\Mailer\Transport;
 
@@ -91,8 +84,9 @@ Where ``$dsn`` as one of the form below.
 - ``http://key:domain@mailgun``
 - ``api://id@postmark``
 
-This provides a unified behaviour across all providers.
-Easily switch from SMTP in development to a "real" provider in production with same API.
+This provides a unified behavior across all providers.
+Easily switch from SMTP in development to a "real" provider in production
+with same API.
 
 Failover transport
 ------------------
@@ -101,20 +95,22 @@ You can create failover transport with the help of `||` operator::
 
     $dsn = 'api://id@postmark || smtp://key@sendgrid';
 
-So if the first transport fails, the mailer will attempt to send through the second transport.
+So if the first transport fails, the mailer will attempt to send through the
+second transport.
 
 Round Robin
 -----------
 
-If you want to send emails by using multiple transports in a round-robin fashion, you can use the
-``&&`` operator between the transports::
+If you want to send emails by using multiple transports in a round-robin fashion,
+you can use the ``&&`` operator between the transports::
 
     $dsn = 'api://id@postmark && smtp://key@sendgrid'
 
 Async
 -----
 
-If you want to use the async functionality you need to install the :doc:`Messenger component </components/messenger>`.
+If you want to use the async functionality you need to install the
+:doc:`Messenger component </components/messenger>`.
 
 .. code-block:: terminal
 
