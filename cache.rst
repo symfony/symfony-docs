@@ -412,9 +412,9 @@ case the value needs to be recalculated.
             <framework:config>
                 <framework:cache>
                     <framework:pool name="my_cache_pool" default-lifetime="31536000">
-                        <framework:adapter name="cache.adapter.array" />
-                        <framework:adapter name="cache.adapter.apcu" />
-                        <framework:adapter name="cache.adapter.redis" provider="redis://user:password@example.com" />
+                        <framework:adapter name="cache.adapter.array"/>
+                        <framework:adapter name="cache.adapter.apcu"/>
+                        <framework:adapter name="cache.adapter.redis" provider="redis://user:password@example.com"/>
                     </framework:pool>
                 </framework:cache>
             </framework:config>
