@@ -4,10 +4,11 @@
 How to Use Bundle Inheritance to Override Parts of a Bundle
 ===========================================================
 
-.. caution::
+.. deprecated:: 3.4
 
     Bundle inheritance is deprecated since Symfony 3.4 and will be removed in
-    4.0.
+    4.0, but you can :doc:`override any part of a bundle </bundles/override>`
+    without using bundle inheritance.
 
 When working with third-party bundles, you'll probably come across a situation
 where you want to override a file in that third-party bundle with a file
