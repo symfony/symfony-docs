@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-08-02T09:06:59Z
+
+As you can see in https://pr-12078-jjvhw7y-nq3xa5jtywvyc.eu.s5y.io/setup.html, this worked ... but the CSS classes are modified a bit. So, let's replace the double dash by a single dash:
+
+![image](https://user-images.githubusercontent.com/73419/62358754-a34a3180-b515-11e9-95b3-aaf920bcff5c.png)
