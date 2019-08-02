@@ -239,6 +239,7 @@ In a Symfony application using the
 you can get this state machine by injecting the Workflow registry service::
 
     // ...
+    use App\Entity\PullRequest;
     use Symfony\Component\Workflow\Registry;
 
     class SomeService
@@ -250,10 +251,10 @@ you can get this state machine by injecting the Workflow registry service::
             $this->workflows = $workflows;
         }
 
-        public function someMethod($subject)
+        public function someMethod(PullRequest $pullRequest)
         {
-            $stateMachine = $this->workflows->get($subject, 'pull_request');
-            $stateMachine->apply($subject, 'wait_for_review');
+            $stateMachine = $this->workflows->get($pullRequest, 'pull_request');
+            $stateMachine->apply($pullRequest, 'wait_for_review');
             // ...
         }
 
@@ -267,6 +268,7 @@ or ``state_machine.pull_request`` respectively in your service definitions
 to access the proper service::
 
     // ...
+    use App\Entity\PullRequest;
     use Symfony\Component\Workflow\StateMachine;
 
     class SomeService
@@ -278,9 +280,9 @@ to access the proper service::
             $this->stateMachine = $stateMachine;
         }
 
-        public function someMethod($subject)
+        public function someMethod(PullRequest $pullRequest)
         {
-            $this->stateMachine->apply($subject, 'wait_for_review', [
+            $this->stateMachine->apply($pullRequest, 'wait_for_review', [
                 'log_comment' => 'My logging comment for the wait for review transition.',
             ]);
             // ...
