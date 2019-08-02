@@ -665,11 +665,11 @@ But what if you need a more complex query? When you generated your entity with
 
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-    use Symfony\Bridge\Doctrine\RegistryInterface;
+    use Doctrine\Common\Persistence\ManagerRegistry;
 
     class ProductRepository extends ServiceEntityRepository
     {
-        public function __construct(RegistryInterface $registry)
+        public function __construct(ManagerRegistry $registry)
         {
             parent::__construct($registry, Product::class);
         }
@@ -687,7 +687,7 @@ a new method for this to your repository::
     // ...
     class ProductRepository extends ServiceEntityRepository
     {
-        public function __construct(RegistryInterface $registry)
+        public function __construct(ManagerRegistry $registry)
         {
             parent::__construct($registry, Product::class);
         }
