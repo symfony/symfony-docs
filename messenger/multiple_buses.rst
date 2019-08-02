@@ -119,7 +119,7 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
         # config/services.yaml
         services:
             App\MessageHandler\SomeCommandHandler:
-                tags: [{ name: messenger.message_handler, bus: messenger.bus.commands }]
+                tags: [{ name: messenger.message_handler, bus: command.bus }]
                 # prevent handlers from being registered twice (or you can remove
                 # the MessageHandlerInterface that autoconfigure uses to find handlers)
                 autoconfigure: false
@@ -135,7 +135,7 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
 
             <services>
                 <service id="App\MessageHandler\SomeCommandHandler">
-                    <tag name="messenger.message_handler" bus="messenger.bus.commands"/>
+                    <tag name="messenger.message_handler" bus="command.bus"/>
                 </service>
             </services>
         </container>
@@ -145,10 +145,10 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
         // config/services.php
         $container->services()
             ->set(App\MessageHandler\SomeCommandHandler::class)
-            ->tag('messenger.message_handler', ['bus' => 'messenger.bus.commands']);
+            ->tag('messenger.message_handler', ['bus' => 'command.bus']);
 
 This way, the ``App\MessageHandler\SomeCommandHandler`` handler will only be
-known by the ``messenger.bus.commands`` bus.
+known by the ``command.bus`` bus.
 
 You can also automatically add this tag to a number of classes by following
 a naming convention and registering all of the handler services by name with
@@ -166,14 +166,14 @@ the correct tag:
             resource: '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php'
             autoconfigure: false
             tags:
-                - { name: messenger.message_handler, bus: messenger.bus.commands }
+                - { name: messenger.message_handler, bus: command.bus }
 
         query_handlers:
             namespace: App\MessageHandler\
             resource: '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php'
             autoconfigure: false
             tags:
-                - { name: messenger.message_handler, bus: messenger.bus.queries }
+                - { name: messenger.message_handler, bus: query.bus }
 
     .. code-block:: xml
 
@@ -187,11 +187,11 @@ the correct tag:
             <services>
                 <!-- command handlers -->
                 <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php" autoconfigure="false">
-                    <tag name="messenger.message_handler" bus="messenger.bus.commands"/>
+                    <tag name="messenger.message_handler" bus="command.bus"/>
                 </service>
                 <!-- query handlers -->
                 <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php" autoconfigure="false">
-                    <tag name="messenger.message_handler" bus="messenger.bus.queries"/>
+                    <tag name="messenger.message_handler" bus="query.bus"/>
                 </service>
             </services>
         </container>
@@ -204,13 +204,13 @@ the correct tag:
         $container->services()
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php')
             ->autoconfigure(false)
-            ->tag('messenger.message_handler', ['bus' => 'messenger.bus.commands']);
+            ->tag('messenger.message_handler', ['bus' => 'command.bus']);
 
         // Query handlers
         $container->services()
             ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php')
             ->autoconfigure(false)
-            ->tag('messenger.message_handler', ['bus' => 'messenger.bus.queries']);
+            ->tag('messenger.message_handler', ['bus' => 'query.bus']);
 
 Debugging the Buses
 -------------------
@@ -225,8 +225,8 @@ You can also restrict the list to a specific bus by providing its name as argume
       Messenger
       =========
 
-      messenger.bus.commands
-      ----------------------
+      command.bus
+      -----------
 
        The following messages can be dispatched:
 
@@ -237,8 +237,8 @@ You can also restrict the list to a specific bus by providing its name as argume
             handled by App\MessageHandler\MultipleBusesMessageHandler
        ---------------------------------------------------------------------------------------
 
-      messenger.bus.queries
-      ---------------------
+      query.bus
+      ---------
 
        The following messages can be dispatched:
 
