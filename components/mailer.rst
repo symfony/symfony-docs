@@ -7,6 +7,9 @@ The Mailer Component
 
     The Mailer component helps sending emails.
 
+If you're using the Symfony Framework, read the
+:doc:`Symfony Framework Mailer documentation </mailer>`.
+
 .. versionadded:: 4.3
 
     The Mailer component was introduced in Symfony 4.3.
@@ -156,4 +159,5 @@ Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
 Learn More
 -----------
 
-To learn more about how to use the mailer component, refer to the :doc:`Symfony Framework Mailer documentation </mailer>`.
+To learn more about how to use the mailer component, refer to the
+:doc:`Symfony Framework Mailer documentation </mailer>`.
