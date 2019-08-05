@@ -375,17 +375,17 @@ objects, they are automatically transformed into YAML tags::
     $dumped = Yaml::dump($data);
     // $dumped = '!my_tag { foo: bar }'
 
-Dumping null
-~~~~~~~~~~~~
+Dumping Null Values
+~~~~~~~~~~~~~~~~~~~
 
-``null`` values will be represented with ``null`` by default::
+The official YAML specification uses both ``null`` and ``~`` to represent null
+values. This component uses ``null`` by default when dumping null values but
+you can dump them as ``~`` with the ``DUMP_NULL_AS_TILDE`` flag::
 
-    $dumped = Yaml::dump(array('foo' => null));
+    $dumped = Yaml::dump(['foo' => null]);
     // foo: null
 
-You can represent them with ``~`` by using the ``DUMP_NULL_AS_TILDE`` flag::
-
-    $dumped = Yaml::dump(array('foo' => null), 2, 4, Yaml::DUMP_NULL_AS_TILDE);
+    $dumped = Yaml::dump(['foo' => null], 2, 4, Yaml::DUMP_NULL_AS_TILDE);
     // foo: ~
 
 .. versionadded:: 4.4
