@@ -375,6 +375,23 @@ objects, they are automatically transformed into YAML tags::
     $dumped = Yaml::dump($data);
     // $dumped = '!my_tag { foo: bar }'
 
+Dumping null
+~~~~~~~~~~~~
+
+``null`` values will be represented with ``null`` by default::
+
+    $dumped = Yaml::dump(array('foo' => null));
+    // foo: null
+
+You can represent them with ``~`` by using the ``DUMP_NULL_AS_TILDE`` flag::
+
+    $dumped = Yaml::dump(array('foo' => null), 2, 4, Yaml::DUMP_NULL_AS_TILDE);
+    // foo: ~
+
+.. versionadded:: 4.4
+
+    The flag to dump ``null`` as ``~`` was introduced in Symfony 4.4.
+
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
 
