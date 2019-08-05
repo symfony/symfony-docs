@@ -35,3 +35,9 @@ Or you can get the button's name by using the
     if ($form->getClickedButton() && 'saveAndAdd' === $form->getClickedButton()->getName()) {
         // ...
     }
+    
+If you have multiple buttons with the same name, each nested in multiple subforms, use direct reference instead the name to get the right button
+
+    if ($form->getClickedButton() && $form->getClickedButton() === $form->get('saveAndAdd')){
+
+    }
