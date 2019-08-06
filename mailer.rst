@@ -32,27 +32,39 @@ can deliver emails over ``smtp`` by configuring your ``.env`` file:
 
     # .env
     MAILER_DSN=smtp://user:pass@smtp.example.com
+    
+You can also use a local `sendmail` instance out of the box:
+
+.. code-block:: bash
+
+    # .env
+    MAILER_DSN=smtp://@sendmail
+    
+Note that the ``MAILER_DSN`` isn't a *real* SMTP address: it's a simple format that 
+offloads most of the configuration work to mailer, which can be used to select any
+available 3rd party transport provider.
 
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-But an easier option is to send emails via a 3rd party provider. Mailer supports
-several - install whichever you want:
+Another option is to send emails via a 3rd party provider. Mailer supports several 
+- install whichever you want:
 
-==================  =============================================
-Service             Install with
-==================  =============================================
-Amazon SES          ``composer require symfony/amazon-mailer``
-Gmail               ``composer require symfony/google-mailer``
-MailChimp           ``composer require symfony/mailchimp-mailer``
-Mailgun             ``composer require symfony/mailgun-mailer``
-Postmark            ``composer require symfony/postmark-mailer``
-SendGrid            ``composer require symfony/sendgrid-mailer``
-==================  =============================================
+==================  ============================================= ======================
+Service             Install with                                  MAILER_DSN
+==================  ============================================= ======================
+Default SMTP                                                      ``@smtp.example.com``
+Sendmail                                                          ``@sendmail``
+Amazon SES          ``composer require symfony/amazon-mailer``    ``@ses``
+Gmail               ``composer require symfony/google-mailer``    ``@gmail``
+MailChimp           ``composer require symfony/mailchimp-mailer`` ``@mandrill``
+Mailgun             ``composer require symfony/mailgun-mailer``   ``@mailgun``
+Postmark            ``composer require symfony/postmark-mailer``  ``@postmark``
+SendGrid            ``composer require symfony/sendgrid-mailer``  ``@sendgrid``
+==================  ============================================= ======================
 
 Each library includes a :ref:`Flex recipe <flex-recipe>` that will add example configuration
-to your ``.env`` file. For example, suppose you want to use SendGrid. First,
-install it:
+to your ``.env`` file. For example, suppose you want to use SendGrid. First, install it:
 
 .. code-block:: terminal
 
@@ -66,13 +78,10 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
     SENDGRID_KEY=
     MAILER_DSN=smtp://$SENDGRID_KEY@sendgrid
 
-The ``MAILER_DSN`` isn't a *real* SMTP address: it's a simple format that offloads
-most of the configuration work to mailer. The ``@sendgrid`` part of the address
-activates the SendGrid mailer library that you just installed, which knows all
-about how to deliver messages to SendGrid.
-
-The *only* part you need to change is to set ``SENDGRID_KEY`` to your key (in
-``.env`` or ``.env.local``).
+The ``@sendgrid`` part of the address activates the SendGrid mailer library that you just 
+installed, which knows all about how to deliver messages to SendGrid. The *only* part you 
+need to change for this configuration to work is the ``SENDGRID_KEY`` variable: set it to 
+your key (in ``.env`` or ``.env.local``).
 
 Each transport will have different environment variables that the library will use
 to configure the *actual* address and authentication for delivery. Some also have
