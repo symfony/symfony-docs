@@ -56,22 +56,22 @@ Active Core Members
 
 * **Mergers Team** (``@symfony/mergers`` on GitHub):
 
-  * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
-    OptionsResolver_ and PropertyAccess_ components;
-
   * **Nicolas Grekas** (`nicolas-grekas`_) can merge into all components,
     bridges and bundles;
 
   * **Christophe Coevoet** (`stof`_) can merge into all components, bridges and
     bundles;
 
+  * **Christian Flothmann** (`xabbuh`_) can merge into all components,
+    bridges and bundles;
+
+  * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
+    OptionsResolver_ and PropertyAccess_ components;
+
   * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_, the Serializer_
     and the WebLink_ components;
 
   * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ and Intl_
-    components;
-
-  * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_, and Form_
     components;
 
   * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_;
