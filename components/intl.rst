@@ -79,6 +79,20 @@ The ``Languages`` class provides access to the name of all languages::
     $language = Languages::getName('fr');
     // => 'French'
 
+If you want to you can also use the ISO 639-2 three-letter language codes instead of
+the ISO 639-1 two-letter codes. (They are here called alpha3 codes.)
+
+    use Symfony\Component\Intl\Languages;
+
+    \Locale::setDefault('en');
+
+    $languages = Languages::getAlpha3Names();
+    // ('languageCode' => 'languageName')
+    // => ['abk' => 'Abkhazian', 'ace' => 'Achinese', ...]
+
+    $language = Languages::getAlpha3Name('fra');
+    // => 'French'
+
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
@@ -93,6 +107,16 @@ If the given locale doesn't exist, the methods trigger a
 to catching the exception, you can also check if a given language code is valid::
 
     $isValidLanguage = Languages::exists($languageCode);
+
+Or if you have a three-letter language code you want to check:
+
+    $isValidLanguage = Languages::alpha3CodeExists($alpha3Code);
+
+You may convert codes between two-letter ISO 639-1 (alpha2) and three-letter ISO 639-2 (alpha3) codes:
+
+    $alpha3Code = Languages::getAlpha3Code($alpha2Code);
+
+    $alpha2Code = Languages::getAlpha2Code($alpha3Code);
 
 .. versionadded:: 4.3
 
@@ -137,19 +161,28 @@ Country Names
 ~~~~~~~~~~~~~
 
 The ``Countries`` class provides access to the name of all countries according
-to the `ISO 3166-1 alpha-2`_ list of officially recognized countries and
-territories::
+to the `ISO 3166-1 alpha-2`_ list and the `ISO 3166-1 alpha-3`_ list
+of officially recognized countries and territories::
 
     use Symfony\Component\Intl\Countries;
 
     \Locale::setDefault('en');
 
+    // Indexed with alpha-2
     $countries = Countries::getNames();
     // ('countryCode' => 'countryName')
     // => ['AF' => 'Afghanistan', 'AX' => 'Åland Islands', ...]
 
+    // Indexed with alhpa-3
+    $countries = Countries::getAlpha3Names();
+    // ('countryCode' => 'countryName')
+    // => ['AFG' => 'Afghanistan', 'ALA' => 'Åland Islands', ...]
+
     $country = Countries::getName('GB');
     // => 'United Kingdom'
+
+    $country = Countries::getAlpha3Name('NOR');
+    // => 'Norway'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
@@ -157,14 +190,28 @@ which defaults to the current default locale::
     $countries = Countries::getNames('de');
     // => ['AF' => 'Afghanistan', 'EG' => 'Ägypten', ...]
 
+    $countries = Countries::getAlpha3Names('de');
+    // => ['AFG' => 'Afghanistan', 'EGY' => 'Ägypten', ...]
+
     $country = Countries::getName('GB', 'de');
+    // => 'Vereinigtes Königreich'
+
+    $country = Countries::getName('GBR', 'de');
     // => 'Vereinigtes Königreich'
 
 If the given country code doesn't exist, the methods trigger a
 :class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
 to catching the exception, you can also check if a given country code is valid::
 
-    $isValidCountry = Countries::exists($countryCode);
+    $isValidCountry = Countries::exists($alpha2Code);
+
+    $isValidCountry = Countries::alpha3CodeExists($alpha2Code);
+
+You may convert codes between two-letter alpha2 and three-letter alpha3 codes:
+
+    $alpha3Code = Countries::getAlpha3Code($alpha2Code);
+
+    $alpha2Code = Countries::getAlpha2Code($alpha3Code);
 
 .. versionadded:: 4.3
 
@@ -356,5 +403,6 @@ Learn more
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+.. _`ISO 3166-1 alpha-3`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
 .. _`UTC/GMT time offsets`: https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
 .. _`daylight saving time (DST)`: https://en.wikipedia.org/wiki/Daylight_saving_time
