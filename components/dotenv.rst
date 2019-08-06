@@ -145,6 +145,17 @@ Use environment variables in values by prefixing variables with ``$``:
     its value will depend on the ``DB_USER`` value defined in other files
     instead of the value defined in this file.
 
+Define a default value in case the environment variable is not set:
+
+.. code-block:: terminal
+
+    DB_USER=
+    DB_PASS=${DB_USER:-root}pass # results in DB_PASS=rootpass
+
+.. versionadded:: 4.4
+
+    The support for default values has been introduced in Symfony 4.4.
+
 Embed commands via ``$()`` (not supported on Windows):
 
 .. code-block:: terminal
