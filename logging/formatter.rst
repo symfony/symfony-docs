@@ -19,7 +19,7 @@ configure your handler to use it:
                 file:
                     type: stream
                     level: debug
-                    formatter: '@monolog.formatter.json'
+                    formatter: 'monolog.formatter.json'
 
     .. code-block:: xml
 
