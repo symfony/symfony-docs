@@ -125,6 +125,8 @@ method is just a helper method that generates the URL for a given route::
 
     $url = $this->generateUrl('app_lucky_number', ['max' => 10]);
 
+.. _controller-redirect:
+
 Redirecting
 ~~~~~~~~~~~
 
@@ -297,7 +299,7 @@ use:
 .. code-block:: terminal
 
     $ php bin/console make:crud Product
-    
+
     created: src/Controller/ProductController.php
     created: src/Form/ProductType.php
     created: templates/product/_delete_form.html.twig
