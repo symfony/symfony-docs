@@ -78,3 +78,20 @@ other information.
 
 .. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`RFC 7239`: http://tools.ietf.org/html/rfc7239
+
+Custom Headers When Using a Reverse Proxy
+-----------------------------------------
+
+Some reverse proxies (like CloudFront with ``CloudFront-Forwarded-Proto``) may force you to use a custom header.
+For instance you have ``Custom-Forwarded-Proto`` instead of ``X-Forwarded-Proto``.
+
+In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value of
+``Custom-Forwarded-Proto`` early enough in your application, i.e. before handling the request::
+
+    // web/app.php
+
+    // ...
+    $_SERVER['HEADER_X_FORWARDED_PROTO'] = $_SERVER['HEADER_CUSTOM_FORWARDED_PROTO'];
+    // ...
+    $response = $kernel->handle($request);
+
