@@ -848,22 +848,24 @@ The transport has a number of options:
 
 Options defined under ``options`` take precedence over ones defined in the DSN.
 
-==================  ===================================  ======================
-     Option         Description                          Default
-==================  ===================================  ======================
-table_name          Name of the table                    messenger_messages
-queue_name          Name of the queue (a column in the   default
-                    table, to use one table for
-                    multiple transports)
-redeliver_timeout   Timeout before retrying a message    3600
-                    that's in the queue but in the
-                    "handling" state (if a worker died
-                    for some reason, this will occur,
-                    eventually you should retry the
-                    message) - in seconds.
-auto_setup          Whether the table should be created
-                    automatically during send / get.     true
-==================  ===================================  ======================
+====================  ====================================  ======================
+     Option           Description                           Default
+====================  ====================================  ======================
+table_name            Name of the table                     messenger_messages
+queue_name            Name of the queue (a column in the    default
+                      table, to use one table for
+                      multiple transports)
+redeliver_timeout     Timeout before retrying a message     3600
+                      that's in the queue but in the
+                      "handling" state (if a worker died
+                      for some reason, this will occur,
+                      eventually you should retry the
+                      message) - in seconds.
+auto_setup            Whether the table should be created
+                      automatically during send / get.      true
+redelivery_max_count  Max count of ignored successive       3
+                      RetryableException
+====================  ====================================  ======================
 
 Redis Transport
 ~~~~~~~~~~~~~~~
