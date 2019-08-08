@@ -79,7 +79,7 @@ must be used instead (where ``XXX`` is the name of the related thing):
 
 .. _contributing-code-conventions-deprecations:
 
-Deprecating code
+Deprecating Code
 ----------------
 
 From time to time, some classes and/or methods are deprecated in the
@@ -170,7 +170,7 @@ Finally, its consequences must be added to the ``UPGRADE.md`` file of the next m
 
 All these tasks are mandatory and must be done in the same pull request.
 
-Removing deprecated code
+Removing Deprecated Code
 ------------------------
 
 Removing deprecated code can only be done once every 2 years, on the next major version of the
