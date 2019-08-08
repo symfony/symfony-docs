@@ -369,7 +369,7 @@ Running the following command will display the full stack trace:
 
 .. code-block:: terminal
 
-    $ SYMFONY_DEPRECATIONS_HELPER='regex=/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
+    $ SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
 
 Time-sensitive Tests
 --------------------

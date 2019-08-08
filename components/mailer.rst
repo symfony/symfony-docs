@@ -40,9 +40,9 @@ The ``$email`` object is created via the :doc:`Mime component </components/mime>
 Transport
 ---------
 
-The only transport that comes pre-installed with mailer is Smtp.
+The only transport that comes pre-installed is SMTP.
 
-Below is the list of other popular providers with built in support.
+Below is the list of other popular providers with built-in support:
 
 ==================  =============================================
 Service             Install with
@@ -55,11 +55,14 @@ Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 ==================  =============================================
 
-For example, suppose you want to use Google's Gmail. First, install it:
+For example, suppose you want to use Google's Gmail SMTP server. First, install
+it:
 
 .. code-block:: terminal
 
     $ composer require symfony/google-mailer
+
+Then, use the SMTP Gmail transport:
 
 .. code-block:: php
 
@@ -69,30 +72,36 @@ For example, suppose you want to use Google's Gmail. First, install it:
     $mailer = new Mailer($transport);
     $mailer->send($email);
 
-Use a DSN
----------
+Each provider provides up to 3 transports: standard SMTP, HTTP (it uses the
+provider's API but the body is created by the mailer component), API (it uses
+the full API of the provider with no control over the body creation -- features
+might be limited as well).
 
-The mailer component provides a convenient way to create transport object from
-DSN string::
+.. _mailer_dsn:
+
+The mailer component provides a convenient way to create a transport from a
+DSN::
 
     use Symfony\Component\Mailer\Transport;
 
     $transport = Transport::fromDsn($dsn);
 
-Where ``$dsn`` as one of the form below.
+Where ``$dsn`` depends on the provider you want to use. For plain SMTP, use
+``smtp://user:pass@example.com`` or ``smtp://sendmail`` to use the ``sendmail``
+binary. For third-party providers, refers to the following table:
 
-- ``smtp://user:pass@gmail``
-- ``smtp://key@sendgrid``
-- ``smtp://null``
-- ``smtp://user:pass@mailgun``
-- ``http://key:domain@mailgun``
-- ``api://id@postmark``
+==================== ================================== ================================== ================================
+ Provider             SMTP                               HTTP                               API
+==================== ================================== ================================== ================================
+ Amazon SES           smtp://ACCESS_KEY:SECRET_KEY@ses   http://ACCESS_KEY:SECRET_KEY@ses   api://ACCESS_KEY:SECRET_KEY@ses
+ Google Gmail         smtp://USERNAME:PASSWORD@gmail     n/a                                n/a
+ Mailchimp Mandrill   smtp://USERNAME:PASSWORD@mandrill  http://KEY@mandrill                api://KEY@mandrill
+ Mailgun              smtp://USERNAME:PASSWORD@mailgun   http://KEY:DOMAIN@mailgun          api://KEY:DOMAIN@mailgun
+ Postmark             smtp://ID:ID@postmark              n/a                                api://KEY@postmark
+ Sendgrid             smtp://apikey:KEY@sendgrid         n/a                                api://KEY@sendgrid
+==================== ================================== ================================== ================================
 
-This provides a unified behavior across all providers.
-Easily switch from SMTP in development to a "real" provider in production
-with same API.
-
-Failover transport
+Failover Transport
 ------------------
 
 You can create failover transport with the help of `||` operator::
@@ -110,11 +119,11 @@ you can use the ``&&`` operator between the transports::
 
     $dsn = 'api://id@postmark && smtp://key@sendgrid'
 
-Async
------
+Sending emails asynchronously
+-----------------------------
 
-If you want to use the async functionality you need to install the
-:doc:`Messenger component </components/messenger>`.
+If you want to send emails asynchronously, install the :doc:`Messenger component
+</components/messenger>`.
 
 .. code-block:: terminal
 
@@ -144,11 +153,13 @@ Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
     ]);
 
     $mailer = new Mailer($transport, $bus);
+    $mailer->send($email);
 
+    // you can pass an optional Envelope
     $mailer->send($email, new SmtpEnvelope(
         new Address('sender@example.com'),
         [
-            new Address('recepient@example.com'),
+            new Address('recipient@example.com'),
         ]
     ));
 

@@ -28,6 +28,11 @@ can deliver emails over ``smtp`` by configuring your ``.env`` file:
     # .env
     MAILER_DSN=smtp://user:pass@smtp.example.com
 
+.. warning::
+
+    If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
+    warned that the DSN format is different.
+
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -74,6 +79,10 @@ to configure the *actual* address and authentication for delivery. Some also hav
 options that can be configured with query parameters on end of the ``MAILER_DSN`` -
 like ``?region=`` for Amazon SES. Some transports support sending via ``http``
 or ``smtp`` - both work the same, but ``http`` is recommended when available.
+
+.. tip::
+
+    Check the :ref:`DSN formats <mailer_dsn>` for all supported providers.
 
 Creating & Sending Messages
 ---------------------------
