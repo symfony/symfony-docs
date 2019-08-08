@@ -29,8 +29,7 @@ The Symfony Core groups, in descending order of priority, are as follows:
 
 2. **Mergers Team**
 
-* Merge pull requests for the component or components on which they have been
-  granted privileges.
+* Merge pull requests on the main Symfony repository.
 
 In addition, there are other groups created to manage specific topics:
 
@@ -38,6 +37,10 @@ In addition, there are other groups created to manage specific topics:
 
 * Manage the whole security process (triaging reported vulnerabilities, fixing
   the reported issues, coordinating the release of security fixes, etc.)
+
+**Recipes Team**
+
+* Manage the recipes in the main and contrib recipe repositories.
 
 **Documentation Team**
 
@@ -52,49 +55,29 @@ Active Core Members
 
 * **Mergers Team** (``@symfony/mergers`` on GitHub):
 
-  * **Nicolas Grekas** (`nicolas-grekas`_) can merge into all components,
-    bridges and bundles;
-
-  * **Christophe Coevoet** (`stof`_) can merge into all components, bridges and
-    bundles;
-
-  * **Christian Flothmann** (`xabbuh`_) can merge into all components,
-    bridges and bundles;
-
-  * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
-    OptionsResolver_ and PropertyAccess_ components;
-
-  * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_ and the Serializer_
-    component;
-
-  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ and Intl_
-    components;
-
-  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_;
-
-  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component;
-
-  * **Ryan Weaver** (`weaverryan`_) can merge into the Security_ component and
-    the SecurityBundle_;
-
-  * **Robin Chalas** (`chalasr`_) can merge into the Console_ and Security_
-    components and the SecurityBundle_;
-
-  * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
-    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components;
-
-  * **Tobias Nyholm** (`Nyholm`_) manages the official and contrib recipes
-    repositories;
-
-  * **Samuel Rozé** (`sroze`_) can merge into the Messenger_ component.
-
-  * **Yonel Ceruto** (`yceruto`_) can merge into the ErrorRenderer,
-    OptionsResolver_, and Form_ components and TwigBundle_.
+  * **Nicolas Grekas** (`nicolas-grekas`_);
+  * **Christophe Coevoet** (`stof`_);
+  * **Christian Flothmann** (`xabbuh`_);
+  * **Tobias Schultze** (`Tobion`_);
+  * **Kévin Dunglas** (`dunglas`_);
+  * **Jakub Zalas** (`jakzal`_);
+  * **Javier Eguiluz** (`javiereguiluz`_);
+  * **Grégoire Pineau** (`lyrixx`_);
+  * **Ryan Weaver** (`weaverryan`_);
+  * **Robin Chalas** (`chalasr`_);
+  * **Maxime Steinhausser** (`ogizanagi`_);
+  * **Samuel Rozé** (`sroze`_);
+  * **Yonel Ceruto** (`yceruto`_).
 
 * **Security Team** (``@symfony/security`` on GitHub):
 
   * **Fabien Potencier** (`fabpot`_);
   * **Michael Cullum** (`michaelcullum`_).
+
+* **Recipes Team**:
+
+  * **Fabien Potencier** (`fabpot`_);
+  * **Tobias Nyholm** (`Nyholm`_).
 
 * **Documentation Team** (``@symfony/team-symfony-docs`` on GitHub):
 
@@ -162,11 +145,11 @@ A pull request **can be merged** if:
 
 * It is a minor change [1]_;
 
-* Enough time was given for peer reviews (at least 2 days for "regular"
-  pull requests, and 4 days for pull requests with "a significant impact");
+* Enough time was given for peer reviews;
 
-* At least the component's **Merger** or two other Core members voted ``+1``
-  and no Core member voted ``-1``.
+* At least two **Merger Team** members voted ``+1`` (only one if the submitter
+  is part of the Merger team) and no Core member voted ``-1`` (via Github
+  reviews or as comments).
 
 Pull Request Merging Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -191,44 +174,6 @@ discretion of the **Project Leader**.
 .. [1] Minor changes comprise typos, DocBlock fixes, code standards
        violations, and minor CSS, JavaScript and HTML modifications.
 
-.. _PhpUnitBridge: https://github.com/symfony/phpunit-bridge
-.. _BrowserKit: https://github.com/symfony/browser-kit
-.. _Cache: https://github.com/symfony/cache
-.. _Config: https://github.com/symfony/config
-.. _Console: https://github.com/symfony/console
-.. _Debug: https://github.com/symfony/debug
-.. _DebugBundle: https://github.com/symfony/debug-bundle
-.. _DependencyInjection: https://github.com/symfony/dependency-injection
-.. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
-.. _EventDispatcher: https://github.com/symfony/event-dispatcher
-.. _DomCrawler: https://github.com/symfony/dom-crawler
-.. _ErrorRenderer: https://github.com/symfony/error-renderer
-.. _Form: https://github.com/symfony/form
-.. _HttpFoundation: https://github.com/symfony/http-foundation
-.. _HttpKernel: https://github.com/symfony/http-kernel
-.. _Icu: https://github.com/symfony/icu
-.. _Intl: https://github.com/symfony/intl
-.. _LDAP: https://github.com/symfony/ldap
-.. _Locale: https://github.com/symfony/locale
-.. _Messenger: https://github.com/symfony/messenger
-.. _MonologBridge: https://github.com/symfony/monolog-bridge
-.. _OptionsResolver: https://github.com/symfony/options-resolver
-.. _Process: https://github.com/symfony/process
-.. _PropertyAccess: https://github.com/symfony/property-access
-.. _PropertyInfo: https://github.com/symfony/property-info
-.. _Routing: https://github.com/symfony/routing
-.. _Serializer: https://github.com/symfony/serializer
-.. _Translation: https://github.com/symfony/translation
-.. _Security: https://github.com/symfony/security
-.. _SecurityBundle: https://github.com/symfony/security-bundle
-.. _Stopwatch: https://github.com/symfony/stopwatch
-.. _TwigBridge: https://github.com/symfony/twig-bridge
-.. _TwigBundle: https://github.com/symfony/twig-bundle
-.. _Validator: https://github.com/symfony/validator
-.. _VarDumper: https://github.com/symfony/var-dumper
-.. _Workflow: https://github.com/symfony/workflow
-.. _Yaml: https://github.com/symfony/yaml
-.. _WebProfilerBundle: https://github.com/symfony/web-profiler-bundle
 .. _`symfony-docs repository`: https://github.com/symfony/symfony-docs
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
