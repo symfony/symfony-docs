@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by tony-tran at 2019-08-05T13:26:38Z
+
+It's the same from 4.1 to 4.4
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-08-05T15:11:53Z
+
+Thanks for this contribution Tony. Please note that if this change is approved, we'll merge it in 4.3 branch, the oldest maintained branch where this is applicable (see https://symfony.com/roadmap#maintained-symfony-branches).
+
+---------------------------------------------------------------------------
+
+by tony-tran at 2019-08-05T15:12:43Z
+
+My bad, this PR is for 4.2 minimum ....
+
+---------------------------------------------------------------------------
+
+by tony-tran at 2019-08-05T15:13:40Z
+
+Yes thank you @javiereguiluz. Do I have to change the target of the PR ?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-06T06:51:55Z
+
+> Yes thank you @javiereguiluz. Do I have to change the target of the PR ?
+
+No we take care of the switch, thank you 👍
