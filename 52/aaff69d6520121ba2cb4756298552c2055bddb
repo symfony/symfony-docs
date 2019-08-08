@@ -1,0 +1,59 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-07-29T15:00:06Z
+
+Reading the related issue it occurs to me that the reporter was referring to options of the `DateIntervalType`. Maybe we need to add a sentence like there too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-29T16:02:09Z
+
+I've added more examples in the DateIntervalType docs. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-30T07:39:27Z
+
+I tested in the Symfony Demo app:
+
+```php
+->add('foo', DateIntervalType::class, [
+    'mapped' => false,
+])
+```
+
+![image](https://user-images.githubusercontent.com/73419/62110053-d8ece180-b2ad-11e9-8285-f5523997d6de.png)
+
+```php
+->add('foo', DateIntervalType::class, [
+    'mapped' => false,
+    'months' => range(1, 12),
+])
+```
+
+![image](https://user-images.githubusercontent.com/73419/62110063-ddb19580-b2ad-11e9-91ab-b2514baa1a89.png)
+
+```php
+->add('foo', DateIntervalType::class, [
+    'mapped' => false,
+    'months' => array_combine(range(1, 12), range(1, 12)),
+])
+```
+
+![image](https://user-images.githubusercontent.com/73419/62110069-e1ddb300-b2ad-11e9-9e7e-f9e7b7512c51.png)
+
+---------------------------------------------------------------------------
+
+by adrx at 2019-07-30T10:26:30Z
+
+Your test proves my point about the comment at line 186 (not 187 as my first comment said) of dateinterval.rst.
+
+The values displayed to users when ‘months’ is set to range(1, 12) range from 0 to 11, not 0 to 12 as your comment says.
+
+BTW, the same sort of error appears in line 200 as well.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-30T14:45:24Z
+
+@adrx you are right! I was looking at the wrong comments! Sorry.
