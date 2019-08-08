@@ -50,9 +50,9 @@ Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 ==================  =============================================
 
-Each library includes a :ref:`Flex recipe <flex-recipe>` that will add example configuration
-to your ``.env`` file. For example, suppose you want to use SendGrid. First,
-install it:
+Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
+example configuration to your ``.env`` file. For example, suppose you want to
+use SendGrid. First, install it:
 
 .. code-block:: terminal
 

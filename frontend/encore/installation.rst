@@ -16,7 +16,7 @@ project:
     $ composer require symfony/webpack-encore-bundle
     $ yarn install
 
-If you are using :doc:`Symfony Flex </setup/flex>`, this will install and enable
+If you are using :ref:`Symfony Flex <symfony-flex>`, this will install and enable
 the `WebpackEncoreBundle`_, create the ``assets/`` directory, add a
 ``webpack.config.js`` file, and add ``node_modules/`` to ``.gitignore``. You can
 skip the rest of this article and go write your first JavaScript and CSS by
