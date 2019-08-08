@@ -32,10 +32,6 @@ The Symfony Core groups, in descending order of priority, are as follows:
 * Merge pull requests for the component or components on which they have been
   granted privileges.
 
-3. **Deciders Team**
-
-* Decide to merge or reject a pull request.
-
 In addition, there are other groups created to manage specific topics:
 
 **Security Team**
@@ -95,11 +91,6 @@ Active Core Members
   * **Yonel Ceruto** (`yceruto`_) can merge into the ErrorRenderer,
     OptionsResolver_, and Form_ components and TwigBundle_.
 
-* **Deciders Team** (``@symfony/deciders`` on GitHub):
-
-  * **Jordi Boggiano** (`seldaek`_);
-  * **Lukas Kahwe Smith** (`lsmith77`_).
-
 * **Security Team** (``@symfony/security`` on GitHub):
 
   * **Fabien Potencier** (`fabpot`_);
@@ -123,7 +114,8 @@ Symfony contributions:
 
 * **Bernhard Schussek** (`webmozart`_);
 * **Abdellatif AitBoudad** (`aitboudad`_);
-* **Romain Neutron**.
+* **Romain Neutron**;
+* **Jordi Boggiano** (`Seldaek`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
