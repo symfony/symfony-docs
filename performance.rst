@@ -125,14 +125,13 @@ deployment process too):
 
 .. code-block:: terminal
 
-    $ composer dump-autoload --optimize --no-dev --classmap-authoritative
+    $ composer dump-autoload --no-dev --classmap-authoritative
 
-* ``--optimize`` dumps every PSR-0 and PSR-4 compatible class used in your
-  application;
 * ``--no-dev`` excludes the classes that are only needed in the development
-  environment (e.g. tests);
-* ``--classmap-authoritative`` prevents Composer from scanning the file
-  system for classes that are not found in the class map.
+  environment (i.e. ``require-dev`` dependencies and ``autoload-dev`` rules);
+* ``--classmap-authoritative`` creates a class map for PSR-0 and PSR-4 compatible classes
+  used in your application and prevents Composer from scanning the file system for
+  classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
 
 Learn more
 ----------
