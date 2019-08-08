@@ -79,8 +79,8 @@ must be used instead (where ``XXX`` is the name of the related thing):
 
 .. _contributing-code-conventions-deprecations:
 
-Deprecations
-------------
+Deprecating code
+----------------
 
 From time to time, some classes and/or methods are deprecated in the
 framework; that happens when a feature implementation cannot be changed
@@ -88,22 +88,38 @@ because of backward compatibility issues, but we still want to propose a
 "better" alternative. In that case, the old implementation can simply be
 **deprecated**.
 
+Deprecations must only be introduced on the next minor version of the impacted
+component (or bundle, or bridge, or contract).
+They can exceptionally be introduced on previous supported versions if they are critical.
+
+A new class (or interface, or trait) cannot be introduced as deprecated, or
+contain deprecated methods.
+
+A new method cannot be introduced as deprecated.
+
 A feature is marked as deprecated by adding a ``@deprecated`` phpdoc to
 relevant classes, methods, properties, ...::
 
     /**
-     * @deprecated since vendor-name/package-name 2.8, to be removed in 3.0. Use XXX instead.
+     * @deprecated since Symfony 2.8.
      */
 
-The deprecation message should indicate the version when the class/method was
-deprecated, the version when it will be removed, and whenever possible, how
-the feature was replaced.
+The deprecation message must indicate the version in which the feature was deprecated,
+and whenever possible, how it was replaced::
 
-A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with
-the migration starting one or two minor versions before the version where the
-feature will be removed (depending on the criticality of the removal)::
+    /**
+     * @deprecated since Symfony 2.8, use Replacement instead.
+     */
 
-    @trigger_error('XXX() is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0. Use XXX instead.', E_USER_DEPRECATED);
+When the replacement is in another namespace than the deprecated class, its FQCN must be used::
+
+    /**
+     * @deprecated since Symfony 2.8, use A\B\Replacement instead.
+     */
+
+A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with the migration::
+
+    @trigger_error(sprintf('The "%s" class is deprecated since Symfony 2.8, use "%s" instead.', Deprecated::class, Replacement::class), E_USER_DEPRECATED);
 
 Without the `@-silencing operator`_, users would need to opt-out from deprecation
 notices. Silencing swaps this behavior and allows users to opt-in when they are
@@ -114,19 +130,58 @@ the Web Debug Toolbar or by the PHPUnit bridge).
 
 When deprecating a whole class the ``trigger_error()`` call should be placed
 between the namespace and the use declarations, like in this example from
-`ArrayParserCache`_::
+`ServiceRouterLoader`_::
 
-    namespace Symfony\Component\ExpressionLanguage\ParserCache;
+    namespace Symfony\Component\Routing\Loader\DependencyInjection;
 
-    @trigger_error('The '.__NAMESPACE__.'\ArrayParserCache class is deprecated since version 3.2 and will be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.', E_USER_DEPRECATED);
+    use Symfony\Component\Routing\Loader\ContainerLoader;
 
-    use Symfony\Component\ExpressionLanguage\ParsedExpression;
+    @trigger_error(sprintf('The "%s" class is deprecated since Symfony 4.4, use "%s" instead.', ServiceRouterLoader::class, ContainerLoader::class), E_USER_DEPRECATED);
 
     /**
-     * @author Adrien Brault <adrien.brault@gmail.com>
-     *
-     * @deprecated since Symfony 3.2, to be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.
+     * @deprecated since Symfony 4.4, use Symfony\Component\Routing\Loader\ContainerLoader instead.
      */
-    class ArrayParserCache implements ParserCacheInterface
+    class ServiceRouterLoader extends ObjectRouteLoader
 
-.. _`ArrayParserCache`: https://github.com/symfony/symfony/blob/3.2/src/Symfony/Component/ExpressionLanguage/ParserCache/ArrayParserCache.php
+.. _`ServiceRouterLoader`: https://github.com/symfony/symfony/blob/4.4/src/Symfony/Component/Routing/Loader/DependencyInjection/ServiceRouterLoader.php
+
+The deprecation must be added to the ``CHANGELOG.md`` file of the impacted component::
+
+    4.4.0
+    -----
+
+    * Deprecated the `Deprecated` class, use `Replacement` instead.
+
+It must also be added to the ``UPGRADE.md`` file of the targeted minor version
+(``UPGRADE-4.4.md`` in our example)::
+
+    DependencyInjection
+    -------------------
+
+    * Deprecated the `Deprecated` class, use `Replacement` instead.
+
+Finally, its consequences must be added to the ``UPGRADE.md`` file of the next major version
+(``UPGRADE-5.0.md`` in our example)::
+
+    DependencyInjection
+    -------------------
+
+    * Removed the `Deprecated` class, use `Replacement` instead.
+
+All these tasks are mandatory and must be done in the same pull request.
+
+Removing deprecated code
+------------------------
+
+Removing deprecated code can only be done once every 2 years, on the next major version of the
+impacted component (``master`` branch).
+
+When removing deprecated code, the consequences of the deprecation must be added to the ``CHANGELOG.md`` file
+of the impacted component::
+
+    5.0.0
+    -----
+
+    * Removed the `Deprecated` class, use `Replacement` instead.
+
+This task is mandatory and must be done in the same pull request.
