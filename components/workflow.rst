@@ -50,7 +50,7 @@ these statuses are called **places**. You can define the workflow like this::
     ;
 
     $singleState = true; // true if the subject can be in only one state at a given time
-    $property = 'currentState' // subject property name where the state is stored
+    $property = 'currentState'; // subject property name where the state is stored
     $marking = new MethodMarkingStore($singleState, $property);
     $workflow = new Workflow($definition, $marking);
 
