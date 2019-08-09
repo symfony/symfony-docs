@@ -188,6 +188,8 @@ provide a callback function to dynamically generate suggestions::
     // ...
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $helper = $this->getHelper('question');
+
         // This function is called whenever the input changes and new
         // suggestions are needed.
         $callback = function (string $userInput): array {
