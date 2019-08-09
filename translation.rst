@@ -169,7 +169,7 @@ For information on where these files should be located, see
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
-the message inside your `templates <Translations in Templates>`.
+the message inside your :ref:`templates <Translations in Templates>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
