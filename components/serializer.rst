@@ -655,7 +655,7 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $dateCallback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
         return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ISO8601) : '';
     };
 
@@ -664,7 +664,7 @@ When serializing, you can set a callback to format a specific object property::
             'createdAt' => $dateCallback,
         ],
     ];
-    
+
     $normalizer = new GetSetMethodNormalizer(null, null, null, null, null, $defaultContext);
 
     $serializer = new Serializer([$normalizer], [$encoder]);
@@ -676,6 +676,26 @@ When serializing, you can set a callback to format a specific object property::
 
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
+Also, you can pass an \ArrayObject or its subclass to callbacks context field to get more flexibility::
+
+    $defaultContext = [
+        AbstractNormalizer::CALLBACKS => new class() extends \ArrayObject {
+            public function offsetExists($index)
+            {
+                return true;
+            }
+
+            public function offsetGet($index)
+            {
+                return function () use ($index) {
+                    return $index;
+                };
+            }
+        }
+    ];
+
+    $normalizer = new GetSetMethodNormalizer(null, null, null, null, null, $defaultContext);
 
 .. deprecated:: 4.2
 
