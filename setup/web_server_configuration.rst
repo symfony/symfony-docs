@@ -294,6 +294,13 @@ The **minimum configuration** to get your application running under Nginx is:
             # try to serve file directly, fallback to index.php
             try_files $uri /index.php$is_args$args;
         }
+        
+        # optionally disable falling back to php script for the asset directories
+        # which will allow nginx to return a 404 error when files are
+        # not found instead of passing the request to Symfony
+        location /bundles {
+            try_files $uri $uri/ =404;
+        }
 
         location ~ ^/index\.php(/|$) {
             fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
