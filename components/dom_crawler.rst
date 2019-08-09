@@ -511,6 +511,9 @@ To work with multi-dimensional fields::
         <input name="multi[]"/>
         <input name="multi[]"/>
         <input name="multi[dimensional]"/>
+        <input name="multi[dimensional][]" value="1"/>
+        <input name="multi[dimensional][]" value="2"/>
+        <input name="multi[dimensional][]" value="3"/>
     </form>
 
 Pass an array of values::
@@ -522,6 +525,11 @@ Pass an array of values::
     $form->setValues(['multi' => [
         1             => 'value',
         'dimensional' => 'an other value',
+    ]]);
+
+    // tick multiple checkboxes at once
+    $form->setValues(['multi' => [
+        'dimensional' => [1, 3] // it uses the input value to determine which checkbox to tick
     ]]);
 
 This is great, but it gets better! The ``Form`` object allows you to interact
