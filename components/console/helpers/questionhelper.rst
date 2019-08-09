@@ -214,10 +214,6 @@ provide a callback function to dynamically generate suggestions::
         $filePath = $helper->ask($input, $output, $question);
     }
 
-.. versionadded:: 4.3
-
-    The ``setAutocompleterCallback()`` method was introduced in Symfony 4.3.
-
 Do not Trim the Answer
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -237,10 +233,6 @@ You can also specify if you want to not trim the answer by setting it directly w
         // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
         $name = $helper->ask($input, $output, $question);
     }
-
-.. versionadded:: 4.4
-
-    The ``setTrimmable()`` method was introduced in Symfony 4.4.
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
