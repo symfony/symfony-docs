@@ -30,7 +30,7 @@ stores the configuration of every package installed in your application.
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
 
-When using :doc:`Symfony Flex </setup/flex>`, which is enabled by default in
+When using :ref:`Symfony Flex <symfony-flex>`, which is enabled by default in
 Symfony applications, packages update the ``bundles.php`` file and create new
 files in ``config/packages/`` automatically during their installation. For
 example, this is the default file created by the "API Platform" package:
@@ -555,7 +555,7 @@ This is for example the content of the ``.env`` file to define the value of the
 
 In addition to your own env vars, this ``.env`` file also contains the env vars
 defined by the third-party packages installed in your application (they are
-added automatically by :doc:`Symfony Flex </setup/flex>` when installing packages).
+added automatically by :ref:`Symfony Flex <symfony-flex>` when installing packages).
 
 .. _configuration-env-var-in-prod:
 
@@ -565,7 +565,7 @@ Configuring Environment Variables in Production
 In production, the ``.env`` files are also parsed and loaded on each request so
 you can override the env vars already defined in the server. In order to improve
 performance, you can run the ``dump-env`` command (available when using
-:doc:`Symfony Flex </setup/flex>` 1.2 or later).
+:ref:`Symfony Flex <symfony-flex>` 1.2 or later).
 
 This command parses all the ``.env`` files once and compiles their contents into
 a new PHP-optimized file called  ``.env.local.php``. From that moment, Symfony
