@@ -14,7 +14,7 @@ transparent. This component is based on the `JSR303 Bean Validation specificatio
 Installation
 ------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the validator before using it:
 
 .. code-block:: terminal
