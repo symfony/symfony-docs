@@ -37,7 +37,7 @@ file::
 
 .. tip::
 
-    In a default Symfony application that uses :doc:`Symfony Flex </setup/flex>`,
+    In a default Symfony application that uses :ref:`Symfony Flex <symfony-flex>`,
     bundles are enabled/disabled automatically for you when installing/removing
     them, so you don't need to look at or edit this ``bundles.php`` file.
 

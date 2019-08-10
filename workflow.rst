@@ -8,7 +8,7 @@ some basic theory and concepts about workflows and state machines.
 Installation
 ------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the workflow feature before using it:
 
 .. code-block:: terminal
