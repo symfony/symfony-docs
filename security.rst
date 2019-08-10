@@ -124,10 +124,9 @@ command will pre-configure this for you:
             encoders:
                 # use your user class name here
                 App\Entity\User:
-                    # bcrypt or sodium are recommended
-                    # sodium is more secure, but requires PHP 7.2 or the Sodium extension
-                    algorithm: bcrypt
-                    cost: 12
+                    # Use native password encoder
+                    # This value auto-selects the best possible hashing algorithm.
+                    algorithm: auto
 
     .. code-block:: xml
 
