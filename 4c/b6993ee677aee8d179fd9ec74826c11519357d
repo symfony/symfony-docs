@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-12T07:43:01Z
+
+> Is it common to add services: and parameters: inside config/packages/*.yaml instead of config/services.yaml ?
+
+I thought the same when doing this change... will change then
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-08-12T09:06:05Z
+
+@OskarStark this is an edge-case ... so I'd say it's better to keep it in the services file instead of the specific package config.
