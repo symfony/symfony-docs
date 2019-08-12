@@ -429,3 +429,17 @@
 /setup/composer /setup
 /security/security_checker /setup
 /service_container/parameters /configuration
+/routing/generate_url_javascript /routing
+/routing/slash_in_parameter /routing
+/routing/scheme /routing
+/routing/optional_placeholders /routing
+/routing/conditions /routing
+/routing/requirements /routing
+/routing/redirect_trailing_slash /routing
+/routing/debug /routing
+/routing/service_container_parameters /routing
+/routing/redirect_in_config /routing
+/routing/external_resources /routing
+/routing/hostname_pattern /routing
+/routing/extra_information /routing
+/console/request_context /routing

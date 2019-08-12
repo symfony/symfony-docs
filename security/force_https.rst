@@ -85,8 +85,10 @@ like ``requires_channel: '%env(SECURE_SCHEME)%'``. In your ``.env`` file, set
 See :doc:`/security/access_control` for more details about ``access_control``
 in general.
 
-It is also possible to specify using HTTPS in the routing configuration,
-see :doc:`/routing/scheme` for more details.
+.. note::
+
+    An alternative way to enforce HTTP or HTTPS is to use
+    :ref:`the scheme option <routing-force-https>` of a route or group of routes.
 
 .. note::
 

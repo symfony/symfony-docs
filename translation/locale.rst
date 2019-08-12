@@ -59,8 +59,8 @@ this violates a fundamental rule of the Web: that a particular URL returns
 the same resource regardless of the user. To further muddy the problem, which
 version of the content would be indexed by search engines?
 
-A better policy is to include the locale in the URL. This is fully-supported
-by the routing system using the special ``_locale`` parameter:
+A better policy is to include the locale in the URL using the
+:ref:`special _locale parameter <routing-locale-parameter>`:
 
 .. configuration-block::
 
@@ -114,8 +114,8 @@ application.
 
 .. tip::
 
-    Read :doc:`/routing/service_container_parameters` to learn how to avoid
-    hardcoding the ``_locale`` requirement in all your routes.
+    Define the locale requirement as a :ref:`container parameter <configuration-parameters>`
+    to avoid hardcoding its value in all your routes.
 
 .. index::
     single: Translations; Fallback and default locale

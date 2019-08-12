@@ -4,6 +4,90 @@
 How to Create a custom Route Loader
 ===================================
 
+Simple applications can define all their routes in a single configuration file -
+usually ``config/routes.yaml`` (see :ref:`routing-creating-routes`).
+However, in most applications it's common to import routes definitions from
+different resources: PHP annotations in controller files, YAML, XML or PHP
+files stored in some directory, etc.
+
+Built-in Route Loaders
+----------------------
+
+Symfony provides several route loaders for the most common needs:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        app_file:
+            # loads routes from the given routing file stored in some bundle
+            resource: '@AcmeBundle/Resources/config/routing.yaml'
+
+        app_annotations:
+            # loads routes from the PHP annotations of the controllers found in that directory
+            resource: '../src/Controller/'
+            type:     annotation
+
+        app_directory:
+            # loads routes from the YAML, XML or PHP files found in that directory
+            resource: '../legacy/routing/'
+            type:     directory
+
+        app_bundle:
+            # loads routes from the YAML, XML or PHP files found in some bundle directory
+            resource: '@AcmeOtherBundle/Resources/config/routing/'
+            type:     directory
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <!-- loads routes from the given routing file stored in some bundle -->
+            <import resource="@AcmeBundle/Resources/config/routing.yaml"/>
+
+            <!-- loads routes from the PHP annotations of the controllers found in that directory -->
+            <import resource="../src/Controller/" type="annotation"/>
+
+            <!-- loads routes from the YAML or XML files found in that directory -->
+            <import resource="../legacy/routing/" type="directory"/>
+
+            <!-- loads routes from the YAML or XML files found in some bundle directory -->
+            <import resource="@AcmeOtherBundle/Resources/config/routing/" type="directory"/>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            // loads routes from the given routing file stored in some bundle
+            $routes->import('@AcmeBundle/Resources/config/routing.yaml');
+
+            // loads routes from the PHP annotations of the controllers found in that directory
+            $routes->import('../src/Controller/', 'annotation');
+
+            // loads routes from the YAML or XML files found in that directory
+            $routes->import('../legacy/routing/', 'directory');
+
+            // loads routes from the YAML or XML files found in some bundle directory
+            $routes->import('@AcmeOtherBundle/Resources/config/routing/', 'directory');
+        };
+
+.. note::
+
+    When importing resources, the key (e.g. ``app_file``) is the name of collection.
+    Just be sure that it's unique per file so no other lines override it.
+
+If your application needs are different, you can create your own custom route
+loader as explained in the next section.
+
 What is a Custom Route Loader
 -----------------------------
 
