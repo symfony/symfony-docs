@@ -211,6 +211,15 @@ of the service whose ID is ``admin_route_loader``. Your service doesn't have to
 extend or implement any special class, but the called method must return a
 :class:`Symfony\\Component\\Routing\\RouteCollection` object.
 
+If you're using :ref:`autoconfigure <services-autoconfigure>`, your class should
+implement the :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\RouteLoaderInterface`
+interface to be tagged automatically. If you're **not using autoconfigure**,
+tag it manually with ``routing.route_loader``.
+
+.. deprecated:: 4.4
+
+    Not tagging or implementing your route loader was deprecated in Symfony 4.4.
+
 .. note::
 
     The routes defined using service route loaders will be automatically
