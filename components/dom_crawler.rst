@@ -370,16 +370,28 @@ This behavior is best illustrated with examples::
 Links
 ~~~~~
 
-To find a link by name (or a clickable image by its ``alt`` attribute), use
-the ``selectLink()`` method on an existing crawler. This returns a ``Crawler``
-instance with just the selected link(s). Calling ``link()`` gives you a special
-:class:`Symfony\\Component\\DomCrawler\\Link` object::
+To find a link by its ``id`` or its ``class`` attribute(s), use the ``filter()``
+method on an existing crawler. To find a link by name (or a clickable image by
+its ``alt`` attribute), use the ``selectLink()`` method on an existing crawler.
+This returns a ``Crawler`` instance with just the selected link(s). Calling
+``link()`` gives you a special :class:`Symfony\\Component\\DomCrawler\\Link` object::
 
-    $linksCrawler = $crawler->selectLink('Go elsewhere...');
-    $link = $linksCrawler->link();
+    // select the link by its id
+    $linksByIdCrawler = $crawler->filter('#your-link');
+    $link = $linksByIdCrawler->link();
+
+    // select the link by its class
+    $linksByClassCrawler = $crawler->filter('.link');
+    $link = $linksByClassCrawler->link();
+
+    // select the link by its name
+    $linksByNameCrawler = $crawler->selectLink('Go elsewhere...');
+    $linkByName = $linksCrawler->link();
 
     // or do this all at once
-    $link = $crawler->selectLink('Go elsewhere...')->link();
+    $linkById = $crawler->filter('#your-link')->link();
+    $linkByClass = $crawler->filter('.link')->link();
+    $linkByName = $crawler->selectLink('Go elsewhere...')->link();
 
 The :class:`Symfony\\Component\\DomCrawler\\Link` object has several useful
 methods to get more information about the selected link itself::
