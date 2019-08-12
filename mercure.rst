@@ -283,10 +283,10 @@ by using the ``AbstractController::addLink`` helper method::
     // src/Controller/DiscoverController.php
     namespace App\Controller;
 
-    use Fig\Link\Link;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\WebLink\LInk;
 
     class DiscoverController extends AbstractController
     {
@@ -383,12 +383,12 @@ And here is the controller::
     // src/Controller/DiscoverController.php
     namespace App\Controller;
 
-    use Fig\Link\Link;
     use Lcobucci\JWT\Builder;
     use Lcobucci\JWT\Signer\Hmac\Sha256;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\WebLink\Link;
 
     class DiscoverController extends AbstractController
     {
