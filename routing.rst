@@ -1928,8 +1928,8 @@ provides some functions to generate both relative and absolute URLs:
 Generating URLs in JavaScript
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your JavaScript code is included in a Twig template, you can use the same
-``path()`` and ``url()`` functions to generate the URLs and store them in
+If your JavaScript code is included in a Twig template, you can use the
+``path()`` and ``url()`` Twig functions to generate the URLs and store them in
 JavaScript variables. The ``escape()`` function is needed to escape any
 non-JavaScript-safe values:
 
@@ -2095,7 +2095,7 @@ method) or globally with these configuration parameters:
         $container->setParameter('asset.request_context.secure', true);
 
 Outside of console commands, use the ``schemes`` option to define the scheme of
-each route explicitly::
+each route explicitly:
 
 .. configuration-block::
 
