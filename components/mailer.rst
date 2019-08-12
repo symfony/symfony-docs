@@ -63,9 +63,7 @@ it:
 
     $ composer require symfony/google-mailer
 
-Then, use the SMTP Gmail transport:
-
-.. code-block:: php
+Then, use the SMTP Gmail transport::
 
     use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
 
