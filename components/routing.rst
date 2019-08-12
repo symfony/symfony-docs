@@ -253,8 +253,8 @@ Last but not least there are
 route definitions from class annotations::
 
     use Doctrine\Common\Annotations\AnnotationReader;
-    use Symfony\Component\Config\FileLocator;
     use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader;
+    use Symfony\Component\Config\FileLocator;
     use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
 
     $loader = new AnnotationDirectoryLoader(
