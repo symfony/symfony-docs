@@ -350,6 +350,4 @@ time and again, you can have just one (or several) listeners deal with them.
     and takes measures like redirecting the user to the login page, logging them
     out and other things.
 
-.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
-.. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php

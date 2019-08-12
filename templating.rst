@@ -805,7 +805,4 @@ Learn more
 .. _`tags`: https://twig.symfony.com/doc/2.x/tags/index.html
 .. _`filters`: https://twig.symfony.com/doc/2.x/filters/index.html
 .. _`functions`: https://twig.symfony.com/doc/2.x/functions/index.html
-.. _`add your own extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
 .. _`with_context`: https://twig.symfony.com/doc/2.x/functions/include.html
-.. _`include() function`: https://twig.symfony.com/doc/2.x/functions/include.html
-.. _`{% include %} tag`: https://twig.symfony.com/doc/2.x/tags/include.html

@@ -180,7 +180,7 @@ before it is returned.
 
 Due to current limitations of the PHP language, there are no
 post-authorization capabilities built into the core Security component.
-However, there is an experimental JMSSecurityExtraBundle_ which adds these
+However, there is an experimental `JMSSecurityExtraBundle`_ which adds these
 capabilities. See its documentation for further information on how this is
 accomplished.
 
@@ -201,4 +201,4 @@ then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.
 
 .. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
-.. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle
+.. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle

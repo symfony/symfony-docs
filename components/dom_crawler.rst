@@ -578,7 +578,6 @@ the whole form or specific field(s)::
     $form['country']->select('Invalid value');
 
 .. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
-.. _Packagist: https://packagist.org/packages/symfony/dom-crawler
 
 Learn more
 ----------

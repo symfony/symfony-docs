@@ -225,7 +225,7 @@ in mind the following:
     as defined in `PSR-1`_ and `PSR-2`_.
 
     A status is posted below the pull request description with a summary
-    of any problems it detects or any Travis CI build failures.
+    of any problems it detects or any `Travis-CI`_ build failures.
 
 .. tip::
 
@@ -415,12 +415,8 @@ before merging.
 
 .. _ProGit: https://git-scm.com/book
 .. _GitHub: https://github.com/join
-.. _`GitHub's Documentation`: https://help.github.com/articles/ignoring-files
+.. _`GitHub's documentation`: https://help.github.com/articles/ignoring-files
 .. _Symfony repository: https://github.com/symfony/symfony
-.. _dev mailing-list: https://groups.google.com/group/symfony-devs
-.. _travis-ci.org: https://travis-ci.org/
-.. _`travis-ci.org status icon`: https://about.travis-ci.com/docs/user/status-images/
-.. _`travis-ci.org Getting Started Guide`: https://about.travis-ci.com/docs/user/getting-started/
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
 .. _`fabbot`: https://fabbot.io
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
@@ -429,4 +425,3 @@ before merging.
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
 .. _`draft status`: https://help.github.com/en/articles/about-pull-requests#draft-pull-requests
-.. _`Symfony Roadmap`: https://symfony.com/roadmap

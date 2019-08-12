@@ -311,4 +311,3 @@ Learn More
     /service_container/*
 
 .. _`PSR-11`: http://www.php-fig.org/psr/psr-11/
-.. _Packagist: https://packagist.org/packages/symfony/dependency-injection

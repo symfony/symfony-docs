@@ -212,5 +212,3 @@ Learn More
     /components/templating/*
     /templating
     /templating/*
-
-.. _Packagist: https://packagist.org/packages/symfony/templating

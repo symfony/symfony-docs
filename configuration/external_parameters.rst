@@ -549,6 +549,3 @@ the Symfony service container::
     // app/config/parameters.php
     include_once('/path/to/drupal/sites/default/settings.php');
     $container->setParameter('drupal.database.url', $db_url);
-
-.. _`SetEnv`: http://httpd.apache.org/docs/current/env.html
-.. _`fastcgi_param`: http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_param

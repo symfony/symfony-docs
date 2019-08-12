@@ -135,7 +135,6 @@ central repository to work. You then have several solutions:
 .. _`Git`: https://git-scm.com/
 .. _`SVN`: https://subversion.apache.org/
 .. _`Subversion`: https://subversion.apache.org/
-.. _`Symfony Standard Edition`: https://symfony.com/download
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/
 .. _`GitHub`: https://github.com/
 .. _`Google code`: https://code.google.com/hosting/

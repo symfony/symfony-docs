@@ -235,8 +235,7 @@ proxy before it has expired, it adds complexity to your caching setup.
 
 .. _`Varnish`: https://www.varnish-cache.org
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
-.. _`GZIP and Varnish`: https://www.varnish-cache.org/docs/3.0/phk/gzip.html
-.. _`Clean the cookies header`: https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
+.. _`clean the cookies header`: https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/

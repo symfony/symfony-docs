@@ -97,8 +97,6 @@ Several pseudo-classes are not yet supported:
   ``*:nth-last-of-type``, ``*:only-of-type``. (These work with an element
   name (e.g. ``li:first-of-type``) but not with ``*``).
 
-.. _Packagist: https://packagist.org/packages/symfony/css-selector
-
 Learn more
 ----------
 

@@ -507,6 +507,5 @@ Public and Reusable Bundles
 
 Public bundles should explicitly configure their services and not rely on autowiring.
 
-.. _Rapid Application Development: https://en.wikipedia.org/wiki/Rapid_application_development
 .. _ROT13: https://en.wikipedia.org/wiki/ROT13
 .. _service definition prototype: https://symfony.com/blog/new-in-symfony-3-3-psr-4-based-service-discovery

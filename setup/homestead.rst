@@ -4,8 +4,8 @@ Using Symfony with Homestead/Vagrant
 ====================================
 
 In order to develop a Symfony application, you might want to use a virtual
-development environment instead of the built-in server or WAMP/LAMP. Homestead_
-is an easy-to-use Vagrant_ box to get a virtual environment up and running
+development environment instead of the built-in server or WAMP/LAMP. `Homestead`_
+is an easy-to-use `Vagrant`_ box to get a virtual environment up and running
 quickly.
 
 .. tip::
@@ -69,8 +69,8 @@ developing your Symfony application!
     integration, automatic creation of MySQL databases and more, read the
     `Daily Usage`_ section of the Homestead documentation.
 
-.. _Homestead: https://laravel.com/docs/homestead
-.. _Vagrant: https://www.vagrantup.com/
-.. _the Homestead documentation: https://laravel.com/docs/homestead#installation-and-setup
-.. _Daily Usage: https://laravel.com/docs/homestead#daily-usage
-.. _this blog post: https://www.whitewashing.de/2013/08/19/speedup_symfony2_on_vagrant_boxes.html
+.. _`Homestead`: https://laravel.com/docs/homestead
+.. _`Vagrant`: https://www.vagrantup.com/
+.. _`the Homestead documentation`: https://laravel.com/docs/homestead#installation-and-setup
+.. _`Daily Usage`: https://laravel.com/docs/homestead#daily-usage
+.. _`this blog post`: https://www.whitewashing.de/2013/08/19/speedup_symfony2_on_vagrant_boxes.html

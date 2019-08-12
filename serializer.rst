@@ -293,7 +293,6 @@ take a look at how this bundle works.
 
     serializer/*
 
-.. _`APCu`: https://github.com/krakjoe/apcu
 .. _`ApiPlatform`: https://github.com/api-platform/core
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com
