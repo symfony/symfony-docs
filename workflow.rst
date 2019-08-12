@@ -94,7 +94,7 @@ like this:
                         <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
                     <framework:support>App\Entity\BlogPost</framework:support>
-                    <framework:initial_marking>draft</framework:initial_marking>
+                    <framework:initial-marking>draft</framework:initial-marking>
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
