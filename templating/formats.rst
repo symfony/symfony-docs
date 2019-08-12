@@ -48,7 +48,7 @@ but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/about-us`` sets the request format to ``html`` while
 ``/about-us.xml`` sets the format to ``xml``. This can be achieved by using the
-special ``_format`` placeholder in your route definition::
+:ref:`special _format parameter <routing-format-parameter>` in your route definition::
 
     /**
      * @Route("/{slug}.{_format}", defaults={"_format"="html"}, requirements={"_format"="html|xml"}))
@@ -66,10 +66,6 @@ format:
     <a href="{{ path('article_show', {'slug': 'about-us', '_format': 'xml'}) }}">
         View as XML
     </a>
-
-.. seealso::
-
-    For more information, see this :ref:`Advanced Routing Example <advanced-routing-example>`.
 
 .. tip::
 
