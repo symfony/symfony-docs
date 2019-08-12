@@ -302,7 +302,8 @@ named ``kernel.http_method_override``.
 
 .. seealso::
 
-    For more information, see :doc:`/form/action_method`.
+    :ref:`Changing the Action and HTTP Method <forms-change-action-method>` of
+    Symfony forms.
 
 .. caution::
 

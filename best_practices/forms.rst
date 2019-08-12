@@ -212,6 +212,8 @@ Handling a form submit usually follows a similar template::
         // render the template
     }
 
+.. _best-practice-handle-form:
+
 We recommend that you use a single action for both rendering the form and
 handling the form submit. For example, you *could* have a ``new()`` action that
 *only* renders the form and a ``create()`` action that *only* processes the form
