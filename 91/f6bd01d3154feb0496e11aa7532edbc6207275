@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-08-28T19:00:42Z
+
+Hey @andreybolonin!
+
+Thanks for the PR to add more details :). I just updated a few parts of the code to use `use` statements, for example. But, there is one problem left: the code uses a class from FrameworkBundle - `AnnotatedRouteControllerLoader`. But, we can't do that: because this code is about setting up the Routing component in a standalone project, we can only use classes from other components.
+
+Could you update the code to not use this class? It's actually a bit odd, I see why you used `AnnotatedRouteControllerLoader`... it does some nice things with setting the `_controller`. I'm not actually sure if there *is* a feasible way of *not* using this class. That's what we need to check out.
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-24T15:36:16Z
+
+@weaverryan I think it's really difficult to not use `AnnotatedRouteControllerLoader` in this example ... unless we copy+paste the code from `AnnotatedRouteControllerLoader` ... is it worth it?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-08T09:31:21Z
+
+Another solution would be to not use `AnnotatedRouteControllerLoader` ... but then, which format should use the PHP classes to define annotations on them? What's the difference when not using `AnnotatedRouteControllerLoader`? This is the component doc, so I guess is OK to not provide all features included in the full Symfony framework.
