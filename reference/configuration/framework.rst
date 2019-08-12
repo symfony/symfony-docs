@@ -256,8 +256,9 @@ Configuration
   * :ref:`name <reference-workflows-name>`
 
     * `audit_trail`_
-    * `initial_place`_
+    * `initial_marking`_
     * `marking_store`_
+    * `metadata`_
     * `places`_
     * `supports`_
     * `support_strategy`_
@@ -2751,12 +2752,12 @@ audit_trail
 If set to ``true``, the :class:`Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener`
 will be enabled.
 
-initial_place
-"""""""""""""
+initial_marking
+"""""""""""""""
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string`` | ``array``
 
-One of the ``places`` or ``null``. If not null and the supported object is not
+One of the ``places`` or ``empty``. If not null and the supported object is not
 already initialized via the workflow, this place will be set.
 
 marking_store
@@ -2768,8 +2769,16 @@ Each marking store can define any of these options:
 
 * ``arguments`` (**type**: ``array``)
 * ``service`` (**type**: ``string``)
-* ``type`` (**type**: ``string`` **possible values**: ``'multiple_state'`` or
-  ``'single_state'``)
+* ``type`` (**type**: ``string`` **allow value**: ``'method'``)
+
+metadata
+""""""""
+
+**type**: ``array``
+
+Metadata available for the workflow configuration.
+Note that ``places`` and ``transitions`` can also have their own
+``metadata`` entry.
 
 places
 """"""

@@ -54,12 +54,12 @@ like this:
                     audit_trail:
                         enabled: true
                     marking_store:
-                        type: 'multiple_state' # or 'single_state'
-                        arguments:
+                        type: 'method'
+                        property:
                             - 'currentPlace'
                     supports:
                         - App\Entity\BlogPost
-                    initial_place: draft
+                    initial_marking: draft
                     places:
                         - draft
                         - reviewed
@@ -90,35 +90,28 @@ like this:
             <framework:config>
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:audit-trail enabled="true"/>
-
                     <framework:marking-store type="single_state">
                         <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
-
                     <framework:support>App\Entity\BlogPost</framework:support>
-
+                    <framework:initial-marking>draft</framework:initial-marking>
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
                     <framework:place>published</framework:place>
-
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
                         <framework:to>reviewed</framework:to>
                     </framework:transition>
-
                     <framework:transition name="publish">
                         <framework:from>reviewed</framework:from>
                         <framework:to>published</framework:to>
                     </framework:transition>
-
                     <framework:transition name="reject">
                         <framework:from>reviewed</framework:from>
                         <framework:to>rejected</framework:to>
                     </framework:transition>
-
                 </framework:workflow>
-
             </framework:config>
         </container>
 
@@ -134,10 +127,11 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'multiple_state', // or 'single_state'
-                        'arguments' => ['currentPlace']
+                        'type' => 'method'
+                        'property' => ['currentPlace']
                     ],
                     'supports' => ['App\Entity\BlogPost'],
+                    'initial_marking' => 'draft',
                     'places' => [
                         'draft',
                         'reviewed',
@@ -177,18 +171,6 @@ As configured, the following property is used by the marking store::
         public $content;
     }
 
-.. note::
-
-    The marking store type could be "multiple_state" or "single_state". A single
-    state marking store does not support a model being on multiple places at the
-    same time.
-
-.. tip::
-
-    The ``type`` (default value ``single_state``) and ``arguments`` (default
-    value ``marking``) attributes of the ``marking_store`` option are optional.
-    If omitted, their default values will be used.
-
 .. tip::
 
     Setting the ``audit_trail.enabled`` option to ``true`` makes the application
@@ -200,7 +182,7 @@ what actions are allowed on a blog post::
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Exception\LogicException;
 
-    $post = BlogPost();
+    $post = new BlogPost();
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
@@ -630,8 +612,8 @@ requires:
                         <framework:from>reviewed</framework:from>
                         <framework:to>published</framework:to>
                         <framework:metadata>
-                            <framework:hour_limit>20</framework:priority>
-                            <framework:explanation>You can not publish after 8 PM.</framework:priority>
+                            <framework:hour_limit>20</framework:hour_limit>
+                            <framework:explanation>You can not publish after 8 PM.</framework:explanation>
                         </framework:metadata>
                     </framework:transition>
                 </framework:workflow>
@@ -682,6 +664,7 @@ Then you can access this metadata in your controller as follows::
 
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
+    use App\Entity\BlogPost;
 
     public function myController(Registry $registry, BlogPost $post)
     {
