@@ -10,7 +10,7 @@ Forms
     Do you prefer video tutorials? Check out the `Symfony Forms screencast series`_.
 
 Dealing with HTML forms is one of the most common - and challenging - tasks for
-a web developer. Symfony integrates a Form component that helps you dealing
+a web developer. Symfony integrates a [Form](https://github.com/symfony/form) component that helps you dealing
 with forms. In this article, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
