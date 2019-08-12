@@ -250,8 +250,22 @@ Annotation Routing Loaders
 Last but not least there are
 :class:`Symfony\\Component\\Routing\\Loader\\AnnotationDirectoryLoader` and
 :class:`Symfony\\Component\\Routing\\Loader\\AnnotationFileLoader` to load
-route definitions from class annotations. The specific details are left
-out here.
+route definitions from class annotations::
+
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader;
+    use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
+
+    $loader = new AnnotationDirectoryLoader(
+        new FileLocator(__DIR__.'/app/controllers/'),
+        new AnnotatedRouteControllerLoader(
+            new AnnotationReader()
+        )
+    );
+
+    $routes = $loader->load(__DIR__.'/app/controllers/');
+    // ...
 
 .. include:: /_includes/_annotation_loader_tip.rst.inc
 
