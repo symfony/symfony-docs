@@ -22,9 +22,9 @@ Usage
 
 The following example shows the component in action::
 
-    use Fig\Link\GenericLinkProvider;
-    use Fig\Link\Link;
     use Symfony\Component\WebLink\HttpHeaderSerializer;
+    use Symfony\Component\WebLink\GenericLinkProvider;
+    use Symfony\Component\WebLink\Link;
 
     $linkProvider = (new GenericLinkProvider())
         ->withLink(new Link('preload', '/bootstrap.min.css'));
