@@ -175,5 +175,5 @@ You can use the following parameters in this message:
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _built-in PHP extension: https://php.net/book.ctype.php
-.. _a list of ctype functions: https://php.net/ref.ctype.php
+.. _built-in PHP extension: https://php.net/book.ctype
+.. _a list of ctype functions: https://php.net/ref.ctype
