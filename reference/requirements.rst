@@ -29,14 +29,18 @@ to avoid leaking internal information about your application to visitors.
 Checking Requirements for the Command Console
 ---------------------------------------------
 
-Open your console or terminal, enter in your project directory, execute this
-command and fix the reported issues:
+Open your console or terminal and run the following command provided by the
+``symfony`` binary created when `installing Symfony`_:
 
 .. code-block:: terminal
 
-    $ cd my-project/
-    $ php bin/symfony_requirements
+    # checks if your computer/server is ready to run Symfony projects
+    $ symfony check:requirements
+
+    # use the --dir option to also check if some specific Symfony project is ready to be run
+    $ symfony check:requirements --dir=/path/to/my-project
 
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`skeleton`: https://github.com/symfony/skeleton
 .. _`website-skeleton`: https://github.com/symfony/website-skeleton
+.. _`installing Symfony`: https://symfony.com/download
