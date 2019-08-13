@@ -38,7 +38,8 @@ confirmed, the core team works on a solution following these steps:
 #. Publish the post on the official Symfony `blog`_ (it must also be added to
    the "`Security Advisories`_" category);
 #. Update the public `security advisories database`_ maintained by the
-   FriendsOfPHP organization and which is used by the ``security:check`` command.
+   FriendsOfPHP organization and which is used by
+   :doc:`the check:security command </security/security_checker>`.
 
 .. note::
 
@@ -169,7 +170,7 @@ Security Advisories
 .. tip::
 
     You can check your Symfony application for known security vulnerabilities
-    using :ref:`the security:check command <security-checker>`.
+    using :ref:`the check:security command <security-checker>`.
 
 Check the `Security Advisories`_ blog category for a list of all security
 vulnerabilities that were fixed in Symfony releases, starting from Symfony
