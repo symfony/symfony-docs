@@ -145,10 +145,10 @@ You can also add links to the HTTP response directly from controllers and servic
     // src/Controller/BlogController.php
     namespace App\Controller;
 
-    use Fig\Link\GenericLinkProvider;
-    use Fig\Link\Link;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\WebLink\GenericLinkProvider;
+    use Symfony\Component\WebLink\Link;
 
     class BlogController extends AbstractController
     {
