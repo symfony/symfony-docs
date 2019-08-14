@@ -44,8 +44,6 @@ to learn even more. Overall, the process has several steps:
    for the request and optionally
    :doc:`on the user's entire session </session/locale_sticky_session>`.
 
-.. _translation-configuration:
-
 Installation
 ------------
 
@@ -54,6 +52,8 @@ First, run this command to install the translator before using it:
 .. code-block:: terminal
 
     $ composer require symfony/translation
+
+.. _translation-configuration:
 
 Configuration
 -------------
