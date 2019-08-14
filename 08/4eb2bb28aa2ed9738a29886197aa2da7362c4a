@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-14T09:23:17Z
+
+Thank you, your fix looks right according to: https://github.com/symfony/symfony/blob/4.3/src/Symfony/Component/Messenger/Transport/Receiver/ReceiverInterface.php#L48
