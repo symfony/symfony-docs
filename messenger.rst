@@ -754,6 +754,17 @@ your Envelope::
         new AmqpStamp('custom-routing-key', AMQP_NOPARAM, $attributes)
     ]);
 
+.. caution::
+
+    The consumers do not show up in an admin panel as this transport does not rely on
+    ``\AmqpQueue::consume()`` which is blocking. Having a blocking receiver makes
+    the ``--time-limit/--memory-limit`` options of the ``messenger:consume`` command as well as
+    the ``messenger:stop-workers`` command inefficient, as they all rely on the fact that
+    the receiver returns immediately no matter if it finds a message or not. The consume
+    worker is responsible for iterating until it receives a message to handle and/or until one
+    of the stop conditions is reached. Thus, the worker's stop logic cannot be reached if it
+    is stuck in a blocking call.
+
 Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
 
