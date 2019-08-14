@@ -4,53 +4,18 @@
 How to Use the submit() Function to Handle Form Submissions
 ===========================================================
 
-Handle the form submission with the ``handleRequest()`` method::
+The recommended way of :ref:`processing Symfony forms <processing-forms>` is to
+use the :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method
+to detect when the form has been submitted. However, you can also use the
+:method:`Symfony\\Component\\Form\\FormInterface::submit` method to have better
+control over when exactly your form is submitted and what data is passed to it::
 
     use Symfony\Component\HttpFoundation\Request;
     // ...
 
     public function new(Request $request)
     {
-        $form = $this->createFormBuilder()
-            // ...
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // perform some action...
-
-            return $this->redirectToRoute('task_success');
-        }
-
-        return $this->render('product/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-.. tip::
-
-    To see more about this method, read :ref:`form-handling-form-submissions`.
-
-.. _form-call-submit-directly:
-
-Calling Form::submit() manually
--------------------------------
-
-In some cases, you want better control over when exactly your form is submitted
-and what data is passed to it. Instead of using the
-:method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
-method, pass the submitted data directly to
-:method:`Symfony\\Component\\Form\\FormInterface::submit`::
-
-    use Symfony\Component\HttpFoundation\Request;
-    // ...
-
-    public function new(Request $request)
-    {
-        $form = $this->createFormBuilder()
-            // ...
-            ->getForm();
+        $form = $this->createForm(TaskType::class, $task);
 
         if ($request->isMethod('POST')) {
             $form->submit($request->request->get($form->getName()));
@@ -62,7 +27,7 @@ method, pass the submitted data directly to
             }
         }
 
-        return $this->render('product/new.html.twig', [
+        return $this->render('task/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }

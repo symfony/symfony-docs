@@ -15,7 +15,8 @@ Symfony Built-In Form Themes
 
 Symfony comes with several **built-in form themes** that make your forms look
 great when using some of the most popular CSS frameworks. Each theme is defined
-in a single Twig template:
+in a single Twig template and they are enabled in the
+:ref:`twig.form_themes <config-twig-form-themes>` option:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element
   and it's the theme used by default in Symfony applications unless you configure
@@ -181,6 +182,8 @@ of form themes:
         {% use "form_div_layout.html.twig" %}
 
         {# ... #}
+
+.. _create-your-own-form-theme:
 
 Creating your Own Form Theme
 ----------------------------

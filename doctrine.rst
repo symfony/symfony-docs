@@ -418,6 +418,8 @@ Take a look at the previous example in more detail:
 Whether you're creating or updating objects, the workflow is always the same: Doctrine
 is smart enough to know if it should INSERT or UPDATE your entity.
 
+.. _automatic_object_validation:
+
 Validating Objects
 ------------------
 
