@@ -630,7 +630,7 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
     This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
-    By default, it uses the RFC3339_ format.
+    By default, it uses the `RFC3339`_ format.
 
     .. versionadded:: 3.2
 
@@ -657,17 +657,17 @@ Encoders
 The Serializer component supports many formats out of the box:
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
-    This class encodes and decodes data in JSON_.
+    This class encodes and decodes data in `JSON`_.
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`
-    This class encodes and decodes data in XML_.
+    This class encodes and decodes data in `XML`_.
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`
-    This encoder encodes and decodes data in YAML_. This encoder requires the
+    This encoder encodes and decodes data in `YAML`_. This encoder requires the
     :doc:`Yaml Component </components/yaml>`.
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
-    This encoder encodes and decodes data in CSV_.
+    This encoder encodes and decodes data in `CSV`_.
 
 All these encoders are enabled by default when using the Symfony Standard Edition
 with the serializer enabled.
@@ -1061,9 +1061,8 @@ Learn more
 
 .. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
-.. _Packagist: https://packagist.org/packages/symfony/serializer
-.. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
-.. _JSON: http://www.json.org/
-.. _XML: https://www.w3.org/XML/
-.. _YAML: http://yaml.org/
-.. _CSV: https://tools.ietf.org/html/rfc4180
+.. _`RFC3339`: https://tools.ietf.org/html/rfc3339#section-5.8
+.. _`JSON`: http://www.json.org/
+.. _`XML`: https://www.w3.org/XML/
+.. _`YAML`: http://yaml.org/
+.. _`CSV`: https://tools.ietf.org/html/rfc4180

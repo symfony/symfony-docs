@@ -91,8 +91,6 @@ a `barebones repository`_ and then pushing to it. One library that helps
 manage this is `Gitolite`_.
 
 .. _`Git`: https://git-scm.com/
-.. _`Symfony Standard Edition`: https://symfony.com/download
-.. _`git submodules`: https://git-scm.com/book/en/Git-Tools-Submodules
 .. _`GitHub`: https://github.com/
 .. _`barebones repository`: https://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository
 .. _`Gitolite`: https://github.com/sitaramc/gitolite

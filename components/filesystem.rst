@@ -339,5 +339,4 @@ Learn More
 
     filesystem/*
 
-.. _`Packagist`: https://packagist.org/packages/symfony/filesystem
 .. _`umask`: https://en.wikipedia.org/wiki/Umask

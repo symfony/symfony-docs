@@ -536,5 +536,4 @@ configuration must not be started while old processes with old configuration
 are still running.
 
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
-.. _Packagist: https://packagist.org/packages/symfony/lock
 .. _`PHP semaphore functions`: https://php.net/manual/en/book.sem.php

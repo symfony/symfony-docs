@@ -580,5 +580,4 @@ Learn more
     /controller
     /controller/*
 
-.. _Packagist: https://packagist.org/packages/symfony/routing
 .. _PCRE Unicode properties: http://php.net/manual/en/regexp.reference.unicode.php

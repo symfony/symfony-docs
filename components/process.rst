@@ -437,6 +437,4 @@ absolute path of the executable PHP binary available on your server::
     // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
 
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
-.. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
-.. _Packagist: https://packagist.org/packages/symfony/process
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php

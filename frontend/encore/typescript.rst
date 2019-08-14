@@ -33,5 +33,4 @@ processed by ``ts-loader``.
 
 .. _`TypeScript`: https://www.typescriptlang.org/
 .. _`ts-loader options`: https://github.com/TypeStrong/ts-loader#options
-.. _`fork-ts-checker-webpack-plugin`: https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js

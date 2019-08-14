@@ -385,6 +385,5 @@ develop :doc:`your own user provider </security/custom_provider>` and
 Next: :doc:`/best_practices/web-assets`
 
 .. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Security annotation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`libsodium`: https://pecl.php.net/package/libsodium

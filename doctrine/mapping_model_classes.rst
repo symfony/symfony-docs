@@ -145,5 +145,3 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
     the ``SymfonyFileLocator`` will get confused.
 
     Adjust accordingly for the other Doctrine implementations.
-
-.. _`CouchDB Mapping Compiler Pass pull request`: https://github.com/doctrine/DoctrineCouchDBBundle/pull/27

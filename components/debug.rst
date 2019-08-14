@@ -87,5 +87,3 @@ Using the ``DebugClassLoader`` is done by calling its static
     use Symfony\Component\Debug\DebugClassLoader;
 
     DebugClassLoader::enable();
-
-.. _Packagist: https://packagist.org/packages/symfony/debug

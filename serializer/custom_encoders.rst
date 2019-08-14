@@ -61,5 +61,3 @@ that's done automatically!
     and tag it with ``serializer.encoder``.
 
 Now you'll be able to serialize and deserialize Yaml!
-
-.. _tracker: https://github.com/symfony/symfony/issues

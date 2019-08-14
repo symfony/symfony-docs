@@ -120,5 +120,3 @@ method and specifying the id of the section to be reopened::
     $stopwatch->openSection('routing');
     $stopwatch->start('building_config_tree');
     $stopwatch->stopSection('routing');
-
-.. _Packagist: https://packagist.org/packages/symfony/stopwatch

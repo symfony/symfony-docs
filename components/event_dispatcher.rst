@@ -521,4 +521,3 @@ Learn More
 .. _Observer: https://en.wikipedia.org/wiki/Observer_pattern
 .. _Closures: https://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: https://php.net/manual/en/language.pseudo-types.php#language.types.callback
-.. _Packagist: https://packagist.org/packages/symfony/event-dispatcher

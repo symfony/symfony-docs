@@ -334,4 +334,3 @@ The contents of returned files can be read with
 .. _protocol:     https://php.net/manual/en/wrappers.php
 .. _Streams:      https://php.net/streams
 .. _IEC standard: https://physics.nist.gov/cuu/Units/binary.html
-.. _Packagist:    https://packagist.org/packages/symfony/finder

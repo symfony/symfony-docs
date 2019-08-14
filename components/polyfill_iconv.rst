@@ -55,5 +55,3 @@ extension are installed:
 * :phpfunction:`iconv_mime_decode`
 
 .. _`PHP iconv extension`: https://secure.php.net/manual/en/book.iconv.php
-.. _`mbstring`: https://secure.php.net/manual/en/book.mbstring.php
-.. _`xml`: https://secure.php.net/manual/en/book.xml.php
