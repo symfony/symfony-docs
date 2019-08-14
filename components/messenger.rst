@@ -282,7 +282,7 @@ do is to write your own CSV receiver::
             $this->filePath = $filePath;
         }
 
-        public function get(): void
+        public function get(): iterable
         {
             $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
