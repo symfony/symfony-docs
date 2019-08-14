@@ -1,0 +1,59 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-08-12T20:36:18Z
+
+These are the changes in the TOC organization:
+
+### Before
+
+```
+Installation
+Creating a Simple Form
+    Building the Form
+    Rendering the Form
+    Handling Form Submissions
+Form Validation
+Built-in Field Types
+    Text Fields
+    Choice Fields
+    Date and Time Fields
+    Other Fields
+    Field Groups
+    Hidden Fields
+    Buttons
+    Base Fields
+    Field Type Options
+Field Type Guessing
+    Field Type Options Guessing
+Creating Form Classes
+Final Thoughts
+Learn more
+```
+
+### After
+
+```
+Installation
+Usage
+    Form Types
+Building Forms
+    Creating Forms in Controllers
+    Creating Form Classes
+Rendering Forms
+Processing Forms
+Validating Forms
+Other Common Form Features
+    Field Type Options
+    Changing the Action and HTTP Method
+    Changing the Form Name
+    Client-Side HTML Validation
+    Form Type Guessing
+    Unmapped Fields
+Learn more
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-08-13T07:03:09Z
+
+This is now ready for review. Thanks.
