@@ -172,7 +172,7 @@ will appear.
     Most of the time, you won't interact directly with the ``validator``
     service or need to worry about printing out the errors. Most of the time,
     you'll use validation indirectly when handling submitted form data. For
-    more information, see the :ref:`forms-form-validation`.
+    more information, see :ref:`how to validate Symfony forms <validating-forms>`.
 
 You could also pass the collection of errors into a template::
 
