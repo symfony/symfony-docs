@@ -44,8 +44,6 @@ to learn even more. Overall, the process has several steps:
    for the request and optionally
    :doc:`on the user's entire session </session/locale_sticky_session>`.
 
-.. _translation-configuration:
-
 Installation
 ------------
 
@@ -54,6 +52,8 @@ First, run this command to install the translator before using it:
 .. code-block:: terminal
 
     $ composer require symfony/translation
+
+.. _translation-configuration:
 
 Configuration
 -------------
@@ -168,7 +168,7 @@ For information on where these files should be located, see
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
-the message inside your `templates <Translations in Templates>`.
+the message inside your :ref:`templates <translation-in-templates>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -214,6 +214,8 @@ plural, based on some variable:
 To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
+
+.. _translation-in-templates:
 
 Translations in Templates
 -------------------------
