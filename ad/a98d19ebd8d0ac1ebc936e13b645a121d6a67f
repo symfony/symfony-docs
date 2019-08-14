@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-14T09:16:39Z
+
+@javierequiluz, this one is now ready to merge 😄
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-14T09:48:01Z
+
+> I also think we are sure this doesn't break anything because if we removed some still-used link, we'd see a build error 👍
+
+Yes a lot of them occured while doing this change, so now we are safe!
+
+Could you do me a favor and do the merge? 😃 Afterwards I will do the same against `4.3`.
