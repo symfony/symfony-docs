@@ -169,7 +169,7 @@ For information on where these files should be located, see
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
-the message inside your `templates <Translations in Templates>`.
+the message inside your :ref:`templates <translation-in-templates>`.
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -221,6 +221,8 @@ using PHP's :phpclass:`MessageFormatter` class. Read more about this in
    Support for ICU MessageFormat was introduced in Symfony 4.2. Prior to this,
    pluralization was managed by the
    :method:`Symfony\\Component\\Translation\\Translator::transChoice` method.
+
+.. _translation-in-templates:
 
 Translations in Templates
 -------------------------
