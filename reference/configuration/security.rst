@@ -713,7 +713,6 @@ role inheritance rules by creating a role hierarchy, as explained in
 :ref:`security-role-hierarchy`.
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
-.. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
 .. _`libsodium`: https://pecl.php.net/package/libsodium
 .. _`Session Fixation`: https://www.owasp.org/index.php/Session_fixation
 .. _`Argon2 key derivation function`: https://en.wikipedia.org/wiki/Argon2

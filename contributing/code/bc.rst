@@ -445,9 +445,4 @@ Turn static into non static                         No
 
 .. [9] Allowed for the ``void`` return type.
 
-.. _Semantic Versioning: https://semver.org/
-.. _scalar type: https://php.net/manual/en/function.is-scalar.php
-.. _boolean values: https://php.net/manual/en/function.boolval.php
-.. _string values: https://php.net/manual/en/function.strval.php
-.. _integer values: https://php.net/manual/en/function.intval.php
-.. _float values: https://php.net/manual/en/function.floatval.php
+.. _`Semantic Versioning`: https://semver.org/

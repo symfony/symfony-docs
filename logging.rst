@@ -41,7 +41,7 @@ To log a message, inject the default logger in your controller::
     }
 
 The ``logger`` service has different methods for different logging levels/priorities.
-See LoggerInterface_ for a list of all of the methods on the logger.
+See `LoggerInterface`_ for a list of all of the methods on the logger.
 
 Monolog
 -------

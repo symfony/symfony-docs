@@ -359,4 +359,3 @@ time and again, you can have just one (or several) listeners deal with them.
 .. _`TwigBundle`: https://github.com/symfony/twig-bundle
 .. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
-.. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php

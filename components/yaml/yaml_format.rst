@@ -149,7 +149,7 @@ Booleans in YAML are expressed with ``true`` and ``false``.
 Dates
 ~~~~~
 
-YAML uses the ISO-8601 standard to express dates:
+YAML uses the `ISO-8601`_ standard to express dates:
 
 .. code-block:: yaml
 
@@ -310,8 +310,6 @@ The YAML specification defines some tags to set the type of any data explicitly:
             Pz7Y6OjuDg4J+fn5OTk6enp
             56enmleECcgggoBADs=
 
-.. _YAML: http://yaml.org/
-
 Unsupported YAML Features
 -------------------------
 
@@ -327,5 +325,6 @@ The following YAML features are not supported by the Symfony Yaml component:
 * Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
   ``{foo: ~, bar: ~}`` instead).
 
+.. _`ISO-8601`: http://www.iso.org/iso/iso8601
 .. _`YAML website`: http://yaml.org/
 .. _`YAML specification`: http://www.yaml.org/spec/1.2/spec.html

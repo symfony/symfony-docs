@@ -77,4 +77,3 @@ If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 
 .. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
-.. _`RFC 7239`: http://tools.ietf.org/html/rfc7239

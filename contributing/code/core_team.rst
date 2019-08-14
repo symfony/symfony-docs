@@ -178,13 +178,11 @@ discretion of the **Project Leader**.
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
 .. _`Tobion`: https://github.com/Tobion/
-.. _`romainneutron`: https://github.com/romainneutron/
 .. _`nicolas-grekas`: https://github.com/nicolas-grekas/
 .. _`stof`: https://github.com/stof/
 .. _`dunglas`: https://github.com/dunglas/
 .. _`jakzal`: https://github.com/jakzal/
 .. _`Seldaek`: https://github.com/Seldaek/
-.. _`lsmith77`: https://github.com/lsmith77/
 .. _`weaverryan`: https://github.com/weaverryan/
 .. _`aitboudad`: https://github.com/aitboudad/
 .. _`xabbuh`: https://github.com/xabbuh/

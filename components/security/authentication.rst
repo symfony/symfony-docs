@@ -324,4 +324,3 @@ because of a user change, it can help you doing some clean-up task when a logout
     :doc:`/security/impersonating_user`.
 
 .. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
-.. _`BasePasswordEncoder::checkPasswordLength`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Encoder/BasePasswordEncoder.php

@@ -488,7 +488,6 @@ service by defining it as a service with one or more of the following
 * ``property_info.description_extractor`` if it provides description information.
 * ``property_info.access_extractor`` if it provides access information.
 
-.. _Packagist: https://packagist.org/packages/symfony/property-info
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
 .. _`Doctrine ORM`: https://www.doctrine-project.org/projects/orm.html
