@@ -39,7 +39,7 @@ confirmed, the core team works on a solution following these steps:
    the "`Security Advisories`_" category);
 #. Update the public `security advisories database`_ maintained by the
    FriendsOfPHP organization and which is used by
-   :doc:`the check:security command </security/security_checker>`.
+   :ref:`the check:security command <security-checker>`.
 
 .. note::
 
