@@ -604,7 +604,7 @@ achieved by specifying the adapter.
 
 .. note::
 
-    The interface :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface`` is
+    The interface :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface` is
     autowired to the ``cache.app`` service.
 
 Clearing the Cache
