@@ -186,5 +186,4 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 
 .. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
 .. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
-.. _`functions`: https://twig.symfony.com/doc/2.x/advanced.html#id2
 .. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension

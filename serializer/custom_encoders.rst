@@ -54,8 +54,8 @@ create your own encoder that uses the
     ``supportsEncoding`` method, make sure to implement
     ``Symfony\Component\Serializer\Encoder\ContextAwareDecoderInterface``
     or ``Symfony\Component\Serializer\Encoder\ContextAwareEncoderInterface`` accordingly.
-    
-    
+
+
 Registering it in your app
 --------------------------
 
@@ -69,5 +69,3 @@ that's done automatically!
     to register your class as a service and tag it with ``serializer.encoder``.
 
 Now you'll be able to serialize and deserialize YAML!
-
-.. _tracker: https://github.com/symfony/symfony/issues

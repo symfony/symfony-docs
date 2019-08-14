@@ -192,5 +192,3 @@ You can set this custom implementation using
     Since you are using a custom metadata factory, you can't configure loaders
     and caches using the ``add*Mapping()`` methods anymore. You now have to
     inject them into your custom metadata factory yourself.
-
-.. _`Packagist`: https://packagist.org

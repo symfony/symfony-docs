@@ -203,4 +203,3 @@ Think about it once more: our framework is more robust and more flexible than
 ever and it still has less than 50 lines of code.
 
 .. _`reflection`: https://php.net/reflection
-.. _`FrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

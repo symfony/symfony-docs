@@ -322,5 +322,4 @@ Learn more
 * :doc:`/components/css_selector`
 * :doc:`/components/dom_crawler`
 
-.. _`Packagist`: https://packagist.org/packages/symfony/browser-kit
 .. _`Goutte`: https://github.com/FriendsOfPHP/Goutte

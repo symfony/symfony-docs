@@ -111,6 +111,5 @@ Form errors are rendered **inside** the ``<label>`` element to make sure there
 is a strong connection between the error and its ``<input>``, as required by the
 `WCAG 2.0 standard`_.
 
-.. _`their documentation`: https://getbootstrap.com/docs/4.1/
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`custom forms`: https://getbootstrap.com/docs/4.1/components/forms/#custom-forms

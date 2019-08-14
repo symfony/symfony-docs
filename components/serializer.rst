@@ -664,7 +664,7 @@ When serializing, you can set a callback to format a specific object property::
             'createdAt' => $dateCallback,
         ],
     ];
-    
+
     $normalizer = new GetSetMethodNormalizer(null, null, null, null, null, $defaultContext);
 
     $serializer = new Serializer([$normalizer], [$encoder]);
@@ -735,7 +735,7 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
     This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
-    By default, it uses the RFC3339_ format.
+    By default, it uses the `RFC3339`_ format.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
@@ -776,17 +776,17 @@ Built-in Encoders
 The Serializer component provides several built-in encoders:
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
-    This class encodes and decodes data in JSON_.
+    This class encodes and decodes data in `JSON`_.
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`
-    This class encodes and decodes data in XML_.
+    This class encodes and decodes data in `XML`_.
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`
-    This encoder encodes and decodes data in YAML_. This encoder requires the
+    This encoder encodes and decodes data in `YAML`_. This encoder requires the
     :doc:`Yaml Component </components/yaml>`.
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
-    This encoder encodes and decodes data in CSV_.
+    This encoder encodes and decodes data in `CSV`_.
 
 All these encoders are enabled by default when using the Serializer component
 in a Symfony application.

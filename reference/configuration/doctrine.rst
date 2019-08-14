@@ -157,8 +157,6 @@ which is the first one defined or the one configured via the
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` is the name of the connection.
 
-.. _DBAL documentation: https://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
-
 Doctrine ORM Configuration
 --------------------------
 
@@ -436,4 +434,4 @@ If the ``dir`` configuration is set and the ``is_bundle`` configuration
 is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
 the path of the bundle.
 
-.. _`DQL User Defined Functions`: https://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
+.. _DBAL documentation: https://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html

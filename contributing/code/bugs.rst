@@ -48,5 +48,4 @@ If your problem definitely looks like a bug, report it using the official bug
 .. _IRC channel: https://symfony.com/irc
 .. _the Symfony Slack: https://symfony.com/slack-invite
 .. _tracker: https://github.com/symfony/symfony/issues
-.. _Symfony Standard Edition: https://github.com/symfony/symfony-standard/
 .. _<details> HTML tag: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details

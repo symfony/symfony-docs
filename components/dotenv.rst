@@ -170,5 +170,4 @@ Embed commands via ``$()`` (not supported on Windows):
 
     Note that using ``$()`` might not work depending on your shell.
 
-.. _Packagist: https://packagist.org/packages/symfony/dotenv
 .. _twelve-factor applications: http://www.12factor.net/

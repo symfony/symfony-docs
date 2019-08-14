@@ -294,7 +294,7 @@ Date Handling
 
 By default, the YAML parser will convert unquoted strings which look like a
 date or a date-time into a Unix timestamp; for example ``2016-05-27`` or
-``2016-05-27T02:59:43.1Z`` (ISO-8601_)::
+``2016-05-27T02:59:43.1Z`` (`ISO-8601`_)::
 
     Yaml::parse('2016-05-27'); // 1464307200
 
@@ -457,7 +457,6 @@ Learn More
 
     yaml/*
 
-.. _YAML: http://yaml.org/
-.. _Packagist: https://packagist.org/packages/symfony/yaml
+.. _`YAML`: http://yaml.org/
 .. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html
-.. _ISO-8601: http://www.iso.org/iso/iso8601
+.. _`ISO-8601`: http://www.iso.org/iso/iso8601
