@@ -22,6 +22,5 @@ Reference Documents
 
     dic_tags
     events
-    requirements
 
 .. include:: /reference/map.rst.inc
