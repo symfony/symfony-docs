@@ -406,5 +406,3 @@ Learn More
     :glob:
 
     var_dumper/*
-
-.. _Packagist: https://packagist.org/packages/symfony/var-dumper

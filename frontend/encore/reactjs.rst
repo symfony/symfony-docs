@@ -26,5 +26,3 @@ install any missing dependencies. After running that command and restarting
 Encore, you're done!
 
 Your ``.js`` and ``.jsx`` files will now be transformed through ``babel-preset-react``.
-
-.. _`babel-preset-react`: https://babeljs.io/docs/plugins/preset-react/

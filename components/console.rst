@@ -65,5 +65,3 @@ Learn more
     /components/console/*
     /components/console/helpers/index
     /console/*
-
-.. _Packagist: https://packagist.org/packages/symfony/console

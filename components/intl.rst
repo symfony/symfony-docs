@@ -349,8 +349,6 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _Packagist: https://packagist.org/packages/symfony/intl
-.. _Icu component: https://packagist.org/packages/symfony/icu
 .. _intl extension: https://php.net/manual/en/book.intl.php
 .. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/

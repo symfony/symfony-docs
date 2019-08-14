@@ -102,5 +102,3 @@ Learn more
     :glob:
 
     /workflow/*
-
-.. _Packagist: https://packagist.org/packages/symfony/workflow

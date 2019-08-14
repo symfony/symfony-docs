@@ -130,5 +130,4 @@ You'll customize and learn more about these file in :doc:`/frontend/encore/simpl
 
 .. _`install Node.js`: https://nodejs.org/en/download/
 .. _`Yarn package manager`: https://yarnpkg.com/lang/en/docs/install/
-.. _`npm`: https://www.npmjs.com/
 .. _`WebpackEncoreBundle`: https://github.com/symfony/webpack-encore-bundle

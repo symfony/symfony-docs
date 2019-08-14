@@ -145,7 +145,6 @@ delete existing ones::
     // Removing an existing entry
     $entryManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
 
-
 Batch Updating
 ______________
 

@@ -301,4 +301,3 @@ Available Options
 .. _`Memcached server`: https://memcached.org/
 .. _`Memcached`: http://php.net/manual/en/class.memcached.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
-.. _`Domain Name System (DNS)`: https://en.wikipedia.org/wiki/Domain_Name_System
