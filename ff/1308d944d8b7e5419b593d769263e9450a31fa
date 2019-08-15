@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-15T08:41:19Z
+
+This is true according to: https://github.com/symfony/symfony/blob/3.4/src/Symfony/Component/Process/Process.php#L1319
