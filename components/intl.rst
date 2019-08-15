@@ -5,8 +5,8 @@
 The Intl Component
 ==================
 
-    A PHP replacement layer for the C `intl extension`_ that also provides
-    access to the localization data of the `ICU library`_.
+    This component provides access to the localization data of the `ICU library`_.
+    It also provides a PHP replacement layer for the C `intl extension`_.
 
 .. caution::
 
