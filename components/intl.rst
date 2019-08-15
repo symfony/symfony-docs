@@ -79,8 +79,8 @@ The ``Languages`` class provides access to the name of all languages::
     $language = Languages::getName('fr');
     // => 'French'
 
-If you want to you can also use the ISO 639-2 three-letter language codes instead of
-the ISO 639-1 two-letter codes. (They are here called alpha3 codes.)
+You can also use the ISO 639-2 three-letter language codes instead of
+the ISO 639-1 two-letter codes, respectively called alpha3 and alpha2 codes::
 
     use Symfony\Component\Intl\Languages;
 
@@ -92,6 +92,10 @@ the ISO 639-1 two-letter codes. (They are here called alpha3 codes.)
 
     $language = Languages::getAlpha3Name('fra');
     // => 'French'
+
+.. versionadded:: 4.4
+
+    The support for alpha3 codes was introduced in Symfony 4.4.
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
@@ -108,11 +112,11 @@ to catching the exception, you can also check if a given language code is valid:
 
     $isValidLanguage = Languages::exists($languageCode);
 
-Or if you have a three-letter language code you want to check:
+Or if you have a three-letter language code you want to check::
 
     $isValidLanguage = Languages::alpha3CodeExists($alpha3Code);
 
-You may convert codes between two-letter ISO 639-1 (alpha2) and three-letter ISO 639-2 (alpha3) codes:
+You may convert codes between two-letter ISO 639-1 (alpha2) and three-letter ISO 639-2 (alpha3) codes::
 
     $alpha3Code = Languages::getAlpha3Code($alpha2Code);
 
@@ -170,12 +174,12 @@ of officially recognized countries and territories::
 
     // Indexed with alpha-2
     $countries = Countries::getNames();
-    // ('countryCode' => 'countryName')
+    // ('alpha2Code' => 'countryName')
     // => ['AF' => 'Afghanistan', 'AX' => 'Åland Islands', ...]
 
     // Indexed with alhpa-3
     $countries = Countries::getAlpha3Names();
-    // ('countryCode' => 'countryName')
+    // ('alpha3Code' => 'countryName')
     // => ['AFG' => 'Afghanistan', 'ALA' => 'Åland Islands', ...]
 
     $country = Countries::getName('GB');
@@ -196,7 +200,7 @@ which defaults to the current default locale::
     $country = Countries::getName('GB', 'de');
     // => 'Vereinigtes Königreich'
 
-    $country = Countries::getName('GBR', 'de');
+    $country = Countries::getAlpha3Name('GBR', 'de');
     // => 'Vereinigtes Königreich'
 
 If the given country code doesn't exist, the methods trigger a
@@ -205,9 +209,11 @@ to catching the exception, you can also check if a given country code is valid::
 
     $isValidCountry = Countries::exists($alpha2Code);
 
-    $isValidCountry = Countries::alpha3CodeExists($alpha2Code);
+Or if you have a alpha3 country code you want to check:
 
-You may convert codes between two-letter alpha2 and three-letter alpha3 codes:
+    $isValidCountry = Countries::alpha3CodeExists($alpha3Code);
+
+You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 
     $alpha3Code = Countries::getAlpha3Code($alpha2Code);
 
