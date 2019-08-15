@@ -1910,7 +1910,7 @@ Generating URLs in Templates
 The Twig template language used in :doc:`Symfony templates </templating>`
 provides some functions to generate both relative and absolute URLs:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# generates relative URLs #}
     <a href="{{ path('sign_up') }}">Sign up</a>
