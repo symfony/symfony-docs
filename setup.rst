@@ -261,7 +261,7 @@ Learn More
 .. _`Install Composer`: https://getcomposer.org/download/
 .. _`Install Symfony`: https://symfony.com/download
 .. _`install Symfony`: https://symfony.com/download
-.. _`The Symfony Demo application`: https://github.com/symfony/demo
+.. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`Symfony roadmap`: https://symfony.com/roadmap

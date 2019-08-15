@@ -228,7 +228,6 @@ take a look at how this bundle works.
     serializer/custom_encoders
     serializer/custom_normalizer
 
-.. _`APCu`: https://github.com/krakjoe/apcu
 .. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com

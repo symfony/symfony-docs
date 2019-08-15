@@ -1041,6 +1041,5 @@ Learn more
 
     /service_container/*
 
-.. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
 .. _`glob pattern`: https://en.wikipedia.org/wiki/Glob_(programming)
 .. _`Symfony Fundamentals screencast series`: https://symfonycasts.com/screencast/symfony-fundamentals
