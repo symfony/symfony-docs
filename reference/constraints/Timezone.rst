@@ -155,5 +155,4 @@ In addition, there are some special zone values:
   country (which is defined using the ``countryCode`` option).
 
 .. _`PHP timezone identifiers`: https://www.php.net/manual/en/timezones.php
-.. _`DateTimeZone`: https://www.php.net/datetimezone
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2

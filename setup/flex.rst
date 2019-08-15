@@ -45,7 +45,7 @@ manual steps:
        $ composer require symfony/flex
 
 #. If the project's ``composer.json`` file contains ``symfony/symfony`` dependency,
-   it still depends on the Symfony Standard edition, which is no longer available
+   it still depends on the Symfony Standard Edition, which is no longer available
    in Symfony 4. First, remove this dependency:
 
    .. code-block:: terminal
@@ -193,9 +193,6 @@ If you customize these paths, some files copied from a recipe still may contain
 references to the original path. In other words: you may need to update some things
 manually after a recipe is installed.
 
-.. _`Symfony Flex`: https://github.com/symfony/flex
-.. _`Symfony Installer`: https://github.com/symfony/symfony-installer
-.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/services.yaml
 .. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
 .. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L44-L46

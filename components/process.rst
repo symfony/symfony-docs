@@ -474,9 +474,6 @@ whether `TTY`_ is supported on the current operating system::
 
     $process = (new Process())->setTty(Process::isTtySupported());
 
-.. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
-.. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
-.. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
 .. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)

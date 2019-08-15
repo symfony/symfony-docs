@@ -531,4 +531,4 @@ Learn more
 .. _`choose any license`: https://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
 .. _`Travis CI`: https://travis-ci.org/
-.. _`Travis Cron`: https://docs.travis-ci.com/user/cron-jobs/
+.. _`Travis cron`: https://docs.travis-ci.com/user/cron-jobs/

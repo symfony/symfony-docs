@@ -1454,7 +1454,6 @@ Learn more
 
 .. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
-.. _Packagist: https://packagist.org/packages/symfony/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
 .. _JSON: http://www.json.org/
 .. _XML: https://www.w3.org/XML/

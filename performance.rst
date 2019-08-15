@@ -140,7 +140,6 @@ Learn more
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: https://php.net/manual/en/book.opcache.php
-.. _`bootstrap file`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
 .. _`APC`: https://php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu

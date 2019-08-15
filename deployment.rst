@@ -248,7 +248,7 @@ Learn More
 .. _`Deployer`: http://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Heroku`: https://devcenter.heroku.com/articles/getting-started-with-symfony
-.. _`platform.sh`: https://docs.platform.sh/frameworks/symfony.html
+.. _`Platform.sh`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
 .. _`fortrabbit`: https://help.fortrabbit.com/install-symfony
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle

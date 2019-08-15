@@ -318,5 +318,3 @@ Learn more
     /routing/*
     /controller
     /controller/*
-
-.. _Packagist: https://packagist.org/packages/symfony/routing
