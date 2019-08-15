@@ -75,6 +75,8 @@ and increase web server performance:
         ServerAlias www.domain.tld
 
         DocumentRoot /var/www/project/web
+        DirectoryIndex /app.php
+
         <Directory /var/www/project/web>
             AllowOverride None
             Order Allow,Deny
