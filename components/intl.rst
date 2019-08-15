@@ -77,26 +77,15 @@ according to the `ISO 639-1 alpha-2`_ list and the `ISO 639-2 alpha-3`_ list::
     // ('languageCode' => 'languageName')
     // => ['ab' => 'Abkhazian', 'ace' => 'Achinese', ...]
 
-    $language = Languages::getName('fr');
-    // => 'French'
-
-You can also use the ISO 639-2 three-letter language codes instead of
-the ISO 639-1 two-letter codes, respectively called alpha3 and alpha2 codes::
-
-    use Symfony\Component\Intl\Languages;
-
-    \Locale::setDefault('en');
-
     $languages = Languages::getAlpha3Names();
     // ('languageCode' => 'languageName')
     // => ['abk' => 'Abkhazian', 'ace' => 'Achinese', ...]
 
-    $language = Languages::getAlpha3Name('fra');
+    $language = Languages::getName('fr');
     // => 'French'
 
-.. versionadded:: 4.4
-
-    The support for alpha3 codes was introduced in Symfony 4.4.
+    $language = Languages::getAlpha3Name('fra');
+    // => 'French'
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
@@ -104,7 +93,13 @@ which defaults to the current default locale::
     $languages = Languages::getNames('de');
     // => ['ab' => 'Abchasisch', 'ace' => 'Aceh', ...]
 
+    $languages = Languages::getAlpha3Names('de');
+    // => ['abk' => 'Abchasisch', 'ace' => 'Aceh', ...]
+
     $language = Languages::getName('fr', 'de');
+    // => 'Französisch'
+
+    $language = Languages::getAlpha3Name('fra', 'de');
     // => 'Französisch'
 
 If the given locale doesn't exist, the methods trigger a
@@ -113,11 +108,11 @@ to catching the exception, you can also check if a given language code is valid:
 
     $isValidLanguage = Languages::exists($languageCode);
 
-Or if you have a three-letter language code you want to check::
+Or if you have a alpha3 language code you want to check::
 
     $isValidLanguage = Languages::alpha3CodeExists($alpha3Code);
 
-You may convert codes between two-letter ISO 639-1 (alpha2) and three-letter ISO 639-2 (alpha3) codes::
+You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 
     $alpha3Code = Languages::getAlpha3Code($alpha2Code);
 
@@ -178,10 +173,6 @@ of officially recognized countries and territories::
 
     $country = Countries::getAlpha3Name('NOR');
     // => 'Norway'
-
-.. versionadded:: 4.4
-
-    The support for alpha3 codes was introduced in Symfony 4.4.
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
