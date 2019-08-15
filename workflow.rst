@@ -664,7 +664,6 @@ Then you can access this metadata in your controller as follows::
 
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
-    use App\Entity\BlogPost;
 
     public function myController(Registry $registry, BlogPost $post)
     {
