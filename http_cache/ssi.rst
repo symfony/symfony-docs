@@ -7,13 +7,12 @@
 Working with Server Side Includes
 =================================
 
-In a similar way as :doc:`ESI (Edge Side Includes) <esi>`, SSI can be used to
-control HTTP caching on fragments of a response. The most important
-difference that is SSI is known directly by most web servers like
-`Apache <https://httpd.apache.org/docs/current/en/howto/ssi.html>`_,
-`Nginx <https://nginx.org/en/docs/http/ngx_http_ssi_module.html>`_ etc.
+In a similar way as :doc:`ESI (Edge Side Includes) </http_cache/esi>`,
+SSI can be used to control HTTP caching on fragments of a response.
+The most important difference that is SSI is known directly by most
+web servers like `Apache`_, `Nginx`_ etc.
 
-The SSI instructions are done in HTML comments:
+The SSI instructions are done via HTML comments:
 
 .. code-block:: html
 
@@ -29,15 +28,13 @@ The SSI instructions are done in HTML comments:
         </body>
     </html>
 
-There is some other `available directives
-<https://en.wikipedia.org/wiki/Server_Side_Includes#Directives>`_ but
+There are some other `available directives`_ but
 Symfony manages only the ``#include virtual`` one.
 
 .. caution::
 
     Be careful with SSI, your website may be victim of injections.
-    Please read this OWASP article first:
-    https://www.owasp.org/index.php/Server-Side_Includes_(SSI)_Injection.
+    Please read this `OWASP article`_ first!
 
 When the web server reads an SSI directive, it requests the given URI or gives
 directly from its cache. It repeats this process until there is no more
@@ -57,7 +54,6 @@ First, to use SSI, be sure to enable it in your application configuration:
 
         # config/packages/framework.yaml
         framework:
-            # ...
             ssi: { enabled: true }
 
     .. code-block:: xml
@@ -73,18 +69,16 @@ First, to use SSI, be sure to enable it in your application configuration:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <!-- ... -->
-                <framework:ssi enabled="true" />
+                <framework:ssi enabled="true"/>
             </framework:config>
         </container>
 
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'ssi' => array('enabled' => true),
-        ));
+        $container->loadFromExtension('framework', [
+            'ssi' => ['enabled' => true],
+        ]);
 
 Suppose you have a page with private content like a Profile page and you want
 to cache a static GDPR content block. With SSI, you can add some expiration
@@ -131,7 +125,7 @@ The ``render_ssi`` twig helper will generate something like:
 
     <!--#include virtual="/_fragment?_hash=abcdef1234&_path=_controller=App\Controller\ProfileController::gdpr" -->
 
-``render_esi`` ensures that SSI directive are generated only if the request
+``render_ssi`` ensures that SSI directive are generated only if the request
 has the header requirement like ``Surrogate-Capability: device="SSI/1.0"``
 (normally given by the web server).
 Otherwise it will embed directly the sub-response.
@@ -140,3 +134,8 @@ Otherwise it will embed directly the sub-response.
 
     For more information about Symfony cache fragments, take a tour on
     the :ref:`ESI documentation <http_cache-fragments>`.
+
+.. _`Apache`: https://httpd.apache.org/docs/current/en/howto/ssi.html
+.. _`Nginx`: https://nginx.org/en/docs/http/ngx_http_ssi_module.html
+.. _`available directives`: https://en.wikipedia.org/wiki/Server_Side_Includes#Directives
+.. _`OWASP article`: https://www.owasp.org/index.php/Server-Side_Includes_(SSI)_Injection
