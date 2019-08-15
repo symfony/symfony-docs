@@ -117,10 +117,10 @@ for traditional Chinese)::
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
-    $languages = Scripts::getNames('de');
+    $scripts = Scripts::getNames('de');
     // => ['Adlm' => 'Adlam', 'Afak' => 'Afaka', ...]
 
-    $language = Scripts::getName('Hans', 'de');
+    $script = Scripts::getName('Hans', 'de');
     // => 'Vereinfacht'
 
 If the given script code doesn't exist, the methods trigger a
