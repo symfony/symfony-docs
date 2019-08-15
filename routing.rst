@@ -929,10 +929,6 @@ and in route imports. Symfony defines some special attributes with the same name
             ;
         };
 
-.. versionadded:: 4.3
-
-    The special attributes were introduced in Symfony 4.3.
-
 Extra Parameters
 ~~~~~~~~~~~~~~~~
 

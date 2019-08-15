@@ -933,10 +933,6 @@ max_duration
 The maximum execution time, in seconds, that the request and the response are
 allowed to take. A value lower than or equal to 0 means it is unlimited.
 
-.. versionadded:: 4.4
-
-    The ``max_duration`` option was introduced in Symfony 4.4.
-
 verify_host
 ...........
 

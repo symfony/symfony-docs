@@ -216,10 +216,6 @@ implement the :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\RouteLoaderInte
 interface to be tagged automatically. If you're **not using autoconfigure**,
 tag it manually with ``routing.route_loader``.
 
-.. deprecated:: 4.4
-
-    Not tagging or implementing your route loader was deprecated in Symfony 4.4.
-
 .. note::
 
     The routes defined using service route loaders will be automatically

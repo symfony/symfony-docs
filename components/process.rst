@@ -367,10 +367,6 @@ the PHP code::
 
     A prepared command line will not be escaped automatically!
 
-.. versionadded:: 4.4
-
-    Prepared command lines were introduced in Symfony 4.4.
-
 Process Timeout
 ---------------
 

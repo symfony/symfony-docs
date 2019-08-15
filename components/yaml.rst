@@ -388,10 +388,6 @@ you can dump them as ``~`` with the ``DUMP_NULL_AS_TILDE`` flag::
     $dumped = Yaml::dump(['foo' => null], 2, 4, Yaml::DUMP_NULL_AS_TILDE);
     // foo: ~
 
-.. versionadded:: 4.4
-
-    The flag to dump ``null`` as ``~`` was introduced in Symfony 4.4.
-
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
 
