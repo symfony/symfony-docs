@@ -8,8 +8,8 @@ The Messenger Component
     The Messenger component helps applications send and receive messages to/from
     other applications or via message queues.
 
-    The component is greatly inspired by Matthias Noback's series of `blog posts
-    about command buses`_ and the `SimpleBus project`_.
+    The component is greatly inspired by Matthias Noback's series of
+    `blog posts about command buses`_ and the `SimpleBus project`_.
 
 .. seealso::
 
@@ -332,5 +332,5 @@ Learn more
     /messenger
     /messenger/*
 
-.. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
-.. _SimpleBus project: http://docs.simplebus.io/en/latest/
+.. _`blog posts about command buses`: https://matthiasnoback.nl/tags/command%20bus/
+.. _`SimpleBus project`: http://docs.simplebus.io/en/latest/

@@ -265,4 +265,3 @@ code needed to generate the previous XLIFF file::
     ]);
 
 .. _`L10n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
-.. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals

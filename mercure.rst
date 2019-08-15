@@ -169,12 +169,12 @@ service, including controllers::
     }
 
 The first parameter to pass to the ``Update`` constructor is
-the **topic** being updated. This topic should be an IRI_
+the **topic** being updated. This topic should be an `IRI`_
 (Internationalized Resource Identifier, RFC 3987): a unique identifier
 of the resource being dispatched.
 
 Usually, this parameter contains the original URL of the resource
-transmitted to the client, but it can be any valid IRI_, it doesn't
+transmitted to the client, but it can be any valid `IRI`_, it doesn't
 have to be an URL that exists (similarly to XML namespaces).
 
 The second parameter of the constructor is the content of the update.
@@ -534,7 +534,6 @@ its Mercure support.
 .. _`a polyfill`: https://github.com/Yaffle/EventSource
 .. _`high-level implementations`: https://github.com/dunglas/mercure#tools
 .. _`In this recording`: https://www.youtube.com/watch?v=UI1l0JOjLeI
-.. _`API Platform`: https://api-platform.com
 .. _`Mercure.rocks`: https://mercure.rocks
 .. _`API Platform distribution`: https://api-platform.com/docs/distribution/
 .. _`JSON Web Token`: https://tools.ietf.org/html/rfc7519

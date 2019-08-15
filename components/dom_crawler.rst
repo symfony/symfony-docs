@@ -613,5 +613,4 @@ Learn more
 * :doc:`/components/css_selector`
 
 .. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
-.. _Packagist: https://packagist.org/packages/symfony/dom-crawler
 .. _`html5-php library`: https://github.com/Masterminds/html5-php

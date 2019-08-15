@@ -1460,6 +1460,6 @@ Learn more
 
     /messenger/*
 
-.. _`enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
+.. _`Enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/

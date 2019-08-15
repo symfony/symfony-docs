@@ -203,7 +203,5 @@ Advanced Usage
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
 .. _`Cache Contracts`: https://github.com/symfony/contracts/blob/master/Cache/CacheInterface.php
-.. _`PSR-16`: http://www.php-fig.org/psr/psr-16/
-.. _Doctrine Cache: https://www.doctrine-project.org/projects/cache.html
-.. _Stampede prevention: https://en.wikipedia.org/wiki/Cache_stampede
+.. _`Stampede prevention`: https://en.wikipedia.org/wiki/Cache_stampede
 .. _Probabilistic early expiration: https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration
