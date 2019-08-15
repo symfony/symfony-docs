@@ -412,5 +412,4 @@ The contents of returned files can be read with
 .. _`PHP wrapper for URL-style protocols`: https://php.net/manual/en/wrappers.php
 .. _`PHP streams`: https://php.net/streams
 .. _`IEC standard`: https://physics.nist.gov/cuu/Units/binary.html
-.. _`Packagist`: https://packagist.org/packages/symfony/finder
 .. _`natural sort order`: https://en.wikipedia.org/wiki/Natural_sort_order

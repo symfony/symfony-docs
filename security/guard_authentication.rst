@@ -509,6 +509,5 @@ Frequently Asked Questions
     question) or use the ``User`` object from FOSUserBundle and create your own
     authenticator(s) (just like in this article).
 
-.. _`must be quoted with backticks`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
 .. _`Social Authentication`: https://github.com/knpuniversity/oauth2-client-bundle#authenticating-with-guard
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

@@ -172,5 +172,3 @@ Possible operation types are ``LDAP_MODIFY_BATCH_ADD``, ``LDAP_MODIFY_BATCH_REMO
 ``LDAP_MODIFY_BATCH_REMOVE_ALL``, ``LDAP_MODIFY_BATCH_REPLACE``. Parameter
 ``$values`` must be ``NULL`` when using ``LDAP_MODIFY_BATCH_REMOVE_ALL``
 operation type.
-
-.. _Packagist: https://packagist.org/packages/symfony/ldap
