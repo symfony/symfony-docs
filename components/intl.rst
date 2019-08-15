@@ -172,12 +172,10 @@ of officially recognized countries and territories::
 
     \Locale::setDefault('en');
 
-    // Indexed with alpha-2
     $countries = Countries::getNames();
     // ('alpha2Code' => 'countryName')
     // => ['AF' => 'Afghanistan', 'AX' => 'Åland Islands', ...]
 
-    // Indexed with alhpa-3
     $countries = Countries::getAlpha3Names();
     // ('alpha3Code' => 'countryName')
     // => ['AFG' => 'Afghanistan', 'ALA' => 'Åland Islands', ...]
@@ -187,6 +185,10 @@ of officially recognized countries and territories::
 
     $country = Countries::getAlpha3Name('NOR');
     // => 'Norway'
+
+.. versionadded:: 4.4
+
+    The support for alpha3 codes was introduced in Symfony 4.4.
 
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
@@ -209,7 +211,7 @@ to catching the exception, you can also check if a given country code is valid::
 
     $isValidCountry = Countries::exists($alpha2Code);
 
-Or if you have a alpha3 country code you want to check:
+Or if you have a alpha3 country code you want to check::
 
     $isValidCountry = Countries::alpha3CodeExists($alpha3Code);
 
