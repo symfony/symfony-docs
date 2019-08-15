@@ -107,6 +107,7 @@ Configuration
     * `proxy`_
     * `resolve`_
     * `timeout`_
+    * `max_duration`_
     * `verify_host`_
     * `verify_peer`_
 
@@ -134,6 +135,7 @@ Configuration
     * `query`_
     * `resolve`_
     * `timeout`_
+    * `max_duration`_
     * `verify_host`_
     * `verify_peer`_
 
@@ -922,6 +924,18 @@ Time, in seconds, to wait for a response. If the response stales for longer, a
 :class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
 Its default value is the same as the value of PHP's `default_socket_timeout`_
 config option.
+
+max_duration
+............
+
+**type**: ``float`` **default**: 0
+
+The maximum execution time, in seconds, that the request and the response are
+allowed to take. A value lower than or equal to 0 means it is unlimited.
+
+.. versionadded:: 4.4
+
+    The ``max_duration`` option was introduced in Symfony 4.4.
 
 verify_host
 ...........
