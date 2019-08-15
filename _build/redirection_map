@@ -445,3 +445,4 @@
 /console/request_context /routing
 /form/action_method /forms
 /reference/requirements /setup
+ /bundles/inheritance /bundles/override
