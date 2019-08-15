@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-02-20T19:31:39Z
+
+@Ioni14 thanks for this contribution. I'll try to review it soon.
+
+You are right that this was introduced in Symfony 2.6 ... and it's part of #2129, a pending issue since Symfony 2.2 !!
