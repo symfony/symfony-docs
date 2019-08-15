@@ -56,7 +56,9 @@ Additionally, you have access to a number of functions inside the expression:
     Returns ``true`` if the user is authenticated via "remember-me" or authenticated
     "fully" - i.e. returns true if the user is "logged in".
 ``is_anonymous``
-    Equal to using ``IS_AUTHENTICATED_ANONYMOUSLY`` with the ``isGranted()`` function.
+    Returns ``true`` if the user is anonymous. That is, the firewall confirms that it
+    does not know this user's identity. This is different from ``IS_AUTHENTICATED_ANONYMOUSLY``,
+    which is granted to *all* users, including authenticated ones.
 ``is_remember_me``
     Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
 ``is_fully_authenticated``
