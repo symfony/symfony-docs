@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-15T10:00:46Z
+
+@ro0NL could you please verify this? Thank you
+
+Also this must go into `4.3` if I am right.
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2019-08-15T10:07:20Z
+
+i tend to agree _Accessing ICU Data_ is the first concern of the Intl component, today. Or put different the idea of stubbing is you dont actually notice it's stubbed, so it seems less important
+
+It was much worse before though :) #11590
