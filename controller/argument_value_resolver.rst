@@ -249,6 +249,5 @@ subrequests.
 
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`yield`: http://php.net/manual/en/language.generators.syntax.php
-.. _`SecurityBundle`: https://github.com/symfony/security-bundle
 .. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
 .. _`SensioFrameworkExtraBundle`: https://github.com/sensiolabs/SensioFrameworkExtraBundle
