@@ -350,6 +350,27 @@ instead::
     );
     $process->run();
 
+Using a Prepared Command Line
+-----------------------------
+
+You can run the process by using a a prepared command line using the
+double bracket notation. You can use a placeholder in order to have a
+process that can only be changed with the values and without changing
+the PHP code::
+
+  use Symfony\Component\Process\Process;
+
+  $process = Process::fromShellCommandline('echo "$name"');
+  $process->run(null, ['name' => 'Elsa']);
+
+.. caution::
+
+    A prepared command line will not be escaped automatically!
+
+.. versionadded:: 4.4
+
+    Prepared command lines were introduced in Symfony 4.4.
+
 Process Timeout
 ---------------
 
