@@ -118,8 +118,8 @@ you'll need to do:
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
-Use the :doc:`Symfony Requirements Checker </reference/requirements>` to check
-if your server meets the technical requirements to run Symfony applications.
+Use the ``check:requirements`` command to check if your server meets the
+:ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`.
 
 .. _b-configure-your-app-config-parameters-yml-file:
 

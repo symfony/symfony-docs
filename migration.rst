@@ -62,9 +62,9 @@ First of all your environment needs to be able to support the minimum
 requirements for both applications. In other words, when the Symfony
 release you aim to use requires PHP 7.1 and your existing application
 does not yet support this PHP version, you will probably have to upgrade
-your legacy project. You can find out the
-:doc:`requirements </reference/requirements>` for running Symfony and
-compare them with your current application's environment to make sure you
+your legacy project. Use the ``check:requirements`` command to check if your
+server meets the :ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`
+and compare them with your current application's environment to make sure you
 are able to run both applications on the same system. Having a test
 system, that is as close to the production environment as possible,
 where you can just install a new Symfony project next to the existing one
