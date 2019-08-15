@@ -363,7 +363,7 @@ a different timeout (in seconds) to the ``setTimeout()`` method::
     $process->run();
 
 If the timeout is reached, a
-:class:`Symfony\\Component\\Process\\Exception\\RuntimeException` is thrown.
+:class:`Symfony\\Component\\Process\\Exception\\ProcessTimedOutException` is thrown.
 
 For long running commands, it is your responsibility to perform the timeout
 check regularly::
