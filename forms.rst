@@ -545,7 +545,7 @@ Form Type Options
 
 Each :ref:`form type <form-types>` has a number of options to configure it, as
 explained in the :doc:`Symfony form types reference </reference/forms/types>`.
-Two commonly used options options are ``required`` and ``label``.
+Two commonly used options are ``required`` and ``label``.
 
 The ``required`` Option
 .......................

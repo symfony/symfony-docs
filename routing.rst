@@ -200,7 +200,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 
     HTML forms only support ``GET`` and ``POST`` methods. If you're calling a
     route with a different method from an HTML form, add a hidden field called
-    ``_method`` with the method to use (e.g. ``<input type="hidden" name="_method" value="PUT" />``).
+    ``_method`` with the method to use (e.g. ``<input type="hidden" name="_method" value="PUT"/>``).
     If you create your forms with :doc:`Symfony Forms </forms>` this is done
     automatically for you.
 
@@ -1910,7 +1910,7 @@ Generating URLs in Templates
 The Twig template language used in :doc:`Symfony templates </templating>`
 provides some functions to generate both relative and absolute URLs:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     {# generates relative URLs #}
     <a href="{{ path('sign_up') }}">Sign up</a>
