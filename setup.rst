@@ -10,16 +10,26 @@ Installing & Setting up the Symfony Framework
     Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
     screencast series.
 
+.. _symfony-tech-requirements:
+
 Technical Requirements
 ----------------------
 
 Before creating your first Symfony application you must:
 
-* Make sure to have PHP 7.1 or higher installed (and :doc:`these PHP extensions </reference/requirements>`
-  which are installed and enabled by default by PHP);
+* Install PHP 7.1 or higher and these PHP extensions (which are installed and
+  enabled by default in most PHP 7 installations): `Ctype`_, `iconv`_, `JSON`_,
+  `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
 * `Install Composer`_, which is used to install PHP packages;
 * `Install Symfony`_, which creates in your computer a binary called ``symfony``
   that provides all the tools you need to develop your application locally.
+
+The ``symfony`` binary provides a tool to check if your computer meets these
+requirements. Open your console terminal and run this command:
+
+.. code-block:: terminal
+
+    $ symfony check:requirements
 
 .. _creating-symfony-applications:
 
@@ -57,6 +67,12 @@ will create a new ``my_project_name/`` directory, download some dependencies
 into it and even generate the basic directories and files you'll need to get
 started. In other words, your new application is ready!
 
+.. note::
+
+    The project's cache and logs directory (by default, ``<project>/var/cache/``
+    and ``<project>/var/log/``) must be writable by the web server. If you have
+    any issue, read how to :doc:`set up permissions for Symfony applications </setup/file_permissions>`.
+
 Running Symfony Applications
 ----------------------------
 
@@ -80,12 +96,6 @@ local web server as follows:
 Open your browser and navigate to ``http://localhost:8000/``. If everything is
 working, you'll see a welcome page. Later, when you are finished working, stop
 the server by pressing ``Ctrl+C`` from your terminal.
-
-.. tip::
-
-    If you're having any problems running Symfony, your system may be missing
-    some technical requirements. Use the :doc:`Symfony Requirements Checker </reference/requirements>`
-    tool to make sure your system is set up.
 
 .. _install-existing-app:
 
@@ -258,3 +268,10 @@ Learn More
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
 .. _`Symfony Recipes documentation`: https://github.com/symfony/recipes/blob/master/README.rst
+.. _`iconv`: https://php.net/book.iconv
+.. _`JSON`: https://php.net/book.json
+.. _`Session`: https://php.net/book.session
+.. _`Ctype`: https://php.net/book.ctype
+.. _`Tokenizer`: https://php.net/book.tokenizer
+.. _`SimpleXML`: https://php.net/book.simplexml
+.. _`PCRE`: https://php.net/book.pcre
