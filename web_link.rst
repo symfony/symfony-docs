@@ -71,12 +71,12 @@ requested the HTML page.
 
 .. note::
 
-    You can preload an asset by wrapping it with the ``preload()`` function
+    You can preload an asset by wrapping it with the ``preload()`` function:
 
     .. code-block:: html+twig
 
         <head>
-            {# ... #}
+            <!-- ... -->
             <link rel="stylesheet" href="{{ preload(asset('build/app.css')) }}">
         </head>
 
