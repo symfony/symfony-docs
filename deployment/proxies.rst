@@ -85,7 +85,7 @@ For instance you have ``Custom-Forwarded-Proto`` instead of ``X-Forwarded-Proto`
 In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value of
 ``Custom-Forwarded-Proto`` early enough in your application, i.e. before handling the request::
 
-    // web/app.php
+    // public/index.php
 
     // ...
     $_SERVER['HEADER_X_FORWARDED_PROTO'] = $_SERVER['HEADER_CUSTOM_FORWARDED_PROTO'];
