@@ -21,55 +21,11 @@ Installation
 Usage
 -----
 
-The ErrorRenderer component provides several handlers and renderers to convert
-PHP errors and exceptions into other formats easier to debug when working with
-HTTP applications.
+The ErrorRenderer component provides several renderers to convert PHP errors and
+exceptions into other formats such as JSON and HTML easier to debug when working
+with HTTP applications::
 
-.. TODO: how are these handlers enabled in the app? (Previously: Debug::enable())
-
-Handling PHP Errors and Exceptions
-----------------------------------
-
-Enabling the Error Handler
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The :class:`Symfony\\Component\\ErrorRenderer\\ErrorHandler` class catches PHP
-errors and converts them to exceptions (of class :phpclass:`ErrorException` or
-:class:`Symfony\\Component\\ErrorRenderer\\Exception\\FatalErrorException` for
-PHP fatal errors)::
-
-    use Symfony\Component\ErrorRenderer\ErrorHandler;
-
-    ErrorHandler::register();
-
-This error handler is enabled by default in the production environment when the
-application uses the FrameworkBundle because it generates better error logs.
-
-Enabling the Exception Handler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The :class:`Symfony\\Component\\ErrorRenderer\\ExceptionHandler` class catches
-uncaught PHP exceptions and converts them to a nice PHP response. It is useful
-in :ref:`debug mode <debug-mode>` to replace the default PHP/XDebug output with
-something prettier and more useful::
-
-    use Symfony\Component\ErrorRenderer\ExceptionHandler;
-
-    ExceptionHandler::register();
-
-.. note::
-
-    If the :doc:`HttpFoundation component </components/http_foundation>` is
-    available, the handler uses a Symfony Response object; if not, it falls
-    back to a regular PHP response.
-
-Rendering PHP Errors and Exceptions
------------------------------------
-
-Another feature provided by this component are the "error renderers", which
-converts PHP errors and exceptions into other formats such as JSON and HTML::
-
-    use Symfony\Component\ErrorRenderer\ErrorRenderer\ErrorRenderer;
+    use Symfony\Component\ErrorRenderer\ErrorRenderer;
     use Symfony\Component\ErrorRenderer\ErrorRenderer\HtmlErrorRenderer;
     use Symfony\Component\ErrorRenderer\ErrorRenderer\JsonErrorRenderer;
 
@@ -78,7 +34,7 @@ converts PHP errors and exceptions into other formats such as JSON and HTML::
         new JsonErrorRenderer(),
         // ...
     ];
-    $errorFormatter = new ErrorFormatter($renderers);
+    $errorRenderer = new ErrorRenderer($renderers);
 
     /** @var Symfony\Component\ErrorRenderer\Exception\FlattenException */
     $exception = ...;
@@ -86,7 +42,7 @@ converts PHP errors and exceptions into other formats such as JSON and HTML::
     $request = ...;
 
     return new Response(
-        $errorFormatter->render($exception, $request->getRequestFormat()),
+        $errorRenderer->render($exception, $request->getPreferredFormat()),
         $exception->getStatusCode(),
         $exception->getHeaders()
     );
@@ -123,14 +79,14 @@ class anywhere in your project::
     {
         private $debug;
 
-        public static function getFormat(): string
-        {
-            return 'jsonld';
-        }
-
         public function __construct(bool $debug = true)
         {
             $this->debug = $debug;
+        }
+
+        public static function getFormat(): string
+        {
+            return 'jsonld';
         }
 
         public function render(FlattenException $exception): string
@@ -161,7 +117,7 @@ class anywhere in your project::
 
 To enable the new error renderer in the application,
 :ref:`register it as a service <service-container-creating-service>` and
-:doc:`tag it </service_container/tags>` with the ``error_catcher.renderer``
+:doc:`tag it </service_container/tags>` with the ``error_renderer.renderer``
 tag.
 
 .. configuration-block::
@@ -172,7 +128,7 @@ tag.
         services:
             App\ErrorRenderer\JsonLdErrorRenderer:
                 arguments: ['%kernel.debug%']
-                tags: ['error_catcher.renderer']
+                tags: ['error_renderer.renderer']
 
     .. code-block:: xml
 
@@ -186,7 +142,7 @@ tag.
             <services>
                 <service id="App\ErrorRenderer\JsonLdErrorRenderer">
                     <argument>true</argument>
-                    <tag name="error_catcher.renderer"/>
+                    <tag name="error_renderer.renderer"/>
                 </service>
             </services>
         </container>
@@ -198,7 +154,7 @@ tag.
 
         $container->register(JsonLdErrorRenderer::class)
             ->setArguments([true]);
-            ->addTag('error_catcher.renderer');
+            ->addTag('error_renderer.renderer');
 
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
 .. _`JSON-LD format`: https://en.wikipedia.org/wiki/JSON-LD

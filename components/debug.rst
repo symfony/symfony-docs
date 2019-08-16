@@ -35,21 +35,4 @@ Enable all of them by calling this method::
 
     In Symfony versions before 4.4, this component also provided error and
     exception handlers. In Symfony 4.4 they were deprecated in favor of their
-    equivalent handlers included in the new :doc:`ErrorCatcher component </components/error_catcher>`.
-
-.. _component-debug-class-loader:
-
-Debugging a Class Loader
-------------------------
-
-The :class:`Symfony\\Component\\Debug\\DebugClassLoader` attempts to
-throw more helpful exceptions when a class isn't found by the registered
-autoloaders. All autoloaders that implement a ``findFile()`` method are replaced
-with a ``DebugClassLoader`` wrapper.
-
-Using the ``DebugClassLoader`` is done by calling its static
-:method:`Symfony\\Component\\Debug\\DebugClassLoader::enable` method::
-
-    use Symfony\Component\Debug\DebugClassLoader;
-
-    DebugClassLoader::enable();
+    equivalent handlers included in the new :doc:`ErrorHandler component </components/error_handler>`.
