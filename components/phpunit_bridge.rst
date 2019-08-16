@@ -6,7 +6,7 @@ The PHPUnit Bridge
 ==================
 
     The PHPUnit Bridge provides utilities to report legacy tests and usage of
-    deprecated code and a helper for time-sensitive tests.
+    deprecated code and a helper for time and network-sensitive tests.
 
 It comes with the following features:
 
@@ -19,10 +19,10 @@ It comes with the following features:
 
 * Displays the stack trace of a deprecation on-demand;
 
-* Provides a ``ClockMock`` and ``DnsMock`` helper classes for time or network-sensitive tests.
+* Provides a ``ClockMock`` and ``DnsMock`` helper classes for time and network-sensitive tests;
 
 * Provides a modified version of PHPUnit that does not embed ``symfony/yaml`` nor
-  ``prophecy`` to prevent any conflicts with these dependencies.
+  ``prophecy`` to prevent any conflicts with these dependencies;
 
 Installation
 ------------
@@ -719,7 +719,7 @@ not find the SUT:
         </listener>
     </listeners>
 
-.. _PHPUnit: https://phpunit.de
+.. _`PHPUnit`: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
 .. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
