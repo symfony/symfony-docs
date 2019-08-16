@@ -1318,8 +1318,7 @@ the ``template`` option:
 Redirecting to URLs and Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``RedirectController`` to redirect to other routes (``redirectAction``)
-and URLs (``urlRedirectAction``):
+Use the ``RedirectController`` to redirect to other routes and URLs:
 
 .. configuration-block::
 
@@ -1328,7 +1327,7 @@ and URLs (``urlRedirectAction``):
         # config/routes.yaml
         doc_shortcut:
             path: /doc
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
             defaults:
                 route: 'doc_page'
                 # optionally you can define some arguments passed to the route
@@ -1345,7 +1344,7 @@ and URLs (``urlRedirectAction``):
 
         legacy_doc:
             path: /legacy/doc
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
             defaults:
                 # this value can be an absolute path or an absolute URL
                 path: 'https://legacy.example.com/doc'
@@ -1361,7 +1360,7 @@ and URLs (``urlRedirectAction``):
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="doc_shortcut" path="/doc"
-                   controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction">
+                   controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController">
                 <default key="route">doc_page</default>
                 <!-- optionally you can define some arguments passed to the route -->
                 <default key="page">index</default>
@@ -1377,7 +1376,7 @@ and URLs (``urlRedirectAction``):
             </route>
 
             <route id="legacy_doc" path="/legacy/doc"
-                   controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction">
+                   controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController">
                 <!-- this value can be an absolute path or an absolute URL -->
                 <default key="path">https://legacy.example.com/doc</default>
                 <!-- redirections are temporary by default (code 302) but you can make them permanent (code 301)-->
@@ -1394,7 +1393,7 @@ and URLs (``urlRedirectAction``):
 
         return function (RoutingConfigurator $routes) {
             $routes->add('doc_shortcut', '/doc')
-                ->controller([RedirectController::class, 'redirectAction'])
+                ->controller(RedirectController::class)
                  ->defaults([
                     'route' => 'doc_page',
                     // optionally you can define some arguments passed to the template
@@ -1412,7 +1411,7 @@ and URLs (``urlRedirectAction``):
             ;
 
             $routes->add('legacy_doc', '/legacy/doc')
-                ->controller([RedirectController::class, 'urlRedirectAction'])
+                ->controller(RedirectController::class)
                  ->defaults([
                     // this value can be an absolute path or an absolute URL
                     'path' => 'https://legacy.example.com/doc',
