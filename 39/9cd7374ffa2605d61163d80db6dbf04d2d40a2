@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-16T05:50:56Z
+
+Hi 👋
+
+First of all: your change looks correct, also the target branch 👍
+
+There were a lot of changes around this variable in the last time:
+* https://github.com/symfony/symfony-docs/pull/11394
+* https://github.com/symfony/symfony-docs/pull/11781
+* https://github.com/symfony/symfony-docs/pull/11887
+
+However I don't now why we should name it `$dateCallback`, I prefer `$callback` (in the whole example of course).
+
+@wouterj is there any reason I can get, to name it `$dateCallback`?
+
+---------------------------------------------------------------------------
+
+by makmaoui at 2019-08-16T08:38:42Z
+
+Hi @OskarStark ,
+
+Thanks for your reply, i propose this change especially to make example working. Actually the variable name isn't the same at creation (`$callback`) and at use (`$dateCallback`).
+
+I choose to keep the "use" version (`$dateCallback`) because i consider it more descriptive but that's not the main purpose of my PR.
