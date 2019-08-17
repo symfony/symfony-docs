@@ -28,6 +28,8 @@ with HTTP applications::
     use Symfony\Component\ErrorRenderer\ErrorRenderer;
     use Symfony\Component\ErrorRenderer\ErrorRenderer\HtmlErrorRenderer;
     use Symfony\Component\ErrorRenderer\ErrorRenderer\JsonErrorRenderer;
+    use Symfony\Component\ErrorRenderer\Exception\FlattenException;
+    use Symfony\Component\HttpFoundation\Response;
 
     $renderers = [
         new HtmlErrorRenderer(),
@@ -36,16 +38,13 @@ with HTTP applications::
     ];
     $errorRenderer = new ErrorRenderer($renderers);
 
-    /** @var Symfony\Component\ErrorRenderer\Exception\FlattenException */
-    $exception = ...;
-    /** @var Symfony\Component\HttpFoundation\Request */
-    $request = ...;
+    try {
+        // ...
+    } catch (\Throwable $e) {
+        $e = FlattenException::createFromThrowable($e);
 
-    return new Response(
-        $errorRenderer->render($exception, $request->getPreferredFormat()),
-        $exception->getStatusCode(),
-        $exception->getHeaders()
-    );
+        return new Response($errorRenderer->render($e, 'json'), 500, ['Content-Type' => 'application/json']);
+    }
 
 Built-in Error Renderers
 ~~~~~~~~~~~~~~~~~~~~~~~~
