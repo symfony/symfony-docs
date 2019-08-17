@@ -140,7 +140,7 @@ tag.
 
             <services>
                 <service id="App\ErrorRenderer\JsonLdErrorRenderer">
-                    <argument>true</argument>
+                    <argument>%kernel.debug%</argument>
                     <tag name="error_renderer.renderer"/>
                 </service>
             </services>
@@ -152,7 +152,7 @@ tag.
         use App\ErrorRenderer\JsonLdErrorRenderer;
 
         $container->register(JsonLdErrorRenderer::class)
-            ->setArguments([true]);
+            ->setArguments([$container->getParameter('kernel.debug')]);
             ->addTag('error_renderer.renderer');
 
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
