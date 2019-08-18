@@ -353,6 +353,11 @@ specific channel (``app`` by default), use the ``monolog.logger`` tag  with the
 ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
 
+.. versionadded:: 4.2
+
+    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
+    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
+
 Adding extra Data to each Log (e.g. a unique request token)
 -----------------------------------------------------------
 

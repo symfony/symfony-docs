@@ -8,6 +8,11 @@ The MonologBundle integrates the Monolog :doc:`logging </logging>` library in
 Symfony applications. All these options are configured under the ``monolog`` key
 in your application configuration.
 
+.. versionadded:: 4.2
+
+    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
+    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
+
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
