@@ -307,6 +307,9 @@ The **minimum configuration** to get your application running under Nginx is:
             # Otherwise, PHP's OPcache may not properly detect changes to
             # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
             # for more information).
+            # Caveat: When PHP-FPM is hosted on a different machine from nginx
+            #         $realpath_root may not resolve as you expect! In this case try using
+            #         $document_root instead.
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             fastcgi_param DOCUMENT_ROOT $realpath_root;
             # Prevents URIs that include the front controller. This will 404:
@@ -329,6 +332,11 @@ The **minimum configuration** to get your application running under Nginx is:
 
     Depending on your PHP-FPM config, the ``fastcgi_pass`` can also be
     ``fastcgi_pass 127.0.0.1:9000``.
+
+.. note::
+
+    When PHP-FPM is hosted on a different machine from nginx ``$realpath_root`` may not 
+    resolve as you expect! In this case try using ``$document_root`` instead.
 
 .. tip::
 
