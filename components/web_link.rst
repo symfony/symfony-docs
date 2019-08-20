@@ -22,8 +22,8 @@ Usage
 
 The following example shows the component in action::
 
-    use Symfony\Component\WebLink\HttpHeaderSerializer;
     use Symfony\Component\WebLink\GenericLinkProvider;
+    use Symfony\Component\WebLink\HttpHeaderSerializer;
     use Symfony\Component\WebLink\Link;
 
     $linkProvider = (new GenericLinkProvider())
