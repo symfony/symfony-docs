@@ -943,7 +943,7 @@ during a request::
 
             /* @var InMemoryTransport $transport */
             $transport = self::$container->get('messenger.transport.async_priority_normal');
-            $this->assertCount(1, $transport->get());
+            $this->assertCount(1, $transport->getSent());
         }
     }
 
