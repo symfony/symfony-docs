@@ -373,6 +373,7 @@ can use:
   objects/strings/*etc.* by ellipses;
 * :class:`Symfony\\Component\\VarDumper\\Caster\\CutArrayStub` to keep only some
   useful keys of an array;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\ImgStub` to wrap an image;
 * :class:`Symfony\\Component\\VarDumper\\Caster\\EnumStub` to wrap a set of virtual
   values (*i.e.* values that do not exist as properties in the original PHP data
   structure, but are worth listing alongside with real ones);
