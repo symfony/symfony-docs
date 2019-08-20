@@ -878,7 +878,7 @@ not find the SUT:
         </listener>
     </listeners>
 
-.. _PHPUnit: https://phpunit.de
+.. _`PHPUnit`: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
 .. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php

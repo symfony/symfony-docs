@@ -1234,8 +1234,8 @@ to get the request and its attributes:
 
 .. code-block:: twig
 
-    {% set route_name = app.request.attributes('_route') %}
-    {% set route_parameters = app.request.attributes('_route_params') %}
+    {% set route_name = app.request.attributes.get('_route') %}
+    {% set route_parameters = app.request.attributes.get('_route_params') %}
 
     {# use this to get all the available attributes (not only routing ones) #}
     {% set all_attributes = app.request.attributes.all %}

@@ -168,7 +168,7 @@ extend from :class:`Symfony\\Component\\Form\\AbstractType`, which already
 implements the interface and provides some utilities::
 
     // src/Form/Type/TaskType.php
-    namespace App\Form;
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -731,7 +731,7 @@ When building the form, omit the second argument to the ``add()`` method, or
 pass ``null`` to it, to enable Symfony's "guessing mechanism"::
 
     // src/Form/Type/TaskType.php
-    namespace App\Form;
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
