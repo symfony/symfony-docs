@@ -6,7 +6,9 @@ The WebLink Component
 ======================
 
     The WebLink component provides tools to manage the ``Link`` HTTP header needed
-    for `Web Linking`_ when using `HTTP/2 Server Push`_ as well as `Resource Hints`_.
+    for `Web Linking`_ when using `HTTP/2 Server Push`_ as well as `Resource Hints`_.#
+
+DONT MERGE!
 
 Installation
 ------------
