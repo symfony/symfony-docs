@@ -21,12 +21,12 @@ It comes with the following features:
 * Displays the stack trace of a deprecation on-demand;
 
 * Provides a ``ClockMock``, ``DnsMock`` and ``ClassExistsMock`` classes for tests
-  sensitive to time, network or class existence.
+  sensitive to time, network or class existence;
 
 * Provides a modified version of PHPUnit that allows 1. separating the
   dependencies of your app from those of phpunit to prevent any unwanted
   constraints to apply; 2. running tests in parallel when a test suite is split
-  in several phpunit.xml files; 3. recording and replaying skipped tests.
+  in several phpunit.xml files; 3. recording and replaying skipped tests;
 
 Installation
 ------------
