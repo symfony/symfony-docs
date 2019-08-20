@@ -1,0 +1,10 @@
+on: [push, pull_request]
+name: Build
+jobs:
+    travis-ci:
+        name: Travis CI
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - name: Travis CI
+              uses: travis-ci/actions@master
