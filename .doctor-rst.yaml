@@ -36,13 +36,22 @@ rules:
     valid_inline_highlighted_namespaces: ~
     indention: ~
     unused_links: ~
+    yaml_instead_of_yml_suffix: ~
+    extend_abstract_controller: ~
+#    no_app_bundle: ~
 
-    #   3.4
+    #   4.x
     versionadded_directive_major_version:
-        major_version: 3
+        major_version: 4
 
     versionadded_directive_min_version:
-        min_version: '3.0'
+        min_version: '4.0'
+
+    deprecated_directive_major_version:
+        major_version: 4
+
+    deprecated_directive_min_version:
+        min_version: '4.0'
 
 # do not report as violation
 whitelist:
