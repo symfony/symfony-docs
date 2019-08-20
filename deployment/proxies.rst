@@ -93,5 +93,4 @@ In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
     $response = $kernel->handle($request);
 
 .. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
-.. _`RFC 7239`: http://tools.ietf.org/html/rfc7239
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
