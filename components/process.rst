@@ -358,10 +358,10 @@ double bracket notation. You can use a placeholder in order to have a
 process that can only be changed with the values and without changing
 the PHP code::
 
-  use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Process;
 
-  $process = Process::fromShellCommandline('echo "$name"');
-  $process->run(null, ['name' => 'Elsa']);
+    $process = Process::fromShellCommandline('echo "$name"');
+    $process->run(null, ['name' => 'Elsa']);
 
 .. caution::
 
