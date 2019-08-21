@@ -400,7 +400,7 @@ possible paths:
 
 #. When initially loading the page in a browser, the form hasn't been submitted
    yet and ``$form->isSubmitted()`` returns ``false``. So, the form is created
-   and rendered.
+   and rendered;
 
 #. When the user submits the form, :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
    recognizes this and immediately writes the submitted data back into the
@@ -413,7 +413,7 @@ possible paths:
    written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
    returns ``true``. Now you have the opportunity to perform some actions using
    the ``$task`` object (e.g. persisting it to the database) before redirecting
-   the user to some other page (e.g. a "thank you" or "success" page).
+   the user to some other page (e.g. a "thank you" or "success" page);
 
 .. note::
 
