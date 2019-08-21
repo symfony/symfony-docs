@@ -189,7 +189,7 @@ describe how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 4.2
+    .. versionadded:: 5.2
 
        ... ... ... was introduced in Symfony 5.2. Prior to this,
        ... ... ... ... ... ... ... ... .
