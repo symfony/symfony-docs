@@ -23,7 +23,6 @@ to communicate with each other. For example, when checking for the latest
 .. image:: /_images/http/xkcd-full.png
    :align: center
 
-And while the actual language used is a bit more formal, it's still dead-simple.
 HTTP is the term used to describe this text-based language. The goal of
 your server is *always* to understand text requests and return text responses.
 
@@ -147,8 +146,7 @@ Requests, Responses and Web Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This request-response conversation is the fundamental process that drives all
-communication on the web. And as important and powerful as this process is,
-it's inescapably simple.
+communication on the web.
 
 The most important fact is this: regardless of the language you use, the
 type of application you build (web, mobile, JSON API) or the development
@@ -328,7 +326,7 @@ executing different PHP files, the front controller is *always* executed,
 and the routing of different URLs to different parts of your application
 is done internally.
 
-A very simple front controller might look like this::
+A small front controller might look like this::
 
     // index.php
     use Symfony\Component\HttpFoundation\Request;
