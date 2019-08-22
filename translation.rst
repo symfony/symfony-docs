@@ -411,12 +411,6 @@ checks translation resources for several locales:
             // ...
         ]);
 
-.. deprecated:: 4.4
-
-    In Symfony versions before 4.4, the ``fallbacks`` option was initialized to
-    ``en`` (English) when not configured explicitly. Starting from Symfony 4.4,
-    this option is initialized to the same value as the ``default_locale`` option.
-
 .. note::
 
     When Symfony can't find a translation in the given locale, it will

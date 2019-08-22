@@ -1939,7 +1939,7 @@ Whether or not to enable the ``translator`` service in the service container.
 fallbacks
 .........
 
-**type**: ``string|array`` **default**: ``['en']``
+**type**: ``string|array`` **default**: value of `default_locale`_
 
 This option is used when the translation key for the current locale wasn't
 found.
