@@ -132,7 +132,6 @@ both strings or address objects::
 
     // ...
     use Symfony\Component\Mime\Address;
-    use Symfony\Component\Mime\NamedAddress;
 
     $email = (new Email())
         // email address as a simple string
@@ -143,7 +142,7 @@ both strings or address objects::
 
         // email address as an object (email clients will display the name
         // instead of the email address)
-        ->from(new NamedAddress('fabien@example.com', 'Fabien'))
+        ->from(new Address('fabien@example.com', 'Fabien'))
 
         // ...
     ;
@@ -306,7 +305,7 @@ for Twig templates::
 
     $email = (new TemplatedEmail())
         ->from('fabien@example.com')
-        ->to(new NamedAddress('ryan@example.com', 'Ryan'))
+        ->to(new Address('ryan@example.com', 'Ryan'))
         ->subject('Thanks for signing up!')
 
         // path of the Twig template to render
