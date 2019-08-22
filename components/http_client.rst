@@ -26,8 +26,8 @@ low-level HTTP client that makes requests, like the following ``GET`` request::
 
     use Symfony\Component\HttpClient\HttpClient;
 
-    $httpClient = HttpClient::create();
-    $response = $httpClient->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
+    $client = HttpClient::create();
+    $response = $client->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
 
     $statusCode = $response->getStatusCode();
     // $statusCode = 200
@@ -63,10 +63,10 @@ the transport explicitly, use the following classes to create the client::
     use Symfony\Component\HttpClient\NativeHttpClient;
 
     // uses native PHP streams
-    $httpClient = new NativeHttpClient();
+    $client = new NativeHttpClient();
 
     // uses the cURL PHP extension
-    $httpClient = new CurlHttpClient();
+    $client = new CurlHttpClient();
 
 When using this component in a full-stack Symfony application, this behavior is
 not configurable and cURL will be used automatically if the cURL PHP extension
@@ -79,7 +79,7 @@ When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.3
 is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
 the ``http_version`` option::
 
-    $httpClient = HttpClient::create(['http_version' => '2.0']);
+    $client = HttpClient::create(['http_version' => '2.0']);
 
 Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61 is used with
 PHP >= 7.2.17 / 7.3.4: pushed responses are put into a temporary cache and are
@@ -91,16 +91,16 @@ Making Requests
 The client created with the ``HttpClient`` class provides a single ``request()``
 method to perform all kinds of HTTP requests::
 
-    $response = $httpClient->request('GET', 'https://...');
-    $response = $httpClient->request('POST', 'https://...');
-    $response = $httpClient->request('PUT', 'https://...');
+    $response = $client->request('GET', 'https://...');
+    $response = $client->request('POST', 'https://...');
+    $response = $client->request('PUT', 'https://...');
     // ...
 
 Responses are always asynchronous, so that the call to the method returns
 immediately instead of waiting to receive the response::
 
     // code execution continues immediately; it doesn't wait to receive the response
-    $response = $httpClient->request('GET', 'http://releases.ubuntu.com/18.04.2/ubuntu-18.04.2-desktop-amd64.iso');
+    $response = $client->request('GET', 'http://releases.ubuntu.com/18.04.2/ubuntu-18.04.2-desktop-amd64.iso');
 
     // getting the response headers waits until they arrive
     $contentType = $response->getHeaders()['content-type'][0];
@@ -125,7 +125,7 @@ defined globally when creating the client (to apply it to all requests) and to
 each request (which overrides any global authentication)::
 
     // Use the same authentication for all requests
-    $httpClient = HttpClient::create([
+    $client = HttpClient::create([
         // HTTP Basic authentication (there are multiple ways of configuring it)
         'auth_basic' => ['the-username'],
         'auth_basic' => ['the-username', 'the-password'],
@@ -140,7 +140,7 @@ each request (which overrides any global authentication)::
         'auth_ntlm' => 'the-username:the-password',
     ]);
 
-    $response = $httpClient->request('GET', 'https://...', [
+    $response = $client->request('GET', 'https://...', [
         // use a different HTTP Basic authentication only for this request
         'auth_basic' => ['the-username', 'the-password'],
 
@@ -158,7 +158,7 @@ You can either append them manually to the requested URL, or define them as an
 associative array via the ``query`` option, that will be merged with the URL::
 
     // it makes an HTTP GET request to https://httpbin.org/get?token=...&name=...
-    $response = $httpClient->request('GET', 'https://httpbin.org/get', [
+    $response = $client->request('GET', 'https://httpbin.org/get', [
         // these values are automatically encoded before including them in the URL
         'query' => [
             'token' => '...',
@@ -173,13 +173,13 @@ Use the ``headers`` option to define both the default headers added to all
 requests and the specific headers for each request::
 
     // this header is added to all requests made by this client
-    $httpClient = HttpClient::create(['headers' => [
+    $client = HttpClient::create(['headers' => [
         'User-Agent' => 'My Fancy App',
     ]]);
 
     // this header is only included in this request and overrides the value
     // of the same header if defined globally by the HTTP client
-    $response = $httpClient->request('POST', 'https://...', [
+    $response = $client->request('POST', 'https://...', [
         'headers' => [
             'Content-Type' => 'text/plain',
         ],
@@ -192,7 +192,7 @@ This component provides several methods for uploading data using the ``body``
 option. You can use regular strings, closures, iterables and resources and they'll be
 processed automatically when making the requests::
 
-    $response = $httpClient->request('POST', 'https://...', [
+    $response = $client->request('POST', 'https://...', [
         // defining data using a regular string
         'body' => 'raw data',
 
@@ -225,7 +225,7 @@ A generator or any ``Traversable`` can also be used instead of a closure.
     given content will be JSON-encoded automatically and the request will add the
     ``Content-Type: application/json`` automatically too::
 
-        $response = $httpClient->request('POST', 'https://...', [
+        $response = $client->request('POST', 'https://...', [
             'json' => ['param1' => 'value1', '...'],
         ]);
 
@@ -268,7 +268,7 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
 (if the number of redirects is higher than the configured value, you'll get a
 :class:`Symfony\\Component\\HttpClient\\Exception\\RedirectionException`)::
 
-    $response = $httpClient->request('GET', 'https://...', [
+    $response = $client->request('GET', 'https://...', [
         // 0 means to not follow any redirect
         'max_redirects' => 0,
     ]);
@@ -297,7 +297,7 @@ uploads/downloads as they complete. This callback is guaranteed to be called on
 DNS resolution, on arrival of headers and on completion; additionally it is
 called when new data is uploaded or downloaded and at least once per second::
 
-    $response = $httpClient->request('GET', 'https://...', [
+    $response = $client->request('GET', 'https://...', [
         'on_progress' => function (int $dlNow, int $dlSize, array $info): void {
             // $dlNow is the number of bytes downloaded so far
             // $dlSize is the total size to be downloaded or -1 if it is unknown
@@ -322,7 +322,7 @@ The response returned by all HTTP clients is an object of type
 :class:`Symfony\\Contracts\\HttpClient\\ResponseInterface` which provides the
 following methods::
 
-    $response = $httpClient->request('GET', 'https://...');
+    $response = $client->request('GET', 'https://...');
 
     // gets the HTTP status code of the response
     $statusCode = $response->getStatusCode();
@@ -361,7 +361,7 @@ Call the ``stream()`` method of the HTTP client to get *chunks* of the
 response sequentially instead of waiting for the entire response::
 
     $url = 'https://releases.ubuntu.com/18.04.1/ubuntu-18.04.1-desktop-amd64.iso';
-    $response = $httpClient->request('GET', $url, [
+    $response = $client->request('GET', $url, [
         // optional: if you don't want to buffer the response in memory
         'buffer' => false,
     ]);
@@ -374,7 +374,7 @@ response sequentially instead of waiting for the entire response::
     // get the response contents in chunk and save them in a file
     // response chunks implement Symfony\Contracts\HttpClient\ChunkInterface
     $fileHandler = fopen('/ubuntu.iso', 'w');
-    foreach ($httpClient->stream($response) as $chunk) {
+    foreach ($client->stream($response) as $chunk) {
         fwrite($fileHandler, $chunk->getContent());
     }
 
@@ -408,7 +408,7 @@ When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
 ``getHeaders()`` and ``getContent()`` methods throw an appropriate exception::
 
     // the response of this request will be a 403 HTTP error
-    $response = $httpClient->request('GET', 'https://httpbin.org/status/403');
+    $response = $client->request('GET', 'https://httpbin.org/status/403');
 
     // this code results in a Symfony\Component\HttpClient\Exception\ClientException
     // because it doesn't check the status code of the response
@@ -603,7 +603,11 @@ class to autoconfigure the HTTP client based on the requested URL::
                 'Authorization' => 'token '.$githubToken,
             ],
         ],
+        // ...
     ]);
+
+You can define several scopes, so that each set of options is added only if a
+requested URL matches one of the regular expressions provided as keys.
 
 If the request URL is relative (because you use the ``base_uri`` option), the
 scoping HTTP client can't make a match. That's why you can define a third
@@ -612,15 +616,28 @@ regular expression applied to relative URLs::
 
     // ...
 
-    $httpClient = new ScopingHttpClient($client, [
-        'https://api\.github\.com/' => [
-            'base_uri' => 'https://api.github.com/',
-            // ...
+    $client = new ScopingHttpClient($client,
+        [
+            'https://api\.github\.com/' => [
+                'base_uri' => 'https://api.github.com/',
+                // ...
+            ],
         ],
-    ],
-        // this is the regexp applied to all relative URLs
+        // this is the index in the previous array that defines
+        // the base URI that shoud be used to resolve relative URLs
         'https://api\.github\.com/'
     );
+
+The above example can be reduced to a simpler call::
+
+    // ...
+
+    $client = ScopingHttpClient::forBaseUri($client, 'https://api.github.com/', [
+        // ...
+    ]);
+
+This way, the provided options will be used only if the requested URL is relative
+or if it matches the ``https://api.github.com/`` base URI.
 
 Interoperability
 ----------------
@@ -795,11 +812,11 @@ into any services by type-hinting a constructor argument with the
 
     class SomeService
     {
-        private $httpClient;
+        private $client;
 
-        public function __construct(HttpClientInterface $httpClient)
+        public function __construct(HttpClientInterface $client)
         {
-            $this->httpClient = $httpClient;
+            $this->client = $client;
         }
     }
 
