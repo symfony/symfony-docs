@@ -190,7 +190,7 @@ vulnerability:
 
 .. code-block:: terminal
 
-    $ symfony check:security
+    $ symfony security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. The security
