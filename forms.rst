@@ -783,10 +783,11 @@ option in the options field array::
 
     ->add('task', null, ['attr' => ['maxlength' => 4]])
 
-.. versionadded:: 4.3
+.. seealso::
 
-    Starting from Symfony 4.3, :doc:`Doctrine </doctrine>` metadata is introspected
-    to add :ref:`automatic validation constraints <automatic_object_validation>`.
+    Besides guessing the form type, Symfony also guesses `validation constraints <validating-forms>`_
+    if you're using a Doctrine entity. Read :ref:`automatic_object_validation`
+    guide for more information.
 
 Unmapped Fields
 ~~~~~~~~~~~~~~~
