@@ -1223,6 +1223,15 @@ Then, make sure to "route" your message to *both* transports:
 
 That's it! You can now consume each transport:
 
+.. note::
+
+    It is possible to specify ``from_transport`` as attribute on the ``messenger.message_handler`` tag.
+
+    .. versionadded:: 4.4
+        
+        The ability to specify ``from_transport`` on the ``messenger.message_handler`` tag
+        itself, was added in Symfony 4.4.
+
 .. code-block:: terminal
 
     # will only call ThumbnailUploadedImageHandler when handling the message
