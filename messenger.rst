@@ -968,6 +968,13 @@ during a request::
         }
     }
 
+.. note::
+
+        All ``in-memory`` transports will be reset automatically after each test **in**
+        test classes extending
+        :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
+        or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
+
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
