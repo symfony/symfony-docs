@@ -751,7 +751,7 @@ PHP <= 5.5             PHPUnit 4.8
 PHP 5.6                PHPUnit 5.7
 PHP 7.0                PHPUnit 6.5
 PHP 7.1                PHPUnit 7.5
-PHP >= 7.2             PHPUnit 8.2
+PHP >= 7.2             PHPUnit 8.3
 =====================  ===============================
 
 If you have installed the bridge through Composer, you can run it by calling e.g.:
