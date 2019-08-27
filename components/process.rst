@@ -96,6 +96,17 @@ with a non-zero code)::
         echo $exception->getMessage();
     }
 
+.. tip::
+
+    You can get the last output time in seconds by using the
+    :method:`Symfony\\Component\\Process\\Process::getLastOutputTime` method.
+    This method returns ``null`` if the process wasn't started!
+
+    .. versionadded:: 4.4
+
+        The :method:`Symfony\\Component\\Process\\Process::getLastOutputTime`
+        method was introduced in Symfony 4.4.
+
 Using Features From the OS Shell
 --------------------------------
 
