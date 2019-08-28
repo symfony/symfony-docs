@@ -165,10 +165,6 @@ Verify if the current node matches a selector::
 
     $crawler->matches('p.lorem');
 
-.. versionadded:: 4.4
-
-    The ``matches()`` method was introduced in Symfony 4.4.
-
 Node Traversing
 ~~~~~~~~~~~~~~~
 
@@ -202,10 +198,6 @@ Get all the direct child nodes matching a CSS selector::
 Get the first parents (heading toward the document root) of the element that matches the provided selector::
 
     $crawler->closest('p.lorem');
-
-.. versionadded:: 4.4
-
-    The ``closest()`` method was introduced in Symfony 4.4.
 
 .. note::
 
@@ -341,10 +333,6 @@ and :phpclass:`DOMNode` objects::
     :method:`Symfony\\Component\\DomCrawler\\Crawler::outerHtml`::
 
         $html = $crawler->outerHtml();
-
-    .. versionadded:: 4.4
-
-        The ``outerHtml()`` method was introduced in Symfony 4.4.
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
