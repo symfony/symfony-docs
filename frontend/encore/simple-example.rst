@@ -302,8 +302,10 @@ Then, tell Encore to enable the Sass pre-processor:
 Because you just changed your ``webpack.config.js`` file, you'll need to restart
 Encore. When you do, you'll see an error!
 
->   Error: Install sass-loader & node-sass to use enableSassLoader()
->     yarn add sass-loader@^7.0.1 node-sass --dev
+.. code-block:: terminal
+
+    >   Error: Install sass-loader & node-sass to use enableSassLoader()
+    >     yarn add sass-loader@^7.0.1 node-sass --dev
 
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
