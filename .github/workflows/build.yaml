@@ -8,6 +8,5 @@ jobs:
             - uses: actions/checkout@master
             - name: Travis CI
               uses: travis-ci/actions@master
-              secrets = [
-                  ${{ secrets.TRAVIS_TOKEN }},
-              ]
+              secrets:
+                  - ${{ secrets.TRAVIS_TOKEN }}
