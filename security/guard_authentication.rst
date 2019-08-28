@@ -296,7 +296,7 @@ Each authenticator needs the following methods:
     If ``getUser()`` returns a User object, this method is called. Your job is to
     verify if the credentials are correct. For a login form, this is where you would
     check that the password is correct for the user. To pass authentication, return
-    ``true``. If you return *anything* else
+    ``true``. If you return ``false``
     (or throw an :ref:`AuthenticationException <guard-customize-error>`),
     authentication will fail.
 
