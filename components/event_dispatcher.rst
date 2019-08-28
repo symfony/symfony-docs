@@ -309,6 +309,12 @@ Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed``
 event will receive the ``OrderPlacedEvent``.
 
+.. note::
+
+    For BC with Symfony 4, the $eventName argument is not declared explicitly on the
+    signature of the method. Implementations that are not bound by this BC constraint
+    MUST declare it explicitly, as allowed by PHP.
+
 .. index::
    single: EventDispatcher; Event subscribers
 
