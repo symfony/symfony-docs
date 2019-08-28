@@ -165,6 +165,14 @@ Namespaces can be explicitly registered with the
     $crawler->registerNamespace('m', 'http://search.yahoo.com/mrss/');
     $crawler = $crawler->filterXPath('//m:group//yt:aspectRatio');
 
+Verify if the current node matches a selector::
+
+    $crawler->matches('p.lorem');
+
+.. versionadded:: 4.4
+
+    The ``matches()`` method was introduced in Symfony 4.4.
+
 Node Traversing
 ~~~~~~~~~~~~~~~
 
@@ -194,6 +202,14 @@ Get all the child or parent nodes::
 Get all the direct child nodes matching a CSS selector::
 
     $crawler->filter('body')->children('p.lorem');
+
+Get the first parents (heading toward the document root) of the element that matches the provided selector::
+
+    $crawler->closest('p.lorem');
+
+.. versionadded:: 4.4
+
+    The ``closest()`` method was introduced in Symfony 4.4.
 
 .. note::
 
@@ -336,6 +352,15 @@ and :phpclass:`DOMNode` objects::
     .. versionadded:: 4.3
 
         The default argument of ``html()`` was introduced in Symfony 4.3.
+
+    Or you can get the outer HTML of the first node using
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::outerHtml`::
+
+        $html = $crawler->outerHtml();
+
+    .. versionadded:: 4.4
+
+        The ``outerHtml()`` method was introduced in Symfony 4.4.
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
