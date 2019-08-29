@@ -9,4 +9,4 @@ jobs:
             - name: Travis CI
               uses: travis-ci/actions@master
               env:
-                  TRAVIS_TOKEN: ${{ secrets.SECRET_TRAVIS_CI }}
+                  TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
