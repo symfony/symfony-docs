@@ -135,12 +135,20 @@ both strings or address objects::
         // email address as an object
         ->from(new Address('fabien@example.com'))
 
-        // email address as an object (email clients will display the name
-        // instead of the email address)
+        // defining the email address and name as an object
+        // (email clients will display the name)
         ->from(new Address('fabien@example.com', 'Fabien'))
+
+        // defining the email address and name as a string
+        // (the format must match: 'Name <email@example.com>')
+        ->from(Address::fromString('Fabien Potencier <fabien@example.com>'))
 
         // ...
     ;
+
+.. versionadded:: 4.4
+
+    The ``Address::fromString()`` method was introduced in Symfony 4.4.
 
 Multiple addresses are defined with the ``addXXX()`` methods::
 
