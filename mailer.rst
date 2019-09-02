@@ -260,14 +260,14 @@ Global from Address
 Instead of calling ``->from()`` *every* time you create a new email, you can
 create an event subscriber to set it automatically::
 
-    // src/EventListener/MailerFromListener.php
-    namespace App\EventListener;
+    // src/EventSubscriber/MailerFromSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Mailer\Event\MessageEvent;
     use Symfony\Component\Mime\Email;
 
-    class MailerFromListener implements EventSubscriberInterface
+    class MailerFromSubscriber implements EventSubscriberInterface
     {
         public function onMessageSend(MessageEvent $event)
         {
