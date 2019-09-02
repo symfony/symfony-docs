@@ -146,10 +146,6 @@ both strings or address objects::
         // ...
     ;
 
-.. versionadded:: 4.4
-
-    The ``Address::fromString()`` method was introduced in Symfony 4.4.
-
 Multiple addresses are defined with the ``addXXX()`` methods::
 
     $email = (new Email())
