@@ -124,11 +124,6 @@ event is dispatched::
         }
     }
 
-.. versionadded:: 4.4
-
-    The support of the ``__invoke()`` method to create invokable event listeners
-    was introduced in Symfony 4.4.
-
 In each event, you have access to a ``LifecycleEventArgs`` object, which
 gives you access to both the entity object of the event and the entity manager
 itself.
