@@ -1626,7 +1626,7 @@ multi-tenant applications) and these parameters can be validated too with
             ;
         };
 
-In the above example, the ``domain`` parameter defines a default value because
+In the above example, the ``subdomain`` parameter defines a default value because
 otherwise you need to include a domain value each time you generate a URL using
 these routes.
 
