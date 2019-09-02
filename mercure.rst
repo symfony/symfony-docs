@@ -189,10 +189,10 @@ Subscribing to updates in JavaScript is straightforward:
 
 .. code-block:: javascript
 
-    const es = new EventSource('http://localhost:3000/hub?topic=' + encodeURIComponent('http://example.com/books/1'));
-    es.onmessage = e => {
+    const eventSource = new EventSource('http://localhost:3000/hub?topic=' + encodeURIComponent('http://example.com/books/1'));
+    eventSource.onmessage = event => {
         // Will be called every time an update is published by the server
-        console.log(JSON.parse(e.data));
+        console.log(JSON.parse(event.data));
     }
 
 Mercure also allows to subscribe to several topics,
@@ -201,16 +201,16 @@ and to use URI Templates as patterns:
 .. code-block:: javascript
 
     // URL is a built-in JavaScript class to manipulate URLs
-    const u = new URL('http://localhost:3000/hub');
-    u.searchParams.append('topic', 'http://example.com/books/1');
+    const url = new URL('http://localhost:3000/hub');
+    url.searchParams.append('topic', 'http://example.com/books/1');
     // Subscribe to updates of several Book resources
-    u.searchParams.append('topic', 'http://example.com/books/2');
+    url.searchParams.append('topic', 'http://example.com/books/2');
     // All Review resources will match this pattern
-    u.searchParams.append('topic', 'http://example.com/reviews/{id}');
+    url.searchParams.append('topic', 'http://example.com/reviews/{id}');
 
-    const es = new EventSource(u);
-    es.onmessage = e => {
-        console.log(JSON.parse(e.data));
+    const eventSource = new EventSource(url);
+    eventSource.onmessage = event => {
+        console.log(JSON.parse(event.data));
     }
 
 .. tip::
@@ -317,12 +317,12 @@ and to subscribe to it:
             const hubUrl = response.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1];
 
             // Append the topic(s) to subscribe as query parameter
-            const h = new URL(hubUrl);
-            h.searchParams.append('topic', 'http://example.com/books/{id}');
+            const hub = new URL(hubUrl);
+            hub.searchParams.append('topic', 'http://example.com/books/{id}');
 
             // Subscribe to updates
-            const es = new EventSource(h);
-            es.onmessage = e => console.log(e.data);
+            const eventSource = new EventSource(hub);
+            eventSource.onmessage = event => console.log(event.data);
         });
 
 Authorization
