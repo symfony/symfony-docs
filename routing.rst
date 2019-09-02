@@ -1454,12 +1454,6 @@ Route URL   If the requested URL is ``/foo``          If the requested URL is ``
 ``/foo/``   It makes a ``301`` redirect to ``/foo/``  It matches (``200`` status response)
 ==========  ========================================  ==========================================
 
-.. note::
-
-    If your application defines different routes for each path (``/foo`` and
-    ``/foo/``) this automatic redirection doesn't take place and the right
-    route is always matched.
-
 Sub-Domain Routing
 ------------------
 
