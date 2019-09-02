@@ -98,7 +98,8 @@ Creating the Listener Class
 
 In the previous example, a ``SearchIndexer`` service was configured as a Doctrine
 listener on the event ``postPersist``. The class behind that service must have
-a ``postPersist()`` method, which will be called when the event is dispatched::
+a ``postPersist()`` or an ``__invoke()`` method, which will be called when the
+event is dispatched::
 
     // src/EventListener/SearchIndexer.php
     namespace App\EventListener;
@@ -122,6 +123,11 @@ a ``postPersist()`` method, which will be called when the event is dispatched::
             // ... do something with the Product
         }
     }
+
+.. versionadded:: 4.4
+
+    The support of the ``__invoke()`` method to create invokable event listeners
+    was introduced in Symfony 4.4.
 
 In each event, you have access to a ``LifecycleEventArgs`` object, which
 gives you access to both the entity object of the event and the entity manager
