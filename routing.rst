@@ -1417,13 +1417,6 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
     Symfony also provides some utilities to
     :ref:`redirect inside controllers <controller-redirect>`
 
-.. versionadded:: 4.4
-
-    In Symfony versions prior to 4.4, you needed to define the specific
-    ``RedirectController`` method to use (either ``redirectAction`` or
-    ``urlRedirectAction``). Starting from Symfony 4.4 this is no longer needed
-    because Symfony detects if the redirection is to a route or an URL.
-
 .. _routing-trailing-slash-redirection:
 
 Redirecting URLs with Trailing Slashes
