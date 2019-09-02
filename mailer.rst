@@ -157,6 +157,15 @@ Multiple addresses are defined with the ``addXXX()`` methods::
         // ...
     ;
 
+An ``Address`` can be created from a single string::
+
+    $email = (new Email())
+        ->from(Address::fromString('Fabien <fabien@example.com>'))
+
+        // ...
+    ;
+
+
 Alternatively, you can pass multiple addresses to each method::
 
     $toAddresses = ['foo@example.com', new Address('bar@example.com')];
