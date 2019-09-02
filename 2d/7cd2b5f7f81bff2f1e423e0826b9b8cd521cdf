@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-02T10:55:26Z
+
+@mikemix thanks for this. However, I find this syntax a bit confusing ... if we don't add this, where's the newline added? Is the newline visible to end users in the web page? Thanks.
+
+---------------------------------------------------------------------------
+
+by mikemix at 2019-09-02T11:45:19Z
+
+@javiereguiluz think of yourself as a regular bloke who wants to translate his app. So he [visits the docs](https://symfony.com/doc/current/translation/message_format.html#pluralization) and sees the examples. Lets create a simple one:
+
+```yaml
+ui:
+  article_count: >
+      {count, plural,
+        one   {one article}
+        other {# articles}
+      }
+```
+
+And lets use it:
+
+```twig
+<h1>Articles ({{ 'ui.article_count'|trans({'count': 5}) }})</h1>
+```
+
+You would expect this to be `<h1>Articles (5 articles)</h1>` right? But this is going to be `<h1>Articles(5 articles )</h1>` - notice the whitespace before ending parenthesis.
+
+This is because a newline was added (one from the YAML file), the generated html looks as follows:
+
+```html
+<h1>Articles (5 articles
+)</h1>
+```
+
+So, in my very humble opinion, either use the `>-` YAML multiline syntax (nothing fancy, see [this](https://yaml-multiline.info/)) which strips ending newline, or add a note that something like that may happen.
+
+The newline is always going to be there, because either there's another translation item in the YAML, or this is the end of the file. AFAIK people usually turn the `Ensure line feed at file end on Save` on in phpStorm.
