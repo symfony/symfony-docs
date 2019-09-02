@@ -92,7 +92,7 @@ typical usage of this is gender:
     .. code-block:: yaml
 
         # translations/messages+intl-icu.en.yaml
-        invitation_title: >
+        invitation_title: >-
             {organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
                 male   {{organizer_name} has invited you for his party!}
@@ -173,7 +173,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
     .. code-block:: yaml
 
         # translations/messages+intl-icu.en.yaml
-        num_of_apples: >
+        num_of_apples: >-
             {apples, plural,
                 =0    {There are no apples}
                 one   {There is one apple...}
@@ -278,7 +278,7 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
     .. code-block:: yaml
 
         # translations/messages+intl-icu.en.yaml
-        finish_place: >
+        finish_place: >-
             You finished {place, selectordinal,
                 one   {#st}
                 two   {#nd}
