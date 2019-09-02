@@ -85,26 +85,44 @@ DSN::
     $transport = Transport::fromDsn($dsn);
 
 Where ``$dsn`` depends on the provider you want to use. For plain SMTP, use
-``smtp://user:pass@example.com`` or ``smtp://sendmail`` to use the ``sendmail``
-binary. For third-party providers, refers to the following table:
+``smtp://user:pass@example.com`` or ``sendmail+smtp://default`` to use the
+``sendmail`` binary. To disable the transport, use ``null://null``.
 
-==================== ================================== ================================== ================================
- Provider             SMTP                               HTTP                               API
-==================== ================================== ================================== ================================
- Amazon SES           smtp://ACCESS_KEY:SECRET_KEY@ses   http://ACCESS_KEY:SECRET_KEY@ses   api://ACCESS_KEY:SECRET_KEY@ses
- Google Gmail         smtp://USERNAME:PASSWORD@gmail     n/a                                n/a
- Mailchimp Mandrill   smtp://USERNAME:PASSWORD@mandrill  http://KEY@mandrill                api://KEY@mandrill
- Mailgun              smtp://USERNAME:PASSWORD@mailgun   http://KEY:DOMAIN@mailgun          api://KEY:DOMAIN@mailgun
- Postmark             smtp://ID:ID@postmark              n/a                                api://KEY@postmark
- Sendgrid             smtp://apikey:KEY@sendgrid         n/a                                api://KEY@sendgrid
-==================== ================================== ================================== ================================
+For third-party providers, refers to the following table:
+
+==================== ========================================== =========================================== ========================================
+ Provider             SMTP                                       HTTP                                        API
+==================== ========================================== =========================================== ========================================
+ Amazon SES           ses+smtp://ACCESS_KEY:SECRET_KEY@default   ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
+ Google Gmail         gmail+smtp://USERNAME:PASSWORD@default     n/a                                         n/a
+ Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default  mandrill+https://KEY@default                mandrill+api://KEY@default
+ Mailgun              mailgun+smtp://USERNAME:PASSWORD@default   mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
+ Postmark             postmark+smtp://ID:ID@default              n/a                                         postmark+api://KEY@default
+ Sendgrid             sendgrid+smtp://apikey:KEY@default         n/a                                         sendgrid+api://KEY@default
+==================== ========================================== =========================================== ========================================
+
+Instead of choosing a specific protocol, you can also let Symfony pick the
+"best" one by omitting it from the scheme: for instance,
+``mailgun://KEY:DOMAIN@default`` is equivalent to
+``mailgun+https://KEY:DOMAIN@default``.
+
+If you want to override the default host for a provider (to debug an issue with
+a requestb.in like service), change ``default`` by your host:
+
+
+.. code-block:: bash
+
+    mailgun+https://KEY:DOMAIN@example.com
+    mailgun+https://KEY:DOMAIN@example.com:99
+
+Note that the protocol is *always* HTTPs and cannot be changed.
 
 Failover Transport
 ------------------
 
 You can create failover transport with the help of `||` operator::
 
-    $dsn = 'api://id@postmark || smtp://key@sendgrid';
+    $dsn = 'postmark+api://ID@default || sendgrid+smtp://KEY@default';
 
 So if the first transport fails, the mailer will attempt to send through the
 second transport.
@@ -115,7 +133,7 @@ Round Robin
 If you want to send emails by using multiple transports in a round-robin fashion,
 you can use the ``&&`` operator between the transports::
 
-    $dsn = 'api://id@postmark && smtp://key@sendgrid'
+    $dsn = 'postmark+api://ID@default && sendgrid+smtp://KEY@default';
 
 Sending emails asynchronously
 -----------------------------
