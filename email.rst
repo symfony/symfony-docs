@@ -17,7 +17,7 @@ own mail servers as well as using popular email providers like `Mandrill`_,
 Installation
 ------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the Swift Mailer based mailer before using it:
 
 .. code-block:: terminal

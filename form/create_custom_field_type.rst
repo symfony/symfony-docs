@@ -137,7 +137,7 @@ These are the most important methods that a form type class can define:
 
 ``buildForm()``
     It adds and configures other types into this type. It's the same method used
-    when :ref:`creating Symfony form classes <form-creating-form-classes>`.
+    when :ref:`creating Symfony form classes <creating-forms-in-classes>`.
 
 ``buildView()``
     It sets any extra variables you'll need when rendering the field in a template.

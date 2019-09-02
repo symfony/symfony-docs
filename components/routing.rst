@@ -6,7 +6,8 @@ The Routing Component
 =====================
 
     The Routing component maps an HTTP request to a set of configuration
-    variables.
+    variables. It's used to build routing systems for web applications where
+    each URL is associated with some code to execute.
 
 Installation
 ------------
@@ -20,45 +21,51 @@ Installation
 Usage
 -----
 
-.. seealso::
+The main :doc:`Symfony routing </routing>` article explains all the features of
+this component when used inside a Symfony application. This article only
+explains the things you need to do to use it in a non-Symfony PHP application.
 
-    This article explains how to use the Routing features as an independent
-    component in any PHP application. Read the :doc:`/routing` article to learn
-    about how to use it in Symfony applications.
+Routing System Setup
+--------------------
 
-In order to set up a basic routing system you need three parts:
+A routing system has three parts:
 
-* A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the route definitions (instances of the class :class:`Symfony\\Component\\Routing\\Route`)
-* A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information about the request
-* A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs the mapping of the path to a single route
+* A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the
+  route definitions (instances of the class :class:`Symfony\\Component\\Routing\\Route`);
+* A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information
+  about the request;
+* A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs
+  the mapping of the path to a single route.
 
-Here is a quick example. Notice that this assumes that you've already configured
-your autoloader to load the Routing component::
+Here is a quick example::
 
+    use App\Controller\BlogController;
     use Symfony\Component\Routing\Matcher\UrlMatcher;
     use Symfony\Component\Routing\RequestContext;
     use Symfony\Component\Routing\Route;
     use Symfony\Component\Routing\RouteCollection;
 
-    $route = new Route('/foo', ['_controller' => 'MyController']);
+    $route = new Route('/blog/{slug}', ['_controller' => BlogController::class])
     $routes = new RouteCollection();
-    $routes->add('route_name', $route);
+    $routes->add('blog_show', $route);
 
     $context = new RequestContext('/');
 
+    // Routing can match routes with incoming requests
     $matcher = new UrlMatcher($routes, $context);
+    $parameters = $matcher->match('/blog/lorem-ipsum');
+    // $parameters = [
+    //     '_controller' => 'App\Controller\BlogController',
+    //     'slug' => 'lorem-ipsum',
+    //     '_route' => 'blog_show'
+    // ]
 
-    $parameters = $matcher->match('/foo');
-    // ['_controller' => 'MyController', '_route' => 'route_name']
-
-.. note::
-
-    The :class:`Symfony\\Component\\Routing\\RequestContext` parameters can be populated
-    with the values stored in ``$_SERVER``, but it's easier to use the HttpFoundation
-    component as explained :ref:`below <components-routing-http-foundation>`.
-
-You can add as many routes as you like to a
-:class:`Symfony\\Component\\Routing\\RouteCollection`.
+    // Routing can also generate URLs for a given route
+    $generator = new UrlGenerator($routes, $context);
+    $url = $generator->generate('blog_show', [
+        'slug' => 'my-blog-post',
+    ]);
+    // $url = '/blog/my-blog-post'
 
 The :method:`RouteCollection::add() <Symfony\\Component\\Routing\\RouteCollection::add>`
 method takes two arguments. The first is the name of the route. The second
@@ -68,50 +75,19 @@ of custom variables can be *anything* that's significant to your application,
 and is returned when that route is matched.
 
 The :method:`UrlMatcher::match() <Symfony\\Component\\Routing\\Matcher\\UrlMatcher::match>`
-returns the variables you set on the route as well as the wildcard placeholders
-(see below). Your application can now use this information to continue
-processing the request. In addition to the configured variables, a ``_route``
-key is added, which holds the name of the matched route.
+returns the variables you set on the route as well as the route parameters.
+Your application can now use this information to continue processing the request.
+In addition to the configured variables, a ``_route`` key is added, which holds
+the name of the matched route.
 
 If no matching route can be found, a
 :class:`Symfony\\Component\\Routing\\Exception\\ResourceNotFoundException` will
 be thrown.
 
 Defining Routes
-~~~~~~~~~~~~~~~
+---------------
 
-A full route definition can contain up to eight parts:
-
-#. The URL pattern. This is matched against the URL passed to the
-   ``RequestContext``. It is not a regular expression, but can contain named
-   wildcard placeholders (e.g. ``{slug}``) to match dynamic parts in the URL.
-   The component will create the regular expression from it.
-
-#. An array of default parameters. This contains an array of arbitrary values
-   that will be returned when the request matches the route. It is used by
-   convention to map a controller to the route.
-
-#. An array of requirements. These define constraints for the values of the
-   placeholders in the pattern as regular expressions.
-
-#. An array of options. These contain advanced settings for the route and
-   can be used to control encoding or customize compilation.
-   See :ref:`routing-unicode-support` below. You can learn more about them by
-   reading :method:`Symfony\\Component\\Routing\\Route::setOptions` implementation.
-
-#. A host. This is matched against the host of the request. See
-   :doc:`/routing/hostname_pattern` for more details.
-
-#. An array of schemes. These enforce a certain HTTP scheme (``http``, ``https``).
-
-#. An array of methods. These enforce a certain HTTP request method (``HEAD``,
-   ``GET``, ``POST``, ...).
-
-#. A condition, using the :doc:`/components/expression_language/syntax`.
-   A string that must evaluate to ``true`` so the route matches. See
-   :doc:`/routing/conditions` for more details.
-
-Take the following route, which combines several of these ideas::
+A full route definition can contain up to eight parts::
 
     $route = new Route(
         '/archive/{month}', // path
@@ -137,36 +113,13 @@ Take the following route, which combines several of these ideas::
     $parameters = $matcher->match('/archive/foo');
     // throws ResourceNotFoundException
 
-In this case, the route is matched by ``/archive/2012-01``, because the ``{month}``
-wildcard matches the regular expression wildcard given. However, ``/archive/foo``
-does *not* match, because "foo" fails the month wildcard.
-
-When using wildcards, these are returned in the array result when calling
-``match``. The part of the path that the wildcard matched (e.g. ``2012-01``) is used
-as value.
-
-A placeholder matches any character except slashes ``/`` by default, unless you define
-a specific requirement for it.
-The reason is that they are used by convention to separate different placeholders.
-
-If you want a placeholder to match anything, it must be the last of the route::
-
-    $route = new Route(
-        '/start/{required}/{anything}',
-        ['required' => 'default'], // should always be defined
-        ['anything' => '.*'] // explicit requirement to allow "/"
-    );
-
-Learn more about it by reading :ref:`routing/slash_in_parameter`.
-
-Using Prefixes and Collection Settings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Route Collections
+-----------------
 
 You can add routes or other instances of
 :class:`Symfony\\Component\\Routing\\RouteCollection` to *another* collection.
-This way you can build a tree of routes. Additionally you can define a prefix
-and default values for the parameters, requirements, options, schemes and the
-host to all routes of a subtree using methods provided by the
+This way you can build a tree of routes. Additionally you can define common
+options for all routes of a subtree using methods provided by the
 ``RouteCollection`` class::
 
     $rootCollection = new RouteCollection();
@@ -185,8 +138,8 @@ host to all routes of a subtree using methods provided by the
 
     $rootCollection->addCollection($subCollection);
 
-Set the Request Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setting the Request Parameters
+------------------------------
 
 The :class:`Symfony\\Component\\Routing\\RequestContext` provides information
 about the current request. You can define all parameters of an HTTP request
@@ -216,67 +169,15 @@ Normally you can pass the values from the ``$_SERVER`` variable to populate the
     $context = new RequestContext();
     $context->fromRequest(Request::createFromGlobals());
 
-Generate a URL
-~~~~~~~~~~~~~~
+Loading Routes
+--------------
 
-While the :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher` tries
-to find a route that fits the given request you can also build a URL from
-a certain route with the :class:`Symfony\\Component\\Routing\\Generator\\UrlGenerator`::
+The Routing component comes with a number of loader classes, each giving you the
+ability to load a collection of route definitions from external resources.
 
-    use Symfony\Component\Routing\Generator\UrlGenerator;
-    use Symfony\Component\Routing\RequestContext;
-    use Symfony\Component\Routing\Route;
-    use Symfony\Component\Routing\RouteCollection;
+File Routing Loaders
+~~~~~~~~~~~~~~~~~~~~
 
-    $routes = new RouteCollection();
-    $routes->add('show_post', new Route('/show/{slug}'));
-
-    $context = new RequestContext('/');
-
-    $generator = new UrlGenerator($routes, $context);
-
-    $url = $generator->generate('show_post', [
-        'slug' => 'my-blog-post',
-    ]);
-    // /show/my-blog-post
-
-.. note::
-
-    If you have defined a scheme, an absolute URL is generated if the scheme
-    of the current :class:`Symfony\\Component\\Routing\\RequestContext` does
-    not match the requirement.
-
-Check if a Route Exists
-~~~~~~~~~~~~~~~~~~~~~~~
-
-In highly dynamic applications, it may be necessary to check whether a route
-exists before using it to generate a URL. In those cases, don't use the
-:method:`Symfony\\Component\\Routing\\Router::getRouteCollection` method because
-that regenerates the routing cache and slows down the application.
-
-Instead, try to generate the URL and catch the
-:class:`Symfony\\Component\\Routing\\Exception\\RouteNotFoundException` thrown
-when the route doesn't exist::
-
-    use Symfony\Component\Routing\Exception\RouteNotFoundException;
-
-    // ...
-
-    try {
-        $url = $generator->generate($dynamicRouteName, $parameters);
-    } catch (RouteNotFoundException $e) {
-        // the route is not defined...
-    }
-
-Load Routes from a File
-~~~~~~~~~~~~~~~~~~~~~~~
-
-You've already seen how you can add routes to a collection right inside
-PHP. But you can also load routes from a number of different files.
-
-The Routing component comes with a number of loader classes, each giving
-you the ability to load a collection of route definitions from an external
-file of some format.
 Each loader expects a :class:`Symfony\\Component\\Config\\FileLocator` instance
 as the constructor argument. You can use the :class:`Symfony\\Component\\Config\\FileLocator`
 to define an array of paths in which the loader will look for the requested files.
@@ -291,7 +192,6 @@ If you're using the ``YamlFileLoader``, then route definitions look like this:
         path:       /foo
         controller: MyController::fooAction
         methods:    GET|HEAD
-
     route2:
         path:       /foo/bar
         controller: FooBarInvokableController
@@ -315,7 +215,8 @@ other loaders that work the same way:
 * :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader`
 
 If you use the :class:`Symfony\\Component\\Routing\\Loader\\PhpFileLoader` you
-have to provide the name of a PHP file which returns a callable handling a :class:`Symfony\\Component\\Routing\\Loader\\Configurator\\RoutingConfigurator`.
+have to provide the name of a PHP file which returns a callable handling a
+:class:`Symfony\\Component\\Routing\\Loader\\Configurator\\RoutingConfigurator`.
 This class allows to chain imports, collections or simple route definition calls::
 
     // RouteProvider.php
@@ -328,8 +229,8 @@ This class allows to chain imports, collections or simple route definition calls
         ;
     };
 
-Routes as Closures
-..................
+Closure Routing Loaders
+~~~~~~~~~~~~~~~~~~~~~~~
 
 There is also the :class:`Symfony\\Component\\Routing\\Loader\\ClosureLoader`, which
 calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\RouteCollection`::
@@ -343,14 +244,28 @@ calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\Ro
     $loader = new ClosureLoader();
     $routes = $loader->load($closure);
 
-Routes as Annotations
-.....................
+Annotation Routing Loaders
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Last but not least there are
 :class:`Symfony\\Component\\Routing\\Loader\\AnnotationDirectoryLoader` and
 :class:`Symfony\\Component\\Routing\\Loader\\AnnotationFileLoader` to load
-route definitions from class annotations. The specific details are left
-out here.
+route definitions from class annotations::
+
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
+
+    $loader = new AnnotationDirectoryLoader(
+        new FileLocator(__DIR__.'/app/controllers/'),
+        new AnnotatedRouteControllerLoader(
+            new AnnotationReader()
+        )
+    );
+
+    $routes = $loader->load(__DIR__.'/app/controllers/');
+    // ...
 
 .. include:: /_includes/_annotation_loader_tip.rst.inc
 
@@ -392,155 +307,6 @@ automatically in the background if you want to use it. A basic example of the
     are saved in the ``cache_dir``. This means your script must have write
     permissions for that location.
 
-.. _routing-unicode-support:
-
-Unicode Routing Support
-~~~~~~~~~~~~~~~~~~~~~~~
-
-The Routing component supports UTF-8 characters in route paths and requirements.
-Thanks to the ``utf8`` route option, you can make Symfony match and generate
-routes with UTF-8 characters:
-
-.. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class DefaultController extends AbstractController
-        {
-            /**
-             * @Route("/category/{name}", name="route1", utf8=true)
-             */
-            public function category()
-            {
-                // ...
-            }
-
-    .. code-block:: yaml
-
-        route1:
-            path:       /category/{name}
-            controller: App\Controller\DefaultController::category
-            utf8: true
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="route1"
-                path="/category/{name}"
-                controller="App\Controller\DefaultController::category"
-                utf8="true"/>
-        </routes>
-
-    .. code-block:: php
-
-        // config/routes.php
-        use App\Controller\DefaultController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-
-        return function (RoutingConfigurator $routes) {
-            $routes->add('route1', '/category/{name}')
-                ->controller([DefaultController::class, 'category'])
-                ->utf8()
-            ;
-        };
-
-.. versionadded:: 4.3
-
-    The ``utf8`` option/method has been introduced in Symfony 4.3.
-    Before you had to use the ``options`` setting to define this value (for
-    example, when using annotations: ``options={"utf8": true}``).
-
-In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
-``.`` requirement to match any UTF-8 characters instead of just a single
-byte character. This means that so the following URLs would match:
-``/category/日本語``, ``/category/فارسی``, ``/category/한국어``, etc. In case you
-are wondering, this option also allows to include and match emojis in URLs.
-
-You can also include UTF-8 strings as routing requirements:
-
-.. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class DefaultController extends AbstractController
-        {
-            /**
-             * @Route(
-             *     "/category/{name}",
-             *     name="route2",
-             *     defaults={"name": "한국어"},
-             *     utf8=true
-             * )
-             */
-            public function category()
-            {
-                // ...
-            }
-
-    .. code-block:: yaml
-
-        route2:
-            path:       /category/{name}
-            controller: App\Controller\DefaultController::category
-            defaults:
-                name: "한국어"
-            utf8: true
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="route2"
-                path="/category/{name}"
-                controller="App\Controller\DefaultController::category"
-                utf8="true">
-                <default key="name">한국어</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // config/routes.php
-        use App\Controller\DefaultController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-
-        return function (RoutingConfigurator $routes) {
-            $routes->add('route2', '/category/{name}')
-                ->controller([DefaultController::class, 'category'])
-                ->defaults([
-                    'name' => '한국어',
-                ])
-                ->utf8()
-            ;
-        };
-
-.. tip::
-
-    In addition to UTF-8 characters, the Routing component also supports all
-    the `PCRE Unicode properties`_, which are escape sequences that match
-    generic character types. For example, ``\p{Lu}`` matches any uppercase
-    character in any language, ``\p{Greek}`` matches any Greek character,
-    ``\P{Han}`` matches any character not included in the Chinese Han script.
-
 Learn more
 ----------
 
@@ -552,6 +318,3 @@ Learn more
     /routing/*
     /controller
     /controller/*
-
-.. _Packagist: https://packagist.org/packages/symfony/routing
-.. _PCRE Unicode properties: http://php.net/manual/en/regexp.reference.unicode.php

@@ -12,7 +12,7 @@ handle them immediately in your application or send them through transports
 Installation
 ------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install messenger:
 
 .. code-block:: terminal
@@ -759,6 +759,17 @@ your Envelope::
         new AmqpStamp('custom-routing-key', AMQP_NOPARAM, $attributes)
     ]);
 
+.. caution::
+
+    The consumers do not show up in an admin panel as this transport does not rely on
+    ``\AmqpQueue::consume()`` which is blocking. Having a blocking receiver makes
+    the ``--time-limit/--memory-limit`` options of the ``messenger:consume`` command as well as
+    the ``messenger:stop-workers`` command inefficient, as they all rely on the fact that
+    the receiver returns immediately no matter if it finds a message or not. The consume
+    worker is responsible for iterating until it receives a message to handle and/or until one
+    of the stop conditions is reached. Thus, the worker's stop logic cannot be reached if it
+    is stuck in a blocking call.
+
 Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
 
@@ -948,6 +959,13 @@ during a request::
             $this->assertCount(1, $transport->get());
         }
     }
+
+.. note::
+
+        All ``in-memory`` transports will be reset automatically after each test **in**
+        test classes extending
+        :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
+        or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
 
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
@@ -1449,6 +1467,6 @@ Learn more
 
     /messenger/*
 
-.. _`enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
+.. _`Enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/

@@ -489,13 +489,13 @@ the same key could be invalidate with one function call::
     use Symfony\Contracts\Cache\ItemInterface;
 
     $value0 = $pool->get('item_0', function (ItemInterface $item) {
-        $item->tag(['foo', 'bar'])
+        $item->tag(['foo', 'bar']);
 
         return 'debug';
     });
 
     $value1 = $pool->get('item_1', function (ItemInterface $item) {
-        $item->tag('foo')
+        $item->tag('foo');
 
         return 'debug';
     });
@@ -604,7 +604,7 @@ achieved by specifying the adapter.
 
 .. note::
 
-    The interface :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface`` is
+    The interface :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface` is
     autowired to the ``cache.app`` service.
 
 Clearing the Cache

@@ -79,7 +79,7 @@ Below is the configuration for the pull request state machine.
                     type: 'state_machine'
                     supports:
                         - App\Entity\PullRequest
-                    initial_place: start
+                    initial_marking: start
                     places:
                         - start
                         - coding
@@ -190,46 +190,46 @@ Below is the configuration for the pull request state machine.
             // ...
             'workflows' => [
                 'pull_request' => [
-                  'type' => 'state_machine',
-                  'supports' => ['App\Entity\PullRequest'],
-                  'places' => [
-                    'start',
-                    'coding',
-                    'test',
-                    'review',
-                    'merged',
-                    'closed',
-                  ],
-                  'transitions' => [
-                    'submit'=> [
-                      'from' => 'start',
-                      'to' => 'test',
+                    'type' => 'state_machine',
+                    'supports' => ['App\Entity\PullRequest'],
+                    'places' => [
+                        'start',
+                        'coding',
+                        'test',
+                        'review',
+                        'merged',
+                        'closed',
                     ],
-                    'update'=> [
-                      'from' => ['coding', 'test', 'review'],
-                      'to' => 'test',
+                    'transitions' => [
+                        'submit'=> [
+                            'from' => 'start',
+                            'to' => 'test',
+                        ],
+                        'update'=> [
+                            'from' => ['coding', 'test', 'review'],
+                            'to' => 'test',
+                        ],
+                        'wait_for_review'=> [
+                            'from' => 'test',
+                            'to' => 'review',
+                        ],
+                        'request_change'=> [
+                            'from' => 'review',
+                            'to' => 'coding',
+                        ],
+                        'accept'=> [
+                            'from' => 'review',
+                            'to' => 'merged',
+                        ],
+                        'reject'=> [
+                            'from' => 'review',
+                            'to' => 'closed',
+                        ],
+                        'reopen'=> [
+                            'from' => 'start',
+                            'to' => 'review',
+                        ],
                     ],
-                    'wait_for_review'=> [
-                      'from' => 'test',
-                      'to' => 'review',
-                    ],
-                    'request_change'=> [
-                      'from' => 'review',
-                      'to' => 'coding',
-                    ],
-                    'accept'=> [
-                      'from' => 'review',
-                      'to' => 'merged',
-                    ],
-                    'reject'=> [
-                      'from' => 'review',
-                      'to' => 'closed',
-                    ],
-                    'reopen'=> [
-                      'from' => 'start',
-                      'to' => 'review',
-                    ],
-                  ],
                 ],
             ],
         ]);

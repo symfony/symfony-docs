@@ -8,8 +8,8 @@ The Messenger Component
     The Messenger component helps applications send and receive messages to/from
     other applications or via message queues.
 
-    The component is greatly inspired by Matthias Noback's series of `blog posts
-    about command buses`_ and the `SimpleBus project`_.
+    The component is greatly inspired by Matthias Noback's series of
+    `blog posts about command buses`_ and the `SimpleBus project`_.
 
 .. seealso::
 
@@ -282,7 +282,7 @@ do is to write your own CSV receiver::
             $this->filePath = $filePath;
         }
 
-        public function get(): void
+        public function get(): iterable
         {
             $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
@@ -332,5 +332,5 @@ Learn more
     /messenger
     /messenger/*
 
-.. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
-.. _SimpleBus project: http://docs.simplebus.io/en/latest/
+.. _`blog posts about command buses`: https://matthiasnoback.nl/tags/command%20bus/
+.. _`SimpleBus project`: http://docs.simplebus.io/en/latest/

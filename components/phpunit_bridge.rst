@@ -21,12 +21,12 @@ It comes with the following features:
 * Displays the stack trace of a deprecation on-demand;
 
 * Provides a ``ClockMock``, ``DnsMock`` and ``ClassExistsMock`` classes for tests
-  sensitive to time, network or class existence.
+  sensitive to time, network or class existence;
 
 * Provides a modified version of PHPUnit that allows 1. separating the
   dependencies of your app from those of phpunit to prevent any unwanted
   constraints to apply; 2. running tests in parallel when a test suite is split
-  in several phpunit.xml files; 3. recording and replaying skipped tests.
+  in several phpunit.xml files; 3. recording and replaying skipped tests;
 
 Installation
 ------------
@@ -213,7 +213,7 @@ message, enclosed with ``/``. For example, with:
         </php>
     </phpunit>
 
-PHPUnit_ will stop your test suite once a deprecation notice is triggered whose
+`PHPUnit`_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
 
 Making Tests Fail
@@ -369,7 +369,7 @@ Running the following command will display the full stack trace:
 
 .. code-block:: terminal
 
-    $ SYMFONY_DEPRECATIONS_HELPER='regex=/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
+    $ SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
 
 Time-sensitive Tests
 --------------------
@@ -871,12 +871,11 @@ not find the SUT:
         </listener>
     </listeners>
 
-.. _PHPUnit: https://phpunit.de
+.. _`PHPUnit`: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
 .. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
-.. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
 .. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/

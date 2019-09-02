@@ -363,7 +363,7 @@ a different timeout (in seconds) to the ``setTimeout()`` method::
     $process->run();
 
 If the timeout is reached, a
-:class:`Symfony\\Component\\Process\\Exception\\RuntimeException` is thrown.
+:class:`Symfony\\Component\\Process\\Exception\\ProcessTimedOutException` is thrown.
 
 For long running commands, it is your responsibility to perform the timeout
 check regularly::
@@ -474,11 +474,6 @@ whether `TTY`_ is supported on the current operating system::
 
     $process = (new Process())->setTty(Process::isTtySupported());
 
-.. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
-.. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
-.. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
-.. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
-.. _Packagist: https://packagist.org/packages/symfony/process
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
 .. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)

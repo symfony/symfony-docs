@@ -574,5 +574,3 @@ original template:
     <?php if (isset($help)) : ?>
         <span class="help"><?= $view->escape($help) ?></span>
     <?php endif ?>
-
-.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view

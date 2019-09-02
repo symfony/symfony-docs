@@ -23,7 +23,6 @@ to communicate with each other. For example, when checking for the latest
 .. image:: /_images/http/xkcd-full.png
    :align: center
 
-And while the actual language used is a bit more formal, it's still dead-simple.
 HTTP is the term used to describe this text-based language. The goal of
 your server is *always* to understand text requests and return text responses.
 
@@ -147,8 +146,7 @@ Requests, Responses and Web Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This request-response conversation is the fundamental process that drives all
-communication on the web. And as important and powerful as this process is,
-it's inescapably simple.
+communication on the web.
 
 The most important fact is this: regardless of the language you use, the
 type of application you build (web, mobile, JSON API) or the development
@@ -328,7 +326,7 @@ executing different PHP files, the front controller is *always* executed,
 and the routing of different URLs to different parts of your application
 is done internally.
 
-A very simple front controller might look like this::
+A small front controller might look like this::
 
     // index.php
     use Symfony\Component\HttpFoundation\Request;
@@ -391,9 +389,6 @@ Here's what we've learned so far:
 .. _`XMLHttpRequest`: https://en.wikipedia.org/wiki/XMLHttpRequest
 .. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
 .. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
-.. _`Live HTTP Headers`: https://addons.mozilla.org/en-US/firefox/addon/live-http-headers/
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 .. _`list of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
-.. _`Validator`: https://github.com/symfony/validator
-.. _`Swift Mailer`: http://swiftmailer.org/

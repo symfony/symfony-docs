@@ -46,7 +46,7 @@ cache directory:
 
 .. code-block:: terminal
 
-    $ On Unix run this command. On Windows, clear this directory manually
+    # On Unix run this command. On Windows, clear this directory manually
     $ rm -rf node_modules/.cache/babel-loader/
 
 Creating a .babelrc File

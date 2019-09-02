@@ -194,7 +194,7 @@ describe how the behavior has changed:
        Support for ICU MessageFormat was introduced in Symfony 4.2. Prior to this,
        pluralization was managed by the ``transChoice`` method.
 
-For a deprecation use the ``.. deprecated:: 4.X`` directive:
+For a deprecation use the ``.. deprecated:: 4.x`` directive:
 
 .. code-block:: rst
 

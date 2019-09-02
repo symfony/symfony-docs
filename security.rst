@@ -30,7 +30,7 @@ A few other important topics are discussed after.
 1) Installation
 ---------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the security feature before using it:
 
 .. code-block:: terminal
@@ -124,10 +124,9 @@ command will pre-configure this for you:
             encoders:
                 # use your user class name here
                 App\Entity\User:
-                    # bcrypt or sodium are recommended
-                    # sodium is more secure, but requires PHP 7.2 or the Sodium extension
-                    algorithm: bcrypt
-                    cost: 12
+                    # Use native password encoder
+                    # This value auto-selects the best possible hashing algorithm.
+                    algorithm: auto
 
     .. code-block:: xml
 
@@ -1000,7 +999,7 @@ Authorization (Denying Access)
     security/acl
     security/force_https
 
-.. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security

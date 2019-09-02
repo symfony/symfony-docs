@@ -15,7 +15,8 @@ Symfony Built-In Form Themes
 
 Symfony comes with several **built-in form themes** that make your forms look
 great when using some of the most popular CSS frameworks. Each theme is defined
-in a single Twig template:
+in a single Twig template and they are enabled in the
+:ref:`twig.form_themes <config-twig-form-themes>` option:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element
   and it's the theme used by default in Symfony applications unless you configure
@@ -181,6 +182,8 @@ of form themes:
         {% use "form_div_layout.html.twig" %}
 
         {# ... #}
+
+.. _create-your-own-form-theme:
 
 Creating your Own Form Theme
 ----------------------------
@@ -591,9 +594,6 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
         {% endif %}
     {% endblock form_errors %}
 
-.. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
-.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig
-.. _`view on GitHub`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
 .. _`form_table_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_table_layout.html.twig
 .. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig

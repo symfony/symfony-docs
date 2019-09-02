@@ -44,6 +44,11 @@ Note that the ``MAILER_DSN`` isn't a *real* SMTP address: it's a simple format t
 offloads most of the configuration work to mailer, which can be used to select any
 available 3rd party transport provider.
 
+.. warning::
+
+    If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
+    warned that the DSN format is different.
+
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -63,8 +68,9 @@ Postmark            ``composer require symfony/postmark-mailer``  ``@postmark``
 SendGrid            ``composer require symfony/sendgrid-mailer``  ``@sendgrid``
 ==================  ============================================= ======================
 
-Each library includes a :ref:`Flex recipe <flex-recipe>` that will add example configuration
-to your ``.env`` file. For example, suppose you want to use SendGrid. First, install it:
+Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
+example configuration to your ``.env`` file. For example, suppose you want to
+use SendGrid. First, install it:
 
 .. code-block:: terminal
 
@@ -88,6 +94,10 @@ to configure the *actual* address and authentication for delivery. Some also hav
 options that can be configured with query parameters on end of the ``MAILER_DSN`` -
 like ``?region=`` for Amazon SES. Some transports support sending via ``http``
 or ``smtp`` - both work the same, but ``http`` is recommended when available.
+
+.. tip::
+
+    Check the :ref:`DSN formats <mailer_dsn>` for all supported providers.
 
 Creating & Sending Messages
 ---------------------------

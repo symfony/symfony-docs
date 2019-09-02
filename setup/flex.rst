@@ -1,137 +1,15 @@
 .. index:: Flex
 
-Using Symfony Flex to Manage Symfony Applications
-=================================================
-
-`Symfony Flex`_ is the new way to install and manage Symfony applications. Flex
-is not a new Symfony version, but a tool that replaces and improves the
-`Symfony Installer`_ and the `Symfony Standard Edition`_.
-
-Symfony Flex **automates the most common tasks of Symfony applications**, like
-installing and removing bundles and other Composer dependencies. Symfony
-Flex works for Symfony 3.3 and higher. Starting from Symfony 4.0, Flex
-should be used by default, but it is still optional.
-
-How Does Flex Work
-------------------
-
-Symfony Flex is a Composer plugin that modifies the behavior of the
-``require``, ``update``, and ``remove`` commands. When installing or removing
-dependencies in a Flex-enabled application, Symfony can perform tasks before
-and after the execution of Composer tasks.
-
-Consider the following example:
-
-.. code-block:: terminal
-
-    $ cd my-project/
-    $ composer require mailer
-
-If you execute that command in a Symfony application which doesn't use Flex,
-you'll see a Composer error explaining that ``mailer`` is not a valid package
-name. However, if the application has Symfony Flex installed, that command ends
-up installing and enabling the SwiftmailerBundle, which is the best way to
-integrate Swiftmailer, the official mailer for Symfony applications.
-
-When Symfony Flex is installed in the application and you execute ``composer
-require``, the application makes a request to the Symfony Flex server before
-trying to install the package with Composer.
-
-* If there's no information about that package, the Flex server returns nothing and
-  the package installation follows the usual procedure based on Composer;
-
-* If there's special information about that package, Flex returns it in a file
-  called a "recipe" and the application uses it to decide which package to
-  install and which automated tasks to run after the installation.
-
-In the above example, Symfony Flex asks about the ``mailer`` package and the
-Symfony Flex server detects that ``mailer`` is in fact an alias for
-SwiftmailerBundle and returns the "recipe" for it.
-
-Flex keeps tracks of the recipes it installed in a ``symfony.lock`` file, which
-must be committed to your code repository.
-
-.. _flex-recipe:
-
-Symfony Flex Recipes
-~~~~~~~~~~~~~~~~~~~~
-
-Recipes are defined in a ``manifest.json`` file and can contain any number of
-other files and directories. For example, this is the ``manifest.json`` for
-SwiftmailerBundle:
-
-.. code-block:: javascript
-
-    {
-        "bundles": {
-            "Symfony\\Bundle\\SwiftmailerBundle\\SwiftmailerBundle": ["all"]
-        },
-        "copy-from-recipe": {
-            "config/": "%CONFIG_DIR%/"
-        },
-        "env": {
-            "MAILER_URL": "smtp://localhost:25?encryption=&auth_mode="
-        },
-        "aliases": ["mailer", "mail"]
-    }
-
-The ``aliases`` option allows Flex to install packages using short and easy to
-remember names (``composer require mailer`` vs
-``composer require symfony/swiftmailer-bundle``). The ``bundles`` option tells
-Flex in which environments this bundle should be enabled automatically (``all``
-in this case). The ``env`` option makes Flex add new environment variables to
-the application. Finally, the ``copy-from-recipe`` option allows the recipe to
-copy files and directories into your application.
-
-The instructions defined in this ``manifest.json`` file are also used by
-Symfony Flex when uninstalling dependencies (e.g. ``composer remove mailer``)
-to undo all changes. This means that Flex can remove the SwiftmailerBundle from
-the application, delete the ``MAILER_URL`` environment variable and any other
-file and directory created by this recipe.
-
-Symfony Flex recipes are contributed by the community and they are stored in
-two public repositories:
-
-* `Main recipe repository`_, is a curated list of recipes for high quality and
-  maintained packages. Symfony Flex only looks in this repository by default.
-
-* `Contrib recipe repository`_, contains all the recipes created by the
-  community. All of them are guaranteed to work, but their associated packages
-  could be unmaintained. Symfony Flex will ask your permission before installing
-  any of these recipes.
-
-Read the `Symfony Recipes documentation`_ to learn everything about how to
-create recipes for your own packages.
-
-Using Symfony Flex in New Applications
---------------------------------------
-
-Symfony has published a new "skeleton" project, which is a minimal Symfony
-project recommended to create new applications. This "skeleton" already
-includes Symfony Flex as a dependency. This means you can create a new Flex-enabled
-Symfony application by executing the following command:
-
-.. code-block:: terminal
-
-    $ composer create-project symfony/skeleton my-project
-
-.. note::
-
-    The use of the Symfony Installer to create new applications is no longer
-    recommended since Symfony 3.3. Use the Composer ``create-project`` command
-    instead.
-
-.. _upgrade-to-flex:
-
-Upgrading Existing Applications to Flex
----------------------------------------
+Upgrading Existing Applications to Symfony Flex
+===============================================
 
 Using Symfony Flex is optional, even in Symfony 4, where Flex is used by
 default. However, Flex is so convenient and improves your productivity so much
 that it's strongly recommended to upgrade your existing applications to it.
 
-The only caveat is that Symfony Flex requires that applications use the
-following directory structure, which is the same used by default in Symfony 4:
+Symfony Flex recommends that applications use the following directory structure,
+which is the same used by default in Symfony 4, but you can
+:ref:`customize some directories <flex-customize-paths>`:
 
 .. code-block:: text
 
@@ -167,7 +45,7 @@ manual steps:
        $ composer require symfony/flex
 
 #. If the project's ``composer.json`` file contains ``symfony/symfony`` dependency,
-   it still depends on the Symfony Standard edition, which is no longer available
+   it still depends on the Symfony Standard Edition, which is no longer available
    in Symfony 4. First, remove this dependency:
 
    .. code-block:: terminal
@@ -283,6 +161,8 @@ manual steps:
 #. Update the ``.gitignore`` file to replace the existing ``var/logs/`` entry
    by ``var/log/``, which is the new name for the log directory.
 
+.. _flex-customize-paths:
+
 Customizing Flex Paths
 ----------------------
 
@@ -313,12 +193,6 @@ If you customize these paths, some files copied from a recipe still may contain
 references to the original path. In other words: you may need to update some things
 manually after a recipe is installed.
 
-.. _`Symfony Flex`: https://github.com/symfony/flex
-.. _`Symfony Installer`: https://github.com/symfony/symfony-installer
-.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
-.. _`Main recipe repository`: https://github.com/symfony/recipes
-.. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
-.. _`Symfony Recipes documentation`: https://github.com/symfony/recipes/blob/master/README.rst
 .. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/services.yaml
 .. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
 .. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L44-L46

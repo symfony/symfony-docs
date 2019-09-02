@@ -150,7 +150,7 @@ Fortunately, the default ``ExceptionController`` allows you to preview your
 *error* pages during development.
 
 To use this feature, you need to load some special routes provided by TwigBundle
-(if the application uses :doc:`Symfony Flex </setup/flex>` they are loaded
+(if the application uses :ref:`Symfony Flex <symfony-flex>` they are loaded
 automatically when installing Twig support):
 
 .. configuration-block::
@@ -357,6 +357,3 @@ time and again, you can have just one (or several) listeners deal with them.
     out and other things.
 
 .. _`TwigBundle`: https://github.com/symfony/twig-bundle
-.. _`WebfactoryExceptionsBundle`: https://github.com/webfactory/exceptions-bundle
-.. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard/
-.. _`ExceptionListener`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Http/Firewall/ExceptionListener.php

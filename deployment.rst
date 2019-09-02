@@ -118,8 +118,8 @@ you'll need to do:
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
-Use the :doc:`Symfony Requirements Checker </reference/requirements>` to check
-if your server meets the technical requirements to run Symfony applications.
+Use the ``check:requirements`` command to check if your server meets the
+:ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`.
 
 .. _b-configure-your-app-config-parameters-yml-file:
 
@@ -170,7 +170,7 @@ as you normally do:
 
     If you get a "class not found" error during this step, you may need to
     run ``export APP_ENV=prod`` (or ``export SYMFONY_ENV=prod`` if you're not
-    using :doc:`Symfony Flex </setup/flex>`) before running this command so
+    using :ref:`Symfony Flex <symfony-flex>`) before running this command so
     that the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
 D) Clear your Symfony Cache
@@ -248,7 +248,7 @@ Learn More
 .. _`Deployer`: http://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Heroku`: https://devcenter.heroku.com/articles/getting-started-with-symfony
-.. _`platform.sh`: https://docs.platform.sh/frameworks/symfony.html
+.. _`Platform.sh`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
 .. _`fortrabbit`: https://help.fortrabbit.com/install-symfony
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle

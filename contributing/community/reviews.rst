@@ -45,7 +45,7 @@ next step.
 Create a GitHub Account
 -----------------------
 
-Symfony uses GitHub_ to manage bug reports and pull requests. If you want to
+Symfony uses `GitHub`_ to manage bug reports and pull requests. If you want to
 do reviews, you need to `create a GitHub account`_ and log in.
 
 The Bug Report Review Process
@@ -214,11 +214,8 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 .. _`Symfony skeleton`: https://github.com/symfony/skeleton
 .. _`Symfony website skeleton`: https://github.com/symfony/website-skeleton
 .. _create a GitHub account: https://help.github.com/articles/signing-up-for-a-new-github-account/
-.. _forking: https://help.github.com/articles/fork-a-repo/
 .. _bug reports in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22Bug%22+label%3A%22Status%3A+Needs+Review%22+
 .. _PRs in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Apr+label%3A%22Status%3A+Needs+Review%22+
-.. _Contribution Guidelines: https://github.com/symfony/symfony/blob/master/CONTRIBUTING.md
-.. _Symfony's Release Schedule: https://symfony.com/doc/current/contributing/community/releases.html#schedule
 .. _Symfony Roadmap: https://symfony.com/roadmap
 .. _Carson Bot: https://github.com/carsonbot/carsonbot
 .. _`Needs Review`: https://github.com/symfony/symfony/labels/Status%3A%20Needs%20Review

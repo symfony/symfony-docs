@@ -133,7 +133,7 @@ Auto-Installing Recipes with Symfony Flex
 
 You may not have noticed, but when you ran ``composer require annotations``, two
 special things happened, both thanks to a powerful Composer plugin called
-:doc:`Flex </setup/flex>`.
+:ref:`Flex <symfony-flex>`.
 
 First, ``annotations`` isn't a real package name: it's an *alias* (i.e. shortcut)
 that Flex resolves to ``sensio/framework-extra-bundle``.
@@ -144,9 +144,6 @@ package. `Flex recipes`_ exist for many packages and have the ability
 to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
 and adding new config to your ``.env`` file. Flex *automates* the installation of
 packages so you can get back to coding.
-
-You can learn more about Flex by reading ":doc:`/setup/flex`". But that's not necessary:
-Flex works automatically in the background when you add packages.
 
 The bin/console Command
 -----------------------

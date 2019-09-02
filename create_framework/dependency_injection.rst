@@ -253,4 +253,3 @@ internally.
 Have fun!
 
 .. _`Pimple`: https://github.com/silexphp/Pimple
-.. _`Application`: https://github.com/silexphp/Silex/blob/master/src/Silex/Application.php

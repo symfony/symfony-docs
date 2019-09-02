@@ -69,6 +69,17 @@ If you reload the page, the perceived performance will improve because the
 server responded with both the HTML page and the CSS file when the browser only
 requested the HTML page.
 
+.. note::
+
+    You can preload an asset by wrapping it with the ``preload()`` function:
+
+    .. code-block:: html+twig
+
+        <head>
+            <!-- ... -->
+            <link rel="stylesheet" href="{{ preload(asset('build/app.css')) }}">
+        </head>
+
 Additionally, according to `the Priority Hints specification`_, you can signal
 the priority of the resource to download using the ``importance`` attribute:
 
@@ -173,13 +184,11 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`HTTP/2 Server Push`: https://tools.ietf.org/html/rfc7540#section-8.2
 .. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
-.. _`preload`: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
 .. _`"as" attribute`: https://w3c.github.io/preload/#as-attribute
 .. _`the Priority Hints specification`: https://wicg.github.io/priority-hints/
 .. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-(http/2)
 .. _`Cloudflare`: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
 .. _`Fastly`: https://docs.fastly.com/guides/performance-tuning/http2-server-push
 .. _`Akamai`: https://blogs.akamai.com/2017/03/http2-server-push-the-what-how-and-why.html
-.. _`this great article`: https://www.shimmercat.com/en/blog/articles/whats-push/
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
 .. _`PSR-13`: https://www.php-fig.org/psr/psr-13/

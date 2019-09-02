@@ -255,8 +255,9 @@ Configuration
   * :ref:`name <reference-workflows-name>`
 
     * `audit_trail`_
-    * `initial_place`_
+    * `initial_marking`_
     * `marking_store`_
+    * `metadata`_
     * `places`_
     * `supports`_
     * `support_strategy`_
@@ -302,7 +303,8 @@ named ``kernel.http_method_override``.
 
 .. seealso::
 
-    For more information, see :doc:`/form/action_method`.
+    :ref:`Changing the Action and HTTP Method <forms-change-action-method>` of
+    Symfony forms.
 
 .. caution::
 
@@ -1110,7 +1112,7 @@ strict_requirements
 **type**: ``mixed`` **default**: ``true``
 
 Determines the routing generator behavior. When generating a route that
-has specific :doc:`requirements </routing/requirements>`, the generator
+has specific :ref:`parameter requirements <routing-requirements>`, the generator
 can behave differently in case the used parameters do not meet these requirements.
 
 The value can be one of:
@@ -1210,14 +1212,14 @@ Unlike the other session options, ``cache_limiter`` is set as a regular
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         parameters:
             session.storage.options:
                 cache_limiter: 0
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1233,7 +1235,7 @@ Unlike the other session options, ``cache_limiter`` is set as a regular
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         $container->setParameter('session.storage.options', [
             'cache_limiter' => 0,
         ]);
@@ -2736,12 +2738,12 @@ audit_trail
 If set to ``true``, the :class:`Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener`
 will be enabled.
 
-initial_place
-"""""""""""""
+initial_marking
+"""""""""""""""
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string`` | ``array``
 
-One of the ``places`` or ``null``. If not null and the supported object is not
+One of the ``places`` or ``empty``. If not null and the supported object is not
 already initialized via the workflow, this place will be set.
 
 marking_store
@@ -2753,8 +2755,16 @@ Each marking store can define any of these options:
 
 * ``arguments`` (**type**: ``array``)
 * ``service`` (**type**: ``string``)
-* ``type`` (**type**: ``string`` **possible values**: ``'multiple_state'`` or
-  ``'single_state'``)
+* ``type`` (**type**: ``string`` **allow value**: ``'method'``)
+
+metadata
+""""""""
+
+**type**: ``array``
+
+Metadata available for the workflow configuration.
+Note that ``places`` and ``transitions`` can also have their own
+``metadata`` entry.
 
 places
 """"""

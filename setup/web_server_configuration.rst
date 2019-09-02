@@ -93,6 +93,8 @@ and increase web server performance:
         ServerAlias www.domain.tld
 
         DocumentRoot /var/www/project/public
+        DirectoryIndex /index.php
+
         <Directory /var/www/project/public>
             AllowOverride None
             Order Allow,Deny

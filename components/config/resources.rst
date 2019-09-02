@@ -10,6 +10,8 @@ Loading Resources
     :phpfunction:`parse_ini_file` function. Therefore, you can only set
     parameters to string values. To set parameters to other data types
     (e.g. boolean, integer, etc), the other loaders are recommended.
+    
+Loaders populate the application's configuration from different sources like YAML files. The Config component defines the interface for such loaders. The :doc:`Dependency Injection </components/dependency_injection>` and :doc:`Routing </components/routing>` components come with specialized loaders for different file formats.
 
 Locating Resources
 ------------------

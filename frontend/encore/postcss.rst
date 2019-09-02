@@ -80,5 +80,4 @@ See `browserslist`_ for more details on the syntax.
 .. _`autoprefixing`: https://github.com/postcss/autoprefixer
 .. _`linting`: https://stylelint.io/
 .. _`browserslist`: https://github.com/browserslist/browserslist
-.. _`babel-preset-env`: https://github.com/babel/babel/tree/master/packages/babel-preset-env
 .. _`postcss-loader`: https://github.com/postcss/postcss-loader

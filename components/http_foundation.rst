@@ -698,7 +698,6 @@ Learn More
     /session/*
     /http_cache/*
 
-.. _Packagist: https://packagist.org/packages/symfony/http-foundation
 .. _Nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx

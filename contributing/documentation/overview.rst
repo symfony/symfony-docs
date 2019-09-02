@@ -65,9 +65,9 @@ Let's imagine that you want to improve the Setup guide. In order to make your
 changes, follow these steps:
 
 **Step 1.** Go to the official Symfony documentation repository located at
-`github.com/symfony/symfony-docs`_ and click on the **Fork** button to `fork the
-repository`_ to your personal account. This is only needed the first time you
-contribute to Symfony.
+`github.com/symfony/symfony-docs`_ and click on the **Fork** button to
+`fork the repository`_ to your personal account. This is only needed the first
+time you contribute to Symfony.
 
 **Step 2.** **Clone** the forked repository to your local machine (this example
 uses the ``projects/symfony-docs/`` directory to store the documentation; change
@@ -339,7 +339,6 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
 .. _`SymfonyConnect`: https://connect.symfony.com/
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
-.. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
 .. _`SymfonyCloud`: https://symfony.com/cloud
 .. _`roadmap`: https://symfony.com/roadmap
 .. _`pip`: https://pip.pypa.io/en/stable/

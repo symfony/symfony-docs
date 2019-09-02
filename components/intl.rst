@@ -5,8 +5,8 @@
 The Intl Component
 ==================
 
-    A PHP replacement layer for the C `intl extension`_ that also provides
-    access to the localization data of the `ICU library`_.
+    This component provides access to the localization data of the `ICU library`_.
+    It also provides a PHP replacement layer for the C `intl extension`_.
 
 .. caution::
 
@@ -66,7 +66,8 @@ This component provides the following ICU data:
 Language and Script Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Languages`` class provides access to the name of all languages::
+The ``Languages`` class provides access to the name of all languages
+according to the `ISO 639-1 alpha-2`_ list and the `ISO 639-2 alpha-3`_ list::
 
     use Symfony\Component\Intl\Languages;
 
@@ -117,10 +118,10 @@ for traditional Chinese)::
 All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale::
 
-    $languages = Scripts::getNames('de');
+    $scripts = Scripts::getNames('de');
     // => ['Adlm' => 'Adlam', 'Afak' => 'Afaka', ...]
 
-    $language = Scripts::getName('Hans', 'de');
+    $script = Scripts::getName('Hans', 'de');
     // => 'Vereinfacht'
 
 If the given script code doesn't exist, the methods trigger a
@@ -349,8 +350,6 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _Packagist: https://packagist.org/packages/symfony/intl
-.. _Icu component: https://packagist.org/packages/symfony/icu
 .. _intl extension: https://php.net/manual/en/book.intl.php
 .. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
@@ -358,3 +357,5 @@ Learn more
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 .. _`UTC/GMT time offsets`: https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
 .. _`daylight saving time (DST)`: https://en.wikipedia.org/wiki/Daylight_saving_time
+.. _`ISO 639-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_639-1
+.. _`ISO 639-2 alpha-3`: https://en.wikipedia.org/wiki/ISO_639-2

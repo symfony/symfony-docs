@@ -31,6 +31,9 @@ and your generated code may be slightly different:
 
     Choose a name for the controller class (e.g. SecurityController) [SecurityController]:
     > SecurityController
+    
+    Do you want to generate a '/logout' URL? (yes/no) [yes]:
+    > yes
 
      created: src/Security/LoginFormAuthenticator.php
      updated: config/packages/security.yaml

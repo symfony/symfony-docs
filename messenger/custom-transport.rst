@@ -28,22 +28,31 @@ DSN. You will need a transport factory::
         }
     }
 
-The transport object needs to implement the ``TransportInterface`` (which simply combines
-the ``SenderInterface`` and ``ReceiverInterface``). It will look like this::
+The transport object needs to implement the
+:class:`Symfony\\Component\\Messenger\\Transport\\TransportInterface`
+(which combines the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`
+and :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\ReceiverInterface`)::
+
+    use Symfony\Component\Messenger\Envelope;
 
     class YourTransport implements TransportInterface
     {
+        public function get(): iterable
+        {
+            // ...
+        }
+
+        public function ack(Envelope $envelope): void
+        {
+            // ...
+        }
+
+        public function reject(Envelope $envelope): void
+        {
+            // ...
+        }
+
         public function send(Envelope $envelope): Envelope
-        {
-            // ...
-        }
-
-        public function receive(callable $handler): void
-        {
-            // ...
-        }
-
-        public function stop(): void
         {
             // ...
         }

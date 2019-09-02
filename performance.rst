@@ -125,14 +125,13 @@ deployment process too):
 
 .. code-block:: terminal
 
-    $ composer dump-autoload --optimize --no-dev --classmap-authoritative
+    $ composer dump-autoload --no-dev --classmap-authoritative
 
-* ``--optimize`` dumps every PSR-0 and PSR-4 compatible class used in your
-  application;
 * ``--no-dev`` excludes the classes that are only needed in the development
-  environment (e.g. tests);
-* ``--classmap-authoritative`` prevents Composer from scanning the file
-  system for classes that are not found in the class map.
+  environment (i.e. ``require-dev`` dependencies and ``autoload-dev`` rules);
+* ``--classmap-authoritative`` creates a class map for PSR-0 and PSR-4 compatible classes
+  used in your application and prevents Composer from scanning the file system for
+  classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
 
 Learn more
 ----------
@@ -141,7 +140,6 @@ Learn more
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: https://php.net/manual/en/book.opcache.php
-.. _`bootstrap file`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
 .. _`APC`: https://php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu

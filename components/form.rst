@@ -80,8 +80,8 @@ object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
 .. seealso::
 
     If you need more control over exactly when your form is submitted or which
-    data is passed to it, you can use the :method:`Symfony\\Component\\Form\\FormInterface::submit`
-    for this. Read more about it :ref:`form-call-submit-directly`.
+    data is passed to it,
+    :doc:`use the submit() method to handle form submissions </form/direct_submit>`.
 
 .. sidebar:: Integration with the HttpFoundation Component
 
@@ -775,6 +775,5 @@ Learn more
 
     /form/*
 
-.. _Packagist: https://packagist.org/packages/symfony/form
 .. _Twig: https://twig.symfony.com
 .. _`Twig Configuration`: https://twig.symfony.com/doc/2.x/intro.html

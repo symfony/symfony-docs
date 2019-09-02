@@ -14,7 +14,7 @@ transparent. This component is based on the `JSR303 Bean Validation specificatio
 Installation
 ------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the validator before using it:
 
 .. code-block:: terminal
@@ -172,7 +172,7 @@ will appear.
     Most of the time, you won't interact directly with the ``validator``
     service or need to worry about printing out the errors. Most of the time,
     you'll use validation indirectly when handling submitted form data. For
-    more information, see the :ref:`forms-form-validation`.
+    more information, see :ref:`how to validate Symfony forms <validating-forms>`.
 
 You could also pass the collection of errors into a template::
 

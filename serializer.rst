@@ -14,7 +14,7 @@ its philosophy and the normalizers and encoders terminology.
 Installation
 ------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the serializer before using it:
 
 .. code-block:: terminal
@@ -228,7 +228,6 @@ take a look at how this bundle works.
     serializer/custom_encoders
     serializer/custom_normalizer
 
-.. _`APCu`: https://github.com/krakjoe/apcu
 .. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com

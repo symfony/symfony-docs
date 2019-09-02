@@ -48,4 +48,4 @@ key from the object that is passed to the ``configureUrlLoader()`` method:
         })
     ;
 
-.. _`URL loader`: https://github.com/webpack-contrib/url-loader
+.. _`URL Loader`: https://github.com/webpack-contrib/url-loader

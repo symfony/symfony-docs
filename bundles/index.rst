@@ -7,7 +7,6 @@ Bundles
     :maxdepth: 2
 
     override
-    inheritance
     best_practices
     configuration
     extension
