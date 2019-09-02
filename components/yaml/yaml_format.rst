@@ -94,9 +94,17 @@ where each line break is replaced by a space:
 
     >
       This is a very long sentence
-      that spans several lines in the YAML
-      but which will be rendered as a string
-      without carriage returns.
+      that spans several lines in the YAML.
+
+    # This will be parsed as follows: (notice the trailing \n)
+    # "This is a very long sentence that spans several lines in the YAML.\n"
+
+    >-
+      This is a very long sentence
+      that spans several lines in the YAML.
+
+    # This will be parsed as follows: (without a trailing \n)
+    # "This is a very long sentence that spans several lines in the YAML."
 
 .. note::
 
@@ -318,8 +326,8 @@ The following YAML features are not supported by the Symfony Yaml component:
 * Multi-documents (``---`` and ``...`` markers);
 * Complex mapping keys and complex values starting with ``?``;
 * Tagged values as keys;
-* The following tags and types: `!!set`, `!!omap`, `!!pairs`, `!!seq`,
-  `!!bool`, `!!int`, `!!merge`, `!!null`, `!!timestamp`, `!!value`, `!!yaml`;
+* The following tags and types: ``!!set``, ``!!omap``, ``!!pairs``, ``!!seq``,
+  ``!!bool``, ``!!int``, ``!!merge``, ``!!null``, ``!!timestamp``, ``!!value``, ``!!yaml``;
 * Tags (``TAG`` directive; example: ``%TAG ! tag:example.com,2000:app/``)
   and tag references (example: ``!<tag:example.com,2000:app/foo>``);
 * Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
