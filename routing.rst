@@ -1958,7 +1958,7 @@ don't have access to HTTP requests. In practice, this means that if you generate
 absolute URLs, you'll get ``http://localhost/`` as the host name instead of your
 real host name.
 
-The solution is to configure "request context" used by commands when they
+The solution is to configure the "request context" used by commands when they
 generate URLs. This context can be configured globally for all commands:
 
 .. configuration-block::
