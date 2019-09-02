@@ -195,7 +195,7 @@ Get all the direct child nodes matching a CSS selector::
 
     $crawler->filter('body')->children('p.lorem');
 
-Get the first parents (heading toward the document root) of the element that matches the provided selector::
+Get the first parent (heading toward the document root) of the element that matches the provided selector::
 
     $crawler->closest('p.lorem');
 
