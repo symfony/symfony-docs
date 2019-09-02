@@ -64,21 +64,28 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
 
     # .env
     SENDGRID_KEY=
-    MAILER_DSN=smtp://$SENDGRID_KEY@sendgrid
+    MAILER_DSN=sendgrid://$SENDGRID_KEY@default
 
-The ``MAILER_DSN`` isn't a *real* SMTP address: it's a simple format that offloads
-most of the configuration work to mailer. The ``@sendgrid`` part of the address
-activates the SendGrid mailer library that you just installed, which knows all
-about how to deliver messages to SendGrid.
+The ``MAILER_DSN`` isn't a *real* address: it's a simple format that offloads
+most of the configuration work to mailer. The ``sendgrid`` scheme activates the
+SendGrid provider that you just installed, which knows all about how to deliver
+messages to SendGrid.
 
 The *only* part you need to change is to set ``SENDGRID_KEY`` to your key (in
 ``.env`` or ``.env.local``).
 
-Each transport will have different environment variables that the library will use
-to configure the *actual* address and authentication for delivery. Some also have
-options that can be configured with query parameters on end of the ``MAILER_DSN`` -
-like ``?region=`` for Amazon SES. Some transports support sending via ``http``
-or ``smtp`` - both work the same, but ``http`` is recommended when available.
+Each provider has different environment variables that the Mailer uses to
+configure the *actual* protocol, address and authentication for delivery. Some
+also have options that can be configured with query parameters at the end of the
+``MAILER_DSN`` - like ``?region=`` for Amazon SES. Some providers support
+sending via ``http``, ``api`` or ``smtp``. Symfony chooses the best available
+transport, but you can force to use one:
+
+.. code-block:: bash
+
+    # .env
+    # force to use SMTP instead of HTTP (which is the default)
+    MAILER_DSN=sendgrid+smtp://$SENDGRID_KEY@default
 
 .. tip::
 
