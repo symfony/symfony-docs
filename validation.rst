@@ -36,7 +36,7 @@ your application::
 
     class Author
     {
-        public $name;
+        private $name;
     }
 
 So far, this is just an ordinary class that serves some purpose inside your
@@ -55,6 +55,7 @@ following:
     .. code-block:: php-annotations
 
         // src/Entity/Author.php
+        namespace App\Entity;
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -64,7 +65,7 @@ following:
             /**
              * @Assert\NotBlank
              */
-            public $name;
+            private $name;
         }
 
     .. code-block:: yaml
@@ -94,14 +95,14 @@ following:
     .. code-block:: php
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
         // ...
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
-            public $name;
+            private $name;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
@@ -325,7 +326,8 @@ literature genre mostly associated with the author, which can be set to either
     .. code-block:: php-annotations
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
+        
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -337,7 +339,7 @@ literature genre mostly associated with the author, which can be set to either
              *     message = "Choose a valid genre."
              * )
              */
-            public $genre;
+            private $genre;
 
             // ...
         }
@@ -378,14 +380,15 @@ literature genre mostly associated with the author, which can be set to either
     .. code-block:: php
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
+        
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
-            public $genre;
+            private $genre;
 
             // ...
 
@@ -412,7 +415,8 @@ options can be specified in this way.
     .. code-block:: php-annotations
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
+        
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -421,7 +425,7 @@ options can be specified in this way.
             /**
              * @Assert\Choice({"fiction", "non-fiction"})
              */
-            protected $genre;
+            private $genre;
 
             // ...
         }
@@ -459,14 +463,15 @@ options can be specified in this way.
     .. code-block:: php
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
+        
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Author
         {
-            protected $genre;
+            private $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
@@ -579,7 +584,8 @@ class to have at least 3 characters.
     .. code-block:: php
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
+        
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -620,7 +626,8 @@ this method must return ``true``:
     .. code-block:: php-annotations
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
+        
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -664,7 +671,8 @@ this method must return ``true``:
     .. code-block:: php
 
         // src/Entity/Author.php
-
+        namespace App\Entity;
+        
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
