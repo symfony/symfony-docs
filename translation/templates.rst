@@ -39,6 +39,10 @@ works when you use a placeholder following the ``%var%`` pattern.
 
     If you need to use the percent character (``%``) in a string, escape it by
     doubling it: ``{% trans %}Percent: %percent%%%{% endtrans %}``
+    
+.. deprecated:: 4.2
+
+    The %var% notation of placeholders no longer works translating in Twig templates. use ``{var}`` instead.  ``%`` characters also no longer need to be escaped. ``{`` & ``}`` also do not have to be escaped.
 
 You can also specify the message domain and pass some additional variables:
 
