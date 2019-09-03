@@ -42,7 +42,8 @@ works when you use a placeholder following the ``%var%`` pattern.
     
 .. deprecated:: 4.2
 
-    The %var% notation of placeholders no longer works translating in Twig templates. use ``{var}`` instead.  ``%`` characters also no longer need to be escaped. ``{`` & ``}`` also do not have to be escaped.
+    The %var% notation of placeholders no longer works translating in Twig templates. use ``{var}`` instead.
+    ``%``, ``{``, & ``}`` do not have to be escaped.
 
 You can also specify the message domain and pass some additional variables:
 
