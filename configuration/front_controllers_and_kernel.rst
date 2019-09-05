@@ -123,6 +123,8 @@ new kernel.
 .. index::
    single: Configuration; Debug mode
 
+.. _debug-mode:
+
 Debug Mode
 ~~~~~~~~~~
 

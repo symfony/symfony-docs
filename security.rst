@@ -723,8 +723,8 @@ If you need to get the logged in user from a service, use the
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In a Twig Template the user object can be accessed via the :ref:`app.user <reference-twig-global-app>`
-key:
+In a Twig Template the user object is available via the ``app.user`` variable
+thanks to the :ref:`Twig global app variable <twig-app-variable>`:
 
 .. code-block:: html+twig
 
