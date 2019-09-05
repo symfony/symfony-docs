@@ -192,7 +192,7 @@ has zero tags).
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/task/new.html.twig #}
+    {# templates/task/new.html.twig #}
 
     {# ... #}
 
@@ -273,7 +273,7 @@ change to the existing ``<ul>`` in your template:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/task/new.html.twig #}
+    {# templates/task/new.html.twig #}
     
     {# ... #}
     
@@ -325,7 +325,7 @@ First, add the link somewhere in your template:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/task/new.html.twig #}
+    {# templates/task/new.html.twig #}
     
     {# ... #}
     
