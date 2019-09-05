@@ -273,25 +273,12 @@ add the ``allow_add`` option to your collection field::
 In addition to telling the field to accept any number of submitted objects,
 ``allow_add`` also makes a ``prototype`` variable available to you. This
 "prototype" is a little "template" that contains all the HTML needed to dynamically
-render any new "tag" forms with JavaScript. To render the prototype, make the following
-change to the existing ``<ul>`` in your template:
+render any new "tag" forms with JavaScript. To render the prototype, add the following
+``data-prototype`` attribute to the existing ``<ul>`` in your template:
 
 .. code-block:: html+twig
 
-    {# templates/task/new.html.twig #}
-    
-    {# ... #}
-    
-    {{ form_start(form) }}
-    
-        {# ... #}
-
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
-            {# ... #}
-        </ul>
-    {{ form_end(form) }}
-
-    {# ... #}
+    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
 
 On the rendered page, the result will look something like this:
 
