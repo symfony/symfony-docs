@@ -199,7 +199,8 @@ has zero tags).
     {# templates/task/new.html.twig #}
 
     {# ... #}
-
+    
+    <h2>New Task</h2>
     {{ form_start(form) }}
         {# render the task's only field: description #}
         {{ form_row(form.description) }}
