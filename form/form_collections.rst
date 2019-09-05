@@ -30,9 +30,9 @@ by creating a simple ``Task`` class::
 
     class Task
     {
-        protected $description;
+        private $description;
 
-        protected $tags;
+        private $tags;
 
         public function __construct()
         {
