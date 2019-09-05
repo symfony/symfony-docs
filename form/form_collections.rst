@@ -122,6 +122,7 @@ Notice that you embed a collection of ``TagType`` forms using the
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class TaskType extends AbstractType
     {
@@ -133,6 +134,7 @@ Notice that you embed a collection of ``TagType`` forms using the
                 'entry_type' => TagType::class,
                 'entry_options' => array('label' => false),
             ));
+            $builder->add('submit', SubmitType::class);
         }
 
         public function configureOptions(OptionsResolver $resolver)
