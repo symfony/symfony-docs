@@ -150,19 +150,20 @@ In your controller, you'll create a new form from the ``TaskType``::
     // src/App/Controller/TaskController.php
     namespace App\Controller;
 
-    use App\Entity\Task;
-    use App\Entity\Tag;
-    use App\Form\TaskType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Doctrine\ORM\EntityManagerInterface;
+    use App\Entity\Task;
+    use App\Entity\Tag;
+    use App\Form\TaskType;
 
     class TaskController extends AbstractController
     {
         /**
          * @Route("/task/new")
          */
-        public function new(Request $request)
+        public function new(Request $request, EntityManagerInterface $em)
         {
             $task = new Task();
 
@@ -181,7 +182,9 @@ In your controller, you'll create a new form from the ``TaskType``::
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                // ... maybe do some form processing, like saving the Task and Tag objects
+                // ... maybe do some form processing, like saving the Task and Tag objects:
+                $em->persist($task);
+                $em->flush();
             }
 
             return $this->render('task/new.html.twig', array(
