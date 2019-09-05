@@ -114,8 +114,8 @@ form itself, create a form for the ``Task`` class.
 Notice that you embed a collection of ``TagType`` forms using the
 :doc:`CollectionType </reference/forms/types/collection>` field::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/AppBundle/Form/TaskType.php
+    namespace AppBundle\Form;
 
     use AppBundle\Entity\Task;
     use Symfony\Component\Form\AbstractType;
@@ -150,7 +150,7 @@ In your controller, you'll create a new form from the ``TaskType``::
 
     use AppBundle\Entity\Task;
     use AppBundle\Entity\Tag;
-    use AppBundle\Form\Type\TaskType;
+    use AppBundle\Form\TaskType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
