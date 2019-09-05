@@ -23,8 +23,8 @@ that Task, right inside the same form.
 First, suppose that each ``Task`` belongs to multiple ``Tag`` objects. Start
 by creating a simple ``Task`` class::
 
-    // src/AppBundle/Entity/Task.php
-    namespace AppBundle\Entity;
+    // src/App/Entity/Task.php
+    namespace App\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
 
@@ -64,8 +64,8 @@ by creating a simple ``Task`` class::
 Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
 
-    // src/AppBundle/Entity/Tag.php
-    namespace AppBundle\Entity;
+    // src/App/Entity/Tag.php
+    namespace App\Entity;
 
     class Tag
     {
@@ -84,10 +84,10 @@ objects::
 
 Then, create a form class so that a ``Tag`` object can be modified by the user::
 
-    // src/AppBundle/Form/Type/TagType.php
-    namespace AppBundle\Form\Type;
+    // src/App/Form/TagType.php
+    namespace App\Form;
 
-    use AppBundle\Entity\Tag;
+    use App\Entity\Tag;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -114,10 +114,10 @@ form itself, create a form for the ``Task`` class.
 Notice that you embed a collection of ``TagType`` forms using the
 :doc:`CollectionType </reference/forms/types/collection>` field::
 
-    // src/AppBundle/Form/TaskType.php
-    namespace AppBundle\Form;
+    // src/App/Form/TaskType.php
+    namespace App\Form;
 
-    use AppBundle\Entity\Task;
+    use App\Entity\Task;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -145,12 +145,12 @@ Notice that you embed a collection of ``TagType`` forms using the
 
 In your controller, you'll create a new form from the ``TaskType``::
 
-    // src/AppBundle/Controller/TaskController.php
-    namespace AppBundle\Controller;
+    // src/App/Controller/TaskController.php
+    namespace App\Controller;
 
-    use AppBundle\Entity\Task;
-    use AppBundle\Entity\Tag;
-    use AppBundle\Form\TaskType;
+    use App\Entity\Task;
+    use App\Entity\Tag;
+    use App\Form\TaskType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -253,7 +253,7 @@ type expects to receive exactly two. If it gets more, the following error will b
 thrown: ``This form should not contain extra fields``. To make the number flexible,
 add the ``allow_add`` option to your collection field::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/App/Form/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -389,7 +389,7 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
 
-    // src/AppBundle/Entity/Task.php
+    // src/App/Entity/Task.php
 
     // ...
     class Task
@@ -408,7 +408,7 @@ for the tags in the ``Task`` class::
 
 Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false``::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/App/Form/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -440,7 +440,7 @@ you will learn about next!).
     ``$entityManager->persist($tag)`` on each, you'll receive this error from Doctrine:
 
         A new entity was found through the relationship
-        ``AppBundle\Entity\Task#tags`` that was not configured to
+        ``App\Entity\Task#tags`` that was not configured to
         cascade persist operations for entity...
 
     To fix this, you may choose to "cascade" the persist operation automatically
@@ -451,7 +451,7 @@ you will learn about next!).
 
         .. code-block:: php-annotations
 
-            // src/AppBundle/Entity/Task.php
+            // src/App/Entity/Task.php
 
             // ...
 
@@ -462,8 +462,8 @@ you will learn about next!).
 
         .. code-block:: yaml
 
-            # src/AppBundle/Resources/config/doctrine/Task.orm.yml
-            AppBundle\Entity\Task:
+            # src/App/Resources/config/doctrine/Task.orm.yml
+            App\Entity\Task:
                 type: entity
                 # ...
                 oneToMany:
@@ -473,14 +473,14 @@ you will learn about next!).
 
         .. code-block:: xml
 
-            <!-- src/AppBundle/Resources/config/doctrine/Task.orm.xml -->
+            <!-- src/App/Resources/config/doctrine/Task.orm.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-                <entity name="AppBundle\Entity\Task">
+                <entity name="App\Entity\Task">
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">
                         <cascade>
@@ -501,7 +501,7 @@ you will learn about next!).
     to the "adder" we created above, which is called by the form type since
     ``by_reference`` is set to ``false``::
 
-        // src/AppBundle/Entity/Task.php
+        // src/App/Entity/Task.php
 
         public function addTag(Tag $tag)
         {
@@ -517,7 +517,7 @@ you will learn about next!).
     In case of the many-to-many association, just make sure you have an appropriate
     method inside ``Tag`` that looks something like this::
 
-        // src/AppBundle/Entity/Tag.php
+        // src/App/Entity/Tag.php
 
         public function addTask(Task $task)
         {
@@ -535,7 +535,7 @@ The next step is to allow the deletion of a particular item in the collection.
 
 Start by adding the ``allow_delete`` option in the form Type::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/App/Form/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -549,7 +549,7 @@ Start by adding the ``allow_delete`` option in the form Type::
 
 Now, you need to put some code into the ``removeTag()`` method of ``Task``::
 
-    // src/AppBundle/Entity/Task.php
+    // src/App/Entity/Task.php
 
     // ...
     class Task
@@ -629,9 +629,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     on the removed tag. This assumes that you have some ``editAction()`` which
     is handling the "update" of your Task::
 
-        // src/AppBundle/Controller/TaskController.php
+        // src/App/Controller/TaskController.php
 
-        use AppBundle\Entity\Task;
+        use App\Entity\Task;
         use Doctrine\Common\Collections\ArrayCollection;
 
         // ...
