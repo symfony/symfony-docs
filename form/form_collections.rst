@@ -154,6 +154,9 @@ In your controller, you'll create a new form from the ``TaskType``::
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+    /**
+     * @Route("/task/new")
+     */
     class TaskController extends Controller
     {
         public function newAction(Request $request)
