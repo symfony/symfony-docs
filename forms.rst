@@ -540,6 +540,82 @@ powerful feature.
 Other Common Form Features
 --------------------------
 
+Passing Options to Forms
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you :ref:`create forms in classes <creating-forms-in-classes>`, when building
+the form in the controller you can pass custom options to it as the third optional
+argument of ``createForm()``::
+
+    // src/Controller/TaskController.php
+    use App\Form\Type\TaskType;
+    // ...
+
+    class TaskController extends AbstractController
+    {
+        public function new()
+        {
+            $task = new Task();
+            // use some PHP logic to decide if this form field is required or not
+            $dueDateIsRequired = ...
+
+            $form = $this->createForm(TaskType::class, $task, [
+                'require_due_date' => $dueDateIsRequired,
+            ]);
+
+            // ...
+        }
+    }
+
+If you try to use the form now, you'll see an error message: *The option
+"require_due_date" does not exist.* That's because forms must declare all the
+options they accept using the ``configureOptions()`` method::
+
+    // src/Form/Type/TaskType.php
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    // ...
+
+    class TaskType extends AbstractType
+    {
+        // ...
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults([
+                // ...,
+                'require_due_date' => false,
+            ]);
+
+            // you can also define the allowed types, allowed values and
+            // any other feature supported by the OptionsResolver component
+            $resolver->setAllowedTypes('require_due_date', 'bool');
+        }
+    }
+
+Now you can use this new form option inside the ``buildForm()`` method::
+
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    class TaskType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                // ...
+                ->add('dueDate', DateType::class, [
+                    'required' => $options['require_due_date'],
+                ])
+            ;
+        }
+
+        // ...
+    }
+
 Form Type Options
 ~~~~~~~~~~~~~~~~~
 
