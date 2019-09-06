@@ -112,8 +112,9 @@ following:
 
 .. tip::
 
-    Protected and private properties can also be validated, as well as "getter"
-    methods (see :ref:`validator-constraint-targets`).
+    Symfony's validator uses PHP reflection, as well as *"getter"* methods, to
+    get the value of any property, so they can be public, private or protected
+    (see :ref:`validator-constraint-targets`).
 
 .. index::
    single: Validation; Using the validator
@@ -327,7 +328,7 @@ literature genre mostly associated with the author, which can be set to either
 
         // src/Entity/Author.php
         namespace App\Entity;
-        
+
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -381,7 +382,7 @@ literature genre mostly associated with the author, which can be set to either
 
         // src/Entity/Author.php
         namespace App\Entity;
-        
+
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -416,7 +417,7 @@ options can be specified in this way.
 
         // src/Entity/Author.php
         namespace App\Entity;
-        
+
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -464,7 +465,7 @@ options can be specified in this way.
 
         // src/Entity/Author.php
         namespace App\Entity;
-        
+
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -585,7 +586,7 @@ class to have at least 3 characters.
 
         // src/Entity/Author.php
         namespace App\Entity;
-        
+
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -627,7 +628,7 @@ this method must return ``true``:
 
         // src/Entity/Author.php
         namespace App\Entity;
-        
+
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -672,7 +673,7 @@ this method must return ``true``:
 
         // src/Entity/Author.php
         namespace App\Entity;
-        
+
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
