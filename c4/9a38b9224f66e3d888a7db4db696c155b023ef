@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-09-05T14:48:35Z
+
+Hi 👋 and thanks for your PR.
+The only thing which is missing from my side is a versionadded directive.
+
+---------------------------------------------------------------------------
+
+by derrabus at 2019-09-05T17:20:48Z
+
+Thank you for your review, @OskarStark. I've added that directive, but I'm a bit unsure about the wording. Should I somehow mention the old behavior as well or do we expect users to look this up in the older branch of the documentation should they need it?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-09-05T18:57:03Z
+
+We could, but to me it’s ok to just mention the “as is”/“current recommendation” 👍🏻🤞🏻
+
+Thanks
