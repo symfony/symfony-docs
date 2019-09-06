@@ -437,6 +437,10 @@ start with ``/admin``, you can:
                 # require ROLE_ADMIN for /admin*
                 - { path: ^/admin, roles: ROLE_ADMIN }
 
+                # the 'path' value can be any valid regular expression
+                # (this one will match URLs like /api/post/7298 and /api/comment/528491)
+                - { path: ^/api/(post|comment)/\d+$, roles: ROLE_USER }
+
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
@@ -456,6 +460,10 @@ start with ``/admin``, you can:
 
                 <!-- require ROLE_ADMIN for /admin* -->
                 <rule path="^/admin" role="ROLE_ADMIN"/>
+
+                <!-- the 'path' value can be any valid regular expression
+                     (this one will match URLs like /api/post/7298 and /api/comment/528491) -->
+                <rule path="^/api/(post|comment)/\d+$" role="ROLE_USER"/>
             </config>
         </srv:container>
 
@@ -474,6 +482,10 @@ start with ``/admin``, you can:
             'access_control' => [
                 // require ROLE_ADMIN for /admin*
                 ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+
+                // the 'path' value can be any valid regular expression
+                // (this one will match URLs like /api/post/7298 and /api/comment/528491)
+                ['path' => '^/api/(post|comment)/\d+$', 'role' => 'ROLE_USER'],
             ],
         ]);
 
