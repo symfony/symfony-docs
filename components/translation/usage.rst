@@ -164,7 +164,10 @@ recommended format. These files are parsed by one of the loader classes.
     read "Symfony is really great" in the default locale.
 
     The choice of which method to use is entirely up to you, but the "keyword"
-    format is often recommended.
+    format is often recommended for multi-language applications, whereas for
+    shared bundles that contain translation resources we recommend the real
+    message, so you application can choose to disable the translator layer
+    and you will see a readable message.
 
     Additionally, the ``php`` and ``yaml`` file formats support nested ids to
     avoid repeating yourself if you use keywords instead of real text for your
