@@ -76,6 +76,12 @@ That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 
+.. caution::
+
+    In case you are also using `CloudFront`_ or another reverse proxy on top of your load balancer, calling ``$request->server->get('REMOTE_ADDR')`` as in the above example won't be enough, as it will only whitelist the node sitting directly above your application (in this case your load balancer). You need to make sure you also append the IP addresses or ranges of any additional proxy to the array of trusted proxies. 
+    
+    In the case of `CloudFront`_, you can find the list of IP ranges `at this address <https://ip-ranges.amazonaws.com/ip-ranges.json>`_. 
+
 Custom Headers When Using a Reverse Proxy
 -----------------------------------------
 
