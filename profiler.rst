@@ -98,23 +98,8 @@ Timing the Execution of the Application
 ---------------------------------------
 
 If you want to measure the time some tasks take in your application, there's no
-need to create a custom data collector. Instead, use the `Stopwatch component`_
-which provides utilities to profile code and displays the results on the
-"Performance" panel of the Profiler web interface.
-
-When using :ref:`autowiring <services-autowire>`, type-hint any argument with
-the :class:`Symfony\\Component\\Stopwatch\\Stopwatch` class and Symfony will
-inject the Stopwatch service. Then, use the ``start()``, ``lap()`` and
-``stop()`` methods to measure time::
-
-    // a user signs up and the timer starts...
-    $stopwatch->start('user-sign-up');
-
-    // ...do things to sign up the user...
-    $stopwatch->lap('user-sign-up');
-
-    // ...the sign up process is finished
-    $stopwatch->stop('user-sign-up');
+need to create a custom data collector. Instead, use the built-in utilities to
+:ref:`profile Symfony applications <profiling-applications>`.
 
 .. tip::
 
@@ -229,5 +214,4 @@ event::
     profiler/data_collector
 
 .. _`Single-page applications`: https://en.wikipedia.org/wiki/Single-page_application
-.. _`Stopwatch component`: https://symfony.com/components/Stopwatch
 .. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=profiler

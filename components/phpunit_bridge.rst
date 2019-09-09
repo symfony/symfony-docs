@@ -477,8 +477,8 @@ If you have this kind of time-related tests::
         }
     }
 
-You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
-calculate the duration time of your process, here 10 seconds. However, depending
+You calculated the duration time of your process using the Stopwatch utilities to
+:ref:`profile Symfony applications <profiling-applications>`. However, depending
 on the load of the server or the processes running on your local machine, the
 ``$duration`` could for example be ``10.000023s`` instead of ``10s``.
 
