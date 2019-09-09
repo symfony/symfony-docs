@@ -8,19 +8,23 @@ Symfony is fast, right out of the box. However, you can make it faster if you
 optimize your servers and your applications as explained in the following
 performance checklists.
 
-Symfony Application Checklist
------------------------------
+Performance Checklists
+----------------------
 
-#. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
+Use these checklists to verify that your application and server are configured
+for maximum performance:
 
-Production Server Checklist
----------------------------
+* **Symfony Application Checklist**:
 
-#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
-#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
-#. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
-#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
-#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
+  #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
+
+* **Production Server Checklist**:
+
+  #. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
+  #. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
+  #. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
+  #. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
+  #. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
 
 .. _performance-install-apcu-polyfill:
 
@@ -133,6 +137,116 @@ deployment process too):
   used in your application and prevents Composer from scanning the file system for
   classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
 
+.. _profiling-applications:
+
+Profiling Applications
+----------------------
+
+`Blackfire`_ is the best tool to profile and optimize performance of Symfony
+applications during development, test and production. It's a commercial service,
+but provides free features that you can use to find bottlenecks in your projects.
+
+Symfony provides a basic performance profiler in the development
+:ref:`config environment <configuration-environments>`. Click on the "time panel"
+of the :ref:`web debug toolbar <web-debug-toolbar>` to see how much time Symfony
+spent on tasks such as making database queries and rendering templates.
+
+Custom Profiling
+~~~~~~~~~~~~~~~~
+
+You can measure the execution time and memory consumption of your own code and
+display the result in the Symfony profiler thanks to the `Stopwatch component`_.
+
+When using :ref:`autowiring <services-autowire>`, type-hint any controller or
+service argument with the :class:`Symfony\\Component\\Stopwatch\\Stopwatch` class
+and Symfony will inject the ``debug.stopwatch`` service::
+
+    use Symfony\Component\Stopwatch\Stopwatch;
+
+    class DataExporter
+    {
+        private $stopwatch;
+
+        public function __construct(Stopwatch $stopwatch)
+        {
+            $this->stopwatch = $stopwatch;
+        }
+
+        public function export()
+        {
+            // the argument is the name of the "profiling event"
+            $this->stopwatch->start('export-data');
+
+            // ...do things to export data...
+
+            // reset the stopwatch to delete all the data measured so far
+            // $this->stopwatch->reset();
+
+            $this->stopwatch->stop('export-data');
+        }
+    }
+
+If the request calls this service during its execution, you'll see a new
+event called ``export-data`` in the Symfony profiler.
+
+The ``start()``, ``stop()`` and ``getEvent()`` methods return a
+:class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object that provides
+information about the current event, even while it's still running.
+
+You can also profile your template code with the :ref:`stopwatch Twig tag <reference-twig-tag-stopwatch>`:
+
+.. code-block:: twig
+
+    {% stopwatch 'render-blog-posts' %}
+        {% for post in blog_posts%}
+            {# ... #}
+        {% endfor %}
+    {% endstopwatch %}
+
+Profiling Categories
+....................
+
+Use the second optional argument of the ``start()`` method to define the
+category or tag of the event. This helps keep events organized by type::
+
+    $this->stopwatch->start('export-data', 'export');
+
+Profiling Periods
+.................
+
+A `real-world stopwatch`_ not only includes the start/stop button but also a
+"lap button" to measure each partial lap. This is exactly what the ``lap()``
+method does, which stops an event and then restarts it immediately::
+
+    $this->stopwatch->start('process-data-records', 'export');
+
+    foreach ($records as $record) {
+        // ... some code goes here
+        $this->stopwatch->lap('process-data-records');
+    }
+
+    $event = $this->stopwatch->stop('process-data-records');
+    // $event->getDuration(), $event->getMemory(), etc.
+
+    // Lap information is stored as "periods" within the event:
+    // $event->getPeriods();
+
+Profiling Sections
+..................
+
+Sections are a way to split the profile timeline into groups. Example::
+
+    $this->stopwatch->openSection();
+    $this->stopwatch->start('validating-file', 'validation');
+    $this->stopwatch->stopSection('parsing');
+
+    $events = $this->stopwatch->getSectionEvents('parsing');
+
+    // later you can reopen a section passing its name to the openSection() method
+    $this->stopwatch->openSection('parsing');
+    $this->stopwatch->start('processing-file');
+    $this->stopwatch->stopSection('parsing');
+
 Learn more
 ----------
 
@@ -146,3 +260,6 @@ Learn more
 .. _`APCu PHP functions`: https://php.net/manual/en/ref.apcu.php
 .. _`cachetool`: https://github.com/gordalina/cachetool
 .. _`open_basedir`: https://php.net/manual/ini.core.php#ini.open-basedir
+.. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=performance
+.. _`Stopwatch component`: https://symfony.com/components/Stopwatch
+.. _`real-world stopwatch`: https://en.wikipedia.org/wiki/Stopwatch
