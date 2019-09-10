@@ -362,7 +362,8 @@
 /console/logging /console
 /frontend/encore/legacy-apps /frontend/encore/legacy-applications
 /contributing/code/patches /contributing/code/pull_requests
-/workflow/state-machines /workflow/introduction
+/workflow/state-machines /workflow/workflow-and-state-machine
+/workflow/introduction /workflow/workflow-and-state-machine
 /workflow/usage /workflow
 /introduction/from_flat_php_to_symfony2 /introduction/from_flat_php_to_symfony
 /contributing/community/other /contributing/community
