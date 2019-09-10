@@ -152,10 +152,6 @@ Content Methods
             ]
         );
 
-    .. versionadded:: 4.4
-
-        The ``horizontalTable()`` method was introduced in Symfony 4.4.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::definitionList`
     It displays the given ``key => value`` pairs as a compact list of elements::
 
@@ -168,10 +164,6 @@ Content Methods
             'This is another title',
             ['foo4' => 'bar4']
         );
-
-    .. versionadded:: 4.4
-
-        The ``definitionList()`` method was introduced in Symfony 4.4.
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
