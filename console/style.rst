@@ -140,6 +140,39 @@ Content Methods
             ]
         );
 
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::horizontalTable`
+    It displays the given array of headers and rows as a compact horizontal table::
+
+        $io->horizontalTable(
+            ['Header 1', 'Header 2'],
+            [
+                ['Cell 1-1', 'Cell 1-2'],
+                ['Cell 2-1', 'Cell 2-2'],
+                ['Cell 3-1', 'Cell 3-2'],
+            ]
+        );
+
+    .. versionadded:: 4.4
+
+        The ``horizontalTable()`` method was introduced in Symfony 4.4.
+
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::definitionList`
+    It displays the given ``key => value`` pairs as a compact list of elements::
+
+        $io->definitionList(
+            'This is a title',
+            ['foo1' => 'bar1'],
+            ['foo2' => 'bar2']
+            ['foo3' => 'bar3']
+            new TableSeparator(),
+            'This is another title',
+            ['foo4' => 'bar4']
+        );
+
+    .. versionadded:: 4.4
+
+        The ``definitionList()`` method was introduced in Symfony 4.4.
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
     most of the times you won't need it at all. The reason is that every helper
