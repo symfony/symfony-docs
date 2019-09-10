@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-05T14:50:01Z
+
+@Kynno good catch! Thanks for improving this. About the PHPUnit, yes you are right. I'm not sure which is the official Symfony recommendation to avoid this issue. Maybe @nicolas-grekas can help us here. Thanks!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-09-05T14:57:32Z
+
+the build issue has been fixed weeks ago, but you need a recent enough phpunit bridge of course
+
+---------------------------------------------------------------------------
+
+by Kynno at 2019-09-05T17:39:59Z
+
+You're right. So what I did to fix this issue with PHPUnit is:
+
+- ` "symfony/phpunit-bridge": "^4.1"`
+- Set this in the file `phpunit.xml.dist`
+
+```xml
+<php>
+    <env name="SYMFONY_PHPUNIT_VERSION" value="7.5" />
+</php>
+```
+
+I'm not sure we need to mention this as in this case it was related to my own settings in my `composer.json`
