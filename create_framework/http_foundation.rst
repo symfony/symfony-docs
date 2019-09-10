@@ -270,7 +270,7 @@ cases by yourself. Why not using a technology that already works?
 .. note::
 
     If you want to learn more about the HttpFoundation component, you can have
-    a look at the :namespace:`Symfony\\Component\\HttpFoundation` API or read
+    a look at the ``Symfony\Component\HttpFoundation`` API or read
     its dedicated :doc:`documentation </components/http_foundation>`.
 
 Believe or not but we have our first framework. You can stop now if you want.
