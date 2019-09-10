@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-26T14:22:24Z
+
+Ryan, I thought about that ... but the File form field doesn't have an `accept` option (it's an HTML attribute defined via `attr`) so it's really hard to mention this feature there 😕
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-03T06:34:10Z
+
+@OskarStark do you know why this is failing?
+
+```
+Warning, treated as error:
+
+/home/travis/build/symfony/symfony-docs/reference/constraints/File.rst:251:
+WARNING: undefined label: forms-field-guessing (if the link has no caption the
+label must precede a section header)
+```
+
+The reference exists and I think the syntax is correct. Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-09-03T07:12:49Z
+
+@javiereguiluz Are you sure? I cannot find the reference.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-03T07:19:55Z
+
+It's strange. On my local computer I see this in the main `forms.rst` file:
+
+![image](https://user-images.githubusercontent.com/73419/64151923-b9f0ea80-ce2b-11e9-9f89-00faa5b3f792.png)
+
+But in the repository the reference is different: https://raw.githubusercontent.com/symfony/symfony-docs/4.4/forms.rst
+
+```
+.. _form-type-guessing:
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-03T07:22:28Z
+
+OK, I've just rebased this PR to the latest 4.4 changes, so it should be OK now. Thanks.
