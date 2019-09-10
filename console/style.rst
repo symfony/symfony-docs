@@ -152,18 +152,26 @@ Content Methods
             ]
         );
 
+    .. versionadded:: 4.4
+
+        The ``horizontalTable()`` method was introduced in Symfony 4.4.
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::definitionList`
-    It displays the given arguments as compact table horizontally where the key::
+    It displays the given ``key => value`` pairs as a compact list of elements::
 
         $io->definitionList(
-            'this is a title',
+            'This is a title',
             ['foo1' => 'bar1'],
             ['foo2' => 'bar2']
             ['foo3' => 'bar3']
             new TableSeparator(),
-            'this is another title',
+            'This is another title',
             ['foo4' => 'bar4']
         );
+
+    .. versionadded:: 4.4
+
+        The ``definitionList()`` method was introduced in Symfony 4.4.
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
