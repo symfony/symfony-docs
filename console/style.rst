@@ -140,6 +140,31 @@ Content Methods
             ]
         );
 
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::horizontalTable`
+    It displays the given array of headers and rows as a compact horizontal table::
+
+        $io->horizontalTable(
+            ['Header 1', 'Header 2'],
+            [
+                ['Cell 1-1', 'Cell 1-2'],
+                ['Cell 2-1', 'Cell 2-2'],
+                ['Cell 3-1', 'Cell 3-2'],
+            ]
+        );
+
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::definitionList`
+    It displays the given arguments as compact table horizontally where the key::
+
+        $io->definitionList(
+            'this is a title',
+            ['foo1' => 'bar1'],
+            ['foo2' => 'bar2']
+            ['foo3' => 'bar3']
+            new TableSeparator(),
+            'this is another title',
+            ['foo4' => 'bar4']
+        );
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
     most of the times you won't need it at all. The reason is that every helper
