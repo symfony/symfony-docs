@@ -242,6 +242,20 @@ of given mime types (if an array).
 
 You can find a list of existing mime types on the `IANA website`_.
 
+.. note::
+
+    When using this constraint on a :doc:`FileType field </reference/forms/types/file>`,
+    the value of the ``mimeTypes`` option is also used in the ``accept``
+    attribute of the related ``<input type="widget"/>`` HTML element.
+
+    This behavior is applied only when using :ref:`form type guessing <form-type-guessing>`
+    (i.e. the form type is not defined explicitly in the ``->add()`` method of
+    the form builder) and when the field doesn't define its own ``accept`` value.
+
+    .. versionadded:: 4.4
+
+        This feature was introduced in Symfony 4.4.
+
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
