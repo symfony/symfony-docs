@@ -148,11 +148,9 @@ If you want to modify that title, use this alternative syntax:
         :doc:`environments`
 
 **Links to the API** follow a different syntax, where you must specify the type
-of the linked resource (``namespace``, ``class`` or ``method``):
+of the linked resource (``class`` or ``method``):
 
 .. code-block:: rst
-
-    :namespace:`Symfony\\Component\\BrowserKit`
 
     :class:`Symfony\\Component\\Routing\\Matcher\\ApacheUrlMatcher`
 
