@@ -251,8 +251,8 @@ Now you may wonder where the Web Debug Toolbar has gone: that's because there is
 no ``</body>`` tag in the current template. You can add the body element yourself,
 or extend ``base.html.twig``, which contains all default HTML elements.
 
-In the :doc:`/templating` article, you'll learn all about Twig: how to loop, render
-other templates and leverage its powerful layout inheritance system.
+In the :doc:`templates </templates>` article, you'll learn all about Twig: how
+to loop, render other templates and leverage its powerful layout inheritance system.
 
 Checking out the Project Structure
 ----------------------------------
@@ -304,7 +304,7 @@ Ok, time to finish mastering the fundamentals by reading these articles:
 
 * :doc:`/routing`
 * :doc:`/controller`
-* :doc:`/templating`
+* :doc:`/templates`
 * :doc:`/configuration`
 
 Then, learn about other important topics like the
