@@ -1238,8 +1238,8 @@ information in a controller via the ``Request`` object::
 
 You can get this information in services too injecting the ``request_stack``
 service to :doc:`get the Request object in a service </service_container/request>`.
-In Twig templates, use the :ref:`global app object <reference-twig-global-app>`
-to get the request and its attributes:
+In templates, use the :ref:`Twig global app variable <twig-app-variable>` to get
+the request and its attributes:
 
 .. code-block:: twig
 
@@ -1256,67 +1256,14 @@ Symfony defines some special controllers to render templates and redirect to
 other routes from the route configuration so you don't have to create a
 controller action.
 
-Rendering Templates
-~~~~~~~~~~~~~~~~~~~
+Rendering a Template Directly from a Route
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``TemplateController`` to render the template whose path is defined in
-the ``template`` option:
+Read the section about :ref:`rendering a template from a route <templates-render-from-route>`
+in the main article about Symfony templates.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/routes.yaml
-        about_us:
-            path: /site/about-us
-            controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
-            defaults:
-                template: 'static_pages/about_us.html.twig'
-
-                # optionally you can define some arguments passed to the template
-                site_name: 'ACME'
-                theme: 'dark'
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="about_us" path="/site/about-us"
-                   controller="Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction">
-                <default key="template">static_pages/about_us.html.twig</default>
-
-                <!-- optionally you can define some arguments passed to the template -->
-                <default key="site_name">ACME</default>
-                <default key="theme">dark</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // config/routes.php
-        use App\Controller\DefaultController;
-        use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-
-        return function (RoutingConfigurator $routes) {
-            $routes->add('about_us', '/site/about-us')
-                ->controller([TemplateController::class, 'templateAction'])
-                 ->defaults([
-                    'template' => 'static_pages/about_us.html.twig',
-                    // optionally you can define some arguments passed to the template
-                    'site_name' => 'ACME',
-                    'theme' => 'dark',
-                ])
-            ;
-        };
-
-Redirecting to URLs and Routes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Redirecting to URLs and Routes Directly from a Route
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use the ``RedirectController`` to redirect to other routes and URLs:
 
@@ -1907,28 +1854,8 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 Generating URLs in Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Twig template language used in :doc:`Symfony templates </templating>`
-provides some functions to generate both relative and absolute URLs:
-
-.. code-block:: html+twig
-
-    {# generates relative URLs #}
-    <a href="{{ path('sign_up') }}">Sign up</a>
-    <a href="{{ path('user_profile', {username: app.user.username}) }}">
-        View your profile
-    </a>
-    <a href="{{ path('user_profile', {username: app.user.username, _locale: 'es'}) }}">
-        Ver mi perfil
-    </a>
-
-    {# generates absolute URLs #}
-    <a href="{{ url('sign_up') }}">Sign up</a>
-    <a href="{{ url('user_profile', {username: app.user.username}) }}">
-        View your profile
-    </a>
-    <a href="{{ url('user_profile', {username: app.user.username, _locale: 'es'}) }}">
-        Ver mi perfil
-    </a>
+Read the section about :ref:`creating links between pages <templates-link-to-pages>`
+in the main article about Symfony templates.
 
 Generating URLs in JavaScript
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

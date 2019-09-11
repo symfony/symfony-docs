@@ -6,9 +6,8 @@ How to Use PHP instead of Twig for Templates
 
 .. deprecated:: 4.3
 
-    The integration of the Templating component in FrameworkBundle has been
-    deprecated since version 4.3 and will be removed in 5.0. PHP templates will
-    no longer be supported and you'll need to use Twig instead.
+    PHP templates have been deprecated in Symfony 4.3 and they will no longer be
+    supported in Symfony 5.0. Use :ref:`Twig templates <twig-language>` instead.
 
 Symfony defaults to Twig for its template engine, but you can still use
 plain PHP code if you want. Both templating engines are supported equally in
@@ -23,19 +22,18 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
-.. deprecated:: 4.3
-
-    The integration of the Templating component in FrameworkBundle has been
-    deprecated since version 4.3 and will be removed in 5.0. PHP templates will
-    no longer be supported and you'll need to use Twig instead.
-
 If you want to use the PHP templating engine, first install the templating component:
 
 .. code-block:: terminal
 
     $ composer require symfony/templating
 
-Next, enable the php engine:
+.. deprecated:: 4.3
+
+    The integration of the Templating component in FrameworkBundle has been
+    deprecated since version 4.3 and will be removed in 5.0.
+
+Next, enable the PHP engine:
 
 .. configuration-block::
 

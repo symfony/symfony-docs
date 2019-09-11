@@ -293,7 +293,7 @@ create an event subscriber to set it automatically::
 Twig: HTML & CSS
 ----------------
 
-The Mime component integrates with the :doc:`Twig template engine </templating>`
+The Mime component integrates with the :ref:`Twig template engine <twig-language>`
 to provide advanced features such as CSS style inlining and support for HTML/CSS
 frameworks to create complex HTML email messages. First, make sure Twig is installed:
 

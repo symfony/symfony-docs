@@ -57,6 +57,8 @@ which is almost equivalent to the more verbose, but also more flexible,
         $_SERVER
     );
 
+.. _accessing-request-data:
+
 Accessing Request Data
 ~~~~~~~~~~~~~~~~~~~~~~
 
