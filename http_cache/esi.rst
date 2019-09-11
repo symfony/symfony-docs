@@ -114,8 +114,8 @@ independently of the rest of the page::
 
 In this example, the full-page cache has a lifetime of ten minutes.
 Next, include the news ticker in the template by embedding an action.
-This is done via the ``render`` helper (see :doc:`/templating/embedding_controllers`
-for more details).
+This is done via the ``render()`` helper (for more details, see how to
+:ref:`embed controllers in templates <templates-embed-controllers>`).
 
 As the embedded content comes from another page (or controller for that
 matter), Symfony uses the standard ``render`` helper to configure ESI tags:

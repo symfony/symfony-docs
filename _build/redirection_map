@@ -447,3 +447,13 @@
 /form/action_method /forms
 /reference/requirements /setup
  /bundles/inheritance /bundles/override
+/templating /templates
+/templating/escaping /templates
+/templating/syntax /templates
+/templating/debug /templates
+/templating/render_without_controller /templates
+/templating/app_variable /templates
+/templating/formats /templates
+/templating/namespaced_paths /templates
+/templating/embedding_controllers /templates
+/templating/inheritance /templates

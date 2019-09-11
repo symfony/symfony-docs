@@ -1,38 +1,19 @@
 .. index::
     single: Symfony Twig extensions
 
-.. _symfony2-twig-extensions:
+Twig Extensions Defined by Symfony
+==================================
 
-Symfony Twig Extensions
-=======================
-
-Twig is the default template engine for Symfony. By itself, it already contains
-a lot of built-in functions, filters, tags and tests. You can learn more about
-them from the `Twig Reference`_.
-
-The Symfony framework adds quite a few extra :ref:`functions <reference-twig-functions>`,
-:ref:`filters <reference-twig-filters>`, :ref:`tags <reference-twig-tags>`
-and :ref:`tests <reference-twig-tests>` to seamlessly integrate the
-various Symfony components with Twig templates. The following sections
-describe these extra features.
+:ref:`Twig <twig-language>` is the template engine used in Symfony applications.
+There are tens of `default filters and functions defined by Twig`_, but Symfony
+also defines some filters, functions and tags to integrate the various Symfony
+components with Twig templates. This article explains them all.
 
 .. tip::
 
-    Technically, most of the extensions live in the `Twig Bridge`_. That code
-    might give you some ideas when you need to write your own Twig extension
-    as described in :doc:`/templating/twig_extension`.
-
-.. note::
-
-    This reference only covers the Twig extensions provided by the Symfony
-    framework. You are probably using some other bundles as well, and
-    those might come with their own extensions not covered here.
-
-.. tip::
-
-    The `Twig Extensions repository`_ contains some additional Twig extensions
-    that do not belong to the Twig core, so you might want to have a look at
-    the `Twig Extensions documentation`_.
+    If these extensions provided by Symfony are not enough, you can
+    :doc:`create a custom Twig extension </templating/twig_extension>` to define
+    even more filters and functions.
 
 .. _reference-twig-functions:
 
@@ -54,20 +35,8 @@ render
     **type**: ``array`` **default**: ``[]``
 
 Makes a request to the given internal URI or controller and returns the result.
-It's commonly used to :doc:`embed controllers in templates </templating/embedding_controllers>`.
-
-.. code-block:: twig
-
-    {# if the controller is associated with a route, use the path() or
-       url() functions to generate the URI used by render() #}
-    {{ render(path('latest_articles', {num: 5})) }}
-    {{ render(url('latest_articles', {num: 5})) }}
-
-    {# if you don't want to expose the controller with a public URL, use
-       the controller() function to define the controller to be executed #}
-    {{ render(controller('App\\Controller\\DefaultController::latestArticles', {num: 5})) }}
-
 The render strategy can be specified in the ``strategy`` key of the options.
+It's commonly used to :ref:`embed controllers in templates <templates-embed-controllers>`.
 
 .. _reference-twig-function-render-esi:
 
@@ -112,6 +81,8 @@ Returns an instance of ``ControllerReference`` to be used with functions
 like :ref:`render() <reference-twig-function-render>` and
 :ref:`render_esi() <reference-twig-function-render-esi>`.
 
+.. _reference-twig-function-asset:
+
 asset
 ~~~~~
 
@@ -124,12 +95,18 @@ asset
 ``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``
 
-Returns a public path to ``path``, which takes into account the base path
-set for the package and the URL path. More information in
-:ref:`templating-assets`. Symfony provides various cache busting
-implementations via the :ref:`reference-framework-assets-version`,
-:ref:`reference-assets-version-strategy`, and
-:ref:`reference-assets-json-manifest-path` configuration options.
+Returns the public path of the given asset path (which can be a CSS file, a
+JavaScript file, an image path, etc.). This function takes into account where
+the application is installed (e.g. in case the project is accessed in a host
+subirectory) and the optional asset package base path.
+
+Symfony provides various cache busting implementations via the
+:ref:`reference-framework-assets-version`, :ref:`reference-assets-version-strategy`,
+and :ref:`reference-assets-json-manifest-path` configuration options.
+
+.. seealso::
+
+    Read more about :ref:`linking to web assets from templates <templates-link-to-assets>`.
 
 asset_version
 ~~~~~~~~~~~~~~
@@ -142,7 +119,7 @@ asset_version
     **type**: ``string`` | ``null`` **default**: ``null``
 
 Returns the current version of the package, more information in
-:ref:`templating-assets`.
+:ref:`templates-link-to-assets`.
 
 .. _reference-twig-function-csrf-token:
 
@@ -211,7 +188,7 @@ path
 
 .. code-block:: twig
 
-    {{ path(name, parameters = [], relative = false) }}
+    {{ path(route_name, route_parameters = [], relative = false) }}
 
 ``name``
     **type**: ``string``
@@ -221,19 +198,19 @@ path
     **type**: ``boolean`` **default**: ``false``
 
 Returns the relative URL (without the scheme and host) for the given route.
-If ``relative`` is enabled, it'll create a path relative to the current
-path. More information in :ref:`templating-pages`.
+If ``relative`` is enabled, it'll create a path relative to the current path.
 
 .. seealso::
 
-    Read :doc:`/routing` to learn more about the Routing component.
+    Read more about :doc:`Symfony routing </routing>` and about
+    :ref:`creating links in Twig templates <templates-link-to-pages>`.
 
 url
 ~~~
 
 .. code-block:: twig
 
-    {{ url(name, parameters = [], schemeRelative = false) }}
+    {{ url(route_name, route_parameters = [], schemeRelative = false) }}
 
 ``name``
     **type**: ``string``
@@ -243,12 +220,12 @@ url
     **type**: ``boolean`` **default**: ``false``
 
 Returns the absolute URL (with scheme and host) for the given route. If
-``schemeRelative`` is enabled, it'll create a scheme-relative URL. More
-information in :ref:`templating-pages`.
+``schemeRelative`` is enabled, it'll create a scheme-relative URL.
 
 .. seealso::
 
-    Read :doc:`/routing` to learn more about the Routing component.
+    Read more about :doc:`Symfony routing </routing>` and about
+    :ref:`creating links in Twig templates <templates-link-to-pages>`.
 
 absolute_url
 ~~~~~~~~~~~~
@@ -260,17 +237,9 @@ absolute_url
 ``path``
     **type**: ``string``
 
-Returns the absolute URL from the passed relative path. For example, assume
-you're on the following page in your app:
-``http://example.com/products/hover-board``.
-
-.. code-block:: twig
-
-    {{ absolute_url('/human.txt') }}
-    {# http://example.com/human.txt #}
-
-    {{ absolute_url('products_icon.png') }}
-    {# http://example.com/products/products_icon.png #}
+Returns the absolute URL from the passed relative path. Combine it with the
+:ref:`asset() function <reference-twig-function-asset>` to generate absolute URLs
+for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Assets <templates-link-to-assets>`.
 
 relative_path
 ~~~~~~~~~~~~~
@@ -297,8 +266,8 @@ you're on the following page in your app:
 expression
 ~~~~~~~~~~
 
-Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in
-Twig.
+Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
+to the :doc:`ExpressionLanguage component </components/expression_language>`.
 
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -600,27 +569,11 @@ in the article about :doc:`customizing form rendering </form/form_customization>
 Global Variables
 ----------------
 
-.. _reference-twig-global-app:
-
 app
 ~~~
 
-The ``app`` variable is available everywhere and gives access to many commonly
-needed objects and values. It is an instance of
-:class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`.
+The ``app`` variable is injected automatically by Symfony in all templates and
+provides access to lots of useful application information. Read more about the
+:ref:`Twig global app variable <twig-app-variable>`.
 
-The available attributes are:
-
-* ``app.user``, a PHP object representing the current user;
-* ``app.request``, a :class:`Symfony\\Component\\HttpFoundation\\Request` object;
-* ``app.session``, a :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` object;
-* ``app.environment``, a string with the name of the execution environment;
-* ``app.debug``, a boolean telling whether the debug mode is enabled in the app;
-* ``app.token``, a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
-  object representing the security token
-* ``app.flashes``, returns flash messages from the session
-
-.. _`Twig Reference`: https://twig.symfony.com/doc/2.x/#reference
-.. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
-.. _`Twig Extensions documentation`: http://twig-extensions.readthedocs.io/en/latest/
-.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension
+.. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/2.x/#reference

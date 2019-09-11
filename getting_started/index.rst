@@ -8,5 +8,5 @@ Getting Started
     /page_creation
     /routing
     /controller
-    /templating
+    /templates
     /configuration

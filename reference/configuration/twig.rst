@@ -5,8 +5,8 @@ Twig Configuration Reference (TwigBundle)
 =========================================
 
 The TwigBundle integrates the Twig library in Symfony applications to
-:doc:`render templates </templating>`. All these options are configured under
-the ``twig`` key in your application configuration.
+:ref:`render templates <templates-rendering>`. All these options are configured
+under the ``twig`` key in your application configuration.
 
 .. code-block:: terminal
 
@@ -41,8 +41,10 @@ Configuration
   * `timezone`_
 
 * `debug`_
+* `default_path`_
 * `exception_controller`_
 * `form_themes`_
+* `globals`_
 * `number_format`_
 
   * `decimals`_
@@ -62,6 +64,8 @@ If ``true``, whenever a template is rendered, Symfony checks first if its source
 code has changed since it was compiled. If it has changed, the template is
 compiled again automatically.
 
+.. _config-twig-autoescape:
+
 autoescape
 ~~~~~~~~~~
 
@@ -73,7 +77,7 @@ individually in the templates).
 .. caution::
 
     Setting this option to ``false`` is dangerous and it will make your
-    application vulnerable to XSS exploits because most third-party bundles
+    application vulnerable to `XSS attacks`_ because most third-party bundles
     assume that auto-escaping is enabled and they don't escape contents
     themselves.
 
@@ -139,8 +143,8 @@ charset
 **type**: ``string`` **default**: ``'%kernel.charset%'``
 
 The charset used by the template files. By default it's the same as the value of
-the ``kernel.charset`` container parameter, which is ``UTF-8`` by default in
-Symfony applications.
+the :ref:`kernel.charset container parameter <configuration-kernel-charset>`,
+which is ``UTF-8`` by default in Symfony applications.
 
 date
 ~~~~
@@ -181,6 +185,17 @@ debug
 If ``true``, the compiled templates include a ``__toString()`` method that can
 be used to display their nodes.
 
+.. _config-twig-default-path:
+
+default_path
+~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
+
+The path to the directory where Symfony will look for the application Twig
+templates by default. If you store the templates in more than one directory, use
+the :ref:`paths <config-twig-paths>`  option too.
+
 .. _config-twig-exception-controller:
 
 exception_controller
@@ -195,7 +210,8 @@ is what's responsible for rendering specific templates under different error
 conditions (see :doc:`/controller/error_pages`). Modifying this
 option is advanced. If you need to customize an error page you should use
 the previous link. If you need to perform some behavior on an exception,
-you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
+you should add an :doc:`event listener </event_dispatcher>` to the
+:ref:`kernel.exception event <kernel-kernel.exception>`.
 
 .. _config-twig-form-themes:
 
@@ -253,6 +269,14 @@ These global themes are applied to all forms, even those which use the
 :ref:`form_theme Twig tag <reference-twig-tag-form-theme>`, but you can
 :ref:`disable global themes for specific forms <disabling-global-themes-for-single-forms>`.
 
+globals
+~~~~~~~
+
+**type**: ``array`` **default**: ``[]``
+
+It defines the global variables injected automatically into all Twig templates.
+Learn more about :doc:`Twig global variables </templating/global_variables>`.
+
 number_format
 ~~~~~~~~~~~~~
 
@@ -301,15 +325,6 @@ on. Set it to ``0`` to disable all the optimizations. You can even enable or
 disable these optimizations selectively, as explained in the Twig documentation
 about `the optimizer extension`_.
 
-.. _config-twig-default-path:
-
-default_path
-~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
-
-The default directory where Symfony will look for Twig templates.
-
 .. _config-twig-paths:
 
 paths
@@ -317,16 +332,8 @@ paths
 
 **type**: ``array`` **default**: ``null``
 
-This option defines the directories where Symfony will look for Twig templates
-in addition to the default locations. Symfony looks for the templates in the
-following order:
-
-#. The directories defined in this option;
-#. The ``Resources/views/`` directories of the bundles used in the application;
-#. The directory defined in the ``default_path`` option.
-
-The values of the ``paths`` option are defined as ``key: value`` pairs where the
-``value`` part can be ``null``. For example:
+Defines the directories where application templates are stored in addition to
+the directory defined in the :ref:`default_path option <config-twig-default-path>`:
 
 .. configuration-block::
 
@@ -336,7 +343,8 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
         twig:
             # ...
             paths:
-                '%kernel.project_dir%/vendor/acme/foo-bar/templates': ~
+                'email/default/templates': ~
+                'backend/templates': 'admin'
 
     .. code-block:: xml
 
@@ -350,7 +358,8 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
             <twig:config>
                 <!-- ... -->
-                <twig:path>%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
+                <twig:path>email/default/templates</twig:path>
+                <twig:path namespace="admin">backend/templates</twig:path>
             </twig:config>
         </container>
 
@@ -360,60 +369,12 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
         $container->loadFromExtension('twig', [
             // ...
             'paths' => [
-                '%kernel.project_dir%/vendor/acme/foo-bar/templates' => null,
+                'email/default/templates' => null,
+                'backend/templates' => 'admin',
             ],
         ]);
 
-The directories defined in the ``paths`` option have more priority than the
-default directories defined by Symfony. In the above example, if the template
-exists in the ``acme/foo-bar/templates/`` directory inside your application's
-``vendor/``, it will be used by Symfony.
-
-If you provide a value for any path, Symfony will consider it the Twig namespace
-for that directory:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/twig.yaml
-        twig:
-            # ...
-            paths:
-                '%kernel.project_dir%/vendor/acme/foo-bar/templates': 'foo_bar'
-
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <!-- ... -->
-                <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
-            </twig:config>
-        </container>
-
-    .. code-block:: php
-
-        # config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            // ...
-            'paths' => [
-                '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
-            ],
-        ]);
-
-This option is useful to not mess with the default template directories defined
-by Symfony. Besides, it simplifies how you refer to those templates:
-
-.. code-block:: text
-
-    @foo_bar/template_name.html.twig
+Read more about :ref:`template directories and namespaces <templates-namespaces>`.
 
 strict_variables
 ~~~~~~~~~~~~~~~~
@@ -425,3 +386,4 @@ attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
 .. _`the optimizer extension`: https://twig.symfony.com/doc/2.x/api.html#optimizer-extension
+.. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting

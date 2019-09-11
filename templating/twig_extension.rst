@@ -4,26 +4,24 @@
 How to Write a custom Twig Extension
 ====================================
 
-If you need to create custom Twig functions, filters, tests or more, you'll need
-to create a Twig extension. You can read more about `Twig Extensions`_ in the Twig
-documentation.
+`Twig Extensions`_ allow to create custom Twig functions, filters and more to
+use them in your templates.
 
-.. tip::
+Before writing your own Twig extension, check if the filter/function that you
+need is already implemented in the `default Twig filters and functions`_ or the
+:doc:`Twig filters and functions added by Symfony </reference/twig_reference>`.
+Check also the `official Twig extensions`_, which add commonly needed filters
+and functions and can be installed in your application as follows:
 
-    Before writing your own Twig extension, check if the filter/function that
-    you need is already implemented in the :doc:`Symfony Twig extensions </reference/twig_reference>`.
-    Check also the `official Twig extensions`_, which can be installed in your
-    application as follows:
+.. code-block:: terminal
 
-    .. code-block:: terminal
-
-        $ composer require twig/extensions
+    $ composer require twig/extensions
 
 Create the Extension Class
 --------------------------
 
-Suppose you want to create a new filter called ``price`` that formats a number into
-money:
+Suppose you want to create a new filter called ``price`` that formats a number
+into money:
 
 .. code-block:: twig
 
@@ -94,23 +92,16 @@ Next, register your class as a service and tag it with ``twig.extension``. If yo
 using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about your new service and add the tag.
 
-Optionally, execute this command to confirm that your new filter was
-successfully registered:
+You can now start using your filter in any Twig template. Optionally, execute
+this command to confirm that your new filter was successfully registered:
 
 .. code-block:: terminal
 
+    # display all information about Twig
+    $ php bin/console debug:twig
+
+    # display only the information about a specific filter
     $ php bin/console debug:twig --filter=price
-
-You can now start using your filter in any Twig template.
-
-.. tip::
-
-    Run the following command to verify that the filters and functions created
-    by your extensions are successfully registered:
-
-    .. code-block:: terminal
-
-        $ php bin/console debug:twig
 
 .. _lazy-loaded-twig-extensions:
 
@@ -184,6 +175,7 @@ If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
+.. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
+.. _`default Twig filters and functions`: https://twig.symfony.com/doc/2.x/#reference
 .. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
 .. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
-.. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension

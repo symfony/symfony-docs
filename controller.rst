@@ -179,7 +179,7 @@ object for you::
     return $this->render('lucky/number.html.twig', ['number' => $number]);
 
 Templating and Twig are explained more in the
-:doc:`Creating and Using Templates article </templating>`.
+:doc:`Creating and Using Templates article </templates>`.
 
 .. index::
    single: Controller; Accessing services
@@ -461,7 +461,8 @@ and then redirects. The message key (``notice`` in this example) can be anything
 you'll use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
-read any flash messages from the session using ``app.flashes()``:
+read any flash messages from the session using the ``flashes()`` method provided
+by the :ref:`Twig global app variable <twig-app-variable>`:
 
 .. code-block:: html+twig
 
@@ -650,7 +651,7 @@ handle caching and more.
 Keep Going!
 -----------
 
-Next, learn all about :doc:`rendering templates with Twig </templating>`.
+Next, learn all about :doc:`rendering templates with Twig </templates>`.
 
 Learn more about Controllers
 ----------------------------
@@ -658,7 +659,7 @@ Learn more about Controllers
 .. toctree::
     :hidden:
 
-    templating
+    templates
 
 .. toctree::
     :maxdepth: 1
