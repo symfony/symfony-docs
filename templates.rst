@@ -570,11 +570,6 @@ errors. It's useful to run it before deploying your application to production
     $ php bin/console lint:twig templates/email/
     $ php bin/console lint:twig templates/article/recent_list.html.twig
 
-.. versionadded:: 4.4
-
-    The feature that checks all the application templates when not passing any
-    arguments to ``lint:twig`` was introduced in Symfony 4.4.
-
 Inspecting Twig Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
