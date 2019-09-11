@@ -98,20 +98,28 @@ binary. For third-party providers, refers to the following table:
 Failover Transport
 ------------------
 
-You can create failover transport with the help of `||` operator::
+You can create failover transport with the help of ``failover()`` keyword::
 
-    $dsn = 'api://id@postmark || smtp://key@sendgrid';
+    $dsn = 'failover(api://id@postmark smtp://key@sendgrid)';
 
 So if the first transport fails, the mailer will attempt to send through the
 second transport.
+
+.. versionadded:: 4.4
+
+    The ``failover()`` keyword was introduced in Symfony 4.4.
 
 Round Robin
 -----------
 
 If you want to send emails by using multiple transports in a round-robin fashion,
-you can use the ``&&`` operator between the transports::
+you can use the ``roundrobin()`` keyword with the transports::
 
-    $dsn = 'api://id@postmark && smtp://key@sendgrid'
+    $dsn = 'roundrobin(api://id@postmark smtp://key@sendgrid)'
+
+.. versionadded:: 4.4
+
+    The ``roundrobin()`` keyword was introduced in Symfony 4.4.
 
 Sending emails asynchronously
 -----------------------------
