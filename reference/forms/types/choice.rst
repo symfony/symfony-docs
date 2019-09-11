@@ -44,6 +44,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `label_format`_                                                            |
 |             | - `mapped`_                                                                  |
 |             | - `required`_                                                                |
+|             | - `row_attr`_                                                                |
 |             | - `translation_domain`_                                                      |
 |             | - `label_translation_parameters`_                                            |
 |             | - `attr_translation_parameters`_                                             |
@@ -297,6 +298,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 

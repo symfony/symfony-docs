@@ -23,6 +23,7 @@ The TextType field represents the most basic input text field.
 |             | - `label_format`_                                                  |
 |             | - `mapped`_                                                        |
 |             | - `required`_                                                      |
+|             | - `row_attr`_                                                      |
 |             | - `trim`_                                                          |
 +-------------+--------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                      |
@@ -75,6 +76,8 @@ an empty string, explicitly set the ``empty_data`` option to an empty string.
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 
