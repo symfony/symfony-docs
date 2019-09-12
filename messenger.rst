@@ -501,8 +501,12 @@ different messages to them. For example:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                         options:
                             # queue_name is specific to the doctrine transport
-                            # try "exchange" for amqp or "group1" for redis
                             queue_name: high
+
+                            # for amqp
+                            #exchange:
+                            #    name: high
+                            # or redis try "group"
                     async_priority_low:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                         options:
