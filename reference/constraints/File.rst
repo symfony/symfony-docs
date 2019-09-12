@@ -252,10 +252,6 @@ You can find a list of existing mime types on the `IANA website`_.
     (i.e. the form type is not defined explicitly in the ``->add()`` method of
     the form builder) and when the field doesn't define its own ``accept`` value.
 
-    .. versionadded:: 4.4
-
-        This feature was introduced in Symfony 4.4.
-
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
