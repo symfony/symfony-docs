@@ -994,12 +994,6 @@ When rendering a template, Symfony looks for it first in the ``twig.paths``
 directories that don't define a namespace and then falls back to the default
 template directory (usually, ``templates/``).
 
-.. deprecated:: 4.2
-
-    Symfony looks for templates in the ``src/Resources/views/`` too before
-    falling back to the default directory. But that behavior is deprecated since
-    Symfony 4.2 and will be removed in Symfony 5.0.
-
 Using the above configuration, if your application renders for example the
 ``layout.html.twig`` template, Symfony will first look for
 ``email/default/templates/layout.html.twig`` and ``backend/templates/layout.html.twig``.
