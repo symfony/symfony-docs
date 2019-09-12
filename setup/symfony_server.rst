@@ -183,11 +183,12 @@ server. First, start the proxy:
 
     $ symfony proxy:start
 
-If this is the first time you run the proxy, you must follow these additional steps:
+If this is the first time you run the proxy, you must configure it as follows:
 
-* Open the **network configuration** of your operating system;
-* Find the **proxy settings** and select the **"Automatic Proxy Configuration"**;
-* Set the following URL as its value: ``http://127.0.0.1:7080/proxy.pac``
+* Open the **proxy settings** of your operating system (`proxy settings in Windows`_,
+  `proxy settings in macOS`_, `proxy settings in Ubuntu`_);
+* Set the following URL as the value of the **Automatic Proxy Configuration**:
+  ``http://127.0.0.1:7080/proxy.pac``
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -319,3 +320,6 @@ debug any issues.
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
+.. _`proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
+.. _`proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
+.. _`proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
