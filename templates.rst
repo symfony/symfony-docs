@@ -455,7 +455,7 @@ Rendering a Template Directly from a Route
 
 Although templates are usually rendered in controllers and services, you can
 render static pages that don't need any variables directly from the route
-definition. Use the special ``TemplateController`` provided by Symfony::
+definition. Use the special ``TemplateController`` provided by Symfony:
 
 .. configuration-block::
 
@@ -596,7 +596,7 @@ Symfony provides a :ref:`dump() function <components-var-dumper-dump>` as an
 improved alternative to PHP's ``var_dump()`` function. This function is useful
 to inspect the contents of any variable and you can use it in Twig templates too.
 
-First, make sure that the VarDumper component is installed in the application::
+First, make sure that the VarDumper component is installed in the application:
 
 .. code-block:: terminal
 
@@ -816,8 +816,8 @@ complex applications:
 
 * ``templates/base.html.twig``, defines the common elements of all application
   templates, such as ``<head>``, ``<header>``, ``<footer>``, etc.;
-* ``templates/layout.html.twig``, extends from ``base.html.twig``and defines the
-  content structure used in all or most of the pages, such as a two-column
+* ``templates/layout.html.twig``, extends from ``base.html.twig`` and defines
+  the content structure used in all or most of the pages, such as a two-column
   content + sidebar layout. Some sections of the application can define their
   own layouts (e.g. ``templates/blog/layout.html.twig``);
 * ``templates/*.html.twig``, the application pages which extend from the main
