@@ -9,16 +9,18 @@ Databases and the Doctrine ORM
 
     Do you prefer video tutorials? Check out the `Doctrine screencast series`_.
 
-Symfony doesn't provide a component to work with the database, but it *does* provide
-tight integration with a third-party library called `Doctrine`_.
+Symfony provides all the tools you need to use databases in your applications
+thanks to `Doctrine`_, the best set of PHP libraries to work with databases.
+These tools support relational databases like MySQL and PostgreSQL and also
+NoSQL databases like MongoDB.
 
-.. note::
+Databases are a broad topic, so the documentation is divided in three articles:
 
-    This article is all about using the Doctrine ORM. If you prefer to use raw
-    database queries, see the ":doc:`/doctrine/dbal`" article instead.
-
-    You can also persist data to `MongoDB`_ using Doctrine ODM library. See the
-    "`DoctrineMongoDBBundle`_" documentation.
+* This article explains the recommended way to work with **relational databases**
+  in Symfony applications;
+* Read :doc:`this other article </doctrine/dbal>` if you need **low-level access**
+  to perform raw SQL queries to relational databases (similar to PHP's `PDO`_);
+* Read `DoctrineMongoDBBundle docs`_ if you are working with **MongoDB databases**.
 
 Installing Doctrine
 -------------------
@@ -873,12 +875,11 @@ Learn more
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`MongoDB`: https://www.mongodb.org/
 .. _`Doctrine's Mapping Types documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
-.. _`DoctrineMongoDBBundle`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
+.. _`DoctrineMongoDBBundle docs`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
 .. _`DoctrineFixturesBundle`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
@@ -888,3 +889,4 @@ Learn more
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
+.. _`PDO`: https://php.net/pdo
