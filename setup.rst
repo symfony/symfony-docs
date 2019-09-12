@@ -27,7 +27,7 @@ Before creating your first Symfony application you must:
 The ``symfony`` binary provides a tool to check if your computer meets these
 requirements. Open your console terminal and run this command:
 
-.. code-block:: terminal
+.. code-block:: terminal 
 
     $ symfony check:requirements
 
