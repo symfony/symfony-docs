@@ -15,6 +15,7 @@ A submit button.
 |                      | - `label`_                                                           |
 |                      | - `label_format`_                                                    |
 |                      | - `label_translation_parameters`_                                    |
+|                      | - `row_attr`_                                                        |
 |                      | - `translation_domain`_                                              |
 |                      | - `validation_groups`_                                               |
 +----------------------+----------------------------------------------------------------------+
@@ -94,6 +95,8 @@ option of its parents, so buttons can reuse and/or override any of the parent
 placeholders.
 
 .. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
 
 validation_groups
 ~~~~~~~~~~~~~~~~~

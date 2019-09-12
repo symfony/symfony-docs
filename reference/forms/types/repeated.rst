@@ -22,14 +22,16 @@ accuracy.
 | Overridden  | - `error_bubbling`_                                                    |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `data`_                                                              |
-| options     | - `error_mapping`_                                                     |
+| Inherited   | - `attr`_                                                              |
+| options     | - `data`_                                                              |
+|             | - `error_mapping`_                                                     |
 |             | - `help`_                                                              |
 |             | - `help_attr`_                                                         |
 |             | - `help_html`_                                                         |
 |             | - `invalid_message`_                                                   |
 |             | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
+|             | - `row_attr`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                          |
 +-------------+------------------------------------------------------------------------+
@@ -182,6 +184,8 @@ Inherited Options
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
+.. include:: /reference/forms/types/options/attr.rst.inc
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
@@ -197,3 +201,5 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc

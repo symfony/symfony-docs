@@ -14,8 +14,9 @@ The ``PasswordType`` field renders an input password text box.
 | Overridden  | - `trim`_                                                              |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | - `disabled`_                                                          |
-| options     | - `empty_data`_                                                        |
+| Inherited   | - `attr`_                                                              |
+| options     | - `disabled`_                                                          |
+|             | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
 |             | - `help`_                                                              |
@@ -26,6 +27,7 @@ The ``PasswordType`` field renders an input password text box.
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
 |             | - `required`_                                                          |
+|             | - `row_attr`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`TextType </reference/forms/types/text>`                          |
 +-------------+------------------------------------------------------------------------+
@@ -67,6 +69,8 @@ Inherited Options
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
+.. include:: /reference/forms/types/options/attr.rst.inc
+
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
@@ -96,3 +100,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
