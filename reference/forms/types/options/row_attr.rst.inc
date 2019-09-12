@@ -14,7 +14,3 @@ to render the :ref:`form type row <form-rendering-basics>`::
 
     Use the ``attr`` option if you want to add these attributes to the
     the :ref:`form type widget <form-rendering-basics>` element.
-
-.. versionadded:: 4.3
-
-    The ``row_attr`` option was introduced in Symfony 4.3.

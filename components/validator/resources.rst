@@ -158,10 +158,6 @@ implement the PSR-6 interface :class:`Psr\\Cache\\CacheItemPoolInterface`)::
         ->setMappingCache(new SomePsr6Cache());
         ->getValidator();
 
-.. versionadded:: 4.4
-
-    Support for PSR-6 compatible mapping caches was introduced in Symfony 4.4.
-
 .. note::
 
     The loaders already use a singleton load mechanism. That means that the
