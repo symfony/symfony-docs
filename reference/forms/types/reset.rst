@@ -14,6 +14,7 @@ A button that resets all fields to their original values.
 |                      | - `disabled`_                                                       |
 |                      | - `label`_                                                          |
 |                      | - `label_translation_parameters`_                                   |
+|                      | - `row_attr`_                                                       |
 |                      | - `translation_domain`_                                             |
 +----------------------+---------------------------------------------------------------------+
 | Parent type          | :doc:`ButtonType </reference/forms/types/button>`                   |
@@ -81,3 +82,5 @@ option of its parents, so buttons can reuse and/or override any of the parent
 placeholders.
 
 .. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc

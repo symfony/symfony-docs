@@ -37,6 +37,7 @@ option defaults to 120 years ago to the current year.
 |                      |                                                                               |
 |                      | from the :doc:`FormType </reference/forms/types/form>`:                       |
 |                      |                                                                               |
+|                      | - `attr`_                                                                     |
 |                      | - `data`_                                                                     |
 |                      | - `disabled`_                                                                 |
 |                      | - `help`_                                                                     |
@@ -46,6 +47,7 @@ option defaults to 120 years ago to the current year.
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
 |                      | - `mapped`_                                                                   |
+|                      | - `row_attr`_                                                                 |
 +----------------------+-------------------------------------------------------------------------------+
 | Parent type          | :doc:`DateType </reference/forms/types/date>`                                 |
 +----------------------+-------------------------------------------------------------------------------+
@@ -112,6 +114,8 @@ values for the year, month and day fields::
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
+.. include:: /reference/forms/types/options/attr.rst.inc
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
@@ -129,3 +133,5 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc

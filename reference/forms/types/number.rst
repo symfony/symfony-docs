@@ -20,8 +20,9 @@ that you want to use for your number.
 | Overridden  | - `compound`_                                                        |
 | options     |                                                                      |
 +-------------+----------------------------------------------------------------------+
-| Inherited   | - `data`_                                                            |
-| options     | - `disabled`_                                                        |
+| Inherited   | - `attr`_                                                            |
+| options     | - `data`_                                                            |
+|             | - `disabled`_                                                        |
 |             | - `empty_data`_                                                      |
 |             | - `error_bubbling`_                                                  |
 |             | - `error_mapping`_                                                   |
@@ -35,6 +36,7 @@ that you want to use for your number.
 |             | - `label_format`_                                                    |
 |             | - `mapped`_                                                          |
 |             | - `required`_                                                        |
+|             | - `row_attr`_                                                        |
 +-------------+----------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                        |
 +-------------+----------------------------------------------------------------------+
@@ -89,6 +91,8 @@ Inherited Options
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
+.. include:: /reference/forms/types/options/attr.rst.inc
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
@@ -124,3 +128,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc

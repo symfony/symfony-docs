@@ -15,8 +15,9 @@ The ``FileType`` represents a file input in your form.
 | options     | - `data_class`_                                                     |
 |             | - `empty_data`_                                                     |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `disabled`_                                                       |
-| options     | - `error_bubbling`_                                                 |
+| Inherited   | - `attr`_                                                           |
+| options     | - `disabled`_                                                       |
+|             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `help`_                                                           |
 |             | - `help_attr`_                                                      |
@@ -26,6 +27,7 @@ The ``FileType`` represents a file input in your form.
 |             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
 |             | - `required`_                                                       |
+|             | - `row_attr`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
@@ -123,6 +125,8 @@ Inherited Options
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
+.. include:: /reference/forms/types/options/attr.rst.inc
+
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
@@ -144,6 +148,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
 
 Form Variables
 --------------
