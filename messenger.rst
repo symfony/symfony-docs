@@ -503,9 +503,11 @@ different messages to them. For example:
                             # queue_name is specific to the doctrine transport
                             queue_name: high
 
-                            # for amqp
+                            # for amqp send to a separate exchange then queue
                             #exchange:
                             #    name: high
+                            #queues:
+                            #    messages_high: ~
                             # or redis try "group"
                     async_priority_low:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
