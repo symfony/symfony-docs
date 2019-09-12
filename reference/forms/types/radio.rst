@@ -22,6 +22,7 @@ If you want to have a boolean field, use :doc:`CheckboxType </reference/forms/ty
 |             |                                                                     |
 |             | from the :doc:`FormType </reference/forms/types/form>`:             |
 |             |                                                                     |
+|             | - `attr`_                                                           |
 |             | - `data`_                                                           |
 |             | - `disabled`_                                                       |
 |             | - `empty_data`_                                                     |
@@ -35,6 +36,7 @@ If you want to have a boolean field, use :doc:`CheckboxType </reference/forms/ty
 |             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
 |             | - `required`_                                                       |
+|             | - `row_attr`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`CheckboxType </reference/forms/types/checkbox>`               |
 +-------------+---------------------------------------------------------------------+
@@ -51,6 +53,8 @@ These options inherit from the :doc:`CheckboxType </reference/forms/types/checkb
 .. include:: /reference/forms/types/options/value.rst.inc
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+
+.. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -77,6 +81,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
 
 Form Variables
 --------------

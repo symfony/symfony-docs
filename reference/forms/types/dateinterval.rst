@@ -37,8 +37,9 @@ or an array (see `input`_).
 |                      | - `with_years`_                                                                  |
 |                      | - `years`_                                                                       |
 +----------------------+----------------------------------------------------------------------------------+
-| Inherited            | - `data`_                                                                        |
-| options              | - `disabled`_                                                                    |
+| Inherited            | - `attr`_                                                                        |
+| options              | - `data`_                                                                        |
+|                      | - `disabled`_                                                                    |
 |                      | - `help`_                                                                        |
 |                      | - `help_attr`_                                                                   |
 |                      | - `help_html`_                                                                   |
@@ -46,6 +47,7 @@ or an array (see `input`_).
 |                      | - `invalid_message`_                                                             |
 |                      | - `invalid_message_parameters`_                                                  |
 |                      | - `mapped`_                                                                      |
+|                      | - `row_attr`_                                                                    |
 +----------------------+----------------------------------------------------------------------------------+
 | Parent type          | :doc:`FormType </reference/forms/types/form>`                                    |
 +----------------------+----------------------------------------------------------------------------------+
@@ -336,6 +338,8 @@ Inherited Options
 
 These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
+.. include:: /reference/forms/types/options/attr.rst.inc
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
@@ -353,6 +357,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
 
 Field Variables
 ---------------

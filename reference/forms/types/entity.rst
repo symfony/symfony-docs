@@ -50,6 +50,7 @@ objects from the database.
 |             | - `label_format`_                                                |
 |             | - `mapped`_                                                      |
 |             | - `required`_                                                    |
+|             | - `row_attr`_                                                    |
 |             | - `label_translation_parameters`_                                |
 |             | - `attr_translation_parameters`_                                 |
 |             | - `help_translation_parameters`_                                 |
@@ -361,6 +362,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/row_attr.rst.inc
 
 .. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
 
