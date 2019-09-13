@@ -102,6 +102,12 @@ To import this file, use the ``imports`` key from a file that *is* loaded:
 The ``resource`` location, for files, is either a relative path from the
 current file or an absolute path.
 
+.. caution::
+
+   The imported files are loaded first; You should be careful, because it can 
+   lead to some of your services definition to be overridden by rules present
+   inside the file where you do imports
+
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
 .. index::
