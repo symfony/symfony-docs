@@ -4,40 +4,126 @@
 How to Test Code that Interacts with the Database
 =================================================
 
-If your code interacts with the database, e.g. reads data from or stores data
-into it, you need to adjust your tests to take this into account. There are
-many ways to deal with this. In a unit test, you can create a mock for
-a ``Repository`` and use it to return expected objects. In a functional test,
-you may need to prepare a test database with predefined values to ensure that
-your test always has the same data to work with.
+Configuring a Database for Tests
+--------------------------------
 
-.. note::
+Tests that interact with the database should use their own separate database to
+not mess with the databases used in the other :ref:`configuration environments <configuration-environments>`.
+To do that, edit or create the ``.env.test.local`` file at the root directory of
+your project and define the new value for the ``DATABASE_URL`` env var:
 
-    If you want to test your queries directly, see :doc:`/testing/doctrine`.
+.. code-block:: bash
 
-.. tip::
-
-    A popular technique to improve the performance of tests that interact with
-    the database is to begin a transaction before every test and roll it back
-    after the test has finished. This makes it unnecessary to recreate the
-    database or reload fixtures before every test. A community bundle called
-    `DoctrineTestBundle`_ provides this feature.
-
-Mocking the ``Repository`` in a Unit Test
------------------------------------------
-
-If you want to test code which depends on a Doctrine repository in isolation,
-you need to mock the ``Repository``. Normally you inject the ``EntityManager``
-into your class and use it to get the repository. This makes things a little
-more difficult as you need to mock both the ``EntityManager`` and your repository
-class.
+    # .env.test.local
+    DATABASE_URL=mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME
 
 .. tip::
 
-    It is possible (and a good idea) to inject your repository directly by
-    registering your repository as a :doc:`factory service </service_container/factories>`.
-    This is a little bit more work to setup, but makes testing easier as you
-    only need to mock the repository.
+    A common practice is to append the ``_test`` suffix to the original database
+    names in tests. If the database name in production is called ``project_acme``
+    the name of the testing database could be ``project_acme_test``.
+
+The above assumes that each developer/machine uses a different database for the
+tests. If the entire team uses the same settings for tests, edit or create the
+``.env.test`` file instead and commit it to the shared repository. Learn more
+about :ref:`using multiple .env files in Symfony applications <configuration-multiple-env-files>`.
+
+Resetting the Database Automatically Before each Test
+-----------------------------------------------------
+
+Tests should be independent from each other to avoid side effects. For example,
+if some test modifies the database (by adding or removing an entity) it could
+change the results of other tests. Run the following command to install a bundle
+that ensures that each test is run with the same unmodified database:
+
+.. code-block:: terminal
+
+    $ composer require --dev dama/doctrine-test-bundle
+
+Now, enable it as a PHPUnit extension or listener:
+
+.. code-block:: xml
+
+    <!-- phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+
+        <!-- Add this in PHPUnit 8 or higher -->
+        <extensions>
+            <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+        </extensions>
+
+        <!-- Add this in PHPUnit 7 or lower -->
+        <listeners>
+            <listener class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener"/>
+        </listeners>
+    </phpunit>
+
+This bundle uses a clever trick to avoid side effects without scarifying
+performance: it begins a database transaction before every test and rolls it
+back automatically after the test finishes to undo all changes. Read more in the
+documentation of the `DAMADoctrineTestBundle`_.
+
+.. _doctrine-fixtures:
+
+Dummy Data Fixtures
+-------------------
+
+Instead of using the real data from the production database, it's common to use
+fake or dummy data in the test database. This is usually called *"fixtures data"*
+and Doctrine provides a library to create and load them. Install it with:
+
+.. code-block:: terminal
+
+    $ composer require --dev doctrine/doctrine-fixtures-bundle
+
+Then, use the ``make:fixtures`` command to generate an empty fixture class:
+
+.. code-block:: terminal
+
+    $ php bin/console make:fixtures
+
+    The class name of the fixtures to create (e.g. AppFixtures):
+    > ProductFixture
+
+Customize the new class to load ``Product`` objects into Doctrine::
+
+    // src/DataFixtures/ProductFixture.php
+    namespace App\DataFixtures;
+
+    use Doctrine\Bundle\FixturesBundle\Fixture;
+    use Doctrine\Common\Persistence\ObjectManager;
+
+    class ProductFixture extends Fixture
+    {
+        public function load(ObjectManager $manager)
+        {
+            $product = new Product();
+            $product->setName('Priceless widget');
+            $product->setPrice(14.50);
+            $product->setDescription('Ok, I guess it *does* have a price');
+            $manager->persist($product);
+
+            // add more products
+
+            $manager->flush();
+        }
+    }
+
+Empty the database and reload *all* the fixture classes with:
+
+.. code-block:: terminal
+
+    $ php bin/console doctrine:fixtures:load
+
+For more information, read the `DoctrineFixturesBundle documentation`_.
+
+Mocking a Doctrine Repository in Unit Tests
+-------------------------------------------
+
+**Unit testing Doctrine repositories is not recommended**. Repositories are
+meant to be tested against a real database connection. However, in case you
+still need to do this, look at the following example.
 
 Suppose the class you want to test looks like this::
 
@@ -66,8 +152,8 @@ Suppose the class you want to test looks like this::
         }
     }
 
-Since the ``EntityManagerInterface`` gets injected into the class through the constructor,
-you can pass a mock object within a test::
+Since the ``EntityManagerInterface`` gets injected into the class through the
+constructor, you can pass a mock object within a test::
 
     // tests/Salary/SalaryCalculatorTest.php
     namespace App\Tests\Salary;
@@ -95,6 +181,8 @@ you can pass a mock object within a test::
                 ->willReturn($employee);
 
             // Last, mock the EntityManager to return the mock of the repository
+            // (this is not needed if the class being tested injects the
+            // repository it uses instead of the entire object manager)
             $objectManager = $this->createMock(ObjectManager::class);
             // use getMock() on PHPUnit 5.3 or below
             // $objectManager = $this->getMock(ObjectManager::class);
@@ -112,26 +200,54 @@ the employee which gets returned by the ``Repository``, which itself gets
 returned by the ``EntityManager``. This way, no real class is involved in
 testing.
 
-Changing Database Settings for Functional Tests
------------------------------------------------
+Mocking a Doctrine Repository in Functional Tests
+-------------------------------------------------
 
-If you have functional tests, you want them to interact with a real database.
-Most of the time you want to use a dedicated database connection to make sure
-not to overwrite data you entered when developing the application and also
-to be able to clear the database before every test.
+In :ref:`functional tests <functional-tests>` you'll make queries to the
+database using the actual Doctrine repositories, instead of mocking them. To do
+so, get the entity manager via the service container as follows::
 
-To do this, you can override the value of the ``DATABASE_URL`` env var in the
-``phpunit.xml.dist`` to use a different database for your tests:
+    // tests/Repository/ProductRepositoryTest.php
+    namespace App\Tests\Repository;
 
-.. code-block:: xml
+    use App\Entity\Product;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-    <?xml version="1.0" charset="utf-8" ?>
-    <phpunit>
-        <php>
-            <!-- the value is the Doctrine connection string in DSN format -->
-            <env name="DATABASE_URL" value="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME"/>
-        </php>
-        <!-- ... -->
-    </phpunit>
+    class ProductRepositoryTest extends KernelTestCase
+    {
+        /**
+         * @var \Doctrine\ORM\EntityManager
+         */
+        private $entityManager;
 
-.. _`DoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
+        protected function setUp()
+        {
+            $kernel = self::bootKernel();
+
+            $this->entityManager = $kernel->getContainer()
+                ->get('doctrine')
+                ->getManager();
+        }
+
+        public function testSearchByName()
+        {
+            $product = $this->entityManager
+                ->getRepository(Product::class)
+                ->findOneBy(['name' => 'Priceless widget'])
+            ;
+
+            $this->assertSame(14.50, $product->getPrice());
+        }
+
+        protected function tearDown()
+        {
+            parent::tearDown();
+
+            // doing this is recommended to avoid memory leaks
+            $this->entityManager->close();
+            $this->entityManager = null;
+        }
+    }
+
+.. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
+.. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html

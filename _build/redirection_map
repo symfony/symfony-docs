@@ -456,3 +456,4 @@
 /templating/namespaced_paths /templates
 /templating/embedding_controllers /templates
 /templating/inheritance /templates
+/testing/doctrine /testing/database
