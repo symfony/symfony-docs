@@ -72,4 +72,22 @@ Crawler
 - ``assertInputValueSame()``
 - ``assertInputValueNotSame()``
 
+Mailer
+~~~~~~
+
+- ``assertEmailCount()``
+- ``assertQueuedEmailCount()``
+- ``assertEmailIsQueued()``
+- ``assertEmailIsNotQueued()``
+- ``assertEmailAttachementCount()``
+- ``assertEmailTextBodyContains()``
+- ``assertEmailTextBodyNotContains()``
+- ``assertEmailHtmlBodyContains()``
+- ``assertEmailHtmlBodyNotContains()``
+- ``assertEmailHasHeader()``
+- ``assertEmailNotHasHeader()``
+- ``assertEmailHeaderSame()``
+- ``assertEmailHeaderNotSame()``
+- ``assertEmailAddressContains()``
+
 .. _`symfony/panther`: https://github.com/symfony/panther
