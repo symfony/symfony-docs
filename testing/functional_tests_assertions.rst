@@ -32,6 +32,12 @@ Now here is the example with the assertions specific to Symfony::
 Assertions Reference
 ---------------------
 
+.. versionadded:: 4.4
+
+    Starting from Symfony 4.4, when using `symfony/panther`_ for end-to-end
+    testing, you can use all the following assertions except the ones related to
+    the :doc:`Crawler </components/dom_crawler>`.
+
 Response
 ~~~~~~~~
 
@@ -72,10 +78,26 @@ Crawler
 - ``assertInputValueSame()``
 - ``assertInputValueNotSame()``
 
+Mailer
+~~~~~~
+
+- ``assertEmailCount()``
+- ``assertQueuedEmailCount()``
+- ``assertEmailIsQueued()``
+- ``assertEmailIsNotQueued()``
+- ``assertEmailAttachementCount()``
+- ``assertEmailTextBodyContains()``
+- ``assertEmailTextBodyNotContains()``
+- ``assertEmailHtmlBodyContains()``
+- ``assertEmailHtmlBodyNotContains()``
+- ``assertEmailHasHeader()``
+- ``assertEmailNotHasHeader()``
+- ``assertEmailHeaderSame()``
+- ``assertEmailHeaderNotSame()``
+- ``assertEmailAddressContains()``
+
 .. versionadded:: 4.4
 
-    Starting from Symfony 4.4, when using `symfony/panther`_ for end-to-end
-    testing, you can use all the above assertions except the ones related to
-    the :doc:`Crawler </components/dom_crawler>`.
+    The mailer assert methods were introduced in Symfony 4.4.
 
 .. _`symfony/panther`: https://github.com/symfony/panther
