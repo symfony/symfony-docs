@@ -99,31 +99,36 @@ binary. For third-party providers, refers to the following table:
  Sendgrid             smtp://apikey:KEY@sendgrid         n/a                                api://KEY@sendgrid
 ==================== ================================== ================================== ================================
 
-Failover Transport
-------------------
+Load Balancing
+--------------
 
-You can create failover transport with the help of ``failover()`` keyword::
+Symfony's mailer supports `load balancing`_ so you can distribute the mailing
+workload across multiple transports. There are two main techniques to balance
+the load: failover and round-robin.
+
+Failover Load Balancing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A failover transport is configured with two or more transports and the
+``failover`` keyword::
 
     $dsn = 'failover(api://id@postmark smtp://key@sendgrid)';
 
-So if the first transport fails, the mailer will attempt to send through the
-second transport.
+The mailer will start using the first transport. If the sending fails, the
+mailer won't retry it with the other transports, but it will switch to the next
+transport automatically for the following deliveries.
 
-.. versionadded:: 4.4
+Round-Robin Load Balancing
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The ``failover()`` keyword was introduced in Symfony 4.4.
-
-Round Robin
------------
-
-If you want to send emails by using multiple transports in a round-robin fashion,
-you can use the ``roundrobin()`` keyword with the transports::
+A round-robin transport is configured with two or more transports and the
+``roundrobin`` keyword::
 
     $dsn = 'roundrobin(api://id@postmark smtp://key@sendgrid)'
 
-.. versionadded:: 4.4
-
-    The ``roundrobin()`` keyword was introduced in Symfony 4.4.
+The mailer will start using the first transport and if it fails, it will retry
+the same delivery with the next transports until one of them succeeds (or until
+all of them fail).
 
 Sending emails asynchronously
 -----------------------------
@@ -174,3 +179,5 @@ Learn More
 
 To learn more about how to use the mailer component, refer to the
 :doc:`Symfony Framework Mailer documentation </mailer>`.
+
+.. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
