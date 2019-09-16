@@ -505,7 +505,7 @@ In order to define the actual values of env vars, Symfony proposes different
 solutions depending if the application is running in production or in your local
 development machine.
 
-Independent from the way you set environmnet variables, you may need to run the
+Independent from the way you set environment variables, you may need to run the
 ``debug:container`` command with the ``--env-vars`` option to verify that they
 are defined and have the expected values:
 
