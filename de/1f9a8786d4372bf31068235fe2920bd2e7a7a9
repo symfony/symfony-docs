@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-11T13:18:02Z
+
+Ping @weaverryan if you can, please review this. I'm not sure my wording is perfectly clear here. Thanks a lot!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-09-11T14:47:30Z
+
+I think you miss the latest change about „failover()“ and „roundrobin()“ here, which was merged in another PR yesterday? Today?
+
+I am currently on a phone 📱
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-11T14:49:50Z
+
+@OskarStark you are right ... but that change was made in 4.4 (as a BC break, but that's OK because it's still experimental). This one improves the explanation from 4.3, which is when this was introduced.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-09-11T15:52:17Z
+
+You are right 👍🏻
