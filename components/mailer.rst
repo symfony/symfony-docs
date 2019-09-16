@@ -125,10 +125,10 @@ If you want to send emails asynchronously, install the :doc:`Messenger component
 
 Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
 
+    use Symfony\Component\Mailer\Envelope;
     use Symfony\Component\Mailer\Mailer;
     use Symfony\Component\Mailer\Messenger\MessageHandler;
     use Symfony\Component\Mailer\Messenger\SendEmailMessage;
-    use Symfony\Component\Mailer\SmtpEnvelope;
     use Symfony\Component\Mailer\Transport;
     use Symfony\Component\Messenger\Handler\HandlersLocator;
     use Symfony\Component\Messenger\MessageBus;
@@ -150,7 +150,7 @@ Then, instantiate and pass a ``MessageBus`` as a second argument to ``Mailer``::
     $mailer->send($email);
 
     // you can pass an optional Envelope
-    $mailer->send($email, new SmtpEnvelope(
+    $mailer->send($email, new Envelope(
         new Address('sender@example.com'),
         [
             new Address('recipient@example.com'),
