@@ -84,7 +84,7 @@ Where ``$dsn`` depends on the provider you want to use. For plain SMTP, use
 ``smtp://user:pass@example.com`` or ``sendmail+smtp://default`` to use the
 ``sendmail`` binary. To disable the transport, use ``null://null``.
 
-For third-party providers, refers to the following table:
+For third-party providers, refer to the following table:
 
 ==================== ========================================== =========================================== ========================================
  Provider             SMTP                                       HTTP                                        API
@@ -98,13 +98,11 @@ For third-party providers, refers to the following table:
 ==================== ========================================== =========================================== ========================================
 
 Instead of choosing a specific protocol, you can also let Symfony pick the
-"best" one by omitting it from the scheme: for instance,
-``mailgun://KEY:DOMAIN@default`` is equivalent to
-``mailgun+https://KEY:DOMAIN@default``.
+best one by omitting it from the scheme: for instance, ``mailgun://KEY:DOMAIN@default``
+is equivalent to ``mailgun+https://KEY:DOMAIN@default``.
 
-If you want to override the default host for a provider (to debug an issue with
-a requestb.in like service), change ``default`` by your host:
-
+If you want to override the default host for a provider (to debug an issue using
+a service like ``requestbin.com``), change ``default`` by your host:
 
 .. code-block:: bash
 
