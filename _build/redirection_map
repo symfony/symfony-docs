@@ -479,3 +479,5 @@
 /components/translation/custom_formats https://github.com/symfony/translation
 /components/translation/custom_message_formatter https://github.com/symfony/translation
 /components/routing https://github.com/symfony/routing
+/doctrine/pdo_session_storage /session/database
+/doctrine/mongodb_session_storage /session/database
