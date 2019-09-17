@@ -111,15 +111,11 @@ a service like ``requestbin.com``), change ``default`` by your host:
 
 Note that the protocol is *always* HTTPs and cannot be changed.
 
-Load Balancing
---------------
+High Availability
+-----------------
 
-Symfony's mailer supports `load balancing`_ so you can distribute the mailing
-workload across multiple transports. There are two main techniques to balance
-the load: failover and round-robin.
-
-Failover Load Balancing
-~~~~~~~~~~~~~~~~~~~~~~~
+Symfony's mailer supports `high availability`_ via a technique called "failover"
+to ensure that emails are sent even if one mailer server fails .
 
 A failover transport is configured with two or more transports and the
 ``failover`` keyword::
@@ -130,8 +126,11 @@ The mailer will start using the first transport. If the sending fails, the
 mailer won't retry it with the other transports, but it will switch to the next
 transport automatically for the following deliveries.
 
-Round-Robin Load Balancing
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Load Balancing
+--------------
+
+Symfony's mailer supports `load balancing`_ via a technique called "round-robin"
+to distribute the mailing workload across multiple transports .
 
 A round-robin transport is configured with two or more transports and the
 ``roundrobin`` keyword::
@@ -192,4 +191,5 @@ Learn More
 To learn more about how to use the mailer component, refer to the
 :doc:`Symfony Framework Mailer documentation </mailer>`.
 
+.. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
