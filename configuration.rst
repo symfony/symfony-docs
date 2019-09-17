@@ -320,8 +320,8 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 
 .. seealso::
 
-    Read the `Accessing Configuration Values`_ section of this article to learn
-    about how to use these configuration parameters in services and controllers.
+    Later in this article you can read how to
+    ref:`get configuration parameters in controllers and services <configuration-accessing-parameters>`.
 
 .. index::
    single: Environments; Introduction
@@ -642,8 +642,10 @@ the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.loca
     involving a ``.env.dist`` file. For information about upgrading, see:
     :doc:`configuration/dot-env-changes`.
 
-Accessing Configuration Values
-------------------------------
+.. _configuration-accessing-parameters:
+
+Accessing Configuration Parameters
+----------------------------------
 
 Controllers and services can access all the configuration parameters. This
 includes both the :ref:`parameters defined by yourself <configuration-parameters>`
@@ -654,9 +656,31 @@ all the parameters that exist in your application:
 
     $ php bin/console debug:container --parameters
 
-Parameters are injected in services as arguments to their constructors.
-:doc:`Service autowiring </service_container/autowiring>` doesn't work for
-parameters. Instead, inject them explicitly:
+In controllers extending from the :ref:`AbstractController <the-base-controller-class-services>`,
+use the ``getParameter()`` helper::
+
+    // src/Controller/UserController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+    class UserController extends AbstractController
+    {
+        // ...
+
+        public function index()
+        {
+            $projectDir = $this->getParameter('kernel.project_dir');
+            $adminEmail = $this->getParameter('app.admin_email');
+
+            // ...
+        }
+    }
+
+In services and controllers not extending from ``AbstractController``, inject
+the parameters as arguments of their constructors. You must inject them
+explicitly because :doc:`service autowiring </service_container/autowiring>`
+doesn't work for parameters:
 
 .. configuration-block::
 
