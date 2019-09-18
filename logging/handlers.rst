@@ -22,7 +22,6 @@ even better performance and fault tolerance, a proper `ELK stack`_ is recommende
 
 To use it, declare it as a service:
 
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -57,8 +56,7 @@ To use it, declare it as a service:
 
         $container->register(ElasticsearchLogstashHandler::class);
 
-Then reference it in monolog configuration:
-
+Then reference it in the Monolog configuration:
 
 .. configuration-block::
 
@@ -94,8 +92,9 @@ Then reference it in monolog configuration:
 
     .. code-block:: php
 
-        use Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler;
         // config/packages/prod/monolog.php
+        use Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler;
+
         $container->loadFromExtension('monolog', [
             'handlers' => [
                 'es' => [
