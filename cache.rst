@@ -87,7 +87,6 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
 The Cache component comes with a series of adapters already created:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
-* :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
 * :doc:`cache.adapter.doctrine </components/cache/adapters/doctrine_adapter>`
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
@@ -190,7 +189,7 @@ You can also create more customized pools. All you need is an adapter:
                 default_memcached_provider: 'memcached://localhost'
                 pools:
                     my_cache_pool:
-                        adapter: cache.adapter.array
+                        adapter: cache.adapter.filesystem
                     cache.acme:
                         adapter: cache.adapter.memcached
                     cache.foobar:
@@ -209,7 +208,7 @@ You can also create more customized pools. All you need is an adapter:
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
-                    <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
+                    <framework:pool name="my_cache_pool" adapter="cache.adapter.filesystem"/>
                     <framework:pool name="cache.acme" adapter="cache.adapter.memcached"/>
                     <framework:pool name="cache.foobar" adapter="cache.adapter.memcached" provider="memcached://user:password@example.com"/>
                 </framework:cache>
@@ -224,7 +223,7 @@ You can also create more customized pools. All you need is an adapter:
                 'default_memcached_provider' => 'memcached://localhost',
                 'pools' => [
                     'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.array',
+                        'adapter' => 'cache.adapter.filesystem',
                     ],
                     'cache.acme' => [
                         'adapter' => 'cache.adapter.memcached',
@@ -421,7 +420,7 @@ case the value needs to be recalculated.
                     cache.apcu:
                         adapter: cache.adapter.apcu
                     cache.array:
-                        adapter: cache.adapter.array
+                        adapter: cache.adapter.filesystem
 
 
         services:
@@ -446,7 +445,7 @@ case the value needs to be recalculated.
                     <framework:pool name="my_cache_pool" adapter="cache.adapter.psr6" provider="app.my_cache_chain_adapter"/>
                     <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="redis://user:password@example.com"/>
                     <framework:pool name="cache.apcu" adapter="cache.adapter.apcu"/>
-                    <framework:pool name="cache.array" adapter="cache.adapter.array"/>
+                    <framework:pool name="cache.array" adapter="cache.adapter.filesystem"/>
                 </framework:cache>
             </framework:config>
 
@@ -480,7 +479,7 @@ case the value needs to be recalculated.
                         'adapter' => 'cache.adapter.apcu',
                     ],
                     'cache.array' => [
-                        'adapter' => 'cache.adapter.array',
+                        'adapter' => 'cache.adapter.filesystem',
                     ],
                 ],
             ],
