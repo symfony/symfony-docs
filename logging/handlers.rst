@@ -4,10 +4,6 @@ Handlers
 ElasticsearchLogstashHandler
 ----------------------------
 
-.. versionadded:: 4.4
-
-    The ``ElasticsearchLogstashHandler`` was introduced in Symfony 4.4.
-
 This handler deals directly with the HTTP interface of Elasticsearch. This means
 it will slow down your application if Elasticsearch takes times to answer. Even
 if all HTTP calls are done asynchronously.
