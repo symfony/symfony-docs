@@ -789,10 +789,6 @@ If this option is a boolean value, the response is buffered when the value is
 returned value is ``true`` (the closure receives as argument an array with the
 response headers).
 
-.. versionadded:: 4.4
-
-    The support of ``Closure`` in the ``buffer`` option was introduced in Symfony 4.4.
-
 cafile
 ......
 
