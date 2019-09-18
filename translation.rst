@@ -240,8 +240,14 @@ with these tasks:
 
 .. code-block:: terminal
 
-    # updates the French translation file with the missing strings for that locale
-    $ php bin/console translation:update --dump-messages --force fr
+    # shows all the messages that should be translated for the French language
+    $ php bin/console translation:update --dump-messages fr
+
+    # updates the French translation files with the missing strings for that locale
+    $ php bin/console translation:update --force fr
+
+    # check out the command help to see its options (prefix, output format, domain, sorting, etc.)
+    $ php bin/console translation:update --help
 
 The ``translation:update`` command looks for missing translations in:
 
@@ -250,15 +256,6 @@ The ``translation:update`` command looks for missing translations in:
   :ref:`twig.paths <config-twig-paths>` config options);
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
   the ``translator`` service and makes calls to the ``trans()`` function.
-
-.. note::
-
-    If you want to see the missing translation strings without actually updating
-    the translation files, remove the ``--force`` option from the command above.
-    
-.. note::
-
-    If you want to see translation output strings sorted alphabetically, add ``--sort=asc`` or ``--sort=desc`` option.
 
 .. _translation-resource-locations:
 
