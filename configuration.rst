@@ -602,6 +602,8 @@ operating systems.
     :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
     problem because the web profiler must **never** be enabled in production.
 
+.. _configuration-multiple-env-files:
+
 Managing Multiple .env Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

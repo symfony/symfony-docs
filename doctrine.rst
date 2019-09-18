@@ -799,58 +799,10 @@ relationships.
 
 For info, see :doc:`/doctrine/associations`.
 
-.. _doctrine-fixtures:
+Database Testing
+----------------
 
-Dummy Data Fixtures
--------------------
-
-Doctrine provides a library that allows you to programmatically load testing
-data into your project (i.e. "fixture data"). Install it with:
-
-.. code-block:: terminal
-
-    $ composer require --dev doctrine/doctrine-fixtures-bundle
-
-Then, use the ``make:fixtures`` command to generate an empty fixture class:
-
-.. code-block:: terminal
-
-    $ php bin/console make:fixtures
-
-    The class name of the fixtures to create (e.g. AppFixtures):
-    > ProductFixture
-
-Customize the new class to load ``Product`` objects into Doctrine::
-
-    // src/DataFixtures/ProductFixture.php
-    namespace App\DataFixtures;
-
-    use Doctrine\Bundle\FixturesBundle\Fixture;
-    use Doctrine\Common\Persistence\ObjectManager;
-
-    class ProductFixture extends Fixture
-    {
-        public function load(ObjectManager $manager)
-        {
-            $product = new Product();
-            $product->setName('Priceless widget!');
-            $product->setPrice(14.50);
-            $product->setDescription('Ok, I guess it *does* have a price');
-            $manager->persist($product);
-
-            // add more products
-
-            $manager->flush();
-        }
-    }
-
-Empty the database and reload *all* the fixture classes with:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:fixtures:load
-
-For information, see the "`DoctrineFixturesBundle`_" documentation.
+Read the article about :doc:`testing code that interacts with the database </testing/database>`.
 
 Learn more
 ----------
@@ -870,8 +822,7 @@ Learn more
     doctrine/mongodb_session_storage
     doctrine/resolve_target_entity
     doctrine/reverse_engineering
-
-* `DoctrineFixturesBundle`_
+    testing/database
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
@@ -880,7 +831,6 @@ Learn more
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
 .. _`DoctrineMongoDBBundle docs`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
-.. _`DoctrineFixturesBundle`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
 .. _`NativeQuery`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/native-sql.html
