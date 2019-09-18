@@ -803,12 +803,20 @@ outgoing network interface.
 buffer
 ......
 
-**type**: ``bool`` | ``string``
+**type**: ``bool`` | ``Closure``
 
-Option that allows to buffer the content of the response and access it multiple times without performing the request again. 
-If boolean value given, request will be buffered or not according to the boolean value. If a string is given, this should 
-be a regex matching the response content-types that
-should be buffered
+Buffering the response means that you can access its content multiple times
+without performing the request again. Buffering is enabled by default when the
+content type of the response is ``text/*``, ``application/json`` or ``application/xml``.
+
+If this option is a boolean value, the response is buffered when the value is
+``true``. If this option is a closure, the response is buffered when the
+returned value is ``true`` (the closure receives as argument an array with the
+response headers).
+
+.. versionadded:: 4.4
+
+    The support of ``Closure`` in the ``buffer`` option was introduced in Symfony 4.4.
 
 cafile
 ......
