@@ -366,6 +366,7 @@ Learn more
     logging/channels_handlers
     logging/formatter
     logging/processors
+    logging/handlers
     logging/monolog_exclude_http_codes
     logging/monolog_console
 
