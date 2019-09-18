@@ -370,28 +370,26 @@ This behavior is best illustrated with examples::
 Links
 ~~~~~
 
-To find a link by its ``id`` or its ``class`` attribute(s), use the ``filter()``
-method on an existing crawler. To find a link by name (or a clickable image by
-its ``alt`` attribute), use the ``selectLink()`` method on an existing crawler.
-This returns a ``Crawler`` instance with just the selected link(s). Calling
-``link()`` gives you a special :class:`Symfony\\Component\\DomCrawler\\Link` object::
+Use the ``filter()`` method to find links by their ``id`` or ``class``
+attributes and use the ``selectLink()`` method to find links by their content
+(it also finds clickable images with that content in its ``alt`` attribute).
 
-    // select the link by its id
-    $linksByIdCrawler = $crawler->filter('#your-link');
-    $link = $linksByIdCrawler->link();
+Both methods return a ``Crawler`` instance with just the selected link. Use the
+``link()`` method to get the :class:`Symfony\\Component\\DomCrawler\\Link` object
+that represents the link::
 
-    // select the link by its class
-    $linksByClassCrawler = $crawler->filter('.link');
-    $link = $linksByClassCrawler->link();
+    // first, select the link by id, class or content...
+    $linkCrawler = $crawler->filter('#sign-up');
+    $linkCrawler = $crawler->filter('.user-profile');
+    $linkCrawler = $crawler->selectLink('Log in');
 
-    // select the link by its name
-    $linksByNameCrawler = $crawler->selectLink('Go elsewhere...');
-    $linkByName = $linksCrawler->link();
+    // ...then, get the Link object:
+    $link = $linkCrawler->link();
 
-    // or do this all at once
-    $linkById = $crawler->filter('#your-link')->link();
-    $linkByClass = $crawler->filter('.link')->link();
-    $linkByName = $crawler->selectLink('Go elsewhere...')->link();
+    // or do all this at once:
+    $link = $crawler->filter('#sign-up')->link();
+    $link = $crawler->filter('.user-profile')->link();
+    $link = $crawler->selectLink('Log in')->link();
 
 The :class:`Symfony\\Component\\DomCrawler\\Link` object has several useful
 methods to get more information about the selected link itself::
