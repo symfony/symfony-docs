@@ -93,6 +93,7 @@ Configuration
   * :ref:`default_options <reference-http-client-default-options>`
 
     * `bindto`_
+    * `buffer`_
     * `cafile`_
     * `capath`_
     * `ciphers`_
@@ -120,6 +121,7 @@ Configuration
     * `auth_ntlm`_
     * `base_uri`_
     * `bindto`_
+    * `buffer`_
     * `cafile`_
     * `capath`_
     * `ciphers`_
@@ -772,6 +774,24 @@ bindto
 
 A network interface name, IP address, a host name or a UNIX socket to use as the
 outgoing network interface.
+
+buffer
+......
+
+**type**: ``bool`` | ``Closure``
+
+Buffering the response means that you can access its content multiple times
+without performing the request again. Buffering is enabled by default when the
+content type of the response is ``text/*``, ``application/json`` or ``application/xml``.
+
+If this option is a boolean value, the response is buffered when the value is
+``true``. If this option is a closure, the response is buffered when the
+returned value is ``true`` (the closure receives as argument an array with the
+response headers).
+
+.. versionadded:: 4.4
+
+    The support of ``Closure`` in the ``buffer`` option was introduced in Symfony 4.4.
 
 cafile
 ......
