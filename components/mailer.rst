@@ -119,7 +119,10 @@ Load Balancing
 --------------
 
 Symfony's mailer supports `load balancing`_ via a technique called "round-robin"
-to distribute the mailing workload across multiple transports .
+to distribute the mailing workload across multiple transports. The only
+requirement is that your application must use the Messenger component
+integration to :ref:`send emails asynchronously <mailer-sending-emails-async>`,
+as explained in the next sections.
 
 A round-robin transport is configured with two or more transports joined by the
 ``&&`` operator::
@@ -129,6 +132,8 @@ A round-robin transport is configured with two or more transports joined by the
 The mailer will start using the first transport and if it fails, it will retry
 the same delivery with the next transports until one of them succeeds (or until
 all of them fail).
+
+.. _mailer-sending-emails-async:
 
 Sending emails asynchronously
 -----------------------------
