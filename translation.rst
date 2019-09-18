@@ -266,6 +266,10 @@ The ``translation:update`` command looks for missing translations in:
 
     If you want to see the missing translation strings without actually updating
     the translation files, remove the ``--force`` option from the command above.
+    
+.. note::
+
+    If you want to see translation output strings sorted alphabetically, add ``--sort=asc`` or ``--sort=desc`` option.
 
 .. _translation-resource-locations:
 
