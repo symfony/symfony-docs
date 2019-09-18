@@ -227,6 +227,7 @@ Configuration
 * `test`_
 * `translator`_
 
+  * `cache_dir`_
   * :ref:`default_path <reference-translator-default_path>`
   * :ref:`enabled <reference-translator-enabled>`
   * `fallbacks`_
@@ -2092,6 +2093,18 @@ implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
 
 translator
 ~~~~~~~~~~
+
+cache_dir
+.........
+
+**type**: ``string`` | ``null`` **default**: ``%kernel.cache_dir%/translations/``
+
+.. versionadded:: 4.4
+
+    The ``cache_dir`` option was introduced in Symfony 4.4.
+
+Defines the directory where the translation cache is stored. Use ``null`` to
+disable this cache.
 
 .. _reference-translator-enabled:
 
