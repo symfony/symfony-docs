@@ -371,13 +371,13 @@ If the client is not a web browser, then using an authorization header is the wa
     The native implementation of EventSource doesn't allow specifying headers.
     For example, authorization using Bearer token. In order to achieve that, use `a polyfill`_
 
-.. code-block:: javascript
+    .. code-block:: javascript
 
-    const es = new EventSourcePolyfill(url, {
-        headers: {
-            'Authorization': 'Bearer ' + token,
-        }
-    });
+        const es = new EventSourcePolyfill(url, {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        });
 
 In the following example controller,
 the generated cookie contains a JWT, itself containing the appropriate targets.
@@ -545,7 +545,8 @@ its Mercure support.
 Testing
 --------
 
-During functional testing there is no need to send updates to Mercure. They will be handled by a stub publisher::
+During functional testing there is no need to send updates to Mercure. They will
+be handled by a stub publisher::
 
     // tests/Functional/Fixtures/PublisherStub.php
     namespace App\Tests\Functional\Fixtures;
@@ -560,12 +561,12 @@ During functional testing there is no need to send updates to Mercure. They will
         }
     }
 
-PublisherStub decorates the default publisher service so no updates are actually sent. Here is the PublisherStub implementation::
+PublisherStub decorates the default publisher service so no updates are actually
+sent. Here is the PublisherStub implementation::
 
-    #services_test.yaml
+    # config/services_test.yaml
     App\Tests\Functional\Fixtures\PublisherStub:
         decorates: mercure.hub.default.publisher
-
 
 .. _`the Mercure protocol`: https://github.com/dunglas/mercure#protocol-specification
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/docs/Server-sent_events
