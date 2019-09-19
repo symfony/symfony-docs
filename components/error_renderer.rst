@@ -47,7 +47,7 @@ with HTTP applications::
     }
 
 Built-in Error Renderers
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 This component provides error renderers for the most common needs:
 
@@ -62,7 +62,7 @@ This component provides error renderers for the most common needs:
     renders errors in plain text format.
 
 Adding a Custom Error Renderer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Error renderers are PHP classes that implement the
 :class:`Symfony\\Component\\ErrorRenderer\\ErrorRenderer\\ErrorRendererInterface`.

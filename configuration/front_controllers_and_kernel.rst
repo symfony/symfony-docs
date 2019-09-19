@@ -21,6 +21,8 @@ process, you need to understand three parts that work together:
     ``Kernel`` class as Symfony provides sensible default implementations.
     This article is provided to explain what is going on behind the scenes.
 
+.. _architecture-front-controller:
+
 The Front Controller
 --------------------
 
