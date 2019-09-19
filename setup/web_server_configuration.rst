@@ -124,6 +124,11 @@ and increase web server performance:
         #SetEnv DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name"
     </VirtualHost>
 
+.. caution::
+
+    Use ``FallbackResource`` on Apache 2.4.25 or higher, due to a bug which was
+    fixed on that release causing the root ``/`` to hang.
+
 .. tip::
 
     If you are using **php-cgi**, Apache does not pass HTTP basic username and
