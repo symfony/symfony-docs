@@ -153,7 +153,7 @@ interval.
     But when using the filesystem spool, the message class is serialized in
     a file with the randomized class name. The problem is that this random
     class name changes on every cache clear. So if you send a mail and then you
-    clear the cache, the message will not be unserializable.
+    clear the cache, the message will be unserializable.
 
     On the next execution of ``swiftmailer:spool:send`` an error will raise because
     the class ``Swift_Message_<someRandomCharacters>`` doesn't exist (anymore).
