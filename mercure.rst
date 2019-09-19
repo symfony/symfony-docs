@@ -363,8 +363,21 @@ a JWT containing at least one target marking the update to the Hub.
 To provide this JWT, the subscriber can use a cookie,
 or a ``Authorization`` HTTP header.
 Cookies are automatically sent by the browsers when opening an ``EventSource`` connection.
-They are the most secure and preferred way when the client is a web browser.
+Using cookies is the most secure and preferred way when the client is a web browser.
 If the client is not a web browser, then using an authorization header is the way to go.
+
+.. tip::
+
+    The native implementation of EventSource doesn't allow specifying headers.
+    For example, authorization using Bearer token. In order to achieve that, use `a polyfill`_
+
+    .. code-block:: javascript
+
+        const es = new EventSourcePolyfill(url, {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        });
 
 In the following example controller,
 the generated cookie contains a JWT, itself containing the appropriate targets.
@@ -528,6 +541,32 @@ These applications will render the content of Mercure updates in real-time.
 
 Checkout `the dedicated API Platform documentation`_ to learn more about
 its Mercure support.
+
+Testing
+--------
+
+During functional testing there is no need to send updates to Mercure. They will
+be handled by a stub publisher::
+
+    // tests/Functional/Fixtures/PublisherStub.php
+    namespace App\Tests\Functional\Fixtures;
+
+    use Symfony\Component\Mercure\Update;
+
+    class PublisherStub
+    {
+        public function __invoke(Update $update): string
+        {
+            return '';
+        }
+    }
+
+PublisherStub decorates the default publisher service so no updates are actually
+sent. Here is the PublisherStub implementation::
+
+    # config/services_test.yaml
+    App\Tests\Functional\Fixtures\PublisherStub:
+        decorates: mercure.hub.default.publisher
 
 .. _`the Mercure protocol`: https://github.com/dunglas/mercure#protocol-specification
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/docs/Server-sent_events
