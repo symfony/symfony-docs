@@ -126,7 +126,8 @@ and increase web server performance:
 
 .. caution::
 
-Use ``FallbackResource`` on Apache 2.4.25 or higher, due to a bug which was fixed on that release causing the root ``/`` to hang.
+    Use ``FallbackResource`` on Apache 2.4.25 or higher, due to a bug which was
+    fixed on that release causing the root ``/`` to hang.
 
 .. tip::
 
