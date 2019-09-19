@@ -14,7 +14,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/expression-language
+    $ composer require symfony/expression-language:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

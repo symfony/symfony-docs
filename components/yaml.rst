@@ -31,7 +31,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/yaml
+    $ composer require symfony/yaml:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -406,7 +406,7 @@ First, install the Console component:
 
 .. code-block:: terminal
 
-    $ composer require symfony/console
+    $ composer require symfony/console:^3.4
 
 Create a console application with ``lint:yaml`` as its only command::
 

@@ -13,7 +13,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/web-link
+    $ composer require symfony/web-link:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 
