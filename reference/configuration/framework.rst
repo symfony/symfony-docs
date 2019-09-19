@@ -1947,10 +1947,6 @@ cache_dir
 
 **type**: ``string`` | ``null`` **default**: ``%kernel.cache_dir%/translations/``
 
-.. versionadded:: 4.4
-
-    The ``cache_dir`` option was introduced in Symfony 4.4.
-
 Defines the directory where the translation cache is stored. Use ``null`` to
 disable this cache.
 
