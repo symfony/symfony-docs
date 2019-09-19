@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-19T15:37:35Z
+
+@kraynel I agree with you ... but the proposed change is also confusing, because *"[...] will be unserializable"* can mean both *"we can unserialize() it"* and *"it's non-serializable, so we can't get transformed it back to its original contents"*.
+
+I'm going to merge your pull request and reword it a bit while merging to say: *"... the message can't be unserialized."*
