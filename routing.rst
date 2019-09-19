@@ -17,39 +17,78 @@ Creating Routes
 
 Routes can be configured in YAML, XML, PHP or using annotations. All formats
 provide the same features and performance, so choose your favorite.
-:doc:`Symfony recommends annotations </best_practices/controllers>`
-because it's convenient to put the route and controller in the
-same place instead of dealing with multiple files.
+:doc:`Symfony recommends annotations </best_practices/controllers>` because it's
+convenient to put the route and controller in the same place.
 
-If you choose annotations, run this command once in your application to add
-support for them:
+Creating Routes as Annotations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run this command once in your application to add support for annotations:
 
 .. code-block:: terminal
 
     $ composer require annotations
 
-Suppose you want to define a route for the ``/blog`` URL in your application:
+In addition to installing the needed dependencies, this command creates the
+following configuration file:
+
+.. code-block:: yaml
+
+    # config/routes.yaml
+    controllers:
+        resource: '../src/Controller/'
+        type:     annotation
+
+This configuration tells Symfony to looks for routes defined as annotations in
+any PHP class stored in the ``src/Controller/`` directory.
+
+Suppose you want to define a route for the ``/blog`` URL in your application. To
+do so, create a :doc:`controller class </controller>` like the following::
+
+    // src/Controller/BlogController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class BlogController extends AbstractController
+    {
+        /**
+         * @Route("/blog", name="blog_list")
+         */
+        public function list()
+        {
+            // ...
+        }
+    }
+
+This configuration defines a route called ``blog_list`` that matches when the
+user requests the ``/blog`` URL. When the match occurs, the application runs
+the ``list()`` method of the ``BlogController`` class.
+
+.. note::
+
+    The query string of a URL is not considered when matching routes. In this
+    example, URLs like ``/blog?foo=bar`` and ``/blog?foo=bar&bar=foo`` will
+    also match the ``blog_list`` route.
+
+The route name (``blog_list``) is not important for now, but it will be
+essential later when :ref:`generating URLs <routing-generating-urls>`. You only
+have to keep in mind that each route name must be unique in the application.
+
+Creating Routes in YAML, XML or PHP Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of defining routes in the controller classes, you can define them in a
+separate YAML, XML or PHP file. The main advantage is that they don't require
+any extra dependency. The main drawback is that you have to work with multiple
+files when checking the routing of some controller action.
+
+The following example shows how to define in YAML/XML/PHP a route called
+``blog_list`` that associates the ``/blog`` URL with the ``list()`` action of
+the ``BlogController``:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Controller/BlogController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class BlogController extends AbstractController
-        {
-            /**
-             * @Route("/blog", name="blog_list")
-             */
-            public function list()
-            {
-                // ...
-            }
-        }
 
     .. code-block:: yaml
 
@@ -97,20 +136,6 @@ Suppose you want to define a route for the ``/blog`` URL in your application:
                 // ->controller([BlogController::class])
             ;
         };
-
-This configuration defines a route called ``blog_list`` that matches when the
-user requests the ``/blog`` URL. When the match occurs, the application runs
-the ``list()`` method of the ``BlogController`` class.
-
-.. note::
-
-    The query string of a URL is not considered when matching routes. In this
-    example, URLs like ``/blog?foo=bar`` and ``/blog?foo=bar&bar=foo`` will
-    also match the ``blog_list`` route.
-
-The route name (``blog_list``) is not important for now, but it will be essential later when
-:ref:`generating URLs <routing-generating-urls>`. You only have to keep in mind
-that each route name must be unique in the application.
 
 .. _routing-matching-http-methods:
 
