@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-04T06:28:13Z
+
+@pavlakis thanks a lot for helping us improve docs. However, I've checked and Apache 2.4.25, the last version suffering this problem, was released on December 2016.
+
+We usually don't add notes for old software ... except if that "old" version is popular for some reason (e.g. because some Linux distribution ships with it by default). So, do you think this "old" Apache version is popular enough these days? Thanks!
+
+---------------------------------------------------------------------------
+
+by pavlakis at 2018-10-04T10:59:43Z
+
+@javiereguiluz I don't have any stats to give you. However, looking at the Ubuntu distro, 16.04 which was the first to include PHP 7, is an LTS and it ships with `Apache 2.4.18`. As an LTS, it means 5 years support.
+Most people will upgrade their PHP version but only upgrade their web server when upgrading the OS.
+But again, I have no metrics to support the last comment.
