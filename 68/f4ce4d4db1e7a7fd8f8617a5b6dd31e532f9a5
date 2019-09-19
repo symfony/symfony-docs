@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-10T07:50:02Z
+
+@karser thanks for this contribution. Lets ping @dunglas, who knows Mercure well, to see if he can review the changes. Thanks.
+
+---------------------------------------------------------------------------
+
+by karser at 2019-07-22T11:07:00Z
+
+@OskarStark fixed. I'd still like to hear @dunglas input on PublisherStub or how to disable the Mercure publisher during functional testing another way.
