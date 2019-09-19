@@ -554,7 +554,7 @@ below for more details).
     The listener has several goals:
 
     1) The thrown exception is converted into a
-       :class:`Symfony\\Component\\Debug\\Exception\\FlattenException`
+       :class:`Symfony\\Component\\ErrorRenderer\\Exception\\FlattenException`
        object, which contains all the information about the request, but which
        can be printed and serialized.
 
