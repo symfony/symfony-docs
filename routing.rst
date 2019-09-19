@@ -39,7 +39,7 @@ following configuration file:
         resource: '../src/Controller/'
         type:     annotation
 
-This configuration tells Symfony to looks for routes defined as annotations in
+This configuration tells Symfony to look for routes defined as annotations in
 any PHP class stored in the ``src/Controller/`` directory.
 
 Suppose you want to define a route for the ``/blog`` URL in your application. To
