@@ -564,11 +564,11 @@ interval.
     If you use the memory spool, this change is transparent and has no impact.
     But when using the filesystem spool, the message class is serialized in
     a file with the randomized class name. The problem is that this random
-    class name changes on every cache clear. So if you send a mail and then you
-    clear the cache, the message will not be unserializable.
+    class name changes on every cache clear.
 
-    On the next execution of ``swiftmailer:spool:send`` an error will raise because
-    the class ``Swift_Message_<someRandomCharacters>`` doesn't exist (anymore).
+    So if you send a mail and then you clear the cache, on the next execution of
+    ``swiftmailer:spool:send`` an error will raise because the class
+    ``Swift_Message_<someRandomCharacters>`` doesn't exist (anymore).
 
     The solutions are either to use the memory spool or to load the
     ``swiftmailer`` service without the ``lazy`` option (see :doc:`/service_container/lazy_services`).
