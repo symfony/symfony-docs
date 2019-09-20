@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-07-16T15:20:35Z
+
+@filip-t thanks for fixing this bug! You are right that `HttpKernel` class doesn't contain this method, but the interface class doesn't contain it either. The method is in the `Kernel` class (see https://github.com/symfony/symfony/blob/e5bd6ff59e1bf32b4af644d8025827900bdbc276/src/Symfony/Component/HttpKernel/Kernel.php#L254) So, could you please update your pull request to use `Kernel` instead of `KernelInterface`? Thanks.
+
+---------------------------------------------------------------------------
+
+by filip-t at 2019-07-17T09:26:58Z
+
+But HttpKernel/Kernel is an abstract class. I tried to use it, but it didn't work. Using KernelInterface fixed the problem. I'm not sure it's the correct way to do it, but this is the only way I could make it work.
+
+---------------------------------------------------------------------------
+
+by filip-t at 2019-07-24T07:16:46Z
+
+I checked again and using the `Kernel`  class gives this exception. It even suggests using `KernelInterface` instead.
+
+![image](https://user-images.githubusercontent.com/47979342/61772856-8dd95700-adf3-11e9-9d20-c88c9750faa8.png)
+
+---------------------------------------------------------------------------
+
+by maxhelias at 2019-08-08T11:36:03Z
+
+An interface is not an instantiable object. You should use the Kernel of the project : `\App\Kernel`
+
+---------------------------------------------------------------------------
+
+by filip-t at 2019-08-08T16:24:00Z
+
+Firstly - I just realised I forked Symfony 3.4, not 4.3, as I intended to do. I don't know how that happened. Looks like this applies to both versions.
+Should I make a separate pull request for 4.3 then?
+Secondly = I think I can see what I was doing wrong here. In my code, I was injecting `KernelInterface` into a service through the constructor to access a resource file. Here. a `Kernel` object is being created. I completely blanked on it. I could swear this code example looked different when I forked it, but I even checked history and nothing has changed.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-15T09:20:51Z
+
+@nicolas-grekas this looks good to me can you confirm please? Thank you
