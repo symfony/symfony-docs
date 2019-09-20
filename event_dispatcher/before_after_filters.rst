@@ -132,16 +132,13 @@ event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
         {
             $controller = $event->getController();
 
-            /*
-             * $controller passed can be either a class or a Closure.
-             * This is not usual in Symfony but it may happen.
-             * If it is a class, it comes in array format
-             */
-            if (!is_array($controller)) {
-                return;
+            // when a controller class defines multiple action methods, the controller
+            // is returned as [$controllerInstance, 'methodName']
+            if (is_array($controller)) {
+                $controller = $controller[0];
             }
 
-            if ($controller[0] instanceof TokenAuthenticatedController) {
+            if ($controller instanceof TokenAuthenticatedController) {
                 $token = $event->getRequest()->query->get('token');
                 if (!in_array($token, $this->tokens)) {
                     throw new AccessDeniedHttpException('This action needs a valid token!');
