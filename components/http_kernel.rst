@@ -759,10 +759,6 @@ directory of AppBundle.
 The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
 which can be used to transform logical paths into physical paths::
 
-    use Symfony\Component\HttpKernel\Kernel;
-
-    // ...
-    $kernel = new Kernel($dispatcher, $resolver);
     $path = $kernel->locateResource('@AppBundle/Resources/config/services.xml');
 
 Learn more
