@@ -7,7 +7,8 @@
 The ErrorHandler Component
 ==========================
 
-    The ErrorHandler component provides tools to manage errors and ease debugging PHP code.
+    The ErrorHandler component provides tools to manage errors and ease
+    debugging PHP code.
 
 Installation
 ------------
@@ -21,109 +22,102 @@ Installation
 Usage
 -----
 
-The ErrorHandler component provides several tools to help you debug PHP code.
-Enable all of them by calling this method::
+The ErrorHandler component provides several tools to help you debug PHP code:
 
+* An **error handler** that turns PHP errors into exceptions;
+* An **exception handler** that turns uncaught PHP exceptions into nice PHP responses;
+* A **debug class loader** that provides better errors when a class is not found.
+
+Call this method (e.g. in your :ref:`front controller <architecture-front-controller>`)
+to enable all these features in your application::
+
+    // public/index.php
     use Symfony\Component\ErrorHandler\Debug;
 
-    Debug::enable();
+    if ($_SERVER['APP_DEBUG']) {
+        Debug::enable();
+    }
 
-The :method:`Symfony\\Component\\ErrorHandler\\Debug::enable` method registers an
-error handler, an exception handler and
-:ref:`a special class loader <component-debug-class-loader>`.
+    // ...
 
-Read the following sections for more information about the different available
-tools.
+Keep reading this article to learn more about each feature, including how to
+enable each of them separately.
 
 .. caution::
 
     You should never enable the debug tools, except for the error handler, in a
     production environment as they might disclose sensitive information to the user.
 
-Handling PHP Errors and Exceptions
+Turning PHP Errors into Exceptions
 ----------------------------------
 
-Enabling the Error Handler
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 The :class:`Symfony\\Component\\ErrorHandler\\ErrorHandler` class catches PHP
-errors and converts them to exceptions (of class :phpclass:`ErrorException` or
-:class:`Symfony\\Component\\ErrorHandler\\Exception\\FatalErrorException` for
-PHP fatal errors)::
+errors and turns them into PHP's :phpclass:`ErrorException` objects, except for
+fatal PHP errors, which are turned into Symfony's
+:class:`Symfony\\Component\\ErrorHandler\\Exception\\FatalErrorException` objects.
+
+If the application uses the FrameworkBundle, this error handler is enabled by
+default in the :ref:`production environment <configuration-environments>`
+because it generates better error logs.
+
+Use the following code (e.g. in your :ref:`front controller <architecture-front-controller>`)
+to enable this error handler::
 
     use Symfony\Component\ErrorHandler\ErrorHandler;
 
     ErrorHandler::register();
 
-This error handler is enabled by default in the production environment when the
-application uses the FrameworkBundle because it generates better error logs.
+.. tip::
 
-Enabling the Exception Handler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    If you want to get even better exception pages, install the
+    :doc:`ErrorRenderer component </components/error_renderer>` too.
 
-The :class:`Symfony\\Component\\ErrorHandler\\ExceptionHandler` class catches
-uncaught PHP exceptions and converts them to a nice PHP response. It is useful
-in :ref:`debug mode <debug-mode>` to replace the default PHP/XDebug output with
-something prettier and more useful::
+Catching PHP Function Errors and Turning Them into Exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    use Symfony\Component\ErrorHandler\ExceptionHandler;
-
-    ExceptionHandler::register();
-
-.. note::
-
-    If the :doc:`HttpFoundation component </components/http_foundation>` is
-    available, the handler uses a Symfony Response object; if not, it falls
-    back to a regular PHP response.
-
-Catches PHP errors and turn them into exceptions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Most PHP core functions were written before exception handling was introduced to the
-language and most of this functions do not throw an exception on failure. Instead,
-they return ``false`` in case of error.
-
-Let's take the following code example::
+Consider the following example::
 
     $data = json_decode(file_get_contents($filename), true);
     $data['read_at'] = date($datetimeFormat);
     file_put_contents($filename, json_encode($data));
 
-All these functions ``file_get_contents``, ``json_decode``, ``date``, ``json_encode``
-and ``file_put_contents`` will return ``false`` or ``null`` on error, having to
-deal with those failures manually::
+Most PHP core functions were written before exception handling was introduced,
+so they return ``false`` or ``null`` in case of error instead of throwing an
+exception. That's why you need to add something like these to check for errors::
 
     $content = @file_get_contents($filename);
     if (false === $content) {
         throw new \RuntimeException('Could not load file.');
     }
+
+    // since PHP 7.3 json_decode() defines an option to throw JSON_THROW_ON_ERROR
+    // but you need to enable that option explicitly
     $data = @json_decode($content, true);
     if (null === $data) {
         throw new \RuntimeException('File does not contain valid JSON.');
     }
+
     $datetime = @date($datetimeFormat);
     if (false === $datetime) {
         throw new \RuntimeException('Invalid datetime format.');
     }
-    // ...
 
-.. note::
-
-    Since PHP 7.3 `json_decode`_ function will accept a new ``JSON_THROW_ON_ERROR`` option
-    that will let ``json_decode`` throw an exception instead of returning ``null`` on error.
-    However, it is not enabled by default, so you will need to explicitly configure it.
-
-To simplify this behavior the :class:`Symfony\\Component\\ErrorHandler\\ErrorHandler` class
-provides a :method:`Symfony\\Component\\ErrorHandler\\ErrorHandler::call` method that will
-automatically throw an exception when such a failure occurs. This method will accept a ``callable``
-parameter and then the arguments needed to call it, returning back the result::
+To simplify this code, the :class:`Symfony\\Component\\ErrorHandler\\ErrorHandler`
+class provides a :method:`Symfony\\Component\\ErrorHandler\\ErrorHandler::call`
+method that throws an exception automatically when a PHP error occurs::
 
     $content = ErrorHandler::call('file_get_contents', $filename);
 
-This way, you could use a ``\Closure`` function to wrap a portion of code and be sure that it
-breaks even if the `@-silencing operator`_ is used::
+The first argument of ``call()`` is the name of the PHP function to execute and
+the rest of arguments are passed to the PHP function. The result of the PHP
+function is returned as the result of ``call()``.
+
+You can pass any PHP callable as the first argument of ``call()``, so you can
+wrap several function calls inside an anonymous function::
 
     $data = ErrorHandler::call(static function () use ($filename, $datetimeFormat) {
+        // if any code executed inside this anonymous function fails, a PHP exception
+        // will be thrown, even if the code uses the '@' PHP silence operator
         $data = json_decode(file_get_contents($filename), true);
         $data['read_at'] = date($datetimeFormat);
         file_put_contents($filename, json_encode($data));
@@ -131,22 +125,46 @@ breaks even if the `@-silencing operator`_ is used::
         return $data;
     });
 
+Debugging Uncaught PHP Exceptions
+---------------------------------
+
+The :class:`Symfony\\Component\\ErrorHandler\\ExceptionHandler` class catches
+uncaught PHP exceptions and turns them into a nice response, so you can debug
+them. It is useful in :ref:`debug mode <debug-mode>` to replace the default
+PHP/XDebug output with something prettier and more useful.
+
+If the :doc:`HttpFoundation component </components/http_foundation>` is
+available, the handler returns a Symfony's
+:class:`Symfony\\Component\\HttpFoundation\\Response` object. Otherwise, it returns
+a generic PHP response.
+
+Use the following code (e.g. in your :ref:`front controller <architecture-front-controller>`)
+to enable this exception handler::
+
+    use Symfony\Component\ErrorHandler\ExceptionHandler;
+
+    ExceptionHandler::register();
+
+.. tip::
+
+    If you want to get even better exception pages, install the
+    :doc:`ErrorRenderer component </components/error_renderer>` too.
+
 .. _component-debug-class-loader:
 
-Debugging a Class Loader
-------------------------
+Class Loading Debugger
+----------------------
 
-The :class:`Symfony\\Component\\ErrorHandler\\DebugClassLoader` attempts to
-throw more helpful exceptions when a class isn't found by the registered
-autoloaders. All autoloaders that implement a ``findFile()`` method are replaced
-with a ``DebugClassLoader`` wrapper.
+The :class:`Symfony\\Component\\ErrorHandler\\DebugClassLoader` class throws
+more useful exceptions when a class isn't found by the registered autoloaders
+(e.g. looks for typos in the class names and suggest the right class name).
 
-Using the ``DebugClassLoader`` is done by calling its static
-:method:`Symfony\\Component\\ErrorHandler\\DebugClassLoader::enable` method::
+In practice, this debugger looks for all registered autoloaders that implement a
+``findFile()`` method and replaces them by its own method to find class files.
+
+Use the following code (e.g. in your :ref:`front controller <architecture-front-controller>`)
+to enable this class loading debugger::
 
     use Symfony\Component\ErrorHandler\DebugClassLoader;
 
     DebugClassLoader::enable();
-
-.. _`@-silencing operator`: https://php.net/manual/en/function.json-decode.php
-.. _`json_decode`: https://php.net/manual/en/language.operators.errorcontrol.php
