@@ -47,14 +47,15 @@ this suffix is neither required nor recommended, so you can safely remove it.
 Routing Configuration
 ---------------------
 
-To load routes defined as annotations in your controllers, add the following
-configuration to the main routing configuration file:
+To load routes defined as annotations in your controllers, run
+``composer require doctrine/annotations``. Thanks to the :ref:`Flex recipe <symfony-flex>`,
+a ``config/routes/annotations.yaml`` file will be created:
 
 .. code-block:: yaml
 
-    # config/routes.yaml
+    # config/routes/annotations.yaml
     controllers:
-        resource: '../src/Controller/'
+        resource: '../../src/Controller/'
         type:     annotation
 
 This configuration will load annotations from any controller stored inside the
