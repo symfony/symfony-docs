@@ -47,13 +47,9 @@ this suffix is neither required nor recommended, so you can safely remove it.
 Routing Configuration
 ---------------------
 
-To load routes defined as annotations in your controllers, run the following command:
-
-.. code-block:: terminal
-
-    $ composer require doctrine/annotations
-
-Thanks to the :doc:`Flex recipe</setup/flex>`, a ``config/routes/annotations.yaml`` file will be created:
+To load routes defined as annotations in your controllers, run
+``composer require doctrine/annotations``. Thanks to the :ref:`Flex recipe <symfony-flex>`,
+a ``config/routes/annotations.yaml`` file will be created:
 
 .. code-block:: yaml
 
