@@ -173,6 +173,12 @@ anonymous function to the
         }
     });
 
+.. note::
+
+    This feature won't work as expected in servers using PHP output buffering.
+    In those cases, either disable the `output_buffering`_ PHP option or use the
+    :phpfunction:`ob_flush` PHP function to force sending the output buffer.
+
 Running Processes Asynchronously
 --------------------------------
 
@@ -499,4 +505,5 @@ whether `TTY`_ is supported on the current operating system::
 
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
+.. _`output_buffering`: https://www.php.net/manual/en/outcontrol.configuration.php
 .. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)
