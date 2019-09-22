@@ -14,8 +14,7 @@ functionality for `Sluggable`_, `Translatable`_, `Timestampable`_, `Loggable`_,
 The usage for each of these extensions is explained in that repository.
 
 However, to install/activate each extension you must register and activate an
-:doc:`Event Listener </doctrine/event_listeners_subscribers>`.
-To do this, you have two options:
+:ref:`Doctrine event Listener <doctrine-lifecycle-listener>`. To do this, you have two options:
 
 #. Use the `StofDoctrineExtensionsBundle`_, which integrates the above library.
 
