@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by stof at 2019-09-17T08:20:41Z
+
+shouldn't this be merged in the 3.4 branch if we want to be able to remove the doc from the bundle ? 3.4 is still an active LTS, so its doc is still maintained.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-17T08:25:58Z
+
+No, sorry. There are too many changes from 3.4 to 4.3. It's a merge nightmare. We're slowly applying the same idea as Symfony code ... fix only bugs (typos) in the older branches and new features (new docs or large rewordings) go to newer branches. That's why 4.3 is the target.
+
+---------------------------------------------------------------------------
+
+by stof at 2019-09-17T08:29:05Z
+
+Then you need to close your PR on DoctrineBundle, as the link to the entity listeners doc of the bundle will still be needed by the 3.4 branch of the doc.
