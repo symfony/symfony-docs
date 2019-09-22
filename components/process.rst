@@ -41,7 +41,7 @@ when executing the command.
 
 The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
-output.Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
+output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods return the new output since the last call.
 
@@ -152,7 +152,11 @@ anonymous function to the
         }
     });
 
-If this is not working, it can be that your server has an output buffer, that means your Server is not giving the information to the browser, so Symfony can't display it. You can use ``ob_flush()`` and ``flush()`` in combination with ``sleep()`` to avoid this in this process. Or change ``output_buffering`` in php.ini to change it globally.
+.. note::
+
+    This feature won't work as expected in servers using PHP output buffering.
+    In those cases, either disable the `output_buffering`_ PHP option or use the
+    :phpfunction:`ob_flush` PHP function to force sending the output buffer.
 
 Running Processes Asynchronously
 --------------------------------
@@ -440,3 +444,4 @@ absolute path of the executable PHP binary available on your server::
 
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
+.. _`output_buffering`: https://www.php.net/manual/en/outcontrol.configuration.php
