@@ -14,12 +14,6 @@ The Security Component
 Installation
 ------------
 
-.. code-block:: terminal
-
-    $ composer require symfony/security
-
-.. include:: /components/require_autoload.rst.inc
-
 The Security component is divided into several smaller sub-components which can
 be used separately:
 
@@ -37,6 +31,17 @@ be used separately:
 ``symfony/security-guard``
     It brings many layers of authentication together, allowing the creation
     of complex authentication systems.
+
+You can install each of them separately in your project:
+
+.. code-block:: terminal
+
+    $ composer require symfony/security-core
+    $ composer require symfony/security-http
+    $ composer require symfony/security-csrf
+    $ composer require symfony/security-guard
+
+.. include:: /components/require_autoload.rst.inc
 
 .. seealso::
 
