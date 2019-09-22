@@ -204,7 +204,7 @@ doctrine.event_listener
 **Purpose**: Add a Doctrine event listener
 
 For details on creating Doctrine event listeners, read the
-:doc:`/doctrine/event_listeners_subscribers` article.
+:doc:`Doctrine events </doctrine/events>` article.
 
 doctrine.event_subscriber
 -------------------------
@@ -212,7 +212,7 @@ doctrine.event_subscriber
 **Purpose**: Add a Doctrine event subscriber
 
 For details on creating Doctrine event subscribers, read the
-:doc:`/doctrine/event_listeners_subscribers` article.
+:doc:`Doctrine events </doctrine/events>` article.
 
 .. _dic-tags-form-type:
 

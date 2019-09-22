@@ -347,9 +347,8 @@ Using a Doctrine Listener
 -------------------------
 
 The previous versions of this article explained how to handle file uploads using
-:doc:`Doctrine listeners </doctrine/event_listeners_subscribers>`. However, this
-is no longer recommended, because Doctrine events shouldn't be used for your
-domain logic.
+:ref:`Doctrine listeners <doctrine-lifecycle-listener>`. However, this is no longer
+recommended, because Doctrine events shouldn't be used for your domain logic.
 
 Moreover, Doctrine listeners are often dependent on internal Doctrine behavior
 which may change in future versions. Also, they can introduce performance issues

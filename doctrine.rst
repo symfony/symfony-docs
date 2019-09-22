@@ -808,8 +808,7 @@ Learn more
 
     doctrine/associations
     doctrine/common_extensions
-    doctrine/lifecycle_callbacks
-    doctrine/event_listeners_subscribers
+    doctrine/events
     doctrine/registration_form
     doctrine/custom_dql_functions
     doctrine/dbal
