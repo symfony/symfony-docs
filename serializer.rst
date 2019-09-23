@@ -15,7 +15,7 @@ Installation
 ------------
 
 In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
-install the serializer before using it:
+install the ``serializer`` :ref:`Symfony pack <symfony-packs>` before using it:
 
 .. code-block:: terminal
 

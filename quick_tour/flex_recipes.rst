@@ -181,9 +181,9 @@ But for a *truly* rich API, try installing `API Platform`_:
 
     $ composer require api
 
-This is an alias to ``api-platform/api-pack``, which has dependencies on several
-other packages, like Symfony's Validator and Security components, as well as the Doctrine
-ORM. In fact, Flex installed *5* recipes!
+This is an alias to ``api-platform/api-pack`` :ref:`Symfony pack <symfony-packs>`,
+which has dependencies on several other packages, like Symfony's Validator and
+Security components, as well as the Doctrine ORM. In fact, Flex installed *5* recipes!
 
 But like usual, we can immediately start using the new library. Want to create a
 rich API for a ``product`` table? Create a ``Product`` entity and give it the
