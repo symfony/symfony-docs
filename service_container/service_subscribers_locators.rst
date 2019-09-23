@@ -258,12 +258,16 @@ service definition to pass a collection of services to the service locator:
                     -
                         App\FooCommand: '@app.command_handler.foo'
                         App\BarCommand: '@app.command_handler.bar'
-                        # if the element has no key, the ID of the original service is used
-                        '@app.command_handler.baz'
-
                 # if you are not using the default service autoconfiguration,
                 # add the following tag to the service definition:
                 # tags: ['container.service_locator']
+
+            # if the element has no key, the ID of the original service is used
+            app.another_command_handler_locator:
+                class: Symfony\Component\DependencyInjection\ServiceLocator
+                arguments:
+                    -
+                        - '@app.command_handler.baz'
 
     .. code-block:: xml
 
