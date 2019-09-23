@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-16T05:59:09Z
+
+Thank you for your contribution, sadly I never used this before, so we need to find someone who can verify this.
+
+---------------------------------------------------------------------------
+
+by ndench at 2019-09-18T23:22:53Z
+
+I don't see a downside for adding this, though you might want to add more info as to why you would want this and what are the downsides?
+
+ie.
+- this prevents any PHP files in the `/bundles` directory from being executed
+- you will need to change `/bundles` to be whatever directory your assets are in
+- this will mean that users are presented with nginx 404 pages instead of Symfony 404 pages which you may have custom styling for
