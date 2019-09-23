@@ -450,8 +450,11 @@ Bundles must be versioned following the `Semantic Versioning Standard`_.
 Services
 --------
 
-If the bundle defines services, they must be prefixed with the bundle alias.
-For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
+If the bundle defines services, they must be prefixed with the bundle alias
+instead of using fully qualified class names like you do in your project
+services. For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
+The reason is that bundles shouldn't rely on features such as service autowiring
+or autoconfiguration to not impose an overhead when compiling application services.
 
 In addition, services not meant to be used by the application directly, should
 be :ref:`defined as private <container-private-services>`. For public services,
