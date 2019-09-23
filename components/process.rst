@@ -103,7 +103,8 @@ Using array of arguments is the recommended way to define commands. This
 saves you from any escaping and allows sending signals seamlessly
 (e.g. to stop processes before completion)::
 
-    $process = new Process(['/path/command', '--flag', 'arg 1', 'etc.']);
+    $process = new Process(['/path/command', '--option', 'argument', 'etc.']);
+    $process = new Process(['/path/to/php', '--define', 'memory_limit=1024M', '/path/to/script.php']);
 
 If you need to use stream redirections, conditional execution, or any other
 feature provided by the shell of your operating system, you can also define
