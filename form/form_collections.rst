@@ -714,13 +714,17 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
 
-.. sidebar:: Form collection jQuery plugin
+.. sidebar:: Form collection external solutions
 
-    The jQuery plugin  `symfony-collection`_ helps with ``collection`` form elements,
-    by providing the JavaScript functionality needed to add, edit and delete
-    elements of the collection. More advanced functionality like moving or duplicating
-    an element in the collection and customizing the buttons is also possible.
+    The package `@a2lix/symfony-collection`_ helps with ``collection`` form elements,
+    by providing to modern browsers the Javascript functionality needed to add, edit and delete
+    elements of the collection.
+
+    If you want to use jQuery, there is a jQuery extension, `symfony-collection`_ with
+    more advanced functionality like moving or duplicating an element in the collection
+    and customizing the buttons is also possible.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
+.. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
