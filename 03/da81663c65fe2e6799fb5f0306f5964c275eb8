@@ -1,0 +1,68 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-23T07:05:01Z
+
+I'm not sure I like this proposal 😕 for two reasons:
+
+* *"... to not pollute ..."* I do't think this is polluting. You freely decided to install a bundle and that bundle provides some services. It makes sense to me.
+* *"... to avoid collisions on service IDs ..."*. How can a FQCN-based ID collide with other FQCN IDs? `Acme\Somebundle\...` will always be unique to that bundle right?
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-07-23T07:41:01Z
+
+@javiereguiluz so you are in favor of #9886 ?
+
+> "... to avoid collisions on service IDs ...". How can a FQCN-based ID collide with other FQCN IDs? Acme\Somebundle\... will always be unique to that bundle right?
+
+Some bundles define services for libs that are not even in their namespaces. Quoting @iltar :+1:
+
+> If 2 bundles use the same Symfony class, there would be a service ID collision which neither can solve and will cause problems.
+
+> "... to not pollute ..." I do't think this is polluting. You freely decided to install a bundle and that bundle provides some services. It makes sense to me.
+
+Aren't most services defined in a bundle for consumption by other services in that bundle ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-23T07:44:54Z
+
+> Aren't most services defined in a bundle for consumption by other services in that bundle ?
+
+Yes ... and those are private ... and I don't care if you use FQCN IDs. or snake_case IDs. But for public services, why would they be different than standard Symfony services?
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-07-23T10:04:26Z
+
+> I don't care if you use FQCN IDs
+
+I think you should, because then those appear when you use `bin/console debug:container --types`, even if they are private (that is what the polluting part is about).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-23T12:53:50Z
+
+> I think you should ... because those appear ... even if they are private
+
+Yes. I keep forgetting about that. In the past things were easy: "public" = services you can use; "private" = don't use these services, they are for internal purposes.
+
+But now "public" and "private" are almost the same. I was thinking about "hidden" services.
+
+However, I still don't understand why we should treat bundles differently. They are part of your application. They are like your code ... except that you didn't write it.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-07-23T13:20:26Z
+
+From @nicolas-grekas in #9886 :
+
+>  bundles should keep using non-fqcn service IDs, which means no autodiscovery. They should also not use autowiring nor autoconfiguration. The reason is that by doing so, they would impose an overhead on the compilation steps (loading PHP code is slow on the CLI where OPcache can't leverage shared memory.)
+
+I'm not 100% sure that "by doing so" means no auto{discovery,wiring,configuration} or just no auto{wiring,configuration}, but if it does, it's a good reason not to do that. Please clarify, @nicolas-grekas
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-07-23T13:23:00Z
+
+I mean `auto*`: anything that relies on Reflection at some point should be avoided for bundles (they are pure band-aid anyway, which is the point, bundle authors should be encouraged to make the extra miles to be top-quality.)
