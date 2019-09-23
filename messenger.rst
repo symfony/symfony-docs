@@ -1356,11 +1356,6 @@ may want to use:
                 buses:
                     command_bus:
                         middleware:
-                            # wraps all handlers in a single Doctrine transaction
-                            # handlers do not need to call flush() and an error
-                            # in any handler will cause a rollback
-                            - doctrine_transaction
-
                             # each time a message is handled, the Doctrine connection
                             # is "pinged" and reconnected if it's closed. Useful
                             # if your workers run for a long time and the database
@@ -1371,6 +1366,11 @@ may want to use:
                             # which can free up database connections in a worker,
                             # instead of keeping them open forever
                             - doctrine_close_connection
+
+                            # wraps all handlers in a single Doctrine transaction
+                            # handlers do not need to call flush() and an error
+                            # in any handler will cause a rollback
+                            - doctrine_transaction
 
                             # or pass a different entity manager to any
                             #- doctrine_transaction: ['custom']
