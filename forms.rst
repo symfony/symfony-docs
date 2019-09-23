@@ -188,6 +188,11 @@ implements the interface and provides some utilities::
         }
     }
 
+.. tip::
+
+    Install the `MakerBundle`_ in your project to generate form classes using
+    the ``make:form`` and ``make:registration-form`` commands.
+
 The form class contains all the directions needed to create the task form. In
 controllers extending from the :ref:`AbstractController <the-base-controller-class-services>`,
 use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
@@ -968,3 +973,4 @@ Misc.:
     /form/without_class
 
 .. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
