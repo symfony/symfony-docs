@@ -153,6 +153,12 @@ both strings or address objects::
         // ...
     ;
 
+.. tip::
+
+    Instead of calling ``->from()`` *every* time you create a new email, you can
+    create an :doc:`event subscriber </event_dispatcher>` and listen to the
+    ``MessageEvent::class`` event to set the same ``From`` email to all messages.
+
 Multiple addresses are defined with the ``addXXX()`` methods::
 
     $email = (new Email())
@@ -251,40 +257,6 @@ images inside the HTML contents::
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
     ;
-
-Global from Address
--------------------
-
-Instead of calling ``->from()`` *every* time you create a new email, you can
-create an event subscriber to set it automatically::
-
-    // src/EventSubscriber/MailerFromSubscriber.php
-    namespace App\EventSubscriber;
-
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Mailer\Event\MessageEvent;
-    use Symfony\Component\Mime\Email;
-
-    class MailerFromSubscriber implements EventSubscriberInterface
-    {
-        public function onMessageSend(MessageEvent $event)
-        {
-            $message = $event->getMessage();
-
-            // make sure it's an Email object
-            if (!$message instanceof Email) {
-                return;
-            }
-
-            // always set the from address
-            $message->from('fabien@example.com');
-        }
-
-        public static function getSubscribedEvents()
-        {
-            return [MessageEvent::class => 'onMessageSend'];
-        }
-    }
 
 .. _mailer-twig:
 
