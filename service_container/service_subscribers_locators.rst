@@ -317,16 +317,6 @@ service definition to pass a collection of services to the service locator:
             // ->addTag('container.service_locator')
         ;
 
-.. versionadded:: 4.1
-    The service locator autoconfiguration was introduced in Symfony 4.1. In
-    previous Symfony versions you always needed to add the
-    ``container.service_locator`` tag explicitly.
-
-.. versionadded:: 4.2
-
-    The ability to add services without specifying their id was introduced in
-    Symfony 4.2.
-
 .. note::
 
     The services defined in the service locator argument must include keys,
