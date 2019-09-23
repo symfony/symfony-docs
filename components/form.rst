@@ -18,7 +18,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/form
+    $ composer require symfony/form:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -114,7 +114,7 @@ use the built-in support, first install the Security CSRF component:
 
 .. code-block:: terminal
 
-    $ composer require symfony/security-csrf
+    $ composer require symfony/security-csrf:^3.4
 
 The following snippet adds CSRF protection to the form factory::
 
@@ -172,7 +172,7 @@ between Twig and several Symfony components:
 
 .. code-block:: terminal
 
-    $ composer require symfony/twig-bridge
+    $ composer require symfony/twig-bridge:^3.4
 
 The TwigBridge integration provides you with several :doc:`Twig Functions </reference/forms/twig_reference>`
 that help you render the HTML widget, label and error for each field
@@ -260,7 +260,7 @@ installed:
 
 .. code-block:: terminal
 
-    $ composer require symfony/translation symfony/config
+    $ composer require symfony/translation symfony/config:^3.4
 
 Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
 to your ``Twig\Environment`` instance::
@@ -305,7 +305,7 @@ it's installed in your application:
 
 .. code-block:: terminal
 
-    $ composer require symfony/validator
+    $ composer require symfony/validator:^3.4
 
 If you're not familiar with Symfony's Validator component, read more about
 it: :doc:`/validation`. The Form component comes with a

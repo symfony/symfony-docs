@@ -24,7 +24,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/intl
+    $ composer require symfony/intl:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

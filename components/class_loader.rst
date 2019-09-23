@@ -44,7 +44,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/class-loader
+    $ composer require symfony/class-loader:^3.4
 
 Alternatively, you can clone the `<https://github.com/symfony/class-loader>`_ repository.
 

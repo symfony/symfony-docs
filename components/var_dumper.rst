@@ -14,7 +14,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/var-dumper
+    $ composer require --dev symfony/var-dumper:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

@@ -21,7 +21,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/property-info
+    $ composer require symfony/property-info:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 

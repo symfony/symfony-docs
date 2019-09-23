@@ -16,7 +16,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/http-kernel
+    $ composer require symfony/http-kernel:^3.4
 
 .. include:: /components/require_autoload.rst.inc
 
