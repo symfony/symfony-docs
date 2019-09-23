@@ -1,0 +1,95 @@
+---------------------------------------------------------------------------
+
+by codedmonkey at 2018-10-05T13:49:05Z
+
+Code has been merged :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-08T10:32:58Z
+
+@codedmonkey for this kind of features, we always add some comments and examples in the code samples, to make it easier to understand. Could you please my reword to do that? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-11T06:37:53Z
+
+@codedmonkey the current YAML example that I added is wrong:
+
+```yaml
+# config/services.yaml
+services:
+    app.command_handler_locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        arguments:
+           -
+               App\FooCommand: '@app.command_handler.foo'
+               App\BarCommand: '@app.command_handler.bar'
+               # if the element has no key, the ID of the original service is used
+               '@app.command_handler.baz'
+```
+
+It says:
+
+```
+(<unknown>): could not find expected ':' while scanning a simple key
+at line 10 column 16
+```
+
+What's the correct syntax for YAML? Or maybe this feature is not supported in YAML? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-29T15:08:58Z
+
+Anyone knows if this feature works with YAML config? @xabbuh? @nicolas-grekas? If it works, which is the syntax? Thanks!
+
+---------------------------------------------------------------------------
+
+by codedmonkey at 2018-11-01T10:54:06Z
+
+My apologies for the late response.
+
+It looks like combining collections aand arrays in YAML is indeed a no-go, https://github.com/symfony/symfony/issues/23664. It's possible to do either
+
+```
+        arguments:
+           -
+               - '@app.command_handler.foo'
+               - '@app.command_handler.bar'
+               - '@app.command_handler.baz'
+```
+or
+```
+        arguments:
+           -
+               App\FooCommand: '@app.command_handler.foo'
+               App\BarCommand: '@app.command_handler.bar'
+               App\BazCommand: '@app.command_handler.baz'
+```
+
+but not a combination of the two. Trying to add the feature would just increase complexity. Any ideas how best to address this in the docs?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-11-06T08:49:43Z
+
+That's correct, a collection in YAML is either a sequence or a mapping. I would just add a second example like this:
+
+```yaml
+# config/services.yaml
+services:
+    app.command_handler_locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        arguments:
+           -
+               App\FooCommand: '@app.command_handler.foo'
+               App\BarCommand: '@app.command_handler.bar'
+
+    # or if the element has no key, the ID of the original service is used
+    app.another_command_handler_locator:
+        class: Symfony\Component\DependencyInjection\ServiceLocator
+        arguments:
+           -
+               - '@app.command_handler.baz'
+```
