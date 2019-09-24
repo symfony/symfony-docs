@@ -2306,7 +2306,51 @@ paths
 **type**: ``array`` **default**: ``[]``
 
 This option allows to define an array of paths with files or directories where
-the component will look for additional validation files.
+the component will look for additional validation files:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            validation:
+                mapping:
+                    paths:
+                        - "%kernel.project_dir%/validation/"
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation>
+                    <framework:mapping>
+                        <framework:path>%kernel.project_dir%/validation</framework:path>
+                    </framework:mapping>
+                </framework:validation>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'validation' => [
+                'mapping' => [
+                    'paths' => [
+                        '%kernel.project_dir%/validation',
+                    ],
+                ],
+            ],
+        ]);
 
 annotations
 ~~~~~~~~~~~

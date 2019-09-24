@@ -279,52 +279,11 @@ previous configuration by the following:
             ],
         ]);
 
-By default, config files are located in the ``config/validator/`` directory.
-It is possible to define an array of paths with files or directories where the component will look for additional validation files:
+.. tip::
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            validation:
-                mapping:
-                    paths:
-                        - "%kernel.project_dir%/validation/"
-                        
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:validation>
-                    <framework:mapping>
-                        <framework:path>%kernel.project_dir%/validation</framework:path>
-                    </framework:mapping>
-                </framework:validation>
-            </framework:config>
-        </container>
-        
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'validation' => [
-                'mapping' => [
-                    'paths' => [
-                        '%kernel.project_dir%/validation',
-                    ],
-                ],
-            ],
-        ]);
+    When using PHP, YAML, and XML files instead of annotations, Symfony looks
+    for by default in the ``config/validator/`` directory, but you can configure
+    other directories with the :ref:`validation.mapping.paths <reference-validation-mapping>` option.
 
 .. index::
    single: Validation; Constraints
