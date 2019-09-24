@@ -45,10 +45,6 @@ validate
 
 **type**: ``boolean`` **default**: ``true``
 
-.. versionadded:: 4.4
-
-    The ``validate`` option was introduced in Symfony 4.4.
-
 Set this option to ``false`` to disable the client-side validation of the form
 performed by the browser.
 
