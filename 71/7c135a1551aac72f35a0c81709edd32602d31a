@@ -1,0 +1,52 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-06-11T12:09:18Z
+
+Please target `4.4` branch here, too. Thank you 🙏
+
+---------------------------------------------------------------------------
+
+by oleg-andreyev at 2019-06-11T17:36:57Z
+
+> Please target `4.4` branch here, too. Thank you 🙏
+
+Changed
+
+---------------------------------------------------------------------------
+
+by terjebraten-certua at 2019-08-21T16:09:29Z
+
+Will this be merged soon?
+
+It should be since @chalasr closed https://github.com/symfony/symfony/issues/21571
+
+---------------------------------------------------------------------------
+
+by TerjeBr at 2019-08-28T11:32:51Z
+
+Any progress on this?
+
+---------------------------------------------------------------------------
+
+by TerjeBr at 2019-09-03T09:51:11Z
+
+Would it not be better to just merge this, and then accept a new PR if something in it is wrong?
+
+As it is now, the documentation is misleading.
+
+---------------------------------------------------------------------------
+
+by chalasr at 2019-09-13T15:24:19Z
+
+@TerjeBr This aims to fix something wrong, let's not replace it with something equally wrong :)
+Also this is going deep in internal details (the `before AccessListener is called` sentence especially), I need to take the time to try it out and confirm that it's all right (if someone else can do it before me I would be more than happy).
+I'm also wondering what's the point of having both `InteractiveLoginEvent` and `AuthenticationSuccessEvent` on the code side since, reading the docs after this PR, both seem to handle the same very use case. I'd like to figure out what's the difference as I'm pretty sure there is one.
+
+---------------------------------------------------------------------------
+
+by terjebraten-certua at 2019-09-16T11:44:29Z
+
+@chalasr I only suggested it because there seemed to be no progress (two weeks had gone by with no activity).
+And now almost a month has gone by since @OskarStark asked for a review.
+
+But I am glad to hear that you are working on it. Always nice to have some feedback se we know the issue has not just been forgotten. I hope this piece of documentation can be fixed soon.
