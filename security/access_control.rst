@@ -59,7 +59,7 @@ Take the following ``access_control`` entries as an example:
                 <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$"/>
                 <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT"/>
                 <!-- when defining multiple roles, users must have at least one of them (it's like an OR condition) -->
-                <rule path="^/admin" roles="ROLE_ADMIN, ROLE_MANAGER" />
+                <rule path="^/admin" roles="ROLE_ADMIN, ROLE_MANAGER"/>
             </config>
         </srv:container>
 
@@ -295,7 +295,7 @@ key:
                      access is granted if the expression is TRUE or the user has ROLE_ADMIN -->
                 <rule path="^/_internal/secure"
                     role="ROLE_ADMIN"
-                    allow-if="'127.0.0.1' == request.getClientIp() or request.header.has('X-Secure-Access')" />
+                    allow-if="'127.0.0.1' == request.getClientIp() or request.header.has('X-Secure-Access')"/>
             </config>
         </srv:container>
 
