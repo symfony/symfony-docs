@@ -142,7 +142,7 @@ locale value before they are redirected to their first page.
 To do this, you need an event subscriber on the ``security.interactive_login``
 event::
 
-    // src/EventSubscriber/UserLocaleSubscriber.php
+    // src/EventSubscriber/UserLocaleListener.php
     namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
