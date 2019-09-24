@@ -416,20 +416,20 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="App\Handler\One">
-                    <tag name="app.handler" key="handler_one" />
+                    <tag name="app.handler" key="handler_one"/>
                 </service>
 
                 <service id="App\Handler\Two">
-                    <tag name="app.handler" key="handler_two" />
+                    <tag name="app.handler" key="handler_two"/>
                 </service>
 
                 <service id="App\HandlerCollection">
                     <!-- inject all services tagged with app.handler as first argument -->
-                    <argument type="tagged_locator" tag="app.handler" index-by="key" />
+                    <argument type="tagged_locator" tag="app.handler" index-by="key"/>
                 </service>
             </services>
         </container>
@@ -437,8 +437,8 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
         use Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
         $container->register(App\Handler\One::class)
             ->addTag('app.handler', ['key' => 'handler_one']);
@@ -506,14 +506,14 @@ attribute to the locator service defining the name of this custom method:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
 
                 <!-- ... -->
 
                 <service id="App\HandlerCollection">
-                    <argument type="tagged_locator" tag="app.handler" default-index-method="myOwnMethodName" />
+                    <argument type="tagged_locator" tag="app.handler" default-index-method="myOwnMethodName"/>
                 </service>
             </services>
         </container>
