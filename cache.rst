@@ -8,7 +8,7 @@ Using cache is a great way of making your application run quicker. The Symfony c
 component is shipped with many adapters to different storages. Every adapter is
 developed for high performance.
 
-Basic uses of the cache looks like this::
+The following example shows a typical usage of the cache::
 
     use Symfony\Contracts\Cache\ItemInterface;
 
