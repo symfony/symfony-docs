@@ -89,3 +89,8 @@ method, pass the submitted data directly to
     "PATCH" method, the validation extension will only handle the submitted
     fields. If the underlying data needs to be validated, this should be done
     manually, i.e. using the validator.
+    
+    When you need validation for some fields you can extend your data array with the required ones so that they will be validated.
+    i.e.::
+    
+        $form->submit(array_merge(['email' => null, 'username' => null], $request->request->all()), false);
