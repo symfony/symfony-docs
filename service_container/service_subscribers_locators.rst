@@ -281,10 +281,10 @@ service definition to pass a collection of services to the service locator:
 
                 <service id="app.command_handler_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
                     <argument type="collection">
-                        <argument key="App\FooCommand" type="service" id="app.command_handler.foo" />
-                        <argument key="App\BarCommand" type="service" id="app.command_handler.bar" />
+                        <argument key="App\FooCommand" type="service" id="app.command_handler.foo"/>
+                        <argument key="App\BarCommand" type="service" id="app.command_handler.bar"/>
                         <!-- if the element has no key, the ID of the original service is used -->
-                        <argument type="service" id="app.command_handler.baz" />
+                        <argument type="service" id="app.command_handler.baz"/>
                     </argument>
                     <!--
                         if you are not using the default service autoconfiguration,
@@ -318,6 +318,7 @@ service definition to pass a collection of services to the service locator:
         ;
 
 .. versionadded:: 4.1
+
     The service locator autoconfiguration was introduced in Symfony 4.1. In
     previous Symfony versions you always needed to add the
     ``container.service_locator`` tag explicitly.
