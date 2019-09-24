@@ -29,20 +29,13 @@ site (or maybe nearly *all* sections), use the ``access_control`` area.
 
 .. best-practice::
 
-    Use the ``bcrypt`` encoder for hashing your users' passwords.
-
-If your users have a password, then we recommend hashing it using the ``bcrypt``
-encoder, instead of the traditional SHA-512 hashing encoder. The main advantages
-of ``bcrypt`` are the inclusion of a *salt* value to protect against rainbow
-table attacks, and its adaptive nature, which allows to make it slower to
-remain resistant to brute-force search attacks.
+    Use the ``auto`` encoder for hashing your users' passwords.
 
 .. note::
 
     :ref:`Sodium <reference-security-sodium>` is the hashing algorithm as
     recommended by industry standards, but this won't be available to you unless
     you are using PHP 7.2+ or have the `libsodium`_ extension installed.
-    ``bcrypt`` is sufficient for most applications.
 
 With this in mind, here is the authentication setup from our application,
 which uses a login form to load users from the database:
@@ -52,7 +45,7 @@ which uses a login form to load users from the database:
     # config/packages/security.yaml
     security:
         encoders:
-            App\Entity\User: bcrypt
+            App\Entity\User: auto
 
         providers:
             database_users:
