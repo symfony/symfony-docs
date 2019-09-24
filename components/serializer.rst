@@ -180,16 +180,16 @@ when constructing the normalizer::
     </person>
     EOF;
 
-    // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
-    // because "city" is not an attribute of the Person class
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    // $loader is any of the valid loaders explained later in this article
+    $classMetadataFactory = new ClassMetadataFactory($loader);
     $normalizer = new ObjectNormalizer($classMetadataFactory);
     $serializer = new Serializer([$normalizer]);
+
+    // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
+    // because "city" is not an attribute of the Person class
     $person = $serializer->deserialize($data, 'App\Model\Person', 'xml', [
         'allow_extra_attributes' => false,
     ]);
-
-.. include:: /_includes/_annotation_loader_tip.rst.inc
 
 Deserializing in an Existing Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
