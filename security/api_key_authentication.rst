@@ -370,7 +370,7 @@ If you have defined ``access_control``, make sure to add a new entry:
             # ...
 
             access_control:
-                - { path: ^/api, roles: ROLE_API }
+                - { path: '^/api', roles: ROLE_API }
 
     .. code-block:: xml
 
@@ -393,7 +393,7 @@ If you have defined ``access_control``, make sure to add a new entry:
             'access_control' => [
                 [
                     'path' => '^/api',
-                    'role' => 'ROLE_API',
+                    'roles' => 'ROLE_API',
                 ],
             ],
         ]);
