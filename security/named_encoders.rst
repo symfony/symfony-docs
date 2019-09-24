@@ -16,7 +16,7 @@ to apply to all instances of a specific class:
             # ...
             encoders:
                 App\Entity\User:
-                    algorithm: bcrypt
+                    algorithm: auto
                     cost: 12
 
     .. code-block:: xml
@@ -32,7 +32,7 @@ to apply to all instances of a specific class:
             <config>
                 <!-- ... -->
                 <encoder class="App\Entity\User"
-                    algorithm="bcrypt"
+                    algorithm="auto"
                     cost=12
                 />
             </config>
@@ -47,7 +47,7 @@ to apply to all instances of a specific class:
             // ...
             'encoders' => [
                 User::class => [
-                    'algorithm' => 'bcrypt',
+                    'algorithm' => 'auto',
                     'cost' => 12,
                 ],
             ],
@@ -56,9 +56,9 @@ to apply to all instances of a specific class:
 Another option is to use a "named" encoder and then select which encoder
 you want to use dynamically.
 
-In the previous example, you've set the ``bcrypt`` algorithm for ``App\Entity\User``.
+In the previous example, you've set the ``auto`` algorithm for ``App\Entity\User``.
 This may be secure enough for a regular user, but what if you want your admins
-to have a stronger algorithm, for example ``bcrypt`` with a higher cost. This can
+to have a stronger algorithm, for example ``auto`` with a higher cost. This can
 be done with named encoders:
 
 .. configuration-block::
@@ -70,7 +70,7 @@ be done with named encoders:
             # ...
             encoders:
                 harsh:
-                    algorithm: bcrypt
+                    algorithm: auto
                     cost: 15
 
     .. code-block:: xml
@@ -87,7 +87,7 @@ be done with named encoders:
             <config>
                 <!-- ... -->
                 <encoder class="harsh"
-                    algorithm="bcrypt"
+                    algorithm="auto"
                     cost="15"/>
             </config>
         </srv:container>
@@ -99,7 +99,7 @@ be done with named encoders:
             // ...
             'encoders' => [
                 'harsh' => [
-                    'algorithm' => 'bcrypt',
+                    'algorithm' => 'auto',
                     'cost'      => '15',
                 ],
             ],

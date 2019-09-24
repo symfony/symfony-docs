@@ -129,12 +129,12 @@ encoding algorithm. Also, each algorithm defines different config options:
             # ...
 
             encoders:
-                # bcrypt encoder with default options
-                App\Entity\User: 'bcrypt'
+                # auto encoder with default options
+                App\Entity\User: 'auto'
 
-                # bcrypt encoder with custom options
+                # auto encoder with custom options
                 App\Entity\User:
-                    algorithm: 'bcrypt'
+                    algorithm: 'auto'
                     cost:      15
 
                 # Sodium encoder with default options
@@ -162,16 +162,16 @@ encoding algorithm. Also, each algorithm defines different config options:
 
             <config>
                 <!-- ... -->
-                <!-- bcrypt encoder with default options -->
+                <!-- auto encoder with default options -->
                 <encoder
                     class="App\Entity\User"
-                    algorithm="bcrypt"
+                    algorithm="auto"
                 />
 
-                <!-- bcrypt encoder with custom options -->
+                <!-- auto encoder with custom options -->
                 <encoder
                     class="App\Entity\User"
-                    algorithm="bcrypt"
+                    algorithm="auto"
                     cost="15"
                 />
 
@@ -209,14 +209,14 @@ encoding algorithm. Also, each algorithm defines different config options:
         $container->loadFromExtension('security', [
             // ...
             'encoders' => [
-                // bcrypt encoder with default options
+                // auto encoder with default options
                 User::class => [
-                    'algorithm' => 'bcrypt',
+                    'algorithm' => 'auto',
                 ],
 
-                // bcrypt encoder with custom options
+                // auto encoder with custom options
                 User::class => [
-                    'algorithm' => 'bcrypt',
+                    'algorithm' => 'auto',
                     'cost'      => 15,
                 ],
 
@@ -278,14 +278,14 @@ sure to allocate enough space for them to be persisted. Also, passwords include
 the `cryptographic salt`_ inside them (it's generated automatically for each new
 password) so you don't have to deal with it.
 
-.. _reference-security-bcrypt:
+.. _reference-security-encoder-auto:
 
-Using the BCrypt Password Encoder
+Using the "auto" Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It uses the `bcrypt password hashing function`_ and it's recommended to use it
-when it's not possible to use Sodium. The encoded passwords are ``60``
-characters long, so make sure to allocate enough space for them to be persisted.
+It uses Sodium as default, falling back to the `bcrypt password hashing function`_,
+which produces encoded passwords with ``60`` characters long, so make sure to allocate
+enough space for them to be persisted.
 Also, passwords include the `cryptographic salt`_ inside them (it's generated
 automatically for each new password) so you don't have to deal with it.
 
@@ -311,7 +311,7 @@ Using the PBKDF2 Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using the `PBKDF2`_ encoder is no longer recommended since PHP added support for
-Sodium and bcrypt. Legacy application still using it are encouraged to upgrade
+Sodium and BCrypt. Legacy application still using it are encouraged to upgrade
 to those newer encoding algorithms.
 
 firewalls
