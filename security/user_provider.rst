@@ -224,7 +224,7 @@ users will encode their passwords:
             # ...
             encoders:
                 # this internal class is used by Symfony to represent in-memory users
-                Symfony\Component\Security\Core\User\User: 'bcrypt'
+                Symfony\Component\Security\Core\User\User: 'auto'
 
     .. code-block:: xml
 
@@ -241,7 +241,7 @@ users will encode their passwords:
 
                 <!-- this internal class is used by Symfony to represent in-memory users -->
                 <encoder class="Symfony\Component\Security\Core\User\User"
-                    algorithm="bcrypt"
+                    algorithm="auto"
                 />
             </config>
         </srv:container>
@@ -257,7 +257,7 @@ users will encode their passwords:
             // ...
             'encoders' => [
                 User::class => [
-                    'algorithm' => 'bcrypt',
+                    'algorithm' => 'auto',
                 ],
             ],
         ]);
