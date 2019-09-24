@@ -291,7 +291,8 @@ Authentication Success and Failure Events
 
 When a provider authenticates the user, a ``security.authentication.success``
 event is dispatched. But beware - this event may fire, for example, on *every*
-request if you have session-based authentication, if ``always_authenticate_before_granting`` is enabled or if token is not authenticated before AccessListener is invoked.
+request if you have session-based authentication, if ``always_authenticate_before_granting``
+is enabled or if token is not authenticated before AccessListener is invoked.
 See ``security.interactive_login`` below if you need to do something when a user *actually* logs in.
 
 When a provider attempts authentication but fails (i.e. throws an ``AuthenticationException``),
