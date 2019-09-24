@@ -180,11 +180,13 @@ when constructing the normalizer::
     </person>
     EOF;
 
-    // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
-    // because "city" is not an attribute of the Person class
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    // $loader is any of the valid loaders explained later in this article
+    $classMetadataFactory = new ClassMetadataFactory($loader);
     $normalizer = new ObjectNormalizer($classMetadataFactory);
     $serializer = new Serializer([$normalizer]);
+
+    // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
+    // because "city" is not an attribute of the Person class
     $person = $serializer->deserialize($data, 'App\Model\Person', 'xml', [
         'allow_extra_attributes' => false,
     ]);
@@ -362,8 +364,6 @@ You are now able to serialize only attributes in the groups you want::
         ['groups' => ['group1', 'group3']]
     );
     // $obj2 = MyObj(foo: 'foo', bar: 'bar')
-
-.. include:: /_includes/_annotation_loader_tip.rst.inc
 
 .. _ignoring-attributes-when-serializing:
 
