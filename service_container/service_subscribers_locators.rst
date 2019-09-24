@@ -392,7 +392,150 @@ will share identical locators amongst all the services referencing them::
         $myService->addArgument(ServiceLocatorTagPass::register($container, $locateableServices));
     }
 
-.. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
+Indexing the Collection of Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Services passed to the service locator can define their own index using an
+arbitrary attribute whose name is defined as ``index_by`` in the service locator.
+
+In the following example, the ``App\Handler\HandlerCollection`` locator receives
+all services tagged with ``app.handler`` and they are indexed using the value
+of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Handler\One:
+                tags:
+                    - { name: 'app.handler', key: 'handler_one' }
+
+            App\Handler\Two:
+                tags:
+                    - { name: 'app.handler', key: 'handler_two' }
+
+            App\HandlerCollection:
+                # inject all services tagged with app.handler as first argument
+                arguments: [!tagged_locator { tag: 'app.handler', index_by: 'key' }]
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Handler\One">
+                    <tag name="app.handler" key="handler_one" />
+                </service>
+
+                <service id="App\Handler\Two">
+                    <tag name="app.handler" key="handler_two" />
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged_locator" tag="app.handler" index-by="key" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+        use Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
+
+        $container->register(App\Handler\One::class)
+            ->addTag('app.handler', ['key' => 'handler_one']);
+
+        $container->register(App\Handler\Two::class)
+            ->addTag('app.handler', ['key' => 'handler_two']);
+
+        $container->register(App\Handler\HandlerCollection::class)
+            // inject all services tagged with app.handler as first argument
+            ->addArgument(new ServiceLocatorArgument(new TaggedIteratorArgument('app.handler', 'key')));
+
+Inside this locator you can retrieve services by index using the value of the
+``key`` attribute. For example, to get the ``App\Handler\Two`` service::
+
+    // src/Handler/HandlerCollection.php
+    namespace App\Handler;
+
+    use Symfony\Component\DependencyInjection\ServiceLocator;
+
+    class HandlerCollection
+    {
+        public function __construct(ServiceLocator $locator)
+        {
+            $handlerTwo = $locator->get('handler_two'):
+        }
+
+        // ...
+    }
+
+Instead of defining the index in the service definition, you can return its
+value in a method called ``getDefaultIndexName()`` inside the class associated
+to the service::
+
+    // src/Handler/One.php
+    namespace App\Handler;
+
+    class One
+    {
+        public static function getDefaultIndexName(): string
+        {
+            return 'handler_one';
+        }
+
+        // ...
+    }
+
+If you prefer to use another method name, add a ``default_index_method``
+attribute to the locator service defining the name of this custom method:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\HandlerCollection:
+                arguments: [!tagged_locator { tag: 'app.handler', default_index_method: 'myOwnMethodName' }]
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+
+                <!-- ... -->
+
+                <service id="App\HandlerCollection">
+                    <argument type="tagged_locator" tag="app.handler" default-index-method="myOwnMethodName" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        // ...
+
+        $container->register(App\HandlerCollection::class)
+            ->addArgument(new ServiceLocatorArgument(new TaggedIteratorArgument('app.handler', null, 'myOwnMethodName')));
 
 Service Subscriber Trait
 ------------------------
@@ -484,3 +627,5 @@ and compose your services with them::
     When creating these helper traits, the service id cannot be ``__METHOD__``
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
+
+.. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
