@@ -351,10 +351,6 @@ following methods::
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
 
-.. versionadded:: 4.4
-
-    The ``toStream()`` method was introduced in Symfony 4.4.
-
 .. note::
 
     ``$response->getInfo()`` is non-blocking: it returns *live* information
