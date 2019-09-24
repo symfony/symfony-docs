@@ -22,7 +22,7 @@ data manipulations.
     Read the official Doctrine `DBAL Documentation`_ to learn all the details
     and capabilities of Doctrine's DBAL library.
 
-First, install the Doctrine ORM pack:
+First, install the Doctrine ``orm`` :ref:`Symfony pack <symfony-packs>`:
 
 .. code-block:: terminal
 

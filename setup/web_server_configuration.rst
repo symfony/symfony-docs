@@ -35,13 +35,14 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
 Adding Rewrite Rules
 --------------------
 
-The easiest way is to install the Apache recipe by executing the following command:
+The easiest way is to install the ``apache`` :ref:`Symfony pack <symfony-packs>`
+by executing the following command:
 
 .. code-block:: terminal
 
     $ composer require symfony/apache-pack
 
-This recipe installs a ``.htaccess`` file in the ``public/`` directory that contains
+This pack installs a ``.htaccess`` file in the ``public/`` directory that contains
 the rewrite rules.
 
 .. tip::

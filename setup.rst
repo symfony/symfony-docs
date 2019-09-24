@@ -179,6 +179,27 @@ two public repositories:
 Read the `Symfony Recipes documentation`_ to learn everything about how to
 create recipes for your own packages.
 
+.. _symfony-packs:
+
+Symfony Packs
+~~~~~~~~~~~~~
+
+Sometimes a single feature requires installing several packages and bundles.
+Instead of installing them individually, Symfony provides **packs**, which are
+Composer metapackages that include several dependencies.
+
+For example, to add debugging features in your application, you can run the
+``composer require --dev debug`` command. This installs the ``symfony/debug-pack``,
+which in turn installs several packages like ``symfony/debug-bundle``,
+``symfony/monolog-bundle``, ``"symfony/var-dumper"``, etc.
+
+By default, when installing Symfony packs, your ``composer.json`` file shows the
+pack dependency (e.g. ``"symfony/debug-pack": "^1.0"``) instead of the actual
+packages installed. To show the packages, add the ``--unpack`` option when
+installing a pack (e.g. ``composer require debug --dev --unpack``) or run this
+command to unpack the already installed packs: ``composer unpack PACK_NAME``
+(e.g. ``composer unpack debug``).
+
 .. _security-checker:
 
 Checking Security Vulnerabilities

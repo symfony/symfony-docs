@@ -9,7 +9,7 @@ Installation
 ------------
 
 In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
-install the profiler before using it:
+install the ``profiler`` :ref:`Symfony pack <symfony-packs>` before using it:
 
 .. code-block:: terminal
 
