@@ -333,6 +333,12 @@ following methods::
     // gets the response body as a string
     $content = $response->getContent();
 
+    // casts the response JSON contents to a PHP array
+    $content = $response->toArray();
+
+    // casts the response content to a PHP stream resource
+    $content = $response->toStream();
+
     // cancels the request/response
     $response->cancel();
 
@@ -342,15 +348,18 @@ following methods::
     // you can get individual info too
     $startTime = $response->getInfo('start_time');
 
+    // returns detailed logs about the requests and responses of the HTTP transaction
+    $httpLogs = $response->getInfo('debug');
+
+.. versionadded:: 4.4
+
+    The ``toStream()`` method was introduced in Symfony 4.4.
+
 .. note::
 
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
-
-.. tip::
-
-    Call ``$response->getInfo('debug')`` to get detailed logs about the HTTP transaction.
 
 .. _http-client-streaming-responses:
 
