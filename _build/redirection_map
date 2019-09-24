@@ -414,7 +414,8 @@
 /frontend/encore/legacy-apps /frontend/encore/legacy-applications
 /configuration/external_parameters /configuration/environment_variables
 /contributing/code/patches /contributing/code/pull_requests
-/workflow/state-machines /workflow/introduction
+/workflow/state-machines /workflow/workflow-and-state-machine
+/workflow/introduction /workflow/workflow-and-state-machine
 /workflow/usage /workflow
 /introduction/from_flat_php_to_symfony2 /introduction/from_flat_php_to_symfony
 /configuration/environment_variables /configuration/env_var_processors
