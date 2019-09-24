@@ -123,9 +123,9 @@ library or strategy you want for this.
 In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.
 
-Doctrine support is not enabled by default in Symfony. So to use Doctrine
-as shown in the examples below you will need to install :doc:`Doctrine ORM support </doctrine>`
-by executing the following command:
+:doc:`Doctrine </doctrine>` support is not enabled by default in Symfony, so you
+must install it first by adding the ``orm`` :ref:`Symfony pack <symfony-packs>`
+to your application:
 
 .. code-block:: terminal
 
