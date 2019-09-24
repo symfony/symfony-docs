@@ -9,6 +9,8 @@ A submit button.
 +----------------------+----------------------------------------------------------------------+
 | Rendered as          | ``button`` ``submit`` tag                                            |
 +----------------------+----------------------------------------------------------------------+
+| Options              | - `validate`_                                                        |
++----------------------+----------------------------------------------------------------------+
 | Inherited            | - `attr`_                                                            |
 | options              | - `attr_translation_parameters`_                                     |
 |                      | - `disabled`_                                                        |
@@ -34,6 +36,21 @@ useful when :doc:`a form has multiple submit buttons </form/multiple_buttons>`::
     if ($form->get('save')->isClicked()) {
         // ...
     }
+
+Options
+-------
+
+validate
+~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+.. versionadded:: 4.4
+
+    The ``validate`` option was introduced in Symfony 4.4.
+
+Set this option to ``false`` to disable the client-side validation of the form
+performed by the browser.
 
 Inherited Options
 -----------------
