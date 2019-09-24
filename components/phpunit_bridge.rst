@@ -409,11 +409,15 @@ Clock Mocking
 ~~~~~~~~~~~~~
 
 The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
-allows you to mock the PHP's built-in time functions ``time()``,
-``microtime()``, ``sleep()``, ``usleep()`` and ``gmdate()``. Additionally the function
-``date()`` is mocked so it uses the mocked time if no timestamp is specified.
+allows you to mock the PHP's built-in time functions ``time()``, ``microtime()``,
+``sleep()``, ``usleep()`` and ``gmdate()``. Additionally the function ``date()``
+is mocked so it uses the mocked time if no timestamp is specified.
+
 Other functions with an optional timestamp parameter that defaults to ``time()``
-will still use the system time instead of the mocked time.
+will still use the system time instead of the mocked time. This means that you
+may need to change some code in your tests. For example, instead of ``new DateTime()``,
+you should use ``DateTime::createFromFormat('U', time())`` to use the mocked
+``time()`` function.
 
 To use the ``ClockMock`` class in your test, add the ``@group time-sensitive``
 annotation to its class or methods. This annotation only works when executing
