@@ -163,8 +163,8 @@ As configured, the following property is used by the marking store::
     configures the marking store according to the "type" by default, so it's
     preferable to not configure it.
 
-    A single state marking store use a string to store the data. A multiple
-    state marking store use an array to store the data.
+    A single state marking store uses a string to store the data. A multiple
+    state marking store uses an array to store the data.
 
 .. tip::
 
