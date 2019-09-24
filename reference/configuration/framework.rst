@@ -1715,8 +1715,8 @@ formatter
 
 **type**: ``string`` **default**: ``translator.formatter.default``
 
-The service that is used to format message. The service
-has to implement the :class:`Symfony\\Component\\Translation\\Formatter\\MessageFormatterInterface`.
+The ID of the service used to format translation messages. The service class
+must implement the :class:`Symfony\\Component\\Translation\\Formatter\\MessageFormatterInterface`.
 
 .. seealso::
 

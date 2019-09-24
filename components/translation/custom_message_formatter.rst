@@ -1,55 +1,38 @@
 .. index::
     single: Translation; Create Custom Message formatter
 
-Create Custom Message Formatter
-===============================
+Create a Custom Message Formatter
+=================================
 
-The default Message Formatter provide a simple and easy way that deals with the most common use-cases
-such as message placeholders and pluralization. But in some cases, you may want to use a custom message formatter
-that fit to your specific needs, for example, handle nested conditions of pluralization or select sub-messages
-via a fixed set of keywords (e.g. gender).
+The default message formatter provided by Symfony solves the most common needs
+when translating messages, such as using variables and pluralization. However,
+if your needs are different, you can create your own message formatter.
 
-Suppose in your application you want to displays different text depending on arbitrary conditions,
-for example upon whether the guest is male or female. To do this, we will use the `ICU Message Format`_
-which the most suitable ones you first need to create a `IntlMessageFormatter` and pass it to the `Translator`.
-
-.. _components-translation-message-formatter:
-
-Creating a Custom Message Formatter
------------------------------------
-
-To define a custom message formatter that is able to read these kinds of rules, you must create a
-new class that implements the
+Message formatters are PHP classes that implement the
 :class:`Symfony\\Component\\Translation\\Formatter\\MessageFormatterInterface`::
+
 
     use Symfony\Component\Translation\Formatter\MessageFormatterInterface;
 
-    class IntlMessageFormatter implements MessageFormatterInterface
+    class MyCustomMessageFormatter implements MessageFormatterInterface
     {
-        public function format($message, $locale, array $parameters = array())
+        public function format($message, $locale, array $parameters = [])
         {
-            $formatter = new \MessageFormatter($locale, $message);
-            if (null === $formatter) {
-                throw new \InvalidArgumentException(sprintf('Invalid message format. Reason: %s (error #%d)', intl_get_error_message(), intl_get_error_code()));
-            }
-
-            $message = $formatter->format($parameters);
-            if ($formatter->getErrorCode() !== U_ZERO_ERROR) {
-                throw new \InvalidArgumentException(sprintf('Unable to format message. Reason: %s (error #%s)', $formatter->getErrorMessage(), $formatter->getErrorCode()));
-            }
+            // ... format the message according to your needs
 
             return $message;
         }
     }
 
-Once created, simply pass it as the second argument to the `Translator`::
+Now, pass an instance of this formatter as the second argument of the translator
+to use it when translating messages::
 
     use Symfony\Component\Translation\Translator;
 
     $translator = new Translator('fr_FR', new IntlMessageFormatter());
+    $message = $translator->trans($originalMessage, $translationParameters);
 
-    var_dump($translator->trans('The guest is {gender, select, m {male} f {female}}', [ 'gender' => 'm' ]));
-
-It will print *"The guest is male"*.
-
-.. _`ICU Message Format`: http://userguide.icu-project.org/formatparse/messages
+If you want to use this formatter to translate all messages in your Symfony
+application, define a service for the formatter and use the
+:ref:`translator.formatter <reference-framework-translator-formatter>` option
+to set that service as the default formatter.
