@@ -135,14 +135,11 @@ through the transport layer, use the ``SerializerStamp`` stamp::
 
     $bus->dispatch(
         (new Envelope($message))->with(new SerializerStamp([
+            // groups are applied to the whole message, so make sure
+            // to define the group for every embedded object
             'groups' => ['my_serialization_groups'],
         ]))
     );
-
-.. note::
-
-    As the groups are applied to the whole message,
-    be sure to define the group for every embedded object. 
 
 At the moment, the Symfony Messenger has the following built-in envelope stamps:
 
