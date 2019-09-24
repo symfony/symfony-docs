@@ -129,6 +129,8 @@ through the transport layer, use the ``SerializerStamp`` stamp::
 
     $bus->dispatch(
         (new Envelope($message))->with(new SerializerStamp([
+            // groups are applied to the whole message, so make sure
+            // to define the group for every embedded object
             'groups' => ['my_serialization_groups'],
         ]))
     );
