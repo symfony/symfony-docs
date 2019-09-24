@@ -435,7 +435,7 @@ start with ``/admin``, you can:
 
             access_control:
                 # require ROLE_ADMIN for /admin*
-                - { path: ^/admin, roles: ROLE_ADMIN }
+                - { path: '^/admin', roles: ROLE_ADMIN }
 
                 # the 'path' value can be any valid regular expression
                 # (this one will match URLs like /api/post/7298 and /api/comment/528491)
@@ -481,11 +481,11 @@ start with ``/admin``, you can:
             ],
             'access_control' => [
                 // require ROLE_ADMIN for /admin*
-                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
 
                 // the 'path' value can be any valid regular expression
                 // (this one will match URLs like /api/post/7298 and /api/comment/528491)
-                ['path' => '^/api/(post|comment)/\d+$', 'role' => 'ROLE_USER'],
+                ['path' => '^/api/(post|comment)/\d+$', 'roles' => 'ROLE_USER'],
             ],
         ]);
 
@@ -503,10 +503,10 @@ the list and stops when it finds the first match:
 
             access_control:
                 # matches /admin/users/*
-                - { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
+                - { path: '^/admin/users', roles: ROLE_SUPER_ADMIN }
 
                 # matches /admin/* except for anything matching the above rule
-                - { path: ^/admin, roles: ROLE_ADMIN }
+                - { path: '^/admin', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -533,8 +533,8 @@ the list and stops when it finds the first match:
             // ...
 
             'access_control' => [
-                ['path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'],
-                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+                ['path' => '^/admin/users', 'roles' => 'ROLE_SUPER_ADMIN'],
+                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
             ],
         ]);
 

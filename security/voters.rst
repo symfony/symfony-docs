@@ -1,6 +1,8 @@
 .. index::
    single: Security; Data Permission Voters
 
+.. _security/custom-voter:
+
 How to Use Voters to Check User Permissions
 ===========================================
 
@@ -19,7 +21,8 @@ How Symfony Uses Voters
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
 authorization checker or call ``denyAccessUnlessGranted()`` in a controller (which
-uses the authorization checker).
+uses the authorization checker), or by
+:ref:`access controls <security-access-control-enforcement-options>`.
 
 Ultimately, Symfony takes the responses from all voters and makes the final
 decision (to allow or deny access to the resource) according to the strategy defined
