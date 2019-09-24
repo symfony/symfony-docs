@@ -283,11 +283,15 @@ password) so you don't have to deal with it.
 Using the "auto" Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It uses Sodium as default, falling back to the `bcrypt password hashing function`_,
-which produces encoded passwords with ``60`` characters long, so make sure to allocate
-enough space for them to be persisted.
-Also, passwords include the `cryptographic salt`_ inside them (it's generated
-automatically for each new password) so you don't have to deal with it.
+It selects automatically the best possible encoder. Currently, it tries to use
+Sodium by default and falls back to the `bcrypt password hashing function`_ if
+not possible. In the future, when PHP adds new hashing techniques, it may use
+different password hashers.
+
+It produces encoded passwords with ``60`` characters long, so make sure to
+allocate enough space for them to be persisted. Also, passwords include the
+`cryptographic salt`_ inside them (it's generated automatically for each new
+password) so you don't have to deal with it.
 
 Its only configuration option is ``cost``, which is an integer in the range of
 ``4-31`` (by default, ``13``). Each single increment of the cost **doubles the

@@ -31,9 +31,6 @@ site (or maybe nearly *all* sections), use the ``access_control`` area.
 
     Use the ``auto`` encoder for hashing your users' passwords.
 
-If your users have a password, then we recommend hashing it using the ``auto``
-encoder.
-
 .. note::
 
     :ref:`Sodium <reference-security-sodium>` is the hashing algorithm as
