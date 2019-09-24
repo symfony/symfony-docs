@@ -457,6 +457,3 @@ As routing is done *before* security, 404 error pages are not covered by
 any firewall. This means you can't check for security or even access the
 user object on these pages. See :doc:`/controller/error_pages`
 for more details.
-
-.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
->>>>>>> 3.4
