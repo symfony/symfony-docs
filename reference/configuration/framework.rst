@@ -2930,7 +2930,7 @@ type
 **type**: ``string`` **possible values**: ``'workflow'`` or ``'state_machine'``
 
 Defines the kind of workflow that is going to be created, which can be either
-a normal workflow or a state machine. Read :doc:`this article </workflow/introduction>`
+a normal workflow or a state machine. Read :doc:`this article </workflow/workflow-and-state-machine>`
 to know their differences.
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
