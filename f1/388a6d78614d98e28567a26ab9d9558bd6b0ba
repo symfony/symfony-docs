@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-08-31T12:45:14Z
+
+Depends on https://github.com/symfony/symfony/pull/18314 first.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-10T18:04:06Z
+
+We decided to not use Gender examples on Symfony Docs anymore (and we refactored docs to remove the existing examples). So we'll need to think of a better example for this. Sadly the ICU User Guide uses the same gender example: http://userguide.icu-project.org/formatparse/messages
