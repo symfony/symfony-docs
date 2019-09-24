@@ -3,7 +3,7 @@ Workflow
 
 Using the Workflow component inside a Symfony application requires to know first
 some basic theory and concepts about workflows and state machines.
-:doc:`Read this article </workflow/introduction>` for a quick overview.
+:doc:`Read this article </workflow/workflow-and-state-machine>` for a quick overview.
 
 Installation
 ------------
@@ -169,6 +169,25 @@ As configured, the following property is used by the marking store::
         public $title;
         public $content;
     }
+
+.. note::
+
+    The marking store type could be "multiple_state" or "single_state". A single
+    state marking store does not support a model being on multiple places at the
+    same time. This means a "workflow" must use a "multiple_state" marking store
+    and a "state_machine" must use a "single_state" marking store. Symfony
+    configures the marking store according to the "type" by default, so it's
+    preferable to not configure it.
+
+    A single state marking store uses a string to store the data. A multiple
+    state marking store uses an array to store the data.
+
+.. tip::
+
+    The ``marking_store.type`` (the default value depends on the ``type`` value)
+    and ``arguments`` (default value ``['marking']``) attributes of the
+    ``marking_store`` option are optional. If omitted, their default values will
+    be used. It's highly recommenced to use the default value.
 
 .. tip::
 
@@ -744,5 +763,5 @@ Learn more
 .. toctree::
    :maxdepth: 1
 
-   workflow/introduction
-   workflow/dumping-workflows
+   /workflow/workflow-and-state-machine
+   /workflow/dumping-workflows
