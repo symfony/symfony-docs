@@ -23,10 +23,10 @@ access control:
                 # ...
 
                 access_control:
-                    - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
-                    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                    - { path: '^/secure', roles: ROLE_ADMIN, requires_channel: https }
+                    - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
                     # catch all other URLs
-                    - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                    - { path: '^/', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         .. code-block:: xml
 
@@ -62,7 +62,7 @@ access control:
                 'access_control' => [
                     [
                         'path'             => '^/secure',
-                        'role'             => 'ROLE_ADMIN',
+                        'roles'            => 'ROLE_ADMIN',
                         'requires_channel' => 'https',
                     ],
                     [

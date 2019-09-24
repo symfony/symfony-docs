@@ -24,11 +24,11 @@ for each ``access_control`` entry, which determines whether or not a given
 access control should be used on this request. The following ``access_control``
 options are used for matching:
 
-* ``path``
-* ``ip`` or ``ips`` (netmasks are also supported)
-* ``port``
-* ``host``
-* ``methods``
+* ``path``: a regular expression (without delimiters)
+* ``ip`` or ``ips``: netmasks are also supported
+* ``port``: an integer
+* ``host``: a regular expression
+* ``methods``: one or many methods
 
 Take the following ``access_control`` entries as an example:
 
@@ -40,11 +40,12 @@ Take the following ``access_control`` entries as an example:
         security:
             # ...
             access_control:
-                - { path: ^/admin, roles: ROLE_USER_IP, ip: 127.0.0.1 }
-                - { path: ^/admin, roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8080 }
-                - { path: ^/admin, roles: ROLE_USER_HOST, host: symfony\.com$ }
-                - { path: ^/admin, roles: ROLE_USER_METHOD, methods: [POST, PUT] }
-                - { path: ^/admin, roles: ROLE_USER }
+                - { path: '^/admin', roles: ROLE_USER_IP, ip: 127.0.0.1 }
+                - { path: '^/admin', roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8080 }
+                - { path: '^/admin', roles: ROLE_USER_HOST, host: symfony\.com$ }
+                - { path: '^/admin', roles: ROLE_USER_METHOD, methods: [POST, PUT] }
+                # when defining multiple roles, users must have at least one of them (it's like an OR condition)
+                - { path: '^/admin', roles: [ROLE_MANAGER, ROLE_ADMIN] }
 
     .. code-block:: xml
 
@@ -62,7 +63,8 @@ Take the following ``access_control`` entries as an example:
                 <rule path="^/admin" role="ROLE_USER_PORT" ip="127.0.0.1" port="8080"/>
                 <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$"/>
                 <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT"/>
-                <rule path="^/admin" role="ROLE_USER"/>
+                <!-- when defining multiple roles, users must have at least one of them (it's like an OR condition) -->
+                <rule path="^/admin" roles="ROLE_ADMIN, ROLE_MANAGER" />
             </config>
         </srv:container>
 
@@ -74,28 +76,29 @@ Take the following ``access_control`` entries as an example:
             'access_control' => [
                 [
                     'path' => '^/admin',
-                    'role' => 'ROLE_USER_IP',
-                    'ip' => '127.0.0.1',
+                    'roles' => 'ROLE_USER_IP',
+                    'ips' => '127.0.0.1',
                 ],
                 [
                     'path' => '^/admin',
-                    'role' => 'ROLE_USER_PORT',
+                    'roles' => 'ROLE_USER_PORT',
                     'ip' => '127.0.0.1',
                     'port' => '8080',
                 ],
                 [
                     'path' => '^/admin',
-                    'role' => 'ROLE_USER_HOST',
+                    'rolse' => 'ROLE_USER_HOST',
                     'host' => 'symfony\.com$',
                 ],
                 [
                     'path' => '^/admin',
-                    'role' => 'ROLE_USER_METHOD',
+                    'roles' => 'ROLE_USER_METHOD',
                     'methods' => 'POST, PUT',
                 ],
                 [
                     'path' => '^/admin',
-                    'role' => 'ROLE_USER',
+                    // when defining multiple roles, users must have at least one of them (it's like an OR condition)
+                    'roles' => ['ROLE_MANAGER', 'ROLE_ADMIN'],
                 ],
             ],
         ]);
@@ -127,9 +130,10 @@ if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
 | ``/admin/user`` | 168.0.0.1   | 80          | example.com | POST       | rule #4 (``ROLE_USER_METHOD``) | The ``ip`` and ``host`` don't match the first two entries,  |
 |                 |             |             |             |            |                                | but the third - ``ROLE_USER_METHOD`` - matches and is used. |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | example.com | GET        | rule #5 (``ROLE_USER``)        | The ``ip``, ``host`` and ``method`` prevent the first       |
+| ``/admin/user`` | 168.0.0.1   | 80          | example.com | GET        | rule #4 (``ROLE_MANAGER``)     | The ``ip``, ``host`` and ``method`` prevent the first       |
 |                 |             |             |             |            |                                | three entries from matching. But since the URI matches the  |
-|                 |             |             |             |            |                                | ``path`` pattern of the ``ROLE_USER`` entry, it is used.    |
+|                 |             |             |             |            |                                | ``path`` pattern, then the ``ROLE_MANAGER`` (or the         |
+|                 |             |             |             |            |                                | ``ROLE_ADMIN``) is used.                                    |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | ``/foo``        | 127.0.0.1   | 80          | symfony.com | POST       | matches no entries             | This doesn't match any ``access_control`` rules, since its  |
 |                 |             |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
@@ -154,6 +158,14 @@ options:
 * ``requires_channel`` If the incoming request's channel (e.g. ``http``)
   does not match this value (e.g. ``https``), the user will be redirected
   (e.g. redirected from ``http`` to ``https``, or vice versa).
+
+.. tip::
+
+    Behind the scenes, the array value of ``roles`` is passed as the
+    ``$attributes`` argument to each voter in the application with the
+    :class:`Symfony\\Component\\HttpFoundation\\Request` as ``$subject``. You
+    can learn how to use your custom attributes by reading
+    :ref:`security/custom-voter`.
 
 .. tip::
 
@@ -191,8 +203,8 @@ pattern so that it is only accessible by requests from the local server itself:
             access_control:
                 #
                 # the 'ips' option supports IP addresses and subnet masks
-                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
-                - { path: ^/internal, roles: ROLE_NO_ACCESS }
+                - { path: '^/internal', roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
+                - { path: '^/internal', roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
 
@@ -225,13 +237,13 @@ pattern so that it is only accessible by requests from the local server itself:
             'access_control' => [
                 [
                     'path' => '^/internal',
-                    'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY',
                     // the 'ips' option supports IP addresses and subnet masks
                     'ips' => ['127.0.0.1', '::1'],
                 ],
                 [
                     'path' => '^/internal',
-                    'role' => 'ROLE_NO_ACCESS',
+                    'roles' => 'ROLE_NO_ACCESS',
                 ],
             ],
         ]);
@@ -276,7 +288,10 @@ key:
             access_control:
                 -
                     path: ^/_internal/secure
-                    allow_if: "'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')"
+                    # the 'role' and 'allow-if' options work like an OR expression, so
+                    # access is granted if the expression is TRUE or the user has ROLE_ADMIN
+                    roles: 'ROLE_ADMIN'
+                    allow_if: "'127.0.0.1' == request.getClientIp() or request.header.has('X-Secure-Access')"
 
     .. code-block:: xml
 
@@ -290,8 +305,11 @@ key:
 
             <config>
                 <!-- ... -->
+                <!-- the 'role' and 'allow-if' options work like an OR expression, so
+                     access is granted if the expression is TRUE or the user has ROLE_ADMIN -->
                 <rule path="^/_internal/secure"
-                    allow-if="'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')"/>
+                    role="ROLE_ADMIN"
+                    allow-if="'127.0.0.1' == request.getClientIp() or request.header.has('X-Secure-Access')" />
             </config>
         </srv:container>
 
@@ -303,14 +321,23 @@ key:
             'access_control' => [
                 [
                     'path' => '^/_internal/secure',
-                    'allow_if' => '"127.0.0.1" == request.getClientIp() or is_granted("ROLE_ADMIN")',
+                    // the 'role' and 'allow-if' options work like an OR expression, so
+                    // access is granted if the expression is TRUE or the user has ROLE_ADMIN
+                    'roles' => 'ROLE_ADMIN',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or request.header.has('X-Secure-Access')',
                 ],
             ],
         ]);
 
-In this case, when the user tries to access any URL starting with ``/_internal/secure``,
-they will only be granted access if the IP address is ``127.0.0.1`` or if
-the user has the ``ROLE_ADMIN`` role.
+In this case, when the user tries to access any URL starting with
+``/_internal/secure``, they will only be granted access if the IP address is
+``127.0.0.1`` or a secure header, or if the user has the ``ROLE_ADMIN`` role.
+
+.. note::
+
+    Internally ``allow_if`` triggers the built-in
+    :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\ExpressionVoter`
+    as like it was part of the attributes defined in the ``roles`` option.
 
 Inside the expression, you have access to a number of different variables
 and functions including ``request``, which is the Symfony
@@ -420,7 +447,7 @@ the user will be redirected to ``https``:
             'access_control' => [
                 [
                     'path' => '^/cart/checkout',
-                    'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY',
                     'requires_channel' => 'https',
                 ],
             ],

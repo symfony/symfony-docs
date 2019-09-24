@@ -31,7 +31,7 @@ and your generated code may be slightly different:
 
     Choose a name for the controller class (e.g. SecurityController) [SecurityController]:
     > SecurityController
-    
+
     Do you want to generate a '/logout' URL? (yes/no) [yes]:
     > yes
 
@@ -424,3 +424,39 @@ deal with this low level session variable. However, the
 can be used to read (like in the example above) or set this value manually.
 
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+=======
+        // ...
+        'access_control' => [
+            ['path' => '^/login', 'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
+            ['path' => '^/', 'roles' => 'ROLE_ADMIN'],
+        ],
+
+3. Be Sure check_path Is Behind a Firewall
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Next, make sure that your ``check_path`` URL (e.g. ``/login``) is behind
+the firewall you're using for your form login (in this example, the single
+firewall matches *all* URLs, including ``/login``). If ``/login``
+doesn't match any firewall, you'll receive a ``Unable to find the controller
+for path "/login"`` exception.
+
+4. Multiple Firewalls Don't Share the Same Security Context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using multiple firewalls and you authenticate against one firewall,
+you will *not* be authenticated against any other firewalls automatically.
+Different firewalls are like different security systems. To do this you have
+to explicitly specify the same :ref:`reference-security-firewall-context`
+for different firewalls. But usually for most applications, having one
+main firewall is enough.
+
+5. Routing Error Pages Are not Covered by Firewalls
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As routing is done *before* security, 404 error pages are not covered by
+any firewall. This means you can't check for security or even access the
+user object on these pages. See :doc:`/controller/error_pages`
+for more details.
+
+.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
+>>>>>>> 3.4

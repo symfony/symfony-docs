@@ -108,9 +108,9 @@ the solution is to split the configuration into two separate firewalls:
                         authenticators:
                             - App\Security\LoginFormAuthenticator
             access_control:
-                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-                - { path: ^/api, roles: ROLE_API_USER }
-                - { path: ^/, roles: ROLE_USER }
+                - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+                - { path: '^/api', roles: ROLE_API_USER }
+                - { path: '^/', roles: ROLE_USER }
 
     .. code-block:: xml
 
@@ -168,8 +168,8 @@ the solution is to split the configuration into two separate firewalls:
                 ],
             ],
             'access_control' => [
-                ['path' => '^/login', 'role' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
-                ['path' => '^/api', 'role' => 'ROLE_API_USER'],
-                ['path' => '^/', 'role' => 'ROLE_USER'],
+                ['path' => '^/login', 'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
+                ['path' => '^/api', 'roles' => 'ROLE_API_USER'],
+                ['path' => '^/', 'roles' => 'ROLE_USER'],
             ],
         ]);
