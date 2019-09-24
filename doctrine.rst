@@ -25,8 +25,8 @@ Databases are a broad topic, so the documentation is divided in three articles:
 Installing Doctrine
 -------------------
 
-First, install Doctrine support via the ORM pack, as well as the MakerBundle,
-which will help generate some code:
+First, install Doctrine support via the ``orm`` :ref:`Symfony pack <symfony-packs>`,
+as well as the MakerBundle, which will help generate some code:
 
 .. code-block:: terminal
 
@@ -566,8 +566,8 @@ the :ref:`doctrine-queries` section.
     If the number of database queries is too high, the icon will turn yellow to
     indicate that something may not be correct. Click on the icon to open the
     Symfony Profiler and see the exact queries that were executed. If you don't
-    see the web debug toolbar, try running ``composer require --dev symfony/profiler-pack``
-    to install it.
+    see the web debug toolbar, install the ``profiler`` :ref:`Symfony pack <symfony-packs>`
+    by running this command: ``composer require --dev symfony/profiler-pack``.
 
 Automatically Fetching Objects (ParamConverter)
 -----------------------------------------------
