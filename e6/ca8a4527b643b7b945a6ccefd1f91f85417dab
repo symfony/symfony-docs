@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-08-26T11:55:45Z
+
+Maybe we should not use the `AnnotationLoader` but use a placeholder `$loader` variable instead. Sticking to annotations here would be confusing for anyone wanting to use YAML or XML files for example. Later on we do explain how to create the loader anyway.
