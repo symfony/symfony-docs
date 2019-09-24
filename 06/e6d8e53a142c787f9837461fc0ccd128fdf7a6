@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-08-28T17:20:22Z
+
+Wouldn't it make more sense to transform this example into a subscriber too?
+
+---------------------------------------------------------------------------
+
+by kshishkin at 2018-08-29T21:10:45Z
+
+I guess either listener or subscriber would be applied by the developer. The listener will be used 99% of the time so I'd stick to it and let the dev apply more sophisticated subscriber if needed. This part of the docs is not there to demonstrate the difference between the two so I wouldn't place both, the [event dispatcher article](https://symfony.com/doc/current/event_dispatcher.html) serves this goal.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-08-30T18:01:28Z
+
+Well, the `LocaleSubscriber` example at the beginning of the page already is based on the `EventSubscriberInterface`. The advantage with this interface is that services implementing it can be autoconfigured. Without it, we would also need to show how to configure your service. That's why I would make this a proper event subscriber.
+
+---------------------------------------------------------------------------
+
+by kshishkin at 2018-09-18T22:51:43Z
+
+Please pardon delay. This is a good point, I have no strong opposing opinion. I'm unable to do the changes any soon myself, so I'd still apply this patch in order to make the documentation examples work and take it from there.
