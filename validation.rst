@@ -44,8 +44,8 @@ application. The goal of validation is to tell you if the data
 of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules are usually defined using PHP code or
-annotations but they can also be defined as a ``validation.yaml`` or
-``validation.xml`` file inside the ``config/validator/`` directory:
+annotations but they can also be defined as ``.yaml`` or
+``.xml`` files inside the ``config/validator/`` directory:
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
@@ -278,6 +278,12 @@ previous configuration by the following:
                 'enable_annotations' => true,
             ],
         ]);
+
+.. tip::
+
+    When using PHP, YAML, and XML files instead of annotations, Symfony looks
+    for by default in the ``config/validator/`` directory, but you can configure
+    other directories with the :ref:`validation.mapping.paths <reference-validation-mapping>` option.
 
 .. index::
    single: Validation; Constraints
