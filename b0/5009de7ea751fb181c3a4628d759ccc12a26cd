@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by Seb33300 at 2018-09-26T10:30:31Z
+
+Mmmh this PR is related to https://github.com/symfony/symfony-docs/issues/10399 and my PR was already merged...
+
+But this PR also fixes another issue in the text related to the issue.
+This PR should be merged in 2.8 not 4.1
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-03-08T10:29:48Z
+
+@wish-master Would you be able to rebase and resolve the conflicts here?
