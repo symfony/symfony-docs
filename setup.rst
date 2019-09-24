@@ -191,7 +191,7 @@ Composer metapackages that include several dependencies.
 For example, to add debugging features in your application, you can run the
 ``composer require --dev debug`` command. This installs the ``symfony/debug-pack``,
 which in turn installs several packages like ``symfony/debug-bundle``,
-``symfony/monolog-bundle``, ``"symfony/var-dumper"``, etc.
+``symfony/monolog-bundle``, ``symfony/var-dumper``, etc.
 
 By default, when installing Symfony packs, your ``composer.json`` file shows the
 pack dependency (e.g. ``"symfony/debug-pack": "^1.0"``) instead of the actual
