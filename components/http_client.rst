@@ -333,9 +333,6 @@ following methods::
     // casts the response JSON contents to a PHP array
     $content = $response->toArray();
 
-    // casts the response content to a PHP stream resource
-    $content = $response->toStream();
-
     // cancels the request/response
     $response->cancel();
 
@@ -347,10 +344,6 @@ following methods::
 
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
-
-.. versionadded:: 4.4
-
-    The ``toStream()`` method was introduced in Symfony 4.4.
 
 .. note::
 
