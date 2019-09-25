@@ -60,9 +60,12 @@ Styling
 You can use ``metadata`` with the following keys to style the workflow:
 
 * for places:
+
   * ``bg_color``: a color;
   * ``description``: a string that describes the state.
+  
 * for transitions:
+
   * ``label``: a string that replaces the name of the transition;
   * ``color``: a color;
   * ``arrow_color``: a color.
