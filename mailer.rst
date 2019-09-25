@@ -271,10 +271,6 @@ The exceptions related to mailer transports (those which implement
 :class:`Symfony\\Component\\Mailer\\Exception\\TransportException`) also provide
 this debug information via the ``getDebug()`` method.
 
-.. versionadded:: 4.4
-
-    The ``getDebug()`` methods were introduced in Symfony 4.4.
-
 .. _mailer-twig:
 
 Twig: HTML & CSS
