@@ -308,7 +308,7 @@ option of your handler to ``rotating_file``:
                 https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
-                <!-- "max_files": max number of log files to keep
+                <!-- "max-files": max number of log files to keep
                      defaults to zero, which means infinite files -->
                 <monolog:handler name="main"
                     type="rotating_file"
