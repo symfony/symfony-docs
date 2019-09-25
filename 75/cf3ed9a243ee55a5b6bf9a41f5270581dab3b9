@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-09-23T20:01:47Z
+
+Thank you for this PR.
+I think this is technically correct. You need to add the IPs of all the proxies in order to make sure you can get the uses IP.
+
+I wish there were a better way of doing this though...
