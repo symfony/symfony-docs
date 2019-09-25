@@ -46,8 +46,6 @@ To use it, declare it as a service:
     .. code-block:: php
 
         // config/services.php
-        use App\Logger\SessionRequestProcessor;
-        use Monolog\Formatter\LineFormatter;
         use Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler;
 
         $container->register(ElasticsearchLogstashHandler::class);
