@@ -258,6 +258,23 @@ images inside the HTML contents::
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
     ;
 
+Debugging Emails
+----------------
+
+The :class:`Symfony\\Component\\Mailer\\SentMessage` object returned by the
+``send()`` method of the :class:`Symfony\\Component\\Mailer\\Transport\\TransportInterface`
+provides access to the original message (``getOriginalMessage()``) and to some
+debug information (``getDebug()``) such as the HTTP calls done by the HTTP
+transports, which is useful to debug errors.
+
+The exceptions related to mailer transports (those which implement
+:class:`Symfony\\Component\\Mailer\\Exception\\TransportException`) also provide
+this debug information via the ``getDebug()`` method.
+
+.. versionadded:: 4.4
+
+    The ``getDebug()`` methods were introduced in Symfony 4.4.
+
 .. _mailer-twig:
 
 Twig: HTML & CSS
