@@ -75,7 +75,7 @@ But if the form is not mapped to an object and you instead want to retrieve a
 simple array of your submitted data, how can you add constraints to the data of
 your form?
 
-The answer is to setup the constraints yourself, and attach them to the individual
+The answer is to set up the constraints yourself, and attach them to the individual
 fields. The overall approach is covered a bit more in :doc:`this validation article </validation/raw_values>`,
 but here's a short example::
 
@@ -112,3 +112,9 @@ but here's a short example::
     If the form is not mapped to an object, every object in your array of
     submitted data is validated using the ``Symfony\Component\Validator\Constraints\Valid``
     constraint, unless you :doc:`disable validation </form/disabling_validation>`.
+
+.. caution::
+
+    When a form is only partially submitted (for example, in an HTTP PATCH
+    request), only the constraints from the submitted form fields will be
+    evaluated.
