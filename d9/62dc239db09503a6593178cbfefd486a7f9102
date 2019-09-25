@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-09-23T21:37:25Z
+
+As far as I can see, it should be returned: https://github.com/fabpot/symfony/blob/fded3cd68cf4422d427a15a503f2fe21428c29d5/src/Symfony/Component/Mailer/Transport/AbstractTransport.php#L57 The only case when it isn't returned is when it's done asychronously I think.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-25T15:39:03Z
+
+Thanks for your reviews!
