@@ -299,6 +299,25 @@ new "tag" forms. To render it, make the following change to your template:
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
 
+.. tip::
+
+    If you need to customize the rendering of your prototype, you can use `Twig macros`_ For instance, you can do :
+
+    .. code-block:: html+twig
+
+        {% macro displayTagForm(tag) %}
+            // Here, our li tag is not wrapped in the div automatically genreated by form_widget, so we have full control of our design
+            <li style="background-color: #bdc3c7;">
+                {{ form_widget(tag.name) }}
+            </li>
+        {% endmacro %}
+        
+    You can then change the data-prototype attribute you provide to your javascript code :
+
+        .. code-block:: html+twig
+
+            <ul class="tags" data-prototype="{{ formMacros.displayTagForm(form.tags.vars.prototype)|e('html_attr') }}">
+
 On the rendered page, the result will look something like this:
 
 .. code-block:: html
@@ -720,3 +739,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
+.. _`Twig macros`: https://twig.symfony.com/doc/2.x/tags/macro.html
