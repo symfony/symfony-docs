@@ -762,7 +762,7 @@ auth_ntlm
 
 **type**: ``string``
 
-.. versionadded:: 4.3
+.. versionadded:: 4.4
 
     The ``auth_ntlm`` option was introduced in Symfony 4.4.
 
