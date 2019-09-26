@@ -40,12 +40,13 @@ A routing system has three parts:
 Here is a quick example::
 
     use App\Controller\BlogController;
+    use Symfony\Component\Routing\Generator\UrlGenerator;
     use Symfony\Component\Routing\Matcher\UrlMatcher;
     use Symfony\Component\Routing\RequestContext;
     use Symfony\Component\Routing\Route;
     use Symfony\Component\Routing\RouteCollection;
 
-    $route = new Route('/blog/{slug}', ['_controller' => BlogController::class])
+    $route = new Route('/blog/{slug}', ['_controller' => BlogController::class]);
     $routes = new RouteCollection();
     $routes->add('blog_show', $route);
 
