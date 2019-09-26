@@ -31,7 +31,7 @@ Importing Configuration with ``imports``
 ----------------------------------------
 
 By default, service configuration lives in ``config/services.yaml``. But if that
-file becomes large, you're free to organize into multiple files. For suppose you
+file becomes large, you're free to organize into multiple files. Suppose you
 decided to move some configuration to a new file:
 
 .. configuration-block::
@@ -70,7 +70,8 @@ decided to move some configuration to a new file:
         // ... some parameters
         // ... some services
 
-To import this file, use the ``imports`` key from a file that *is* loaded:
+To import this file, use the ``imports`` key from any other file and pass either
+a relative or absolute path to the imported file:
 
 .. configuration-block::
 
@@ -79,6 +80,18 @@ To import this file, use the ``imports`` key from a file that *is* loaded:
         # config/services.yaml
         imports:
             - { resource: services/mailer.yaml }
+
+        services:
+            _defaults:
+                autowire: true
+                autoconfigure: true
+                public: false
+
+            App\:
+                resource: '../src/*'
+                exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+            # ...
 
     .. code-block:: xml
 
@@ -91,22 +104,44 @@ To import this file, use the ``imports`` key from a file that *is* loaded:
 
             <imports>
                 <import resource="services/mailer.xml"/>
+
+                <defaults autowire="true" autoconfigure="true" public="false"/>
+
+                <prototype namespace="App\" resource="../src/*"
+                    exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+
+                <!-- ... -->
             </imports>
         </container>
 
     .. code-block:: php
 
         // config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
         $loader->import('services/mailer.php');
 
-The ``resource`` location, for files, is either a relative path from the
-current file or an absolute path.
+        $definition = new Definition();
+        $definition
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+        ;
 
-.. caution::
+        $this->registerClasses($definition, 'App\\', '../src/*',
+            '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
 
-   The imported files are loaded first; You should be careful, because it can 
-   lead to some of your services definition to be overridden by rules present
-   inside the file where you do imports
+When loading a configuration file, Symfony loads first the imported files and
+then it processes the parameters and services defined in the file. If you use the
+:ref:`default services.yaml configuration <service-container-services-load-example>`
+as in the above example, the ``App\`` definition creates services for classes
+found in ``../src/*``. If your imported file defines services for those classes
+too, they will be overridden.
+
+A possible solution for this is to add the classes and/or directories of the
+imported files in the ``exclude`` option of the ``App\`` definition. Another
+solution is to not use imports and add the service definitions in the same file,
+but after the ``App\`` definition to override it.
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
