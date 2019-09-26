@@ -61,6 +61,8 @@ As well as the following normalizers:
   handle typical data objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
   objects implementing the :phpclass:`DateTimeInterface` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer` for
+  :phpclass:`DateTimeZone` objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
   transform :phpclass:`SplFileInfo` objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
