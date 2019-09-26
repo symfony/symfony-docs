@@ -289,11 +289,10 @@ do is to write your own CSV receiver::
         {
             // Receive the envelope according to your transport ($yourEnvelope here),
             // in most cases, using a connection is the easiest solution.
-            
             if (null === $yourEnvelope) {
                 return [];
             }
-            
+
             try {
                 $envelope = $this->serializer->decode([
                     'body' => $yourEnvelope['body'],
@@ -303,8 +302,8 @@ do is to write your own CSV receiver::
                 $this->connection->reject($yourEnvelope['id']);
                 throw $exception;
             }
-            
-            return [$yourEnvelope->with(new CustomStamp($yourEnvelope['id']);
+
+            return [$envelope->with(new CustomStamp($yourEnvelope['id']);
         }
 
         public function ack(Envelope $envelope): void
