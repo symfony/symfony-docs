@@ -719,10 +719,6 @@ There are several types of normalizers available:
     This normalizer converts :phpclass:`DateTimeZone` objects into strings that
     represent the name of the timezone according to the `list of PHP timezones`_.
 
-    .. versionadded:: 4.3
-
-        The ``DateTimeZoneNormalizer`` was introduced in Symfony 4.3.
-
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
