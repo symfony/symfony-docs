@@ -582,16 +582,9 @@ current URL is before creating the token in ``createToken()``::
 
     // ...
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Http\HttpUtils;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
-        protected $httpUtils;
-
-        public function __construct(HttpUtils $httpUtils)
-        {
-            $this->httpUtils = $httpUtils;
-        }
 
         public function createToken(Request $request, $providerKey)
         {
