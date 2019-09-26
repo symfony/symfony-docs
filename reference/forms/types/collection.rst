@@ -184,7 +184,7 @@ And update the template as follows:
         <ul id="email-fields-list"
             data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
             data-widget-tags="{{ '<li></li>'|e }}"
-            data-widget-counter="{{ form.children|length }}">
+            data-widget-counter="{{ form.emails|length }}">
         {% for emailField in form.emails %}
             <li>
                 {{ form_errors(emailField) }}
