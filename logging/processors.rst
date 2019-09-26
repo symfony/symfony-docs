@@ -1,7 +1,7 @@
 How to Add extra Data to Log Messages via a Processor
 =====================================================
 
-Monolog allows you to process every record before logging it by adding some
+`Monolog`_ allows you to process every record before logging it by adding some
 extra data. This is the role of a processor, which can be applied for the whole
 handler stack or only for a specific handler or channel.
 
@@ -30,8 +30,7 @@ using a processor::
             $this->session = $session;
         }
 
-        // This method is called for each log record and process it.
-        // Keep it optimized process, to not introduce any overhead.
+        // this method is called for each log record; optimize it to not hurt performance
         public function __invoke(array $record)
         {
             if (!$this->session->isStarted()) {
@@ -186,8 +185,10 @@ Symfony's MonologBridge provides processors that can be registered inside your a
     The ``RouteProcessor`` and the ``ConsoleCommandProcessor`` were introduced
     in Symfony 4.3.
 
-Monolog_ also have built in processors ready to use inside your application.
-Read the librairy documentation to learn more.
+.. seealso::
+
+    Check out the `built-in Monolog processors`_ to learn more about how to
+    create these processors.
 
 Registering Processors per Handler
 ----------------------------------
@@ -277,4 +278,5 @@ the ``monolog.processor`` tag:
             ->register(SessionRequestProcessor::class)
             ->addTag('monolog.processor', ['channel' => 'main']);
 
-.. _Monolog: https://github.com/Seldaek/monolog
+.. _`Monolog`: https://github.com/Seldaek/monolog
+.. _`built-in Monolog processors`: https://github.com/Seldaek/monolog/tree/master/src/Monolog/Processor
