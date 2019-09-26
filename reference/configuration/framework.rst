@@ -2709,10 +2709,6 @@ A list of lock stores to be created by the framework extension.
             ],
         ]);
 
-.. versionadded:: 4.2
-
-    The ``flock://`` store was introduced in Symfony 4.2.
-
 .. _reference-lock-resources-name:
 
 name
