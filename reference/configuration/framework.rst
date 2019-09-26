@@ -141,6 +141,12 @@ Configuration
 * `http_method_override`_
 * `ide`_
 * :ref:`lock <reference-lock>`
+
+  * :ref:`enabled <reference-lock-enabled>`
+  * :ref:`resources <reference-lock-resources>`
+
+    * :ref:`name <reference-lock-resources-name>`
+
 * `php_errors`_
 
   * `log`_
@@ -217,7 +223,7 @@ Configuration
   * `engines`_
   * :ref:`form <reference-templating-form>`
 
-    * `resources`_
+    * :ref:`resources <reference-templating-form-resources>`
 
   * `loaders`_
 
@@ -1948,6 +1954,8 @@ templating
 form
 ....
 
+.. _reference-templating-form-resources:
+
 resources
 """""""""
 
@@ -2726,10 +2734,130 @@ example, when warming caches offline).
 lock
 ~~~~
 
-**type**: ``string``
+**type**: ``string`` | ``array``
 
 The default lock adapter. If not defined, the value is set to ``semaphore`` when
 available, or to ``flock`` otherwise. Store's DSN are also allowed.
+
+.. _reference-lock-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to enable the support for lock or not. This setting is
+automatically set to ``true`` when one of the child settings is configured.
+
+.. _reference-lock-resources:
+
+resources
+.........
+
+**type**: ``array``
+
+A list of lock stores to be created by the framework extension.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # these are all the supported lock stores
+            lock: ~
+            lock: 'flock'
+            lock: 'semaphore'
+            lock: 'memcached://m1.docker'
+            lock: ['memcached://m1.docker', 'memcached://m2.docker']
+            lock: 'redis://r1.docker'
+            lock: ['redis://r1.docker', 'redis://r2.docker']
+            lock: '%env(MEMCACHED_OR_REDIS_URL)%'
+
+            # named locks
+            lock:
+                invoice: ['redis://r1.docker', 'redis://r2.docker']
+                report: 'semaphore'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:lock>
+                    <!-- these are all the supported lock stores -->
+                    <framework:resource>flock</framework:resource>
+
+                    <framework:resource>semaphore</framework:resource>
+
+                    <framework:resource>memcached://m1.docker</framework:resource>
+
+                    <framework:resource>memcached://m1.docker</framework:resource>
+                    <framework:resource>memcached://m2.docker</framework:resource>
+
+                    <framework:resource>redis://r1.docker</framework:resource>
+
+                    <framework:resource>redis://r1.docker</framework:resource>
+                    <framework:resource>redis://r2.docker</framework:resource>
+
+                    <framework:resource>%env(REDIS_URL)%</framework:resource>
+
+                    <!-- named locks -->
+                    <framework:resource name="invoice">redis://r1.docker</framework:resource>
+                    <framework:resource name="invoice">redis://r2.docker</framework:resource>
+                    <framework:resource name="report">semaphore</framework:resource>
+                </framework:lock>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', [
+            // these are all the supported lock stores
+            'lock' => null,
+            'lock' => 'flock',
+            'lock' => 'semaphore',
+            'lock' => 'memcached://m1.docker',
+            'lock' => ['memcached://m1.docker', 'memcached://m2.docker'],
+            'lock' => 'redis://r1.docker',
+            'lock' => ['redis://r1.docker', 'redis://r2.docker'],
+            'lock' => '%env(MEMCACHED_OR_REDIS_URL)%',
+
+            // named locks
+            'lock' => [
+                'invoice' => ['redis://r1.docker', 'redis://r2.docker'],
+                'report' => 'semaphore',
+            ],
+        ]);
+
+.. _reference-lock-resources-name:
+
+name
+""""
+
+**type**: ``prototype``
+
+Name of the lock you want to create.
+
+.. tip::
+
+    If you want to use the `RetryTillSaveStore` for :ref:`non-blocking locks <lock-blocking-locks>`,
+    you can do it by :doc:`decorating the store </service_container/service_decoration>` service:
+
+    .. code-block:: yaml
+
+        lock.invoice.retry_till_save.store:
+            class: Symfony\Component\Lock\Store\RetryTillSaveStore
+            decorates: lock.invoice.store
+            arguments: ['@lock.invoice.retry.till.save.store.inner', 100, 50]
 
 workflows
 ~~~~~~~~~

@@ -65,6 +65,8 @@ method can be safely called repeatedly, even if the lock is already acquired.
     across several requests. To disable the automatic release behavior, set the
     third argument of the ``createLock()`` method to ``false``.
 
+.. _lock-blocking-locks:
+
 Blocking Locks
 --------------
 
