@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-25T15:47:17Z
+
+@wouterj don't you think that this is a Symfony bug?
+
+In the docs we always explain that "_defaults apply to services created in this file". If you import some config file ... you should accept the services as they are created in the other files ... and your "_defaults" shouldn't apply to them, right? Am I missing something?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-09-26T00:21:11Z
+
+@javiereguiluz that's exactly what's happening here. The  `_defaults` is not the thing here, it's the `App\` glob service creation. It overwrites the `App\Actions\Company\CreateCompany` service defined in the imported file. This can be considered a bug, maybe a more expected behavior is to not overwrite explicitly defined services @nicolas-grekas. (I did assume it was expected behavior, given that Fabien reviewed this PR).
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-09-26T05:38:00Z
+
+Lastly defined services override previous one. That's the rule since 2.0, it applies here too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-26T06:49:14Z
+
+Now I see my mistake. I completely misunderstood. I think it makes sense because of the `App\*` config, which "destroys" anything previously configured, created or imported. It makes sense to me. Let's merge this. Thanks.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-09-26T06:54:35Z
+
+I'd suggest to remove the "FUD" part of the message and keep it strictly factual.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-26T07:11:44Z
+
+In fact, I think the real problem is that this is an old article. At that time, Symfony forced you to write a 3,000-line config file for services, so splitting into multiple files may make sense. But that's no longer the case. The services file is short even for complex apps (when using autowiring/autoconfiguration) so you don't really need imports most of the times.
