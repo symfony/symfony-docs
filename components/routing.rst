@@ -45,7 +45,7 @@ Here is a quick example::
     use Symfony\Component\Routing\Route;
     use Symfony\Component\Routing\RouteCollection;
 
-    $route = new Route('/blog/{slug}', ['_controller' => BlogController::class])
+    $route = new Route('/blog/{slug}', ['_controller' => BlogController::class]);
     $routes = new RouteCollection();
     $routes->add('blog_show', $route);
 
