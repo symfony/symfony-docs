@@ -1,9 +1,9 @@
 How to Add extra Data to Log Messages via a Processor
 =====================================================
 
-Monolog allows you to process the record before logging it to add some
-extra data. A processor can be applied for the whole handler stack or
-only for a specific handler.
+`Monolog`_ allows you to process every record before logging it by adding some
+extra data. This is the role of a processor, which can be applied for the whole
+handler stack or only for a specific handler or channel.
 
 A processor is a callable receiving the record as its first argument.
 Processors are configured using the ``monolog.processor`` DIC tag. See the
@@ -30,6 +30,7 @@ using a processor::
             $this->session = $session;
         }
 
+        // this method is called for each log record; optimize it to not hurt performance
         public function __invoke(array $record)
         {
             if (!$this->session->isStarted()) {
@@ -179,6 +180,11 @@ Symfony's MonologBridge provides processors that can be registered inside your a
 :class:`Symfony\\Bridge\\Monolog\\Processor\\ConsoleCommandProcessor`
     Adds information about current console command.
 
+.. seealso::
+
+    Check out the `built-in Monolog processors`_ to learn more about how to
+    create these processors.
+
 Registering Processors per Handler
 ----------------------------------
 
@@ -266,3 +272,6 @@ the ``monolog.processor`` tag:
         $container
             ->register(SessionRequestProcessor::class)
             ->addTag('monolog.processor', ['channel' => 'main']);
+
+.. _`Monolog`: https://github.com/Seldaek/monolog
+.. _`built-in Monolog processors`: https://github.com/Seldaek/monolog/tree/master/src/Monolog/Processor
