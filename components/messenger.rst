@@ -270,6 +270,7 @@ do is to write your own CSV receiver::
 
     use App\Message\NewOrder;
     use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Exception\MessageDecodingFailedException;
     use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
     use Symfony\Component\Serializer\SerializerInterface;
 
@@ -286,17 +287,24 @@ do is to write your own CSV receiver::
 
         public function get(): iterable
         {
-            $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
-
-            foreach ($ordersFromCsv as $orderFromCsv) {
-                $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
-
-                $envelope = new Envelope($order);
-
-                $handler($envelope);
+            // Receive the envelope according to your transport ($yourEnvelope here),
+            // in most cases, using a connection is the easiest solution.
+            
+            if (null === $yourEnvelope) {
+                return [];
             }
-
-            return [$envelope];
+            
+            try {
+                $envelope = $this->serializer->decode([
+                    'body' => $yourEnvelope['body'],
+                    'headers' => $yourEnvelope['headers'],
+                ]);
+            } catch (MessageDecodingFailedException $exception) {
+                $this->connection->reject($yourEnvelope['id']);
+                throw $exception;
+            }
+            
+            return [$yourEnvelope->with(new CustomStamp($yourEnvelope['id']);
         }
 
         public function ack(Envelope $envelope): void
@@ -306,7 +314,8 @@ do is to write your own CSV receiver::
 
         public function reject(Envelope $envelope): void
         {
-            // Reject the message if needed
+            // In the case of a custom connection
+            $this->connection->reject($this->findCustomStamp($envelope)->getId());
         }
     }
 
