@@ -715,6 +715,14 @@ There are several types of normalizers available:
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default, it uses the `RFC3339`_ format.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
+    This normalizer converts :phpclass:`DateTimeZone` objects into strings that
+    represent the name of the timezone according to the `list of PHP timezones`_.
+
+    .. versionadded:: 4.3
+
+        The ``DateTimeZoneNormalizer`` was introduced in Symfony 4.3.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
@@ -1462,3 +1470,4 @@ Learn more
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
 .. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object
 .. _`API Platform`: https://api-platform.com
+.. _`list of PHP timezones`: https://www.php.net/manual/en/timezones.php
