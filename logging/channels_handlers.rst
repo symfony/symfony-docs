@@ -14,14 +14,9 @@ the channel).
 
 .. note::
 
-    Each channel corresponds to a logger service (``monolog.logger.XXX``)
-    in the container (use the ``php bin/console debug:container monolog`` command
-    to see a full list) and those are injected into different services.
-
-.. versionadded:: 4.2
-
-    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
+    Each channel corresponds to a different logger service (``monolog.logger.XXX``)
+    Use the ``php bin/console debug:container monolog`` command to see a full
+    list of services and learn :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
 
 .. _logging-channel-handler:
 
@@ -180,18 +175,13 @@ inject this service into others, you must update the service configuration to
 
 .. _monolog-autowire-channels:
 
-How to autowire logger channels
+How to Autowire Logger Channels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.2
-
-    This feature available since MonologBundle 3.5
-
-Each channel already bind into container by type-hinted alias.
-Just use method variables, which follows next naming template ``Psr\Log\LoggerInterface $<channel>Logger``.
-For example, you have ``App\Log\CustomLogger`` service which tagged by ``app`` logger channel
-as described in part :ref:`Logging with a custom logging channel <dic_tags-monolog>`.
-Now you can remove service configuration at all and change constructor signature:
+Starting from `MonologBundle`_ 3.5 you can autowire different Monolog channels
+by type-hinting your service arguments with the following syntax:
+``Psr\Log\LoggerInterface $<channel>Logger``. For example, to inject the service
+related to the ``app`` logger channel use this:
 
 .. code-block:: diff
 
@@ -200,3 +190,5 @@ Now you can remove service configuration at all and change constructor signature
         {
             $this->logger = $appLogger;
         }
+
+.. _`MonologBundle`: https://github.com/symfony/monolog-bundle

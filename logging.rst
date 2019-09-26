@@ -349,14 +349,9 @@ passed as a service.
     was introduced in Symfony 4.2.
 
 If you want to use in your own services a pre-configured logger which uses a
-specific channel (``app`` by default), use the ``monolog.logger`` tag  with the
-``channel`` property as explained in the
+specific channel (``app`` by default), you can either :ref:`autowire monolog channels <monolog-autowire-channels>`
+or use the ``monolog.logger`` tag  with the ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
-
-.. versionadded:: 4.2
-
-    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
 
 Adding extra Data to each Log (e.g. a unique request token)
 -----------------------------------------------------------

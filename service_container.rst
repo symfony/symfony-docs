@@ -616,13 +616,6 @@ But, you can control this and pass in a different logger:
 This tells the container that the ``$logger`` argument to ``__construct`` should use
 service whose id is ``monolog.logger.request``.
 
-.. versionadded:: 4.2
-
-    Since Monolog Bundle 3.5 each channel already into container by type-hinted alias.
-    Instead of explicit declare configuration ``$logger: '@monolog.logger.request'``
-    just use variable in the constructor signature: ``Psr\Log\LoggerInterface $requestLogger``.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
-
 .. _container-debug-container:
 
 For a full list of *all* possible services in the container, run:
@@ -720,11 +713,6 @@ By putting the ``bind`` key under ``_defaults``, you can specify the value of *a
 argument for *any* service defined in this file! You can bind arguments by name
 (e.g. ``$adminEmail``), by type (e.g. ``Psr\Log\LoggerInterface``) or both
 (e.g. ``Psr\Log\LoggerInterface $requestLogger``).
-
-.. versionadded:: 4.2
-
-    Since Monolog Bundle 3.5 each channel already bind into container by type-hinted alias.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
 
 The ``bind`` config can also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).

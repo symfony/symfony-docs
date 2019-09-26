@@ -52,11 +52,6 @@ But wait! Something *very* cool just happened. Symfony read the ``LoggerInterfac
 type-hint and automatically figured out that it should pass us the Logger object!
 This is called *autowiring*.
 
-.. versionadded:: 4.2
-
-    Furthermore, since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
-
 Every bit of work that's done in a Symfony app is done by an *object*: the Logger
 object logs things and the Twig object renders templates. These objects are called
 *services* and they are *tools* that help you build rich features.

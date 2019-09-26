@@ -275,11 +275,6 @@ the argument by its name:
             ])
         ;
 
-.. versionadded:: 4.2
-
-    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
-
 Like with all services, you can also use regular :ref:`constructor injection <services-constructor-injection>`
 in your controllers.
 
