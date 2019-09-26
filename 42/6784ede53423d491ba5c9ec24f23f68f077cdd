@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-07-01T11:53:09Z
+
+@weaverryan Thank for your reply
+
+> What made you think it was abandoned? Just lack of activity?
+
+I did not write `abandoned` but `not actively maintained`
+yes indeed, lack of activity in the review/merge IMO (cf https://github.com/Seldaek/monolog/pulse)
+
+Just wanted to ask while opening this PR
+
+I will address your review soon :)
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-07-04T07:21:36Z
+
+hi @weaverryan
+
+PR is updated accordingly, ready for review :)
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-08-05T06:59:27Z
+
+friendly ping @weaverryan
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-08-15T09:56:50Z
+
+@noniagriconomie could you please rebase your PR, I had some issues while merging it and give me a ping?
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-09-02T06:46:42Z
+
+@OskarStark ping, here you are :)
+thank you
+
+EDIT: for the part on the Monolog question
+
+> I also have a question, I can see that monolog, which is the main php logger lib, is not "actively maintained", maybe the maintainer(s) are busy on other projects which is normal
+
+Monolog release https://github.com/Seldaek/monolog/releases/tag/2.0.0, so maybe the question is no more important :)
