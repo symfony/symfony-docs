@@ -2813,11 +2813,12 @@ A list of lock stores to be created by the framework extension.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/lock.yml
         framework:
             # these are all the supported lock stores
             lock: ~
             lock: 'flock'
+            lock: 'flock:///path/to/file'
             lock: 'semaphore'
             lock: 'memcached://m1.docker'
             lock: ['memcached://m1.docker', 'memcached://m2.docker']
@@ -2832,7 +2833,7 @@ A list of lock stores to be created by the framework extension.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/lock.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -2845,6 +2846,8 @@ A list of lock stores to be created by the framework extension.
                 <framework:lock>
                     <!-- these are all the supported lock stores -->
                     <framework:resource>flock</framework:resource>
+
+                    <framework:resource>flock:///path/to/file</framework:resource>
 
                     <framework:resource>semaphore</framework:resource>
 
@@ -2870,11 +2873,12 @@ A list of lock stores to be created by the framework extension.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/lock.php
         $container->loadFromExtension('framework', [
             // these are all the supported lock stores
             'lock' => null,
             'lock' => 'flock',
+            'lock' => 'flock:///path/to/file',
             'lock' => 'semaphore',
             'lock' => 'memcached://m1.docker',
             'lock' => ['memcached://m1.docker', 'memcached://m2.docker'],
@@ -2888,6 +2892,10 @@ A list of lock stores to be created by the framework extension.
                 'report' => 'semaphore',
             ],
         ]);
+
+.. versionadded:: 4.2
+
+    The ``flock://`` store was introduced in Symfony 4.2.
 
 .. _reference-lock-resources-name:
 
