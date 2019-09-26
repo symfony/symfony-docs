@@ -534,6 +534,11 @@ channel when injecting the logger in a service.
     the corresponding logger service from the service container directly (see
     :ref:`monolog-channels-config`).
 
+.. versionadded:: 4.2
+
+    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
+    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
+
 .. _dic_tags-monolog-processor:
 
 monolog.processor

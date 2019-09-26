@@ -463,6 +463,11 @@ to the service id. For example, in MonologBundle, an alias is created from
 ``Psr\Log\LoggerInterface`` to ``logger`` so that the ``LoggerInterface`` type-hint
 can be used for autowiring.
 
+.. versionadded:: 4.2
+
+    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
+    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
+
 Services should not use autowiring or autoconfiguration. Instead, all services should
 be defined explicitly.
 

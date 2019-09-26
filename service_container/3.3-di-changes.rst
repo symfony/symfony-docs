@@ -392,8 +392,15 @@ create the class::
     }
 
 Great! In Symfony 3.2 or lower, you would now need to register this as a service
-in ``services.yaml`` and tag it with ``kernel.event_subscriber``. In Symfony 3.3,
-you're already done! The service is :ref:`automatically registered <service-33-changes-automatic-registration>`.
+in ``services.yaml`` and tag it with ``kernel.event_subscriber``.
+In Symfony 3.3, you're already done!
+
+.. versionadded:: 4.2
+
+    Furthermore, since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
+    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
+
+The service is :ref:`automatically registered <service-33-changes-automatic-registration>`.
 And thanks to ``autoconfigure``, Symfony automatically tags the service because
 it implements ``EventSubscriberInterface``.
 

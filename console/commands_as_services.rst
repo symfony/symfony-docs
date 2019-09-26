@@ -53,6 +53,11 @@ the command class will automatically be registered as a service and passed the `
 argument (thanks to autowiring). In other words, *just* by creating this class, everything
 works! You can call the ``app:sunshine`` command and start logging.
 
+.. versionadded:: 4.2
+
+    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
+    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
+
 .. caution::
 
     You *do* have access to services in ``configure()``. However, if your command is
