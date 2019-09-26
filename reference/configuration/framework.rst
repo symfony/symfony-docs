@@ -2762,7 +2762,7 @@ A list of lock stores to be created by the framework extension.
 
     .. code-block:: yaml
 
-        # config/packages/lock.yml
+        # config/packages/lock.yaml
         framework:
             # these are all the supported lock stores
             lock: ~
