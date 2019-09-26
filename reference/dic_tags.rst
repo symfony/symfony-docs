@@ -530,9 +530,8 @@ channel when injecting the logger in a service.
 
 .. tip::
 
-    You can also configure custom channels in the configuration and retrieve
-    the corresponding logger service from the service container directly (see
-    :ref:`monolog-channels-config`).
+    You can create :doc:`custom channels </logging/channels_handlers>` and
+    even :ref:`autowire logging channels <monolog-autowire-channels>`.
 
 .. _dic_tags-monolog-processor:
 

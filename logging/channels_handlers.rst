@@ -14,9 +14,9 @@ the channel).
 
 .. note::
 
-    Each channel corresponds to a logger service (``monolog.logger.XXX``)
-    in the container (use the ``php bin/console debug:container monolog`` command
-    to see a full list) and those are injected into different services.
+    Each channel corresponds to a different logger service (``monolog.logger.XXX``)
+    Use the ``php bin/console debug:container monolog`` command to see a full
+    list of services and learn :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
 
 .. _logging-channel-handler:
 
@@ -172,3 +172,23 @@ Symfony automatically registers one service per channel (in this example, the
 channel ``foo`` creates a service called ``monolog.logger.foo``). In order to
 inject this service into others, you must update the service configuration to
 :ref:`choose the specific service to inject <services-wire-specific-service>`.
+
+.. _monolog-autowire-channels:
+
+How to Autowire Logger Channels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from `MonologBundle`_ 3.5 you can autowire different Monolog channels
+by type-hinting your service arguments with the following syntax:
+``Psr\Log\LoggerInterface $<channel>Logger``. For example, to inject the service
+related to the ``app`` logger channel use this:
+
+.. code-block:: diff
+
+    -     public function __construct(LoggerInterface $logger)
+    +     public function __construct(LoggerInterface $appLogger)
+        {
+            $this->logger = $appLogger;
+        }
+
+.. _`MonologBundle`: https://github.com/symfony/monolog-bundle
