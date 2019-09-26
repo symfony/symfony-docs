@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-04-05T15:10:15Z
+
+@tgalopin I know you know TypeScript very well ... could you please check if this proposal is correct? Thanks.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-24T15:42:39Z
+
+Friendly ping to @Kocal and @Lyrkan to see if they can review this proposal. Thanks.
+
+---------------------------------------------------------------------------
+
+by Lyrkan at 2019-09-24T16:35:58Z
+
+I don't think the `include` part is necessary, I just tested it on a really basic project with a `tsconfig.json` file that only contained `{}` and everything went fine:
+
+```
+$ cat tsconfig.json
+{}
+
+$ cat webpack.config.js
+const Encore = require('@symfony/webpack-encore');
+
+Encore
+  .disableSingleRuntimeChunk()
+  .setOutputPath('build/')
+  .setPublicPath('/')
+  .cleanupOutputBeforeBuild()
+  .addEntry('main', './src/index.ts')
+  .enableTypeScriptLoader()
+;
+
+module.exports = Encore.getWebpackConfig();
+
+$ ./node_modules/.bin/encore dev
+Running webpack ...
+
+ DONE  Compiled successfully in 2095ms
+
+ I  1 files written to build
+Entrypoint main = main.js
+```
+
+Maybe it would be a better idea to directly add a link to [TypeScript's documentation](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) or to the [Webpack's page about that topic](https://webpack.js.org/guides/typescript/)?
