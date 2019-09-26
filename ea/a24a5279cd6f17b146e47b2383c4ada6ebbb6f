@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2019-07-26T14:03:43Z
+
+Hey! Can you open a new PR? It looks like something got messed up here :/.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-07-28T07:13:25Z
+
+@weaverryan I changed the base branch to `4.3` and from now on `4.2` is EOM. So everything is correct 👍
+
+Can you please review the PR? Thank you 😃
+
+---------------------------------------------------------------------------
+
+by lambertbeekhuis at 2019-07-28T16:27:42Z
+
+@weaverryan: Yes, I originally made it to the 4.3 branch, but later moved it to 4.2. That gave the errors, sorry.
+
+I saw later that in 4.0 and 4.1 there was documentation on the --disable-host-check option, but removed in 4.2. I took me quite some time to figure this out. You need the this --disable-host-check in case the dev-server and your domain/ip are different. Additionally, you need the --port option, but this might also be related to an issue, see https://github.com/symfony/webpack-encore/issues/565.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-20T17:49:11Z
+
+@Kocal could you please review this proposed change? Thanks!
+
+---------------------------------------------------------------------------
+
+by Kocal at 2019-09-20T18:03:20Z
+
+Yes of course, I'm working on it :)
