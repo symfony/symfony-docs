@@ -344,8 +344,8 @@ receive a call to its method ``setLogger()`` with the default logger service
 passed as a service.
 
 If you want to use in your own services a pre-configured logger which uses a
-specific channel (``app`` by default), use the ``monolog.logger`` tag  with the
-``channel`` property as explained in the
+specific channel (``app`` by default), you can either :ref:`autowire monolog channels <monolog-autowire-channels>`
+or use the ``monolog.logger`` tag  with the ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
 
 Adding extra Data to each Log (e.g. a unique request token)
