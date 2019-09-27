@@ -50,10 +50,15 @@ you can also set the current progress by calling the
 
     If your platform doesn't support ANSI codes, updates to the progress
     bar are added as new lines. To prevent the output from being flooded,
-    adjust the
+    use the method :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::preventRedrawFasterThan`
+    (it writes to the output after every N seconds) and the method
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
-    accordingly. By default, when using a ``max``, the redraw frequency
-    is set to *10%* of your ``max``.
+    (it writes to the output every N iterations). By default, redraw frequency is
+    **100ms** or **10%** of your ``max``.
+
+    .. versionadded::
+
+        The ``preventRedrawFasterThan()`` method was introduced in Symfony 4.4.
 
 If you don't know the exact number of steps in advance, set it to a reasonable
 value and then call the ``setMaxSteps()`` method to update it as needed::
@@ -285,17 +290,20 @@ to display it can be customized::
 
 .. caution::
 
-    For performance reasons, be careful if you set the total number of steps
-    to a high number. For example, if you're iterating over a large number of
-    items, consider setting the redraw frequency to a higher value by calling
-    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`,
-    so it updates on only some iterations::
+    For performance reasons, Symfony redraws screen every 100ms. If this is too
+    fast or to slow for your application, use these methods:
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::preventRedrawFasterThan`
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::forceRedrawSlowerThan`::
 
         $progressBar = new ProgressBar($output, 50000);
         $progressBar->start();
 
-        // update every 100 iterations
+        // this redraws the screen every 100 iterations, but sets additional limits:
+        // don't redraw slower than 100ms (0.1) or faster than 200ms (0.2)
         $progressBar->setRedrawFrequency(100);
+        $progressBar->forceRedrawSlowerThan(0.2);
+        $progressBar->preventRedrawFasterThan(0.1);
 
         $i = 0;
         while ($i++ < 50000) {
@@ -303,6 +311,11 @@ to display it can be customized::
 
             $progressBar->advance();
         }
+
+    .. versionadded::
+
+        The ``forceRedrawSlowerThan`` and ``preventRedrawFasterThan()`` methods
+        were introduced in Symfony 4.4.
 
 Custom Placeholders
 ~~~~~~~~~~~~~~~~~~~
