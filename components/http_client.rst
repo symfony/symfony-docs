@@ -745,19 +745,14 @@ HTTPlug
 The `HTTPlug`_ specification was published before PSR-18 and is superseded by
 it. As such, you should not use it in newly written code. Yet, many libraries
 still require v1 or v2 of it. The component is interoperable with them thanks to
-the ``HttplugClient`` adapter class. Similarly to ``Psr18Client`` implementing
-relevant parts of PSR-17, ``HttplugClient`` also implements the factory methods
-defined in the related ``php-http/message-factory`` package.
-
-Internally, the implementation relies on the ``Psr18Client``, so that the
-``psr/http-client`` package is needed to use this class:
+the :class:`Symfony\\Component\\HttpClient\\HttplugClient` adapter class. Similarly
+to ``Psr18Client`` implementing relevant parts of PSR-17, ``HttplugClient`` also
+implements the factory methods defined in the related ``php-http/message-factory``
+package.
 
 .. code-block:: terminal
 
     # Let's suppose php-http/httplug is already required by the lib you want to use
-
-    # installs the PSR-18 ClientInterface
-    $ composer require psr/http-client
 
     # installs an efficient implementation of response and stream factories
     # with autowiring aliases provided by Symfony Flex
