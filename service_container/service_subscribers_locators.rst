@@ -225,14 +225,16 @@ service type to a service.
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\CommandBus;
 
-        // ...
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container
-            ->register(CommandBus::class)
-            ->addTag('container.service_subscriber', ['key' => 'logger', 'id' => 'monolog.logger.event'])
-        ;
+            $services->set(CommandBus::class)
+                ->tag('container.service_subscriber', ['key' => 'logger', 'id' => 'monolog.logger.event']);
+        };
 
 .. tip::
 
@@ -299,23 +301,30 @@ service definition to pass a collection of services to the service locator:
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Symfony\Component\DependencyInjection\ServiceLocator;
 
-        // ...
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container
-            ->register('app.command_handler_locator', ServiceLocator::class)
-            ->setArguments([[
-                'App\FooCommand' => new Reference('app.command_handler.foo'),
-                'App\BarCommand' => new Reference('app.command_handler.bar'),
-                // if the element has no key, the ID of the original service is used
-                new Reference('app.command_handler.baz'),
-            )))
-            // if you are not using the default service autoconfiguration,
-            // add the following tag to the service definition:
-            // ->addTag('container.service_locator')
-        ;
+            $services->set('app.command_handler_locator', ServiceLocator::class)
+                ->args([[
+                    'App\FooCommand' => ref('app.command_handler.foo'),
+                    'App\BarCommand' => ref('app.command_handler.bar'),
+                ]])
+                // if you are not using the default service autoconfiguration,
+                // add the following tag to the service definition:
+                // ->tag('container.service_locator')
+            ;
+
+            // if the element has no key, the ID of the original service is used
+            $services->set('app.another_command_handler_locator', ServiceLocator::class)
+                ->args([[
+                    ref('app.command_handler.baz'),
+                ]])
+            ;
+        };
 
 .. note::
 
@@ -353,13 +362,16 @@ Now you can use the service locator by injecting it in any other service:
     .. code-block:: php
 
         // config/services.php
-        use App\CommandBus;
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container
-            ->register(CommandBus::class)
-            ->setArguments([new Reference('app.command_handler_locator')])
-        ;
+        use App\CommandBus;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(CommandBus::class)
+                ->args([ref('app.command_handler_locator')]);
+        };
 
 In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
 to use the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\ServiceLocatorTagPass::register`
@@ -437,18 +449,24 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\DependencyInjection\Argument\ServiceLocatorArgument;
-        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->register(App\Handler\One::class)
-            ->addTag('app.handler', ['key' => 'handler_one']);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register(App\Handler\Two::class)
-            ->addTag('app.handler', ['key' => 'handler_two']);
+            $services->set(App\Handler\One::class)
+                ->tag('app.handler', ['key' => 'handler_one'])
+            ;
 
-        $container->register(App\Handler\HandlerCollection::class)
-            // inject all services tagged with app.handler as first argument
-            ->addArgument(new ServiceLocatorArgument(new TaggedIteratorArgument('app.handler', 'key')));
+            $services->set(App\Handler\Two::class)
+                ->tag('app.handler', ['key' => 'handler_two'])
+            ;
+
+            $services->set(App\Handler\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->args([tagged_locator('app.handler', 'key')])
+            ;
+        };
 
 Inside this locator you can retrieve services by index using the value of the
 ``key`` attribute. For example, to get the ``App\Handler\Two`` service::
@@ -521,10 +539,14 @@ attribute to the locator service defining the name of this custom method:
     .. code-block:: php
 
         // config/services.php
-        // ...
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->register(App\HandlerCollection::class)
-            ->addArgument(new ServiceLocatorArgument(new TaggedIteratorArgument('app.handler', null, 'myOwnMethodName')));
+        return function(ContainerConfigurator $configurator) {
+            $configurator->services()
+                ->set(App\HandlerCollection::class)
+                    ->args([service_locator(tagged('app.handler', null, 'myOwnMethodName'))])
+            ;
+        };
 
 Service Subscriber Trait
 ------------------------

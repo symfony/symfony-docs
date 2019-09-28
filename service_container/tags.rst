@@ -38,11 +38,18 @@ example:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Twig\AppExtension;
 
-        $container->register(AppExtension::class)
-            ->setPublic(false)
-            ->addTag('twig.extension');
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(AppExtension::class)
+                ->private()
+                ->tag('twig.extension');
+        };
+
 
 Services tagged with the ``twig.extension`` tag are collected during the
 initialization of TwigBundle and added to Twig as extensions.
@@ -96,13 +103,20 @@ If you want to apply tags automatically for your own services, use the
     .. code-block:: php
 
         // config/services.php
-        use App\Security\CustomInterface;
-        // ...
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // services whose classes are instances of CustomInterface will be tagged automatically
-        $container->registerForAutoconfiguration(CustomInterface::class)
-            ->addTag('app.custom_tag')
-            ->setAutowired(true);
+        use App\Security\CustomInterface;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            // this config only applies to the services created by this file
+            $services
+                ->instanceof(CustomInterface::class)
+                    // services whose classes are instances of CustomInterface will be tagged automatically
+                    ->tag('app.custom_tag');
+        };
+
 
 For more advanced needs, you can define the automatic tags using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
@@ -182,9 +196,16 @@ Then, define the chain as a service:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Mail\TransportChain;
 
-        $container->autowire(TransportChain::class);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(TransportChain::class);
+        };
+
 
 Define Services with a Custom Tag
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,12 +252,20 @@ For example, you may add the following transports as services:
     .. code-block:: php
 
         // config/services.php
-        $container->register(\Swift_SmtpTransport::class)
-            ->addArgument('%mailer_host%')
-            ->addTag('app.mail_transport');
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->register(\Swift_SendmailTransport::class)
-            ->addTag('app.mail_transport');
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(\Swift_SmtpTransport::class)
+                ->args(['%mailer_host%'])
+                ->tag('app.mail_transport')
+            ;
+
+            $services->set(\Swift_SendmailTransport::class)
+                ->tag('app.mail_transport')
+            ;
+        };
 
 Notice that each service was given a tag named ``app.mail_transport``. This is
 the custom tag that you'll use in your compiler pass. The compiler pass is what
@@ -387,12 +416,20 @@ To answer this, change the service declaration:
     .. code-block:: php
 
         // config/services.php
-        $container->register(\Swift_SmtpTransport::class)
-            ->addArgument('%mailer_host%')
-            ->addTag('app.mail_transport', ['alias' => 'smtp']);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->register(\Swift_SendmailTransport::class)
-            ->addTag('app.mail_transport', ['alias' => 'sendmail']);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(\Swift_SmtpTransport::class)
+                ->args(['%mailer_host%'])
+                ->tag('app.mail_transport', ['alias' => 'smtp'])
+            ;
+
+            $services->set(\Swift_SendmailTransport::class)
+                ->tag('app.mail_transport', ['alias' => 'sendmail'])
+            ;
+        };
 
 .. tip::
 
@@ -500,17 +537,24 @@ first  constructor argument to the ``App\HandlerCollection`` service:
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->register(App\Handler\One::class)
-            ->addTag('app.handler');
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register(App\Handler\Two::class)
-            ->addTag('app.handler');
+            $services->set(App\Handler\One::class)
+                ->tag('app.handler')
+            ;
 
-        $container->register(App\HandlerCollection::class)
-            // inject all services tagged with app.handler as first argument
-            ->addArgument(new TaggedIteratorArgument('app.handler'));
+            $services->set(App\Handler\Two::class)
+                ->tag('app.handler')
+            ;
+
+            $services->set(App\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->args([tagged('app.handler')])
+            ;
+        };
 
 After compilation the ``HandlerCollection`` service is able to iterate over your
 application handlers::
@@ -558,7 +602,14 @@ application handlers::
         .. code-block:: php
 
             // config/services.php
-            $container->register(App\Handler\One::class)
-                ->addTag('app.handler', ['priority' => 20]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return function(ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                $services->set(App\Handler\One::class)
+                    ->tag('app.handler', ['priority' => 20])
+                ;
+            };
 
     Note that any other custom attributes will be ignored by this feature.

@@ -288,17 +288,25 @@ config files:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->setParameter('mailer.transport', 'sendmail');
-        $container
-            ->register('mailer', 'Mailer')
-            ->addArgument('%mailer.transport%');
+        return function(ContainerConfigurator $configurator) {
+            $configurator->parameters()
+                // ...
+                ->set('mailer.transport', 'sendmail')
+            ;
 
-        $container
-            ->register('newsletter_manager', 'NewsletterManager')
-            ->addMethodCall('setMailer', [new Reference('mailer')]);
+            $services = $configurator->services();
+
+            $services->set('mailer', 'Mailer')
+                ->args(['%mailer.transport%'])
+            ;
+
+            $services->set('newsletter_manager', 'NewsletterManager')
+                ->call('setMailer', [ref('mailer')])
+            ;
+        };
+
 
 Learn More
 ----------

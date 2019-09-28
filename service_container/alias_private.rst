@@ -55,10 +55,16 @@ You can also control the ``public`` option on a service-by-service basis:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\Foo;
 
-        $container->register(Foo::class)
-            ->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(Foo::class)
+                ->private();
+        };
 
 .. _services-why-private:
 
@@ -123,12 +129,18 @@ services.
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Mail\PhpMailer;
 
-        $container->register(PhpMailer::class)
-            ->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->setAlias('app.mailer', PhpMailer::class);
+            $services->set(PhpMailer::class)
+                ->private();
+
+            $services->alias('app.mailer', PhpMailer::class);
+        };
 
 This means that when using the container directly, you can access the
 ``PhpMailer`` service by asking for the ``app.mailer`` service like this::
@@ -208,10 +220,6 @@ one occurrence of the ``%alias_id%`` placeholder in your template.
 Anonymous Services
 ------------------
 
-.. note::
-
-    Anonymous services are only supported by the XML and YAML configuration formats.
-
 In some cases, you may want to prevent a service being used as a dependency of
 other services. This can be achieved by creating an anonymous service. These
 services are like regular services but they don't define an ID and they are
@@ -248,6 +256,28 @@ The following example shows how to inject an anonymous service into another serv
             </services>
         </container>
 
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\AnonymousBar;
+        use App\Foo;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(Foo::class)
+                ->args([inline(AnonymousBar::class)])
+        };
+
+.. note::
+
+    Anonymous services do *NOT* inherit the definitions provided from the
+    defaults defined in the configuration. So you'll need to explicitly mark
+    service as autowired or autoconfigured when doing an anonymous service
+    e.g.: ``inline(Foo::class)->autowire()->autoconfigure()``.
+
 Using an anonymous service as a factory looks like this:
 
 .. configuration-block::
@@ -276,6 +306,21 @@ Using an anonymous service as a factory looks like this:
                 </service>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\AnonymousBar;
+        use App\Foo;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(Foo::class)
+                ->factory([inline(AnonymousBar::class), 'constructFoo'])
+        };
 
 Deprecating Services
 --------------------
@@ -309,15 +354,16 @@ or you decided not to maintain it anymore), you can deprecate its definition:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\OldService;
 
-        $container
-            ->register(OldService::class)
-            ->setDeprecated(
-                true,
-                'The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.'
-            )
-        ;
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(OldService::class)
+                ->deprecate('The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.');
+        };
 
 Now, every time this service is used, a deprecation warning is triggered,
 advising you to stop or to change your uses of that service.
