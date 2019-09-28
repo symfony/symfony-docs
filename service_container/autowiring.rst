@@ -104,17 +104,19 @@ both services:
     .. code-block:: php
 
         // config/services.php
-        use App\Service\TwitterClient;
-        use App\Util\Rot13Transformer;
+        return function(ContainerConfigurator $configurator) {
+            $container = $configurator->services()
+                ->defaults()
+                ->autowire()
+                ->autoconfigure()
+                ->private();
 
-        // ...
+            $container->set(TwitterClient::class)
+                ->autowire(); // redundant thanks to defaults, but value is overridable on each service
+            $container->set(Rot13Transformer::class)
+                ->autowire();
+        };
 
-        // the autowire method is new in Symfony 3.3
-        // in earlier versions, use register() and then call setAutowired(true)
-        $container->autowire(TwitterClient::class);
-
-        $container->autowire(Rot13Transformer::class)
-            ->setPublic(false);
 
 Now, you can use the ``TwitterClient`` service immediately in a controller::
 
@@ -229,13 +231,19 @@ adding a service alias:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Util\Rot13Transformer;
 
-        // ...
+        return function(ContainerConfigurator $configurator) {
+            // ...
 
-        $container->autowire('app.rot13.transformer', Rot13Transformer::class)
-            ->setPublic(false);
-        $container->setAlias(Rot13Transformer::class, 'app.rot13.transformer');
+            $container->set('app.rot13.transformer', Rot13Transformer::class)
+                ->autowire()
+                ->private();
+            $container->alias(Rot13Transformer::class, 'app.rot13.transformer');
+        };
+
 
 This creates a service "alias", whose id is ``App\Util\Rot13Transformer``.
 Thanks to this, autowiring sees this and uses it whenever the ``Rot13Transformer``
@@ -329,12 +337,18 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Util\Rot13Transformer;
         use App\Util\TransformerInterface;
 
-        // ...
-        $container->autowire(Rot13Transformer::class);
-        $container->setAlias(TransformerInterface::class, Rot13Transformer::class);
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            $container->set(Rot13Transformer::class);
+            $container->alias(TransformerInterface::class, Rot13Transformer::class);
+        };
+
 
 Thanks to the ``App\Util\TransformerInterface`` alias, the autowiring subsystem
 knows that the ``App\Util\Rot13Transformer`` service should be injected when
@@ -459,24 +473,27 @@ the injection::
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\MastodonClient;
         use App\Service\TwitterClient;
         use App\Util\Rot13Transformer;
         use App\Util\TransformerInterface;
         use App\Util\UppercaseTransformer;
 
-        // ...
-        $container->autowire(Rot13Transformer::class);
-        $container->autowire(UppercaseTransformer::class);
-        $container->setAlias(TransformerInterface::class, Rot13Transformer::class);
-        $container->setAlias(
-            TransformerInterface::class.' $shoutyTransformer',
-            UppercaseTransformer::class
-        );
-        $container->autowire(TwitterClient::class)
-            //->setArgument('$transformer', new Reference(UppercaseTransformer::class))
-        ;
-        $container->autowire(MastodonClient::class);
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            $container->set(Rot13Transformer::class)->autowire();
+            $container->set(UppercaseTransformer::class)->autowire();
+            $container->alias(TransformerInterface::class.' $shoutyTransformer', UppercaseTransformer::class);
+
+            $container->set(TwitterClient::class)
+                ->autowire()
+                // ->arg('$transformer', ref(UppercaseTransformer::class))
+
+            $container->set(MastodonClient::class)->autowire();
+        };
 
 Thanks to the ``App\Util\TransformerInterface`` alias, any argument type-hinted
 with this interface will be passed the ``App\Util\Rot13Transformer`` service.

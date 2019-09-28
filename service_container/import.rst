@@ -117,19 +117,21 @@ a relative or absolute path to the imported file:
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $loader->import('services/mailer.php');
+        return function(ContainerConfigurator $configurator) {
+            $configurator->import('services/mailer.php');
 
-        $definition = new Definition();
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
+            $container = $configurator->services()
+                ->defaults()
+                    ->autowire()
+                    ->autoconfigure()
+                    ->private()
+                ;
 
-        $this->registerClasses($definition, 'App\\', '../src/*',
-            '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+            $container->load('App\\', '../src/*')
+                    ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+        };
 
 When loading a configuration file, Symfony loads first the imported files and
 then it processes the parameters and services defined in the file. If you use the
