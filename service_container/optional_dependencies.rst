@@ -39,8 +39,9 @@ if the service does not exist:
         use App\Newsletter\NewsletterManager;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
-            $container->set(NewsletterManager::class)
+            $services = $configurator->services();
+
+            $services->set(NewsletterManager::class)
                 ->args([ref('logger')->nullOnInvalid()]);
         };
 
@@ -95,8 +96,9 @@ call if the service exists and remove the method call if it does not:
         use App\Newsletter\NewsletterManager;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
-            $container->set(NewsletterManager::class)
+            $services = $configurator->services();
+
+            $services->set(NewsletterManager::class)
                 ->call('setLogger', [ref('logger')->ignoreOnInvalid()])
             ;
         };

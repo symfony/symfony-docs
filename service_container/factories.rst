@@ -75,9 +75,10 @@ configure the service container to use the
         use App\Email\NewsletterManagerStaticFactory;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->set(NewsletterManager::class)
+            // call the static method
+            $services->set(NewsletterManager::class)
                 ->factory([NewsletterManagerStaticFactory::class, 'createNewsletterManager']);
         };
 
@@ -141,9 +142,12 @@ Configuration of the service container then looks like this:
         use App\Email\NewsletterManagerFactory;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->set(NewsletterManager::class)
+            $services->set(NewsletterManagerFactory::class);
+
+            // call a method on the specified factory service
+            $services->set(NewsletterManager::class)
                 ->factory([ref(NewsletterManagerFactory::class), 'createNewsletterManager']);
         };
 
@@ -206,13 +210,18 @@ method name, just as routes can reference
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->register(NewsletterManager::class, NewsletterManager::class)
-            ->setFactory(new Reference(NewsletterManagerFactory::class));
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(NewsletterManager::class)
+                ->args([ref('templating')])
+                ->factory(ref(NewsletterManagerFactory::class));
+        };
 
 .. _factories-passing-arguments-factory-method:
 
@@ -268,10 +277,11 @@ example takes the ``templating`` service as an argument:
         use App\Email\NewsletterManagerFactory;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->set(NewsletterManager::class)
+            $services->set(NewsletterManager::class)
+                ->factory([ref(NewsletterManagerFactory::class), 'createNewsletterManager'])
                 ->args([ref('templating')])
-                ->factory([ref(NewsletterManagerFactory::class), 'createNewsletterManager']);
+            ;
         };
 

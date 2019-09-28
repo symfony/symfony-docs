@@ -67,8 +67,10 @@ configuration:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
-            $container->set('app.synthetic_service')
+            $services = $configurator->services();
+
+            // synthetic services don't specify a class
+            $services->set('app.synthetic_service')
                 ->synthetic();
         };
 

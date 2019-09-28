@@ -45,7 +45,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
         # config/services.yaml
         services:
             App\Twig\AppExtension:
-                lazy:  true
+                lazy: true
 
     .. code-block:: xml
 
@@ -69,8 +69,9 @@ You can mark the service as ``lazy`` by manipulating its definition:
         use App\Twig\AppExtension;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
-            $container->set(AppExtension::class)->lazy();
+            $services = $configurator->services();
+
+            $services->set(AppExtension::class)->lazy();
         };
 
 

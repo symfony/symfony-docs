@@ -124,13 +124,21 @@ duplicated service definitions:
         use App\Repository\DoctrineUserRepository;
 
         return function(ContainerConfigurator $configurator) {
-            $configurator->services()
-                ->set(BaseDoctrineRepository::class) // NOTE: this must be set outside of a defaults section so that it can be extended
-                    ->abstract()
-                    ->args([ref('doctrine.orm.entity_manager')])
-                    ->call('setLogger', [ref('logger')])
-                ->set(DoctrineUserRepository::class)->parent(BaseDoctrineRepository::class)
-                ->set(DoctrinePostRepository::class)->parent(BaseDoctrineRepository::class)
+            $services = $configurator->services();
+
+            $services->set(BaseDoctrineRepository::class)
+                ->abstract()
+                ->args([ref('doctrine.orm.entity_manager')])
+                ->call('setLogger', [ref('logger')])
+            ;
+
+            $services->set(DoctrineUserRepository::class)
+                // extend the App\Repository\BaseDoctrineRepository service
+                ->parent(BaseDoctrineRepository::class)
+            ;
+
+            $services->set(DoctrinePostRepository::class)
+                ->parent(BaseDoctrineRepository::class)
             ;
         };
 
@@ -231,15 +239,27 @@ the child class:
         // ...
 
         return function(ContainerConfigurator $configurator) {
-            $configurator->services()
-                ->set(BaseDoctrineRepository::class) // NOTE: this must be set outside of a defaults section so that it can be extended
-                    // ...
-                ->set(DoctrineUserRepository::class)
-                    ->parent(BaseDoctrineRepository::class)
-                    ->private()
-                    ->arg(1, ref('app.username_checker'))
-                ->set(DoctrinePostRepository::class)
-                    ->parent(BaseDoctrineRepository::class)
-                    ->arg(0, ref('doctrine.custom_entity_manager'))
+            $services = $configurator->services();
+
+            $services->set(BaseDoctrineRepository::class)
+                // ...
+            ;
+
+            $services->set(DoctrineUserRepository::class)
+                ->parent(BaseDoctrineRepository::class)
+
+                // overrides the public setting of the parent service
+                ->private()
+
+                // appends the '@app.username_checker' argument to the parent
+                // argument list
+                ->args([ref('app.username_checker')])
+            ;
+
+            $services->set(DoctrinePostRepository::class)
+                ->parent(BaseDoctrineRepository::class)
+
+                # overrides the first argument
+                ->arg(0, ref('doctrine.custom_entity_manager'))
             ;
         };

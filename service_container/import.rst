@@ -122,15 +122,15 @@ a relative or absolute path to the imported file:
         return function(ContainerConfigurator $configurator) {
             $configurator->import('services/mailer.php');
 
-            $container = $configurator->services()
+            $services = $configurator->services()
                 ->defaults()
                     ->autowire()
                     ->autoconfigure()
                     ->private()
-                ;
+            ;
 
-            $container->load('App\\', '../src/*')
-                    ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+            $services->load('App\\', '../src/*')
+                ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
         };
 
 When loading a configuration file, Symfony loads first the imported files and

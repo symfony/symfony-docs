@@ -173,13 +173,16 @@ all the classes are already loaded as services. All you need to do is specify th
         use App\Mail\NewsletterManager;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->load('App\', '../src/*');
-            $container->set(NewsletterManager::class)
+            // Registers all 4 classes as services, including App\Mail\EmailConfigurator
+            $services->load('App\', '../src/*');
+
+            // override the services to set the configurator
+            $services->set(NewsletterManager::class)
                 ->configurator(ref(EmailConfigurator::class), 'configure');
 
-            $container->set(GreetingCardManager::class)
+            $services->set(GreetingCardManager::class)
                 ->configurator(ref(EmailConfigurator::class), 'configure');
         };
 
@@ -238,23 +241,24 @@ routes can reference :ref:`invokable controllers <controller-service-invoke>`.
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Mail\GreetingCardManager;
         use App\Mail\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        // Same as before
-        $definition = new Definition();
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $definition->setAutowired(true);
+            // Registers all 4 classes as services, including App\Mail\EmailConfigurator
+            $services->load('App\', '../src/*');
 
-        $this->registerClasses($definition, 'App\\', '../src/*');
+            // override the services to set the configurator
+            $services->set(NewsletterManager::class)
+                ->configurator(ref(EmailConfigurator::class));
 
-        $container->getDefinition(NewsletterManager::class)
-            ->setConfigurator(new Reference(EmailConfigurator::class));
-
-        $container->getDefinition(GreetingCardManager::class)
-            ->setConfigurator(new Reference(EmailConfigurator::class));
+            $services->set(GreetingCardManager::class)
+                ->configurator(ref(EmailConfigurator::class));
+        };
 
 That's it! When requesting the ``App\Mail\NewsletterManager`` or
 ``App\Mail\GreetingCardManager`` service, the created instance will first be

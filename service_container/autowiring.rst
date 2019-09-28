@@ -95,6 +95,7 @@ both services:
                 <defaults autowire="true" autoconfigure="true" public="false"/>
                 <!-- ... -->
 
+                <!-- autowire is redundant thanks to defaults, but value is overridable on each service -->
                 <service id="App\Service\TwitterClient" autowire="true"/>
 
                 <service id="App\Util\Rot13Transformer" autowire="true"/>
@@ -105,15 +106,17 @@ both services:
 
         // config/services.php
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services()
+            $services = $configurator->services()
                 ->defaults()
-                ->autowire()
-                ->autoconfigure()
-                ->private();
+                    ->autowire()
+                    ->autoconfigure()
+            ;
 
-            $container->set(TwitterClient::class)
-                ->autowire(); // redundant thanks to defaults, but value is overridable on each service
-            $container->set(Rot13Transformer::class)
+            $services->set(TwitterClient::class)
+                // redundant thanks to defaults, but value is overridable on each service
+                ->autowire();
+
+            $services->set(Rot13Transformer::class)
                 ->autowire();
         };
 
@@ -238,10 +241,14 @@ adding a service alias:
         return function(ContainerConfigurator $configurator) {
             // ...
 
-            $container->set('app.rot13.transformer', Rot13Transformer::class)
-                ->autowire()
-                ->private();
-            $container->alias(Rot13Transformer::class, 'app.rot13.transformer');
+            // the id is not a class, so it won't be used for autowiring
+            $services->set('app.rot13.transformer', Rot13Transformer::class)
+                ->autowire();
+
+            // but this fixes it!
+            // the ``app.rot13.transformer`` service will be injected when
+            // an ``App\Util\Rot13Transformer`` type-hint is detected
+            $services->alias(Rot13Transformer::class, 'app.rot13.transformer');
         };
 
 
@@ -345,8 +352,11 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
         return function(ContainerConfigurator $configurator) {
             // ...
 
-            $container->set(Rot13Transformer::class);
-            $container->alias(TransformerInterface::class, Rot13Transformer::class);
+            $services->set(Rot13Transformer::class);
+
+            // the ``App\Util\Rot13Transformer`` service will be injected when
+            // an ``App\Util\TransformerInterface`` type-hint is detected
+            $services->alias(TransformerInterface::class, Rot13Transformer::class);
         };
 
 
@@ -484,15 +494,27 @@ the injection::
         return function(ContainerConfigurator $configurator) {
             // ...
 
-            $container->set(Rot13Transformer::class)->autowire();
-            $container->set(UppercaseTransformer::class)->autowire();
-            $container->alias(TransformerInterface::class.' $shoutyTransformer', UppercaseTransformer::class);
+            $services->set(Rot13Transformer::class)->autowire();
+            $services->set(UppercaseTransformer::class)->autowire();
 
-            $container->set(TwitterClient::class)
+            // the ``App\Util\UppercaseTransformer`` service will be
+            // injected when an ``App\Util\TransformerInterface``
+            // type-hint for a ``$shoutyTransformer`` argument is detected.
+            $services->alias(TransformerInterface::class.' $shoutyTransformer', UppercaseTransformer::class);
+
+            // If the argument used for injection does not match, but the
+            // type-hint still matches, the ``App\Util\Rot13Transformer``
+            // service will be injected.
+            $services->alias(TransformerInterface::class, Rot13Transformer::class);
+
+            $services->set(TwitterClient::class)
+                // the Rot13Transformer will be passed as the $transformer argument
                 ->autowire()
-                // ->arg('$transformer', ref(UppercaseTransformer::class))
 
-            $container->set(MastodonClient::class)->autowire();
+                // If you wanted to choose the non-default service and do not
+                // want to use a named autowiring alias, wire it manually:
+                //     ->arg('$transformer', ref(UppercaseTransformer::class))
+                // ...
         };
 
 Thanks to the ``App\Util\TransformerInterface`` alias, any argument type-hinted

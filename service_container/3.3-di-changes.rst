@@ -87,17 +87,25 @@ what the file looks like in Symfony 4):
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services()
+            // default configuration for services in *this* file
+            $services = $configurator->services()
                 ->defaults()
-                ->autowire()
-                ->autoconfigure()
-                ->private();
+                    ->autowire()      // Automatically injects dependencies in your services.
+                    ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
+            ;
 
-            $container->load('App\\', '../src/*')
+            // makes classes in src/ available to be used as services
+            // this creates a service per class whose id is the fully-qualified class name
+            $services->load('App\\', '../src/*')
                 ->exclude('../src/{Entity,Migrations,Tests}');
 
-            $container->load('App\\Controller\\', '../src/Controller')
+            // controllers are imported separately to make sure services can be injected
+            // as action arguments even if you don't extend any base controller class
+            $services->load('App\\Controller\\', '../src/Controller')
                 ->tag('controller.service_arguments');
+
+            // add more service definitions when explicit configuration is needed
+            // please note that last definitions always *replace* previous ones
         };
 
 This small bit of configuration contains a paradigm shift of how services
@@ -153,7 +161,9 @@ thanks to the following config:
         return function(ContainerConfigurator $configurator) {
             // ...
 
-            $container->load('App\\', '../src/*')
+            // makes classes in src/ available to be used as services
+            // this creates a service per class whose id is the fully-qualified class name
+            $services->load('App\\', '../src/*')
                 ->exclude('../src/{Entity,Migrations,Tests}');
         };
 
@@ -355,7 +365,9 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
         return function(ContainerConfigurator $configurator) {
             // ...
 
-            $container->load('App\\Controller\\', '../src/Controller')
+            // controllers are imported separately to make sure they're public
+            // and have a tag that allows actions to type-hint services
+            $services->load('App\\Controller\\', '../src/Controller')
                 ->tag('controller.service_arguments');
         };
 
@@ -509,7 +521,7 @@ inherited from an abstract definition:
         return function(ContainerConfigurator $configurator) {
             // ...
 
-            $container->instanceof(LoaderInterface::class
+            $services->instanceof(LoaderInterface::class)
                 ->public()
                 ->tag('app.domain_loader');
         };

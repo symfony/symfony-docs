@@ -60,8 +60,9 @@ You can also control the ``public`` option on a service-by-service basis:
         use App\Service\Foo;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
-            $container->set(Foo::class)
+            $services = $configurator->services();
+
+            $services->set(Foo::class)
                 ->private();
         };
 
@@ -133,10 +134,12 @@ services.
         use App\Mail\PhpMailer;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
-            $container->set(PhpMailer::class)
+            $services = $configurator->services();
+
+            $services->set(PhpMailer::class)
                 ->private();
-            $container->alias('app.mailer', PhpMailer::class);
+
+            $services->alias('app.mailer', PhpMailer::class);
         };
 
 This means that when using the container directly, you can access the
@@ -221,10 +224,6 @@ one occurrence of the ``%alias_id%`` placeholder in your template.
 Anonymous Services
 ------------------
 
-.. note::
-
-    Anonymous services are only supported by the XML, YAML, and PHP Fluent configuration formats.
-
 In some cases, you may want to prevent a service being used as a dependency of
 other services. This can be achieved by creating an anonymous service. These
 services are like regular services but they don't define an ID and they are
@@ -270,16 +269,18 @@ The following example shows how to inject an anonymous service into another serv
         use App\Foo;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->set(Foo::class)
+            $services->set(Foo::class)
                 ->args([inline(AnonymousBar::class)])
         };
 
 .. note::
 
-    Anonymous services do *NOT* inherit the definitions provided from the defaults defined in the configuration. So you'll
-    need to explicitly mark service as autowired or autoconfigured when doing an anonymous service e.g.: `inline(Foo::class)->autowire()->autoconfigure()`.
+    Anonymous services do *NOT* inherit the definitions provided from the
+    defaults defined in the configuration. So you'll need to explicitly mark
+    service as autowired or autoconfigured when doing an anonymous service
+    e.g.: ``inline(Foo::class)->autowire()->autoconfigure()``.
 
 Using an anonymous service as a factory looks like this:
 
@@ -319,9 +320,9 @@ Using an anonymous service as a factory looks like this:
         use App\Foo;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->set(Foo::class)
+            $services->set(Foo::class)
                 ->factory([inline(AnonymousBar::class), 'constructFoo'])
         };
 
@@ -362,9 +363,9 @@ or you decided not to maintain it anymore), you can deprecate its definition:
         use App\Service\OldService;
 
         return function(ContainerConfigurator $configurator) {
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->set(OldService::class)
+            $services->set(OldService::class)
                 ->deprecate('The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.');
         };
 

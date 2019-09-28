@@ -292,15 +292,19 @@ config files:
 
         return function(ContainerConfigurator $configurator) {
             $configurator->parameters()
-                ->set('mailer.transport', 'sendmail');
+                // ...
+                ->set('mailer.transport', 'sendmail')
+            ;
 
-            $container = $configurator->services();
+            $services = $configurator->services();
 
-            $container->set('mailer', 'Mailer')
-                ->args(['%mailer.transport%']);
+            $services->set('mailer', 'Mailer')
+                ->args(['%mailer.transport%'])
+            ;
 
-            $container->set('newsletter_manager', 'NewsletterManager')
-                ->call('setMailer', [ref('mailer')]);
+            $services->set('newsletter_manager', 'NewsletterManager')
+                ->call('setMailer', [ref('mailer')])
+            ;
         };
 
 
