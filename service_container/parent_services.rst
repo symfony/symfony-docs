@@ -119,9 +119,9 @@ duplicated service definitions:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Repository\DoctrineUserRepository;
-        use App\Repository\DoctrinePostRepository;
         use App\Repository\BaseDoctrineRepository;
+        use App\Repository\DoctrinePostRepository;
+        use App\Repository\DoctrineUserRepository;
 
         return function(ContainerConfigurator $configurator) {
             $configurator->services()
@@ -225,9 +225,9 @@ the child class:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Repository\DoctrineUserRepository;
-        use App\Repository\DoctrinePostRepository;
         use App\Repository\BaseDoctrineRepository;
+        use App\Repository\DoctrinePostRepository;
+        use App\Repository\DoctrineUserRepository;
         // ...
 
         return function(ContainerConfigurator $configurator) {

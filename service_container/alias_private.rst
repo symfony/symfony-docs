@@ -225,14 +225,6 @@ Anonymous Services
 
     Anonymous services are only supported by the XML, YAML, and PHP Fluent configuration formats.
 
-.. versionadded:: 3.3
-
-    The feature to configure anonymous services in YAML was introduced in Symfony 3.3.
-
-.. versionadded:: 4.1
-
-    The feaature to configure anonymous services in PHP Fluent was introduced in Symfony 3.4.
-
 In some cases, you may want to prevent a service being used as a dependency of
 other services. This can be achieved by creating an anonymous service. These
 services are like regular services but they don't define an ID and they are
@@ -274,8 +266,8 @@ The following example shows how to inject an anonymous service into another serv
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Foo;
         use App\AnonymousBar;
+        use App\Foo;
 
         return function(ContainerConfigurator $configurator) {
             $container = $configurator->services();
@@ -323,8 +315,8 @@ Using an anonymous service as a factory looks like this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Foo;
         use App\AnonymousBar;
+        use App\Foo;
 
         return function(ContainerConfigurator $configurator) {
             $container = $configurator->services();
