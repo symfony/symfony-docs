@@ -117,28 +117,30 @@ duplicated service definitions:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Repository\BaseDoctrineRepository;
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
-        use Symfony\Component\DependencyInjection\ChildDefinition;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(BaseDoctrineRepository::class)
-            ->setAbstract(true)
-            ->addArgument(new Reference('doctrine.orm.entity_manager'))
-            ->addMethodCall('setLogger', [new Reference('logger')])
-        ;
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        // extend the App\Repository\BaseDoctrineRepository service
-        $definition = new ChildDefinition(BaseDoctrineRepository::class);
-        $definition->setClass(DoctrineUserRepository::class);
-        $container->setDefinition(DoctrineUserRepository::class, $definition);
+            $services->set(BaseDoctrineRepository::class)
+                ->abstract()
+                ->args([ref('doctrine.orm.entity_manager')])
+                ->call('setLogger', [ref('logger')])
+            ;
 
-        $definition = new ChildDefinition(BaseDoctrineRepository::class);
-        $definition->setClass(DoctrinePostRepository::class);
-        $container->setDefinition(DoctrinePostRepository::class, $definition);
+            $services->set(DoctrineUserRepository::class)
+                // extend the App\Repository\BaseDoctrineRepository service
+                ->parent(BaseDoctrineRepository::class)
+            ;
 
-        // ...
+            $services->set(DoctrinePostRepository::class)
+                ->parent(BaseDoctrineRepository::class)
+            ;
+        };
 
 In this context, having a ``parent`` service implies that the arguments
 and method calls of the parent service should be used for the child services.
@@ -229,23 +231,35 @@ the child class:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Repository\BaseDoctrineRepository;
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
-        use Symfony\Component\DependencyInjection\ChildDefinition;
-        use Symfony\Component\DependencyInjection\Reference;
         // ...
 
-        $definition = new ChildDefinition(BaseDoctrineRepository::class);
-        $definition->setClass(DoctrineUserRepository::class);
-        // overrides the public setting of the parent service
-        $definition->setPublic(false);
-        // appends the '@app.username_checker' argument to the parent argument list
-        $definition->addArgument(new Reference('app.username_checker'));
-        $container->setDefinition(DoctrineUserRepository::class, $definition);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $definition = new ChildDefinition(BaseDoctrineRepository::class);
-        $definition->setClass(DoctrinePostRepository::class);
-        // overrides the first argument
-        $definition->replaceArgument(0, new Reference('doctrine.custom_entity_manager'));
-        $container->setDefinition(DoctrinePostRepository::class, $definition);
+            $services->set(BaseDoctrineRepository::class)
+                // ...
+            ;
+
+            $services->set(DoctrineUserRepository::class)
+                ->parent(BaseDoctrineRepository::class)
+
+                // overrides the public setting of the parent service
+                ->private()
+
+                // appends the '@app.username_checker' argument to the parent
+                // argument list
+                ->args([ref('app.username_checker')])
+            ;
+
+            $services->set(DoctrinePostRepository::class)
+                ->parent(BaseDoctrineRepository::class)
+
+                # overrides the first argument
+                ->arg(0, ref('doctrine.custom_entity_manager'))
+            ;
+        };

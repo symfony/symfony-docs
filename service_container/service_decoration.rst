@@ -39,14 +39,20 @@ When overriding an existing definition, the original service is lost:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Mailer;
         use App\NewMailer;
 
-        $container->register(Mailer::class);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        // this replaces the old App\Mailer definition with the new one, the
-        // old definition is lost
-        $container->register(Mailer::class, NewMailer::class);
+            $services->set(Mailer::class);
+
+            // this replaces the old App\Mailer definition with the new one, the
+            // old definition is lost
+            $services->set(Mailer::class, NewMailer::class);
+        };
 
 Most of the time, that's exactly what you want to do. But sometimes,
 you might want to decorate the old one instead (i.e. apply the `Decorator pattern`_).
@@ -88,15 +94,21 @@ but keeps a reference of the old one as ``App\DecoratingMailer.inner``:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\DecoratingMailer;
         use App\Mailer;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(Mailer::class);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register(DecoratingMailer::class)
-            ->setDecoratedService(Mailer::class)
-        ;
+            $services->set(Mailer::class);
+
+            $services->set(DecoratingMailer::class)
+                // overrides the App\Mailer service
+                // but that service is still available as App\DecoratingMailer.inner
+                ->decorate(Mailer::class);
+        };
 
 The ``decorates`` option tells the container that the ``App\DecoratingMailer``
 service replaces the ``App\Mailer`` service. If you're using the
@@ -145,16 +157,22 @@ automatically changed to ``decorating_service_id + '.inner'``):
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\DecoratingMailer;
         use App\Mailer;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(Mailer::class);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register(DecoratingMailer::class)
-            ->setDecoratedService(Mailer::class)
-            ->addArgument(new Reference(DecoratingMailer::class.'.inner'))
-        ;
+            $services->set(Mailer::class);
+
+            $services->set(DecoratingMailer::class)
+                ->decorate(Mailer::class)
+                // pass the old service as an argument
+                ->args([ref(DecoratingMailer::class.'.inner')]);
+        };
+
 
 .. tip::
 
@@ -206,14 +224,20 @@ automatically changed to ``decorating_service_id + '.inner'``):
         .. code-block:: php
 
             // config/services.php
-            use App\DecoratingMailer;
-            use Symfony\Component\DependencyInjection\Reference;
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            $container->register(DecoratingMailer::class)
-                ->setDecoratedService(App\Mailer, DecoratingMailer::class.'.wooz')
-                ->addArgument(new Reference(DecoratingMailer::class.'.wooz'))
-                // ...
-            ;
+            use App\DecoratingMailer;
+            use App\Mailer;
+
+            return function(ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                $services->set(Mailer::class);
+
+                $services->set(DecoratingMailer::class)
+                    ->decorate(Mailer::class, DecoratingMailer::class.'.wooz')
+                    ->args([ref(DecoratingMailer::class.'.wooz')]);
+            };
 
 Decoration Priority
 -------------------
@@ -266,19 +290,24 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->register(Foo::class)
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register(Bar::class)
-            ->addArgument(new Reference(Bar::class.'.inner'))
-            ->setPublic(false)
-            ->setDecoratedService(Foo::class, null, 5);
+            $services->set(Foo::class);
 
-        $container->register(Baz::class)
-            ->addArgument(new Reference(Baz::class.'.inner'))
-            ->setPublic(false)
-            ->setDecoratedService(Foo::class, null, 1);
+            $services->set(Bar::class)
+                ->private()
+                ->decorate(Foo::class, null, 5)
+                ->args([ref(Bar::class.'.inner')]);
+
+            $services->set(Baz::class)
+                ->private()
+                ->decorate(Foo::class, null, 1)
+                ->args([ref(Baz::class.'.inner')]);
+        };
+
 
 The generated code will be the following::
 

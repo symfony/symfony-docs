@@ -81,6 +81,33 @@ what the file looks like in Symfony 4):
             </services>
         </container>
 
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $configurator) {
+            // default configuration for services in *this* file
+            $services = $configurator->services()
+                ->defaults()
+                    ->autowire()      // Automatically injects dependencies in your services.
+                    ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
+            ;
+
+            // makes classes in src/ available to be used as services
+            // this creates a service per class whose id is the fully-qualified class name
+            $services->load('App\\', '../src/*')
+                ->exclude('../src/{Entity,Migrations,Tests}');
+
+            // controllers are imported separately to make sure services can be injected
+            // as action arguments even if you don't extend any base controller class
+            $services->load('App\\Controller\\', '../src/Controller')
+                ->tag('controller.service_arguments');
+
+            // add more service definitions when explicit configuration is needed
+            // please note that last definitions always *replace* previous ones
+        };
+
 This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
 
@@ -125,6 +152,20 @@ thanks to the following config:
                 <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            // makes classes in src/ available to be used as services
+            // this creates a service per class whose id is the fully-qualified class name
+            $services->load('App\\', '../src/*')
+                ->exclude('../src/{Entity,Migrations,Tests}');
+        };
 
 This means that every class in ``src/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
@@ -319,11 +360,17 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
+        return function(ContainerConfigurator $configurator) {
+            // ...
 
-        $definition->addTag('controller.service_arguments');
-        $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
+            // controllers are imported separately to make sure they're public
+            // and have a tag that allows actions to type-hint services
+            $services->load('App\\Controller\\', '../src/Controller')
+                ->tag('controller.service_arguments');
+        };
+
 
 But, you might not even notice this. First, your controllers *can* still extend
 the same base controller class (``AbstractController``).
@@ -463,6 +510,21 @@ inherited from an abstract definition:
                 </instanceof>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Domain\LoaderInterface;
+
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            $services->instanceof(LoaderInterface::class)
+                ->public()
+                ->tag('app.domain_loader');
+        };
 
 What about Performance
 ----------------------

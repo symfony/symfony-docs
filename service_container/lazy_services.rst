@@ -45,7 +45,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
         # config/services.yaml
         services:
             App\Twig\AppExtension:
-                lazy:  true
+                lazy: true
 
     .. code-block:: xml
 
@@ -64,10 +64,16 @@ You can mark the service as ``lazy`` by manipulating its definition:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Twig\AppExtension;
 
-        $container->register(AppExtension::class)
-            ->setLazy(true);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(AppExtension::class)->lazy();
+        };
+
 
 Once you inject the service into another service, a virtual `proxy`_ with the
 same signature of the class representing the service should be injected. The

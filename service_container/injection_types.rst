@@ -69,12 +69,17 @@ service container configuration:
     .. code-block:: php
 
         // config/services.php
-        use App\Mail\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->register(NewsletterManager::class)
-            ->addArgument(new Reference('mailer'));
+        use App\Mail\NewsletterManager;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(NewsletterManager::class)
+                ->args(ref('mailer'));
+        };
+
 
 .. tip::
 
@@ -155,12 +160,16 @@ that accepts the dependency::
     .. code-block:: php
 
         // config/services.php
-        use App\Mail\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->register('app.newsletter_manager', NewsletterManager::class)
-            ->addMethodCall('setMailer', [new Reference('mailer')]);
+        use App\Mail\NewsletterManager;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(NewsletterManager::class)
+                ->call('setMailer', [ref('mailer')]);
+        };
 
 This time the advantages are:
 
@@ -228,12 +237,16 @@ Another possibility is setting public fields of the class directly::
     .. code-block:: php
 
         // config/services.php
-        use App\Mail\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->register('newsletter_manager', NewsletterManager::class)
-            ->setProperty('mailer', new Reference('mailer'));
+        use App\Mail\NewsletterManager;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('app.newsletter_manager, NewsletterManager::class)
+                ->property('mailer', ref('mailer'));
+        };
 
 There are mainly only disadvantages to using property injection, it is similar
 to setter injection but with these additional important problems:
