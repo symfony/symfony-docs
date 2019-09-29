@@ -56,7 +56,7 @@ you can also set the current progress by calling the
     (it writes to the output every N iterations). By default, redraw frequency is
     **100ms** or **10%** of your ``max``.
 
-    .. versionadded::
+    .. versionadded:: 4.4
 
         The ``preventRedrawFasterThan()`` method was introduced in Symfony 4.4.
 
@@ -316,7 +316,7 @@ to display it can be customized::
             $progressBar->advance();
         }
 
-    .. versionadded::
+    .. versionadded:: 4.4
 
         The ``forceRedrawSlowerThan`` and ``preventRedrawFasterThan()`` methods
         were introduced in Symfony 4.4.
