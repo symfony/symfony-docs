@@ -253,56 +253,74 @@ Docker Integration
 ------------------
 
 The local Symfony server provides full `Docker`_ integration for projects that
-use it. First, make sure to expose the container ports:
+use it.
 
-.. code-block:: yaml
+When the web server detects that Docker Compose is running for the project, it
+automatically exposes environment variables according to the exposed port and
+the name of the ``docker-compose`` services.
 
-    # docker-compose.override.yaml
-    services:
-        database:
-            ports:
-                - "3306"
-
-        redis:
-            ports:
-                - "6379"
-
-        # ...
-
-Then, check your service names and update them if needed (Symfony creates
-environment variables following the name of the services so they can be
-autoconfigured):
+Consider the following configuration:
 
 .. code-block:: yaml
 
     # docker-compose.yaml
     services:
-        # DATABASE_URL
-        database: ...
-        # MONGODB_DATABASE, MONGODB_SERVER
-        mongodb: ...
-        # REDIS_URL
-        redis: ...
-        # ELASTISEARCH_HOST, ELASTICSEARCH_PORT
-        elasticsearch: ...
-        # RABBITMQ_DSN
-        rabbitmq: ...
+        database:
+            ports: [3306]
 
-If your ``docker-compose.yaml`` file doesn't use the environment variable names
-expected by Symfony (e.g. you use ``MYSQL_URL`` instead of ``DATABASE_URL``)
-then you need to rename all occurrences of those environment variables in your
-Symfony application. A simpler alternative is to use the ``.env.local`` file to
-reassign the environment variables:
+The web server detects that a service exposing port ``3306`` is running for the
+project. It understands that this is a MySQL service and creates environment
+variables accordingly with the service name (``database``) as a prefix:
+``DATABASE_URL``, ``DATABASE_HOST``, ...
 
-.. code-block:: bash
+If the ``docker-compose.yaml`` names do not match Symfony's conventions, add a
+label to override the environment variables prefix:
 
-    # .env.local
-    DATABASE_URL=${MYSQL_URL}
-    # ...
+.. code-block:: yaml
 
-Now you can start the containers and all their services will be exposed. Browse
-any page of your application and check the "Symfony Server" section in the web
-debug toolbar. You'll see that "Docker Compose" is "Up".
+    # docker-compose.yaml
+    services:
+        db:
+            ports: [3306]
+            labels:
+                com.symfony.server.service-prefix: 'DATABASE'
+
+In this example, the service is named ``db``, so environment variables would be
+prefixed with ``DB_``, but as the ``com.symfony.server.service-prefix`` is set
+to ``DATABASE``, the web server creates environment variables starting with
+``DATABASE_`` instead as expected by the default Symfony configuration.
+
+Here is the list of supported services with their ports and default Symfony
+prefixes:
+
+============= ===== ======================
+Service       Port  Symfony default prefix
+============= ===== ======================
+MySQL         3306  ``DATABASE_``
+PostgreSQL    5432  ``DATABASE_``
+Redis         6379  ``REDIS_``
+RabbitMQ      5672  ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_DEFAULT_USER`` and ``RABBITMQ_DEFAULT_PASS`` env var)
+ElasticSearch 9200  ``ELASTICSEARCH_``
+MongoDB       27017 ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
+Kafka         9092  ``KAFKA_``
+============= ===== ======================
+
+.. tip::
+
+    To debug and list all exported environment variables, run ``symfony
+    var:export``.
+
+.. tip::
+
+    For some services, the web server also exposes environment variables
+    understood by CLI tools related to the service. For instance, running
+    ``symfony run psql`` will connect you automatically to the PostgreSQL server
+    running in a container without having to specify the username, password, or
+    database name.
+
+When Docker services are running, browse a page of your Symfony application and
+check the "Symfony Server" section in the web debug toolbar; you'll see that
+"Docker Compose" is "Up".
 
 SymfonyCloud Integration
 ------------------------
