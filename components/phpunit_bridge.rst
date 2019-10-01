@@ -28,6 +28,10 @@ It comes with the following features:
   constraints to apply; 2. running tests in parallel when a test suite is split
   in several phpunit.xml files; 3. recording and replaying skipped tests;
 
+* It allows to create tests that are compatible with multiple PHPUnit versions
+  (because it provides polyfills for missing methods, namespaced aliases for
+  non-namespaced classes, etc.).
+
 Installation
 ------------
 
@@ -366,6 +370,83 @@ Running the following command will display the full stack trace:
 .. code-block:: terminal
 
     $ SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
+
+Testing with Multiple PHPUnit Versions
+--------------------------------------
+
+When testing a library that has to be compatible with several versions of PHP,
+the test suite cannot use the latest versions of PHPUnit because:
+
+* PHPUnit 8 deprecated several methods in favor of other methods which are not
+  available in older versions (e.g. PHPUnit 4);
+* PHPUnit 8 added the ``void`` return type to the ``setUp()`` method, which is
+  not compatible with PHP 5.5;
+* PHPUnit switched to namespaced classes starting from PHPUnit 6, so tests must
+  work with and without namespaces.
+
+Polyfills for the Unavailable Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.4
+
+    This feature was introduced in Symfony 4.4.
+
+When using the ``simple-phpunit`` script, PHPUnit Bridge injects polyfills for
+most methods of the ``TestCase`` and ``Assert`` classes (e.g. ``expectException()``,
+``expectExcpetionMessage()``, ``assertContainsEquals``, etc.). This allows writing
+test cases using the latest best practices while still remaining compatible with
+older PHPUnit versions.
+
+Removing the Void Return Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.4
+
+    This feature was introduced in Symfony 4.4.
+
+When running the ``simple-phpunit`` script with the ``SYMFONY_PHPUNIT_REMOVE_RETURN_TYPEHINT``
+environment variable set to ``1``, the PHPUnit bridge will alter the code of
+PHPUnit to remove the return type (introduced in PHPUnit 8) from ``setUp()``,
+``tearDown()``, ``setUpBeforeClass()`` and ``tearDownAfterClass()`` methods.
+This allows you to write a test compatible with both PHP 5 and PHPUnit 8.
+
+Alternatively, you can use the trait :class:`Symfony\Bridge\PhpUnit\SetUpTearDownTrait`,
+which provides the right signature for the ``setUp()``, ``tearDown()``,
+``setUpBeforeClass()`` and ``tearDownAfterClass()`` methods and delegates the
+call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
+``doTearDownAfterClass()`` methods::
+
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+
+    class MyTest extends TestCase
+    {
+        use SetUpTearDownTrait;
+
+        private $state;
+
+        private function doSetup()
+        {
+            $this->state = 'demo';
+        }
+
+        protected function doSetup(): void
+        {
+            // visibility and return type-hint of method is free
+        }
+    }
+
+Using Namespaced PHPUnit Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.4
+
+    This feature was introduced in Symfony 4.4.
+
+The PHPUnit bridge adds namespaced class aliases for most of the PHPUnit classes
+declared without namespaces (e.g. ``PHPUnit_Framework_Assert``), allowing you to
+always use the namespaced class declaration even when the test is executed with
+PHPUnit 4.
 
 Time-sensitive Tests
 --------------------
