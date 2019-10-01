@@ -688,6 +688,13 @@ The Crawler can extract information from the nodes::
     // returns the node value for the first node
     $crawler->text();
 
+    // returns the default text if the node does not exist
+    $crawler->text('Default text content');
+
+    // pass TRUE as the second argument of text() to remove all extra white spaces, including
+    // the internal ones (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
+    $crawler->text(null, true);
+
     // extracts an array of attributes for all nodes
     // (_text returns the node value)
     // returns an array for each element in crawler,
