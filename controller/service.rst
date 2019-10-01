@@ -183,7 +183,7 @@ look at the `ControllerTrait`_ that holds its logic.
 If you want to know what type-hints to use for each service, see the
 ``getSubscribedServices()`` method in `AbstractController`_.
 
-.. _`Controller class source code`: https://github.com/symfony/symfony/blob/4.3/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
-.. _`ControllerTrait`: https://github.com/symfony/symfony/blob/4.3/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
+.. _`Controller class source code`: https://github.com/symfony/symfony/blob/4.4/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
+.. _`ControllerTrait`: https://github.com/symfony/symfony/blob/4.4/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`AbstractController`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
 .. _`ADR pattern`: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
