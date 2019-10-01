@@ -93,7 +93,7 @@ Example::
 
     $bus = new MessageBus([
         new HandleMessageMiddleware(new HandlersLocator([
-            MyMessage::class => ['dummy' => $handler],
+            MyMessage::class => [$handler],
         ])),
     ]);
 
@@ -155,8 +155,7 @@ At the moment, the Symfony Messenger has the following built-in envelope stamps:
    :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SendersLocator`.
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
    a stamp that marks the message as handled by a specific handler.
-   Allows accessing the handler returned value, the handler callable name
-   and its alias if available from the :class:`Symfony\\Component\\Messenger\\Handler\\HandlersLocator`.
+   Allows accessing the handler returned value and the handler name.
 
 Instead of dealing directly with the messages in the middleware you receive the envelope.
 Hence you can inspect the envelope content and its stamps, or add any::
