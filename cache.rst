@@ -447,21 +447,36 @@ use cache tags. One or more tags could be added to the cache item. All items wit
 the same key could be invalidate with one function call::
 
     use Symfony\Contracts\Cache\ItemInterface;
+    use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
-    $value0 = $pool->get('item_0', function (ItemInterface $item) {
-        $item->tag(['foo', 'bar']);
+    class SomeClass
+    {
+        private $myCachePool;
 
-        return 'debug';
-    });
+        // using autowiring to inject the cache pool
+        public function __construct(TagAwareCacheInterface $myCachePool)
+        {
+            $this->myCachePool = $myCachePool;
+        }
 
-    $value1 = $pool->get('item_1', function (ItemInterface $item) {
-        $item->tag('foo');
+        public function someMethod()
+        {
+            $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item) {
+                $item->tag(['foo', 'bar']);
 
-        return 'debug';
-    });
+                return 'debug';
+            });
 
-    // Remove all cache keys tagged with "bar"
-    $pool->invalidateTags(['bar']);
+            $value1 = $this->myCachePool->get('item_1', function (ItemInterface $item) {
+                $item->tag('foo');
+
+                return 'debug';
+            });
+
+            // Remove all cache keys tagged with "bar"
+            $this->myCachePool->invalidateTags(['bar']);
+        }
+    }
 
 The cache adapter needs to implement :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface``
 to enable this feature. This could be added by using the following configuration.
