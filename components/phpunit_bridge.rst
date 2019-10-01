@@ -387,10 +387,6 @@ the test suite cannot use the latest versions of PHPUnit because:
 Polyfills for the Unavailable Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    This feature was introduced in Symfony 4.4.
-
 When using the ``simple-phpunit`` script, PHPUnit Bridge injects polyfills for
 most methods of the ``TestCase`` and ``Assert`` classes (e.g. ``expectException()``,
 ``expectExcpetionMessage()``, ``assertContainsEquals``, etc.). This allows writing
@@ -399,10 +395,6 @@ older PHPUnit versions.
 
 Removing the Void Return Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.4
-
-    This feature was introduced in Symfony 4.4.
 
 When running the ``simple-phpunit`` script with the ``SYMFONY_PHPUNIT_REMOVE_RETURN_TYPEHINT``
 environment variable set to ``1``, the PHPUnit bridge will alter the code of
@@ -438,10 +430,6 @@ call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
 
 Using Namespaced PHPUnit Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.4
-
-    This feature was introduced in Symfony 4.4.
 
 The PHPUnit bridge adds namespaced class aliases for most of the PHPUnit classes
 declared without namespaces (e.g. ``PHPUnit_Framework_Assert``), allowing you to
