@@ -489,7 +489,7 @@ the same key could be invalidate with one function call::
     use Symfony\Contracts\Cache\ItemInterface;
     use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
-    public function SomeClass
+    class SomeClass
     {
         private $myCachePool;
 
