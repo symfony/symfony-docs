@@ -232,9 +232,17 @@ Access the value of the first node of the current selection::
     // avoid the exception passing an argument that text() returns when node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
+    // pass TRUE as the second argument of text() to remove all extra white spaces, including
+    // the internal ones (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
+    $crawler->filterXPath('//body/p')->text('Default text content', true);
+
 .. versionadded:: 4.3
 
     The default argument of ``text()`` was introduced in Symfony 4.3.
+
+.. versionadded:: 4.4
+
+    The option to trim white spaces in ``text()`` was introduced in Symfony 4.4.
 
 Access the attribute value of the first node of the current selection::
 
