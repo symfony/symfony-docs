@@ -518,10 +518,12 @@ The :class:`Symfony\\Component\\DomCrawler\\Form` object has lots of very
 useful methods for working with forms::
 
     $uri = $form->getUri();
-
     $method = $form->getMethod();
-
     $name = $form->getName();
+
+.. versionadded:: 4.4
+
+    The ``getName()`` method was introduced in Symfony 4.4.
 
 The :method:`Symfony\\Component\\DomCrawler\\Form::getUri` method does more
 than just return the ``action`` attribute of the form. If the form method
