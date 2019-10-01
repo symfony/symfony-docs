@@ -489,10 +489,6 @@ useful methods for working with forms::
     $method = $form->getMethod();
     $name = $form->getName();
 
-.. versionadded:: 4.4
-
-    The ``getName()`` method was introduced in Symfony 4.4.
-
 The :method:`Symfony\\Component\\DomCrawler\\Form::getUri` method does more
 than just return the ``action`` attribute of the form. If the form method
 is GET, then it mimics the browser's behavior and returns the ``action``

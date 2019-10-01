@@ -811,10 +811,6 @@ their type::
     :method:`Symfony\\Component\\DomCrawler\\Form::getName` method to get the
     form name.
 
-    .. versionadded:: 4.4
-
-        The ``getName()`` method was introduced in Symfony 4.4.
-
 .. tip::
 
     If you purposefully want to select "invalid" select/radio values, see
