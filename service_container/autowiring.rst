@@ -263,11 +263,6 @@ class is type-hinted.
     adds an alias: ``Psr\Log\LoggerInterface`` that points to the ``logger`` service.
     This is why arguments type-hinted with ``Psr\Log\LoggerInterface`` can be autowired.
 
-.. versionadded:: 4.2
-
-    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
-
 .. _autowiring-interface-alias:
 
 Working with Interfaces
