@@ -49,7 +49,8 @@ resolver. Modify the framework to make use of them::
     namespace Simplex;
 
     // ...
-
+    
+    use Calendar\Controller\LeapYearController;
     use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
     use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
     use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
@@ -125,7 +126,7 @@ Execute this test by running ``phpunit`` in the ``example.com`` directory:
 
 .. code-block:: terminal
 
-    $ phpunit
+    $ ./vendor/bin/phpunit
 
 .. note::
 
@@ -164,11 +165,9 @@ Response::
             ->expects($this->once())
             ->method('match')
             ->will($this->returnValue([
-                '_route' => 'foo',
-                'name' => 'Fabien',
-                '_controller' => function ($name) {
-                    return new Response('Hello '.$name);
-                }
+                '_route' => 'is_leap_year/{year}',
+                'year' => '2000',
+                '_controller' => [new LeapYearController(), 'index']
             ]))
         ;
         $matcher
@@ -196,7 +195,7 @@ coverage feature (you need to enable `XDebug`_ first):
 
 .. code-block:: terminal
 
-    $ phpunit --coverage-html=cov/
+    $ ./vendor/bin/phpunit --coverage-html=cov/
 
 Open ``example.com/cov/src/Simplex/Framework.php.html`` in a browser and check
 that all the lines for the Framework class are green (it means that they have
@@ -206,7 +205,7 @@ Alternatively you can output the result directly to the console:
 
 .. code-block:: terminal
 
-    $ phpunit --coverage-text
+    $ ./vendor/bin/phpunit --coverage-text
 
 Thanks to the clean object-oriented code that we have written so far, we have
 been able to write unit-tests to cover all possible use cases of our
