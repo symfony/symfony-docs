@@ -274,20 +274,9 @@ The ``translation:update`` command looks for missing translations in:
 Translation Resource/File Names and Locations
 ---------------------------------------------
 
-Symfony looks for message files (i.e. translations) in the following default locations:
+Symfony looks for message files (i.e. translations) in the following default location:
 
 #. the ``translations/`` directory (at the root of the project);
-#. the ``src/Resources/<bundle name>/translations/`` directory;
-#. the ``Resources/translations/`` directory inside of any bundle.
-
-.. deprecated:: 4.2
-
-    Using the ``src/Resources/<bundle name>/translations/`` directory to store
-    translations was deprecated in Symfony 4.2. Use instead the directory
-    defined in the ``default_path`` option (which is ``translations/`` by default).
-
-The locations are listed here with the highest priority first. That is, you can
-override the translation messages of a bundle in any of the top two directories.
 
 The override mechanism works at a key level: only the overridden keys need
 to be listed in a higher priority message file. When a key is not found
