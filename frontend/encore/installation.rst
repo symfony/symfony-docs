@@ -99,7 +99,7 @@ is the main config file for both Webpack and Webpack Encore:
     module.exports = Encore.getWebpackConfig();
 
 Next, create a new ``assets/js/app.js`` file with some basic JavaScript *and*
-import some JavaScript:
+import some CSS:
 
 .. code-block:: javascript
 
