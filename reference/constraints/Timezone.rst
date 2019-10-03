@@ -108,7 +108,7 @@ This constraint considers valid both the `PHP timezone identifiers`_ and the
 However, the timezones provided by the Intl component can be different from the
 timezones provided by PHP's Intl extension (because they use different ICU
 versions). If this option is set to ``true``, this constraint only considers
-valid the values created with the PHP ``\IntlTimeZone::createTimeZone()`` method.
+valid the values compatible with the PHP ``\IntlTimeZone::createTimeZone()`` method.
 
 message
 ~~~~~~~
