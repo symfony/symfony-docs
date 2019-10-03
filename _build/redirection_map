@@ -461,6 +461,7 @@
 /testing/doctrine /testing/database
 /doctrine/lifecycle_callbacks /doctrine/events
 /doctrine/event_listeners_subscribers /doctrine/events
+/doctrine/common_extensions /doctrine
 /best_practices/index /best_practices
 /best_practices/introduction /best_practices
 /best_practices/creating-the-project /best_practices
