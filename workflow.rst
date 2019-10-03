@@ -275,8 +275,7 @@ order:
     * ``workflow.[workflow name].enter.[place name]``
 
 ``workflow.entered``
-    The subject has entered in the places and the marking is updated (making it a good
-    place to flush data in Doctrine).
+    The subject has entered in the places and the marking is updated.
 
     The three events being dispatched are:
 
