@@ -804,6 +804,14 @@ Database Testing
 
 Read the article about :doc:`testing code that interacts with the database </testing/database>`.
 
+Doctrine Extensions (Timestampable, Translatable, etc.)
+-------------------------------------------------------
+
+Doctrine community has created some extensions to implement common needs such as
+*"set the value of the createdAt property automatically when creating an entity"*.
+Read more about the `available Doctrine extensions`_ and use the
+`StofDoctrineExtensionsBundle`_ to integrate them in your application.
+
 Learn more
 ----------
 
@@ -811,7 +819,6 @@ Learn more
     :maxdepth: 1
 
     doctrine/associations
-    doctrine/common_extensions
     doctrine/events
     doctrine/registration_form
     doctrine/custom_dql_functions
@@ -839,3 +846,5 @@ Learn more
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
 .. _`PDO`: https://php.net/pdo
+.. _`available Doctrine extensions`: https://github.com/Atlantic18/DoctrineExtensions
+.. _`StofDoctrineExtensionsBundle`: https://github.com/antishov/StofDoctrineExtensionsBundle
