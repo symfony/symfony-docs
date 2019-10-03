@@ -1076,7 +1076,6 @@ Learn more
     :glob:
 
     testing/*
-    /best_practices/tests
     /components/dom_crawler
     /components/css_selector
 

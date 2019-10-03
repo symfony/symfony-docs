@@ -17,8 +17,8 @@ Creating Routes
 
 Routes can be configured in YAML, XML, PHP or using annotations. All formats
 provide the same features and performance, so choose your favorite.
-:doc:`Symfony recommends annotations </best_practices/controllers>` because it's
-convenient to put the route and controller in the same place.
+:ref:`Symfony recommends annotations <best-practice-controller-annotations>`
+because it's convenient to put the route and controller in the same place.
 
 Creating Routes as Annotations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
