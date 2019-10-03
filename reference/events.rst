@@ -87,6 +87,8 @@ Typically, this is used to map URL routing parameters to their corresponding
 named arguments; or pass the current request when the ``Request`` type-hint is
 found::
 
+    use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
+
     public function onKernelControllerArguments(ControllerArgumentsEvent $event)
     {
         // ...
@@ -149,6 +151,8 @@ This event is dispatched after the controller or any ``kernel.view`` listener
 returns a ``Response`` object. It's useful to modify or replace the response
 before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
+
     public function onKernelResponse(ResponseEvent $event)
     {
         $response = $event->getResponse();
@@ -175,6 +179,8 @@ their priorities:
 This event is dispatched after the ``kernel.response`` event. It's useful to reset
 the global state of the application (for example, the translator listener resets
 the translator's locale to the one of the parent request)::
+
+    use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 
     public function onKernelFinishRequest(FinishRequestEvent $event)
     {
