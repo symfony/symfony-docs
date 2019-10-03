@@ -461,3 +461,15 @@
 /testing/doctrine /testing/database
 /doctrine/lifecycle_callbacks /doctrine/events
 /doctrine/event_listeners_subscribers /doctrine/events
+/best_practices/index /best_practices
+/best_practices/introduction /best_practices
+/best_practices/creating-the-project /best_practices
+/best_practices/configuration /best_practices
+/best_practices/business-logic /best_practices
+/best_practices/controllers /best_practices
+/best_practices/templates /best_practices
+/best_practices/forms /best_practices
+/best_practices/i18n /best_practices
+/best_practices/security /best_practices
+/best_practices/web-assets /best_practices
+/best_practices/tests /best_practices

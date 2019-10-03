@@ -626,6 +626,8 @@ To avoid leaking sensitive information, the ``dump()`` function/tag is only
 available in the ``dev`` and ``test`` :ref:`configuration environments <configuration-environments>`.
 If you try to use it in the ``prod`` environment, you will see a PHP error.
 
+.. _templates-reuse-contents:
+
 Reusing Template Contents
 -------------------------
 

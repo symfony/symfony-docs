@@ -31,6 +31,7 @@ Topics
 .. toctree::
     :maxdepth: 1
 
+    best_practices
     bundles
     cache
     console
@@ -59,16 +60,6 @@ Topics
     validation
     web_link
     workflow
-
-Best Practices
---------------
-
-.. toctree::
-    :hidden:
-
-    best_practices/index
-
-Read the :doc:`Official Best Practices </best_practices/index>`.
 
 Components
 ----------

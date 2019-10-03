@@ -157,10 +157,10 @@ added a submit button with a custom label for submitting the form to the server.
 Creating Form Classes
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony recommends to :doc:`create thin controllers </best_practices/controllers>`.
-That's why it's better to move complex forms to dedicated classes instead of
-defining them in controller actions. Besides, forms defined in classes can be
-reused in multiple actions and services.
+Symfony recommends to put as little logic as possible in controllers. That's why
+it's better to move complex forms to dedicated classes instead of defining them
+in controller actions. Besides, forms defined in classes can be reused in
+multiple actions and services.
 
 Form classes are :ref:`form types <form-types>` that implement
 :class:`Symfony\\Component\\Form\\FormTypeInterface`. However, it's better to
@@ -244,6 +244,8 @@ the ``data_class`` option by adding the following to your form type class::
             ]);
         }
     }
+
+.. _rendering-forms:
 
 Rendering Forms
 ---------------
