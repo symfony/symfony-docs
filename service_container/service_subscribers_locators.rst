@@ -491,7 +491,7 @@ Inside this locator you can retrieve services by index using the value of the
     {
         public function __construct(ServiceLocator $locator)
         {
-            $handlerTwo = $locator->get('handler_two'):
+            $handlerTwo = $locator->get('handler_two');
         }
 
         // ...
