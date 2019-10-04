@@ -18,9 +18,10 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 Basic Usage
 -----------
 
-This will check if ``firstName`` is of type ``string`` (using :phpfunction:`is_string`
-PHP function), ``age`` is an ``integer`` (using :phpfunction:`is_int` PHP
-function) and ``accessCode`` contains either only letters or only digits (using
+This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
+``firstName`` is of type ``string`` (using :phpfunction:`is_string` PHP function),
+``age`` is an ``integer`` (using :phpfunction:`is_int` PHP function) and
+``accessCode`` contains either only letters or only digits (using
 :phpfunction:`ctype_alpha` and :phpfunction:`ctype_digit` PHP functions).
 
 .. configuration-block::
@@ -34,6 +35,11 @@ function) and ``accessCode`` contains either only letters or only digits (using
 
         class Author
         {
+            /**
+             * @Assert\Type("Ramsey\Uuid\UuidInterface")
+             */
+            protected $id;
+
             /**
              * @Assert\Type("string")
              */
@@ -58,6 +64,9 @@ function) and ``accessCode`` contains either only letters or only digits (using
         # config/validator/validation.yaml
         App\Entity\Author:
             properties:
+                id:
+                    - Type: Ramsey\Uuid\UuidInterface
+
                 firstName:
                     - Type: string
 
@@ -79,6 +88,11 @@ function) and ``accessCode`` contains either only letters or only digits (using
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="App\Entity\Author">
+                <property name="id">
+                    <constraint name="Type">
+                        <option name="type">Ramsey\Uuid\UuidInterface</option>
+                    </constraint>
+                </property>
                 <property name="firstName">
                     <constraint name="Type">
                         <option name="type">string</option>
@@ -106,6 +120,7 @@ function) and ``accessCode`` contains either only letters or only digits (using
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Ramsey\Uuid\UuidInterface;
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
@@ -113,6 +128,8 @@ function) and ``accessCode`` contains either only letters or only digits (using
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('id', new Assert\Type(UuidInterface::class));
+
                 $metadata->addPropertyConstraint('firstName', new Assert\Type('string'));
 
                 $metadata->addPropertyConstraint('age', new Assert\Type([
@@ -157,8 +174,8 @@ type
 **type**: ``string`` or ``array`` [:ref:`default option <validation-default-option>`]
 
 This required option defines the type or collection of types allowed for the
-given value. Each type is defined as the fully qualified class name or one of
-the PHP datatypes as determined by PHP's ``is_*()`` functions.
+given value. Each type is is either the FQCN (fully qualified class name) of some
+PHP class/interface or a valid PHP datatype (checked by PHP's ``is_()`` functions):
 
 * :phpfunction:`array <is_array>`
 * :phpfunction:`bool <is_bool>`
