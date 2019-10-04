@@ -106,6 +106,10 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
             }
         }
 
+.. tip::
+
+    Type value can be class's or interface's fully qualified class name
+
 Options
 -------
 
