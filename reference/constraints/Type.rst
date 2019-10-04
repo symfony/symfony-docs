@@ -18,8 +18,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 Basic Usage
 -----------
 
-This will check if ``firstName`` is of type ``string`` and that ``age`` is an
-``integer``.
+This will check that ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
+``firstName`` is of type ``string`` and ``age`` is an ``integer``.
 
 .. configuration-block::
 
@@ -32,6 +32,11 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
 
         class Author
         {
+            /**
+             * @Assert\Type("Ramsey\Uuid\UuidInterface")
+             */
+            protected $id;
+
             /**
              * @Assert\Type("string")
              */
@@ -51,6 +56,9 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
         # config/validator/validation.yaml
         App\Entity\Author:
             properties:
+                id:
+                    - Type: Ramsey\Uuid\UuidInterface
+
                 firstName:
                     - Type: string
 
@@ -68,6 +76,11 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="App\Entity\Author">
+                <property name="id">
+                    <constraint name="Type">
+                        <option name="type">Ramsey\Uuid\UuidInterface</option>
+                    </constraint>
+                </property>
                 <property name="firstName">
                     <constraint name="Type">
                         <option name="type">string</option>
@@ -87,6 +100,7 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Ramsey\Uuid\UuidInterface;
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
@@ -94,6 +108,8 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('id', new Assert\Type(UuidInterface::class));
+
                 $metadata->addPropertyConstraint('firstName', new Assert\Type('string'));
 
                 $metadata->addPropertyConstraint('age', new Assert\Type([
@@ -133,8 +149,8 @@ type
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
-This required option is the fully qualified class name or one of the PHP
-datatypes as determined by PHP's ``is_()`` functions.
+This required option is either the FQCN (fully qualified class name) of some PHP
+class/interface or a valid PHP datatype (checked by PHP's ``is_()`` functions):
 
 * :phpfunction:`array <is_array>`
 * :phpfunction:`bool <is_bool>`
