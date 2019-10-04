@@ -119,7 +119,7 @@ max
 
 **type**: ``integer``
 
-This required option is the "max" count value. Validation will fail if the
+This option is the "max" count value and it is required if the **min** option has not been defined. Validation will fail if the
 given collection elements count is **greater** than this max value.
 
 minMessage
