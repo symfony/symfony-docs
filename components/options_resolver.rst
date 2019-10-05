@@ -347,7 +347,7 @@ is thrown::
     ]);
 
     // InvalidOptionsException: The option "host" with value "25" is
-    // expected to be of type "string"
+    // expected to be of type "string", but is of type "int"
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
