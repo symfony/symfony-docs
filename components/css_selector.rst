@@ -93,9 +93,8 @@ rather than elements.
 
 Several pseudo-classes are not yet supported:
 
-* ``*:first-of-type``, ``*:last-of-type``, ``*:nth-of-type``,
-  ``*:nth-last-of-type``, ``*:only-of-type``. (These work with an element
-  name (e.g. ``li:first-of-type``) but not with ``*``).
+* ``*:first-of-type``, ``*:last-of-type``, ``*:nth-of-type`` and
+  ``*:nth-last-of-type``.
 
 Learn more
 ----------
