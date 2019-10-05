@@ -115,7 +115,7 @@ is thrown if an unknown option is passed::
     ]);
 
     // UndefinedOptionsException: The option "usernme" does not exist.
-    // Known options are: "host", "password", "port", "username"
+    // Defined options are: "host", "password", "port", "username"
 
 The rest of your code can access the values of the options without boilerplate
 code::
@@ -330,7 +330,7 @@ is thrown::
     ]);
 
     // InvalidOptionsException: The option "host" with value "25" is
-    // expected to be of type "string"
+    // expected to be of type "string", but is of type "int"
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
@@ -365,8 +365,8 @@ is thrown::
         'transport' => 'send-mail',
     ]);
 
-    // InvalidOptionsException: The option "transport" has the value
-    // "send-mail", but is expected to be one of "sendmail", "mail", "smtp"
+    // InvalidOptionsException: The option "transport" with value "send-mail"
+    // is invalid. Accepted values are: "sendmail", "mail", "smtp"
 
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
