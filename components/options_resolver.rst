@@ -382,8 +382,8 @@ is thrown::
         'transport' => 'send-mail',
     ]);
 
-    // InvalidOptionsException: The option "transport" has the value
-    // "send-mail", but is expected to be one of "sendmail", "mail", "smtp"
+    // InvalidOptionsException: The option "transport" with value "send-mail"
+    // is invalid. Accepted values are: "sendmail", "mail", "smtp"
 
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
