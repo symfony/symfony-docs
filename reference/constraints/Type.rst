@@ -174,7 +174,7 @@ type
 **type**: ``string`` or ``array`` [:ref:`default option <validation-default-option>`]
 
 This required option defines the type or collection of types allowed for the
-given value. Each type is is either the FQCN (fully qualified class name) of some
+given value. Each type is either the FQCN (fully qualified class name) of some
 PHP class/interface or a valid PHP datatype (checked by PHP's ``is_()`` functions):
 
 * :phpfunction:`array <is_array>`
