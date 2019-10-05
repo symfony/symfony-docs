@@ -9,7 +9,7 @@ Symfony provides different means to work with an LDAP server.
 The Security component offers:
 
 * The ``ldap`` :doc:`user provider</security/user_provider>`, using the
-  :class:`Symfony\\Component\\Security\\Core\\User\\LdapUserProvider`
+  :class:`Symfony\\Component\\Ldap\\Security\\LdapUserProvider`
   class. Like all other user providers, it can be used with any
   authentication provider.
 
@@ -33,6 +33,12 @@ This means that the following scenarios will work:
 
 * Loading user information from an LDAP server, while using another
   authentication strategy (token-based pre-authentication, for example).
+
+.. deprecated:: 4.4
+
+    The class ``Symfony\Component\Security\Core\User\LdapUserProvider``
+    has been deprecated in Symfony 4.4. Use the class
+    ``Symfony\Component\Ldap\Security\LdapUserProvider`` instead.
 
 Installation
 ------------
