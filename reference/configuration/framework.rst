@@ -1952,7 +1952,7 @@ name_converter
 
 The name converter to use.
 The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
-name converter can enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
+name converter can be enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
 value.
 
 .. seealso::
