@@ -127,7 +127,7 @@ is thrown if an unknown option is passed::
     ]);
 
     // UndefinedOptionsException: The option "usernme" does not exist.
-    // Known options are: "host", "password", "port", "username"
+    // Defined options are: "host", "password", "port", "username"
 
 The rest of your code can access the values of the options without boilerplate
 code::
