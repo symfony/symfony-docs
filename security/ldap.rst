@@ -34,12 +34,6 @@ This means that the following scenarios will work:
 * Loading user information from an LDAP server, while using another
   authentication strategy (token-based pre-authentication, for example).
 
-.. deprecated:: 4.4
-
-    The class ``Symfony\Component\Security\Core\User\LdapUserProvider``
-    has been deprecated in Symfony 4.4. Use the class
-    ``Symfony\Component\Ldap\Security\LdapUserProvider`` instead.
-
 Installation
 ------------
 
