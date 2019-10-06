@@ -694,10 +694,6 @@ the transport to be handled later (see :ref:`messenger-worker`).
 Mutliple Email Transports
 -------------------------
 
-.. versionadded:: 4.4
-
-    The option to define multiple email transports was introduced in Symfony 4.4.
-
 You may want to use more than one mailer transport for delivery of your messages.
 This can be configured by replacing the ``dsn`` configuration entry with a
 ``transports`` entry, like:
