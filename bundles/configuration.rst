@@ -82,8 +82,10 @@ can add some configuration that looks like this:
 
         // config/packages/acme_social.php
         $container->loadFromExtension('acme_social', [
-            'client_id'     => 123,
-            'client_secret' => 'your_secret',
+            'twitter' => [
+                'client_id'     => 123,
+                'client_secret' => 'your_secret',
+            ],
         ]);
 
 The basic idea is that instead of having the user override individual
