@@ -92,8 +92,10 @@ allow users to configure it with some configuration that looks like this:
 
         // app/config/config.php
         $container->loadFromExtension('acme_social', [
-            'client_id'     => 123,
-            'client_secret' => 'your_secret',
+            'twitter' => [
+                'client_id'     => 123,
+                'client_secret' => 'your_secret',
+            ],
         ]);
 
 The basic idea is that instead of having the user override individual
