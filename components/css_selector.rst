@@ -98,10 +98,6 @@ Pseudo-classes are partially supported:
   ``li:first-of-type``) but not with the ``*`` selector).
 * Supported: ``*:only-of-type``.
 
-.. versionadded:: 4.4
-
-    The support for ``*:only-of-type`` was introduced in Symfony 4.4.
-
 Learn more
 ----------
 
