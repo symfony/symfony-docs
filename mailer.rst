@@ -697,7 +697,7 @@ you have a transport called ``async``, you can route the message there:
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
 
-Mutliple email transports
+Mutliple Email Transports
 -------------------------
 
 .. versionadded:: 4.4
@@ -717,10 +717,8 @@ This can be configured by replacing the ``dsn`` configuration entry with a
                 main: '%env(MAILER_DSN)%'
                 important: '%env(MAILER_DSN_IMPORTANT)%'
 
-By default the first transport is used. The other tranports can be used by adding
-a text header ``X-Transport`` to an email:
-
-.. code-block:: php
+By default the first transport is used. The other transports can be used by
+adding a text header ``X-Transport`` to an email::
 
     // Send using first "main" transport ...
     $mailer->send($email);
