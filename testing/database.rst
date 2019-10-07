@@ -201,7 +201,7 @@ returned by the ``EntityManager``. This way, no real class is involved in
 testing.
 
 Functional Testing of A Doctrine Repository
--------------------------------------------------
+-------------------------------------------
 
 In :ref:`functional tests <functional-tests>` you'll make queries to the
 database using the actual Doctrine repositories, instead of mocking them. To do
