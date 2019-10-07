@@ -434,7 +434,7 @@ the task takes longer to be accomplished, then the lock can be released by the
 store and acquired by someone else.
 
 The ``Lock`` provides several methods to check its health. The ``isExpired()``
-method checks whether or not it lifetime is over and the ``getRemainingLifetime()``
+method checks whether or not its lifetime is over and the ``getRemainingLifetime()``
 method returns its time to live in seconds.
 
 Using the above methods, a more robust code would be::
