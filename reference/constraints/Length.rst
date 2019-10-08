@@ -168,8 +168,10 @@ max
 
 **type**: ``integer``
 
-This required option is the "max" length value. Validation will fail if
+This option is the "max" length value. Validation will fail if
 the given value's length is **greater** than this max value.
+
+This option is required when the ``min`` option is not defined.
 
 maxMessage
 ~~~~~~~~~~
@@ -193,8 +195,10 @@ min
 
 **type**: ``integer``
 
-This required option is the "min" length value. Validation will fail if
+This option is the "min" length value. Validation will fail if
 the given value's length is **less** than this min value.
+
+This option is required when the ``max`` option is not defined.
 
 It is important to notice that NULL values and empty strings are considered
 valid no matter if the constraint required a minimum length. Validators
