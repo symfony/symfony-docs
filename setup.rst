@@ -42,7 +42,7 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new --full my_project_name
+    $ symfony new my_project_name --full
 
     # run this if you are building a microservice, console application or API
     $ symfony new my_project_name
@@ -237,12 +237,15 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
 
 .. code-block:: terminal
 
-    # find the latest LTS version at https://symfony.com/roadmap
-    $ symfony new --version=3.4 my_project_name_name
+    # use the most recent 'lts' version
+    $ symfony new my_project_name --version=lts
 
-    # you can also base your project on development versions
-    $ symfony new --version=4.4.x-dev my_project_name
-    $ symfony new --version=dev-master my_project_name
+    # use the 'next' Symfony version to be released (still in development)
+    $ symfony new my_project_name --version=next
+
+    #  use a specific Symfony version
+    $ symfony new my_project_name --version=3.3.10
+    $ symfony new my_project_name --version=4.3.1
 
 The Symfony Demo application
 ----------------------------
@@ -255,7 +258,7 @@ Run this command to create a new project based on the Symfony Demo application:
 
 .. code-block:: terminal
 
-    $ symfony new --demo my_project_name
+    $ symfony new my_project_name --demo
 
 Start Coding!
 -------------
