@@ -111,7 +111,7 @@ Using the ``validator`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, to actually validate an ``Author`` object, use the ``validate()`` method
-on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
+on the ``validator`` service (implementation of :class:`Symfony\\Component\\Validator\\Validator\\ValidatorInterface`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify if the data on the object satisfies those
 constraints. If validation fails, a non-empty list of errors
