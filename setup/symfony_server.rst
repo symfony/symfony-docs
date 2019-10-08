@@ -364,24 +364,25 @@ commands from the Symfony server:
 .. code-block:: terminal
 
     # creates a new project based on symfony/skeleton
-    $ symfony new --version=3.4 my_project_name
+    $ symfony new my_project_name --version=3.4
 
     # creates a new project based on symfony/website-skeleton
-    $ symfony new --version=3.4 --full my_project_name
+    $ symfony new my_project_name --version=3.4 --full
 
     # creates a new project based on the Symfony Demo application
-    $ symfony new --version=3.4 --demo my_project_name
+    $ symfony new my_project_name --version=3.4 --demo
 
 You can create a project depending on a **development** version as well (note
 that Composer will also set the stability to ``dev`` for all root dependencies):
 
 .. code-block:: terminal
 
-    # creates a new project based on Symfony's master branch
-    $ symfony new --version=dev-master my_project_name
+    # creates a new project based on Symfony's master branch (both are equivalent)
+    $ symfony new my_project_name --version=dev-master
+    $ symfony new my_project_name --version=next
 
     # creates a new project based on Symfony's 4.3 dev branch
-    $ symfony new --version=4.3.x-dev my_project_name
+    $ symfony new my_project_name --version=4.3.x-dev
 
 .. _`symfony.com/download`: https://symfony.com/download
 .. _`symfony/cli`: https://github.com/symfony/cli

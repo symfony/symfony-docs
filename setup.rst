@@ -67,7 +67,7 @@ with the ``new`` command:
 
 .. code-block:: terminal
 
-    $ symfony new --version=3.4 my_project_name
+    $ symfony new my_project_name --version=3.4
 
 This command creates a new directory called ``my_project_name/`` that contains
 an empty project based on the most recent stable Symfony version available. In
@@ -111,15 +111,18 @@ In case your project needs to be based on a specific Symfony version, use the
 .. code-block:: terminal
 
     # use the most recent version in any Symfony branch
-    $ symfony new --version=3.3 my_project_name
-    $ symfony new --version=3.4 my_project_name
+    $ symfony new my_project_name --version=3.3
+    $ symfony new my_project_name --version=3.4
 
     # use a specific Symfony version
-    $ symfony new --version=3.3.10 my_project_name
-    $ symfony new --version=3.4.5 my_project_name
+    $ symfony new my_project_name --version=3.3.10
+    $ symfony new my_project_name --version=3.4.5
 
     # use the most recent 'lts' version (Long Term Support version)
-    $ symfony new --version=lts my_project_name
+    $ symfony new my_project_name --version=lts
+
+    # use the 'next' Symfony version to be released (still in development)
+    $ symfony new my_project_name --version=next
 
 Each version has its *own* documentation, which you can select on any documentation
 page.
