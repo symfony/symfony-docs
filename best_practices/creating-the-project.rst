@@ -31,7 +31,7 @@ to create files and execute the following commands:
 .. code-block:: terminal
 
     $ cd projects/
-    $ symfony new blog 3.4
+    $ symfony new --version=3.4 blog
 
 **Windows systems**:
 
@@ -39,7 +39,7 @@ to create files and execute the following commands:
 .. code-block:: terminal
 
     > cd projects/
-    > php symfony new blog 3.4
+    > php symfony new --version=3.4 blog
 
 .. note::
 
