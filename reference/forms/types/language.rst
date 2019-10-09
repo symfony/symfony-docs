@@ -24,6 +24,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `choice_translation_locale`_                                         |
+|             | - `alpha3`_                                                            |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
@@ -65,6 +66,8 @@ Field Options
 -------------
 
 .. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
+
+.. include:: /reference/forms/types/options/alpha3.rst.inc
 
 Overridden Options
 ------------------
