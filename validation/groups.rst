@@ -92,7 +92,7 @@ user registers and when a user updates their contact information later:
 
                 <property name="city">
                     <constraint name="Length">
-                        <option name="min">7</option>
+                        <option name="min">2</option>
                     </constraint>
                 </property>
             </class>
@@ -123,7 +123,7 @@ user registers and when a user updates their contact information later:
                 ]));
 
                 $metadata->addPropertyConstraint('city', new Assert\Length([
-                    "min" => 3,
+                    "min" => 2,
                 ]));
             }
         }
