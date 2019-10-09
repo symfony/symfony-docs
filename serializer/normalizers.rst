@@ -5,9 +5,9 @@ Normalizers
 ===========
 
 Normalizers turn **objects** into **arrays** and vice versa. They implement
-:class:`Symfony\\Component\\Serializer\\Normalizers\\NormalizerInterface` for
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface` for
 normalizing (object to array) and
-:class:`Symfony\\Component\\Serializer\\Normalizers\\DenormalizerInterface` for
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface` for
 denormalizing (array to object).
 
 Normalizers are enabled in the serializer passing them as its first argument::
