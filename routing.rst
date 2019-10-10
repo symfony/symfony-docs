@@ -1132,7 +1132,7 @@ the common configuration using options when importing the routes.
         use Symfony\Component\Routing\Annotation\Route;
 
         /**
-         * @Route("/blog", requirements={"locale": "en|es|fr"}, name="blog_")
+         * @Route("/blog", requirements={"_locale": "en|es|fr"}, name="blog_")
          */
         class BlogController
         {
@@ -1165,7 +1165,7 @@ the common configuration using options when importing the routes.
             name_prefix: 'blog_'
             # these requirements are added to all imported routes
             requirements:
-                locale: 'en|es|fr'
+                _locale: 'en|es|fr'
             # An imported route with an empty URL will become "/blog/"
             # Uncomment this option to make that URL "/blog" instead
             # trailing_slash_on_root: false
@@ -1188,7 +1188,7 @@ the common configuration using options when importing the routes.
                 prefix="/blog"
                 name-prefix="blog_">
                 <!-- these requirements are added to all imported routes -->
-                <requirement key="locale">en|es|fr</requirement>
+                <requirement key="_locale">en|es|fr</requirement>
             </import>
 
             <!-- An imported route with an empty URL will become "/blog/"
@@ -1215,7 +1215,7 @@ the common configuration using options when importing the routes.
                 // this is added to the beginning of all imported route names
                 ->namePrefix('blog_')
                 // these requirements are added to all imported routes
-                ->requirements(['locale' => 'en|es|fr'])
+                ->requirements(['_locale' => 'en|es|fr'])
             ;
         };
 
