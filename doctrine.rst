@@ -522,6 +522,24 @@ be able to go to ``/product/1`` to see your new product::
         // in the template, print things with {{ product.name }}
         // return $this->render('product/show.html.twig', ['product' => $product]);
     }
+    
+Another possibility is to use the ``ProductRepository`` using Symfony's autowiring 
+and injected by the dependency injection container::
+
+    // src/Controller/ProductController.php
+    // ...
+    use App\Repository\ProductRepository;
+
+    /**
+     * @Route("/product/{id}", name="product_show")
+     */
+    public function show($id, ProductRepository $productRepository)
+    {
+        $product = $productRepository
+            ->find($id);
+        
+        // ...
+    }
 
 Try it out!
 
