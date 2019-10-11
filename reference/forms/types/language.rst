@@ -65,7 +65,21 @@ manually, but then you should just use the ``ChoiceType`` directly.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/alpha3.rst.inc
+alpha3
+~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.4
+
+    The ``alpha3`` option was introduced in Symfony 4.4.
+
+If this option is ``true``, the choice values use the `ISO 639-2 alpha-3`_
+three-letter codes (e.g. French = ``fra``) instead of the default
+`ISO 639-1 alpha-2`_ two-letter codes (e.g. French = ``fr``).
+
+.. _`ISO 639-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_639-1
+.. _`ISO 639-2 alpha-3`: https://en.wikipedia.org/wiki/ISO_639-2
 
 .. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
 
