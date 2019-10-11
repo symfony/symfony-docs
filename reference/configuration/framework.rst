@@ -2223,7 +2223,7 @@ error messages.
 .. _reference-validation-not-compromised-password:
 
 not_compromised_password
-~~~~~~~~~~~~~~~~~~~~~~~~
+........................
 
 The :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 constraint makes HTTP requests to a public API to check if the given password
@@ -2232,7 +2232,7 @@ has been compromised in a data breach.
 .. _reference-validation-not-compromised-password-enabled:
 
 enabled
-.......
+"""""""
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -2246,7 +2246,7 @@ make HTTP requests, such as in ``dev`` and ``test`` environments or in
 continuous integration servers.
 
 endpoint
-........
+""""""""
 
 **type**: ``string`` **default**: ``null``
 
