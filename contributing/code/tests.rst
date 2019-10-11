@@ -26,6 +26,9 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 
 .. _running:
 
+You also have to download the phpunit executable to run tests.
+Follow the instructions of the `phpunit website`_.
+
 Running the Tests
 -----------------
 
@@ -55,6 +58,7 @@ what's going on and if the tests are broken because of the new code.
     to see colored test results.
 
 .. _`install Composer`: https://getcomposer.org/download/
+.. _`phpunit website`: https://phpunit.de/getting-started/phpunit-7.html
 .. _Cmder: http://cmder.net/
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
