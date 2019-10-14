@@ -10,7 +10,7 @@ The String Component
 
 .. versionadded:: 5.0
 
-    The String component was introduced in 5.0 as an
+    The String component was introduced in Symfony 5.0 as an
     :doc:`experimental feature </contributing/code/experimental>`.
 
 Installation
