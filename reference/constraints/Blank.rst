@@ -90,7 +90,7 @@ of an ``Author`` class were blank, you could do the following:
 Options
 -------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -107,4 +107,4 @@ You can use the following parameters in this message:
 | ``{{ value }}``  | The current (invalid) value                    |
 +------------------+------------------------------------------------+
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc

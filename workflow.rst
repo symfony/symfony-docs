@@ -499,5 +499,5 @@ Learn more
 .. toctree::
    :maxdepth: 1
 
-   /workflow/workflow-and-state-machine
-   /workflow/dumping-workflows
+   /workflow/workflow_and_state_machine
+   /workflow/dumping_workflows

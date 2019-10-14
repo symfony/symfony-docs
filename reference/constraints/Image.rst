@@ -580,7 +580,7 @@ is corrupted.
 
 This message has no parameters.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
 .. _`PHP GD extension`: http://php.net/manual/en/book.image.php

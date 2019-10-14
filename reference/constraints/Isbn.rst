@@ -106,7 +106,7 @@ type
 The type of ISBN to validate against. Valid values are ``isbn10``, ``isbn13``
 and ``null`` to accept any kind of ISBN.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -172,6 +172,6 @@ You can use the following parameters in this message:
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
 .. _`International Standard Book Number (ISBN)`: https://en.wikipedia.org/wiki/Isbn

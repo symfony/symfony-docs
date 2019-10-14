@@ -139,7 +139,7 @@ If you need to require two fields to be individually unique (e.g. a unique
 ``email`` *and* a unique ``username``), you use two ``UniqueEntity`` entries,
 each with a single field.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -307,7 +307,7 @@ entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
 .. _`race conditions`: https://en.wikipedia.org/wiki/Race_condition
 .. _`countable PHP variable`: https://php.net/manual/function.is-countable.php

@@ -386,9 +386,9 @@ You can use the following parameters in this message:
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 .. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
 .. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php

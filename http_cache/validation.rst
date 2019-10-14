@@ -29,7 +29,7 @@ page again (see below for an implementation example).
 Like with expiration, there are two different HTTP headers that can be used
 to implement the validation model: ``ETag`` and ``Last-Modified``.
 
-.. include:: /http_cache/_expiration-and-validation.rst.inc
+.. include:: /http_cache/_expiration_and_validation.rst.inc
 
 .. index::
     single: Cache; Etag header

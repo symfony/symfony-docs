@@ -170,7 +170,7 @@ Also, you can use ``ctype_()`` functions from corresponding
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -189,7 +189,7 @@ You can use the following parameters in this message:
 | ``{{ type }}``  | The expected type           |
 +-----------------+-----------------------------+
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
 .. _built-in PHP extension: https://php.net/book.ctype
 .. _a list of ctype functions: https://php.net/ref.ctype

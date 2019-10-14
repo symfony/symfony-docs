@@ -334,7 +334,7 @@ This option is required and is an associative array defining all of the
 keys in the collection and, for each key, exactly which validator(s) should
 be executed against that element of the collection.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 missingFieldsMessage
 ~~~~~~~~~~~~~~~~~~~~
@@ -352,4 +352,4 @@ You can use the following parameters in this message:
 | ``{{ field }}``  | The key of the missing field defined in ``fields`` |
 +------------------+----------------------------------------------------+
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc

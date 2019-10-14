@@ -104,7 +104,7 @@ To import this file, use the ``imports`` key from a file that *is* loaded:
 The ``resource`` location, for files, is either a relative path from the
 current file or an absolute path.
 
-.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
+.. include:: /components/dependency_injection/_imports_parameters_note.rst.inc
 
 .. index::
     single: Service Container; Extension configuration

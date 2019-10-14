@@ -5,7 +5,7 @@ Community
     :maxdepth: 2
 
     releases
-    review-comments
+    review_comments
     reviews
     mentoring
-    speaker-mentoring
+    speaker_mentoring

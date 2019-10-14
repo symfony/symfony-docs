@@ -5,15 +5,15 @@ Official Symfony Best Practices
     :hidden:
 
     introduction
-    creating-the-project
+    creating_the_project
     configuration
-    business-logic
+    business_logic
     controllers
     templates
     forms
     i18n
     security
-    web-assets
+    web_assets
     tests
 
 .. include:: /best_practices/map.rst.inc

@@ -110,6 +110,6 @@ constraints
 This required option is the array of validation constraints that you want
 to apply to each element of the underlying array.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc

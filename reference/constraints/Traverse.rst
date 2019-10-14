@@ -95,4 +95,4 @@ configure the ``Traverse`` constraint on the ``Book`` class.
 Options
 -------
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc

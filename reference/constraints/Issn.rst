@@ -82,7 +82,7 @@ Basic Usage
 Options
 -------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -115,6 +115,6 @@ requireHyphen
 The validator will allow non hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
 .. _`International Standard Serial Number (ISSN)`: https://en.wikipedia.org/wiki/Issn

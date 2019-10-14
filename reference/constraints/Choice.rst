@@ -303,7 +303,7 @@ This is a callback method that can be used instead of the `choices`_ option
 to return the choices array. See
 `Supplying the Choices with a Callback Function`_ for details on its usage.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 multiple
 ~~~~~~~~
@@ -415,4 +415,4 @@ method when checking to see if a value is in the valid choices array.
     Setting the strict option of the Choice Constraint to ``false`` has been
     deprecated as of Symfony 3.2 and the option will be changed to ``true`` as of 4.0.
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc

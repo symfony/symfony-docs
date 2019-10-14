@@ -84,7 +84,7 @@ will contain a Business Identifier Code (BIC).
 Available Options
 -----------------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -101,6 +101,6 @@ You can use the following parameters in this message:
 | ``{{ value }}``  | The current (invalid) BIC value                |
 +------------------+------------------------------------------------+
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
 .. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code

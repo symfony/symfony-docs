@@ -104,7 +104,7 @@ Other Front-End Articles
     :glob:
 
     frontend/encore/installation
-    frontend/encore/simple-example
+    frontend/encore/simple_example
     frontend/encore/*
 
 .. toctree::

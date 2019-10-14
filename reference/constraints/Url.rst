@@ -82,7 +82,7 @@ Basic Usage
 Options
 -------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -237,7 +237,7 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
             }
         }
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
 checkDNS
 ~~~~~~~~

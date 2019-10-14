@@ -113,9 +113,9 @@ The following constraints ensure that:
 Options
 -------
 
-.. include:: /reference/constraints/_comparison-value-option.rst.inc
+.. include:: /reference/constraints/_comparison_value_option.rst.inc
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+.. include:: /reference/constraints/_groups_option.rst.inc
 
 message
 ~~~~~~~
@@ -136,6 +136,6 @@ You can use the following parameters in this message:
 | ``{{ compared_value_type }}`` | The expected value type     |
 +-------------------------------+-----------------------------+
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+.. include:: /reference/constraints/_payload_option.rst.inc
 
-.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
+.. include:: /reference/constraints/_comparison_propertypath_option.rst.inc
