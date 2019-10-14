@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by stof at 2019-10-09T10:33:23Z
+
+the `[]` is just Yaml syntax for a sequence (an array indexed from 0 to `length - 1`, cf JS Array). It is not related to `!tagged`. YAML has 2 ways to define a sequence:
+
+- the inline syntax `[]` (similar to the JS syntax)
+- the nested syntax, with nested elements using `-`
+
+```yaml
+services:
+    App\HandlerCollection:
+        arguments: [@router]
+```
+ is **exactly** the same than
+
+```
+services:
+    App\HandlerCollection:
+        arguments:
+            - @router
+```
+
+And after parsing the Yaml, we cannot even know which syntax was seen by the parser (which is totally expected).
+
+note that the same is true for mappings (think about JS object literals). They also have an inline syntax (using `{ }` and a nested syntax (with the keys indented).
+
+so this is absolutely not a non-standard notation.
+
+---------------------------------------------------------------------------
+
+by ostrolucky at 2019-10-09T11:17:18Z
+
+I prefer short notation in case there is one argument only, like it is now. When using yaml, you need to know the yaml syntax and this error was good for your colleague to learn it
+
+---------------------------------------------------------------------------
+
+by romaricdrigon at 2019-10-09T11:18:37Z
+
+@stof I get that, and I understand `[]`. I said `!tagged xxx ` is not standard, not `[]`.
+My point is that mixing both makes the snippet less clear and easier to misunderstand, which is not great for beginners to Symfony/YAML.
+
+@ostrolucky I can't help but feel it is a little bit unsensitive to say "people will learn the hard way".
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-10-13T16:57:17Z
+
+I have no facts pointing out that either the inline or the nested notation are easier to understand. But I can see that copying a single argument is easier when using the nested notation. That would actually be an argument for me in of using it in favour of the inline notation.
