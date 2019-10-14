@@ -466,7 +466,8 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
             AppBundle\HandlerCollection:
                 # inject all services tagged with app.handler as first argument
-                arguments: [!tagged app.handler]
+                arguments:
+                    - !tagged app.handler
 
     .. code-block:: xml
 
