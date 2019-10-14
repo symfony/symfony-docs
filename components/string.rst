@@ -438,8 +438,7 @@ In a Symfony application, you don't need to create the slugger yourself. Thanks
 to :doc:`service autowiring </service_container/autowiring>`, you can inject a
 slugger by type-hinting a service constructor argument with the
 :class:`Symfony\\Component\\String\\Slugger\\SluggerInterface`. The locale of
-the injected slugger is the value of the application's
-:ref:`default_locale option <config-framework-default_locale>`::
+the injected slugger is the same as the request locale::
 
     use Symfony\Component\String\Slugger\SluggerInterface;
 
