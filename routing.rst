@@ -725,11 +725,6 @@ Now, when the user visits ``/blog``, the ``blog_list`` route will match and
     ``/{page}/blog`` is a valid path, but ``page`` will always be required
     (i.e. ``/blog`` will not match this route).
 
-.. note::
-
-    Routes with optional parameters at the end will not match on requests
-    with a trailing slash (i.e. ``/blog/`` will not match, ``/blog`` will match).
-
 If you want to always include some default value in the generated URL (for
 example to force the generation of ``/blog/1`` instead of ``/blog`` in the
 previous example) add the ``!`` character before the parameter name: ``/blog/{!page}``
