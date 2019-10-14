@@ -1359,6 +1359,76 @@ will be thrown. The type enforcement of the properties can be disabled by settin
 the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
 to ``true``.
 
+Casting Values During Denormalization
+-------------------------------------
+
+When dealing with data that may be of the incorrect primitive type, the serializer context option
+``AbstractObjectNormalizer::CAST_PRIMITIVE_TYPES`` can be used, in conjunction with
+:class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor`, to automatically cast data to the
+corresponding property's type::
+
+    use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    class Car
+    {
+        /**
+         * @var string
+         */
+        public $make;
+
+        /**
+         * @var int
+         */
+        public $year;
+
+        /**
+         * @var float
+         */
+        public $mileage;
+
+        /**
+         * @var bool
+         */
+        public $isRegistered;
+
+        /**
+         * @var bool
+         */
+        public $isInsured;
+    }
+
+    $normalizer = new ObjectNormalizer(
+        null,
+        null,
+        null,
+        new PhpDocExtractor()
+    );
+    $serializer = new Serializer([$normalizer]);
+
+    $obj = $serializer->denormalize(
+        [
+            'make' => 'Volkswagen',
+            'year' => '2016',
+            'mileage' => '70205.25',
+            'isRegistered' => '1',
+            'isInsured' => '0'
+        ],
+        Car::class,
+        null,
+        ['cast_primitive_types' => true]
+    );
+    dump($obj);
+    // Output:
+    //     Car^ {#17
+    //       +make: "Volkswagen"
+    //       +year: 2016
+    //       +mileage: 70205.25
+    //       +isRegistered: true
+    //       +isInsured: false
+    //     }
+
 Serializing Interfaces and Abstract Classes
 -------------------------------------------
 
