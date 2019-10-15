@@ -199,6 +199,8 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
 ``form.factory`` service)::
 
     // src/Controller/TaskController.php
+    namespace App\Controller;
+    
     use App\Form\Type\TaskType;
     // ...
 
@@ -229,6 +231,8 @@ So, while not always necessary, it's generally a good idea to explicitly specify
 the ``data_class`` option by adding the following to your form type class::
 
     // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
+    
     use App\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     // ...
@@ -519,6 +523,8 @@ object.
     .. code-block:: php
 
         // src/Entity/Task.php
+        namespace App\Entity;
+        
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -555,6 +561,8 @@ the form in the controller you can pass custom options to it as the third option
 argument of ``createForm()``::
 
     // src/Controller/TaskController.php
+    namespace App\Controller;
+    
     use App\Form\Type\TaskType;
     // ...
 
@@ -579,6 +587,8 @@ If you try to use the form now, you'll see an error message: *The option
 options they accept using the ``configureOptions()`` method::
 
     // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
+    
     use Symfony\Component\OptionsResolver\OptionsResolver;
     // ...
 
@@ -758,6 +768,8 @@ If you want to modify this, use the :method:`Symfony\\Component\\Form\\FormFacto
 method::
 
     // src/Controller/TaskController.php
+    namespace App\Controller;
+    
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
