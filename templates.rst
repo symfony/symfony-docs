@@ -188,6 +188,7 @@ Consider the following routing configuration:
     .. code-block:: php-annotations
 
         // src/Controller/BlogController.php
+        namespace App\Controller;
 
         // ...
         use Symfony\Component\Routing\Annotation\Route;
@@ -421,6 +422,8 @@ you only need to add an argument in the service constructor and type-hint it wit
 the :class:`Twig\\Environment` class::
 
     // src/Service/SomeService.php
+    namespace App\Service;
+    
     use Twig\Environment;
 
     class SomeService
