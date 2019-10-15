@@ -137,8 +137,12 @@ interface only requires one method: ``loadUserByUsername($username)``::
 
         public function loadUserByUsername($usernameOrEmail)
         {
-            return $this->createQueryBuilder('u')
-                ->where('u.username = :query OR u.email = :query')
+            return $this->createQuery(
+                    'SELECT u
+                    FROM App\Entity\User u
+                    WHERE u.username = :query
+                    OR u.email = :query'
+                )
                 ->setParameter('query', $usernameOrEmail)
                 ->getQuery()
                 ->getOneOrNullResult();

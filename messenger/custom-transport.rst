@@ -58,12 +58,13 @@ Here is a simplified example of a database transport::
         public function get(): iterable
         {
             // Get a message from "my_queue"
-            $row = $this->db->createQueryBuilder()
-                ->from('my_queue')
-                ->where('delivered_at is null OR delivered_at < :redeliver_timeout')
-                ->andWhere('handled = :false')
+            $row = $this->db->createQuery(
+                    'SELECT *
+                    FROM my_queue
+                    WHERE (delivered_at IS NULL OR delivered_at < :redeliver_timeout')
+                    AND handled = FALSE'
+                )
                 ->setParameter('redeliver_timeout', new DateTimeImmutable('-5minutes'))
-                ->setParameter('false', false)
                 ->getOneOrNullResult();
 
             if (null === $row) {
@@ -85,12 +86,7 @@ Here is a simplified example of a database transport::
             }
 
             // Mark the message as "handled"
-            $this->db->createQueryBuilder()
-                ->update('my_queue')
-                ->setValues([
-                    'handled' => true
-                ])
-                ->where('id = :id')
+            $this->db->createQuery('UPDATE my_queue SET handled = TRUE WHERE id = :id')
                 ->setParameter('id', $stamp->getId())
                 ->execute();
         }
@@ -103,9 +99,7 @@ Here is a simplified example of a database transport::
             }
 
             // Delete the message from the "my_queue" table
-            $this->db->createQueryBuilder()
-                ->delete('my_queue')
-                ->where('id = :id')
+            $this->db->createQuery('DELETE FROM my_queue WHERE id = :id')
                 ->setParameter('id', $stamp->getId())
                 ->execute();
         }
@@ -116,14 +110,13 @@ Here is a simplified example of a database transport::
             $uuid = Uuid::uuid4()->toString();
 
             // Add a message to the "my_queue" table
-            $this->db->createQueryBuilder()
-                ->insert('my_queue')
-                ->values([
-                    'id' => $uuid,
-                    'envelope' => $encodedMessage['body'],
-                    'delivered_at' => null,
-                    'handled' => false,
-                ]);
+            $this->db->createQuery(
+                    'INSERT INTO my_queue (id, envelope, delivered_at, handled)
+                    VALUES (:id, :envelope, NULL, FALSE)'
+                )
+                ->setParameter('id', $uuid)
+                ->setParameter('envelope', $encodedMessage['body'])
+                ->execute();
 
             return $envelope->with(new TransportMessageIdStamp($uuid));
         }

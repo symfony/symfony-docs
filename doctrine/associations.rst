@@ -471,15 +471,16 @@ following method to the ``ProductRepository`` class::
     // src/Repository/ProductRepository.php
     public function findOneByIdJoinedToCategory($productId)
     {
-        return $this->createQueryBuilder('p')
-            // p.category refers to the "category" property on product
-            ->innerJoin('p.category', 'c')
-            // selects all the category data to avoid the query
-            ->addSelect('c')
-            ->andWhere('p.id = :id')
-            ->setParameter('id', $productId)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p, c
+            FROM App\Entity\Product p
+            INNER JOIN p.category c
+            WHERE p.id = :id'
+        )->setParameter('id', $productId);
+
+        return $query->getOneOrNullResult();
     }
 
 This will *still* return an array of ``Product`` objects. But now, when you call
