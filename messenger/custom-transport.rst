@@ -114,8 +114,10 @@ Here is a simplified example of a database transport::
                     'INSERT INTO my_queue (id, envelope, delivered_at, handled)
                     VALUES (:id, :envelope, NULL, FALSE)'
                 )
-                ->setParameter('id', $uuid)
-                ->setParameter('envelope', $encodedMessage['body'])
+                ->setParameters([
+                    'id' => $uuid,
+                    'envelope' => $encodedMessage['body'],
+                ])
                 ->execute();
 
             return $envelope->with(new TransportMessageIdStamp($uuid));
