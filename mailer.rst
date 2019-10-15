@@ -146,9 +146,13 @@ both strings or address objects::
         // email address as an object
         ->from(new Address('fabien@example.com'))
 
-        // email address as an object (email clients will display the name
-        // instead of the email address)
-        ->from(new NamedAddress('fabien@example.com', 'Fabien'))
+        // defining the email address and name as an object
+        // (email clients will display the name)
+        ->from(new Address('fabien@example.com'))
+
+        // defining the email address and name as a string
+        // (the format must match: 'Name <email@example.com>')
+        ->from(Address::fromString('Fabien Potencier <fabien@example.com>'))
 
         // ...
     ;
@@ -283,7 +287,7 @@ for Twig templates::
 
     $email = (new TemplatedEmail())
         ->from('fabien@example.com')
-        ->to(new NamedAddress('ryan@example.com', 'Ryan'))
+        ->to(new Address('ryan@example.com'))
         ->subject('Thanks for signing up!')
 
         // path of the Twig template to render
