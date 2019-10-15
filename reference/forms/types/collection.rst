@@ -145,7 +145,7 @@ you need is this JavaScript code:
     // add-collection-widget.js
     jQuery(document).ready(function () {
         jQuery('.add-another-collection-widget').click(function (e) {
-            var list = jQuery(jQuery(this).attr('data-list'));
+            var list = jQuery(jQuery(this).attr('data-list-selector'));
             // Try to find the counter of the list or use the length of the list
             var counter = list.data('widget-counter') || list.children().length;
 
@@ -176,7 +176,8 @@ And update the template as follows:
         {# store the prototype on the data-prototype attribute #}
         <ul id="email-fields-list"
             data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
-            data-widget-tags="{{ '<li></li>'|e }}">
+            data-widget-tags="{{ '<li></li>'|e }}"
+            data-widget-counter="{{ form.emails|length }}">
         {% for emailField in form.emails %}
             <li>
                 {{ form_errors(emailField) }}
@@ -187,7 +188,7 @@ And update the template as follows:
 
         <button type="button"
             class="add-another-collection-widget"
-            data-list="#email-fields-list">Add another email</button>
+            data-list-selector="#email-fields-list">Add another email</button>
 
         {# ... #}
     {{ form_end(form) }}
