@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-10-14T14:34:53Z
+
+Thanks for the quick reviews. I've resolved all comments.
+
+The Custom Transport section is a very weird one, as it "uses a dummy DB" with sort-of Doctrine syntax. I'll rewrite the example in a new PR (and make it just doctrine DBAL).
