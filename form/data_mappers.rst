@@ -193,30 +193,3 @@ create a new ``Color`` object now.
 
     When a form has the ``inherit_data`` option set to ``true``, it does not use the data mapper and
     lets its parent map inner values.
-
-.. sidebar:: Stateful Data Mappers
-
-    Sometimes, data mappers need to access services or need to maintain their
-    state. In this case, you cannot implement the methods in the form type
-    itself. Create a separate class implementing ``DataMapperInterface`` and
-    initialize it in your form type::
-
-        // src/Form/Type/ColorType.php
-
-        // ...
-        use App\Form\DataMapper\ColorMapper;
-
-        final class ColorType extends AbstractType
-        {
-            public function buildForm(FormBuilderInterface $builder, array $options)
-            {
-                $builder
-                    // ...
-
-                    // Initialize the data mapper class and e.g. pass some state
-                    ->setDataMapper(new ColorMapper($options['opacity']))
-                ;
-            }
-
-            // ...
-        }
