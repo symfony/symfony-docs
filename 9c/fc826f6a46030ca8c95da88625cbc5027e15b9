@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-10-13T09:46:58Z
+
+Not sure if we should remove it if it’s available yet. And to say the will find out in its own is another thing than having a well written (short) doc.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-10-14T06:21:21Z
+
+I'm pretty ignorant about "form data mappers" ... but instead of removing this ... I'd remove the "sidebar" and turn this into regular text ... or even maybe a small section? Then, I'd change the "Stateful Data Mappers" title by something more focused around "Accessing Services in Data Mappers", which would be the most useful feature of doing this ... but you can access services from regular forms too, right? ... so maybe we should indeed remove this sidebar entirely 🤔
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-10-14T12:43:40Z
+
+@javiereguiluz accessing services isn't the dealbreaker here: Form types are services, so a form type that implements `DataMapperInterface` can also access services while data mapping.
+
+Accessing a FormType option is also easily achievable when implementing data mapper in the form type, like @yceruto also commented.
+
+The *only* case were this is not possible is when you have a "state" per Form (not form type!). In this case, state is not maintained by form types, but by the parent form.
+
+As this is such an edge-case imho, I think removing it is the best thing.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-10-15T06:38:00Z
+
+After reading the new comments now I think that removing this is the best thing to do. Merging it. Thanks!
