@@ -701,28 +701,30 @@ a new method for this to your repository::
         }
 
         /**
-         * @param $price
          * @return Product[]
          */
         public function findAllGreaterThanPrice($price): array
         {
-            // automatically knows to select Products
-            // the "p" is an alias you'll use in the rest of the query
-            $qb = $this->createQueryBuilder('p')
-                ->andWhere('p.price > :price')
-                ->setParameter('price', $price)
-                ->orderBy('p.price', 'ASC')
-                ->getQuery();
+            $entityManager = $this->getEntityManager();
 
-            return $qb->execute();
+            $query = $entityManager->createQuery(
+                'SELECT p
+                FROM App\Entity\Product p
+                WHERE p.price > :price
+                ORDER BY p.price ASC'
+            )->setParameter('price', $price);
 
-            // to get just one result:
-            // $product = $qb->setMaxResults(1)->getOneOrNullResult();
+            // returns an array of Product objects
+            return $query->getResult();
         }
     }
 
-This uses Doctrine's `Query Builder`_: a very powerful and user-friendly way to
-write custom queries. Now, you can call this method on the repository::
+The string passed to ``createQuery()`` might look like SQL, but it is
+`Doctrine Query Language`_. This allows you to type queries using commonly
+known query language, but referencing PHP objects instead (i.e. in the ``FROM``
+statement).
+
+Now, you can call this method on the repository::
 
     // from inside a controller
     $minPrice = 1000;
@@ -736,36 +738,45 @@ write custom queries. Now, you can call this method on the repository::
 If you're in a :ref:`services-constructor-injection`, you can type-hint the
 ``ProductRepository`` class and inject it like normal.
 
-For more details, see the `Query Builder`_ Documentation from Doctrine.
+Querying with the Query Builder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Querying with DQL or SQL
-------------------------
-
-In addition to the query builder, you can also query with `Doctrine Query Language`_::
+Doctrine also provides a `Query Builder`_, an object-oriented way to write
+queries. It is recommended to use this when queries and build dynamically (i.e.
+based on PHP conditions)::
 
     // src/Repository/ProductRepository.php
+
     // ...
-
-    public function findAllGreaterThanPrice($price): array
+    public function findAllGreaterThanPrice($price, $includeUnavailableProducts = false): array
     {
-        $entityManager = $this->getEntityManager();
+        // automatically knows to select Products
+        // the "p" is an alias you'll use in the rest of the query
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.price > :price')
+            ->setParameter('price', $price)
+            ->orderBy('p.price', 'ASC')
 
-        $query = $entityManager->createQuery(
-            'SELECT p
-            FROM App\Entity\Product p
-            WHERE p.price > :price
-            ORDER BY p.price ASC'
-        )->setParameter('price', $price);
+        if (!$includeUnavailableProducts) {
+            $qb->andWhere('p.available = TRUE')
+        }
 
-        // returns an array of Product objects
+        $query = $qb->getQuery();
+
         return $query->execute();
+
+        // to get just one result:
+        // $product = $query->setMaxResults(1)->getOneOrNullResult();
     }
 
-Or directly with SQL if you need to::
+Querying with SQL
+~~~~~~~~~~~~~~~~~
+
+In addition, you can query directly with SQL if you need to::
 
     // src/Repository/ProductRepository.php
-    // ...
 
+    // ...
     public function findAllGreaterThanPrice($price): array
     {
         $conn = $this->getEntityManager()->getConnection();
