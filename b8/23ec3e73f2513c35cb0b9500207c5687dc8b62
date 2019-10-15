@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-10-15T06:42:34Z
+
+@iarro good catch! However, I think the fix should use the `SCOPE_ONE` public const from `QueryInterface`, right? https://github.com/symfony/symfony/blob/6b3bbe4cc2d38329cccf47589fef653db3b0fd55/src/Symfony/Component/Ldap/Adapter/QueryInterface.php#L30
+
+---------------------------------------------------------------------------
+
+by iarro at 2019-10-15T07:18:22Z
+
+`Query` implements `QueryInterface`, so there is no conflict. Both refers to same constant. But yes, you're right. It is more accurate use interface than concrete implementation.
