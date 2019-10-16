@@ -153,6 +153,7 @@ with the ``doctrine.event_listener`` tag:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -172,6 +173,7 @@ with the ``doctrine.event_listener`` tag:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
@@ -195,6 +197,7 @@ with the ``doctrine.event_listener`` tag:
 
     .. code-block:: php
 
+        // config/services.php
         use App\EventListener\SearchIndexer;
 
         // listeners are applied by default to all Doctrine connections
@@ -250,6 +253,7 @@ with the ``doctrine.orm.entity_listener`` tag:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -274,6 +278,7 @@ with the ``doctrine.orm.entity_listener`` tag:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
@@ -302,6 +307,7 @@ with the ``doctrine.orm.entity_listener`` tag:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Entity\User;
         use App\EventListener\UserChangedNotifier;
 
@@ -394,6 +400,7 @@ with the ``doctrine.event_subscriber`` tag:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -403,6 +410,7 @@ with the ``doctrine.event_subscriber`` tag:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
@@ -417,6 +425,7 @@ with the ``doctrine.event_subscriber`` tag:
 
     .. code-block:: php
 
+        // config/services.php
         use App\EventListener\DatabaseActivitySubscriber;
 
         $container->autowire(DatabaseActivitySubscriber::class)
@@ -430,6 +439,7 @@ can do it in the service configuration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -439,6 +449,7 @@ can do it in the service configuration:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
@@ -453,6 +464,7 @@ can do it in the service configuration:
 
     .. code-block:: php
 
+        // config/services.php
         use App\EventListener\DatabaseActivitySubscriber;
 
         $container->autowire(DatabaseActivitySubscriber::class)
