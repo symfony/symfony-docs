@@ -792,6 +792,8 @@ parameters at once by type-hinting any of its constructor arguments with the
 :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`::
 
     // src/Service/MessageGenerator.php
+    namespace App\Service;
+    
     // ...
 
     use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;

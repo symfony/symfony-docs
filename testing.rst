@@ -531,6 +531,7 @@ You can also get the objects related to the latest request::
     // the BrowserKit response instance
     $response = $client->getInternalResponse();
 
+    // the Crawler instance
     $crawler = $client->getCrawler();
 
 Accessing the Container
