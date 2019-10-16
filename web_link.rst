@@ -170,7 +170,9 @@ You can also add links to the HTTP response directly from controllers and servic
 
             // alternative if you don't want to use the addLink() shortcut
             $linkProvider = $request->attributes->get('_links', new GenericLinkProvider());
-            $request->attributes->set('_links', $linkProvider->withLink(new Link('preload', '/app.css', ['as' : 'style'])));
+            $request->attributes->set('_links', $linkProvider->withLink(
+                (new Link('preload', '/app.css'))->withAttribute('as', 'style')
+            ));
 
             return $this->render('...');
         }
