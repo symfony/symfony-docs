@@ -883,7 +883,11 @@ The Redis transport uses `streams`_ to queue messages.
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
     # Full DSN Example
-    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0
+    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0
+
+.. versionadded:: 4.4
+
+    The ``dbindex`` query parameter in Redis DSN was introduced in Symfony 4.4.
 
 To use the Redis transport, you will need the Redis PHP extension (^4.3) and
 a running Redis server (^5.0).
