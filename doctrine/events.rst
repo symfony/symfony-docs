@@ -153,6 +153,7 @@ with the ``doctrine.event_listener`` tag:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -172,6 +173,7 @@ with the ``doctrine.event_listener`` tag:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
@@ -195,6 +197,7 @@ with the ``doctrine.event_listener`` tag:
 
     .. code-block:: php
 
+        // config/services.php
         use App\EventListener\SearchIndexer;
 
         // listeners are applied by default to all Doctrine connections
@@ -250,6 +253,7 @@ with the ``doctrine.orm.entity_listener`` tag:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -274,6 +278,7 @@ with the ``doctrine.orm.entity_listener`` tag:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
@@ -302,6 +307,7 @@ with the ``doctrine.orm.entity_listener`` tag:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Entity\User;
         use App\EventListener\UserChangedNotifier;
 
@@ -330,7 +336,7 @@ Doctrine Lifecycle Subscribers
 Lifecycle subscribers are defined as PHP classes that implement the
 ``Doctrine\Common\EventSubscriber`` interface and which listen to one or more
 Doctrine events on all the application entities. For example, suppose that you
-want to log all the database activity. To do so, define a listener for the
+want to log all the database activity. To do so, define a subscriber for the
 ``postPersist``, ``postRemove`` and ``postUpdate`` Doctrine events::
 
     // src/EventListener/DatabaseActivitySubscriber.php
@@ -386,37 +392,70 @@ want to log all the database activity. To do so, define a listener for the
         }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-Symfony will register the Doctrine subscriber automatically thanks to the
-:ref:`autoconfigure <services-autoconfigure>` and
-:doc:`autowiring </service_container/autowiring>` features. However, if you need
-to associate the subscriber with a specific Doctrine connection, you must define
-a service for it and :doc:`tag it </service_container/tags>` with the
-``doctrine.event_subscriber`` tag:
+The next step is to enable the Doctrine subscriber in the Symfony application by
+creating a new service for it and :doc:`tagging it </service_container/tags>`
+with the ``doctrine.event_subscriber`` tag:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
-            # in most applications you don't need to define a service for your
-            # subscriber (this is only needed when using a custom Doctrine connection)
             App\EventListener\DatabaseActivitySubscriber:
                 tags:
-                    - { name: 'doctrine.event_subscriber', connection: 'default' }
+                    - { name: 'doctrine.event_subscriber' }
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
                 <!-- ... -->
 
-                <!-- in most applications you don't need to define a service for your
-                     subscriber (this is only needed when using a custom Doctrine connection) -->
+                <service id="App\EventListener\DatabaseActivitySubscriber">
+                    <tag name="doctrine.event_subscriber"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\EventListener\DatabaseActivitySubscriber;
+
+        $container->autowire(DatabaseActivitySubscriber::class)
+            ->addTag('doctrine.event_subscriber')
+        ;
+
+If you need to associate the subscriber with a specific Doctrine connection, you
+can do it in the service configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\EventListener\DatabaseActivitySubscriber:
+                tags:
+                    - { name: 'doctrine.event_subscriber', connection: 'default' }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+            <services>
+                <!-- ... -->
+
                 <service id="App\EventListener\DatabaseActivitySubscriber">
                     <tag name="doctrine.event_subscriber" connection="default"/>
                 </service>
@@ -425,10 +464,9 @@ a service for it and :doc:`tag it </service_container/tags>` with the
 
     .. code-block:: php
 
+        // config/services.php
         use App\EventListener\DatabaseActivitySubscriber;
 
-        // in most applications you don't need to define a service for your
-        // subscriber (this is only needed when using a custom Doctrine connection)
         $container->autowire(DatabaseActivitySubscriber::class)
             ->addTag('doctrine.event_subscriber', ['connection' => 'default'])
         ;
