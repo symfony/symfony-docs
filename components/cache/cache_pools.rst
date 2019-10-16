@@ -65,11 +65,11 @@ and deleting cache items using only two methods and a callback::
 
 Out of the box, using this interface provides stampede protection via locking
 and early expiration. Early expiration can be controlled via the third "beta"
-argument of the :method:`Symfony\\Contracts\\Cache\\CacheInterface::get()` method.
+argument of the :method:`Symfony\\Contracts\\Cache\\CacheInterface::get` method.
 See the :doc:`/components/cache` article for more information.
 
 Early expiration can be detected inside the callback by calling the
-:method:`Symfony\\Contracts\\Cache\\ItemInterface::isHit()` method: if this
+:method:`Symfony\\Contracts\\Cache\\ItemInterface::isHit` method: if this
 returns ``true``, it means we are currently recomputing a value ahead of its
 expiration date.
 
