@@ -732,7 +732,7 @@ environment:
     # config/packages/dev/mailer.yaml
     framework:
         mailer:
-            dsn: 'smtp://null'
+            dsn: 'null://null'
 
 .. note::
 
