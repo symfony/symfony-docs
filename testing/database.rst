@@ -59,7 +59,7 @@ Now, enable it as a PHPUnit extension or listener:
         </listeners>
     </phpunit>
 
-This bundle uses a clever trick to avoid side effects without scarifying
+This bundle uses a clever trick to avoid side effects without sacrificing
 performance: it begins a database transaction before every test and rolls it
 back automatically after the test finishes to undo all changes. Read more in the
 documentation of the `DAMADoctrineTestBundle`_.
