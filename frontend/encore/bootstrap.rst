@@ -7,7 +7,7 @@ First, install it. To be able to customize things further, we'll install
 
 .. code-block:: terminal
 
-    $ yarn add bootstrap --dev
+    $ yarn add bootstrap
 
 Importing Bootstrap Styles
 --------------------------
@@ -41,7 +41,7 @@ Bootstrap JavaScript requires jQuery and Popper.js, so make sure you have this i
 
 .. code-block:: terminal
 
-    $ yarn add jquery popper.js --dev
+    $ yarn add jquery popper.js
 
 Now, require bootstrap from any of your JavaScript files:
 
