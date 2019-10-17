@@ -30,7 +30,7 @@ Basic Usage
 
 Suppose you have a ``User`` entity that has an ``email`` field. You can use the
 ``UniqueEntity`` constraint to guarantee that the ``email`` field remains unique
-between all of the constraints in your user table:
+between all of the rows in your user table:
 
 .. configuration-block::
 
