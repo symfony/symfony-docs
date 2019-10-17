@@ -573,6 +573,9 @@ errors. It's useful to run it before deploying your application to production
     $ php bin/console lint:twig templates/email/
     $ php bin/console lint:twig templates/article/recent_list.html.twig
 
+    # you can show deprecations as errors
+    $ php bin/console lint:twig --show-deprecations templates/email/
+
 .. versionadded:: 4.4
 
     The feature that checks all the application templates when not passing any
