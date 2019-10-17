@@ -1432,10 +1432,6 @@ may want to use:
             ],
         ]);
 
-.. versionadded:: 4.4
-
-    The ``doctrine_clear_entity_manager`` middleware was introduced in Symfony 4.4.
-
 Messenger Events
 ~~~~~~~~~~~~~~~~
 
