@@ -985,8 +985,8 @@ Authentication (Identifying/Logging in the User)
 .. toctree::
     :maxdepth: 1
 
-    security/json_login_setup
     security/form_login_setup
+    security/json_login_setup
     security/guard_authentication
     security/auth_providers
     security/user_provider
