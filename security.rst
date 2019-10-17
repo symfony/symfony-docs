@@ -986,6 +986,7 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
+    security/json_login_setup
     security/guard_authentication
     security/auth_providers
     security/user_provider
