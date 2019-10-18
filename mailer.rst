@@ -144,7 +144,7 @@ both strings or address objects::
 
         // defining the email address and name as an object
         // (email clients will display the name)
-        ->from(new NamedAddress('fabien@example.com', 'Fabien'))
+        ->from(new Address('fabien@example.com', 'Fabien'))
 
         // defining the email address and name as a string
         // (the format must match: 'Name <email@example.com>')
