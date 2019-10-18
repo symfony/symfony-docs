@@ -235,7 +235,7 @@ Usage of this string is the same as with variables and select::
 
     .. code-block:: text
 
-		{gender_of_host, select,
+        {gender_of_host, select,
             female {
                 {num_guests, plural, offset:1
                 =0    {{host} does not give a party.}
