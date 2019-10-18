@@ -32,6 +32,8 @@ can deliver emails over ``smtp`` by configuring your ``.env`` file:
 
     # .env
     MAILER_DSN=smtp://user:pass@smtp.example.com
+    # or with another port and TLS encryption enabled
+    MAILER_DSN=smtp://user:pass@smtp.example.com:587/?encryption=tls
 
 .. warning::
 
