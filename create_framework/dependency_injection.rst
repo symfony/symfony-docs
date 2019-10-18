@@ -27,8 +27,12 @@ to it::
             $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
             $dispatcher = new EventDispatcher();
+            $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener(
+                'Calendar\Controller\ErrorController::exception'
+            ));
             $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, $requestStack));
             $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
+            $dispatcher->addSubscriber(new StringResponseListener());
 
             parent::__construct($dispatcher, $controllerResolver, $requestStack, $argumentResolver);
         }
