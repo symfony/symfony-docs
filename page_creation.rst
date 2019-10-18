@@ -217,6 +217,7 @@ Now, use the handy ``render()`` function to render a template. Pass it a ``numbe
 variable so you can use it in Twig::
 
     // src/Controller/LuckyController.php
+    namespace App\Controller;
 
     // ...
     class LuckyController extends AbstractController
