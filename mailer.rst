@@ -395,9 +395,9 @@ it with:
 
 .. code-block:: terminal
 
-    $ composer require twig/cssinliner-extension
+    $ composer require twig/extra-bundle twig/cssinliner-extra
 
-The extension is enabled automatically. To use this, wrap the entire template
+The extension is enabled automatically. To use it, wrap the entire template
 with the ``inline_css`` filter:
 
 .. code-block:: html+twig
@@ -497,14 +497,14 @@ the extension in your application:
 
 .. code-block:: terminal
 
-    $ composer require twig/inky-extension
+    $ composer require twig/extra-bundle twig/inky-extra
 
-The extension adds an ``inky`` filter, which can be used to convert parts or the
-entire email contents from Inky to HTML:
+The extension adds an ``inky_to_html`` filter, which can be used to convert parts
+or the entire email contents from Inky to HTML:
 
 .. code-block:: html+twig
 
-    {% apply inky %}
+    {% apply inky_to_html %}
         <container>
             <row class="header">
                 <columns>
@@ -521,7 +521,7 @@ You can combine all filters to create complex email messages:
 
 .. code-block:: twig
 
-    {% apply inky|inline_css(source('@css/foundation-emails.css')) %}
+    {% apply inky_to_html|inline_css(source('@css/foundation-emails.css')) %}
         {# ... #}
     {% endapply %}
 
