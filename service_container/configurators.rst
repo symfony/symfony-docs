@@ -176,7 +176,7 @@ all the classes are already loaded as services. All you need to do is specify th
             $services = $configurator->services();
 
             // Registers all 4 classes as services, including App\Mail\EmailConfigurator
-            $services->load('App\', '../src/*');
+            $services->load('App\\', '../src/*');
 
             // override the services to set the configurator
             $services->set(NewsletterManager::class)
@@ -246,7 +246,7 @@ routes can reference :ref:`invokable controllers <controller-service-invoke>`.
             $services = $configurator->services();
 
             // Registers all 4 classes as services, including App\Mail\EmailConfigurator
-            $services->load('App\', '../src/*');
+            $services->load('App\\', '../src/*');
 
             // override the services to set the configurator
             $services->set(NewsletterManager::class)
