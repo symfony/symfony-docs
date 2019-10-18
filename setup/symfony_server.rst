@@ -306,6 +306,12 @@ MongoDB       27017 ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE
 Kafka         9092  ``KAFKA_``
 ============= ===== ======================
 
+The server also supports Mailcatcher images (including
+``schickling/mailcatcher``). When ports ``1025`` and ``1080`` are detected,
+``MAILER_*`` environment variables are added to support both Symfony Mailer and
+Swiftmailer. To access the web mailer, use ``symfony open:local:webmail`` or
+click on the "Webmail" link in the web debug toolbar.
+
 .. tip::
 
     To debug and list all exported environment variables, run ``symfony
