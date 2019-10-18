@@ -88,6 +88,14 @@ them is missing::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
+If you want to differentiate between files and directories when using
+:method:`Symfony\\Component\\Filesystem\\Filesystem::exists`, use the optional second argument::
+
+    use Symfony\Component\Filesystem\Filesystem;
+
+    $filesystem->exists('/tmp/photos', Filesystem::FILE_TYPE_DIRECTORY);
+    $filesystem->exists(['rabbit.jpg', 'bottle.png'], Filesystem::FILE_TYPE_REGULAR);
+
 copy
 ~~~~
 
