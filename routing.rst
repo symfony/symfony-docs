@@ -883,7 +883,7 @@ and in route imports. Symfony defines some special attributes with the same name
 
         // src/Controller/ArticleController.php
         namespace App\Controller;
-        
+
         // ...
         class ArticleController extends AbstractController
         {
@@ -972,7 +972,7 @@ the controllers of the routes:
 
         // src/Controller/BlogController.php
         namespace App\Controller;
-        
+
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController
@@ -1045,7 +1045,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         // src/Controller/DefaultController.php
         namespace App\Controller;
-        
+
         use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController
@@ -1130,9 +1130,10 @@ the common configuration using options when importing the routes.
 .. configuration-block::
 
     .. code-block:: php-annotations
+
         // src/Controller/BlogController.php
         namespace App\Controller;
-        
+
         use Symfony\Component\Routing\Annotation\Route;
 
         /**
@@ -1842,7 +1843,7 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 
     // src/Service/SomeService.php
     namespace App\Service;
-    
+
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
     class SomeService
@@ -1949,7 +1950,7 @@ This information can be configured per command too::
 
     // src/Command/SomeCommand.php
     namespace App\Command;
-    
+
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Routing\RouterInterface;
     // ...
