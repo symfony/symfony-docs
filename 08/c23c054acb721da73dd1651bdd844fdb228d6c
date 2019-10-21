@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-10-18T14:55:15Z
+
+@Lyrkan could you please review this proposed change? Thanks!
+
+---------------------------------------------------------------------------
+
+by Steveb-p at 2019-10-18T21:32:18Z
+
+@Lyrkan current page already has an example just above the one that this PR adds, where there is no parameter. I had considered it sufficient, as it is a continuation of the example.
+
+I'll adjust it into a diff instead to clearly show that it's an optional parameter that is only required if a specific ts-loader adjustment is needed.
+
+EDIT: ccb694d should do the trick.
+
+---------------------------------------------------------------------------
+
+by Lyrkan at 2019-10-18T21:38:25Z
+
+> @Lyrkan current page already has an example just above the one that this PR adds, where there is no parameter. I had considered it sufficient, as it is a continuation of the example.
+
+Oh, my bad then, I didn't expand the top part of the file :)
+
+> I'll adjust it into a diff instead to clearly show that it's an optional parameter that is only required if a specific ts-loader adjustment is needed.
+
+Good idea!
