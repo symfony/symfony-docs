@@ -26,7 +26,29 @@ Encore, you're done!
 
 Any ``.ts`` files that you require will be processed correctly. You can
 also configure the `ts-loader options`_ via the ``enableTypeScriptLoader()``
-method. See the `Encore's index.js file`_ for detailed documentation and check
+method. 
+
+.. code-block:: diff
+
+    Encore
+        // ...
+        .addEntry('main', './assets/main.ts')
+
+    -     .enableTypeScriptLoader()
+    +     .enableTypeScriptLoader(function(tsConfig) {
+    +         // You can use this callback function to adjust ts-loader settings
+    +         // https://github.com/TypeStrong/ts-loader/blob/master/README.md#loader-options
+    +         // For example:
+    +         // tsConfig.silent = false
+    +     })
+
+        // optionally enable forked type script for faster builds
+        // https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
+        // requires that you have a tsconfig.json file that is setup correctly.
+        //.enableForkedTypeScriptTypesChecking()
+    ;   
+
+See the `Encore's index.js file`_ for detailed documentation and check
 out the `tsconfig.json reference`_ and the `Webpack guide about Typescript`_.
 
 If React is enabled (``.enableReactPreset()``), any ``.tsx`` file will also be
