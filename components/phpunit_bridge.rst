@@ -255,7 +255,7 @@ deprecations but:
 * forget to mark appropriate tests with the ``@group legacy`` annotations.
 
 By using ``SYMFONY_DEPRECATIONS_HELPER=max[self]=0``, deprecations that are
-triggered outside the ``vendors`` directory will be accounted for seperately,
+triggered outside the ``vendors`` directory will be accounted for separately,
 while deprecations triggered from a library inside it will not (unless you reach
 999999 of these), giving you the best of both worlds.
 
