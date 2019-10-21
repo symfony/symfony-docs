@@ -200,7 +200,7 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
 
     // src/Controller/TaskController.php
     namespace App\Controller;
-    
+
     use App\Form\Type\TaskType;
     // ...
 
@@ -232,7 +232,7 @@ the ``data_class`` option by adding the following to your form type class::
 
     // src/Form/Type/TaskType.php
     namespace App\Form\Type;
-    
+
     use App\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     // ...
@@ -524,7 +524,7 @@ object.
 
         // src/Entity/Task.php
         namespace App\Entity;
-        
+
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -562,7 +562,7 @@ argument of ``createForm()``::
 
     // src/Controller/TaskController.php
     namespace App\Controller;
-    
+
     use App\Form\Type\TaskType;
     // ...
 
@@ -588,7 +588,7 @@ options they accept using the ``configureOptions()`` method::
 
     // src/Form/Type/TaskType.php
     namespace App\Form\Type;
-    
+
     use Symfony\Component\OptionsResolver\OptionsResolver;
     // ...
 
@@ -769,13 +769,13 @@ method::
 
     // src/Controller/TaskController.php
     namespace App\Controller;
-    
+
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class TaskController extends AbstractController
     {
-        public function newAction()
+        public function new()
         {
             $task = ...;
             $form = $this->get('form.factory')->createNamed('my_name', TaskType::class, $task);
