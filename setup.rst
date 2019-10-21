@@ -281,7 +281,7 @@ Learn More
     setup/web_server_configuration
     setup/*
 
-.. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
+.. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
 .. _`Install Symfony`: https://symfony.com/download
 .. _`install Symfony`: https://symfony.com/download
