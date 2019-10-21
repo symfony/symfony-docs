@@ -243,7 +243,7 @@ For example, you may add the following transports as services:
                     <tag name="app.mail_transport"/>
                 </service>
 
-                <service class="\Swift_SendmailTransport">
+                <service id="Swift_SendmailTransport">
                     <tag name="app.mail_transport"/>
                 </service>
             </services>
