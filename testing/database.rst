@@ -91,6 +91,7 @@ Customize the new class to load ``Product`` objects into Doctrine::
     // src/DataFixtures/ProductFixture.php
     namespace App\DataFixtures;
 
+    use App\Entity\Product;
     use Doctrine\Bundle\FixturesBundle\Fixture;
     use Doctrine\Common\Persistence\ObjectManager;
 
