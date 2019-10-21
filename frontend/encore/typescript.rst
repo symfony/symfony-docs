@@ -26,7 +26,7 @@ Encore, you're done!
 
 Any ``.ts`` files that you require will be processed correctly. You can
 also configure the `ts-loader options`_ via the ``enableTypeScriptLoader()``
-method. 
+method.
 
 .. code-block:: diff
 
@@ -42,11 +42,8 @@ method.
     +         // tsConfig.silent = false
     +     })
 
-        // optionally enable forked type script for faster builds
-        // https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
-        // requires that you have a tsconfig.json file that is setup correctly.
-        //.enableForkedTypeScriptTypesChecking()
-    ;   
+            // ...
+    ;
 
 See the `Encore's index.js file`_ for detailed documentation and check
 out the `tsconfig.json reference`_ and the `Webpack guide about Typescript`_.
