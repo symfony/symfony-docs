@@ -877,6 +877,7 @@ and in route imports. Symfony defines some special attributes with the same name
     .. code-block:: php-annotations
 
         // src/Controller/ArticleController.php
+        namespace App\Controller;
 
         // ...
         class ArticleController extends AbstractController
@@ -960,6 +961,9 @@ the controllers of the routes:
 
     .. code-block:: php-annotations
 
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController
@@ -1029,6 +1033,9 @@ A possible solution is to change the parameter requirements to be more permissiv
 .. configuration-block::
 
     .. code-block:: php-annotations
+
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Component\Routing\Annotation\Route;
 
@@ -1115,6 +1122,9 @@ the common configuration using options when importing the routes.
 
     .. code-block:: php-annotations
 
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
         use Symfony\Component\Routing\Annotation\Route;
 
         /**
@@ -1131,7 +1141,7 @@ the common configuration using options when importing the routes.
             }
 
             /**
-             * @Route("/{_locale}/posts/{slug}", name="post")
+             * @Route("/{_locale}/posts/{slug}", name="show")
              */
             public function show(Post $post)
             {
@@ -1207,7 +1217,7 @@ the common configuration using options when importing the routes.
 
 In this example, the route of the ``index()`` action will be called ``blog_index``
 and its URL will be ``/blog/``. The route of the ``show()`` action will be called
-``blog_post`` and its URL will be ``/blog/{_locale}/posts/{slug}``. Both routes
+``blog_show`` and its URL will be ``/blog/{_locale}/posts/{slug}``. Both routes
 will also validate that the ``_locale`` parameter matches the regular expression
 defined in the class annotation.
 
@@ -1822,6 +1832,8 @@ you only need to add an argument in the service constructor and type-hint it wit
 the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class::
 
     // src/Service/SomeService.php
+    namespace App\Service;
+
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
     class SomeService
@@ -1927,6 +1939,8 @@ generate URLs. This context can be configured globally for all commands:
 This information can be configured per command too::
 
     // src/Command/SomeCommand.php
+    namespace App\Command;
+
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Routing\RouterInterface;
     // ...
@@ -2059,7 +2073,7 @@ each route explicitly:
         # config/routes.yaml
         login:
             path:       /login
-            controller: App\Controller\SeurityController::login
+            controller: App\Controller\SecurityController::login
             schemes:    [https]
 
     .. code-block:: xml
