@@ -54,7 +54,9 @@ Concepts
    For instance: logging, validating a message, starting a transaction, ...
    They are also responsible for calling the next middleware in the chain,
    which means they can tweak the envelope, by adding stamps to it or even
-   replacing it, as well as interrupt the middleware chain.
+   replacing it, as well as interrupt the middleware chain. Middleware are called
+   both when a message is originally dispatched and again later when a message
+   is received from a tansport,
 
 **Envelope**
    Messenger specific concept, it gives full flexibility inside the message bus,
@@ -174,6 +176,8 @@ Hence you can inspect the envelope content and its stamps, or add any::
 
                 // You could for example add another stamp.
                 $envelope = $envelope->with(new AnotherStamp(/* ... */));
+            } else {
+                // Message was just originally dispatched
             }
 
             return $stack->next()->handle($envelope, $stack);

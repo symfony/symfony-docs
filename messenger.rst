@@ -1297,6 +1297,10 @@ for each bus looks like this:
     These middleware names are actually shortcuts names. The real service ids
     are prefixed with ``messenger.middleware.``.
 
+The middleware are executed when the message is dispatched but *also* again when
+a message is received via the worker (for messages that were sent to a transport
+to be handled asynchronously). Keep this in mind if you create your own middleware.
+
 You can add your own middleware to this list, or completely disable the default
 middleware and *only* include your own:
 
