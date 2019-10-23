@@ -715,6 +715,9 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
                 # require ROLE_ADMIN for /admin*
                 - { path: '^/admin', roles: ROLE_ADMIN }
 
+                # or require ROLE_ADMIN and IS_AUTHENTICATED_FULLY for /admin*
+                - { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+                
                 # the 'path' value can be any valid regular expression
                 # (this one will match URLs like /api/post/7298 and /api/comment/528491)
                 - { path: ^/api/(post|comment)/\d+$, roles: ROLE_USER }
