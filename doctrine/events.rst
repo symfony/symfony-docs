@@ -233,13 +233,13 @@ define a listener for the ``postUpdate`` Doctrine event::
     namespace App\EventListener;
 
     use App\Entity\User;
-    use Doctrine\ORM\Event\PreUpdateEventArgs;
+    use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
     class UserChangedNotifier
     {
         // the entity listener methods receive two arguments:
         // the entity instance and the lifecycle event
-        public function postUpdate(User $user, PreUpdateEventArgs $event)
+        public function postUpdate(User $user, LifecycleEventArgs $event)
         {
             // ... do something to notify the changes
         }

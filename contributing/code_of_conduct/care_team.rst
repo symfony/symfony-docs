@@ -31,7 +31,7 @@ of them at once by emailing **care@symfony.com**:
 
 * **Michelle Sanver**
 
-  * *E-mail*: hello [at] michellesanver.com
+  * *E-mail*: michelle [at] liip.ch
   * *Twitter*: `@michellesanver <https://twitter.com/michellesanver>`_
   * *SymfonyConnect*: `michellesanver <https://connect.symfony.com/profile/michellesanver>`_
 
