@@ -420,6 +420,10 @@ and will abort the request.
 In case the response was canceled using ``$response->cancel()``,
 ``$response->getInfo('canceled')`` will return ``true``.
 
+.. versionadded:: 4.4
+
+    The possibility to get information about canceled or not was introduced in Symfony 4.4.
+
 Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
 
