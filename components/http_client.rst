@@ -417,6 +417,9 @@ Or throw an exception from a progress callback::
 The exception will be wrapped in an instance of ``TransportExceptionInterface``
 and will abort the request.
 
+In case the response was canceled using ``$response->cancel()``,
+``$response->getInfo('canceled')`` will return ``true``.
+
 Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
 
