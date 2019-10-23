@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by Toflar at 2019-10-21T16:16:05Z
+
+Fixed, sorry.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-10-22T07:01:27Z
+
+@OskarStark note for mergers: we must add `versionadded:: 4.4` while merging this. Thanks!
