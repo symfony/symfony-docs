@@ -61,9 +61,10 @@ divisor
 
 **type**: ``integer`` **default**: ``1``
 
-If, for some reason, you need to divide your starting value by a number
+If you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
-For example::
+For example if you store prices as integer in order to avoid `rounding errors`_,
+you can transform values in cents automatically::
 
     use Symfony\Component\Form\Extension\Core\Type\MoneyType;
     // ...
@@ -139,3 +140,4 @@ money_pattern  ``string``  The format to use to display the money, including the
 =============  ==========  ===============================================================
 
 .. _`3 letter ISO 4217 code`: https://en.wikipedia.org/wiki/ISO_4217
+.. _`rounding errors`: https://0.30000000000000004.com/
