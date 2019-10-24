@@ -136,7 +136,7 @@ and hidden with the service definition:
 
         .. code-block:: php
 
-            // the @ symbol does NOT need to be escaped in XML
+            // the @ symbol does NOT need to be escaped in PHP
             $container->setParameter('mailer_password', '@securepass');
 
             // But % does need to be escaped
