@@ -215,6 +215,39 @@ what actions are allowed on a blog post::
 
     // See all the available transitions for the post in the current state
     $transitions = $workflow->getEnabledTransitions($post);
+    
+In a class or a controller
+--------------------------
+
+To access workflow inside a class, use dependency injection and inject the registry in the constructor. 
+
+For a controller, you can directly inject it in a method::
+
+    use Symfony\Component\Workflow\Registry;
+    
+    class MyClass
+    {
+    
+        private $worflowRegistry;
+    
+        public function __construct(Registry $workflowRegistry)
+        {
+            $this->worflowRegistry = $worflowRegistry;
+        }
+    
+        public function toReview(BlogPost $blogPost)
+        {
+            $workflow = $this->worflowRegistry->get($blogPost);
+        
+            // Update the currentState on the post
+            try {
+                $workflow->apply($post, 'to_review');
+            } catch (LogicException $exception) {
+                // ...
+            }
+            // ...
+        }
+    }
 
 Using Events
 ------------
