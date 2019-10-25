@@ -61,7 +61,7 @@ Here is a simplified example of a database transport::
             $row = $this->db->createQuery(
                     'SELECT *
                     FROM my_queue
-                    WHERE (delivered_at IS NULL OR delivered_at < :redeliver_timeout')
+                    WHERE (delivered_at IS NULL OR delivered_at < :redeliver_timeout)
                     AND handled = FALSE'
                 )
                 ->setParameter('redeliver_timeout', new DateTimeImmutable('-5minutes'))
