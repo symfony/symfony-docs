@@ -183,7 +183,7 @@ Instead of using ``require`` and ``module.exports`` like shown above, JavaScript
 provides an alternate syntax based on the `ECMAScript 6 modules`_ that includes
 the ability to use dynamic imports.
 
-To export values, use ``exports``:
+To export values, use ``export``:
 
 .. code-block:: diff
 
@@ -343,7 +343,7 @@ This will output a new ``some_page.css``.
 Keep Going!
 -----------
 
-Encore support many more features! For a full list of what you can do, see
+Encore supports many more features! For a full list of what you can do, see
 `Encore's index.js file`_. Or, go back to :ref:`list of Encore articles <encore-toc>`.
 
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
