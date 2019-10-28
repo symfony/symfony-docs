@@ -1363,6 +1363,10 @@ middleware and *only* include your own:
 Middleware for Doctrine
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
+    Doctrine middlewares mentioned below require `doctrine/doctrine-bundle@^1.11`.
+
 If you use Doctrine in your app, a number of optional middleware exist that you
 may want to use:
 
