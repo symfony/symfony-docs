@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-10-28T09:03:03Z
+
+Timo, thanks for improving this. I'd go even further and remove this phrase entirely:
+
+> People may read documentation because they know very little about a specific topic or are even completely new to it.
+
+In addition to being a wrong and limited assumption ... it doesn't provide any value.
+
+---------------------------------------------------------------------------
+
+by TimoBakx at 2019-10-28T09:05:40Z
+
+You're right. The sentence after that covers the reason enough. I'll make the changes.
