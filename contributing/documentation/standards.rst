@@ -175,11 +175,10 @@ In addition, documentation follows these rules:
   * his or hers, use theirs
   * himself or herself, use themselves
 
-* **Avoid belittling words**: People read documentation because they know very
-  little about a specific topic or are even completely new to it. Things that
-  seem "obvious" or "simple" for the person documenting it, can be the exact
-  opposite for the reader. To make sure everybody feels comfortable when reading
-  the documentation, try to avoid words like:
+* **Avoid belittling words**: Things that seem "obvious" or "simple" for the
+  person documenting it, can be the exact opposite for the reader. To make sure
+  everybody feels comfortable when reading the documentation, try to avoid words
+  like:
 
   * basically
   * clearly
