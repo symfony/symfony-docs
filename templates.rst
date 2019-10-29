@@ -897,7 +897,7 @@ template, such as ``blog/index.html.twig``, which displays the blog index:
 
 This template extends from the second-level template (``blog/layout.html.twig``)
 but overrides blocks of different parent templates: ``content`` from
-``blog/index.html.twig`` and ``title`` from ``base.html.twig``.
+``blog/layout.html.twig`` and ``title`` from ``base.html.twig``.
 
 When you render the ``blog/index.html.twig`` template, Symfony uses three
 different templates to create the final contents. This inheritance mechanism
