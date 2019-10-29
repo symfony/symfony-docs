@@ -127,7 +127,7 @@ like this:
                     ],
                     'marking_store' => [
                         'type' => 'method'
-                        'property' => ['currentPlace']
+                        'property' => 'currentPlace'
                     ],
                     'supports' => ['App\Entity\BlogPost'],
                     'initial_marking' => 'draft',
