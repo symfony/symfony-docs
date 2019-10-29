@@ -21,8 +21,8 @@ HTTP headers: ``Expires`` or ``Cache-Control``.
 Expiration with the ``Cache-Control`` Header
 --------------------------------------------
 
-Most of the time, you will use the ``Cache-Control`` header. Recall that the
-``Cache-Control`` header is used to specify many different cache directives::
+Most of the time, you will use the ``Cache-Control`` header, which
+is used to specify many different cache directives::
 
     // sets the number of seconds after which the response
     // should no longer be considered fresh by shared caches
