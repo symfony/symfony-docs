@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-10-28T09:09:41Z
+
+Kane, thanks for fixing this grammar issue. However, even if the phrase is correct now, I think it's wrong to say that: *"you may recall that ..."* Why should I recall that? Here's a reword proposal:
+
+Before:
+
+```rst
+Most of the time, you will use the ``Cache-Control`` header. You may
+recall that the ``Cache-Control`` header is used to specify many
+different cache directives::
+```
+
+After:
+
+```rst
+Most of the time, you will use the ``Cache-Control`` header, which
+is used to specify many different cache directives::
+```
+
+Would that read better to you? Thanks.
+
+---------------------------------------------------------------------------
+
+by kane-menicou at 2019-10-28T10:02:01Z
+
+Yeah that makes much more sense, thanks.
