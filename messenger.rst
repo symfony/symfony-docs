@@ -1343,6 +1343,10 @@ middleware and *only* include your own:
 Middleware for Doctrine
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 1.11
+
+    The following Doctrine middleware were introduced in DoctrineBundle 1.11.
+
 If you use Doctrine in your app, a number of optional middleware exist that you
 may want to use:
 

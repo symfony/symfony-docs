@@ -676,7 +676,7 @@ interface you need to code against when a client is needed::
 
         public function __construct(HttpClientInterface $client)
         {
-            $this->client = $client
+            $this->client = $client;
         }
 
         // [...]
