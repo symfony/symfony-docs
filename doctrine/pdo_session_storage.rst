@@ -184,7 +184,7 @@ Preparing the Database to Store Sessions
 
 Before storing sessions in the database, you must create the table that stores
 the information. The session handler provides a method called
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler::createTable`
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler::createTable`
 to set up this table for you according to the database engine used::
 
     try {
