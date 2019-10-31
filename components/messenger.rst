@@ -296,7 +296,7 @@ do is to write your own CSV receiver::
                 throw $exception;
             }
 
-            return [$envelope->with(new CustomStamp($yourEnvelope['id']);
+            return [$envelope->with(new CustomStamp($yourEnvelope['id']))];
         }
 
         public function ack(Envelope $envelope): void
