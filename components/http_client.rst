@@ -128,8 +128,8 @@ The HTTP client supports different authentication mechanisms. They can be
 defined globally when creating the client (to apply it to all requests) and to
 each request (which overrides any global authentication)::
 
-    // Use the same authentication for all requests
-    $client = HttpClient::create([
+    // Use the same authentication for all requests to https://example.com/
+    $client = HttpClient::createForBaseUri('https://example.com/', [
         // HTTP Basic authentication (there are multiple ways of configuring it)
         'auth_basic' => ['the-username'],
         'auth_basic' => ['the-username', 'the-password'],
@@ -154,10 +154,12 @@ each request (which overrides any global authentication)::
 .. note::
 
     The NTLM authentication mechanism requires using the cURL transport.
+    By using ``HttpClient::createForBaseUri()``, we ensure that the auth credentials
+    won't be sent to any other hosts than https://example.com/.
 
 .. versionadded:: 4.4
 
-    The ``auth_ntlm`` option was introduced in Symfony 4.4.
+    The ``auth_ntlm`` option and the ``HttpClient::createForBaseUri()`` method were introduced in Symfony 4.4.
 
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -378,10 +380,7 @@ Call the ``stream()`` method of the HTTP client to get *chunks* of the
 response sequentially instead of waiting for the entire response::
 
     $url = 'https://releases.ubuntu.com/18.04.1/ubuntu-18.04.1-desktop-amd64.iso';
-    $response = $client->request('GET', $url, [
-        // optional: if you don't want to buffer the response in memory
-        'buffer' => false,
-    ]);
+    $response = $client->request('GET', $url);
 
     // Responses are lazy: this code is executed as soon as headers are received
     if (200 !== $response->getStatusCode()) {
@@ -394,6 +393,14 @@ response sequentially instead of waiting for the entire response::
     foreach ($client->stream($response) as $chunk) {
         fwrite($fileHandler, $chunk->getContent());
     }
+
+.. note::
+
+    By default, ``text/*``, JSON and XML response bodies are buffered in a local
+    ``php://temp`` stream. You can control this behavior by using the ``buffer``
+    option: set it to ``true``/``false`` to enable/disable buffering, or to a
+    closure that should return the same based on the response headers it receives
+    as argument.
 
 Canceling Responses
 ~~~~~~~~~~~~~~~~~~~
@@ -541,6 +548,8 @@ response and get remaining contents that might come back in a new timeout, etc.
     is idle*. Big responses can last as long as needed to complete, provided they
     remain active during the transfer and never pause for longer than specified.
 
+    Use the ``max_duration`` option to limit the time a full request/response can last.
+
 Dealing with Network Errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -666,15 +675,15 @@ or if it matches the ``https://api.github.com/`` base URI.
 Interoperability
 ----------------
 
-The component is interoperable with three different abstractions for HTTP
-clients: `Symfony Contracts`_, `PSR-18`_ and `HTTPlug`_ v1 and v2. If your
-application uses libraries that need any of them, the component is compatible
+The component is interoperable with four different abstractions for HTTP
+clients: `Symfony Contracts`_, `PSR-18`_, `HTTPlug`_ v1/v2 and native PHP streams.
+If your application uses libraries that need any of them, the component is compatible
 with all of them. They also benefit from :ref:`autowiring aliases <service-autowiring-alias>`
 when the :ref:`framework bundle <framework-bundle-configuration>` is used.
 
 If you are writing or maintaining a library that makes HTTP requests, you can
 decouple it from any specific HTTP client implementations by coding against
-either Symfony Contracts (recommended) or PSR-18 (which superseded HTTPlug).
+either Symfony Contracts (recommended), PSR-18 or HTTPlug v2.
 
 Symfony Contracts
 ~~~~~~~~~~~~~~~~~
@@ -701,7 +710,7 @@ interface you need to code against when a client is needed::
 All request options mentioned above (e.g. timeout management) are also defined
 in the wordings of the interface, so that any compliant implementations (like
 this component) is guaranteed to provide them. That's a major difference with
-the PSR-18 abstraction, which provides none related to the transport itself.
+the other abstractions, which provide none related to the transport itself.
 
 Another major feature covered by the Symfony Contracts is async/multiplexing,
 as described in the previous sections.
@@ -726,6 +735,10 @@ To use it, you need the ``psr/http-client`` package and a `PSR-17`_ implementati
     # with autowiring aliases provided by Symfony Flex
     $ composer require nyholm/psr7
 
+    # alternatively, install the php-http/discovery package to auto-discover
+    # any already installed implementations from common vendors:
+    # composer require php-http/discovery
+
 Now you can make HTTP requests with the PSR-18 client as follows::
 
     use Symfony\Component\HttpClient\Psr18Client;
@@ -749,26 +762,25 @@ HTTPlug
 
     Support for HTTPlug was introduced in Symfony 4.4.
 
-The `HTTPlug`_ specification was published before PSR-18 and is superseded by
-it. As such, you should not use it in newly written code. Yet, many libraries
-still require v1 or v2 of it. The component is interoperable with them thanks to
-the ``HttplugClient`` adapter class. Similarly to ``Psr18Client`` implementing
-relevant parts of PSR-17, ``HttplugClient`` also implements the factory methods
-defined in the related ``php-http/message-factory`` package.
-
-Internally, the implementation relies on the ``Psr18Client``, so that the
-``psr/http-client`` package is needed to use this class:
+The `HTTPlug`_ v1 specification was published before PSR-18 and is superseded by
+it. As such, you should not use it in newly written code. The component is still
+interoperable with libraries that require it thanks to the
+:class:`Symfony\\Component\\HttpClient\\HttplugClient` class. Similarly to
+``Psr18Client`` implementing relevant parts of PSR-17, ``HttplugClient`` also
+implements the factory methods defined in the related ``php-http/message-factory``
+package.
 
 .. code-block:: terminal
 
     # Let's suppose php-http/httplug is already required by the lib you want to use
 
-    # installs the PSR-18 ClientInterface
-    $ composer require psr/http-client
-
     # installs an efficient implementation of response and stream factories
     # with autowiring aliases provided by Symfony Flex
     $ composer require nyholm/psr7
+
+    # alternatively, install the php-http/discovery package to auto-discover
+    # any already installed implementations from common vendors:
+    # composer require php-http/discovery
 
 Let's say you want to instantiate a class with the following constructor,
 that requires HTTPlug dependencies::
@@ -793,6 +805,76 @@ Because ``HttplugClient`` implements the three interfaces, you can use it this w
 
     $httpClient = new HttplugClient();
     $apiClient = new SomeSdk($httpClient, $httpClient, $httpClient);
+
+If you'd like to work with promises, ``HttplugClient`` also implements the
+``HttpAsyncClient`` interface. To use it, you need to install the
+``guzzlehttp/promises`` package:
+
+.. code-block:: terminal
+
+    $ composer require guzzlehttp/promises
+
+Then you're ready to go::
+
+    use Psr\Http\Message\ResponseInterface;
+    use Symfony\Component\HttpClient\HttplugClient;
+
+    $httpClient = new HttplugClient();
+    $request = $httpClient->createRequest('GET', 'https://my.api.com/');
+    $promise = $httpClient->sendRequest($request)
+        ->then(
+            function (ResponseInterface $response) {
+                echo 'Got status '.$response->getStatusCode();
+
+                return $response;
+            },
+            function (\Throwable $exception) {
+                echo 'Error: '.$exception->getMessage();
+
+                throw $exception;
+            }
+        );
+
+    // after you're done with sending several requests,
+    // you must wait for them to complete concurrently
+
+    // wait for a specific promise to resolve while monitoring them all
+    $response = $promise->wait();
+
+    // wait maximum 1 second for pending promises to resolve
+    $httpClient->wait(1.0);
+
+    // wait for all remaining promises to resolve
+    $httpClient->wait();
+
+Native PHP streams
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.4
+
+    Support for native PHP streams was introduced in Symfony 4.4.
+
+Responses implementing :class:`Symfony\\Contracts\\HttpClient\\ResponseInterface`
+can be cast to native PHP streams with
+:method:`Symfony\\Component\\HttpClient\\Response\\StreamWrapper::createResource``.
+This allows using them where native PHP streams are needed::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpClient\Response\StreamWrapper;
+
+    $client = HttpClient::create();
+    $response = $client->request('GET', 'https://symfony.com/versions.json');
+
+    $streamResource = StreamWrapper::createResource($response, $client);
+
+    // alternatively and contrary to the previous one, this returns
+    // a resource that is seekable and potentially stream_select()-able
+    $streamResource = $response->toStream();
+
+    echo stream_get_contents($streamResource); // outputs the content of the response
+
+    // later on if you need to, you can access the response from the stream
+    $response = stream_get_meta_data($streamResource)['wrapper_data']->getResponse();
 
 Symfony Framework Integration
 -----------------------------
