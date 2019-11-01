@@ -389,7 +389,7 @@ Polyfills for the Unavailable Methods
 
 When using the ``simple-phpunit`` script, PHPUnit Bridge injects polyfills for
 most methods of the ``TestCase`` and ``Assert`` classes (e.g. ``expectException()``,
-``expectExcpetionMessage()``, ``assertContainsEquals``, etc.). This allows writing
+``expectExceptionMessage()``, ``assertContainsEquals()``, etc.). This allows writing
 test cases using the latest best practices while still remaining compatible with
 older PHPUnit versions.
 
@@ -413,18 +413,18 @@ call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
 
     class MyTest extends TestCase
     {
+        // when using the SetUpTearDownTrait, methods like doSetup() can
+        // be defined with and without the 'void' return type, as you wish
         use SetUpTearDownTrait;
-
-        private $state;
 
         private function doSetup()
         {
-            $this->state = 'demo';
+            // ...
         }
 
         protected function doSetup(): void
         {
-            // visibility and return type-hint of method is free
+            // ...
         }
     }
 
