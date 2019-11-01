@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-10-03T21:40:24Z
+
+Should we add some words about the async method? This one is not superseded by PSR18 and provides a promise-based API, which is a paradigm that could be worth mentioning?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2019-10-14T17:41:40Z
+
+Thank you for completing this PR.
+
+I’m :+1:
