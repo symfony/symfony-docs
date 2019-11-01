@@ -1,0 +1,198 @@
+---------------------------------------------------------------------------
+
+by jbdelhommeau at 2019-10-18T16:15:07Z
+
+I try with my SF 4.3 version and 4 \ erase a exception. With 2 like my
+request it's working... Stranger
+
+On Fri, 18 Oct 2019, 17:58 Wouter J, <notifications@github.com> wrote:
+
+> *@wouterj* requested changes on this pull request.
+>
+> I believe this is wrong, see
+> https://symfony.com/doc/current/components/expression_language/syntax.html#supported-literals
+> :
+>
+> A backslash (\) must be escaped by 4 backslashes (\\\\) in a string and 8
+> backslashes (\\\\\\\\) in a regex:
+>
+> The reason is that one backslash (leaving \\) is removed by PHP and the
+> expression language needs another escape of the backslash.
+>
+> Exactly this line was changed in #8347
+> <https://github.com/symfony/symfony-docs/pull/8347>
+>
+> However, I'm sure you didn't put time into submitting a fix without a
+> reason: So did you test this and came to the conclusion that 2 backslashes
+> were enough? Because then we have to reconsider the ExpressionLanguage
+> documentation :)
+>
+> —
+> You are receiving this because you authored the thread.
+> Reply to this email directly, view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/12513?email_source=notifications&email_token=AALEW4QDOWLCHRGJG4GQLLTQPHMKTA5CNFSM4JCJBPDKYY3PNVWWK3TUL52HS4DFWFIHK3DMKJSXC5LFON2FEZLWNFSXPKTDN5WW2ZLOORPWSZGOCIPHOGI#pullrequestreview-303986457>,
+> or unsubscribe
+> <https://github.com/notifications/unsubscribe-auth/AALEW4UU725HOKLJ4N6WYQ3QPHMKTANCNFSM4JCJBPDA>
+> .
+>
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-10-18T17:21:56Z
+
+My first thought was, it was wrong, but we only need 4 when using it as regex pattern AFAIK.
+I didn’t test this but, 2 looks ok to me. Anyone else who can confirm this?
+
+@nicolas-grekas can you please give your 2 cents here please? Thanks 🙏
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-10-18T17:56:40Z
+
+This might work :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-10-18T23:09:47Z
+
+So I ran a small test:
+
+`expr.yaml`
+```yaml
+argument: "'App\\Mail\\MailerConfiguration'"
+```
+
+`expr.php`
+```php
+<?php
+
+require 'vendor/autoload.php';
+
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\Yaml\Yaml;
+
+$lang = new ExpressionLanguage();
+$file = Yaml::parseFile('expr.yaml');
+
+var_dump($lang->evaluate($file['argument']));
+var_dump($lang->compile($file['argument']))
+```
+
+And this produces:
+```
+$ php expr.php
+string(26) "AppMailMailerConfiguration"
+string(28) ""AppMailMailerConfiguration""
+```
+
+So as far as I can see, we indeed do need the 4 backslashes in the configuration (fyi, if I test without the Yaml and with normal PHP strings, we also need 4 backslashes). So I'm going to close for now, but feel free to comment and share your insights @jbdelhommeau! And as always, thanks for taking the time to fix documentation!
+
+---------------------------------------------------------------------------
+
+by jbdelhommeau at 2019-10-19T16:21:57Z
+
+Okay I found the problem ! You're right but so am I.
+
+Show this small test :
+
+`expr.yaml`
+
+```yaml
+argument_1: '"App\\Mail\\MailerConfiguration"'
+argument_2: "'App\\Mail\\MailerConfiguration'"
+```
+
+```php
+<?php
+require 'vendor/autoload.php';
+
+use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+use Symfony\Component\Yaml\Yaml;
+
+$lang = new ExpressionLanguage();
+$file = Yaml::parseFile('expr.yaml');
+
+var_dump($lang->evaluate($file['argument_1']));
+var_dump($lang->compile($file['argument_1']));
+
+var_dump($lang->evaluate($file['argument_2']));
+var_dump($lang->compile($file['argument_2']));
+ ```
+
+Tada and the result are :
+
+```
+$ php expr.php
+string(28) "App\Mail\MailerConfiguration"
+string(32) ""App\\Mail\\MailerConfiguration""
+string(26) "AppMailMailerConfiguration"
+string(28) ""AppMailMailerConfiguration""
+```
+
+In Yaml quote or double quote on declaration of the expression alter expression parsing...
+
+Stranger no ?
+
+In my case, and I don't grant it to you in the documentation, I use a simple quote to declare my expression.
+
+Wouldn't that still deserve a little note in the documentation?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-10-19T17:36:59Z
+
+Thanks for coming back to this! This is starting to blow my mind :smile: . First, let's reopen this PR as I think this is worth changing/clarifying.
+
+I extended your script a bit more:
+
+```
+Raw YAML value dump
+'App\Mail\MailerConfiguration'
+"App\\Mail\\MailerConfiguration"
+
+YAML	"'...'"
+AppMailMailerConfiguration
+"AppMailMailerConfiguration"
+
+YAML	'"..."'
+App\Mail\MailerConfiguration
+"App\\Mail\\MailerConfiguration"
+
+PHP	"'...'"
+AppMailMailerConfiguration
+"AppMailMailerConfiguration"
+
+PHP	'"..."'
+AppMailMailerConfiguration
+"AppMailMailerConfiguration"
+```
+
+For some reason, double backslashes only work with Yaml `'"..."'` quotes. @xabbuh as you're the Yaml hero, can you shed some light on this?
+
+I always favor single quotes in Yaml (as yaml double quotes are magic), so should we use double backslashes here with `'"..."'` and add a line comment about it in the code example? And then, what does this mean for the XML and PHP examples? I think they should remain 4 backslashes?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-10-30T08:03:44Z
+
+This looks expected to me. Double-quoted strings in YAML support escape sequences. This requires us to escape backslashes that are not part of escape sequences to be doubled which is not the case in single-quoted strings:
+
+> The double-quoted style is specified by surrounding “"” indicators. This is the only style capable of expressing arbitrary strings, by using “\” escape sequences. This comes at the cost of having to escape the “\” and “"” characters.
+
+see https://yaml.org/spec/1.2/spec.html#id2787109
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2019-10-30T08:05:45Z
+
+So, what I would do here is to add a comment that explains that you need to escape backslashes when using double-quoted strings.
+
+On a side note, I personally prefer single-quoted strings to not have to think about things like this.
+
+---------------------------------------------------------------------------
+
+by jbdelhommeau at 2019-10-30T08:27:54Z
+
+I  added a comment in yaml to explain the usage with the double quote.
+
+Does this change seem good for you ?
