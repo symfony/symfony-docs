@@ -823,7 +823,7 @@ Then you're ready to go::
     // wait for all remaining promises to resolve
     $httpClient->wait();
 
-Native PHP streams
+Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
 
 Responses implementing :class:`Symfony\\Contracts\\HttpClient\\ResponseInterface`
