@@ -77,3 +77,79 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
                 ->call('setLogger', [ref('logger')]);
         };
 
+
+.. versionadded:: 4.3
+
+    The ``immutable-setter`` injection was introduced in Symfony 4.3.
+
+In order to provide immutable services, some classes implement immutable setters.
+Such setters return a new instance of the configured class
+instead of mutating the object they were called on::
+
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+
+    class MessageGenerator
+    {
+        private $logger;
+
+        /**
+         * @return static
+         */
+        public function withLogger(LoggerInterface $logger)
+        {
+            $new = clone $this;
+            $new->logger = $logger;
+
+            return $new;
+        }
+
+        // ...
+    }
+
+Because the method returns a separate cloned instance, configuring such a service means using
+the return value of the wither method (``$service = $service->withLogger($logger);``).
+The configuration to tell the container it should do so would be like:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\MessageGenerator:
+                # ...
+                calls:
+                    - method: withLogger
+                      arguments:
+                          - '@logger'
+                      returns_clone: true
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Service\MessageGenerator">
+                    <!-- ... -->
+                    <call method="withLogger" returns-clone="true">
+                        <argument type="service" id="logger"/>
+                    </call>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\Service\MessageGenerator;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register(MessageGenerator::class)
+            ->addMethodCall('withLogger', [new Reference('logger')], true);
