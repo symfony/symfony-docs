@@ -203,6 +203,10 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
+        Make sure Composer is installed globally, as explained in the
+        [installation chapter](https://getcomposer.org/doc/00-intro.md)
+        of the Composer documentation.
+
         Step 1: Download the Bundle
         ---------------------------
 
@@ -212,10 +216,6 @@ following standardized instructions in your ``README.md`` file.
         ```console
         $ composer require <package-name>
         ```
-
-        This command requires you to have Composer installed globally, as explained
-        in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-        of the Composer documentation.
 
         Step 2: Enable the Bundle
         -------------------------
@@ -248,6 +248,9 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
+        Make sure Composer is installed globally, as explained in the
+        `installation chapter`_ of the Composer documentation.
+
         Step 1: Download the Bundle
         ---------------------------
 
@@ -257,9 +260,6 @@ following standardized instructions in your ``README.md`` file.
         .. code-block:: terminal
 
             $ composer require <package-name>
-
-        This command requires you to have Composer installed globally, as explained
-        in the `installation chapter`_ of the Composer documentation.
 
         Step 2: Enable the Bundle
         -------------------------
