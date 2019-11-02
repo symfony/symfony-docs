@@ -702,7 +702,7 @@ toggle a behavior::
         public function hello(): string
         {
             if (class_exists(DependencyClass::class)) {
-                return 'The dependency bahavior.';
+                return 'The dependency behavior.';
             }
 
             return 'The default behavior.';
@@ -720,7 +720,7 @@ are installed during tests) would look like::
         public function testHello()
         {
             $class = new MyClass();
-            $result = $class->hello(); // "The dependency bahavior."
+            $result = $class->hello(); // "The dependency behavior."
 
             // ...
         }
@@ -744,7 +744,7 @@ classes, interfaces and/or traits for the code to run::
             ClassExistsMock::withMockedClasses([DependencyClass::class => false]);
 
             $class = new MyClass();
-            $result = $class->hello(); // "The default bahavior."
+            $result = $class->hello(); // "The default behavior."
 
             // ...
         }
