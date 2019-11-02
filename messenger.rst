@@ -1379,11 +1379,6 @@ may want to use:
                             # or pass a different entity manager to any
                             #- doctrine_transaction: ['custom']
 
-                            # After handling, the clear() method is executed in the
-                            # entity manager, which reduces the memory consumption and
-                            # avoids side-effects related to unrefreshed entities
-                            - doctrine_clear_entity_manager
-
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->
@@ -1409,8 +1404,6 @@ may want to use:
                             <framework:argument>custom</framework:argument>
                         </framework:middleware>
                         -->
-
-                        <framework:middleware id="doctrine_clear_entity_manager"/>
                     </framework:bus>
                 </framework:messenger>
             </framework:config>
@@ -1429,7 +1422,6 @@ may want to use:
                             'doctrine_close_connection',
                             // Using another entity manager
                             ['id' => 'doctrine_transaction', 'arguments' => ['custom']],
-                            'doctrine_clear_entity_manager',
                         ],
                     ],
                 ],
