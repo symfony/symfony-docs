@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by dbrumann at 2019-11-03T09:31:27Z
+
+Good catch :+1:
+
+The parameter is deprecated anyway, but having this wrong in the 4.3 and 4.4 docs can be annoying.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-03T09:54:07Z
+
+Do you know since when its deprecated?
+
+Because there is a `.. deprecated::` missing:
+https://symfony.com/doc/3.4/reference/configuration/kernel#log-directory
+https://symfony.com/doc/current/reference/configuration/kernel.html#log-directory
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2019-11-03T10:13:09Z
+
+It's deprecated since 4.2, see https://github.com/symfony/symfony/blob/bfd308ff4ada2adb235c8db71350aa49cdf5d6d3/src/Symfony/Component/HttpKernel/Kernel.php#L683-L688
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-03T10:57:25Z
+
+I created a PR to add the missing directive:
+https://github.com/symfony/symfony-docs/pull/12581
