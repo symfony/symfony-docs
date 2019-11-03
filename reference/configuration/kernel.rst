@@ -121,11 +121,16 @@ Log Directory
 
 **type**: ``string`` **default**: ``$this->rootDir/log``
 
+.. deprecated:: 4.2
+
+    The ``kernel.log_dir`` parameter was deprecated in Symfony 4.2,
+    use ``kernel.logs_dir`` instead.
+
 This returns the absolute path of the log directory of your Symfony project.
 It's calculated automatically based on the current
 :ref:`environment <configuration-environments>`.
 
-This value is exposed via the ``kernel.log_dir`` configuration parameter and
+This value is exposed via the ``kernel.logs_dir`` configuration parameter and
 the :method:`Symfony\\Component\\HttpKernel\\Kernel::getLogDir` method. To
 change this setting, override the ``getLogDir()`` method to return the right
 log directory.
