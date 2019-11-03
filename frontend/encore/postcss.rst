@@ -24,7 +24,7 @@ Next, create a ``postcss.config.js`` file at the root of your project:
         }
     }
 
-Then, Enable the loader in Encore!
+Then, enable the loader in Encore!
 
 .. code-block:: diff
 
