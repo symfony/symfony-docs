@@ -28,7 +28,9 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
             App\Mail\MailerConfiguration: ~
 
             App\Mailer:
-                arguments: ["@=service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()"]
+                arguments: ['@=service("App\\Mail\\MailerConfiguration").getMailerMethod()']
+                # when using double-quoted strings, the backslash needs to be escaped twice (see https://yaml.org/spec/1.2/spec.html#id2787109)
+                # arguments: ["@=service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()"]
 
     .. code-block:: xml
 

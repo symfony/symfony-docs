@@ -431,7 +431,6 @@ defined as ``/blog/{slug}``:
 
             <route id="blog_show" path="/blog/{slug}"
                    controller="App\Controller\BlogController::show"/>
-            </route>
         </routes>
 
     .. code-block:: php
@@ -525,7 +524,6 @@ the ``{page}`` parameter using the ``requirements`` option:
 
             <route id="blog_show" path="/blog/{slug}"
                    controller="App\Controller\BlogController::show"/>
-            </route>
         </routes>
 
     .. code-block:: php

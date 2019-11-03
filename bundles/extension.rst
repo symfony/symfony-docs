@@ -119,10 +119,6 @@ they are compiled when generating the application cache to improve the overall
 performance. Define the list of annotated classes to compile in the
 ``addAnnotatedClassesToCompile()`` method::
 
-    use App\Manager\UserManager;
-    use App\Utils\Slugger;
-
-    // ...
     public function load(array $configs, ContainerBuilder $container)
     {
         // ...
