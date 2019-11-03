@@ -395,7 +395,7 @@ app, such as changing all ``<textarea>`` elements of a form or customizing a
 very special form field which will be handled with JavaScript.
 
 You only need to add the special ``{% form_theme form _self %}`` tag to the same
-template where the form is rendered. This makes Twig to look inside the template
+template where the form is rendered. This causes Twig to look inside the template
 for any overridden form blocks:
 
 .. code-block:: html+twig
