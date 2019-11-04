@@ -301,7 +301,7 @@ MySQL         3306      ``DATABASE_``
 PostgreSQL    5432      ``DATABASE_``
 Redis         6379      ``REDIS_``
 RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_DEFAULT_USER`` and ``RABBITMQ_DEFAULT_PASS`` env var)
-ElasticSearch 9200      ``ELASTICSEARCH_``
+Elasticsearch 9200      ``ELASTICSEARCH_``
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
 Kafka         9092      ``KAFKA_``
 Mailcatcher   1025/1080 ``MAILER_``
