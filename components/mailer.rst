@@ -25,9 +25,9 @@ Usage
 The Mailer component has two main classes: a ``Transport`` and the ``Mailer`` itself::
 
     use Symfony\Component\Mailer\Mailer;
-    use Symfony\Component\Mailer\Transport\Smtp\SmtpTransport;
+    use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 
-    $transport = new SmtpTransport('localhost');
+    $transport = new EsmtpTransport('localhost');
     $mailer = new Mailer($transport);
     $mailer->send($email);
 
