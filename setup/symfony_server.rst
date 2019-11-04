@@ -294,23 +294,28 @@ to ``DATABASE``, the web server creates environment variables starting with
 Here is the list of supported services with their ports and default Symfony
 prefixes:
 
-============= ===== ======================
-Service       Port  Symfony default prefix
-============= ===== ======================
-MySQL         3306  ``DATABASE_``
-PostgreSQL    5432  ``DATABASE_``
-Redis         6379  ``REDIS_``
-RabbitMQ      5672  ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_DEFAULT_USER`` and ``RABBITMQ_DEFAULT_PASS`` env var)
-ElasticSearch 9200  ``ELASTICSEARCH_``
-MongoDB       27017 ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
-Kafka         9092  ``KAFKA_``
-============= ===== ======================
+============= ========= ======================
+Service       Port      Symfony default prefix
+============= ========= ======================
+MySQL         3306      ``DATABASE_``
+PostgreSQL    5432      ``DATABASE_``
+Redis         6379      ``REDIS_``
+RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_DEFAULT_USER`` and ``RABBITMQ_DEFAULT_PASS`` env var)
+ElasticSearch 9200      ``ELASTICSEARCH_``
+MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
+Kafka         9092      ``KAFKA_``
+Mailcatcher   1025/1080 ``MAILER_``
+              25/80
+============= ========= ======================
 
-The server also supports Mailcatcher images (including
-``schickling/mailcatcher``). When ports ``1025`` and ``1080`` are detected,
-``MAILER_*`` environment variables are added to support both Symfony Mailer and
-Swiftmailer. To access the web mailer, use ``symfony open:local:webmail`` or
-click on the "Webmail" link in the web debug toolbar.
+You can open web management interfaces for the services that expose them:
+
+.. code-block:: bash
+
+    $ symfony open:local:webmail
+    $ symfony open:local:rabbitmq
+
+Or click on the links in the "Server" section of the web debug toolbar.
 
 .. tip::
 
