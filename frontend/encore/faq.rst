@@ -74,7 +74,7 @@ like ``/myAppSubdir``), you will need to configure that when calling ``Encore.se
     +     .setPublicPath('/myAppSubdir/build')
 
     +     // this is now needed so that your manifest.json keys are still `build/foo.js`
-    +     // (which is a file that's used by Symfony's asset function)
+    +     // (which is a file that's used by Symfony's `asset()` function)
     +     .setManifestKeyPrefix('build')
     ;
 
