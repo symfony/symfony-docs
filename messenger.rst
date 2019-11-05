@@ -905,10 +905,6 @@ The Redis transport uses `streams`_ to queue messages.
 To use the Redis transport, you will need the Redis PHP extension (^4.3) and
 a running Redis server (^5.0).
 
-.. caution::
-
-    The Redis transport does not support "delayed" messages.
-
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
