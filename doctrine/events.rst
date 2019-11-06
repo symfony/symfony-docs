@@ -272,8 +272,7 @@ with the ``doctrine.orm.entity_listener`` tag:
                         entity_manager: 'custom'
 
                         # by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                        # if it doesn't exist, it tries to execute the '__invoke()' method, but you can
-                        # configure a custom method name with the 'method' option
+                        # but you can configure a custom method name with the 'method' option
                         method: 'checkUserChanges'
 
     .. code-block:: xml
@@ -292,8 +291,7 @@ with the ``doctrine.orm.entity_listener`` tag:
                         * 'entity_manager': define it if the listener is not associated to the
                         *                   default entity manager
                         * 'method': by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                        *           if it doesn't exist, it tries to execute the '__invoke()' method, but
-                        *           you can configure a custom method name with the 'method' option
+                        *           but you can configure a custom method name with the 'method' option
                     -->
                     <tag name="doctrine.orm.entity_listener"
                         event="postUpdate"
@@ -323,9 +321,8 @@ with the ``doctrine.orm.entity_listener`` tag:
                 // you can also associate an entity listener to a specific entity manager
                 'entity_manager' => 'custom',
 
-                // by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                // if it doesn't exist, it tries to execute the '__invoke()' method, but you can
-                // configure a custom method name with the 'method' option
+                // by default, Symfony looks for a method called after the event (e.g. postUpdate()),
+                // but you can configure a custom method name with the 'method' option
                 'method' => 'checkUserChanges',
             ])
         ;
