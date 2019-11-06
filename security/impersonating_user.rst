@@ -85,9 +85,9 @@ role to the users that need it.
 Knowing When Impersonation Is Active
 ------------------------------------
 
-During impersonation, the user is provided with a special role called
-``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can be used
-to show a link to exit impersonation:
+When a user is being impersonated, Symfony grants them a special role called
+``ROLE_PREVIOUS_ADMIN`` (in addition to the roles the user may have). Use this
+special role, for instance, to show a link to exit impersonation in a template:
 
 .. code-block:: html+twig
 
