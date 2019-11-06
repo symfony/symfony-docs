@@ -94,13 +94,7 @@ version string::
                 return $path;
             }
 
-            $versionized = sprintf($this->format, ltrim($path, '/'), $version);
-
-            if ($path && '/' === $path[0]) {
-                return '/'.$versionized;
-            }
-
-            return $versionized;
+            return sprintf($this->format, $path, $version);
         }
 
         private function loadManifest()
