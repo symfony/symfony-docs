@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-04T11:55:22Z
+
+I don't know if both codes are equivalent in all cases ... but I think they are both wrong in the following case:
+
+```php
+$format = '/%s/%s';
+$path = '/foo';
+$version = '3';
+
+// Old code:
+$versionized = '/foo/3';
+return: '//foo/3'
+
+// New code:
+return: '//foo/3'
+```
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2019-11-04T13:42:46Z
+
+But you're using a different format `/%s/%s`. In this example, the default format is `%s?%s`, and the format we're using is `%s?version=%s`.  If you expect a URL like `/foo/3` - you need to use `%s/%s` format instead and the example will still work.
+
+As I understand, this `GulpBusterVersionStrategy` is nothing more like just take some given path (and we expect the given path is correct, i.e. devs should care about what path to give `/foo/bar` or `foo/bar`) and adds a version of assets to it. I would not expect from this class that it adds the leading slash for me. Or it should always make sure the leading slash exist?
+
+---------------------------------------------------------------------------
+
+by bocharsky-bw at 2019-11-06T15:06:58Z
+
+OK, perfect. Thanks for the review, Javier!
