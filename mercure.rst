@@ -99,7 +99,7 @@ Set it to the URL of the Mercure Hub (``http://localhost:3000/hub`` by default).
 In addition, the Symfony application must bear a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates.
 
-This JWT should be stored in the ``MERCURE_JWT_SECRET`` environment variable.
+This JWT should be stored in the ``MERCURE_JWT_TOKEN`` environment variable.
 
 The JWT must be signed with the same secret key as the one used by
 the Hub to verify the JWT (``aVerySecretKey`` in our example).
@@ -126,7 +126,7 @@ public updates (see the authorization_ section for further information).
 
 .. caution::
 
-    Don't put the secret key in ``MERCURE_JWT_SECRET``, it will not work!
+    Don't put the secret key in ``MERCURE_JWT_TOKEN``, it will not work!
     This environment variable must contain a JWT, signed with the secret key.
 
     Also, be sure to keep both the secret key and the JWTs... secrets!
