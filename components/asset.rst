@@ -119,8 +119,9 @@ suffix to any asset path::
     echo $package->getUrl('image.png');
     // result: image.png?v1
 
-In case you want to modify the version format, pass a sprintf-compatible format
-string as the second argument of the ``StaticVersionStrategy`` constructor::
+In case you want to modify the version format, pass a ``sprintf``-compatible
+format string as the second argument of the ``StaticVersionStrategy``
+constructor::
 
     // puts the 'version' word before the version value
     $package = new Package(new StaticVersionStrategy('v1', '%s?version=%s'));

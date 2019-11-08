@@ -344,7 +344,7 @@ As before you can use the :doc:`Symfony Local Web Server
     cd web/
     $ symfony server:start
 
-Then see webpage in browser:
+Then see page in browser:
 
     http://localhost:8000/random/10
 

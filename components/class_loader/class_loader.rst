@@ -55,8 +55,8 @@ your classes::
     ]);
 
 Classes from a sub-namespace or a sub-hierarchy of `PEAR`_ classes can be
-looked for in a location list to ease the vendoring of a sub-set of classes
-for large projects::
+looked for in a location list to ease the splitting a sub-set of classes into
+another package for large projects::
 
     $loader->addPrefixes([
         'Doctrine\Common'          => __DIR__.'/vendor/doctrine/common/lib',

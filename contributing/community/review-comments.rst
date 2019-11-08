@@ -74,12 +74,12 @@ Assume everyone is intelligent and well-meaning.
 
 .. tip::
 
-    Good questions avoid judgement and avoid assumptions about the author's perspective.
+    Good questions avoid judgment and avoid assumptions about the author's perspective.
 
     Maybe you can ask for clarification? Suggest an alternative?
     Or provide a simple explanation *why* you disagree with their proposal.
 
-    * ``This looks wrong. Are you sure it's correct?`` (eg. typo/syntax error)
+    * ``This looks wrong. Are you sure it's correct?`` (e.g. typo/syntax error)
 
     * ``What do you think of "RequestFactory" instead of RequestCreator?``
 
@@ -157,7 +157,7 @@ Sometimes when people receive feedback they may get defensive.
 In that case, it is better to try to approach the discussion in
 a different way, to not escalate further.
 
-If you want someone to mediate, please join the #contribs channel on `Symfony Slack`_,
+If you want someone to mediate, please join the ``#contribs`` channel on `Symfony Slack`_,
 to have a safe environment and keep working together on the common goals.
 
 Using Humor

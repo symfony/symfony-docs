@@ -19,7 +19,7 @@ Resolving Process
 For each report, we first try to confirm the vulnerability. When it is
 confirmed, the core team works on a solution following these steps:
 
-#. Send an acknowledgement to the reporter;
+#. Send an acknowledgment to the reporter;
 #. Work on a patch;
 #. Get a CVE identifier from `mitre.org`_;
 #. Write a security announcement for the official Symfony `blog`_ about the

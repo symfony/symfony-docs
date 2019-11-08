@@ -78,7 +78,7 @@ A very simple extension may just load configuration files into the container::
 
 This does not gain very much compared to loading the file directly into
 the overall container being built. It just allows the files to be split
-up amongst the modules/bundles. Being able to affect the configuration
+up among the modules/bundles. Being able to affect the configuration
 of a module from configuration files outside of the module/bundle is needed
 to make a complex application configurable. This can be done by specifying
 sections of config files loaded directly into the container as being for

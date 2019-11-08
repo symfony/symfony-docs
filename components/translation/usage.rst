@@ -411,17 +411,19 @@ use for translation::
             'fr_FR'
         );
 
-Retrieving the Message Catalogue
---------------------------------
+.. _retrieving-the-message-catalogue:
 
-In case you want to use the same translation catalogue outside your application
+Retrieving the Message Catalog
+------------------------------
+
+In case you want to use the same translation catalog outside your application
 (e.g. use translation on the client side), it's possible to fetch raw translation
 messages. Just specify the required locale::
 
-    $catalogue = $translator->getCatalogue('fr_FR');
-    $messages = $catalogue->all();
-    while ($catalogue = $catalogue->getFallbackCatalogue()) {
-        $messages = array_replace_recursive($catalogue->all(), $messages);
+    $catalog = $translator->getCatalogue('fr_FR');
+    $messages = $catalog->all();
+    while ($catalog = $catalog->getFallbackCatalogue()) {
+        $messages = array_replace_recursive($catalog->all(), $messages);
     }
 
 The ``$messages`` variable will have the following structure::
@@ -472,24 +474,24 @@ loaded/dumped when using this component inside a Symfony application:
     </xliff>
 
 When using the standalone Translation component, call the ``setMetadata()``
-method of the catalogue and pass the notes as arrays. This is for example the
+method of the catalog and pass the notes as arrays. This is for example the
 code needed to generate the previous XLIFF file::
 
     use Symfony\Component\Translation\Dumper\XliffFileDumper;
     use Symfony\Component\Translation\MessageCatalogue;
 
-    $catalogue = new MessageCatalogue('en_US');
-    $catalogue->add([
+    $catalog = new MessageCatalogue('en_US');
+    $catalog->add([
         'original-content' => 'translated-content',
     ]);
-    $catalogue->setMetadata('original-content', ['notes' => [
+    $catalog->setMetadata('original-content', ['notes' => [
         ['category' => 'state', 'content' => 'new'],
         ['category' => 'approved', 'content' => 'true'],
         ['category' => 'section', 'content' => 'user login', 'priority' => '1'],
     ]]);
 
     $dumper = new XliffFileDumper();
-    $dumper->formatCatalogue($catalogue, 'messages', [
+    $dumper->formatCatalogue($catalog, 'messages', [
         'default_locale' => 'fr_FR',
         'xliff_version' => '2.0'
     ]);

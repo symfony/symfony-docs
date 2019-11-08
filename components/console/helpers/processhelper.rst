@@ -9,7 +9,7 @@ useful information about process status.
 
 To display process details, use the :class:`Symfony\\Component\\Console\\Helper\\ProcessHelper`
 and run your command with verbosity. For example, running the following code with
-a very verbose verbosity (e.g. -vv)::
+a very verbose verbosity (e.g. ``-vv``)::
 
     use Symfony\Component\Process\Process;
 

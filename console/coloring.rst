@@ -54,7 +54,7 @@ are swapped) and ``conceal`` (sets the foreground color to transparent, making
 the typed text invisible - although it can be selected and copied; this option is
 commonly used when asking the user to type sensitive information).
 
-You can also set these colors and options directly inside the tagname::
+You can also set these colors and options directly inside the tag name::
 
     // green text
     $output->writeln('<fg=green>foo</>');

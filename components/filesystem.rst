@@ -44,8 +44,8 @@ endpoint for filesystem operations::
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
-mkdir
-~~~~~
+``mkdir``
+~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory recursively.
 On POSIX filesystems, directories are created with a default mode value
@@ -65,12 +65,12 @@ On POSIX filesystems, directories are created with a default mode value
 .. note::
 
     The directory permissions are affected by the current `umask`_.
-    Set the umask for your webserver, use PHP's :phpfunction:`umask`
+    Set the ``umask`` for your webserver, use PHP's :phpfunction:`umask`
     function or use the :phpfunction:`chmod` function after the
     directory has been created.
 
-exists
-~~~~~~
+``exists``
+~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::exists` checks for the
 presence of one or more files or directories and returns ``false`` if any of
@@ -88,8 +88,8 @@ them is missing::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-copy
-~~~~
+``copy``
+~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::copy` makes a copy of a
 single file (use :method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` to
@@ -103,8 +103,8 @@ by the third boolean argument::
     // image.jpg will be overridden
     $filesystem->copy('image-ICC.jpg', 'image.jpg', true);
 
-touch
-~~~~~
+``touch``
+~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` sets access and
 modification time for a file. The current time is used by default. You can set
@@ -122,8 +122,8 @@ your own with the second argument. The third argument is the access time::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-chown
-~~~~~
+``chown``
+~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` changes the owner of
 a file. The third argument is a boolean recursive option::
@@ -138,8 +138,8 @@ a file. The third argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-chgrp
-~~~~~
+``chgrp``
+~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` changes the group of
 a file. The third argument is a boolean recursive option::
@@ -154,8 +154,8 @@ a file. The third argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-chmod
-~~~~~
+``chmod``
+~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` changes the mode or
 permissions of a file. The fourth argument is a boolean recursive option::
@@ -170,8 +170,8 @@ permissions of a file. The fourth argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-remove
-~~~~~~
+``remove``
+~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` deletes files,
 directories and symlinks::
@@ -183,8 +183,8 @@ directories and symlinks::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-rename
-~~~~~~
+``rename``
+~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::rename` changes the name
 of a single file or directory::
@@ -194,8 +194,8 @@ of a single file or directory::
     // renames a directory
     $filesystem->rename('/tmp/files', '/path/to/store/files');
 
-symlink
-~~~~~~~
+``symlink``
+~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::symlink` creates a
 symbolic link from the target to the destination. If the filesystem does not
@@ -207,8 +207,8 @@ support symbolic links, a third boolean argument is available::
     // does not support symbolic links
     $filesystem->symlink('/path/to/source', '/path/to/destination', true);
 
-readlink
-~~~~~~~~
+``readlink``
+~~~~~~~~~~~~
 
 .. versionadded:: 3.2
 
@@ -242,8 +242,8 @@ Its behavior is the following::
     * if ``$path`` does not exist, it returns null.
     * if ``$path`` exists, it returns its absolute fully resolved final version.
 
-makePathRelative
-~~~~~~~~~~~~~~~~
+``makePathRelative``
+~~~~~~~~~~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::makePathRelative` takes two
 absolute paths and returns the relative path from the second path to the first one::
@@ -256,8 +256,8 @@ absolute paths and returns the relative path from the second path to the first o
     // returns 'videos/'
     $filesystem->makePathRelative('/tmp/videos', '/tmp')
 
-mirror
-~~~~~~
+``mirror``
+~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` copies all the
 contents of the source directory into the target one (use the
@@ -266,8 +266,8 @@ files)::
 
     $filesystem->mirror('/path/to/source', '/path/to/target');
 
-isAbsolutePath
-~~~~~~~~~~~~~~
+``isAbsolutePath``
+~~~~~~~~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::isAbsolutePath` returns
 ``true`` if the given path is absolute, ``false`` otherwise::
@@ -281,16 +281,18 @@ isAbsolutePath
     // returns false
     $filesystem->isAbsolutePath('../dir');
 
-tempnam
-~~~~~~~
+``tempnam``
+~~~~~~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::tempnam` creates a temporary file with a unique filename, and returns its path, or throw an exception on failure::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::tempnam` creates a
+temporary file with a unique filename, and returns its path, or throw an
+exception on failure::
 
     // returns a path like : /tmp/prefix_wyjgtF
     $filesystem->tempnam('/tmp', 'prefix_');
 
-dumpFile
-~~~~~~~~
+``dumpFile``
+~~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` saves the given
 contents into a file. It does this in an atomic manner: it writes a temporary
@@ -302,8 +304,8 @@ complete new file (but never a partially-written file)::
 
 The ``file.txt`` file contains ``Hello World`` now.
 
-appendToFile
-~~~~~~~~~~~~
+``appendToFile``
+~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.3
 

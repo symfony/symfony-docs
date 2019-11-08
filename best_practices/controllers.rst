@@ -48,7 +48,7 @@ configuration to the main routing configuration file:
 
 This configuration will load annotations from any controller stored inside the
 ``src/AppBundle/Controller/`` directory and even from its subdirectories.
-So if your application defines lots of controllers, it's perfectly ok to
+So if your application defines lots of controllers, it's perfectly OK to
 reorganize them into subdirectories:
 
 .. code-block:: text
