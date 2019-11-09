@@ -91,12 +91,16 @@ for **all** users.
 Custom Forms
 ------------
 
-Bootstrap 4 has a feature called "`custom forms`_". You can enable that on your
-Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes over the label:
+.. versionadded:: 4.4
 
-- for radio, use ``radio-custom``
-- for a custom checkbox, use ``checkbox-custom``
-- for having a switch instead of a checkbox, use ``switch-custom``
+    Support for the ``switch-custom`` class was introduced in Symfony 4.4.
+
+Bootstrap 4 has a feature called "`custom forms`_". You can enable that on your
+Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the label:
+
+* For a `custom radio`_, use ``radio-custom``;
+* For a `custom checkbox`_, use ``checkbox-custom``;
+* For having a `switch instead of a checkbox`_, use ``switch-custom``.
 
 .. code-block:: twig
 
@@ -116,4 +120,7 @@ is a strong connection between the error and its ``<input>``, as required by the
 `WCAG 2.0 standard`_.
 
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
-.. _`custom forms`: https://getbootstrap.com/docs/4.1/components/forms/#custom-forms
+.. _`custom forms`: https://getbootstrap.com/docs/4.3/components/forms/#custom-forms
+.. _`custom radio`: https://getbootstrap.com/docs/4.3/components/forms/#radios
+.. _`custom checkbox`: https://getbootstrap.com/docs/4.3/components/forms/#checkboxes
+.. _`switch instead of a checkbox`: https://getbootstrap.com/docs/4.3/components/forms/#switches
