@@ -144,6 +144,12 @@ if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
 |                 |             |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 
+.. caution::
+
+    Matching the URI is done without ``$_GET`` parameters.
+    :ref:`Deny access in PHP code <security-securing-controller>` if you want
+    to disallow access based on ``$_GET`` parameter values.
+
 .. _security-access-control-enforcement-options:
 
 2. Access Enforcement

@@ -71,7 +71,7 @@ Run the following command to start it:
 
 .. code-block:: terminal
 
-    $ JWT_KEY='aVerySecretKey' ADDR='localhost:3000' ALLOW_ANONYMOUS=1 CORS_ALLOWED_ORIGINS=* ./mercure
+    $ ./mercure --jwt-key='aVerySecretKey' --addr='localhost:3000' --allow-anonymous --cors-allowed-origins='*'
 
 .. note::
 
@@ -94,7 +94,7 @@ The preferred way to configure the MercureBundle is using
 Set the URL of your hub as the value of the ``MERCURE_PUBLISH_URL`` env var.
 The ``.env`` file of your project has been updated by the Flex recipe to
 provide example values.
-Set it to the URL of the Mercure Hub (``http://localhost:3000/hub`` by default).
+Set it to the URL of the Mercure Hub (``http://localhost:3000/.well-known/mercure`` by default).
 
 In addition, the Symfony application must bear a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates.
@@ -189,7 +189,7 @@ Subscribing to updates in JavaScript is straightforward:
 
 .. code-block:: javascript
 
-    const eventSource = new EventSource('http://localhost:3000/hub?topic=' + encodeURIComponent('http://example.com/books/1'));
+    const eventSource = new EventSource('http://localhost:3000/.well-known/mercure?topic=' + encodeURIComponent('http://example.com/books/1'));
     eventSource.onmessage = event => {
         // Will be called every time an update is published by the server
         console.log(JSON.parse(event.data));
@@ -201,7 +201,7 @@ and to use URI Templates as patterns:
 .. code-block:: javascript
 
     // URL is a built-in JavaScript class to manipulate URLs
-    const url = new URL('http://localhost:3000/hub');
+    const url = new URL('http://localhost:3000/.well-known/mercure');
     url.searchParams.append('topic', 'http://example.com/books/1');
     // Subscribe to updates of several Book resources
     url.searchParams.append('topic', 'http://example.com/books/2');
@@ -295,7 +295,7 @@ by using the ``AbstractController::addLink`` helper method::
             // This parameter is automatically created by the MercureBundle
             $hubUrl = $this->getParameter('mercure.default_hub');
 
-            // Link: <http://localhost:3000/hub>; rel="mercure"
+            // Link: <http://localhost:3000/.well-known/mercure>; rel="mercure"
             $this->addLink($request, new Link('mercure', $hubUrl));
 
             return $this->json([
@@ -311,7 +311,7 @@ and to subscribe to it:
 .. code-block:: javascript
 
     // Fetch the original resource served by the Symfony web API
-    fetch('/books/1') // Has Link: <http://localhost:3000/hub>; rel="mercure"
+    fetch('/books/1') // Has Link: <http://localhost:3000/.well-known/mercure>; rel="mercure"
         .then(response => {
             // Extract the hub URL from the Link header
             const hubUrl = response.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1];
@@ -420,7 +420,7 @@ And here is the controller::
             $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
             $response->headers->set(
                 'set-cookie',
-                sprintf('mercureAuthorization=%s; path=/hub; secure; httponly; SameSite=strict', $token)
+                sprintf('mercureAuthorization=%s; path=/.well-known/mercure; secure; httponly; SameSite=strict', $token)
             );
 
             return $response;
@@ -460,7 +460,7 @@ Then, reference this service in the bundle configuration:
         mercure:
             hubs:
                 default:
-                    url: https://mercure-hub.example.com/hub
+                    url: https://mercure-hub.example.com/.well-known/mercure
                     jwt_provider: App\Mercure\MyJwtProvider
 
     .. code-block:: xml
@@ -470,7 +470,7 @@ Then, reference this service in the bundle configuration:
         <config>
             <hub
                 name="default"
-                url="https://mercure-hub.example.com/hub"
+                url="https://mercure-hub.example.com/.well-known/mercure"
                 jwt-provider="App\Mercure\MyJwtProvider"
             />
         </config>
@@ -483,7 +483,7 @@ Then, reference this service in the bundle configuration:
         $container->loadFromExtension('mercure', [
             'hubs' => [
                 'default' => [
-                    'url' => 'https://mercure-hub.example.com/hub',
+                    'url' => 'https://mercure-hub.example.com/.well-known/mercure',
                     'jwt_provider' => MyJwtProvider::class,
                 ],
             ],

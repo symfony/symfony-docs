@@ -28,7 +28,7 @@ Usage
 The following example shows the component in action::
 
     // change these values accordingly to your hub installation
-    define('HUB_URL', 'https://demo.mercure.rocks/hub');
+    define('HUB_URL', 'https://demo.mercure.rocks/.well-known/mercure');
     define('JWT', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InN1YnNjcmliZSI6WyJmb28iLCJiYXIiXSwicHVibGlzaCI6WyJmb28iXX19.LRLvirgONK13JgacQ_VbcjySbVhkSmHy3IznH3tA9PM');
 
     use Symfony\Component\Mercure\Jwt\StaticJwtProvider;
