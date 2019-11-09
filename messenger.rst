@@ -1069,8 +1069,8 @@ by tagging the handler service with ``messenger.message_handler``
     .. code-block:: php
 
         // config/services.php
-        use App\MessageHandler\SmsNotificationHandler;
         use App\Message\SmsNotification;
+        use App\MessageHandler\SmsNotificationHandler;
 
         $container->register(SmsNotificationHandler::class)
             ->addTag('messenger.message_handler', [
