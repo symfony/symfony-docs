@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-03T11:31:53Z
+
+Hi @l-vo 👋 ,
+
+first of all thanks for your contribution.
+Can you explain a bit why we should change it this way? To me its less readable.
+
+Cheers 🙏
+
+---------------------------------------------------------------------------
+
+by l-vo at 2019-11-03T12:36:30Z
+
+Hi @OskarStark :)
+
+Some examples used context constants and some others not. I thought it was an oversight for the examples that didn't use constants. Furthermore I think using constants in the doc allows to advise the developpers that context constants exist and that they should use them instead of magic strings.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-03T21:29:43Z
+
+Thank you for your feedback!
+Personally I am against using the constants here, but let’s see what the other say.
+@xabbuh @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by l-vo at 2019-11-04T08:17:04Z
+
+@OskarStark No problem ! Thank you for your feedback too :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-04T11:56:58Z
+
+I'd say we should do this ... but it's sad that the constants are so long and ugly 😢
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-05T22:40:33Z
+
+@javiereguiluz this should go into 3.4, right?
