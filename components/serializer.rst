@@ -168,7 +168,7 @@ needs three parameters:
 
 By default, additional attributes that are not mapped to the denormalized object
 will be ignored by the Serializer component. If you prefer to throw an exception
-when this happens, set the ``allow_extra_attributes`` context option to
+when this happens, set the ``AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES`` context option to
 ``false`` and provide an object that implements ``ClassMetadataFactoryInterface``
 when constructing the normalizer::
 
@@ -188,7 +188,7 @@ when constructing the normalizer::
     // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
     // because "city" is not an attribute of the Person class
     $person = $serializer->deserialize($data, 'App\Model\Person', 'xml', [
-        'allow_extra_attributes' => false,
+        AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
     ]);
 
 Deserializing in an Existing Object
@@ -209,12 +209,12 @@ The serializer can also be used to update an existing object::
     </person>
     EOF;
 
-    $serializer->deserialize($data, Person::class, 'xml', ['object_to_populate' => $person]);
+    $serializer->deserialize($data, Person::class, 'xml', [AbstractNormalizer::OBJECT_TO_POPULATE => $person]);
     // $person = App\Model\Person(name: 'foo', age: '69', sportsperson: true)
 
 This is a common need when working with an ORM.
 
-The ``OBJECT_TO_POPULATE`` is only used for the top level object. If that object
+The ``AbstractNormalizer::OBJECT_TO_POPULATE`` is only used for the top level object. If that object
 is the root of a tree structure, all child elements that exist in the
 normalized data will be re-created with new instances.
 
@@ -372,6 +372,7 @@ Selecting Specific Attributes
 
 It is also possible to serialize only a set of specific attributes::
 
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
@@ -399,7 +400,7 @@ It is also possible to serialize only a set of specific attributes::
 
     $serializer = new Serializer([new ObjectNormalizer()]);
 
-    $data = $serializer->normalize($user, null, ['attributes' => ['familyName', 'company' => ['name']]]);
+    $data = $serializer->normalize($user, null, [AbstractNormalizer::ATTRIBUTES => ['familyName', 'company' => ['name']]]);
     // $data = ['familyName' => 'Dunglas', 'company' => ['name' => 'Les-Tilleuls.coop']];
 
 Only attributes that are not ignored (see below) are available.
@@ -411,11 +412,12 @@ Ignoring Attributes
 -------------------
 
 As an option, there's a way to ignore attributes from the origin object.
-To remove those attributes provide an array via the ``ignored_attributes``
+To remove those attributes provide an array via the ``AbstractNormalizer::IGNORED_ATTRIBUTES``
 key in the ``context`` parameter of the desired serializer method::
 
     use Acme\Person;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
@@ -427,7 +429,7 @@ key in the ``context`` parameter of the desired serializer method::
     $encoder = new JsonEncoder();
 
     $serializer = new Serializer([$normalizer], [$encoder]);
-    $serializer->serialize($person, 'json', ['ignored_attributes' => ['age']]); // Output: {"name":"foo"}
+    $serializer->serialize($person, 'json', [AbstractNormalizer::IGNORED_ATTRIBUTES => ['age']]); // Output: {"name":"foo"}
 
 .. _component-serializer-converting-property-names-when-serializing-and-deserializing:
 
@@ -843,7 +845,7 @@ Skipping ``null`` Values
 ------------------------
 
 By default, the Serializer will preserve properties containing a ``null`` value.
-You can change this behavior by setting the ``skip_null_values`` context option
+You can change this behavior by setting the ``AbstractObjectNormalizer::SKIP_NULL_VALUES`` context option
 to ``true``::
 
     $dummy = new class {
@@ -852,7 +854,7 @@ to ``true``::
     };
 
     $normalizer = new ObjectNormalizer();
-    $result = $normalizer->normalize($dummy, 'json', ['skip_null_values' => true]);
+    $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
 
 .. _component-serializer-handling-circular-references:
@@ -1027,11 +1029,11 @@ in a Symfony application. When using the standalone component, refer to
 :ref:`the groups documentation <component-serializer-attributes-groups>` to
 learn how to do that.
 
-The check is only done if the ``enable_max_depth`` key of the serializer context
+The check is only done if the ``AbstractObjectNormalizer::ENABLE_MAX_DEPTH`` key of the serializer context
 is set to ``true``. In the following example, the third level is not serialized
 because it is deeper than the configured maximum depth of 2::
 
-    $result = $serializer->normalize($level1, null, ['enable_max_depth' => true]);
+    $result = $serializer->normalize($level1, null, [AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true]);
     /*
     $result = [
         'foo' => 'level1',
@@ -1052,6 +1054,7 @@ having unique identifiers::
     use Symfony\Component\Serializer\Annotation\MaxDepth;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
@@ -1090,7 +1093,7 @@ having unique identifiers::
 
     $serializer = new Serializer([$normalizer]);
 
-    $result = $serializer->normalize($level1, null, [ObjectNormalizer::ENABLE_MAX_DEPTH => true]);
+    $result = $serializer->normalize($level1, null, [AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true]);
     /*
     $result = [
         'id' => 1,
@@ -1220,6 +1223,7 @@ If the class constructor defines arguments, as usually happens with
 arguments are missing. In those cases, use the ``default_constructor_arguments``
 context option::
 
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
@@ -1241,7 +1245,7 @@ context option::
     $data = $serializer->denormalize(
         ['foo' => 'Hello'],
         'MyObj',
-        ['default_constructor_arguments' => [
+        [AbstractNormalizer::DEFAULT_CONSTRUCTOR_ARGUMENTS => [
             'MyObj' => ['foo' => '', 'bar' => ''],
         ]]
     );

@@ -35,6 +35,7 @@ Form Types Reference
    types/datetime
    types/time
    types/birthday
+   types/week
 
    types/checkbox
    types/file
