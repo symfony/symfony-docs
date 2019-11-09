@@ -277,6 +277,10 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
+        Make sure Composer is installed globally, as explained in the
+        [installation chapter](https://getcomposer.org/doc/00-intro.md)
+        of the Composer documentation.
+
         Applications that use Symfony Flex
         ----------------------------------
 
@@ -298,10 +302,6 @@ following standardized instructions in your ``README.md`` file.
         $ composer require <package-name>
         ```
 
-        This command requires you to have Composer installed globally, as explained
-        in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-        of the Composer documentation.
-
         ### Step 2: Enable the Bundle
 
         Then, enable the bundle by adding it to the list of registered bundles
@@ -321,7 +321,9 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
-        Applications that use Symfony Flex
+        Make sure Composer is installed globally, as explained in the
+        `installation chapter`_ of the Composer documentation.
+
         ----------------------------------
 
         Open a command console, enter your project directory and execute:
@@ -342,9 +344,6 @@ following standardized instructions in your ``README.md`` file.
         .. code-block:: terminal
 
             $ composer require <package-name>
-
-        This command requires you to have Composer installed globally, as explained
-        in the `installation chapter`_ of the Composer documentation.
 
         Step 2: Enable the Bundle
         ~~~~~~~~~~~~~~~~~~~~~~~~~
