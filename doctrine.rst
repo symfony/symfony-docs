@@ -751,7 +751,7 @@ based on PHP conditions)::
         $qb = $this->createQueryBuilder('p')
             ->where('p.price > :price')
             ->setParameter('price', $price)
-            ->orderBy('p.price', 'ASC')
+            ->orderBy('p.price', 'ASC');
 
         if (!$includeUnavailableProducts) {
             $qb->andWhere('p.available = TRUE')

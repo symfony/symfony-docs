@@ -50,10 +50,10 @@ you can also set the current progress by calling the
 
     If your platform doesn't support ANSI codes, updates to the progress
     bar are added as new lines. To prevent the output from being flooded,
-    use the method :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::preventRedrawFasterThan`
-    (it writes to the output after every N seconds) and the method
+    use the method :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws`
+    to limit the number of redraws and the method
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
-    (it writes to the output every N iterations). By default, redraw frequency is
+    to redraw every N iterations. By default, redraw frequency is
     **100ms** or **10%** of your ``max``.
 
 If you don't know the exact number of steps in advance, set it to a reasonable
@@ -287,19 +287,18 @@ to display it can be customized::
 .. caution::
 
     For performance reasons, Symfony redraws screen every 100ms. If this is too
-    fast or to slow for your application, use these methods:
-    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::preventRedrawFasterThan`
-    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
-    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::forceRedrawSlowerThan`::
+    fast or to slow for your application, use the methods
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws` and
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::maxSecondsBetweenRedraws`::
 
         $progressBar = new ProgressBar($output, 50000);
         $progressBar->start();
 
         // this redraws the screen every 100 iterations, but sets additional limits:
-        // don't redraw slower than 100ms (0.1) or faster than 200ms (0.2)
+        // don't redraw slower than 200ms (0.2) or faster than 100ms (0.1)
         $progressBar->setRedrawFrequency(100);
-        $progressBar->forceRedrawSlowerThan(0.2);
-        $progressBar->preventRedrawFasterThan(0.1);
+        $progressBar->maxSecondsBetweenRedraws(0.2);
+        $progressBar->minSecondsBetweenRedraws(0.1);
 
         $i = 0;
         while ($i++ < 50000) {
