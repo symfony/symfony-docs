@@ -77,10 +77,10 @@ values for the year and week fields::
 
     $builder->add('startDateTime', WeekType::class, [
         'placeholder' => [
-            'year' => 'Year', 'week' => 'Week',
+            'year' => 'Year',
+            'week' => 'Week',
         ]
     ]);
-
 
 .. include:: /reference/forms/types/options/html5.rst.inc
 
@@ -92,7 +92,7 @@ input
 The format of the *input* data - i.e. the format that the date is stored
 on your underlying object. Valid values are:
 
-* ``string`` (e.g. ``2011-W17``)
+* ``string`` (e.g. ``"2011-W17"``)
 * ``array`` (e.g. ``[2011, 17]``)
 
 The value that comes back from the form will also be normalized back into
@@ -106,10 +106,8 @@ widget
 The basic way in which this field should be rendered. Can be one of the
 following:
 
-* ``choice``: renders two select inputs.
-
-* ``text``: renders a two field input of type ``text`` (year, week).
-
+* ``choice``: renders two select inputs;
+* ``text``: renders a two field input of type ``text`` (year and week);
 * ``single_text``: renders a single input of type ``week``.
 
 years
@@ -120,7 +118,6 @@ current year
 
 List of years available to the year field type. This option is only relevant
 when the ``widget`` option is set to ``choice``.
-
 
 .. include:: /reference/forms/types/options/weeks.rst.inc
 
@@ -134,8 +131,7 @@ Overridden Options
 
 The actual default value of this option depends on other field options:
 
-* If ``widget`` is ``single_text``, then ``''``
-  (empty string);
+* If ``widget`` is ``single_text``, then ``''`` (empty string);
 * Otherwise ``[]`` (empty array).
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
