@@ -103,11 +103,6 @@ Take the following ``access_control`` entries as an example:
             ],
         ]);
 
-.. deprecated:: 4.4
-
-    Using more than one role in a single ``access_control`` rule is deprecated
-    and will stop working in Symfony 5.0.
-
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
 and the request method. Remember, the first rule that matches is used, and
@@ -163,11 +158,6 @@ options:
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
   is thrown). If this value is an array of multiple roles, the user must have
   at least one of them.
-
-  .. deprecated:: 4.4
-
-    Using more than one role in a single ``access_control`` rule is deprecated
-    and will stop working in Symfony 5.0.
 
 * ``allow_if`` If the expression returns false, then access is denied;
 
