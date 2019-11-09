@@ -65,12 +65,17 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 
        // ...
        Request::setTrustedProxies(
-           // trust *all* requests
-           ['127.0.0.1', $request->server->get('REMOTE_ADDR')],
+           // trust *all* requests (the 'REMOTE_ADDR' string is replaced at
+           // run time by $_SERVER['REMOTE_ADDR'])
+           ['127.0.0.1', 'REMOTE_ADDR'],
 
            // if you're using ELB, otherwise use a constant from above
            Request::HEADER_X_FORWARDED_AWS_ELB
        );
+
+.. versionadded:: 4.4
+
+    The support for the ``REMOTE_ADDR`` option was introduced in Symfony 4.4.
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
