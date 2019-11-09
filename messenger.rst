@@ -1048,8 +1048,6 @@ by tagging the handler service with ``messenger.message_handler``
                         # only needed if can't be guessed by type-hint
                         handles: App\Message\SmsNotification
 
-                        # options returned by getHandledMessages() are supported here
-
     .. code-block:: xml
 
         <!-- config/services.xml -->
@@ -1061,7 +1059,9 @@ by tagging the handler service with ``messenger.message_handler``
 
             <services>
                 <service id="App\MessageHandler\SmsNotificationHandler">
-                   <tag name="messenger.message_handler"/>
+                     <!-- handles is only needed if it can't be guessed by type-hint -->
+                     <tag name="messenger.message_handler"
+                          handles="App\Message\SmsNotification"/>
                 </service>
             </services>
         </container>
@@ -1070,9 +1070,26 @@ by tagging the handler service with ``messenger.message_handler``
 
         // config/services.php
         use App\MessageHandler\SmsNotificationHandler;
+        use App\Message\SmsNotification;
 
         $container->register(SmsNotificationHandler::class)
-            ->addTag('messenger.message_handler');
+            ->addTag('messenger.message_handler', [
+                // only needed if can't be guessed by type-hint
+                'handles' => SmsNotification::class,
+            ]);
+
+
+Possible options to configure with tags are:
+
+* ``bus``
+* ``from_transport``
+* ``handles``
+* ``method``
+* ``priority``
+
+.. versionadded:: 4.4
+    
+    The ability to specify ``from_transport`` on the tag, was added in Symfony 4.4.
 
 Handler Subscriber & Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1228,15 +1245,6 @@ Then, make sure to "route" your message to *both* transports:
         ]);
 
 That's it! You can now consume each transport:
-
-.. note::
-
-    It is possible to specify ``from_transport`` as attribute on the ``messenger.message_handler`` tag.
-
-    .. versionadded:: 4.4
-        
-        The ability to specify ``from_transport`` on the ``messenger.message_handler`` tag
-        itself, was added in Symfony 4.4.
 
 .. code-block:: terminal
 
