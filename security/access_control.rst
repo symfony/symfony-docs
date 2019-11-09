@@ -93,10 +93,11 @@ Take the following ``access_control`` entries as an example:
         ]);
 
 For each incoming request, Symfony will decide which ``access_control``
-to use based on the URI, the client's IP address, the incoming host name,
-and the request method. Remember, the first rule that matches is used, and
-if ``ips``, ``host`` or ``methods`` are not specified for an entry, that
-``access_control`` will match any ``ips``, ``host`` or ``methods``:
+to use based on the URI (without the ``GET`` parameters), the
+client's IP address, the incoming host name, and the request method.
+Remember, the first rule that matches is used, and if ``ips``, ``host``
+or ``methods`` are not specified for an entry, that ``access_control``
+will match any ``ips``, ``host`` or ``methods``:
 
 +-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | URI             | IP          | HOST        | METHOD     | ``access_control``             | Why?                                                        |
