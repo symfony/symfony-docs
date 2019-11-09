@@ -92,13 +92,17 @@ Custom Forms
 ------------
 
 Bootstrap 4 has a feature called "`custom forms`_". You can enable that on your
-Symfony Form ``RadioType`` and ``CheckboxType`` by adding a class called ``radio-custom``
-and ``checkbox-custom`` respectively.
+Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes over the label:
+
+- for radio, use ``radio-custom``
+- for a custom checkbox, use ``checkbox-custom``
+- for having a switch instead of a checkbox, use ``switch-custom``
 
 .. code-block:: twig
 
     {{ form_row(form.myRadio, {label_attr: {class: 'radio-custom'} }) }}
     {{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }}
+    {{ form_row(form.myCheckbox, {label_attr: {class: 'switch-custom'} }) }}
 
 Labels and Errors
 -----------------
