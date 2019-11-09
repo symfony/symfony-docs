@@ -91,10 +91,6 @@ for **all** users.
 Custom Forms
 ------------
 
-.. versionadded:: 4.4
-
-    Support for the ``switch-custom`` class was introduced in Symfony 4.4.
-
 Bootstrap 4 has a feature called "`custom forms`_". You can enable that on your
 Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the label:
 

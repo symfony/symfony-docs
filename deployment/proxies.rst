@@ -73,10 +73,6 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
            Request::HEADER_X_FORWARDED_AWS_ELB
        );
 
-.. versionadded:: 4.4
-
-    The support for the ``REMOTE_ADDR`` option was introduced in Symfony 4.4.
-
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.

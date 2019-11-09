@@ -330,10 +330,6 @@ with the ``doctrine.orm.entity_listener`` tag:
             ])
         ;
 
-.. versionadded:: 4.4
-
-    Support for invokable listeners (using the ``__invoke()`` method) was introduced in Symfony 4.4.
-
 Doctrine Lifecycle Subscribers
 ------------------------------
 

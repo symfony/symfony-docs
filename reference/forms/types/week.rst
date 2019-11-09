@@ -4,10 +4,6 @@
 WeekType Field
 ==============
 
-.. versionadded:: 4.4
-
-    The ``WeekType`` type was introduced in Symfony 4.4.
-
 This field type allows the user to modify data that represents a specific
 `ISO 8601`_ week number (e.g. ``1984-W05``).
 

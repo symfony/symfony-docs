@@ -1055,10 +1055,6 @@ Possible options to configure with tags are:
 * ``method``
 * ``priority``
 
-.. versionadded:: 4.4
-    
-    The ability to specify ``from_transport`` on the tag, was added in Symfony 4.4.
-
 Handler Subscriber & Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
