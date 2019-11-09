@@ -93,11 +93,10 @@ Take the following ``access_control`` entries as an example:
         ]);
 
 For each incoming request, Symfony will decide which ``access_control``
-to use based on the URI (without the ``GET`` parameters), the
-client's IP address, the incoming host name, and the request method.
-Remember, the first rule that matches is used, and if ``ips``, ``host``
-or ``methods`` are not specified for an entry, that ``access_control``
-will match any ``ips``, ``host`` or ``methods``:
+to use based on the URI, the client's IP address, the incoming host name, and
+the request method.  Remember, the first rule that matches is used, and if
+``ips``, ``host`` or ``methods`` are not specified for an entry, that
+``access_control`` will match any ``ips``, ``host`` or ``methods``:
 
 +-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | URI             | IP          | HOST        | METHOD     | ``access_control``             | Why?                                                        |
@@ -126,6 +125,12 @@ will match any ``ips``, ``host`` or ``methods``:
 | ``/foo``        | 127.0.0.1   | symfony.com | POST       | matches no entries             | This doesn't match any ``access_control`` rules, since its  |
 |                 |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
 +-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+
+.. caution::
+
+    Matching the URI is done without ``$_GET`` parameters.
+    :ref:`Deny access in PHP code <security-securing-controller>` if you want
+    to disallow access based on ``$_GET`` parameter values.
 
 .. _security-access-control-enforcement-options:
 
