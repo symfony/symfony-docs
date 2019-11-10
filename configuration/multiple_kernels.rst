@@ -136,7 +136,7 @@ The ``bin/console`` script used to run Symfony commands always uses the default
 to execute console commands using the new kernel, duplicate the ``bin/console``
 script and rename it (e.g. ``bin/api``).
 
-Then, replace the ``Kernel`` instantiation by your own kernel instantiation
+Then, replace the ``Kernel`` instance by your own kernel instance
 (e.g. ``ApiKernel``) and now you can execute commands using the new kernel
 (e.g. ``php bin/api cache:clear``) Now you can use execute commands using the
 new kernel.

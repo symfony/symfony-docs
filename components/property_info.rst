@@ -281,8 +281,8 @@ Each object will provide 6 attributes, available in the 6 methods:
 
 .. _`components-property-info-type-builtin`:
 
-Type::getBuiltInType()
-~~~~~~~~~~~~~~~~~~~~~~
+``Type::getBuiltInType()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::getBuiltinType() <Symfony\\Component\\PropertyInfo\\Type::getBuiltinType>`
 method returns the built-in PHP data type, which can be one of these
@@ -292,22 +292,22 @@ string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
 
-Type::isNullable()
-~~~~~~~~~~~~~~~~~~
+``Type::isNullable()``
+~~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::isNullable() <Symfony\\Component\\PropertyInfo\\Type::isNullable>`
 method will return a boolean value indicating whether the property parameter
 can be set to ``null``.
 
-Type::getClassName()
-~~~~~~~~~~~~~~~~~~~~
+``Type::getClassName()``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the :ref:`built-in PHP data type <components-property-info-type-builtin>`
 is ``object``, the :method:`Type::getClassName() <Symfony\\Component\\PropertyInfo\\Type::getClassName>`
 method will return the fully-qualified class or interface name accepted.
 
-Type::isCollection()
-~~~~~~~~~~~~~~~~~~~~
+``Type::isCollection()``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::isCollection() <Symfony\\Component\\PropertyInfo\\Type::isCollection>`
 method will return a boolean value indicating if the property parameter is
@@ -326,8 +326,8 @@ this returns ``true`` if:
 
     The support of phpDocumentor collection types was introduced in Symfony 4.2.
 
-Type::getCollectionKeyType() & Type::getCollectionValueType()
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``Type::getCollectionKeyType()`` & ``Type::getCollectionValueType()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the property is a collection, additional type objects may be returned
 for both the key and value types of the collection (if the information is

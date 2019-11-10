@@ -112,9 +112,9 @@ Using Getters
 ~~~~~~~~~~~~~
 
 The ``getValue()`` method also supports reading using getters. The method will
-be created using common naming conventions for getters. It camelizes the
-property name (``first_name`` becomes ``FirstName``) and prefixes it with
-``get``. So the actual method becomes ``getFirstName()``::
+be created using common naming conventions for getters. It transform the
+property name to camelCase (``first_name`` becomes ``FirstName``) and prefixes
+it with ``get``. So the actual method becomes ``getFirstName()``::
 
     // ...
     class Person

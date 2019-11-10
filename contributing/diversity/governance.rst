@@ -40,7 +40,7 @@ The project leader (Fabien Potencier) will have the right to veto any actionable
 item, regardless of the vote of the initiative's guidance team. The project
 leader may, at their discretion, also appoint other people from among the
 initiative's guidance team to also have the right to veto - in such a case these
-people are expected to use appropriate judgement to know when to use a "no" vote
+people are expected to use appropriate judgment to know when to use a "no" vote
 or a veto. Any single veto will reject an actionable item.
 
 The purpose of having members with the right to veto is to prevent a "people's
