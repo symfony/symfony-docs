@@ -115,7 +115,7 @@ This requires you to implement several methods::
 
             // if a User object, checkCredentials() is called
             return $this->em->getRepository(User::class)
-                ->findOneBy(['apiToken' => $apiToken]);
+                ->findOneBy(['api_token' => $apiToken]);
         }
 
         public function checkCredentials($credentials, UserInterface $user)
