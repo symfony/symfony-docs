@@ -157,7 +157,7 @@ and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
     method.
 
     The default namespace is removed when loading the content if it's the only
-    namespace in the document. It's done to simplify the xpath queries.
+    namespace in the document. It's done to simplify the XPath queries.
 
 Namespaces can be explicitly registered with the
 :method:`Symfony\\Component\\DomCrawler\\Crawler::registerNamespace` method::
@@ -203,7 +203,7 @@ Get all the direct child nodes matching a CSS selector::
 Accessing Node Values
 ~~~~~~~~~~~~~~~~~~~~~
 
-Access the node name (HTML tag name) of the first node of the current selection (eg. "p" or "div")::
+Access the node name (HTML tag name) of the first node of the current selection (e.g. "p" or "div")::
 
     // returns the node name (HTML tag name) of the first child element under <body>
     $tag = $crawler->filterXPath('//body/*')->nodeName();

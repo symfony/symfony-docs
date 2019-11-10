@@ -245,7 +245,7 @@ priority of 100. As this one is responsible for fetching attributes from the
 ``Request``, it's recommended to trigger your custom value resolver with a
 lower priority. This makes sure the argument resolvers are not triggered when
 the attribute is present. For instance, when passing the user along a
-subrequests.
+sub-requests.
 
 .. tip::
 

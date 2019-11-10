@@ -272,7 +272,7 @@ the example above.
 Bar Settings
 ~~~~~~~~~~~~
 
-Amongst the placeholders, ``bar`` is a bit special as all the characters used
+Among the placeholders, ``bar`` is a bit special as all the characters used
 to display it can be customized::
 
     // the finished part of the bar

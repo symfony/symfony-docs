@@ -21,7 +21,7 @@ Usage
 
 The Stopwatch component provides a consistent way to measure execution
 time of certain parts of code so that you don't constantly have to parse
-microtime by yourself. Instead, use the
+:phpfunction:`microtime` by yourself. Instead, use the
 :class:`Symfony\\Component\\Stopwatch\\Stopwatch` class::
 
     use Symfony\Component\Stopwatch\Stopwatch;

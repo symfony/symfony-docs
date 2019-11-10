@@ -69,7 +69,7 @@ level configuration for pretty outputs.
 Types Support
 ~~~~~~~~~~~~~
 
-It supports most of the YAML built-in types like dates, integers, octals,
+It supports most of the YAML built-in types like dates, integers, octal numbers,
 booleans, and much more...
 
 Full Merge Key Support
@@ -149,8 +149,10 @@ array to its YAML representation::
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
 
-Array Expansion and Inlining
-............................
+.. _array-expansion-and-inlining:
+
+Expanded and Inlined Arrays
+...........................
 
 The YAML format supports two kind of representation for arrays, the expanded
 one, and the inline one. By default, the dumper uses the expanded

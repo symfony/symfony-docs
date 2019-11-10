@@ -72,10 +72,10 @@ must be used instead (where ``XXX`` is the name of the related thing):
 
 .. note::
 
-    While "setXXX" and "replaceXXX" are very similar, there is one notable
-    difference: "setXXX" may replace, or add new elements to the relation.
-    "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
-    key is passed to "replaceXXX" it must throw an exception.
+    While ``setXXX()`` and ``replaceXXX()`` are very similar, there is one notable
+    difference: ``setXXX()`` may replace, or add new elements to the relation.
+    ``replaceXXX()``, on the other hand, cannot add new elements. If an unrecognized
+    key is passed to ``replaceXXX()`` it must throw an exception.
 
 .. _contributing-code-conventions-deprecations:
 
@@ -96,7 +96,7 @@ contain deprecated methods.
 
 A new method cannot be introduced as deprecated.
 
-A feature is marked as deprecated by adding a ``@deprecated`` phpdoc to
+A feature is marked as deprecated by adding a ``@deprecated`` PHPdoc to
 relevant classes, methods, properties, ...::
 
     /**
