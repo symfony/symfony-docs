@@ -10,7 +10,7 @@ built-in options as well as a couple of built-in commands for the Console compon
 .. note::
 
     These examples assume you have added a file ``application.php`` to run at
-    the cli::
+    the CLI::
 
         #!/usr/bin/env php
         <?php

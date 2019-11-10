@@ -46,10 +46,10 @@ create the catalog that will be returned::
                 }
             }
 
-            $messageCatalogue = new MessageCatalogue($locale);
-            $messageCatalogue->add($messages, $domain);
+            $messageCatalog = new MessageCatalogue($locale);
+            $messageCatalog->add($messages, $domain);
 
-            return $messageCatalogue;
+            return $messageCatalog;
         }
 
     }
@@ -102,7 +102,7 @@ will save a few lines::
         }
     }
 
-.. sidebar:: Format a message catalogue
+.. sidebar:: Format a message catalog
 
     In some cases, you want to send the dump contents as a response instead of
     writing them in files.  To do this, you can use the ``formatCatalogue``

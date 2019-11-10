@@ -38,7 +38,7 @@ optional second argument, which is the default value to use if the slot is not
 available.
 
 The ``_content`` slot is a special slot set by the ``PhpEngine``. It contains
-the content of the subtemplate.
+the content of the sub-template.
 
 .. caution::
 

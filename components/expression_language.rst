@@ -102,9 +102,9 @@ PHP type (including objects)::
         [
             'fruit' => $apple,
         ]
-    ));
+    )); // displays "Honeycrisp"
 
-This will print "Honeycrisp". For more information, see the :doc:`/components/expression_language/syntax`
+For more information, see the :doc:`/components/expression_language/syntax`
 entry, especially :ref:`component-expression-objects` and :ref:`component-expression-arrays`.
 
 Caching
