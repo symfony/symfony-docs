@@ -29,7 +29,7 @@ Sphinx
 
 Sphinx_ is a build system that provides tools to create documentation from
 reStructuredText documents. As such, it adds new directives and interpreted text
-roles to the standard reST markup. Read more about the `Sphinx Markup Constructs`_.
+roles to the standard reStructuredText markup. Read more about the `Sphinx Markup Constructs`_.
 
 Syntax Highlighting
 ~~~~~~~~~~~~~~~~~~~
@@ -74,7 +74,7 @@ directive to show the configuration in all supported configuration formats
 
             // Configuration in PHP
 
-The previous reST snippet renders as follow:
+The previous reStructuredText snippet renders as follow:
 
 .. configuration-block::
 

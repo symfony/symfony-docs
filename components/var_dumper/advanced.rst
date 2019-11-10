@@ -85,7 +85,7 @@ Before dumping it, you can further limit the resulting
     Removes internal objects' handles for sparser output (useful for tests).
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek`
-    Selects only subparts of already cloned arrays, objects or resources.
+    Selects only sub-parts of already cloned arrays, objects or resources.
 
     .. versionadded:: 3.2
 
@@ -345,7 +345,7 @@ Casters are responsible for returning the properties of the object or resource
 being cloned in an array. They are callables that accept five arguments:
 
 * the object or resource being casted;
-* an array modelled for objects after PHP's native ``(array)`` cast operator;
+* an array modeled for objects after PHP's native ``(array)`` cast operator;
 * a :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` object
   representing the main properties of the object (class, type, etc.);
 * true/false when the caster is called nested in a structure or not;

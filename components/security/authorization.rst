@@ -140,7 +140,7 @@ RoleHierarchyVoter
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleHierarchyVoter`
 extends :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
 and provides some additional functionality: it knows how to handle a
-hierarchy of roles. For instance, a ``ROLE_SUPER_ADMIN`` role may have subroles
+hierarchy of roles. For instance, a ``ROLE_SUPER_ADMIN`` role may have sub-roles
 ``ROLE_ADMIN`` and ``ROLE_USER``, so that when a certain object requires the
 user to have the ``ROLE_ADMIN`` role, it grants access to users who in fact
 have the ``ROLE_ADMIN`` role, but also to users having the ``ROLE_SUPER_ADMIN``

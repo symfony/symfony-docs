@@ -86,7 +86,7 @@ TextBundleWriter
 
 The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Writer\\TextBundleWriter`
 writes an array or an array-like object to a plain-text resource bundle. The
-resulting .txt file can be converted to a binary .res file with the
+resulting ``.txt`` file can be converted to a binary ``.res`` file with the
 :class:`Symfony\\Component\\Intl\\ResourceBundle\\Compiler\\BundleCompiler`
 class::
 
@@ -105,7 +105,7 @@ class::
     $compiler = new BundleCompiler();
     $compiler->compile('/path/to/bundle', '/path/to/binary/bundle');
 
-The command "genrb" must be available for the
+The command ``genrb`` must be available for the
 :class:`Symfony\\Component\\Intl\\ResourceBundle\\Compiler\\BundleCompiler` to
 work. If the command is located in a non-standard location, you can pass its
 path to the

@@ -51,7 +51,7 @@ the contents of the output and
 the contents of the error output.
 
 You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
-foreach construct to get the output while it is generated. By default, the loop waits
+for each construct to get the output while it is generated. By default, the loop waits
 for new output before going to the next iteration::
 
     $process = new Process(['ls', '-lsa']);
@@ -137,7 +137,7 @@ with a non-zero code)::
 Getting real-time Process Output
 --------------------------------
 
-When executing a long running command (like rsync-ing files to a remote
+When executing a long running command (like ``rsync`` to a remote
 server), you can give feedback to the end user in real-time by passing an
 anonymous function to the
 :method:`Symfony\\Component\\Process\\Process::run` method::
@@ -237,7 +237,7 @@ Streaming to the Standard Input of a Process
 Before a process is started, you can specify its standard input using either the
 :method:`Symfony\\Component\\Process\\Process::setInput` method or the 4th argument
 of the constructor. The provided input can be a string, a stream resource or a
-Traversable object::
+``Traversable`` object::
 
     $process = new Process('cat');
     $process->setInput('foobar');
@@ -267,7 +267,7 @@ provides the :class:`Symfony\\Component\\Process\\InputStream` class::
     echo $process->getOutput();
 
 The :method:`Symfony\\Component\\Process\\InputStream::write` method accepts scalars,
-stream resources or Traversable objects as argument. As shown in the above example,
+stream resources or ``Traversable`` objects as argument. As shown in the above example,
 you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
 method when you are done writing to the standard input of the subprocess.
 

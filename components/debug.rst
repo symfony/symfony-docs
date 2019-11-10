@@ -58,7 +58,7 @@ Enabling the Exception Handler
 
 The :class:`Symfony\\Component\\Debug\\ExceptionHandler` class catches
 uncaught PHP exceptions and converts them to a nice PHP response. It is useful
-in debug mode to replace the default PHP/XDebug output with something prettier
+in debug mode to replace the default PHP/Xdebug output with something prettier
 and more useful::
 
     use Symfony\Component\Debug\ExceptionHandler;

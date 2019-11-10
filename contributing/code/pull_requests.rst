@@ -11,7 +11,7 @@ Before working on a change, check to see if someone else also raised the topic
 or maybe even started working on a PR by `searching on GitHub`_.
 
 If you are unsure or if you have any questions during this entire process,
-please ask your questions on the #contribs channel on `Symfony Slack`_.
+please ask your questions on the ``#contribs`` channel on `Symfony Slack`_.
 
 .. _step-1-setup-your-environment:
 
@@ -380,7 +380,7 @@ We ask all contributors to follow some
 to ensure a constructive feedback process.
 
 If you think someone fails to keep this advice in mind and you want another
-perspective, please join the #contribs channel on `Symfony Slack`_. If you
+perspective, please join the ``#contribs`` channel on `Symfony Slack`_. If you
 receive feedback you find abusive please contact the
 :doc:`CARE team </contributing/code_of_conduct/care_team>`.
 
@@ -405,8 +405,8 @@ PR. Before re-submitting the PR, rebase with ``upstream/master`` or
 .. note::
 
     When doing a ``push --force``, always specify the branch name explicitly
-    to avoid messing other branches in the repo (``--force`` tells Git that
-    you really want to mess with things so do it carefully).
+    to avoid messing other branches in the repository (``--force`` tells Git
+    that you really want to mess with things so do it carefully).
 
 Moderators earlier asked you to "squash" your commits. This means you will
 convert many commits to one commit. This is no longer necessary today, because

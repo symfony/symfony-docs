@@ -203,7 +203,7 @@ convenient for passwords::
 .. caution::
 
     When you ask for a hidden response, Symfony will use either a binary, change
-    stty mode or use another trick to hide the response. If none is available,
+    ``stty`` mode or use another trick to hide the response. If none is available,
     it will fallback and allow the response to be visible unless you set this
     behavior to ``false`` using
     :method:`Symfony\\Component\\Console\\Question\\Question::setHiddenFallback`

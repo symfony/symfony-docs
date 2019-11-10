@@ -277,7 +277,7 @@ Symfony provides the following env var processors:
     Casts ``FOO`` to a float.
 
 ``env(const:FOO)``
-    Finds the const value named in ``FOO``:
+    Finds the constant value named in ``FOO``:
 
     .. configuration-block::
 

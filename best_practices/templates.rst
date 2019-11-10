@@ -30,8 +30,8 @@ Template Locations
     Store all your application's templates in ``app/Resources/views/`` directory.
 
 Traditionally, Symfony developers stored the application templates in the
-``Resources/views/`` directory of each bundle. Then they used the Twig namespaced
-path to refer to them (e.g. ``@AcmeDemo/Default/index.html.twig``).
+``Resources/views/`` directory of each bundle. Then they used Twig namespaces
+to refer to them (e.g. ``@AcmeDemo/Default/index.html.twig``).
 
 But for the templates used in your application, it's much more convenient
 to store them in the ``app/Resources/views/`` directory. For starters, this
@@ -51,7 +51,7 @@ scattered through lots of bundles.
 
 .. best-practice::
 
-    Use lowercased snake_case for directory and template names.
+    Use lowercase snake_case for directory and template names.
 
 .. best-practice::
 

@@ -34,5 +34,5 @@ that is optimized and preloaded into OPcache memory storage::
 
 .. note::
 
-    This adapter requires PHP 7.x and should be used with the php.ini setting
-    ``opcache.enable`` on.
+    This adapter requires PHP 7.x and should be used with the ``php.ini``
+    setting ``opcache.enable=On``.
