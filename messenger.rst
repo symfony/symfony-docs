@@ -50,8 +50,8 @@ serialized::
 
 .. _messenger-handler:
 
-A message handler is a PHP callable, the easiest way to create it is to create a class that implements
-``MessageHandlerInterface`` and has an ``__invoke()`` method that's
+A message handler is a PHP callable, the recommended way to create it is to create a class that
+implements ``MessageHandlerInterface`` and has an ``__invoke()`` method that's
 type-hinted with the message class (or a message interface)::
 
     // src/MessageHandler/SmsNotificationHandler.php
@@ -928,7 +928,7 @@ In Memory Transport
 
     The ``in-memory`` transport was introduced in Symfony 4.3.
 
-The ``in-memory`` transport does not actually delivery messages. Instead, it
+The ``in-memory`` transport does not actually deliver messages. Instead, it
 holds them in memory during the request, which can be useful for testing.
 For example, if you have an ``async_priority_normal`` transport, you could
 override it in the ``test`` environment to use this transport:
@@ -1273,7 +1273,7 @@ Middleware
 ~~~~~~~~~~
 
 What happens when you dispatch a message to a message bus depends on its
-collection of middleware (and their order). By default, the middleware configured
+collection of middleware and their order. By default, the middleware configured
 for each bus looks like this:
 
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
