@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2019-11-11T17:45:00Z
+
+This feature has been merged and released in MercureBundle 0.2. This PR can be merged in the 4.3 branch of the docs, because MercureBundle is a separate package already usable with Symfony 4.3.
