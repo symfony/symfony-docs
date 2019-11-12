@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-10T18:59:11Z
+
+@amine-betari thanks! This is correct ... but the reword implies that you can access to ALL public services, and that's not true. So ... what if reword this again and say something like this:
+
+```
+If you extend the base ``AbstractController``, you can only access to
+the most common services (e.g. ``twig``, ``router``, ``doctrine``, etc.).
+via ``$this->container->get()`` or ``$this->get()``. Use dependency
+injection to fetch the rest of services [...]
+```
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2019-11-10T20:20:49Z
+
+@javiereguiluz  done
+
+thank's. I thought we could access to all public services
