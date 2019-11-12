@@ -568,12 +568,15 @@ sent. Here is the PublisherStub implementation::
     App\Tests\Functional\Fixtures\PublisherStub:
         decorates: mercure.hub.default.publisher
 
-.. versionadded:: 0.2
 
 Debugging
 ---------
 
-The WebProfiler panel was introduced in MercureBundle 0.2. Enable it on your configuration, as following:
+.. versionadded:: 0.2
+
+    The WebProfiler panel was introduced in MercureBundle 0.2.
+
+Enable the panel in your configuration, as follows:
 
 .. configuration-block::
 
