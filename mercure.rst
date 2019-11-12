@@ -568,6 +568,47 @@ sent. Here is the PublisherStub implementation::
     App\Tests\Functional\Fixtures\PublisherStub:
         decorates: mercure.hub.default.publisher
 
+
+Debugging
+---------
+
+.. versionadded:: 0.2
+
+    The WebProfiler panel was introduced in MercureBundle 0.2.
+
+Enable the panel in your configuration, as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mercure.yaml
+        mercure:
+            enable_profiler: '%kernel.debug%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mercure.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <mercure:config enable_profiler="%kernel.debug%"/>
+
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mercure.php
+        $container->loadFromExtension('mercure', [
+            'enable_profiler' => '%kernel.debug%',
+        ]);
+
+
+.. image:: /_images/mercure/panel.png
+
 .. _`the Mercure protocol`: https://github.com/dunglas/mercure#protocol-specification
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/docs/Server-sent_events
 .. _`a polyfill`: https://github.com/Yaffle/EventSource

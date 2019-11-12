@@ -735,8 +735,8 @@ Now, you can call this method on the repository::
 
     // ...
 
-If you're in a :ref:`services-constructor-injection`, you can type-hint the
-``ProductRepository`` class and inject it like normal.
+See :ref:`services-constructor-injection` for how to inject the repository into
+any service.
 
 Querying with the Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
