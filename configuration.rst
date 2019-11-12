@@ -321,7 +321,7 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 .. seealso::
 
     Later in this article you can read how to
-    ref:`get configuration parameters in controllers and services <configuration-accessing-parameters>`.
+    :ref:`get configuration parameters in controllers and services <configuration-accessing-parameters>`.
 
 .. index::
    single: Environments; Introduction

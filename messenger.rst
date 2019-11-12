@@ -50,8 +50,8 @@ serialized::
 
 .. _messenger-handler:
 
-A message handler is a PHP callable, the easiest way to create it is to create a class that implements
-``MessageHandlerInterface`` and has an ``__invoke()`` method that's
+A message handler is a PHP callable, the recommended way to create it is to create a class that
+implements ``MessageHandlerInterface`` and has an ``__invoke()`` method that's
 type-hinted with the message class (or a message interface)::
 
     // src/MessageHandler/SmsNotificationHandler.php
@@ -1262,7 +1262,7 @@ Middleware
 ~~~~~~~~~~
 
 What happens when you dispatch a message to a message bus depends on its
-collection of middleware (and their order). By default, the middleware configured
+collection of middleware and their order. By default, the middleware configured
 for each bus looks like this:
 
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
