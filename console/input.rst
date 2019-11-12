@@ -153,11 +153,11 @@ flag:
     Hi Fabien!
 
     $ php bin/console app:greet Fabien --iterations=5
-    Hi Fabien
-    Hi Fabien
-    Hi Fabien
-    Hi Fabien
-    Hi Fabien
+    Hi Fabien!
+    Hi Fabien!
+    Hi Fabien!
+    Hi Fabien!
+    Hi Fabien!
 
     # the order of options isn't important
     $ php bin/console app:greet Fabien --iterations=5 --yell
