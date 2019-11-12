@@ -12,7 +12,7 @@ have one limitation: they can only cache whole pages. If your pages contain
 dynamic sections, such as the user name or a shopping cart, you are out of
 luck. Fortunately, Symfony provides a solution for these cases, based on a
 technology called `ESI`_, or Edge Side Includes. Akamai wrote this specification
-almost 10 years ago and it allows specific parts of a page to have a different
+in 2001 and it allows specific parts of a page to have a different
 caching strategy than the main page.
 
 The ESI specification describes tags you can embed in your pages to communicate
