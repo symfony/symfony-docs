@@ -112,7 +112,7 @@ Using Getters
 ~~~~~~~~~~~~~
 
 The ``getValue()`` method also supports reading using getters. The method will
-be created using common naming conventions for getters. It transform the
+be created using common naming conventions for getters. It transforms the
 property name to camelCase (``first_name`` becomes ``FirstName``) and prefixes
 it with ``get``. So the actual method becomes ``getFirstName()``::
 
