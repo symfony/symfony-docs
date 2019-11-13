@@ -97,7 +97,7 @@ contain deprecated methods.
 
 A new method cannot be introduced as deprecated.
 
-A feature is marked as deprecated by adding a ``@deprecated`` PHPdoc to
+A feature is marked as deprecated by adding a ``@deprecated`` PHPDoc to
 relevant classes, methods, properties, ...::
 
     /**
