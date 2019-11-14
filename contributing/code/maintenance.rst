@@ -13,7 +13,7 @@ acceptable changes.
 
 .. note::
 
-    When documentation (or phpdoc) is not in sync with the code, code behavior
+    When documentation (or PHPDoc) is not in sync with the code, code behavior
     should always be considered as being the correct one.
 
 Besides bug fixes, other minor changes can be accepted in a patch version:
