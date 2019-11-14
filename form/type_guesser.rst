@@ -146,7 +146,7 @@ With this knowledge, you can implement the ``guessType()`` method of the
     }
 
 This type guesser can now guess the field type for a property if it has
-PHPdoc!
+PHPDoc!
 
 Guessing Field Options
 ~~~~~~~~~~~~~~~~~~~~~~

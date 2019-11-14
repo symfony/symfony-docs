@@ -26,7 +26,7 @@ is straightforward::
 
     $loader = new ClassLoader();
 
-    // to enable searching the include path (eg. for PEAR packages)
+    // to enable searching the include path (e.g. for PEAR packages)
     $loader->setUseIncludePath(true);
 
     // ... register namespaces and prefixes here - see below

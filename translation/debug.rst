@@ -7,7 +7,7 @@ How to Find Missing or Unused Translation Messages
 ==================================================
 
 When maintaining an application or bundle, you may add or remove translation
-messages and forget to update the message catalogues. The ``debug:translation``
+messages and forget to update the message catalogs. The ``debug:translation``
 command helps you to find these missing or unused translation messages.
 
 Thanks to the messages extractors, the command will detect the translation
