@@ -79,7 +79,7 @@ other information.
 .. tip::
 
     In applications using :ref:`Symfony Flex <symfony-flex>` you can set the
-    TRUSTED_PROXIES env var:
+    ``TRUSTED_PROXIES`` env var:
 
     .. code-block:: bash
 
