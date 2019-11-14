@@ -269,7 +269,8 @@ you need them:
     + {% endblock %}
 
 Now, the checkout page will contain all the JavaScript and CSS for the ``app`` entry
-(because this is included in ``base.html.twig``) *and* your ``checkout`` entry.
+(because this is included in ``base.html.twig`` and there is the ``{{ parent() }}`` call)
+*and* your ``checkout`` entry.
 
 See :doc:`/frontend/encore/page-specific-assets` for more details. To avoid duplicating
 the same code in different entry files, see :doc:`/frontend/encore/split-chunks`.
