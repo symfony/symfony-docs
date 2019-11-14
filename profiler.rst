@@ -206,6 +206,11 @@ event::
         if (!$this->getKernel()->isDebug()) {
             return;
         }
+        
+        $request = $event->getRequest();
+        if (!$request->isXmlHttpRequest()) {
+            return;
+        }
 
         $response = $event->getResponse();
         $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
