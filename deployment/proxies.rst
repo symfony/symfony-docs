@@ -77,6 +77,17 @@ That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 
+.. tip::
+
+    In applications using :ref:`Symfony Flex <symfony-flex>` you can set the
+    ``TRUSTED_PROXIES`` env var:
+
+    .. code-block:: bash
+
+        # .env
+        TRUSTED_PROXIES=127.0.0.1,REMOTE_ADDR
+
+
 If you are also using a reverse proxy on top of your load balancer (e.g.
 `CloudFront`_), calling ``$request->server->get('REMOTE_ADDR')`` won't be
 enough, as it will only trust the node sitting directly above your application
