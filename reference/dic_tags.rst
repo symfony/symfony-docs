@@ -894,9 +894,9 @@ required option: ``alias``, which defines the name of the extractor::
         protected $prefix;
 
         /**
-         * Extracts translation messages from a template directory to the catalogue.
+         * Extracts translation messages from a template directory to the catalog.
          */
-        public function extract($directory, MessageCatalogue $catalogue)
+        public function extract($directory, MessageCatalogue $catalog)
         {
             // ...
         }
