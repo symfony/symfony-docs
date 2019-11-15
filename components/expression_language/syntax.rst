@@ -308,3 +308,15 @@ Ternary Operators
 * ``foo ? 'yes' : 'no'``
 * ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
 * ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
+
+Built-in Objects and Variables
+------------------------------
+
+When using this component inside a Symfony application, certain objects and
+variables are automatically injected by Symfony so you can use them in your
+expressions (e.g. the request, the current user, etc.):
+
+* :doc:`Variables available in security expressions </security/expressions>`;
+* :doc:`Variables available in service container expressions </service_container/expression_language>`;
+* :doc:`Variables available in routing expressions </routing/conditions>`.
+
