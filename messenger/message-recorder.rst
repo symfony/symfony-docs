@@ -6,7 +6,7 @@ Transactional Messages: Handle New Messages After Handling is Done
 
 A message handler can ``dispatch`` new messages during execution, to either the
 same or a different bus (if the application has
-`multiple buses </messenger/multiple_buses>`_). Any errors or exceptions that
+:doc:`/messenger/multiple_buses`). Any errors or exceptions that
 occur during this process can have unintended consequences, such as:
 
 - If using the ``DoctrineTransactionMiddleware`` and a dispatched message throws
