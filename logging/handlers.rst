@@ -28,7 +28,8 @@ To use it, declare it as a service:
 
         # config/services.yaml
         services:
-            Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler: ~
+            Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler:
+                autowire: false
 
     .. code-block:: xml
 
