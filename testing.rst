@@ -562,6 +562,15 @@ command.
 
 .. tip::
 
+    Keep in mind that, if a private service is never used as a dependency of another service in
+    your application, it is then removed from the container. So, if you try to access a private
+    service in a test through the special test container and that service isn't used elsewhere
+    you'll get a ``ServiceNotFoundException``. The solution, depending on the context, is to
+    define the service as explicitly ``public`` or to inject it where you'll need it so Symfony
+    doesn't remove it.
+
+.. tip::
+
     The special container that gives access to private services exists only in
     the ``test`` environment and is itself a service that you can get from the
     real container using the ``test.service_container`` id.
