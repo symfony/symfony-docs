@@ -243,10 +243,6 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
     # use the 'next' Symfony version to be released (still in development)
     $ symfony new my_project_name --version=next
 
-    #  use a specific Symfony version
-    $ symfony new my_project_name --version=3.3.10
-    $ symfony new my_project_name --version=4.3.1
-
 The Symfony Demo application
 ----------------------------
 
