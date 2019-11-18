@@ -114,10 +114,6 @@ In case your project needs to be based on a specific Symfony version, use the
     $ symfony new my_project_name --version=3.3
     $ symfony new my_project_name --version=3.4
 
-    # use a specific Symfony version
-    $ symfony new my_project_name --version=3.3.10
-    $ symfony new my_project_name --version=3.4.5
-
     # use the most recent 'lts' version (Long Term Support version)
     $ symfony new my_project_name --version=lts
 
