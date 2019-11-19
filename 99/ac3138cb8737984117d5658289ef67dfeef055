@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-12T12:54:06Z
+
+Thank you very much!
+
+Can you please update the exception image including the toolbar like before and try to decrease the size? ist ~260 kb vs. 76 kb before
+
+cc @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-11-12T12:58:55Z
+
+@OskarStark I will do it, but maybe should I wait until sf 4.4 lts is out, so will be more "stable" images?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-15T20:44:14Z
+
+No let’s use them for 4.3 now and maybe update them later for 4.4
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-11-18T17:15:03Z
+
+@OskarStark here you go
+
+note that i had to create a project with `symfony new sf43 --version=4.3 --full --debug` (note the `--full`) to have the wdt (i do not know if we should document it or not)
+
+images are also compressed a little bit as requested
+
+cheers
