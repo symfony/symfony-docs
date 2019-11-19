@@ -629,6 +629,11 @@ the only mandatory file and each file content overrides the previous one:
 
 .. note::
 
+    ``.env.local`` is always ignored in test environment. The logic is that
+    tests should always produce the same results for everyone.
+
+.. note::
+
     The real environment variables defined in the server always win over the
     env vars created by the ``.env`` files.
 
