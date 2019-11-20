@@ -286,8 +286,6 @@ console::
             $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);
             $commandTester->execute([
-                'command'  => $command->getName(),
-
                 // pass arguments to the helper
                 'username' => 'Wouter',
 
