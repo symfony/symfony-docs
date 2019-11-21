@@ -204,8 +204,7 @@ following standardized instructions in your ``README.md`` file.
         ============
 
         Make sure Composer is installed globally, as explained in the
-        [installation chapter](https://getcomposer.org/doc/00-intro.md)
-        of the Composer documentation.
+        `installation chapter`_ of the Composer documentation.
 
         Step 1: Download the Bundle
         ---------------------------
@@ -446,6 +445,7 @@ Learn more
 * :doc:`/bundles/extension`
 * :doc:`/bundles/configuration`
 
+.. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
 .. _`PSR-0`: https://www.php-fig.org/psr/psr-0/
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
 .. _`Semantic Versioning Standard`: https://semver.org/
