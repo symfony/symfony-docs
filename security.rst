@@ -84,6 +84,176 @@ to add more fields. Also, make sure to make and run a migration for the new enti
     $ php bin/console make:migration
     $ php bin/console doctrine:migrations:migrate
 
+The Maker Bundler generated the following: 1) the User entity and 2) the User Repository
+
+**Step 1.** The User entity::
+
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Security\Core\User\UserInterface;
+
+    /**
+     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+     */
+    class User implements UserInterface
+    {
+        /**
+         * @ORM\Id()
+         * @ORM\GeneratedValue()
+         * @ORM\Column(type="integer")
+         */
+        private $id;
+
+        /**
+         * @ORM\Column(type="string", length=180, unique=true)
+         */
+        private $email;
+
+        /**
+         * @ORM\Column(type="json")
+         */
+        private $roles = [];
+
+        /**
+         * @var string The hashed password
+         * @ORM\Column(type="string")
+         */
+        private $password;
+
+        public function getId(): ?int
+        {
+            return $this->id;
+        }
+
+        public function getEmail(): ?string
+        {
+            return $this->email;
+        }
+
+        public function setEmail(string $email): self
+        {
+            $this->email = $email;
+
+            return $this;
+        }
+
+        /**
+         * A visual identifier that represents this user.
+         *
+         * @see UserInterface
+         */
+        public function getUsername(): string
+        {
+            return (string) $this->email;
+        }
+
+        /**
+         * @see UserInterface
+         */
+        public function getRoles(): array
+        {
+            $roles = $this->roles;
+            // guarantee every user at least has ROLE_USER
+            $roles[] = 'ROLE_USER';
+
+            return array_unique($roles);
+        }
+
+        public function setRoles(array $roles): self
+        {
+            $this->roles = $roles;
+
+            return $this;
+        }
+
+        /**
+         * @see UserInterface
+         */
+        public function getPassword(): string
+        {
+            return (string) $this->password;
+        }
+
+        public function setPassword(string $password): self
+        {
+            $this->password = $password;
+
+            return $this;
+        }
+
+        /**
+         * @see UserInterface
+         */
+        public function getSalt()
+        {
+            // not needed when using the "bcrypt" algorithm in security.yaml
+        }
+
+        /**
+         * @see UserInterface
+         */
+        public function eraseCredentials()
+        {
+            // If you store any temporary, sensitive data on the user, clear it here
+            // $this->plainPassword = null;
+        }
+    }
+
+
+**Step 2.** The User Repository::
+
+    // src/Repository/UserRepository.php
+    namespace App\Repository;
+
+    use App\Entity\User;
+    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Doctrine\Common\Persistence\ManagerRegistry;
+
+    /**
+     * @method User|null find($id, $lockMode = null, $lockVersion = null)
+     * @method User|null findOneBy(array $criteria, array $orderBy = null)
+     * @method User[]    findAll()
+     * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+     */
+    class UserRepository extends ServiceEntityRepository
+    {
+        public function __construct(ManagerRegistry $registry)
+        {
+            parent::__construct($registry, User::class);
+        }
+
+        // /**
+        //  * @return User[] Returns an array of User objects
+        //  */
+        /*
+        public function findByExampleField($value)
+        {
+            return $this->createQueryBuilder('u')
+                ->andWhere('u.exampleField = :val')
+                ->setParameter('val', $value)
+                ->orderBy('u.id', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
+        */
+
+        /*
+        public function findOneBySomeField($value): ?User
+        {
+            return $this->createQueryBuilder('u')
+                ->andWhere('u.exampleField = :val')
+                ->setParameter('val', $value)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
+        */
+    }
+
 .. _security-user-providers:
 .. _where-do-users-come-from-user-providers:
 
@@ -96,7 +266,22 @@ optional features, like :doc:`remember me </security/remember_me>` and
 :doc:`impersonation </security/impersonating_user>`.
 
 Fortunately, the ``make:user`` command already configured one for you in your
-``security.yaml`` file under the ``providers`` key.
+``security.yaml`` file under the ``providers`` key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            providers:
+                # used to reload user from session & other features (e.g. switch_user)
+                app_user_provider:
+                    entity:
+                        class: App\Entity\User
+                        property: email
 
 If your ``User`` class is an entity, you don't need to do anything else. But if
 your class is *not* an entity, then ``make:user`` will also have generated a
