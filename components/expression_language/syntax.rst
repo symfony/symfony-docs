@@ -319,4 +319,3 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :doc:`Variables available in service container expressions </service_container/expression_language>`;
 * :doc:`Variables available in routing expressions </routing/conditions>`.
-
