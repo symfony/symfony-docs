@@ -229,6 +229,8 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
     If you create your forms with :doc:`Symfony Forms </forms>` this is done
     automatically for you.
 
+.. _routing-matching-expressions:
+
 Matching Expressions
 ~~~~~~~~~~~~~~~~~~~~
 
