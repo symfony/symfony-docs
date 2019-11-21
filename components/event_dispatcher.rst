@@ -469,7 +469,6 @@ Other Dispatchers
 Besides the commonly used ``EventDispatcher``, the component comes
 with some other dispatchers:
 
-* :doc:`/components/event_dispatcher/container_aware_dispatcher`
 * :doc:`/components/event_dispatcher/immutable_dispatcher`
 * :doc:`/components/event_dispatcher/traceable_dispatcher`
 

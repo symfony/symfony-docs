@@ -64,7 +64,7 @@ files: ``BlogPost.php`` and ``BlogComment.php``.
 
 .. tip::
 
-    It's also possible to generate the metadata files into XML or YAML:
+    It's also possible to generate the metadata files into XML or eventually into YAML:
 
     .. code-block:: terminal
 
@@ -82,7 +82,7 @@ files: ``BlogPost.php`` and ``BlogComment.php``.
                 mappings:
                     App:
                         is_bundle: false
-                        type: yml # Set to xml in case of XML mapping
+                        type: xml # "yml" is marked as deprecated for doctrine v2.6+ and will be removed in v3
                         dir: '%kernel.project_dir%/config/doctrine'
                         prefix: 'App\Entity'
                         alias: App
