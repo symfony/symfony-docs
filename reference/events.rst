@@ -23,6 +23,9 @@ following information:
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
     Returns the current ``Request`` being handled.
 
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
+    Checks if this is a master request.
+
 .. _kernel-core-request:
 
 ``kernel.request``
