@@ -490,7 +490,7 @@ Serving Files
 
 When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is straightforward,
-using non-ASCII filenames is more involving. The
+using non-ASCII filenames is more involved. The
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::makeDisposition`
 abstracts the hard work behind a simple API::
 
