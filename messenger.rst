@@ -902,7 +902,7 @@ The Redis transport uses `streams`_ to queue messages.
 
     The ``dbindex`` query parameter in Redis DSN was introduced in Symfony 4.4.
 
-To use the Redis transport, you will need the Redis PHP extension (^4.3) and
+To use the Redis transport, you will need the Redis PHP extension (>=4.3) and
 a running Redis server (^5.0).
 
 A number of options can be configured via the DSN or via the ``options`` key
@@ -1088,7 +1088,7 @@ Possible options to configure with tags are:
 * ``priority``
 
 .. versionadded:: 4.4
-    
+
     The ability to specify ``from_transport`` on the tag, was added in Symfony 4.4.
 
 Handler Subscriber & Options
