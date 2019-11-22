@@ -18,7 +18,7 @@ Symfony documentation, please read
 SymfonyCloud
 ------------
 
-Pull requests are automatically built by [SymfonyCloud](https://symfony.com/cloud).
+Pull requests are automatically built on [SymfonyCloud](https://symfony.com/cloud).
 
 Docker
 ------
