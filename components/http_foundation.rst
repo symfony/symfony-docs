@@ -316,6 +316,28 @@ are also supported::
     $quality = $accept->get('text/xml')->getQuality(); // $quality = 0.8
     $quality = $accept->get('application/xml')->getQuality(); // $quality = 0.3
 
+Anonymizing IP Addresses
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.4
+
+    The ``anonymize()`` method was introduced in Symfony 4.4.
+
+An increasingly common need for applications to comply with user protection
+regulations is to anonymize IP addresses before logging and storing them for
+analysis purposes. Use the ``anonymize()`` method from the
+:class:`Symfony\\Component\\HttpFoundation\\IpUtils` to do that::
+
+    use Symfony\Component\HttpFoundation\IpUtils;
+
+    $ipv4 = '123.234.235.236';
+    $anonymousIpv4 = IPUtils::anonymize($ipv4);
+    // $anonymousIpv4 = '123.234.235.0'
+
+    $ipv6 = '2a01:198:603:10:396e:4789:8e99:890f';
+    $anonymousIpv6 = IPUtils::anonymize($ipv6);
+    // $anonymousIpv6 = '2a01:198:603:10::'
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
