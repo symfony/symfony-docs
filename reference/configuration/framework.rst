@@ -1158,7 +1158,11 @@ utf8
 
 **type**: ``boolean`` **default**: ``false``
 
-When this option is set to ``true``, route patterns can include UTF-8 characters.
+When this option is set to ``true``, the regular expressions used in the
+:ref:`requirements of route parameters <routing-requirements>` will be run
+using the `utf-8 modifier`_. This will for example match any UTF-8 character
+when using ``.``, instead of matching only a single byte.
+
 If the charset of your application is UTF-8 (as defined in the
 :ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
 recommended to set it to ``true``. This will make non-UTF8 URLs to generate 404
@@ -2902,3 +2906,4 @@ to know their differences.
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
 .. _`session.cache-limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter
 .. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/desktop/secauthn/microsoft-ntlm
+.. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
