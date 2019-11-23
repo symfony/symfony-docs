@@ -58,15 +58,14 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
 .. code-block:: bash
 
     # .env
-    SENDGRID_KEY=
-    MAILER_DSN=sendgrid://$SENDGRID_KEY@default
+    MAILER_DSN=sendgrid://KEY@default
 
 The ``MAILER_DSN`` isn't a *real* address: it's a simple format that offloads
 most of the configuration work to mailer. The ``sendgrid`` scheme activates the
 SendGrid provider that you just installed, which knows all about how to deliver
 messages to SendGrid.
 
-The *only* part you need to change is to set ``SENDGRID_KEY`` to your key (in
+The *only* part you need to change is to replace ``KEY`` in the ``MAILER_DSN`` (in
 ``.env`` or ``.env.local``).
 
 Each provider has different environment variables that the Mailer uses to
