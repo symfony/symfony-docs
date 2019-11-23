@@ -128,7 +128,8 @@ store the HTTP status code and message respectively.
     The exception pages shown in the development environment can be customized
     in the same way as error pages. Create a new ``exception.html.twig`` template
     for the standard HTML exception page or ``exception.json.twig`` for the JSON
-    exception page.
+    exception page. Or create ``exception_full.html.twig`` if $showException is true and $format is html.
+    $showException is a parameters of method ``findTemplate`` of class ``ExceptionController``
 
 Security & 404 Pages
 --------------------
