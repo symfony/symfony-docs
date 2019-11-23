@@ -144,7 +144,7 @@ mentions of ``4.*`` to ``5.0.*``:
     }
 
 At the bottom of your ``composer.json`` file, in the ``extra`` block you can
-find a data setting for the symfony version. Make sure to also upgrade
+find a data setting for the Symfony version. Make sure to also upgrade
 this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
 
 .. code-block:: json
