@@ -117,6 +117,9 @@ any method calls in the definitions as well::
     // configures a new method call
     $definition->addMethodCall('setLogger', [new Reference('logger')]);
 
+    // configures an immutable-setter
+    $definition->addMethodCall('withLogger', [new Reference('logger')], true);
+
     // replaces all previously configured method calls with the passed array
     $definition->setMethodCalls($methodCalls);
 
