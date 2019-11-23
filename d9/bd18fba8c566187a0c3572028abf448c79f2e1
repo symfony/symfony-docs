@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-15T20:44:53Z
+
+@nicolas-grekas may we have your 2 cents here? Thanks 😊
+
+---------------------------------------------------------------------------
+
+by teohhanhui at 2019-11-15T21:06:25Z
+
+What about this point?
+
+> Additional question: Should I also change No to No [3]_ for traits? Or is there a specific reason why it's absolutely not allowed on traits?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-11-15T21:15:45Z
+
+> Is there a specific reason why it's absolutely not allowed on traits?
+
+A trait is not part of a type, thus we don't know what contract it implements: maybe an interface/the parent of the class that uses the trait actually declared the optional argument. Removing it would be a BC break. Since we cannot know, we cannot remove these arguments.
+
+---------------------------------------------------------------------------
+
+by teohhanhui at 2019-11-16T10:41:13Z
+
+Should we add a note to explain this? Probably in another PR...
