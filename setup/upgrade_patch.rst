@@ -1,7 +1,7 @@
 .. index::
     single: Upgrading; Patch Version
 
-Upgrading a Patch Version (e.g. 4.1.0 to 4.1.1)
+Upgrading a Patch Version (e.g. 5.0.0 to 5.0.1)
 ===============================================
 
 When a new patch version is released (only the last number changed), it is a
