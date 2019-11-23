@@ -108,10 +108,6 @@ then extending it and overriding the constructor becomes problematic.
 Immutable-setter Injection
 --------------------------
 
-.. versionadded:: 4.3
-
-    The ``immutable-setter`` injection was introduced in Symfony 4.3.
-
 Another possible injection is to use a method which returns a separate instance
 by cloning the original service, this approach allows you to make a service immutable::
 

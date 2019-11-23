@@ -78,10 +78,6 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
         };
 
 
-.. versionadded:: 4.3
-
-    The ``immutable-setter`` injection was introduced in Symfony 4.3.
-
 To provide immutable services, some classes implement immutable setters.
 Such setters return a new instance of the configured class
 instead of mutating the object they were called on::
