@@ -46,7 +46,7 @@ to `decorate`_ the kernel with additional features. Examples include:
 * Adding HTTP level caching by wrapping the kernel with an instance of
   :ref:`AppCache <symfony-gateway-cache>`;
 * Enabling (or skipping) the :doc:`ClassCache </debug/debugging>`;
-* Enabling the :doc:`Debug Component </components/debug>`.
+* Enabling the `Debug component`_.
 
 The front controller can be chosen by requesting URLs like:
 
@@ -158,6 +158,7 @@ loading the ``app/config/config_*environment*.yml`` file. You are free to
 implement this method differently if you need a more sophisticated way of
 loading your configuration.
 
+.. _Debug component: https://github.com/symfony/debug
 .. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
 .. _app.php: https://github.com/symfony/symfony-standard/blob/master/web/app.php
