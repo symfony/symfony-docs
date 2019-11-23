@@ -880,7 +880,7 @@ option in the options field array::
 
 .. seealso::
 
-    Besides guessing the form type, Symfony also guesses `validation constraints <validating-forms>`_
+    Besides guessing the form type, Symfony also guesses :ref:`validation constraints <validating-forms>`
     if you're using a Doctrine entity. Read :ref:`automatic_object_validation`
     guide for more information.
 
