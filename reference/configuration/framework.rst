@@ -1153,8 +1153,9 @@ utf8
 **type**: ``boolean`` **default**: ``false``
 
 When this option is set to ``true``, the regular expressions used in the
-:ref:`requirements of route parameters <routing-requirements>` will match any
-UTF-8 character when using ``.``, instead of matching only a single byte.
+:ref:`requirements of route parameters <routing-requirements>` will be run
+using the `utf-8 modifier`_. This will for example match any UTF-8 character
+when using ``.``, instead of matching only a single byte.
 
 If the charset of your application is UTF-8 (as defined in the
 :ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
@@ -3041,3 +3042,4 @@ to know their differences.
 .. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
 .. _`session.cache-limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter
+.. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
