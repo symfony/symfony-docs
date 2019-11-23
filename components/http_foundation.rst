@@ -319,10 +319,6 @@ are also supported::
 Anonymizing IP Addresses
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    The ``anonymize()`` method was introduced in Symfony 4.4.
-
 An increasingly common need for applications to comply with user protection
 regulations is to anonymize IP addresses before logging and storing them for
 analysis purposes. Use the ``anonymize()`` method from the
