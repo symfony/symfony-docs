@@ -467,9 +467,8 @@ Symfony defines several services related to user providers:
 
       Select one of the following services to display its information:
       [0] security.user.provider.in_memory
-      [1] security.user.provider.in_memory.user
-      [2] security.user.provider.ldap
-      [3] security.user.provider.chain
+      [1] security.user.provider.ldap
+      [2] security.user.provider.chain
       ...
 
 Most of these services are abstract and cannot be injected in your services.
