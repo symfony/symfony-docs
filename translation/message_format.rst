@@ -267,6 +267,27 @@ Usage of this string is the same as with variables and select::
             }
         }
 
+.. sidebar:: Using Ranges in Messages
+
+    The pluralization in the legacy Symfony syntax could be used with custom
+    ranges (e.g. have a different messages for 0-12, 12-40 and 40+). The ICU
+    message format does not have this feature. Instead, this logic should be
+    moved to PHP code::
+
+        // Instead of
+        $message = $translator->trans('balance_message', $balance);
+        // with a message like:
+        // ]-Inf,0]Oops! I'm down|]0,1000]I still have money|]1000,Inf]I have lots of money
+
+        // use three different messages for each range:
+        if ($balance < 0) {
+            $message = $translator->trans('no_money_message');
+        } elseif ($balance < 1000) {
+            $message = $translator->trans('some_money_message');
+        } else {
+            $message = $translator->trans('lots_of_money_message');
+        }
+
 Additional Placeholder Functions
 --------------------------------
 
