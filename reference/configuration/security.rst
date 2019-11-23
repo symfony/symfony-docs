@@ -152,7 +152,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                 # Argon2i encoder with default options
                 AppBundle\Entity\User: 'argon2i'
 
-                # PBKDF2 encoder using SHA512 hashing with default options
+                # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
                 AppBundle\Entity\User: 'sha512'
 
     .. code-block:: xml
@@ -186,7 +186,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     algorithm="argon2i"
                 />
 
-                <!-- PBKDF2 encoder using SHA512 hashing with default options -->
+                <!-- MessageDigestPasswordEncoder encoder using SHA512 hashing with default options -->
                 <encoder
                     class="AppBundle\Entity\User"
                     algorithm="sha512"
@@ -218,7 +218,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     'algorithm' => 'argon2i',
                 ],
 
-                // PBKDF2 encoder using SHA512 hashing with default options
+                // MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
                 User::class => [
                     'algorithm' => 'sha512',
                 ],
