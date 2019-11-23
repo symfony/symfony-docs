@@ -350,6 +350,23 @@ evaluates them:
     blog_show         ANY      ANY      ANY    /blog/{slug}
     ----------------  -------  -------  -----  --------------------------------------------
 
+You can sort the routes by name or path using the --sort option
+
+.. code-block:: terminal
+
+    $ php bin/console debug:router --sort=name
+
+    ----------------  -------  -------  -----  --------------------------------------------
+    Name              Method   Scheme   Host   Path
+    ----------------  -------  -------  -----  --------------------------------------------
+    article_show      ANY      ANY      ANY    /articles/{_locale}/{year}/{title}.{_format}
+    blog              ANY      ANY      ANY    /blog/{page}
+    blog_show         ANY      ANY      ANY    /blog/{slug}
+    contact           GET      ANY      ANY    /contact
+    contact_process   POST     ANY      ANY    /contact
+    homepage          ANY      ANY      ANY    /
+    ----------------  -------  -------  -----  --------------------------------------------
+
 Pass the name (or part of the name) of some route to this argument to print the
 route details:
 
