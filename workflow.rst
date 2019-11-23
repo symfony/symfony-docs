@@ -216,12 +216,11 @@ what actions are allowed on a blog post::
     // See all the available transitions for the post in the current state
     $transitions = $workflow->getEnabledTransitions($post);
     
-In a class or a controller
---------------------------
+Accessing the Workflow in a Class
+---------------------------------
 
-To access workflow inside a class, use dependency injection and inject the registry in the constructor. 
-
-For a controller, you can directly inject it in a method::
+To access workflow inside a class, use dependency injection and inject the
+registry in the constructor::
 
     use Symfony\Component\Workflow\Registry;
     
