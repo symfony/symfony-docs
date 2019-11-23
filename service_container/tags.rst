@@ -493,10 +493,6 @@ compiler pass just for that.
 In the following example, all services tagged with ``app.handler`` are passed as
 first  constructor argument to the ``App\HandlerCollection`` service:
 
-.. deprecated:: 4.4
-
-    ``tagged`` has been deprecated since version 4.4 and will be removed in 5.0. Use ``tagged_iterator`` instead.
-
 .. configuration-block::
 
     .. code-block:: yaml
