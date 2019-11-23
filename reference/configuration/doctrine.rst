@@ -155,7 +155,11 @@ which is the first one defined or the one configured via the
 ``default_connection`` parameter.
 
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
-service where ``[name]`` is the name of the connection.
+service where ``[name]`` is the name of the connection. Or directly in the controller with 
+getConnection method and the name of the connection::
+
+    $connection = $this->getDoctrine()->getConnection('customer');
+    $result = $connection->fetchAll('select name from customer');
 
 Doctrine ORM Configuration
 --------------------------
