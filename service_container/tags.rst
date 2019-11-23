@@ -553,7 +553,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
             $services->set(App\HandlerCollection::class)
                 // inject all services tagged with app.handler as first argument
-                ->args([tagged('app.handler')])
+                ->args([tagged_iterator('app.handler')])
             ;
         };
 
