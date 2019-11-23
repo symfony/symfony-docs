@@ -147,8 +147,8 @@ encoding algorithm. Also, each algorithm defines different config options:
                     time_cost:    2     # Number of iterations
                     threads:      4     # Number of parallel threads
 
-                # PBKDF2 encoder using SHA512 hashing with default options
-                App\Entity\User: 'sha512'
+                # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
+                AppBundle\Entity\User: 'sha512'
 
     .. code-block:: xml
 
@@ -193,7 +193,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     threads="4"
                 />
 
-                <!-- PBKDF2 encoder using SHA512 hashing with default options -->
+                <!-- MessageDigestPasswordEncoder encoder using SHA512 hashing with default options -->
                 <encoder
                     class="App\Entity\User"
                     algorithm="sha512"
@@ -233,7 +233,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     'threads' => 4,         // Number of parallel threads
                 ],
 
-                // PBKDF2 encoder using SHA512 hashing with default options
+                // MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
                 User::class => [
                     'algorithm' => 'sha512',
                 ],
