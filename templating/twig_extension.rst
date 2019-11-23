@@ -130,46 +130,47 @@ callable defined in ``getFilters()``::
     // src/Twig/AppExtension.php
     namespace App\Twig;
 
-    use App\Twig\AppRuntime;
+    use App\Foo\BarHandler;
+    use Symfony\Contracts\Service\ServiceSubscriberInterface;
     use Twig\Extension\AbstractExtension;
     use Twig\TwigFilter;
 
-    class AppExtension extends AbstractExtension
+    class AppExtension extends AbstractExtension implements ServiceSubscriberInterface
     {
+        public function __construct(ContainerInterface $container)
+        {
+            $this->container = $container;
+        }
+
+        public static function getSubscribedServices()
+        {
+            return [
+                // you'll need to inject services using this static method
+                BarHandler::class,
+            ];
+        }
+
         public function getFilters()
         {
             return [
                 // the logic of this filter is now implemented in a different class
-                new TwigFilter('price', [AppRuntime::class, 'formatPrice']),
+                new TwigFilter('price', 'formatPrice'),
             ];
-        }
-    }
-
-Then, create the new ``AppRuntime`` class (it's not required but these classes
-are suffixed with ``Runtime`` by convention) and include the logic of the
-previous ``formatPrice()`` method::
-
-    // src/Twig/AppRuntime.php
-    namespace App\Twig;
-
-    use Twig\Extension\RuntimeExtensionInterface;
-
-    class AppRuntime implements RuntimeExtensionInterface
-    {
-        public function __construct()
-        {
-            // this simple example doesn't define any dependency, but in your own
-            // extensions, you'll need to inject services using this constructor
         }
 
         public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
         {
+            $this->container->get(BarHandler::class)->baz();
+
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
 
             return $price;
         }
     }
+
+You could also do a Lazy-Loaded Twig extension by injecting a ServiceLocator
+or do the logic in a separated class using Twig RuntimeExtension.
 
 If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
