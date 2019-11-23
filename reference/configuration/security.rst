@@ -146,8 +146,8 @@ encoding algorithm. Also, each algorithm defines different config options:
                     memory_cost:  16384 # Amount in KiB. (16384 = 16 MiB)
                     time_cost:    2     # Number of iterations
 
-                # PBKDF2 encoder using SHA512 hashing with default options
-                App\Entity\User: 'sha512'
+                # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
+                AppBundle\Entity\User: 'sha512'
 
     .. code-block:: xml
 
@@ -190,7 +190,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     time_cost="2"
                 />
 
-                <!-- PBKDF2 encoder using SHA512 hashing with default options -->
+                <!-- MessageDigestPasswordEncoder encoder using SHA512 hashing with default options -->
                 <encoder
                     class="App\Entity\User"
                     algorithm="sha512"
@@ -229,7 +229,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     'time_cost' => 2,       // Number of iterations
                 ],
 
-                // PBKDF2 encoder using SHA512 hashing with default options
+                // MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
                 User::class => [
                     'algorithm' => 'sha512',
                 ],
