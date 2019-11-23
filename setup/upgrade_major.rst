@@ -1,7 +1,7 @@
 .. index::
     single: Upgrading; Major Version
 
-Upgrading a Major Version (e.g. 3.4.0 to 4.1.0)
+Upgrading a Major Version (e.g. 4.4.0 to 5.0.0)
 ===============================================
 
 Every two years, Symfony releases a new major version release (the first number
@@ -30,10 +30,10 @@ backwards incompatible changes. To accomplish this, the "old" (e.g. functions,
 classes, etc) code still works, but is marked as *deprecated*, indicating that
 it will be removed/changed in the future and that you should stop using it.
 
-When the major version is released (e.g. 4.1.0), all deprecated features and
+When the major version is released (e.g. 5.0.0), all deprecated features and
 functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
-3.4.*), you should be able to upgrade without a problem.
+4.4.*), you should be able to upgrade without a problem.
 
 To help you with this, deprecation notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
@@ -124,7 +124,8 @@ done!
 -----------------------------------------------
 
 Once your code is deprecation free, you can update the Symfony library via
-Composer by modifying your ``composer.json`` file:
+Composer by modifying your ``composer.json`` file. In this file update all
+mentions of ``4.4.*`` to ``5.0.*``.
 
 .. code-block:: json
 
@@ -132,16 +133,32 @@ Composer by modifying your ``composer.json`` file:
         "...": "...",
 
         "require": {
-            "symfony/symfony": "^4.1",
+            "symfony/asset": "5.0.*",
+            "symfony/flex": "^1.3.1",
+            "symfony/mailer": "5.0.*",
+            "symfony/yaml": "5.0.*"
         },
         "...": "..."
+    }
+
+At the bottom of your ``composer.json`` file, in the ``extra`` block you can
+find a data setting for the symfony version. Make sure to also upgrade
+this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
+
+.. code-block:: json
+
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "5.0.*"
+        }
     }
 
 Next, use Composer to download new versions of the libraries:
 
 .. code-block:: terminal
 
-    $ composer update symfony/symfony
+    $ composer update symfony/*
 
 .. include:: /setup/_update_dep_errors.rst.inc
 
@@ -156,10 +173,3 @@ The next major version *may* also contain new BC breaks as a BC layer is not alw
 a possibility. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major
 version) included in the Symfony repository for any BC break that you need to be aware
 of.
-
-4) Updating to the Symfony 4 Flex Directory Structure
------------------------------------------------------
-
-When upgrading to Symfony 4, you will probably also want to upgrade to the new
-Symfony 4 directory structure so that you can take advantage of Symfony Flex.
-This takes some work, but is optional. For details, see :doc:`/setup/flex`.
