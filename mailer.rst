@@ -561,7 +561,7 @@ encrypt a signed message and/or to sign an encrypted message.
 Before signing/encrypting messages, make sure to have:
 
 * The `OpenSSL PHP extension`_ properly installed and configured;
-* A valid security certificate (you can get it for free from `Let's Encrypt project`_).
+* A valid S/MIME security certificate.
 
 Signing Messages
 ~~~~~~~~~~~~~~~~
@@ -781,5 +781,4 @@ environment:
 .. _`Inky`: https://foundation.zurb.com/emails.html
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
 .. _`OpenSSL PHP extension`: https://php.net/manual/en/book.openssl.php
-.. _`Let's Encrypt project`: https://letsencrypt.org/
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
