@@ -267,6 +267,69 @@ Usage of this string is the same as with variables and select::
             }
         }
 
+Ranges
+~~~~~~
+
+Sometimes, it can be handy to use ranges for a translation. The ``intl`` component provides a way to do this, using the ``choice`` function.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # translations/messages+intl-icu.en.yaml
+        balance_account: >-
+            {balance, choice,
+                -∞ < Oops! I'm down |
+                0 < I still have money |
+                1000 # I have a lot of money !
+            }
+
+    .. code-block:: xml
+
+        <!-- translations/messages+intl-icu.en.xlf -->
+        <?xml version="1.0"?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="balance_account">
+                        <source>balance_account</source>
+                        <target>{balance, choice, -∞ < Oops! I'm down | 0 < I still have money | 1000 # I have a lot of money !}</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: php
+
+        // translations/messages+intl-icu.en.php
+        return [
+            'balance_account' => '{balance, choice,
+                -∞ < Oops! I\'m down |
+                0 < I still have money |
+                1000 # I have a lot of money!
+            }',
+        ];
+
+Here are some examples of what this ``choice`` formatter will render::
+
+    // prints "Oops! I'm down"
+    echo $translator->trans('balance_account', ['balance' => -10]);
+    echo $translator->trans('balance_account', ['balance' => 0]);
+
+    // prints "I still have money"
+    echo $translator->trans('balance_account', ['balance' => 10]);
+    echo $translator->trans('balance_account', ['balance' => 999]);
+
+    // prints "I have a lot of money!"
+    echo $translator->trans('balance_account', ['balance' => 1000]);
+
+This formatter adds some characters used as keyword:
+
+* Ranges must be separated by a pipe (``|``).
+* ``<`` means ``inferior to``.
+* ``#`` means ``inferior or equal to``.
+* ``∞`` is the infinity symbol (U+221E). It can be prefixed with a minus (``-``).
+
 Additional Placeholder Functions
 --------------------------------
 
