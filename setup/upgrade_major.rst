@@ -124,7 +124,8 @@ done!
 -----------------------------------------------
 
 Once your code is deprecation free, you can update all the Symfony packages via
-Composer by modifying your ``composer.json`` file:
+Composer by modifying your ``composer.json`` file. In this file update all
+mentions of ``4.*`` to ``5.0.*``:
 
 .. code-block:: json
 
@@ -134,6 +135,7 @@ Composer by modifying your ``composer.json`` file:
         "require": {
             "symfony/console": "^5.0",
             "symfony/dotenv": "^5.0",
+            "symfony/flex": "^1.3.1",
             "symfony/framework-bundle": "^5.0",
             "symfony/validator": "^5.0",
             "symfony/yaml": "^5.0"
@@ -141,6 +143,19 @@ Composer by modifying your ``composer.json`` file:
         "...": "..."
     }
     
+At the bottom of your ``composer.json`` file, in the ``extra`` block you can
+find a data setting for the symfony version. Make sure to also upgrade
+this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
+
+.. code-block:: json
+
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "5.0.*"
+        }
+    }
+
 At the bottom of your ``composer.json`` file, in the ``extra`` block you can
 find a data setting for the symfony version. Make sure to also upgrade
 this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
@@ -173,4 +188,3 @@ The next major version *may* also contain new BC breaks as a BC layer is not alw
 a possibility. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major
 version) included in the Symfony repository for any BC break that you need to be aware
 of.
-
