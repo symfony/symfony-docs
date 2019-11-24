@@ -107,7 +107,7 @@ manual steps:
 
        Make sure that your previous configuration files don't have ``imports``
        declarations pointing to resources already loaded by ``Kernel::configureContainer()``
-       or ``Kernel::configureRoutes()`` methods.
+       or ``Kernel::configureRouting()`` methods.
 
 #. Move the rest of the ``app/`` contents as follows (and after that, remove the
    ``app/`` directory):

@@ -28,7 +28,7 @@ Next, create an ``index.php`` file that defines the kernel class and executes it
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-    use Symfony\Component\Routing\RouteCollectionBuilder;
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
     require __DIR__.'/vendor/autoload.php';
 
@@ -51,7 +51,7 @@ Next, create an ``index.php`` file that defines the kernel class and executes it
             ]);
         }
 
-        protected function configureRoutes(RouteCollectionBuilder $routes)
+        protected function configureRouting(RoutingConfigurator $routes): void
         {
             // kernel is a service that points to this class
             // optional 3rd argument is the route name
@@ -98,9 +98,9 @@ that define your bundles, your services and your routes:
     of what you see in a normal ``config/packages/*`` file). You can also register
     services directly in PHP or load external configuration files (shown below).
 
-**configureRoutes(RouteCollectionBuilder $routes)**
+**configureRouting(RoutingConfigurator $routes)**
     Your job in this method is to add routes to the application. The
-    ``RouteCollectionBuilder`` has methods that make adding routes in PHP more
+    ``RoutingConfigurator`` has methods that make adding routes in PHP more
     fun. You can also load external routing files (shown below).
 
 Advanced Example: Twig, Annotations and the Web Debug Toolbar
@@ -138,7 +138,7 @@ hold the kernel. Now it looks like this::
     use Symfony\Component\Config\Loader\LoaderInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-    use Symfony\Component\Routing\RouteCollectionBuilder;
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
     class Kernel extends BaseKernel
     {
@@ -171,16 +171,22 @@ hold the kernel. Now it looks like this::
             }
         }
 
-        protected function configureRoutes(RouteCollectionBuilder $routes)
+        protected function configureRouting(RoutingConfigurator $routes): void
         {
             // import the WebProfilerRoutes, only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
-                $routes->import('@WebProfilerBundle/Resources/config/routing/wdt.xml', '/_wdt');
-                $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml', '/_profiler');
+                $routes
+                    ->import('@WebProfilerBundle/Resources/config/routing/wdt.xml')
+                    ->prefix('/_wdt')
+                ;
+                $routes
+                    ->import('@WebProfilerBundle/Resources/config/routing/profiler.xml')
+                    ->prefix('/_profiler')
+                ;
             }
 
             // load the annotation routes
-            $routes->import(__DIR__.'/../src/Controller/', '/', 'annotation');
+            $routes->import(__DIR__.'/../src/Controller/', 'annotation');
         }
 
         // optional, to use the standard Symfony cache directory
