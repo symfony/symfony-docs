@@ -203,6 +203,12 @@ exception_controller
 
 **type**: ``string`` **default**: ``twig.controller.exception:showAction``
 
+.. deprecated:: 4.4
+
+    The ``exception_controller`` configuration option was deprecated in Symfony 4.4.
+    Set it to ``null`` and use the new ``error_controller`` option under ``framework``
+    configuration instead.
+
 This is the controller that is activated after an exception is thrown anywhere
 in your application. The default controller
 (:class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`)
