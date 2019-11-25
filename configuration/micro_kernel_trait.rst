@@ -103,6 +103,10 @@ that define your bundles, your services and your routes:
     ``RoutingConfigurator`` has methods that make adding routes in PHP more
     fun. You can also load external routing files (shown below).
 
+.. versionadded:: 5.1
+
+    The ``configureRouting`` method was introduced in Symfony 5.1.
+
 Advanced Example: Twig, Annotations and the Web Debug Toolbar
 -------------------------------------------------------------
 

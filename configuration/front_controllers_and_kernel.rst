@@ -89,6 +89,10 @@ you must implement them all:
     It adds individual routes or collections of routes to the application (for
     example loading the routes defined in some config file).
 
+.. versionadded:: 5.1
+
+    The ``configureRouting`` method was introduced in Symfony 5.1.
+
 :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureContainer`
     It loads the application configuration from config files or using the
     ``loadFromExtension()`` method and can also register new container parameters
