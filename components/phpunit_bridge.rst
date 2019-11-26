@@ -307,8 +307,8 @@ Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the PHPUnit Bridge uses ``DebugClassLoader`` from the
-:doc:`Debug component </components/debug>` to throw deprecation notices at
-class autoloading time. This can be disabled with the ``debug-class-loader`` option.
+`Debug component`_ to throw deprecation notices at class autoloading time.
+This can be disabled with the ``debug-class-loader`` option.
 
 .. code-block:: xml
 
@@ -886,3 +886,4 @@ not find the SUT:
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
 .. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
 .. _`PHP namespace resolutions rules`: https://php.net/manual/en/language.namespaces.rules.php
+.. _Debug component: https://github.com/symfony/debug
