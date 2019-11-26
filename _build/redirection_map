@@ -428,6 +428,7 @@
 /contributing/community/other /contributing/community
 /profiler/storage /profiler
 /setup/composer /setup
+<<<<<<< HEAD
 /security/security_checker /setup
 /service_container/parameters /configuration
 /routing/generate_url_javascript /routing
@@ -473,3 +474,4 @@
 /best_practices/security /best_practices
 /best_practices/web-assets /best_practices
 /best_practices/tests /best_practices
+/components/debug https://github.com/symfony/debug
