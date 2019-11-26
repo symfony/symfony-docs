@@ -13,6 +13,7 @@ Tag Name                                  Usage
 ========================================  ========================================================================
 `auto_alias`_                             Define aliases based on the value of container parameters
 `console.command`_                        Add a command
+`container.hot_path`_                     Add to list of always needed services
 `controller.argument_value_resolver`_     Register a value resolver for controller arguments such as ``Request``
 `data_collector`_                         Create a class that collects custom data for the profiler
 `doctrine.event_listener`_                Add a Doctrine event listener
@@ -180,6 +181,27 @@ console.command
 
 For details on registering your own commands in the service container, read
 :doc:`/console/commands_as_services`.
+
+container.hot_path
+------------------
+
+.. versionadded:: 3.4
+
+    The ``container.hot_path`` tag was introduced in Symfony 3.4.
+
+**Purpose**: Add to list of always needed services
+
+This tag identifies the services that are always needed. It is only applied to 
+a very short list of bootstrapping services (like ``router``, ``event_dispatcher``, 
+``http_kernel``, ``request_stack``, etc.). Then, it is propagated to all dependencies 
+of these services, with a special case for event listeners, where only listed events 
+are propagated to their related listeners.
+
+It will replace, in cache for generated service factories, the PHP autoload by 
+plain inlined ``include_once``. The benefit is a complete bypass of the autoloader 
+for services and their class hierarchy. The result is as significant performance improvement.
+
+Use this tag with great caution, you have to be sure that the tagged service is always used.
 
 controller.argument_value_resolver
 ----------------------------------

@@ -204,7 +204,7 @@ Change name                                     No
 Move to parent interface                        Yes
 Add argument without a default value            No
 Add argument with a default value               No
-Remove argument                                 Yes [3]_
+Remove argument                                 No [3]_
 Add default value to an argument                No
 Remove default value of an argument             No
 Add type hint to an argument                    No
@@ -272,7 +272,7 @@ Make final                                          No [6]_
 Move to parent class                                Yes
 Add argument without a default value                No
 Add argument with a default value                   No [7]_ [8]_
-Remove argument                                     Yes [3]_
+Remove argument                                     No [3]_
 Add default value to an argument                    No [7]_ [8]_
 Remove default value of an argument                 No
 Add type hint to an argument                        No [7]_ [8]_
@@ -291,7 +291,7 @@ Make public                                         No [7]_ [8]_
 Move to parent class                                Yes
 Add argument without a default value                No [7]_
 Add argument with a default value                   No [7]_ [8]_
-Remove argument                                     Yes [3]_
+Remove argument                                     No [3]_
 Add default value to an argument                    No [7]_ [8]_
 Remove default value of an argument                 No [7]_
 Add type hint to an argument                        No [7]_ [8]_
@@ -416,8 +416,8 @@ Turn static into non static                         No
 .. [2] The added parent interface must not introduce any new methods that don't
        exist in the interface already.
 
-.. [3] Only the last argument(s) of a method may be removed, as PHP does not
-       care about additional arguments that you pass to a method.
+.. [3] Only the last optional argument(s) of a method may be removed, as PHP
+       does not care about additional arguments that you pass to a method.
 
 .. [4] When changing the parent class, the original parent class must remain an
        ancestor of the class.
