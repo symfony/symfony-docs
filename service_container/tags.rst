@@ -569,8 +569,9 @@ application handlers::
         {
         }
     }
-
-.. tip::
+    
+Prioritizing collected services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     The collected services can be prioritized using the ``priority`` attribute:
 
@@ -614,3 +615,17 @@ application handlers::
             };
 
     Note that any other custom attributes will be ignored by this feature.
+    
+    
+Another option, which is particularly useful when using :doc:`interface based configuration </current/service_container/3.3-di-changes.html#auto-configure-with-instanceof>`, is to implement the ``getDefaultPriority`` static method on a collected class::
+
+    // src/App/Handler/One.php
+    namespace App/Handler;
+
+    class One
+    {
+        public static function getDefaultPriority(): int
+        {
+            return 3;
+        }
+    }
