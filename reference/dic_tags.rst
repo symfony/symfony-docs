@@ -185,20 +185,16 @@ For details on registering your own commands in the service container, read
 container.hot_path
 ------------------
 
-.. versionadded:: 3.4
-
-    The ``container.hot_path`` tag was introduced in Symfony 3.4.
-
 **Purpose**: Add to list of always needed services
 
-This tag identifies the services that are always needed. It is only applied to 
-a very short list of bootstrapping services (like ``router``, ``event_dispatcher``, 
-``http_kernel``, ``request_stack``, etc.). Then, it is propagated to all dependencies 
-of these services, with a special case for event listeners, where only listed events 
+This tag identifies the services that are always needed. It is only applied to
+a very short list of bootstrapping services (like ``router``, ``event_dispatcher``,
+``http_kernel``, ``request_stack``, etc.). Then, it is propagated to all dependencies
+of these services, with a special case for event listeners, where only listed events
 are propagated to their related listeners.
 
-It will replace, in cache for generated service factories, the PHP autoload by 
-plain inlined ``include_once``. The benefit is a complete bypass of the autoloader 
+It will replace, in cache for generated service factories, the PHP autoload by
+plain inlined ``include_once``. The benefit is a complete bypass of the autoloader
 for services and their class hierarchy. The result is as significant performance improvement.
 
 Use this tag with great caution, you have to be sure that the tagged service is always used.
