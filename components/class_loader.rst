@@ -34,10 +34,10 @@ Additionally, the Symfony ClassLoader component ships with a wrapper class
 which makes it possible
 :doc:`to cache the results of a class loader </components/class_loader/cache_class_loader>`.
 
-When using the :doc:`Debug component </components/debug>`, you
-can also use a special :ref:`DebugClassLoader <component-debug-class-loader>`
-that eases debugging by throwing more helpful exceptions when a class could
-not be found by a class loader.
+When using the `Debug component`_, you can also use a special
+:class:`Symfony\\Component\\Debug\\DebugClassLoader` that eases debugging by
+throwing more helpful exceptions when a class could not be found by a class
+loader.
 
 Installation
 ------------
@@ -68,6 +68,7 @@ Learn More
 
     class_loader/cache_class_loader
 
+.. _Debug component: https://github.com/symfony/debug
 .. _PSR-0: https://www.php-fig.org/psr/psr-0/
 .. _PSR-4: https://www.php-fig.org/psr/psr-4/
 .. _`autoloading mechanism`: https://php.net/manual/en/language.oop5.autoload.php
