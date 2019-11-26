@@ -185,10 +185,6 @@ For details on registering your own commands in the service container, read
 container.hot_path
 ------------------
 
-.. versionadded:: 3.4
-
-    The ``container.hot_path`` tag was introduced in Symfony 3.4.
-
 **Purpose**: Add to list of always needed services
 
 This tag identifies the services that are always needed. It is only applied to
