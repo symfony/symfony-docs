@@ -48,8 +48,8 @@ Example::
     // this will print: hello
 
 In addition to the custom function arguments, the **evaluator** is passed an
-``arguments`` variable as its first argument, which is equal to the second
-argument of ``compile()`` (e.g. the "values" when evaluating an expression).
+``arguments`` variable as its first argument, which is equal to all the
+arguments of ``compile()`` (e.g. the compiled expressions of the arguments).
 
 .. _components-expression-language-provider:
 
