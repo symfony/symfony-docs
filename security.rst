@@ -13,15 +13,15 @@ Symfony's security system is incredibly powerful, but it can also be confusing
 to set up. Don't worry! In this article, you'll learn how to set up your app's
 security system step-by-step:
 
-#. :ref:`Installing security support <security-installation>`;
+#. :ref:`Installing security support <security-installation>`
 
-#. :ref:`Create your User Class <create-user-class>`;
+#. :ref:`Create your User Class <create-user-class>`
 
-#. :ref:`Authentication & Firewalls <security-yaml-firewalls>`;
+#. :ref:`Authentication & Firewalls <security-yaml-firewalls>`
 
-#. :ref:`Denying access to your app (authorization) <security-authorization>`;
+#. :ref:`Denying access to your app (authorization) <security-authorization>`
 
-#. :ref:`Fetching the current User object <retrieving-the-user-object>`.
+#. :ref:`Fetching the current User object <retrieving-the-user-object>`
 
 A few other important topics are discussed after.
 
