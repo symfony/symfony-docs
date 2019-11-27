@@ -305,7 +305,8 @@ Elasticsearch 9200      ``ELASTICSEARCH_``
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
 Kafka         9092      ``KAFKA_``
 Mailcatcher   1025/1080 ``MAILER_``
-              25/80
+              or 25/80
+Blackfire     8707      ``BLACKFIRE_``
 ============= ========= ======================
 
 You can open web management interfaces for the services that expose them:
