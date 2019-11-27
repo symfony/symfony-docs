@@ -32,7 +32,7 @@ Next, create an ``index.php`` file that creates a kernel class and executes it::
     use Symfony\Component\Routing\RouteCollectionBuilder;
 
     // require Composer's autoloader
-    require __DIR__.'/vendor/autoload.php';
+    require dirname(__DIR__).'/vendor/autoload.php';
 
     class AppKernel extends Kernel
     {
