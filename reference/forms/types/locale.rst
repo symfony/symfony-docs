@@ -73,7 +73,7 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: ``Symfony\Component\Intl\Intl::getLocaleBundle()->getLocaleNames()``
+**default**: ``Symfony\Component\Intl\Locales::getNames()``
 
 The choices option defaults to all locales. It uses the default locale to
 specify the language.
