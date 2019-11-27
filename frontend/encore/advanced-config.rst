@@ -38,6 +38,22 @@ But be careful not to accidentally override any config from Encore:
     // BAD - this replaces any extensions added by Encore
     // config.resolve.extensions = ['json'];
 
+If you absolutely need to overwrite or add to Encore config:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Object.assign(config, {
+        target: 'web',
+        node: {
+            fs: 'empty'
+        }
+    });
+    
+This should only be used for options not supported by Encore.
+
 Configuring Watching Options and Polling
 ----------------------------------------
 
