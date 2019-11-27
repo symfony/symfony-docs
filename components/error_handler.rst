@@ -67,11 +67,6 @@ to enable this error handler::
 
     ErrorHandler::register();
 
-.. tip::
-
-    If you want to get even better exception pages, install the
-    :doc:`ErrorRenderer component </components/error_renderer>` too.
-
 Catching PHP Function Errors and Turning Them into Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
