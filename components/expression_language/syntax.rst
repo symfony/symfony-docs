@@ -19,6 +19,7 @@ The component supports:
 * **hashes** - using JSON-like notation (e.g. ``{ foo: 'bar' }``)
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
+* **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
 
 .. caution::
 
