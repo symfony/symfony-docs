@@ -526,7 +526,7 @@ to the exception.
 
 Each listener to this event is passed a :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 object, which you can use to access the original exception via the
-:method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::getException`
+:method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::getThrowable`
 method. A typical listener on this event will check for a certain type of
 exception and create an appropriate error ``Response``.
 

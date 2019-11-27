@@ -35,7 +35,7 @@ The most common way to listen to an event is to register an **event listener**::
         public function onKernelException(ExceptionEvent $event)
         {
             // You get the exception object from the received event
-            $exception = $event->getException();
+            $exception = $event->getThrowable();
             $message = sprintf(
                 'My Error says: %s with code: %s',
                 $exception->getMessage(),
