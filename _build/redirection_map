@@ -428,7 +428,6 @@
 /contributing/community/other /contributing/community
 /profiler/storage /profiler
 /setup/composer /setup
-<<<<<<< HEAD
 /security/security_checker /setup
 /service_container/parameters /configuration
 /routing/generate_url_javascript /routing
@@ -447,7 +446,7 @@
 /console/request_context /routing
 /form/action_method /forms
 /reference/requirements /setup
- /bundles/inheritance /bundles/override
+/bundles/inheritance /bundles/override
 /templating /templates
 /templating/escaping /templates
 /templating/syntax /templates
