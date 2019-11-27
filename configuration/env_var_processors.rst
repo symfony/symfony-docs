@@ -604,6 +604,57 @@ Symfony provides the following env var processors:
                 ],
             ]);
 
+``env(datetime:NOW)``
+    Instantiates a ``DateTime`` object with the given time string.
+
+    .. code-block:: bash
+
+        # .env
+        NOW="11-21-2018 08:00"
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                # if NOW is not set, the DateTime will be using system time
+                App\Service\Clock:
+                    $now: '%env(datetime:default::NOW)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                <services>
+                    <!-- if NOW is not set, the DateTime will be using system time -->
+                    <service id="App\Service\Clock">
+                        <argument key="$now">%env(datetime:default::NOW)%</argument>
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            use App\Service\Clock
+
+            // if NOW is not set, the DateTime will be using system time
+            $container->getDefinition(Clock::class)
+                ->setArgument('$now', '%env(datetime:default::NOW)%');
+
+    .. note::
+
+        It is also possible to use ``DateTimeImmutable`` instead by
+        using ``datetime_immutable`` as prefix.
+
 It is also possible to combine any number of processors:
 
 .. code-block:: yaml
