@@ -64,10 +64,10 @@ it:
 
 Then, use the SMTP Gmail transport::
 
-    use Symfony\Component\Mailer\Bridge\Google\Smtp\GmailTransport;
+    use Symfony\Component\Mailer\Bridge\Google\Transport\GmailSmtpTransport;
     use Symfony\Component\Mailer\Mailer;
 
-    $transport = new GmailTransport('user', 'pass');
+    $transport = new GmailSmtpTransport('user', 'pass');
     $mailer = new Mailer($transport);
     $mailer->send($email);
 
