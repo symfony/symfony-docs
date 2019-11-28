@@ -38,7 +38,7 @@ But be careful not to accidentally override any config from Encore:
     // BAD - this replaces any extensions added by Encore
     // config.resolve.extensions = ['json'];
 
-If you absolutely need to overwrite or add to Encore config:
+If you need to overwrite or add options that are not supported by Encore, use this config:
 
 .. code-block:: javascript
 
@@ -51,8 +51,6 @@ If you absolutely need to overwrite or add to Encore config:
             fs: 'empty'
         }
     });
-    
-This should only be used for options not supported by Encore.
 
 Configuring Watching Options and Polling
 ----------------------------------------
