@@ -258,6 +258,7 @@
 /cookbook/session/proxy_examples /session/proxy_examples
 /cookbook/session/sessions_directory /session/sessions_directory
 /cookbook/symfony1 /introduction/symfony1
+/cookbook/templating/event_dispatcher /templating/event_dispatcher
 /cookbook/templating/global_variables /templating/global_variables
 /cookbook/templating/index /templating
 /cookbook/templating/namespaced_paths /templating/namespaced_paths
