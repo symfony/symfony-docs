@@ -70,7 +70,7 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: ``Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames()``
+**default**: ``Symfony\Component\Intl\Countries::getNames()``
 
 The country type defaults the ``choices`` option to the whole list of countries.
 The locale is used to translate the countries names.
