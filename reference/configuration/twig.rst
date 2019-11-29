@@ -277,6 +277,14 @@ globals
 It defines the global variables injected automatically into all Twig templates.
 Learn more about :doc:`Twig global variables </templating/global_variables>`.
 
+event
+~~~~~
+
+**type**: ``Symfony\Contracts\EventDispatcher\EventDispatcherInterface`` **default**: ``null``
+
+It gives pre render events for twig.
+Learn more about :doc:`Pre render events </templating/event_dispatcher>`.
+
 number_format
 ~~~~~~~~~~~~~
 

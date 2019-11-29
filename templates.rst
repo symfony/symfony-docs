@@ -380,6 +380,9 @@ gives you access to these variables:
 In addition to the global ``app`` variable injected by Symfony, you can also
 :doc:`inject variables automatically to all Twig templates </templating/global_variables>`.
 
+If you want to assign variables to an partial for example, you can inject it using the
+:doc:`Pre render events </templating/event_dispatcher>`.
+
 .. _templates-rendering:
 
 Rendering Templates
