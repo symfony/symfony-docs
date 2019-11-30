@@ -665,6 +665,7 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     # optionally you can define both the name and type of the argument to match
                     string $adminEmail: 'manager@example.com'
                     Psr\Log\LoggerInterface $requestLogger: '@monolog.logger.request'
+                    iterable $rules: !tagged_iterator app.foo.rule
 
             # ...
 
@@ -694,6 +695,10 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     <bind key="Psr\Log\LoggerInterface $requestLogger"
                         type="service"
                         id="monolog.logger.request"
+                    />
+                    <bind key="iterable $rules"
+                        type="tagged_iterator"
+                        tag="app.foo.rule"
                     />
                 </defaults>
 
@@ -728,6 +733,7 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     // optionally you can define both the name and type of the argument to match
                     ->bind('string $adminEmail', 'manager@example.com')
                     ->bind(LoggerInterface::class.' $requestLogger', ref('monolog.logger.request'))
+                    ->bind('iterable $rules', tagged_iterator('app.foo.rule'))
             ;
 
             // ...
