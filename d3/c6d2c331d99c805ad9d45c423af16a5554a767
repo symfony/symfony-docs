@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-26T08:08:52Z
+
+@HLeithner you are right! However, the new patch versions of contracts haven't been released yet, so 7.2.9 is still the required version. I've put this "On Hold" until they are released, which hopefully will be very soon.
+
+Thanks and congrats on your first Symfony Docs contribution!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-30T10:14:07Z
+
+Translation contracts 2.0.1 has just been released (https://github.com/symfony/translation-contracts/releases) so this can be merged because PHP 7.2.5 is again the minimum required version of Symfony.
