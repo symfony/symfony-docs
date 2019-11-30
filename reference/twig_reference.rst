@@ -624,8 +624,28 @@ Global Variables
 app
 ~~~
 
+<<<<<<< HEAD
 The ``app`` variable is injected automatically by Symfony in all templates and
 provides access to lots of useful application information. Read more about the
 :ref:`Twig global app variable <twig-app-variable>`.
 
 .. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/2.x/#reference
+=======
+The ``app`` variable is available everywhere and gives access to many commonly
+needed objects and values. It is an instance of
+:class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`.
+
+The available attributes are:
+
+* ``app.user``, a PHP object representing the current user;
+* ``app.request``, a :class:`Symfony\\Component\\HttpFoundation\\Request` object;
+* ``app.session``, a :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` object;
+* ``app.environment``, a string with the name of the execution environment;
+* ``app.debug``, a boolean telling whether the debug mode is enabled in the app;
+* ``app.token``, a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
+  object representing the security token
+* ``app.flashes``, returns flash messages from the session
+
+.. _`Twig Reference`: https://twig.symfony.com/doc/2.x/#reference
+.. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension
+>>>>>>> 3.4
