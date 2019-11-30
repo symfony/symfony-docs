@@ -35,6 +35,7 @@ The template name will be the full name from the template.
 For listing make a class twig events in the Event folder from your application:
 
 .. code-block:: php
+
     namespace App\Event;
 
     use Twig\Event\TwigEvents as BaseTwigEvents;
@@ -52,6 +53,7 @@ For listing make a class twig events in the Event folder from your application:
 Next step is make a subscriber:
 
 .. code-block:: php
+
     namespace App\EventSubscriber;
 
     use App\Event\TwigEvents;
