@@ -104,10 +104,8 @@ level of authentication, i.e. is the user fully authenticated, or only based
 on a "remember-me" cookie, or even authenticated anonymously?::
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
-    use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-    use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 
-    $trustResolver = new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
+    $trustResolver = new AuthenticationTrustResolver();
 
     $authenticatedVoter = new AuthenticatedVoter($trustResolver);
 
