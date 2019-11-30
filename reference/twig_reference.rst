@@ -28,12 +28,6 @@ describe these extra features.
     framework. You are probably using some other bundles as well, and
     those might come with their own extensions not covered here.
 
-.. tip::
-
-    The `Twig Extensions repository`_ contains some additional Twig extensions
-    that do not belong to the Twig core, so you might want to have a look at
-    the `Twig Extensions documentation`_.
-
 .. _reference-twig-functions:
 
 Functions
@@ -771,6 +765,4 @@ The available attributes are:
 * ``app.flashes``, returns flash messages from the session
 
 .. _`Twig Reference`: https://twig.symfony.com/doc/2.x/#reference
-.. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
-.. _`Twig Extensions documentation`: http://twig-extensions.readthedocs.io/en/latest/
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension

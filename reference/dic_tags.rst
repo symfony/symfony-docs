@@ -1288,42 +1288,6 @@ For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the
 :doc:`/templating/twig_extension` article.
 
-Before writing your own extensions, have a look at the
-`Twig official extension repository`_ which already includes several
-useful extensions. For example ``Intl`` and its ``localizeddate`` filter
-that formats a date according to user's locale. These official Twig extensions
-also have to be added as regular services:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            Twig\Extensions\IntlExtension:
-                tags: [twig.extension]
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="Twig\Extensions\IntlExtension">
-                    <tag name="twig.extension"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        $container
-            ->register('Twig\Extensions\IntlExtension')
-            ->addTag('twig.extension')
-        ;
-
 twig.loader
 -----------
 
@@ -1404,6 +1368,5 @@ For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
 .. _`Twig's documentation`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
-.. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
 .. _`Twig Loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
