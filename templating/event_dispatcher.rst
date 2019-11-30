@@ -32,9 +32,7 @@ This will be done for every template.
 The event which is dispatched will be: twig.pre_render:{templateName}
 The template name will be the full name from the template.
 
-For listing make a class twig events in the Event folder from your application:
-
-.. code-block:: php
+For listing make a class twig events in the Event folder from your application::
 
     namespace App\Event;
 
@@ -50,9 +48,7 @@ For listing make a class twig events in the Event folder from your application:
     }
 
 
-Next step is make a subscriber:
-
-.. code-block:: php
+Next step is make a subscriber::
 
     namespace App\EventSubscriber;
 
