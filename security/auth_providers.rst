@@ -21,8 +21,6 @@ use-case matches one of these exactly, they're a great option:
 * :doc:`json_login </security/json_login_setup>`
 * :ref:`X.509 Client Certificate Authentication (x509) <security-x509>`
 * :ref:`REMOTE_USER Based Authentication (remote_user) <security-remote_user>`
-* ``simple_form``
-* ``simple_pre_auth``
 
 .. _security-http_basic:
 
