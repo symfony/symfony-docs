@@ -62,7 +62,7 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: ``Symfony\Component\Intl\Intl::getCurrencyBundle()->getCurrencyNames()``
+**default**: ``Symfony\Component\Intl\Currencies::getNames()``
 
 The choices option defaults to all currencies.
 

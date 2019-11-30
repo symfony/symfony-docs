@@ -87,7 +87,7 @@ method to return the right project directory::
 Cache Directory
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``$this->rootDir/cache/$this->environment``
+**type**: ``string`` **default**: ``$this->getProjectDir()/var/cache/$this->environment``
 
 This returns the absolute path of the cache directory of your Symfony project.
 It's calculated automatically based on the current
@@ -101,7 +101,7 @@ cache directory.
 Log Directory
 ~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``$this->rootDir/log``
+**type**: ``string`` **default**: ``$this->getProjectDir()/var/log``
 
 This returns the absolute path of the log directory of your Symfony project.
 It's calculated automatically based on the current

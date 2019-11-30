@@ -237,7 +237,7 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
 
 .. code-block:: terminal
 
-    # use the most recent 'lts' version
+    # use the most recent LTS version
     $ symfony new my_project_name --version=lts
 
     # use the 'next' Symfony version to be released (still in development)
