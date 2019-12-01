@@ -36,7 +36,8 @@ requirements. Open your console terminal and run this command:
 Creating Symfony Applications
 -----------------------------
 
-Open your console terminal and run any of these commands to create a new Symfony
+Open your console terminal and navigate to the directory where you want to create
+your new Symfony applcation. Run any of these commands to create a new Symfony
 application:
 
 .. code-block:: terminal
