@@ -190,8 +190,8 @@ each time you ask for it.
                     ->defaults()
                         ->autowire()      // Automatically injects dependencies in your services.
                         ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
-                ;                      
-                                       
+                ;
+
                 // makes classes in src/ available to be used as services
                 // this creates a service per class whose id is the fully-qualified class name
                 $services->load('App\\', '../src/*')
@@ -665,6 +665,7 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     # optionally you can define both the name and type of the argument to match
                     string $adminEmail: 'manager@example.com'
                     Psr\Log\LoggerInterface $requestLogger: '@monolog.logger.request'
+                    iterable $rules: !tagged_iterator app.foo.rule
 
             # ...
 
@@ -694,6 +695,10 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     <bind key="Psr\Log\LoggerInterface $requestLogger"
                         type="service"
                         id="monolog.logger.request"
+                    />
+                    <bind key="iterable $rules"
+                        type="tagged_iterator"
+                        tag="app.foo.rule"
                     />
                 </defaults>
 
@@ -728,10 +733,15 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     // optionally you can define both the name and type of the argument to match
                     ->bind('string $adminEmail', 'manager@example.com')
                     ->bind(LoggerInterface::class.' $requestLogger', ref('monolog.logger.request'))
+                    ->bind('iterable $rules', tagged_iterator('app.foo.rule'))
             ;
 
             // ...
         };
+
+.. versionadded:: 4.4
+
+    The feature to bind tagged services was introduced in Symfony 4.4.
 
 By putting the ``bind`` key under ``_defaults``, you can specify the value of *any*
 argument for *any* service defined in this file! You can bind arguments by name

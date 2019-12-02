@@ -39,7 +39,7 @@ Your child service classes may look like this::
     // src/Repository/DoctrineUserRepository.php
     namespace App\Repository;
 
-    use App\Repository\BaseDoctrineRepository
+    use App\Repository\BaseDoctrineRepository;
 
     // ...
     class DoctrineUserRepository extends BaseDoctrineRepository
@@ -50,7 +50,7 @@ Your child service classes may look like this::
     // src/Repository/DoctrinePostRepository.php
     namespace App\Repository;
 
-    use App\Repository\BaseDoctrineRepository
+    use App\Repository\BaseDoctrineRepository;
 
     // ...
     class DoctrinePostRepository extends BaseDoctrineRepository
