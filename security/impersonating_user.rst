@@ -112,7 +112,7 @@ the impersonator user::
     use Symfony\Component\Security\Core\Security;
     // ...
 
-    public class SomeService
+    class SomeService
     {
         private $security;
 
