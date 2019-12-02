@@ -190,8 +190,8 @@ each time you ask for it.
                     ->defaults()
                         ->autowire()      // Automatically injects dependencies in your services.
                         ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
-                ;                      
-                                       
+                ;
+
                 // makes classes in src/ available to be used as services
                 // this creates a service per class whose id is the fully-qualified class name
                 $services->load('App\\', '../src/*')
