@@ -739,6 +739,10 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
             // ...
         };
 
+.. versionadded:: 4.4
+
+    The feature to bind tagged services was introduced in Symfony 4.4.
+
 By putting the ``bind`` key under ``_defaults``, you can specify the value of *any*
 argument for *any* service defined in this file! You can bind arguments by name
 (e.g. ``$adminEmail``), by type (e.g. ``Psr\Log\LoggerInterface``) or both
