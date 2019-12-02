@@ -1000,6 +1000,7 @@ Authentication (Identifying/Logging in the User)
     security/form_login_setup
     security/json_login_setup
     security/guard_authentication
+    security/password_migration
     security/auth_providers
     security/user_provider
     security/ldap
