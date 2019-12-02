@@ -227,16 +227,16 @@ registry in the constructor::
     class MyClass
     {
     
-        private $worflowRegistry;
+        private $workflowRegistry;
     
         public function __construct(Registry $workflowRegistry)
         {
-            $this->worflowRegistry = $worflowRegistry;
+            $this->workflowRegistry = $workflowRegistry;
         }
     
         public function toReview(BlogPost $blogPost)
         {
-            $workflow = $this->worflowRegistry->get($blogPost);
+            $workflow = $this->workflowRegistry->get($blogPost);
         
             // Update the currentState on the post
             try {
