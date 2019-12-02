@@ -102,7 +102,7 @@ over the user's roles until you find one that is a ``SwitchUserRole`` object::
     use Symfony\Component\Security\Core\Security;
     // ...
 
-    public class SomeService
+    class SomeService
     {
         private $security;
 
