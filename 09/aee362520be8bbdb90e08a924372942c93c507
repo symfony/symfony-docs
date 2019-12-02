@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by chalasr at 2019-10-27T07:38:06Z
+
+I suggest to wait for symfony/symfony#34020 before finishing this one :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-10-29T18:49:08Z
+
+For the reference, I'm waiting on symfony/symfony#34139 as well before finishing this article. I think we should then have the complete picture (and it's a nice picture!)
+
+---------------------------------------------------------------------------
+
+by chalasr at 2019-11-09T13:14:08Z
+
+Unlocked now that symfony/symfony#34139 has been merged
+
+---------------------------------------------------------------------------
+
+by chalasr at 2019-11-09T13:15:26Z
+
+Should also fix #12612
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-12-01T14:00:39Z
+
+Thanks @chalasr!
+
+This PR is ready for a final review & merge imho
