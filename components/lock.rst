@@ -210,7 +210,7 @@ Available Stores
 ----------------
 
 Locks are created and managed in ``Stores``, which are classes that implement
-:class:`Symfony\\Component\\Lock\\PersistStoreInterface` and, optionally,
+:class:`Symfony\\Component\\Lock\\PersistingStoreInterface` and, optionally,
 :class:`Symfony\\Component\\Lock\\BlockingStoreInterface`.
 
 The component includes the following built-in store types:
