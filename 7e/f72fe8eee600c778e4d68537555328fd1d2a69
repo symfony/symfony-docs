@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-12-03T11:26:14Z
+
+@javiereguiluz are you fine with deprecated and versionadded? I tried to only use deprecated one but the the „new“ is missing and less prominent, so I decided to go this way
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-12-03T11:30:20Z
+
+I agree. It looks like an edge case, so I like your solution!
