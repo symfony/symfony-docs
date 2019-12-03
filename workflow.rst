@@ -215,7 +215,7 @@ what actions are allowed on a blog post::
 
     // See all the available transitions for the post in the current state
     $transitions = $workflow->getEnabledTransitions($post);
-    
+
 Accessing the Workflow in a Class
 ---------------------------------
 
@@ -223,21 +223,21 @@ To access workflow inside a class, use dependency injection and inject the
 registry in the constructor::
 
     use Symfony\Component\Workflow\Registry;
-    
+
     class MyClass
     {
-    
+
         private $workflowRegistry;
-    
+
         public function __construct(Registry $workflowRegistry)
         {
             $this->workflowRegistry = $workflowRegistry;
         }
-    
+
         public function toReview(BlogPost $blogPost)
         {
             $workflow = $this->workflowRegistry->get($blogPost);
-        
+
             // Update the currentState on the post
             try {
                 $workflow->apply($post, 'to_review');
@@ -338,6 +338,11 @@ order:
 
     The leaving and entering events are triggered even for transitions that stay
     in same place.
+
+.. versionadded:: 4.3
+
+    Following events are also dispatched when the subject enters the workflow
+    for the first time: ``workflow.entered`` and ``workflow.[worflow name].entered``.
 
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
