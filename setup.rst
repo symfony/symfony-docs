@@ -17,7 +17,7 @@ Technical Requirements
 
 Before creating your first Symfony application you must:
 
-* Install PHP 7.2.5 or higher and these PHP extensions (which are installed and
+* Install PHP 7.2.9 or higher and these PHP extensions (which are installed and
   enabled by default in most PHP 7 installations): `Ctype`_, `iconv`_, `JSON`_,
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
 * `Install Composer`_, which is used to install PHP packages;
