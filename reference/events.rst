@@ -239,14 +239,14 @@ sent as response::
 
     public function onKernelException(ExceptionEvent $event)
     {
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
         $response = new Response();
         // setup the Response object based on the caught exception
         $event->setResponse($response);
 
         // you can alternatively set a new Exception
         // $exception = new \Exception('Some special exception');
-        // $event->setException($exception);
+        // $event->setThrowable($exception);
     }
 
 .. note::
