@@ -433,7 +433,7 @@ which script to call and wrap the output in a response class::
     {
         public function loadLegacyScript(string $requestPath, string $legacyScript)
         {
-            return StreamedResponse::create(
+            return new StreamedResponse(
                 function () use ($requestPath, $legacyScript) {
                     $_SERVER['PHP_SELF'] = $requestPath;
                     $_SERVER['SCRIPT_NAME'] = $requestPath;
