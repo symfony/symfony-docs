@@ -21,10 +21,6 @@ The component supports:
 * **null** - ``null``
 * **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
 
-    .. versionadded:: 4.4
-    
-        The ``exponential`` literal was introduced in Symfony 4.4.
-
 .. caution::
 
     A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string

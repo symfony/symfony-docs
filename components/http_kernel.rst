@@ -530,18 +530,6 @@ object, which you can use to access the original exception via the
 method. A typical listener on this event will check for a certain type of
 exception and create an appropriate error ``Response``.
 
-.. versionadded:: 4.4
-
-    The :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::getThrowable` and
-    :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::setThrowable` methods
-    were introduced in Symfony 4.4.
-
-.. deprecated:: 4.4
-
-    The :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::getException` and
-    :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::setException` methods
-    are deprecated since Symfony 4.4.
-
 For example, to generate a 404 page, you might throw a special type of exception
 and then add a listener on this event that looks for this exception and
 creates and returns a 404 ``Response``. In fact, the HttpKernel component

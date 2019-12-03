@@ -4,10 +4,6 @@
 How to Migrate a Password Hash
 ==============================
 
-.. versionadded:: 4.4
-
-    Password migration was introduced in Symfony 4.4.
-
 In order to protect passwords, it is recommended to store them using the latest
 hash algorithms. This means that if a better hash algorithm is supported on the
 system, the user's password should be rehashed and stored. Symfony provides this
@@ -122,8 +118,8 @@ is available to hash the user's password. If it is, it'll hash the correct
 password using the new hash. You can enable this behavior by implementing how
 this newly hashed password should be stored:
 
-* `When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`_ 
-* `When using a custom user provider <Upgrade the Password when using a custom User Provider>`_ 
+* `When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`_
+* `When using a custom user provider <Upgrade the Password when using a custom User Provider>`_
 
 After this, you're done and passwords are always hashed as secure as possible!
 

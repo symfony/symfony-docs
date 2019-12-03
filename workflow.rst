@@ -339,11 +339,6 @@ order:
     The leaving and entering events are triggered even for transitions that stay
     in same place.
 
-.. versionadded:: 4.3
-
-    Following events are also dispatched when the subject enters the workflow
-    for the first time: ``workflow.entered`` and ``workflow.[worflow name].entered``.
-
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
 
