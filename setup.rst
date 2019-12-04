@@ -61,6 +61,10 @@ commands to create the new Symfony application using Composer:
 
     # run this if you are building a microservice, console application or API
     $ composer create-project symfony/skeleton my_project_name
+    
+    # to specify the version of Symfony to install
+    $ composer create-project symfony/website-skeleton:^4.x my_project_name
+    Replace 4.x with the version. IE: 4.4
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_name/`` directory, download some dependencies
