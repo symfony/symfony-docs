@@ -24,6 +24,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `alpha3`_                                                            |
+|             | - `choice_self_translation`_                                           |
 |             | - `choice_translation_locale`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
@@ -73,6 +74,23 @@ alpha3
 If this option is ``true``, the choice values use the `ISO 639-2 alpha-3`_
 three-letter codes (e.g. French = ``fra``) instead of the default
 `ISO 639-1 alpha-2`_ two-letter codes (e.g. French = ``fr``).
+
+choice_self_translation
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 5.1
+
+    The ``choice_self_translation`` option was introduced in Symfony 5.1.
+
+By default, the choice values are translated into the locale of the application.
+For example, when using ``en`` as the locale, you'll get an array like
+``[..., 'cs' => 'Czech', ..., 'es' => 'Spanish', ..., 'zh' => 'Chinese']``.
+
+If this option is ``true``, each choice value is translated into its own
+language. The resulting array is the same regardless of the application locale:
+``[..., 'cs' => 'čeština', ..., 'es' => 'español', ..., 'zh' => '中文']``.
 
 .. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
 
