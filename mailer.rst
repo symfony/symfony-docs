@@ -703,7 +703,7 @@ you have a transport called ``async``, you can route the message there:
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
 
-Mutliple Email Transports
+Multiple Email Transports
 -------------------------
 
 .. versionadded:: 4.4
