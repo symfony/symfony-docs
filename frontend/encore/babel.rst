@@ -22,6 +22,13 @@ Need to extend the Babel configuration further? The easiest way is via
 
             // no plugins are added by default, but you can add some
             babelConfig.plugins.push('styled-jsx/babel');
+            
+            // add configuration for preset
+            const preset = babelConfig.presets.find(([name]) => name === "@babel/preset-env");
+            if (preset !== undefined) {
+                preset[1].useBuiltIns = "entry";
+                preset[1].corejs = '3.0.0'; //here, give the same version that is in your package.json
+            }
         }, {
             // node_modules is not processed through Babel by default
             // but you can whitelist specific modules to process
