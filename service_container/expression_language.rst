@@ -28,6 +28,7 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
             AppBundle\Mail\MailerConfiguration: ~
 
             AppBundle\Mailer:
+                # the '@=' prefix is required when using expressions for arguments in YAML files
                 arguments: ["@=service('AppBundle\\\\Mail\\\\MailerConfiguration').getMailerMethod()"]
 
     .. code-block:: xml
@@ -80,6 +81,7 @@ via a ``container`` variable. Here's another example:
 
         services:
             AppBundle\Mailer:
+                # the '@=' prefix is required when using expressions for arguments in YAML files
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml
