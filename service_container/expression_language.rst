@@ -28,6 +28,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
             App\Mail\MailerConfiguration: ~
 
             App\Mailer:
+                # the '@=' prefix is required when using expressions for arguments in YAML files
                 arguments: ['@=service("App\\Mail\\MailerConfiguration").getMailerMethod()']
                 # when using double-quoted strings, the backslash needs to be escaped twice (see https://yaml.org/spec/1.2/spec.html#id2787109)
                 # arguments: ["@=service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()"]
@@ -89,6 +90,7 @@ via a ``container`` variable. Here's another example:
         # config/services.yaml
         services:
             App\Mailer:
+                # the '@=' prefix is required when using expressions for arguments in YAML files
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml

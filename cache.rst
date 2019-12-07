@@ -370,11 +370,21 @@ and use that when configuring the pool.
 Creating a Cache Chain
 ----------------------
 
-Different cache adapters have different strengths and weaknesses. Some might be really
-quick but small and some may be able to contain a lot of data but are quite slow.
-To get the best of both worlds you may use a chain of adapters. The idea is to
-first look at the quick adapter and then move on to slower adapters. In the worst
-case the value needs to be recalculated.
+Different cache adapters have different strengths and weaknesses. Some might be
+really quick but optimized to store small items and some may be able to contain
+a lot of data but are quite slow. To get the best of both worlds you may use a
+chain of adapters.
+
+A cache chain combines several cache pools into a single one. When storing an
+item in a cache chain, Symfony stores it in all pools sequentially. When
+retrieving an item, Symfony tries to get it from the first pool. If it's not
+found, it tries the next pools until the item is found or an exception is thrown.
+Because of this behavior, it's recommended to define the adapters in the chain
+in order from the fastest to the slowest.
+
+If an error happens when storing an item in a pool, Symfony stores it in the
+other pools and no exception is thrown. Later, when the item is retrieved,
+Symfony stores the item automatically in all the missing pools.
 
 .. configuration-block::
 
@@ -470,7 +480,7 @@ the same key could be invalidate with one function call::
         }
     }
 
-The cache adapter needs to implement :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface``
+The cache adapter needs to implement :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface`
 to enable this feature. This could be added by using the following configuration.
 
 .. configuration-block::
