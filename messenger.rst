@@ -1335,7 +1335,7 @@ middleware and *only* include your own:
                 buses:
                     messenger.bus.default:
                         middleware:
-                            # service ids that implement Symfony\Component\Messenger\Middleware
+                            # service ids that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
                             - 'App\Middleware\MyMiddleware'
                             - 'App\Middleware\AnotherMiddleware'
 
