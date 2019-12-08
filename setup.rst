@@ -230,7 +230,7 @@ Symfony LTS Versions
 
 According to the :doc:`Symfony release process </contributing/community/releases>`,
 "long-term support" (or LTS for short) versions are published every two years.
-Check out the `Symfony roadmap`_ to know which is the latest LTS version.
+Check out the `Symfony releases`_ to know which is the latest LTS version.
 
 By default, the command that creates new Symfony applications uses the latest
 stable version. If you want to use an LTS version, add the ``--version`` option:
@@ -284,7 +284,7 @@ Learn More
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
-.. _`Symfony roadmap`: https://symfony.com/roadmap
+.. _`Symfony releases`: https://symfony.com/releases
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
 .. _`Symfony Recipes documentation`: https://github.com/symfony/recipes/blob/master/README.rst
