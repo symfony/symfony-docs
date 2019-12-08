@@ -106,6 +106,10 @@ name of your service group::
 
     The option to define multiple servers in a single DSN was introduced in Symfony 4.2.
 
+.. versionadded:: 4.4
+
+    Redis Sentinel support was introduced in Symfony 4.4.
+
 .. note::
 
     See the :class:`Symfony\\Component\\Cache\\Traits\\RedisTrait` for more options
