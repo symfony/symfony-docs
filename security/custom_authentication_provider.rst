@@ -97,8 +97,7 @@ The Listener
 
 Next, you need a listener to listen on the firewall. The listener
 is responsible for fielding requests to the firewall and calling the authentication
-provider. A listener must be an instance of
-:class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`.
+provider. Since Symfony 4.3, Listener is a callable, so you have to implement __invoke() method.
 A security listener should handle the
 :class:`Symfony\\Component\\HttpKernel\\Event\\RequestEvent` event, and
 set an authenticated token in the token storage if successful::
@@ -112,9 +111,8 @@ set an authenticated token in the token storage if successful::
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
-    class WsseListener implements ListenerInterface
+    class WsseListener
     {
         protected $tokenStorage;
         protected $authenticationManager;
@@ -125,7 +123,7 @@ set an authenticated token in the token storage if successful::
             $this->authenticationManager = $authenticationManager;
         }
 
-        public function handle(RequestEvent $event)
+        public function __invoke(RequestEvent $event)
         {
             $request = $event->getRequest();
 
