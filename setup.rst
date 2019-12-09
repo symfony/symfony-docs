@@ -61,10 +61,6 @@ commands to create the new Symfony application using Composer:
 
     # run this if you are building a microservice, console application or API
     $ composer create-project symfony/skeleton my_project_name
-    
-    # to specify the version of Symfony to install
-    $ composer create-project symfony/website-skeleton:^4.x my_project_name
-    Replace 4.x with the version. IE: 4.4
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_name/`` directory, download some dependencies
@@ -246,6 +242,16 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
 
     # use the 'next' Symfony version to be released (still in development)
     $ symfony new my_project_name --version=next
+
+    # you can also select an exact specific Symfony version
+    $ symfony new my_project_name --version=4.4
+
+The ``lts`` and ``next`` shortcuts are only available when using Symfony to
+create new projects. If you use Composer, you need to tell the exact version:
+
+.. code-block:: terminal
+
+    $ composer create-project symfony/website-skeleton:^4.4 my_project_name
 
 The Symfony Demo application
 ----------------------------
