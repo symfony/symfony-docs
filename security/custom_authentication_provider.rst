@@ -203,7 +203,6 @@ the ``PasswordDigest`` header value matches with the user's password::
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\Exception\NonceExpiredException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
 
     class WsseProvider implements AuthenticationProviderInterface
