@@ -608,11 +608,11 @@ error_controller
 
     The ``error_controller`` option was introduced in Symfony 4.4.
 
-This is the controller that is activated after an exception is thrown anywhere
-in your application. The default controller
+This is the controller that is called when an exception is thrown anywhere in
+your application. The default controller
 (:class:`Symfony\\Component\\HttpKernel\\Controller\\ErrorController`)
-is what's responsible for rendering specific templates under different error
-conditions (see :doc:`/controller/error_pages`).
+renders specific templates under different error conditions (see
+:doc:`/controller/error_pages`).
 
 esi
 ~~~

@@ -33,7 +33,8 @@ depending on your needs:
 #. If you just want to change the contents and styles of the error pages to match
    the rest of your application, :ref:`override the default error templates <use-default-error-controller>`;
 
-#. If you want to change the contents of non-HTML error output, :ref:`create a new normalizer <overriding-non-html-error-output>`;
+#. If you want to change the contents of non-HTML error output,
+   :ref:`create a new normalizer <overriding-non-html-error-output>`;
 
 #. If you also want to tweak the logic used by Symfony to generate error pages,
    :ref:`override the default error controller <custom-error-controller>`;
@@ -47,9 +48,9 @@ depending on your needs:
 Overriding the Default Error Templates
 --------------------------------------
 
-You can use the built-in Twig error renderer to easily override the default error templates.
-Both the TwigBundle and TwigBridge need to be installed for this.
-Run this command to ensure both are installed:
+You can use the built-in Twig error renderer to override the default error
+templates. Both the TwigBundle and TwigBridge need to be installed for this. Run
+this command to ensure both are installed:
 
 .. code-block:: terminal
 
@@ -191,10 +192,14 @@ To override non-HTML error output, the Serializer component needs to be installe
 
     $ composer require serializer
 
-The Serializer component has a built-in ``FlattenException`` normalizer (``ProblemNormalizer``) and JSON/XML/CSV/YAML
-encoders by default. That means that if an exception were to be thrown in your application, Symfony can output it in
-a format supported by one of the encoders. If you want to change how the output is structured, all you have to do
-is create a new Normalizer that supports the ``FlattenException`` input::
+The Serializer component has a built-in ``FlattenException`` normalizer
+(``ProblemNormalizer``) and JSON/XML/CSV/YAML encoders. When your application
+throws an exception, Symfony can output it in one of those formats. If you want
+to change the output contents, create a new Normalizer that supports the
+``FlattenException`` input::
+
+    # src/App/Serializer/MyCustomProblemNormalizer.php
+    namespace App\Serializer;
 
     class MyCustomProblemNormalizer implements NormalizerInterface
     {
