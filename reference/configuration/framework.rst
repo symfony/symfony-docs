@@ -74,6 +74,7 @@ Configuration
 
 * `default_locale`_
 * `disallow_search_engine_index`_
+* `error_controller`_
 * `esi`_
 
   * :ref:`enabled <reference-esi-enabled>`
@@ -595,6 +596,23 @@ can also :ref:`disable CSRF protection on individual forms <form-csrf-customizat
 If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
+
+.. _config-framework-error_controller:
+
+error_controller
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``error_controller``
+
+.. versionadded:: 4.4
+
+    The ``error_controller`` option was introduced in Symfony 4.4.
+
+This is the controller that is activated after an exception is thrown anywhere
+in your application. The default controller
+(:class:`Symfony\\Component\\HttpKernel\\Controller\\ErrorController`)
+is what's responsible for rendering specific templates under different error
+conditions (see :doc:`/controller/error_pages`).
 
 esi
 ~~~
