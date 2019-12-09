@@ -72,6 +72,7 @@ app quickly. There are many PaaS - below are a few that work well with Symfony:
 * `Azure`_
 * `fortrabbit`_
 * `Clever Cloud`_
+* `Scalingo`_
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -254,3 +255,4 @@ Learn More
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
 .. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
 .. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html
+.. _`Scalingo`: https://doc.scalingo.com/languages/php/symfony
