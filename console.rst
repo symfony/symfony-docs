@@ -317,13 +317,8 @@ command:
 
 :method:`Symfony\\Component\\Console\\Command\\Command::execute` *(required)*
     This method is executed after ``interact()`` and ``initialize()``.
-    It contains the logic you want the command to execute and it should
+    It contains the logic you want the command to execute and it must
     return an integer which will be used as the command `exit status`_.
-
-    .. deprecated:: 4.4
-
-        Not returning an integer with the exit status as the result of
-        ``execute()`` is deprecated since Symfony 4.4.
 
 .. _console-testing-commands:
 
