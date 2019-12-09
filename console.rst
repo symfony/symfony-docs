@@ -46,7 +46,7 @@ want a command to create a user::
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             // ...
-            
+
             return 0;
         }
     }
@@ -148,7 +148,7 @@ the console::
         // outputs a message without adding a "\n" at the end of the line
         $output->write('You are about to ');
         $output->write('create a user.');
-        
+
         return 0;
     }
 
@@ -199,7 +199,7 @@ which returns an instance of
             // (this example deletes the last two lines of the section)
             $section1->clear(2);
             // Output is now completely empty!
-            
+
             return 0;
         }
     }
@@ -241,7 +241,7 @@ Use input options or arguments to pass information to the command::
 
         // retrieve the argument value using getArgument()
         $output->writeln('Username: '.$input->getArgument('username'));
-        
+
         return 0;
     }
 
@@ -292,7 +292,7 @@ as a service, you can use normal dependency injection. Imagine you have a
             $this->userManager->create($input->getArgument('username'));
 
             $output->writeln('User successfully generated!');
-            
+
             return 0;
         }
     }
@@ -317,8 +317,13 @@ command:
 
 :method:`Symfony\\Component\\Console\\Command\\Command::execute` *(required)*
     This method is executed after ``interact()`` and ``initialize()``.
-    It contains the logic you want the command to execute.
-    Must return an integer which will be used as the command `exit status`_.
+    It contains the logic you want the command to execute and it should
+    return an integer which will be used as the command `exit status`_.
+
+    .. deprecated:: 4.4
+
+        Not returning an integer with the exit status as the result of
+        ``execute()`` is deprecated since Symfony 4.4.
 
 .. _console-testing-commands:
 
