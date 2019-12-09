@@ -5,7 +5,7 @@ Symfony code is contributed by thousands of developers around the world. To make
 every piece of code look and feel familiar, Symfony defines some coding standards
 that all contributions must follow.
 
-These Symfony coding standards are based on the `PSR-1`_, `PSR-2`_ and `PSR-4`_
+These Symfony coding standards are based on the `PSR-1`_, `PSR-12`_ and `PSR-4`_
 standards, so you may already know most of them.
 
 Making your Code Follow the Coding Standards
