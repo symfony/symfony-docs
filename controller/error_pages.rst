@@ -157,30 +157,30 @@ automatically when installing Twig support):
 
     .. code-block:: yaml
 
-        # config/routes/dev/twig.yaml
+        # config/routes/dev/framework.yaml
         _errors:
-            resource: '@TwigBundle/Resources/config/routing/errors.xml'
+            resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
             prefix:   /_error
 
     .. code-block:: xml
 
-        <!-- config/routes/dev/twig.xml -->
+        <!-- config/routes/dev/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@TwigBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
+            <import resource="@FrameworkBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
         </routes>
 
     .. code-block:: php
 
-        // config/routes/dev/twig.php
+        // config/routes/dev/framework.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('@TwigBundle/Resources/config/routing/errors.xml')
+            $routes->import('@FrameworkBundle/Resources/config/routing/errors.xml')
                 ->prefix('/_error')
             ;
         };
