@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2019-11-25T03:50:06Z
+
+All my previous comments explain how things work, but please, let's focus this document on how to achieve things rather than explaining how they work. Thanks!
+
+---------------------------------------------------------------------------
+
+by dbrekelmans at 2019-11-25T20:03:14Z
+
+> We should also replace `Component\ErrorRenderer` by `Component\ErrorHandler` everywhere. Thanks!
+
+Thanks to this comment I also noticed there still exists an `error_renderer.rst`. Since the component was merged into ErrorHandler, I suppose the docs should too.
+
+For me it's a bit too in-depth and time consuming to consider that within the scope of this PR. I do however think that this should be documented in an issue so it's not forgotten.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2019-11-25T20:10:55Z
+
+> > We should also replace Component\ErrorRenderer by Component\ErrorHandler everywhere. Thanks!
+
+> Thanks to this comment I also noticed there still exists an error_renderer.rst. Since the component was merged into ErrorHandler, I suppose the docs should too.
+
+Agreed! I meant in this page only.
+
+---------------------------------------------------------------------------
+
+by dbrekelmans at 2019-11-30T15:12:31Z
+
+@yceruto I resolved all PR comments. I'm not sure why the linter is complaining about a `.. code-block:: php` though as I've just copied how it's used elsewhere and it looks good on https://pr-12687-pvgcroy-nq3xa5jtywvyc.eu.s5y.io/controller/error_pages.html#overriding-error-output-for-non-html-formats.
+
+---------------------------------------------------------------------------
+
+by dbrekelmans at 2019-12-03T20:37:08Z
+
+Hi @wouterj, it still says you have requested changes. Could you confirm I resolved your feedback?
+
+---------------------------------------------------------------------------
+
+by yceruto at 2019-12-04T04:47:24Z
+
+Hi @dbrekelmans I'll take a look again tomorrow, thank you for your patience.
