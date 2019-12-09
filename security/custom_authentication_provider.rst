@@ -97,7 +97,7 @@ The Listener
 
 Next, you need a listener to listen on the firewall. The listener
 is responsible for fielding requests to the firewall and calling the authentication
-provider. Listener is a callable, so you have to implement __invoke() method.
+provider. Listener is a callable, so you have to implement an ``__invoke()`` method.
 A security listener should handle the
 :class:`Symfony\\Component\\HttpKernel\\Event\\RequestEvent` event, and
 set an authenticated token in the token storage if successful::
