@@ -29,19 +29,23 @@ you can "ask" for a service from the container by type-hinting an argument with 
 service's class or interface name. Want to :doc:`log </logging>` something? No problem::
 
     // src/Controller/ProductController.php
-    // ...
+    namespace App\Controller;
 
     use Psr\Log\LoggerInterface;
 
-    /**
-     * @Route("/products")
-     */
-    public function list(LoggerInterface $logger)
+    class ProductController
     {
-        $logger->info('Look! I just used a service');
+        /**
+        * @Route("/products")
+        */
+        public function list(LoggerInterface $logger)
+        {
+            $logger->info('Look! I just used a service');
 
-        // ...
+            // ...
+        }
     }
+
 
 What other services are available? Find out by running:
 
@@ -222,7 +226,7 @@ the ``LoggerInterface`` type-hint. Set this on a new ``$logger`` property
 and use it later::
 
     // src/Service/MessageGenerator.php
-    // ...
+    namespace App\Service;
 
     use Psr\Log\LoggerInterface;
 
@@ -550,7 +554,7 @@ Choose a Specific Service
 The ``MessageGenerator`` service created earlier requires a ``LoggerInterface`` argument::
 
     // src/Service/MessageGenerator.php
-    // ...
+    namespace App\Service;
 
     use Psr\Log\LoggerInterface;
 
