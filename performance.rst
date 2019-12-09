@@ -48,10 +48,6 @@ used byte code cache is `APC`_.
 Use the OPcache class preloading
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    The feature that generates the preloading file was introduced in Symfony 4.4.
-
 Starting from PHP 7.4, OPcache can compile and load classes at start-up and
 make them available to all requests until the server is restarted, improving
 performance significantly.
