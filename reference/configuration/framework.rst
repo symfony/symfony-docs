@@ -589,10 +589,6 @@ error_controller
 
 **type**: ``string`` **default**: ``error_controller``
 
-.. versionadded:: 4.4
-
-    The ``error_controller`` option was introduced in Symfony 4.4.
-
 This is the controller that is called when an exception is thrown anywhere in
 your application. The default controller
 (:class:`Symfony\\Component\\HttpKernel\\Controller\\ErrorController`)
