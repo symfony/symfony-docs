@@ -247,7 +247,7 @@ the request that will be dispatched to your controller. In addition, your contro
 will be passed two parameters:
 
 ``exception``
-    A :class:`\\Symfony\\Component\\ErrorRenderer\\Exception\\FlattenException`
+    A :class:`\\Symfony\\Component\\ErrorHandler\\Exception\\FlattenException`
     instance created from the exception being handled.
 
 ``logger``
