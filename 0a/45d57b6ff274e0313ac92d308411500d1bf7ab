@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2019-11-30T16:25:11Z
+
+duplicate of #12703
+
+---------------------------------------------------------------------------
+
+by slootjes at 2019-11-30T19:26:50Z
+
+@maxhelias I see, you're right! This PR however also adds the explanation of what the return code actually does.
