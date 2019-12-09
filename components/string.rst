@@ -238,7 +238,7 @@ Methods to Append and Prepend
 
     // returns the contents found before/after the first occurrence of the given string
     u('hello world')->before('world');   // 'hello '
-    u('hello world')->before('o');       // 'hell '
+    u('hello world')->before('o');       // 'hell'
     u('hello world')->before('o', true); // 'hello'
 
     u('hello world')->after('hello');   // ' world'
