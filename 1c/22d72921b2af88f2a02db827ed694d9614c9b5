@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2019-11-26T19:54:45Z
+
+@OskarStark We can also target a old version because it return 0 by defaults for all that is not numeric and since 4.4 we trigger a deprecation
+
+---------------------------------------------------------------------------
+
+by JeremieSamson at 2019-12-09T09:12:16Z
+
+What should I do here, just open another PR and target the 4.4 version ?
