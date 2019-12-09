@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by pableu at 2019-12-03T22:55:58Z
+
+We could also direct users to other (maintained) extensions like [intl-extra](https://packagist.org/packages/twig/intl-extra) or [html-extra](https://packagist.org/packages/twig/html-extra).
