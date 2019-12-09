@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by tucksaun at 2019-11-22T12:13:49Z
+
+This was indeed not really clear.
+The SymfonyCloud build kind-of serve as integration tests, I don't know if it would be more clear but maybe we should mention that is "built by" and made available available for preview **on **?
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2019-11-22T13:44:50Z
+
+it just feels weird when i read it, that is why i opened this to find an improvement :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2019-11-23T10:39:11Z
+
+Let's ping our native @weaverryan here.
+
+We use SymfonyCloud to build & serve a documentation for each pull request + the documentation is served on symfony.com, which runs on SymfonyCloud as well. So it's more "we use SymfonyCloud" than " we're build by SymfonyCloud" imho.
