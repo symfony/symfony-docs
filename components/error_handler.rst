@@ -67,11 +67,6 @@ to enable this error handler::
 
     ErrorHandler::register();
 
-.. tip::
-
-    If you want to get even better exception pages, install the
-    :doc:`ErrorRenderer component </components/error_renderer>` too.
-
 Catching PHP Function Errors and Turning Them into Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -144,11 +139,6 @@ to enable this exception handler::
     use Symfony\Component\ErrorHandler\ExceptionHandler;
 
     ExceptionHandler::register();
-
-.. tip::
-
-    If you want to get even better exception pages, install the
-    :doc:`ErrorRenderer component </components/error_renderer>` too.
 
 .. _component-debug-class-loader:
 
