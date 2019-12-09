@@ -617,10 +617,10 @@ following list shows the files loaded in all environments. The ``.env`` file is
 the only mandatory file and each file content overrides the previous one:
 
 * ``.env``: defines the default values of the env vars needed by the application;
-* ``.env.local``: defines machine-specific overrides for env vars on all
-  environments. This file is not committed to the repository, so these overrides
-  only apply to the machine which contains the file (your local computer,
-  production server, etc.);
+* ``.env.local``: overrides the default values of env vars for all environments
+  but only in the machine which contains the file (e.g. your development computer).
+  This file should not be committed to the repository and it's ignored in the
+  ``test`` environment (because tests should produce the same results for everyone);
 * ``.env.<environment>`` (e.g. ``.env.test``): overrides env vars only for some
   environment but for all machines;
 * ``.env.<environment>.local`` (e.g. ``.env.test.local``): defines machine-specific
@@ -797,7 +797,7 @@ parameters at once by type-hinting any of its constructor arguments with the
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
-    
+
     // ...
 
     use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
