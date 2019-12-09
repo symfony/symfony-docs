@@ -46,6 +46,8 @@ want a command to create a user::
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             // ...
+            
+            return 0;
         }
     }
 
@@ -316,6 +318,7 @@ command:
 :method:`Symfony\\Component\\Console\\Command\\Command::execute` *(required)*
     This method is executed after ``interact()`` and ``initialize()``.
     It contains the logic you want the command to execute.
+    Must return an integer which will be used as the command `exit status`_.
 
 .. _console-testing-commands:
 
@@ -395,3 +398,5 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progressbar`: shows a progress bar
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
+
+.. _`exit status`: https://en.wikipedia.org/wiki/Exit_status
