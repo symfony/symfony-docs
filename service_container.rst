@@ -36,8 +36,8 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
     class ProductController
     {
         /**
-        * @Route("/products")
-        */
+         * @Route("/products")
+         */
         public function list(LoggerInterface $logger)
         {
             $logger->info('Look! I just used a service');
@@ -194,8 +194,8 @@ each time you ask for it.
                     ->defaults()
                         ->autowire()      // Automatically injects dependencies in your services.
                         ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
-                ;                      
-                                       
+                ;
+
                 // makes classes in src/ available to be used as services
                 // this creates a service per class whose id is the fully-qualified class name
                 $services->load('App\\', '../src/*')
