@@ -42,7 +42,6 @@ Configuration
 
 * `debug`_
 * `default_path`_
-* `exception_controller`_
 * `form_themes`_
 * `globals`_
 * `number_format`_
@@ -195,29 +194,6 @@ default_path
 The path to the directory where Symfony will look for the application Twig
 templates by default. If you store the templates in more than one directory, use
 the :ref:`paths <config-twig-paths>`  option too.
-
-.. _config-twig-exception-controller:
-
-exception_controller
-~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``twig.controller.exception:showAction``
-
-.. deprecated:: 4.4
-
-    The ``exception_controller`` configuration option was deprecated in Symfony 4.4.
-    Set it to ``null`` and use the new ``error_controller`` option under ``framework``
-    configuration instead.
-
-This is the controller that is activated after an exception is thrown anywhere
-in your application. The default controller
-(:class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`)
-is what's responsible for rendering specific templates under different error
-conditions (see :doc:`/controller/error_pages`). Modifying this
-option is advanced. If you need to customize an error page you should use
-the previous link. If you need to perform some behavior on an exception,
-you should add an :doc:`event listener </event_dispatcher>` to the
-:ref:`kernel.exception event <kernel-kernel.exception>`.
 
 .. _config-twig-form-themes:
 
