@@ -17,6 +17,7 @@ Production Server Checklist
 ---------------------------
 
 #. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
+#. :ref:`Use the OPcache class preloading <performance-use-preloading>`
 #. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
 #. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
 #. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
@@ -41,6 +42,24 @@ OPcache stores the compiled PHP files to avoid having to recompile them for
 every request. There are some `byte code caches`_ available, but as of PHP
 5.5, PHP comes with `OPcache`_ built-in. For older versions, the most widely
 used byte code cache is `APC`_.
+
+.. _performance-use-preloading:
+
+Use the OPcache class preloading
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from PHP 7.4, OPcache can compile and load classes at start-up and
+make them available to all requests until the server is restarted, improving
+performance significantly.
+
+Symfony generates the file automatically with the list of classes to preload.
+The file path is the same as the file generated for the service container but
+with the ``preload`` suffix:
+
+.. code-block:: ini
+
+    ; php.ini
+    opcache.preload=/path/to/project/var/cache/prod/App_KernelProdContainer.preload.php
 
 .. _performance-configure-opcache:
 
