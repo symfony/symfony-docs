@@ -11,7 +11,8 @@ Before writing your own Twig extension, check if the filter/function that you
 need is already implemented in the `default Twig filters and functions`_ or the
 :doc:`Twig filters and functions added by Symfony </reference/twig_reference>`.
 Check also the `official Twig extensions`_, which add commonly needed filters
-and functions and can be installed in your application as follows:
+and functions and can be installed in your application as follows (only needed
+if you're using Twig 1 or 2):
 
 .. code-block:: terminal
 
