@@ -10,8 +10,9 @@ use them in your templates.
 Before writing your own Twig extension, check if the filter/function that you
 need is already implemented in the `default Twig filters and functions`_ or the
 :doc:`Twig filters and functions added by Symfony </reference/twig_reference>`.
-Check also the `official Twig extensions`_, which add commonly needed filters
-and functions and can be installed in your application as follows:
+Check also the `official Twig GitHub organization`_, which contains some extra
+repositories that provide extensions for common needs (such as ``string-extra``,
+``html-extra``, ``intl-extra``, etc.)
 
 .. code-block:: terminal
 
@@ -177,5 +178,5 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 
 .. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
 .. _`default Twig filters and functions`: https://twig.symfony.com/doc/2.x/#reference
-.. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
+.. _`official Twig GitHub organization`: https://github.com/twigphp
 .. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
