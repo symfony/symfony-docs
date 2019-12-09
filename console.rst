@@ -46,6 +46,8 @@ want a command to create a user::
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             // ...
+
+            return 0;
         }
     }
 
@@ -146,6 +148,8 @@ the console::
         // outputs a message without adding a "\n" at the end of the line
         $output->write('You are about to ');
         $output->write('create a user.');
+
+        return 0;
     }
 
 Now, try executing the command:
@@ -195,6 +199,8 @@ which returns an instance of
             // (this example deletes the last two lines of the section)
             $section1->clear(2);
             // Output is now completely empty!
+
+            return 0;
         }
     }
 
@@ -235,6 +241,8 @@ Use input options or arguments to pass information to the command::
 
         // retrieve the argument value using getArgument()
         $output->writeln('Username: '.$input->getArgument('username'));
+
+        return 0;
     }
 
 Now, you can pass the username to the command:
@@ -284,6 +292,8 @@ as a service, you can use normal dependency injection. Imagine you have a
             $this->userManager->create($input->getArgument('username'));
 
             $output->writeln('User successfully generated!');
+
+            return 0;
         }
     }
 
@@ -307,7 +317,13 @@ command:
 
 :method:`Symfony\\Component\\Console\\Command\\Command::execute` *(required)*
     This method is executed after ``interact()`` and ``initialize()``.
-    It contains the logic you want the command to execute.
+    It contains the logic you want the command to execute and it should
+    return an integer which will be used as the command `exit status`_.
+
+    .. deprecated:: 4.4
+
+        Not returning an integer with the exit status as the result of
+        ``execute()`` is deprecated since Symfony 4.4.
 
 .. _console-testing-commands:
 
@@ -387,3 +403,5 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progressbar`: shows a progress bar
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
+
+.. _`exit status`: https://en.wikipedia.org/wiki/Exit_status
