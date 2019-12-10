@@ -793,9 +793,9 @@ Linting Service Definitions
 
 .. versionadded:: 4.4
 
-    The ``lint:conainer`` command was introduced in Symfony 4.4.
+    The ``lint:container`` command was introduced in Symfony 4.4.
 
-The ``lint:conainer`` command checks that the arguments injected into services
+The ``lint:container`` command checks that the arguments injected into services
 match their type declarations. It's useful to run it before deploying your
 application to production (e.g. in your continuous integration server):
 
