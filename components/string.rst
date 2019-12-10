@@ -211,7 +211,7 @@ Methods to Change Case
 The methods of all string classes are case-sensitive by default. You can perform
 case-insensitive operations with the ``ignoreCase()`` method::
 
-    u('abc')->indexOf('B');               //  null
+    u('abc')->indexOf('B');               // null
     u('abc')->ignoreCase()->indexOf('B'); // 1
 
 Methods to Append and Prepend
