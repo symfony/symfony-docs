@@ -311,7 +311,7 @@ Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the PHPUnit Bridge uses ``DebugClassLoader`` from the
-:doc:`ErrorHandler component </components/error_handler>`_ to throw deprecation
+:doc:`ErrorHandler component </components/error_handler>` to throw deprecation
 notices at class autoloading time. This can be disabled with the
 ``debug-class-loader`` option.
 
