@@ -126,7 +126,7 @@ There are also some specialized constructors::
 
     // CodePointString and UnicodeString can create a string from code points
     $foo = UnicodeString::fromCodePoints(0x928, 0x92E, 0x938, 0x94D, 0x924, 0x947);
-    // $foo = 'नमस्ते'
+    // equivalent to: $foo = new UnicodeString('नमस्ते');
 
 Methods to Transform String Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -238,7 +238,7 @@ Methods to Append and Prepend
 
     // returns the contents found before/after the first occurrence of the given string
     u('hello world')->before('world');   // 'hello '
-    u('hello world')->before('o');       // 'hell '
+    u('hello world')->before('o');       // 'hell'
     u('hello world')->before('o', true); // 'hello'
 
     u('hello world')->after('hello');   // ' world'
