@@ -372,6 +372,12 @@ console::
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
 
+.. caution::
+
+    When testing commands using the ``CommandTester`` class, console events are
+    not dispatched. If you need to test those events, use the
+    :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester` instead.
+
 .. note::
 
     When using the Console component in a standalone project, use
