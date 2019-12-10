@@ -125,8 +125,8 @@ There are also some specialized constructors::
     $foo = ByteString::fromRandom(12);
 
     // CodePointString and UnicodeString can create a string from code points
-    $foo = (string) UnicodeString::fromCodePoints(0x928, 0x92E, 0x938, 0x94D, 0x924, 0x947);
-    // $foo = 'नमस्ते'
+    $foo = UnicodeString::fromCodePoints(0x928, 0x92E, 0x938, 0x94D, 0x924, 0x947);
+    // equivalent to: $foo = new UnicodeString('नमस्ते');
 
 Methods to Transform String Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
