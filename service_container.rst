@@ -788,6 +788,28 @@ you don't need to do *anything*: the service will be automatically loaded. Then,
 implements ``Twig\Extension\ExtensionInterface``. And thanks to ``autowire``, you can even add
 constructor arguments without any configuration.
 
+Linting Service Definitions
+---------------------------
+
+.. versionadded:: 4.4
+
+    The ``lint:conainer`` command was introduced in Symfony 4.4.
+
+The ``lint:conainer`` command checks that the arguments injected into services
+match their type declarations. It's useful to run it before deploying your
+application to production (e.g. in your continuous integration server):
+
+.. code-block:: terminal
+
+    $ php bin/console lint:container
+
+Checking the types of all service arguments whenever the container is compiled
+can hurt performance. That's why this type checking is implemented in a
+:doc:`compiler pass </service_container/compiler_passes>` called
+``CheckTypeDeclarationsPass`` which is disabled by default and enabled only when
+executing the ``lint:container`` command. If you don't mind the performance
+loss, enable the compiler pass in your application.
+
 .. _container-public:
 
 Public Versus Private Services
