@@ -115,11 +115,11 @@ using a special "tag":
     method executed by default is ``onKernelException()``.
 
     The other optional tag attribute is called  ``priority``, which defaults to
-    ``0`` and it controls the order in which listeners are executed (the higher
-    the number the earlier a listener is executed). This is useful when you
-    need to guarantee that one listener is executed before another. The priorities
-    of the internal Symfony listeners usually range from ``-255`` to ``255`` but
-    your own listeners can use any positive or negative integer.
+    ``0`` and it controls the order in which listeners are executed for a given
+    event (the higher the number the earlier a listener is executed). This is
+    useful when you need to guarantee that one listener is executed before
+    another. The priorities of the internal Symfony listeners usually range from
+    ``-255`` to ``255`` but your own listeners can use any positive or negative integer.
 
 .. _events-subscriber:
 
@@ -131,10 +131,12 @@ that defines one or more methods that listen to one or various events. The main
 difference with the event listeners is that subscribers always know which events
 they are listening to.
 
-In a given subscriber, different methods can listen to the same event. The order
-in which methods are executed is defined by the ``priority`` parameter of each
-method (the higher the number the earlier the method is called). To learn more
-about event subscribers, read :doc:`/components/event_dispatcher`.
+If different event subscriber methods listen to the same event, their order is
+defined by the ``priority`` parameter. This value is a positive or negative
+integer which defaults to ``0``. The higher the number, the earlier the method
+is called. **Priority is aggregated for all listeners and subscribers**, so your
+methods could be executed before or after the methods defined in other listeners
+and subscribers. To learn more about event subscribers, read :doc:`/components/event_dispatcher`.
 
 The following example shows an event subscriber that defines several methods which
 listen to the same ``kernel.exception`` event::
