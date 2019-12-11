@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by B-Galati at 2019-10-22T14:13:11Z
+
+Thanks @weaverryan! Few questions on my end:
+
+- Should it also be documented in the component section?
+- Should built-in middlewares document their behavior about this? I think they should on my end to avoid having to look at the middlewares' code.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2019-10-22T14:48:34Z
+
+> Should it also be documented in the component section
+
+I added some details there, but it was actually already shown in an example.
+
+> Should built-in middlewares document their behavior about this?
+
+What do you mean by this?
+
+---------------------------------------------------------------------------
+
+by B-Galati at 2019-10-22T15:25:28Z
+
+> > Should built-in middlewares document their behavior about this?
+>
+> What do you mean by this?
+
+For example the doctrine ping connection middleware should say that it is triggered only when the message is handled by the worker otherwise it will do nothing.
+
+It's a bit out of the scope of this PR though.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2019-10-22T15:54:47Z
+
+> For example the doctrine ping connection middleware should say that it is triggered only when the message is handled by the worker otherwise it will do nothing.
+
+Perhaps - it would be a comment in the core class. But the class is also pretty small, and if you're wiring it up manually (e.g. not using the DoctrineBundle integration), then you'll probably look inside the class anyways. It doesn't seem too important to me to document anywhere.
