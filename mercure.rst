@@ -7,7 +7,7 @@ Pushing Data to Clients Using the Mercure Protocol
 Being able to broadcast data in real-time from servers to clients is a
 requirement for many modern web and mobile applications.
 
-Creating an UI reacting in live to changes made by other users
+Creating a UI reacting in live to changes made by other users
 (e.g. a user changes the data currently browsed by several other users,
 all UIs are instantly updated),
 notifying the user when :doc:`an asynchronous job </messenger>` has been
@@ -175,7 +175,7 @@ of the resource being dispatched.
 
 Usually, this parameter contains the original URL of the resource
 transmitted to the client, but it can be any valid `IRI`_, it doesn't
-have to be an URL that exists (similarly to XML namespaces).
+have to be a URL that exists (similarly to XML namespaces).
 
 The second parameter of the constructor is the content of the update.
 It can be anything, stored in any format.
@@ -229,7 +229,7 @@ and to use URI Templates as patterns:
 
 .. tip::
 
-    Test if a URI Template match an URL using `the online debugger`_
+    Test if a URI Template match a URL using `the online debugger`_
 
 Async dispatching
 -----------------
