@@ -9,7 +9,7 @@ Cache Invalidation
     "There are only two hard things in Computer Science: cache invalidation
     and naming things." -- Phil Karlton
 
-Once an URL is cached by a gateway cache, the cache will not ask the
+Once a URL is cached by a gateway cache, the cache will not ask the
 application for that content anymore. This allows the cache to provide fast
 responses and reduces the load on your application. However, you risk
 delivering outdated content. A way out of this dilemma is to use long
