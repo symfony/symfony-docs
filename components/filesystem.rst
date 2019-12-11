@@ -311,6 +311,19 @@ contents at the end of some file::
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
 
+joinPaths
+~~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::joinPaths` creates a normalized path from path segments::
+
+    Filesystem::joinPaths('C:\\\\', '\\\\dev', '', '/services/', '/apache');
+    // C:/dev/services/apache
+
+It normalizes path separator to forward slash, that works in PHP on both Linux and Windows. It won't create double slashes when joining. It retains heading and trailing slashes. It won't touch separators within the segments::
+
+    Filesystem::joinPaths('C:\\\\', '\\\\dev\\\\services', 'apache');
+    // C:/dev\\services/apache
+
 Error Handling
 --------------
 
