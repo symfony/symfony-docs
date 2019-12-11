@@ -38,13 +38,15 @@ to implement the validation model: ``ETag`` and ``Last-Modified``.
 Validation with the ``ETag`` Header
 -----------------------------------
 
-The ``ETag`` header is a string header (called the "entity-tag") that uniquely
-identifies one representation of the target resource. It's entirely generated
-and set by your application so that you can tell, for example, if the ``/about``
-resource that's stored by the cache is up-to-date with what your application
-would return. An ``ETag`` is like a fingerprint and is used to quickly compare
-if two different versions of a resource are equivalent. Like fingerprints,
-each ``ETag`` must be unique across all representations of the same resource.
+The `HTTP ETag`_ ("entity-tag") header is an optional HTTP header whose value is
+an arbitrary string that uniquely identifies one representation of the target
+resource. It's entirely generated and set by your application so that you can
+tell, for example, if the ``/about`` resource that's stored by the cache is
+up-to-date with what your application would return.
+
+An ``ETag`` is like a fingerprint and is used to quickly compare if two
+different versions of a resource are equivalent. Like fingerprints, each
+``ETag`` must be unique across all representations of the same resource.
 
 To see a simple implementation, generate the ETag as the md5 of the content::
 
@@ -71,6 +73,20 @@ The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
 method compares the ``If-None-Match`` header with the ``ETag`` response header.
 If the two match, the method automatically sets the ``Response`` status code
 to 304.
+
+.. note::
+
+    When using ``mod_deflate`` or ``mod_brotli`` in Apache 2.4, the original
+    ``ETag`` value is modified (e.g. if ``ETag`` was ``foo``, Apache turns it
+    into ``foo-gzip`` or ``foo-br``), which breaks the ETag-based validation.
+
+    You can control this behavior with the `DeflateAlterETag`_ and `BrotliAlterETag`_
+    directives. Alternatively, you can use the following Apache configuration to
+    keep both the original ETag and the modified one when compressing responses:
+
+    .. code-block:: apache
+
+        RequestHeader edit "If-None-Match" '^"((.*)-(gzip|br))"$' '"$1", "$2"'
 
 .. note::
 
@@ -219,3 +235,6 @@ headers that must not be present for ``304`` responses (see
 :method:`Symfony\\Component\\HttpFoundation\\Response::setNotModified`).
 
 .. _`expiration model`: https://tools.ietf.org/html/rfc2616#section-13.2
+.. _`HTTP ETag`: https://en.wikipedia.org/wiki/HTTP_ETag
+.. _`DeflateAlterETag`: https://httpd.apache.org/docs/trunk/mod/mod_deflate.html#deflatealteretag
+.. _`BrotliAlterETag`: https://httpd.apache.org/docs/2.4/mod/mod_brotli.html#brotlialteretag
