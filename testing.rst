@@ -549,6 +549,8 @@ allows fetching both public and all non-removed private services::
 
     // gives access to the same services used in your test, unless you're using
     // $client->insulate() or using real HTTP requests to test your application
+    // don't forget to call self::bootKernel() before, otherwise, the container
+    // will be empty
     $container = self::$container;
 
 For a list of services available in your application, use the ``debug:container``
