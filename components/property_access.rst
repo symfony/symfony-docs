@@ -21,7 +21,7 @@ Usage
 -----
 
 The entry point of this component is the
-:method:`PropertyAccess::createPropertyAccessor<Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor>`
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor`
 factory. This factory will create a new instance of the
 :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` class with the
 default configuration::
@@ -34,8 +34,8 @@ Reading from Arrays
 -------------------
 
 You can read an array with the
-:method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
-method. This is done using the index notation that is used in PHP::
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue` method.
+This is done using the index notation that is used in PHP::
 
     // ...
     $person = [
@@ -158,19 +158,19 @@ getters, this means that you can do something like this::
     $person = new Person();
 
     if ($propertyAccessor->getValue($person, 'author')) {
-        var_dump('He is an author');
+        var_dump('This person is an author');
     }
     if ($propertyAccessor->getValue($person, 'children')) {
-        var_dump('He has children');
+        var_dump('This person has children');
     }
 
-This will produce: ``He is an author``
+This will produce: ``This person is an author``
 
 Accessing a non Existing Property Path
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default a :class:`Symfony\\Component\\PropertyAccess\\Exception\\NoSuchPropertyException`
-is thrown if the property path passed to :method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
+is thrown if the property path passed to :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue`
 does not exist. You can change this behavior using the
 :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::disableExceptionOnInvalidPropertyPath`
 method::
@@ -254,7 +254,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
 .. caution::
 
     The ``__call()`` feature is disabled by default, you can enable it by calling
-    :method:`PropertyAccessorBuilder::enableMagicCall<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall>`
+    :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall`
     see `Enable other Features`_.
 
 Writing to Arrays
@@ -262,8 +262,7 @@ Writing to Arrays
 
 The ``PropertyAccessor`` class can do more than just read an array, it can
 also write to an array. This can be achieved using the
-:method:`PropertyAccessor::setValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue>`
-method::
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue` method::
 
     // ...
     $person = [];
@@ -399,10 +398,9 @@ Checking Property Paths
 -----------------------
 
 When you want to check whether
-:method:`PropertyAccessor::getValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue>`
-can safely be called without actually calling that method, you can use
-:method:`PropertyAccessor::isReadable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable>`
-instead::
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue` can
+safely be called without actually calling that method, you can use
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable` instead::
 
     $person = new Person();
 
@@ -410,9 +408,8 @@ instead::
         // ...
     }
 
-The same is possible for :method:`PropertyAccessor::setValue<Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue>`:
-Call the
-:method:`PropertyAccessor::isWritable<Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable>`
+The same is possible for :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue`:
+Call the :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable`
 method to find out whether a property path can be updated::
 
     $person = new Person();
