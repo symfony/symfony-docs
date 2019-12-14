@@ -157,6 +157,7 @@ Instead of dealing directly with the messages in the middleware you receive the 
 Hence you can inspect the envelope content and its stamps, or add any::
 
     use App\Message\Stamp\AnotherStamp;
+    use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
     use Symfony\Component\Messenger\Middleware\StackInterface;
     use Symfony\Component\Messenger\Stamp\ReceivedStamp;

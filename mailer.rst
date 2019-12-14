@@ -117,7 +117,9 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
                 ->text('Sending emails is fun again!')
                 ->html('<p>See Twig integration for better HTML integration!</p>');
 
-            $mailer->send($email);
+            /** @var Symfony\Component\Mailer\SentMessage $sentEmail */
+            $sentEmail = $mailer->send($email);
+            // $messageId = $sentEmail->getMessageId();
 
             // ...
         }
@@ -156,7 +158,8 @@ both strings or address objects::
 
     Instead of calling ``->from()`` *every* time you create a new email, you can
     create an :doc:`event subscriber </event_dispatcher>` and listen to the
-    ``MessageEvent::class`` event to set the same ``From`` email to all messages.
+    :class:`Symfony\\Component\\Mailer\\Event\\MessageEvent` event to set the
+    same ``From`` email to all messages.
 
 Multiple addresses are defined with the ``addXXX()`` methods::
 
