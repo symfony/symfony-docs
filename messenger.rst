@@ -50,9 +50,10 @@ serialized::
 
 .. _messenger-handler:
 
-A message handler is a PHP callable, the recommended way to create it is to create a class that
-implements ``MessageHandlerInterface`` and has an ``__invoke()`` method that's
-type-hinted with the message class (or a message interface)::
+A message handler is a PHP callable, the recommended way to create it is to
+create a class that implements :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
+and has an ``__invoke()`` method that's type-hinted with the message class (or a
+message interface)::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
@@ -111,7 +112,7 @@ Transports: Async/Queued Messages
 By default, messages are handled as soon as they are dispatched. If you want
 to handle a message asynchronously, you can configure a transport. A transport
 is capable of sending messages (e.g. to a queueing system) and then
-:ref:`receiving them via a worker<messenger-worker>`. Messenger supports
+:ref:`receiving them via a worker <messenger-worker>`. Messenger supports
 :ref:`multiple transports <messenger-transports-config>`.
 
 .. note::
@@ -503,7 +504,7 @@ different messages to them. For example:
                             # queue_name is specific to the doctrine transport
                             queue_name: high
 
-                            # for amqp send to a separate exchange then queue
+                            # for AMQP send to a separate exchange then queue
                             #exchange:
                             #    name: high
                             #queues:
@@ -1265,7 +1266,7 @@ Envelopes & Stamps
 ~~~~~~~~~~~~~~~~~~
 
 A message can be any PHP object. Sometimes, you may need to configure something
-extra about the message - like the way it should be handled inside Amqp or adding
+extra about the message - like the way it should be handled inside AMQP or adding
 a delay before the message should be handled. You can do that by adding a "stamp"
 to your message::
 
@@ -1319,8 +1320,8 @@ for each bus looks like this:
 
 .. note::
 
-    These middleware names are actually shortcuts names. The real service ids
-    are prefixed with ``messenger.middleware.``.
+    These middleware names are actually shortcut names. The real service ids
+    are prefixed with ``messenger.middleware.`` (e.g. ``messenger.middleware.handle_message``).
 
 The middleware are executed when the message is dispatched but *also* again when
 a message is received via the worker (for messages that were sent to a transport
