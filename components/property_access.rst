@@ -158,13 +158,13 @@ getters, this means that you can do something like this::
     $person = new Person();
 
     if ($propertyAccessor->getValue($person, 'author')) {
-        var_dump('He is an author');
+        var_dump('This person is an author');
     }
     if ($propertyAccessor->getValue($person, 'children')) {
-        var_dump('He has children');
+        var_dump('This person has children');
     }
 
-This will produce: ``He is an author``
+This will produce: ``This person is an author``
 
 Accessing a non Existing Property Path
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
