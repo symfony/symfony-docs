@@ -221,7 +221,7 @@ so, get the entity manager via the service container as follows::
          */
         private $entityManager;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             $kernel = self::bootKernel();
 
@@ -240,7 +240,7 @@ so, get the entity manager via the service container as follows::
             $this->assertSame(14.50, $product->getPrice());
         }
 
-        protected function tearDown()
+        protected function tearDown(): void
         {
             parent::tearDown();
 
