@@ -22,14 +22,9 @@ Installation
 Usage
 -----
 
-The ErrorHandler component provides several tools to help you debug PHP code:
-
-* An **error handler** that turns PHP errors into exceptions;
-* An **exception handler** that turns uncaught PHP exceptions into nice PHP responses;
-* A **debug class loader** that provides better errors when a class is not found.
-
+The ErrorHandler component provides several tools to help you debug PHP code.
 Call this method (e.g. in your :ref:`front controller <architecture-front-controller>`)
-to enable all these features in your application::
+to enable all of them in your application::
 
     // public/index.php
     use Symfony\Component\ErrorHandler\Debug;
@@ -52,9 +47,10 @@ Turning PHP Errors into Exceptions
 ----------------------------------
 
 The :class:`Symfony\\Component\\ErrorHandler\\ErrorHandler` class catches PHP
-errors and turns them into PHP's :phpclass:`ErrorException` objects, except for
-fatal PHP errors, which are turned into Symfony's
-:class:`Symfony\\Component\\ErrorHandler\\Exception\\FatalErrorException` objects.
+errors and uncaught PHP exceptions and turns them into PHP's
+:phpclass:`ErrorException` objects, except for fatal PHP errors, which are
+turned into Symfony's :class:`Symfony\\Component\\ErrorHandler\\Exception\\FatalErrorException`
+objects.
 
 If the application uses the FrameworkBundle, this error handler is enabled by
 default in the :ref:`production environment <configuration-environments>`
@@ -119,26 +115,6 @@ wrap several function calls inside an anonymous function::
 
         return $data;
     });
-
-Debugging Uncaught PHP Exceptions
----------------------------------
-
-The :class:`Symfony\\Component\\ErrorHandler\\ExceptionHandler` class catches
-uncaught PHP exceptions and turns them into a nice response, so you can debug
-them. It is useful in :ref:`debug mode <debug-mode>` to replace the default
-PHP/XDebug output with something prettier and more useful.
-
-If the :doc:`HttpFoundation component </components/http_foundation>` is
-available, the handler returns a Symfony's
-:class:`Symfony\\Component\\HttpFoundation\\Response` object. Otherwise, it returns
-a generic PHP response.
-
-Use the following code (e.g. in your :ref:`front controller <architecture-front-controller>`)
-to enable this exception handler::
-
-    use Symfony\Component\ErrorHandler\ExceptionHandler;
-
-    ExceptionHandler::register();
 
 .. _component-debug-class-loader:
 

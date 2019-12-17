@@ -1165,6 +1165,8 @@ the common configuration using options when importing the routes.
             # An imported route with an empty URL will become "/blog/"
             # Uncomment this option to make that URL "/blog" instead
             # trailing_slash_on_root: false
+            # you can optionally exclude some files/subdirectories when loading annotations
+            # exclude: '../src/Controller/{DebugEmailController}.php'
 
     .. code-block:: xml
 
@@ -1178,11 +1180,13 @@ the common configuration using options when importing the routes.
             <!--
                 the 'prefix' value is added to the beginning of all imported route URLs
                 the 'name-prefix' value is added to the beginning of all imported route names
+                the 'exclude' option defines the files or subdirectories ignored when loading annotations
             -->
             <import resource="../src/Controller/"
                 type="annotation"
                 prefix="/blog"
-                name-prefix="blog_">
+                name-prefix="blog_"
+                exclude="../src/Controller/{DebugEmailController}.php">
                 <!-- these requirements are added to all imported routes -->
                 <requirement key="_locale">en|es|fr</requirement>
             </import>
@@ -1202,6 +1206,8 @@ the common configuration using options when importing the routes.
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
+            // use the optional fifth argument of import() to exclude some files
+            // or subdirectories when loading annotations
             $routes->import('../src/Controller/', 'annotation')
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
