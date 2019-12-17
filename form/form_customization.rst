@@ -98,7 +98,7 @@ class to the rendered input text field:
 
 .. code-block:: twig
 
-    {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
+    {{ form_widget(form.task, {'attr': {'class': 'task_field'} }) }}
 
 .. note::
 
@@ -219,7 +219,7 @@ label you want to display as the second argument.
     {{ form_label(form.name) }}
 
     {# The two following syntaxes are equivalent #}
-    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}}) }}
+    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'} }) }}
 
     {{ form_label(form.name, null, {
         'label': 'Your name',
@@ -266,7 +266,7 @@ form or collection of fields, each underlying form row will be rendered.
 .. code-block:: twig
 
     {# render a widget, but add a "foo" class to it #}
-    {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'foo'} }) }}
 
 The second argument to ``form_widget()`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
