@@ -4,6 +4,11 @@
 How to Configure Monolog to Email Errors
 ========================================
 
+.. caution::
+
+    This feature is not compatible yet with the new :doc:`Symfony mailer </mailer>`,
+    so it requires using SwiftMailer.
+
 `Monolog`_ can be configured to send an email when an error occurs with an
 application. The configuration for this requires a few nested handlers
 in order to avoid receiving too many emails. This configuration looks
