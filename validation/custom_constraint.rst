@@ -93,11 +93,6 @@ The validator class is also simple, and only has one required method ``validate(
         }
     }
 
-.. versionadded:: 4.4
-
-    The feature to allow passing an object as the ``buildViolation()`` argument
-    was introduced in Symfony 4.4.
-
 Inside ``validate``, you don't need to return a value. Instead, you add violations
 to the validator's ``context`` property and a value will be considered valid
 if it causes no violations. The ``buildViolation()`` method takes the error
