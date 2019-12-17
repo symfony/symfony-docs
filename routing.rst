@@ -1221,11 +1221,6 @@ the common configuration using options when importing the routes.
             ;
         };
 
-.. versionadded:: 4.4
-
-    The option to exclude some files or subdirectories when loading annotations
-    was introduced in Symfony 4.4.
-
 In this example, the route of the ``index()`` action will be called ``blog_index``
 and its URL will be ``/blog/``. The route of the ``show()`` action will be called
 ``blog_show`` and its URL will be ``/blog/{_locale}/posts/{slug}``. Both routes
