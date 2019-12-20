@@ -12,6 +12,7 @@ Symfony Application Checklist
 -----------------------------
 
 #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
+#. :ref:`Dump the service container into a single file <performance-service-container-single-file>`
 
 Production Server Checklist
 ---------------------------
@@ -32,6 +33,51 @@ If your production server still uses the legacy APC PHP extension instead of
 OPcache, install the `APCu Polyfill component`_ in your application to enable
 compatibility with `APCu PHP functions`_ and unlock support for advanced Symfony
 features, such as the APCu Cache adapter.
+
+.. _performance-service-container-single-file:
+
+Dump the Service Container into a Single File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.4
+
+    The ``container.dumper.inline_factories`` parameter was introduced in
+    Symfony 4.4.
+
+Symfony compiles the :doc:`service container </service_container>` into multiple
+small files by default. Set this parameter to ``true`` to compile the entire
+container into a single file, which could improve performance when using
+"class preloading" in PHP 7.4 or newer versions:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            # ...
+            container.dumper.inline_factories: true
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <!-- ... -->
+                <parameter key="container.dumper.inline_factories">true</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+
+        // ...
+        $container->setParameter('container.dumper.inline_factories', true);
 
 .. _performance-use-opcache:
 
