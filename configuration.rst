@@ -563,7 +563,7 @@ Configuring Environment Variables in Production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In production, the ``.env`` files are also parsed and loaded on each request so
-you can override the env vars already defined in the server. In order to improve
+you can add env vars to those already defined in the server. In order to improve
 performance, you can run the ``dump-env`` command (available when using
 :ref:`Symfony Flex <symfony-flex>` 1.2 or later).
 
