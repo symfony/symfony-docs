@@ -139,16 +139,16 @@ environment variables using the second argument of the ``run()``,
     // On both Unix-like and Windows
     $process->run(null, ['MESSAGE' => 'Something to output']);
 
-To help write command lines that are independent from the operating system,
-you can also write the above code as such::
+If you prefer to create portable commands that are independent from the
+operating system, you can write the above command as follows::
 
-    // On both Unix-like and Windows
+    // works the same on Windows , Linux and macOS
     $process = Process::fromShellCommandline('echo "${:MESSAGE}"');
 
-This requires using a syntax that is specific to the component: when enclosing
-a variable name into ``"{$:`` and ``}"`` exactly, the process object will
-replace it with its escaped value, or will fail if the variable is not found in
-the list of environment variables attached to the command.
+Portable commands require using a syntax that is specific to the component: when
+enclosing a variable name into ``"{$:`` and ``}"`` exactly, the process object
+will replace it with its escaped value, or will fail if the variable is not
+found in the list of environment variables attached to the command.
 
 .. versionadded:: 4.4
 
