@@ -112,7 +112,7 @@ Using Features From the OS Shell
 
 Using array of arguments is the recommended way to define commands. This
 saves you from any escaping and allows sending signals seamlessly
-(e.g. to stop processes before completion)::
+(e.g. to stop processes while they run)::
 
     $process = new Process(['/path/command', '--option', 'argument', 'etc.']);
     $process = new Process(['/path/to/php', '--define', 'memory_limit=1024M', '/path/to/script.php']);
@@ -138,6 +138,21 @@ environment variables using the second argument of the ``run()``,
 
     // On both Unix-like and Windows
     $process->run(null, ['MESSAGE' => 'Something to output']);
+
+To help write command lines that are independent from the operating system,
+you can also write the above code as such::
+
+    // On both Unix-like and Windows
+    $process = Process::fromShellCommandline('echo "${:MESSAGE}"');
+
+This requires using a syntax that is specific to the component: when enclosing
+a variable name into ``"{$:`` and ``}"`` exactly, the process object will
+replace it with its escaped value, or will fail if the variable is not found in
+the list of environment variables attached to the command.
+
+.. versionadded:: 4.4
+
+    Portable command lines were introduced in Symfony 4.4.
 
 Setting Environment Variables for Processes
 -------------------------------------------
@@ -367,27 +382,6 @@ instead::
     EOF
     );
     $process->run();
-
-Using a Prepared Command Line
------------------------------
-
-You can run the process by using a a prepared command line using the
-double bracket notation. You can use a placeholder in order to have a
-process that can only be changed with the values and without changing
-the PHP code::
-
-    use Symfony\Component\Process\Process;
-
-    $process = Process::fromShellCommandline('echo "$name"');
-    $process->run(null, ['name' => 'Elsa']);
-
-.. caution::
-
-    A prepared command line will not be escaped automatically!
-
-.. versionadded:: 4.4
-
-    Prepared command lines were introduced in Symfony 4.4.
 
 Process Timeout
 ---------------
