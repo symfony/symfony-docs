@@ -17,7 +17,7 @@ DSN. You will need a transport factory::
 
     class YourTransportFactory implements TransportFactoryInterface
     {
-        public function createTransport(string $dsn, array $options): TransportInterface
+        public function createTransport(string $dsn, array $options, SerializerInterface $serializer): TransportInterface
         {
             return new YourTransport(/* ... */);
         }
