@@ -221,13 +221,13 @@ For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`
 option details below.
 
-Available Options
------------------
+Options
+-------
 
 .. _reference-constraint-expression-option:
 
-expression
-~~~~~~~~~~
+``expression``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
@@ -248,8 +248,8 @@ in your expression:
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not valid.``
 

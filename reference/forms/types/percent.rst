@@ -41,16 +41,16 @@ This field adds a percentage sign "``%``" after the input box.
 Field Options
 -------------
 
-scale
-~~~~~
+``scale``
+~~~~~~~~~
 
 **type**: ``integer`` **default**: ``0``
 
 By default, the input numbers are rounded. To allow for more decimal places,
 use this option.
 
-type
-~~~~
+``type``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``fractional``
 

@@ -1,4 +1,4 @@
-Isbn
+ISBN
 ====
 
 This constraint validates that an `International Standard Book Number (ISBN)`_
@@ -95,11 +95,11 @@ on an object that will contain an ISBN.
 
 .. include:: /reference/constraints/_empty-values-are-valid.rst.inc
 
-Available Options
------------------
+Options
+-------
 
-type
-~~~~
+``type``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -108,8 +108,8 @@ and ``null`` to accept any kind of ISBN.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -124,8 +124,8 @@ You can use the following parameters in this message:
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
 
-isbn10Message
-~~~~~~~~~~~~~
+``isbn10Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-10.``
 
@@ -140,8 +140,8 @@ You can use the following parameters in this message:
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
 
-isbn13Message
-~~~~~~~~~~~~~
+``isbn13Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-13.``
 
@@ -156,8 +156,8 @@ You can use the following parameters in this message:
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
 
-bothIsbnMessage
-~~~~~~~~~~~~~~~
+``bothIsbnMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
 

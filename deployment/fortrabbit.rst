@@ -182,7 +182,7 @@ Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~
 
 Set the ``SYMFONY_ENV`` environment variable to ``prod`` to make sure the right
-config files get loaded. ENV vars are configuable in fortrabbit Dashboard as well.
+config files get loaded. ENV vars are configurable in fortrabbit Dashboard as well.
 
 Document Root
 ~~~~~~~~~~~~~
@@ -198,7 +198,7 @@ It is assumed that your codebase is under version-control with Git and dependenc
 are managed with Composer (locally).
 
 Every time you push to fortrabbit composer install runs before your code gets
-deployed. To finetune the deployment behavior put a `fortrabbit.yml`_. deployment
+deployed. To fine-tune the deployment behavior put a `fortrabbit.yml`_. deployment
 file (optional) in the project root.
 
 Add fortrabbit as a (additional) Git remote and add your configuration changes:

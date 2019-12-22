@@ -66,7 +66,7 @@ following script to determine your web server user and grant the needed permissi
 4. Without Using ACL
 ~~~~~~~~~~~~~~~~~~~~
 
-If none of the previous methods work for you, change the umask so that the
+If none of the previous methods work for you, change the ``umask`` so that the
 cache and log directories are group-writable or world-writable (depending
 if the web server user and the command line user are in the same group or not).
 To achieve this, put the following line at the beginning of the ``bin/console``,
@@ -80,7 +80,7 @@ To achieve this, put the following line at the beginning of the ``bin/console``,
 
 .. note::
 
-    Changing the umask is not thread-safe, so the ACL methods are recommended
+    Changing the ``umask`` is not thread-safe, so the ACL methods are recommended
     when they are available.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs

@@ -15,7 +15,7 @@ Before submitting a bug:
   framework;
 
 * Ask for assistance on `Stack Overflow`_, on the #support channel of
-  `the Symfony Slack`_ or on the #symfony `IRC channel`_ if you're not sure if
+  `the Symfony Slack`_ or on the ``#symfony`` `IRC channel`_ if you're not sure if
   your issue really is a bug.
 
 If your problem definitely looks like a bug, report it using the official bug

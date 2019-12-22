@@ -8,8 +8,8 @@ Every Symfony application consists of a collection of bundles that add useful to
 (:doc:`services </service_container>`) to your project. Each bundle can be customized
 via configuration files that live - by default - in the ``app/config`` directory.
 
-Configuration: config.yml
--------------------------
+Configuration: ``config.yml``
+-----------------------------
 
 The main configuration file is called ``config.yml``:
 
@@ -297,8 +297,8 @@ a controller - see :ref:`service-container-parameters`.
 
 .. _config-parameters-yml:
 
-The Special parameters.yml File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The Special ``parameters.yml`` File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 On the surface, ``parameters.yml`` is just like any other configuration file: it
 is imported by ``config.yml`` and defines several parameters:

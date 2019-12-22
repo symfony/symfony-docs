@@ -54,13 +54,13 @@ Tag Name                                  Usage
 `validator.initializer`_                  Register a service that initializes objects before validation
 ========================================  ========================================================================
 
-assetic.asset
--------------
+``assetic.asset``
+-----------------
 
 **Purpose**: Register an asset with the current asset manager
 
-assetic.factory_worker
-----------------------
+``assetic.factory_worker``
+--------------------------
 
 **Purpose**: Add a factory worker
 
@@ -116,8 +116,8 @@ And then register it as a tagged service:
             ->addTag('assetic.factory_worker')
         ;
 
-assetic.filter
---------------
+``assetic.filter``
+------------------
 
 **Purpose**: Register a filter
 
@@ -194,8 +194,8 @@ In order to do that, you must define your filter service in a separate xml
 config file and point to this file's path via the ``assetic.filters.my_filter.resource``
 configuration key.
 
-assetic.formula_loader
-----------------------
+``assetic.formula_loader``
+--------------------------
 
 **Purpose**: Add a formula loader to the current asset manager
 
@@ -206,32 +206,32 @@ instance, twig template). Assetic ships loaders for PHP and Twig templates.
 
 An ``alias`` attribute defines the name of the loader.
 
-assetic.formula_resource
-------------------------
+``assetic.formula_resource``
+----------------------------
 
 **Purpose**: Adds a resource to the current asset manager
 
 A resource is something formulae can be loaded from. For instance, Twig
 templates are resources.
 
-assetic.templating.php
-----------------------
+``assetic.templating.php``
+--------------------------
 
 **Purpose**: Remove this service if PHP templating is disabled
 
 The tagged service will be removed from the container if the
-``framework.templating.engines`` config section does not contain php.
+``framework.templating.engines`` config section does not contain PHP.
 
-assetic.templating.twig
------------------------
+``assetic.templating.twig``
+---------------------------
 
 **Purpose**: Remove this service if Twig templating is disabled
 
 The tagged service will be removed from the container if
 ``framework.templating.engines`` config section does not contain ``twig``.
 
-auto_alias
-----------
+``auto_alias``
+--------------
 
 **Purpose**: Define aliases based on the value of container parameters
 
@@ -355,16 +355,16 @@ wrapping their names with ``%`` characters).
     You need to manually add the ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
     compiler pass to the container for this feature to work.
 
-console.command
----------------
+``console.command``
+-------------------
 
 **Purpose**: Add a command to the application
 
 For details on registering your own commands in the service container, read
 :doc:`/console/commands_as_services`.
 
-container.hot_path
-------------------
+``container.hot_path``
+----------------------
 
 .. versionadded:: 3.4
 
@@ -384,8 +384,8 @@ for services and their class hierarchy. The result is as significant performance
 
 Use this tag with great caution, you have to be sure that the tagged service is always used.
 
-controller.argument_value_resolver
-----------------------------------
+``controller.argument_value_resolver``
+--------------------------------------
 
 **Purpose**: Register a value resolver for controller arguments such as ``Request``
 
@@ -394,24 +394,24 @@ Value resolvers implement the
 and are used to resolve argument values for controllers as described here:
 :doc:`/controller/argument_value_resolver`.
 
-data_collector
---------------
+``data_collector``
+------------------
 
 **Purpose**: Create a class that collects custom data for the profiler
 
 For details on creating your own custom data collection, read the
 :doc:`/profiler/data_collector` article.
 
-doctrine.event_listener
------------------------
+``doctrine.event_listener``
+---------------------------
 
 **Purpose**: Add a Doctrine event listener
 
 For details on creating Doctrine event listeners, read the
 :doc:`/doctrine/event_listeners_subscribers` article.
 
-doctrine.event_subscriber
--------------------------
+``doctrine.event_subscriber``
+-----------------------------
 
 **Purpose**: Add a Doctrine event subscriber
 
@@ -420,16 +420,16 @@ For details on creating Doctrine event subscribers, read the
 
 .. _dic-tags-form-type:
 
-form.type
----------
+``form.type``
+-------------
 
 **Purpose**: Create a custom form field type
 
 For details on creating your own custom form type, read the
 :doc:`/form/create_custom_field_type` article.
 
-form.type_extension
--------------------
+``form.type_extension``
+-----------------------
 
 **Purpose**: Create a custom "form extension"
 
@@ -438,8 +438,8 @@ For details on creating Form type extensions, read the
 
 .. _reference-dic-type_guesser:
 
-form.type_guesser
------------------
+``form.type_guesser``
+---------------------
 
 **Purpose**: Add your own logic for "form type guessing"
 
@@ -453,8 +453,8 @@ metadata and Doctrine metadata (if you're using Doctrine) or Propel metadata
     For information on how to create your own type guesser, see
     :doc:`/form/type_guesser`.
 
-kernel.cache_clearer
---------------------
+``kernel.cache_clearer``
+------------------------
 
 **Purpose**: Register your service to be called during the cache clearing
 process
@@ -515,8 +515,8 @@ can also register it manually:
             ->addTag('kernel.cache_clearer')
         ;
 
-kernel.cache_warmer
--------------------
+``kernel.cache_warmer``
+-----------------------
 
 **Purpose**: Register your service to be called during the cache warming
 process
@@ -617,8 +617,8 @@ with the following command:
 
 .. _dic-tags-kernel-event-listener:
 
-kernel.event_listener
----------------------
+``kernel.event_listener``
+-------------------------
 
 **Purpose**: To listen to different events/hooks in Symfony
 
@@ -637,16 +637,16 @@ see the :doc:`Symfony Events Reference </reference/events>`.
 
 .. _dic-tags-kernel-event-subscriber:
 
-kernel.event_subscriber
------------------------
+``kernel.event_subscriber``
+---------------------------
 
 **Purpose**: To subscribe to a set of different events/hooks in Symfony
 
 This is an alternative way to create an event listener, and is the recommended
 way (instead of using ``kernel.event_listener``). See :ref:`events-subscriber`.
 
-kernel.fragment_renderer
-------------------------
+``kernel.fragment_renderer``
+----------------------------
 
 **Purpose**: Add a new HTTP content rendering strategy
 
@@ -655,8 +655,8 @@ To add a new rendering strategy - in addition to the core strategies like
 :class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
 register it as a service, then tag it with ``kernel.fragment_renderer``.
 
-kernel.reset
-------------
+``kernel.reset``
+----------------
 
 **Purpose**: Clean up services between requests
 
@@ -672,8 +672,8 @@ of the profiler to delete all their information.
 
 .. _dic_tags-monolog:
 
-monolog.logger
---------------
+``monolog.logger``
+------------------
 
 **Purpose**: To use a custom logging channel with Monolog
 
@@ -724,8 +724,8 @@ channel when injecting the logger in a service.
 
 .. _dic_tags-monolog-processor:
 
-monolog.processor
------------------
+``monolog.processor``
+---------------------
 
 **Purpose**: Add a custom processor for logging
 
@@ -854,8 +854,8 @@ You can also add a processor for a specific logging channel by using the
     You cannot use both the ``handler`` and ``channel`` attributes for the
     same tag as handlers are shared between all channels.
 
-routing.loader
---------------
+``routing.loader``
+------------------
 
 **Purpose**: Register a custom service that loads routes
 
@@ -896,8 +896,8 @@ of your configuration and tag it with ``routing.loader``:
 
 For more information, see :doc:`/routing/custom_route_loader`.
 
-routing.expression_language_provider
-------------------------------------
+``routing.expression_language_provider``
+----------------------------------------
 
 **Purpose**: Register a provider for expression language functions in routing
 
@@ -906,8 +906,8 @@ This tag is used to automatically register
 for the routing expression component. Using these providers, you can add custom
 functions to the routing expression language.
 
-security.expression_language_provider
--------------------------------------
+``security.expression_language_provider``
+-----------------------------------------
 
 **Purpose**: Register a provider for expression language functions in security
 
@@ -916,8 +916,8 @@ This tag is used to automatically register :ref:`expression function providers
 component. Using these providers, you can add custom functions to the security
 expression language.
 
-security.remember_me_aware
---------------------------
+``security.remember_me_aware``
+------------------------------
 
 **Purpose**: To allow remember me authentication
 
@@ -932,8 +932,8 @@ and your custom authentication listener extends
 then your custom authentication listener will automatically have this tag
 applied and it will function automatically.
 
-security.voter
---------------
+``security.voter``
+------------------
 
 **Purpose**: To add a custom voter to Symfony's authorization logic
 
@@ -945,8 +945,8 @@ For more information, read the :doc:`/security/voters` article.
 
 .. _reference-dic-tags-serializer-encoder:
 
-serializer.encoder
-------------------
+``serializer.encoder``
+----------------------
 
 **Purpose**: Register a new encoder in the ``serializer`` service
 
@@ -957,8 +957,8 @@ For more details, see :doc:`/serializer`.
 
 .. _reference-dic-tags-serializer-normalizer:
 
-serializer.normalizer
----------------------
+``serializer.normalizer``
+-------------------------
 
 **Purpose**: Register a new normalizer in the Serializer service
 
@@ -971,8 +971,8 @@ The priorities of the default normalizers can be found in the
 :method:`Symfony\\Bundle\\FrameworkBundle\\DependencyInjection\\FrameworkExtension::registerSerializerConfiguration`
 method.
 
-swiftmailer.default.plugin
---------------------------
+``swiftmailer.default.plugin``
+------------------------------
 
 **Purpose**: Register a custom SwiftMailer Plugin
 
@@ -993,8 +993,8 @@ For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
 Several SwiftMailer plugins are core to Symfony and can be activated via
 different configuration. For details, see :doc:`/reference/configuration/swiftmailer`.
 
-templating.helper
------------------
+``templating.helper``
+---------------------
 
 **Purpose**: Make your service available in PHP templates
 
@@ -1037,8 +1037,8 @@ templates):
 
 .. _dic-tags-translation-loader:
 
-translation.loader
-------------------
+``translation.loader``
+----------------------
 
 **Purpose**: To register a custom service that loads translations
 
@@ -1103,8 +1103,8 @@ the ``load()`` method on your custom loader.
 
 .. _reference-dic-tags-translation-extractor:
 
-translation.extractor
----------------------
+``translation.extractor``
+-------------------------
 
 **Purpose**: To register a custom service that extracts messages from a
 file
@@ -1178,8 +1178,8 @@ required option: ``alias``, which defines the name of the extractor::
         $container->register(CustomExtractor::class)
             ->addTag('translation.extractor', ['alias' => 'foo']);
 
-translation.dumper
-------------------
+``translation.dumper``
+----------------------
 
 **Purpose**: To register a custom service that dumps messages to a file
 
@@ -1242,8 +1242,8 @@ This is the name that's used to determine which dumper should be used.
 
 .. _reference-dic-tags-twig-extension:
 
-twig.extension
---------------
+``twig.extension``
+------------------
 
 **Purpose**: To register a custom Twig Extension
 
@@ -1288,8 +1288,8 @@ For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the
 :doc:`/templating/twig_extension` article.
 
-twig.loader
------------
+``twig.loader``
+---------------
 
 **Purpose**: Register a custom service that loads Twig templates
 
@@ -1340,16 +1340,16 @@ also register it manually:
     The ``priority`` is optional and its value is a positive or negative integer
     that defaults to ``0``. Loaders with higher numbers are tried first.
 
-validator.constraint_validator
-------------------------------
+``validator.constraint_validator``
+----------------------------------
 
 **Purpose**: Create your own custom validation constraint
 
 This tag allows you to create and register your own custom validation constraint.
 For more information, read the :doc:`/validation/custom_constraint` article.
 
-validator.initializer
----------------------
+``validator.initializer``
+-------------------------
 
 **Purpose**: Register a service that initializes objects before validation
 

@@ -21,7 +21,7 @@ Spool Using Memory
 When you use spooling to store the emails to memory, they will get sent right
 before the kernel terminates. This means the email only gets sent if the whole
 request got executed without any unhandled exception or any errors. To configure
-swiftmailer with the memory option, use the following configuration:
+Swift Mailer with the memory option, use the following configuration:
 
 .. configuration-block::
 
@@ -63,7 +63,7 @@ Spool Using Files
 When you use the filesystem for spooling, Symfony creates a folder in the given
 path for each mail service (e.g. "default" for the default service). This folder
 will contain files for each email in the spool. So make sure this directory is
-writable by Symfony (or your webserver/php)!
+writable by Symfony (or your webserver/PHP)!
 
 In order to use the spool with files, use the following configuration:
 
@@ -145,7 +145,7 @@ interval.
 
 .. caution::
 
-    When you create a message with SwiftMailer, it generates a ``Swift_Message``
+    When you create a message with Swift Mailer, it generates a ``Swift_Message``
     class. If the ``swiftmailer`` service is lazy loaded, it generates instead a
     proxy class named ``Swift_Message_<someRandomCharacters>``.
 

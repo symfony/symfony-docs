@@ -101,8 +101,8 @@ be displayed when the two fields do not match each other.
 Field Options
 -------------
 
-first_name
-~~~~~~~~~~
+``first_name``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``first``
 
@@ -112,8 +112,8 @@ will be available under the key assigned to the ``RepeatedType`` field itself
 (e.g.  ``password``). However, if you don't specify a label, this field
 name is used to "guess" the label for you.
 
-first_options
-~~~~~~~~~~~~~
+``first_options``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -129,8 +129,8 @@ the label::
         'second_options' => ['label' => 'Repeat Password'],
     ]);
 
-options
-~~~~~~~
+``options``
+~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -140,15 +140,15 @@ types. For example, if the ``type`` option is set to ``password``, this
 array might contain the options ``always_empty`` or ``required`` - both
 options that are supported by the ``PasswordType`` field.
 
-second_name
-~~~~~~~~~~~
+``second_name``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``second``
 
 The same as ``first_name``, but for the second field.
 
-second_options
-~~~~~~~~~~~~~~
+``second_options``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -156,8 +156,8 @@ Additional options (will be merged into `options`_ above) that should be
 passed *only* to the second field. This is especially useful for customizing
 the label (see `first_options`_).
 
-type
-~~~~
+``type``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\TextType``
 
@@ -167,8 +167,8 @@ The two underlying fields will be of this field type. For example, passing
 Overridden Options
 ------------------
 
-error_bubbling
-~~~~~~~~~~~~~~
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
 
 **default**: ``false``
 

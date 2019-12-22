@@ -53,8 +53,8 @@ Field Options
 
 .. _form-option-allow-extra-fields:
 
-allow_extra_fields
-~~~~~~~~~~~~~~~~~~
+``allow_extra_fields``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

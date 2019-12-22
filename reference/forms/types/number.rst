@@ -41,8 +41,8 @@ Field Options
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-scale
-~~~~~
+``scale``
+~~~~~~~~~
 
 **type**: ``integer`` **default**: Locale-specific (usually around ``3``)
 
@@ -51,8 +51,8 @@ the submitted value (via ``rounding_mode``). For example, if ``scale`` is set
 to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
 ``20.12`` (depending on your `rounding_mode`_).
 
-rounding_mode
-~~~~~~~~~~~~~
+``rounding_mode``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALF_UP``
 

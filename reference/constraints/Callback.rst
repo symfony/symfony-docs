@@ -259,8 +259,8 @@ Options
 
 .. _callback-option:
 
-callback
-~~~~~~~~
+``callback``
+~~~~~~~~~~~~
 
 **type**: ``string``, ``array`` or ``Closure`` [:ref:`default option <validation-default-option>`]
 

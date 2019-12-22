@@ -64,7 +64,7 @@ field as two different choice fields::
     ]);
 
 The ``input`` option *must* be changed to match the type of the underlying
-date data. For example, if the ``startTime`` field's data were a unix timestamp,
+date data. For example, if the ``startTime`` field's data were a Unix timestamp,
 you'd need to set ``input`` to ``timestamp``::
 
     use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -83,8 +83,8 @@ Field Options
 
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
-placeholder
-~~~~~~~~~~~
+``placeholder``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` | ``array``
 
@@ -109,8 +109,8 @@ values for the hour, minute and second fields::
 
 .. include:: /reference/forms/types/options/html5.rst.inc
 
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``datetime``
 
@@ -133,8 +133,8 @@ this format.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-widget
-~~~~~~
+``widget``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: ``choice``
 
@@ -164,8 +164,8 @@ following:
 Overridden Options
 ------------------
 
-by_reference
-~~~~~~~~~~~~
+``by_reference``
+~~~~~~~~~~~~~~~~
 
 **default**: ``false``
 
@@ -175,8 +175,8 @@ The ``DateTime`` classes are treated as immutable objects.
 
 .. include:: /reference/forms/types/options/data_class_date.rst.inc
 
-error_bubbling
-~~~~~~~~~~~~~~
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
 
 **default**: ``false``
 
@@ -202,15 +202,15 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 Form Variables
 --------------
 
-+--------------+-------------+----------------------------------------------------------------------+
-| Variable     | Type        | Usage                                                                |
-+==============+=============+======================================================================+
-| widget       | ``mixed``   | The value of the `widget`_ option.                                   |
-+--------------+-------------+----------------------------------------------------------------------+
-| with_minutes | ``boolean`` | The value of the `with_minutes`_ option.                             |
-+--------------+-------------+----------------------------------------------------------------------+
-| with_seconds | ``boolean`` | The value of the `with_seconds`_ option.                             |
-+--------------+-------------+----------------------------------------------------------------------+
-| type         | ``string``  | Only present when widget is ``single_text`` and HTML5 is activated,  |
-|              |             | contains the input type to use (``datetime``, ``date`` or ``time``). |
-+--------------+-------------+----------------------------------------------------------------------+
++------------------+-------------+----------------------------------------------------------------------+
+| Variable         | Type        | Usage                                                                |
++==================+=============+======================================================================+
+| ``widget``       | ``mixed``   | The value of the `widget`_ option.                                   |
++------------------+-------------+----------------------------------------------------------------------+
+| ``with_minutes`` | ``boolean`` | The value of the `with_minutes`_ option.                             |
++------------------+-------------+----------------------------------------------------------------------+
+| ``with_seconds`` | ``boolean`` | The value of the `with_seconds`_ option.                             |
++------------------+-------------+----------------------------------------------------------------------+
+| ``type``         | ``string``  | Only present when widget is ``single_text`` and HTML5 is activated,  |
+|                  |             | contains the input type to use (``datetime``, ``date`` or ``time``). |
++------------------+-------------+----------------------------------------------------------------------+

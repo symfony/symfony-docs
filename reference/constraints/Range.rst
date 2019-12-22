@@ -318,24 +318,24 @@ can check that a delivery date starts within the next five hours like this:
 Options
 -------
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``number`` or ``string`` (date format)
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``number`` or ``string`` (date format)
 
 This required option is the "max" value. Validation will fail if the given
 value is **greater** than this max value.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
@@ -352,8 +352,8 @@ You can use the following parameters in this message:
 | ``{{ limit }}`` | The lower limit             |
 +-----------------+-----------------------------+
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
@@ -370,8 +370,8 @@ You can use the following parameters in this message:
 | ``{{ limit }}`` | The upper limit             |
 +-----------------+-----------------------------+
 
-invalidMessage
-~~~~~~~~~~~~~~
+``invalidMessage``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
 

@@ -229,52 +229,52 @@ This constraint shares all of its options with the :doc:`File </reference/constr
 constraint. It does, however, modify two of the default option values and
 add several other options.
 
-mimeTypes
-~~~~~~~~~
+``mimeTypes``
+~~~~~~~~~~~~~
 
 **type**: ``array`` or ``string`` **default**: ``image/*``
 
 You can find a list of existing image mime types on the `IANA website`_.
 
-mimeTypesMessage
-~~~~~~~~~~~~~~~~
+``mimeTypesMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This file is not a valid image.``
 
-minWidth
-~~~~~~~~
+``minWidth``
+~~~~~~~~~~~~
 
 **type**: ``integer``
 
 If set, the width of the image file must be greater than or equal to this
 value in pixels.
 
-maxWidth
-~~~~~~~~
+``maxWidth``
+~~~~~~~~~~~~
 
 **type**: ``integer``
 
 If set, the width of the image file must be less than or equal to this
 value in pixels.
 
-minHeight
-~~~~~~~~~
+``minHeight``
+~~~~~~~~~~~~~
 
 **type**: ``integer``
 
 If set, the height of the image file must be greater than or equal to this
 value in pixels.
 
-maxHeight
-~~~~~~~~~
+``maxHeight``
+~~~~~~~~~~~~~
 
 **type**: ``integer``
 
 If set, the height of the image file must be less than or equal to this
 value in pixels.
 
-minPixels
-~~~~~~~~~
+``minPixels``
+~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
 
@@ -285,8 +285,8 @@ minPixels
 If set, the amount of pixels of the image file must be greater than or equal to this
 value.
 
-maxPixels
-~~~~~~~~~
+``maxPixels``
+~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
 
@@ -297,24 +297,24 @@ maxPixels
 If set, the amount of pixels of the image file must be less than or equal to this
 value.
 
-maxRatio
-~~~~~~~~
+``maxRatio``
+~~~~~~~~~~~~
 
 **type**: ``float``
 
 If set, the aspect ratio (``width / height``) of the image file must be less
 than or equal to this value.
 
-minRatio
-~~~~~~~~
+``minRatio``
+~~~~~~~~~~~~
 
 **type**: ``float``
 
 If set, the aspect ratio (``width / height``) of the image file must be greater
 than or equal to this value.
 
-allowSquare
-~~~~~~~~~~~
+``allowSquare``
+~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
@@ -322,22 +322,22 @@ If this option is false, the image cannot be a square. If you want to force
 a square image, then leave this option as its default ``true`` value
 and set `allowLandscape`_ and `allowPortrait`_ both to ``false``.
 
-allowLandscape
-~~~~~~~~~~~~~~
+``allowLandscape``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
 If this option is false, the image cannot be landscape oriented.
 
-allowPortrait
-~~~~~~~~~~~~~
+``allowPortrait``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
 If this option is false, the image cannot be portrait oriented.
 
-detectCorrupted
-~~~~~~~~~~~~~~~
+``detectCorrupted``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -345,8 +345,8 @@ If this option is true, the image contents are validated to ensure that the
 image is not corrupted. This validation is done with PHP's :phpfunction:`imagecreatefromstring`
 function, which requires the `PHP GD extension`_ to be enabled.
 
-sizeNotDetectedMessage
-~~~~~~~~~~~~~~~~~~~~~~
+``sizeNotDetectedMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The size of the image could not be detected.``
 
@@ -356,8 +356,8 @@ options has been set.
 
 This message has no parameters.
 
-maxWidthMessage
-~~~~~~~~~~~~~~~
+``maxWidthMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image width is too big ({{ width }}px).
 Allowed maximum width is {{ max_width }}px.``
@@ -374,8 +374,8 @@ You can use the following parameters in this message:
 | ``{{ max_width }}`` | The maximum allowed width   |
 +---------------------+-----------------------------+
 
-minWidthMessage
-~~~~~~~~~~~~~~~
+``minWidthMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image width is too small ({{ width }}px).
 Minimum width expected is {{ min_width }}px.``
@@ -392,8 +392,8 @@ You can use the following parameters in this message:
 | ``{{ min_width }}`` | The minimum required width  |
 +---------------------+-----------------------------+
 
-maxHeightMessage
-~~~~~~~~~~~~~~~~
+``maxHeightMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image height is too big ({{ height }}px).
 Allowed maximum height is {{ max_height }}px.``
@@ -410,8 +410,8 @@ You can use the following parameters in this message:
 | ``{{ max_height }}`` | The maximum allowed height   |
 +----------------------+------------------------------+
 
-minHeightMessage
-~~~~~~~~~~~~~~~~
+``minHeightMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image height is too small ({{ height }}px).
 Minimum height expected is {{ min_height }}px.``
@@ -428,8 +428,8 @@ You can use the following parameters in this message:
 | ``{{ min_height }}`` | The minimum required height  |
 +----------------------+------------------------------+
 
-maxPixelsMessage
-~~~~~~~~~~~~~~~~
+``maxPixelsMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
 
@@ -454,8 +454,8 @@ You can use the following parameters in this message:
 | ``{{ width }}``      | The current image width               |
 +----------------------+---------------------------------------+
 
-minPixelsMessage
-~~~~~~~~~~~~~~~~
+``minPixelsMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
 
@@ -480,8 +480,8 @@ You can use the following parameters in this message:
 | ``{{ width }}``      | The current image width               |
 +----------------------+---------------------------------------+
 
-maxRatioMessage
-~~~~~~~~~~~~~~~
+``maxRatioMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image ratio is too big ({{ ratio }}).
 Allowed maximum ratio is {{ max_ratio }}``
@@ -498,8 +498,8 @@ You can use the following parameters in this message:
 | ``{{ max_ratio }}`` | The maximum allowed ratio   |
 +---------------------+-----------------------------+
 
-minRatioMessage
-~~~~~~~~~~~~~~~
+``minRatioMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image ratio is too small ({{ ratio }}).
 Minimum ratio expected is {{ min_ratio }}``
@@ -516,8 +516,8 @@ You can use the following parameters in this message:
 | ``{{ min_ratio }}`` | The minimum required ratio  |
 +---------------------+-----------------------------+
 
-allowSquareMessage
-~~~~~~~~~~~~~~~~~~
+``allowSquareMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image is square ({{ width }}x{{ height }}px).
 Square images are not allowed``
@@ -534,8 +534,8 @@ You can use the following parameters in this message:
 | ``{{ height }}`` | The current height |
 +------------------+--------------------+
 
-allowLandscapeMessage
-~~~~~~~~~~~~~~~~~~~~~
+``allowLandscapeMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image is landscape oriented ({{ width }}x{{ height }}px).
 Landscape oriented images are not allowed``
@@ -552,8 +552,8 @@ You can use the following parameters in this message:
 | ``{{ height }}`` | The current height |
 +------------------+--------------------+
 
-allowPortraitMessage
-~~~~~~~~~~~~~~~~~~~~
+``allowPortraitMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image is portrait oriented ({{ width }}x{{ height }}px).
 Portrait oriented images are not allowed``
@@ -570,8 +570,8 @@ You can use the following parameters in this message:
 | ``{{ height }}`` | The current height |
 +------------------+--------------------+
 
-corruptedMessage
-~~~~~~~~~~~~~~~~
+``corruptedMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The image file is corrupted.``
 

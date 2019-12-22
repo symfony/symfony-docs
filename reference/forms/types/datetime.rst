@@ -57,8 +57,8 @@ Field Options
 
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
-date_format
-~~~~~~~~~~~
+``date_format``
+~~~~~~~~~~~~~~~
 
 **type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
 
@@ -69,8 +69,8 @@ for more details.
 The ``date_format`` option does not have any effect when the form is rendered
 as an HTML5 datetime input.
 
-date_widget
-~~~~~~~~~~~
+``date_widget``
+~~~~~~~~~~~~~~~
 
 .. include:: /reference/forms/types/options/date_widget_description.rst.inc
 
@@ -78,8 +78,8 @@ The ``date_widget`` option is ignored when the ``widget`` option is set to ``sin
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-placeholder
-~~~~~~~~~~~
+``placeholder``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` | ``array``
 
@@ -105,8 +105,8 @@ values for the year, month, day, hour, minute and second fields::
         ]
     ]);
 
-format
-~~~~~~
+``format``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\DateTimeType::HTML5_FORMAT``
 
@@ -121,8 +121,8 @@ For more information on valid formats, see `Date/Time Format Syntax`_.
 
 .. include:: /reference/forms/types/options/html5.rst.inc
 
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``datetime``
 
@@ -147,8 +147,8 @@ this format.
 
 .. include:: /reference/forms/types/options/seconds.rst.inc
 
-time_widget
-~~~~~~~~~~~
+``time_widget``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``choice``
 
@@ -158,8 +158,8 @@ The ``time_widget`` option is ignored when the ``widget`` option is set to ``sin
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-widget
-~~~~~~
+``widget``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -176,8 +176,8 @@ with the `date_widget`_ and `time_widget`_ options.
 Overridden Options
 ------------------
 
-by_reference
-~~~~~~~~~~~~
+``by_reference``
+~~~~~~~~~~~~~~~~
 
 **default**: ``false``
 
@@ -187,8 +187,8 @@ The ``DateTime`` classes are treated as immutable objects.
 
 .. include:: /reference/forms/types/options/data_class_date.rst.inc
 
-error_bubbling
-~~~~~~~~~~~~~~
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
 
 **default**: ``false``
 
@@ -212,14 +212,14 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 Field Variables
 ---------------
 
-+----------+------------+----------------------------------------------------------------------+
-| Variable | Type       | Usage                                                                |
-+==========+============+======================================================================+
-| widget   | ``mixed``  | The value of the `widget`_ option.                                   |
-+----------+------------+----------------------------------------------------------------------+
-| type     | ``string`` | Only present when widget is ``single_text`` and HTML5 is activated,  |
-|          |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
-+----------+------------+----------------------------------------------------------------------+
++--------------+------------+----------------------------------------------------------------------+
+| Variable     | Type       | Usage                                                                |
++==============+============+======================================================================+
+| ``widget``   | ``mixed``  | The value of the `widget`_ option.                                   |
++--------------+------------+----------------------------------------------------------------------+
+| ``type``     | ``string`` | Only present when widget is ``single_text`` and HTML5 is activated,  |
+|              |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
++--------------+------------+----------------------------------------------------------------------+
 
 .. _`datetime local`: http://w3c.github.io/html-reference/datatypes.html#form.data.datetime-local
 .. _`Date/Time Format Syntax`: http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax

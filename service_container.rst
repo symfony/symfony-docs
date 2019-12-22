@@ -175,7 +175,7 @@ each time you ask for it.
 
 .. _service-container-services-load-example:
 
-.. sidebar:: Automatic Service Loading in services.yml
+.. sidebar:: Automatic Service Loading in ``services.yml``
 
     The documentation assumes you're using
     `Symfony Standard Edition (version 3.3) services.yml`_ configuration. The most
@@ -336,12 +336,12 @@ This is just a small subset of the output:
 =============================================================== =====================================
 Service ID                                                      Class name
 =============================================================== =====================================
-``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
-``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
-``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
-``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
-``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
-``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
+``Psr\Cache\CacheItemPoolInterface``                            alias for ``cache.app.recorder``
+``Psr\Log\LoggerInterface``                                     alias for ``monolog.logger``
+``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for ``debug.event_dispatcher``
+``Symfony\Component\HttpFoundation\RequestStack``               alias for ``request_stack``
+``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for ``session``
+``Symfony\Component\Routing\RouterInterface``                   alias for ``router.default``
 =============================================================== =====================================
 
 Handling Multiple Services
@@ -442,6 +442,8 @@ example, suppose you want to make the admin email configurable:
     }
 
 If you make this change and refresh, you'll see an error:
+
+.. code-block:: text
 
     Cannot autowire service "AppBundle\Updates\SiteUpdateManager": argument "$adminEmail"
     of method "__construct()" must have a type-hint or be given a value explicitly.
@@ -898,7 +900,7 @@ from the container::
         $this->container->get(MessageGenerator::class);
     }
 
-Usually, this is ok: there are better ways to access a service. But, if you *do*
+Usually, this is OK: there are better ways to access a service. But, if you *do*
 need to make your service public, just override this setting:
 
 .. configuration-block::

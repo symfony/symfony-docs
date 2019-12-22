@@ -35,8 +35,8 @@ Functions
 
 .. _reference-twig-function-render:
 
-render
-~~~~~~
+``render``
+~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -65,8 +65,8 @@ The render strategy can be specified in the ``strategy`` key of the options.
 
 .. _reference-twig-function-render-esi:
 
-render_esi
-~~~~~~~~~~
+``render_esi``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -85,11 +85,11 @@ falls back to the behavior of `render`_ otherwise.
 
     The ``render_esi()`` function is an example of the shortcut functions
     of ``render``. It automatically sets the strategy based on what's given
-    in the function name, e.g. ``render_hinclude()`` will use the hinclude.js
+    in the function name, e.g. ``render_hinclude()`` will use the HInclude
     strategy. This works for all ``render_*()`` functions.
 
-controller
-~~~~~~~~~~
+``controller``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -106,8 +106,8 @@ Returns an instance of ``ControllerReference`` to be used with functions
 like :ref:`render() <reference-twig-function-render>` and
 :ref:`render_esi() <reference-twig-function-render-esi>`.
 
-asset
-~~~~~
+``asset``
+~~~~~~~~~
 
 .. code-block:: twig
 
@@ -125,8 +125,8 @@ implementations via the :ref:`reference-framework-assets-version`,
 :ref:`reference-assets-version-strategy`, and
 :ref:`reference-assets-json-manifest-path` configuration options.
 
-asset_version
-~~~~~~~~~~~~~~
+``asset_version``
+~~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -138,8 +138,8 @@ asset_version
 Returns the current version of the package, more information in
 :ref:`templating-assets`.
 
-form
-~~~~
+``form``
+~~~~~~~~
 
 .. code-block:: twig
 
@@ -153,8 +153,8 @@ form
 Renders the HTML of a complete form, more information in
 :ref:`the Twig Form reference <reference-forms-twig-form>`.
 
-form_start
-~~~~~~~~~~
+``form_start``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -168,8 +168,8 @@ form_start
 Renders the HTML start tag of a form, more information in
 :ref:`the Twig Form reference <reference-forms-twig-start>`.
 
-form_end
-~~~~~~~~
+``form_end``
+~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -184,8 +184,8 @@ Renders the HTML end tag of a form together with all fields that have not
 been rendered yet, more information in
 :ref:`the Twig Form reference <reference-forms-twig-end>`.
 
-form_widget
-~~~~~~~~~~~
+``form_widget``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -199,8 +199,8 @@ form_widget
 Renders a complete form or a specific HTML widget of a field, more information
 in :ref:`the Twig Form reference <reference-forms-twig-widget>`.
 
-form_errors
-~~~~~~~~~~~
+``form_errors``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -212,8 +212,8 @@ form_errors
 Renders any errors for the given field or the global errors, more information
 in :ref:`the Twig Form reference <reference-forms-twig-errors>`.
 
-form_label
-~~~~~~~~~~
+``form_label``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -229,8 +229,8 @@ form_label
 Renders the label for the given field, more information in
 :ref:`the Twig Form reference <reference-forms-twig-label>`.
 
-form_row
-~~~~~~~~
+``form_row``
+~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -244,8 +244,8 @@ form_row
 Renders the row (the field's label, errors and widget) of the given field,
 more information in :ref:`the Twig Form reference <reference-forms-twig-row>`.
 
-form_rest
-~~~~~~~~~
+``form_rest``
+~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -259,8 +259,8 @@ form_rest
 Renders all fields that have not yet been rendered, more information in
 :ref:`the Twig Form reference <reference-forms-twig-rest>`.
 
-csrf_token
-~~~~~~~~~~
+``csrf_token``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -272,8 +272,8 @@ csrf_token
 Renders a CSRF token. Use this function if you want CSRF protection without
 creating a form.
 
-is_granted
-~~~~~~~~~~
+``is_granted``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -298,8 +298,8 @@ can be found in :ref:`security-template`.
     You can also pass in the field to use ACE for a specific field. Read
     more about this in :ref:`security-acl-field_scope`.
 
-logout_path
-~~~~~~~~~~~
+``logout_path``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -311,8 +311,8 @@ logout_path
 Generates a relative logout URL for the given firewall. If no key is provided,
 the URL is generated for the current firewall the user is logged into.
 
-logout_url
-~~~~~~~~~~
+``logout_url``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -324,8 +324,8 @@ logout_url
 Equal to the `logout_path`_ function, but it'll generate an absolute URL
 instead of a relative one.
 
-path
-~~~~
+``path``
+~~~~~~~~
 
 .. code-block:: twig
 
@@ -346,8 +346,8 @@ path. More information in :ref:`templating-pages`.
 
     Read :doc:`/routing` to learn more about the Routing component.
 
-url
-~~~
+``url``
+~~~~~~~
 
 .. code-block:: twig
 
@@ -368,8 +368,8 @@ information in :ref:`templating-pages`.
 
     Read :doc:`/routing` to learn more about the Routing component.
 
-absolute_url
-~~~~~~~~~~~~
+``absolute_url``
+~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -390,8 +390,8 @@ you're on the following page in your app:
     {{ absolute_url('products_icon.png') }}
     {# http://example.com/products/products_icon.png #}
 
-relative_path
-~~~~~~~~~~~~~
+``relative_path``
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -412,8 +412,8 @@ you're on the following page in your app:
     {{ relative_path('http://example.com/products/products_icon.png') }}
     {# products_icon.png #}
 
-expression
-~~~~~~~~~~
+``expression``
+~~~~~~~~~~~~~~
 
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in
 Twig. See ":ref:`Template Expressions <security-template-expression>`".
@@ -425,8 +425,8 @@ Filters
 
 .. _reference-twig-humanize-filter:
 
-humanize
-~~~~~~~~
+``humanize``
+~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -439,8 +439,8 @@ Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
 
-trans
-~~~~~
+``trans``
+~~~~~~~~~
 
 .. code-block:: twig
 
@@ -458,8 +458,8 @@ trans
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.
 
-transchoice
-~~~~~~~~~~~
+``transchoice``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -479,8 +479,8 @@ transchoice
 Translates the text with pluralization support. More information in
 :ref:`Translation Filters <translation-filters>`.
 
-yaml_encode
-~~~~~~~~~~~
+``yaml_encode``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -496,8 +496,8 @@ yaml_encode
 Transforms the input into YAML syntax. See :ref:`components-yaml-dump` for
 more information.
 
-yaml_dump
-~~~~~~~~~
+``yaml_dump``
+~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -513,8 +513,8 @@ yaml_dump
 Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in
 the output.
 
-abbr_class
-~~~~~~~~~~
+``abbr_class``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -526,8 +526,8 @@ abbr_class
 Generates an ``<abbr>`` element with the short name of a PHP class (the
 FQCN will be shown in a tooltip when a user hovers over the element).
 
-abbr_method
-~~~~~~~~~~~
+``abbr_method``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -540,8 +540,8 @@ Generates an ``<abbr>`` element using the ``FQCN::method()`` syntax. If
 ``method`` is ``Closure``, ``Closure`` will be used instead and if ``method``
 doesn't have a class name, it's shown as a function (``method()``).
 
-format_args
-~~~~~~~~~~~
+``format_args``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -552,8 +552,8 @@ format_args
 
 Generates a string with the arguments and their types (within ``<em>`` elements).
 
-format_args_as_text
-~~~~~~~~~~~~~~~~~~~
+``format_args_as_text``
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -564,8 +564,8 @@ format_args_as_text
 
 Equal to the `format_args`_ filter, but without using HTML tags.
 
-file_excerpt
-~~~~~~~~~~~~
+``file_excerpt``
+~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -582,8 +582,8 @@ Generates an excerpt of a code file around the given ``line`` number. The
 ``srcContext`` argument defines the total number of lines to display around the
 given line number (use ``-1`` to display the whole file).
 
-format_file
-~~~~~~~~~~~
+``format_file``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -600,8 +600,8 @@ Generates the file path inside an ``<a>`` element. If the path is inside
 the kernel root directory, the kernel root directory path is replaced by
 ``kernel.root_dir`` (showing the full path in a tooltip on hover).
 
-format_file_from_text
-~~~~~~~~~~~~~~~~~~~~~
+``format_file_from_text``
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -612,8 +612,8 @@ format_file_from_text
 
 Uses `format_file`_ to improve the output of default PHP errors.
 
-file_link
-~~~~~~~~~
+``file_link``
+~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -632,8 +632,8 @@ a preconfigured scheme.
 Tags
 ----
 
-form_theme
-~~~~~~~~~~
+``form_theme``
+~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -648,8 +648,8 @@ Sets the resources to override the form theme for the given form view instance.
 You can use ``_self`` as resources to set it to the current resource. More
 information in :doc:`/form/form_customization`.
 
-trans
-~~~~~
+``trans``
+~~~~~~~~~
 
 .. code-block:: twig
 
@@ -664,8 +664,8 @@ trans
 
 Renders the translation of the content. More information in :ref:`translation-tags`.
 
-transchoice
-~~~~~~~~~~~
+``transchoice``
+~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -683,8 +683,8 @@ transchoice
 Renders the translation of the content with pluralization support, more
 information in :ref:`translation-tags`.
 
-trans_default_domain
-~~~~~~~~~~~~~~~~~~~~
+``trans_default_domain``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -695,8 +695,8 @@ trans_default_domain
 
 This will set the default domain in the current template.
 
-stopwatch
-~~~~~~~~~
+``stopwatch``
+~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -710,8 +710,8 @@ of the WebProfilerBundle.
 Tests
 -----
 
-selectedchoice
-~~~~~~~~~~~~~~
+``selectedchoice``
+~~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -725,8 +725,8 @@ selectedchoice
 Checks if ``selectedValue`` was checked for the provided choice field. Using
 this test is the most effective way.
 
-rootform
-~~~~~~~~
+``rootform``
+~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -746,8 +746,8 @@ Global Variables
 
 .. _reference-twig-global-app:
 
-app
-~~~
+``app``
+~~~~~~~
 
 The ``app`` variable is available everywhere and gives access to many commonly
 needed objects and values. It is an instance of

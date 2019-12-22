@@ -1,5 +1,5 @@
-choice_attr
-~~~~~~~~~~~
+``choice_attr``
+~~~~~~~~~~~~~~~
 
 **type**: ``array``, ``callable`` or ``string`` **default**: ``[]``
 

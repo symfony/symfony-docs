@@ -1,5 +1,5 @@
-by_reference
-~~~~~~~~~~~~
+``by_reference``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

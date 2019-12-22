@@ -45,16 +45,16 @@ separate articles:
 * `providers`_
 * `role_hierarchy`_
 
-access_denied_url
-~~~~~~~~~~~~~~~~~
+``access_denied_url``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access deny handler). Example: ``/no-permission``
 
-always_authenticate_before_granting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``always_authenticate_before_granting``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -62,16 +62,16 @@ If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
 templates.
 
-erase_credentials
-~~~~~~~~~~~~~~~~~
+``erase_credentials``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
 If ``true``, the ``eraseCredentials()`` method of the user object is called
 after authentication.
 
-hide_user_not_found
-~~~~~~~~~~~~~~~~~~~
+``hide_user_not_found``
+~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -83,8 +83,8 @@ If ``false``, the exception thrown is of type
 :class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
 and it includes the given not found username.
 
-session_fixation_strategy
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``session_fixation_strategy``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``SessionAuthenticationStrategy::MIGRATE``
 
@@ -102,8 +102,8 @@ The possible values of this option are:
   The entire session is regenerated, so the session ID is updated but all the
   other session attributes are lost.
 
-access_control
---------------
+``access_control``
+------------------
 
 Defines the security protection of the URLs of your application. It's used for
 example to trigger the user authentication when trying to access to the backend
@@ -111,8 +111,8 @@ and to allow anonymous users to the login form page.
 
 This option is explained in detail in :doc:`/security/access_control`.
 
-acl
----
+``acl``
+-------
 
 This option is used to define `ACL (Access Control List)`_, which allow to
 associate a list of permissions to an object. This option is deprecated since
@@ -122,8 +122,8 @@ Instead of using ACLs, Symfony recommends :doc:`security voters </security/voter
 which provide the same granular security access without the complication of ACLs.
 If you still want to implement ACLs, check out the `Symfony ACL Bundle`_.
 
-encoders
---------
+``encoders``
+------------
 
 This option defines the algorithm used to *encode* the password of the users.
 Although Symfony calls it *"password encoding"* for historical reasons, this is
@@ -248,7 +248,7 @@ password) so you don't have to deal with it.
 
 .. _reference-security-bcrypt:
 
-Using the BCrypt Password Encoder
+Using the Bcrypt Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It uses the `bcrypt password hashing function`_ and it's recommended to use it
@@ -269,7 +269,7 @@ used back when they were encoded.
 
 .. tip::
 
-    A simple technique to make tests much faster when using BCrypt is to set
+    A simple technique to make tests much faster when using bcrypt is to set
     the cost to ``4``, which is the minimum value allowed, in the ``test``
     environment configuration.
 
@@ -282,8 +282,8 @@ Using the `PBKDF2`_ encoder is no longer recommended since PHP added support for
 Argon2i and bcrypt. Legacy application still using it are encouraged to upgrade
 to those newer encoding algorithms.
 
-firewalls
----------
+``firewalls``
+-------------
 
 This is arguably the most important option of the security config file. It
 defines the authentication mechanism used for each URL (or URL pattern) of your
@@ -393,8 +393,8 @@ When using the ``form_login`` authentication listener beneath a firewall,
 there are several common options for configuring the "form login" experience.
 For even more details, see :doc:`/security/form_login`.
 
-login_path
-..........
+``login_path``
+..............
 
 **type**: ``string`` **default**: ``/login``
 
@@ -402,12 +402,12 @@ This is the route or path that the user will be redirected to (unless ``use_forw
 is set to ``true``) when they try to access a protected resource but isn't
 fully authenticated.
 
-This path **must** be accessible by a normal, un-authenticated user, else
+This path **must** be accessible by a normal, unauthenticated user, else
 you may create a redirect loop. For details, see
 ":ref:`Avoid Common Pitfalls <security-common-pitfalls>`".
 
-check_path
-..........
+``check_path``
+..............
 
 **type**: ``string`` **default**: ``/login_check``
 
@@ -418,16 +418,16 @@ URL and process the submitted login credentials.
 Be sure that this URL is covered by your main firewall (i.e. don't create
 a separate firewall just for ``check_path`` URL).
 
-use_forward
-...........
+``use_forward``
+...............
 
 **type**: ``boolean`` **default**: ``false``
 
 If you'd like the user to be forwarded to the login form instead of being
 redirected, set this option to ``true``.
 
-username_parameter
-..................
+``username_parameter``
+......................
 
 **type**: ``string`` **default**: ``_username``
 
@@ -435,8 +435,8 @@ This is the field name that you should give to the username field of your
 login form. When you submit the form to ``check_path``, the security system
 will look for a POST parameter with this name.
 
-password_parameter
-..................
+``password_parameter``
+......................
 
 **type**: ``string`` **default**: ``_password``
 
@@ -444,8 +444,8 @@ This is the field name that you should give to the password field of your
 login form. When you submit the form to ``check_path``, the security system
 will look for a POST parameter with this name.
 
-post_only
-.........
+``post_only``
+.............
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -455,32 +455,32 @@ request to the ``check_path`` URL.
 
 **Options Related to Redirecting after Login**
 
-always_use_default_target_path
-..............................
+``always_use_default_target_path``
+..................................
 
 **type**: ``boolean`` **default**: ``false``
 
 If ``true``, users are always redirected to the default target path regardless
 of the previous URL that was stored in the session.
 
-default_target_path
-....................
+``default_target_path``
+........................
 
 **type**: ``string`` **default**: ``/``
 
 The page users are redirected to when there is no previous page stored in the
 session (for example, when the users browse the login page directly).
 
-target_path_parameter
-.....................
+``target_path_parameter``
+.........................
 
 **type**: ``string`` **default**: ``_target_path``
 
 When using a login form, if you include an HTML element to set the target path,
 this option lets you change the name of the HTML element itself.
 
-use_referer
-...........
+``use_referer``
+...............
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -496,8 +496,8 @@ redirected to the ``default_target_path`` to avoid a redirection loop.
 
 **Options Related to Logout Configuration**
 
-invalidate_session
-~~~~~~~~~~~~~~~~~~
+``invalidate_session``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -509,8 +509,8 @@ The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
-logout_on_user_change
-~~~~~~~~~~~~~~~~~~~~~
+``logout_on_user_change``
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -528,8 +528,8 @@ The user is considered to have changed when the user class implements
 required by the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 (like the username, password or salt) changes.
 
-success_handler
-~~~~~~~~~~~~~~~
+``success_handler``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'security.logout.success_handler'``
 
@@ -557,15 +557,15 @@ You can authenticate to an LDAP server using the LDAP variants of the
 Both authentication providers have the same arguments as their normal
 counterparts, with the addition of two configuration keys:
 
-service
-.......
+``service``
+...........
 
 **type**: ``string`` **default**: ``ldap``
 
 This is the name of your configured LDAP client.
 
-dn_string
-.........
+``dn_string``
+.............
 
 **type**: ``string`` **default**: ``{username}``
 
@@ -574,8 +574,8 @@ placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
 
-query_string
-............
+``query_string``
+................
 
 **type**: ``string`` **default**: ``null``
 
@@ -748,8 +748,8 @@ a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
 
-providers
----------
+``providers``
+-------------
 
 This options defines how the application users are loaded (from a database,
 an LDAP server, a configuration file, etc.) Read the following articles to learn
@@ -760,8 +760,8 @@ more about each of those providers:
 * :ref:`Load users from a configuration file <security-user-providers>`
 * :doc:`Create your own user provider </security/custom_provider>`
 
-role_hierarchy
---------------
+``role_hierarchy``
+------------------
 
 Instead of associating many roles to users, this option allows you to define
 role inheritance rules by creating a role hierarchy, as explained in

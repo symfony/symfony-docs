@@ -4,7 +4,7 @@
 
 .. _component-cache-files-adapter:
 
-Php Files Cache Adapter
+PHP Files Cache Adapter
 =======================
 
 Similarly to :ref:`Filesystem Adapter <component-cache-filesystem-adapter>`, this cache

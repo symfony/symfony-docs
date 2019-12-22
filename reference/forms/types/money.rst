@@ -43,8 +43,8 @@ how the input and output of the data is handled.
 Field Options
 -------------
 
-currency
-~~~~~~~~
+``currency``
+~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``EUR``
 
@@ -56,8 +56,8 @@ text field.
 This can be any `3 letter ISO 4217 code`_. You can also set this to false
 to hide the currency symbol.
 
-divisor
-~~~~~~~
+``divisor``
+~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``1``
 
@@ -80,8 +80,8 @@ be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-scale
-~~~~~
+``scale``
+~~~~~~~~~
 
 **type**: ``integer`` **default**: ``2``
 

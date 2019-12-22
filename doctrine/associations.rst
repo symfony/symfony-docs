@@ -189,10 +189,10 @@ own a collection of its related ``Product`` objects.
 
 .. tip::
 
-    The targetEntity value in the metadata used above can reference any entity
+    The ``targetEntity`` value in the metadata used above can reference any entity
     with a valid namespace, not just entities defined in the same namespace. To
     relate to an entity defined in a different class or bundle, enter a full
-    namespace as the targetEntity.
+    namespace as the ``targetEntity``.
 
 Now that you've added new properties to both the ``Product`` and ``Category``
 classes, you must generate the missing getter and setter methods manually or

@@ -161,8 +161,8 @@ have been specified.
 Options
 -------
 
-maxSize
-~~~~~~~
+``maxSize``
+~~~~~~~~~~~
 
 **type**: ``mixed``
 
@@ -170,38 +170,38 @@ If set, the size of the underlying file must be below this file size in
 order to be valid. The size of the file can be given in one of the following
 formats:
 
-+--------+-----------+-----------------+------+
-| Suffix | Unit Name |      value      | e.g. |
-+========+===========+=================+======+
-|        | byte      |          1 byte | 4096 |
-+--------+-----------+-----------------+------+
-| k      | kilobyte  |     1,000 bytes | 200k |
-+--------+-----------+-----------------+------+
-| M      | megabyte  | 1,000,000 bytes |   2M |
-+--------+-----------+-----------------+------+
-| Ki     | kibibyte  |     1,024 bytes | 32Ki |
-+--------+-----------+-----------------+------+
-| Mi     | mebibyte  | 1,048,576 bytes |  8Mi |
-+--------+-----------+-----------------+------+
++--------+-----------+-----------------+----------+
+| Suffix | Unit Name |      value      | e.g.     |
++========+===========+=================+==========+
+|        | byte      |          1 byte | ``4096`` |
++--------+-----------+-----------------+----------+
+| k      | kilobyte  |     1,000 bytes | ``200k`` |
++--------+-----------+-----------------+----------+
+| M      | megabyte  | 1,000,000 bytes |   ``2M`` |
++--------+-----------+-----------------+----------+
+| Ki     | kibibyte  |     1,024 bytes | ``32Ki`` |
++--------+-----------+-----------------+----------+
+| Mi     | mebibyte  | 1,048,576 bytes |  ``8Mi`` |
++--------+-----------+-----------------+----------+
 
 For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
 
-binaryFormat
-~~~~~~~~~~~~
+``binaryFormat``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``null``
 
 When ``true``, the sizes will be displayed in messages with binary-prefixed
 units (KiB, MiB). When ``false``, the sizes will be displayed with SI-prefixed
-units (kB, MB). When ``null``, then the binaryFormat will be guessed from
+units (kB, MB). When ``null``, the ``binaryFormat`` will be guessed from
 the value defined in the ``maxSize`` option.
 
 For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
 
-mimeTypes
-~~~~~~~~~
+``mimeTypes``
+~~~~~~~~~~~~~
 
 **type**: ``array`` or ``string``
 
@@ -211,8 +211,8 @@ of given mime types (if an array).
 
 You can find a list of existing mime types on the `IANA website`_.
 
-maxSizeMessage
-~~~~~~~~~~~~~~
+``maxSizeMessage``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.``
 
@@ -232,8 +232,8 @@ You can use the following parameters in this message:
 | ``{{ file }}``   | Absolute file path                             |
 +------------------+------------------------------------------------+
 
-mimeTypesMessage
-~~~~~~~~~~~~~~~~
+``mimeTypesMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
 
@@ -252,8 +252,8 @@ You can use the following parameters in this message:
 | ``{{ file }}``  | Absolute file path                     |
 +-----------------+----------------------------------------+
 
-disallowEmptyMessage
-~~~~~~~~~~~~~~~~~~~~
+``disallowEmptyMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``An empty file is not allowed.``
 
@@ -268,8 +268,8 @@ You can use the following parameters in this message:
 | ``{{ file }}`` | Absolute file path |
 +----------------+--------------------+
 
-notFoundMessage
-~~~~~~~~~~~~~~~
+``notFoundMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file could not be found.``
 
@@ -285,8 +285,8 @@ You can use the following parameters in this message:
 | ``{{ file }}`` | Absolute file path |
 +----------------+--------------------+
 
-notReadableMessage
-~~~~~~~~~~~~~~~~~~
+``notReadableMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is not readable.``
 
@@ -301,8 +301,8 @@ You can use the following parameters in this message:
 | ``{{ file }}`` | Absolute file path |
 +----------------+--------------------+
 
-uploadIniSizeErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadIniSizeErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.``
 
@@ -319,8 +319,8 @@ You can use the following parameters in this message:
 | ``{{ suffix }}`` | Suffix for the used file size unit (see above) |
 +------------------+------------------------------------------------+
 
-uploadFormSizeErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadFormSizeErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is too large.``
 
@@ -329,8 +329,8 @@ by the HTML file input field.
 
 This message has no parameters.
 
-uploadPartialErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadPartialErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file was only partially uploaded.``
 
@@ -338,8 +338,8 @@ The message that is displayed if the uploaded file is only partially uploaded.
 
 This message has no parameters.
 
-uploadNoFileErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadNoFileErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``No file was uploaded.``
 
@@ -347,18 +347,18 @@ The message that is displayed if no file was uploaded.
 
 This message has no parameters.
 
-uploadNoTmpDirErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadNoTmpDirErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``No temporary folder was configured in php.ini.``
 
-The message that is displayed if the php.ini setting ``upload_tmp_dir`` is
+The message that is displayed if the ``php.ini`` setting ``upload_tmp_dir`` is
 missing.
 
 This message has no parameters.
 
-uploadCantWriteErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadCantWriteErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Cannot write temporary file to disk.``
 
@@ -367,8 +367,8 @@ temporary folder.
 
 This message has no parameters.
 
-uploadExtensionErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadExtensionErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``A PHP extension caused the upload to fail.``
 
@@ -377,8 +377,8 @@ fail.
 
 This message has no parameters.
 
-uploadErrorMessage
-~~~~~~~~~~~~~~~~~~
+``uploadErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file could not be uploaded.``
 

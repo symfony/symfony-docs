@@ -28,15 +28,15 @@ Overridden Options
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
-error_bubbling
-~~~~~~~~~~~~~~
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
 
 **default**: ``true``
 
 Pass errors to the root form, otherwise they will not be visible.
 
-required
-~~~~~~~~
+``required``
+~~~~~~~~~~~~
 
 **default**: ``false``
 

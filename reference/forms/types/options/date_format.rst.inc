@@ -1,5 +1,5 @@
-format
-~~~~~~
+``format``
+~~~~~~~~~~
 
 **type**: ``integer`` or ``string`` **default**: `IntlDateFormatter::MEDIUM`_
 (or ``yyyy-MM-dd`` if `widget`_ is ``single_text``)

@@ -106,7 +106,7 @@ following:
 Application Bundles
 ~~~~~~~~~~~~~~~~~~~
 
-When Symfony 2.0 was released, most developers naturally adopted the symfony
+When Symfony 2.0 was released, most developers naturally adopted the Symfony
 1.x way of dividing applications into logical modules. That's why many Symfony
 applications use bundles to divide their code into logical features: UserBundle,
 ProductBundle, InvoiceBundle, etc.

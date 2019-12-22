@@ -174,7 +174,7 @@ After Filters with the ``kernel.response`` Event
 
 In addition to having a "hook" that's executed *before* your controller, you
 can also add a hook that's executed *after* your controller. For this example,
-imagine that you want to add a sha1 hash (with a salt using that token) to
+imagine that you want to add a ``sha1`` hash (with a salt using that token) to
 all responses that have passed this token authentication.
 
 Another core Symfony event - called ``kernel.response`` (aka ``KernelEvents::RESPONSE``) -

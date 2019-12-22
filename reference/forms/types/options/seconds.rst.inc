@@ -1,5 +1,5 @@
-seconds
-~~~~~~~
+``seconds``
+~~~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 59
 
