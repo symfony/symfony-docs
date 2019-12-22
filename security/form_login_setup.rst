@@ -244,6 +244,10 @@ a traditional HTML form that submits to ``/login``:
 
         public function checkCredentials($credentials, UserInterface $user)
         {
+            if (empty($credentials['password'])) {
+                throw new CustomUserMessageAuthenticationException('Invalid password.');
+            }
+            
             return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         }
 
