@@ -100,7 +100,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mailer\Transport\TransportInterface;
     use Symfony\Component\Mime\Email;
 
     class MailerController extends AbstractController
@@ -108,7 +108,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
         /**
          * @Route("/email")
          */
-        public function sendEmail(MailerInterface $mailer)
+        public function sendEmail(TransportInterface $mailer)
         {
             $email = (new Email())
                 ->from('hello@example.com')
