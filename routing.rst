@@ -2155,7 +2155,7 @@ defined as annotations:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="../src/Controller/" type="annotation">
-                <default locale="schemes">HTTPS</prefix>
+                <default key="schemes">HTTPS</default>
             </import>
         </routes>
 
