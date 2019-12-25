@@ -2061,7 +2061,7 @@ each route explicitly:
 
     .. code-block:: php-annotations
 
-        // src/Controller/MainController.php
+        // src/Controller/SecurityController.php
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
