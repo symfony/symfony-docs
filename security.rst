@@ -239,7 +239,7 @@ important section is ``firewalls``:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: ~
+                    anonymous: lazy
 
     .. code-block:: xml
 
