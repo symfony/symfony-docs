@@ -1045,11 +1045,6 @@ translation.loader
 By default, translations are loaded from the filesystem in a variety of
 different formats (YAML, XLIFF, PHP, etc).
 
-.. seealso::
-
-    Learn how to :ref:`load custom formats <components-translation-custom-loader>`
-    in the components section.
-
 Now, register your loader as a service and tag it with ``translation.loader``:
 
 .. configuration-block::
@@ -1234,11 +1229,6 @@ This is the name that's used to determine which dumper should be used.
 
         $container->register(JsonFileDumper::class)
             ->addTag('translation.dumper', ['alias' => 'json']);
-
-.. seealso::
-
-    Learn how to :ref:`dump to custom formats <components-translation-custom-dumper>`
-    in the components section.
 
 .. _reference-dic-tags-twig-extension:
 
