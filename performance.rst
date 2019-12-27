@@ -39,11 +39,6 @@ features, such as the APCu Cache adapter.
 Dump the Service Container into a Single File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    The ``container.dumper.inline_factories`` parameter was introduced in
-    Symfony 4.4.
-
 Symfony compiles the :doc:`service container </service_container>` into multiple
 small files by default. Set this parameter to ``true`` to compile the entire
 container into a single file, which could improve performance when using
