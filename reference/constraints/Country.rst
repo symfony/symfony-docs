@@ -7,6 +7,7 @@ Validates that a value is a valid `ISO 3166-1 alpha-2`_ country code.
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
             - `message`_
+            - `alpha3`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Country`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountryValidator`
@@ -78,6 +79,15 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
+alpha3
+~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is ``true``, then the constraint will valid the value as
+`ISO 3166-1 alpha-3`_ three-letter codes (e.g. France = ``FRA``) instead
+of the default `ISO 3166-1 alpha-2`_ two-letter codes (e.g. France = ``FR``).
+
 ``message``
 ~~~~~~~~~~~
 
@@ -96,3 +106,5 @@ Parameter        Description
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+.. _`ISO 3166-1 alpha-3`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3#Current_codes
+
