@@ -188,7 +188,7 @@ Trigger Password Migration From a Custom Encoder
 If you're using a custom password encoder, you can trigger the password
 migration by returning ``true`` in the ``needsRehash()`` method::
 
-    // src/Security/UserProvider.php
+    // src/Security/CustomPasswordEncoder.php
     namespace App\Security;
 
     // ...
