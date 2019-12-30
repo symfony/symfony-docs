@@ -200,12 +200,12 @@ every day::
             $this->version = date('Ymd');
         }
 
-        public function getVersion($path)
+        public function getVersion(string $path)
         {
             return $this->version;
         }
 
-        public function applyVersion($path)
+        public function applyVersion(string $path)
         {
             return sprintf('%s?v=%s', $path, $this->getVersion($path));
         }

@@ -98,7 +98,7 @@ in your form type::
         /**
          * @param Color|null $viewData
          */
-        public function mapDataToForms($viewData, $forms)
+        public function mapDataToForms($viewData, iterable $forms)
         {
             // there is no data yet, so nothing to prepopulate
             if (null === $viewData) {
@@ -119,7 +119,7 @@ in your form type::
             $forms['blue']->setData($viewData->getBlue());
         }
 
-        public function mapFormsToData($forms, &$viewData)
+        public function mapFormsToData(iterable $forms, &$viewData)
         {
             /** @var FormInterface[] $forms */
             $forms = iterator_to_array($forms);

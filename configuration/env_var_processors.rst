@@ -631,7 +631,7 @@ create a class that implements
 
     class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
     {
-        public function getEnv($prefix, $name, \Closure $getEnv)
+        public function getEnv(string $prefix, string $name, \Closure $getEnv)
         {
             $env = $getEnv($name);
 
