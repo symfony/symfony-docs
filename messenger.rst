@@ -588,31 +588,106 @@ Supervisor Configuration
 
 Supervisor is a great tool to guarantee that your worker process(es) is
 *always* running (even if it closes due to failure, hitting a message limit
-or thanks to ``messenger:stop-workers``). You can install it on Ubuntu, for
-example, via:
+or thanks to ``messenger:stop-workers``). Messenger component has built-in
+``messenger:supervisor`` command which runs ``messenger:consume`` commands
+with parameters from app config.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                supervisor:
+                        queue-1:
+                            receivers: [in_memory, redis]
+                            limit: 1000
+                            time-limit: 3600
+                            memory-limit: 128M
+                            bus: mybus
+                        queue-2:
+                            limit: 10
+                        queue-3: ~
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'supervisor' => [
+                    'queue-1' => [
+                        'receivers' => ['in_memory', 'redis'],
+                        'limit' => 1000,
+                        'time-limit' => 3600,
+                        'memory-limit' => '128M',
+                        'bus' => 'mybus',
+                    ],
+                    'queue-2' => [
+                        'limit' => 10,
+                    ],
+                    'queue-3' => [],
+                ],
+            ]
+        ]);
+
+Now you need to add this command to system supervisor like ``systemd`` or ``supervisord``
+
+Systemd
+"""""""
+
+``systemd`` is standard init system on most linux distros.
+Create unit in ``/etc/systemd/system`` dir:
+
+.. code-block:: ini
+
+    #/etc/systemd/system/messenger-supervisor.service
+    [Unit]
+    Description=Symfony messenger supervisor
+    After=network.target
+
+    [Service]
+    Type=exec
+    User=www-data
+    Restart=always
+    ExecStart=php /path/to/your/app/bin/console messenger:supervisor
+
+    [Install]
+    WantedBy=multi-user.target
+
+Change ``user`` to the Unix user on your server if needed.
+Now tell systemd about new unit, enable it for run at system start and run it
+
+.. code-block:: terminal
+
+    $ sudo systemctl daemon-reload
+    $ sudo systemctl enable messenger-supervisor
+    $ sudo systemctl start messenger-supervisor
+
+Supervisord
+"""""""""""
+
+You can install it on Ubuntu, for example, via:
 
 .. code-block:: terminal
 
     $ sudo apt-get install supervisor
 
 Supervisor configuration files typically live in a ``/etc/supervisor/conf.d``
-directory. For example, you can create a new ``messenger-worker.conf`` file
-there to make sure that 2 instances of ``messenger:consume`` are running at all
-times:
+directory. For example, you can create a new ``messenger-worker.conf`` file:
 
 .. code-block:: ini
 
-    ;/etc/supervisor/conf.d/messenger-worker.conf
-    [program:messenger-consume]
-    command=php /path/to/your/app/bin/console messenger:consume async --time-limit=3600
-    user=ubuntu
-    numprocs=2
+    ;/etc/supervisor/conf.d/messenger-supervisor.conf
+    [program:messenger-supervisor]
+    command=php /path/to/your/app/bin/console messenger:supervisor
+    user=www-data
+    numprocs=1
     autostart=true
     autorestart=true
     process_name=%(program_name)s_%(process_num)02d
 
-Change the ``async`` argument to use the name of your transport (or transports)
-and ``user`` to the Unix user on your server. Next, tell Supervisor to read your
+Change ``user`` to the Unix user on your server. Next, tell Supervisor to read your
 config and start your workers:
 
 .. code-block:: terminal
