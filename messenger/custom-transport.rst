@@ -12,6 +12,7 @@ DSN. You will need a transport factory::
 
     use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
     use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+    use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
     use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
     use Symfony\Component\Messenger\Transport\TransportInterface;
 
