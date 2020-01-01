@@ -115,13 +115,40 @@ Upgrade the Password
 
 Upon successful login, the Security system checks whether a better algorithm
 is available to hash the user's password. If it is, it'll hash the correct
-password using the new hash. You can enable this behavior by implementing how
-this newly hashed password should be stored:
+password using the new hash. If you use a Guard authenticator, you first need to
+`provide the original password to the Security system <Provide the Password when using Guards>`_.
+
+You can enable the upgrade behavior by implementing how this newly hashed
+password should be stored:
 
 * `When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`_
 * `When using a custom user provider <Upgrade the Password when using a custom User Provider>`_
 
 After this, you're done and passwords are always hashed as secure as possible!
+
+Provide the Password when using Guard
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you're using a custom :doc:`guard authenticator </security/guard_authentication>`,
+you need to implement :class:`Symfony\\Component\\Security\\Guard\\PasswordAuthenticatedInterface`.
+This interface defines a ``getPassword()`` method that returns the password
+for this login request. This password is used in the migration process::
+
+    // src/Security/CustomAuthenticator.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
+    // ...
+
+    class CustomAuthenticator extends AbstractGuardAuthenticator implements PasswordAuthenticatedInterface
+    {
+        // ...
+
+        public function getPassword($credentials): ?string
+        {
+            return $credentials['password'];
+        }
+    }
 
 Upgrade the Password when using Doctrine
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,7 +211,7 @@ Trigger Password Migration From a Custom Encoder
 If you're using a custom password encoder, you can trigger the password
 migration by returning ``true`` in the ``needsRehash()`` method::
 
-    // src/Security/UserProvider.php
+    // src/Security/CustomPasswordEncoder.php
     namespace App\Security;
 
     // ...
