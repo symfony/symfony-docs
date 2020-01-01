@@ -241,7 +241,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
                     'logout'         => true,
                     'guard'          => [
                         'authenticators'  => [
-                            TokenAuthenticator::class
+                            TokenAuthenticator::class,
                         ],
                     ],
                     // ...
@@ -300,7 +300,7 @@ Each authenticator needs the following methods:
     (or throw an :ref:`AuthenticationException <guard-customize-error>`),
     authentication will fail.
 
-**onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)**
+**onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)**
     This is called after successful authentication and your job is to either
     return a :class:`Symfony\\Component\\HttpFoundation\\Response` object
     that will be sent to the client or ``null`` to continue the request
@@ -321,7 +321,7 @@ Each authenticator needs the following methods:
     the user authenticate (e.g. a 401 response that says "token is missing!").
 
 **supportsRememberMe()**
-    If you want to support "remember me" functionality, return true from this method.
+    If you want to support "remember me" functionality, return ``true`` from this method.
     You will still need to activate ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
@@ -330,7 +330,7 @@ Each authenticator needs the following methods:
     If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`
     instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
     class, you have to implement this method. It will be called
-    after a successful authentication to create and return the token
+    after a successful authentication to create and return the token (a class implementing :class:`Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface`)
     for the user, who was supplied as the first argument.
 
 The picture below shows how Symfony calls Guard Authenticator methods:

@@ -349,7 +349,7 @@ Another possibility is setting public fields of the class directly::
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
-            $services->set('app.newsletter_manager, NewsletterManager::class)
+            $services->set('app.newsletter_manager', NewsletterManager::class)
                 ->property('mailer', ref('mailer'));
         };
 
