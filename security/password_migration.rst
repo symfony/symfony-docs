@@ -120,7 +120,7 @@ Upgrade the Password
 Upon successful login, the Security system checks whether a better algorithm
 is available to hash the user's password. If it is, it'll hash the correct
 password using the new hash. If you use a Guard authenticator, you first need to
-`provide the original password to the Security system <Provide the Password when using Guards>`_.
+`provide the original password to the Security system <Provide the Password when using Guard>`_.
 
 You can enable the upgrade behavior by implementing how this newly hashed
 password should be stored:
@@ -150,7 +150,7 @@ for this login request. This password is used in the migration process::
 
         public function getPassword($credentials): ?string
         {
-            return $credentials['password'];
+            return $credentials['password'] ?? null;
         }
     }
 
