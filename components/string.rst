@@ -388,8 +388,8 @@ objects::
 
     // returns the value of the code point stored at the given position
     // (code points of 'नमस्ते' graphemes = [2344, 2350, 2360, 2340]
-    u('नमस्ते')->codePoint(0); // 2344
-    u('नमस्ते')->codePoint(2); // 2360
+    u('नमस्ते')->codePointsAt(0); // 2344
+    u('नमस्ते')->codePointsAt(2); // 2360
 
 `Unicode equivalence`_ is the specification by the Unicode standard that
 different sequences of code points represent the same character. For example,
