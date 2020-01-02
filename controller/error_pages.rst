@@ -206,10 +206,10 @@ to change the output contents, create a new Normalizer that supports the
         public function normalize($exception, $format = null, array $context = [])
         {
             return [
-                'content': 'This is my custom problem normalizer.',
-                'exception': [
-                    'message': $exception->getMessage(),
-                    'code': $exception->getStatusCode(),
+                'content' => 'This is my custom problem normalizer.',
+                'exception'=> [
+                    'message' => $exception->getMessage(),
+                    'code' => $exception->getStatusCode(),
                 ],
             ];
         }
