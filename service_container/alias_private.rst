@@ -175,7 +175,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             deprecated: true
 
             # ...but you can also define a custom deprecation message
-            deprecated: 'The "%alias_id%" alias is deprecated. Don\'t use it anymore.'
+            deprecated: 'The "%alias_id%" alias is deprecated. Do not use it anymore.'
 
     .. code-block:: xml
 
