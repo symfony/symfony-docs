@@ -94,7 +94,7 @@ Creating & Sending Messages
 ---------------------------
 
 To send an email, autowire the mailer using
-:class:`Symfony\\Component\\Mailer\\MailerInterface` (service id ``mailer``)
+:class:`Symfony\\Component\\Mailer\\MailerInterface` (service id ``mailer.mailer``)
 and create an :class:`Symfony\\Component\\Mime\\Email` object::
 
     // src/Controller/MailerController.php
