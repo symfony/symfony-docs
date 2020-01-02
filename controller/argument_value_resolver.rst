@@ -32,8 +32,8 @@ Symfony ships with the following value resolvers in the
     works like :doc:`autowiring </service_container/autowiring>`.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\SessionValueResolver`
-    Injects the configured session class extending ``SessionInterface`` if
-    type-hinted with ``SessionInterface`` or a class extending
+    Injects the configured session class implementing ``SessionInterface`` if
+    type-hinted with ``SessionInterface`` or a class implementing
     ``SessionInterface``.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\DefaultValueResolver`
