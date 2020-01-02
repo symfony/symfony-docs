@@ -1524,7 +1524,6 @@ host name:
             ;
         };
 
-        return $routes;
 
 The value of the ``host`` option can include parameters (which is useful in
 multi-tenant applications) and these parameters can be validated too with
@@ -2078,7 +2077,7 @@ each route explicitly:
 
     .. code-block:: php-annotations
 
-        // src/Controller/MainController.php
+        // src/Controller/SecurityController.php
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -2172,7 +2171,7 @@ defined as annotations:
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="../src/Controller/" type="annotation">
-                <default locale="schemes">HTTPS</prefix>
+                <default key="schemes">HTTPS</default>
             </import>
         </routes>
 
