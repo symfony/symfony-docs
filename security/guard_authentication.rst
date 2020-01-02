@@ -330,7 +330,8 @@ Each authenticator needs the following methods:
     If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`
     instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
     class, you have to implement this method. It will be called
-    after a successful authentication to create and return the token (a class implementing :class:`Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface`)
+    after a successful authentication to create and return the token (a
+    class implementing :class:`Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface`)
     for the user, who was supplied as the first argument.
 
 The picture below shows how Symfony calls Guard Authenticator methods:
