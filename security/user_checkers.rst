@@ -23,7 +23,6 @@ are not met, an exception should be thrown which extends the
     use App\Exception\AccountDeletedException;
     use App\Security\User as AppUser;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
-    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\User\UserCheckerInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
