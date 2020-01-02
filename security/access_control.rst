@@ -160,6 +160,13 @@ options:
     can learn how to use your custom attributes by reading
     :ref:`security/custom-voter`.
 
+.. caution::
+
+    If you define both ``roles`` and ``allow_if``, and your Access Decision
+    Strategy is the default one (``affirmative``), then the user will be granted
+    access if there's at least one valid condition. See :doc:`/security/voters`
+    to change your strategy to something more suited to your needs.
+
 .. tip::
 
     If access is denied, the system will try to authenticate the user if not
