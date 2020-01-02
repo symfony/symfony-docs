@@ -738,7 +738,7 @@ Querying with the Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine also provides a `Query Builder`_, an object-oriented way to write
-queries. It is recommended to use this when queries and build dynamically (i.e.
+queries. It is recommended to use this when queries are built dynamically (i.e.
 based on PHP conditions)::
 
     // src/Repository/ProductRepository.php
