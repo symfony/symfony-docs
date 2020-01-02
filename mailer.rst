@@ -647,6 +647,8 @@ and it will select the appropriate certificate depending on the ``To`` option::
         // ...
         ->to('john@example.com');
 
+    // the second optional argument of SMimeEncrypter defines which encryption algorithm is used
+    // (it must be one of these constants: https://www.php.net/manual/en/openssl.ciphers.php)
     $encrypter = new SMimeEncrypter([
         // key = email recipient; value = path to the certificate file
         'jane@example.com' => '/path/to/first-certificate.crt',
@@ -656,11 +658,6 @@ and it will select the appropriate certificate depending on the ``To`` option::
     $firstEncryptedEmail = $encrypter->encrypt($firstEmail);
     $secondEncryptedEmail = $encrypter->encrypt($secondEmail);
 
-.. tip::
-
-    The ``SMimeEncrypter`` class defines a second argument to choose
-    an algorithm to encrypt the message. the cipher must be one of these PHP constants: https://www.php.net/manual/en/openssl.ciphers.php
-    
 Sending Messages Async
 ----------------------
 
