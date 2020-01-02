@@ -581,15 +581,18 @@ of the information you need to create a POST request for the form::
 
     // now use some HTTP client and post using this information
 
-One great example of an integrated system that uses all of this is `Goutte`_.
-Goutte understands the Symfony Crawler object and can use it to submit forms
+One great example of an integrated system that uses all of this is
+the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` provided by
+the :doc:`BrowserKit component </components/browser_kit>`.
+It understands the Symfony Crawler object and can use it to submit forms
 directly::
 
-    use Goutte\Client;
+    use Symfony\Component\BrowserKit\HttpBrowser;
+    use Symfony\Component\HttpClient\HttpClient;
 
     // makes a real request to an external site
-    $client = new Client();
-    $crawler = $client->request('GET', 'https://github.com/login');
+    $browser = new HttpBrowser(HttpClient::create());
+    $crawler = $browser->request('GET', 'https://github.com/login');
 
     // select the form and fill in some values
     $form = $crawler->selectButton('Sign in')->form();
@@ -597,7 +600,7 @@ directly::
     $form['password'] = 'anypass';
 
     // submits the given form
-    $crawler = $client->submit($form);
+    $crawler = $browser->submit($form);
 
 .. _components-dom-crawler-invalid:
 
@@ -622,5 +625,4 @@ Learn more
 * :doc:`/testing`
 * :doc:`/components/css_selector`
 
-.. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
 .. _`html5-php library`: https://github.com/Masterminds/html5-php
