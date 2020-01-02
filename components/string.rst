@@ -317,8 +317,8 @@ Methods to Search and Replace
         return '['.$match[0].']';
     }); // result = '[1][2][3]'
 
-Methods to Join, Split and Truncate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Methods to Join, Split, Truncate and Reverse
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -358,18 +358,13 @@ Methods to Join, Split and Truncate
     // breaks the string into pieces of the length given as argument
     u('0123456789')->chunk(3);  // ['012', '345', '678', '9']
 
-.. versionadded:: 5.1
-
-    The reverse() method was introduced in Symfony 5.1.
-
-Method to Reverse
-~~~~~~~~~~~~~~~~~
-
-::
-
-    // reverses the order of characters in a string
+    // reverses the order of the string contents
     u('foo bar')->reverse(); // 'rab oof'
     u('さよなら')->reverse(); // 'らなよさ'
+
+.. versionadded:: 5.1
+
+    The ``reverse()`` method was introduced in Symfony 5.1.
 
 Methods Added by ByteString
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
