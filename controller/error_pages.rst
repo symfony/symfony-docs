@@ -193,17 +193,19 @@ To override non-HTML error output, the Serializer component needs to be installe
     $ composer require serializer
 
 The Serializer component has a built-in ``FlattenException`` normalizer
-(``ProblemNormalizer``) and JSON/XML/CSV/YAML encoders. When your application
-throws an exception, Symfony can output it in one of those formats. If you want
-to change the output contents, create a new Normalizer that supports the
-``FlattenException`` input::
+(:class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`) and
+JSON/XML/CSV/YAML encoders. When your application throws an exception, Symfony
+can output it in one of those formats. If you want to change the output
+contents, create a new Normalizer that supports the ``FlattenException`` input::
 
     # src/App/Serializer/MyCustomProblemNormalizer.php
     namespace App\Serializer;
 
+    use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
     class MyCustomProblemNormalizer implements NormalizerInterface
     {
-        public function normalize($exception, $format = null, array $context = [])
+        public function normalize($exception, string $format = null, array $context = [])
         {
             return [
                 'content' => 'This is my custom problem normalizer.',
@@ -214,7 +216,7 @@ to change the output contents, create a new Normalizer that supports the
             ];
         }
 
-        public function supportsNormalization($data, $format = null)
+        public function supportsNormalization($data, string $format = null)
         {
             return $data instanceof FlattenException;
         }
@@ -252,14 +254,14 @@ configuration option to point to it:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
-                <framework:error_controller>App\Controller\ErrorController::showAction</framework:error_controller>
+                <framework:error-controller>App\Controller\ErrorController::showAction</framework:error-controller>
             </framework:config>
 
         </container>
 
     .. code-block:: php
 
-        // config/packages/twig.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', [
             'error_controller' => 'App\Controller\ErrorController::showAction',
             // ...
