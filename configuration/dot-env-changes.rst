@@ -47,7 +47,8 @@ changes can be made to any Symfony 3.4 or higher app:
 
 #. Create a new `config/bootstrap.php`_ file in your project. This file loads Composer's
    autoloader and loads all the ``.env`` files as needed (note: in an earlier recipe,
-   this file was called ``src/.bootstrap.php``).
+   this file was called ``src/.bootstrap.php``; if you are upgrading from Symfony 3.3
+   or 4.1, use the `3.3/config/bootstrap.php`_ file instead).
 
 #. Update your `public/index.php`_ (`index.php diff`_) file to load the new ``config/bootstrap.php``
    file. If you've customized this file, make sure to keep those changes (but use
@@ -89,6 +90,7 @@ changes can be made to any Symfony 3.4 or higher app:
    file.
 
 .. _`config/bootstrap.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/config/bootstrap.php
+.. _`3.3/config/bootstrap.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/bootstrap.php
 .. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/public/index.php
 .. _`index.php diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...86e2b6795c455f026e5ab0cba2aff2c7a18511f7#diff-7d73eabd1e5eb7d969ddf9a7ce94f954
 .. _`bin/console`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
