@@ -49,7 +49,7 @@ Turning PHP Errors into Exceptions
 The :class:`Symfony\\Component\\ErrorHandler\\ErrorHandler` class catches PHP
 errors and uncaught PHP exceptions and turns them into PHP's
 :phpclass:`ErrorException` objects, except for fatal PHP errors, which are
-turned into Symfony's :class:`Symfony\\Component\\ErrorHandler\\Exception\\FatalErrorException`
+turned into Symfony's :class:`Symfony\\Component\\ErrorHandler\\Error\\FatalError`
 objects.
 
 If the application uses the FrameworkBundle, this error handler is enabled by
