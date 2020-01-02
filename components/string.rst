@@ -358,6 +358,19 @@ Methods to Join, Split and Truncate
     // breaks the string into pieces of the length given as argument
     u('0123456789')->chunk(3);  // ['012', '345', '678', '9']
 
+.. versionadded:: 5.1
+
+    The reverse() method was introduced in Symfony 5.1.
+
+Method to Reverse
+~~~~~~~~~~~~~~~~~
+
+::
+
+    // reverses the order of characters in a string
+    u('foo bar')->reverse(); // 'rab oof'
+    u('さよなら')->reverse(); // 'らなよさ'
+
 Methods Added by ByteString
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
