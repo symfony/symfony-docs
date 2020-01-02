@@ -183,7 +183,7 @@ Response::
         $response = $framework->handle(new Request());
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('Hello Fabien', $response->getContent());
+        $this->assertContains('Yep, this is a leap year!', $response->getContent());
     }
 
 In this test, we simulate a route that matches and returns a simple
