@@ -193,10 +193,10 @@ To override non-HTML error output, the Serializer component needs to be installe
     $ composer require serializer
 
 The Serializer component has a built-in ``FlattenException`` normalizer
-(:class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`) and JSON/XML/CSV/YAML encoders. When your application
-throws an exception, Symfony can output it in one of those formats. If you want
-to change the output contents, create a new Normalizer that supports the
-``FlattenException`` input::
+(:class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`) and
+JSON/XML/CSV/YAML encoders. When your application throws an exception, Symfony
+can output it in one of those formats. If you want to change the output
+contents, create a new Normalizer that supports the ``FlattenException`` input::
 
     # src/App/Serializer/MyCustomProblemNormalizer.php
     namespace App\Serializer;
