@@ -164,8 +164,8 @@ options:
 
     If you define both ``roles`` and ``allow_if``, and your Access Decision
     Strategy is the default one (``affirmative``), then the user will be granted
-    access if there's at least one valid condition. See :doc:`/security/voters`
-    to change your strategy to something more suited to your needs.
+    access if there's at least one valid condition. If this behavior doesn't fit
+    your needs, :ref:`change the Access Decision Strategy <security-voters-change-strategy>`.
 
 .. tip::
 
