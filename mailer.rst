@@ -234,7 +234,7 @@ Embedding Images
 
 If you want to display images inside your email, you must embed them
 instead of adding them as attachments. When using Twig to render the email
-contents, as explained `later in this article <Embedding Images>`_,
+contents, as explained :ref:`later in this article <mailer-twig-embedding-images>`,
 the images are embedded automatically. Otherwise, you need to embed them manually.
 
 First, use the ``embed()`` or ``embedFromPath()`` method to add an image from a
@@ -365,6 +365,8 @@ the ``TemplatedEmail`` class:
     +     ->textTemplate('emails/signup.txt.twig')
         // ...
     ;
+
+.. _mailer-twig-embedding-images:
 
 Embedding Images
 ~~~~~~~~~~~~~~~~
