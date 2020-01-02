@@ -47,8 +47,8 @@ changes can be made to any Symfony 3.4 or higher app:
 
 #. Create a new `config/bootstrap.php`_ file in your project. This file loads Composer's
    autoloader and loads all the ``.env`` files as needed (note: in an earlier recipe,
-   this file was called ``src/.bootstrap.php``).  
-   For Symfony 3.3 - 4.1 please use `3.3/config/bootstrap.php`_
+   this file was called ``src/.bootstrap.php``; if you are upgrading from Symfony 3.3
+   or 4.1, use the `3.3/config/bootstrap.php`_ file instead).
 
 #. Update your `public/index.php`_ (`index.php diff`_) file to load the new ``config/bootstrap.php``
    file. If you've customized this file, make sure to keep those changes (but use
