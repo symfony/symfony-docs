@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-12-11T15:59:18Z
+
+@demyanovs thanks for this contribution.
+
+I haven't run the code shown on this page ... but the whole test code looks correct to me because of this:
+
+![image](https://user-images.githubusercontent.com/73419/70637414-79c5b300-1c37-11ea-8406-bc818cbee606.png)
+
+Do you have the exact same code as in this test and the result is different? Thanks.
+
+---------------------------------------------------------------------------
+
+by demyanovs at 2019-12-11T19:02:08Z
+
+@javiereguiluz thanks for the response.
+I relied on the code posted on this page and here we have another route
+'_route' => 'is_leap_year / {year}'.
+If you follow the documentation, then the condition on this page does not match.
+![er_01](https://user-images.githubusercontent.com/12573390/70651198-734c3100-1c61-11ea-8c05-334c0adac7ed.png)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-12-12T06:41:27Z
+
+That looks indeed like a bug, thank you both for sharing the very helpful screenshots 👍🏻🙂
