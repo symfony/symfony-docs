@@ -125,8 +125,8 @@ password using the new hash. If you use a Guard authenticator, you first need to
 You can enable the upgrade behavior by implementing how this newly hashed
 password should be stored:
 
-* `When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`_ 
-* `When using a custom user provider <Upgrade the Password when using a custom User Provider>`_ 
+* `When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`_
+* `When using a custom user provider <Upgrade the Password when using a custom User Provider>`_
 
 After this, you're done and passwords are always hashed as secure as possible!
 
@@ -150,7 +150,7 @@ for this login request. This password is used in the migration process::
 
         public function getPassword($credentials): ?string
         {
-            return $credentials['password'] ?? null;
+            return $credentials['password'];
         }
     }
 
