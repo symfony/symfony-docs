@@ -252,7 +252,17 @@ to get your *new* lucky number!
 
 Now you may wonder where the Web Debug Toolbar has gone: that's because there is
 no ``</body>`` tag in the current template. You can add the body element yourself,
-or extend ``base.html.twig``, which contains all default HTML elements.
+or extend ``base.html.twig``, which contains all default HTML elements:
+
+.. code-block:: html+twig
+  {# templates/lucky/number.html.twig #}
+  {% extends 'base.html.twig' %}
+
+  {% block title %}Lucky number{% endblock %}
+
+  {% block body %}
+      <h1>Your lucky number is {{ number }}</h1>
+  {% endblock %}
 
 In the :doc:`/templating` article, you'll learn all about Twig: how to loop, render
 other templates and leverage its powerful layout inheritance system.
