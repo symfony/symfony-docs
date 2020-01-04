@@ -37,7 +37,12 @@ extensions = [
     'sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
     'sensio.sphinx.refinclude', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode', 'sensio.sphinx.bestpractice', 'sensio.sphinx.codeblock',
     'symfonycom.sphinx'
+    #,'sphinxcontrib.spelling'
 ]
+
+#spelling_show_sugestions=True
+#spelling_lang='en_US'
+#spelling_word_list_filename='_build/spelling_word_list.txt'
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_theme/_templates']

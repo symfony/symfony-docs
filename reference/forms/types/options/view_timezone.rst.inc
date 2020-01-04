@@ -1,5 +1,5 @@
-view_timezone
-~~~~~~~~~~~~~
+``view_timezone``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: system default timezone
 

@@ -1,5 +1,5 @@
-property_path
-~~~~~~~~~~~~~
+``property_path``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``PropertyPathInterface|string|null`` **default**: ``null``
 

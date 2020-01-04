@@ -25,8 +25,8 @@ To link to these assets, Encore creates two files ``entrypoints.json`` and
 
 .. _load-manifest-files:
 
-Loading Assets from entrypoints.json & manifest.json
-----------------------------------------------------
+Loading Assets from ``entrypoints.json`` & ``manifest.json``
+------------------------------------------------------------
 
 Whenever you run Encore, two configuration files are generated: ``entrypoints.json``
 and ``manifest.json``. Each file is similar, and contains a map to the final, versioned

@@ -79,8 +79,8 @@ three-letter codes (e.g. French = ``fra``) instead of the default
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: ``Symfony\Component\Intl\Languages::getNames()``.
 

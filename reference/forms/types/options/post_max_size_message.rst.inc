@@ -1,5 +1,5 @@
-post_max_size_message
-~~~~~~~~~~~~~~~~~~~~~
+``post_max_size_message``
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The uploaded file was too large. Please try to upload a smaller file.``
 

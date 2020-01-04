@@ -1,5 +1,5 @@
-translation_domain
-~~~~~~~~~~~~~~~~~~
+``translation_domain``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string``, ``null`` or ``false``  **default**: ``null``
 

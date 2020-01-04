@@ -60,8 +60,8 @@ manually, but then you should just use the ``ChoiceType`` directly.
 Field Options
 -------------
 
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``string``
 
@@ -93,8 +93,8 @@ with the ``choice_translation_locale`` option.
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: An array of timezones.
 

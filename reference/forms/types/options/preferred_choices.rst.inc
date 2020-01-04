@@ -1,5 +1,5 @@
-preferred_choices
-~~~~~~~~~~~~~~~~~
+``preferred_choices``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``, ``callable`` or ``string`` **default**: ``[]``
 

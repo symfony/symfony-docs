@@ -1,5 +1,5 @@
-label_format
-~~~~~~~~~~~~
+``label_format``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 

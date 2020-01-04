@@ -1,5 +1,5 @@
-group_by
-~~~~~~~~
+``group_by``
+~~~~~~~~~~~~
 
 **type**: ``string`` or ``callable`` **default**: ``null``
 
