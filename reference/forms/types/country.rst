@@ -81,8 +81,8 @@ three-letter codes (e.g. New Zealand = ``NZL``) instead of the default
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: ``Symfony\Component\Intl\Countries::getNames()``
 

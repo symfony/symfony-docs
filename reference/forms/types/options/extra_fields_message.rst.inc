@@ -1,5 +1,5 @@
-extra_fields_message
-~~~~~~~~~~~~~~~~~~~~
+``extra_fields_message``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This form should not contain extra fields.``
 

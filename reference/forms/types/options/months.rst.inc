@@ -1,5 +1,5 @@
-months
-~~~~~~
+``months``
+~~~~~~~~~~
 
 **type**: ``array`` **default**: 1 to 12
 

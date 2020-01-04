@@ -60,7 +60,7 @@ The example above could then be rewritten as::
 Depending on the verbosity level that the command is run in and the user's
 configuration (see below), these messages may or may not be displayed to
 the console. If they are displayed, they are timestamped and colored appropriately.
-Additionally, error logs are written to the error output (php://stderr).
+Additionally, error logs are written to the error output (``php://stderr``).
 There is no need to conditionally handle the verbosity settings anymore.
 
 The Monolog console handler is enabled by default:

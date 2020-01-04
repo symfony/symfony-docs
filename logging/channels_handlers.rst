@@ -119,7 +119,7 @@ You can specify the configuration by many forms:
 Creating your own Channel
 -------------------------
 
-You can change the channel monolog logs to one service at a time. This is done
+You can change the channel Monolog logs to one service at a time. This is done
 either via the :ref:`configuration <monolog-channels-config>` below
 or by tagging your service with :ref:`monolog.logger<dic_tags-monolog>` and
 specifying which channel the service should log to. With the tag, the logger

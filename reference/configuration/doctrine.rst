@@ -253,32 +253,32 @@ Explicit definition of all the mapped entities is the only necessary
 configuration for the ORM and there are several configuration options that
 you can control. The following configuration options exist for a mapping:
 
-type
-....
+``type``
+........
 
 One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
 
-dir
-...
+``dir``
+.......
 
 Absolute path to the mapping or entity files (depending on the driver).
 
-prefix
-......
+``prefix``
+..........
 
 A common namespace prefix that all entities of this mapping share. This prefix
 should never conflict with prefixes of other defined mappings otherwise some of
 your entities cannot be found by Doctrine.
 
-alias
-.....
+``alias``
+.........
 
 Doctrine offers a way to alias entity namespaces to simpler, shorter names
 to be used in DQL queries or for Repository access.
 
-is_bundle
-.........
+``is_bundle``
+.............
 
 This option is ``false`` by default and it's considered a legacy option. It was
 only useful in previous Symfony versions, when it was recommended to use bundles
@@ -432,7 +432,7 @@ Default Value of Dir
 
 If ``dir`` is not specified, then its default value depends on which configuration
 driver is being used. For drivers that rely on the PHP files (annotation,
-staticphp) it will be ``[Bundle]/Entity``. For drivers that are using
+``staticphp``) it will be ``[Bundle]/Entity``. For drivers that are using
 configuration files (XML, YAML, ...) it will be
 ``[Bundle]/Resources/config/doctrine``.
 

@@ -1,5 +1,5 @@
-choice_value
-~~~~~~~~~~~~
+``choice_value``
+~~~~~~~~~~~~~~~~
 
 **type**: ``callable`` or ``string`` **default**: ``null``
 

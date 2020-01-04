@@ -40,8 +40,8 @@ have a protocol.
 Field Options
 -------------
 
-default_protocol
-~~~~~~~~~~~~~~~~
+``default_protocol``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``http``
 

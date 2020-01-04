@@ -1,5 +1,5 @@
-attr
-~~~~
+``attr``
+~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 

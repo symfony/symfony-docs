@@ -112,8 +112,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should not be identical to {{ compared_value_type }} {{ compared_value }}.``
 

@@ -104,8 +104,8 @@ the validity of the given locale (e.g. ``FR-fr.utf8`` is transformed into ``fr_F
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid locale.``
 

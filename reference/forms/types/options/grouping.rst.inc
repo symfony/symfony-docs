@@ -1,5 +1,5 @@
-grouping
-~~~~~~~~
+``grouping``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

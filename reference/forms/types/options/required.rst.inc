@@ -1,5 +1,5 @@
-required
-~~~~~~~~
+``required``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

@@ -1,5 +1,5 @@
-label
-~~~~~
+``label``
+~~~~~~~~~
 
 **type**: ``string`` **default**: The label is "guessed" from the field name
 

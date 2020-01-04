@@ -1,5 +1,5 @@
-label_attr
-~~~~~~~~~~
+``label_attr``
+~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
