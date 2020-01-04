@@ -292,7 +292,7 @@ Why Do my Changes Take so Long to Be Reviewed and/or Merged?
 
 Please be patient. It can take up to several days before your pull request can
 be fully reviewed. After merging the changes, it could take again several hours
-before your changes appear on the ``symfony.com`` website.
+before your changes appear on the Symfony website.
 
 Why Should I Use the Oldest Maintained Branch Instead of the Master Branch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
