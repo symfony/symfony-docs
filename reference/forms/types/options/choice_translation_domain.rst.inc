@@ -1,5 +1,5 @@
-choice_translation_domain
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``choice_translation_domain``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string``, ``boolean`` or ``null``
 

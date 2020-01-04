@@ -1,5 +1,5 @@
-empty_data
-~~~~~~~~~~
+``empty_data``
+~~~~~~~~~~~~~~
 
 **type**: ``mixed``
 

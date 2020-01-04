@@ -77,7 +77,7 @@ request::
     Returns the collector identifier, which must be unique in the application.
     This value is used later to access the collector information (see
     :doc:`/testing/profiling`) so it's recommended to return a string which is
-    short, lowercased and without white spaces.
+    short, lowercase and without white spaces.
 
 .. _data_collector_tag:
 

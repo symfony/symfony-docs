@@ -69,8 +69,8 @@ Field Options
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: ``Symfony\Component\Intl\Languages::getNames()``.
 

@@ -1,5 +1,5 @@
-invalid_message_parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``invalid_message_parameters``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 

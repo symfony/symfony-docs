@@ -87,8 +87,8 @@ possible solutions:
 
 .. _performance-configure-realpath-cache:
 
-Configure the PHP realpath Cache
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure the PHP ``realpath`` Cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a relative path is transformed into its real and absolute path, PHP
 caches the result to improve performance. Applications that open many PHP files,

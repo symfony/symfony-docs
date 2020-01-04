@@ -61,8 +61,8 @@ manually, but then you should just use the ``ChoiceType`` directly.
 Field Options
 -------------
 
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``string``
 
@@ -99,8 +99,8 @@ with the ``choice_translation_locale`` option.
     The :doc:`Timezone constraint </reference/constraints/Timezone>` can validate
     both timezone sets and adapts to the selected set automatically.
 
-regions
-~~~~~~~
+``regions``
+~~~~~~~~~~~
 
 **type**: ``int`` **default**: ``\DateTimeZone::ALL``
 
@@ -113,8 +113,8 @@ The available regions in the timezone choice list. For example: ``DateTimeZone::
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: An array of timezones.
 

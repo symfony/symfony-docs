@@ -521,10 +521,10 @@ represented by a PHP callable instead of a string::
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
     server might also buffer based on its configuration. Some servers, such as
-    Nginx, let you disable buffering at the config level or by adding a special HTTP
+    nginx, let you disable buffering at the config level or by adding a special HTTP
     header in the response::
 
-        // disables FastCGI buffering in Nginx only for this response
+        // disables FastCGI buffering in nginx only for this response
         $response->headers->set('X-Accel-Buffering', 'no')
 
 .. _component-http-foundation-serving-files:
@@ -562,7 +562,7 @@ Alternatively, if you are serving a static file, you can use a
 
 The ``BinaryFileResponse`` will automatically handle ``Range`` and
 ``If-Range`` headers from the request. It also supports ``X-Sendfile``
-(see for `Nginx`_ and `Apache`_). To make use of it, you need to determine
+(see for `nginx`_ and `Apache`_). To make use of it, you need to determine
 whether or not the ``X-Sendfile-Type`` header should be trusted and call
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
 if it should::
@@ -701,7 +701,7 @@ Learn More
     /session/*
     /http_cache/*
 
-.. _Nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
+.. _nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
 .. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside

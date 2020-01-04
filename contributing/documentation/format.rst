@@ -8,7 +8,7 @@ such as HTML and PDF.
 reStructuredText
 ----------------
 
-reStructuredText is a plaintext markup syntax similar to Markdown, but much
+reStructuredText is a plain text markup syntax similar to Markdown, but much
 stricter with its syntax. If you are new to reStructuredText, take some time to
 familiarize with this format by reading the existing `Symfony documentation`_
 source code.

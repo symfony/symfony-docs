@@ -1,5 +1,5 @@
-compound
-~~~~~~~~
+``compound``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

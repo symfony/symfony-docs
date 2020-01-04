@@ -149,7 +149,7 @@ a directory containing multiple test suites with their own ``phpunit.xml.dist``.
     $ ./vendor/bin/simple-phpunit tests/
 
 The modified PHPUnit script will recursively go through the provided directory,
-up to a depth of 3 subfolders or the value specified by the environment variable
+up to a depth of 3 subdirectories or the value specified by the environment variable
 ``SYMFONY_PHPUNIT_MAX_DEPTH``, looking for ``phpunit.xml.dist`` files and then
 running each suite it finds in parallel, collecting their output and displaying
 each test suite's results in their own section.
@@ -708,7 +708,7 @@ classes' namespace. In order to work as expected, the listener has to run before
 the tested class ever runs. By default, the mocked functions are created when the
 annotation are found and the corresponding tests are run. Depending on how your
 tests are constructed, this might be too late. In this case, you will need to declare
-the namespaces of the tested classes in your phpunit.xml.dist
+the namespaces of the tested classes in your ``phpunit.xml.dist``.
 
 .. code-block:: xml
 

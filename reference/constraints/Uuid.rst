@@ -1,4 +1,4 @@
-Uuid
+UUID
 ====
 
 Validates that a value is a valid `Universally unique identifier (UUID)`_ per `RFC 4122`_.
@@ -84,8 +84,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid UUID.``
 
@@ -103,8 +103,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-strict
-~~~~~~
+``strict``
+~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -116,8 +116,8 @@ will allow alternate input formats like:
 * ``{216fff40-98d9-11e3-a5e2-0800200c9a66}``
 * ``216fff4098d911e3a5e20800200c9a66``
 
-versions
-~~~~~~~~
+``versions``
+~~~~~~~~~~~~
 
 **type**: ``int[]`` **default**: ``[1,2,3,4,5]``
 
