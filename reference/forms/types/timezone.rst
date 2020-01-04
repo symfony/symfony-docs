@@ -52,8 +52,8 @@ manually, but then you should just use the ``ChoiceType`` directly.
 Field Options
 -------------
 
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``string``
 
@@ -63,8 +63,8 @@ on your underlying object. Valid values are:
 * ``string`` (e.g. ``America/New_York``)
 * ``datetimezone`` (a ``DateTimeZone`` object)
 
-regions
-~~~~~~~
+``regions``
+~~~~~~~~~~~
 
 **type**: ``int`` **default**: ``\DateTimeZone::ALL``
 
@@ -73,8 +73,8 @@ The available regions in the timezone choice list. For example: ``DateTimeZone::
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: An array of timezones.
 

@@ -38,8 +38,8 @@ Configuration
 * `toolbar`_
 * `verbose`_
 
-toolbar
-~~~~~~~
+``toolbar``
+~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -47,8 +47,8 @@ It enables and disables the toolbar entirely. Usually you set this to ``true``
 in the ``dev`` and ``test`` environments and to ``false`` in the ``prod``
 environment.
 
-position
-~~~~~~~~
+``position``
+~~~~~~~~~~~~
 
 .. deprecated:: 3.4
 
@@ -60,8 +60,8 @@ position
 It defines the location of the browser window where the toolbar is displayed.
 the only allowed values are ``bottom`` and ``top``.
 
-intercept_redirects
-~~~~~~~~~~~~~~~~~~~
+``intercept_redirects``
+~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -74,8 +74,8 @@ redirection and shows you the URL which is going to redirect to, its toolbar,
 and its profiler. Once you've inspected the toolbar/profiler data, you can click
 on the given link to perform the redirect.
 
-excluded_ajax_paths
-~~~~~~~~~~~~~~~~~~~
+``excluded_ajax_paths``
+~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'^/(app(_[\\w]+)?\\.php/)?_wdt'``
 
@@ -84,8 +84,8 @@ expression. If the URL matches, the request is not displayed in the toolbar. Thi
 is useful when the application makes lots of AJAX requests, or if they are heavy
 and you want to exclude some of them.
 
-verbose
-~~~~~~~
+``verbose``
+~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

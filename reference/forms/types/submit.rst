@@ -33,8 +33,8 @@ useful when :doc:`a form has multiple submit buttons </form/multiple_buttons>`::
 Inherited Options
 -----------------
 
-attr
-~~~~
+``attr``
+~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -57,8 +57,8 @@ as a key. This can be useful when you need to set a custom class for the button:
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
-validation_groups
-~~~~~~~~~~~~~~~~~
+``validation_groups``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``null``
 
@@ -89,8 +89,8 @@ from the "Registration" are validated.
 Form Variables
 --------------
 
-========  ===========  ==============================================================
-Variable  Type         Usage
-========  ===========  ==============================================================
-clicked   ``boolean``  Whether the button is clicked or not.
-========  ===========  ==============================================================
+============  ===========  ==============================================================
+Variable      Type         Usage
+============  ===========  ==============================================================
+``clicked``   ``boolean``  Whether the button is clicked or not.
+============  ===========  ==============================================================

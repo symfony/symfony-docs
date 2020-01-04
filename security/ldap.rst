@@ -201,8 +201,8 @@ use the ``ldap`` user provider.
 
 The ``ldap`` user provider supports many different configuration options:
 
-service
-.......
+``service``
+...........
 
 **type**: ``string`` **default**: ``ldap``
 
@@ -210,31 +210,31 @@ This is the name of your configured LDAP client. You can freely choose the
 name, but it must be unique in your application and it cannot start with a
 number or contain white spaces.
 
-base_dn
-.......
+``base_dn``
+...........
 
 **type**: ``string`` **default**: ``null``
 
 This is the base DN for the directory
 
-search_dn
-.........
+``search_dn``
+.............
 
 **type**: ``string`` **default**: ``null``
 
 This is your read-only user's DN, which will be used to authenticate
 against the LDAP server in order to fetch the user's information.
 
-search_password
-...............
+``search_password``
+...................
 
 **type**: ``string`` **default**: ``null``
 
 This is your read-only user's password, which will be used to authenticate
 against the LDAP server in order to fetch the user's information.
 
-default_roles
-.............
+``default_roles``
+.................
 
 **type**: ``array`` **default**: ``[]``
 
@@ -242,8 +242,8 @@ This is the default role you wish to give to a user fetched from the LDAP
 server. If you do not configure this key, your users won't have any roles,
 and will not be considered as authenticated fully.
 
-uid_key
-.......
+``uid_key``
+...........
 
 **type**: ``string`` **default**: ``sAMAccountName``
 
@@ -254,8 +254,8 @@ implementation. Commonly used values are:
 * ``userPrincipalName``
 * ``uid``
 
-filter
-......
+``filter``
+..........
 
 **type**: ``string`` **default**: ``({uid_key}={username})``
 

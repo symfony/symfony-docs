@@ -387,10 +387,10 @@ When running a program asynchronously, you can send it POSIX signals with the
     // will send a SIGKILL to the process
     $process->signal(SIGKILL);
 
-Process Pid
+Process PID
 -----------
 
-You can access the `pid`_ of a running process with the
+You can access the `PID`_ of a running process with the
 :method:`Symfony\\Component\\Process\\Process::getPid` method::
 
     use Symfony\Component\Process\Process;
@@ -443,6 +443,6 @@ absolute path of the executable PHP binary available on your server::
     $phpBinaryPath = $phpBinaryFinder->find();
     // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
 
-.. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
+.. _`PID`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
 .. _`output_buffering`: https://www.php.net/manual/en/outcontrol.configuration.php

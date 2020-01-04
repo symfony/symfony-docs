@@ -98,33 +98,33 @@ the request method.  Remember, the first rule that matches is used, and if
 ``ips``, ``host`` or ``methods`` are not specified for an entry, that
 ``access_control`` will match any ``ips``, ``host`` or ``methods``:
 
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| URI             | IP          | HOST        | METHOD     | ``access_control``             | Why?                                                        |
-+=================+=============+=============+============+================================+=============================================================+
-| ``/admin/user`` | 127.0.0.1   | example.com | GET        | rule #1 (``ROLE_USER_IP``)     | The URI matches ``path`` and the IP matches ``ip``.         |
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 127.0.0.1   | symfony.com | GET        | rule #1 (``ROLE_USER_IP``)     | The ``path`` and ``ip`` still match. This would also match  |
-|                 |             |             |            |                                | the ``ROLE_USER_HOST`` entry, but *only* the **first**      |
-|                 |             |             |            |                                | ``access_control`` match is used.                           |
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | symfony.com | GET        | rule #2 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match the first rule, so the second      |
-|                 |             |             |            |                                | rule (which matches) is used.                               |
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | symfony.com | POST       | rule #2 (``ROLE_USER_HOST``)   | The second rule still matches. This would also match the    |
-|                 |             |             |            |                                | third rule (``ROLE_USER_METHOD``), but only the **first**   |
-|                 |             |             |            |                                | matched ``access_control`` is used.                         |
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | example.com | POST       | rule #3 (``ROLE_USER_METHOD``) | The ``ip`` and ``host`` don't match the first two entries,  |
-|                 |             |             |            |                                | but the third - ``ROLE_USER_METHOD`` - matches and is used. |
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | example.com | GET        | rule #4 (``ROLE_MANAGER``)     | The ``ip``, ``host`` and ``method`` prevent the first       |
-|                 |             |             |            |                                | three entries from matching. But since the URI matches the  |
-|                 |             |             |            |                                | ``path`` pattern, then the ``ROLE_MANAGER`` (or the         |
-|                 |             |             |            |                                | ``ROLE_ADMIN``) is used.                                    |
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/foo``        | 127.0.0.1   | symfony.com | POST       | matches no entries             | This doesn't match any ``access_control`` rules, since its  |
-|                 |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
-+-----------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
+| URI             | IP          | HOST            | METHOD     | ``access_control``             | Why?                                                        |
++=================+=============+=================+============+================================+=============================================================+
+| ``/admin/user`` | 127.0.0.1   | ``example.com`` | GET        | rule #1 (``ROLE_USER_IP``)     | The URI matches ``path`` and the IP matches ``ip``.         |
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 127.0.0.1   | ``symfony.com`` | GET        | rule #1 (``ROLE_USER_IP``)     | The ``path`` and ``ip`` still match. This would also match  |
+|                 |             |                 |            |                                | the ``ROLE_USER_HOST`` entry, but *only* the **first**      |
+|                 |             |                 |            |                                | ``access_control`` match is used.                           |
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | ``symfony.com`` | GET        | rule #2 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match the first rule, so the second      |
+|                 |             |                 |            |                                | rule (which matches) is used.                               |
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | ``symfony.com`` | POST       | rule #2 (``ROLE_USER_HOST``)   | The second rule still matches. This would also match the    |
+|                 |             |                 |            |                                | third rule (``ROLE_USER_METHOD``), but only the **first**   |
+|                 |             |                 |            |                                | matched ``access_control`` is used.                         |
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | ``example.com`` | POST       | rule #3 (``ROLE_USER_METHOD``) | The ``ip`` and ``host`` don't match the first two entries,  |
+|                 |             |                 |            |                                | but the third - ``ROLE_USER_METHOD`` - matches and is used. |
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/admin/user`` | 168.0.0.1   | ``example.com`` | GET        | rule #4 (``ROLE_MANAGER``)     | The ``ip``, ``host`` and ``method`` prevent the first       |
+|                 |             |                 |            |                                | three entries from matching. But since the URI matches the  |
+|                 |             |                 |            |                                | ``path`` pattern, then the ``ROLE_MANAGER`` (or the         |
+|                 |             |                 |            |                                | ``ROLE_ADMIN``) is used.                                    |
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
+| ``/foo``        | 127.0.0.1   | ``symfony.com`` | POST       | matches no entries             | This doesn't match any ``access_control`` rules, since its  |
+|                 |             |                 |            |                                | URI doesn't match any of the ``path`` values.               |
++-----------------+-------------+-----------------+------------+--------------------------------+-------------------------------------------------------------+
 
 .. caution::
 

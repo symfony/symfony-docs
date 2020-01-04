@@ -186,7 +186,7 @@ Modify ``security.yml``
 
 Everything comes together in your security configuration. Add the user provider
 to the list of providers in the "security" section. Choose a name for the user provider
-(e.g. "webservice") and mention the ``id`` of the service you just defined.
+(e.g. ``webservice``) and mention the ``id`` of the service you just defined.
 
 .. configuration-block::
 

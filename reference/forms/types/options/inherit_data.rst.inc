@@ -1,5 +1,5 @@
-inherit_data
-~~~~~~~~~~~~
+``inherit_data``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

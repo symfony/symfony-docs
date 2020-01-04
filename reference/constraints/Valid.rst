@@ -248,8 +248,8 @@ the validation of the ``Address`` fields failed.
 Options
 -------
 
-traverse
-~~~~~~~~
+``traverse``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

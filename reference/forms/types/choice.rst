@@ -156,8 +156,8 @@ To get fancier, use the `group_by`_ option.
 Field Options
 -------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -183,8 +183,8 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
-choice_loader
-~~~~~~~~~~~~~
+``choice_loader``
+~~~~~~~~~~~~~~~~~
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
@@ -220,8 +220,8 @@ the choice options would need to be resolved thus triggering the callback.
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 
-choices_as_values
-~~~~~~~~~~~~~~~~~
+``choices_as_values``
+~~~~~~~~~~~~~~~~~~~~~
 
 This option is deprecated and you should remove it from your 3.x projects (removing
 it will have *no* effect). For its purpose in 2.x, see the 2.7 documentation.
@@ -239,8 +239,8 @@ it will have *no* effect). For its purpose in 2.x, see the 2.7 documentation.
 Overridden Options
 ------------------
 
-compound
-~~~~~~~~
+``compound``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: same value as ``expanded`` option
 
@@ -259,8 +259,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER
 
-error_bubbling
-~~~~~~~~~~~~~~
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -301,32 +301,32 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 Field Variables
 ---------------
 
-+----------------------------+--------------+-------------------------------------------------------------------+
-| Variable                   | Type         | Usage                                                             |
-+============================+==============+===================================================================+
-| multiple                   | ``boolean``  | The value of the `multiple`_ option.                              |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| expanded                   | ``boolean``  | The value of the `expanded`_ option.                              |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| preferred_choices          | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
-|                            |              | choices which should be presented to the user with priority.      |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| choices                    | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
-|                            |              | the remaining choices.                                            |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| separator                  | ``string``   | The separator to use between choice groups.                       |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| placeholder                | ``mixed``    | The empty value if not already in the list, otherwise             |
-|                            |              | ``null``.                                                         |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| choice_translation_domain  | ``mixed``    | ``boolean``, ``null`` or ``string`` to determine if the value     |
-|                            |              | should be translated.                                             |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| is_selected                | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
-|                            |              | and returns whether the choice is in the selected value(s).       |
-+----------------------------+--------------+-------------------------------------------------------------------+
-| placeholder_in_choices     | ``boolean``  | Whether the empty value is in the choice list.                    |
-+----------------------------+--------------+-------------------------------------------------------------------+
++-------------------------------+--------------+-------------------------------------------------------------------+
+| Variable                      | Type         | Usage                                                             |
++===============================+==============+===================================================================+
+| ``multiple``                  | ``boolean``  | The value of the `multiple`_ option.                              |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``expanded``                  | ``boolean``  | The value of the `expanded`_ option.                              |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``preferred_choices``         | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
+|                               |              | choices which should be presented to the user with priority.      |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``choices``                   | ``array``    | A nested array containing the ``ChoiceView`` objects of           |
+|                               |              | the remaining choices.                                            |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``separator``                 | ``string``   | The separator to use between choice groups.                       |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``placeholder``               | ``mixed``    | The empty value if not already in the list, otherwise             |
+|                               |              | ``null``.                                                         |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``choice_translation_domain`` | ``mixed``    | ``boolean``, ``null`` or ``string`` to determine if the value     |
+|                               |              | should be translated.                                             |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``is_selected``               | ``callable`` | A callable which takes a ``ChoiceView`` and the selected value(s) |
+|                               |              | and returns whether the choice is in the selected value(s).       |
++-------------------------------+--------------+-------------------------------------------------------------------+
+| ``placeholder_in_choices``    | ``boolean``  | Whether the empty value is in the choice list.                    |
++-------------------------------+--------------+-------------------------------------------------------------------+
 
 .. tip::
 

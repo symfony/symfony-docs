@@ -5,7 +5,7 @@ BirthdayType Field
 ==================
 
 A :doc:`DateType </reference/forms/types/date>` field that specializes in handling
-birthdate data.
+birth date data.
 
 Can be rendered as a single text box, three text boxes (month, day and year),
 or three select boxes.
@@ -51,8 +51,8 @@ option defaults to 120 years ago to the current year.
 Overridden Options
 ------------------
 
-years
-~~~~~
+``years``
+~~~~~~~~~
 
 **type**: ``array`` **default**: 120 years ago to the current year
 
@@ -68,8 +68,8 @@ These options inherit from the :doc:`DateType </reference/forms/types/date>`:
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-placeholder
-~~~~~~~~~~~
+``placeholder``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` | ``array``
 

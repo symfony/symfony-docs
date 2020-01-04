@@ -96,7 +96,7 @@ will be used whenever the corresponding environment variable is *not* found:
         $container->setParameter('env(DATABASE_HOST)', 'localhost');
 
 Setting environment variables is generally done at the web server level or in the
-terminal. If you're using Apache, Nginx or just the console, you can use e.g. one
+terminal. If you're using Apache, nginx or just the console, you can use e.g. one
 of the following:
 
 .. configuration-block::

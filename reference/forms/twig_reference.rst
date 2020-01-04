@@ -28,8 +28,8 @@ errors, widgets, etc).
 
 .. _reference-forms-twig-form:
 
-form(view, variables)
----------------------
+``form(view, variables)``
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Renders the HTML of a complete form.
 
@@ -55,8 +55,8 @@ the other helpers to render individual parts of the form instead:
 
 .. _reference-forms-twig-start:
 
-form_start(view, variables)
----------------------------
+``form_start(view, variables)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Renders the start tag of a form. This helper takes care of printing the
 configured method and target action of the form. It will also include the
@@ -69,8 +69,8 @@ correct ``enctype`` property if the form contains upload fields.
 
 .. _reference-forms-twig-end:
 
-form_end(view, variables)
--------------------------
+``form_end(view, variables)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Renders the end tag of a form.
 
@@ -88,8 +88,8 @@ to false:
 
 .. _reference-forms-twig-label:
 
-form_label(view, label, variables)
-----------------------------------
+``form_label(view, label, variables)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Renders the label for the given field. You can optionally pass the specific
 label you want to display as the second argument.
@@ -111,8 +111,8 @@ argument.
 
 .. _reference-forms-twig-errors:
 
-form_errors(view)
------------------
+``form_errors(view)``
+~~~~~~~~~~~~~~~~~~~~~
 
 Renders any errors for the given field.
 
@@ -125,8 +125,8 @@ Renders any errors for the given field.
 
 .. _reference-forms-twig-widget:
 
-form_widget(view, variables)
-----------------------------
+``form_widget(view, variables)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Renders the HTML widget of a given field. If you apply this to an entire
 form or collection of fields, each underlying form row will be rendered.
@@ -148,8 +148,8 @@ argument.
 
 .. _reference-forms-twig-row:
 
-form_row(view, variables)
--------------------------
+``form_row(view, variables)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Renders the "row" of a given field, which is the combination of the field's
 label, errors and widget.
@@ -168,8 +168,8 @@ argument.
 
 .. _reference-forms-twig-rest:
 
-form_rest(view, variables)
---------------------------
+``form_rest(view, variables)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This renders all fields that have not yet been rendered for the given form.
 It's a good idea to always have this somewhere inside your form as it'll
@@ -188,8 +188,8 @@ condition. Read `the Twig documentation`_ for more information.
 
 .. _form-twig-selectedchoice:
 
-selectedchoice(selected_value)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``selectedchoice(selected_value)``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This test will check if the current choice is equal to the ``selected_value``
 or if the current choice is in the array (when ``selected_value`` is an
@@ -201,8 +201,8 @@ array).
 
 .. _form-twig-rootform:
 
-rootform
-~~~~~~~~
+``rootform``
+~~~~~~~~~~~~
 
 This test will check if the current ``form`` does not have a parent form view.
 

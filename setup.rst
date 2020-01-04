@@ -161,7 +161,7 @@ Running the Symfony Application
 -------------------------------
 
 On production servers, Symfony applications use web servers such as Apache or
-Nginx (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
+nginx (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
 However, on your local development machine you can also use the web server
 provided by Symfony, which in turn uses the built-in web server provided by PHP.
 
@@ -191,7 +191,7 @@ pressing ``Ctrl+C`` from the terminal or command console.
 .. tip::
 
     Symfony's web server is great for developing, but should **not** be
-    used on production. Instead, use Apache or Nginx.
+    used on production. Instead, use Apache or nginx.
     See :doc:`/setup/web_server_configuration`.
 
 Checking Symfony Application Configuration and Setup

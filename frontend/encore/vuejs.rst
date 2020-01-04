@@ -1,5 +1,5 @@
-Enabling Vue.js (vue-loader)
-============================
+Enabling Vue.js (``vue-loader``)
+================================
 
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 

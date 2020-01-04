@@ -21,7 +21,7 @@ Symfony automatically validates the presence and accuracy of this token.
 
 The ``_token`` field is a hidden field and will be automatically rendered
 if you include the ``form_end()`` function in your template, which ensures
-that all un-rendered fields are output.
+that all unrendered fields are output.
 
 .. caution::
 

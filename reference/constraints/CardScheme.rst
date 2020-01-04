@@ -102,8 +102,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-schemes
-~~~~~~~
+``schemes``
+~~~~~~~~~~~
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 
@@ -125,8 +125,8 @@ Valid values are:
 For more information about the used schemes, see
 `Wikipedia: Issuer identification number (IIN)`_.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 

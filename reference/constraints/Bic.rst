@@ -81,13 +81,13 @@ will contain a Business Identifier Code (BIC).
 
 .. include:: /reference/constraints/_empty-values-are-valid.rst.inc
 
-Available Options
------------------
+Options
+-------
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid Business Identifier Code (BIC).``
 

@@ -4,7 +4,7 @@
 Mailer Configuration Reference (SwiftmailerBundle)
 ==================================================
 
-The SwiftmailerBundle integrates the Swiftmailer library in Symfony applications
+The SwiftmailerBundle integrates the Swift Mailer library in Symfony applications
 to :doc:`send emails </email>`. All these options are configured under the
 ``swiftmailer`` key in your application configuration.
 
@@ -55,112 +55,112 @@ Configuration
 * `url`_
 * `username`_
 
-url
-~~~
+``url``
+~~~~~~~
 
 **type**: ``string``
 
-The entire SwiftMailer configuration using a DSN-like URL format.
+The entire Swift Mailer configuration using a DSN-like URL format.
 
 Example: ``smtp://user:pass@host:port/?timeout=60&encryption=ssl&auth_mode=login&...``
 
-transport
-~~~~~~~~~
+``transport``
+~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``smtp``
 
 The exact transport method to use to deliver emails. Valid values are:
 
-* smtp
-* gmail (see :doc:`/email/gmail`)
-* mail (deprecated in SwiftMailer since version 5.4.5)
-* sendmail
-* null (same as setting `disable_delivery`_ to ``true``)
+* ``smtp``
+* ``gmail`` (see :doc:`/email/gmail`)
+* ``mail`` (deprecated in Swift Mailer since version 5.4.5)
+* ``sendmail``
+* ``null`` (same as setting `disable_delivery`_ to ``true``)
 
-username
-~~~~~~~~
+``username``
+~~~~~~~~~~~~
 
 **type**: ``string``
 
 The username when using ``smtp`` as the transport.
 
-password
-~~~~~~~~
+``password``
+~~~~~~~~~~~~
 
 **type**: ``string``
 
 The password when using ``smtp`` as the transport.
 
-command
-~~~~~~~~
+``command``
+~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``/usr/sbin/sendmail -bs``
 
 Command to be executed by ``sendmail`` transport.
 
-host
-~~~~
+``host``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``localhost``
 
 The host to connect to when using ``smtp`` as the transport.
 
-port
-~~~~
+``port``
+~~~~~~~~
 
 **type**: ``string`` **default**: 25 or 465 (depending on `encryption`_)
 
 The port when using ``smtp`` as the transport. This defaults to 465 if encryption
 is ``ssl`` and 25 otherwise.
 
-timeout
-~~~~~~~
+``timeout``
+~~~~~~~~~~~
 
 **type**: ``integer``
 
 The timeout in seconds when using ``smtp`` as the transport.
 
-source_ip
-~~~~~~~~~
+``source_ip``
+~~~~~~~~~~~~~
 
 **type**: ``string``
 
 The source IP address when using ``smtp`` as the transport.
 
-local_domain
-~~~~~~~~~~~~
-
-**type**: ``string``
+``local_domain``
+~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.4.0
 
     The ``local_domain`` option was introduced in SwiftMailerBundle 2.4.0.
 
+**type**: ``string``
+
 The domain name to use in ``HELO`` command.
 
-encryption
-~~~~~~~~~~
+``encryption``
+~~~~~~~~~~~~~~
 
 **type**: ``string``
 
 The encryption mode to use when using ``smtp`` as the transport. Valid values
 are ``tls``, ``ssl``, or ``null`` (indicating no encryption).
 
-auth_mode
-~~~~~~~~~
+``auth_mode``
+~~~~~~~~~~~~~
 
 **type**: ``string``
 
 The authentication mode to use when using ``smtp`` as the transport. Valid
 values are ``plain``, ``login``, ``cram-md5``, or ``null``.
 
-spool
-~~~~~
+``spool``
+~~~~~~~~~
 
 For details on email spooling, see :doc:`/email/spool`.
 
-type
-....
+``type``
+........
 
 **type**: ``string`` **default**: ``file``
 
@@ -168,16 +168,16 @@ The method used to store spooled messages. Valid values are ``memory`` and
 ``file``. A custom spool should be possible by creating a service called
 ``swiftmailer.spool.myspool`` and setting this value to ``myspool``.
 
-path
-....
+``path``
+........
 
 **type**: ``string`` **default**: ``%kernel.cache_dir%/swiftmailer/spool``
 
 When using the ``file`` spool, this is the path where the spooled messages
 will be stored.
 
-sender_address
-~~~~~~~~~~~~~~
+``sender_address``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string``
 
@@ -185,19 +185,19 @@ If set, all messages will be delivered with this address as the "return
 path" address, which is where bounced messages should go. This is handled
 internally by Swift Mailer's ``Swift_Plugins_ImpersonatePlugin`` class.
 
-antiflood
-~~~~~~~~~
+``antiflood``
+~~~~~~~~~~~~~
 
-threshold
-.........
+``threshold``
+.............
 
 **type**: ``integer`` **default**: ``99``
 
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of emails
 to send before restarting the transport.
 
-sleep
-.....
+``sleep``
+.........
 
 **type**: ``integer`` **default**: ``0``
 
@@ -206,8 +206,8 @@ to sleep for during a transport restart.
 
 .. _delivery-address:
 
-delivery_addresses
-~~~~~~~~~~~~~~~~~~
+``delivery_addresses``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
@@ -223,8 +223,8 @@ that all emails sent during development go to one or more some specific accounts
 This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
 
-delivery_whitelist
-~~~~~~~~~~~~~~~~~~
+``delivery_whitelist``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
@@ -234,16 +234,16 @@ of these patterns will be delivered like normal, as well as being sent to
 :ref:`How to Work with Emails during Development <sending-to-a-specified-address-but-with-exceptions>`
 article.
 
-disable_delivery
-~~~~~~~~~~~~~~~~
+``disable_delivery``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
 If true, the ``transport`` will automatically be set to ``null`` and no
 emails will actually be delivered.
 
-logging
-~~~~~~~
+``logging``
+~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 

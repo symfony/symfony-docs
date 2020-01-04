@@ -117,8 +117,8 @@ and "50", you might add the following:
 Options
 -------
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -131,8 +131,8 @@ It is important to notice that NULL values and empty strings are considered
 valid no matter if the constraint required a minimum length. Validators
 are triggered only if the value is not blank.
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -141,8 +141,8 @@ the given value's length is **greater** than this max value.
 
 This option is required when the ``min`` option is not defined.
 
-charset
-~~~~~~~
+``charset``
+~~~~~~~~~~~
 
 **type**: ``string``  **default**: ``UTF-8``
 
@@ -150,8 +150,8 @@ The charset to be used when computing value's length with the
 :phpfunction:`mb_check_encoding` and :phpfunction:`mb_strlen`
 PHP functions.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 
@@ -168,8 +168,8 @@ You can use the following parameters in this message:
 | ``{{ limit }}`` | The expected minimum length |
 +-----------------+-----------------------------+
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
@@ -186,8 +186,8 @@ You can use the following parameters in this message:
 | ``{{ limit }}`` | The expected maximum length |
 +-----------------+-----------------------------+
 
-exactMessage
-~~~~~~~~~~~~
+``exactMessage``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 
@@ -204,8 +204,8 @@ You can use the following parameters in this message:
 | ``{{ limit }}`` | The exact expected length   |
 +-----------------+-----------------------------+
 
-charsetMessage
-~~~~~~~~~~~~~~
+``charsetMessage``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value does not match the expected {{ charset }} charset.``
 

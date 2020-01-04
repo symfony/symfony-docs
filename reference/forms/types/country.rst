@@ -53,8 +53,8 @@ the option manually, but then you should just use the ``ChoiceType`` directly.
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: ``Symfony\Component\Intl\Intl::getRegionBundle()->getCountryNames()``
 

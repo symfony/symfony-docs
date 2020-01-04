@@ -1,4 +1,4 @@
-Url
+URL
 ===
 
 Validates that a value is a valid URL string.
@@ -84,8 +84,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid URL.``
 
@@ -162,8 +162,8 @@ You can use the following parameters in this message:
             }
         }
 
-protocols
-~~~~~~~~~
+``protocols``
+~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``['http', 'https']``
 
@@ -239,8 +239,8 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-checkDNS
-~~~~~~~~
+``checkDNS``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -314,8 +314,8 @@ option to the value of any of the ``CHECK_DNS_TYPE_*`` constants in the
 This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
 of the DNS record corresponding to the host associated with the given URL.
 
-dnsMessage
-~~~~~~~~~~
+``dnsMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The host could not be resolved.``
 

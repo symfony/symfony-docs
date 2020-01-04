@@ -245,7 +245,7 @@ added above::
     $identity = new UserSecurityIdentity('johannes', 'AppBundle\Entity\User');
     $acl->insertObjectAce($identity, $mask);
 
-The user is now allowed to view, edit, delete, and un-delete objects.
+The user is now allowed to view, edit, delete, and undelete objects.
 
 .. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`MongoDBAclBundle`: https://github.com/IamPersistent/MongoDBAclBundle

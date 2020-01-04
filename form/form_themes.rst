@@ -132,10 +132,10 @@ Template Fragment Inheritance
 
 In some cases, the fragment you want to customize will appear to be missing.
 For example, there is no ``textarea_errors`` fragment in the default themes
-provided with Symfony. So how are the errors for a textarea field rendered?
+provided with Symfony. So how are the errors for a ``textarea`` field rendered?
 
 The answer is: via the ``form_errors`` fragment. When Symfony renders the errors
-for a textarea type, it looks first for a ``textarea_errors`` fragment before
+for a ``textarea`` type, it looks first for a ``textarea_errors`` fragment before
 falling back to the ``form_errors`` fragment. Each field type has a *parent*
 type (the parent type of ``textarea`` is ``text``, its parent is ``form``),
 and Symfony uses the fragment for the parent type if the base fragment doesn't

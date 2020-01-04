@@ -9,12 +9,12 @@ The preferred way to develop your Symfony application is to use
 
 However, when running the application in the production environment, you'll need
 to use a fully-featured web server. This article describes several ways to use
-Symfony with Apache or Nginx.
+Symfony with Apache or nginx.
 
 When using Apache, you can configure PHP as an
 :ref:`Apache module <web-server-apache-mod-php>` or with FastCGI using
 :ref:`PHP FPM <web-server-apache-fpm>`. FastCGI also is the preferred way
-to use PHP :ref:`with Nginx <web-server-nginx>`.
+to use PHP :ref:`with nginx <web-server-nginx>`.
 
 .. sidebar:: The Web Directory
 
@@ -32,8 +32,8 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
 
 .. _web-server-apache-mod-php:
 
-Apache with mod_php/PHP-CGI
----------------------------
+Apache with ``mod_php``/PHP-CGI
+-------------------------------
 
 The **minimum configuration** to get your application running under Apache is:
 
@@ -103,7 +103,7 @@ and increase web server performance:
 
 .. tip::
 
-    If you are using **php-cgi**, Apache does not pass HTTP basic username and
+    If you are using ``php-cgi``, Apache does not pass HTTP basic username and
     password to PHP by default. To work around this limitation, you should use
     the following configuration snippet:
 
@@ -111,8 +111,8 @@ and increase web server performance:
 
         RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-Using mod_php/PHP-CGI with Apache 2.4
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using ``mod_php``/PHP-CGI with Apache 2.4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Apache 2.4, ``Order Allow,Deny`` has been replaced by ``Require all granted``.
 Hence, you need to modify your ``Directory`` permission settings as follows:
@@ -154,8 +154,8 @@ listen on. Each pool can also be run under a different UID and GID:
     ; or listen on a TCP socket
     listen = 127.0.0.1:9000
 
-Using mod_proxy_fcgi with Apache 2.4
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using ``mod_proxy_fcgi`` with Apache 2.4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are running Apache 2.4, you can use ``mod_proxy_fcgi`` to pass incoming
 requests to PHP-FPM. Configure PHP-FPM to listen on a TCP or Unix socket, enable
@@ -251,10 +251,10 @@ instead:
 
 .. _web-server-nginx:
 
-Nginx
+nginx
 -----
 
-The **minimum configuration** to get your application running under Nginx is:
+The **minimum configuration** to get your application running under nginx is:
 
 .. code-block:: nginx
 
@@ -321,7 +321,7 @@ The **minimum configuration** to get your application running under Nginx is:
 .. tip::
 
     This executes **only** ``app.php``, ``app_dev.php`` and ``config.php`` in
-    the web directory. All other files ending in ".php" will be denied.
+    the web directory. All other files ending in ``.php`` will be denied.
 
     If you have other PHP files in your web directory that need to be executed,
     be sure to include them in the ``location`` block above.
@@ -337,10 +337,10 @@ The **minimum configuration** to get your application running under Nginx is:
     By default, Symfony applications include several ``.htaccess`` files to
     configure redirections and to prevent unauthorized access to some sensitive
     directories. Those files are only useful when using Apache, so you can
-    safely remove them when using Nginx.
+    safely remove them when using nginx.
 
-For advanced Nginx configuration options, read the official `Nginx documentation`_.
+For advanced nginx configuration options, read the official `nginx documentation`_.
 
 .. _`Apache documentation`: https://httpd.apache.org/docs/
 .. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
-.. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/
+.. _`nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/

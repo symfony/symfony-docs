@@ -32,8 +32,8 @@ like :ref:`logging out <security-logging-out>` and
 .. _security-firewalls:
 .. _firewalls-authentication:
 
-1) Initial security.yml Setup (Authentication)
-----------------------------------------------
+1) Initial ``security.yml`` Setup (Authentication)
+--------------------------------------------------
 
 The security system is configured in ``app/config/security.yml``. The default
 configuration looks like this:
@@ -272,7 +272,7 @@ user to be logged in to access this URL:
     You'll learn more about this ``ROLE_ADMIN`` thing and denying access
     later in the :ref:`security-authorization` section.
 
-Great! Now, if you go to ``/admin``, you'll see the HTTP basic auth prompt:
+Great! Now, if you go to ``/admin``, you'll see the HTTP basic authentication prompt:
 
 .. image:: /_images/security/http_basic_popup.png
    :align: center
@@ -609,7 +609,7 @@ D) Configuration Done!
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Congratulations! You now have a working authentication system that uses HTTP
-basic auth and loads users right from the ``security.yml`` file.
+basic authentication and loads users right from the ``security.yml`` file.
 
 Your next steps depend on your setup:
 
@@ -1110,7 +1110,7 @@ Logging Out
 
 .. caution::
 
-    Notice that when using http-basic authenticated firewalls, there is no
+    Notice that when using HTTP basic authenticated firewalls, there is no
     real  way to log out : the only way to *log out* is to have the browser
     stop sending your name and password  on every request. Clearing your
     browser cache or restarting your browser usually helps. Some web developer
@@ -1203,7 +1203,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         return $routes;
 
 And that's it! By sending a user to ``/logout`` (or whatever you configure
-the ``path`` to be), Symfony will un-authenticate the current user.
+the ``path`` to be), Symfony will unauthenticate the current user.
 
 Once the user has been logged out, they will be redirected to whatever path
 is defined by the ``target`` parameter above (e.g. the ``homepage``).

@@ -52,8 +52,8 @@ Configuration
 * `paths`_
 * `strict_variables`_
 
-auto_reload
-~~~~~~~~~~~
+``auto_reload``
+~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 
@@ -61,8 +61,8 @@ If ``true``, whenever a template is rendered, Symfony checks first if its source
 code has changed since it was compiled. If it has changed, the template is
 compiled again automatically.
 
-autoescape
-~~~~~~~~~~
+``autoescape``
+~~~~~~~~~~~~~~
 
 **type**: ``boolean`` or ``string`` **default**: ``'name'``
 
@@ -87,8 +87,8 @@ templates and ``js`` for ``*.js.html`` templates).
     See `autoescape_service`_ and `autoescape_service_method`_ to define your
     own escaping strategy.
 
-autoescape_service
-~~~~~~~~~~~~~~~~~~
+``autoescape_service``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -100,16 +100,16 @@ for HTML and the contents of ``*.js.twig`` are escaped for JavaScript.
 This option allows to define the Symfony service which will be used to determine
 the default escaping applied to the template.
 
-autoescape_service_method
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``autoescape_service_method``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
 If ``autoescape_service`` option is defined, then this option defines the method
 called to determine the default escaping applied to the template.
 
-base_template_class
-~~~~~~~~~~~~~~~~~~~
+``base_template_class``
+~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'Twig\Template'``
 
@@ -118,8 +118,8 @@ contents. This option defines the base class from which all the template classes
 extend. Using a custom base template is discouraged because it will make your
 application harder to maintain.
 
-cache
-~~~~~
+``cache``
+~~~~~~~~~
 
 **type**: ``string`` | ``false`` **default**: ``'%kernel.cache_dir%/twig'``
 
@@ -132,47 +132,47 @@ is not recommended; not even in the ``dev`` environment, because the
 ``auto_reload`` option ensures that cached templates which have changed get
 compiled again.
 
-charset
-~~~~~~~
+``charset``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'%kernel.charset%'``
 
 The charset used by the template files. In the Symfony Standard edition this
 defaults to the ``UTF-8`` charset.
 
-date
-~~~~
+``date``
+~~~~~~~~
 
 These options define the default values used by the ``date`` filter to format
 date and time values. They are useful to avoid passing the same arguments on
 every ``date`` filter call.
 
-format
-......
+``format``
+..........
 
 **type**: ``string`` **default**: ``F j, Y H:i``
 
 The format used by the ``date`` filter to display values when no specific format
 is passed as argument.
 
-interval_format
-...............
+``interval_format``
+...................
 
 **type**: ``string`` **default**: ``%d days``
 
 The format used by the ``date`` filter to display ``DateInterval`` instances
 when no specific format is passed as argument.
 
-timezone
-........
+``timezone``
+............
 
 **type**: ``string`` **default**: (the value returned by ``date_default_timezone_get()``)
 
 The timezone used when formatting date values with the ``date`` filter and no
 specific timezone is passed as argument.
 
-debug
-~~~~~
+``debug``
+~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 
@@ -181,8 +181,8 @@ be used to display their nodes.
 
 .. _config-twig-exception-controller:
 
-exception_controller
-~~~~~~~~~~~~~~~~~~~~
+``exception_controller``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``twig.controller.exception:showAction``
 
@@ -195,23 +195,23 @@ option is advanced. If you need to customize an error page you should use
 the previous link. If you need to perform some behavior on an exception,
 you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
 
-number_format
-~~~~~~~~~~~~~
+``number_format``
+~~~~~~~~~~~~~~~~~
 
 These options define the default values used by the ``number_format`` filter to
 format numeric values. They are useful to avoid passing the same arguments on
 every ``number_format`` filter call.
 
-decimals
-........
+``decimals``
+............
 
 **type**: ``integer`` **default**: ``0``
 
 The number of decimals used to format numeric values when no specific number is
 passed as argument to the ``number_format`` filter.
 
-decimal_point
-.............
+``decimal_point``
+.................
 
 **type**: ``string`` **default**: ``.``
 
@@ -219,16 +219,16 @@ The character used to separate the decimals from the integer part of numeric
 values when no specific character is passed as argument to the ``number_format``
 filter.
 
-thousands_separator
-...................
+``thousands_separator``
+.......................
 
 **type**: ``string`` **default**: ``,``
 
 The character used to separate every group of thousands in numeric values when
 no specific character is passed as argument to the ``number_format`` filter.
 
-optimizations
-~~~~~~~~~~~~~
+``optimizations``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``int`` **default**: ``-1``
 
@@ -243,8 +243,8 @@ on. Set it to ``0`` to disable all the optimizations. You can even enable or
 disable these optimizations selectively, as explained in the Twig documentation
 about `the optimizer extension`_.
 
-default_path
-~~~~~~~~~~~~
+``default_path``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
 
@@ -256,8 +256,8 @@ The default directory where Symfony will look for Twig templates.
 
 .. _config-twig-paths:
 
-paths
-~~~~~
+``paths``
+~~~~~~~~~
 
 **type**: ``array`` **default**: ``null``
 
@@ -360,8 +360,8 @@ by Symfony. Besides, it simplifies how you refer to those templates:
 
     @foo_bar/template_name.html.twig
 
-strict_variables
-~~~~~~~~~~~~~~~~
+``strict_variables``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

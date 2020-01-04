@@ -434,7 +434,7 @@ use this, update the compiler::
 
 The double loop may be confusing. This is because a service can have more
 than one tag. You tag a service twice or more with the ``app.mail_transport``
-tag. The second foreach loop iterates over the ``app.mail_transport``
+tag. The second ``foreach`` loop iterates over the ``app.mail_transport``
 tags set for the current service and gives you the attributes.
 
 Reference Tagged Services

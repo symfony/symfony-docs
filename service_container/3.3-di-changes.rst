@@ -24,8 +24,8 @@ need to actually change your configuration files to use them.
 
 .. _`service-33-default_definition`:
 
-The new Default services.yml File
----------------------------------
+The new Default ``services.yml`` File
+-------------------------------------
 
 To understand the changes, look at the new default ``services.yml`` file in the
 Symfony Standard Edition:
@@ -159,7 +159,7 @@ automatically removed from the compiled container. This means that the number of
 services in your container should be the *same* whether your explicitly configure
 each service or load them all at once with this method.
 
-    Ok, but can I exclude some paths that I *know* won't contain services?
+    OK, but can I exclude some paths that I *know* won't contain services?
 
 Yes! The ``exclude`` key is a glob pattern that can be used to *blacklist* paths
 that you do *not* want to be included as services. But, since unused services are
@@ -264,13 +264,13 @@ which should be used for autowiring. For full details on the autowiring logic, s
     But what if I have a scalar (e.g. string) argument? How does it autowire that?
 
 If you have an argument that is *not* an object, it can't be autowired. But that's
-ok! Symfony will give you a clear exception (on the next refresh of *any* page) telling
+OK! Symfony will give you a clear exception (on the next refresh of *any* page) telling
 you which argument of which service could not be autowired. To fix it, you can
 :ref:`manually configure *just* that one argument <services-manually-wire-args>`.
 This is the philosophy of autowiring: only configure the parts that you need to.
 Most configuration is automated.
 
-    Ok, but autowiring makes your applications less stable. If you change one thing
+    OK, but autowiring makes your applications less stable. If you change one thing
     or make a mistake, unexpected things might happen. Isn't that a problem?
 
 Symfony has always valued stability, security and predictability first. Autowiring
@@ -429,8 +429,8 @@ Many autoconfigured tags have an optional priority. If you need to specify a pri
 (or any other optional tag attribute), no problem! Just :ref:`manually configure your service <services-manually-wire-args>`
 and add the tag. Your tag will take precedence over the one added by auto-configuration.
 
-5) Auto-configure with _instanceof
-----------------------------------
+5) Auto-configure with ``_instanceof``
+--------------------------------------
 
 And the final big change is ``_instanceof``. It acts as a default definition
 template (see `service-33-default_definition`_), but only for services whose

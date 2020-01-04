@@ -1,5 +1,5 @@
-property_path
-~~~~~~~~~~~~~
+``property_path``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``any`` **default**: ``the field's name``
 

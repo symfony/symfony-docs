@@ -101,14 +101,14 @@ value and then a User object is created::
     }
 
 Once you've :ref:`configured <security-api-key-config>` everything,
-you'll be able to authenticate by adding an apikey parameter to the query
+you'll be able to authenticate by adding an ``apikey`` parameter to the query
 string, like ``http://example.com/api/foo?apikey=37b51d194a7513e45b56f6524f2d51f2``.
 
 The authentication process has several steps, and your implementation will
 probably differ:
 
-1. createToken
-~~~~~~~~~~~~~~
+1. ``createToken()``
+~~~~~~~~~~~~~~~~~~~~
 
 Early in the request cycle, Symfony calls ``createToken()``. Your job here
 is to create a token object that contains all of the information from the
@@ -127,13 +127,13 @@ method, if any.
     firewall. This way Symfony executes the anonymous authentication provider
     and you'll get an ``AnonymousToken``.
 
-2. supportsToken
-~~~~~~~~~~~~~~~~
+2. ``supportsToken()``
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: _supportsToken.rst.inc
 
-3. authenticateToken
-~~~~~~~~~~~~~~~~~~~~
+3. ``authenticateToken()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If ``supportsToken()`` returns ``true``, Symfony will now call ``authenticateToken()``.
 One key part is the ``$userProvider``, which is an external class that helps

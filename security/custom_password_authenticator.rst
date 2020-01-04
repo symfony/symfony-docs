@@ -105,8 +105,8 @@ How it Works
 Great! Now you just need to setup some :ref:`security-password-authenticator-config`.
 But first, you can find out more about what each method in this class does.
 
-1) createToken
-~~~~~~~~~~~~~~
+1) ``createToken()``
+~~~~~~~~~~~~~~~~~~~~
 
 When Symfony begins handling a request, ``createToken()`` is called, where
 you create a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
@@ -115,13 +115,13 @@ to authenticate the user (e.g. the username and password).
 
 Whatever token object you create here will be passed to you later in ``authenticateToken()``.
 
-2) supportsToken
-~~~~~~~~~~~~~~~~
+2) ``supportsToken()``
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: _supportsToken.rst.inc
 
-3) authenticateToken
-~~~~~~~~~~~~~~~~~~~~
+3) ``authenticateToken()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If ``supportsToken()`` returns ``true``, Symfony will now call ``authenticateToken()``.
 Your job here is to check that the token is allowed to log in by first

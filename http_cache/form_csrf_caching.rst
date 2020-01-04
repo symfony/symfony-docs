@@ -36,5 +36,5 @@ Another option would be to load the form via an uncached AJAX request, but
 cache the rest of the HTML response.
 
 Or you can even load just the CSRF token with an AJAX request and replace the
-form field value with it. Take a look at :doc:`hinclude.js </templating/hinclude>`
+form field value with it. Take a look at :doc:`HInclude </templating/hinclude>`
 for a nice solution.

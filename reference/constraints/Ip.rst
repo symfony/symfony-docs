@@ -1,4 +1,4 @@
-Ip
+IP
 ==
 
 Validates that a value is a valid IP address. By default, this will validate
@@ -82,8 +82,8 @@ Basic Usage
 Options
 -------
 
-version
-~~~~~~~
+``version``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``4``
 
@@ -128,8 +128,8 @@ of a variety of different values:
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid IP address.``
 

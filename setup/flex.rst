@@ -31,7 +31,7 @@ If you execute that command in a Symfony application which doesn't use Flex,
 you'll see a Composer error explaining that ``mailer`` is not a valid package
 name. However, if the application has Symfony Flex installed, that command ends
 up installing and enabling the SwiftmailerBundle, which is the best way to
-integrate Swiftmailer, the official mailer for Symfony applications.
+integrate Swift Mailer, the official mailer for Symfony applications.
 
 When Symfony Flex is installed in the application and you execute ``composer
 require``, the application makes a request to the Symfony Flex server before

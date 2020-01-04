@@ -215,8 +215,8 @@ Configuration
     * `transitions`_
     * :ref:`type <reference-workflows-type>`
 
-secret
-~~~~~~
+``secret``
+~~~~~~~~~~
 
 **type**: ``string`` **required**
 
@@ -241,8 +241,8 @@ out all the application users.
 
 .. _configuration-framework-http_method_override:
 
-http_method_override
-~~~~~~~~~~~~~~~~~~~~
+``http_method_override``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -276,13 +276,13 @@ named ``kernel.http_method_override``.
 
 .. _reference-framework-trusted-proxies:
 
-trusted_proxies
-~~~~~~~~~~~~~~~
+``trusted_proxies``
+~~~~~~~~~~~~~~~~~~~
 
 The ``trusted_proxies`` option was removed in Symfony 3.3. See :doc:`/deployment/proxies`.
 
-ide
-~~~
+``ide``
+~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -364,8 +364,8 @@ need to escape the percent signs (``%``) by doubling them.
 
 .. _reference-framework-test:
 
-test
-~~~~
+``test``
+~~~~~~~~
 
 **type**: ``boolean``
 
@@ -380,8 +380,8 @@ setting should be present in your ``test`` environment (usually via
 
 .. _config-framework-default_locale:
 
-default_locale
-~~~~~~~~~~~~~~
+``default_locale``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``en``
 
@@ -395,8 +395,8 @@ method.
     You can read more information about the default locale in
     :ref:`translation-default-locale`.
 
-trusted_hosts
-~~~~~~~~~~~~~
+``trusted_hosts``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` | ``string`` **default**: ``[]``
 
@@ -470,13 +470,13 @@ can respond to any given host.
 
 .. _reference-framework-form:
 
-form
-~~~~
+``form``
+~~~~~~~~
 
 .. _reference-form-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -495,8 +495,8 @@ settings is configured.
 
     For more details, see :doc:`/forms`.
 
-csrf_protection
-~~~~~~~~~~~~~~~
+``csrf_protection``
+~~~~~~~~~~~~~~~~~~~
 
 .. seealso::
 
@@ -504,8 +504,8 @@ csrf_protection
 
 .. _reference-csrf_protection-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``true`` if form support is enabled, ``false``
 otherwise
@@ -517,8 +517,8 @@ If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
 
-esi
-~~~
+``esi``
+~~~~~~~
 
 .. seealso::
 
@@ -526,8 +526,8 @@ esi
 
 .. _reference-esi-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -566,8 +566,8 @@ You can also set ``esi`` to ``true`` to enable it:
             'esi' => true,
         ]);
 
-fragments
-~~~~~~~~~
+``fragments``
+~~~~~~~~~~~~~
 
 .. seealso::
 
@@ -576,8 +576,8 @@ fragments
 
 .. _reference-fragments-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -589,21 +589,21 @@ is configured.
 
 .. _reference-fragments-path:
 
-path
-....
+``path``
+........
 
 **type**: ``string`` **default**: ``'/_fragment'``
 
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
 
-profiler
-~~~~~~~~
+``profiler``
+~~~~~~~~~~~~
 
 .. _reference-profiler-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -617,8 +617,8 @@ and ``test`` environments.
     the :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
     on how to disable/enable the toolbar.
 
-collect
-.......
+``collect``
+...........
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -630,24 +630,24 @@ and activate the data collectors manually::
 
     $profiler->enable();
 
-only_exceptions
-...............
+``only_exceptions``
+...................
 
 **type**: ``boolean`` **default**: ``false``
 
 When this is set to ``true``, the profiler will only be enabled when an
 exception is thrown during the handling of the request.
 
-only_master_requests
-....................
+``only_master_requests``
+........................
 
 **type**: ``boolean`` **default**: ``false``
 
 When this is set to ``true``, the profiler will only be enabled on the master
 requests (and not on the subrequests).
 
-dsn
-...
+``dsn``
+.......
 
 **type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
 
@@ -658,8 +658,8 @@ The DSN where to store the profiling information.
     See :doc:`/profiler/storage` for more information about the
     profiler storage.
 
-matcher
-.......
+``matcher``
+...........
 
 .. caution::
 
@@ -673,8 +673,8 @@ instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
     See :doc:`/profiler/matchers` for more information about using
     matchers to enable/disable the profiler.
 
-ip
-""
+``ip``
+""""""
 
 **type**: ``string``
 
@@ -682,25 +682,25 @@ If set, the profiler will only be enabled when the current IP address matches.
 
 .. _reference-profiler-matcher-path:
 
-path
-""""
+``path``
+""""""""
 
 **type**: ``string``
 
 If set, the profiler will only be enabled when the current path matches.
 
-service
-"""""""
+``service``
+"""""""""""
 
 **type**: ``string``
 
 This setting contains the service id of a custom matcher.
 
-request
-~~~~~~~
+``request``
+~~~~~~~~~~~
 
-formats
-.......
+``formats``
+...........
 
 **type**: ``array`` **default**: ``[]``
 
@@ -759,11 +759,11 @@ To configure a ``jsonp`` format:
             ],
         ]);
 
-router
-~~~~~~
+``router``
+~~~~~~~~~~
 
-resource
-........
+``resource``
+............
 
 **type**: ``string`` **required**
 
@@ -772,8 +772,8 @@ routes and imports the router should load.
 
 .. _reference-router-type:
 
-type
-....
+``type``
+........
 
 **type**: ``string``
 
@@ -781,22 +781,22 @@ The type of the resource to hint the loaders about the format. This isn't
 needed when you use the default routers with the expected file extensions
 (``.xml``, ``.yml`` / ``.yaml``, ``.php``).
 
-http_port
-.........
+``http_port``
+.............
 
 **type**: ``integer`` **default**: ``80``
 
 The port for normal http requests (this is used when matching the scheme).
 
-https_port
-..........
+``https_port``
+..............
 
 **type**: ``integer`` **default**: ``443``
 
 The port for https requests (this is used when matching the scheme).
 
-strict_requirements
-...................
+``strict_requirements``
+.......................
 
 **type**: ``mixed`` **default**: ``true``
 
@@ -818,11 +818,11 @@ The value can be one of:
 ``true`` is recommended in the development environment, while ``false``
 or ``null`` might be preferred in production.
 
-session
-~~~~~~~
+``session``
+~~~~~~~~~~~
 
-storage_id
-..........
+``storage_id``
+..............
 
 **type**: ``string`` **default**: ``'session.storage.native'``
 
@@ -830,8 +830,8 @@ The service id used for session storage. The ``session.storage`` service
 alias will be set to this service id. This class has to implement
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
 
-handler_id
-..........
+``handler_id``
+..............
 
 **type**: ``string`` **default**: ``'session.handler.native_file'``
 
@@ -848,8 +848,8 @@ installation.
 
 .. _name:
 
-name
-....
+``name``
+........
 
 **type**: ``string`` **default**: ``null``
 
@@ -857,8 +857,8 @@ This specifies the name of the session cookie. By default, it will use the
 cookie name which is defined in the ``php.ini`` with the ``session.name``
 directive.
 
-cookie_lifetime
-...............
+``cookie_lifetime``
+...................
 
 **type**: ``integer`` **default**: ``null``
 
@@ -867,16 +867,16 @@ This determines the lifetime of the session - in seconds. The default value
 will be used. Setting this value to ``0`` means the cookie is valid for
 the length of the browser session.
 
-cookie_path
-...........
+``cookie_path``
+...............
 
 **type**: ``string`` **default**: ``/``
 
 This determines the path to set in the session cookie. By default, it will
 use ``/``.
 
-cache_limiter
-.............
+``cache_limiter``
+.................
 
 **type**: ``string`` or ``int`` **default**: ``''``
 
@@ -919,8 +919,8 @@ Unlike the other session options, ``cache_limiter`` is set as a regular
             'cache_limiter' => 0,
         ]);
 
-cookie_domain
-.............
+``cookie_domain``
+.................
 
 **type**: ``string`` **default**: ``''``
 
@@ -928,15 +928,15 @@ This determines the domain to set in the session cookie. By default, it's
 blank, meaning the host name of the server which generated the cookie according
 to the cookie specification.
 
-cookie_secure
-.............
+``cookie_secure``
+.................
 
 **type**: ``boolean`` **default**: ``false``
 
 This determines whether cookies should only be sent over secure connections.
 
-cookie_httponly
-...............
+``cookie_httponly``
+...................
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -945,15 +945,15 @@ protocol. This means that the cookie won't be accessible by scripting
 languages, such as JavaScript. This setting can effectively help to reduce
 identity theft through XSS attacks.
 
-gc_divisor
-..........
+``gc_divisor``
+..............
 
 **type**: ``integer`` **default**: ``100``
 
 See `gc_probability`_.
 
-gc_probability
-..............
+``gc_probability``
+..................
 
 **type**: ``integer`` **default**: ``1``
 
@@ -962,8 +962,8 @@ started on every session initialization. The probability is calculated by
 using ``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1%
 chance that the GC process will start on each request.
 
-gc_maxlifetime
-..............
+``gc_maxlifetime``
+..................
 
 **type**: ``integer`` **default**: ``1440``
 
@@ -971,8 +971,8 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
-save_path
-.........
+``save_path``
+.............
 
 **type**: ``string`` **default**: ``%kernel.cache_dir%/sessions``
 
@@ -1019,8 +1019,8 @@ setting the value to ``null``:
 
 .. _reference-session-metadata-update-threshold:
 
-metadata_update_threshold
-.........................
+``metadata_update_threshold``
+.............................
 
 **type**: ``integer`` **default**: ``0``
 
@@ -1033,8 +1033,8 @@ changed. Previously, you needed to set this option to avoid that behavior.
 
 .. _reference-session-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -1074,8 +1074,8 @@ Whether to enable the session support in the framework.
             ],
         ]);
 
-use_cookies
-...........
+``use_cookies``
+...............
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -1083,13 +1083,13 @@ This specifies if the session ID is stored on the client side using cookies or
 not. By default, it will use the value defined in the ``php.ini`` with the
 ``session.use_cookies`` directive.
 
-assets
-~~~~~~
+``assets``
+~~~~~~~~~~
 
 .. _reference-assets-base-path:
 
-base_path
-.........
+``base_path``
+.............
 
 **type**: ``string``
 
@@ -1134,8 +1134,8 @@ This option allows you to define a base path to be used for assets:
 .. _reference-templating-base-urls:
 .. _reference-assets-base-urls:
 
-base_urls
-.........
+``base_urls``
+.............
 
 **type**: ``array``
 
@@ -1182,8 +1182,8 @@ collection each time it generates an asset's path:
 
 .. _reference-framework-assets-packages:
 
-packages
-........
+``packages``
+............
 
 You can group assets into packages, to specify different base URLs for them:
 
@@ -1251,8 +1251,8 @@ Each package can configure the following options:
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
 
-version
-.......
+``version``
+...........
 
 **type**: ``string``
 
@@ -1326,8 +1326,8 @@ option.
 .. _reference-templating-version-format:
 .. _reference-assets-version-format:
 
-version_format
-..............
+``version_format``
+..................
 
 **type**: ``string`` **default**: ``%%s?%%s``
 
@@ -1366,8 +1366,8 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 .. _reference-assets-version-strategy:
 .. _reference-templating-version-strategy:
 
-version_strategy
-................
+``version_strategy``
+....................
 
 **type**: ``string`` **default**: ``null``
 
@@ -1453,8 +1453,8 @@ individually for each asset package:
 .. _reference-assets-json-manifest-path:
 .. _reference-templating-json-manifest-path:
 
-json_manifest_path
-..................
+``json_manifest_path``
+......................
 
 **type**: ``string`` **default**: ``null``
 
@@ -1550,11 +1550,11 @@ package:
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
 
-templating
-~~~~~~~~~~
+``templating``
+~~~~~~~~~~~~~~
 
-hinclude_default_template
-.........................
+``hinclude_default_template``
+.............................
 
 **type**: ``string`` **default**: ``null``
 
@@ -1563,17 +1563,17 @@ is disabled. This can be either a template name or the content itself.
 
 .. seealso::
 
-    See :doc:`/templating/hinclude` for more information about hinclude.
+    See :doc:`/templating/hinclude` for more information about HInclude.
 
 .. _reference-templating-form:
 
-form
-....
+``form``
+........
 
 .. _reference-templating-form-resources:
 
-resources
-"""""""""
+``resources``
+"""""""""""""
 
 **type**: ``string[]`` **default**: ``['FrameworkBundle:Form']``
 
@@ -1645,8 +1645,8 @@ Assume you have custom global form themes in
 
 .. _reference-templating-cache:
 
-cache
-.....
+``cache``
+.........
 
 **type**: ``string``
 
@@ -1658,8 +1658,8 @@ is disabled.
     When using Twig templating, the caching is already handled by the
     TwigBundle and doesn't need to be enabled for the FrameworkBundle.
 
-engines
-.......
+``engines``
+...........
 
 **type**: ``string[]`` / ``string`` **required**
 
@@ -1668,8 +1668,8 @@ engine is configured) or an array of engines.
 
 At least one engine is required.
 
-loaders
-.......
+``loaders``
+...........
 
 **type**: ``string[]``
 
@@ -1678,13 +1678,13 @@ templating loaders. Templating loaders are used to find and load templates
 from a resource (e.g. a filesystem or database). Templating loaders must
 implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
 
-translator
-~~~~~~~~~~
+``translator``
+~~~~~~~~~~~~~~
 
 .. _reference-translator-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -1692,8 +1692,8 @@ Whether or not to enable the ``translator`` service in the service container.
 
 .. _fallback:
 
-fallbacks
-.........
+``fallbacks``
+.............
 
 **type**: ``string|array`` **default**: ``['en']``
 
@@ -1706,8 +1706,8 @@ found.
 
 .. _reference-framework-translator-logging:
 
-logging
-.......
+``logging``
+...........
 
 **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
@@ -1718,8 +1718,8 @@ locale and the ``warning`` level if there is no translation to use at all.
 
 .. _reference-framework-translator-formatter:
 
-formatter
-.........
+``formatter``
+.............
 
 **type**: ``string`` **default**: ``translator.formatter.default``
 
@@ -1732,8 +1732,8 @@ must implement the :class:`Symfony\\Component\\Translation\\Formatter\\MessageFo
 
 .. _reference-translator-paths:
 
-paths
-.....
+``paths``
+.........
 
 **type**: ``array`` **default**: ``[]``
 
@@ -1742,8 +1742,8 @@ for translation files.
 
 .. _reference-translator-default_path:
 
-default_path
-............
+``default_path``
+................
 
 .. versionadded:: 3.4
 
@@ -1754,11 +1754,11 @@ default_path
 This option allows to define the path where the application translations files
 are stored.
 
-property_access
-~~~~~~~~~~~~~~~
+``property_access``
+~~~~~~~~~~~~~~~~~~~
 
-magic_call
-..........
+``magic_call``
+..............
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -1766,31 +1766,31 @@ When enabled, the ``property_accessor`` service uses PHP's
 :ref:`magic __call() method <components-property-access-magic-call>` when
 its ``getValue()`` method is called.
 
-throw_exception_on_invalid_index
-................................
+``throw_exception_on_invalid_index``
+....................................
 
 **type**: ``boolean`` **default**: ``false``
 
 When enabled, the ``property_accessor`` service throws an exception when you
 try to access an invalid index of an array.
 
-property_info
-~~~~~~~~~~~~~
+``property_info``
+~~~~~~~~~~~~~~~~~
 
 .. _reference-property-info-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
-validation
-~~~~~~~~~~
+``validation``
+~~~~~~~~~~~~~~
 
 .. _reference-validation-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``true`` if :ref:`form support is enabled <reference-form-enabled>`,
 ``false`` otherwise
@@ -1802,8 +1802,8 @@ settings is configured.
 
 .. _reference-validation-cache:
 
-cache
-.....
+``cache``
+.........
 
 **type**: ``string``
 
@@ -1815,23 +1815,23 @@ cache provide from the Doctrine project.
 
 .. _reference-validation-enable_annotations:
 
-enable_annotations
-..................
+``enable_annotations``
+......................
 
 **type**: ``boolean`` **default**: ``false``
 
 If this option is enabled, validation constraints can be defined using annotations.
 
-translation_domain
-..................
+``translation_domain``
+......................
 
 **type**: ``string`` **default**: ``validators``
 
 The translation domain that is used when translating validation constraint
 error messages.
 
-static_method
-.............
+``static_method``
+.................
 
 **type**: ``string | array`` **default**: ``['loadValidatorMetadata']``
 
@@ -1840,8 +1840,8 @@ metadata of the class. You can define an array of strings with the names of
 several methods. In that case, all of them will be called in that order to load
 the metadata.
 
-strict_email
-............
+``strict_email``
+................
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -1851,26 +1851,26 @@ the validator uses a simple regular expression to validate email addresses.
 
 .. _reference-validation-mapping:
 
-mapping
-.......
+``mapping``
+...........
 
 .. _reference-validation-mapping-paths:
 
-paths
-"""""
+``paths``
+"""""""""
 
 **type**: ``array`` **default**: ``[]``
 
 This option allows to define an array of paths with files or directories where
 the component will look for additional validation files.
 
-annotations
-~~~~~~~~~~~
+``annotations``
+~~~~~~~~~~~~~~~
 
 .. _reference-annotations-cache:
 
-cache
-.....
+``cache``
+.........
 
 **type**: ``string`` **default**: ``'file'``
 
@@ -1883,16 +1883,16 @@ none
 a service id
     A service id referencing a `Doctrine Cache`_ implementation
 
-file_cache_dir
-..............
+``file_cache_dir``
+..................
 
 **type**: ``string`` **default**: ``'%kernel.cache_dir%/annotations'``
 
 The directory to store cache files for annotations, in case
 ``annotations.cache`` is set to ``'file'``.
 
-debug
-.....
+``debug``
+.........
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 
@@ -1904,13 +1904,13 @@ default value.
 
 .. _configuration-framework-serializer:
 
-serializer
-~~~~~~~~~~
+``serializer``
+~~~~~~~~~~~~~~
 
 .. _reference-serializer-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -1918,8 +1918,8 @@ Whether to enable the ``serializer`` service or not in the service container.
 
 .. _reference-serializer-cache:
 
-cache
-.....
+``cache``
+.........
 
 **type**: ``string``
 
@@ -1932,8 +1932,8 @@ has to implement the ``Doctrine\Common\Cache\Cache`` interface.
 
 .. _reference-serializer-enable_annotations:
 
-enable_annotations
-..................
+``enable_annotations``
+......................
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -1945,8 +1945,8 @@ If this option is enabled, serialization groups can be defined using annotations
 
 .. _reference-serializer-name_converter:
 
-name_converter
-..............
+``name_converter``
+..................
 
 **type**: ``string``
 
@@ -1962,8 +1962,8 @@ value.
 
 .. _reference-serializer-circular_reference_handler:
 
-circular_reference_handler
-..........................
+``circular_reference_handler``
+..............................
 
 **type** ``string``
 
@@ -1978,24 +1978,24 @@ method.
 
 .. _reference-serializer-mapping:
 
-mapping
-.......
+``mapping``
+...........
 
 .. _reference-serializer-mapping-paths:
 
-paths
-"""""
+``paths``
+"""""""""
 
 **type**: ``array`` **default**: ``[]``
 
 This option allows to define an array of paths with files or directories where
 the component will look for additional serialization files.
 
-php_errors
-~~~~~~~~~~
+``php_errors``
+~~~~~~~~~~~~~~
 
-log
-...
+``log``
+.......
 
 .. versionadded:: 3.2
 
@@ -2005,8 +2005,8 @@ log
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 
-throw
-.....
+``throw``
+.........
 
 .. versionadded:: 3.2
 
@@ -2019,13 +2019,13 @@ Throw PHP errors as ``\ErrorException`` instances. The parameter
 
 .. _reference-cache:
 
-cache
-~~~~~
+``cache``
+~~~~~~~~~
 
 .. _reference-cache-app:
 
-app
-...
+``app``
+.......
 
 **type**: ``string`` **default**: ``cache.adapter.filesystem``
 
@@ -2043,48 +2043,48 @@ ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``
 
 .. _reference-cache-system:
 
-system
-......
+``system``
+..........
 
 **type**: ``string`` **default**: ``cache.adapter.system``
 
 The cache adapter used by the ``cache.system`` service. It supports the same
 adapters available for the ``cache.app`` service.
 
-directory
-.........
+``directory``
+.............
 
 **type**: ``string`` **default**: ``%kernel.cache_dir%/pools``
 
 The path to the cache directory used by services inheriting from the
 ``cache.adapter.filesystem`` adapter (including ``cache.app``).
 
-default_doctrine_provider
-.........................
+``default_doctrine_provider``
+.............................
 
 **type**: ``string``
 
 The service name to use as your default Doctrine provider. The provider is
 available as the ``cache.default_doctrine_provider`` service.
 
-default_psr6_provider
-.....................
+``default_psr6_provider``
+.........................
 
 **type**: ``string``
 
 The service name to use as your default PSR-6 provider. It is available as
 the ``cache.default_psr6_provider`` service.
 
-default_redis_provider
-......................
+``default_redis_provider``
+..........................
 
 **type**: ``string`` **default**: ``redis://localhost``
 
 The DSN to use by the Redis provider. The provider is available as the ``cache.default_redis_provider``
 service.
 
-default_memcached_provider
-..........................
+``default_memcached_provider``
+..............................
 
 .. versionadded:: 3.3
 
@@ -2095,8 +2095,8 @@ default_memcached_provider
 The DSN to use by the Memcached provider. The provider is available as the ``cache.default_memcached_provider``
 service.
 
-pools
-.....
+``pools``
+.........
 
 **type**: ``array``
 
@@ -2159,8 +2159,8 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
 
 .. _reference-cache-pools-name:
 
-name
-""""
+``name``
+""""""""
 
 **type**: ``prototype``
 
@@ -2170,8 +2170,8 @@ Name of the pool you want to create.
 
     Your pool name must differ from ``cache.app`` or ``cache.system``.
 
-adapter
-"""""""
+``adapter``
+"""""""""""
 
 **type**: ``string`` **default**: ``cache.app``
 
@@ -2184,22 +2184,22 @@ settings from the base pool as defaults.
 
     Your service MUST implement the ``Psr\Cache\CacheItemPoolInterface`` interface.
 
-public
-""""""
+``public``
+""""""""""
 
 **type**: ``boolean`` **default**: ``false``
 
 Whether your service should be public or not.
 
-default_lifetime
-""""""""""""""""
+``default_lifetime``
+""""""""""""""""""""
 
 **type**: ``integer``
 
 Default lifetime of your cache items in seconds.
 
-provider
-""""""""
+``provider``
+""""""""""""
 
 **type**: ``string``
 
@@ -2208,8 +2208,8 @@ use what is configured as ``default_X_provider`` under ``cache``. See the
 description of the default provider setting above for the type of adapter
 you use for information on how to specify the provider.
 
-clearer
-"""""""
+``clearer``
+"""""""""""
 
 **type**: ``string``
 
@@ -2219,8 +2219,8 @@ The cache clearer used to clear your PSR-6 cache.
 
     For more information, see :class:`Symfony\\Component\\HttpKernel\\CacheClearer\\Psr6CacheClearer`.
 
-prefix_seed
-...........
+``prefix_seed``
+...............
 
 .. versionadded:: 3.2
 
@@ -2240,8 +2240,8 @@ example, when warming caches offline).
 
 .. _reference-lock:
 
-lock
-~~~~
+``lock``
+~~~~~~~~
 
 **type**: ``string`` | ``array``
 
@@ -2250,8 +2250,8 @@ available, or to ``flock`` otherwise. Store's DSN are also allowed.
 
 .. _reference-lock-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -2260,8 +2260,8 @@ automatically set to ``true`` when one of the child settings is configured.
 
 .. _reference-lock-resources:
 
-resources
-.........
+``resources``
+.............
 
 **type**: ``array``
 
@@ -2349,8 +2349,8 @@ A list of lock stores to be created by the framework extension.
 
 .. _reference-lock-resources-name:
 
-name
-""""
+``name``
+""""""""
 
 **type**: ``prototype``
 
@@ -2368,8 +2368,8 @@ Name of the lock you want to create.
             decorates: lock.invoice.store
             arguments: ['@lock.invoice.retry.till.save.store.inner', 100, 50]
 
-workflows
-~~~~~~~~~
+``workflows``
+~~~~~~~~~~~~~
 
 **type**: ``array``
 
@@ -2420,8 +2420,8 @@ A list of workflows to be created by the framework extension:
 
 .. _reference-workflows-enabled:
 
-enabled
-.......
+``enabled``
+...........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -2430,31 +2430,31 @@ automatically set to ``true`` when one of the child settings is configured.
 
 .. _reference-workflows-name:
 
-name
-....
+``name``
+........
 
 **type**: ``prototype``
 
 Name of the workflow you want to create.
 
-audit_trail
-"""""""""""
+``audit_trail``
+"""""""""""""""
 
 **type**: ``bool``
 
 If set to ``true``, the :class:`Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener`
 will be enabled.
 
-initial_place
-"""""""""""""
+``initial_place``
+"""""""""""""""""
 
 **type**: ``string`` **default**: ``null``
 
 One of the ``places`` or ``null``. If not null and the supported object is not
 already initialized via the workflow, this place will be set.
 
-marking_store
-"""""""""""""
+``marking_store``
+"""""""""""""""""
 
 **type**: ``array``
 
@@ -2465,28 +2465,28 @@ Each marking store can define any of these options:
 * ``type`` (**type**: ``string`` **possible values**: ``'multiple_state'`` or
   ``'single_state'``)
 
-places
-""""""
+``places``
+""""""""""
 
 **type**: ``array``
 
 All available places (**type**: ``string``) for the workflow configuration.
 
-supports
-""""""""
+``supports``
+""""""""""""
 
 **type**: ``string`` | ``array``
 
 The FQCN (fully-qualified class name) of the object supported by the workflow
 configuration or an array of FQCN if multiple objects are supported.
 
-support_strategy
-""""""""""""""""
+``support_strategy``
+""""""""""""""""""""
 
 **type**: ``string``
 
-transitions
-"""""""""""
+``transitions``
+"""""""""""""""
 
 **type**: ``array``
 
@@ -2502,8 +2502,8 @@ Each marking store can define any of these options:
 
 .. _reference-workflows-type:
 
-type
-""""
+``type``
+""""""""
 
 **type**: ``string`` **possible values**: ``'workflow'`` or ``'state_machine'``
 

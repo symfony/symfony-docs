@@ -34,7 +34,7 @@ To upgrade your libraries to new versions, run ``composer update``.
 To learn more about Composer, see `GetComposer.org`_:
 
 It's important to realize that these vendor libraries are *not* actually part
-of *your* repository. Instead, they're simply un-tracked files that are downloaded
+of *your* repository. Instead, they're simply untracked files that are downloaded
 into the ``vendor/``. But since all the information needed to download these
 files is saved in ``composer.json`` and ``composer.lock`` (which *are* stored
 in the repository), any other developer can use the project, run ``composer install``,

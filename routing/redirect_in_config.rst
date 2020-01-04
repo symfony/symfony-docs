@@ -18,7 +18,7 @@ Redirecting Using a Path
 Assume there is no default controller for the ``/`` path of your application
 and you want to redirect these requests to ``/app``. You will need to use the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::urlRedirectAction`
-action to redirect to this new url:
+action to redirect to this new URL:
 
 .. configuration-block::
 

@@ -207,8 +207,8 @@ And update the template as follows:
 Field Options
 -------------
 
-allow_add
-~~~~~~~~~
+``allow_add``
+~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -229,8 +229,8 @@ the client side. For more information, see the above example and
     these new objects is set correctly. If you're using Doctrine, this won't
     happen automatically. See the above link for more details.
 
-allow_delete
-~~~~~~~~~~~~
+``allow_delete``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -252,8 +252,8 @@ For more information, see :ref:`form-collections-remove`.
     the main object. None of this is handled automatically. For more
     information, see :ref:`form-collections-remove`.
 
-delete_empty
-~~~~~~~~~~~~
+``delete_empty``
+~~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` or ``callable`` **default**: ``false``
 
@@ -294,8 +294,8 @@ may define complex conditions for considering them empty.
     Support for using a callable for the ``delete_empty`` option was introduced
     in Symfony 3.4.
 
-entry_options
-~~~~~~~~~~~~~
+``entry_options``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -321,8 +321,8 @@ type::
         ],
     ]);
 
-entry_type
-~~~~~~~~~~
+``entry_type``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'Symfony\Component\Form\Extension\Core\Type\TextType'``
 
@@ -332,8 +332,8 @@ you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
 to embed a collection of some other form, pass the form type class as this
 option (e.g. ``MyFormType::class``).
 
-prototype
-~~~~~~~~~
+``prototype``
+~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -365,8 +365,8 @@ rendering your form, having the entire "form row" may be easier for you.
 For details on how to actually use this option, see the above example as
 well as :ref:`form-collections-new-prototype`.
 
-prototype_data
-~~~~~~~~~~~~~~
+``prototype_data``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``mixed`` **default**: ``null``
 
@@ -385,8 +385,8 @@ for all entries with the `entry_options`_ option will be used::
         'prototype_data' => 'New Tag Placeholder',
     ]);
 
-prototype_name
-~~~~~~~~~~~~~~
+``prototype_name``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``__name__``
 
@@ -412,8 +412,8 @@ The default value is ``[]`` (empty array).
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER
 
-error_bubbling
-~~~~~~~~~~~~~~
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -434,9 +434,9 @@ error_bubbling
 Field Variables
 ---------------
 
-============  ===========  ========================================
-Variable      Type         Usage
-============  ===========  ========================================
-allow_add     ``boolean``  The value of the `allow_add`_ option.
-allow_delete  ``boolean``  The value of the `allow_delete`_ option.
-============  ===========  ========================================
+================  ===========  ========================================
+Variable          Type         Usage
+================  ===========  ========================================
+``allow_add``     ``boolean``  The value of the `allow_add`_ option.
+``allow_delete``  ``boolean``  The value of the `allow_delete`_ option.
+================  ===========  ========================================

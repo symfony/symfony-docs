@@ -349,7 +349,7 @@ Now you can use the service locator by injecting it in any other service:
 In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
 to use the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\ServiceLocatorTagPass::register`
 method to create the service locators. This will save you some boilerplate and
-will share identical locators amongst all the services referencing them::
+will share identical locators among all the services referencing them::
 
     use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
     use Symfony\Component\DependencyInjection\ContainerBuilder;

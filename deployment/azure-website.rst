@@ -65,7 +65,7 @@ application code to the Git repository.
    :alt: Configure Azure Website credentials
 
 Congratulations! Your Azure Website is now up and running. You can check
-it by browsing to the Website url you configured in the first step. You should
+it by browsing to the website URL you configured in the first step. You should
 see the following display in your web browser:
 
 .. image:: /_images/deployment/azure-website/step-05.png
@@ -117,8 +117,8 @@ the web server.
     .. image:: /_images/deployment/azure-website/step-08.png
        :alt: OPCache Configuration
 
-Tweaking php.ini Configuration Settings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Tweaking ``php.ini`` Configuration Settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Microsoft Azure allows you to override the ``php.ini`` global configuration
 settings by creating a custom ``.user.ini`` file under the project root

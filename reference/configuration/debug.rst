@@ -32,16 +32,20 @@ Configuration
 * `min_depth`_
 * `max_string_length`_
 
-max_items
-~~~~~~~~~
+``max_items``
+~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``2500``
 
 This is the maximum number of items to dump. Setting this option to ``-1``
 disables the limit.
 
-min_depth
-~~~~~~~~~
+``min_depth``
+~~~~~~~~~~~~~
+
+.. versionadded:: 3.4
+
+    The ``min_depth`` option was introduced in Symfony 3.4.
 
 **type**: ``integer`` **default**: ``1``
 
@@ -50,20 +54,16 @@ be cloned. After this depth is reached, only ``max_items`` items will be
 cloned. The default value is ``1``, which is consistent with older Symfony
 versions.
 
-.. versionadded:: 3.4
-
-    The ``min_depth`` option was introduced in Symfony 3.4.
-
-max_string_length
-~~~~~~~~~~~~~~~~~
+``max_string_length``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``-1``
 
 This option configures the maximum string length before truncating the
 string. The default value (``-1``) means that strings are never truncated.
 
-dump_destination
-~~~~~~~~~~~~~~~~
+``dump_destination``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 

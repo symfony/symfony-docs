@@ -116,7 +116,7 @@ PhpBundleWriter
 ~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Writer\\PhpBundleWriter`
-writes an array or an array-like object to a .php resource bundle::
+writes an array or an array-like object to a ``.php`` resource bundle::
 
     use Symfony\Component\Intl\ResourceBundle\Writer\PhpBundleWriter;
 
@@ -147,7 +147,7 @@ PhpBundleReader
 ~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\PhpBundleReader`
-reads resource bundles from .php files and returns an array or an array-like
+reads resource bundles from ``.php`` files and returns an array or an array-like
 object::
 
     use Symfony\Component\Intl\ResourceBundle\Reader\PhpBundleReader;

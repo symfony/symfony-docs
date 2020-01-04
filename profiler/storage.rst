@@ -5,7 +5,7 @@ Switching the Profiler Storage
 ==============================
 
 In Symfony versions prior to 3.0, profiles could be stored in files, databases,
-services like Redis and Memcache, etc. Starting from Symfony 3.0, the only storage
+services like Redis and memcache, etc. Starting from Symfony 3.0, the only storage
 mechanism with built-in support is the filesystem.
 
 By default, the profile stores the collected data in the ``%kernel.cache_dir%/profiler/``

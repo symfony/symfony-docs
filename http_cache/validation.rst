@@ -13,7 +13,7 @@ The validation model addresses this issue. Under this model, the cache continues
 to store responses. The difference is that, for each request, the cache asks the
 application if the cached response is still valid or if it needs to be regenerated.
 If the cache *is* still valid, your application should return a 304 status code
-and no content. This tells the cache that it's ok to return the cached response.
+and no content. This tells the cache that it's OK to return the cached response.
 
 Under this model, you only save CPU if you're able to determine that the
 cached response is still valid by doing *less* work than generating the whole
@@ -48,7 +48,8 @@ An ``ETag`` is like a fingerprint and is used to quickly compare if two
 different versions of a resource are equivalent. Like fingerprints, each
 ``ETag`` must be unique across all representations of the same resource.
 
-To see a simple implementation, generate the ETag as the md5 of the content::
+To see a simple implementation, generate the ``ETag`` as the ``md5`` of the
+content::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -78,11 +79,11 @@ to 304.
 
     When using ``mod_deflate`` or ``mod_brotli`` in Apache 2.4, the original
     ``ETag`` value is modified (e.g. if ``ETag`` was ``foo``, Apache turns it
-    into ``foo-gzip`` or ``foo-br``), which breaks the ETag-based validation.
+    into ``foo-gzip`` or ``foo-br``), which breaks the ``ETag``-based validation.
 
     You can control this behavior with the `DeflateAlterETag`_ and `BrotliAlterETag`_
     directives. Alternatively, you can use the following Apache configuration to
-    keep both the original ETag and the modified one when compressing responses:
+    keep both the original ``ETag`` and the modified one when compressing responses:
 
     .. code-block:: apache
 
@@ -96,7 +97,7 @@ to 304.
     decide whether or not the resource has been updated since it was cached.
 
 This algorithm is simple enough and very generic, but you need to create the
-whole ``Response`` before being able to compute the ETag, which is sub-optimal.
+whole ``Response`` before being able to compute the ``ETag``, which is sub-optimal.
 In other words, it saves on bandwidth, but not CPU cycles.
 
 In the :ref:`optimizing-cache-validation` section, you'll see how validation
@@ -105,7 +106,7 @@ doing so much work.
 
 .. tip::
 
-    Symfony also supports weak ETags by passing ``true`` as the second
+    Symfony also supports weak ``ETag``s by passing ``true`` as the second
     argument to the
     :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag` method.
 

@@ -1,4 +1,4 @@
-Issn
+ISSN
 ====
 
 Validates that a value is a valid
@@ -84,8 +84,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` default: ``This value is not a valid ISSN.``
 
@@ -99,16 +99,16 @@ You can use the following parameters in this message:
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
 
-caseSensitive
-~~~~~~~~~~~~~
+``caseSensitive``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 
 The validator will allow ISSN values to end with a lower case 'x' by default.
 When switching this to ``true``, the validator requires an upper case 'X'.
 
-requireHyphen
-~~~~~~~~~~~~~
+``requireHyphen``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 

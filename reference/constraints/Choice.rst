@@ -285,8 +285,8 @@ you can pass the class name and the method as an array.
 Available Options
 -----------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **type**: ``array`` [:ref:`default option <validation-default-option>`]
 
@@ -294,8 +294,8 @@ A required option (unless `callback`_ is specified) - this is the array
 of options that should be considered in the valid set. The input value
 will be matched against this array.
 
-callback
-~~~~~~~~
+``callback``
+~~~~~~~~~~~~
 
 **type**: ``string|array|Closure``
 
@@ -305,8 +305,8 @@ to return the choices array. See
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-multiple
-~~~~~~~~
+``multiple``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -315,8 +315,8 @@ of a single, scalar value. The constraint will check that each value of
 the input array can be found in the array of valid choices. If even one
 of the input values cannot be found, the validation will fail.
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -325,8 +325,8 @@ to force at least XX number of values to be selected. For example, if
 ``min`` is 3, but the input array only contains 2 valid items, the validation
 will fail.
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -335,8 +335,8 @@ to force no more than XX number of values to be selected. For example, if
 ``max`` is 3, but the input array contains 4 valid items, the validation
 will fail.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The value you selected is not a valid choice.``
 
@@ -352,8 +352,8 @@ You can use the following parameters in this message:
 | ``{{ value }}``  | The current (invalid) value                    |
 +------------------+------------------------------------------------+
 
-multipleMessage
-~~~~~~~~~~~~~~~
+``multipleMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``One or more of the given values is invalid.``
 
@@ -369,8 +369,8 @@ You can use the following parameters in this message:
 | ``{{ value }}``  | The current (invalid) value                    |
 +------------------+------------------------------------------------+
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``You must select at least {{ limit }} choices.``
 
@@ -385,8 +385,8 @@ You can use the following parameters in this message:
 | ``{{ limit }}``  | The lower limit of choices                     |
 +------------------+------------------------------------------------+
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``You must select at most {{ limit }} choices.``
 
@@ -401,8 +401,8 @@ You can use the following parameters in this message:
 | ``{{ limit }}``  | The upper limit of choices                     |
 +------------------+------------------------------------------------+
 
-strict
-~~~~~~
+``strict``
+~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

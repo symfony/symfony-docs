@@ -127,8 +127,8 @@ Options
 
 .. _reference-constraint-type-type:
 
-type
-~~~~
+``type``
+~~~~~~~~
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
@@ -172,8 +172,8 @@ using one of these.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be of type {{ type }}.``
 

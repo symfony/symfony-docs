@@ -1,5 +1,5 @@
-choice_name
-~~~~~~~~~~~
+``choice_name``
+~~~~~~~~~~~~~~~
 
 **type**: ``callable`` or ``string`` **default**: ``null``
 

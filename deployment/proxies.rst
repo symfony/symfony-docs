@@ -18,8 +18,8 @@ via HTTPS, the client's port and the hostname being requested.
 
 .. _request-set-trusted-proxies:
 
-Solution: setTrustedProxies()
------------------------------
+Solution: ``setTrustedProxies()``
+---------------------------------
 
 To fix this, you need to tell Symfony which reverse proxy IP addresses to trust
 and what headers your reverse proxy uses to send information::

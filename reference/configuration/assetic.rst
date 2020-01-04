@@ -6,7 +6,7 @@ Assetic Configuration Reference (AsseticBundle)
 
 .. include:: /assetic/_standard_edition_warning.rst.inc
 
-You can get the full Asstic configuration reference as follows:
+You can get the full Assetic configuration reference as follows:
 
 .. code-block:: terminal
 

@@ -1,4 +1,4 @@
-Iban
+IBAN
 ====
 
 This constraint is used to ensure that a bank account number has the proper
@@ -21,7 +21,7 @@ borders with a reduced risk of propagating transcription errors.
 Basic Usage
 -----------
 
-To use the Iban validator, apply it to a property on an object that
+To use the IBAN validator, apply it to a property on an object that
 will contain an International Bank Account Number.
 
 .. configuration-block::
@@ -93,17 +93,17 @@ will contain an International Bank Account Number.
 
 .. include:: /reference/constraints/_empty-values-are-valid.rst.inc
 
-Available Options
------------------
+Options
+-------
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid International Bank Account Number (IBAN).``
 
-The default message supplied when the value does not pass the Iban check.
+The default message supplied when the value does not pass the IBAN check.
 
 You can use the following parameters in this message:
 

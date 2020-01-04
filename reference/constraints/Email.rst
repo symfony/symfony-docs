@@ -96,8 +96,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-strict
-~~~~~~
+``strict``
+~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -105,8 +105,8 @@ When false, the email will be validated against a simple regular expression.
 If true, then the `egulias/email-validator`_ library is required to perform
 an RFC compliant validation.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid email address.``
 
@@ -120,8 +120,8 @@ You can use the following parameters in this message:
 | ``{{ value }}``  | The current (invalid) value                    |
 +------------------+------------------------------------------------+
 
-checkMX
-~~~~~~~
+``checkMX``
+~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -133,8 +133,8 @@ check the validity of the MX record of the host of the given email.
     This option is not reliable because it depends on the network conditions
     and some valid servers refuse to respond to those requests.
 
-checkHost
-~~~~~~~~~
+``checkHost``
+~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

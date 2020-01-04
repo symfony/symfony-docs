@@ -123,8 +123,8 @@ that the ``email`` field remains unique between all of the rows in your user tab
 Options
 -------
 
-fields
-~~~~~~
+``fields``
+~~~~~~~~~~
 
 **type**: ``array`` | ``string`` [:ref:`default option <validation-default-option>`]
 
@@ -140,8 +140,8 @@ each with a single field.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is already used.``
 
@@ -162,8 +162,8 @@ You can use the following parameters in this message:
 | ``{{ value }}`` | The current (invalid) value |
 +-----------------+-----------------------------+
 
-em
-~~
+``em``
+~~~~~~
 
 **type**: ``string``
 
@@ -172,8 +172,8 @@ the uniqueness. If it's left blank, the correct entity manager will be
 determined for this class. For that reason, this option should probably
 not need to be used.
 
-repositoryMethod
-~~~~~~~~~~~~~~~~
+``repositoryMethod``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``findBy``
 
@@ -183,8 +183,8 @@ blank, ``findBy()`` will be used. The method receives as its argument a
 fields configured in the ``fields`` option). The method should return a
 `countable PHP variable`_.
 
-entityClass
-~~~~~~~~~~~
+``entityClass``
+~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.2
 
@@ -198,8 +198,8 @@ inheritance mapping, you need to execute the query in a different repository.
 Use this option to define the fully-qualified class name (FQCN) of the Doctrine
 entity associated with the repository you want to use.
 
-errorPath
-~~~~~~~~~
+``errorPath``
+~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: The name of the first field in `fields`_
 
@@ -296,8 +296,8 @@ Consider this example:
 
 Now, the message would be bound to the ``port`` field with this configuration.
 
-ignoreNull
-~~~~~~~~~~
+``ignoreNull``
+~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
