@@ -1,5 +1,5 @@
-choice_label
-~~~~~~~~~~~~
+``choice_label``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string``, ``callable`` or ``false`` **default**: ``null``
 

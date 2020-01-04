@@ -1,5 +1,5 @@
-placeholder
-~~~~~~~~~~~
+``placeholder``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` or ``boolean``
 

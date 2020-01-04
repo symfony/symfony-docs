@@ -1,5 +1,5 @@
-html5
-~~~~~
+``html5``
+~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

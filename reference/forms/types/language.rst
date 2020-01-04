@@ -97,8 +97,8 @@ language. The resulting array is the same regardless of the application locale:
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: ``Symfony\Component\Intl\Languages::getNames()``.
 

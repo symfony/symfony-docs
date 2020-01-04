@@ -59,8 +59,8 @@ Field Options
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: ``Symfony\Component\Intl\Currencies::getNames()``
 

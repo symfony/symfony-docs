@@ -78,8 +78,8 @@ options to show (e.g. don't show "months", but *do* show "days")::
 Field Options
 -------------
 
-days
-~~~~
+``days``
+~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 31
 
@@ -92,8 +92,8 @@ when the ``widget`` option is set to ``choice``::
     // values displayed to users range from 1 to 31 (both inclusive)
     'days' => array_combine(range(1, 31), range(1, 31)),
 
-placeholder
-~~~~~~~~~~~
+``placeholder``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` or ``array``
 
@@ -111,8 +111,8 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
         'placeholder' => ['years' => 'Years', 'months' => 'Months', 'days' => 'Days']
     ]);
 
-hours
-~~~~~
+``hours``
+~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 24
 
@@ -125,8 +125,8 @@ when the ``widget`` option is set to ``choice``::
     // values displayed to users range from 1 to 24 (both inclusive)
     'hours' => array_combine(range(1, 24), range(1, 24)),
 
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``dateinterval``
 
@@ -140,8 +140,8 @@ your underlying object. Valid values are:
 The value that comes back from the form will also be normalized back into
 this format.
 
-labels
-~~~~~~
+``labels``
+~~~~~~~~~~
 
 **type**: ``array`` **default**: (see below)
 
@@ -160,8 +160,8 @@ are ``null``, so they display the "humanized version" of the child names (``Inve
         'seconds' => null,
     ]
 
-minutes
-~~~~~~~
+``minutes``
+~~~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 60
 
@@ -174,8 +174,8 @@ when the ``widget`` option is set to ``choice``::
     // values displayed to users range from 1 to 60 (both inclusive)
     'minutes' => array_combine(range(1, 60), range(1, 60)),
 
-months
-~~~~~~
+``months``
+~~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 12
 
@@ -188,8 +188,8 @@ when the ``widget`` option is set to ``choice``::
     // values displayed to users range from 1 to 12 (both inclusive)
     'months' => array_combine(range(1, 12), range(1, 12)),
 
-seconds
-~~~~~~~
+``seconds``
+~~~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 60
 
@@ -202,8 +202,8 @@ when the ``widget`` option is set to ``choice``::
     // values displayed to users range from 1 to 60 (both inclusive)
     'seconds' => array_combine(range(1, 60), range(1, 60)),
 
-weeks
-~~~~~
+``weeks``
+~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 52
 
@@ -216,8 +216,8 @@ when the ``widget`` option is set to ``choice``::
     // values displayed to users range from 1 to 52 (both inclusive)
     'weeks' => array_combine(range(1, 52), range(1, 52)),
 
-widget
-~~~~~~
+``widget``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: ``choice``
 
@@ -246,8 +246,8 @@ following:
   will be validated against the form ``PnYnMnDTnHnMnS`` (or ``PnW`` if using
   only weeks).
 
-with_days
-~~~~~~~~~
+``with_days``
+~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
@@ -258,16 +258,16 @@ input to capture days.
 
     This can not be used when `with_weeks`_ is enabled.
 
-with_hours
-~~~~~~~~~~
+``with_hours``
+~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``false``
 
 Whether or not to include hours in the input. This will result in an additional
 input to capture hours.
 
-with_invert
-~~~~~~~~~~~
+``with_invert``
+~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -275,32 +275,32 @@ Whether or not to include invert in the input. This will result in an additional
 checkbox.
 This can not be used when the `widget`_ option is set to ``single_text``.
 
-with_minutes
-~~~~~~~~~~~~
+``with_minutes``
+~~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``false``
 
 Whether or not to include minutes in the input. This will result in an additional
 input to capture minutes.
 
-with_months
-~~~~~~~~~~~
+``with_months``
+~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
 Whether or not to include months in the input. This will result in an additional
 input to capture months.
 
-with_seconds
-~~~~~~~~~~~~
+``with_seconds``
+~~~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``false``
 
 Whether or not to include seconds in the input. This will result in an additional
 input to capture seconds.
 
-with_weeks
-~~~~~~~~~~
+``with_weeks``
+~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -311,16 +311,16 @@ input to capture weeks.
 
     This can not be used when `with_days`_ is enabled.
 
-with_years
-~~~~~~~~~~
+``with_years``
+~~~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``true``
 
 Whether or not to include years in the input. This will result in an additional
 input to capture years.
 
-years
-~~~~~
+``years``
+~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 100
 
@@ -363,18 +363,18 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 Field Variables
 ---------------
 
-============  ===========  ========================================
-Variable      Type         Usage
-============  ===========  ========================================
-widget        ``mixed``    The value of the `widget`_ option.
-with_days     ``Boolean``  The value of the `with_days`_ option.
-with_invert   ``Boolean``  The value of the `with_invert`_ option.
-with_hours    ``Boolean``  The value of the `with_hours`_ option.
-with_minutes  ``Boolean``  The value of the `with_minutes`_ option.
-with_months   ``Boolean``  The value of the `with_months`_ option.
-with_seconds  ``Boolean``  The value of the `with_seconds`_ option.
-with_weeks    ``Boolean``  The value of the `with_weeks`_ option.
-with_years    ``Boolean``  The value of the `with_years`_ option.
-============  ===========  ========================================
+================  ===========  ========================================
+Variable          Type         Usage
+================  ===========  ========================================
+``widget``        ``mixed``    The value of the `widget`_ option.
+``with_days``     ``Boolean``  The value of the `with_days`_ option.
+``with_invert``   ``Boolean``  The value of the `with_invert`_ option.
+``with_hours``    ``Boolean``  The value of the `with_hours`_ option.
+``with_minutes``  ``Boolean``  The value of the `with_minutes`_ option.
+``with_months``   ``Boolean``  The value of the `with_months`_ option.
+``with_seconds``  ``Boolean``  The value of the `with_seconds`_ option.
+``with_weeks``    ``Boolean``  The value of the `with_weeks`_ option.
+``with_years``    ``Boolean``  The value of the `with_years`_ option.
+================  ===========  ========================================
 
 .. _`ISO 8601`: https://en.wikipedia.org/wiki/ISO_8601

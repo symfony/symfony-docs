@@ -94,8 +94,8 @@ This option allows to validate a custom date format. See
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid datetime.``
 

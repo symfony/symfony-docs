@@ -1,5 +1,5 @@
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``datetime``
 

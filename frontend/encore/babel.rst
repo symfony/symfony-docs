@@ -49,8 +49,8 @@ cache directory:
     # On Unix run this command. On Windows, clear this directory manually
     $ rm -rf node_modules/.cache/babel-loader/
 
-Creating a .babelrc File
-------------------------
+Creating a ``.babelrc`` File
+----------------------------
 
 Instead of calling ``configureBabel()``, you could create a ``.babelrc`` file
 at the root of your project. This is a more "standard" way of configuring

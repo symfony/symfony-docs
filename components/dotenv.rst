@@ -24,7 +24,7 @@ Sensitive information and environment-dependent settings should be defined as
 environment variables (as recommended for `twelve-factor applications`_). Using
 a ``.env`` file to store those environment variables eases development and CI
 management by keeping them in one "standard" place and agnostic of the
-technology stack you are using (Nginx vs PHP built-in server for instance).
+technology stack you are using (nginx vs PHP built-in server for instance).
 
 .. note::
 

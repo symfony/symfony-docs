@@ -262,7 +262,7 @@ The index file (for example ``Resources/doc/index.rst`` or
 ``Resources/doc/index.md``) is the only mandatory file and must be the entry
 point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
-used to render the documentation on symfony.com.
+used to render the documentation on the Symfony website.
 
 Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
