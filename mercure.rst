@@ -399,6 +399,7 @@ And here is the controller::
     use Fig\Link\Link;
     use Lcobucci\JWT\Builder;
     use Lcobucci\JWT\Signer\Hmac\Sha256;
+    use Lcobucci\JWT\Signer\Key;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -413,9 +414,8 @@ And here is the controller::
             $username = $this->getUser()->getUsername(); // Retrieve the username of the current user
             $token = (new Builder())
                 // set other appropriate JWT claims, such as an expiration date
-                ->set('mercure', ['subscribe' => ["http://example.com/user/$username"]]) // could also include the security roles, or anything else
-                ->sign(new Sha256(), $this->getParameter('mercure_secret_key')) // don't forget to set this parameter! Test value: aVerySecretKey
-                ->getToken();
+                ->withClaim('mercure', ['subscribe' => ["http://example.com/user/$username"]]) // could also include the security roles, or anything else
+                ->getToken(new Sha256(), new Key($this->getParameter('mercure_secret_key'))); // don't forget to set this parameter! Test value: aVerySecretKey
 
             $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
             $response->headers->set(
