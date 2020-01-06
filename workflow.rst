@@ -179,9 +179,6 @@ As configured, the following property is used by the marking store::
     configures the marking store according to the "type" by default, so it's
     preferable to not configure it.
 
-    A single state marking store uses a string to store the data. A multiple
-    state marking store uses an array to store the data.
-
 .. tip::
 
     The ``marking_store.type`` (the default value depends on the ``type`` value)
