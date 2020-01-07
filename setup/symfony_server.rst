@@ -134,7 +134,7 @@ to override:
 Running Commands with Different PHP Versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When running different PHP versions it's useful to use the main ``symfony``
+When running different PHP versions, it is useful to use the main ``symfony``
 command as a wrapper for the ``php`` command. This allows you to always select
 the most appropriate PHP version according to the project which is running the
 commands. It also loads the env vars automatically, which is important when
@@ -148,20 +148,6 @@ running non-Symfony commands:
     # runs the command with the PHP version selected by the project
     # (or the default PHP version if the project didn't select one)
     $ symfony php -r "..."
-
-If you are using this wrapper frequently, consider aliasing the ``php`` command
-to it:
-
-.. code-block:: terminal
-
-    $ cd ~/.symfony/bin
-    $ cp symfony php
-    # now you can run "php ..." and the "symfony" command will be executed instead
-
-    # other PHP commands can be wrapped too using this trick
-    $ cp symfony php-config
-    $ cp symfony pear
-    $ cp symfony pecl
 
 Local Domain Names
 ------------------
