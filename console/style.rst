@@ -162,8 +162,8 @@ Content Methods
         $io->definitionList(
             'This is a title',
             ['foo1' => 'bar1'],
-            ['foo2' => 'bar2']
-            ['foo3' => 'bar3']
+            ['foo2' => 'bar2'],
+            ['foo3' => 'bar3'],
             new TableSeparator(),
             'This is another title',
             ['foo4' => 'bar4']
