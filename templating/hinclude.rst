@@ -10,7 +10,7 @@ performance you can use the `hinclude.js`_ JavaScript library to embed
 controllers asynchronously.
 
 First, include the `hinclude.js`_ library in your page
-ref:`linking to it <templates-link-to-assets>` from the template or adding it
+:ref:`linking to it <templates-link-to-assets>` from the template or adding it
 to your application JavaScript :doc:`using Webpack Encore </frontend>`.
 
 As the embedded content comes from another page (or controller for that matter),
