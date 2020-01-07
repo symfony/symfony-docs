@@ -460,6 +460,12 @@ the "foreach" in the snippet with this one, the code becomes fully async::
 
     foreach ($client->stream($responses) as $response => $chunk) {
         if ($chunk->isFirst()) {
+            if (400 <= $response->getStatusCode()) {
+                // here can be handled case when request was respond
+                // with 4xx-5xx status code
+                // for example $response->cancel() may be called
+                // to prevent subsequent handling of this response
+            }
             // headers of $response just arrived
             // $response->getHeaders() is now a non-blocking call
         } elseif ($chunk->isLast()) {
@@ -515,6 +521,11 @@ response and get remaining contents that might come back in a new timeout, etc.
     Timeouts control how long one is willing to wait *while the HTTP transaction
     is idle*. Big responses can last as long as needed to complete, provided they
     remain active during the transfer and never pause for longer than specified.
+
+.. note::
+
+    When multiplexing responses, you should check timeout firstly, before
+    ``isFirst``/``isLast``.
 
 Dealing with Network Errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
