@@ -13,7 +13,7 @@ How to Use PHP's built-in Web Server
 The PHP CLI SAPI comes with a `built-in web server`_. It can be used to run your
 PHP applications locally during development, for testing or for application
 demonstrations. This way, you don't have to bother configuring a full-featured
-web server such as :doc:`Apache or Nginx </setup/web_server_configuration>`.
+web server such as :doc:`Apache or nginx </setup/web_server_configuration>`.
 
 .. caution::
 
