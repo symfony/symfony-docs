@@ -461,7 +461,7 @@ the injected slugger is the same as the request locale::
 
         public function someMethod()
         {
-            $slug = $slugger->slug('...');
+            $slug = $this->slugger->slug('...');
         }
     }
 
