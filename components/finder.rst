@@ -144,9 +144,7 @@ And it also works with user-defined streams::
 Files or Directories
 ~~~~~~~~~~~~~~~~~~~~
 
-By default, the Finder returns files and directories; but the
-:method:`Symfony\\Component\\Finder\\Finder::files` and
-:method:`Symfony\\Component\\Finder\\Finder::directories` methods control that::
+By default, the Finder returns both files and directories. If you need to find either files or directories only, use the :method:`Symfony\\Component\\Finder\\Finder::files` and :method:`Symfony\\Component\\Finder\\Finder::directories` methods::
 
     $finder->files();
 
