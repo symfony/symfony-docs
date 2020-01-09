@@ -113,6 +113,10 @@ with the ``preload`` suffix:
 
 .. _performance-configure-opcache:
 
+You need to set both parameters ``container.dumper.inline_factories`` and 
+``container.dumper.inline_class_loader`` to ``true`` to enable generating 
+the ``preload`` file during container compilation.
+
 Configure OPcache for Maximum Performance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
