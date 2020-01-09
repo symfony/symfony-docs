@@ -49,7 +49,7 @@ Example::
 
 In addition to the custom function arguments, the **evaluator** is passed an
 ``arguments`` variable as its first argument, which is equal to the second
-argument of ``compile()`` (e.g. the "values" when evaluating an expression).
+argument of ``evaluate()`` (e.g. the "values" when evaluating an expression).
 
 .. _components-expression-language-provider:
 
