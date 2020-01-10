@@ -48,8 +48,19 @@ the rewrite rules.
 .. tip::
 
     A performance improvement can be achieved by moving the rewrite rules from the ``.htaccess``
-    file into the VirtualHost block of your Apache configuration and then changing
-    ``AllowOverride All`` to ``AllowOverride None`` in your VirtualHost block.
+    file into the VirtualHost block of your Apache configuration (inside the ``public/`` Directory block)
+    and then changing ``AllowOverride All`` to ``AllowOverride None`` in your VirtualHost block.
+
+    .. code-block:: apache
+
+        <VirtualHost *:80>
+            # ...
+            DocumentRoot /var/www/project/public
+            <Directory /var/www/project/public>
+                AllowOverride None
+                # Move .htaccess contents here
+            </Directory>
+        </VirtualHost>
 
 Apache with mod_php/PHP-CGI
 ---------------------------
