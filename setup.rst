@@ -251,7 +251,7 @@ create new projects. If you use Composer, you need to tell the exact version:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/website-skeleton:^4.4 my_project_name
+    $ composer create-project symfony/website-skeleton my_project_name "^4"
 
 The Symfony Demo application
 ----------------------------
