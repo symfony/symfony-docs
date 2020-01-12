@@ -786,9 +786,6 @@ The ``CsvEncoder``
 
 The ``CsvEncoder`` encodes to and decodes from CSV.
 
-You can pass the context key ``as_collection`` in order to have the results
-always as a collection.
-
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
 
