@@ -9,11 +9,6 @@ The Notifier Component
     The Notifier component sends notifications via one or more channels
     (email, SMS, Slack, ...).
 
-.. versionadded:: 5.0
-
-    The String component was introduced in Symfony 5.0 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
-
 Installation
 ------------
 
