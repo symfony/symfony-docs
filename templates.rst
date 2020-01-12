@@ -477,8 +477,9 @@ definition. Use the special ``TemplateController`` provided by Symfony:
                 sharedAge: 86400
 
                 # optionally you can define some arguments passed to the template
-                site_name: 'ACME'
-                theme: 'dark'
+                context:
+                    site_name: 'ACME'
+                    theme: 'dark'
 
     .. code-block:: xml
 
@@ -499,8 +500,10 @@ definition. Use the special ``TemplateController`` provided by Symfony:
                 <default key="sharedAge">86400</default>
 
                 <!-- optionally you can define some arguments passed to the template -->
-                <default key="site_name">ACME</default>
-                <default key="theme">dark</default>
+                <default key="context">
+                    <default key="site_name">ACME</default>
+                    <default key="theme">dark</default>
+                </default>
             </route>
         </routes>
 
@@ -522,8 +525,10 @@ definition. Use the special ``TemplateController`` provided by Symfony:
                     'sharedAge' => 86400,
 
                     // optionally you can define some arguments passed to the template
-                    'site_name' => 'ACME',
-                    'theme' => 'dark',
+                    'context' => [
+                        'site_name' => 'ACME',
+                        'theme' => 'dark',
+                    ]
                 ])
             ;
         };
