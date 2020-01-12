@@ -48,12 +48,12 @@ Now, enable it as a PHPUnit extension or listener:
     <phpunit>
         <!-- ... -->
 
-        <!-- Add this for PHPUnit 7.1 or higher -->
+        <!-- Add this for PHPUnit 7.5 or higher -->
         <extensions>
             <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
         </extensions>
 
-        <!-- Add this for PHPUnit 7.0 -->
+        <!-- Add this for PHPUnit 7.0 until 7.4 -->
         <listeners>
             <listener class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener"/>
         </listeners>
