@@ -93,9 +93,13 @@ Starting from PHP 7.4, OPcache can compile and load classes at start-up and
 make them available to all requests until the server is restarted, improving
 performance significantly.
 
-Symfony generates the file automatically with the list of classes to preload.
-The file path is the same as the file generated for the service container but
-with the ``preload`` suffix:
+During container compilation, Symfony generates the file with the list of
+classes to preload. The only requirement is that you need to set both
+``container.dumper.inline_factories`` and  ``container.dumper.inline_class_loader``
+parameters to ``true``.
+
+The preload file path is the same as the compiled service container but with the
+``preload`` suffix:
 
 .. code-block:: ini
 
