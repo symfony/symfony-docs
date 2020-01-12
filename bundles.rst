@@ -117,31 +117,6 @@ database, create and validate forms, create translations for your application,
 write tests and much more. Each of these has their own place and role within
 the bundle.
 
-Overridding the Bundle Directory Structure
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Some of the bundle directories are conventions that can be overridden if needed.
-For example, the **public directory**, which by default is located at
-``<your-bundle>/Resources/public/``, can be changed by defining the
-``getPublicDir()`` method in the bundle class::
-
-    // src/Acme/TestBundle/AcmeTestBundle.php
-    namespace App\Acme\TestBundle;
-
-    use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-    class AcmeTestBundle extends Bundle
-    {
-        // ...
-
-        // the returned value must be relative to the bundle root directory
-        // (public dir is now <your-bundle>/public/ instead of <your-bundle>/Resources/public/)
-        public function getPublicDir(): string
-        {
-            return 'public/';
-        }
-    }
-
 Learn more
 ----------
 
