@@ -10,9 +10,9 @@ user submits a series of different forms to complete a task. Such processes are
 best kept away from your models and should be defined in configuration.
 
 A **definition** of a workflow consists of places and actions to get from one
-place to another. The actions are called **transitions**. A workflow does also
-need to know each object's position in the workflow. That **marking store**
-writes to a property of the object to remember the current place.
+place to another. The actions are called **transitions**. A workflow also needs to
+know each object's position in the workflow. The **marking store** writes
+the current place to a property on the object.
 
 .. note::
 
