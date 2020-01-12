@@ -80,6 +80,7 @@ class::
                 ->addModelTransformer(new CallbackTransformer(
                     function ($tagsAsArray) {
                         // transform the array to a string
+                        $tagsAsArray = ['tag1', 'tag2', 'tag3'];
                         return implode(', ', $tagsAsArray);
                     },
                     function ($tagsAsString) {
