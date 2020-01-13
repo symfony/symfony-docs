@@ -2869,7 +2869,7 @@ Name of the lock you want to create.
         lock.invoice.retry_till_save.store:
             class: Symfony\Component\Lock\Store\RetryTillSaveStore
             decorates: lock.invoice.store
-            arguments: ['@lock.invoice.retry.till.save.store.inner', 100, 50]
+            arguments: ['@lock.invoice.retry_till_save.store.inner', 100, 50]
 
 workflows
 ~~~~~~~~~
