@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-01-12T12:18:47Z
+
+I agree that the original phrase can be improved ... but I'm not sure about the new proposal because it still doesn't explain the methods explicitly (it says "granular results" instead of "files only or dirs only").
+
+What about something like this instead:
+
+```
+By default, the Finder returns both files and directories. If you need to find
+either files or directories only, use the :method:`Symfony\\Component\\Finder\\Finder::files`
+and :method:`Symfony\\Component\\Finder\\Finder::directories` methods::
+```
