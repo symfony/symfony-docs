@@ -334,6 +334,10 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
+    You can avoid those events by using the context::
+
+        $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
+
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
