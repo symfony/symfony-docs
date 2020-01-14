@@ -143,7 +143,7 @@ Finally, you need to update the code of the controller that handles the form::
 
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var UploadedFile $brochureFile */
-                $brochureFile = $form['brochure']->getData();
+                $brochureFile = $form->get('brochure')->getData();
 
                 // this condition is needed because the 'brochure' field is not required
                 // so the PDF file must be processed only when a file is uploaded
