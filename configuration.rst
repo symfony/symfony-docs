@@ -351,8 +351,8 @@ development), ``prod`` (for production servers) and ``test`` (for
 the configuration files in this order (the last files can override the values
 set in the previous ones):
 
-#. ``config/packages/*.yaml`` (and ``.xml`` and ``*.php`` files too);
-#. ``config/packages/<environment-name>/*.yaml`` (and ``.xml`` and ``*.php`` files too);
+#. ``config/packages/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
+#. ``config/packages/<environment-name>/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
 #. ``config/packages/services.yaml`` (and ``services.xml`` and ``services.php`` files too);
 
 Take the ``framework`` package, installed by default, as an example:
