@@ -31,7 +31,7 @@ Routing System Setup
 A routing system has three parts:
 
 * A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the
-  route definitions (instances of the class :class:`Symfony\\Component\\Routing\\Route`);
+  route definitions (instances of the :class:`Symfony\\Component\\Routing\\Route` class);
 * A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information
   about the request;
 * A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs
