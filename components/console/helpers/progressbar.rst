@@ -50,9 +50,9 @@ you can also set the current progress by calling the
 
     If your platform doesn't support ANSI codes, updates to the progress
     bar are added as new lines. To prevent the output from being flooded,
-    use the method :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws`
-    to limit the number of redraws and the method
-    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
+    use the :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws`
+    method to limit the number of redraws and the
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency` method
     to redraw every N iterations. By default, redraw frequency is
     **100ms** or **10%** of your ``max``.
 
