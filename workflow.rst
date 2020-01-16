@@ -391,7 +391,7 @@ This means that each event has access to the following information:
 
         The ``getWorkflowName()`` method was introduced in Symfony 3.3.
 
-For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`.
+For Guard Events, there is an extended :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent` class.
 This class has two more methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::isBlocked`
