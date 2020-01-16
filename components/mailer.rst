@@ -83,7 +83,7 @@ DSN::
 
 Where ``$dsn`` depends on the provider you want to use. For plain SMTP, use
 ``smtp://user:pass@example.com`` or ``sendmail+smtp://default`` to use the
-``sendmail`` binary. To disable the transport, use ``null://null``.
+``sendmail`` binary. To disable the transport, use ``smtp://null``.
 
 For third-party providers, refer to the following table:
 
