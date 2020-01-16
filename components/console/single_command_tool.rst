@@ -9,7 +9,7 @@ In such case, having to pass the command name each time is tedious.
 
 .. versionadded:: 5.1
 
-    The class :class:`Symfony\\Component\\Console\\SingleCommandApplication` was
+    The :class:`Symfony\\Component\\Console\\SingleCommandApplication` class was
     introduced in Symfony 5.1.
 
 Fortunately, it is possible to remove this need by declaring a single command
@@ -52,6 +52,6 @@ You can still register a command as usual::
     $application->setDefaultCommand($command->getName(), true);
     $application->run();
 
-The method :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
+The :method:`Symfony\\Component\\Console\\Application::setDefaultCommand` method
 accepts a boolean as second parameter. If true, the command ``echo`` will then
 always be used, without having to pass its name.
