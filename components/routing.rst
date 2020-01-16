@@ -28,7 +28,7 @@ Usage
 
 In order to set up a basic routing system you need three parts:
 
-* A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the route definitions (instances of the class :class:`Symfony\\Component\\Routing\\Route`)
+* A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the route definitions (instances of the :class:`Symfony\\Component\\Routing\\Route` class)
 * A :class:`Symfony\\Component\\Routing\\RequestContext`, which has information about the request
 * A :class:`Symfony\\Component\\Routing\\Matcher\\UrlMatcher`, which performs the mapping of the request to a single route
 
