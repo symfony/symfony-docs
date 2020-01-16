@@ -70,6 +70,11 @@ The basic usage of the MessageFormat allows you to use placeholders (called
             'say_hello' => "Hello {name}!",
         ];
 
+
+.. caution::
+
+    With the previous format, placeholders were often named between ``%``. This character is no longer valid with the ICU MessageFormat syntax. Be careful to rename your parameters.
+
 Everything within the curly braces (``{...}``) is processed by the formatter
 and replaced by its placeholder::
 
