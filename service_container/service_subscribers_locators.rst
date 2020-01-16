@@ -544,7 +544,7 @@ attribute to the locator service defining the name of this custom method:
         return function(ContainerConfigurator $configurator) {
             $configurator->services()
                 ->set(App\HandlerCollection::class)
-                    ->args([service_locator(tagged('app.handler', null, 'myOwnMethodName'))])
+                    ->args([tagged_locator('app.handler', null, 'myOwnMethodName')])
             ;
         };
 
