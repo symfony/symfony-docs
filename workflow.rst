@@ -438,7 +438,7 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getMetadata`
     Returns a metadata.
 
-For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`.
+For Guard Events, there is an extended :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent` class.
 This class has two more methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::isBlocked`
