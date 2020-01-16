@@ -285,7 +285,7 @@ been set::
         }
     }
 
-The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getMissingOptions`
+The :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getMissingOptions` method
 lets you access the names of all missing options.
 
 Type Validation
