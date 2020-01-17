@@ -9,7 +9,7 @@ option was not set. This is useful when using
 
 If you're using keyword translation messages as labels, you often end up having
 multiple keyword messages for the same label (e.g. ``profile_address_street``,
-``invoice_address_street``). This is because the label is build for each "path"
+``invoice_address_street``). This is because the label is built for each "path"
 to a field. To avoid duplicated keyword messages, you can configure the label
 format to a static value, like::
 
