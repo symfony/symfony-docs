@@ -1172,6 +1172,11 @@ utf8
 
 **type**: ``boolean`` **default**: ``false``
 
+.. deprecated:: 5.1
+
+    Not setting this option is deprecated since Symfony 5.1. Moreover, the
+    default value of this option will change to ``true`` in Symfony 6.0.
+
 When this option is set to ``true``, the regular expressions used in the
 :ref:`requirements of route parameters <routing-requirements>` will be run
 using the `utf-8 modifier`_. This will for example match any UTF-8 character
