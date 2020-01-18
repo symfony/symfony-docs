@@ -74,21 +74,32 @@ class::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
+             // Tags
             $builder->add('tags', TextType::class);
-
             $builder->get('tags')
                 ->addModelTransformer(new CallbackTransformer(
                     function ($tagsAsArray) {
+                     //   $tagsAsArray = ['tag1', 'tag2', 'tag3'];
+                     //   $tagsAsArray = is_array($tagsAsArray) ?: [];
+
+                        if (null === $tagsAsArray) {
+                            return '';
+                        }
                         // transform the array to a string
-                        $tagsAsArray = ['tag1', 'tag2', 'tag3'];
+                        // transform the original value into a format that'll be used to render the field
                         return implode(', ', $tagsAsArray);
                     },
                     function ($tagsAsString) {
+                        if (null === $tagsAsString || '' === $tagsAsString) {
+                            return [];
+                        }
                         // transform the string back to an array
+                        // it transforms the submitted value back into the format you will use
                         return explode(', ', $tagsAsString);
                     }
                 ))
-            ;
+                // The addModelTransformer() method accepts any object that implements DataTransformerInterface
+        ;
         }
 
         // ...
