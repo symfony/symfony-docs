@@ -49,6 +49,13 @@ recognizes several strategies:
 ``unanimous``
     only grant access if none of the voters has denied access;
 
+``priority``
+    grants or denies access by the first voter that does not abstain;
+
+    .. versionadded:: 5.1
+
+        The priority version strategy was introduced in Symfony 5.1.
+
 Usage of the available options in detail::
 
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
@@ -56,7 +63,7 @@ Usage of the available options in detail::
     // instances of Symfony\Component\Security\Core\Authorization\Voter\VoterInterface
     $voters = [...];
 
-    // one of "affirmative", "consensus", "unanimous"
+    // one of "affirmative", "consensus", "unanimous", "priority"
     $strategy = ...;
 
     // whether or not to grant access when all voters abstain
@@ -258,4 +265,3 @@ decision manager::
     if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
-
