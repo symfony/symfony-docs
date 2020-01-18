@@ -148,8 +148,7 @@ To actually translate the message, the Translator uses the following process:
   not, the translator returns the original message.
 
 You start this process by calling
-:method:`Symfony\\Component\\Translation\\Translator::trans` or
-:method:`Symfony\\Component\\Translation\\Translator::transChoice`. Then, the
+:method:`Symfony\\Component\\Translation\\Translator::trans`. Then, the
 Translator looks for the exact string inside the appropriate message catalog
 and returns it (if it exists).
 
