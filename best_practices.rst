@@ -90,10 +90,8 @@ and create multiple ``.env`` files to :ref:`configure env vars per environment <
 Use Secret for Sensitive Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These are the options used to store sensitive information like passwords,
-tokens, api key
-
-:ref:`Use secrets <secrets-set>` to define these options in an easy and secure way.
+When your application has sensitive configuration - like an API key - you should
+store those securely via :doc:`secrets </configuration/secrets>`.
 
 Use Parameters for Application Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
