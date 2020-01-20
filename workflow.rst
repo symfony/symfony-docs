@@ -240,7 +240,7 @@ registry in the constructor::
 
             // Update the currentState on the post
             try {
-                $workflow->apply($post, 'to_review');
+                $workflow->apply($blogPost, 'to_review');
             } catch (LogicException $exception) {
                 // ...
             }
