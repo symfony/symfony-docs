@@ -185,9 +185,9 @@ With a Slack Message you can add some interactive options called `Block elements
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackActionsBlock;
     use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
-    use Symfony\Component\Notifier\Message\ChatMessage;
-    use Symfony\Component\Notifier\Chatter;
     use Symfony\Component\Notifier\Bridge\Slack\SlackTransport;
+    use Symfony\Component\Notifier\Chatter;
+    use Symfony\Component\Notifier\Message\ChatMessage;
 
     // Initialize a chatter with Slack Transport
     $chatter = new Chatter(new SlackTransport('token'));
