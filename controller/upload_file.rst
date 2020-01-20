@@ -142,6 +142,7 @@ Finally, you need to update the code of the controller that handles the form::
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
                 /** @var UploadedFile|null $brochureFile */
                 $brochureFile = $form['brochure']->getData();
 

@@ -6,7 +6,7 @@ Validates that a value is a valid "file", which can be one of the following:
 * A string (or object with a ``__toString()`` method) path to an existing
   file;
 * A valid :class:`Symfony\\Component\\HttpFoundation\\File\\File` object
-  (including objects of class :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`).
+  (including objects of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` class).
 
 This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
 form field.

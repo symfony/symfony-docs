@@ -29,7 +29,7 @@ it is possible to remove this need by declaring a single command application::
         ->setDefaultCommand('echo', true) // Single command application
         ->run();
 
-The method :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
+The :method:`Symfony\\Component\\Console\\Application::setDefaultCommand` method
 accepts a boolean as second parameter. If true, the command ``echo`` will then
 always be used, without having to pass its name.
 
