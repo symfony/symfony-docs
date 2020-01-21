@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-01-19T08:24:06Z
+
+@wouterj would you be able to review this PR? Thanks 🙏
+
+---------------------------------------------------------------------------
+
+by kane-menicou at 2020-01-19T14:24:36Z
+
+Thanks for the comments, based on the feedback I've removed the `Pluralized Translations` section, information regarding the ICU message format is specified here: https://github.com/symfony/symfony-docs/blob/5.0/translation.rst#message-format.
+
+---------------------------------------------------------------------------
+
+by kane-menicou at 2020-01-20T11:59:37Z
+
+@xabbuh should I change the target branch?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-01-20T12:03:34Z
+
+@kane-menicou Thank you, but we use a tool for merging that is able to do it. So it's not really necessary for you to change it. :)
