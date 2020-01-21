@@ -106,8 +106,8 @@ With this setup:
 
 * New users will be encoded with the new algorithm;
 * Whenever a user logs in whose password is still stored using the old algorithm,
-  Symfony will verify the password with the old algorithm and then re-encode
-  and update the hashed password using the new algorithm.
+  Symfony will verify the password with the old algorithm and then rehash
+  and update the password using the new algorithm.
 
 .. tip::
 
