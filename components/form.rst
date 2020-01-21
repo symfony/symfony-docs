@@ -246,13 +246,13 @@ Translation
 ~~~~~~~~~~~
 
 If you're using the Twig integration with one of the default form theme files
-(e.g. ``form_div_layout.html.twig``), there are 2 Twig filters (``trans``
-and ``transChoice``) that are used for translating form labels, errors, option
+(e.g. ``form_div_layout.html.twig``), there is a Twig filter (``trans``)
+that is used for translating form labels, errors, option
 text and other strings.
 
-To add these Twig filters, you can either use the built-in
+To add the ``trans`` Twig filter, you can either use the built-in
 :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension` that integrates
-with Symfony's Translation component, or add the 2 Twig filters yourself,
+with Symfony's Translation component, or add the Twig filter yourself,
 via your own Twig extension.
 
 To use the built-in integration, be sure that your project has Symfony's
@@ -281,7 +281,7 @@ to your ``Twig\Environment`` instance::
         'en'
     );
 
-    // adds the TranslationExtension (gives us trans and transChoice filters)
+    // adds the TranslationExtension (it gives us trans filter)
     $twig->addExtension(new TranslationExtension($translator));
 
     $formFactory = Forms::createFormFactoryBuilder()
