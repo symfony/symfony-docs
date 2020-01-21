@@ -234,13 +234,13 @@ registry in the constructor::
             $this->workflowRegistry = $workflowRegistry;
         }
 
-        public function toReview(BlogPost $blogPost)
+        public function toReview(BlogPost $post)
         {
-            $workflow = $this->workflowRegistry->get($blogPost);
+            $workflow = $this->workflowRegistry->get($post);
 
             // Update the currentState on the post
             try {
-                $workflow->apply($blogPost, 'to_review');
+                $workflow->apply($post, 'to_review');
             } catch (LogicException $exception) {
                 // ...
             }
