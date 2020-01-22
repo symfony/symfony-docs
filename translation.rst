@@ -159,75 +159,76 @@ the message inside your :ref:`templates <translation-tags>`.
 
 .. _translation-real-vs-keyword-messages:
 
-.. sidebar:: Using Real or Keyword Messages
+Using Real or Keyword Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    This example illustrates the two different philosophies when creating
-    messages to be translated::
+This example illustrates the two different philosophies when creating
+messages to be translated::
 
-        $translator->trans('Symfony is great');
+    $translator->trans('Symfony is great');
 
-        $translator->trans('symfony.great');
+    $translator->trans('symfony.great');
 
-    In the first method, messages are written in the language of the default
-    locale (English in this case). That message is then used as the "id"
-    when creating translations.
+In the first method, messages are written in the language of the default
+locale (English in this case). That message is then used as the "id"
+when creating translations.
 
-    In the second method, messages are actually "keywords" that convey the
-    idea of the message. The keyword message is then used as the "id" for
-    any translations. In this case, translations must be made for the default
-    locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
+In the second method, messages are actually "keywords" that convey the
+idea of the message. The keyword message is then used as the "id" for
+any translations. In this case, translations must be made for the default
+locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
 
-    The second method is handy because the message key won't need to be changed
-    in every translation file if you decide that the message should actually
-    read "Symfony is really great" in the default locale.
+The second method is handy because the message key won't need to be changed
+in every translation file if you decide that the message should actually
+read "Symfony is really great" in the default locale.
 
-    The choice of which method to use is entirely up to you, but the "keyword"
-    format is often recommended for multi-language applications, whereas for
-    shared bundles that contain translation resources we recommend the real
-    message, so your application can choose to disable the translator layer
-    and you will see a readable message.
+The choice of which method to use is entirely up to you, but the "keyword"
+format is often recommended for multi-language applications, whereas for
+shared bundles that contain translation resources we recommend the real
+message, so your application can choose to disable the translator layer
+and you will see a readable message.
 
-    Additionally, the ``php`` and ``yaml`` file formats support nested ids to
-    avoid repeating yourself if you use keywords instead of real text for your
-    ids:
+Additionally, the ``php`` and ``yaml`` file formats support nested ids to
+avoid repeating yourself if you use keywords instead of real text for your
+ids:
 
-    .. configuration-block::
+.. configuration-block::
 
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            symfony:
-                is:
-                    # id is symfony.is.great
-                    great: Symfony is great
-                    # id is symfony.is.amazing
-                    amazing: Symfony is amazing
-                has:
-                    # id is symfony.has.bundles
-                    bundles: Symfony has bundles
-            user:
-                # id is user.login
-                login: Login
+        symfony:
+            is:
+                # id is symfony.is.great
+                great: Symfony is great
+                # id is symfony.is.amazing
+                amazing: Symfony is amazing
+            has:
+                # id is symfony.has.bundles
+                bundles: Symfony has bundles
+        user:
+            # id is user.login
+            login: Login
 
-        .. code-block:: php
+    .. code-block:: php
 
-            [
-                'symfony' => [
-                    'is' => [
-                        // id is symfony.is.great
-                        'great'   => 'Symfony is great',
-                        // id is symfony.is.amazing
-                        'amazing' => 'Symfony is amazing',
-                    ],
-                    'has' => [
-                        // id is symfony.has.bundles
-                        'bundles' => 'Symfony has bundles',
-                    ],
+        [
+            'symfony' => [
+                'is' => [
+                    // id is symfony.is.great
+                    'great'   => 'Symfony is great',
+                    // id is symfony.is.amazing
+                    'amazing' => 'Symfony is amazing',
                 ],
-                'user' => [
-                    // id is user.login
-                    'login' => 'Login',
+                'has' => [
+                    // id is symfony.has.bundles
+                    'bundles' => 'Symfony has bundles',
                 ],
-            ];
+            ],
+            'user' => [
+                // id is user.login
+                'login' => 'Login',
+            ],
+        ];
 
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
