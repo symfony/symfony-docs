@@ -249,27 +249,12 @@ To actually translate the message, Symfony uses a simple process:
 When using the ``trans()`` method, Symfony looks for the exact string inside
 the appropriate message catalog and returns it (if it exists).
 
-.. _using-message-domains:
+.. tip::
 
-Using Message Domains
-~~~~~~~~~~~~~~~~~~~~~
+    When translating strings that are not in the default domain (``messages``),
+    you must specify the domain as the third argument of ``trans()``::
 
-As you've seen, message files are organized into the different locales that
-they translate. The message files can also be organized further into "domains".
-
-The domain is the filename without the extension. The default domain is
-``messages``. Translations can for example be split into three different
-domains: ``messages``, ``admin`` and ``navigation``. The French translation
-would be organized in these files:
-
-* ``app/Resources/translations/messages.fr.yml``
-* ``app/Resources/translations/admin.fr.yml``
-* ``app/Resources/translations/navigation.fr.yml``
-
-When translating strings that are not in the default domain (``messages``),
-you must specify the domain as the third argument of ``trans()``::
-
-    $translator->trans('Symfony is great', [], 'admin');
+        $translator->trans('Symfony is great', [], 'admin');
 
 Message Placeholders
 ~~~~~~~~~~~~~~~~~~~~
@@ -520,17 +505,17 @@ works when you use a placeholder following the ``%var%`` pattern.
     If you need to use the percent character (``%``) in a string, escape it by
     doubling it: ``{% trans %}Percent: %percent%%%{% endtrans %}``
 
-You can also specify the message domain and pass some additional variables:
+You can also pass some additional variables and specify the message domain:
 
 .. code-block:: twig
 
-    {% trans with {'%name%': 'Fabien'} from 'app' %}Hello %name%{% endtrans %}
+    {% trans with {'%name%': 'Fabien'} into 'fr' %}Hello %name%{% endtrans %}
 
-    {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
-
-    {% transchoice count with {'%name%': 'Fabien'} from 'app' %}
+    {% transchoice count with {'%name%': 'Fabien'} %}
         {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
+
+    {% trans with {'%name%': 'Fabien'} from 'custom_domain' %}Hello %name%{% endtrans %}
 
 .. _translation-filters:
 
@@ -670,8 +655,9 @@ priority message files.
 The filename of the translation files is also important: each message file
 must be named according to the following path: ``domain.locale.loader``:
 
-* **domain**: An optional way to organize messages into groups (e.g. ``admin``,
-  ``navigation`` or the default ``messages``) - see :ref:`using-message-domains`;
+* **domain**: An optional way to organize messages into groups. Unless
+  parts of the application are explicitly separated from each other, it is
+  recommended to only use default ``messages`` domain;
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 

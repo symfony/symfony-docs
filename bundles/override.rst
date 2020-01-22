@@ -135,6 +135,6 @@ Translations
 
 Translations are not related to bundles, but to domains. That means that you
 can override the translations from any translation file, as long as it is in
-:ref:`the correct domain <using-message-domains>`.
+:ref:`the correct domain <translation-resource-locations>`.
 
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
