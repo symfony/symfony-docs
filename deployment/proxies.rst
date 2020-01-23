@@ -93,7 +93,7 @@ If you are also using a reverse proxy on top of your load balancer (e.g.
 enough, as it will only trust the node sitting directly above your application
 (in this case your load balancer). You also need to append the IP addresses or
 ranges of any additional proxy (e.g. `CloudFront IP ranges`_) to the array of
-trusted proxies. You can also take a look to [this library](https://github.com/florianajir/cloudfront-trusted-proxies).
+trusted proxies. You can also take a look to this `Cloudfront trusted proxy library`_.
 
 Custom Headers When Using a Reverse Proxy
 -----------------------------------------
@@ -114,3 +114,4 @@ In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
 .. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
 .. _`CloudFront IP ranges`: https://ip-ranges.amazonaws.com/ip-ranges.json
+.. _`Cloudfront trusted proxy library`: https://github.com/florianajir/cloudfront-trusted-proxies
