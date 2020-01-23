@@ -93,7 +93,7 @@ If you are also using a reverse proxy on top of your load balancer (e.g.
 enough, as it will only trust the node sitting directly above your application
 (in this case your load balancer). You also need to append the IP addresses or
 ranges of any additional proxy (e.g. `CloudFront IP ranges`_) to the array of
-trusted proxies. You can also take a look to this `Cloudfront trusted proxy library`_.
+trusted proxies (you can take a look to this `Cloudfront trusted proxy library`_).
 
 Custom Headers When Using a Reverse Proxy
 -----------------------------------------
