@@ -812,7 +812,7 @@ this file is ``public: false`` by default.
 
 What does this mean? When a service **is** public, you can access it directly
 from the container object, which is accessible from any controller that extends
-``Controller``::
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`::
 
     use App\Service\MessageGenerator;
 
