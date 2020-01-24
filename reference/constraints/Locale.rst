@@ -17,6 +17,7 @@ Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
             - `message`_
             - `payload`_
+            _ `canonicalize`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Locale`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`
 ==========  ===================================================================
@@ -110,6 +111,12 @@ Parameter        Description
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+``canonicalize``
+~~~~~~~~~~~
+**type**: ``boolean`` **default**: ``true``
+
+this method performs Level 1 and Level 2 canonicalization according to ICU standards `ICU format locale IDs`.
 
 .. _`ICU format locale IDs`: http://userguide.icu-project.org/locale
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
