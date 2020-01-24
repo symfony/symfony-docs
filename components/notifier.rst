@@ -22,7 +22,45 @@ Installation
 Usage
 -----
 
-.. caution::
+Transport
+---------
 
-	We're still working on the docs of this component. Check this page again
-	in a few days.
+Every Notification, Text or Chat Message needs a Transport in order to be delivered.
+
+There are implement Transports for Slack, Twilio, Nexmo and Telegram.
+
+You can create a Transport by implementing the TransportInterface.
+
+For example you can send a Chat Message to a Slack Transport::
+
+    $slackTransport = new SlackTransport(
+        'xxxx-xxxxxxxxx-xxxx',
+        'C1234567890',
+        new CurlHttpClient()
+    );
+    $chatMessage = (new ChatMessage('Contribute to Symfony! It\'s fun and a great experience.'));
+    $slackTransport->send($chatMessage);
+
+Notifier
+-------
+
+Chatter
+-------
+
+
+Texter
+------
+
+
+Channel
+-------
+
+
+Message
+-------
+
+Recipient
+---------
+
+
+
