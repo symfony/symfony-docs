@@ -10,17 +10,19 @@ password, but needs to enter their old password for security.
     This should **not** be used to validate a login form, since this is
     done automatically by the security system.
 
-+----------------+--------------------------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                                     |
-+----------------+--------------------------------------------------------------------------------------------+
-| Options        | - `groups`_                                                                                |
-|                | - `message`_                                                                               |
-|                | - `payload`_                                                                               |
-+----------------+--------------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`          |
-+----------------+--------------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPasswordValidator` |
-+----------------+--------------------------------------------------------------------------------------------+
+.. note::
+
+    In order to use this constraints, you should have installed the
+    symfony/security-core component with Composer.
+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`
+Validator   :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPasswordValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
