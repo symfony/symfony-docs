@@ -98,7 +98,7 @@ asset
 Returns the public path of the given asset path (which can be a CSS file, a
 JavaScript file, an image path, etc.). This function takes into account where
 the application is installed (e.g. in case the project is accessed in a host
-subirectory) and the optional asset package base path.
+subdirectory) and the optional asset package base path.
 
 Symfony provides various cache busting implementations via the
 :ref:`reference-framework-assets-version`, :ref:`reference-assets-version-strategy`,
