@@ -254,13 +254,11 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
         Foo: ~
 
         Bar:
-            public: false
             decorates: Foo
             decoration_priority: 5
             arguments: ['@Bar.inner']
 
         Baz:
-            public: false
             decorates: Foo
             decoration_priority: 1
             arguments: ['@Baz.inner']
@@ -277,11 +275,11 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             <services>
                 <service id="Foo"/>
 
-                <service id="Bar" decorates="Foo" decoration-priority="5" public="false">
+                <service id="Bar" decorates="Foo" decoration-priority="5">
                     <argument type="service" id="Bar.inner"/>
                 </service>
 
-                <service id="Baz" decorates="Foo" decoration-priority="1" public="false">
+                <service id="Baz" decorates="Foo" decoration-priority="1">
                     <argument type="service" id="Baz.inner"/>
                 </service>
             </services>
@@ -298,12 +296,10 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             $services->set(Foo::class);
 
             $services->set(Bar::class)
-                ->private()
                 ->decorate(Foo::class, null, 5)
                 ->args([ref(Bar::class.'.inner')]);
 
             $services->set(Baz::class)
-                ->private()
                 ->decorate(Foo::class, null, 1)
                 ->args([ref(Baz::class.'.inner')]);
         };

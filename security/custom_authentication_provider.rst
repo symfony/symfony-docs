@@ -396,11 +396,9 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
             App\Security\Authentication\Provider\WsseProvider:
                 arguments:
                     $cachePool: '@cache.app'
-                public: false
 
             App\Security\Firewall\WsseListener:
                 arguments: ['@security.token_storage', '@security.authentication.manager']
-                public: false
 
     .. code-block:: xml
 
@@ -411,15 +409,11 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Security\Authentication\Provider\WsseProvider"
-                    public="false"
-                >
+                <service id="App\Security\Authentication\Provider\WsseProvider">
                     <argument key="$cachePool" type="service" id="cache.app"></argument>
                 </service>
 
-                <service id="App\Security\Firewall\WsseListener"
-                    public="false"
-                >
+                <service id="App\Security\Firewall\WsseListener">
                     <argument type="service" id="security.token_storage"/>
                     <argument type="service" id="security.authentication.manager"/>
                 </service>
@@ -428,21 +422,27 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
 
     .. code-block:: php
 
-        // config/services.php
+         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Security\Authentication\Provider\WsseProvider;
         use App\Security\Firewall\WsseListener;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(WsseProvider::class)
-            ->setArgument('$cachePool', new Reference('cache.app'))
-            ->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register(WsseListener::class)
-            ->setArguments([
-                new Reference('security.token_storage'),
-                new Reference('security.authentication.manager'),
-            ])
-            ->setPublic(false);
+            $services->set(WsseProvider::class)
+                ->arg('$cachePool', ref('cache.app'))
+            ;
+
+            $services->set(WsseListener::class)
+                ->args([
+                    ref('security.token_storage'),
+                    ref('security.authentication.manager'),
+                ])
+            ;
+        };
 
 Now that your services are defined, tell your security context about your
 factory in the kernel::
