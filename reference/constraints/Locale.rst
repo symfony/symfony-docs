@@ -117,7 +117,7 @@ Parameter        Description
 
 **type**: ``boolean`` **default**: ``true``
 
-this method performs Level 1 and Level 2 canonicalization according to ICU standards `ICU format locale IDs`.
+This method performs level 1 and level 2 canonicalization according to ICU standards `ICU format locale IDs`.
 
 .. _`ICU format locale IDs`: http://userguide.icu-project.org/locale
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
