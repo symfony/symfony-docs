@@ -114,6 +114,7 @@ Parameter        Description
 
 ``canonicalize``
 ~~~~~~~~~~~~~~~~
+
 **type**: ``boolean`` **default**: ``true``
 
 this method performs Level 1 and Level 2 canonicalization according to ICU standards `ICU format locale IDs`.
