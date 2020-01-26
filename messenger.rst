@@ -1023,6 +1023,13 @@ If you *do* choose to use the Symfony serializer, you can control the context
 on a case-by-case basis via the :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`
 (see `Envelopes & Stamps`_).
 
+.. tip::
+
+    When sending/receiving messages to/from another application, it could be a good
+    idea to have more control over the serialization process. Using a custom serializer
+    provides that control. See `Symfony Casts' message serializer tutorial`_ for
+    details.
+
 Customizing Handlers
 --------------------
 
@@ -1514,3 +1521,4 @@ Learn more
 .. _`Enqueue's transport`: https://github.com/sroze/messenger-enqueue-transport
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
+.. _`Symfony Casts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
