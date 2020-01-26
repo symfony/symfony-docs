@@ -33,9 +33,11 @@ it will be removed/changed in the future and that you should stop using it.
 When the major version is released (e.g. 5.0.0), all deprecated features and
 functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
-4.4.*), you should be able to upgrade without a problem.
+``4.4.*``), you should be able to upgrade without a problem. That means that
+you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
+(e.g. 4.4) so that you can see *all* the deprecations.
 
-To help you with this, deprecation notices are triggered whenever you end up
+To help you find deprecations, notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
 :ref:`dev environment <configuration-environments>`
 in your browser, these notices are shown in the web dev toolbar:
@@ -123,24 +125,44 @@ done!
 2) Update to the New Major Version via Composer
 -----------------------------------------------
 
-Once your code is deprecation free, you can update all the Symfony packages via
-Composer by modifying your ``composer.json`` file. In this file update all
-mentions of ``4.*`` to ``5.0.*``:
+Once your code is deprecation free, you can update the Symfony library via
+Composer by modifying your ``composer.json`` file and changing all the libraries
+starting with ``symfony/`` to the new major version:
 
-.. code-block:: json
+.. code-block:: diff
 
     {
         "...": "...",
 
         "require": {
-            "symfony/console": "^5.0",
-            "symfony/dotenv": "^5.0",
-            "symfony/flex": "^1.3.1",
-            "symfony/framework-bundle": "^5.0",
-            "symfony/validator": "^5.0",
-            "symfony/yaml": "^5.0"
+    -         "symfony/cache": "4.3.*",
+    +         "symfony/cache": "4.4.*",
+    -         "symfony/config": "4.3.*",
+    +         "symfony/config": "4.4.*",
+    -         "symfony/console": "4.3.*",
+    +         "symfony/console": "4.4.*",
+            "...": "...",
+
+            "...": "A few libraries starting with
+                    symfony/ follow their versioning scheme. You
+                    do not need to update these versions: you can
+                    upgrade them independently whenever you want",
+            "symfony/monolog-bundle": "^3.5",
         },
-        "...": "..."
+        "...": "...",
+    }
+
+Your ``composer.json`` file should also have an ``extra`` block that you will
+*also* need to update:
+
+.. code-block:: diff
+
+    "extra": {
+        "symfony": {
+            "...": "...",
+    -         "require": "4.4.*"
+    +         "require": "5.0.*"
+        }
     }
 
 At the bottom of your ``composer.json`` file, in the ``extra`` block you can
@@ -160,7 +182,7 @@ Next, use Composer to download new versions of the libraries:
 
 .. code-block:: terminal
 
-    $ composer update "symfony/*"
+    $ composer update symfony/*
 
 .. include:: /setup/_update_dep_errors.rst.inc
 
@@ -171,7 +193,6 @@ Next, use Composer to download new versions of the libraries:
 3) Update your Code to Work with the New Version
 ------------------------------------------------
 
-The next major version *may* also contain new BC breaks as a BC layer is not always
-a possibility. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major
-version) included in the Symfony repository for any BC break that you need to be aware
-of.
+In some rare situations, the next major version *may* contain backwards-compatibility
+breaks. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major version)
+included in the Symfony repository for any BC break that you need to be aware of.
