@@ -4,19 +4,13 @@
 How to Write a custom Twig Extension
 ====================================
 
-`Twig Extensions`_ allow to create custom Twig functions, filters and more to
-use them in your templates.
+`Twig Extensions`_ allow to create custom functions, filters and more to use
+them in your Twig templates. Before writing your own Twig extension, check if
+the filter/function that you need is already implemented in:
 
-Before writing your own Twig extension, check if the filter/function that you
-need is already implemented in the `default Twig filters and functions`_ or the
-:doc:`Twig filters and functions added by Symfony </reference/twig_reference>`.
-Check also the `official Twig GitHub organization`_, which contains some extra
-repositories that provide extensions for common needs (such as ``string-extra``,
-``html-extra``, ``intl-extra``, etc.)
-
-.. code-block:: terminal
-
-    $ composer require twig/extensions
+* The `default Twig filters and functions`_;
+* The :doc:`Twig filters and functions added by Symfony </reference/twig_reference>`;
+* The `official Twig extensions`_ related to strings, HTML, Markdown, internationalization, etc.
 
 Create the Extension Class
 --------------------------
@@ -178,5 +172,5 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 
 .. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
 .. _`default Twig filters and functions`: https://twig.symfony.com/doc/2.x/#reference
-.. _`official Twig GitHub organization`: https://github.com/twigphp
+.. _`official Twig extensions`: https://github.com/twigphp?q=extra
 .. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
