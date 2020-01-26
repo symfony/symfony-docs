@@ -160,6 +160,8 @@ you'll see a Composer error explaining that ``logger`` is not a valid package
 name. However, if the application has Symfony Flex installed, that command
 installs and enables all the packages needed to use the official Symfony logger.
 
+.. _recipes-description:
+
 This is possible because lots of Symfony packages/bundles define **"recipes"**,
 which are a set of automated instructions to install and enable packages into
 Symfony applications. Flex keeps tracks of the recipes it installed in a
