@@ -262,11 +262,9 @@ to build another object with the visual representation of the form::
     namespace App\Controller;
 
     use App\Entity\Task;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use App\Form\Type\TaskType;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class TaskController extends AbstractController
     {
