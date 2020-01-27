@@ -263,9 +263,9 @@ to build another object with the visual representation of the form::
 
     use App\Entity\Task;
     use App\Form\Type\TaskType;
-    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+    use Symfony\Component\HttpFoundation\Request;
+    
     class TaskController extends AbstractController
     {
         public function new(Request $request)
