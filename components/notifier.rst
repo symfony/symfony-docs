@@ -38,29 +38,24 @@ For example you can send a Chat Message to a Slack Transport::
         'C1234567890',
         new CurlHttpClient()
     );
-    $chatMessage = (new ChatMessage('Contribute to Symfony! It\'s fun and a great experience.'));
+    $chatMessage = new ChatMessage('Contribute to Symfony! It\'s fun and a great experience.');
     $slackTransport->send($chatMessage);
 
 Notifier
--------
+--------
+
 
 Chatter
 -------
 
-
 Texter
 ------
 
-
 Channel
 -------
-
 
 Message
 -------
 
 Recipient
 ---------
-
-
-
