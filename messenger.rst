@@ -888,6 +888,10 @@ The Redis transport uses `streams`_ to queue messages.
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
 
+.. versionadded:: 5.1
+
+    The Unix socket DSN was introduced in Symfony 5.1.
+
 To use the Redis transport, you will need the Redis PHP extension (>=4.3) and
 a running Redis server (^5.0).
 
