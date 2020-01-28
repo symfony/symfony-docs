@@ -122,8 +122,8 @@ RoleVoter
 
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
 supports attributes starting with ``ROLE_`` and grants access to the user
-when the required ``ROLE_*`` attributes can all be found in the array of
-roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoleNames`
+when at least one required ``ROLE_*`` attribute can be found in the array of
+roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
 method::
 
     use Symfony\Component\Security\Core\Authorization\Voter\RoleVoter;
