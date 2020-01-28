@@ -455,7 +455,6 @@ of methods to manipulate the HTTP headers related to the cache:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`;
