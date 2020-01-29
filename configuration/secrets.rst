@@ -4,10 +4,6 @@
 How to Keep Sensitive Information Secret
 ========================================
 
-.. versionadded:: 4.4
-
-    The Secrets management was introduced in Symfony 4.4.
-
 :ref:`Environment variables <config-env-vars>` are the best way to store configuration
 that depends on where the application is run - for example, some API key that
 might be set to one value while developing locally and another value on production.

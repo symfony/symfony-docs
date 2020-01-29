@@ -644,10 +644,6 @@ their values by running:
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
 
-.. versionadded:: 4.3
-
-    The option to debug environment variables was introduced in Symfony 4.3.
-
 .. _configuration-accessing-parameters:
 
 Accessing Configuration Parameters
