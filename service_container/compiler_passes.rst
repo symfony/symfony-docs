@@ -46,7 +46,7 @@ and process the services inside the ``process()`` method::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-    class Kernel extends BaseKernel implements CompilerPassInterface
+    class CustomPass implements CompilerPassInterface
     {
         use MicroKernelTrait;
 
