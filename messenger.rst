@@ -913,6 +913,7 @@ stream_max_entries  The maximum number of entries which    ``0`` (which means "n
                     the stream will be trimmed to. Set
                     it to a large enough number to
                     avoid losing pending messages
+tls                 Enable TLS support for the connection  false
 ==================  =====================================  =========================
 
 In Memory Transport
