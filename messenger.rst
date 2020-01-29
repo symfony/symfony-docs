@@ -730,6 +730,14 @@ options.
 AMQP Transport
 ~~~~~~~~~~~~~~
 
+.. versionadded:: 5.1
+
+    The AMQP transport has moved to a separate package. Install it by running
+
+    .. code-block:: terminal
+
+        $ composer require symfony/amqp-messenger
+
 The ``amqp`` transport configuration looks like this:
 
 .. code-block:: bash
@@ -753,7 +761,7 @@ You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Transport\\AmqpExt\\AmqpStamp` to
 your Envelope::
 
-    use Symfony\Component\Messenger\Transport\AmqpExt\AmqpStamp;
+    use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
     // ...
 
     $attributes = [];
@@ -774,6 +782,14 @@ your Envelope::
 
 Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The Doctrine transport has moved to a separate package. Install it by running
+
+    .. code-block:: terminal
+
+        $ composer require symfony/doctrine-messenger
 
 The Doctrine transport can be used to store messages in a database table.
 
@@ -876,6 +892,14 @@ auto_setup          Whether the table should be created
 
 Redis Transport
 ~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The Redis transport has moved to a separate package. Install it by running
+
+    .. code-block:: terminal
+
+        $ composer require symfony/redis-messenger
 
 The Redis transport uses `streams`_ to queue messages.
 
