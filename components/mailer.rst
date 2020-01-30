@@ -145,12 +145,16 @@ all of them fail).
 TLS Peer Verification
 ---------------------
 
-SMTP tranports supports TLS peer verification by default, but in some cases, you 
-may want to turn this off. For example, in a development environment.
-
-In such case, add the `verify_peer` parameter to the DSN::
+By default, SMTP transports perform TLS peer verification. This behavior is
+configurable with the ``verify_peer`` option. Although it's not recommended to
+disable this verification for security reasons, it can be useful while developing
+the application or when using a self-signed certificate::
 
     $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=false'
+
+.. versionadded:: 5.1
+
+    The ``verify_peer`` option was introduced in Symfony 5.1.
 
 Sending emails asynchronously
 -----------------------------
