@@ -142,6 +142,16 @@ The mailer will start using the first transport and if it fails, it will retry
 the same delivery with the next transports until one of them succeeds (or until
 all of them fail).
 
+TLS Peer Verification
+---------------------
+
+SMTP tranports supports TLS peer verification by default, but in some cases, you 
+may want to turn this off. For example, in a development environment.
+
+In such case, add the `verify_peer` parameter to the DSN::
+
+    $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=false'
+
 Sending emails asynchronously
 -----------------------------
 
