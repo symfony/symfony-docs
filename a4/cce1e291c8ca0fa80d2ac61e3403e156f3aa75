@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-01-26T07:15:50Z
+
+@lyrixx can you please have a look here? Thanks 🙏
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-01-30T07:44:46Z
+
+@lyrixx I'm going to merge this. I saw that the same change can be done in 3.4 branch. Is that correct ... or does this only work starting from another branch? Thanks!
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2020-01-30T09:45:11Z
+
+@javiereguiluz Thanks for seeking :) But nope. It's only for Symfony 4.3 (so 4.4)
+ref: https://symfony.com/blog/new-in-symfony-4-3-workflow-improvements#added-a-context-to-workflow-apply
