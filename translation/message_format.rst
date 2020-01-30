@@ -115,7 +115,7 @@ typical usage of this is gender:
                 <body>
                     <trans-unit id="invitation_title">
                         <source>invitation_title</source>
-                        <target>{organizer_gender, select, 
+                        <target>{organizer_gender, select,
                             female {{organizer_name} has invited you for her party!}
                             male {{organizer_name} has invited you for his party!}
                             other {{organizer_name} have invited you for their party!}
