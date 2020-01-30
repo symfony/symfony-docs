@@ -160,14 +160,25 @@ like this:
     If you are creating your first workflows, consider using the ``workflow:dump``
     command to :doc:`debug the workflow contents </workflow/dumping-workflows>`.
 
-As configured, the following property is used by the marking store::
+The configured property will be used via it's implemented getter/setter methods by the marking store::
 
     class BlogPost
     {
-        // This property is used by the marking store
-        public $currentPlace;
-        public $title;
-        public $content;
+        // the configured property must be declared
+        private $currentPlace;
+        private $title;
+        private $content;
+
+        // getter/setter methods must exist for property access by the marking store
+        public function getCurrentPlace()
+        {
+            return $this->currentPlace;
+        }
+
+        public function setCurrentPlace($currentPlace, $context = [])
+        {
+            $this->currentPlace = $currentPlace;
+        }
     }
 
 .. note::
