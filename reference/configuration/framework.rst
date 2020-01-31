@@ -1726,10 +1726,6 @@ locale and the ``warning`` level if there is no translation to use at all.
 The ID of the service used to format translation messages. The service class
 must implement the :class:`Symfony\\Component\\Translation\\Formatter\\MessageFormatterInterface`.
 
-.. seealso::
-
-    For more details, see :doc:`/components/translation/custom_message_formatter`.
-
 .. _reference-translator-paths:
 
 ``paths``

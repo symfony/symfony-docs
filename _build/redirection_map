@@ -369,3 +369,5 @@
 /contributing/community/other /contributing/community
 /setup/composer /setup
 /components/debug https://github.com/symfony/debug
+/components/translation https://github.com/symfony/translation
+/components/translation/usage /translation

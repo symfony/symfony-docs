@@ -28,10 +28,7 @@ into the language of the user::
     *language* code, an underscore (``_``), then the `ISO 3166-1 alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
-In this article, you'll learn how to use the Translation component in the
-Symfony Framework. You can read the
-:doc:`Translation component documentation </components/translation/usage>`
-to learn even more. Overall, the process has several steps:
+The translation process has several steps:
 
 #. :ref:`Enable and configure <translation-configuration>` Symfony's
    translation service;
@@ -122,9 +119,14 @@ When this code is executed, Symfony will attempt to translate the message
 you need to tell Symfony how to translate the message via a "translation
 resource", which is usually a file that contains a collection of translations
 for a given locale. This "dictionary" of translations can be created in several
-different formats, XLIFF being the recommended format:
+different formats:
 
 .. configuration-block::
+
+    .. code-block:: yaml
+
+        # messages.fr.yml
+        Symfony is great: J'aime Symfony
 
     .. code-block:: xml
 
@@ -141,11 +143,6 @@ different formats, XLIFF being the recommended format:
             </file>
         </xliff>
 
-    .. code-block:: yaml
-
-        # messages.fr.yml
-        Symfony is great: J'aime Symfony
-
     .. code-block:: php
 
         // messages.fr.php
@@ -160,27 +157,107 @@ Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``
 the message will be translated into ``J'aime Symfony``. You can also translate
 the message inside your :ref:`templates <translation-tags>`.
 
+.. _translation-real-vs-keyword-messages:
+
+Using Real or Keyword Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This example illustrates the two different philosophies when creating
+messages to be translated::
+
+    $translator->trans('Symfony is great');
+
+    $translator->trans('symfony.great');
+
+In the first method, messages are written in the language of the default
+locale (English in this case). That message is then used as the "id"
+when creating translations.
+
+In the second method, messages are actually "keywords" that convey the
+idea of the message. The keyword message is then used as the "id" for
+any translations. In this case, translations must be made for the default
+locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
+
+The second method is handy because the message key won't need to be changed
+in every translation file if you decide that the message should actually
+read "Symfony is really great" in the default locale.
+
+The choice of which method to use is entirely up to you, but the "keyword"
+format is often recommended for multi-language applications, whereas for
+shared bundles that contain translation resources we recommend the real
+message, so your application can choose to disable the translator layer
+and you will see a readable message.
+
+Additionally, the ``php`` and ``yaml`` file formats support nested ids to
+avoid repeating yourself if you use keywords instead of real text for your
+ids:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        symfony:
+            is:
+                # id is symfony.is.great
+                great: Symfony is great
+                # id is symfony.is.amazing
+                amazing: Symfony is amazing
+            has:
+                # id is symfony.has.bundles
+                bundles: Symfony has bundles
+        user:
+            # id is user.login
+            login: Login
+
+    .. code-block:: php
+
+        [
+            'symfony' => [
+                'is' => [
+                    // id is symfony.is.great
+                    'great'   => 'Symfony is great',
+                    // id is symfony.is.amazing
+                    'amazing' => 'Symfony is amazing',
+                ],
+                'has' => [
+                    // id is symfony.has.bundles
+                    'bundles' => 'Symfony has bundles',
+                ],
+            ],
+            'user' => [
+                // id is user.login
+                'login' => 'Login',
+            ],
+        ];
+
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To actually translate the message, Symfony uses a simple process:
 
-* The ``locale`` of the current user, which is stored on the request is determined;
+#. The ``locale`` of the current user, which is stored on the request is determined;
 
-* A catalog (e.g. big collection) of translated messages is loaded from translation
-  resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
-  :ref:`fallback locale <translation-fallback>` are also loaded and
-  added to the catalog if they don't already exist. The end result is a large
-  "dictionary" of translations.
+#. A catalog (i.e. big collection) of translated messages is loaded from translation
+   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
+   :ref:`fallback locale <translation-fallback>` are also loaded and
+   added to the catalog if they don't already exist. The end result is a large
+   "dictionary" of translations.
 
-* If the message is located in the catalog, the translation is returned. If
-  not, the translator returns the original message.
+#. If the message is located in the catalog, the translation is returned. If
+   not, the translator returns the original message.
 
 When using the ``trans()`` method, Symfony looks for the exact string inside
 the appropriate message catalog and returns it (if it exists).
 
+.. tip::
+
+    When translating strings that are not in the default domain (``messages``),
+    you must specify the domain as the third argument of ``trans()``::
+
+        $translator->trans('Symfony is great', [], 'admin');
+
 Message Placeholders
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Sometimes, a message containing a variable needs to be translated::
 
@@ -193,10 +270,65 @@ Sometimes, a message containing a variable needs to be translated::
 
 However, creating a translation for this string is impossible since the translator
 will try to look up the exact message, including the variable portions
-(e.g. *"Hello Ryan"* or *"Hello Fabien"*).
+(e.g. *"Hello Ryan"* or *"Hello Fabien"*). Instead of writing a translation
+for every possible iteration of the ``$name`` variable, you can replace the
+variable with a "placeholder"::
 
-For details on how to handle this situation, see :ref:`component-translation-placeholders`
-in the components documentation. For how to do this in templates, see :ref:`translation-tags`.
+    // ...
+
+    public function indexAction($name)
+    {
+        $translated = $this->get('translator')->trans('Hello %name%');
+
+        // ...
+    }
+
+Symfony will now look for a translation of the raw message (``Hello %name%``)
+and *then* replace the placeholders with their values. Creating a translation
+is done just as before:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        'Hello %name%': Bonjour %name%
+
+    .. code-block:: xml
+
+        <?xml version="1.0"?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="1">
+                        <source>Hello %name%</source>
+                        <target>Bonjour %name%</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: php
+
+        return [
+            'Hello %name%' => 'Bonjour %name%',
+        ];
+
+.. note::
+
+    The placeholders can take on any form as the full message is reconstructed
+    using the PHP :phpfunction:`strtr function<strtr>`. But the ``%...%`` form
+    is recommended, to avoid problems when using Twig.
+
+As you've seen, creating a translation is a two-step process:
+
+#. Abstract the message that needs to be translated by processing it through
+   the ``Translator``.
+
+#. Create a translation for the message in each locale that you choose to
+   support.
+
+The second step is done by creating message catalogs that define the translations
+for any number of different locales.
 
 Pluralization
 -------------
@@ -209,11 +341,133 @@ plural, based on some variable:
     There is one apple.
     There are 5 apples.
 
-To handle this, use the :method:`Symfony\\Component\\Translation\\Translator::transChoice`
-method or the ``transchoice`` tag/filter in your :ref:`template <translation-tags>`.
+When a translation has different forms due to pluralization, you can provide
+all the forms as a string separated by a pipe (``|``)::
 
-For much more information, see :ref:`component-translation-pluralization`
-in the Translation component documentation.
+    'There is one apple|There are %count% apples'
+
+To translate these messages, use the
+:method:`Symfony\\Component\\Translation\\Translator::transChoice`
+method or the ``transchoice`` tag/filter in your :ref:`template <translation-tags>`.
+To translate pluralized messages, use the
+:method:`Symfony\\Component\\Translation\\Translator::transChoice` method::
+
+    // the %count% placeholder is assigned to the second argument...
+    $this->get('translator')->transChoice(
+        'There is one apple|There are %count% apples',
+        10
+    );
+
+    // ...but you can define more placeholders if needed
+    $this->get('translator')->transChoice(
+        'Hurry up %name%! There is one apple left.|There are %count% apples left.',
+        10,
+        // no need to include %count% here; Symfony does that for you
+        ['%name%' => $user->getName()]
+    );
+
+The second argument (``10`` in this example) is the *number* of objects being
+described and is used to determine which translation to use and also to populate
+the ``%count%`` placeholder.
+
+.. versionadded:: 3.2
+
+    Before Symfony 3.2, the placeholder used to select the plural (``%count%``
+    in this example) must be included in the third optional argument of the
+    ``transChoice()`` method::
+
+        $translator->transChoice(
+            'There is one apple|There are %count% apples',
+            10,
+            ['%count%' => 10]
+        );
+
+    Starting from Symfony 3.2, when the only placeholder is ``%count%``, you
+    don't have to pass this third argument.
+
+Based on the given number, the translator chooses the right plural form.
+In English, most words have a singular form when there is exactly one object
+and a plural form for all other numbers (0, 2, 3...). So, if ``count`` is
+``1``, the translator will use the first string (``There is one apple``)
+as the translation. Otherwise it will use ``There are %count% apples``.
+
+Here is the French translation::
+
+    'Il y a %count% pomme|Il y a %count% pommes'
+
+Even if the string looks similar (it is made of two sub-strings separated by a
+pipe), the French rules are different: the first form (no plural) is used when
+``count`` is ``0`` or ``1``. So, the translator will automatically use the
+first string (``Il y a %count% pomme``) when ``count`` is ``0`` or ``1``.
+
+Each locale has its own set of rules, with some having as many as six different
+plural forms with complex rules behind which numbers map to which plural form.
+The rules are quite simple for English and French, but for Russian, you'd
+may want a hint to know which rule matches which string. To help translators,
+you can optionally "tag" each string:
+
+.. code-block:: text
+
+    'one: There is one apple|some: There are %count% apples'
+
+    'none_or_one: Il y a %count% pomme|some: Il y a %count% pommes'
+
+The tags are really only hints for translators and don't affect the logic
+used to determine which plural form to use. The tags can be any descriptive
+string that ends with a colon (``:``). The tags also do not need to be the
+same in the original message as in the translated one.
+
+.. tip::
+
+    As tags are optional, the translator doesn't use them (the translator will
+    only get a string based on its position in the string).
+
+Explicit Interval Pluralization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The easiest way to pluralize a message is to let the Translator use internal
+logic to choose which string to use based on a given number. Sometimes, you'll
+need more control or want a different translation for specific cases (for
+``0``, or when the count is negative, for example). For such cases, you can
+use explicit math intervals:
+
+.. code-block:: text
+
+    '{0} There are no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf[ There are many apples'
+
+The intervals follow the `ISO 31-11`_ notation. The above string specifies
+four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
+and higher.
+
+You can also mix explicit math rules and standard rules. In this case, if
+the count is not matched by a specific interval, the standard rules take
+effect after removing the explicit rules:
+
+.. code-block:: text
+
+    '{0} There are no apples|[20,Inf[ There are many apples|There is one apple|a_few: There are %count% apples'
+
+For example, for ``1`` apple, the standard rule ``There is one apple`` will
+be used. For ``2-19`` apples, the second standard rule
+``There are %count% apples`` will be selected.
+
+An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
+of numbers:
+
+.. code-block:: text
+
+    {1,2,3,4}
+
+Or numbers between two other numbers:
+
+.. code-block:: text
+
+    [1, +Inf[
+    ]-1,2[
+
+The left delimiter can be ``[`` (inclusive) or ``]`` (exclusive). The right
+delimiter can be ``[`` (exclusive) or ``]`` (inclusive). Beside numbers, you
+can use ``-Inf`` and ``+Inf`` for the infinite.
 
 Translations in Templates
 -------------------------
@@ -251,17 +505,17 @@ works when you use a placeholder following the ``%var%`` pattern.
     If you need to use the percent character (``%``) in a string, escape it by
     doubling it: ``{% trans %}Percent: %percent%%%{% endtrans %}``
 
-You can also specify the message domain and pass some additional variables:
+You can also pass some additional variables and specify the message domain:
 
 .. code-block:: twig
 
-    {% trans with {'%name%': 'Fabien'} from 'app' %}Hello %name%{% endtrans %}
+    {% trans with {'%name%': 'Fabien'} into 'fr' %}Hello %name%{% endtrans %}
 
-    {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
-
-    {% transchoice count with {'%name%': 'Fabien'} from 'app' %}
+    {% transchoice count with {'%name%': 'Fabien'} %}
         {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
+
+    {% trans with {'%name%': 'Fabien'} from 'custom_domain' %}Hello %name%{% endtrans %}
 
 .. _translation-filters:
 
@@ -326,6 +580,28 @@ The translator service is accessible in PHP templates through the
         ['%count%' => 10]
     ) ?>
 
+Forcing the Translator Locale
+-----------------------------
+
+When translating a message, the translator uses the specified locale or the
+``fallback`` locale if necessary. You can also manually specify the locale to
+use for translation::
+
+    $translator->trans(
+        'Symfony is great',
+        [],
+        'messages',
+        'fr_FR'
+    );
+
+    $translator->transChoice(
+        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+        10,
+        [],
+        'messages',
+        'fr_FR'
+    );
+
 Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
 
@@ -379,8 +655,9 @@ priority message files.
 The filename of the translation files is also important: each message file
 must be named according to the following path: ``domain.locale.loader``:
 
-* **domain**: An optional way to organize messages into groups (e.g. ``admin``,
-  ``navigation`` or the default ``messages``) - see :ref:`using-message-domains`;
+* **domain**: An optional way to organize messages into groups. Unless
+  parts of the application are explicitly separated from each other, it is
+  recommended to only use default ``messages`` domain;
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
@@ -388,15 +665,32 @@ must be named according to the following path: ``domain.locale.loader``:
   ``php``, ``yml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
-provides many loaders, including:
+provides many loaders:
 
-* ``xlf``: XLIFF file;
-* ``php``: PHP file;
-* ``yml``: YAML file.
+* ``.yaml``: YAML file
+* ``.xlf``: XLIFF file;
+* ``.php``: Returning a PHP array;
+* ``.csv``: CSV file;
+* ``.json``: JSON file;
+* ``.ini``: INI file;
+* ``.dat``, ``.res``: ICU resource bundle;
+* ``.mo``: Machine object format;
+* ``.po``: Portable object format;
+* ``.qt``: QT Translations XML file;
 
 The choice of which loader to use is entirely up to you and is a matter of
-taste. The recommended option is to use ``xlf`` for translations.
-For more options, see :ref:`component-translator-message-catalogs`.
+taste. The recommended option is to use YAML for simple projects and use XLIFF
+if you're generating translations with specialized programs or teams.
+
+.. caution::
+
+    Each time you create a *new* message catalog (or install a bundle
+    that includes a translation catalog), be sure to clear your cache so
+    that Symfony can discover the new translation resources:
+
+    .. code-block:: terminal
+
+        $ php bin/console cache:clear
 
 .. note::
 
@@ -450,16 +744,6 @@ For more options, see :ref:`component-translator-message-catalogs`.
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
     See the :ref:`dic-tags-translation-loader` tag for more information.
-
-.. caution::
-
-    Each time you create a *new* translation resource (or install a bundle
-    that includes a translation resource), be sure to clear your cache so
-    that Symfony can discover the new translation resources:
-
-    .. code-block:: terminal
-
-        $ php bin/console cache:clear
 
 .. _translation-fallback:
 
@@ -515,8 +799,7 @@ steps:
 
 * Abstract messages in your application by wrapping each in either the
   :method:`Symfony\\Component\\Translation\\Translator::trans` or
-  :method:`Symfony\\Component\\Translation\\Translator::transChoice` methods
-  (learn about this in :doc:`/components/translation/usage`);
+  :method:`Symfony\\Component\\Translation\\Translator::transChoice` methods;
 
 * Translate each message into multiple locales by creating translation message
   files. Symfony discovers and processes each file because its name follows
@@ -533,9 +816,11 @@ Learn more
     :glob:
 
     /translation/*
+    /validation/translations
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+.. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
