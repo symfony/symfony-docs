@@ -529,7 +529,9 @@ different messages to them. For example:
             <framework:config>
                 <framework:messenger>
                     <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
-                        <option key="queue_name">high</option>
+                        <framework:options>
+                            <framework:queue_name>high</framework:queue_name>
+                        </framework:options>
                     </framework:transport>
                     <framework:transport name="async_priority_low" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
                         <option key="queue_name">low</option>
