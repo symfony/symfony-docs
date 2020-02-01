@@ -26,10 +26,7 @@ into the language of the user::
     *language* code, an underscore (``_``), then the `ISO 3166-1 alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
-In this article, you'll learn how to use the Translation component in the
-Symfony Framework. You can read the
-:doc:`Translation component documentation </components/translation/usage>`
-to learn even more. Overall, the process has several steps:
+The translation process has several steps:
 
 #. :ref:`Enable and configure <translation-configuration>` Symfony's
    translation service;
@@ -133,9 +130,14 @@ When this code is executed, Symfony will attempt to translate the message
 you need to tell Symfony how to translate the message via a "translation
 resource", which is usually a file that contains a collection of translations
 for a given locale. This "dictionary" of translations can be created in several
-different formats, XLIFF being the recommended format:
+different formats:
 
 .. configuration-block::
+
+    .. code-block:: yaml
+
+        # translations/messages.fr.yaml
+        Symfony is great: J'aime Symfony
 
     .. code-block:: xml
 
@@ -152,11 +154,6 @@ different formats, XLIFF being the recommended format:
             </file>
         </xliff>
 
-    .. code-block:: yaml
-
-        # translations/messages.fr.yaml
-        Symfony is great: J'aime Symfony
-
     .. code-block:: php
 
         // translations/messages.fr.php
@@ -171,13 +168,86 @@ Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``
 the message will be translated into ``J'aime Symfony``. You can also translate
 the message inside your :ref:`templates <translation-in-templates>`.
 
+.. _translation-real-vs-keyword-messages:
+
+Using Real or Keyword Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This example illustrates the two different philosophies when creating
+messages to be translated::
+
+    $translator->trans('Symfony is great');
+
+    $translator->trans('symfony.great');
+
+In the first method, messages are written in the language of the default
+locale (English in this case). That message is then used as the "id"
+when creating translations.
+
+In the second method, messages are actually "keywords" that convey the
+idea of the message. The keyword message is then used as the "id" for
+any translations. In this case, translations must be made for the default
+locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
+
+The second method is handy because the message key won't need to be changed
+in every translation file if you decide that the message should actually
+read "Symfony is really great" in the default locale.
+
+The choice of which method to use is entirely up to you, but the "keyword"
+format is often recommended for multi-language applications, whereas for
+shared bundles that contain translation resources we recommend the real
+message, so your application can choose to disable the translator layer
+and you will see a readable message.
+
+Additionally, the ``php`` and ``yaml`` file formats support nested ids to
+avoid repeating yourself if you use keywords instead of real text for your
+ids:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        symfony:
+            is:
+                # id is symfony.is.great
+                great: Symfony is great
+                # id is symfony.is.amazing
+                amazing: Symfony is amazing
+            has:
+                # id is symfony.has.bundles
+                bundles: Symfony has bundles
+        user:
+            # id is user.login
+            login: Login
+
+    .. code-block:: php
+
+        [
+            'symfony' => [
+                'is' => [
+                    // id is symfony.is.great
+                    'great'   => 'Symfony is great',
+                    // id is symfony.is.amazing
+                    'amazing' => 'Symfony is amazing',
+                ],
+                'has' => [
+                    // id is symfony.has.bundles
+                    'bundles' => 'Symfony has bundles',
+                ],
+            ],
+            'user' => [
+                // id is user.login
+                'login' => 'Login',
+            ],
+        ];
+
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To actually translate the message, Symfony uses the following process when
 using the ``trans()`` method:
 
-* The ``locale`` of the current user, which is stored on the request is determined;
+#. The ``locale`` of the current user, which is stored on the request is determined;
 
 * A catalog (e.g. big collection) of translated messages is loaded from translation
   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
@@ -186,8 +256,15 @@ using the ``trans()`` method:
   "dictionary" of translations. This catalog is cached in production to
   minimize performance impact.
 
-* If the message is located in the catalog, the translation is returned. If
-  not, the translator returns the original message.
+#. If the message is located in the catalog, the translation is returned. If
+   not, the translator returns the original message.
+
+.. tip::
+
+    When translating strings that are not in the default domain (``messages``),
+    you must specify the domain as the third argument of ``trans()``::
+
+        $translator->trans('Symfony is great', [], 'admin');
 
 .. _message-placeholders:
 .. _pluralization:
@@ -236,6 +313,28 @@ support for both Twig and PHP templates:
 
 Read :doc:`/translation/templates` for more information about the Twig tags and
 filters for translation.
+
+Forcing the Translator Locale
+-----------------------------
+
+When translating a message, the translator uses the specified locale or the
+``fallback`` locale if necessary. You can also manually specify the locale to
+use for translation::
+
+    $translator->trans(
+        'Symfony is great',
+        [],
+        'messages',
+        'fr_FR'
+    );
+
+    $translator->transChoice(
+        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+        10,
+        [],
+        'messages',
+        'fr_FR'
+    );
 
 Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
@@ -297,8 +396,9 @@ priority message files.
 The filename of the translation files is also important: each message file
 must be named according to the following path: ``domain.locale.loader``:
 
-* **domain**: An optional way to organize messages into groups (e.g. ``admin``,
-  ``navigation`` or the default ``messages``) - see :ref:`using-message-domains`;
+* **domain**: An optional way to organize messages into groups. Unless
+  parts of the application are explicitly separated from each other, it is
+  recommended to only use default ``messages`` domain;
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
@@ -306,15 +406,32 @@ must be named according to the following path: ``domain.locale.loader``:
   ``php``, ``yaml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
-provides many loaders, including:
+provides many loaders:
 
-* ``xlf``: XLIFF file;
-* ``php``: PHP file;
-* ``yaml``: YAML file.
+* ``.yaml``: YAML file
+* ``.xlf``: XLIFF file;
+* ``.php``: Returning a PHP array;
+* ``.csv``: CSV file;
+* ``.json``: JSON file;
+* ``.ini``: INI file;
+* ``.dat``, ``.res``: ICU resource bundle;
+* ``.mo``: Machine object format;
+* ``.po``: Portable object format;
+* ``.qt``: QT Translations XML file;
 
 The choice of which loader to use is entirely up to you and is a matter of
-taste. The recommended option is to use ``xlf`` for translations.
-For more options, see :ref:`component-translator-message-catalogs`.
+taste. The recommended option is to use YAML for simple projects and use XLIFF
+if you're generating translations with specialized programs or teams.
+
+.. caution::
+
+    Each time you create a *new* message catalog (or install a bundle
+    that includes a translation catalog), be sure to clear your cache so
+    that Symfony can discover the new translation resources:
+
+    .. code-block:: terminal
+
+        $ php bin/console cache:clear
 
 .. note::
 
@@ -448,10 +565,12 @@ Learn more
     translation/locale
     translation/debug
     translation/lint
+    translation/xliff
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
+.. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
