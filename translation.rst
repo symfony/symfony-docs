@@ -321,14 +321,6 @@ use for translation::
         'fr_FR'
     );
 
-    $translator->transChoice(
-        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
-        10,
-        [],
-        'messages',
-        'fr_FR'
-    );
-
 Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
 
@@ -478,56 +470,60 @@ to learn more about how to handle it.
 Fallback Translation Locales
 ----------------------------
 
-Imagine that the user's locale is ``fr_FR`` and that you're translating the
-key ``Symfony is great``. To find the French translation, Symfony actually
+Imagine that the user's locale is ``es_AR`` and that you're translating the
+key ``Symfony is great``. To find the Spanish translation, Symfony actually
 checks translation resources for several locales:
 
-#. First, Symfony looks for the translation in a ``fr_FR`` translation resource
-   (e.g. ``messages.fr_FR.xlf``);
+#. First, Symfony looks for the translation in a ``es_AR`` (Argentinean
+   Spanish) translation resource (e.g. ``messages.es_AR.yaml``);
 
-#. If it wasn't found, Symfony looks for the translation in a ``fr`` translation
-   resource (e.g. ``messages.fr.xlf``);
+#. If it wasn't found, Symfony looks for the translation in the
+   parent locale, which is automatically defined only for some locales. In
+   this example, the parent locale is ``es_419`` (Latin American Spanish);
+
+#. If it wasn't found, Symfony looks for the translation in a ``es``
+   (Spanish) translation resource (e.g. ``messages.es.yaml``);
 
 #. If the translation still isn't found, Symfony uses the ``fallbacks`` option,
    which can be configured as follows:
 
-.. configuration-block::
+   .. configuration-block::
 
-    .. code-block:: yaml
+       .. code-block:: yaml
 
-        # config/packages/translation.yaml
-        framework:
-            translator:
-                fallbacks: ['en']
-                # ...
+           # config/packages/translation.yaml
+           framework:
+               translator:
+                   fallbacks: ['en']
+                   # ...
 
-    .. code-block:: xml
+       .. code-block:: xml
 
-        <!-- config/packages/translation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+           <!-- config/packages/translation.xml -->
+           <?xml version="1.0" encoding="UTF-8" ?>
+           <container xmlns="http://symfony.com/schema/dic/services"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:framework="http://symfony.com/schema/dic/symfony"
+               xsi:schemaLocation="http://symfony.com/schema/dic/services
+                   https://symfony.com/schema/dic/services/services-1.0.xsd
+                   http://symfony.com/schema/dic/symfony
+                   https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config>
-                <framework:translator>
-                    <framework:fallback>en</framework:fallback>
-                    <!-- ... -->
-                </framework:translator>
-            </framework:config>
-        </container>
+               <framework:config>
+                   <framework:translator>
+                       <framework:fallback>en</framework:fallback>
+                       <!-- ... -->
+                   </framework:translator>
+               </framework:config>
+           </container>
 
-    .. code-block:: php
+       .. code-block:: php
 
-        // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => ['fallbacks' => ['en']],
-            // ...
-        ]);
+           // config/packages/translation.php
+           $container->loadFromExtension('framework', [
+               'translator' => ['fallbacks' => ['en']],
+               // ...
+           ]);
 
 .. note::
 
@@ -582,7 +578,6 @@ Learn more
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
-.. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors

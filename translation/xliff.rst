@@ -27,7 +27,7 @@ loaded/dumped inside a Symfony application:
     <xliff xmlns="urn:oasis:names:tc:xliff:document:2.1" version="2.1"
         srcLang="fr-FR" trgLang="en-US">
         <file id="messages.en_US">
-            <unit id="LCa0a2j">
+            <unit id="LCa0a2j" name="original-content">
                 <notes>
                     <note category="state">new</note>
                     <note category="approved">true</note>
