@@ -327,14 +327,6 @@ use for translation::
         'fr_FR'
     );
 
-    $translator->transChoice(
-        '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
-        10,
-        [],
-        'messages',
-        'fr_FR'
-    );
-
 Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
 
@@ -520,43 +512,43 @@ checks translation resources for several locales:
 #. If the translation still isn't found, Symfony uses the ``fallbacks`` option,
    which can be configured as follows:
 
-.. configuration-block::
+   .. configuration-block::
 
-    .. code-block:: yaml
+       .. code-block:: yaml
 
-        # config/packages/translation.yaml
-        framework:
-            translator:
-                fallbacks: ['en']
-                # ...
+           # config/packages/translation.yaml
+           framework:
+               translator:
+                   fallbacks: ['en']
+                   # ...
 
-    .. code-block:: xml
+       .. code-block:: xml
 
-        <!-- config/packages/translation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+           <!-- config/packages/translation.xml -->
+           <?xml version="1.0" encoding="UTF-8" ?>
+           <container xmlns="http://symfony.com/schema/dic/services"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:framework="http://symfony.com/schema/dic/symfony"
+               xsi:schemaLocation="http://symfony.com/schema/dic/services
+                   https://symfony.com/schema/dic/services/services-1.0.xsd
+                   http://symfony.com/schema/dic/symfony
+                   https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config>
-                <framework:translator>
-                    <framework:fallback>en</framework:fallback>
-                    <!-- ... -->
-                </framework:translator>
-            </framework:config>
-        </container>
+               <framework:config>
+                   <framework:translator>
+                       <framework:fallback>en</framework:fallback>
+                       <!-- ... -->
+                   </framework:translator>
+               </framework:config>
+           </container>
 
-    .. code-block:: php
+       .. code-block:: php
 
-        // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => ['fallbacks' => ['en']],
-            // ...
-        ]);
+           // config/packages/translation.php
+           $container->loadFromExtension('framework', [
+               'translator' => ['fallbacks' => ['en']],
+               // ...
+           ]);
 
 .. deprecated:: 4.4
 
