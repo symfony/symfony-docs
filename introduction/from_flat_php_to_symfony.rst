@@ -686,7 +686,7 @@ migrating the blog from flat PHP to Symfony has improved your life:
   :doc:`Templating </components/templating>`,
   :doc:`Security </components/security>`,
   :doc:`Form </components/form>`, `Validator`_ and
-  :doc:`Translation </components/translation>` components (to name
+  `Translation`_ components (to name
   a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the Routing
@@ -703,6 +703,7 @@ A good selection of `Symfony community tools`_ can be found on GitHub.
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org
+.. _Translation: https://github.com/symfony/translation
 .. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/
 .. _`Validator`: https://github.com/symfony/validator
