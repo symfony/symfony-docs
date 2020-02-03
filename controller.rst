@@ -457,8 +457,8 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
     }
 
 After processing the request, the controller sets a flash message in the session
-and then redirects. The message key (``notice`` in this example) can be anything:
-you'll use this key to retrieve the message.
+and then redirects. The message type (``notice`` in this example) can be anything:
+you'll use this to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
 read any flash messages from the session using the ``flashes()`` method provided
@@ -476,26 +476,25 @@ by the :ref:`Twig global app variable <twig-app-variable>`:
     {% endfor %}
 
     {# read and display several types of flash messages #}
-    {% for label, messages in app.flashes(['success', 'warning']) %}
+    {% for type, messages in app.flashes(['success', 'warning']) %}
         {% for message in messages %}
-            <div class="flash-{{ label }}">
+            <div class="flash-{{ type }}">
                 {{ message }}
             </div>
         {% endfor %}
     {% endfor %}
 
     {# read and display all flash messages #}
-    {% for label, messages in app.flashes %}
+    {% for type, messages in app.flashes %}
         {% for message in messages %}
-            <div class="flash-{{ label }}">
+            <div class="flash-{{ type }}">
                 {{ message }}
             </div>
         {% endfor %}
     {% endfor %}
 
-It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
-different types of flash messages, but you can use any key that fits your
-needs.
+It's common to use ``notice``, ``warning`` and ``error`` for the types of
+flash messages, but you can use any string that fits your needs.
 
 .. tip::
 
