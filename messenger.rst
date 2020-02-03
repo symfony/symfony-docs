@@ -1038,9 +1038,9 @@ a running Redis server (^5.0).
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-==================  =====================================  =========================
-     Option               Description                      Default
-==================  =====================================  =========================
+===================  =====================================  =================================
+     Option               Description                       Default
+===================  =====================================  =================================
 stream              The Redis stream name                  messages
 group               The Redis consumer group name          symfony
 consumer            Consumer name used in Redis            consumer
@@ -1056,7 +1056,23 @@ stream_max_entries  The maximum number of entries which    ``0`` (which means "n
                     it to a large enough number to
                     avoid losing pending messages
 tls                 Enable TLS support for the connection  false
-==================  =====================================  =========================
+redeliver_timeout    Timeout before retrying a pending      ``3600``
+                     message which is owned by an
+                     abandoned consumer (if a worker died
+                     for some reason, this will occur,
+                     eventually you should retry the
+                     message) - in seconds.
+claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
+                     messages should be checked for to
+                     claim - in milliseconds
+===================  =====================================  =================================
+
+.. caution::
+
+    There should never be more than one `messenger:consume` command running with the same
+    config (stream, group and consumer name) to avoid having a message handled more than once.
+    Using the ``HOSTNAME`` as the consumer might often be a good idea. In case you are using
+    Kubernetes to orchestrate your containers, consider using a ``StatefulSet``.
 
 .. tip::
 
