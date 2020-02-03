@@ -135,16 +135,16 @@ starting with ``symfony/`` to the new major version:
         "...": "...",
 
         "require": {
-    -         "symfony/cache": "4.3.*",
-    +         "symfony/cache": "4.4.*",
-    -         "symfony/config": "4.3.*",
-    +         "symfony/config": "4.4.*",
-    -         "symfony/console": "4.3.*",
-    +         "symfony/console": "4.4.*",
+    -         "symfony/cache": "4.4.*",
+    +         "symfony/cache": "5.0.*",
+    -         "symfony/config": "4.4.*",
+    +         "symfony/config": "5.0.*",
+    -         "symfony/console": "4.4.*",
+    +         "symfony/console": "5.0.*",
             "...": "...",
 
             "...": "A few libraries starting with
-                    symfony/ follow their versioning scheme. You
+                    symfony/ follow their own versioning scheme. You
                     do not need to update these versions: you can
                     upgrade them independently whenever you want",
             "symfony/monolog-bundle": "^3.5",
@@ -152,29 +152,17 @@ starting with ``symfony/`` to the new major version:
         "...": "...",
     }
 
-Your ``composer.json`` file should also have an ``extra`` block that you will
-*also* need to update:
+At the bottom of your ``composer.json`` file, in the ``extra`` block you can
+find a data setting for the Symfony version. Make sure to also upgrade
+this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
 
 .. code-block:: diff
 
     "extra": {
         "symfony": {
-            "...": "...",
-    -         "require": "4.4.*"
-    +         "require": "5.0.*"
-        }
-    }
-
-At the bottom of your ``composer.json`` file, in the ``extra`` block you can
-find a data setting for the Symfony version. Make sure to also upgrade
-this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
-
-.. code-block:: json
-
-    "extra": {
-        "symfony": {
             "allow-contrib": false,
-            "require": "5.0.*"
+    -       "require": "4.4.*"
+    +       "require": "5.0.*"
         }
     }
 
