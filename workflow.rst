@@ -518,7 +518,7 @@ In the example we get this message from the
 central place to manage the text.
 
 This example has been simplified; in production you may prefer to use the
-:doc:`Translation </components/translation>` component to manage messages in one
+:doc:`Translation </translation>` component to manage messages in one
 place::
 
     namespace App\Listener\Workflow\Task;
