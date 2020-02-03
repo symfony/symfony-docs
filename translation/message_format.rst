@@ -19,8 +19,8 @@ handle this, the Translator component supports the `ICU MessageFormat`_ syntax.
 Using the ICU Message Format
 ----------------------------
 
-In order to use the ICU Message Format, the :ref:`message domain
-<using-message-domains>` has to be suffixed with ``+intl-icu``:
+In order to use the ICU Message Format, the message domain has to be
+suffixed with ``+intl-icu``:
 
 ======================  ===============================
 Normal file name        ICU Message Format filename
