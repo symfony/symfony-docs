@@ -109,9 +109,9 @@ level of verbosity of the ``OutputInterface`` instance:
      3/3 [============================] 100%  1 sec
 
     # OutputInterface::VERBOSITY_VERY_VERBOSE (-vv)
-     0/3 [>---------------------------]   0%  1 sec
-     1/3 [=========>------------------]  33%  1 sec
-     3/3 [============================] 100%  1 sec
+     0/3 [>---------------------------]   0%  1 sec/1 sec
+     1/3 [=========>------------------]  33%  1 sec/1 sec
+     3/3 [============================] 100%  1 sec/1 sec
 
     # OutputInterface::VERBOSITY_DEBUG (-vvv)
      0/3 [>---------------------------]   0%  1 sec/1 sec  1.0 MB
