@@ -132,6 +132,15 @@ The ``remember_me`` firewall defines the following configuration options:
     Defines the service id of a token provider to use. If you want to store tokens
     in the database, see :ref:`remember-me-token-in-database`.
 
+``service`` (default value: ``null``)
+    Defines the ID of the service used to handle the Remember Me feature. It's
+    mostly useful in complex applications that need to override the default
+    behavior entirely.
+
+    .. versionadded:: 5.1
+
+        The ``service`` option was introduced in Symfony 5.1.
+
 Forcing the User to Opt-Out of the Remember Me Feature
 ------------------------------------------------------
 
