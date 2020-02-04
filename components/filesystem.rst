@@ -291,7 +291,7 @@ exception on failure::
 
 .. versionadded:: 5.1
 
-    The option to set a suffix in  ``tempnam()`` was introduced in Symfony 4.4.
+    The option to set a suffix in  ``tempnam()`` was introduced in Symfony 5.1.
 
 ``dumpFile``
 ~~~~~~~~~~~~
