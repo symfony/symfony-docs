@@ -109,7 +109,7 @@ the ``BlogController``:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <!-- the controller value has the format 'controller_class::method_name' -->
             <route id="blog_list" path="/blog"
@@ -124,7 +124,7 @@ the ``BlogController``:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog')
@@ -193,7 +193,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="api_post_show" path="/api/posts/{id}"
                 controller="App\Controller\BlogApiController::show"
@@ -208,7 +208,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 
         // config/routes.php
         use App\Controller\BlogApiController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('api_post_show', '/api/posts/{id}')
@@ -282,7 +282,7 @@ arbitrary matching logic:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="contact" path="/contact" controller="App\Controller\DefaultController::contact">
                 <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
@@ -295,7 +295,7 @@ arbitrary matching logic:
 
         // config/routes.php
         use App\Controller\DefaultController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('contact', '')
@@ -429,7 +429,7 @@ defined as ``/blog/{slug}``:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="blog_show" path="/blog/{slug}"
                    controller="App\Controller\BlogController::show"/>
@@ -439,7 +439,7 @@ defined as ``/blog/{slug}``:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_show', '/blog/{slug}')
@@ -518,7 +518,7 @@ the ``{page}`` parameter using the ``requirements`` option:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <requirement key="page">\d+</requirement>
@@ -532,7 +532,7 @@ the ``{page}`` parameter using the ``requirements`` option:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page}')
@@ -615,7 +615,7 @@ concise, but it can decrease route readability when requirements are complex:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="blog_list" path="/blog/{page<\d+>}"
                    controller="App\Controller\BlogController::list"/>
@@ -627,7 +627,7 @@ concise, but it can decrease route readability when requirements are complex:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page<\d+>}')
@@ -690,7 +690,7 @@ other configuration formats they are defined with the ``defaults`` option:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <default key="page">1</default>
@@ -705,7 +705,7 @@ other configuration formats they are defined with the ``defaults`` option:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page}')
@@ -769,7 +769,7 @@ parameter:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="blog_list" path="/blog/{page <\d+>?1}"
                    controller="App\Controller\BlogController::list"/>
@@ -781,7 +781,7 @@ parameter:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_list', '/blog/{page<\d+>?1}')
@@ -917,7 +917,7 @@ and in route imports. Symfony defines some special attributes with the same name
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="article_search"
                 path="/articles/{_locale}/search.{_format}"
@@ -994,7 +994,7 @@ the controllers of the routes:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="blog_index" path="/blog/{page}" controller="App\Controller\BlogController::index">
                 <default key="page">1</default>
@@ -1006,7 +1006,7 @@ the controllers of the routes:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_index', '/blog/{page}')
@@ -1066,7 +1066,7 @@ A possible solution is to change the parameter requirements to be more permissiv
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="share" path="/share/{token}" controller="App\Controller\DefaultController::share">
                 <requirement key="token">.+</requirement>
@@ -1077,7 +1077,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         // config/routes.php
         use App\Controller\DefaultController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('share', '/share/{token}')
@@ -1175,7 +1175,7 @@ the common configuration using options when importing the routes.
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <!--
                 the 'prefix' value is added to the beginning of all imported route URLs
@@ -1203,7 +1203,7 @@ the common configuration using options when importing the routes.
     .. code-block:: php
 
         // config/routes/annotations.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // use the optional fifth argument of import() to exclude some files
@@ -1292,7 +1292,8 @@ in the main article about Symfony templates.
 Redirecting to URLs and Routes Directly from a Route
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``RedirectController`` to redirect to other routes and URLs:
+Use the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController`
+to redirect to other routes and URLs:
 
 .. configuration-block::
 
@@ -1301,28 +1302,27 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         # config/routes.yaml
         doc_shortcut:
             path: /doc
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+            redirect_to_route: 'doc_page'
+
+            # redirections are temporary by default (code 302) but you can make them permanent (code 301)
+            permanent: true
+            # add this to keep the original query string parameters when redirecting
+            keepQueryParams: true
+            # add this to keep the HTTP method when redirecting. The redirect status changes
+            # * for temporary redirects, it uses the 307 status code instead of 302
+            # * for permanent redirects, it uses the 308 status code instead of 301
+            keepRequestMethod: true
+
+            # optionally you can define some arguments passed to the route
             defaults:
-                route: 'doc_page'
-                # optionally you can define some arguments passed to the route
                 page: 'index'
                 version: 'current'
-                # redirections are temporary by default (code 302) but you can make them permanent (code 301)
-                permanent: true
-                # add this to keep the original query string parameters when redirecting
-                keepQueryParams: true
-                # add this to keep the HTTP method when redirecting. The redirect status changes
-                # * for temporary redirects, it uses the 307 status code instead of 302
-                # * for permanent redirects, it uses the 308 status code instead of 301
-                keepRequestMethod: true
 
         legacy_doc:
             path: /legacy/doc
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
-            defaults:
-                # this value can be an absolute path or an absolute URL
-                path: 'https://legacy.example.com/doc'
-                permanent: true
+            # this value can be an absolute path or an absolute URL
+            redirect_to_url: 'https://legacy.example.com/doc'
+            permanent: true
 
     .. code-block:: xml
 
@@ -1331,74 +1331,133 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
-            <route id="doc_shortcut" path="/doc"
-                   controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController">
-                <default key="route">doc_page</default>
+            <redirect-route id="doc_shortcut" path="/doc"
+                    redirect-to-route="doc_page"
+                    <!-- redirections are temporary by default (code 302) but you can make them permanent (code 301)-->
+                    permanent="true"
+                    <!-- add this to keep the original query string parameters when redirecting -->
+                    keepQueryParams="true">
+                    <!-- add this to keep the HTTP method when redirecting. The redirect status changes:
+                         * for temporary redirects, it uses the 307 status code instead of 302
+                         * for permanent redirects, it uses the 308 status code instead of 301 -->
+                    keepRequestMethod="true">
                 <!-- optionally you can define some arguments passed to the route -->
                 <default key="page">index</default>
                 <default key="version">current</default>
-                <!-- redirections are temporary by default (code 302) but you can make them permanent (code 301)-->
-                <default key="permanent">true</default>
-                <!-- add this to keep the original query string parameters when redirecting -->
-                <default key="keepQueryParams">true</default>
-                <!-- add this to keep the HTTP method when redirecting. The redirect status changes:
-                     * for temporary redirects, it uses the 307 status code instead of 302
-                     * for permanent redirects, it uses the 308 status code instead of 301 -->
-                <default key="keepRequestMethod">true</default>
-            </route>
+            </redirect-route>
 
-            <route id="legacy_doc" path="/legacy/doc"
-                   controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController">
+            <url-redirect-route id="legacy_doc" path="/legacy/doc"
                 <!-- this value can be an absolute path or an absolute URL -->
-                <default key="path">https://legacy.example.com/doc</default>
+                redirect-to-url="https://legacy.example.com/doc"
                 <!-- redirections are temporary by default (code 302) but you can make them permanent (code 301)-->
-                <default key="permanent">true</default>
-            </route>
+                permanent="true">
+            </url-redirect-route>
         </routes>
 
     .. code-block:: php
 
         // config/routes.php
         use App\Controller\DefaultController;
-        use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('doc_shortcut', '/doc')
-                ->controller(RedirectController::class)
-                 ->defaults([
-                    'route' => 'doc_page',
-                    // optionally you can define some arguments passed to the template
+                ->redirectToRoute('doc_page')
+
+                // redirections are temporary by default (code 302) but you can make them permanent (code 301)
+                ->permanent()
+
+                // add this to keep the original query string parameters when redirecting
+                ->keepQueryParams()
+
+                // add this to keep the HTTP method when redirecting. The redirect status changes:
+                // * for temporary redirects, it uses the 307 status code instead of 302
+                // * for permanent redirects, it uses the 308 status code instead of 301
+                ->keepRequestMethod()
+
+                // optionally you can define some arguments passed to the template
+                ->defaults([
                     'page' => 'index',
                     'version' => 'current',
-                    // redirections are temporary by default (code 302) but you can make them permanent (code 301)
-                    'permanent' => true,
-                    // add this to keep the original query string parameters when redirecting
-                    'keepQueryParams' => true,
-                    // add this to keep the HTTP method when redirecting. The redirect status changes:
-                    // * for temporary redirects, it uses the 307 status code instead of 302
-                    // * for permanent redirects, it uses the 308 status code instead of 301
-                    'keepRequestMethod' => true,
                 ])
             ;
 
             $routes->add('legacy_doc', '/legacy/doc')
-                ->controller(RedirectController::class)
-                 ->defaults([
-                    // this value can be an absolute path or an absolute URL
-                    'path' => 'https://legacy.example.com/doc',
-                    // redirections are temporary by default (code 302) but you can make them permanent (code 301)
-                    'permanent' => true,
-                ])
+                // this value can be an absolute path or an absolute URL
+                ->redirectToUrl('https://legacy.example.com/doc')
+
+                // redirections are temporary by default (code 302) but you can make them permanent (code 301)
+                ->permanent()
             ;
         };
+
+.. versionadded:: 5.1
+
+    This short syntax was introduced in Symfony 5.1. Before you had to
+    define the controller and specific route attributes using ``defaults``.
 
 .. tip::
 
     Symfony also provides some utilities to
     :ref:`redirect inside controllers <controller-redirect>`
+
+Discarding Routes From Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, you may want to discard a route from a vendor collection, or notify
+search engines that a page is gone:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        # if the same name was used by a route imported before it will be overridden
+        discarded_route:
+            path: /unwanted
+            gone: true
+            # gone routes are temporary by default (code 404) but you can make them permanent (code 410)
+            permanent: true
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
+
+            <!-- if the same id was used by a route imported before it will be overridden -->
+            <gone-route id="discarded_route" path="/unwanted"
+                    permanent="true">
+                    <!-- gone routes are temporary by default (code 404) but you can make them permanent (code 410) -->
+            </gone-route>
+
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use App\Controller\DefaultController;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            // if the same name was used by a route imported before it will be overridden
+            $routes->add('discarded_route', '/unwanted')
+                ->gone()
+
+                // gone routes are temporary by default (code 404) but you can make them permanent (code 410)
+                ->permanent()
+            ;
+        };
+
+.. versionadded:: 5.1
+
+    This short syntax was introduced in Symfony 5.1. Before you had to
+    define the controller and specific route attributes using ``defaults``.
 
 .. _routing-trailing-slash-redirection:
 
@@ -1477,7 +1536,7 @@ host name:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="mobile_homepage"
                 path="/"
@@ -1491,7 +1550,7 @@ host name:
 
         // config/routes.php
         use App\Controller\MainController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('mobile_homepage', '/')
@@ -1566,7 +1625,7 @@ multi-tenant applications) and these parameters can be validated too with
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="mobile_homepage"
                 path="/"
@@ -1583,7 +1642,7 @@ multi-tenant applications) and these parameters can be validated too with
 
         // config/routes.php
         use App\Controller\MainController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('mobile_homepage', '/')
@@ -1674,7 +1733,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="about_us" controller="App\Controller\CompanyController::about">
                 <path locale="en">/about-us</path>
@@ -1686,7 +1745,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
 
         // config/routes.php
         use App\Controller\CompanyController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('about_us', [
@@ -1729,7 +1788,7 @@ with a locale. This can be done by defining a different prefix for each locale
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <import resource="../../src/Controller/" type="annotation">
                 <!-- don't prefix URLs for English, the default locale -->
@@ -1741,7 +1800,7 @@ with a locale. This can be done by defining a different prefix for each locale
     .. code-block:: php
 
         // config/routes/annotations.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../../src/Controller/', 'annotation')
@@ -2098,7 +2157,7 @@ each route explicitly:
 
         // config/routes.php
         use App\Controller\SecurityController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('login', '/login')
@@ -2147,7 +2206,7 @@ defined as annotations:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <import resource="../../src/Controller/" type="annotation">
                 <default key="schemes">HTTPS</default>
@@ -2157,7 +2216,7 @@ defined as annotations:
     .. code-block:: php
 
         // config/routes/annotations.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../../src/Controller/', 'annotation')

@@ -46,7 +46,7 @@ Symfony provides several route loaders for the most common needs:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <!-- loads routes from the given routing file stored in some bundle -->
             <import resource="@AcmeBundle/Resources/config/routing.yaml"/>
@@ -64,7 +64,7 @@ Symfony provides several route loaders for the most common needs:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             // loads routes from the given routing file stored in some bundle
@@ -138,7 +138,7 @@ Take these lines from the ``routes.yaml``:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <import resource="../src/Controller" type="annotation"/>
         </routes>
@@ -146,7 +146,7 @@ Take these lines from the ``routes.yaml``:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('../src/Controller', 'annotation');
@@ -192,7 +192,7 @@ and configure the service and method to call:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <import resource="admin_route_loader::loadRoutes" type="service"/>
         </routes>
@@ -200,7 +200,7 @@ and configure the service and method to call:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('admin_route_loader::loadRoutes', 'service');
@@ -370,7 +370,7 @@ What remains to do is adding a few lines to the routing configuration:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <import resource="." type="extra"/>
         </routes>
@@ -378,7 +378,7 @@ What remains to do is adding a few lines to the routing configuration:
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('.', 'extra');

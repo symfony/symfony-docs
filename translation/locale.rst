@@ -80,7 +80,7 @@ A better policy is to include the locale in the URL using the
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="contact" path="/{_locale}/contact">
                 controller="App\Controller\ContactController::index">
@@ -92,7 +92,7 @@ A better policy is to include the locale in the URL using the
 
         // config/routes.php
         use App\Controller\ContactController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('contact', '/{_locale}/contact')

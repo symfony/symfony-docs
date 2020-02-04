@@ -230,7 +230,7 @@ Consider the following routing configuration:
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="blog_index"
                 path="/"
@@ -245,7 +245,7 @@ Consider the following routing configuration:
 
         // config/routes.php
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('blog_index', '/')
@@ -457,8 +457,8 @@ Rendering a Template Directly from a Route
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Although templates are usually rendered in controllers and services, you can
-render static pages that don't need any variables directly from the route
-definition. Use the special :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\TemplateController`
+render static pages from the route definition. Use the special
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\TemplateController`
 provided by Symfony:
 
 .. configuration-block::
@@ -468,22 +468,20 @@ provided by Symfony:
         # config/routes.yaml
         acme_privacy:
             path:          /privacy
-            controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-            defaults:
-                # the path of the template to render
-                template:  'static/privacy.html.twig'
+            # the path of the template to render
+            template:  'static/privacy.html.twig'
 
-                # special options defined by Symfony to set the page cache
-                maxAge:    86400
-                sharedAge: 86400
+            # special options defined by Symfony to set the page cache
+            maxAge:    86400
+            sharedAge: 86400
 
-                # whether or not caching should apply for client caches only
-                private: true
+            # whether or not caching should apply for client caches only
+            private: true
 
-                # optionally you can define some arguments passed to the template
-                context:
-                    site_name: 'ACME'
-                    theme: 'dark'
+            # some variables passed to the template
+            context:
+                site_name: 'ACME'
+                theme: 'dark'
 
     .. code-block:: xml
 
@@ -491,57 +489,55 @@ provided by Symfony:
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
-            <route id="acme_privacy"
+            <template-route id="acme_privacy"
                 path="/privacy"
-                controller="Symfony\Bundle\FrameworkBundle\Controller\TemplateController">
                 <!-- the path of the template to render -->
-                <default key="template">static/privacy.html.twig</default>
+                template="static/privacy.html.twig"
 
                 <!-- special options defined by Symfony to set the page cache -->
-                <default key="maxAge">86400</default>
-                <default key="sharedAge">86400</default>
+                maxAge="86400"
+                sharedMaxAge="86400">
 
                 <!-- whether or not caching should apply for client caches only -->
                 <default key="private">true</default>
 
-                <!-- optionally you can define some arguments passed to the template -->
-                <default key="context">
-                    <default key="site_name">ACME</default>
-                    <default key="theme">dark</default>
-                </default>
-            </route>
+                <!-- some variables passed to the template -->
+                <context>
+                    <string key="site_name">ACME</string>
+                    <string key="theme">dark</string>
+                </context>
+            </template-route>
         </routes>
 
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('acme_privacy', '/privacy')
-                ->controller(TemplateController::class)
-                ->defaults([
-                    // the path of the template to render
-                    'template'  => 'static/privacy.html.twig',
-
-                    // special options defined by Symfony to set the page cache
-                    'maxAge'    => 86400,
-                    'sharedAge' => 86400,
-
-                    // whether or not caching should apply for client caches only
-                    'private' => true,
-
-                    // optionally you can define some arguments passed to the template
-                    'context' => [
-                        'site_name' => 'ACME',
-                        'theme' => 'dark',
-                    ]
+                // the path of the template to render and a context of variables passed to it
+                ->template('static/privacy.html.twig', [
+                    'site_name' => 'ACME',
+                    'theme' => 'dark',
                 ])
+
+                // special options defined by Symfony to set the page cache
+                ->maxAge(86400)
+                ->sharedMaxAge(86400)
+
+                // whether or not caching should apply for client caches only
+                ->private()
             ;
         };
+
+.. versionadded:: 5.1
+
+    This short syntax was introduced in Symfony 5.1. Before you had to
+    define the controller and specific route attributes using ``defaults``.
 
 .. versionadded:: 5.1
 

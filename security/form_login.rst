@@ -122,7 +122,7 @@ configuration (``login``):
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="GET|POST"/>
         </routes>
@@ -131,7 +131,7 @@ configuration (``login``):
 
         // config/routes.php
         use App\Controller\SecurityController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('login', '/login')

@@ -157,7 +157,7 @@ automatically when installing ``symfony/framework-bundle``):
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+                https://symfony.com/schema/routing/framework-routing-1.0.xsd">
 
             <import resource="@FrameworkBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
         </routes>
@@ -165,7 +165,7 @@ automatically when installing ``symfony/framework-bundle``):
     .. code-block:: php
 
         // config/routes/dev/framework.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->import('@FrameworkBundle/Resources/config/routing/errors.xml')
