@@ -227,6 +227,10 @@ PHP process is terminated::
     // the argument is the path of the directory where the locks are created
     $store = new FlockStore(sys_get_temp_dir());
 
+.. note::
+
+    If no path is given, ``sys_get_temp_dir`` is used as default value.
+
 .. caution::
 
     Beware that some file systems (such as some types of NFS) do not support
