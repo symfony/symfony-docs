@@ -134,8 +134,7 @@ The ``remember_me`` firewall defines the following configuration options:
 
 ``service`` (default value: ``null``)
     Defines the ID of the service used to handle the Remember Me feature. It's
-    mostly useful in complex applications that need to override the default
-    behavior entirely.
+    useful if you need to overwrite the current behavior entirely.
 
     .. versionadded:: 5.1
 
