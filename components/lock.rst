@@ -643,6 +643,14 @@ can be two running containers in parallel.
     concurrent process on a new machine, check that other process are stopped
     on the old one.
 
+.. caution::
+
+    When runing on systemd with non-system user and option ``RemoveIPC=yes``
+    (default value), locks are deleted by systemd when that user logs out.
+    Check that process is run with a system user (UID <= SYS_UID_MAX) with
+    ``SYS_UID_MAX`` defined in ``/etc/login.defs``, or set the option
+    ``RemoveIPC=off`` in ``/etc/systemd/logind.conf``.
+
 ZookeeperStore
 ~~~~~~~~~~~~~~
 
