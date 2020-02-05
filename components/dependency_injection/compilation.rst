@@ -341,7 +341,7 @@ methods described in :doc:`/service_container/definitions`.
 .. note::
 
     Please note that the ``process()`` method in the extension class is
-    called during the optimization step. You can read
+    called during the ``PassConfig::TYPE_BEFORE_OPTIMIZATION`` step. You can read
     :ref:`the next section <components-di-separate-compiler-passes>` if you
     need to edit the container during another step.
 
