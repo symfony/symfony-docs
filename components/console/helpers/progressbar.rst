@@ -110,19 +110,19 @@ which starts, advances and finishes the progress bar automatically::
 
     $progressBar = new ProgressBar($output);
 
-    // $iterable can be for example an array ([1, 2, 3, ...])
+    // $iterable can be array
     $iterable = [1, 2];
     foreach ($progressBar->iterate($iterable) as $value) {
         // ... do some work
     }
-    
+
     // or a generator
     function iterable() { yield 1; yield 2; ... };
     foreach ($progressBar->iterate(iterable()) as $value) {
         // ... do some work
     }
 
-If ``$iterable = [1, 2]``, the previous code will output the following:
+The previous code will output:
 
 .. code-block:: text
 
