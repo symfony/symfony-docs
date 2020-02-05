@@ -532,9 +532,9 @@ can be two running containers in parallel.
 
 .. caution::
 
-    When runing on systemd with non-system user with option ``RemoveIPC=yes``
+    When runing on systemd with non-system user and option ``RemoveIPC=yes``
     (default value), locks are deleted by systemd when that user logs out.
-    Check that process is ran with a system user (UID <= SYS_UID_MAX) with
+    Check that process is run with a system user (UID <= SYS_UID_MAX) with
     ``SYS_UID_MAX`` defined in ``/etc/login.defs``, or set the option
     ``RemoveIPC=off`` in ``/etc/systemd/logind.conf``.
 
