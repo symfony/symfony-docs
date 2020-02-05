@@ -31,8 +31,8 @@ The notifier component supports the following channels:
 * `SMS <SMS Channel>`_ sends notifications to phones via SMS messages
 * `Chat <Chat Channel>`_ sends notifications to chat services like Slack
   and Telegram;
-* `Email <Email Channel>`_ integrating the :doc:`Symfony Mailer </mailer>`;
-* Browser using :ref:`flash messages <flash-messages>`.
+* `Email <Email Channel>`_ integrates the :doc:`Symfony Mailer </mailer>`;
+* Browser uses :ref:`flash messages <flash-messages>`.
 
 .. tip::
 
