@@ -238,7 +238,8 @@ PHP process is terminated::
     use Symfony\Component\Lock\Store\FlockStore;
 
     // the argument is the path of the directory where the locks are created
-    $store = new FlockStore(sys_get_temp_dir());
+    // if none is given, sys_get_temp_dir() is used internally.
+    $store = new FlockStore('/var/stores');
 
 .. caution::
 
