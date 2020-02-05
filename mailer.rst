@@ -733,26 +733,17 @@ adding a text header ``X-Transport`` to an email::
 Adding Tags and Metadata to Emails
 ----------------------------------
 
-Certain 3rd party transports support email *tags* and *metadata*. These can be
-used by the 3rd party service for grouping, tracking and workflows. The
-:class:`Symfony\\Component\\Mailer\\Header\\TagHeader` and
-:class:`Symfony\\Component\\Mailer\\Header\\MetadataHeader` headers can be
-added to your email. If your transport supports these headers, they will be
-applied in the format specific to the transport.
-
 .. versionadded:: 5.1
 
     The :class:`Symfony\\Component\\Mailer\\Header\\TagHeader` and
     :class:`Symfony\\Component\\Mailer\\Header\\MetadataHeader` classes were
     introduced in Symfony 5.1.
 
-The following 3rd party transports currently support tags and metadata:
-
-* Postmark
-* Mailgun
-* MailChimp
-
-For example, say you want to tag an email and add some metadata::
+Certain 3rd party transports support email *tags* and *metadata*, which can be used
+for grouping, tracking and workflows. You can add those by using the
+:class:`Symfony\\Component\\Mailer\\Header\\TagHeader` and
+:class:`Symfony\\Component\\Mailer\\Header\\MetadataHeader` classes. If your transport
+supports headers, it will convert them to their appropriate format::
 
     use Symfony\Component\Mailer\Header\MetadataHeader;
     use Symfony\Component\Mailer\Header\TagHeader;
@@ -761,15 +752,19 @@ For example, say you want to tag an email and add some metadata::
     $email->getHeaders()->add(new MetadataHeader('Color', 'blue'));
     $email->getHeaders()->add(new MetadataHeader('Client-ID', '12345'));
 
-When sending this email with a transport that supports tags and metadata, the transport
-will convert these to their appropriate format. If using a transport that does not
-support tags and metadata, they will be added as custom headers:
+If your transport does not support tags and metadata, they will be added as custom headers:
 
 .. code-block:: text
 
     X-Tag: password-reset
     X-Metadata-Color: blue
     X-Metadata-Client-ID: 12345
+
+The following transports currently support tags and metadata:
+
+* Postmark
+* Mailgun
+* MailChimp
 
 Development & Debugging
 -----------------------
