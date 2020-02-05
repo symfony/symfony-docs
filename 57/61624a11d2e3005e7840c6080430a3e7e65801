@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by BenMorel at 2020-02-04T21:37:27Z
+
+@HeahDude Done!
+
+I can target 4.4, but then you'd have to merge it to master as well, am I mistaken?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-04T22:05:24Z
+
+We merge this afterwards to master
+
+---------------------------------------------------------------------------
+
+by BenMorel at 2020-02-04T22:37:13Z
+
+So should I retarget to `4.4`?
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2020-02-04T22:40:31Z
+
+You can if you want, but we use an internal tool to merge PRs and can do it otherwise, thanks.
