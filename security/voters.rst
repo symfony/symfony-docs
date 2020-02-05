@@ -26,7 +26,7 @@ uses the authorization checker), or by
 
 Ultimately, Symfony takes the responses from all voters and makes the final
 decision (to allow or deny access to the resource) according to the strategy defined
-in the application, which can be: affirmative, consensus or unanimous.
+in the application, which can be: affirmative, consensus, unanimous or priority.
 
 For more information take a look at
 :ref:`the section about access decision managers <components-security-access-decision-manager>`.
@@ -262,7 +262,7 @@ checks if the user is a member of the site and a second one that checks if the u
 is older than 18.
 
 To handle these cases, the access decision manager uses an access decision
-strategy. You can configure this to suit your needs. There are three
+strategy. You can configure this to suit your needs. There are four
 strategies available:
 
 ``affirmative`` (default)
@@ -274,7 +274,16 @@ strategies available:
 ``unanimous``
     This only grants access if there is no voter denying access. If all voters
     abstained from voting, the decision is based on the ``allow_if_all_abstain``
-    config option (which defaults to ``false``).
+    config option (which defaults to ``false``);
+
+``priority``
+    This grants or denies access by the first voter that does not abstain,
+    based on their service priority;
+
+    .. versionadded:: 5.1
+
+        The priority version strategy was introduced in Symfony 5.1.
+
 
 In the above scenario, both voters should grant access in order to grant access
 to the user to read the post. In this case, the default strategy is no longer
