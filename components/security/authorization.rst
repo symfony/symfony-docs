@@ -54,7 +54,7 @@ recognizes several strategies:
 
     .. versionadded:: 5.1
 
-        The priority version strategy was introduced in Symfony 5.1.
+        The ``priority`` version strategy was introduced in Symfony 5.1.
 
 Usage of the available options in detail::
 

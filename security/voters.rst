@@ -262,8 +262,8 @@ checks if the user is a member of the site and a second one that checks if the u
 is older than 18.
 
 To handle these cases, the access decision manager uses an access decision
-strategy. You can configure this to suit your needs. There are four
-strategies available:
+strategy. You can configure this to suit your needs. The following strategies
+are available:
 
 ``affirmative`` (default)
     This grants access as soon as there is *one* voter granting access;
@@ -282,8 +282,7 @@ strategies available:
 
     .. versionadded:: 5.1
 
-        The priority version strategy was introduced in Symfony 5.1.
-
+        The ``priority`` version strategy was introduced in Symfony 5.1.
 
 In the above scenario, both voters should grant access in order to grant access
 to the user to read the post. In this case, the default strategy is no longer
