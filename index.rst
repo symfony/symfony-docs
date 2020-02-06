@@ -47,6 +47,7 @@ Topics
     mercure
     messenger
     migration
+    notifier
     performance
     profiler
     routing

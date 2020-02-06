@@ -12,6 +12,9 @@ integration, CSS inlining, file attachments and a lot more. Get them installed w
 
     $ composer require symfony/mailer
 
+
+.. _mailer-transport-setup:
+
 Transport Setup
 ---------------
 
