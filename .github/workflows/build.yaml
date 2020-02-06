@@ -1,0 +1,20 @@
+on:
+    push:
+        branches-ignore:
+            - 'github-comments'
+    pull_request:
+        branches-ignore:
+            - 'github-comments'
+
+name: Build
+
+jobs:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v1
+        - uses: ammaraskar/sphinx-action@master
+          with:
+              docs-folder: "/"
+              repo-token: "${{ secrets.GITHUB_TOKEN }}"
+              pre-build-command: "pip install -r _build/.requirements.txt"
+              build-command: "make -C _build SPHINXOPTS=-nW html"
