@@ -220,11 +220,55 @@ determine which instance is passed.
         $containerBuilder->register('subscriber_service_id', \AcmeSubscriber::class)
             ->addTag('kernel.event_subscriber');
 
+    ``RegisterListenersPass`` resolves aliased class names which for instance
+    allows to refer to an event via the fully qualified class name (FQCN) of the
+    event class. The pass will read the alias mapping from a dedicated container
+    parameter. This parameter can be extended by registering another compiler pass,
+    ``AddEventAliasesPass``::
+
+        use Symfony\Component\DependencyInjection\Compiler\PassConfig;
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\EventDispatcher\DependencyInjection\AddEventAliasesPass;
+        use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
+        use Symfony\Component\EventDispatcher\EventDispatcher;
+
+        $containerBuilder = new ContainerBuilder(new ParameterBag());
+        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
+        $containerBuilder->addCompilerPass(new AddEventAliasesPass([
+            \AcmeFooActionEvent::class => 'acme.foo.action',
+        ]));
+
+        $containerBuilder->register('event_dispatcher', EventDispatcher::class);
+
+        // registers an event listener
+        $containerBuilder->register('listener_service_id', \AcmeListener::class)
+            ->addTag('kernel.event_listener', [
+                // will be translated to 'acme.foo.action' by RegisterListenersPass.
+                'event' => \AcmeFooActionEvent::class,
+                'method' => 'onFooAction',
+            ]);
+
+    .. note::
+
+        Note that ``AddEventAliasesPass`` has to be processed before ``RegisterListenersPass``.
+
     By default, the listeners pass assumes that the event dispatcher's service
     id is ``event_dispatcher``, that event listeners are tagged with the
-    ``kernel.event_listener`` tag and that event subscribers are tagged
-    with the ``kernel.event_subscriber`` tag. You can change these default
-    values by passing custom values to the constructor of ``RegisterListenersPass``.
+    ``kernel.event_listener`` tag, that event subscribers are tagged
+    with the ``kernel.event_subscriber`` tag and that the alias mapping is
+    stored as parameter ``event_dispatcher.event_aliases``. You can change these
+    default values by passing custom values to the constructors of
+    ``RegisterListenersPass`` and ``AddEventAliasesPass``.
+
+.. versionadded:: 4.3
+
+    Aliasing event names is possible since Symfony 4.3.
+
+.. versionadded:: 4.4
+
+    The ``AddEventAliasesPass`` class was introduced in Symfony 4.4.
 
 .. _event_dispatcher-closures-as-listeners:
 
