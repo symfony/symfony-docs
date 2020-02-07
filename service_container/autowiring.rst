@@ -583,6 +583,10 @@ Public and Reusable Bundles
 ---------------------------
 
 Public bundles should explicitly configure their services and not rely on autowiring.
+Autowiring depends on the services that are available in the container and bundles have
+no control over the service container of applications they are included in. You can use
+autowiring when building reusable bundles within your company, as you have full control
+over all code.
 
 .. _ROT13: https://en.wikipedia.org/wiki/ROT13
 .. _service definition prototype: https://symfony.com/blog/new-in-symfony-3-3-psr-4-based-service-discovery
