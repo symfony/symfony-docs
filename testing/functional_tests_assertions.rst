@@ -8,16 +8,15 @@ When doing functional tests, sometimes you need to make complex assertions in
 order to check whether the ``Request``, the ``Response`` or the ``Crawler``
 contain the expected information to make your test succeed.
 
-Here is an example with plain PHPUnit::
+The following example uses plain PHPUnit to assert that the response redirects
+to a certain URL::
 
-    $this->assertGreaterThan(
-        0,
-        $crawler->filter('html:contains("Hello World")')->count()
-    );
+    $this->assertSame(301, $client->getResponse()->getStatusCode());
+    $this->assertSame('https://example.com', $client->getResponse()->headers->get('Location'));
 
-Now here is the example with the assertions specific to Symfony::
+This is the same example using the assertions provided by Symfony::
 
-    $this->assertSelectorTextContains('html', 'Hello World');
+    $this->assertResponseRedirects('https://example.com', 301);
 
 .. note::
 
@@ -64,9 +63,9 @@ Crawler
 
 - ``assertSelectorExists()``
 - ``assertSelectorNotExists()``
-- ``assertSelectorTextContains()``
-- ``assertSelectorTextSame()``
-- ``assertSelectorTextNotContains()``
+- ``assertSelectorTextContains()`` (note: it only checks the first selector occurrence)
+- ``assertSelectorTextSame()`` (note: it only checks the first selector occurrence)
+- ``assertSelectorTextNotContains()`` (note: it only checks the first selector occurrence)
 - ``assertPageTitleSame()``
 - ``assertPageTitleContains()``
 - ``assertInputValueSame()``
