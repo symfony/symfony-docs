@@ -274,7 +274,7 @@ in) is correct, you can use::
 Authentication Events
 ---------------------
 
-The security component provides 4 related authentication events:
+The security component provides the following authentication events:
 
 ===============================  ================================================================= ==============================================================================
 Name                             Event Constant                                                    Argument Passed to the Listener
