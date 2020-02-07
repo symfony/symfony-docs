@@ -270,11 +270,6 @@ name (FQCN) of the corresponding event class::
         }
     }
 
-.. versionadded:: 4.3
-
-    Referring Symfony's core events via the FQCN of the event class is possible
-    since Symfony 4.3.
-
 Internally, the event FQCN are treated as aliases for the original event names.
 Since the mapping already happens when compiling the service container, event
 listeners and subscribers using FQCN instead of event names will appear under
@@ -302,10 +297,6 @@ compiler pass ``AddEventAliasesPass``::
 The compiler pass will always extend the existing list of aliases. Because of
 that, it is safe to register multiple instances of the pass with different
 configurations.
-
-.. versionadded:: 4.4
-
-    The ``AddEventAliasesPass`` class was introduced in Symfony 4.4.
 
 Debugging Event Listeners
 -------------------------

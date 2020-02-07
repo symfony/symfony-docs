@@ -262,14 +262,6 @@ determine which instance is passed.
     default values by passing custom values to the constructors of
     ``RegisterListenersPass`` and ``AddEventAliasesPass``.
 
-.. versionadded:: 4.3
-
-    Aliasing event names is possible since Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    The ``AddEventAliasesPass`` class was introduced in Symfony 4.4.
-
 .. _event_dispatcher-closures-as-listeners:
 
 .. index::
