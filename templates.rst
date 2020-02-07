@@ -458,7 +458,8 @@ Rendering a Template Directly from a Route
 
 Although templates are usually rendered in controllers and services, you can
 render static pages that don't need any variables directly from the route
-definition. Use the special ``TemplateController`` provided by Symfony:
+definition. Use the special :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\TemplateController`
+provided by Symfony:
 
 .. configuration-block::
 
