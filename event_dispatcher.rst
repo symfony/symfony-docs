@@ -248,6 +248,73 @@ there are some minor advantages for each of them:
 * **Listeners are more flexible** because bundles can enable or disable each of
   them conditionally depending on some configuration value.
 
+.. _event-aliases:
+
+Event Aliases
+-------------
+
+When configuring event listeners and subscribers via dependency injection,
+Symfony's core events can also be referred to by the fully qualified class
+name (FQCN) of the corresponding event class::
+
+    // src/EventSubscriber/RequestSubscriber.php
+    namespace App\EventSubscriber;
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\Event\RequestEvent;
+
+    class RequestSubscriber implements EventSubscriberInterface
+    {
+        public static function getSubscribedEvents(): array
+        {
+            return [
+                RequestEvent::class => 'onKernelRequest',
+            ];
+        }
+
+        public function onKernelRequest(RequestEvent $event)
+        {
+            // ...
+        }
+    }
+
+.. versionadded:: 4.3
+
+    Referring Symfony's core events via the FQCN of the event class is possible
+    since Symfony 4.3.
+
+Internally, the event FQCN are treated as aliases for the original event names.
+Since the mapping already happens when compiling the service container, event
+listeners and subscribers using FQCN instead of event names will appear under
+the original event name when inspecting the event dispatcher.
+
+This alias mapping can be extended for custom events by registering the
+compiler pass ``AddEventAliasesPass``::
+
+    // src/Kernel.php
+    use App\Event\MyCustomEvent;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\EventDispatcher\DependencyInjection\AddEventAliasesPass;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+
+    class Kernel extends BaseKernel
+    {
+        protected function build(ContainerBuilder $container)
+        {
+            $container->addCompilerPass(new AddEventAliasesPass([
+                MyCustomEvent::class => 'my_custom_event',
+            ]));
+        }
+    }
+
+The compiler pass will always extend the existing list of aliases. Because of
+that, it is safe to register multiple instances of the pass with different
+configurations.
+
+.. versionadded:: 4.4
+
+    The ``AddEventAliasesPass`` class was introduced in Symfony 4.4.
+
 Debugging Event Listeners
 -------------------------
 
