@@ -458,7 +458,8 @@ Rendering a Template Directly from a Route
 
 Although templates are usually rendered in controllers and services, you can
 render static pages that don't need any variables directly from the route
-definition. Use the special ``TemplateController`` provided by Symfony:
+definition. Use the special :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\TemplateController`
+provided by Symfony:
 
 .. configuration-block::
 
@@ -475,10 +476,6 @@ definition. Use the special ``TemplateController`` provided by Symfony:
                 # special options defined by Symfony to set the page cache
                 maxAge:    86400
                 sharedAge: 86400
-
-                # optionally you can define some arguments passed to the template
-                site_name: 'ACME'
-                theme: 'dark'
 
     .. code-block:: xml
 
@@ -497,10 +494,6 @@ definition. Use the special ``TemplateController`` provided by Symfony:
                 <!-- special options defined by Symfony to set the page cache -->
                 <default key="maxAge">86400</default>
                 <default key="sharedAge">86400</default>
-
-                <!-- optionally you can define some arguments passed to the template -->
-                <default key="site_name">ACME</default>
-                <default key="theme">dark</default>
             </route>
         </routes>
 
@@ -520,10 +513,6 @@ definition. Use the special ``TemplateController`` provided by Symfony:
                     // special options defined by Symfony to set the page cache
                     'maxAge'    => 86400,
                     'sharedAge' => 86400,
-
-                    // optionally you can define some arguments passed to the template
-                    'site_name' => 'ACME',
-                    'theme' => 'dark',
                 ])
             ;
         };
