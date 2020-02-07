@@ -248,8 +248,6 @@ there are some minor advantages for each of them:
 * **Listeners are more flexible** because bundles can enable or disable each of
   them conditionally depending on some configuration value.
 
-.. _event-aliases:
-
 Event Aliases
 -------------
 

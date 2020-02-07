@@ -220,11 +220,11 @@ determine which instance is passed.
         $containerBuilder->register('subscriber_service_id', \AcmeSubscriber::class)
             ->addTag('kernel.event_subscriber');
 
-    ``RegisterListenersPass`` is able to resolve aliased class names which for
-    instance allows to refer to an event via the fully qualified class name
-    (FQCN) of the event class. The pass will read the alias mapping from a
-    dedicated container parameter. This parameter can be extended by registering
-    another compiler pass, ``AddEventAliasesPass``::
+    ``RegisterListenersPass`` resolves aliased class names which for instance
+    allows to refer to an event via the fully qualified class name (FQCN) of the
+    event class. The pass will read the alias mapping from a dedicated container
+    parameter. This parameter can be extended by registering another compiler pass,
+    ``AddEventAliasesPass``::
 
         use Symfony\Component\DependencyInjection\Compiler\PassConfig;
         use Symfony\Component\DependencyInjection\ContainerBuilder;
