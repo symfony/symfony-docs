@@ -10,8 +10,10 @@ The Intl Component
 
 .. caution::
 
-    The replacement layer is limited to the locale "en". If you want to use
-    other locales, you should `install the intl extension`_ instead.
+    The replacement layer is limited to the ``en`` locale. If you want to use
+    other locales, you should `install the intl extension`_. There is no conflict 
+    between the two because, even if you use the extension, this package can still
+    be useful to access the ICU data.
 
 .. seealso::
 
