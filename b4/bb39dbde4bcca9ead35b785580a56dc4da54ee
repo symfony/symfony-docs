@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2019-10-07T14:02:11Z
+
+Thanks a lot for this extensive documentation @derrabus!
+
+I think we won't need to document this in the components section. If there is someone that uses both these components in a standalone application and wants this behaviour, they'll probably find out how to use it themselves. We might only want to add one sentences (like ```To alias event classes to event names, use the :class:`....` class.```).
+
+For the main guide, I think the part about your custom aliases should probably be moved to a subtopic, as it's an advanced usage. But before you do anything, let's hear what @javiereguiluz thinks about that as he's busy creating a consistent structure of the documentation these weeks.
+
+---------------------------------------------------------------------------
+
+by derrabus at 2020-02-07T08:50:45Z
+
+Is there anything left for me to do to get this PR merged?
