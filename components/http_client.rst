@@ -116,6 +116,14 @@ immediately instead of waiting to receive the response::
 This component also supports :ref:`streaming responses <http-client-streaming-responses>`
 for full asynchronous applications.
 
+.. caution::
+
+    Reference to ``$response`` object must be kept in order to benefit from the asynchronous
+    behavior. If not, the response object is destroyed by PHP
+    garbage collector which forces the response to be resolved at this moment.
+    One solution is to store all ``$response`` object in an ``array`` to keep a reference to them
+    until they are not needed anymore.
+
 .. note::
 
     HTTP compression and chunked transfer encoding are automatically enabled when
