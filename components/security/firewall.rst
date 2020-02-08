@@ -60,7 +60,7 @@ the user::
 
     $requestMatcher = new RequestMatcher('^/secured-area/');
 
-    // instances of Symfony\Component\Security\Http\Firewall\ListenerInterface
+    // array of callables
     $listeners = [...];
 
     $exceptionListener = new ExceptionListener(...);
@@ -108,7 +108,7 @@ Firewall Listeners
 When the firewall gets notified of the ``kernel.request`` event, it asks
 the firewall map if the request matches one of the secured areas. The first
 secured area that matches the request will return a set of corresponding
-firewall listeners (which each implement :class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`).
+firewall listeners (which each is a callable).
 These listeners will all be asked to handle the current request. This basically
 means: find out if the current request contains any information by which
 the user might be authenticated (for instance the Basic HTTP authentication
