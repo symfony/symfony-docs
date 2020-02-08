@@ -56,7 +56,7 @@ Twilio   ``symfony/twilio-notifier``  ``twilio://SID:TOKEN@default?from=FROM``
 Nexmo    ``symfony/nexmo-notifier``   ``nexmo://KEY:SECRET@default?from=FROM``
 =======  ===========================  ========================================
 
-To enable a texter, add the add the correct DSN in your ``.env`` file and
+To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
 
 .. code-block:: bash
