@@ -161,10 +161,11 @@ loading your configuration.
 .. _Debug component: https://github.com/symfony/debug
 .. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
-.. _app.php: https://github.com/symfony/symfony-standard/blob/master/web/app.php
-.. _app_dev.php: https://github.com/symfony/symfony-standard/blob/master/web/app_dev.php
-.. _bin/console: https://github.com/symfony/symfony-standard/blob/master/bin/console
-.. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
+.. _app.php: https://github.com/symfony/symfony-standard/blob/3.4/web/app.php
+.. _app_dev.php: https://github.com/symfony/symfony-standard/blob/3.4/web/app_dev.php
+.. _bin/console: https://github.com/symfony/symfony-standard/blob/3.4/bin/console
+.. _AppKernel: https://github.com/symfony/symfony-standard/blob/3.4/app/AppKernel.php
 .. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
-.. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
+.. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/3.4
+/web/.htaccess
 .. _template methods: https://en.wikipedia.org/wiki/Template_method_pattern
