@@ -166,6 +166,5 @@ loading your configuration.
 .. _bin/console: https://github.com/symfony/symfony-standard/blob/3.4/bin/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/3.4/app/AppKernel.php
 .. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
-.. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/3.4
-/web/.htaccess
+.. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/3.4/web/.htaccess
 .. _template methods: https://en.wikipedia.org/wiki/Template_method_pattern
