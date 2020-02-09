@@ -23,6 +23,7 @@ via Composer:
 
 Next, create an ``index.php`` file that creates a kernel class and executes it::
 
+    // index.php
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
     use Symfony\Component\Config\Loader\LoaderInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -32,7 +33,7 @@ Next, create an ``index.php`` file that creates a kernel class and executes it::
     use Symfony\Component\Routing\RouteCollectionBuilder;
 
     // require Composer's autoloader
-    require dirname(__DIR__).'/vendor/autoload.php';
+    require __DIR__.'/vendor/autoload.php';
 
     class AppKernel extends Kernel
     {
