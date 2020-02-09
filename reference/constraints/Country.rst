@@ -5,9 +5,9 @@ Validates that a value is a valid `ISO 3166-1 alpha-2`_ country code.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
+Options     - `alpha3`_
+            - `groups`_
             - `message`_
-            - `alpha3`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Country`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountryValidator`
@@ -81,6 +81,10 @@ Options
 
 alpha3
 ~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``alpha3`` option was introduced in Symfony 5.1.
 
 **type**: ``boolean`` **default**: ``false``
 
