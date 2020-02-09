@@ -56,7 +56,7 @@ Twilio   ``symfony/twilio-notifier``  ``twilio://SID:TOKEN@default?from=FROM``
 Nexmo    ``symfony/nexmo-notifier``   ``nexmo://KEY:SECRET@default?from=FROM``
 =======  ===========================  ========================================
 
-To enable a texter, add the add the correct DSN in your ``.env`` file and
+To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
 
 .. code-block:: bash
@@ -354,16 +354,16 @@ set the notification content and icon.
 
 Symfony provides three types of recipients:
 
-:class:`Symfony\\Component\\Notifier\\Recipient\\NoRecipient``
+:class:`Symfony\\Component\\Notifier\\Recipient\\NoRecipient`
     This is the default and is useful when there is no need to have
     information about the receiver. For example, the browser channel uses
     the current requests's :ref:`session flashbag <flash-messages>`;
 
-:class:`Symfony\\Component\\Notifier\\Recipient\\Recipient``
+:class:`Symfony\\Component\\Notifier\\Recipient\\Recipient`
     This contains only the email address of the user and can be used for
     messages on the email and browser channel;
 
-:class:`Symfony\\Component\\Notifier\\Recipient\\AdminRecipient``.
+:class:`Symfony\\Component\\Notifier\\Recipient\\AdminRecipient`
     This can contain both email address and phonenumber of the user. This
     recipient can be used for all channels (depending on whether they are
     actually set).
