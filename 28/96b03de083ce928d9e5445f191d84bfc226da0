@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-06T08:42:30Z
+
+I'm sorry but I don't know the internals of this well. Maybe @tucksaun can help us because he set up the SymfonyCloud integration and because he knows everything about SymfonyCloud. Thanks!
+
+---------------------------------------------------------------------------
+
+by tucksaun at 2020-02-06T08:59:26Z
+
+> I'm sorry but I don't know the internals of this well. Maybe @tucksaun can help us because he set up the SymfonyCloud integration and because he knows everything about SymfonyCloud. Thanks!
+
+Just ported what used to be on Platform.sh to SymfonyCloud, so sorry I can't tell either 🤷‍♂
+
+---------------------------------------------------------------------------
+
+by tucksaun at 2020-02-06T09:01:58Z
+
+Actually, according to https://github.com/symfony/symfony-docs/commit/75e717732dfa8f2f2d1daa10c36db54c55935952:
+
+> **Pin Python dependencies and install them in a virtualenv**
+> Installing `sphinx` started to fail about a week ago,
+with `pip` incorrectly trying to remove a Python package
+shipped at the system level in Platform.sh environment.
+
+So that would be why
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-06T09:05:18Z
+
+Ok, but in this case we could add them to the `.requirements.txt` file? right?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-06T09:08:13Z
+
+> Ok, but in this case we could add them to the .requirements.txt file? right?
+
+Lets see if it works
+
+---------------------------------------------------------------------------
+
+by tucksaun at 2020-02-06T09:12:11Z
+
+> Ok, but in this case we could add them to the `.requirements.txt` file? right?
+
+Probably not because this is a usual command to upgrade `pip` and then used this updated `pip` version.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-06T09:26:25Z
+
+Unfortunately in this PR there is no SymfonyCloud env deployed. Do we raise the allowed number of ENVs? Or can you force this PR to deploy? @tucksaun
+
+> Probably not because this is a usual command to upgrade pip and then used this updated pip version.
+
+Sounds reasonable
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-06T11:40:40Z
+
+I dropped the package move, so no blocker here for now. We are good to go
+
+ping @javiereguiluz @xabbuh @wouterj
+
+---------------------------------------------------------------------------
+
+by tucksaun at 2020-02-06T11:44:32Z
+
+> Unfortunately in this PR there is no SymfonyCloud env deployed. Do we raise the allowed number of ENVs? Or can you force this PR to deploy? @tucksaun
+
+Actually it is deployed... don't know why the status is not updated 🤔
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-08T07:57:30Z
+
+RTM from my side
