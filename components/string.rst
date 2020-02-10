@@ -8,11 +8,6 @@ The String Component
     The String component provides a single object-oriented API to work with
     three "unit systems" of strings: bytes, code points and grapheme clusters.
 
-.. versionadded:: 5.0
-
-    The String component was introduced in Symfony 5.0 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
-
 Installation
 ------------
 
