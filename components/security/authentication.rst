@@ -17,9 +17,8 @@ The listener should then store the authenticated token using
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
-    class SomeAuthenticationListener implements ListenerInterface
+    class SomeAuthenticationListener
     {
         /**
          * @var TokenStorageInterface
@@ -38,7 +37,7 @@ The listener should then store the authenticated token using
 
         // ...
 
-        public function handle(RequestEvent $event)
+        public function __invoke(RequestEvent $event)
         {
             $request = $event->getRequest();
 
