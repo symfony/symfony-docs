@@ -1,0 +1,53 @@
+on:
+    push:
+        branches-ignore:
+            - 'github-comments'
+    pull_request:
+        branches-ignore:
+            - 'github-comments'
+
+name: CI
+
+jobs:
+    build:
+        name: Build
+
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: "Checkout"
+                uses: actions/checkout@v2
+
+            -   name: "Set up Python 3.x"
+                uses: actions/setup-python@v1
+                with:
+                    python-version: '3.7' # Semantic version range syntax or exact version of a Python version
+
+            -   name: "Display Python version"
+                run: python -c "import sys; print(sys.version)"
+
+            -   name: "Install Sphinx dependencies"
+                run: sudo apt-get install python-dev build-essential
+
+            -   name: "Install Sphinx"
+                run: pip install --user sphinx
+
+            -   name: "Install custom requirements via pip"
+                run: pip install -r _build/.requirements.txt
+
+            -   name: "Build documentation"
+                run: make -C _build SPHINXOPTS=-nW html
+
+    doctor-rst:
+        name: DOCtor-RST
+
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: "Checkout"
+                uses: actions/checkout@v2
+
+            -   name: "Run DOCtor-RST"
+                uses: docker://oskarstark/doctor-rst
+                with:
+                    args: --short
