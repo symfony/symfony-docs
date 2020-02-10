@@ -14,30 +14,22 @@ jobs:
 
         runs-on: ubuntu-latest
 
+        container: python:3.7-alpine
+
         steps:
             -   name: "Checkout"
                 uses: actions/checkout@v2
 
-            -   name: "Set up Python 3.7"
-                uses: actions/setup-python@v1
-                with:
-                    python-version: '3.7' # Semantic version range syntax or exact version of a Python version
-
             -   name: "Display Python version"
                 run: python -c "import sys; print(sys.version)"
 
-            -   name: "Install Sphinx dependencies"
-                run: sudo apt-get install python-dev build-essential
+            -   name: "Install Sphinx"
+                run: pip install --user sphinx
 
-            -   name: "Cache pip"
-                uses: actions/cache@v2
-                with:
-                    path: ~/.cache/pip
-                    key: ${{ runner.os }}-pip-${{ hashFiles('_build/.requirements.txt') }}
-                    restore-keys: |
-                        ${{ runner.os }}-pip-
+            -   name: "Install dependencies"
+                run: apk add --no-cache git make
 
-            -   name: "Install Sphinx + requirements via pip"
+            -   name: "Install custom requirements via pip"
                 run: pip install -r _build/.requirements.txt
 
             -   name: "Build documentation"
