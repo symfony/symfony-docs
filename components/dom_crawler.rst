@@ -620,20 +620,22 @@ the whole form or specific field(s)::
     $form->disableValidation();
     $form['country']->select('Invalid value');
 
-Resolving URI
-~~~~~~~~~~~~~
+Resolving a URI
+~~~~~~~~~~~~~~~
 
 .. versionadded:: 5.1
 
-    The `UriResolver` helper was added in Symfony 5.1.
+    The :class:`Symfony\\Component\\DomCrawler\\UriResolver` helper class was added in Symfony 5.1.
 
 The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes an URI
 (relative, absolute, fragment, etc.) and turns it into an absolute URI against
-another given base URI.::
+another given base URI::
 
-    UriResolver::resolve('/foo', 'http://localhost/bar/foo/'); // => 'http://localhost/foo'
-    UriResolver::resolve('?a=b', 'http://localhost/bar#foo'); // => 'http://localhost/bar?a=b'
-    UriResolver::resolve('../../', 'http://localhost/'); // =>  http://localhost/'
+    use Symfony\Component\DomCrawler\UriResolver;
+
+    UriResolver::resolve('/foo', 'http://localhost/bar/foo/'); // http://localhost/foo
+    UriResolver::resolve('?a=b', 'http://localhost/bar#foo'); // http://localhost/bar?a=b
+    UriResolver::resolve('../../', 'http://localhost/'); // http://localhost/
 
 Learn more
 ----------
