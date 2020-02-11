@@ -127,13 +127,13 @@ Upgrade the Password
 Upon successful login, the Security system checks whether a better algorithm
 is available to hash the user's password. If it is, it'll hash the correct
 password using the new hash. If you use a Guard authenticator, you first need to
-`provide the original password to the Security system <Provide the Password when using Guard>`_.
+:ref:`provide the original password to the Security system <Provide the Password when using Guard>`.
 
 You can enable the upgrade behavior by implementing how this newly hashed
 password should be stored:
 
-* `When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`_
-* `When using a custom user provider <Upgrade the Password when using a custom User Provider>`_
+* :ref:`When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`
+* :ref:`When using a custom user provider <Upgrade the Password when using a Custom User Provider>`
 
 After this, you're done and passwords are always hashed as secure as possible!
 
