@@ -254,7 +254,7 @@ Fetching Services as Controller Arguments
     The ability to type-hint a controller argument in order to receive a service
     was introduced in Symfony 3.3.
 
-Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
+Symfony comes *packed* with a lot of useful classes and functionalities, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of.
 
