@@ -632,9 +632,12 @@ See the `Supervisor docs`_ for more details.
 Retries & Failures
 ------------------
 
-If an exception is thrown while consuming a message from a transport it will
-automatically be re-sent to the transport to be tried again. By default, a message
-will be retried 3 times before being discarded or
+If an exception is thrown while consuming a message from a transport it can
+automatically be re-sent to the transport to be tried again - please check the
+actual implementation of the transport you use. For example, in case of the Doctrine
+the thrown exception must implement :class:`Doctrine\DBAL\Exception\RetryableException`,
+otherwise the message will be lost.
+By default, a message will be retried 3 times before being discarded or
 :ref:`sent to the failure transport <messenger-failure-transport>`. Each retry
 will also be delayed, in case the failure was due to a temporary issue. All of
 this is configurable for each transport:
