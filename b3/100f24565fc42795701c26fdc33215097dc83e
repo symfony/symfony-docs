@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-11T14:35:45Z
+
+@savvasal thanks for this contribution! However, I think that the change should be to remove this `versionadded` directive entirely ... because in 5.1, the component is neither new nor experimental, so no extra info is needed.
