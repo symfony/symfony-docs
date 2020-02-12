@@ -408,8 +408,8 @@ the report with details of the sent emails.
 .. tip::
 
     In addition to the features provided by Symfony, there are applications that
-    can help you test emails during application development, like `MailCatcher`_
-    and `MailHog`_.
+    can help you test emails during application development, like `MailCatcher`_,
+    `Mailtrap`_ and `MailHog`_.
 
 How to Spool Emails
 -------------------
@@ -656,6 +656,7 @@ redirected page and the email won't be accessible.
 
 .. _`MailCatcher`: https://github.com/sj26/mailcatcher
 .. _`MailHog`: https://github.com/mailhog/MailHog
+.. _`Mailtrap`: https://mailtrap.io/
 .. _`Swift Mailer`: http://swiftmailer.org/
 .. _`SwiftMailerBundle`: https://github.com/symfony/swiftmailer-bundle
 .. _`Creating Messages`: https://swiftmailer.symfony.com/docs/messages.html
