@@ -120,8 +120,8 @@ Service     Package                          DSN
 ==========  ===============================  ============================================
 Slack       ``symfony/slack-notifier``       ``slack://TOKEN@default?channel=CHANNEL``
 Telegram    ``symfony/telegram-notifier``    ``telegram://TOKEN@default?channel=CHAT_ID``
-Mattermost  ``symfony/mattermost-notifier``  ``mattermost://ENDPOINT?channel=CHANNEL``
-RocketChat  ``symfony/rocketchat-notifier``  ``rocketchat://ENDPOINT?channel=CHANNEL``
+Mattermost  ``symfony/mattermost-notifier``  ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
+RocketChat  ``symfony/rocketchat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 ==========  ===============================  ============================================
 
 .. versionadded:: 5.1
