@@ -27,7 +27,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/serializer
+    $ composer require symfony/serializer symfony/property-access
 
 .. include:: /components/require_autoload.rst.inc
 
