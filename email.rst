@@ -41,7 +41,7 @@ environment variable in the ``.env`` file:
 
     # .env (or override MAILER_URL in .env.local to avoid committing your changes)
 
-    # use this to disable email delivery
+    # use this to disable email delivery (this configuration can be used in a test environment)
     MAILER_URL=null://localhost
 
     # use this to configure a traditional SMTP server
