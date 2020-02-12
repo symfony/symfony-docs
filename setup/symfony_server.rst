@@ -50,6 +50,9 @@ run the Symfony server in the background:
 
     # start the server in the background
     $ symfony server:start -d
+    
+    # you can also use this shortcut
+    $ symfony serve -d
 
     # continue working and running other commands...
 
