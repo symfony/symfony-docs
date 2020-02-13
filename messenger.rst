@@ -734,7 +734,8 @@ AMQP Transport
 
 .. versionadded:: 5.1
 
-    The AMQP transport has moved to a separate package. Install it by running
+    Starting from Symfony 5.1, the AMQP transport has moved to a separate package.
+    Install it by running:
 
     .. code-block:: terminal
 
@@ -787,7 +788,8 @@ Doctrine Transport
 
 .. versionadded:: 5.1
 
-    The Doctrine transport has moved to a separate package. Install it by running
+    Starting from Symfony 5.1, the Doctrine transport has moved to a separate package.
+    Install it by running:
 
     .. code-block:: terminal
 
@@ -897,7 +899,8 @@ Redis Transport
 
 .. versionadded:: 5.1
 
-    The Redis transport has moved to a separate package. Install it by running
+    Starting from Symfony 5.1, the Redis transport has moved to a separate package.
+    Install it by running:
 
     .. code-block:: terminal
 
