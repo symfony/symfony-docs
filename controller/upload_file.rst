@@ -74,7 +74,7 @@ so Symfony doesn't try to get/set its value from the related entity::
                     'mapped' => false,
 
                     // make it optional so you don't have to re-upload the PDF file
-                    // everytime you edit the Product details
+                    // every time you edit the Product details
                     'required' => false,
 
                     // unmapped fields can't define their validation using annotations
