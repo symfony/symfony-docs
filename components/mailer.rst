@@ -138,9 +138,14 @@ A round-robin transport is configured with two or more transports and the
 
     $dsn = 'roundrobin(postmark+api://ID@default sendgrid+smtp://KEY@default)'
 
-The mailer will start using the first transport and if it fails, it will retry
-the same delivery with the next transports until one of them succeeds (or until
-all of them fail).
+The mailer will start using a randomly selected transport and if it fails, it
+will retry the same delivery with the next transports until one of them succeeds
+(or until all of them fail).
+
+.. versionadded:: 5.1
+
+    The random selection of the first transport was introduced in Symfony 5.1.
+    In previous Symfony versions the first transport was always selected first.
 
 TLS Peer Verification
 ---------------------
