@@ -127,6 +127,7 @@ Now, if you want to serialize this object into JSON, you only need to
 use the Serializer service created before::
 
     use Symfony\Component\Serializer\Serializer;
+    
     $person = new App\Model\Person();
     $person->setName('foo');
     $person->setAge(99);
@@ -203,7 +204,9 @@ Deserializing in an Existing Object
 
 The serializer can also be used to update an existing object::
 
-    // ...
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    
     $person = new Person();
     $person->setName('bar');
     $person->setAge(99);
@@ -557,11 +560,13 @@ When using this component inside a Symfony application and the class metadata
 factory is enabled as explained in the :ref:`Attributes Groups section <component-serializer-attributes-groups>`,
 this is already set up and you only need to provide the configuration. Otherwise::
 
-    // ...
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
@@ -621,6 +626,8 @@ defines a ``Person`` entity with a ``firstName`` property:
 This custom mapping is used to convert property names when serializing and
 deserializing objects::
 
+    use Symfony\Component\Serializer\Serializer;
+    
     $serialized = $serializer->serialize(new Person("Kévin"));
     // {"customer_name": "Kévin"}
 
@@ -643,6 +650,7 @@ When serializing, you can set a callback to format a specific object property::
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
     use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
     $encoder = new JsonEncoder();
 
@@ -814,6 +822,8 @@ The ``XmlEncoder`` will encode this object like that::
 Be aware that this encoder will consider keys beginning with ``@`` as attributes, and will use
 the key  ``#comment`` for encoding XML comments::
 
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+    
     $encoder = new XmlEncoder();
     $encoder->encode([
         'foo' => ['@bar' => 'value'],
@@ -851,6 +861,9 @@ Skipping ``null`` Values
 By default, the Serializer will preserve properties containing a ``null`` value.
 You can change this behavior by setting the ``AbstractObjectNormalizer::SKIP_NULL_VALUES`` context option
 to ``true``::
+
+    use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
     $dummy = new class {
         public $foo;
@@ -925,6 +938,8 @@ or :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
 throw a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
 when such a case is encountered::
 
+    use Symfony\Component\Serializer\Serializer;
+
     $member = new Member();
     $member->setName('Kévin');
 
@@ -943,6 +958,11 @@ reference. The default value is ``1``.
 Instead of throwing an exception, circular references can also be handled
 by custom callables. This is especially useful when serializing entities
 having unique identifiers::
+
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $encoder = new JsonEncoder();
     $defaultContext = [
@@ -1037,6 +1057,9 @@ The check is only done if the ``AbstractObjectNormalizer::ENABLE_MAX_DEPTH`` key
 is set to ``true``. In the following example, the third level is not serialized
 because it is deeper than the configured maximum depth of 2::
 
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+    
     $result = $serializer->normalize($level1, null, [AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true]);
     /*
     $result = [
@@ -1115,6 +1138,7 @@ The Serializer component is capable of handling arrays of objects as well.
 Serializing arrays works just like serializing a single object::
 
     use Acme\Person;
+    use Symfony\Component\Serializer\Serializer;
 
     $person1 = new Person();
     $person1->setName('foo');
@@ -1196,6 +1220,8 @@ Context
 
 The ``encode()`` method defines a third optional parameter called ``context``
 which defines the configuration options for the XmlEncoder an associative array::
+
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
     $xmlEncoder->encode($array, 'xml', $context);
 
@@ -1352,6 +1378,9 @@ this is already set up and you only need to provide the configuration. Otherwise
     use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Doctrine\Common\Annotations\AnnotationReader;
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
@@ -1412,6 +1441,8 @@ and ``BitBucketCodeRepository`` classes:
 
 Once configured, the serializer uses the mapping to pick the correct class::
 
+    use Symfony\Component\Serializer\Serializer;
+    
     $serialized = $serializer->serialize(new GitHubCodeRepository());
     // {"type": "github"}
 
