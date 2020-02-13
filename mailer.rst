@@ -489,14 +489,14 @@ several popular libraries):
 .. code-block:: terminal
 
     # instead of league/commonmark, you can also use erusev/parsedown or michelf/php-markdown
-    $ composer require twig/markdown-extension league/commonmark
+    $ composer require twig/markdown-extra league/commonmark
 
-The extension adds a ``markdown`` filter, which you can use to convert parts or
+The extension adds a ``markdown_to_html`` filter, which you can use to convert parts or
 the entire email contents from Markdown to HTML:
 
 .. code-block:: twig
 
-    {% apply markdown %}
+    {% apply markdown_to_html %}
         Welcome {{ email.toName }}!
         ===========================
 
