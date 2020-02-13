@@ -13,6 +13,7 @@ Symfony Application Checklist
 
 #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
 #. :ref:`Dump the service container into a single file <performance-service-container-single-file>`
+#. :ref:`Restrict the number of locales enabled in the application <performance-enabled-locales>`
 
 Production Server Checklist
 ---------------------------
@@ -73,6 +74,14 @@ container into a single file, which could improve performance when using
 
         // ...
         $container->setParameter('container.dumper.inline_factories', true);
+
+.. _performance-enabled-locales:
+
+Restrict the Number of Locales Enabled in the Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the :ref:`framework.translator.enabled_locales <reference-translator-enabled-locales>`
+option to only generate the translation files actually used in your application.
 
 .. _performance-use-opcache:
 
