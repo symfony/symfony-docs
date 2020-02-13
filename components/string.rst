@@ -118,7 +118,7 @@ to make your code more concise::
 
     // the s() function creates a byte string or Unicode string
     // depending on the given contents
-    use function Symfony\Component\String\u;
+    use function Symfony\Component\String\s;
 
     // creates a ByteString object
     $foo = s('\xfe\xff');
