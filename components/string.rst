@@ -99,20 +99,35 @@ Use the ``wrap()`` static method to instantiate more than one string object::
         new UnicodeString('hello'), new UnicodeString('world'),
     ]); // $contents = ['hello', 'world']
 
-There are two shortcut functions called ``b()`` and ``u()`` to create
-``ByteString`` and ``UnicodeString`` objects::
+If you work with lots of String objects, consider using the shortcut functions
+to make your code more concise::
 
-    // ...
+    // the b() function creates byte strings
     use function Symfony\Component\String\b;
-    use function Symfony\Component\String\u;
 
-    // both are equivalent
+    // both lines are equivalent
     $foo = new ByteString('hello');
     $foo = b('hello');
 
-    // both are equivalent
-    $baz = new UnicodeString('hello');
-    $baz = u('hello');
+    // the u() function creates Unicode strings
+    use function Symfony\Component\String\u;
+
+    // both lines are equivalent
+    $foo = new UnicodeString('hello');
+    $foo = u('hello');
+
+    // the s() function creates a byte string or Unicode string
+    // depending on the given contents
+    use function Symfony\Component\String\u;
+
+    // creates a ByteString object
+    $foo = s('\xfe\xff');
+    // creates a UnicodeString object
+    $foo = s('अनुच्छेद');
+
+.. versionadded:: 5.1
+
+    The ``s()`` function was introduced in Symfony 5.1.
 
 There are also some specialized constructors::
 
