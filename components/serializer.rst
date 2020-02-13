@@ -149,8 +149,8 @@ Deserializing an Object
 You'll now learn how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
-    use Symfony\Component\Serializer\Serializer;
     use App\Model\Person;
+    use Symfony\Component\Serializer\Serializer;
 
     $data = <<<EOF
     <person>
@@ -175,10 +175,10 @@ when this happens, set the ``AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES`` contex
 ``false`` and provide an object that implements ``ClassMetadataFactoryInterface``
 when constructing the normalizer::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $data = <<<EOF
     <person>
@@ -204,8 +204,8 @@ Deserializing in an Existing Object
 
 The serializer can also be used to update an existing object::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    use Symfony\Component\Serializer\Serializer;
     
     $person = new Person();
     $person->setName('bar');
@@ -561,12 +561,12 @@ factory is enabled as explained in the :ref:`Attributes Groups section <componen
 this is already set up and you only need to provide the configuration. Otherwise::
 
     use Doctrine\Common\Annotations\AnnotationReader;
-    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
     use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
@@ -648,9 +648,9 @@ When serializing, you can set a callback to format a specific object property::
 
     use App\Model\Person;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
     use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
     use Symfony\Component\Serializer\Serializer;
-    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
     $encoder = new JsonEncoder();
 
@@ -1057,8 +1057,8 @@ The check is only done if the ``AbstractObjectNormalizer::ENABLE_MAX_DEPTH`` key
 is set to ``true``. In the following example, the third level is not serialized
 because it is deeper than the configured maximum depth of 2::
 
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
     
     $result = $serializer->normalize($level1, null, [AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true]);
     /*
@@ -1372,15 +1372,14 @@ When using this component inside a Symfony application and the class metadata fa
 as explained in the :ref:`Attributes Groups section <component-serializer-attributes-groups>`,
 this is already set up and you only need to provide the configuration. Otherwise::
 
-    // ...
+    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Mapping\ClassDiscriminatorFromClassMetadata;
     use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
-    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-    use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
     use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
