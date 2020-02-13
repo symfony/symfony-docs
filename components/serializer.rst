@@ -126,6 +126,7 @@ exists in your project::
 Now, if you want to serialize this object into JSON, you only need to
 use the Serializer service created before::
 
+    use Symfony\Component\Serializer\Serializer;
     $person = new App\Model\Person();
     $person->setName('foo');
     $person->setAge(99);
@@ -147,6 +148,7 @@ Deserializing an Object
 You'll now learn how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
+    use Symfony\Component\Serializer\Serializer;
     use App\Model\Person;
 
     $data = <<<EOF
@@ -171,6 +173,11 @@ will be ignored by the Serializer component. If you prefer to throw an exception
 when this happens, set the ``AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES`` context option to
 ``false`` and provide an object that implements ``ClassMetadataFactoryInterface``
 when constructing the normalizer::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
     $data = <<<EOF
     <person>
