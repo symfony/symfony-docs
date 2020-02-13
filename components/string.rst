@@ -121,7 +121,7 @@ to make your code more concise::
     use function Symfony\Component\String\s;
 
     // creates a ByteString object
-    $foo = s('\xfe\xff');
+    $foo = s("\xfe\xff");
     // creates a UnicodeString object
     $foo = s('अनुच्छेद');
 
