@@ -561,6 +561,13 @@ that network errors can happen when calling e.g. ``getStatusCode()`` too::
 .. note::
 
     Because ``$response->getInfo()`` is non-blocking, it shouldn't throw by design.
+    
+.. note::
+
+    The exceptions are thrown during the response `__destruct()` method. This 
+    means that if you do not store `$client->request(...)` in a variable 
+    (like in the example above), you do not need to call any methods of the 
+    returned responses.
 
 When multiplexing responses, you can deal with errors for individual streams by
 catching ``TransportExceptionInterface`` in the foreach loop::
