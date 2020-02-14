@@ -449,6 +449,34 @@ When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
     // instead the original response content (even if it's an error message)
     $content = $response->getContent(false);
 
+While responses are lazy, their destructor will always wait for headers to come
+back. This means that the following request *will* complete; and if e.g. a 404
+is returned, an exception will be thrown::
+
+    // because the returned value is not assigned to a variable, the destructor
+    // of the returned response will be called immediately and will throw if the
+    // status code is in the 300-599 range
+    $client->request('POST', 'https://...');
+
+This in turn means that unassigned responses will fallback to synchronous requests.
+If you want to make these requests concurrent, you can store their corresponding
+responses in an array::
+
+    $responses[] = $client->request('POST', 'https://.../path1');
+    $responses[] = $client->request('POST', 'https://.../path2');
+    // ...
+
+    // This line will trigger the destructor of all responses stored in the array;
+    // they will complete concurrently and an exception will be thrown in case a
+    // status code in the 300-599 range is returned
+    unset($responses);
+
+This behavior provided at destruction-time is part of the fail-safe design of the
+component. No errors will be unnoticed: if you don't write the code to handle
+errors, exceptions will notify you when needed. On the other hand, if you write
+the error-handling code, you will opt-out from these fallback mecanisms as the
+destructor won't have anything remaining to do.
+
 Concurrent Requests
 -------------------
 
@@ -583,7 +611,16 @@ catching ``TransportExceptionInterface`` in the foreach loop::
 
     foreach ($client->stream($responses) as $response => $chunk) {
         try {
-            if ($chunk->isLast()) {
+            if ($chunk->isTimeout()) {
+                // ... decide what to do when a timeout occurs
+                // if you want to stop a response that timed out, don't miss
+                // calling $response->cancel() or the destructor of the response
+                // will try to complete it one more time
+            } elseif ($chunk->isFirst()) {
+                // if you want to check the status code, you must do it when the
+                // first chunk arrived, using $response->getStatusCode();
+                // not doing so might trigger an HttpExceptionInterface
+            } elseif ($chunk->isLast()) {
                 // ... do something with $response
             }
         } catch (TransportExceptionInterface $e) {
