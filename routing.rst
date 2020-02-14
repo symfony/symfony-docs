@@ -1162,7 +1162,7 @@ the common configuration using options when importing the routes.
 
         # config/routes/annotations.yaml
         controllers:
-            resource: '../src/Controller/'
+            resource: '../../src/Controller/'
             type: annotation
             # this is added to the beginning of all imported route URLs
             prefix: '/blog'
@@ -1175,7 +1175,7 @@ the common configuration using options when importing the routes.
             # Uncomment this option to make that URL "/blog" instead
             # trailing_slash_on_root: false
             # you can optionally exclude some files/subdirectories when loading annotations
-            # exclude: '../src/Controller/{DebugEmailController}.php'
+            # exclude: '../../src/Controller/{DebugEmailController}.php'
 
     .. code-block:: xml
 
@@ -1191,18 +1191,18 @@ the common configuration using options when importing the routes.
                 the 'name-prefix' value is added to the beginning of all imported route names
                 the 'exclude' option defines the files or subdirectories ignored when loading annotations
             -->
-            <import resource="../src/Controller/"
+            <import resource="../../src/Controller/"
                 type="annotation"
                 prefix="/blog"
                 name-prefix="blog_"
-                exclude="../src/Controller/{DebugEmailController}.php">
+                exclude="../../src/Controller/{DebugEmailController}.php">
                 <!-- these requirements are added to all imported routes -->
                 <requirement key="_locale">en|es|fr</requirement>
             </import>
 
             <!-- An imported route with an empty URL will become "/blog/"
                  Uncomment this option to make that URL "/blog" instead -->
-            <import resource="../src/Controller/" type="annotation"
+            <import resource="../../src/Controller/" type="annotation"
                     prefix="/blog"
                     trailing-slash-on-root="false">
                     <!-- ... -->
@@ -1217,7 +1217,7 @@ the common configuration using options when importing the routes.
         return function (RoutingConfigurator $routes) {
             // use the optional fifth argument of import() to exclude some files
             // or subdirectories when loading annotations
-            $routes->import('../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'annotation')
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
                 // An imported route with an empty URL will become "/blog/"
@@ -1737,7 +1737,7 @@ with a locale. This can be done by defining a different prefix for each locale
 
         # config/routes/annotations.yaml
         controllers:
-            resource: '../src/Controller/'
+            resource: '../../src/Controller/'
             type: annotation
             prefix:
                 en: '' # don't prefix URLs for English, the default locale
@@ -1752,7 +1752,7 @@ with a locale. This can be done by defining a different prefix for each locale
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../src/Controller/" type="annotation">
+            <import resource="../../src/Controller/" type="annotation">
                 <!-- don't prefix URLs for English, the default locale -->
                 <prefix locale="en"></prefix>
                 <prefix locale="nl">/nl</prefix>
@@ -1765,7 +1765,7 @@ with a locale. This can be done by defining a different prefix for each locale
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'annotation')
                 ->prefix([
                     // don't prefix URLs for English, the default locale
                     'en' => '',
@@ -2156,7 +2156,7 @@ defined as annotations:
 
         # config/routes/annotations.yaml
         controllers:
-            resource: '../src/Controller/'
+            resource: '../../src/Controller/'
             type: annotation
             defaults:
                 schemes: [https]
@@ -2170,7 +2170,7 @@ defined as annotations:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../src/Controller/" type="annotation">
+            <import resource="../../src/Controller/" type="annotation">
                 <default key="schemes">HTTPS</default>
             </import>
         </routes>
@@ -2181,7 +2181,7 @@ defined as annotations:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'annotation')
                 ->schemes(['https'])
             ;
         };
