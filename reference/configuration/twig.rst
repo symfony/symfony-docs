@@ -84,7 +84,7 @@ If set to a string, the template contents are escaped using the strategy with
 that name. Allowed values are ``html``, ``js``, ``css``, ``url``, ``html_attr``
 and ``name``. The default value is ``name``. This strategy escapes contents
 according to the template name extension (e.g. it uses ``html`` for ``*.html.twig``
-templates and ``js`` for ``*.js.html`` templates).
+templates and ``js`` for ``*.js.twig`` templates).
 
 .. tip::
 
