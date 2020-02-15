@@ -225,7 +225,7 @@ the argument by its name:
 
     .. code-block:: yaml
 
-        # config/services.yaml
+        # config/packages/dev/services.yaml
         services:
             # ...
 
@@ -240,7 +240,7 @@ the argument by its name:
 
     .. code-block:: xml
 
-        <!-- config/services.xml -->
+        <!-- # config/packages/dev/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -262,8 +262,8 @@ the argument by its name:
         </container>
 
     .. code-block:: php
-
-        // config/services.php
+    
+        // config/packages/dev/services.php
         use App\Controller\LuckyController;
         use Symfony\Component\DependencyInjection\Reference;
 
