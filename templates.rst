@@ -191,6 +191,7 @@ Consider the following routing configuration:
         namespace App\Controller;
 
         // ...
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
@@ -719,6 +720,7 @@ First, create the controller that renders a certain number of recent articles::
     namespace App\Controller;
 
     // ...
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class BlogController extends AbstractController
     {
