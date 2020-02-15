@@ -312,11 +312,6 @@ The generated code will be the following::
 Control the Behavior When the Decorated Service Does Not Exist
 --------------------------------------------------------------
 
-.. versionadded:: 4.4
-
-    The ``decoration_on_invalid`` option has been introduced in Symfony 4.4.
-    In previous versions, a ``ServiceNotFoundException`` was always thrown.
-
 When you decorate a service that doesn't exist, the ``decoration_on_invalid``
 option allows you to choose the behavior to adopt.
 
