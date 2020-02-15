@@ -34,10 +34,14 @@ following configuration file:
 
 .. code-block:: yaml
 
-    # config/routes.yaml
+    # config/routes/annotations.yaml
     controllers:
-        resource: '../src/Controller/'
-        type:     annotation
+        resource: '../../src/Controller/'
+        type: annotation
+        
+    kernel:
+        resource: ../../src/Kernel.php
+        type: annotation
 
 This configuration tells Symfony to look for routes defined as annotations in
 any PHP class stored in the ``src/Controller/`` directory.
