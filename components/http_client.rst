@@ -474,7 +474,7 @@ responses in an array::
 This behavior provided at destruction-time is part of the fail-safe design of the
 component. No errors will be unnoticed: if you don't write the code to handle
 errors, exceptions will notify you when needed. On the other hand, if you write
-the error-handling code, you will opt-out from these fallback mecanisms as the
+the error-handling code, you will opt-out from these fallback mechanisms as the
 destructor won't have anything remaining to do.
 
 Concurrent Requests
