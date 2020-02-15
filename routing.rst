@@ -153,7 +153,6 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\HttpFoundation\JsonResponse;
 
         class BlogApiController extends AbstractController
         {
@@ -163,7 +162,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
             public function show(int $id)
             {
                 // create your json response
-                return new JsonResponse('');
+                return $this->json('Hello Symfony');
             }
 
             /**
