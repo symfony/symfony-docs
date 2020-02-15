@@ -16,7 +16,6 @@ example:
         # config/services.yaml
         services:
             App\Twig\AppExtension:
-                public: false
                 tags: ['twig.extension']
 
     .. code-block:: xml
@@ -29,7 +28,7 @@ example:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Twig\AppExtension" public="false">
+                <service id="App\Twig\AppExtension">
                     <tag name="twig.extension"/>
                 </service>
             </services>
@@ -46,7 +45,6 @@ example:
             $services = $configurator->services();
 
             $services->set(AppExtension::class)
-                ->private()
                 ->tag('twig.extension');
         };
 

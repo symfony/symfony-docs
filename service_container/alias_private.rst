@@ -23,8 +23,7 @@ And in this case, those services do *not* need to be public.
 
 So unless you *specifically* need to access a service directly from the container
 via ``$container->get()``, the best-practice is to make your services *private*.
-In fact, the :ref:`default services.yaml configuration <container-public>` configures
-all services to be private by default.
+In fact, All services  are :ref:`private <container-public>` by default.
 
 You can also control the ``public`` option on a service-by-service basis:
 
@@ -37,7 +36,7 @@ You can also control the ``public`` option on a service-by-service basis:
             # ...
 
             App\Service\Foo:
-                public: false
+                public: true
 
     .. code-block:: xml
 
@@ -48,7 +47,7 @@ You can also control the ``public`` option on a service-by-service basis:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Service\Foo" public="false"/>
+                <service id="App\Service\Foo" public="true"/>
             </services>
         </container>
 
@@ -63,7 +62,7 @@ You can also control the ``public`` option on a service-by-service basis:
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->private();
+                ->public();
         };
 
 .. _services-why-private:

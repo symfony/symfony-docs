@@ -73,7 +73,6 @@ both services:
             _defaults:
                 autowire: true
                 autoconfigure: true
-                public: false
             # ...
 
             App\Service\TwitterClient:
@@ -92,7 +91,7 @@ both services:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" autoconfigure="true" public="false"/>
+                <defaults autowire="true" autoconfigure="true"/>
                 <!-- ... -->
 
                 <!-- autowire is redundant thanks to defaults, but value is overridable on each service -->

@@ -89,7 +89,6 @@ properties and setters (``setXxx()``) to change properties:
         services:
             get_set_method_normalizer:
                 class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-                public: false
                 tags: [serializer.normalizer]
 
     .. code-block:: xml
@@ -102,7 +101,7 @@ properties and setters (``setXxx()``) to change properties:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
+                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
                     <tag name="serializer.normalizer"/>
                 </service>
             </services>
@@ -111,12 +110,17 @@ properties and setters (``setXxx()``) to change properties:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        $container->register('get_set_method_normalizer', GetSetMethodNormalizer::class)
-            ->setPublic(false)
-            ->addTag('serializer.normalizer')
-        ;
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
+                ->tag('serializer.normalizer')
+            ;
+        };
 
 .. _serializer-using-serialization-groups-annotations:
 
