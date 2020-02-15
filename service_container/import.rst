@@ -85,7 +85,6 @@ a relative or absolute path to the imported file:
             _defaults:
                 autowire: true
                 autoconfigure: true
-                public: false
 
             App\:
                 resource: '../src/*'
@@ -105,7 +104,7 @@ a relative or absolute path to the imported file:
             <imports>
                 <import resource="services/mailer.xml"/>
 
-                <defaults autowire="true" autoconfigure="true" public="false"/>
+                <defaults autowire="true" autoconfigure="true"/>
 
                 <prototype namespace="App\" resource="../src/*"
                     exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
@@ -126,7 +125,6 @@ a relative or absolute path to the imported file:
                 ->defaults()
                     ->autowire()
                     ->autoconfigure()
-                    ->private()
             ;
 
             $services->load('App\\', '../src/*')

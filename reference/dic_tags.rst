@@ -63,13 +63,10 @@ services:
         services:
             app.mysql_lock:
                 class: App\Lock\MysqlLock
-                public: false
             app.postgresql_lock:
                 class: App\Lock\PostgresqlLock
-                public: false
             app.sqlite_lock:
                 class: App\Lock\SqliteLock
-                public: false
 
     .. code-block:: xml
 
@@ -80,24 +77,31 @@ services:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mysql_lock" public="false"
+                <service id="app.mysql_lock"
                     class="App\Lock\MysqlLock"/>
-                <service id="app.postgresql_lock" public="false"
+                <service id="app.postgresql_lock"
                     class="App\Lock\PostgresqlLock"/>
-                <service id="app.sqlite_lock" public="false"
+                <service id="app.sqlite_lock"
                     class="App\Lock\SqliteLock"/>
             </services>
         </container>
 
     .. code-block:: php
 
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Lock\MysqlLock;
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        $container->register('app.mysql_lock', MysqlLock::class)->setPublic(false);
-        $container->register('app.postgresql_lock', PostgresqlLock::class)->setPublic(false);
-        $container->register('app.sqlite_lock', SqliteLock::class)->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('app.mysql_lock', MysqlLock::class);
+            $services->set('app.postgresql_lock', PostgresqlLock::class);
+            $services->set('app.sqlite_lock', SqliteLock::class);
+        };
 
 Instead of dealing with these three services, your application needs a generic
 ``app.lock`` service that will be an alias to one of these services, depending on
@@ -131,11 +135,11 @@ the generic ``app.lock`` service can be defined as follows:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mysql_lock" public="false"
+                <service id="app.mysql_lock"
                     class="App\Lock\MysqlLock"/>
-                <service id="app.postgresql_lock" public="false"
+                <service id="app.postgresql_lock"
                     class="App\Lock\PostgresqlLock"/>
-                <service id="app.sqlite_lock" public="false"
+                <service id="app.sqlite_lock"
                     class="App\Lock\SqliteLock"/>
 
                 <service id="app.lock">
@@ -146,16 +150,24 @@ the generic ``app.lock`` service can be defined as follows:
 
     .. code-block:: php
 
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Lock\MysqlLock;
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        $container->register('app.mysql_lock', MysqlLock::class)->setPublic(false);
-        $container->register('app.postgresql_lock', PostgresqlLock::class)->setPublic(false);
-        $container->register('app.sqlite_lock', SqliteLock::class)->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register('app.lock')
-            ->addTag('auto_alias', ['format' => 'app.%database_type%_lock']);
+            $services->set('app.mysql_lock', MysqlLock::class);
+            $services->set('app.postgresql_lock', PostgresqlLock::class);
+            $services->set('app.sqlite_lock', SqliteLock::class);
+
+            $services->set('app.lock')
+                ->tag('auto_alias', ['format' => 'app.%database_type%_lock'])
+            ;
+        };
 
 The ``format`` option defines the expression used to construct the name of the service
 to alias. This expression can use any container parameter (as usual,
