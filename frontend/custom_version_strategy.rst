@@ -118,7 +118,6 @@ After creating the strategy PHP class, register it as a Symfony service.
                 arguments:
                     - "%kernel.project_dir%/busters.json"
                     - "%%s?version=%%s"
-                public: false
 
     .. code-block:: xml
 
@@ -130,7 +129,7 @@ After creating the strategy PHP class, register it as a Symfony service.
                 https://symfony.com/schema/dic/services/services-1.0.xsd"
         >
             <services>
-                <service id="App\Asset\VersionStrategy\GulpBusterVersionStrategy" public="false">
+                <service id="App\Asset\VersionStrategy\GulpBusterVersionStrategy">
                     <argument>%kernel.project_dir%/busters.json</argument>
                     <argument>%%s?version=%%s</argument>
                 </service>
@@ -140,16 +139,23 @@ After creating the strategy PHP class, register it as a Symfony service.
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->autowire(GulpBusterVersionStrategy::class)
-            ->setArguments(
-                [
-                    '%kernel.project_dir%/busters.json',
-                    '%%s?version=%%s',
-                ]
-        )->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(GulpBusterVersionStrategy::class)
+                ->args(
+                    [
+                        '%kernel.project_dir%/busters.json',
+                        '%%s?version=%%s',
+                    ]
+                );
+        };
+
 
 Finally, enable the new asset versioning for all the application assets or just
 for some :ref:`asset package <reference-framework-assets-packages>` thanks to

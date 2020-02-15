@@ -154,9 +154,6 @@ each time you ask for it.
                 _defaults:
                     autowire: true      # Automatically injects dependencies in your services.
                     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-                    public: false       # Allows optimizing the container by removing unused services; this also means
-                                        # fetching services directly from the container via $container->get() won't work.
-                                        # The best practice is to be explicit about your dependencies anyway.
 
                 # makes classes in src/ available to be used as services
                 # this creates a service per class whose id is the fully-qualified class name
@@ -177,7 +174,7 @@ each time you ask for it.
 
                 <services>
                     <!-- Default configuration for services in *this* file -->
-                    <defaults autowire="true" autoconfigure="true" public="false"/>
+                    <defaults autowire="true" autoconfigure="true"/>
 
                     <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
                 </services>
@@ -815,8 +812,7 @@ loss, enable the compiler pass in your application.
 Public Versus Private Services
 ------------------------------
 
-Thanks to the ``_defaults`` section in ``services.yaml``, every service defined in
-this file is ``public: false`` by default.
+From Symfony 4.0, every service defined is private by default.
 
 What does this mean? When a service **is** public, you can access it directly
 from the container object, which is accessible from any controller that extends
@@ -956,9 +952,7 @@ them will not cause the container to be rebuilt.
 .. note::
 
     Wait, does this mean that *every* class in ``src/`` is registered as
-    a service? Even model classes? Actually, no. As long as you have
-    ``public: false`` under your ``_defaults`` key (or you can add it under the
-    specific import), all the imported services are *private*. Thanks to this, all
+    a service? Even model classes? Actually, no. As long as you keep your imported services as :ref:`private <container-public>`, all
     classes in ``src/`` that are *not* explicitly used as services are
     automatically removed from the final container. In reality, the import
     means that all classes are "available to be *used* as services" without needing

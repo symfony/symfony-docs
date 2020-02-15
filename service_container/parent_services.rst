@@ -181,8 +181,8 @@ the child class:
             App\Repository\DoctrineUserRepository:
                 parent: App\Repository\BaseDoctrineRepository
 
-                # overrides the public setting of the parent service
-                public: false
+                # overrides the private setting of the parent service
+                public: true
 
                 # appends the '@app.username_checker' argument to the parent
                 # argument list
@@ -207,10 +207,10 @@ the child class:
             <services>
                 <!-- ... -->
 
-                <!-- overrides the public setting of the parent service -->
+                <!-- overrides the private setting of the parent service -->
                 <service id="App\Repository\DoctrineUserRepository"
                     parent="App\Repository\BaseDoctrineRepository"
-                    public="false"
+                    public="true"
                 >
                     <!-- appends the '@app.username_checker' argument to the parent
                          argument list -->
@@ -248,8 +248,8 @@ the child class:
             $services->set(DoctrineUserRepository::class)
                 ->parent(BaseDoctrineRepository::class)
 
-                // overrides the public setting of the parent service
-                ->private()
+                // overrides the private setting of the parent service
+                ->public()
 
                 // appends the '@app.username_checker' argument to the parent
                 // argument list

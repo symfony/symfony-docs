@@ -239,7 +239,6 @@ to specify a tag that contains the template:
                         id:       'app.request_collector'
                         # optional priority
                         # priority: 300
-                public: false
 
     .. code-block:: xml
 
@@ -251,7 +250,7 @@ to specify a tag that contains the template:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\DataCollector\RequestCollector" public="false">
+                <service id="App\DataCollector\RequestCollector">
                     <!-- priority="300" -->
                     <tag name="data_collector"
                         template="data_collector/template.html.twig"
@@ -264,17 +263,21 @@ to specify a tag that contains the template:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\DataCollector\RequestCollector;
 
-        $container
-            ->autowire(RequestCollector::class)
-            ->setPublic(false)
-            ->addTag('data_collector', [
-                'template' => 'data_collector/template.html.twig',
-                'id'       => 'app.request_collector',
-                // 'priority' => 300,
-            ])
-        ;
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(RequestCollector::class)
+                ->autowire()
+                ->tag('data_collector', [
+                    'template' => 'data_collector/template.html.twig',
+                    'id'       => 'app.request_collector',
+                    // 'priority' => 300,
+                ]);
+        };
 
 The position of each panel in the toolbar is determined by the collector priority.
 Priorities are defined as positive or negative integers and they default to ``0``.
