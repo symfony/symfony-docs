@@ -45,7 +45,7 @@ configuration looks like this:
         # app/config/security.yml
         security:
             providers:
-                in_memory:
+                users_in_memory:
                     memory: ~
 
             firewalls:
@@ -55,6 +55,7 @@ configuration looks like this:
 
                 main:
                     anonymous: ~
+                    provider: users_in_memory
 
     .. code-block:: xml
 
@@ -67,7 +68,7 @@ configuration looks like this:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <provider name="in_memory">
+                <provider name="users_in_memory">
                     <memory/>
                 </provider>
 
@@ -77,6 +78,7 @@ configuration looks like this:
 
                 <firewall name="main">
                     <anonymous/>
+                    <provider>users_in_memory</provider>
                 </firewall>
             </config>
         </srv:container>
@@ -86,7 +88,7 @@ configuration looks like this:
         // app/config/security.php
         $container->loadFromExtension('security', [
             'providers' => [
-                'in_memory' => [
+                'users_in_memory' => [
                     'memory' => null,
                 ],
             ],
@@ -97,6 +99,7 @@ configuration looks like this:
                 ],
                 'main' => [
                     'anonymous' => null,
+                    'provider' => 'users_in_memory'
                 ],
             ],
         ]);
@@ -315,7 +318,7 @@ provider, but it's better to think of it as an "in configuration" provider:
         # app/config/security.yml
         security:
             providers:
-                in_memory:
+                users_in_memory:
                     memory:
                         users:
                             ryan:
@@ -324,7 +327,11 @@ provider, but it's better to think of it as an "in configuration" provider:
                             admin:
                                 password: kitten
                                 roles: 'ROLE_ADMIN'
-            # ...
+
+            firewalls:
+                main:
+                    provider: users_in_memory
+                    # ...
 
     .. code-block:: xml
 
@@ -337,13 +344,16 @@ provider, but it's better to think of it as an "in configuration" provider:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <provider name="in_memory">
+                <provider name="users_in_memory">
                     <memory>
                         <user name="ryan" password="ryanpass" roles="ROLE_USER"/>
                         <user name="admin" password="kitten" roles="ROLE_ADMIN"/>
                     </memory>
                 </provider>
-                <!-- ... -->
+                <firewall name="main">
+                    <provider>users_in_memory</provider>
+                    <!-- ... -->
+                </firewall>
             </config>
         </srv:container>
 
@@ -352,7 +362,7 @@ provider, but it's better to think of it as an "in configuration" provider:
         // app/config/security.php
         $container->loadFromExtension('security', [
             'providers' => [
-                'in_memory' => [
+                'users_in_memory' => [
                     'memory' => [
                         'users' => [
                             'ryan' => [
@@ -367,13 +377,17 @@ provider, but it's better to think of it as an "in configuration" provider:
                     ],
                 ],
             ],
-            // ...
+            'firewalls' => [
+                'main' => [
+                    'provider' => 'users_in_memory',
+                ],
+            ],
         ]);
 
 Like with ``firewalls``, you can have multiple ``providers``, but you'll
-probably only need one. If you *do* have multiple, you can configure which
+probably only need one. If you *do* have multiple, you have to configure which
 *one* provider to use for your firewall under its ``provider`` key (e.g.
-``provider: in_memory``).
+``provider: users_in_memory``).
 
 .. seealso::
 
@@ -421,20 +435,22 @@ To fix this, add an ``encoders`` key:
     .. code-block:: php
 
         // app/config/security.php
+        use Symfony\Component\Security\Core\User\User;
+
         $container->loadFromExtension('security', [
             // ...
 
             'encoders' => [
-                'Symfony\Component\Security\Core\User\User' => 'plaintext',
+                User::class => 'plaintext',
             ],
             // ...
         ]);
 
-User providers load user information and put it into a ``User`` object. If
-you :doc:`load users from the database </security/entity_provider>`
+User providers load user information and put it into a :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
+implementation. If you :doc:`load users from the database </security/entity_provider>`
 or :doc:`some other source </security/custom_provider>`, you'll
-use your own custom User class. But when you use the "in memory" provider,
-it gives you a ``Symfony\Component\Security\Core\User\User`` object.
+use your own custom User class. But when you use the "in memory" provider type,
+it gives you a :class:`Symfony\\Component\\Security\\Core\\User\\User` object.
 
 Whatever your User class is, you need to tell Symfony what algorithm was
 used to encode the passwords. In this case, the passwords are just plaintext,
@@ -448,6 +464,67 @@ you who you are and what roles you have:
 
 Because this URL requires ``ROLE_ADMIN``, if you had logged in as ``ryan``,
 this would deny you access. More on that later (:ref:`security-authorization-access-control`).
+
+.. tip::
+
+    If you have many providers and want to define the same encoder for all of
+    them, you can configure as follow:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/security.yml
+            security:
+                encoders:
+                    Symfony\Component\Security\Core\User\UserInterface: bcrypt
+
+                    # is equivalent to:
+                    AppBundle\Entity\User: bcrypt
+                    Symfony\Component\Security\Core\User\User: bcrypt
+                    # and any other type you may add in the future
+                # ...
+
+        .. code-block:: xml
+
+            <!-- app/config/security.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <config>
+                    <encoder class="Symfony\Component\Security\Core\User\UserInterface"
+                        algorithm="bcrypt"/>
+                    <!-- is equivalent to: -->
+                    <encoder class="AppBundle\Entity\User"
+                        algorithm="bcrypt"/>
+                    <encoder class="Symfony\Component\Security\Core\User\User"
+                        algorithm="bcrypt"/>
+                    <!-- and any other type you may add in the future -->
+
+                    <!-- ... -->
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // app/config/security.php
+            use Symfony\Component\Security\Core\User\UserInterface;
+
+            $container->loadFromExtension('security', [
+                'encoders' => [
+                    UserInterface::class => 'bcrypt',
+
+                    // is equivalent to:
+                    AppBundle\Entity\User::class => 'bcrypt',
+                    Symfony\Component\Security\Core\User\User::class => 'bcrypt',
+                    // and any other type you may add in the future
+                ],
+                // ...
+            ]);
 
 Loading Users from the Database
 ...............................
@@ -502,11 +579,13 @@ is ``bcrypt``:
     .. code-block:: php
 
         // app/config/security.php
+        use Symfony\Component\Security\Core\User\User;
+
         $container->loadFromExtension('security', [
             // ...
 
             'encoders' => [
-                'Symfony\Component\Security\Core\User\User' => [
+                User::class => [
                     'algorithm' => 'bcrypt',
                     'cost' => 12,
                 ]
@@ -532,7 +611,7 @@ It will give you something like this:
             # ...
 
             providers:
-                in_memory:
+                users_in_memory:
                     memory:
                         users:
                             ryan:
@@ -571,7 +650,7 @@ It will give you something like this:
             // ...
 
             'providers' => [
-                'in_memory' => [
+                'users_in_memory' => [
                     'memory' => [
                         'users' => [
                             'ryan' => [

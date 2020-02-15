@@ -20,14 +20,14 @@ a new provider that chains the two together:
         # app/config/security.yml
         security:
             providers:
-                chain_provider:
+                users:
                     chain:
-                        providers: [in_memory, user_db]
-                in_memory:
+                        providers: [users_in_memory, users_in_db]
+                users_in_memory:
                     memory:
                         users:
                             foo: { password: test }
-                user_db:
+                users_in_db:
                     entity: { class: AppBundle\Entity\User, property: username }
 
     .. code-block:: xml
@@ -41,20 +41,20 @@ a new provider that chains the two together:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <provider name="chain_provider">
+                <provider name="users">
                     <chain>
-                        <provider>in_memory</provider>
-                        <provider>user_db</provider>
+                        <provider>users_in_memory</provider>
+                        <provider>users_in_db</provider>
                     </chain>
                 </provider>
 
-                <provider name="in_memory">
+                <provider name="users_in_memory">
                     <memory>
                         <user name="foo" password="test"/>
                     </memory>
                 </provider>
 
-                <provider name="user_db">
+                <provider name="users_in_db">
                     <entity class="AppBundle\Entity\User" property="username"/>
                 </provider>
             </config>
@@ -67,19 +67,19 @@ a new provider that chains the two together:
 
         $container->loadFromExtension('security', [
             'providers' => [
-                'chain_provider' => [
+                'users' => [
                     'chain' => [
                         'providers' => ['in_memory', 'user_db'],
                     ],
                 ],
-                'in_memory' => [
+                'users_in_memory' => [
                     'memory' => [
                         'users' => [
                             'foo' => ['password' => 'test'],
                         ],
                     ],
                 ],
-                'user_db' => [
+                'users_in_db' => [
                     'entity' => [
                         'class'    => User::class,
                         'property' => 'username',
@@ -88,14 +88,14 @@ a new provider that chains the two together:
             ],
         ]);
 
-Now, all firewalls that explicitly define ``chain_provider`` as their user
-provider will, in turn, try to load the user from both the ``in_memory`` and
-``user_db`` providers.
+Now, all firewalls that explicitly define ``users`` as their user
+provider will, in turn, try to load the user from both the ``users_in_memory`` then
+``users_in_db`` providers.
 
 .. deprecated:: 3.4
 
     In previous Symfony versions, firewalls that didn't define their user provider
-    explicitly, used the first existing provider (``chain_provider`` in this
+    explicitly, used the first existing provider (``users`` in this
     example). However, auto-selecting the first user provider has been deprecated
     in Symfony 3.4 and will throw an exception in 4.0. Always define the provider
     used by the firewall when there are multiple providers.
@@ -114,10 +114,10 @@ the first provider is always used:
                 secured_area:
                     # ...
                     pattern: ^/
-                    provider: user_db
+                    provider: users_in_db
                     http_basic:
                         realm: 'Secured Demo Area'
-                        provider: in_memory
+                        provider: users_in_memory
                     form_login: ~
 
     .. code-block:: xml
@@ -131,9 +131,9 @@ the first provider is always used:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <firewall name="secured_area" pattern="^/" provider="user_db">
+                <firewall name="secured_area" pattern="^/" provider="users_in_db">
                     <!-- ... -->
-                    <http-basic realm="Secured Demo Area" provider="in_memory"/>
+                    <http-basic realm="Secured Demo Area" provider="users_in_memory"/>
                     <form-login/>
                 </firewall>
             </config>
@@ -147,11 +147,11 @@ the first provider is always used:
                 'secured_area' => [
                     // ...
                     'pattern' => '^/',
-                    'provider' => 'user_db',
+                    'provider' => 'users_in_db',
                     'http_basic' => [
                         // ...
                         'realm' => 'Secured Demo Area',
-                        'provider' => 'in_memory',
+                        'provider' => 'users_in_memory',
                     ],
                     'form_login' => [],
                 ],
@@ -159,8 +159,8 @@ the first provider is always used:
         ]);
 
 In this example, if a user tries to log in via HTTP authentication, the authentication
-system will use the ``in_memory`` user provider. But if the user tries to
-log in via the form login, the ``user_db`` provider will be used (since it's
+system will use the ``users_in_memory`` user provider. But if the user tries to
+log in via the form login, the ``users_in_db`` provider will be used (since it's
 the default for the firewall as a whole).
 
 If you need to check that the user being returned by  your provider is a allowed
