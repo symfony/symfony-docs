@@ -190,7 +190,7 @@ Templating and Twig are explained more in the
 Fetching Services
 ~~~~~~~~~~~~~~~~~
 
-Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
+Symfony comes *packed* with a lot of useful classes and functionalities, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of.
 
