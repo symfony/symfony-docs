@@ -313,4 +313,115 @@ The generated code will be the following::
 
     $this->services[Foo::class] = new Baz(new Bar(new Foo()));
 
+Control the Behavior When the Decorated Service Does Not Exist
+--------------------------------------------------------------
+
+.. versionadded:: 4.4
+
+    The ``decoration_on_invalid`` option has been introduced in Symfony 4.4.
+    In previous versions, a ``ServiceNotFoundException`` was always thrown.
+
+When you decorate a service that doesn't exist, the ``decoration_on_invalid``
+option allows you to choose the behavior to adopt.
+
+Three different behaviors are available:
+
+* ``exception``: A ``ServiceNotFoundException`` will be thrown telling that decorator's dependency is missing. (default)
+* ``ignore``: The container will remove the decorator.
+* ``null``: The container will keep the decorator service and will set the decorated one to ``null``.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        Foo: ~
+
+        Bar:
+            decorates: Foo
+            decoration_on_invalid: ignore
+            arguments: ['@Bar.inner']
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="Foo"/>
+
+                <service id="Bar" decorates="Foo" decoration-on-invalid="ignore">
+                    <argument type="service" id="Bar.inner"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\DependencyInjection\ContainerInterface;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(Foo::class);
+
+            $services->set(Bar::class)
+                ->decorate(Foo::class, null, 0, ContainerInterface::IGNORE_ON_INVALID_REFERENCE)
+                ->args([ref(Bar::class.'.inner')])
+            ;
+        };
+
+.. caution::
+
+    When using ``null``, you may have to update the decorator constructor in
+    order to make decorated dependency nullable.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            App\Service\DecoratorService:
+                decorates: Acme\OptionalBundle\Service\OptionalService
+                decoration_on_invalid: null
+                arguments: ['@App\Service\DecoratorService.inner']
+
+        .. code-block:: php
+
+            namespace App\Service;
+
+            use Acme\OptionalBundle\Service\OptionalService;
+
+            class DecoratorService
+            {
+                private $decorated;
+
+                public function __construct(?OptionalService $decorated)
+                {
+                    $this->decorated = $decorated;
+                }
+
+                public function tellInterestingStuff(): string
+                {
+                    if (!$this->decorated) {
+                        return 'Just one interesting thing';
+                    }
+
+                    return $this->decorated->tellInterestingStuff().' + one more interesting thing';
+                }
+            }
+
+.. note::
+
+    Sometimes, you may want to add a compiler pass that creates service
+    definitions on the fly. If you want to decorate such a service,
+    be sure that your compiler pass is registered with ``PassConfig::TYPE_BEFORE_OPTIMIZATION``
+    type so that the decoration pass will be able to find the created services.
+
 .. _`Decorator pattern`: https://en.wikipedia.org/wiki/Decorator_pattern
