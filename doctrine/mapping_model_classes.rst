@@ -116,8 +116,8 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
     instead of the ``SymfonyFileLocator``::
 
         use AppBundle\Model;
-        use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
         use Doctrine\ORM\Mapping\Driver\XmlDriver;
+        use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 
         // ...
         private function buildMappingCompilerPass()

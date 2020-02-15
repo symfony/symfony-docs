@@ -45,7 +45,7 @@ Suppose the class you want to test looks like this::
     namespace AppBundle\Salary;
 
     use AppBundle\Entity\Employee;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
 
     class SalaryCalculator
     {
@@ -74,8 +74,8 @@ it's easy to pass a mock object within a test::
 
     use AppBundle\Entity\Employee;
     use AppBundle\Salary\SalaryCalculator;
-    use Doctrine\Common\Persistence\ObjectManager;
-    use Doctrine\Common\Persistence\ObjectRepository;
+    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectRepository;
     use PHPUnit\Framework\TestCase;
 
     class SalaryCalculatorTest extends TestCase
