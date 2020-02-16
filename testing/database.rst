@@ -93,7 +93,7 @@ Customize the new class to load ``Product`` objects into Doctrine::
 
     use App\Entity\Product;
     use Doctrine\Bundle\FixturesBundle\Fixture;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
 
     class ProductFixture extends Fixture
     {
@@ -132,7 +132,7 @@ Suppose the class you want to test looks like this::
     namespace App\Salary;
 
     use App\Entity\Employee;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
 
     class SalaryCalculator
     {
@@ -161,8 +161,8 @@ constructor, you can pass a mock object within a test::
 
     use App\Entity\Employee;
     use App\Salary\SalaryCalculator;
-    use Doctrine\Common\Persistence\ObjectManager;
-    use Doctrine\Common\Persistence\ObjectRepository;
+    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectRepository;
     use PHPUnit\Framework\TestCase;
 
     class SalaryCalculatorTest extends TestCase

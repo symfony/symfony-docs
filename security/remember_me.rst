@@ -282,7 +282,7 @@ service you just created:
                     <!-- ... -->
 
                     <remember-me
-                        token_provider="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
+                        token-provider="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
                         />
                 </firewall>
             </config>
@@ -291,6 +291,7 @@ service you just created:
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
         $container->loadFromExtension('security', [
             // ...
 
@@ -299,7 +300,7 @@ service you just created:
                     // ...
                     'remember_me' => [
                         // ...
-                        'token_provider' => 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider',
+                        'token_provider' => DoctrineTokenProvider::class,
                     ],
                 ],
             ],

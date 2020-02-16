@@ -522,8 +522,8 @@ be able to go to ``/product/1`` to see your new product::
         // in the template, print things with {{ product.name }}
         // return $this->render('product/show.html.twig', ['product' => $product]);
     }
-    
-Another possibility is to use the ``ProductRepository`` using Symfony's autowiring 
+
+Another possibility is to use the ``ProductRepository`` using Symfony's autowiring
 and injected by the dependency injection container::
 
     // src/Controller/ProductController.php
@@ -537,7 +537,7 @@ and injected by the dependency injection container::
     {
         $product = $productRepository
             ->find($id);
-        
+
         // ...
     }
 
@@ -691,7 +691,7 @@ But what if you need a more complex query? When you generated your entity with
 
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-    use Doctrine\Common\Persistence\ManagerRegistry;
+    use Doctrine\Persistence\ManagerRegistry;
 
     class ProductRepository extends ServiceEntityRepository
     {

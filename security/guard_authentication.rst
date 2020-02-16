@@ -100,22 +100,20 @@ This requires you to implement several methods::
          */
         public function getCredentials(Request $request)
         {
-            return [
-                'token' => $request->headers->get('X-AUTH-TOKEN'),
-            ];
+            return $request->headers->get('X-AUTH-TOKEN');
         }
 
         public function getUser($credentials, UserProviderInterface $userProvider)
         {
-            $apiToken = $credentials['token'];
-
-            if (null === $apiToken) {
+            if (null === $credentials) {
+                // The token header was empty, authentication fails with 401
                 return;
             }
 
-            // if a User object, checkCredentials() is called
+            // if a User is returned, checkCredentials() is called
             return $this->em->getRepository(User::class)
-                ->findOneBy(['apiToken' => $apiToken]);
+                ->findOneBy(['apiToken' => $credentials])
+            ;
         }
 
         public function checkCredentials($credentials, UserInterface $user)
@@ -136,13 +134,14 @@ This requires you to implement several methods::
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
             $data = [
+                // you may ant to customize or obfuscate the message first
                 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
 
                 // or to translate this message
                 // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
             ];
 
-            return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+            return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
         }
 
         /**
@@ -211,10 +210,10 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
             <config>
                 <!-- ... -->
 
-                <firewall name="main"
-                    pattern="^/"
-                    anonymous="true"
-                >
+                <!-- if you want, disable storing the user in the session
+                    add 'stateless="true"' to the firewall -->
+                <firewall name="main" pattern="^/">
+                    <anonymous/>
                     <logout/>
 
                     <guard>
@@ -244,6 +243,8 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
                             TokenAuthenticator::class,
                         ],
                     ],
+                    // if you want, disable storing the user in the session
+                    // 'stateless' => true,
                     // ...
                 ],
             ],

@@ -153,11 +153,13 @@ command will pre-configure this for you:
     .. code-block:: php
 
         // config/packages/security.php
+        use App\Entity\User;
+
         $container->loadFromExtension('security', [
             // ...
 
             'encoders' => [
-                'App\Entity\User' => [
+                User::class => [
                     'algorithm' => 'auto',
                     'cost' => 12,
                 ]
@@ -257,7 +259,7 @@ important section is ``firewalls``:
                     security="false"/>
 
                 <firewall name="main">
-                    <anonymous/>
+                    <anonymous lazy="true"/>
                 </firewall>
             </config>
         </srv:container>
@@ -268,11 +270,11 @@ important section is ``firewalls``:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'dev' => [
-                    'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
-                    'security'  => false,
+                    'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
+                    'security' => false,
                 ),
                 'main' => [
-                    'anonymous' => null,
+                    'anonymous' => 'lazy',
                 ],
             ],
         ]);

@@ -169,14 +169,12 @@ use the ``ldap`` user provider.
 
             <config>
                 <provider name="my_ldap">
-                    <ldap
-                            service="Symfony\Component\Ldap\Ldap"
-                            base-dn="dc=example,dc=com"
-                            search-dn="cn=read-only-admin,dc=example,dc=com"
-                            search-password="password"
-                            default-roles="ROLE_USER"
-                            uid-key="uid"
-                    />
+                    <ldap service="Symfony\Component\Ldap\Ldap"
+                        base-dn="dc=example,dc=com"
+                        search-dn="cn=read-only-admin,dc=example,dc=com"
+                        search-password="password"
+                        default-roles="ROLE_USER"
+                        uid-key="uid"/>
                 </provider>
             </config>
         </srv:container>
@@ -395,9 +393,8 @@ Configuration example for form login
 
             <config>
                 <firewall name="main">
-                    <form-login-ldap
-                            service="Symfony\Component\Ldap\Ldap"
-                            dn-string="uid={username},dc=example,dc=com"/>
+                    <form-login-ldap service="Symfony\Component\Ldap\Ldap"
+                        dn-string="uid={username},dc=example,dc=com"/>
                 </firewall>
             </config>
         </srv:container>
@@ -432,9 +429,8 @@ Configuration example for HTTP Basic
 
             firewalls:
                 main:
-                    # ...
+                    stateless: true
                     http_basic_ldap:
-                        # ...
                         service: Symfony\Component\Ldap\Ldap
                         dn_string: 'uid={username},dc=example,dc=com'
 
@@ -449,8 +445,11 @@ Configuration example for HTTP Basic
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
+                <!-- ... -->
+
                 <firewall name="main" stateless="true">
-                    <http-basic-ldap service="Symfony\Component\Ldap\Ldap" dn-string="uid={username},dc=example,dc=com"/>
+                    <http-basic-ldap service="Symfony\Component\Ldap\Ldap"
+                        dn-string="uid={username},dc=example,dc=com"/>
                 </firewall>
             </config>
         </srv:container>
@@ -461,12 +460,13 @@ Configuration example for HTTP Basic
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', [
+            // ...
+
             'firewalls' => [
                 'main' => [
                     'http_basic_ldap' => [
                         'service' => Ldap::class,
                         'dn_string' => 'uid={username},dc=example,dc=com',
-                        // ...
                     ],
                     'stateless' => true,
                 ],
@@ -488,7 +488,6 @@ Configuration example for form login and query_string
                 main:
                     # ...
                     form_login_ldap:
-                        # ...
                         service: Symfony\Component\Ldap\Ldap
                         dn_string: 'dc=example,dc=com'
                         query_string: '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))'
@@ -507,12 +506,12 @@ Configuration example for form login and query_string
 
             <config>
                 <firewall name="main">
-                    <form-login-ldap
-                            service="Symfony\Component\Ldap\Ldap"
-                            dn-string="dc=example,dc=com"
-                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))"
-                            search-dn="..."
-                            search-password="the-raw-password"/>
+                    <!-- ... -->
+                    <form-login-ldap service="Symfony\Component\Ldap\Ldap"
+                        dn-string="dc=example,dc=com"
+                        query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))"
+                        search-dn="..."
+                        search-password="the-raw-password"/>
                 </firewall>
             </config>
         </srv:container>
@@ -525,13 +524,13 @@ Configuration example for form login and query_string
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
+                    // ...
                     'form_login_ldap' => [
                         'service' => Ldap::class,
                         'dn_string' => 'dc=example,dc=com',
                         'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
                         'search_dn' => '...',
                         'search_password' => 'the-raw-password',
-                        // ...
                     ],
                 ],
             ]
