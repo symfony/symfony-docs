@@ -33,7 +33,7 @@ to use HTTPS then you could use the following configuration:
                 <config>
                     <!-- ... -->
 
-                    <rule path="^/secure" role="ROLE_ADMIN" requires_channel="https"/>
+                    <rule path="^/secure" role="ROLE_ADMIN" requires-channel="https"/>
                 </config>
             </srv:container>
 
@@ -83,7 +83,7 @@ role:
 
                 <rule path="^/login"
                     role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    requires_channel="https"
+                    requires-channel="https"
                 />
             </config>
         </srv:container>

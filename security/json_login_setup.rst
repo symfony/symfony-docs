@@ -184,8 +184,8 @@ The security configuration should be:
                 <firewall name="main">
                     <anonymous/>
                     <json-login check-path="login"
-                                username-path="security.credentials.login"
-                                password-path="security.credentials.password"/>
+                        username-path="security.credentials.login"
+                        password-path="security.credentials.password"/>
                 </firewall>
             </config>
         </srv:container>

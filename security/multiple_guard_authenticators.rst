@@ -68,7 +68,7 @@ This is how your security configuration can look in action:
                 'default' => [
                     'anonymous' => null,
                     'guard' => [
-                        'entry_point' => '',
+                        'entry_point' => LoginFormAuthenticator::class,
                         'authenticators' => [
                             LoginFormAuthenticator::class,
                             FacebookConnectAuthenticator::class,

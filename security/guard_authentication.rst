@@ -116,7 +116,7 @@ Next, make sure you've configured a "user provider" for the user:
                 <!-- ... -->
 
                 <provider name="your_db_provider">
-                    <entity class="AppBundle:User"/>
+                    <entity class="AppBundle:User" property="apiKey"/>
                 </provider>
 
                 <!-- ... -->
@@ -133,6 +133,7 @@ Next, make sure you've configured a "user provider" for the user:
                 'your_db_provider' => [
                     'entity' => [
                         'class' => 'AppBundle:User',
+                        'property' => 'apiKey',
                     ],
                 ],
             ],
@@ -187,21 +188,18 @@ This requires you to implement several methods::
          */
         public function getCredentials(Request $request)
         {
-            return [
-                'token' => $request->headers->get('X-AUTH-TOKEN'),
-            ];
+            return $request->headers->get('X-AUTH-TOKEN');
         }
 
         public function getUser($credentials, UserProviderInterface $userProvider)
         {
-            $apiKey = $credentials['token'];
-
-            if (null === $apiKey) {
+            if (null === $credentials) {
+                // The token header was empty, authentication fails with 401
                 return;
             }
 
-            // if a User object, checkCredentials() is called
-            return $userProvider->loadUserByUsername($apiKey);
+            // if a User is returned, checkCredentials() is called
+            return $userProvider->loadUserByUsername($credentials);
         }
 
         public function checkCredentials($credentials, UserInterface $user)
@@ -222,13 +220,14 @@ This requires you to implement several methods::
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
             $data = [
+                // you may ant to customize or obfuscate the message first
                 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
 
                 // or to translate this message
                 // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
             ];
 
-            return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+            return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
         }
 
         /**
@@ -303,11 +302,11 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
             <config>
                 <!-- ... -->
 
-                <firewall name="main"
-                    pattern="^/"
-                    anonymous="true"
-                >
-                    <logoutOjso/>
+                <!-- if you want, disable storing the user in the session
+                    add 'stateless="true"' to the firewall -->
+                <firewall name="main" pattern="^/">
+                    <anonymous/>
+                    <logout/>
 
                     <guard>
                         <authenticator>AppBundle\Security\TokenAuthenticator</authenticator>
@@ -336,6 +335,8 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                             TokenAuthenticator::class,
                         ],
                     ],
+                    // if you want, disable storing the user in the session
+                    // 'stateless' => true,
                     // ...
                 ],
             ],
