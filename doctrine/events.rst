@@ -124,7 +124,7 @@ do so, define a listener for the ``postPersist`` Doctrine event::
     namespace App\EventListener;
 
     use App\Entity\Product;
-    use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+    use Doctrine\Persistence\Event\LifecycleEventArgs;
 
     class SearchIndexer
     {
@@ -233,7 +233,7 @@ define a listener for the ``postUpdate`` Doctrine event::
     namespace App\EventListener;
 
     use App\Entity\User;
-    use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+    use Doctrine\Persistence\Event\LifecycleEventArgs;
 
     class UserChangedNotifier
     {
@@ -344,8 +344,8 @@ want to log all the database activity. To do so, define a subscriber for the
 
     use App\Entity\Product;
     use Doctrine\Common\EventSubscriber;
-    use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
     use Doctrine\ORM\Events;
+    use Doctrine\Persistence\Event\LifecycleEventArgs;
 
     class DatabaseActivitySubscriber implements EventSubscriber
     {

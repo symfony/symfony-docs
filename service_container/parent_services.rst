@@ -12,7 +12,7 @@ you may have multiple repository classes which need the
     // src/Repository/BaseDoctrineRepository.php
     namespace App\Repository;
 
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
     use Psr\Log\LoggerInterface;
 
     // ...
