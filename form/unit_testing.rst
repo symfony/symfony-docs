@@ -135,7 +135,7 @@ make sure the ``FormRegistry`` uses the created instance::
     namespace Tests\AppBundle\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
     use Symfony\Component\Form\PreloadedExtension;
     use Symfony\Component\Form\Test\TypeTestCase;
     // ...
