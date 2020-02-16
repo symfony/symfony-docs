@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-14T16:45:23Z
+
+@tvlooy thanks for improving the docs!
+
+@xabbuh @wouterj do you see any problem for merging this in 3.4? Thanks!
+
+---------------------------------------------------------------------------
+
+by tvlooy at 2020-02-15T21:21:31Z
+
+> I do not completely understand the changes. Aren't the namespace changes about removing the `Common` part?
+>
+> So `Doctrine\Common\Persistence\ObjectManager` should become `Doctrine\Persistence\ObjectManager`. `ManagerRegistry` is a registry holding all `ObjectManager`'s, so it's not a one to one replacement for `ObjectManager`.
+>
+> This is also what the deprecation messages suggests: https://github.com/doctrine/persistence/pull/71/files#diff-0e209770d31833077cce41eba53a171eR11-R17
+
+Whoops. Fixed!
