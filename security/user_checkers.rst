@@ -89,8 +89,9 @@ is the service id of your user checker:
 
             <config>
                 <!-- ... -->
-                <firewall name="main" pattern="^/">
-                    <user-checker>AppBundle\Security\UserChecker</user-checker>
+                <firewall name="main"
+                        pattern="^/"
+                        user-checker="AppBundle\Security\UserChecker">
                     <!-- ... -->
                 </firewall>
             </config>
@@ -99,11 +100,10 @@ is the service id of your user checker:
     .. code-block:: php
 
         // app/config/security.php
-
-        // ...
         use AppBundle\Security\UserChecker;
 
         $container->loadFromExtension('security', [
+            // ...
             'firewalls' => [
                 'main' => [
                     'pattern' => '^/',

@@ -246,9 +246,10 @@ the username and then check the password (more on passwords in a moment):
                 <!-- ... -->
 
                 <provider name="our_db_provider">
-                    <!-- if you're using multiple entity managers, add:
-                         manager-name="customer" -->
                     <entity class="AppBundle:User" property="username"/>
+
+                    <!-- if you're using multiple entity managers
+                    <entity class="AppBundle:User" property="username" manager-name="customer"/> -->
                 </provider>
 
                 <firewall name="main" pattern="^/" provider="our_db_provider">
