@@ -41,14 +41,16 @@ access control:
                 <config>
                     <!-- ... -->
 
-                    <rule path="^/secure" role="ROLE_ADMIN" requires_channel="https"/>
+                    <rule path="^/secure"
+                        role="ROLE_ADMIN"
+                        requires-channel="https"/>
                     <rule path="^/login"
                         role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        requires_channel="https"
+                        requires-channel="https"
                     />
                     <rule path="^/"
                         role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        requires_channel="https"
+                        requires-channel="https"
                     />
                 </config>
             </srv:container>

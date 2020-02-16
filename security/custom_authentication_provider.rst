@@ -168,7 +168,7 @@ the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
 the proper information is not provided, or the authentication manager throws
 an :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`,
-a 403 Response is returned.
+a 401 Response is returned.
 
 .. note::
 
@@ -184,7 +184,7 @@ a 403 Response is returned.
 
     Returning prematurely from the listener is relevant only if you want to chain
     authentication providers (for example to allow anonymous users). If you want
-    to forbid access to anonymous users and have a nice 403 error, you should set
+    to forbid access to anonymous users and have a 404 error, you should set
     the status code of the response before returning.
 
 The Authentication Provider

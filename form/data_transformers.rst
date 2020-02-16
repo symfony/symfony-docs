@@ -7,7 +7,7 @@ How to Use Data Transformers
 Data transformers are used to translate the data for a field into a format that can
 be displayed in a form (and back on submit). They're already used internally for
 many field types. For example, the :doc:`DateType </reference/forms/types/date>` field
-can be rendered as a ``yyyy-MM-dd``-formatted input textbox. Internally, a data transformer
+can be rendered as a ``yyyy-MM-dd``-formatted input text box. Internally, a data transformer
 converts the starting ``DateTime`` value of the field into the ``yyyy-MM-dd`` string
 to render the form, and then back into a ``DateTime`` object on submit.
 
@@ -56,7 +56,7 @@ Suppose you have a Task form with a tags ``text`` type::
     }
 
 Internally the ``tags`` are stored as an array, but displayed to the user as a
-comma separated string to make them easier to edit.
+simple comma separated string to make them easier to edit.
 
 This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
@@ -119,9 +119,9 @@ Harder Example: Transforming an Issue Number into an Issue Entity
 -----------------------------------------------------------------
 
 Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
-Task has an optional foreign key to its related Issue). Adding a listbox with all
+Task has an optional foreign key to its related Issue). Adding a list box with all
 possible issues could eventually get *really* long and take a long time to load.
-Instead, you decide you want to add a textbox, where the user can enter the
+Instead, you decide you want to add a text box, where the user can enter the
 issue number.
 
 Start by setting up the text field like normal::
@@ -376,7 +376,6 @@ First, create the custom field type class::
     namespace App\Form;
 
     use App\Form\DataTransformer\IssueToNumberTransformer;
-    use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
