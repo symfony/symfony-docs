@@ -45,11 +45,25 @@ want a command to create a user::
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            // ...
+            // ... put here the code to run in your command
 
-            return 0;
+            // this method must return an integer number with the "exit status code"
+            // of the command. You can also use these constants to make code more readable
+
+            // return this if there was no problem running the command
+            // (it's equivalent to returning int(0))
+            return Command::SUCCESS;
+
+            // or return this if some error happened during the execution
+            // (it's equivalent to returning int(1))
+            // return Command::FAILURE;
         }
     }
+
+.. versionadded:: 5.1
+
+    The ``Command::SUCCESS`` and ``Command::FAILURE`` constants were introduced
+    in Symfony 5.1.
 
 Configuring the Command
 -----------------------
@@ -149,7 +163,7 @@ the console::
         $output->write('You are about to ');
         $output->write('create a user.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 Now, try executing the command:
@@ -200,7 +214,7 @@ which returns an instance of
             $section1->clear(2);
             // Output is now completely empty!
 
-            return 0;
+            return Command::SUCCESS;
         }
     }
 
@@ -242,7 +256,7 @@ Use input options or arguments to pass information to the command::
         // retrieve the argument value using getArgument()
         $output->writeln('Username: '.$input->getArgument('username'));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 Now, you can pass the username to the command:
@@ -293,7 +307,7 @@ as a service, you can use normal dependency injection. Imagine you have a
 
             $output->writeln('User successfully generated!');
 
-            return 0;
+            return Command::SUCCESS;
         }
     }
 
