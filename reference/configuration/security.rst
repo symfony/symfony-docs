@@ -554,8 +554,7 @@ csrf_token_id
 
 **type**: ``string`` **default**: ``'logout'``
 
-An arbitrary string used to generate the token value (and check its validity
-afterwards).
+An arbitrary string used to identify the token (and check its validity afterwards).
 
 .. _reference-security-ldap:
 
