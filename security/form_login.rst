@@ -28,7 +28,7 @@ First, enable ``form_login`` under your firewall:
 
             firewalls:
                 main:
-                    anonymous: ~
+                    anonymous: lazy
                     form_login:
                         login_path: login
                         check_path: login
