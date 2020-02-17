@@ -706,6 +706,31 @@ Session
 
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
+Safe content preference - RFC 8674
+----------------------------------
+
+`RFC 8674`_ (not yet an IETF standard) defines a way for user agents to ask for "safe"
+content to a server. Symfony offers 2 methods to interact with this preference:
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::preferSafeContent`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setContentSafe`;
+
+When the user agent prefers "safe" content, you can detect it and send it a more appropriate
+reponse::
+
+    if ($request->preferSafeContent()) {
+        $response = new Response($alternativeContent);
+        $response->setContentSafe(); // Inform the user we respected their preferences
+ 
+        return $response;
+    }
+
+.. note::
+
+   The RFC 8674 does not define a precise semantic for "safe". Rather, the term is interpreted
+   by the server and within the scope of each web site that chooses to act upon this information.
+
+
 Learn More
 ----------
 
@@ -723,3 +748,4 @@ Learn More
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
+.. _RFC 8674: https://tools.ietf.org/html/rfc8674
