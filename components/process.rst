@@ -421,6 +421,14 @@ check regularly::
         usleep(200000);
     }
 
+.. tip::
+
+    You can get the process start time using the ``getStartTime()`` method.
+
+    .. versionadded:: 5.1
+
+        The ``getStartTime()`` method was introduced in Symfony 5.1.
+
 .. _reference-process-signal:
 
 Process Idle Timeout
