@@ -706,30 +706,36 @@ Session
 
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
-Safe content preference - RFC 8674
-----------------------------------
+Safe Content Preference
+-----------------------
 
-`RFC 8674`_ (not yet an IETF standard) defines a way for user agents to ask for "safe"
-content to a server. Symfony offers 2 methods to interact with this preference:
+Some web sites have a "safe" mode to assist those who don't want to be exposed
+to content to which they might object. The  `RFC 8674`_ specification defines a
+way for user agents to ask for safe content to a server.
+
+The specification does not define what content might be considered objectionable,
+so the concept of "safe" is not precisely defined. Rather, the term is interpreted
+by the server and within the scope of each web site that chooses to act upon this information.
+
+Symfony offers two methods to interact with this preference:
 
 * :method:`Symfony\\Component\\HttpFoundation\\Request::preferSafeContent`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setContentSafe`;
 
-When the user agent prefers "safe" content, you can detect it and send it a more appropriate
-reponse::
+.. versionadded:: 5.1
+
+    The ``preferSafeContent()`` and ``setContentSafe()`` methods were introduced
+    in Symfony 5.1.
+
+The following example shows how to detect if the user agent prefers "safe" content::
 
     if ($request->preferSafeContent()) {
         $response = new Response($alternativeContent);
-        $response->setContentSafe(); // Inform the user we respected their preferences
- 
+        // this informs the user we respected their preferences
+        $response->setContentSafe();
+
         return $response;
     }
-
-.. note::
-
-   The RFC 8674 does not define a precise semantic for "safe". Rather, the term is interpreted
-   by the server and within the scope of each web site that chooses to act upon this information.
-
 
 Learn More
 ----------
