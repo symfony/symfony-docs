@@ -332,7 +332,7 @@ If you want to only compile a CSS file, that's possible via ``addStyleEntry()``:
 
 .. code-block:: javascript
 
-    // webpack/config.js
+    // webpack.config.js
     Encore
         // ...
 
