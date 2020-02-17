@@ -372,41 +372,30 @@ Three different behaviors are available:
 .. caution::
 
     When using ``null``, you may have to update the decorator constructor in
-    order to make decorated dependency nullable.
+    order to make decorated dependency nullable::
 
-    .. configuration-block::
+        namespace App\Service;
 
-        .. code-block:: yaml
+        use Acme\OptionalBundle\Service\OptionalService;
 
-            App\Service\DecoratorService:
-                decorates: Acme\OptionalBundle\Service\OptionalService
-                decoration_on_invalid: null
-                arguments: ['@App\Service\DecoratorService.inner']
+        class DecoratorService
+        {
+            private $decorated;
 
-        .. code-block:: php
-
-            namespace App\Service;
-
-            use Acme\OptionalBundle\Service\OptionalService;
-
-            class DecoratorService
+            public function __construct(?OptionalService $decorated)
             {
-                private $decorated;
-
-                public function __construct(?OptionalService $decorated)
-                {
-                    $this->decorated = $decorated;
-                }
-
-                public function tellInterestingStuff(): string
-                {
-                    if (!$this->decorated) {
-                        return 'Just one interesting thing';
-                    }
-
-                    return $this->decorated->tellInterestingStuff().' + one more interesting thing';
-                }
+                $this->decorated = $decorated;
             }
+
+            public function tellInterestingStuff(): string
+            {
+                if (!$this->decorated) {
+                    return 'Just one interesting thing';
+                }
+
+                return $this->decorated->tellInterestingStuff().' + one more interesting thing';
+            }
+        }
 
 .. note::
 
