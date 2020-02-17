@@ -131,7 +131,7 @@ csrf_token
     {{ csrf_token(intention) }}
 
 ``intention``
-    **type**: ``string`` - an arbitrary string used to identify the token value.
+    **type**: ``string`` - an arbitrary string used to identify the token.
 
 Renders a CSRF token. Use this function if you want :doc:`CSRF protection </security/csrf>`
 in a regular HTML form not managed by the Symfony Form component.
