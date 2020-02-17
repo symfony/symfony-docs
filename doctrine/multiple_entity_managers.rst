@@ -156,11 +156,11 @@ The following configuration code shows how you can configure two entity managers
                         'connection' => 'default',
                         'mappings'   => [
                             'Main'  => [
-                                is_bundle => false,
-                                type => 'annotation',
-                                dir => '%kernel.project_dir%/src/Entity/Main',
-                                prefix => 'App\Entity\Main',
-                                alias => 'Main',
+                                'is_bundle' => false,
+                                'type' => 'annotation',
+                                'dir' => '%kernel.project_dir%/src/Entity/Main',
+                                'prefix' => 'App\Entity\Main',
+                                'alias' => 'Main',
                             ]
                         ],
                     ],
@@ -168,11 +168,11 @@ The following configuration code shows how you can configure two entity managers
                         'connection' => 'customer',
                         'mappings'   => [
                             'Customer'  => [
-                                is_bundle => false,
-                                type => 'annotation',
-                                dir => '%kernel.project_dir%/src/Entity/Customer',
-                                prefix => 'App\Entity\Customer',
-                                alias => 'Customer',
+                                'is_bundle' => false,
+                                'type' => 'annotation',
+                                'dir' => '%kernel.project_dir%/src/Entity/Customer',
+                                'prefix' => 'App\Entity\Customer',
+                                'alias' => 'Customer',
                             ]
                         ],
                     ],
