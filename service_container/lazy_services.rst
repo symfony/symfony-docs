@@ -23,9 +23,9 @@ Configuring lazy services is one answer to this. With a lazy service, a
 just like the ``mailer``, except that the ``mailer`` isn't actually instantiated
 until you interact with the proxy in some way.
 
-.. note::
+.. caution::
 
-    Lazy services does not work with final classes!
+    Lazy services does not work with final classes.
 
 Installation
 ------------
