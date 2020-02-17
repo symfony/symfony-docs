@@ -279,6 +279,10 @@ important section is ``firewalls``:
             ],
         ]);
 
+.. versionadded:: 4.4
+
+    The ``anonymous: lazy`` option was introduced in Symfony 4.4.
+
 A "firewall" is your authentication system: the configuration below it defines
 *how* your users will be able to authenticate (e.g. login form, API token, etc).
 
