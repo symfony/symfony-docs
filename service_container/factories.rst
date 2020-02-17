@@ -303,17 +303,17 @@ previous examples takes the ``templating`` service as an argument:
         };
         
 Usage example
---------------------
+-------------
 
 The following example is intended to show how to create and use a factory method in Symfony framework.
-Suppose you want to realize the factory method pattern for services, that describe two delivery methods - DPD and SmartPost.
+Suppose you want to realize the factory method pattern for services, that describe two delivery methods - DHL and UPS.
 
 Services (subclasses) definition::
 
-    // src/Deliveries/DPD.php
+    // src/Deliveries/DHL.php
     namespace App\Deliveries;
 
-    class DPD
+    class DHL
     {
         public $costLabel;
     
@@ -322,10 +322,10 @@ Services (subclasses) definition::
         }
     }
     
-    // src/Deliveries/SmartPost.php
+    // src/Deliveries/UPS.php
     namespace App\Deliveries;
 
-    class SmartPost
+    class UPS
     {
         public $costLabel;
     
@@ -354,7 +354,7 @@ Factory definition::
     
 As you can see, ``DeliveryFactory`` doesn't specify the exact class of the object that will be created.
     
-Next, use settings similar to those in the sections above. These settings allow you to define a factory method for subclasses without explicitly extending the abstract class (i.e., without ``class DPD extends DeliveryFactory``)!
+Next, use settings similar to those in the sections above. These settings allow you to define a factory method for subclasses without explicitly extending the abstract class (i.e., without ``class DHL extends DeliveryFactory``)!
 
 .. configuration-block::
 
@@ -364,14 +364,14 @@ Next, use settings similar to those in the sections above. These settings allow 
         services:
             # ...
 
-            App\Deliveries\DPD:
+            App\Deliveries\DHL:
                 factory:   ['@App\Factories\DeliveryFactory', create]
                 arguments:
-                    $deliveryMethod: 'App\Deliveries\DPD'
-            App\Deliveries\SmartPost:
+                    $deliveryMethod: 'App\Deliveries\DHL'
+            App\Deliveries\UPS:
                 factory:   ['@App\Factories\DeliveryFactory', create]
                 arguments:
-                    $deliveryMethod: 'App\Deliveries\SmartPost'
+                    $deliveryMethod: 'App\Deliveries\UPS'
             
 
     .. code-block:: xml
@@ -386,13 +386,13 @@ Next, use settings similar to those in the sections above. These settings allow 
             <services>
                 <!-- ... -->
 
-                <service id="App\Deliveries\DPD">
+                <service id="App\Deliveries\DHL">
                     <factory service="App\Factories\DeliveryFactory" method="create"/>
-                    <argument key="$deliveryMethod">App\Deliveries\DPD</argument>
+                    <argument key="$deliveryMethod">App\Deliveries\DHL</argument>
                 </service>
-                <service id="App\Deliveries\SmartPost">
+                <service id="App\Deliveries\UPS">
                     <factory service="App\Factories\DeliveryFactory" method="create"/>
-                    <argument key="$deliveryMethod">App\Deliveries\SmartPost</argument>
+                    <argument key="$deliveryMethod">App\Deliveries\UPS</argument>
                 </service>
             </services>
         </container>
@@ -402,20 +402,20 @@ Next, use settings similar to those in the sections above. These settings allow 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Deliveries\DPD;
-        use App\Deliveries\SmartPost;
+        use App\Deliveries\DHL;
+        use App\Deliveries\UPS;
         use App\Factories\DeliveryFactory;
 
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
-            $services->set(DPD::class)
+            $services->set(DHL::class)
                 ->factory([ref(DeliveryFactory::class), 'create'])
-                ->arg('$deliveryMethod', 'App\Deliveries\DPD')
+                ->arg('$deliveryMethod', 'App\Deliveries\DHL')
             ;
-            $services->set(SmartPost::class)
+            $services->set(UPS::class)
                 ->factory([ref(DeliveryFactory::class), 'create'])
-                ->arg('$deliveryMethod', 'App\Deliveries\SmartPost')
+                ->arg('$deliveryMethod', 'App\Deliveries\UPS')
             ;
         };
 
@@ -424,13 +424,13 @@ Now we can use our services as usual (via dependency injection). The only differ
     /**
      * @Route("/get-deliveries-cost", methods={"GET"})
      */
-    public function getDeliveriesCost(DPD $dpd, SmartPost $smartPost)
+    public function getDeliveriesCost(DHL $dhl, UPS $ups)
     {
         // ...
         
-        // $dpd->costLabel is fulfilled in factory method.
-        $dpdCost = $dpd->costLabel . $dpd->cost();
-        $smartPostCost = $smartPost->costLabel . $smartPost->cost();
+        // $dhl->costLabel and $ups->costLabel are fulfilled in factory method.
+        $dhlCost = $dhl->costLabel . $dhl->cost();
+        $upsCost = $ups->costLabel . $ups->cost();
         
         // ...
     }
