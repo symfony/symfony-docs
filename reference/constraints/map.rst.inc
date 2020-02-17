@@ -19,6 +19,7 @@ String Constraints
 * :doc:`Length </reference/constraints/Length>`
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
+* :doc:`Hostname </reference/constraints/Hostname>`
 * :doc:`Ip </reference/constraints/Ip>`
 * :doc:`Json</reference/constraints/Json>`
 * :doc:`Uuid</reference/constraints/Uuid>`
