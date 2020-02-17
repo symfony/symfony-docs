@@ -36,6 +36,8 @@ in a single Twig template and they are enabled in the
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the default styles of the
   `Foundation CSS framework`_.
+* `foundation_6_layout.html.twig`_, same as ``foundation_5_layout.html.twig``, but
+  updated for `Foundation CSS framework`_ styles.
 
 .. tip::
 
@@ -106,7 +108,7 @@ apply a theme only to some specific form. You can do that with the
 .. code-block:: twig
 
     {# this form theme will be applied only to the form of this template #}
-    {% form_theme form 'foundation_5_layout.html.twig' %}
+    {% form_theme form 'foundation_6_layout.html.twig' %}
 
     {{ form_start(form) }}
         {# ... #}
@@ -127,7 +129,7 @@ order is important, because each theme overrides all the previous ones):
 
     {# apply multiple form themes but only to the form of this template #}
     {% form_theme form with [
-        'foundation_5_layout.html.twig',
+        'foundation_6_layout.html.twig',
         'forms/my_custom_theme.html.twig'
     ] %}
 
@@ -164,7 +166,7 @@ of form themes:
 
 .. code-block:: twig
 
-    {% form_theme form with ['foundation_5_layout.html.twig'] only %}
+    {% form_theme form with ['foundation_6_layout.html.twig'] only %}
 
     {# ... #}
 
@@ -599,6 +601,7 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.3/
 .. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.1/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
+.. _`foundation_6_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_6_layout.html.twig
 .. _`Foundation CSS framework`: http://foundation.zurb.com/
 .. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
 .. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html
