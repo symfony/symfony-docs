@@ -865,7 +865,7 @@ Native PHP Streams
 
 Responses implementing :class:`Symfony\\Contracts\\HttpClient\\ResponseInterface`
 can be cast to native PHP streams with
-:method:`Symfony\\Component\\HttpClient\\Response\\StreamWrapper::createResource``.
+:method:`Symfony\\Component\\HttpClient\\Response\\StreamWrapper::createResource`.
 This allows using them where native PHP streams are needed::
 
     use Symfony\Component\HttpClient\HttpClient;
