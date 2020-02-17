@@ -17,7 +17,7 @@ First, enable the JSON login under your firewall:
 
             firewalls:
                 main:
-                    anonymous: ~
+                    anonymous: lazy
                     json_login:
                         check_path: /login
 
@@ -33,7 +33,7 @@ First, enable the JSON login under your firewall:
 
             <config>
                 <firewall name="main">
-                    <anonymous/>
+                    <anonymous lazy="true"/>
                     <json-login check-path="/login"/>
                 </firewall>
             </config>
@@ -45,7 +45,7 @@ First, enable the JSON login under your firewall:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
-                    'anonymous'  => null,
+                    'anonymous'  => 'lazy',
                     'json_login' => [
                         'check_path' => '/login',
                     ],
@@ -163,7 +163,7 @@ The security configuration should be:
 
             firewalls:
                 main:
-                    anonymous: ~
+                    anonymous: lazy
                     json_login:
                         check_path:    login
                         username_path: security.credentials.login
@@ -181,7 +181,7 @@ The security configuration should be:
 
             <config>
                 <firewall name="main">
-                    <anonymous/>
+                    <anonymous lazy="true"/>
                     <json-login check-path="login"
                         username-path="security.credentials.login"
                         password-path="security.credentials.password"/>
@@ -195,7 +195,7 @@ The security configuration should be:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
-                    'anonymous'  => null,
+                    'anonymous'  => 'lazy',
                     'json_login' => [
                         'check_path' => 'login',
                         'username_path' => 'security.credentials.login',
