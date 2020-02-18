@@ -166,7 +166,7 @@ usually simple to fix:
       ...
 
       Unable to rebase the patch for <comment>pull/11183</comment>
-      The command "'git' 'rebase' '--onto' '3.4' '4.2' 'pull/11160'" failed.
+      The command "'git' 'rebase' '--onto' '3.4' '4.4' 'pull/11160'" failed.
       Exit Code: 128(Invalid exit argument)
 
       [...]
@@ -195,7 +195,7 @@ Step 3: Merge it into the other branches
 
 If a PR has not been merged in ``master``, you must merge it up into all the
 maintained branches until ``master``. Imagine that you are merging a PR against
-``3.4`` and the maintained branches are ``3.4``, ``4.2`` and ``master``:
+``3.4`` and the maintained branches are ``3.4``, ``4.4`` and ``master``:
 
 .. code-block:: terminal
 
@@ -208,8 +208,8 @@ maintained branches until ``master``. Imagine that you are merging a PR against
     $ git push origin
     $ git push upstream
 
-    $ git checkout 4.2
-    $ git merge upstream/4.2
+    $ git checkout 4.4
+    $ git merge upstream/4.4
     $ git merge --log 3.4
     # here you can face several errors explained later
     $ git push origin
@@ -217,7 +217,7 @@ maintained branches until ``master``. Imagine that you are merging a PR against
 
     $ git checkout master
     $ git merge upstream/master
-    $ git merge --log 4.2
+    $ git merge --log 4.4
     $ git push origin
     $ git push upstream
 
@@ -257,7 +257,7 @@ easy to spot because you'll see lots of conflicts:
 
     # DON'T DO THIS! It's a wrong branch merge
     $ git checkout 3.4
-    $ git merge upstream/4.2
+    $ git merge upstream/4.4
 
 As long as you don't push this wrong merge, there's no problem. Delete your
 local branch and check it out again:
@@ -278,8 +278,8 @@ When merging things to upper branches, most of the times you'll see conflicts:
 
 .. code-block:: terminal
 
-    $ git checkout 4.2
-    $ git merge upstream/4.2
+    $ git checkout 4.4
+    $ git merge upstream/4.4
     $ git merge --log 3.4
 
       Auto-merging security/entity_provider.rst
@@ -314,8 +314,8 @@ were modified by the PR but no longer exist in newer branches:
 
 .. code-block:: terminal
 
-    $ git checkout 4.2
-    $ git merge upstream/4.2
+    $ git checkout 4.4
+    $ git merge upstream/4.4
     $ git merge --log 3.4
 
       Auto-merging translation/debug.rst
