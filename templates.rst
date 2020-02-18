@@ -476,6 +476,9 @@ provided by Symfony:
                 # special options defined by Symfony to set the page cache
                 maxAge:    86400
                 sharedAge: 86400
+                
+                # whether or not caching should apply for client caches only
+                private: true 
 
     .. code-block:: xml
 
@@ -494,6 +497,8 @@ provided by Symfony:
                 <!-- special options defined by Symfony to set the page cache -->
                 <default key="maxAge">86400</default>
                 <default key="sharedAge">86400</default>
+                 <!-- whether or not caching should apply for client caches only -->
+                <default key="private">true</default>
             </route>
         </routes>
 
@@ -513,6 +518,9 @@ provided by Symfony:
                     // special options defined by Symfony to set the page cache
                     'maxAge'    => 86400,
                     'sharedAge' => 86400,
+                    
+                    // whether or not caching should apply for client caches only
+                    'private' => true,
                 ])
             ;
         };
