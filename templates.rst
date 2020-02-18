@@ -497,7 +497,7 @@ provided by Symfony:
                 <!-- special options defined by Symfony to set the page cache -->
                 <default key="maxAge">86400</default>
                 <default key="sharedAge">86400</default>
-                 <!-- Whether or not caching should apply for client caches only -->
+                 <!-- whether or not caching should apply for client caches only -->
                 <default key="private">true</default>
             </route>
         </routes>
