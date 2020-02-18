@@ -1,11 +1,11 @@
 ``preferred_choices``
 ~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``array``, ``callable`` or ``string`` **default**: ``[]``
+**type**: ``array``, ``callable``, ``string`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``[]``
 
 This option allows you to move certain choices to the top of your list with a visual
 separator between them and the rest of the options. If you have a form of languages,
-you can list the most popular on top, like Bork Bork and Pirate::
+you can list the most popular on top, like Bork and Pirate::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
@@ -14,7 +14,7 @@ you can list the most popular on top, like Bork Bork and Pirate::
         'choices' => [
             'English' => 'en',
             'Spanish' => 'es',
-            'Bork'   => 'muppets',
+            'Bork' => 'muppets',
             'Pirate' => 'arr',
         ],
         'preferred_choices' => ['muppets', 'arr'],
