@@ -40,3 +40,17 @@ a "Later" ``<optgroup>``:
 If you return ``null``, the option won't be grouped. You can also pass a string
 "property path" that will be called to get the group. See the `choice_label`_ for
 details about using a property path.
+
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'group_by' => ChoiceList::groupBy($this, 'category'),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.

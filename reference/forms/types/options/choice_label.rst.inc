@@ -53,3 +53,17 @@ If your choice values are objects, then ``choice_label`` can also be a
 
 If set to ``false``, all the tag labels will be discarded for radio or checkbox
 inputs. You can also return ``false`` from the callable to discard certain labels.
+
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'choice_label' => ChoiceList::label($this, 'displayName'),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.
