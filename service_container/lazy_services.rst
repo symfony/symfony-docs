@@ -25,7 +25,7 @@ until you interact with the proxy in some way.
 
 .. caution::
 
-    Lazy services does not work with final classes.
+    Lazy services do not support final classes.
 
 Installation
 ------------
