@@ -477,7 +477,7 @@ Customize Notifications
 You can extend the ``Notification`` or ``Recipient`` base classes to
 customize their behavior. For instance, you can overwrite the
 ``getChannels()`` method to only return ``sms`` if the invoice price is
-very high and the recipient has a phonenumber::
+very high and the recipient has a phone number::
 
     namespace App\Notifier;
 
@@ -500,10 +500,10 @@ very high and the recipient has a phonenumber::
                 && $recipient instanceof AdminRecipient
                 && null !== $recipient->getPhone()
             ) {
-                return ['sms', 'email'];
+                return ['sms'];
             }
 
-            return 'email';
+            return ['email'];
         }
     }
 
