@@ -419,7 +419,7 @@ Next, use settings similar to those in the sections above. These settings allow 
             ;
         };
 
-Now we can use our services as usual (via dependency injection). The only difference is that object instances are created in the factory. Let's get those services in controller::
+Now we can use our services as usual (via dependency injection). The only difference is that subclasses instances of services are created in the factory. Let's get those services in controller::
 
     /**
      * @Route("/get-deliveries-cost", methods={"GET"})
