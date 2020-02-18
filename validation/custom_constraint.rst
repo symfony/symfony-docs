@@ -248,8 +248,8 @@ not to the property:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/AcmeEntity.php
-        use AppBundle\Validator\Constraints\ProtocolClass;
+        // src/Entity/AcmeEntity.php
+        use App\Validator\Constraints\ProtocolClass;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class AcmeEntity
