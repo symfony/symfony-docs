@@ -12,7 +12,7 @@ Symfony documentation, please read
 
 > **Note**
 > Unless you're documenting a feature that was introduced *after* Symfony 3.4
-> (e.g. in Symfony 4.2), all pull requests must be based off of the **3.4** branch,
+> (e.g. in Symfony 4.4), all pull requests must be based off of the **3.4** branch,
 > **not** the master or older branches.
 
 SymfonyCloud
