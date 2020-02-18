@@ -81,7 +81,7 @@ The value returned by the ``request()`` method is an instance of the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
 
-The :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest` method,
+The `xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to
 make AJAX requests::
 
