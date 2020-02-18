@@ -1,7 +1,7 @@
 ``group_by``
 ~~~~~~~~~~~~
 
-**type**: ``string`` or ``callable`` **default**: ``null``
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``null``
 
 You can group the ``<option>`` elements of a ``<select>`` into ``<optgroup>``
 by passing a multi-dimensional array to ``choices``. See the
@@ -25,9 +25,9 @@ Take the following example::
         'group_by' => function($choice, $key, $value) {
             if ($choice <= new \DateTime('+3 days')) {
                 return 'Soon';
-            } else {
-                return 'Later';
             }
+
+            return 'Later';
         },
     ]);
 
