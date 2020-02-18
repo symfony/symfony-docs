@@ -234,3 +234,19 @@ not to the property:
         <class name="AppBundle\Entity\AcmeEntity">
             <constraint name="AppBundle\Validator\Constraints\ProtocolClass"/>
         </class>
+
+    .. code-block:: php
+
+        // src/AppBundle/Entity/AcmeEntity.php
+        use AppBundle\Validator\Constraints\ProtocolClass;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class AcmeEntity
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new ProtocolClass());
+            }
+        }
