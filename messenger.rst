@@ -17,7 +17,7 @@ install messenger:
 
 .. code-block:: terminal
 
-    $ composer require messenger
+    $ composer require symfony/messenger
 
 Creating a Message & Handler
 ----------------------------
@@ -321,6 +321,9 @@ If you need to pass a Doctrine entity in a message, it's better to pass the enti
 primary key (or whatever relevant information the handler actually needs, like ``email``,
 etc) instead of the object::
 
+    // src/Message/NewUserWelcomeEmail.php
+    namespace App\Message;
+    
     class NewUserWelcomeEmail
     {
         private $userId;

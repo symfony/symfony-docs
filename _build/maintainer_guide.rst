@@ -134,9 +134,9 @@ original contributor.
     $ cd symfony-docs/
 
     # make sure that your local branch is updated
-    $ git checkout 3.4
+    $ git checkout 4.4
     $ git fetch upstream
-    $ git merge upstream/3.4
+    $ git merge upstream/4.4
 
     # merge any PR passing its GitHub number as argument
     $ gh merge 11159
@@ -153,20 +153,20 @@ the ``-s`` option:
 
 .. code-block:: terminal
 
-    # e.g. this PR was sent against 'master', but it's merged in '3.4'
-    $ gh merge 11160 -s 3.4
+    # e.g. this PR was sent against 'master', but it's merged in '4.4'
+    $ gh merge 11160 -s 4.4
 
 Sometimes, when changing the branch, you may face rebase issues, but they are
 usually simple to fix:
 
 .. code-block:: terminal
 
-    $ gh merge 11160 -s 3.4
+    $ gh merge 11160 -s 4.4
 
       ...
 
       Unable to rebase the patch for <comment>pull/11183</comment>
-      The command "'git' 'rebase' '--onto' '3.4' '4.2' 'pull/11160'" failed.
+      The command "'git' 'rebase' '--onto' '4.4' '5.0' 'pull/11160'" failed.
       Exit Code: 128(Invalid exit argument)
 
       [...]
@@ -183,7 +183,7 @@ usually simple to fix:
 
     # Lastly, re-run the exact same original command that resulted in a conflict
     # There's no need to change the branch or do anything else.
-    $ gh merge 11160 -s 3.4
+    $ gh merge 11160 -s 4.4
 
       The previous run had some conflicts. Do you want to resume the merge? (Y/n)
 
@@ -195,29 +195,29 @@ Step 3: Merge it into the other branches
 
 If a PR has not been merged in ``master``, you must merge it up into all the
 maintained branches until ``master``. Imagine that you are merging a PR against
-``3.4`` and the maintained branches are ``3.4``, ``4.2`` and ``master``:
+``4.4`` and the maintained branches are ``4.4``, ``5.0`` and ``master``:
 
 .. code-block:: terminal
 
     $ git fetch upstream
 
-    $ git checkout 3.4
-    $ git merge upstream/3.4
+    $ git checkout 4.4
+    $ git merge upstream/4.4
 
     $ gh merge 11159
     $ git push origin
     $ git push upstream
 
-    $ git checkout 4.2
-    $ git merge upstream/4.2
-    $ git merge --log 3.4
+    $ git checkout 5.0
+    $ git merge upstream/5.0
+    $ git merge --log 4.4
     # here you can face several errors explained later
     $ git push origin
     $ git push upstream
 
     $ git checkout master
     $ git merge upstream/master
-    $ git merge --log 4.2
+    $ git merge --log 5.0
     $ git push origin
     $ git push upstream
 
@@ -247,8 +247,8 @@ When updating your local branches before merging:
 .. code-block:: terminal
 
     $ git fetch upstream
-    $ git checkout 3.4
-    $ git merge upstream/3.4
+    $ git checkout 4.4
+    $ git merge upstream/4.4
 
 It's possible that you merge a wrong upstream branch unawarely. It's usually
 easy to spot because you'll see lots of conflicts:
@@ -256,8 +256,8 @@ easy to spot because you'll see lots of conflicts:
 .. code-block:: terminal
 
     # DON'T DO THIS! It's a wrong branch merge
-    $ git checkout 3.4
-    $ git merge upstream/4.2
+    $ git checkout 4.4
+    $ git merge upstream/5.0
 
 As long as you don't push this wrong merge, there's no problem. Delete your
 local branch and check it out again:
@@ -265,8 +265,8 @@ local branch and check it out again:
 .. code-block:: terminal
 
     $ git checkout master
-    $ git branch -D 3.4
-    $ git checkout 3.4 upstream/3.4
+    $ git branch -D 4.4
+    $ git checkout 4.4 upstream/4.4
 
 If you did push the wrong branch merge, ask for help in the documentation
 mergers chat and we'll help solve the problem.
@@ -278,9 +278,9 @@ When merging things to upper branches, most of the times you'll see conflicts:
 
 .. code-block:: terminal
 
-    $ git checkout 4.2
-    $ git merge upstream/4.2
-    $ git merge --log 3.4
+    $ git checkout 5.0
+    $ git merge upstream/5.0
+    $ git merge --log 4.4
 
       Auto-merging security/entity_provider.rst
       Auto-merging logging/monolog_console.rst
@@ -314,13 +314,13 @@ were modified by the PR but no longer exist in newer branches:
 
 .. code-block:: terminal
 
-    $ git checkout 4.2
-    $ git merge upstream/4.2
-    $ git merge --log 3.4
+    $ git checkout 5.0
+    $ git merge upstream/5.0
+    $ git merge --log 4.4
 
       Auto-merging translation/debug.rst
       CONFLICT (modify/delete): service_container/scopes.rst deleted in HEAD and
-      modified in 3.4. Version 3.4 of service_container/scopes.rst left in tree.
+      modified in 4.4. Version 4.4 of service_container/scopes.rst left in tree.
       Auto-merging service_container.rst
 
 If the contents of the deleted file were moved to a different file in newer

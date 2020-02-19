@@ -111,7 +111,7 @@ needs::
 
         private function logIn()
         {
-            $session = $this->client->getContainer()->get('session');
+            $session = self::$container->get('session');
 
             $firewallName = 'secure_area';
             // if you don't define multiple connected firewalls, the context defaults to the firewall name
