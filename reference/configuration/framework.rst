@@ -2192,7 +2192,7 @@ mapping
 paths
 """""
 
-**type**: ``array`` **default**: ``[]``
+**type**: ``array`` **default**: ``['config/validation/']``
 
 This option allows to define an array of paths with files or directories where
 the component will look for additional validation files:
@@ -2206,7 +2206,7 @@ the component will look for additional validation files:
             validation:
                 mapping:
                     paths:
-                        - "%kernel.project_dir%/validation/"
+                        - "%kernel.project_dir%/config/validation/"
 
     .. code-block:: xml
 
@@ -2222,7 +2222,7 @@ the component will look for additional validation files:
             <framework:config>
                 <framework:validation>
                     <framework:mapping>
-                        <framework:path>%kernel.project_dir%/validation</framework:path>
+                        <framework:path>%kernel.project_dir%/config/validation/</framework:path>
                     </framework:mapping>
                 </framework:validation>
             </framework:config>
@@ -2235,7 +2235,7 @@ the component will look for additional validation files:
             'validation' => [
                 'mapping' => [
                     'paths' => [
-                        '%kernel.project_dir%/validation',
+                        '%kernel.project_dir%/config/validation/',
                     ],
                 ],
             ],
