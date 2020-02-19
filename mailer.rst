@@ -76,7 +76,7 @@ The *only* part you need to change is to replace ``KEY`` in the ``MAILER_DSN`` (
 Each provider has different environment variables that the Mailer uses to
 configure the *actual* protocol, address and authentication for delivery. Some
 also have options that can be configured with query parameters at the end of the
-``MAILER_DSN`` - like ``?region=`` for Amazon SES. Some providers support
+``MAILER_DSN`` - like ``?region=`` for Amazon SES or Mailgun. Some providers support
 sending via ``http``, ``api`` or ``smtp``. Symfony chooses the best available
 transport, but you can force to use one:
 
