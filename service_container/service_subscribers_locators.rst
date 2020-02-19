@@ -559,7 +559,7 @@ attribute to the locator service defining the name of this custom method:
             ;
         };
 
-.. note:
+.. note::
 
     Since code should not be responsible for defining how the locators are
     going to be used, a configuration key (``key`` in the example above) must
