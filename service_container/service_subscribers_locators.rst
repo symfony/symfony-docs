@@ -558,9 +558,12 @@ attribute to the locator service defining the name of this custom method:
                     ->args([tagged_locator('app.handler', 'key', 'myOwnMethodName')])
             ;
         };
-        
-Note since code should not be the place that decides how the locators are going to be used, a configuration key (`key` in the example above) must be set in order this to work. So the custom method may be called as a fallback.
-        
+
+.. note:
+
+    Since code should not be responsible for defining how the locators are
+    going to be used, a configuration key (``key`` in the example above) must
+    be set so the custom method may be called as a fallback.
 
 Service Subscriber Trait
 ------------------------
