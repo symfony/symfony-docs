@@ -651,7 +651,7 @@ This defines a common form "workflow", which contains 3 different possibilities:
 1) On the initial GET request (i.e. when the user "surfs" to your page),
    build your form and render it;
 
-If the request is a POST, process the submitted data (via ``handleRequest()``).
+If the request is a POST, process the submitted data (via :method:`Symfony\\Component\\Form\\Form::handleRequest`).
 Then:
 
 2) if the form is invalid, re-render the form (which will now contain errors);
