@@ -815,20 +815,35 @@ Public Versus Private Services
 From Symfony 4.0, every service defined is private by default.
 
 What does this mean? When a service **is** public, you can access it directly
-from the container object, which is accessible from any controller that extends
-``Controller``::
+from the container object, which can also be injected thanks to autowiring.
+This is mostly useful when you want to fetch services lazily::
 
-    use App\Service\MessageGenerator;
+    namespace App\Generator;
 
-    // ...
-    public function new()
+    use Psr\Container\ContainerInterface;
+
+    class MessageGenerator
     {
-        // there IS a public "logger" service in the container
-        $logger = $this->container->get('logger');
+        private $container;
 
-        // this will NOT work: MessageGenerator is a private service
-        $generator = $this->container->get(MessageGenerator::class);
-    }
+        public function __construct(ContainerInterface $container)
+        {
+            $this->container = $container;
+        }
+
+        public function generate(string $message, string $template = null, array $context = []): string
+        {
+            if ($template && $this->container->has('twig')) {
+                // there IS a public "twig" service in the container
+                $twig = $this->container->get('twig');
+
+                return $twig->render($template, $context + ['message' => $message]);
+            }
+
+            // if no template is passed, the "twig" service will not be loaded
+
+            // ...
+        }
 
 As a best practice, you should only create *private* services, which will happen
 automatically. And also, you should *not* use the ``$container->get()`` method to
@@ -845,7 +860,7 @@ But, if you *do* need to make a service public, override the ``public`` setting:
             # ... same code as before
 
             # explicitly configure the service
-            App\Service\MessageGenerator:
+            Acme\PublicService:
                 public: true
 
     .. code-block:: xml
@@ -861,7 +876,7 @@ But, if you *do* need to make a service public, override the ``public`` setting:
                 <!-- ... same code as before -->
 
                 <!-- Explicitly configure the service -->
-                <service id="App\Service\MessageGenerator" public="true"></service>
+                <service id="Acme\PublicService" public="true"></service>
             </services>
         </container>
 
@@ -870,16 +885,21 @@ But, if you *do* need to make a service public, override the ``public`` setting:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Service\MessageGenerator;
+        use Acme\PublicService;
 
         return function(ContainerConfigurator $configurator) {
             // ... same as code before
 
             // explicitly configure the service
-            $services->set(MessageGenerator::class)
+            $services->set(PublicService::class)
                 ->public()
             ;
         };
+
+.. note::
+
+    Instead of injecting the container you should consider using a
+    :ref:`service locator <service-locators>` instead.
 
 .. _service-psr4-loader:
 
