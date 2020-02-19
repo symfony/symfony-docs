@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by lmillucci at 2020-02-09T15:50:47Z
+
+I don't think there are any drawback in this signature.
+I don't think I will have time to work on this until next weekend so if you
+want to do this in the meantime you can work on it :)
+
+Il dom 9 feb 2020, 16:43 Wouter J <notifications@github.com> ha scritto:
+
+> *@wouterj* approved this pull request.
+>
+> Hi @lmillucci <https://github.com/lmillucci>!
+>
+> This is a great new syntax! Is there any drawback to using this new
+> signature? I'm asking because if there is no drawback (performance wise or
+> the like), we should imho use this new signature everywhere in this
+> document. A superior syntax should be preferred over the old setters :)
+>
+> If you agree, but don't have the time/motivation/whatever to do it, please
+> leave a comment and I'll take care for it while merging this PR.
+>
+> Thanks!
+>
+> —
+> You are receiving this because you were mentioned.
+> Reply to this email directly, view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/12426?email_source=notifications&email_token=ABLXDXAZ4QZDXQFFXFAAUI3RCAQAPA5CNFSM4I5XAG2KYY3PNVWWK3TUL52HS4DFWFIHK3DMKJSXC5LFON2FEZLWNFSXPKTDN5WW2ZLOORPWSZGOCUZEE7Y#pullrequestreview-355615359>,
+> or unsubscribe
+> <https://github.com/notifications/unsubscribe-auth/ABLXDXGF3LRCZSNPHHECGIDRCAQAPANCNFSM4I5XAG2A>
+> .
+>
+
+---------------------------------------------------------------------------
+
+by yceruto at 2020-02-11T00:23:04Z
+
+Meanwhile, a new `info()` method was added to this new configurator. It would be nice if we could document it right here :)
+
+---------------------------------------------------------------------------
+
+by yceruto at 2020-02-11T00:23:28Z
+
+this is the link https://github.com/symfony/symfony-docs/issues/13090
