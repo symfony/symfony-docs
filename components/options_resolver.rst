@@ -778,6 +778,38 @@ the option::
 This closure receives as argument the value of the option after validating it
 and before normalizing it when the option is being resolved.
 
+Chaining option configurations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In many cases you may need to define multiple configurations for each option.
+For example, suppose the ``Mailer`` class has an ``host`` option that is required
+and a ``transport`` option which can be one of ``sendmail``, ``mail`` and ``smtp``.
+You can improve the readability of the code avoiding to duplicate option name for
+each configuration using the method
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::define``::
+
+    // ...
+    class Mailer
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // ...
+            $resolver->define('host')
+                ->required()
+                ->default('smtp.example.org')
+                ->allowedTypes('string');
+            $resolver->define('transport')
+                ->required()
+                ->default('transport')
+                ->allowedValues(['sendmail', 'mail', 'smtp']);
+        }
+    }
+
+.. versionadded:: 5.1
+
+    The ``define()`` method was introduced in Symfony 5.1.
+
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~
 
