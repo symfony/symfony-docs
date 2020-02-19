@@ -535,7 +535,7 @@ Changing a Form's Method and Action
 By default, a form is submitted to the same URI that rendered the form with
 an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
 and :ref:`form-option-method` options (the ``method`` option is also used
-by ``handleRequest()`` to determine whether a form has been submitted):
+by :method:`Symfony\\Component\\Form\\Form::handleRequest` to determine whether a form has been submitted):
 
 .. configuration-block::
 
@@ -658,8 +658,8 @@ Then:
 3) if the form is valid, perform some action and redirect.
 
 Luckily, you don't need to decide whether or not a form has been submitted.
-Just pass the current request to the ``handleRequest()`` method. Then, the Form
-component will do all the necessary work for you.
+Just pass the current request to the :method:`Symfony\\Component\\Form\\Form::handleRequest`
+method. Then, the Form component will do all the necessary work for you.
 
 .. _component-form-intro-validation:
 
