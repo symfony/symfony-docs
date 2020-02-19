@@ -576,7 +576,7 @@ encrypt a signed message and/or to sign an encrypted message.
 Before signing/encrypting messages, make sure to have:
 
 * The `OpenSSL PHP extension`_ properly installed and configured;
-* A valid S/MIME security certificate.
+* A valid `S/MIME`_ security certificate.
 
 Signing Messages
 ~~~~~~~~~~~~~~~~
