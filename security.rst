@@ -449,12 +449,17 @@ To fix this, add an ``encoders`` key:
 User providers load user information and put it into a :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 implementation. If you :doc:`load users from the database </security/entity_provider>`
 or :doc:`some other source </security/custom_provider>`, you'll
-use your own custom User class. But when you use the "in memory" provider type,
+use your own custom User class. But when you use the ``memory`` provider type,
 it gives you a :class:`Symfony\\Component\\Security\\Core\\User\\User` object.
 
 Whatever your User class is, you need to tell Symfony what algorithm was
 used to encode the passwords. In this case, the passwords are just plaintext,
 but in a second, you'll change this to use ``bcrypt``.
+
+.. caution::
+
+    When using a ``memory`` provider and the :class:`Symfony\\Component\\Security\\Core\\User\\User`,
+    you have to choose an encoding without salt (i.e. ``bcrypt``).
 
 If you refresh now, you'll be logged in! The web debug toolbar even tells
 you who you are and what roles you have:
