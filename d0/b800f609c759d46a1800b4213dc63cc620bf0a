@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-18T16:50:29Z
+
+Oskar, I don't understand the error message because I linked the file from this file: https://github.com/symfony/symfony-docs/pull/13167/files#diff-5c99f0007238ae4a681869aa8713c3fd
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-18T18:14:28Z
+
+You need to add it here too:
+
+https://github.com/symfony/symfony-docs/blob/master/reference/constraints.rst
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-19T07:00:06Z
+
+@javiereguiluz can you please squash or at least your two commits? Otherwise I cannot merge this, thanks!
