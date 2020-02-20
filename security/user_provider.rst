@@ -215,11 +215,6 @@ It's not recommended to use this provider in real applications because of its
 limitations and how difficult it is to manage users. It may be useful in application
 prototypes and for limited applications that don't store users in databases.
 
-.. caution::
-
-    When using a ``memory`` provider, the :class:`Symfony\\Component\\Security\\Core\\User\\User`
-    and not the ``auto`` algorithm, you have to choose an encoding without salt (i.e. ``bcrypt``).
-
 This user provider stores all user information in a configuration file,
 including their passwords. That's why the first step is to configure how these
 users will encode their passwords:
@@ -290,6 +285,11 @@ Now you can configure all the user information in ``config/packages/security.yam
                     users:
                         john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
                         jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+
+.. caution::
+
+    When using a ``memory`` provider, and not the ``auto`` algorithm, you have
+    to choose an encoding without salt (i.e. ``bcrypt``).
 
 .. _security-ldap-user-provider:
 
