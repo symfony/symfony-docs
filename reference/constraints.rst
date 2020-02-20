@@ -62,6 +62,7 @@ Validation Constraints Reference
    constraints/Isbn
    constraints/Issn
 
+   constraints/Compound
    constraints/Callback
    constraints/Expression
    constraints/All

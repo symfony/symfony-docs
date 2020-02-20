@@ -83,6 +83,7 @@ Financial and other Number Constraints
 Other Constraints
 ~~~~~~~~~~~~~~~~~
 
+* :doc:`Compound </reference/constraints/Compound>`
 * :doc:`Callback </reference/constraints/Callback>`
 * :doc:`Expression </reference/constraints/Expression>`
 * :doc:`All </reference/constraints/All>`

@@ -181,6 +181,16 @@ then your validator is already registered as a service and :doc:`tagged </servic
 with the necessary ``validator.constraint_validator``. This means you can
 :ref:`inject services or configuration <services-constructor-injection>` like any other service.
 
+Create a Reusable Set of Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In case you need to apply some common set of constraints in different places
+consistently across your application, you can extend the :doc:`Compound constraint</reference/constraints/Compound>`.
+
+.. versionadded:: 5.1
+
+    The ``Compound`` constraint was introduced in Symfony 5.1.
+
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
