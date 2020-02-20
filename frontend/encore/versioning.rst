@@ -66,7 +66,7 @@ like normal:
 
 .. code-block:: html+twig
 
-    <img src="{{ asset('build/images/logo.png') }}">
+    <img src="{{ asset('build/images/logo.png') }}" alt="ACME logo">
 
 Troubleshooting
 ---------------
