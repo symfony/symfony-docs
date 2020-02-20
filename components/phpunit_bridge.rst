@@ -525,7 +525,7 @@ Troubleshooting
 The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
 "by convention" and assume that the namespace of the tested class can be
 obtained just by removing the ``Tests\`` part from the test namespace. I.e.
-that if the your test case fully-qualified class name (FQCN) is
+if your test case's fully-qualified class name (FQCN) is
 ``App\Tests\Watch\DummyWatchTest``, it assumes the tested class namespace
 is ``App\Watch``.
 
