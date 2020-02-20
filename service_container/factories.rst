@@ -308,12 +308,23 @@ Usage example
 The following example is intended to show how to create and use a factory method in Symfony framework.
 Suppose you want to realize the factory method pattern for services, that describe two delivery methods - DHL and UPS.
 
+Firstly, define marker interface for delivery methods classes::
+
+    // src/Deliveries/DeliveryInterface.php
+    namespace App\Deliveries;
+	
+    interface DeliveryInterface
+    {
+    }
+
 Services (subclasses) definition::
 
     // src/Deliveries/DHL.php
     namespace App\Deliveries;
+	
+    use App\Deliveries\DeliveryInterface;
 
-    class DHL
+    class DHL implements DeliveryInterface
     {
         public $costLabel;
     
@@ -324,8 +335,10 @@ Services (subclasses) definition::
     
     // src/Deliveries/UPS.php
     namespace App\Deliveries;
+	
+    use App\Deliveries\DeliveryInterface;
 
-    class UPS
+    class UPS implements DeliveryInterface
     {
         public $costLabel;
     
@@ -338,12 +351,19 @@ Factory definition::
 
     // src/Factories/DeliveryFactory.php
     namespace App\Factories;
+	
+    use App\Deliveries\DeliveryInterface;
+    use RuntimeException;
     
     abstract class DeliveryFactory
     {
         public static function create($deliveryMethod)
         {
             $delivery = new $deliveryMethod;
+            if ( ! $delivery instanceof DeliveryInterface) {
+                throw new RuntimeException(sprintf('%1$s should implement %2$s.', $deliveryMethod, DeliveryInterface::class));
+            }
+			
             $delivery->costLabel = 'Delivery cost is: ';
     
             return $delivery;
@@ -366,12 +386,10 @@ Next, use settings similar to those in the sections above. These settings allow 
 
             App\Deliveries\DHL:
                 factory:   ['@App\Factories\DeliveryFactory', create]
-                arguments:
-                    $deliveryMethod: 'App\Deliveries\DHL'
+                arguments: ['App\Deliveries\DHL']
             App\Deliveries\UPS:
                 factory:   ['@App\Factories\DeliveryFactory', create]
-                arguments:
-                    $deliveryMethod: 'App\Deliveries\UPS'
+                arguments: ['App\Deliveries\UPS']
             
 
     .. code-block:: xml
@@ -388,11 +406,11 @@ Next, use settings similar to those in the sections above. These settings allow 
 
                 <service id="App\Deliveries\DHL">
                     <factory service="App\Factories\DeliveryFactory" method="create"/>
-                    <argument key="$deliveryMethod">App\Deliveries\DHL</argument>
+                    <argument>App\Deliveries\DHL</argument>
                 </service>
                 <service id="App\Deliveries\UPS">
                     <factory service="App\Factories\DeliveryFactory" method="create"/>
-                    <argument key="$deliveryMethod">App\Deliveries\UPS</argument>
+                    <argument>App\Deliveries\UPS</argument>
                 </service>
             </services>
         </container>
@@ -411,11 +429,11 @@ Next, use settings similar to those in the sections above. These settings allow 
 
             $services->set(DHL::class)
                 ->factory([ref(DeliveryFactory::class), 'create'])
-                ->arg('$deliveryMethod', 'App\Deliveries\DHL')
+                ->args(['App\Deliveries\DHL'])
             ;
             $services->set(UPS::class)
                 ->factory([ref(DeliveryFactory::class), 'create'])
-                ->arg('$deliveryMethod', 'App\Deliveries\UPS')
+                ->args(['App\Deliveries\UPS'])
             ;
         };
 
