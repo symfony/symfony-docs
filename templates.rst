@@ -816,8 +816,8 @@ template fragments. Configure that special URL in the ``fragments`` option:
 
 .. caution::
 
-    Embedding controllers require making requests to those controllers and
-    rendering some templates as result. This can have a significant impact in
+    Embedding controllers requires making requests to those controllers and
+    rendering some templates as result. This can have a significant impact on
     the application performance if you embed lots of controllers. If possible,
     :doc:`cache the template fragment </http_cache/esi>`.
 
