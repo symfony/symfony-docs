@@ -1388,7 +1388,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
                 ->controller(RedirectController::class)
                  ->defaults([
                     'route' => 'doc_page',
-                    // optionally you can define some arguments passed to the template
+                    // optionally you can define some arguments passed to the route
                     'page' => 'index',
                     'version' => 'current',
                     // redirections are temporary by default (code 302) but you can make them permanent (code 301)
