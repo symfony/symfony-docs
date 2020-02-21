@@ -1949,7 +1949,9 @@ generate URLs. This context can be configured globally for all commands:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="router.request_context.host">example.org</parameter>
@@ -2062,7 +2064,9 @@ method) or globally with these configuration parameters:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="router.request_context.scheme">https</parameter>
