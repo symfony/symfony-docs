@@ -553,6 +553,26 @@ and
 :class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`
 also exists to modify messages send to those channels.
 
+Development & Debugging
+-----------------------
+
+Disabling Delivery
+~~~~~~~~~~~~~~~~~~
+
+While developing (or testing), you may want to disable delivery of notifications entirely.
+You can do this by forcing Notifier to use the ``NullTransport`` for all configured texter
+and chatter transports in only the ``dev`` (or respectively ``test``) environment:
+
+.. code-block:: yaml
+
+    # config/packages/dev/notifier.yaml
+    framework:
+        notifier:
+            texter_transports:
+                twilio: 'null://null'
+            chatter_transports:
+                slack: 'null://null'
+
 .. TODO
     - Using the message bus for asynchronous notification
     - Describe notifier monolog handler
