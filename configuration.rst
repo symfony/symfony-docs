@@ -84,7 +84,7 @@ The main configuration file is called ``config.yml``:
 
         // Twig Configuration
         $container->loadFromExtension('twig', [
-            'debug'            => '%kernel.debug%',
+            'debug' => '%kernel.debug%',
             'strict_variables' => '%kernel.debug%',
         ]);
 
@@ -196,14 +196,8 @@ can also load XML files or PHP files.
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xmlns:twig="http://symfony.com/schema/dic/twig"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                    http://symfony.com/schema/dic/twig
-                    https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <imports>
                     <import resource="parameters.res" type="yml"/>

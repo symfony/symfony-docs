@@ -263,14 +263,14 @@ Sometimes, a message containing a variable needs to be translated::
 
     public function indexAction($name)
     {
-        $translated = $this->get('translator')->trans('Hello '.$name);
+        $translated = $this->get('translator')->trans('Hello '.$name.'!');
 
         // ...
     }
 
 However, creating a translation for this string is impossible since the translator
 will try to look up the exact message, including the variable portions
-(e.g. *"Hello Ryan"* or *"Hello Fabien"*). Instead of writing a translation
+(e.g. *"Hello Ryan!"* or *"Hello Fabien!"*). Instead of writing a translation
 for every possible iteration of the ``$name`` variable, you can replace the
 variable with a "placeholder"::
 
@@ -291,7 +291,7 @@ is done just as before:
 
     .. code-block:: yaml
 
-        'Hello %name%': Bonjour %name%
+        'Hello %name%!': Bonjour %name% !
 
     .. code-block:: xml
 
@@ -300,8 +300,8 @@ is done just as before:
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
                     <trans-unit id="1">
-                        <source>Hello %name%</source>
-                        <target>Bonjour %name%</target>
+                        <source>Hello %name%!</source>
+                        <target>Bonjour %name% !</target>
                     </trans-unit>
                 </body>
             </file>
@@ -310,7 +310,7 @@ is done just as before:
     .. code-block:: php
 
         return [
-            'Hello %name%' => 'Bonjour %name%',
+            'Hello %name%!' => 'Bonjour %name% !',
         ];
 
 .. note::
@@ -717,8 +717,7 @@ if you're generating translations with specialized programs or teams.
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-            >
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <framework:config>
                     <framework:translator>

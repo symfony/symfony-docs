@@ -65,7 +65,9 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:cache app="cache.adapter.filesystem"
@@ -133,7 +135,9 @@ will create pool with service id of ``cache.[type]``
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!--
@@ -143,6 +147,7 @@ will create pool with service id of ``cache.[type]``
                 default_memcached_provider: Service: cache.memcached
                 default_pdo_provider: Service: cache.pdo
                 -->
+                <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
                     default_doctrine_provider="app.doctrine_cache"
                     default_psr6_provider="app.my_psr6_service"
@@ -204,7 +209,9 @@ You can also create more customized pools. All you need is an adapter:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:cache default_memcached_provider="memcached://localhost">
@@ -276,7 +283,9 @@ For advanced configurations it could sometimes be useful to use a pool as an ada
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:cache app="my_cache_pool">
@@ -354,7 +363,9 @@ and use that when configuring the pool.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:cache>
@@ -364,6 +375,7 @@ and use that when configuring the pool.
 
             <services>
                 <service id="app.my_custom_redis_provider" class="\Redis">
+                    <factory class="Symfony\Component\Cache\Adapter\RedisAdapter" method="createConnection"/>
                     <argument>redis://localhost</argument>
                     <argument type="collection">
                         <argument key="retry_interval">2</argument>
@@ -376,6 +388,8 @@ and use that when configuring the pool.
     .. code-block:: php
 
         // app/config/config.php
+        use Symfony\Component\Cache\Adapter\RedisAdapter;
+
         $container->loadFromExtension('framework', [
             'cache' => [
                 'pools' => [
@@ -387,12 +401,14 @@ and use that when configuring the pool.
             ],
         ]);
 
-        $container->getDefinition('app.my_custom_redis_provider', \Redis::class)
+        $container->register('app.my_custom_redis_provider', \Redis::class)
+            ->setFactory([RedisAdapter::class, 'createConnection'])
             ->addArgument('redis://localhost')
             ->addArgument([
                 'retry_interval' => 2,
                 'timeout' => 10
-            ]);
+            ])
+        ;
 
 Creating a Cache Chain
 ----------------------
@@ -448,7 +464,9 @@ Symfony stores the item automatically in all the missing pools.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <framework:cache>
@@ -474,6 +492,9 @@ Symfony stores the item automatically in all the missing pools.
     .. code-block:: php
 
         // app/config/config.php
+        use Symfony\Component\Cache\Adapter\ChainAdapter;
+        use Symfony\Component\DependencyInjection\Reference;
+
         $container->loadFromExtension('framework', [
             'cache' => [
                 'pools' => [
@@ -495,13 +516,14 @@ Symfony stores the item automatically in all the missing pools.
             ],
         ]);
 
-        $container->getDefinition('app.my_cache_chain_adapter', \Symfony\Component\Cache\Adapter\ChainAdapter::class)
+        $container->register('app.my_cache_chain_adapter', ChainAdapter::class)
             ->addArgument([
                 new Reference('cache.array'),
                 new Reference('cache.apcu'),
                 new Reference('cache.my_redis'),
             ])
-            ->addArgument(31536000);
+            ->addArgument(31536000)
+        ;
 
 .. note::
 

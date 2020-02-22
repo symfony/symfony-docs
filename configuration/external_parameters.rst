@@ -47,9 +47,7 @@ variable in your service container configuration, you can reference it using
                 https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
-                <doctrine:dbal
-                    host="%env(DATABASE_HOST)%"
-                />
+                <doctrine:dbal host="%env(DATABASE_HOST)%"/>
             </doctrine:config>
 
         </container>
@@ -81,7 +79,8 @@ will be used whenever the corresponding environment variable is *not* found:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="database_host">%env(DATABASE_HOST)%</parameter>
@@ -160,7 +159,7 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
         # app/config/config.yml
         framework:
             router:
-                http_port: env(int:HTTP_PORT)
+                http_port: '%env(int:HTTP_PORT)%'
 
     .. code-block:: xml
 
@@ -379,7 +378,7 @@ Symfony provides the following env var processors:
             parameters:
                 env(HOST): '10.0.0.1'
                 sentry_host: '%env(HOST)%'
-                env(SENTRY_DSN): 'http://%sentry_host%/project'
+                env(SENTRY_DSN): 'https://%sentry_host%/project'
             sentry:
                 dsn: '%env(resolve:SENTRY_DSN)%'
 
@@ -388,6 +387,7 @@ Symfony provides the following env var processors:
             <!-- app/config/config.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:sentry="http://symfony.com/schema/dic/sentry"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -395,7 +395,7 @@ Symfony provides the following env var processors:
                 <parameters>
                     <parameter key="env(HOST)">10.0.0.1</parameter>
                     <parameter key="sentry_host">%env(HOST)%</parameter>
-                    <parameter key="env(SENTRY_DSN)">http://%sentry_host%/project</parameter>
+                    <parameter key="env(SENTRY_DSN)">https://%sentry_host%/project</parameter>
                 </parameters>
 
                 <sentry:config dsn="%env(resolve:SENTRY_DSN)%"/>
@@ -406,7 +406,7 @@ Symfony provides the following env var processors:
             // app/config/config.php
             $container->setParameter('env(HOST)', '10.0.0.1');
             $container->setParameter('sentry_host', '%env(HOST)%');
-            $container->setParameter('env(SENTRY_DSN)', 'http://%sentry_host%/project');
+            $container->setParameter('env(SENTRY_DSN)', 'https://%sentry_host%/project');
             $container->loadFromExtension('sentry', [
                 'dsn' => '%env(resolve:SENTRY_DSN)%',
             ]);
@@ -420,9 +420,12 @@ Symfony provides the following env var processors:
 
             # app/config/config.yml
             parameters:
-                env(AUTH_FILE): '../config/auth.json'
-            google:
-                auth: '%env(file:AUTH_FILE)%'
+                env(AUTH_FILE): '../auth.json'
+
+            services:
+                some_authenticator:
+                    arguments:
+                        $auth: '%env(file:AUTH_FILE)%'
 
         .. code-block:: xml
 
@@ -430,26 +433,30 @@ Symfony provides the following env var processors:
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(AUTH_FILE)">../config/auth.json</parameter>
+                    <parameter key="env(AUTH_FILE)">../auth.json</parameter>
                 </parameters>
 
-                <google auth="%env(file:AUTH_FILE)%"/>
+                <services>
+                    <service id="some_authenticator">
+                        <argument key="$auth">"%env(file:AUTH_FILE)%"<argument/>
+                    <service>
+                </services>
             </container>
 
         .. code-block:: php
 
             // app/config/config.php
-            $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
-            $container->loadFromExtension('google', [
-                'auth' => '%env(file:AUTH_FILE)%',
-            ]);
+            $container->setParameter('env(AUTH_FILE)', __DIR__.'/../auth.json');
+
+            $container->register('some_authenticator')
+                ->setArgument('$auth', '%env(file:AUTH_FILE)%')
+            ;
 
 It is also possible to combine any number of processors:
 
@@ -457,12 +464,15 @@ It is also possible to combine any number of processors:
 
     parameters:
         env(AUTH_FILE): "%kernel.project_dir%/config/auth.json"
-    google:
-        # 1. gets the value of the AUTH_FILE env var
-        # 2. replaces the values of any config param to get the config path
-        # 3. gets the content of the file stored in that path
-        # 4. JSON-decodes the content of the file and returns it
-        auth: '%env(json:file:resolve:AUTH_FILE)%'
+
+    services:
+        some_authenticator:
+            arguments:
+                # 1. gets the value of the AUTH_FILE env var
+                # 2. replaces the values of any config param to get the config path
+                # 3. gets the content of the file stored in that path
+                # 4. JSON-decodes the content of the file and returns it
+                $auth: '%env(json:file:resolve:AUTH_FILE)%'
 
 Custom Environment Variable Processors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -550,3 +560,4 @@ the Symfony service container::
     // app/config/parameters.php
     include_once('/path/to/drupal/sites/default/settings.php');
     $container->setParameter('drupal.database.url', $db_url);
+

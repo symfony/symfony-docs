@@ -101,7 +101,9 @@ type-hinted method arguments:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:sensio-framework-extra="http://symfony.com/schema/dic/symfony_extra"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony_extra
+                https://symfony.com/schema/dic/symfony_extra/symfony_extra-1.0.xsd">
 
             <sensio-framework-extra:config>
                 <request converters="true" auto-convert="false"/>
@@ -191,12 +193,8 @@ and adding a priority.
 
         # app/config/services.yml
         services:
-            _defaults:
-                # ... be sure autowiring is enabled
-                autowire: true
-            # ...
-
             AppBundle\ArgumentResolver\UserValueResolver:
+                autowire: true
                 tags:
                     - { name: controller.argument_value_resolver, priority: 50 }
 
@@ -206,14 +204,11 @@ and adding a priority.
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... be sure autowiring is enabled -->
-                <defaults autowire="true"/>
-                <!-- ... -->
-
-                <service id="AppBundle\ArgumentResolver\UserValueResolver">
+                <service id="AppBundle\ArgumentResolver\UserValueResolver" autowire="true">
                     <tag name="controller.argument_value_resolver" priority="50"/>
                 </service>
             </services>
@@ -226,7 +221,8 @@ and adding a priority.
         use AppBundle\ArgumentResolver\UserValueResolver;
 
         $container->autowire(UserValueResolver::class)
-            ->addTag('controller.argument_value_resolver', ['priority' => 50]);
+            ->addTag('controller.argument_value_resolver', ['priority' => 50])
+        ;
 
 While adding a priority is optional, it's recommended to add one to make sure
 the expected value is injected. The ``RequestAttributeValueResolver`` has a

@@ -102,8 +102,7 @@ using a special "tag":
         // app/config/services.php
         use AppBundle\EventListener\ExceptionListener;
 
-        $container
-            ->autowire(ExceptionListener::class)
+        $container->register(ExceptionListener::class)
             ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
         ;
 

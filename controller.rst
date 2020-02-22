@@ -295,7 +295,7 @@ the argument by its name:
 
             # explicitly configure the service
             AppBundle\Controller\LuckyController:
-                public: true
+                tags: [controller.service_arguments]
                 bind:
                     # for any $logger argument, pass this specific service
                     $logger: '@monolog.logger.doctrine'
@@ -313,7 +313,8 @@ the argument by its name:
                 <!-- ... -->
 
                 <!-- Explicitly configure the service -->
-                <service id="AppBundle\Controller\LuckyController" public="true">
+                <service id="AppBundle\Controller\LuckyController">
+                    <tag name"controller.service_arguments"/>
                     <bind key="$logger"
                         type="service"
                         id="monolog.logger.doctrine"
@@ -329,7 +330,7 @@ the argument by its name:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register(LuckyController::class)
-            ->setPublic(true)
+            ->addTag('controller.service_arguments')
             ->setBindings([
                 '$logger' => new Reference('monolog.logger.doctrine'),
             ])
@@ -341,7 +342,7 @@ in your controllers.
 .. caution::
 
     You can *only* pass *services* to your controller arguments in this way. It's not
-    possible, for example, to pass a service parameter as a controller argument,
+    possible, for example, to pass a config parameter as a controller argument,
     even by using ``bind``. If you need a parameter, use the ``$this->getParameter('kernel.debug')``
     shortcut or pass the value through your controller's ``__construct()`` method
     and specify its value with ``bind``.

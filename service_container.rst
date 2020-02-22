@@ -210,11 +210,13 @@ each time you ask for it.
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <!-- Default configuration for services in *this* file -->
+                    <!-- default configuration for services in *this* file -->
                     <defaults autowire="true" autoconfigure="true" public="false"/>
 
-                    <!-- Load services from whatever directories you want (you can update this!) -->
-                    <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}"/>
+                    <!-- makes classes in src/AppBundle available to be used as services -->
+                    <prototype namespace="AppBundle\"
+                        resource="../../src/AppBundle/*"
+                        exclude="../../src/AppBundle/{Entity,Repository}"/>
                 </services>
             </container>
 
@@ -223,17 +225,23 @@ each time you ask for it.
             // app/config/services.php
             use Symfony\Component\DependencyInjection\Definition;
 
-            // To use as default template
-            $definition = new Definition();
-
-            $definition
+            // To use as default configuration for services in *this* file
+            $defaults = new Definition();
+            $defaults
                 ->setAutowired(true)
                 ->setAutoconfigured(true)
                 ->setPublic(false)
             ;
 
             // $this is a reference to the current loader
-            $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+            $this->registerClasses(
+                $defaults,
+                // makes classes in src/AppBundle available to be used as services
+                'AppBundle\\',
+                '../../src/AppBundle/*',
+                // excludes some directory or files
+                '../../src/AppBundle/{Entity,Repository}'
+            );
 
     .. tip::
 
@@ -457,9 +465,8 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         # app/config/services.yml
         services:
-            # ...
+            # ... same as before
 
-            # same as before
             AppBundle\:
                 resource: '../../src/AppBundle/*'
                 exclude: '../../src/AppBundle/{Entity,Repository}'
@@ -479,12 +486,13 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... -->
+                <!-- ...  same as before -->
 
-                <!-- Same as before -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}"/>
+                <prototype namespace="AppBundle\"
+                    resource="../../src/AppBundle/*"
+                    exclude="../../src/AppBundle/{Entity,Repository}"/>
 
-                <!-- Explicitly configure the service -->
+                <!-- explicitly configure the service -->
                 <service id="AppBundle\Updates\SiteUpdateManager">
                     <argument key="$adminEmail">manager@example.com</argument>
                 </service>
@@ -497,20 +505,21 @@ pass here. No problem! In your configuration, you can explicitly set this argume
         use AppBundle\Updates\SiteUpdateManager;
         use Symfony\Component\DependencyInjection\Definition;
 
-        // Same as before
-        $definition = new Definition();
+        // ... same as before
 
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
+        // $this is a reference to the current loader
+        $this->registerClasses(
+            $defaults,
+            'AppBundle\\',
+            '../../src/AppBundle/*',
+            // excludes
+            '../../src/AppBundle/{Entity,Repository}'
+        );
 
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
-
-        // Explicitly configure the service
+        // explicitly configure the service
         $container->getDefinition(SiteUpdateManager::class)
-            ->setArgument('$adminEmail', 'manager@example.com');
+            ->setArgument('$adminEmail', 'manager@example.com')
+        ;
 
 .. versionadded:: 3.3
 
@@ -544,7 +553,7 @@ and reference it with the ``%parameter_name%`` syntax:
             admin_email: manager@example.com
 
         services:
-            # ...
+            # ... same as before
 
             AppBundle\Updates\SiteUpdateManager:
                 arguments:
@@ -564,7 +573,7 @@ and reference it with the ``%parameter_name%`` syntax:
             </parameters>
 
             <services>
-                <!-- ... -->
+                <!-- ... same as before -->
 
                 <service id="AppBundle\Updates\SiteUpdateManager">
                     <argument key="$adminEmail">%admin_email%</argument>
@@ -576,11 +585,14 @@ and reference it with the ``%parameter_name%`` syntax:
 
         // app/config/services.php
         use AppBundle\Updates\SiteUpdateManager;
+
+        // ... same as before
+
         $container->setParameter('admin_email', 'manager@example.com');
 
-        $container->autowire(SiteUpdateManager::class)
-            // ...
-            ->setArgument('$adminEmail', '%admin_email%');
+        $container->getDefinition(SiteUpdateManager::class)
+            ->setArgument('$adminEmail', '%admin_email%')
+        ;
 
 Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
@@ -671,7 +683,7 @@ But, you can control this and pass in a different logger:
             <services>
                 <!-- ... same code as before -->
 
-                <!-- Explicitly configure the service -->
+                <!-- explicitly configure the service -->
                 <service id="AppBundle\Service\MessageGenerator">
                     <argument key="$logger" type="service" id="monolog.logger.request"/>
                 </service>
@@ -684,10 +696,12 @@ But, you can control this and pass in a different logger:
         use AppBundle\Service\MessageGenerator;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->autowire(MessageGenerator::class)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-            ->setArgument('$logger', new Reference('monolog.logger.request'));
+        // ... same as before
+
+        // explicitly configure the service
+        $container->getDefinition(MessageGenerator::class)
+            ->setArgument('$logger', new Reference('monolog.logger.request'))
+        ;
 
 This tells the container that the ``$logger`` argument to ``__construct`` should use
 service whose id is ``monolog.logger.request``.
@@ -756,15 +770,26 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
     .. code-block:: php
 
         // config/services.php
-        use App\Controller\LuckyController;
         use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(LuckyController::class)
-            ->setPublic(true)
-            ->setBindings([
+        $defaults = new Definition();
+        $defaults
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+            ->setBinds([
+                // pass this value to any $adminEmail argument for any service
+                // that's defined in this file (including controller arguments)
                 '$adminEmail' => 'manager@example.com',
-                '$requestLogger' => new Reference('monolog.logger.request'),
+
+                // pass this service to any $requestLogger argument for any
+                // service that's defined in this file
+                '$requestLogger' => new Reference('@monolog.logger.request'),
+
+                // pass this service for any LoggerInterface type-hint for any
+                // service that's defined in this file
                 LoggerInterface::class => new Reference('monolog.logger.request'),
             ])
         ;
@@ -840,8 +865,10 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
         // app/config/services.php
         use AppBundle\Twig\MyTwigExtension;
 
-        $container->autowire(MyTwigExtension::class)
-            ->addTag('twig.extension');
+        // ...
+        $container->getDefinition(MyTwigExtension::class)
+            ->addTag('twig.extension')
+        ;
 
 But, with ``autoconfigure: true``, you don't need the tag. In fact, if you're using
 the :ref:`Symfony Standard Edition services.yml config <service-container-services-load-example>`,
@@ -886,6 +913,21 @@ this file is ``public: false`` by default:
                 <defaults autowire="true" autoconfigure="true" public="false"/>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        <?php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // To use as default configuration for services in *this* file
+        $defaults = new Definition();
+        $defaults
+            // ...
+            ->setPublic(false)
+        ;
+
 
 What does this mean? When a service is **not** public, you cannot access it directly
 from the container::
@@ -932,6 +974,19 @@ need to make your service public, just override this setting:
             </services>
         </container>
 
+    .. code-block:: php
+
+        // app/config/services.php
+        <?php
+
+        use AppBundle\Service\MessageGenerator;
+
+        // ... same code as before
+
+        $container->getDefinition(MessageGenerator::class)
+            ->setPublic(true)
+        ;
+
 .. _service-psr4-loader:
 
 Importing Many Services at once with resource
@@ -946,7 +1001,7 @@ key. For example, the default Symfony configuration contains this:
 
         # app/config/services.yml
         services:
-            # ...
+            # ... same as before
 
             # the namespace prefix for classes (must end in \)
             AppBundle\:
@@ -955,11 +1010,10 @@ key. For example, the default Symfony configuration contains this:
                 # ...except for the classes located in these directories
                 exclude: '../../src/AppBundle/{Entity,Repository}'
 
-            # these were imported above, but we want to add some extra config
+            # these were imported above, but we want to add the tag
             AppBundle\Controller\:
                 resource: '../../src/AppBundle/Controller'
                 # apply some configuration to these services
-                public: true
                 tags: ['controller.service_arguments']
 
     .. code-block:: xml
@@ -972,10 +1026,16 @@ key. For example, the default Symfony configuration contains this:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... -->
+                <!-- ... same as before -->
 
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}"/>
+                <!-- the namespace prefix for classes (must end in \) -->
+                <prototype namespace="AppBundle\"
+                    resource="../../src/AppBundle/*"
+                    exclude="../../src/AppBundle/{Entity,Repository}"/>
+                    <!-- create services for all the classes found in this directory...
+                         ...except for the classes located in these directories -->
 
+                <!-- these were imported above, but we want to add the tag -->
                 <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
                     <tag name="controller.service_arguments"/>
                 </prototype>
@@ -985,27 +1045,27 @@ key. For example, the default Symfony configuration contains this:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        // To use as default template
-        $definition = new Definition();
-
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
-
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
-
-        // Changes default config
-        $definition
-            ->setPublic(true)
-            ->addTag('controller.service_arguments')
-        ;
+        // ... same as before
 
         // $this is a reference to the current loader
-        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+        $this->registerClasses(
+            $defaults,
+            // the namespace prefix for classes (must end in \)
+            'AppBundle\\',
+            // create services for all the classes found in this directory...
+            '../../src/AppBundle/*',
+            '../../src/AppBundle/{Entity,Repository}'
+        );
+
+        // changes default config
+        $defaults->addTag('controller.service_arguments');
+
+        // these were imported above, but we want to the tag
+        $this->registerClasses(
+            $defaults,
+            'AppBundle\\Controller\\',
+            '../../src/AppBundle/Controller/*'
+        );
 
 .. tip::
 
@@ -1045,30 +1105,119 @@ If you define services using the YAML config format, the PHP namespace is used
 as the key of each configuration, so you can't define different service configs
 for classes under the same namespace:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/services.yml
-    services:
-        App\Domain\:
-            resource: '../../src/Domain/*'
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            AppBundle\Domain\:
+                resource: '../../src/AppBundleDomain/*'
+
             # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <prototype namespace="AppBundle\Domain"
+                    resource="../../src/AppBundle/Domain/*"/>
+                </prototype>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $defaults = new Definition();
+
+        // $this is a reference to the current loader
+        $this->registerClasses(
+            $defaults,
+            'AppBundle\\Domain\\',
+            '../../src/AppBundle/Domain/*'
+        );
+
+        // ...
 
 In order to have multiple definitions, add the ``namespace`` option and use any
 unique string as the key of each service config:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # app/config/services.yml
-    services:
-        command_handlers:
-            namespace: App\Domain\
-            resource: '../../src/Domain/*/CommandHandler'
-            tags: [command_handler]
+    .. code-block:: yaml
 
-        event_subscribers:
-            namespace: App\Domain\
-            resource: '../../src/Domain/*/EventSubscriber'
-            tags: [event_subscriber]
+        # app/config/services.yml
+        services:
+            command_handlers:
+                namespace: App\Domain\
+                resource: '../../src/Domain/*/CommandHandler'
+                tags: [command_handler]
+
+            event_subscribers:
+                namespace: App\Domain\
+                resource: '../../src/Domain/*/EventSubscriber'
+                tags: [event_subscriber]
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <prototype namespace="AppBundle\Domain"
+                    resource="../../src/AppBundle/Domain/*/CommandHandler"/>
+                    <tag name"command_handler"/>
+                </prototype>
+
+                <prototype namespace="AppBundle\Domain"
+                    resource="../../src/AppBundle/Domain/*/EventSubscriber"/>
+                    <tag name"event_subscriber"/>
+                </prototype>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $commandHandlers = new Definition();
+        $commandHandlers->addTag('command_handler');
+
+        // $this is a reference to the current loader
+        $this->registerClasses(
+            $commandHandlers,
+            'AppBundle\\Domain\\',
+            '../../src/AppBundle/Domain/*/CommandHandler'
+        );
+
+        $eventSubscribers = new Definition();
+        $eventSubscribers->addTag('event_subscriber');
+
+        $this->registerClasses(
+            $eventSubscribers,
+            'AppBundle\\Domain\\',
+            '../../src/AppBundle/Domain/*/EventSubscriber'
+        );
 
 .. _services-explicitly-configure-wire-services:
 
@@ -1127,18 +1276,26 @@ admin email. In this case, each needs to have a unique service id:
             <services>
                 <!-- ... -->
 
-                <service id="site_update_manager.superadmin" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
+                <!-- you CAN still use autowiring: we just want to show what it looks like without -->
+                <service id="site_update_manager.superadmin"
+                    class="AppBundle\Updates\SiteUpdateManager"
+                    autowire="false">
+                    <!-- manually wire all arguments -->
                     <argument type="service" id="AppBundle\Service\MessageGenerator"/>
                     <argument type="service" id="mailer"/>
                     <argument>superadmin@example.com</argument>
                 </service>
 
-                <service id="site_update_manager.normal_users" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
+                <service id="site_update_manager.normal_users"
+                    class="AppBundle\Updates\SiteUpdateManager"
+                    autowire="false">
                     <argument type="service" id="AppBundle\Service\MessageGenerator"/>
                     <argument type="service" id="mailer"/>
                     <argument>contact@example.com</argument>
                 </service>
 
+                <!-- Create an alias, so that - by default - if you type-hint SiteUpdateManager,
+                     the site_update_manager.superadmin will be used -->
                 <service id="AppBundle\Updates\SiteUpdateManager" alias="site_update_manager.superadmin"/>
             </services>
         </container>
@@ -1150,13 +1307,17 @@ admin email. In this case, each needs to have a unique service id:
         use AppBundle\Updates\SiteUpdateManager;
         use Symfony\Component\DependencyInjection\Reference;
 
+        // register the service by its id
         $container->register('site_update_manager.superadmin', SiteUpdateManager::class)
+            // you CAN still use autowiring: we just want to show what it looks like without
             ->setAutowired(false)
+            // manually wire all arguments
             ->setArguments([
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
                 'superadmin@example.com'
-            ]);
+            ])
+        ;
 
         $container->register('site_update_manager.normal_users', SiteUpdateManager::class)
             ->setAutowired(false)
@@ -1164,8 +1325,11 @@ admin email. In this case, each needs to have a unique service id:
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
                 'contact@example.com'
-            ]);
+            ])
+        ;
 
+        // Create an alias, so that - by default - if you type-hint SiteUpdateManager,
+        // the site_update_manager.superadmin will be used
         $container->setAlias(SiteUpdateManager::class, 'site_update_manager.superadmin')
 
 In this case, *two* services are registered: ``site_update_manager.superadmin``
