@@ -121,10 +121,8 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
                 ->html('<p>See Twig integration for better HTML integration!</p>');
-
-            /** @var Symfony\Component\Mailer\SentMessage $sentEmail */
-            $sentEmail = $mailer->send($email);
-            // $messageId = $sentEmail->getMessageId();
+                
+            $mailer->send($email);
 
             // ...
         }
