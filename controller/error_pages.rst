@@ -118,6 +118,17 @@ store the HTTP status code and message respectively.
     and its required ``getStatusCode()`` method. Otherwise, the ``status_code``
     will default to ``500``.
 
+Additionally you have access to the Exception with ``exception``, which for example
+allows you to output the stack trace using ``{{ exception.traceAsString }}`` or
+access any other method on the object. You should be careful with this though,
+as this is very likely to expose sensitive data.
+
+.. tip::
+
+    PHP errors are turned into exceptions as well by default, so you can also access these
+    error details using ``exception``. For more on this see
+    :ref:`Turning PHP Errors into Exceptions <turning-php-errors-into-exceptions>`
+
 Security & 404 Pages
 --------------------
 

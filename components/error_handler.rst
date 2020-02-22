@@ -43,6 +43,8 @@ enable each of them separately.
     You should never enable the debug tools, except for the error handler, in a
     production environment as they might disclose sensitive information to the user.
 
+.. _turning-php-errors-into-exceptions:
+
 Turning PHP Errors into Exceptions
 ----------------------------------
 
