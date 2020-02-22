@@ -453,7 +453,11 @@ whenever the user browses a page::
         public function onKernelRequest(RequestEvent $event): void
         {
             $request = $event->getRequest();
-            if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
+            if (
+                !$event->isMasterRequest()
+                || $request->isXmlHttpRequest()
+                || 'app_login' === $request->attributes->get('_route')
+            ) {
                 return;
             }
 
