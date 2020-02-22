@@ -9,6 +9,9 @@ Creating and Sending Notifications
     The Notifier component was introduced in Symfony 5.0 as an
     :doc:`experimental feature </contributing/code/experimental>`.
 
+Installation
+------------
+
 Current web applications use many different channels to send messages to
 the users (e.g. SMS, Slack messages, emails, push notifications, etc.). The
 Notifier component in Symfony is an abstraction on top of all these
