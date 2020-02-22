@@ -348,9 +348,20 @@ Methods to Join, Split, Truncate and Reverse
     u('Symfony is great')->slice(-5);    // 'great'
 
     // reduces the string to the length given as argument (if it's longer)
-    u('Lorem Ipsum')->truncate(80);     // 'Lorem Ipsum'
-    u('Lorem Ipsum')->truncate(3);      // 'Lor'
-    u('Lorem Ipsum')->truncate(8, '…'); // 'Lorem I…'
+    u('Lorem Ipsum')->truncate(3);             // 'Lor'
+    u('Lorem Ipsum')->truncate(80);            // 'Lorem Ipsum'
+    // the second argument is the character(s) added when a string is cut
+    // (the total length includes the length of this character(s))
+    u('Lorem Ipsum')->truncate(8, '…');        // 'Lorem I…'
+    // if the third argument is false, the last word before the cut is kept
+    // even if that generates a string longer than the desired length
+    u('Lorem Ipsum')->truncate(8, '…', false); // 'Lorem Ipsum'
+
+.. versionadded:: 5.1
+
+    The third argument of ``truncate()`` was introduced in Symfony 5.1.
+
+::
 
     // breaks the string into lines of the given length
     u('Lorem Ipsum')->wordwrap(4);             // 'Lorem\nIpsum'
