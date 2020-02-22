@@ -11,18 +11,12 @@ performance checklists.
 Symfony Application Checklist
 -----------------------------
 
+These are the code and configuration changes that you can make in your Symfony
+application to improve its performance:
+
 #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
 #. :ref:`Enable APC Caching for the Autoloader <performance-autoloader-apc-cache>`
 #. :ref:`Use Bootstrap Files <performance-use-bootstrap-files>`
-
-Production Server Checklist
----------------------------
-
-#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
-#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
-#. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
-#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
-#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
 
 .. _performance-install-apcu-polyfill:
 
@@ -107,6 +101,18 @@ rebuilt after updating the vendor libraries via the ``composer install`` command
   bootstrap file since there will be fewer files to monitor for changes. Of
   course, if this feature is disabled in the byte code cache (e.g.
   ``apc.stat=0`` in APC), there is no longer a reason to use a bootstrap file.
+
+Production Server Checklist
+---------------------------
+
+These are the changes that you can make in your production server to improve
+performance when running Symfony applications:
+
+#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
+#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
+#. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
+#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
+#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
 
 .. _performance-use-opcache:
 
