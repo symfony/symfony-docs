@@ -17,7 +17,7 @@ For example:
 
     <!-- ... -->
 
-    <a href="/"><img src="/images/logo.png"></a>
+    <a href="/"><img src="/images/logo.png" alt="logo"></a>
 
 This practice is no longer recommended unless the web application is extremely
 simple. Hardcoding URLs can be a disadvantage because:
