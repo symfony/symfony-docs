@@ -423,8 +423,7 @@ missing a title::
             $title = $post->title;
 
             if (empty($title)) {
-                // Block the transition "to_review" if the post has no title
-                $event->setBlocked(true);
+                $event->setBlocked(true, 'This blog post cannot be marked as reviewed because it has no title.');
             }
         }
 
@@ -435,6 +434,10 @@ missing a title::
             ];
         }
     }
+
+.. versionadded:: 5.1
+
+    The optional second argument of ``setBlocked()`` was introduced in Symfony 5.1.
 
 Event Methods
 ~~~~~~~~~~~~~
