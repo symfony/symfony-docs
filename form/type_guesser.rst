@@ -13,8 +13,6 @@ type guessers.
 
     Symfony also provides some form type guessers in the bridges:
 
-    * :class:`Symfony\\Bridge\\Propel1\\Form\\PropelTypeGuesser` provided by
-      the Propel1 bridge;
     * :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmTypeGuesser`
       provided by the Doctrine bridge.
 
