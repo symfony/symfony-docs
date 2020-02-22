@@ -14,6 +14,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
 |             | - `choice_attr`_                                                             |
+|             | - `choice_filter`_                                                           |
 |             | - `choice_label`_                                                            |
 |             | - `choice_loader`_                                                           |
 |             | - `choice_name`_                                                             |
@@ -211,6 +212,8 @@ as values. When the form gets submitted the correct values with the
 correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_filter.rst.inc
 
 .. _reference-form-choice-label:
 
