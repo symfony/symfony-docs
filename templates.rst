@@ -671,7 +671,7 @@ following code to display the user information is repeated in several places:
 
     {# ... #}
     <div class="user-profile">
-        <img src="{{ user.profileImageUrl }}"/>
+        <img src="{{ user.profileImageUrl }}" alt="{{ user.fullName }}"/>
         <p>{{ user.fullName }} - {{ user.email }}</p>
     </div>
 
