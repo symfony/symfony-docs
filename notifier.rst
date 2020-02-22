@@ -63,7 +63,7 @@ Sinch     ``symfony/sinch-notifier``     ``sinch://ACCOUNT_ID:AUTH_TOKEN@default
 
 .. versionadded:: 5.1
 
-    The OvhCloud integration was introduced in Symfony 5.1.
+    The OvhCloud and Sinch integrations were introduced in Symfony 5.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
