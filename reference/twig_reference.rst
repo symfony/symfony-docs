@@ -237,7 +237,7 @@ absolute_url
 ``path``
     **type**: ``string``
 
-Returns the absolute URL from the passed relative path. Combine it with the
+Returns the absolute URL (with scheme and host) from the passed relative path. Combine it with the
 :ref:`asset() function <reference-twig-function-asset>` to generate absolute URLs
 for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Assets <templates-link-to-assets>`.
 
