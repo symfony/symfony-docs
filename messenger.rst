@@ -717,8 +717,8 @@ to retry them:
     # retry specific messages
     $ php bin/console messenger:failed:retry 20 30 --force
 
-    # remove a message without retrying it
-    $ php bin/console messenger:failed:remove 20
+    # remove messages without retrying them and show each message before removing it
+    $ php bin/console messenger:failed:remove 20 30 --show-messages
 
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
