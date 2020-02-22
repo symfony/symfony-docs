@@ -25,7 +25,7 @@ the ``services.yaml`` file configures the services of the
 :doc:`service container </service_container>`; the ``bundles.php`` file enables/
 disables packages in your application.
 
-You'll be working most in the ``config/packages/`` directory. This directory
+You'll be working mostly in the ``config/packages/`` directory. This directory
 stores the configuration of every package installed in your application.
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
@@ -55,7 +55,7 @@ to change these files after package installation
 Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~
 
-Unlike other frameworks, Symfony doesn't impose you a specific format to
+Unlike other frameworks, Symfony doesn't impose a specific format on you to
 configure your applications. Symfony lets you choose between YAML, XML and PHP
 and throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
@@ -70,8 +70,8 @@ readable. These are the main advantages and disadvantages of each format:
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
   and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
 * **XML**:autocompleted/validated by most IDEs and is parsed natively by PHP,
-  but sometimes it generates too verbose configuration. `Learn the XML syntax`_;
-* **PHP**: very powerful and it allows to create dynamic configuration, but the
+  but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
+* **PHP**: very powerful and it allows you to create dynamic configuration, but the
   resulting configuration is less readable than the other formats.
 
 Importing Configuration Files
@@ -368,7 +368,7 @@ Take the ``framework`` package, installed by default, as an example:
   ``config/packages/framework.yaml``.
 
 In reality, each environment differs only somewhat from others. This means that
-all environments share a large base of common configurations, which is put in
+all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
 .. seealso::
@@ -425,7 +425,7 @@ going to production:
 
 .. tip::
 
-    It's common for environments to be similar between each other, so you can
+    It's common for environments to be similar to each other, so you can
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
 
@@ -728,10 +728,10 @@ doesn't work for parameters:
         $container->getDefinition(MessageGenerator::class)
             ->setArgument('$contentsDir', '%app.contents_dir%');
 
-If you inject the same parameters over and over again, use instead the
-``services._defaults.bind`` option. The arguments defined in that option are
+If you inject the same parameters over and over again, use the
+``services._defaults.bind`` option instead. The arguments defined in that option are
 injected automatically whenever a service constructor or controller action
-define an argument with that exact name. For example, to inject the value of the
+defines an argument with that exact name. For example, to inject the value of the
 :ref:`kernel.project_dir parameter <configuration-kernel-project-directory>`
 whenever a service/controller defines a ``$projectDir`` argument, use this:
 
@@ -790,7 +790,7 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
     Read the article about :ref:`binding arguments by name and/or type <services-binding>`
     to learn more about this powerful feature.
 
-Finally, if some service needs to access to lots of parameters, instead of
+Finally, if some service needs access to lots of parameters, instead of
 injecting each of them individually, you can inject all the application
 parameters at once by type-hinting any of its constructor arguments with the
 :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`::
@@ -822,7 +822,7 @@ parameters at once by type-hinting any of its constructor arguments with the
 Keep Going!
 -----------
 
-Congratulations! You've tackled the basics in Symfony. Next, learn about *each*
+Congratulations! You've tackled the basics of Symfony. Next, learn about *each*
 part of Symfony individually by following the guides. Check out:
 
 * :doc:`/forms`
