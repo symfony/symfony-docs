@@ -212,7 +212,7 @@ support symbolic links, a third boolean argument is available::
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
 
-PHP's ``readlink()`` function returns the target of a symbolic link. However, its behavior
+PHP's :phpfunction:`readlink` function returns the target of a symbolic link. However, its behavior
 is completely different under Windows and Unix. On Windows systems, ``readlink()``
 resolves recursively the children links of a link until a final target is found. On
 Unix-based systems ``readlink()`` only resolves the next link.
