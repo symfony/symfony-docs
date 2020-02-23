@@ -499,7 +499,7 @@ transition. The value of this option is any valid expression created with the
                         to:   published
                     reject:
                         # or any valid expression language with "subject" referring to the supported object
-                        guard: "has_role('ROLE_ADMIN') and subject.isRejectable()"
+                        guard: "is_granted('ROLE_ADMIN') and subject.isRejectable()"
                         from: reviewed
                         to:   rejected
 
