@@ -98,6 +98,16 @@ For third-party providers, refer to the following table:
  Sendgrid             sendgrid+smtp://apikey:KEY@default         n/a                                         sendgrid+api://KEY@default
 ==================== ========================================== =========================================== ========================================
 
+.. note::
+
+    When using SMTP, the default timeout for sending a message before throwing an
+    exception is the value defined in the `default_socket_timeout`_ PHP.ini option.
+
+    .. versionadded:: 5.1
+
+        The usage of ``default_socket_timeout`` as the default timeout was
+        introduced in Symfony 5.1.
+
 Instead of choosing a specific protocol, you can also let Symfony pick the
 best one by omitting it from the scheme: for instance, ``mailgun://KEY:DOMAIN@default``
 is equivalent to ``mailgun+https://KEY:DOMAIN@default``.
@@ -213,3 +223,4 @@ To learn more about how to use the mailer component, refer to the
 
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
+.. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
