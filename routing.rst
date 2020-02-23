@@ -798,6 +798,54 @@ parameter:
     To give a ``null`` default value to any parameter, add nothing after the
     ``?`` character (e.g. ``/blog/{page?}``).
 
+Priority Parameter
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``priority`` parameter was introduced in Symfony 5.1
+
+When defining a greedy pattern that matches many routes, this may be at the
+beginning of your routing collection and prevents any route defined after to be
+matched.
+A ``priority`` optional parameter is available in order to let you choose the
+order of your routes, and it is only available when using annotations.
+
+.. code-block:: php-annotations
+
+    // src/Controller/BlogController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class BlogController extends AbstractController
+    {
+        /**
+         * This route has a greedy pattern and is defined first.
+         *
+         * @Route("/blog/{slug}", name="blog_show")
+         */
+        public function show(string $slug)
+        {
+            // ...
+        }
+
+        /**
+         * This route could not be matched without defining a higher priority than 0.
+         *
+         * @Route("/blog/list", name="blog_list", priority=2)
+         */
+        public function list()
+        {
+            // ...
+        }
+    }
+
+The priority parameter expects an integer value. Routes with higher priority
+are sorted before routes with lower priority. The default value when it is not
+defined is ``0``.
+
 Parameter Conversion
 ~~~~~~~~~~~~~~~~~~~~
 
