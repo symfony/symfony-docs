@@ -381,6 +381,7 @@ image files as usual. First, to simplify things, define a Twig namespace called
 
     # config/packages/twig.yaml
     twig:
+        default_path: '%kernel.project_dir%/templates' 
         # ...
 
         paths:
@@ -458,6 +459,7 @@ called ``css`` that points to the directory where ``email.css`` lives:
 
     # config/packages/twig.yaml
     twig:
+        default_path: '%kernel.project_dir%/templates' 
         # ...
 
         paths:
