@@ -11,18 +11,11 @@ performance checklists.
 Symfony Application Checklist
 -----------------------------
 
+These are the code and configuration changes that you can make in your Symfony
+application to improve its performance:
+
 #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
 #. :ref:`Dump the service container into a single file <performance-service-container-single-file>`
-
-Production Server Checklist
----------------------------
-
-#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
-#. :ref:`Use the OPcache class preloading <performance-use-preloading>`
-#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
-#. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
-#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
-#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
 
 .. _performance-install-apcu-polyfill:
 
@@ -73,6 +66,19 @@ container into a single file, which could improve performance when using
 
         // ...
         $container->setParameter('container.dumper.inline_factories', true);
+
+Production Server Checklist
+---------------------------
+
+These are the changes that you can make in your production server to improve
+performance when running Symfony applications:
+
+#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
+#. :ref:`Use the OPcache class preloading <performance-use-preloading>`
+#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
+#. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
+#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
+#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
 
 .. _performance-use-opcache:
 
