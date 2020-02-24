@@ -416,7 +416,9 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"
-        xsi:schemaLocation="http://acme_company.com/schema/dic/hello
+        xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://acme_company.com/schema/dic/hello
             https://acme_company.com/schema/dic/hello/hello-1.0.xsd">
 
         <acme-hello:config>
