@@ -74,7 +74,8 @@ to greet all your friends). Only the last argument can be a list::
             'names',
             InputArgument::IS_ARRAY,
             'Who do you want to greet (separate multiple names with a space)?'
-        );
+        )
+    ;
 
 To use this, specify as many names as you want:
 
@@ -111,7 +112,8 @@ You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
             'names',
             InputArgument::IS_ARRAY | InputArgument::REQUIRED,
             'Who do you want to greet (separate multiple names with a space)?'
-        );
+        )
+    ;
 
 Using Command Options
 ---------------------
@@ -135,7 +137,8 @@ how many times in a row the message should be printed::
             InputOption::VALUE_REQUIRED,
             'How many times should the message be printed?',
             1
-        );
+        )
+    ;
 
 Next, use this in the command to print the message multiple times::
 
@@ -177,7 +180,8 @@ flag:
                 InputOption::VALUE_REQUIRED,
                 'How many times should the message be printed?',
                 1
-            );
+            )
+        ;
 
 Note that to comply with the `docopt standard`_, long options can specify their
 values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
@@ -221,7 +225,8 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
             InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
             'Which colors do you like?',
             ['blue', 'red']
-        );
+        )
+    ;
 
 Options with optional arguments
 -------------------------------
@@ -239,7 +244,8 @@ optionally accepts a value, but it's a bit tricky. Consider this example::
             null,
             InputOption::VALUE_OPTIONAL,
             'Should I yell while greeting?'
-        );
+        )
+    ;
 
 This option can be used in 3 ways: ``--yell``, ``yell=louder``, and not passing
 the option at all. However, it's hard to distinguish between passing the option
@@ -258,7 +264,8 @@ To solve this issue, you have to set the option's default value to ``false``::
             InputOption::VALUE_OPTIONAL,
             'Should I yell while greeting?',
             false // this is the new default value, instead of null
-        );
+        )
+    ;
 
 Now check the value of the option and keep in mind that ``false !== null``::
 
