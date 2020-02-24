@@ -84,6 +84,7 @@ Financial and other Number Constraints
 Other Constraints
 ~~~~~~~~~~~~~~~~~
 
+* :doc:`Sequentially </reference/constraints/Sequentially>`
 * :doc:`Compound </reference/constraints/Compound>`
 * :doc:`Callback </reference/constraints/Callback>`
 * :doc:`Expression </reference/constraints/Expression>`
