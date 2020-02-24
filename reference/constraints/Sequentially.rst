@@ -25,17 +25,19 @@ Basic Usage
 
 Suppose that you have a ``Place`` object with an ``$address`` property which
 must match the following requirements:
-- it's a non-blank string
-- of at least 10 chars long
-- with a specific format
-- and geolocalizable using an external service
+
+* it's a non-blank string
+* of at least 10 chars long
+* with a specific format
+* and geolocalizable using an external service
 
 In such situations, you may encounter three issues:
-- the ``Length`` or ``Regex`` constraints may fail hard with a :class:`Symfony\\Component\\Validator\\Exception\\UnexpectedValueException`
-exception if the actual value is not a string, as enforced by ``Type``.
-- you may end with multiple error messages for the same property
-- you may perform a useless and heavy external call to geolocalize the address,
-while the format isn't valid.
+
+* the ``Length`` or ``Regex`` constraints may fail hard with a :class:`Symfony\\Component\\Validator\\Exception\\UnexpectedValueException`
+  exception if the actual value is not a string, as enforced by ``Type``.
+* you may end with multiple error messages for the same property
+* you may perform a useless and heavy external call to geolocalize the address,
+  while the format isn't valid.
 
 You can validate each of these constraints sequentially to solve these issues:
 
