@@ -122,9 +122,14 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
             xmlns:acme-something="http://example.org/schema/dic/acme_something"
             xmlns:acme-other="http://example.org/schema/dic/acme_other"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://example.org/schema/dic/acme_something
+                https://example.org/schema/dic/acme_something/acme_something-1.0.xsd
+                http://example.org/schema/dic/acme_other
+                https://example.org/schema/dic/acme_something/acme_other-1.0.xsd">
 
             <acme-something:config use-acme-goodbye="false">
+                <!-- ... -->
                 <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
             </acme-something:config>
 

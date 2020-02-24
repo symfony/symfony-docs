@@ -177,6 +177,11 @@ each time you ask for it.
                     <defaults autowire="true" autoconfigure="true"/>
 
                     <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+
+                    <!-- makes classes in src/AppBundle available to be used as services -->
+                    <prototype namespace="AppBundle\"
+                        resource="../../src/AppBundle/*"
+                        exclude="../../src/AppBundle/{Entity,Repository}"/>
                 </services>
             </container>
 
@@ -394,7 +399,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         # config/services.yaml
         services:
-            # ...
+            # ... same as before
 
             # same as before
             App\:
@@ -416,11 +421,14 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... -->
+                <!-- ...  same as before -->
 
                 <!-- Same as before -->
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+                <prototype namespace="App\"
+                    resource="../src/*"
+                    exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"
+                />
 
                 <!-- Explicitly configure the service -->
                 <service id="App\Updates\SiteUpdateManager">
@@ -714,6 +722,7 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
 
         use App\Controller\LuckyController;
         use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         return function(ContainerConfigurator $configurator) {
@@ -915,7 +924,7 @@ key. For example, the default Symfony configuration contains this:
 
         # config/services.yaml
         services:
-            # ...
+            # ... same as before
 
             # makes classes in src/ available to be used as services
             # this creates a service per class whose id is the fully-qualified class name
@@ -933,7 +942,7 @@ key. For example, the default Symfony configuration contains this:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... -->
+                <!-- ... same as before -->
 
                 <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
             </services>
@@ -985,7 +994,14 @@ If you define services using the YAML config format, the PHP namespace is used
 as the key of each configuration, so you can't define different service configs
 for classes under the same namespace:
 
-.. code-block:: yaml
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            AppBundle\Domain\:
+                resource: '../../src/AppBundleDomain/*'
 
     # config/services.yaml
     services:
@@ -993,10 +1009,44 @@ for classes under the same namespace:
             resource: '../src/Domain/*'
             # ...
 
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <prototype namespace="AppBundle\Domain"
+                    resource="../../src/AppBundle/Domain/*"/>
+                </prototype>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $defaults = new Definition();
+
+        // $this is a reference to the current loader
+        $this->registerClasses(
+            $defaults,
+            'AppBundle\\Domain\\',
+            '../../src/AppBundle/Domain/*'
+        );
+
+        // ...
+
 In order to have multiple definitions, add the ``namespace`` option and use any
 unique string as the key of each service config:
 
-.. code-block:: yaml
+.. configuration-block::
 
     # config/services.yaml
     services:

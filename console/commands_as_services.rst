@@ -89,10 +89,11 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
         # config/services.yaml
         services:
+            # ...
+
             App\Command\SunshineCommand:
                 tags:
                     - { name: 'console.command', command: 'app:sunshine' }
-                # ...
 
     .. code-block:: xml
 
@@ -100,9 +101,12 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
+                <!-- ... -->
+
                 <service id="App\Command\SunshineCommand">
                     <tag name="console.command" command="app:sunshine"/>
                 </service>
@@ -113,10 +117,9 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
         // config/services.php
         use App\Command\SunshineCommand;
-        // ...
 
-        $container
-            ->register(SunshineCommand::class)
+        // ...
+        $container->register(SunshineCommand::class)
             ->addTag('console.command', ['command' => 'app:sunshine'])
         ;
 

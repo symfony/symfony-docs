@@ -123,17 +123,15 @@ to write logs using the :phpfunction:`syslog` function:
                 https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
-                <monolog:handler
-                    name="file_log"
+                <!-- this "file_log" key could be anything -->
+                <monolog:handler name="file_log"
                     type="stream"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
-                    level="debug"
-                />
-                <monolog:handler
-                    name="syslog_handler"
+                    level="debug"/><!-- log *all* messages (debug is lowest level) -->
+
+                <monolog:handler name="syslog_handler"
                     type="syslog"
-                    level="error"
-                />
+                    level="error"/><!-- log error-level messages and higher -->
             </monolog:config>
         </container>
 
@@ -142,13 +140,17 @@ to write logs using the :phpfunction:`syslog` function:
         // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', [
             'handlers' => [
+                // this "file_log" key could be anything
                 'file_log' => [
                     'type'  => 'stream',
+                    // log to var/logs/(environment).log
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
+                    // log *all* messages (debug is lowest level)
                     'level' => 'debug',
                 ],
                 'syslog_handler' => [
                     'type'  => 'syslog',
+                    // log error-level messages and higher
                     'level' => 'error',
                 ],
             ],
@@ -202,20 +204,22 @@ one of the messages reaches an ``action_level``. Take this example:
                 https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config>
-                <monolog:handler
-                    name="filter_for_errors"
+                <!-- if *one* log is error or higher, pass *all* to file_log -->
+                <monolog:handler name="filter_for_errors"
                     type="fingers_crossed"
                     action-level="error"
                     handler="file_log"
                 />
-                <monolog:handler
-                    name="file_log"
+
+                <!-- now passed *all* logs, but only if one log is error or higher -->
+                <monolog:handler name="file_log"
                     type="stream"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
                 />
-                <monolog:handler
-                    name="syslog_handler"
+
+                <!-- still passed *all* logs, and still only logs error or higher -->
+                <monolog:handler name="syslog_handler"
                     type="syslog"
                     level="error"
                 />
@@ -229,14 +233,19 @@ one of the messages reaches an ``action_level``. Take this example:
             'handlers' => [
                 'filter_for_errors' => [
                     'type'         => 'fingers_crossed',
+                    // if *one* log is error or higher, pass *all* to file_log
                     'action_level' => 'error',
                     'handler'      => 'file_log',
                 ],
+
+                // now passed *all* logs, but only if one log is error or higher
                 'file_log' => [
                     'type'  => 'stream',
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level' => 'debug',
                 ],
+
+                // still passed *all* logs, and still only logs error or higher
                 'syslog_handler' => [
                     'type'  => 'syslog',
                     'level' => 'error',
