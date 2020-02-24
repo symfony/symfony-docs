@@ -101,13 +101,6 @@ specifically tailored to the requirements of Symfony.
     `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
     (which works only with Capistrano 2).
 
-`sf2debpkg`_
-    Helps you build a native Debian package for your Symfony project.
-
-Basic scripting
-    You can use shell, `Ant`_ or any other build tool to script
-    the deploying of your project.
-
 Common Post-Deployment Tasks
 ----------------------------
 
@@ -238,11 +231,9 @@ kernel and return your project's root directory::
 
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
-.. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Fabric`: http://www.fabfile.org/
 .. _`Ansistrano`: https://ansistrano.com/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
-.. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
