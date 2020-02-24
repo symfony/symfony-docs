@@ -253,7 +253,7 @@ configuration option to point to it:
 
         # config/packages/framework.yaml
         framework:
-            error_controller: App\Controller\ErrorController::showAction
+            error_controller: App\Controller\ErrorController::show
 
     .. code-block:: xml
 
@@ -265,7 +265,7 @@ configuration option to point to it:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
-                <framework:error-controller>App\Controller\ErrorController::showAction</framework:error-controller>
+                <framework:error-controller>App\Controller\ErrorController::show</framework:error-controller>
             </framework:config>
 
         </container>
@@ -274,7 +274,7 @@ configuration option to point to it:
 
         // config/packages/framework.php
         $container->loadFromExtension('framework', [
-            'error_controller' => 'App\Controller\ErrorController::showAction',
+            'error_controller' => 'App\Controller\ErrorController::show',
             // ...
         ]);
 
@@ -284,69 +284,11 @@ the request that will be dispatched to your controller. In addition, your contro
 will be passed two parameters:
 
 ``exception``
-    A :class:`\\Symfony\\Component\\ErrorHandler\\Exception\\FlattenException`
-    instance created from the exception being handled.
+    The original :class:`Throwable` instance being handled.
 
 ``logger``
     A :class:`\\Symfony\\Component\\HttpKernel\\Log\\DebugLoggerInterface`
     instance which may be ``null`` in some circumstances.
-
-Instead of creating a new exception controller from scratch you can also extend
-the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
-In that case, you might want to override one or both of the ``showAction()`` and
-``findTemplate()`` methods. The latter one locates the template to be used.
-
-.. note::
-
-    In case of extending the
-    :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController` you
-    may configure a service to pass the Twig environment and the ``debug`` flag
-    to the constructor.
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/services.yaml
-            services:
-                _defaults:
-                    # ... be sure autowiring is enabled
-                    autowire: true
-                # ...
-
-                App\Controller\CustomExceptionController:
-                    public: true
-                    arguments:
-                        $debug: '%kernel.debug%'
-
-        .. code-block:: xml
-
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <services>
-                    <!-- ... be sure autowiring is enabled -->
-                    <defaults autowire="true"/>
-                    <!-- ... -->
-
-                    <service id="App\Controller\CustomExceptionController" public="true">
-                        <argument key="$debug">%kernel.debug%</argument>
-                    </service>
-                </services>
-
-            </container>
-
-        .. code-block:: php
-
-            // config/services.php
-            use App\Controller\CustomExceptionController;
-
-            $container->autowire(CustomExceptionController::class)
-                ->setArgument('$debug', '%kernel.debug%');
 
 .. tip::
 
