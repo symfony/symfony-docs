@@ -1,0 +1,64 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-22T10:23:20Z
+
+@smoench this is really nice. Thanks for all your help to improve the performance of the doc linter.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-02-22T10:49:20Z
+
+Thanks a lot!
+
+In the CMF docs, we also cached `$HOME/.cache/pip`, to speed up pip. Maybe that's an option here as well?
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-22T10:55:04Z
+
+Sure, I was also thinking about that
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-22T14:05:42Z
+
+I don't know what causes following error:
+```
+Warning, treated as error:
+/home/runner/work/symfony-docs/symfony-docs/form/form_customization.rst:None: WARNING: duplicate label form-customization-sidebar, other instance in /home/runner/work/symfony-docs/symfony-docs/form/form_themes.rst
+```
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-02-22T18:36:46Z
+
+> I don't know what causes following error:
+
+Hmm, that reference target (`form-customization-sidebar`) lives in `form/form_customization.rst` in 3.4 and in `form/form_themes.rst` for the newer versions. Seems like the cache is maybe shared among all branches, resulting in this error? Or does the docs somehow render a wrong version of the documentation?
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-22T19:13:33Z
+
+On the first try the base branch was on `master` but changed I changed it to `3.4`. I thought it wouldn't matter as of the cache restrictions https://help.github.com/en/actions/configuring-and-managing-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache.
+I changed cache keys now.
+
+But some how after the cache hit and cache file has been extracted, sphinx thinks all files has been changed. So cache does not work properly 🤷‍♂
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-24T06:41:59Z
+
+So we only go with the pip cache and not the other ones?
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-24T09:15:21Z
+
+Unfortunately, yes! But perhaps someone can confirm that it is working with a more latest sphinx version than 1.3.6.
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-24T09:33:33Z
+
+Well, Sphinx uses `mtime` (in all versions) for detecting changes. This works on a local machine but not in a CI that makes a fresh checkout.
