@@ -1041,7 +1041,7 @@ for classes under the same namespace:
 In order to have multiple definitions, add the ``namespace`` option and use any
 unique string as the key of each service config:
 
-.. configuration-block::
+.. code-block:: yaml
 
     # config/services.yaml
     services:
