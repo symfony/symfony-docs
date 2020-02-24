@@ -231,6 +231,7 @@ this code and changing the environment string.
 
                 <doctrine:dbal logging="%kernel.debug%"/>
 
+                <!-- ... ->
             </container>
 
         .. code-block:: php
@@ -240,7 +241,6 @@ this code and changing the environment string.
                     'logging'  => '%kernel.debug%',
                     // ...
                 ],
-                // ...
             ]);
 
 Selecting the Environment for Console Commands

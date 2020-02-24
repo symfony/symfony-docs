@@ -100,8 +100,8 @@ the same features and performance, so choose the one you prefer:
                 <default key="_controller">AppBundle:Blog:list</default>
             </route>
 
-            <!-- Matches /blog/* -->
-            <!-- but not /blog/slug/extra-part -->
+            <!-- Matches /blog/*
+                 but not /blog/slug/extra-part -->
             <route id="blog_show" path="/blog/{slug}">
                 <default key="_controller">AppBundle:Blog:show</default>
             </route>
@@ -119,7 +119,7 @@ the same features and performance, so choose the one you prefer:
             '_controller' => 'AppBundle:Blog:list',
         ]));
         // Matches /blog/*
-            // but not /blog/slug/extra-part
+        // but not /blog/slug/extra-part
         $routes->add('blog_show', new Route('/blog/{slug}', [
             '_controller' => 'AppBundle:Blog:show',
         ]));
@@ -253,8 +253,10 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
         $routes = new RouteCollection();
         $routes->add('blog_list', new Route('/blog/{page}', [
+            // defaults
             '_controller' => 'AppBundle:Blog:list',
         ], [
+            // requirements
             'page' => '\d+'
         ]));
 
@@ -347,10 +349,12 @@ So how can you make ``blog_list`` once again match when the user visits
         $routes->add('blog_list', new Route(
             '/blog/{page}',
             [
+                // defaults
                 '_controller' => 'AppBundle:Blog:list',
                 'page'        => 1,
             ],
             [
+                // requirements
                 'page' => '\d+'
             ]
         ));
@@ -440,9 +444,11 @@ With all of this in mind, check out this advanced example:
         $routes->add(
             'article_show',
             new Route('/articles/{_locale}/{year}/{slug}.{_format}', [
+                // defaults
                 '_controller' => 'AppBundle:Article:show',
                 '_format'     => 'html',
             ], [
+                // requirements
                 '_locale' => 'en|fr',
                 '_format' => 'html|rss',
                 'year'    => '\d+',

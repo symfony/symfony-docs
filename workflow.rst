@@ -60,14 +60,17 @@ like this:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://symfony.com/schema/dic/symfony
+            https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
+                <!-- or type="state_machine" -->
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:audit-trail enabled="true"/>
 
+                    <!-- or type="multiple_state" -->
                     <framework:marking-store type="single_state">
                         <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
@@ -102,8 +105,9 @@ like this:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Entity\BlogPost;
+
         $container->loadFromExtension('framework', [
-            // ...
             'workflows' => [
                 'blog_publishing' => [
                     'type' => 'workflow', // or 'state_machine'
@@ -114,7 +118,7 @@ like this:
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => ['currentPlace']
                     ],
-                    'supports' => ['AppBundle\Entity\BlogPost'],
+                    'supports' => [BlogPost::class],
                     'places' => [
                         'draft',
                         'reviewed',
@@ -163,8 +167,8 @@ As configured, the following property is used by the marking store::
     configures the marking store according to the "type" by default, so it's
     preferable to not configure it.
 
-    A single state marking store uses a string to store the data. A multiple
-    state marking store uses an array to store the data.
+    A single state marking store uses a ``string`` to store the data. A multiple
+    state marking store uses an ``array`` to store the data.
 
 .. tip::
 
@@ -414,29 +418,109 @@ Alternatively, you can define a ``guard`` configuration option for the
 transition. The value of this option is any valid expression created with the
 :doc:`ExpressionLanguage component </components/expression_language>`:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/workflow.yaml
-    framework:
-        workflows:
-            blog_publishing:
-                # previous configuration
-                transitions:
-                    to_review:
-                        # the transition is allowed only if the current user has the ROLE_REVIEWER role.
-                        guard: "is_granted('ROLE_REVIEWER')"
-                        from: draft
-                        to:   reviewed
-                    publish:
-                        # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
-                        guard: "is_authenticated"
-                        from: reviewed
-                        to:   published
-                    reject:
-                        # or any valid expression language with "subject" referring to the post
-                        guard: "has_role('ROLE_ADMIN') and subject.isStatusReviewed()"
-                        from: reviewed
-                        to:   rejected
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # ... previous configuration
+
+                    transitions:
+                        to_review:
+                            # the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                            guard: "is_granted('ROLE_REVIEWER')"
+                            from: draft
+                            to:   reviewed
+                        publish:
+                            # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                            guard: "is_authenticated"
+                            from: reviewed
+                            to:   published
+                        reject:
+                            # or any valid expression language with "subject" referring to the post
+                            guard: "has_role('ROLE_ADMIN') and subject.isStatusReviewed()"
+                            from: reviewed
+                            to:   rejected
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://symfony.com/schema/dic/symfony
+            https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:workflow name="blog_publishing" type="workflow">
+
+                    <!-- ... previous configuration -->
+
+                    <framework:transition name="to_review">
+                        <!-- the transition is allowed only if the current user has the ROLE_REVIEWER role. -->
+                        <framework:guard>is_granted("ROLE_REVIEWER")</framework:guard>
+                        <framework:from>draft</framework:from>
+                        <framework:to>reviewed</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="publish">
+                        <!-- or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted" -->
+                        <framework:guard>is_authenticated</framework:guard>
+                        <framework:from>reviewed</framework:from>
+                        <framework:to>published</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="reject">
+                        <!-- or any valid expression language with "subject" referring to the post -->
+                        <framework:guard>has_role("ROLE_ADMIN") and subject.isStatusReviewed()</framework:guard>
+                        <framework:from>reviewed</framework:from>
+                        <framework:to>rejected</framework:to>
+                    </framework:transition>
+
+                </framework:workflow>
+
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        use AppBundle\Entity\BlogPost;
+
+        $container->loadFromExtension('framework', [
+            'workflows' => [
+                'blog_publishing' => [
+                    // ... previous configuration
+
+                    'transitions' => [
+                        'to_review' => [
+                            // the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                            'guard' => 'is_granted("ROLE_REVIEWER")',
+                            'from' => 'draft',
+                            'to' => 'reviewed',
+                        ],
+                        'publish' => [
+                            // or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                            'guard' => 'is_authenticated',
+                            'from' => 'reviewed',
+                            'to' => 'published',
+                        ],
+                        'reject' => [
+                            // or any valid expression language with "subject" referring to the post
+                            'guard' => 'has_role("ROLE_ADMIN") and subject.isStatusReviewed()',
+                            'from' => 'reviewed',
+                            'to' => 'rejected',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Usage in Twig
 -------------

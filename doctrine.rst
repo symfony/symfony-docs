@@ -102,10 +102,10 @@ information. By convention, this information is usually configured in an
             // app/config/config.php
             $container->loadFromExtension('doctrine', [
                 'dbal' => [
-                    'driver'   => 'pdo_mysql',
-                    'host'     => '%database_host%',
-                    'dbname'   => '%database_name%',
-                    'user'     => '%database_user%',
+                    'driver' => 'pdo_mysql',
+                    'host' => '%database_host%',
+                    'dbname' => '%database_name%',
+                    'user' => '%database_user%',
                     'password' => '%database_password%',
                 ],
             ]);
@@ -250,8 +250,8 @@ can automatically generate an empty ``test_project`` database for you:
             // app/config/config.php
             $container->loadFromExtension('doctrine', [
                 'dbal' => [
-                    'driver'  => 'pdo_sqlite',
-                    'path'    => '%kernel.project_dir%/app/sqlite.db',
+                    'driver' => 'pdo_sqlite',
+                    'path' => '%kernel.project_dir%/app/sqlite.db',
                     'charset' => 'UTF-8',
                 ],
             ]);
