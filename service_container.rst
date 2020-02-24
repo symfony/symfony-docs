@@ -990,20 +990,15 @@ for classes under the same namespace:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            AppBundle\Domain\:
-                resource: '../../src/AppBundleDomain/*'
-
-    # config/services.yaml
-    services:
-        App\Domain\:
-            resource: '../src/Domain/*'
-            # ...
+            App\Domain\:
+                resource: '../src/Domain/*'
+                # ...
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1011,8 +1006,8 @@ for classes under the same namespace:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <prototype namespace="AppBundle\Domain"
-                    resource="../../src/AppBundle/Domain/*"/>
+                <prototype namespace="App\Domain"
+                    resource="../src/App/Domain/*"/>
                 </prototype>
 
                 <!-- ... -->
@@ -1021,7 +1016,7 @@ for classes under the same namespace:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         $defaults = new Definition();
@@ -1029,8 +1024,8 @@ for classes under the same namespace:
         // $this is a reference to the current loader
         $this->registerClasses(
             $defaults,
-            'AppBundle\\Domain\\',
-            '../../src/AppBundle/Domain/*'
+            'App\\Domain\\',
+            '../src/App/Domain/*'
         );
 
         // ...
