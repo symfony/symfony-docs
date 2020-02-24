@@ -113,5 +113,5 @@ In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
 introduce the HttpFoundation Component and see what it brings us.
 
 .. _`Symfony`: https://symfony.com/
-.. _`Composer`: http://packagist.org/about-composer
+.. _`Composer`: https//getcomposer.org/
 .. _`download and install Composer`: https://getcomposer.org/download/

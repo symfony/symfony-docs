@@ -190,11 +190,11 @@ In addition, documentation follows these rules:
   * simply
   * trivial
 
-.. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
+.. _`the Sphinx documentation`: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#literal-blocks
 .. _`Twig Coding Standards`: https://twig.symfony.com/doc/2.x/coding_standards.html
-.. _`reserved by the IANA`: http://tools.ietf.org/html/rfc2606#section-3
+.. _`reserved by the IANA`: https://tools.ietf.org/html/rfc2606#section-3
 .. _`American English`: https://en.wikipedia.org/wiki/American_English
-.. _`American English Oxford Dictionary`: http://en.oxforddictionaries.com/definition/american_english/
+.. _`American English Oxford Dictionary`: https://www.lexico.com/definition/american_english
 .. _`headings and titles`: https://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: https://en.wikipedia.org/wiki/Serial_comma
 .. _`nosism`: https://en.wikipedia.org/wiki/Nosism

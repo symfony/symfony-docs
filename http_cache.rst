@@ -414,11 +414,11 @@ Learn more
 
     http_cache/*
 
-.. _`Things Caches Do`: http://2ndscale.com/writings/things-caches-do
-.. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
-.. _`Varnish`: https://www.varnish-cache.org/
-.. _`Squid in reverse proxy mode`: http://wiki.squid-cache.org/SquidFaq/ReverseProxy
+.. _`Things Caches Do`: https://2ndscale.com/writings/things-caches-do
+.. _`Cache Tutorial`: https://www.mnot.net/cache_docs/
+.. _`Varnish`: https://varnish-cache.org/
+.. _`Squid in reverse proxy mode`: https://wiki.squid-cache.org/SquidFaq/ReverseProxy
 .. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
-.. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/
 .. _`they can be cached`: https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-20#section-2.3.4

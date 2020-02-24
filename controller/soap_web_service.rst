@@ -14,7 +14,7 @@ create one from scratch or use a 3rd party generator.
 .. note::
 
     There are several SOAP server implementations available for use with
-    PHP. `Zend SOAP`_ and `NuSOAP`_ are two examples. Although the PHP SOAP
+    PHP. `Laminas SOAP`_ and `NuSOAP`_ are two examples. Although the PHP SOAP
     extension is used in these examples, the general idea should still
     be applicable to other implementations.
 
@@ -165,7 +165,7 @@ An example WSDL is below.
         </service>
     </definitions>
 
-.. _`PHP SOAP`: https://php.net/manual/en/book.soap.php
-.. _`NuSOAP`: http://sourceforge.net/projects/nusoap
-.. _`output buffering`: https://php.net/manual/en/book.outcontrol.php
-.. _`Zend SOAP`: http://framework.zend.com/manual/current/en/modules/zend.soap.server.html
+.. _`PHP SOAP`: https://www.php.net/manual/en/book.soap.php
+.. _`NuSOAP`: https://sourceforge.net/projects/nusoap
+.. _`output buffering`: https://www.php.net/manual/en/book.outcontrol.php
+.. _`Laminas SOAP`: https://docs.laminas.dev/laminas-soap/server/

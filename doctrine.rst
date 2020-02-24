@@ -859,21 +859,21 @@ Learn more
     doctrine/reverse_engineering
     testing/database
 
-.. _`Doctrine`: http://www.doctrine-project.org/
+.. _`Doctrine`: https://www.doctrine-project.org/
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`Doctrine's Mapping Types documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
-.. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
-.. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
-.. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
+.. _`Doctrine's Mapping Types documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html
+.. _`Query Builder`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/query-builder.html
+.. _`Doctrine Query Language`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/dql-doctrine-query-language.html
+.. _`Reserved SQL keywords documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#quoting-reserved-words
 .. _`DoctrineMongoDBBundle docs`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
-.. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
+.. _`Transactions and Concurrency`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/transactions-and-concurrency.html
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
-.. _`NativeQuery`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/native-sql.html
-.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`NativeQuery`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/native-sql.html
+.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
-.. _`PDO`: https://php.net/pdo
+.. _`PDO`: https://www.php.net/pdo
 .. _`available Doctrine extensions`: https://github.com/Atlantic18/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/antishov/StofDoctrineExtensionsBundle

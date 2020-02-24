@@ -333,6 +333,6 @@ The following YAML features are not supported by the Symfony Yaml component:
 * Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
   ``{foo: ~, bar: ~}`` instead).
 
-.. _`ISO-8601`: http://www.iso.org/iso/iso8601
-.. _`YAML website`: http://yaml.org/
-.. _`YAML specification`: http://www.yaml.org/spec/1.2/spec.html
+.. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
+.. _`YAML website`: https://yaml.org/
+.. _`YAML specification`: https://www.yaml.org/spec/1.2/spec.html

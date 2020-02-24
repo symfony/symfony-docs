@@ -30,5 +30,5 @@ For more information on valid formats, see `Date/Time Format Syntax`_::
     ``single_text`` widget.
 
 .. _`Date/Time Format Syntax`: http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax
-.. _`IntlDateFormatter::MEDIUM`: https://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
+.. _`IntlDateFormatter::MEDIUM`: https://www.php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
 .. _`RFC 3339`: https://tools.ietf.org/html/rfc3339

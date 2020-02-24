@@ -88,4 +88,4 @@ Learn More
     /validation
     /validation/*
 
-.. _`JSR-303 Bean Validation specification`: http://jcp.org/en/jsr/detail?id=303
+.. _`JSR-303 Bean Validation specification`: https://jcp.org/en/jsr/detail?id=303

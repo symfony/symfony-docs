@@ -237,21 +237,21 @@ Learn More
     deployment/proxies
 
 .. _`Capifony`: https://github.com/everzet/capifony
-.. _`Capistrano`: http://capistranorb.com/
+.. _`Capistrano`: https://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Fabric`: http://www.fabfile.org/
 .. _`Ansistrano`: https://ansistrano.com/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
-.. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
+.. _`Ant`: https://blog.sznapka.pl/deploying-symfony2-applications-with-ant/
 .. _`Memcached`: http://memcached.org/
-.. _`Redis`: http://redis.io/
+.. _`Redis`: https://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
-.. _`Deployer`: http://deployer.org/
+.. _`Deployer`: https://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Heroku`: https://devcenter.heroku.com/articles/deploying-symfony4
 .. _`Platform.sh`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
-.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony
+.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-4-uni
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
 .. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
 .. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html

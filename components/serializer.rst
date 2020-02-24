@@ -1507,7 +1507,7 @@ Learn more
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
 .. _JSON: http://www.json.org/
 .. _XML: https://www.w3.org/XML/
-.. _YAML: http://yaml.org/
+.. _YAML: https://yaml.org/
 .. _CSV: https://tools.ietf.org/html/rfc4180
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
 .. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object

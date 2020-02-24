@@ -128,5 +128,5 @@ created by using the special ``"\0"`` property name to define their internal val
         "\0" => [$inputArray]
     ]);
 
-.. _`OPcache`: https://php.net/opcache
+.. _`OPcache`: https://www.php.net/opcache
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/

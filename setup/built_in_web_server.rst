@@ -123,5 +123,5 @@ When you finish your work, you can stop the web server with the following comman
 
     $ php bin/console server:stop
 
-.. _`built-in web server`: https://php.net/manual/en/features.commandline.webserver.php
-.. _`php.net`: https://php.net/manual/en/features.commandline.webserver.php#example-411
+.. _`built-in web server`: https://www.php.net/manual/en/features.commandline.webserver.php
+.. _`php.net`: https://www.php.net/manual/en/features.commandline.webserver.php#example-415

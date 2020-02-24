@@ -461,7 +461,7 @@ chance to use Symfony's event lifecycle. For instance, this allows you to
 transition the authentication and authorization of the legacy application over
 to the Symfony application using the Security component and its firewalls.
 
-.. _`Strangler Application`: https://www.martinfowler.com/bliki/StranglerApplication.html
+.. _`Strangler Application`: https://martinfowler.com/bliki/StranglerFigApplication.html
 .. _`autoload`: https://getcomposer.org/doc/04-schema.md#autoload
 .. _`Modernizing with Symfony`: https://youtu.be/YzyiZNY9htQ
 .. _`Symfony Panther`: https://github.com/symfony/panther
