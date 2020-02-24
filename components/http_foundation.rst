@@ -443,9 +443,21 @@ method takes an instance of
 You can clear a cookie via the
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::clearCookie` method.
 
-Note you can create a
-:class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header
-value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
+In addition to the ``Cookie::create()`` method, you can create a ``Cookie``
+object from a raw header value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
+You can also use the ``with*()`` methods to change some Cookie property (or to
+build the entire Cookie using a fluent interface). Each ``with*()`` method returns
+a new object with the modified property::
+
+    $cookie = Cookie::create('foo')
+        ->withValue('bar')
+        ->withExpiresTime(strtotime('Fri, 20-May-2011 15:25:52 GMT'))
+        ->withDomain('.example.com')
+        ->withSecure(true);
+
+.. versionadded:: 5.1
+
+    The ``with*()`` methods were introduced in Symfony 5.1.
 
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
