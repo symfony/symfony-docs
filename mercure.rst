@@ -149,12 +149,12 @@ service, including controllers::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Mercure\Publisher;
+    use Symfony\Component\Mercure\PublisherInterface;
     use Symfony\Component\Mercure\Update;
 
     class PublishController
     {
-        public function __invoke(Publisher $publisher): Response
+        public function __invoke(PublisherInterface $publisher): Response
         {
             $update = new Update(
                 'http://example.com/books/1',
@@ -286,7 +286,7 @@ by using the ``AbstractController::addLink`` helper method::
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\WebLink\LInk;
+    use Symfony\Component\WebLink\Link;
 
     class DiscoverController extends AbstractController
     {
@@ -336,12 +336,12 @@ as the third parameter of the ``Update`` constructor::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Mercure\Publisher;
+    use Symfony\Component\Mercure\PublisherInterface;
     use Symfony\Component\Mercure\Update;
 
     class PublishController
     {
-        public function __invoke(Publisher $publisher): Response
+        public function __invoke(PublisherInterface $publisher): Response
         {
             $update = new Update(
                 'http://example.com/books/1',
