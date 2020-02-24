@@ -663,7 +663,7 @@ You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
 ``access_control`` or in Twig.
 
 ``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
-user that has logged in will have this. Actually, there are 3 special attributes
+user that has logged in will have this. Actually, there are some special attributes
 like this:
 
 * ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
@@ -678,6 +678,21 @@ like this:
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/security/access_control`.
+
+* ``IS_ANONYMOUS``: *Only* anonymous users are matched by this attribute.
+
+* ``IS_REMEMBERED``: *Only* users authenticated using the 
+  :doc:`remember me functionality </security/remember_me>`, (i.e. a
+  remember-me cookie).
+
+* ``IS_IMPERSONATOR``: When the current user is
+  :doc:`impersonating </security/impersonating_user>` another user in this
+  session, this attribute will match.
+
+.. versionadded:: 5.1
+
+    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
+    attributes were introduced in Symfony 5.1.
 
 .. _security-secure-objects:
 

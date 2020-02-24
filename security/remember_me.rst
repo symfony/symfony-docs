@@ -176,7 +176,8 @@ visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
 before accessing certain resources. For example, you might not allow "remember me"
-users to change their password. You can do this by leveraging a few special "roles"::
+users to change their password. You can do this by leveraging a few special
+"attributes"::
 
     // src/Controller/AccountController.php
     // ...
@@ -199,6 +200,15 @@ users to change their password. You can do this by leveraging a few special "rol
 
         // ...
     }
+
+.. tip::
+
+    There is also a ``IS_REMEMBERED`` attribute that grants *only* when the
+    user is authenticated via the remember me mechanism.
+
+.. versionadded:: 5.1
+
+    The ``IS_REMEMBERED`` attribute was introduced in Symfony 5.1.
 
 .. _remember-me-token-in-database:
 
