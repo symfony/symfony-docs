@@ -369,7 +369,7 @@ console::
 
 .. caution::
 
-    When testing commands using the ``CommandTester`` class, console events are
+    When testing commands using the :class:`Symfony\\Component\\Console\\Tester\\CommandTester` class, console events are
     not dispatched. If you need to test those events, use the
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester` instead.
 
