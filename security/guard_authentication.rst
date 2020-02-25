@@ -12,7 +12,7 @@ Guard authentication can be used to:
 
 * :doc:`Build a Login Form </security/form_login_setup>`,
 * Create an API token authentication system (done on this page!)
-* `Social Authentication`_ (or use `HWIOAuthBundle`_ for a robust, but non-Guard solution)
+* `Social Authentication`_ (or use `HWIOAuthBundle`_ for a robust, but non-Guard solution. Check `KnpUOAuth2ClientBundle`_ if you want a Guard solution)
 
 or anything else. In this example, we'll build an API token authentication
 system so we can learn more about Guard in detail.
@@ -513,3 +513,4 @@ Frequently Asked Questions
 
 .. _`Social Authentication`: https://github.com/knpuniversity/oauth2-client-bundle#authenticating-with-guard
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+.. _`KnpUOAuth2ClientBundle`: https://github.com/knpuniversity/oauth2-client-bundle
