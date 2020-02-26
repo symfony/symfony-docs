@@ -195,7 +195,7 @@ This requires you to implement several methods::
         {
             if (null === $credentials) {
                 // The token header was empty, authentication fails with 401
-                return;
+                return null;
             }
 
             // if a User is returned, checkCredentials() is called
