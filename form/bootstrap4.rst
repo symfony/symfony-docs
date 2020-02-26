@@ -121,6 +121,6 @@ is a strong connection between the error and its ``<input>``, as required by the
 
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`custom forms`: https://getbootstrap.com/docs/4.4/components/forms/#custom-forms
-.. _`custom radio`: https://getbootstrap.com/docs/4.3/components/forms/#radios
-.. _`custom checkbox`: https://getbootstrap.com/docs/4.3/components/forms/#checkboxes
-.. _`switch instead of a checkbox`: https://getbootstrap.com/docs/4.3/components/forms/#switches
+.. _`custom radio`: https://getbootstrap.com/docs/4.4/components/forms/#radios
+.. _`custom checkbox`: https://getbootstrap.com/docs/4.4/components/forms/#checkboxes
+.. _`switch instead of a checkbox`: https://getbootstrap.com/docs/4.4/components/forms/#switches
