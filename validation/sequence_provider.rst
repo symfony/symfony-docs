@@ -357,7 +357,7 @@ provides a sequence of groups to be validated:
         }
 
 How to Sequentially Apply Constraints on a Single Property
-==========================================================
+----------------------------------------------------------
 
 Sometimes, you may want to apply constraints sequentially on a single
 property. The :doc:`Sequentially constraint</reference/constraints/Sequentially>`
