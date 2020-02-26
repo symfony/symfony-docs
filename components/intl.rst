@@ -230,10 +230,11 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 Locales
 ~~~~~~~
 
-A locale is the combination of a language and a region. For example, "Chinese"
-is the language and ``zh_Hans_MO`` is the locale for "Chinese" (language) +
-"Simplified" (script) + "Macau SAR China" (region). The ``Locales`` class
-provides access to the name of all locales::
+A locale is the combination of a language, a region and some parameters that
+define the interface preferences of the user. For example, "Chinese" is the 
+language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified" 
+(script) + "Macau SAR China" (region). The ``Locales`` class provides access to 
+the name of all locales::
 
     use Symfony\Component\Intl\Locales;
 
