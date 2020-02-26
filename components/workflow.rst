@@ -97,6 +97,8 @@ you can retrieve a workflow from it and use it as follows::
 Learn more
 ----------
 
+Read more about the usage of the :doc:`Workflow component </workflow>` inside a Symfony application.
+
 .. toctree::
     :maxdepth: 1
     :glob:
