@@ -165,6 +165,20 @@ In those cases, use the
     echo $package->getUrl('css/app.css');
     // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
 
+If your JSON file is not on your local filesystem but is accessible over HTTP,
+you can use the ...
+:class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
+with the :doc:`HttpClient component </components/http_client>`::
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy;
+    use Symfony\Component\HttpClient\HttpClient;
+
+    $httpClient = HttpClient::create();
+    $manifestUrl = 'https://cdn.example.com/rev-manifest.json';
+    $package = new Package(new RemoteJsonManifestVersionStrategy($manifestUrl, $httpClient));
+
+
 Custom Version Strategies
 .........................
 

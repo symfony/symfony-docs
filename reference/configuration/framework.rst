@@ -1970,6 +1970,10 @@ package:
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
 
+.. note::
+
+    If an URL is set, the JSON manifest is downloaded on each request using the `http_client`_.
+
 translator
 ~~~~~~~~~~
 
