@@ -101,6 +101,8 @@ When you have configured a ``Registry`` with your workflows, you may use it as f
 Learn more
 ----------
 
+Read more about the usage of the :doc:`Workflow component </workflow>` inside a Symfony application.
+
 .. toctree::
     :maxdepth: 1
     :glob:
