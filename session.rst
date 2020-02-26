@@ -143,7 +143,7 @@ controllers if you type-hint an argument with
             $this->session = $session;
         }
 
-        public function someMethod()
+        public function someMethod() : void
         {
             // stores an attribute in the session for later reuse
             $this->session->set('attribute-name', 'attribute-value');
