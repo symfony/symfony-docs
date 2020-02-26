@@ -453,17 +453,17 @@ Managing the HTTP Cache
 The :class:`Symfony\\Component\\HttpFoundation\\Response` class has a rich set
 of methods to manipulate the HTTP headers related to the cache:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`
 
 .. note::
 
