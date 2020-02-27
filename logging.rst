@@ -30,9 +30,8 @@ To log a message, inject the default logger in your controller::
     public function index(LoggerInterface $logger)
     {
         $logger->info('I just got the logger');
-        $logger->error('An error occurred');
-
-        $logger->critical('I left the oven on!', [
+            ->error('An error occurred');
+            ->critical('I left the oven on!', [
             // include extra "context" info in your logs
             'cause' => 'in_hurry',
         ]);
