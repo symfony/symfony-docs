@@ -443,7 +443,7 @@ some basic validation tasks::
          */
         public function createProduct(ValidatorInterface $validator): Response
         {
-            $product = new Product();
+            $product = new Product()
             // This will trigger an error: the column isn't nullable in the database
                 ->setName(null);
             // This will trigger a type mismatch error: an integer is expected
