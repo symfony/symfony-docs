@@ -1,0 +1,48 @@
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-25T14:53:16Z
+
+Can `actions/cache` cache only directories and not a single file? Or what I'm doing wrong?
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-25T15:35:13Z
+
+I had to create `.cache` directory to get caching work
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-26T07:54:08Z
+
+Should I also provide PRs for 4.4, 5.0 and master?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-26T08:06:12Z
+
+@smoench no, don't worry. We merge each PR in all active merges up to `master`. Thanks.
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-26T08:11:08Z
+
+@javiereguiluz I was just asking as the suffix of cache key might has to change to base branch name
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-27T11:06:06Z
+
+Wow
+<img width="690" alt="Screenshot 2020-02-27 12 05 56" src="https://user-images.githubusercontent.com/995707/75439109-8665c780-5959-11ea-96a0-33ea00781f17.png">
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-27T11:18:19Z
+
+~~Please don't merge yet as the base branch resolving doesn't work~~
+
+---------------------------------------------------------------------------
+
+by smoench at 2020-02-27T12:12:38Z
+
+Got it work. Ready for merge
