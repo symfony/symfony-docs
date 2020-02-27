@@ -446,6 +446,19 @@ the :class:`Twig\\Environment` class::
         }
     }
 
+Rendering a Template's Content
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``renderView()`` method renders a template and returns its content. The content from the template can be used to create a ``Response`` object::
+
+    use Symfony\Component\HttpFoundation\Response;
+    
+    $content = $this->renderView('product/index.html.twig', [
+        'category' => '...',
+        'promotions' => ['...', '...'],
+    );
+    
+    return new Response($content);
+
 Rendering a Template in Emails
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
