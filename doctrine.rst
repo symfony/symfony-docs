@@ -445,9 +445,9 @@ some basic validation tasks::
         {
             $product = new Product();
             // This will trigger an error: the column isn't nullable in the database
-            $product->setName(null);
+                ->setName(null);
             // This will trigger a type mismatch error: an integer is expected
-            $product->setPrice('1999');
+                ->setPrice('1999');
 
             // ...
 
