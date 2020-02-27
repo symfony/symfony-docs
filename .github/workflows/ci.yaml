@@ -52,7 +52,20 @@ jobs:
             -   name: "Checkout"
                 uses: actions/checkout@v2
 
+            -   name: "Create cache dir"
+                run: mkdir .cache
+
+            -   name: "Extract base branch name"
+                run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:=${GITHUB_REF##*/}})"
+                id: extract_base_branch
+
+            -   name: "Cache DOCtor-RST"
+                uses: actions/cache@v1
+                with:
+                    path: .cache
+                    key: ${{ runner.os }}-doctor-rst-${{ steps.extract_base_branch.outputs.branch }}
+
             -   name: "Run DOCtor-RST"
                 uses: docker://oskarstark/doctor-rst
                 with:
-                    args: --short
+                    args: --short --cache-file=/github/workspace/.cache/doctor-rst.cache
