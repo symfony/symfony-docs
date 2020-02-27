@@ -415,13 +415,13 @@ that only includes safe ASCII characters::
     use Symfony\Component\String\Slugger\AsciiSlugger;
 
     $slugger = new AsciiSlugger();
-    $slug = (string) $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~');
+    $slug = $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~')->toString();
     // $slug = 'Workspace-settings'
 
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::
 
-    $slug = (string) $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~', '/');
+    $slug = $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~', '/')->toString();
     // $slug = 'Workspace/settings'
 
 The slugger transliterates the original string into the Latin script before
