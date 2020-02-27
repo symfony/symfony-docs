@@ -86,7 +86,7 @@ Creating Routes in YAML, XML or PHP Files
 Instead of defining routes in the controller classes, you can define them in a
 separate YAML, XML or PHP file. The main advantage is that they don't require
 any extra dependency. The main drawback is that you have to work with multiple
-files when checking the routing of some controller action.
+files when checking the routing of some controller actions.
 
 The following example shows how to define in YAML/XML/PHP a route called
 ``blog_list`` that associates the ``/blog`` URL with the ``list()`` action of
@@ -238,7 +238,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 Matching Expressions
 ~~~~~~~~~~~~~~~~~~~~
 
-Use the ``condition`` option if you need some route to match based on some
+Use the ``condition`` option if you need some routes to match based on some
 arbitrary matching logic:
 
 .. configuration-block::
@@ -354,7 +354,7 @@ evaluates them:
     blog_show         ANY      ANY      ANY    /blog/{slug}
     ----------------  -------  -------  -----  --------------------------------------------
 
-Pass the name (or part of the name) of some route to this argument to print the
+Pass the name (or part of the name) of some routes to this argument to print the
 route details:
 
 .. code-block:: terminal
@@ -386,7 +386,7 @@ Route Parameters
 
 The previous examples defined routes where the URL never changes (e.g. ``/blog``).
 However, it's common to define routes where some parts are variable. For example,
-the URL to display some blog post will probably include the title or slug
+the URL to display some blog posts will probably include the title or slug
 (e.g. ``/blog/my-first-post`` or ``/blog/all-about-symfony``).
 
 In Symfony routes, variable parts are wrapped in ``{ ... }`` and they must have
@@ -729,7 +729,7 @@ Now, when the user visits ``/blog``, the ``blog_list`` route will match and
     ``/{page}/blog`` is a valid path, but ``page`` will always be required
     (i.e. ``/blog`` will not match this route).
 
-If you want to always include some default value in the generated URL (for
+If you want to always include some default values in the generated URL (for
 example to force the generation of ``/blog/1`` instead of ``/blog`` in the
 previous example) add the ``!`` character before the parameter name: ``/blog/{!page}``
 
@@ -801,7 +801,7 @@ parameter:
 Parameter Conversion
 ~~~~~~~~~~~~~~~~~~~~
 
-A common routing need is to convert the value stored in some parameter (e.g. an
+A common routing need is to convert the value stored in some parameters (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
 represents the user). This feature is called "param converter" and is only
 available when using annotations to define routes.
@@ -1429,7 +1429,7 @@ Sub-Domain Routing
 ------------------
 
 Routes can configure a ``host`` option to require that the HTTP host of the
-incoming requests matches some specific value. In the following example, both
+incoming requests matches some specific values. In the following example, both
 routes match the same path (``/``) but one of them only responds to a specific
 host name:
 
@@ -1625,7 +1625,7 @@ these routes.
             [],
             [],
             ['HTTP_HOST' => 'm.example.com']
-            // or get the value from some container parameter:
+            // or get the value from some container parameters:
             // ['HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain')]
         );
 
