@@ -703,7 +703,7 @@ If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 After authentication, the ``User`` object of the current user can be accessed
 via the ``getUser()`` shortcut::
 
-    public function index()
+    public function index() : Response
     {
         // usually you'll want to make sure the user is authenticated first
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
