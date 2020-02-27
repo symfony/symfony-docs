@@ -1319,7 +1319,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         # config/routes.yaml
         doc_shortcut:
             path: /doc
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController:redirectAction
             defaults:
                 route: 'doc_page'
                 # optionally you can define some arguments passed to the route
