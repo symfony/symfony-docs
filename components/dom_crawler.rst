@@ -185,7 +185,13 @@ Get the same level nodes after or before the current selection::
 
     $crawler->filter('body > p')->nextAll();
     $crawler->filter('body > p')->previousAll();
+    
+Get the same level nodes after or before the current selection until a node::
 
+    $finalNode = $crawler->filter('body > p:nth-child(4)')->getNode(0);
+    $crawler->filter('body > p')->nextUntil($finalNode);
+    $crawler->filter('body > p')->previousUntil($finalNode);
+    
 Get all the child or parent nodes::
 
     $crawler->filter('body')->children();
