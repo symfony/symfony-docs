@@ -115,7 +115,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference by:
         # config/packages/doctrine.yaml
         doctrine:
             dbal:
-                password: '%env(DATABASE_PASSWORD)%'
+                password: '%env(secret:DATABASE_PASSWORD)%'
                 # ...
             # ...
 
