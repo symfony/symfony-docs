@@ -77,8 +77,6 @@ Basic Usage
 Options
 -------
 
-.. include:: /reference/constraints/_groups-option.rst.inc
-
 alpha3
 ~~~~~~
 
@@ -88,9 +86,11 @@ alpha3
 
 **type**: ``boolean`` **default**: ``false``
 
-If this option is ``true``, then the constraint will valid the value as
-`ISO 3166-1 alpha-3`_ three-letter codes (e.g. France = ``FRA``) instead
-of the default `ISO 3166-1 alpha-2`_ two-letter codes (e.g. France = ``FR``).
+If this option is ``true``, the constraint checks that the value is a
+`ISO 3166-1 alpha-3`_ three-letter code (e.g. France = ``FRA``) instead
+of the default `ISO 3166-1 alpha-2`_ two-letter code (e.g. France = ``FR``).
+
+.. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
 ~~~~~~~~~~~
