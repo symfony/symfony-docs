@@ -326,7 +326,7 @@ invalidMessage
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
 The message that will be shown if the underlying value is not a number (per
-the `is_numeric`_ PHP function).
+the :phpfunction:`is_numeric` PHP function).
 
 You can use the following parameters in this message:
 
@@ -442,5 +442,4 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
-.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php
+.. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php

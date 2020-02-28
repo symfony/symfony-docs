@@ -159,7 +159,7 @@ mapping type:
             ],
         ]);
 
-.. _`PDO`:           https://php.net/pdo
-.. _`Doctrine`:      http://www.doctrine-project.org
-.. _`DBAL Documentation`: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html
-.. _`Custom Mapping Types`: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/types.html#custom-mapping-types
+.. _`PDO`: https://www.php.net/pdo
+.. _`Doctrine`: https://www.doctrine-project.org/
+.. _`DBAL Documentation`: https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html
+.. _`Custom Mapping Types`: https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/types.html#custom-mapping-types

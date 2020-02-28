@@ -223,9 +223,9 @@ message contains the ``"foobar"`` string.
 Making Tests Fail
 ~~~~~~~~~~~~~~~~~
 
-By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation
-notices will make tests fail. Alternatively, you can configure an
-arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
+By default, any non-legacy-tagged or any non-`@-silenced <@-silencing operator>`_
+deprecation notices will make tests fail. Alternatively, you can configure
+an arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
 ``max[total]=320`` for instance. It will make the tests fails only if a
 higher number of deprecation notices is reached (``0`` is the default
 value).
@@ -955,11 +955,10 @@ not find the SUT:
 .. _`PHPUnit`: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
-.. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
+.. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
-.. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
-.. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
 .. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
-.. _`PHP namespace resolutions rules`: https://php.net/manual/en/language.namespaces.rules.php
+.. _`PHP namespace resolutions rules`: https://www.php.net/manual/en/language.namespaces.rules.php

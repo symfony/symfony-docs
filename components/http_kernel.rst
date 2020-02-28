@@ -752,11 +752,11 @@ Learn more
 
    /reference/events
 
-.. _reflection: https://php.net/manual/en/book.reflection.php
+.. _reflection: https://www.php.net/manual/en/book.reflection.php
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
-.. _`PHP FPM`: https://php.net/manual/en/install.fpm.php
+.. _`PHP FPM`: https://www.php.net/manual/en/install.fpm.php
 .. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
 .. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php
-.. _variadic: http://php.net/manual/en/functions.arguments.php
+.. _variadic: https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list

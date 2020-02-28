@@ -212,5 +212,5 @@ Also, you can use ``ctype_*()`` functions from corresponding
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
 
-.. _built-in PHP extension: https://php.net/book.ctype
-.. _a list of ctype functions: https://php.net/ref.ctype
+.. _built-in PHP extension: https://www.php.net/book.ctype
+.. _a list of ctype functions: https://www.php.net/ref.ctype

@@ -219,10 +219,10 @@ Learn more
 * :doc:`/http_cache/varnish`
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
-.. _`OPcache`: https://php.net/manual/en/book.opcache.php
+.. _`OPcache`: https://www.php.net/manual/en/book.opcache.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
-.. _`APC`: https://php.net/manual/en/book.apc.php
+.. _`APC`: https://www.php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
-.. _`APCu PHP functions`: https://php.net/manual/en/ref.apcu.php
+.. _`APCu PHP functions`: https://www.php.net/manual/en/ref.apcu.php
 .. _`cachetool`: https://github.com/gordalina/cachetool
-.. _`open_basedir`: https://php.net/manual/ini.core.php#ini.open-basedir
+.. _`open_basedir`: https://www.php.net/manual/ini.core.php#ini.open-basedir

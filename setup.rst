@@ -300,10 +300,10 @@ Learn More
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
 .. _`Symfony Recipes documentation`: https://github.com/symfony/recipes/blob/master/README.rst
-.. _`iconv`: https://php.net/book.iconv
-.. _`JSON`: https://php.net/book.json
-.. _`Session`: https://php.net/book.session
-.. _`Ctype`: https://php.net/book.ctype
-.. _`Tokenizer`: https://php.net/book.tokenizer
-.. _`SimpleXML`: https://php.net/book.simplexml
-.. _`PCRE`: https://php.net/book.pcre
+.. _`iconv`: https://www.php.net/book.iconv
+.. _`JSON`: https://www.php.net/book.json
+.. _`Session`: https://www.php.net/book.session
+.. _`Ctype`: https://www.php.net/book.ctype
+.. _`Tokenizer`: https://www.php.net/book.tokenizer
+.. _`SimpleXML`: https://www.php.net/book.simplexml
+.. _`PCRE`: https://www.php.net/book.pcre

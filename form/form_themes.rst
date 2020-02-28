@@ -607,6 +607,6 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.1/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
 .. _`foundation_6_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_6_layout.html.twig
-.. _`Foundation CSS framework`: http://foundation.zurb.com/
+.. _`Foundation CSS framework`: https://get.foundation/
 .. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
 .. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html

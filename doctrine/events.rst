@@ -478,6 +478,6 @@ can do it in the service configuration:
     related event is actually fired, making them more performant.
 
 .. _`Doctrine`: https://www.doctrine-project.org/
-.. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/events.html#lifecycle-events
-.. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/events.html
+.. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
+.. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html
 .. _`DoctrineMongoDBBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html

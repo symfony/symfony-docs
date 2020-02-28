@@ -19,8 +19,7 @@ entity manager that connects to another database might handle the rest.
 .. caution::
 
     Entities cannot define associations across different entity managers. If you
-    need that, there are `several alternatives <https://stackoverflow.com/a/11494543/2804294>`_
-    that require some custom setup.
+    need that, there are `several alternatives`_ that require some custom setup.
 
 The following configuration code shows how you can configure two entity managers:
 
@@ -283,3 +282,5 @@ The same applies to repository calls::
             ;
         }
     }
+
+.. _`several alternatives`: https://stackoverflow.com/a/11494543

@@ -34,4 +34,4 @@ Symfony includes the following normalizers but you can also
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer` to
   normalize PHP object using `PHP reflection`_.
 
-.. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
+.. _`PHP reflection`: https://www.php.net/manual/en/book.reflection.php

@@ -104,4 +104,4 @@ different URLs. More flexible concepts exist for those cases:
 * **Cache tagging** lets you add a tag for each content used in a response
   so that you can invalidate all URLs containing a certain content.
 
-.. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/

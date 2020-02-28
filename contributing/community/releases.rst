@@ -132,6 +132,6 @@ period to upgrade. Companies wanting more stability use the LTS versions: a new
 version is published every two years and there is a year to upgrade.
 
 .. _`semantic versioning`: https://semver.org/
-.. _`Subscribe to Symfony Roadmap notifications`: https://symfony.com/account
-.. _`Symfony Roadmap`: https://symfony.com/roadmap#checker
+.. _`Subscribe to Symfony Roadmap notifications`: https://symfony.com/account/notifications
+.. _`Symfony Roadmap`: https://symfony.com/releases
 .. _`professional Symfony support`: https://sensiolabs.com/

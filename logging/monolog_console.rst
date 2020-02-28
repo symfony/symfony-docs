@@ -28,9 +28,10 @@ calls need to be wrapped in conditions. For example::
     }
 
 Instead of using these semantic methods to test for each of the verbosity
-levels, the `MonologBridge`_ provides a `ConsoleHandler`_ that listens to
-console events and writes log messages to the console output depending on the
-current log level and the console verbosity.
+levels, the `MonologBridge`_ provides a
+:class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler` that listens to
+console events and writes log messages to the console output depending on
+the current log level and the console verbosity.
 
 The example above could then be rewritten as::
 
@@ -122,5 +123,4 @@ Now, log messages will be shown on the console based on the log levels and verbo
 By default (normal verbosity level), warnings and higher will be shown. But in
 :doc:`full verbosity mode </console/verbosity>`, all messages will be shown.
 
-.. _ConsoleHandler: https://github.com/symfony/MonologBridge/blob/master/Handler/ConsoleHandler.php
-.. _MonologBridge: https://github.com/symfony/MonologBridge
+.. _MonologBridge: https://github.com/symfony/monolog-bridge

@@ -440,4 +440,4 @@ If the ``dir`` configuration is set and the ``is_bundle`` configuration
 is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
 the path of the bundle.
 
-.. _DBAL documentation: https://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
+.. _DBAL documentation: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html

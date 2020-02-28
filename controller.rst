@@ -76,9 +76,7 @@ In order to *view* the result of this controller, you need to map a URL to it vi
 a route. This was done above with the ``@Route("/lucky/number/{max}")``
 :ref:`route annotation <annotation-routes>`.
 
-To see your page, go to this URL in your browser:
-
-    http://localhost:8000/lucky/number/100
+To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
 For more information on routing, see :doc:`/routing`.
 
@@ -677,4 +675,4 @@ Learn more about Controllers
     controller/*
 
 .. _`Symfony Maker`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect
+.. _`unvalidated redirects security vulnerability`: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html

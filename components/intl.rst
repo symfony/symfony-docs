@@ -374,8 +374,8 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _intl extension: https://php.net/manual/en/book.intl.php
-.. _install the intl extension: https://php.net/manual/en/intl.setup.php
+.. _intl extension: https://www.php.net/manual/en/book.intl.php
+.. _install the intl extension: https://www.php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2

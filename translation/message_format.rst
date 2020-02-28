@@ -466,6 +466,6 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
 
 .. _`online editor`: http://format-message.github.io/icu-message-format-for-translators/
 .. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
-.. _`switch statement`: https://php.net/control-structures.switch
+.. _`switch statement`: https://www.php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
-.. _`constants defined by the IntlDateFormatter class`: https://php.net/manual/en/class.intldateformatter.php
+.. _`constants defined by the IntlDateFormatter class`: https://www.php.net/manual/en/class.intldateformatter.php
