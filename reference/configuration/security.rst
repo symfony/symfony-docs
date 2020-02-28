@@ -756,7 +756,7 @@ role inheritance rules by creating a role hierarchy, as explained in
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`libsodium`: https://pecl.php.net/package/libsodium
-.. _`Session Fixation`: https://www.owasp.org/index.php/Session_fixation
+.. _`Session Fixation`: https://owasp.org/www-community/attacks/Session_fixation
 .. _`Argon2 key derivation function`: https://en.wikipedia.org/wiki/Argon2
 .. _`bcrypt password hashing function`: https://en.wikipedia.org/wiki/Bcrypt
 .. _`cryptographic salt`: https://en.wikipedia.org/wiki/Salt_(cryptography)

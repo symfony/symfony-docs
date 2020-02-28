@@ -28,4 +28,4 @@ may want to add an index to improve garbage collection performance. From the
     use session_db
     db.session.ensureIndex( { "expires_at": 1 }, { expireAfterSeconds: 0 } )
 
-.. _MongoDB shell: http://docs.mongodb.org/v2.2/tutorial/getting-started-with-the-mongo-shell/
+.. _MongoDB shell: https://docs.mongodb.com/manual/mongo/

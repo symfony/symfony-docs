@@ -657,12 +657,12 @@ redirected page and the email won't be accessible.
 .. _`MailCatcher`: https://github.com/sj26/mailcatcher
 .. _`MailHog`: https://github.com/mailhog/MailHog
 .. _`Mailtrap`: https://mailtrap.io/
-.. _`Swift Mailer`: http://swiftmailer.org/
+.. _`Swift Mailer`: https://swiftmailer.symfony.com/
 .. _`SwiftMailerBundle`: https://github.com/symfony/swiftmailer-bundle
 .. _`Creating Messages`: https://swiftmailer.symfony.com/docs/messages.html
 .. _`Mandrill`: https://mandrill.com/
 .. _`SendGrid`: https://sendgrid.com/
-.. _`Amazon SES`: http://aws.amazon.com/ses/
+.. _`Amazon SES`: https://aws.amazon.com/ses/
 .. _`generate an App password`: https://support.google.com/accounts/answer/185833
 .. _`allow less secure applications to access your Gmail account`: https://support.google.com/accounts/answer/6010255
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt

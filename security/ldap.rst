@@ -541,6 +541,6 @@ Configuration example for form login and query_string
     Using the ``query_string`` config option without defining ``search_dn`` and
     ``search_password`` is deprecated since Symfony 4.4.
 
-.. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
+.. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection

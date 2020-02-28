@@ -124,6 +124,8 @@ that will do the required processing for your message::
         }
     }
 
+.. _messenger-envelopes:
+
 Adding Metadata to Messages (Envelopes)
 ---------------------------------------
 

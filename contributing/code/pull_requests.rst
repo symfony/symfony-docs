@@ -415,7 +415,7 @@ before merging.
 
 .. _ProGit: https://git-scm.com/book
 .. _GitHub: https://github.com/join
-.. _`GitHub's documentation`: https://help.github.com/articles/ignoring-files
+.. _`GitHub's documentation`: https://help.github.com/github/using-git/ignoring-files
 .. _Symfony repository: https://github.com/symfony/symfony
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
 .. _`fabbot`: https://fabbot.io
@@ -424,4 +424,4 @@ before merging.
 .. _`searching on GitHub`: https://github.com/symfony/symfony/issues?q=+is%3Aopen+
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
-.. _`draft status`: https://help.github.com/en/articles/about-pull-requests#draft-pull-requests
+.. _`draft status`: https://help.github.com/github/collaborating-with-issues-and-pull-requests/about-pull-requests#draft-pull-requests

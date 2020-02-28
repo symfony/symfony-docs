@@ -1032,7 +1032,7 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 
     $mockResponse = new MockResponse($body());
 
-.. _`cURL PHP extension`: https://php.net/curl
+.. _`cURL PHP extension`: https://www.php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
 .. _`HTTPlug`: https://github.com/php-http/httplug/#readme

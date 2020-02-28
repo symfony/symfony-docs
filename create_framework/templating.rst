@@ -177,5 +177,5 @@ As always, you can decide to stop here and use the framework as is; it's
 probably all you need to create simple websites like those fancy one-page
 `websites`_ and hopefully a few others.
 
-.. _`callbacks`: https://php.net/callback#language.types.callback
+.. _`callbacks`: https://www.php.net/callback#language.types.callback
 .. _`websites`: https://kottke.org/08/02/single-serving-sites

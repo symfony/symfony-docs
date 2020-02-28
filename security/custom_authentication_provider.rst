@@ -636,5 +636,5 @@ The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.
 
 
-.. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
+.. _`WSSE`: https://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce

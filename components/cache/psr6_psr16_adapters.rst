@@ -91,4 +91,4 @@ this use-case::
 
     The ``Psr16Cache`` class was introduced in Symfony 4.3.
 
-.. _`PSR-16`: http://www.php-fig.org/psr/psr-16/
+.. _`PSR-16`: https://www.php-fig.org/psr/psr-16/

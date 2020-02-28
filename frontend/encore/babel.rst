@@ -62,4 +62,4 @@ automatically be added to Babel: you must add it yourself in ``.babelrc``.
 As soon as a ``.babelrc`` file is present, it will take priority over the Babel
 configuration added by Encore.
 
-.. _`Babel`: http://babeljs.io/
+.. _`Babel`: https://babeljs.io/
