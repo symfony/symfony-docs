@@ -105,10 +105,22 @@ AuthenticatedVoter
 ~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AuthenticatedVoter`
-voter supports the attributes ``IS_AUTHENTICATED_FULLY``, ``IS_AUTHENTICATED_REMEMBERED``,
-and ``IS_AUTHENTICATED_ANONYMOUSLY`` and grants access based on the current
-level of authentication, i.e. is the user fully authenticated, or only based
-on a "remember-me" cookie, or even authenticated anonymously?::
+voter supports the attributes ``IS_AUTHENTICATED_FULLY``,
+``IS_AUTHENTICATED_REMEMBERED``, ``IS_AUTHENTICATED_ANONYMOUSLY``,
+to grant access based on the current level of authentication, i.e. is the
+user fully authenticated, or only based on a "remember-me" cookie, or even
+authenticated anonymously?
+
+It also supports the attributes ``IS_ANONYMOUS``, ``IS_REMEMBERED``,
+``IS_IMPERSONATED`` to grant access based on a specific state of
+authentication.
+
+.. versionadded:: 5.1
+
+    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATED``
+    attributes were introduced in Symfony 5.1.
+
+::
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 

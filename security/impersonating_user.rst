@@ -85,15 +85,20 @@ role to the users that need it.
 Knowing When Impersonation Is Active
 ------------------------------------
 
-When a user is being impersonated, Symfony grants them a special role called
-``ROLE_PREVIOUS_ADMIN`` (in addition to the roles the user may have). Use this
-special role, for instance, to show a link to exit impersonation in a template:
+You can use the special attribute ``IS_IMPERSONATOR`` to check if the
+impersonation is active in this session. Use this special role, for
+instance, to show a link to exit impersonation in a template:
 
 .. code-block:: html+twig
 
-    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+    {% if is_granted('IS_IMPERSONATOR') %}
         <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
     {% endif %}
+
+.. versionadded:: 5.1
+
+    The ``IS_IMPERSONATOR`` was introduced in Symfony 5.1. Use
+    ``ROLE_PREVIOUS_ADMIN`` prior to Symfony 5.1.
 
 Finding the Original User
 -------------------------
