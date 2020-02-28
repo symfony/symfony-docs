@@ -162,4 +162,4 @@ Embed commands via ``$()`` (not supported on Windows):
 
     Note that using ``$()`` might not work depending on your shell.
 
-.. _twelve-factor applications: http://www.12factor.net/
+.. _twelve-factor applications: https://12factor.net/

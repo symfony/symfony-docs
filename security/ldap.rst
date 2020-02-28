@@ -526,6 +526,6 @@ Configuration example for form login and query_string
             ]
         ]);
 
-.. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
+.. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection

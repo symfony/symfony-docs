@@ -298,4 +298,4 @@ You can register your own MIME type guesser by creating a class that implements
 
 .. _`MIME`: https://en.wikipedia.org/wiki/MIME
 .. _`MIME types`: https://en.wikipedia.org/wiki/Media_type
-.. _`fileinfo extension`: https://php.net/fileinfo
+.. _`fileinfo extension`: https://www.php.net/fileinfo

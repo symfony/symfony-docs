@@ -83,4 +83,4 @@ this use-case::
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr16Cache);
 
-.. _`PSR-16`: http://www.php-fig.org/psr/psr-16/
+.. _`PSR-16`: https://www.php-fig.org/psr/psr-16/

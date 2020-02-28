@@ -702,10 +702,10 @@ set of **high-quality open source tools developed by the Symfony community**!
 A good selection of `Symfony community tools`_ can be found on GitHub.
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
-.. _`Doctrine`: http://www.doctrine-project.org
+.. _`Doctrine`: https://www.doctrine-project.org/
 .. _Translation: https://github.com/symfony/translation
 .. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/
 .. _`Validator`: https://github.com/symfony/validator
-.. _`Varnish`: https://www.varnish-cache.org/
+.. _`Varnish`: https://varnish-cache.org/
 .. _`Symfony community tools`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories

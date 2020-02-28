@@ -132,6 +132,6 @@ The following PHP constants can also be used:
 
 All five versions are allowed by default.
 
-.. _`Universally unique identifier (UUID)`: http://en.wikipedia.org/wiki/Universally_unique_identifier
-.. _`RFC 4122`: http://tools.ietf.org/html/rfc4122
-.. _`UUID versions`: http://en.wikipedia.org/wiki/Universally_unique_identifier#Variants_and_versions
+.. _`Universally unique identifier (UUID)`: https://en.wikipedia.org/wiki/Universally_unique_identifier
+.. _`RFC 4122`: https://tools.ietf.org/html/rfc4122
+.. _`UUID versions`: https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions

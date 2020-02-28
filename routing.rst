@@ -2229,6 +2229,6 @@ Learn more about Routing
     routing/*
 
 .. _`PHP regular expressions`: https://www.php.net/manual/en/book.pcre.php
-.. _`PCRE Unicode properties`: http://php.net/manual/en/regexp.reference.unicode.php
+.. _`PCRE Unicode properties`: https://www.php.net/manual/en/regexp.reference.unicode.php
 .. _`full param converter documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

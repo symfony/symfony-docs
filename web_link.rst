@@ -188,9 +188,9 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
 .. _`"as" attribute`: https://w3c.github.io/preload/#as-attribute
 .. _`the Priority Hints specification`: https://wicg.github.io/priority-hints/
-.. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-(http/2)
+.. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-http-2
 .. _`Cloudflare`: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
-.. _`Fastly`: https://docs.fastly.com/guides/performance-tuning/http2-server-push
+.. _`Fastly`: https://docs.fastly.com/en/guides/http2-server-push
 .. _`Akamai`: https://blogs.akamai.com/2017/03/http2-server-push-the-what-how-and-why.html
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
 .. _`PSR-13`: https://www.php-fig.org/psr/psr-13/

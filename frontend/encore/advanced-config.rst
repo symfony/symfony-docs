@@ -219,6 +219,6 @@ The following loaders are configurable with ``configureLoaderRule()``:
   - ``handlebars``
 
 .. _`configuration options`: https://webpack.js.org/configuration/
-.. _`array of configurations`: https://github.com/webpack/docs/wiki/configuration#multiple-configurations
+.. _`array of configurations`: https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations
 .. _`Karma`: https://karma-runner.github.io
 .. _`Watching Options`: https://webpack.js.org/configuration/watch/#watchoptions
