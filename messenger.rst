@@ -323,7 +323,7 @@ etc) instead of the object::
 
     // src/Message/NewUserWelcomeEmail.php
     namespace App\Message;
-    
+
     class NewUserWelcomeEmail
     {
         private $userId;
@@ -538,7 +538,9 @@ different messages to them. For example:
                 <framework:messenger>
                     <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
                         <framework:options>
-                            <framework:queue_name>high</framework:queue_name>
+                            <framework:queue>
+                                <framework:name>Queue</framework:name>
+                            </framework:queue>
                         </framework:options>
                     </framework:transport>
                     <framework:transport name="async_priority_low" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
@@ -846,7 +848,11 @@ The transport has a number of options:
                 <framework:messenger>
                     <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority"/>
                     <framework:transport name="async_priority_low" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
-                        <framework:option queue_name="normal_priority"/>
+                        <framework:options>
+                            <framework:queue>
+                                <framework:name>normal_priority</framework:name>
+                            </framework:queue>
+                        </framework:options>
                     </framework:transport>
                 </framework:messenger>
             </framework:config>
