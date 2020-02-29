@@ -503,7 +503,7 @@ the same key could be invalidated with one function call::
             $this->myCachePool = $myCachePool;
         }
 
-        public function someMethod()
+        public function someMethod(): string
         {
             $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item) {
                 $item->tag(['foo', 'bar']);
