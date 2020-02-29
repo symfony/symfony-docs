@@ -666,6 +666,54 @@ this is configurable for each transport:
                             # implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
                             # service: null
 
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority">
+                        <framework:retry-strategy max-retries="3" delay="1000" multiplier="2" max-delay="0"/>
+                    </framework:transport>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'transports' => [
+                    'async_priority_high' => [
+                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
+
+                        // default configuration
+                        'retry_strategy' => [
+                            'max_retries' => 3,
+                            // milliseconds delay
+                            'delay' => 1000,
+                            // causes the delay to be higher before each retry
+                            // e.g. 1 second delay, 2 seconds, 4 seconds
+                            'multiplier' => 2,
+                            'max_delay' => 0,
+                            // override all of this with a service that
+                            // implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
+                            // 'service' => null,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
 Avoiding Retrying
 ~~~~~~~~~~~~~~~~~
 
@@ -696,6 +744,46 @@ be discarded. To avoid this happening, you can instead configure a ``failure_tra
                     # ... other transports
 
                     failed: 'doctrine://default?queue_name=failed'
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- after retrying, messages will be sent to the "failed" transport -->
+                <framework:messenger failure-transport="failed">
+                    <!-- ... other transports -->
+
+                    <framework:transport name="failed" dsn="doctrine://default?queue_name=failed"/>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                // after retrying, messages will be sent to the "failed" transport
+                'failure_transport' => 'failed',
+
+                'transports' => [
+                    // ... other transports
+
+                    'failed' => [
+                        'dsn' => 'doctrine://default?queue_name=failed',
+                    ],
+                ],
+            ],
+        ]);
 
 In this example, if handling a message fails 3 times (default ``max_retries``),
 it will then be sent to the ``failed`` transport. While you *can* use
@@ -963,13 +1051,47 @@ holds them in memory during the request, which can be useful for testing.
 For example, if you have an ``async_priority_normal`` transport, you could
 override it in the ``test`` environment to use this transport:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/test/messenger.yaml
-    framework:
-        messenger:
-            transports:
-                async_priority_normal: 'in-memory:///'
+    .. code-block:: yaml
+
+        # config/packages/test/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    async_priority_normal: 'in-memory:///'
+
+    .. code-block:: xml
+
+        <!-- config/packages/test/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="async_priority_normal" dsn="in-memory:///"/>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/test/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'transports' => [
+                    'async_priority_normal' => [
+                        'dsn' => 'in-memory:///',
+                    ],
+                ],
+            ],
+        ]);
 
 Then, while testing, messages will *not* be delivered to the real transport.
 Even better, in a test, you can check that exactly one message was sent
@@ -1028,6 +1150,52 @@ this globally (or for each transport) to a service that implements
                     async_priority_normal:
                         dsn: # ...
                         serializer: messenger.transport.symfony_serializer
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:serializer default-serializer="messenger.transport.symfony_serializer">
+                        <framework:symfony-serializer format="json">
+                            <framework:context/>
+                        </framework:symfony-serializer>
+                    </framework:serializer>
+
+                    <framework:transport name="async_priority_normal" dsn="..." serializer="messenger.transport.symfony_serializer"/>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'serializer' => [
+                    'default_serializer' => 'messenger.transport.symfony_serializer',
+                    'symfony_serializer' => [
+                        'format' => 'json',
+                        'context' => [],
+                    ],
+                ],
+                'transports' => [
+                    'async_priority_normal' => [
+                        'dsn' => // ...
+                        'serializer' => 'messenger.transport.symfony_serializer',
+                    ],
+                ],
+            ],
+        ]);
 
 The ``messenger.transport.symfony_serializer`` is a built-in service that uses
 the :doc:`Serializer component </serializer>` and can be configured in a few ways.
