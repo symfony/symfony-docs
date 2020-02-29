@@ -52,7 +52,7 @@ random) number and prints it. To do that, create a "Controller" class and a
 
     class LuckyController
     {
-        public function number()
+        public function number(): Response
         {
             $number = random_int(0, 100);
 
