@@ -147,7 +147,7 @@ each with a single field.
 
 The message that's displayed when this constraint fails. This message is by default
 mapped to the first field causing the violation. When using multiple fields
-in the constraint, the mapping can be specified in the `errorPath`_ property.
+in the constraint, the mapping can be specified via the `errorPath`_ property.
 
 Messages can include the ``{{ value }}`` placeholder to display a string
 representation of the invalid entity. If the entity doesn't define the
