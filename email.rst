@@ -607,7 +607,7 @@ to get information about the messages sent on the previous request::
 
     class MailControllerTest extends WebTestCase
     {
-        public function testMailIsSentAndContentIsOk()
+        public function testMailIsSentAndContentIsOk(): void
         {
             $client = static::createClient();
 
