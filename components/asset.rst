@@ -184,7 +184,7 @@ every day::
             $this->version = date('Ymd');
         }
 
-        public function getVersion($path)
+        public function getVersion()
         {
             return $this->version;
         }
