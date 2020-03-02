@@ -145,9 +145,9 @@ each with a single field.
 
 **type**: ``string`` **default**: ``This value is already used.``
 
-The message that's displayed when this constraint fails. This message is always
-mapped to the first field causing the violation, even when using multiple fields
-in the constraint.
+The message that's displayed when this constraint fails. This message is by default
+mapped to the first field causing the violation. When using multiple fields
+in the constraint, the mapping can be specified via the `errorPath`_ property.
 
 Messages can include the ``{{ value }}`` placeholder to display a string
 representation of the invalid entity. If the entity doesn't define the
