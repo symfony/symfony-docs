@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-28T09:30:15Z
+
+What about using something similar to the [Wikipedia definition of "locale"](https://en.wikipedia.org/wiki/Locale_(computer_software)):
+
+```
+A locale is the combination of a language, a region and some parameters that
+define the interface preferences of the user (such as the language script, the
+date and number formatting, etc.).
+```
+
+---------------------------------------------------------------------------
+
+by michaelKaefer at 2020-02-29T06:22:49Z
+
+@javiereguiluz I think the definition on Wikipedia is to general for what is meant here. A locale here is almost always a combination of a language code, a country code and a _script code_ and not the combination of a language code, a country code and _some parameters_. But anyway I changed the commit to this version.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-02-29T09:00:02Z
+
+@michaelKaefer thanks for updating your contribution. I wasn't sure about this either ... but looking at Symfony Intl tests (https://github.com/symfony/intl/blob/master/Tests/Locale/LocaleTest.php) it looks like we support locales with attributes like script, currency formatting, etc.
+
+---------------------------------------------------------------------------
+
+by michaelKaefer at 2020-03-01T07:38:21Z
+
+@javiereguiluz Ok, thank you. But `Locales::getNames()` only returns combinations of languages, scripts and countries, or? No currencies, no number formats, etc. That is what my commit was targeting. But anyway I already changed it to _some parameters_.
