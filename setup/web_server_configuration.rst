@@ -294,6 +294,10 @@ The **minimum configuration** to get your application running under Nginx is:
         location / {
             # try to serve file directly, fallback to index.php
             try_files $uri /index.php$is_args$args;
+            
+            # try to search index automatically
+            autoindex on;
+            autoindex_exact_size off;
         }
 
         # optionally disable falling back to PHP script for the asset directories;
