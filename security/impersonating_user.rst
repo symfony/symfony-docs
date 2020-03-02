@@ -193,8 +193,8 @@ Limiting User Switching
 
 If you need more control over user switching, you can use a security voter. First,
 configure ``switch_user`` to check for some new, custom attribute. This can be
-anything, but *cannot* start with ``ROLE_`` (to enforce that only your voter will)
-be called:
+anything, but *cannot* start with ``ROLE_`` (to enforce that only your voter will 
+be called):
 
 .. configuration-block::
 
