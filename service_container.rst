@@ -38,7 +38,7 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
         /**
          * @Route("/products")
          */
-        public function list(LoggerInterface $logger)
+        public function list(LoggerInterface $logger): void
         {
             $logger->info('Look! I just used a service');
 
@@ -101,7 +101,7 @@ it can't be re-used. Instead, you decide to create a new class::
 
     class MessageGenerator
     {
-        public function getHappyMessage()
+        public function getHappyMessage(): array
         {
             $messages = [
                 'You did it! You updated the system! Amazing!',
@@ -120,7 +120,7 @@ inside your controller::
 
     use App\Service\MessageGenerator;
 
-    public function new(MessageGenerator $messageGenerator)
+    public function new(MessageGenerator $messageGenerator): void
     {
         // thanks to the type-hint, the container will instantiate a
         // new MessageGenerator and pass it to you!
@@ -241,7 +241,7 @@ and use it later::
             $this->logger = $logger;
         }
 
-        public function getHappyMessage()
+        public function getHappyMessage(): void
         {
             $this->logger->info('About to find a happy message!');
             // ...
@@ -307,7 +307,7 @@ made. To do that, you create a new class::
             $this->mailer = $mailer;
         }
 
-        public function notifyOfSiteUpdate()
+        public function notifyOfSiteUpdate(): void
         {
             $happyMessage = $this->messageGenerator->getHappyMessage();
 
@@ -530,13 +530,13 @@ Working with container parameters is straightforward using the container's
 accessor methods for parameters::
 
     // checks if a parameter is defined (parameter names are case-sensitive)
-    $container->hasParameter('mailer.transport');
+    $container->hasParameter('mailer.transport')
 
     // gets value of a parameter
-    $container->getParameter('mailer.transport');
+        ->getParameter('mailer.transport')
 
     // adds a new parameter
-    $container->setParameter('mailer.transport', 'sendmail');
+        ->setParameter('mailer.transport', 'sendmail');
 
 .. caution::
 
