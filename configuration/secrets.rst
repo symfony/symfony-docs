@@ -115,7 +115,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference by:
         # config/packages/doctrine.yaml
         doctrine:
             dbal:
-                password: '%env(secret:DATABASE_PASSWORD)%'
+                password: '%env(DATABASE_PASSWORD)%'
                 # ...
             # ...
 
@@ -133,7 +133,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference by:
 
             <doctrine:config>
                 <doctrine:dbal
-                    password="%env(secret:DATABASE_PASSWORD)%"
+                    password="%env(DATABASE_PASSWORD)%"
                 />
             </doctrine:config>
 
@@ -144,7 +144,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference by:
         // config/packages/doctrine.php
         $container->loadFromExtension('doctrine', [
             'dbal' => [
-                'password' => '%env(secret:DATABASE_PASSWORD)%',
+                'password' => '%env(DATABASE_PASSWORD)%',
             ]
         ]);
 
