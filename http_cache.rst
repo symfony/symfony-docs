@@ -137,7 +137,7 @@ method::
 
     class CacheKernel extends HttpCache
     {
-        protected function getOptions(): Array
+        protected function getOptions(): array
         {
             return [
                 'default_ttl' => 0,
