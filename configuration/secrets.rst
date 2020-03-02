@@ -257,7 +257,7 @@ your secrets during deployment to the "local" vault:
 
     $ php bin/console secrets:decrypt-to-local --force --env=prod
 
-This will put all the decrypted secrets into ``.env.php.local``. After doing this,
+This will put all the decrypted secrets into ``.env.prod.local``. After doing this,
 the decryption key does *not* need to remain on the server.
 
 Rotating Secrets
