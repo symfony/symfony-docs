@@ -833,7 +833,7 @@ part of Symfony individually by following the guides. Check out:
 * :doc:`/doctrine`
 * :doc:`/service_container`
 * :doc:`/security`
-* :doc:`/email`
+* :doc:`/mailer`
 * :doc:`/logging`
 
 And all the other topics related to configuration:
