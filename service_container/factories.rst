@@ -308,7 +308,7 @@ Usage example
 The following example is intended to show how to create and use a factory method in Symfony framework.
 Suppose you want to realize the factory method pattern for services, that describe two delivery methods - DHL and UPS.
 
-Firstly, define marker interface for delivery methods classes::
+Services (subclasses) definition::
 
     // src/Deliveries/DeliveryInterface.php
     namespace App\Deliveries;
@@ -316,8 +316,6 @@ Firstly, define marker interface for delivery methods classes::
     interface DeliveryInterface
     {
     }
-
-Services (subclasses) definition::
 
     // src/Deliveries/DHL.php
     namespace App\Deliveries;
@@ -353,17 +351,12 @@ Factory definition::
     namespace App\Factories;
 	
     use App\Deliveries\DeliveryInterface;
-    use RuntimeException;
     
     abstract class DeliveryFactory
     {
-        public static function create($deliveryMethod)
+        public static function create(string $deliveryMethod): DeliveryInterface
         {
-            $delivery = new $deliveryMethod;
-            if ( ! $delivery instanceof DeliveryInterface) {
-                throw new RuntimeException(sprintf('%1$s should implement %2$s.', $deliveryMethod, DeliveryInterface::class));
-            }
-			
+            $delivery = new $deliveryMethod;			
             $delivery->costLabel = 'Delivery cost is: ';
     
             return $delivery;
