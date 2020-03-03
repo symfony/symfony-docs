@@ -354,8 +354,8 @@ to associate both methods::
      */
     public function testPageIsSuccessful($url)
     {
-        $client = self::createClient();
-        $client->request('GET', $url);
+        $client = self::createClient()
+            ->request('GET', $url);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
@@ -496,12 +496,12 @@ Browsing
 
 The Client supports many operations that can be done in a real browser::
 
-    $client->back();
-    $client->forward();
-    $client->reload();
+    $client->back()
+        ->forward();
+        ->reload();
 
     // clears all cookies and the history
-    $client->restart();
+        ->restart();
 
 .. note::
 
@@ -686,17 +686,17 @@ Extracting Information
 The Crawler can extract information from the nodes::
 
     // returns the attribute value for the first node
-    $crawler->attr('class');
+    $crawler->attr('class')
 
     // returns the node value for the first node
-    $crawler->text();
+        ->text()
 
     // returns the default text if the node does not exist
-    $crawler->text('Default text content');
+        ->text('Default text content')
 
     // pass TRUE as the second argument of text() to remove all extra white spaces, including
     // the internal ones (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
-    $crawler->text(null, true);
+        ->text(null, true);
 
     // extracts an array of attributes for all nodes
     // (_text returns the node value)
@@ -715,10 +715,9 @@ Links
 Use the ``clickLink()`` method to click on the first link that contains the
 given text (or the first clickable image with that ``alt`` attribute)::
 
-    $client = static::createClient();
-    $client->request('GET', '/post/hello-world');
-
-    $client->clickLink('Click here');
+    $client = static::createClient()
+        ->request('GET', '/post/hello-world')
+        ->clickLink('Click here');
 
 If you need access to the :class:`Symfony\\Component\\DomCrawler\\Link` object
 that provides helpful methods specific to links (such as ``getMethod()`` and
@@ -735,8 +734,8 @@ Forms
 
 Use the ``submitForm()`` method to submit the form that contains the given button::
 
-    $client = static::createClient();
-    $client->request('GET', '/post/hello-world');
+    $client = static::createClient()
+        ->request('GET', '/post/hello-world');
 
     $crawler = $client->submitForm('Add comment', [
         'comment_form[content]' => '...',
@@ -833,8 +832,8 @@ their type::
     The ``submit()`` and ``submitForm()`` methods define optional arguments to
     add custom server parameters and HTTP headers when submitting the form::
 
-        $client->submit($form, [], ['HTTP_ACCEPT_LANGUAGE' => 'es']);
-        $client->submitForm($button, [], 'POST', ['HTTP_ACCEPT_LANGUAGE' => 'es']);
+        $client->submit($form, [], ['HTTP_ACCEPT_LANGUAGE' => 'es'])
+            ->submitForm($button, [], 'POST', ['HTTP_ACCEPT_LANGUAGE' => 'es']);
 
 Adding and Removing Forms to a Collection
 .........................................
