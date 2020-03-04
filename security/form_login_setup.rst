@@ -174,7 +174,7 @@ a traditional HTML form that submits to ``/login``:
 
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -185,21 +185,22 @@ a traditional HTML form that submits to ``/login``:
     use Symfony\Component\Security\Csrf\CsrfToken;
     use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
     use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+    use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
     use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-    class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
+    class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
     {
         use TargetPathTrait;
 
         private $entityManager;
-        private $router;
+        private $urlGenerator;
         private $csrfTokenManager;
         private $passwordEncoder;
 
-        public function __construct(EntityManagerInterface $entityManager, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+        public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
         {
             $this->entityManager = $entityManager;
-            $this->router = $router;
+            $this->urlGenerator = $urlGenerator;
             $this->csrfTokenManager = $csrfTokenManager;
             $this->passwordEncoder = $passwordEncoder;
         }
@@ -253,13 +254,13 @@ a traditional HTML form that submits to ``/login``:
                 return new RedirectResponse($targetPath);
             }
 
-            // For example : return new RedirectResponse($this->router->generate('some_route'));
+            // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
             throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         }
 
         protected function getLoginUrl()
         {
-            return $this->router->generate('app_login');
+            return $this->urlGenerator->generate('app_login');
         }
     }
 
