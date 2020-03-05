@@ -117,8 +117,9 @@ If you want to apply tags automatically for your own services, use the
 
 
 For more advanced needs, you can define the automatic tags using the
-:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
-method in an :doc:`extension </bundles/extension>` or from your kernel::
+:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration` method.
+
+In a Symfony application, call this method in your kernel class::
 
     // src/Kernel.php
     class Kernel extends BaseKernel
@@ -126,6 +127,22 @@ method in an :doc:`extension </bundles/extension>` or from your kernel::
         // ...
 
         protected function build(ContainerBuilder $container)
+        {
+            $container->registerForAutoconfiguration(CustomInterface::class)
+                ->addTag('app.custom_tag')
+            ;
+        }
+    }
+
+In a Symfony bundle, call this method in the ``load()`` method of the
+:doc:`bundle extension class </bundles/extension>`::
+
+    // src/DependencyInjection/MyBundleExtension.php
+    class MyBundleExtension extends Extension
+    {
+        // ...
+
+        public function load(array $configs, ContainerBuilder $container)
         {
             $container->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
