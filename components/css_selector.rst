@@ -29,7 +29,7 @@ Why to Use CSS selectors?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you're parsing an HTML or an XML document, by far the most powerful
-method is XPath.
+method is `Xpath`_.
 
 XPath expressions are incredibly flexible, so there is almost always an
 XPath expression that will find the element you need. Unfortunately, they
@@ -77,7 +77,7 @@ You can use this expression with, for instance, :phpclass:`DOMXPath` or
 Limitations of the CssSelector Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Not all CSS selectors can be converted to XPath equivalents.
+Not all CSS selectors can be converted to `Xpath`_ equivalents.
 
 There are several CSS selectors that only make sense in the context of a
 web-browser.
@@ -102,3 +102,5 @@ Learn more
 
 * :doc:`/testing`
 * :doc:`/components/dom_crawler`
+
+.. _`Xpath`: https://en.wikipedia.org/wiki/XPath
