@@ -21,7 +21,7 @@ sessions, check their default configuration:
                 # enables the support of sessions in the app
                 enabled: true
                 # ID of the service used for session storage.
-                # NULL =  means that PHP's default session mechanism is used
+                # NULL means that Symfony uses PHP default session mechanism
                 handler_id: null
                 # improves the security of the cookies used for sessions
                 cookie_secure: 'auto'
@@ -42,7 +42,7 @@ sessions, check their default configuration:
                 <!--
                     enabled: enables the support of sessions in the app
                     handler-id: ID of the service used for session storage
-                                NULL means that PHP's default session mechanism is used
+                                NULL means that Symfony uses PHP default session mechanism
                     cookie-secure and cookie-samesite: improves the security of the cookies used for sessions
                 -->
                 <framework:session enabled="true"
@@ -60,7 +60,7 @@ sessions, check their default configuration:
                 // enables the support of sessions in the app
                 'enabled' => true,
                 // ID of the service used for session storage
-                // NULL means that PHP's default session mechanism is used
+                // NULL means that Symfony uses PHP default session mechanism
                 'handler_id' => null,
                 // improves the security of the cookies used for sessions
                 'cookie_secure' => 'auto',
