@@ -43,13 +43,26 @@ by executing the following command:
     $ composer require symfony/apache-pack
 
 This pack installs a ``.htaccess`` file in the ``public/`` directory that contains
-the rewrite rules.
+the rewrite rules needed to serve the Symfony application.
 
-.. tip::
+In production servers, you should move the ``.htaccess`` rules into the main
+Apache configuration file to improve performance. To do so, copy the
+``.htaccess`` contents inside the ``<Directory>`` configuration associated to
+the Symfony application ``public/`` directory (and replace ``AllowOverride All``
+by ``AllowOverride None``):
 
-    A performance improvement can be achieved by moving the rewrite rules from the ``.htaccess``
-    file into the VirtualHost block of your Apache configuration and then changing
-    ``AllowOverride All`` to ``AllowOverride None`` in your VirtualHost block.
+.. code-block:: apache
+
+    <VirtualHost *:80>
+        # ...
+        DocumentRoot /var/www/project/public
+
+        <Directory /var/www/project/public>
+            AllowOverride None
+
+            # Copy .htaccess contents here
+        </Directory>
+    </VirtualHost>
 
 Apache with mod_php/PHP-CGI
 ---------------------------
