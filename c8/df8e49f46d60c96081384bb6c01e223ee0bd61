@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by guilliamxavier at 2020-01-23T16:25:26Z
+
+What's the matter with the "DOCtor-RST" lint failing?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-01-28T07:24:40Z
+
+@guilliamxavier you can ignore the DOCtor-RST linter errors for this pull request.
+
+About the proposed changes, let's ask @nicolas-grekas and @stof for a review. Thanks!
+
+---------------------------------------------------------------------------
+
+by guilliamxavier at 2020-02-24T16:10:16Z
+
+@nicolas-grekas: Thank you for reviewing, I have applied your suggested changes
