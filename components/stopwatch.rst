@@ -120,3 +120,16 @@ method and specifying the id of the section to be reopened::
     $stopwatch->openSection('routing');
     $stopwatch->start('building_config_tree');
     $stopwatch->stopSection('routing');
+
+
+Printing a Summary
+------------------
+
+The event can easily be printed to display a summary::
+
+    $stopwatch = new Stopwatch();
+    $stopwatch->start();
+    // ... do some work here
+    $output->writeln($stopwatch->stop()); // prints something like default: 14.00 MiB - 2056 ms
+
+This gives you a brief summary of the used memory an elapsed time.
