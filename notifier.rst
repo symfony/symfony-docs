@@ -256,8 +256,8 @@ transport:
                     # Slack errored
                     main: '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%'
 
-                    # Always send notifications to both Slack and Telegram
-                    all: '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%'
+                    # Send notifications to the next scheduled transport calculated by round robin
+                    roundrobin: '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%'
 
     .. code-block:: xml
 
@@ -279,7 +279,8 @@ transport:
                         %env(SLACK_DSN)% || %env(TELEGRAM_DSN)%
                     </framework:chatter-transport>
 
-                    <!-- Always send notifications to both Slack and Telegram -->
+                    <!-- Send notifications to the next scheduled transport 
+                         calculated by round robin -->
                     <framework:chatter-transport name="slack">
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
                     </framework:chatter-transport>
@@ -297,8 +298,8 @@ transport:
                     // Slack errored
                     'main' => '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%',
 
-                    // Always send notifications to both Slack and Telegram
-                    'all' => '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%',
+                    // Send notifications to the next scheduled transport calculated by round robin
+                    'roundrobin' => '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%',
                 ],
             ],
         ]);
