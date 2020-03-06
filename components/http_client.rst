@@ -480,14 +480,14 @@ destructor won't have anything remaining to do.
 
 There are three types of exceptions:
 
-* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface` are thrown when
-  your code does not handle the status codes in the 300-599 range.
+* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`
+  are thrown when your code does not handle the status codes in the 300-599 range.
 
-* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface` are thrown
-  when a lower level issue occurs.
+* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`
+  are thrown when a lower level issue occurs.
 
-* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\DecodingExceptionInterface` are thrown
-  when a content-type cannot be decoded to the expected representation.
+* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\DecodingExceptionInterface`
+  are thrown when a content-type cannot be decoded to the expected representation.
 
 Concurrent Requests
 -------------------
