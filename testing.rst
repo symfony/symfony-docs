@@ -484,7 +484,7 @@ script::
 AJAX Requests
 ~~~~~~~~~~~~~
 
-The Client provides a :class:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser :: xmlHttpRequest` 
+The Client provides a :class:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser`
 method, which has the same arguments as the ``request()`` method, and it's a
 shortcut to make AJAX requests::
 
