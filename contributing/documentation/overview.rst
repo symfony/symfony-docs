@@ -343,5 +343,5 @@ definitely don't want you to waste your time!
 .. _`roadmap`: https://symfony.com/releases
 .. _`pip`: https://pip.pypa.io/en/stable/
 .. _`pip installation`: https://pip.pypa.io/en/stable/installing/
-.. _`Sphinx`: http://sphinx-doc.org/
+.. _`Sphinx`: https://www.sphinx-doc.org/
 .. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php

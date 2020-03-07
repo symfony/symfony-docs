@@ -207,7 +207,7 @@ versions that have a lower major version will be removed. For example, if
 Symfony 6.0 were released today, 5.0 to 5.4 ``versionadded`` and ``deprecated``
 tags would be removed from the new ``6.0`` branch.
 
-.. _reStructuredText: https://docutils.sourceforge.net/rst.html
+.. _reStructuredText: https://docutils.sourceforge.io/rst.html
 .. _Sphinx: https://www.sphinx-doc.org/
 .. _`Symfony documentation`: https://github.com/symfony/symfony-docs
 .. _`reStructuredText Primer`: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
