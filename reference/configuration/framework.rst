@@ -1260,10 +1260,6 @@ You can also configure the session handler with a DSN. For example:
             ],
         ]);
 
-.. versionadded:: 4.4
-
-    The option to configure the session handler with a DSN was introduced in Symfony 4.4.
-
 If you prefer to make Symfony store sessions in a database read
 :doc:`/doctrine/pdo_session_storage`.
 
