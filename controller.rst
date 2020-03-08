@@ -93,7 +93,7 @@ To aid development, Symfony comes with an optional base controller class called
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`.
 It can be extended to gain access to helper methods.
 
-Add the ``use`` statement atop your controller class and then modify
+Add the ``use`` statement at top of your controller class and then modify
 ``LuckyController`` to extend it:
 
 .. code-block:: diff
