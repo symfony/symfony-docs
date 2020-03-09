@@ -84,7 +84,7 @@ Now, you can start fixing the notices:
     OK (10 tests, 20 assertions)
 
     Remaining deprecation notices (6)
-    
+
     The "request" service is deprecated and will be removed in 3.0. Add a type-hint for
     Symfony\Component\HttpFoundation\Request to your controller parameters to retrieve the
     request instead: 6x
@@ -178,7 +178,9 @@ Next, use Composer to download new versions of the libraries:
 
 .. _upgrade-major-symfony-after:
 
-3) Update your Code to Work with the New Version
+.. include:: /setup/_update_recipes.rst.inc
+
+4) Update your Code to Work with the New Version
 ------------------------------------------------
 
 In some rare situations, the next major version *may* contain backwards-compatibility
