@@ -129,8 +129,8 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'method'
-                        'property' => 'currentPlace'
+                        'type' => 'method',
+                        'property' => 'currentPlace',
                     ],
                     'supports' => [BlogPost::class],
                     'initial_marking' => 'draft',
