@@ -248,12 +248,12 @@ using the ``trans()`` method:
 
 #. The ``locale`` of the current user, which is stored on the request is determined;
 
-* A catalog (e.g. big collection) of translated messages is loaded from translation
-  resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
-  :ref:`fallback locale <translation-fallback>` are also loaded and
-  added to the catalog if they don't already exist. The end result is a large
-  "dictionary" of translations. This catalog is cached in production to
-  minimize performance impact.
+#. A catalog (e.g. big collection) of translated messages is loaded from translation
+   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
+   :ref:`fallback locale <translation-fallback>` are also loaded and
+   added to the catalog if they don't already exist. The end result is a large
+   "dictionary" of translations. This catalog is cached in production to
+   minimize performance impact.
 
 #. If the message is located in the catalog, the translation is returned. If
    not, the translator returns the original message.
