@@ -1151,6 +1151,35 @@ during a request::
         :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
         or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
 
+Amazon SQS
+~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The Amazon SQS transport has been added in Symfony 5.1
+    Install it by running:
+
+    .. code-block:: terminal
+
+        $ composer require symfony/amazon-sqs-messenger
+
+The ``SQS`` transport configuration looks like this:
+
+.. code-block:: bash
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=sqs://guest:guest@sqs.eu-west-3.amazonaws.com/test?region=eu-west-3
+
+
+.. note::
+
+    By default, the transport will automatically create queue that are needed. That can be disabled.
+    
+The transport has a number of other options, including ways to configure
+the exchange, queues binding keys and more. See the documentation on
+:class:`Symfony\\Component\\Messenger\\Transport\\AmazonSqs\\Connection`.
+
+
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
