@@ -26,6 +26,7 @@ Symfony includes the following normalizers but you can also
 
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
   normalize PHP object using the :doc:`PropertyAccessor component </components/property_access>`;
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer` for :phpclass:`DateTimeZone` objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer` to
   normalize PHP object using an object that implements
   :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`;
@@ -33,5 +34,7 @@ Symfony includes the following normalizers but you can also
   normalize PHP object using the getter and setter methods of the object;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer` to
   normalize PHP object using `PHP reflection`_.
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
 
 .. _`PHP reflection`: https://www.php.net/manual/en/book.reflection.php
