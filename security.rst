@@ -272,7 +272,7 @@ important section is ``firewalls``:
                 'dev' => [
                     'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
                     'security' => false,
-                ),
+                ],
                 'main' => [
                     'anonymous' => 'lazy',
                 ],
