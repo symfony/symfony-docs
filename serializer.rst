@@ -103,12 +103,15 @@ As well as the following normalizers:
   handle typical data objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
   objects implementing the :phpclass:`DateTimeInterface` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer` for :phpclass:`DateInterval` objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
   transform :phpclass:`SplFileInfo` objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
   to deal with objects implementing the :phpclass:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
   denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
+
+.. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
 
 Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
