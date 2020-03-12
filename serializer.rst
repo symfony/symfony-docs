@@ -72,9 +72,17 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
 
+.. versionadded:: 4.1
+
+    The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
+
 .. versionadded:: 4.3
 
     The ``DateTimeZoneNormalizer`` was introduced in Symfony 4.3.
+
+.. versionadded:: 4.4
+
+    The ``ProblemNormalizer`` was introduced in Symfony 4.4.
 
 Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
