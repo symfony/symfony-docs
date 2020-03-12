@@ -178,20 +178,25 @@ First, build a base layout file:
         <head>
             <meta charset="UTF-8">
             <title>{% block title %}Test Application{% endblock %}</title>
+            {% block stylesheets %}
+                <link rel="stylesheet" type="text/css" href="/css/base.css"/>
+            {% endblock
         </head>
         <body>
-            <div id="sidebar">
-                {% block sidebar %}
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/blog">Blog</a></li>
-                    </ul>
-                {% endblock %}
-            </div>
+            {% block body %}
+                <div id="sidebar">
+                    {% block sidebar %}
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/blog">Blog</a></li>
+                        </ul>
+                    {% endblock %}
+                </div>
 
-            <div id="content">
-                {% block body %}{% endblock %}
-            </div>
+                <div id="content">
+                    {% block content %}{% endblock %}
+                </div>
+            {% endblock %}
         </body>
     </html>
 
@@ -201,11 +206,11 @@ First, build a base layout file:
     the philosophy is the same between Twig and PHP templates.
 
 This template defines the base HTML skeleton document of a simple two-column
-page. In this example, three ``{% block %}`` areas are defined (``title``,
-``sidebar`` and ``body``). Each block may be overridden by a child template
-or left with its default implementation. This template could also be rendered
-directly. In that case the ``title``, ``sidebar`` and ``body`` blocks would
-simply retain the default values used in this template.
+page. In this example, five ``{% block %}`` areas are defined (``title``,
+``stylesheets``, ``body``, ``sidebar`` and ``content``). Each block may be
+overridden by a child template or left with its default implementation. This
+template could also be rendered directly. In that case the ``title`` and
+``body`` blocks would simply retain the default values used in this template.
 
 A child template might look like this:
 
@@ -243,28 +248,22 @@ output might look like this:
         <head>
             <meta charset="UTF-8">
             <title>My cool blog posts</title>
+            <link rel="stylesheet" type="text/css" href="/css/base.css"/>
         </head>
         <body>
-            <div id="sidebar">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/blog">Blog</a></li>
-                </ul>
-            </div>
+            <h2>My first post</h2>
+            <p>The body of the first post.</p>
 
-            <div id="content">
-                <h2>My first post</h2>
-                <p>The body of the first post.</p>
-
-                <h2>Another post</h2>
-                <p>The body of the second post.</p>
-            </div>
+            <h2>Another post</h2>
+            <p>The body of the second post.</p>
         </body>
     </html>
 
-Notice that since the child template didn't define a ``sidebar`` block, the
+Notice that since the child template didn't define a ``stylesheets`` block, the
 value from the parent template is used instead. Content within a ``{% block %}``
 tag in a parent template is always used by default.
+However the ``body`` block has been replaced entirely. To keep a default sidebar
+the ``content`` block can be overridden instead.
 
 .. tip::
 
@@ -300,6 +299,23 @@ When working with template inheritance, here are some tips to keep in mind:
 
           {{ parent() }}
       {% endblock %}
+
+.. caution::
+
+    When using ``extends``, a child template is forbidden to define template
+    parts outside of a block. The following code throws a ``SyntaxError``:
+
+    .. code-block:: html+twig
+
+        {# app/Resources/views/blog/index.html.twig #}
+        {% extends 'base.html.twig' %}
+
+        {# the line below is not captured by a "block" tag #}
+        <div class="alert">Some Alert</div>
+
+        {# the following is valid #}
+        {% block content %}My cool blog posts{% endblock %}
+
 
 .. index::
    single: Templating; Naming conventions
