@@ -41,7 +41,7 @@ In this case, you'll need a ``Category`` class, and a way to relate a
 
 Start by creating a ``Category`` entity with a ``name`` field:
 
-.. code-block:: terminal
+.. code-block:: bash
 
     $ php bin/console make:entity Category
 
@@ -64,6 +64,8 @@ Start by creating a ``Category`` entity with a ``name`` field:
 This will generate your new entity class::
 
     // src/Entity/Category.php
+    namespace App\Entity;
+    
     // ...
 
     class Category
@@ -99,7 +101,7 @@ the ``ManyToOne`` annotation. You can do this by hand, or by using the ``make:en
 command, which will ask you several questions about your relationship. If you're
 not sure of the answer, don't worry! You can always change the settings later:
 
-.. code-block:: terminal
+.. code-block:: bash
 
     $ php bin/console make:entity
 
@@ -144,6 +146,7 @@ the ``Product`` entity (and getter & setter methods):
     .. code-block:: php-annotations
 
         // src/Entity/Product.php
+        namespace App\Entity;
 
         // ...
         class Product
@@ -214,7 +217,8 @@ class that will hold these objects:
     .. code-block:: php-annotations
 
         // src/Entity/Category.php
-
+        namespace App\Entity;
+        
         // ...
         use Doctrine\Common\Collections\ArrayCollection;
         use Doctrine\Common\Collections\Collection;
@@ -310,8 +314,10 @@ Saving Related Entities
 
 Now you can see this new code in action! Imagine you're inside a controller::
 
+    // src/Controller/ProductController.php
+    namespace App/Controller;
+    
     // ...
-
     use App\Entity\Category;
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
