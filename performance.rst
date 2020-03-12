@@ -119,7 +119,7 @@ The preload file path is the same as the compiled service container but with the
 .. code-block:: ini
 
     ; php.ini
-    opcache.preload=/path/to/project/var/cache/prod/App_KernelProdContainer.preload.php
+    opcache.preload=/path/to/project/var/cache/prod/srcApp_KernelProdContainer.preload.php
 
 .. _performance-configure-opcache:
 
