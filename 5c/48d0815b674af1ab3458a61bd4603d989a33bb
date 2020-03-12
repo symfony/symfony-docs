@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-29T10:40:16Z
+
+I like the idea but would not add the Logger in this example, yes it makes sense but complicated the example itself
+
+---------------------------------------------------------------------------
+
+by ker0x at 2020-03-03T13:52:57Z
+
+Hello @OskarStark , thank you for your feedback!
+
+I have 3 propositions:
+
+1. Removing the Logger from the example. This leave us with a try/catch that only return a boolean, it's a bit strange IMHO
+2. Keeping the Logger and update the intro message of the [Handling Multiple Services](https://github.com/symfony/symfony-docs/blob/master/service_container.rst#handling-multiple-services) to specify that we want to log any exception that can be triggered when sending the email.
+3. Replacing the Logger with an other component, but which one ?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-03-03T19:59:32Z
+
+Please use the same example as before, no need for a try catch here, it’s just an example and should not distract by things which are not needed.
+
+Using
+
+// ...
+
+Is fine too, meaning there could be some other code parts around. Thanks
+
+Edit:
+You can remove the return type too please
+
+If you have further questions or sth is unclear please feel free to ping me again and I can provide the full example. I am currently on a phone 📲
