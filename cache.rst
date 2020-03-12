@@ -194,13 +194,20 @@ You can also create more customized pools. All you need is an adapter:
                 default_memcached_provider: 'memcached://localhost'
                 pools:
                     my_cache_pool:
-                        adapter: cache.adapter.filesystem
+                        provider: app.my_cache_chain_adapter
                     cache.acme:
                         adapter: cache.adapter.memcached
                     cache.foobar:
                         adapter: cache.adapter.memcached
                         provider: 'memcached://user:password@example.com'
 
+        services:
+            app.my_cache_chain_adapter:
+                class: Symfony\Component\Cache\Adapter\ChainAdapter
+                arguments:
+                    - ['@cache.array', '@cache.apcu', '@cache.my_redis']
+                    - 31536000 # One year
+                    
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
