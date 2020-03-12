@@ -27,10 +27,15 @@ time of certain parts of code so that you don't constantly have to parse
     use Symfony\Component\Stopwatch\Stopwatch;
 
     $stopwatch = new Stopwatch();
+
     // starts event named 'eventName'
     $stopwatch->start('eventName');
-    // ... some code goes here
+
+    // ... run your code here
+
     $event = $stopwatch->stop('eventName');
+    // you can convert $event into a string for a quick summary
+    // e.g. (string) $event = '4.50 MiB - 26 ms'
 
 The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
 from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
@@ -120,16 +125,3 @@ method and specifying the id of the section to be reopened::
     $stopwatch->openSection('routing');
     $stopwatch->start('building_config_tree');
     $stopwatch->stopSection('routing');
-
-
-Printing a Summary
-------------------
-
-The event can easily be printed to display a summary::
-
-    $stopwatch = new Stopwatch();
-    $stopwatch->start();
-    // ... do some work here
-    $output->writeln($stopwatch->stop()); // prints something like default: 14.00 MiB - 2056 ms
-
-This gives you a brief summary of the used memory an elapsed time.
