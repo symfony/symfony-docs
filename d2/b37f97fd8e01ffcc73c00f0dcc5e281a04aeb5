@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-01-03T09:40:48Z
+
+You are right ... but instead of AbstractBrowser, which is an abstract class that cannot be instantiated ... we should use HttpBrowser, right?
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2020-01-03T10:40:19Z
+
+Yes, HttpBrowser should be used, but I think that since the goal here is to show the xmlHttpRequest method, it makes sense to point to the file that implements it, do you agree ?
+
+Or, as there are some other methods from the same page that do not point to their implementation, perhaps this link can be removed if it is not necessary.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2020-01-17T18:39:38Z
+
+Using `AbstractBrowser` sounds good to me, this `Client` class was abstract as well.
