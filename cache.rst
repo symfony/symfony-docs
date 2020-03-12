@@ -202,7 +202,7 @@ You can also create more customized pools:
                     # creates a "my_cache_pool" service
                     # autowireable via "CacheInterface $myCachePool"
                     my_cache_pool:
-                        adapter: cache.adapter.array
+                        adapter: cache.adapter.filesystem
 
                     # uses the default_memcached_provider from above
                     acme.cache:
@@ -240,7 +240,7 @@ You can also create more customized pools:
 
                     <!-- creates a "my_cache_pool" service
                          autowireable via "CacheInterface $myCachePool" -->
-                    <framework:pool name="my_cache_pool" adapter="cache.adapter.array"/>
+                    <framework:pool name="my_cache_pool" adapter="cache.adapter.filesystem"/>
 
                     <!-- uses the default_memcached_provider from above -->
                     <framework:pool name="acme.cache" adapter="cache.adapter.memcached"/>
@@ -274,13 +274,65 @@ You can also create more customized pools:
                     // creates a "my_cache_pool" service
                     // autowireable via "CacheInterface $myCachePool"
                     'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.array',
+                        'adapter' => 'cache.adapter.filesystem',
                     ],
 
                     // uses the default_memcached_provider from above
                     'acme.cache' => [
                         'adapter' => 'cache.adapter.memcached',
                     ],
+
+                    'cache.foobar' => [
+                        'adapter' => 'cache.adapter.memcached',
+                        'provider' => 'memcached://user:password@example.com',
+                    ],
+                ],
+            ],
+        ]);
+
+The configuration above will create 3 services: ``my_cache_pool``, ``cache.acme``
+and ``cache.foobar``.  The ``my_cache_pool`` pool is using the filesystem adapter
+and the other two are using the :doc:`MemcachedAdapter </components/cache/adapters/memcached_adapter>`.
+The ``cache.acme`` pool is using the Memcached server on localhost and ``cache.foobar``
+is using the Memcached server at example.com.
+
+For advanced configurations it could sometimes be useful to use a pool as an adapter.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            cache:
+                app: my_configured_app_cache
+                pools:
+                    my_cache_pool:
+                        adapter: cache.adapter.memcached
+                        provider: 'memcached://user:password@example.com'
+                    cache.short_cache:
+                        adapter: my_cache_pool
+                        default_lifetime: 60
+                    cache.long_cache:
+                        adapter: my_cache_pool
+                        default_lifetime: 604800
+                    my_configured_app_cache:
+                        # "cache.adapter.filesystem" is the default for "cache.app"
+                        adapter: cache.adapter.filesystem
+                        default_lifetime: 3600
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+>>>>>>> 3.4
 
                     // control adapter's configuration
                     'foobar.cache' => [
