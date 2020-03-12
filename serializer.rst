@@ -111,8 +111,6 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
   denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
 
-.. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
-
 Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
