@@ -69,6 +69,8 @@ As well as the following normalizers:
   to deal with objects implementing the :phpclass:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
   denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
 
 Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
