@@ -753,7 +753,7 @@ environment:
     If you're using Messenger and routing to a transport, the message will *still*
     be sent to that transport.
 
-Always Send to the Same Address
+Always Send to the same Address
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of disabling delivery entirely, you might want to *always* send emails to
