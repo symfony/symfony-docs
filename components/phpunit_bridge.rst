@@ -710,7 +710,7 @@ your application, you can use your own SUT (System Under Test) solver:
     </listeners>
 
 The ``My\Namespace\SutSolver::solve`` can be any PHP callable and receives the
-current test classname as its first argument.
+current test as its first argument.
 
 Finally, the listener can also display warning messages when the SUT solver does
 not find the SUT:
