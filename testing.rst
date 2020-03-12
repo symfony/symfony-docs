@@ -22,10 +22,7 @@ wraps the original PHPUnit binary to provide additional features:
 
     $ composer require --dev symfony/phpunit-bridge
 
-Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the ``tests/`` directory of your application. If you follow
-this rule, then you can run all of your application's tests with the following
-command:
+After the library downloads, try executing PHPUnit by running:
 
 .. code-block:: terminal
 
@@ -38,6 +35,14 @@ command:
     can remove the package (``composer remove symfony/phpunit-bridge``) and install
     it again. Another solution is to remove the project's ``symfony.lock`` file and
     run ``composer install`` to force the execution of all Symfony Flex recipes.
+
+The first time you run this, it will download PHPUnit itself and make its
+classes available in your app.
+
+Each test - whether it's a unit test or a functional test - is a PHP class
+that should live in the ``tests/`` directory of your application. If you follow
+this rule, then you can run all of your application's tests with the same
+command as before.
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
