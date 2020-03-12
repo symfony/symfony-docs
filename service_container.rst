@@ -295,13 +295,15 @@ made. To do that, you create a new class::
     namespace App\Updates;
 
     use App\Service\MessageGenerator;
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\Email;
 
     class SiteUpdateManager
     {
         private $messageGenerator;
         private $mailer;
 
-        public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer)
+        public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
         {
             $this->messageGenerator = $messageGenerator;
             $this->mailer = $mailer;
@@ -311,19 +313,21 @@ made. To do that, you create a new class::
         {
             $happyMessage = $this->messageGenerator->getHappyMessage();
 
-            $message = (new \Swift_Message('Site update just happened!'))
-                ->setFrom('admin@example.com')
-                ->setTo('manager@example.com')
-                ->addPart(
-                    'Someone just updated the site. We told them: '.$happyMessage
-                );
+            $email = (new Email())
+                ->from('admin@example.com')
+                ->to('manager@example.com')
+                ->subject('Site update just happened!')
+                ->text('Someone just updated the site. We told them: '.$happyMessage);
 
-            return $this->mailer->send($message) > 0;
+            $this->mailer->send($email);
+
+            // ...
         }
     }
 
-This needs the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. That's no
-problem! In fact, this new service is ready to be used. In a controller, for example,
+This needs the ``MessageGenerator`` *and* the ``Mailer`` service. That's no
+problem, we ask them by type hinting their class and interface names!
+Now, this new service is ready to be used. In a controller, for example,
 you can type-hint the new ``SiteUpdateManager`` class and use it::
 
     // src/Controller/SiteController.php
