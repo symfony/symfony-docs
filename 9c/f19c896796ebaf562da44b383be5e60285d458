@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-03-12T08:41:42Z
+
+To be more precise in 4.1 and 4.4.
+And if I'm not mistaken in the process, you can target the 4.4 branch and use the `versionadded` block with the right version. And after the merge, open a new PR on 5.0 branch to remove this block.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-03-12T11:25:05Z
+
+> And after the merge, open a new PR on 5.0 branch to remove this block.
+
+We would remove the versionadded when upmerging into 5.0 👍
