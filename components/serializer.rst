@@ -582,11 +582,11 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
     This normalizer leverages the :doc:`PropertyAccess Component </components/property_access>`
     to read and write in the object. It means that it can access to properties
-    directly and through getters, setters, hassers, adders and removers. It supports
+    directly and through getters, setters, hassers, issers, adders and removers. It supports
     calling the constructor during the denormalization process.
 
     Objects are normalized to a map of property names and values (names are
-    generated removing the ``get``, ``set``, ``has``, ``is`` or ``remove`` prefix from
+    generated removing the ``get``, ``set``, ``has``, ``is``, ``add`` or ``remove`` prefix from
     the method name and transforming the first letter to lowercase; e.g.
     ``getFirstName()`` -> ``firstName``).
 
