@@ -13,6 +13,7 @@ A simple, non-responsive button.
 | options              | - `attr_translation_parameters`_                                     |
 |                      | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
+|                      | - `label_html`_                                                      |
 |                      | - `label_translation_parameters`_                                    |
 |                      | - `row_attr`_                                                        |
 |                      | - `translation_domain`_                                              |
@@ -52,6 +53,8 @@ as a key. This can be useful when you need to set a custom class for the button:
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/button_label.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
