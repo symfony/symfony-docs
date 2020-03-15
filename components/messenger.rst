@@ -89,9 +89,12 @@ are configured for you:
 Example::
 
     use App\Message\MyMessage;
+    use App\MessageHandler\MyMessageHandler;
     use Symfony\Component\Messenger\Handler\HandlersLocator;
     use Symfony\Component\Messenger\MessageBus;
     use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
+
+    $handler = new MyMessageHandler();
 
     $bus = new MessageBus([
         new HandleMessageMiddleware(new HandlersLocator([
