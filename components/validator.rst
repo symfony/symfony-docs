@@ -69,8 +69,8 @@ If you have lots of validation errors, you can filter them by error code::
 Retrieving a Validator Instance
 -------------------------------
 
-The :class:`Symfony\\Component\\Validator\\Validator` class is the main access
-point of the Validator component. To create a new instance of this class, it's
+The Validator object (that implements :class:`Symfony\\Component\\Validator\\Validator\\ValidatorInterface`) is the main access
+point of the Validator component. To create a new instance of it, it's
 recommended to use the :class:`Symfony\\Component\\Validator\\Validation` class::
 
     use Symfony\Component\Validator\Validation;
@@ -79,7 +79,7 @@ recommended to use the :class:`Symfony\\Component\\Validator\\Validation` class:
 
 This ``$validator`` object can validate simple variables such as strings, numbers
 and arrays, but it can't validate objects. To do so, configure the
-``Validator`` class as explained in the next sections.
+``Validator`` as explained in the next sections.
 
 Learn More
 ----------
