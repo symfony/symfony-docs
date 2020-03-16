@@ -18,6 +18,7 @@ the input.
 | Options     | - `scale`_                                                            |
 |             | - `symbol`_                                                           |
 |             | - `type`_                                                             |
+|             | - `rounding_mode`_                                                    |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
 | options     |                                                                       |
@@ -55,8 +56,12 @@ scale
 
 **type**: ``integer`` **default**: ``0``
 
-By default, the input numbers are rounded. To allow for more decimal places,
-use this option.
+This specifies how many decimals will be allowed until the field rounds
+the submitted value (via ``rounding_mode``). For example, if ``scale`` is set
+to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
+``20.12`` (depending on your `rounding_mode`_).
+
+.. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
 symbol
 ~~~~~~
