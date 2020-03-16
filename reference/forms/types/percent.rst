@@ -15,10 +15,10 @@ the input.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
-| Options     | - `scale`_                                                            |
+| Options     | - `rounding_mode`_                                                    |
+|             | - `scale`_                                                            |
 |             | - `symbol`_                                                           |
 |             | - `type`_                                                             |
-|             | - `rounding_mode`_                                                    |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
 | options     |                                                                       |
@@ -51,6 +51,12 @@ the input.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/rounding_mode.rst.inc
+
+.. versionadded:: 5.1
+
+    The ``rounding_mode`` option was introduced in Symfony 5.1.
+
 scale
 ~~~~~
 
@@ -60,8 +66,6 @@ This specifies how many decimals will be allowed until the field rounds
 the submitted value (via ``rounding_mode``). For example, if ``scale`` is set
 to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
 ``20.12`` (depending on your `rounding_mode`_).
-
-.. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
 symbol
 ~~~~~~
