@@ -172,6 +172,8 @@ Now that Symfony knows *how* you want to encode the passwords, you can use the
 ``UserPasswordEncoderInterface`` service to do this before saving your users to
 the database.
 
+.. _user-data-fixture:
+
 For example, by using :ref:`DoctrineFixturesBundle <doctrine-fixtures>`, you can
 create dummy database users:
 
