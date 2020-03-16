@@ -26,14 +26,22 @@ is used to specify many different cache directives::
 
     // sets the number of seconds after which the response
     // should no longer be considered fresh by shared caches
-    $response->setSharedMaxAge(600);
+    $response->setPublic();
+    $response->setMaxAge(600);
 
 The ``Cache-Control`` header would take on the following format (it may have
 additional directives):
 
 .. code-block:: text
 
-    Cache-Control: public, s-maxage=600
+    Cache-Control: public, maxage=600
+
+.. note::
+
+    Using the ``setSharedMaxAge()`` may seem equivalent to using both ``setPublic()``
+    and ``setMaxAge()`` methods. However, their behavior is different in a
+    ``stale-if-error`` scenario and that's why it's recommended to use both
+    ``public`` and ``max-age`` directives.
 
 .. index::
     single: Cache; Expires header

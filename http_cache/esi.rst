@@ -105,14 +105,15 @@ independently of the rest of the page::
         public function about()
         {
             $response = $this->render('static/about.html.twig');
-            // sets the shared max age - which also marks the response as public
-            $response->setSharedMaxAge(600);
+            $response->setPublic();
+            $response->setMaxAge(600);
 
             return $response;
         }
     }
 
-In this example, the full-page cache has a lifetime of ten minutes.
+In this example, the response is marked as public to make the full page
+cacheable for all requests with a lifetime of ten minutes.
 Next, include the news ticker in the template by embedding an action.
 This is done via the ``render()`` helper (for more details, see how to
 :ref:`embed controllers in templates <templates-embed-controllers>`).
@@ -170,14 +171,19 @@ of the master page::
         public function latest($maxPerPage)
         {
             // ...
-            $response->setSharedMaxAge(60);
+            $response->setPublic();
+            $response->setMaxAge(60);
 
             return $response;
         }
     }
 
-With ESI, the full page cache will be valid for 600 seconds, but the news
-component cache will only last for 60 seconds.
+In this example, the embedded action is cached publicly too because the contents
+are the same for all requests. However, in other cases you may need to make this
+response non-public and even non-cacheable, depending on your needs.
+
+Putting all the above code together, with ESI the full page cache will be valid
+for 600 seconds, but the news component cache will only last for 60 seconds.
 
 .. _http_cache-fragments:
 
@@ -232,14 +238,6 @@ possible.
     The fragment listener only responds to signed requests. Requests are only
     signed when using the fragment renderer and the ``render_esi`` Twig
     function.
-
-.. note::
-
-    Once you start using ESI, remember to always use the ``s-maxage``
-    directive instead of ``max-age``. As the browser only ever receives the
-    aggregated resource, it is not aware of the sub-components, and so it will
-    obey the ``max-age`` directive and cache the entire page. And you don't
-    want that.
 
 The ``render_esi`` helper supports two other useful options:
 

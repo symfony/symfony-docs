@@ -249,8 +249,9 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
         // somehow create a Response object, like by rendering a template
         $response = $this->render('blog/index.html.twig', []);
 
-        // cache for 3600 seconds
-        $response->setSharedMaxAge(3600);
+        // cache publicly for 3600 seconds
+        $response->setPublic();
+        $response->setMaxAge(3600);
 
         // (optional) set a custom Cache-Control directive
         $response->headers->addCacheControlDirective('must-revalidate', true);
@@ -262,7 +263,7 @@ Thanks to this new code, your HTTP response will have the following header:
 
 .. code-block:: text
 
-    Cache-Control: public, s-maxage=3600, must-revalidate
+    Cache-Control: public, maxage=3600, must-revalidate
 
 This tells your HTTP reverse proxy to cache this response for 3600 seconds. If *anyone*
 requests this URL again before 3600 seconds, your application *won't* be hit at all.
