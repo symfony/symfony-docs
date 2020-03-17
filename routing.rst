@@ -38,7 +38,7 @@ following configuration file:
     controllers:
         resource: '../../src/Controller/'
         type: annotation
-        
+
     kernel:
         resource: ../../src/Kernel.php
         type: annotation
