@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-03-16T08:05:02Z
+
+@Nyholm does this proposed change look good to you? Thanks!
+
+---------------------------------------------------------------------------
+
+by jpjoao at 2020-03-16T09:02:54Z
+
+Hi @Nyholm
+
+I refer to the available documentation for the component since it's release. It changed 3 times until getting into the current state:
+4.1: The parameter is just `$handler`
+https://symfony.com/doc/4.1/components/messenger.html#bus
+4.2: The parameter is an array with named keys: `['dummy' => $handler]`
+https://symfony.com/doc/4.2/components/messenger.html#bus
+4.3 onwards: The parameter is an array without keys: `[$handler]`
+https://symfony.com/doc/4.3/components/messenger.html#bus
+
+I don know what we want to do to document this. If needed I can go and make PRs aiming each of the versions and document `$handler` on each of them.
+
+Answering your question about $handler: I considered adding a comment "see next item" or something similar when declaring the `$handler` and this is also why I choose not to do it inline inside the MessageBus creation.
+
+Let me know how you want me to proceed with this PR, I am happy with any decision made about the comments and the number of PRs needed to close the issue.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-03-16T10:54:45Z
+
+Excellent question.
+
+The docs team is super of moving changes to different branches. I know that this will be merged in master and "copied" down to 5.0 and 4.4.
+
+We dont bother about 4.1, 4.2 and 4.3 since those versions are not maintained anymore.
+
+>  considered adding a comment "see next item
+
+I think the current solution is fine for now.
+
+-------
+
+I think this PR is ready for merge. @jpjoao thank you for this. No more changes is needed at the moment.
+
+👍
