@@ -1655,9 +1655,9 @@ these routes.
 Localized Routes (i18n)
 -----------------------
 
-..version-added:: 4.1
+.. versionadded:: 4.1
 
-    The i18n routing has been introduced in Symfony 4.1.
+    The i18n routing was introduced in Symfony 4.1.
 
 If your application is translated into multiple languages, each route can define
 a different URL per each :doc:`translation locale </translation/locale>`. This
