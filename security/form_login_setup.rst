@@ -191,8 +191,8 @@ a traditional HTML form that submits to ``/login``:
     class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
     {
         use TargetPathTrait;
-        
-        public const LOGIN_ROUTE = 'app_login';
+
+        private const LOGIN_ROUTE = 'app_login';
 
         private $entityManager;
         private $urlGenerator;
