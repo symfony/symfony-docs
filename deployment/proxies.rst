@@ -107,7 +107,7 @@ In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
     // public/index.php
 
     // ...
-    $_SERVER['HEADER_X_FORWARDED_PROTO'] = $_SERVER['HEADER_CUSTOM_FORWARDED_PROTO'];
+    $_SERVER['HTTP_X_FORWARDED_PROTO'] = $_SERVER['HTTP_CUSTOM_FORWARDED_PROTO'];
     // ...
     $response = $kernel->handle($request);
 
