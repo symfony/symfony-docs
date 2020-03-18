@@ -1821,10 +1821,10 @@ If this option is enabled, validation constraints can be defined using annotatio
 ``translation_domain``
 ......................
 
-**type**: ``string`` **default**: ``validators``
+**type**: ``string | false`` **default**: ``validators``
 
 The translation domain that is used when translating validation constraint
-error messages.
+error messages. Use false to disable translations.
 
 ``static_method``
 .................
