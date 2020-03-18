@@ -312,10 +312,36 @@ names.
 Fragment Naming for Collections
 ...............................
 
-When using a :doc:`collection of forms </form/form_collections>`, the fragment
-of each collection item follows a predefined pattern. For example, consider the
-following complex example where a ``TaskManagerType`` has a collection of
-``TaskListType`` which in turn has a collection of ``TaskType``::
+When using a :doc:`collection of forms </form/form_collections>`, you have
+several ways of customizing the collection and each of its entries. First,
+use the following blocks to customize each part of all form collections:
+
+.. code-block:: twig
+
+    {% block collection_row %} ... {% endblock %}
+    {% block collection_label %} ... {% endblock %}
+    {% block collection_widget %} ... {% endblock %}
+    {% block collection_help %} ... {% endblock %}
+    {% block collection_errors %} ... {% endblock %}
+
+You can also customize each entry of all collections with the following blocks:
+
+.. code-block:: twig
+
+    {% block collection_entry_row %} ... {% endblock %}
+    {% block collection_entry_label %} ... {% endblock %}
+    {% block collection_entry_widget %} ... {% endblock %}
+    {% block collection_entry_help %} ... {% endblock %}
+    {% block collection_entry_errors %} ... {% endblock %}
+
+.. versionadded:: 5.1
+
+    The ``collection_entry_*`` blocks were introduced in Symfony 5.1.
+
+Finally, you can customize specific form collections instead of all of them.
+For example, consider the following complex example where a ``TaskManagerType``
+has a collection of ``TaskListType`` which in turn has a collection of
+``TaskType``::
 
     class TaskManagerType extends AbstractType
     {
