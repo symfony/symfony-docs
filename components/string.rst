@@ -300,6 +300,11 @@ Methods to Search and Replace
     u('avatar-73647.png')->match('/avatar-(\d+)\.png/');
     // result = ['avatar-73647.png', '73647']
 
+    // checks if the string contains any of the other given strings
+    u('aeiou')->containsAny('a');                 // true
+    u('aeiou')->containsAny(['ab', 'efg']);       // false
+    u('aeiou')->containsAny(['eio', 'foo', 'z']); // true
+
     // finds the position of the first occurrence of the given string
     // (the second argument is the position where the search starts and negative
     // values have the same meaning as in PHP functions)
@@ -326,6 +331,10 @@ Methods to Search and Replace
     u('123')->replaceMatches('/\d/', function ($match) {
         return '['.$match[0].']';
     }); // result = '[1][2][3]'
+
+.. versionadded:: 5.1
+
+    The ``containsAny()`` method was introduced in Symfony 5.1.
 
 Methods to Join, Split, Truncate and Reverse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
