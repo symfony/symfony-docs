@@ -417,9 +417,9 @@ going to production:
 #. Create a configuration directory with the same name as the environment (in
    this case, ``config/packages/staging/``);
 #. Add the needed configuration files in ``config/packages/staging/`` to
-   define the behavior of the new environment. Symfony loads first the files in
-   ``config/packages/*.yaml``, so you must only configure the differences with
-   those files;
+   define the behavior of the new environment. Symfony loads the
+   ``config/packages/*.yaml`` files first, so you only need to configure the
+   differences to those files;
 #. Select the ``staging`` environment using the ``APP_ENV`` env var as explained
    in the previous section.
 
