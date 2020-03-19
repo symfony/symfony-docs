@@ -215,21 +215,30 @@ Write Assertions about Deprecations
 
 When adding deprecations to your code, you might like writing tests that verify
 that they are triggered as required. To do so, the bridge provides the
-``@expectedDeprecation`` annotation that you can use on your test methods.
+:method:`Symfony\\Bridge\\PhpUnit\\ExpectDeprecationTrait::expectDeprecation` method that you can use on your test methods.
 It requires you to pass the expected message, given in the same format as for
 the `PHPUnit's assertStringMatchesFormat()`_ method. If you expect more than one
-deprecation message for a given test method, you can use the annotation several
+deprecation message for a given test method, you can use the method several
 times (order matters)::
 
-    /**
-     * @group legacy
-     * @expectedDeprecation This "%s" method is deprecated.
-     * @expectedDeprecation The second argument of the "%s" method is deprecated.
-     */
-    public function testDeprecatedCode()
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
+
+    class MyTest extends TestCase
     {
-        @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
-        @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
+        use ExpectDeprecationTrait;
+
+        /**
+         * @group legacy
+         */
+        public function testDeprecatedCode()
+        {
+            $this->expectDeprecation("This "%s" method is deprecated.");
+            $this->expectDeprecation("The second argument of the "%s" method is deprecated.");
+
+            @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
+            @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
+        }
     }
 
 Time-sensitive Tests
