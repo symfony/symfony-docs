@@ -71,7 +71,7 @@ including concurrent requests, HTTP/2 is only supported when using cURL or Amp H
 
 ``HttpClient::create()`` selects the cURL transport if the `cURL PHP extension`_
 is enabled and on a stable version, falls back to Amp HTTPClient if available,
- and falls back to PHP streams otherwise. If you prefer to select
+and falls back to PHP streams otherwise. If you prefer to select
 the transport explicitly, use the following classes to create the client::
 
     use Symfony\Component\HttpClient\AmpHttpClient;
