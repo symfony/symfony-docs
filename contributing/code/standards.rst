@@ -72,7 +72,7 @@ short example containing most features described below::
          */
         public function someDeprecatedMethod()
         {
-            @trigger_error(sprintf('The %s() method is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
+            trigger_deprecation('vendor-name/package-name', '5.1', 'The %s() method is deprecated. Use Acme\Baz::someMethod() instead.', __METHOD__);
 
             return Baz::someMethod();
         }
@@ -186,10 +186,6 @@ Structure
   arguments the constructor has;
 
 * Exception and error message strings must be concatenated using :phpfunction:`sprintf`;
-
-* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` must be
-  switched to opt-in via ``@`` operator.
-  Read more at :ref:`contributing-code-conventions-deprecations`;
 
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;

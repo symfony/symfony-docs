@@ -150,7 +150,7 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
    * Does the code break backward compatibility? If yes, does the PR header say
      so?
    * Does the PR contain deprecations? If yes, does the PR header say so? Does
-     the code contain ``trigger_error()`` statements for all deprecated
+     the code contain ``trigger_deprecation()`` statements for all deprecated
      features?
    * Are all deprecations and backward compatibility breaks documented in the
      latest UPGRADE-X.X.md file? Do those explanations contain "Before"/"After"
