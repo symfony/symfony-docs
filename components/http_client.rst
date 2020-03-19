@@ -48,42 +48,49 @@ allows keeping connections to remote hosts open between requests, improving
 performance by saving repetitive DNS resolution, SSL negotiation, etc.
 To leverage all these design benefits, the cURL extension is needed.
 
-Enabling cURL Support
+HTTP/2 Support
+~~~~~~~~~~~~~~
+
+When requesting an ``https`` URL, HTTP/2 is enabled by default if a compatible
+client is found.
+To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
+``http_version`` option::
+
+    $client = HttpClient::create(['http_version' => '2.0']);
+
+Support for HTTP/2 PUSH works out of the box when a compatible client is
+installed: pushed responses are put into a temporary cache and are
+used when a subsequent request is triggered for the corresponding URLs.
+
+HTTP/2 Compatible clients
 ~~~~~~~~~~~~~~~~~~~~~
 
-This component supports both the native PHP streams and cURL to make the HTTP
-requests. Although both are interchangeable and provide the same features,
-including concurrent requests, HTTP/2 is only supported when using cURL.
+This component supports the native PHP streams, cURL and `Amp HttpClient`_ to make the HTTP
+requests. Although they are interchangeable and provide the same features,
+including concurrent requests, HTTP/2 is only supported when using cURL or Amp HttpClient.
 
 ``HttpClient::create()`` selects the cURL transport if the `cURL PHP extension`_
-is enabled and falls back to PHP streams otherwise. If you prefer to select
+is enabled and on a stable version, falls back to Amp HTTPClient if available,
+ and falls back to PHP streams otherwise. If you prefer to select
 the transport explicitly, use the following classes to create the client::
 
+    use Symfony\Component\HttpClient\AmpHttpClient;
     use Symfony\Component\HttpClient\CurlHttpClient;
     use Symfony\Component\HttpClient\NativeHttpClient;
 
     // uses native PHP streams
     $client = new NativeHttpClient();
 
+    // uses the Amp HttpClient
+    $client = new AmpHttpClient();
+
     // uses the cURL PHP extension
     $client = new CurlHttpClient();
 
 When using this component in a full-stack Symfony application, this behavior is
-not configurable and cURL will be used automatically if the cURL PHP extension
-is installed and enabled. Otherwise, the native PHP streams will be used.
-
-HTTP/2 Support
-~~~~~~~~~~~~~~
-
-When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.36
-is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
-the ``http_version`` option::
-
-    $client = HttpClient::create(['http_version' => '2.0']);
-
-Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61 is used with
-PHP >= 7.2.17 / 7.3.4: pushed responses are put into a temporary cache and are
-used when a subsequent request is triggered for the corresponding URLs.
+not configurable and Amp HTTP Client or cURL will be used automatically if the
+Amp HTTPClient library is installed or cURL PHP extension is installed and enabled.
+Otherwise, the native PHP streams will be used.
 
 Making Requests
 ---------------
@@ -1016,6 +1023,7 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 
     $mockResponse = new MockResponse($body());
 
+.. _`Amp HttpClient`: https://github.com/amphp/http-client
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
