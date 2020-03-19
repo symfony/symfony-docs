@@ -63,7 +63,7 @@ installed: pushed responses are put into a temporary cache and are
 used when a subsequent request is triggered for the corresponding URLs.
 
 HTTP/2 Compatible clients
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This component supports the native PHP streams, cURL and `Amp HttpClient`_ to make the HTTP
 requests. Although they are interchangeable and provide the same features,
