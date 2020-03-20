@@ -1024,7 +1024,7 @@ override it in the ``test`` environment to use this transport:
         framework:
             messenger:
                 transports:
-                    async_priority_normal: 'in-memory:///'
+                    async_priority_normal: 'in-memory://'
 
     .. code-block:: xml
 
@@ -1040,7 +1040,7 @@ override it in the ``test`` environment to use this transport:
 
             <framework:config>
                 <framework:messenger>
-                    <framework:transport name="async_priority_normal" dsn="in-memory:///"/>
+                    <framework:transport name="async_priority_normal" dsn="in-memory://"/>
                 </framework:messenger>
             </framework:config>
         </container>
@@ -1052,7 +1052,7 @@ override it in the ``test`` environment to use this transport:
             'messenger' => [
                 'transports' => [
                     'async_priority_normal' => [
-                        'dsn' => 'in-memory:///',
+                        'dsn' => 'in-memory://',
                     ],
                 ],
             ],
