@@ -35,8 +35,8 @@ The linter results can be exported to JSON using the ``--format`` option:
 
 .. tip::
 
-    The Yaml component provides a stand-alone ``yaml-lint`` binary to lint YAML
-    files without using the entire Symfony console application:
+    The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
+    you to lint YAML files without having to create a console application:
 
     .. code-block:: terminal
 
