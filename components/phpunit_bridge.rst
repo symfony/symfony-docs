@@ -163,13 +163,9 @@ Trigger Deprecation Notices
 
 Deprecation notices can be triggered by using::
 
-    @trigger_error('Your deprecation message', E_USER_DEPRECATED);
+    trigger_deprecation('vendor-name/package-name', '5.1', 'Your deprecation message');
 
-Without the `@-silencing operator`_, users would need to opt-out from deprecation
-notices. Silencing by default swaps this behavior and allows users to opt-in
-when they are ready to cope with them (by adding a custom error handler like the
-one provided by this bridge). When not silenced, deprecation notices will appear
-in the **Unsilenced** section of the deprecation report.
+Where 5.1 is the version from which the deprecation starts. Note that the deprecation message can use the :phpfunction:`printf` format. In this case, you can pass placeholders as extra arguments after the deprecation message.
 
 Mark Tests as Legacy
 --------------------
@@ -354,14 +350,14 @@ times (order matters)::
         public function testDeprecatedCode()
         {
             // test some code that triggers the following deprecation:
-            // @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
-            $this->expectDeprecation('This "%s" method is deprecated');
+            // trigger_deprecation('vendor-name/package-name', '5.1', 'This "Foo" method is deprecated.');
+            $this->expectDeprecation('Since vendor-name/package-name 5.1: This "%s" method is deprecated');
 
             // ...
 
             // test some code that triggers the following deprecation:
-            // @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
-            $this->expectDeprecation('The second argument of the "%s" method is deprecated.');
+            // trigger_deprecation('vendor-name/package-name', '4.4', 'The second argument of the "Bar" method is deprecated.');
+            $this->expectDeprecation('Since vendor-name/package-name 4.4: The second argument of the "%s" method is deprecated.');
         }
     }
 

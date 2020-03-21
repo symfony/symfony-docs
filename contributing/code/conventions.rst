@@ -100,32 +100,30 @@ A feature is marked as deprecated by adding a ``@deprecated`` PHPDoc to
 relevant classes, methods, properties, ...::
 
     /**
-     * @deprecated since Symfony 2.8.
+     * @deprecated since Symfony 5.1.
      */
 
 The deprecation message must indicate the version in which the feature was deprecated,
 and whenever possible, how it was replaced::
 
     /**
-     * @deprecated since Symfony 2.8, use Replacement instead.
+     * @deprecated since Symfony 5.1, use Replacement instead.
      */
 
 When the replacement is in another namespace than the deprecated class, its FQCN must be used::
 
     /**
-     * @deprecated since Symfony 2.8, use A\B\Replacement instead.
+     * @deprecated since Symfony 5.1, use A\B\Replacement instead.
      */
 
 A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with the migration::
 
-    @trigger_error(sprintf('The "%s" class is deprecated since Symfony 2.8, use "%s" instead.', Deprecated::class, Replacement::class), E_USER_DEPRECATED);
+    trigger_deprecation('vendor-name/package-name', '5.1', 'The "%s" class is deprecated since Symfony 5.1, use "%s" instead.', Deprecated::class, Replacement::class);
 
-Without the `@-silencing operator`_, users would need to opt-out from deprecation
-notices. Silencing swaps this behavior and allows users to opt-in when they are
-ready to cope with them (by adding a custom error handler like the one used by
-the Web Debug Toolbar or by the PHPUnit bridge).
+The ``trigger_deprecation`` function internally use the php function :phpfunction:`assert`. This means you should use `zend.assertions` to disable deprecations in production.
 
-When deprecating a whole class the ``trigger_error()`` call should be placed
+
+When deprecating a whole class the ``trigger_deprecation()`` call should be placed
 between the namespace and the use declarations, like in this example from
 `ServiceRouterLoader`_::
 
@@ -133,7 +131,7 @@ between the namespace and the use declarations, like in this example from
 
     use Symfony\Component\Routing\Loader\ContainerLoader;
 
-    @trigger_error(sprintf('The "%s" class is deprecated since Symfony 4.4, use "%s" instead.', ServiceRouterLoader::class, ContainerLoader::class), E_USER_DEPRECATED);
+    trigger_deprecation('symfony/routing', '4.4', 'The "%s" class is deprecated since Symfony 4.4, use "%s" instead.', ServiceRouterLoader::class, ContainerLoader::class);
 
     /**
      * @deprecated since Symfony 4.4, use Symfony\Component\Routing\Loader\ContainerLoader instead.
@@ -182,5 +180,3 @@ of the impacted component::
     * Removed the `Deprecated` class, use `Replacement` instead.
 
 This task is mandatory and must be done in the same pull request.
-
-.. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
