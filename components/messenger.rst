@@ -68,6 +68,34 @@ Concepts
    to use for transport, markers identifying a received message or any sort of
    metadata your middleware or transport layer may use.
 
+**Message**
+   There is no specific requirement for a message, it can be any kind of object except it
+   should be serializable and unserializable by a Symfony Serializer instance.
+
+Message
+-------
+Message is a serializable object that holds the data that will be dispatched. It does not need
+to extend a class or implement an interface.
+
+Example::
+
+    namespace App\Message;
+
+    class MyMessage {
+
+        protected $name = 'name';
+
+        public function __construct(string $name)
+        {
+            $this->name = $name;
+        }
+
+        public function getName(): string
+        {
+            return $this->name;
+        }
+    }
+
 Bus
 ---
 
@@ -112,8 +140,9 @@ that will do the required processing for your message::
     namespace App\MessageHandler;
 
     use App\Message\MyMessage;
+    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-    class MyMessageHandler
+    class MyMessageHandler implements MessageHandlerInterface
     {
         public function __invoke(MyMessage $message)
         {
@@ -209,7 +238,7 @@ transport will be responsible for communicating with your message broker or 3rd 
 Your own Sender
 ~~~~~~~~~~~~~~~
 
-Imagine that you already have an ``ImportantAction`` message going through the
+You already have the ``MyMessage`` message going through the
 message bus and being handled by a handler. Now, you also want to send this
 message as an email (using the :doc:`Mime </components/mime>` and
 :doc:`Mailer </components/mailer>` components).
@@ -219,13 +248,13 @@ you can create your own message sender::
 
     namespace App\MessageSender;
 
-    use App\Message\ImportantAction;
+    use App\Message\MyMessage;
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
     use Symfony\Component\Mime\Email;
 
-    class ImportantActionToEmailSender implements SenderInterface
+    class MyMessageToEmailSender implements SenderInterface
     {
         private $mailer;
         private $toEmail;
@@ -240,15 +269,15 @@ you can create your own message sender::
         {
             $message = $envelope->getMessage();
 
-            if (!$message instanceof ImportantAction) {
-                throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', ImportantAction::class));
+            if (!$message instanceof MyMessage) {
+                throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', MyMessage::class));
             }
 
             $this->mailer->send(
                 (new Email())
                     ->to($this->toEmail)
                     ->subject('Important action made')
-                    ->html('<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>')
+                    ->html('<h1>Important action</h1><p>Made by '.$message->getName().'</p>')
             );
 
             return $envelope;
@@ -328,6 +357,33 @@ To allow sending and receiving messages on the same bus and prevent an infinite
 loop, the message bus will add a :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`
 stamp to the message envelopes and the :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware`
 middleware will know it should not route these messages again to a transport.
+
+Debugging the Messenger
+-----------------------
+
+The ``debug:messenger`` command lists available messages & handlers per bus.
+You can also restrict the list to a specific bus by providing its name as argument.
+
+.. code-block:: terminal
+
+    $ php bin/console debug:messenger
+
+    Messenger
+    =========
+
+    messenger.bus.default
+    ---------------------
+
+     The following messages can be dispatched:
+
+     -----------------------------------------------------
+      App\Message\MyMessage
+          handled by App\MessageHandler\MyMessageHandler
+
+      Symfony\Component\Mailer\Messenger\SendEmailMessage
+          handled by mailer.messenger.message_handler
+
+     -----------------------------------------------------
 
 Learn more
 ----------
