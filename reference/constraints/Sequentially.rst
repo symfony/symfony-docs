@@ -57,7 +57,7 @@ You can validate each of these constraints sequentially to solve these issues:
              * @var string
              *
              * @Assert\Sequentially({
-             *     @Assert\NotBlank(),
+             *     @Assert\NotNull(),
              *     @Assert\Type("string"),
              *     @Assert\Length(min=10),
              *     @Assert\Regex(Place::ADDRESS_REGEX),
@@ -74,7 +74,7 @@ You can validate each of these constraints sequentially to solve these issues:
             properties:
                 address:
                     - Sequentially:
-                        - NotBlank: ~
+                        - NotNull: ~
                         - Type: string
                         - Length: { min: 10 }
                         - Regex: !php/const App\Localization\Place::ADDRESS_REGEX
@@ -91,7 +91,7 @@ You can validate each of these constraints sequentially to solve these issues:
             <class name="App\Localization\Place">
                 <property name="address">
                     <constraint name="Sequentially">
-                            <constraint name="NotBlank"/>
+                            <constraint name="NotNull"/>
                             <constraint name="Type">string</constraint>
                             <constraint name="Length">
                                 <option name="min">10</option>
@@ -119,7 +119,7 @@ You can validate each of these constraints sequentially to solve these issues:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('address', new Assert\Sequentially([
-                    new Assert\NotBlank(),
+                    new Assert\NotNull(),
                     new Assert\Type("string"),
                     new Assert\Length(['min' => 10]),
                     new Assert\Regex(self::ADDRESS_REGEX),
