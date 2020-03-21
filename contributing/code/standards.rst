@@ -72,7 +72,7 @@ short example containing most features described below::
          */
         public function someDeprecatedMethod()
         {
-            trigger_deprecation('vendor-name/package-name', '5.1', 'The %s() method is deprecated. Use Acme\Baz::someMethod() instead.', __METHOD__);
+            trigger_deprecation('symfony/package-name', '5.1', 'The %s() method is deprecated, use Acme\Baz::someMethod() instead.', __METHOD__);
 
             return Baz::someMethod();
         }

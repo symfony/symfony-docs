@@ -116,12 +116,10 @@ When the replacement is in another namespace than the deprecated class, its FQCN
      * @deprecated since Symfony 5.1, use A\B\Replacement instead.
      */
 
-A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with the migration::
+A deprecation must also be triggered to help people with the migration
+(requires the ``symfony/deprecation-contracts`` package)::
 
-    trigger_deprecation('vendor-name/package-name', '5.1', 'The "%s" class is deprecated since Symfony 5.1, use "%s" instead.', Deprecated::class, Replacement::class);
-
-The ``trigger_deprecation`` function internally use the php function :phpfunction:`assert`. This means you should use `zend.assertions` to disable deprecations in production.
-
+    trigger_deprecation('symfony/package-name', '5.1', 'The "%s" class is deprecated, use "%s" instead.', Deprecated::class, Replacement::class);
 
 When deprecating a whole class the ``trigger_deprecation()`` call should be placed
 between the namespace and the use declarations, like in this example from
@@ -131,7 +129,7 @@ between the namespace and the use declarations, like in this example from
 
     use Symfony\Component\Routing\Loader\ContainerLoader;
 
-    trigger_deprecation('symfony/routing', '4.4', 'The "%s" class is deprecated since Symfony 4.4, use "%s" instead.', ServiceRouterLoader::class, ContainerLoader::class);
+    trigger_deprecation('symfony/routing', '4.4', 'The "%s" class is deprecated, use "%s" instead.', ServiceRouterLoader::class, ContainerLoader::class);
 
     /**
      * @deprecated since Symfony 4.4, use Symfony\Component\Routing\Loader\ContainerLoader instead.

@@ -161,11 +161,14 @@ each test suite's results in their own section.
 Trigger Deprecation Notices
 ---------------------------
 
-Deprecation notices can be triggered by using::
+Deprecation notices can be triggered by using ``trigger_deprecation`` from
+the ``symfony/deprecation-contracts`` package::
 
-    trigger_deprecation('vendor-name/package-name', '5.1', 'Your deprecation message');
+    // indicates something is deprecated since version 1.3 of vendor-name/packagename
+    trigger_deprecation('vendor-name/package-name', '1.3', 'Your deprecation message');
 
-Where 5.1 is the version from which the deprecation starts. Note that the deprecation message can use the :phpfunction:`printf` format. In this case, you can pass placeholders as extra arguments after the deprecation message.
+    // you can also use printf format (all arguments after the message will be used)
+    trigger_deprecation('...', '1.3', 'Value "%s" is deprecated, use ...  instead.', $value);
 
 Mark Tests as Legacy
 --------------------
