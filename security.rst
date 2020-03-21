@@ -339,7 +339,7 @@ you to control *every* part of the authentication process (see the next section)
     bundle.
 
 Guard Authenticators
-....................
+~~~~~~~~~~~~~~~~~~~~
 
 A Guard authenticator is a class that gives you *complete* control over your
 authentication process. There are many different ways to build an authenticator;
