@@ -1,16 +1,14 @@
 FROM  python:2-stretch as builder
 
-WORKDIR /www
-
 COPY ./_build/.requirements.txt _build/
 
 RUN pip install  pip==9.0.1 wheel==0.29.0 \
     && pip install -r _build/.requirements.txt
 
-COPY . /www
+EXPOSE 8000
 
-RUN make -C _build html
+VOLUME /www
 
-FROM  nginx:latest
+WORKDIR /www/_build
 
-COPY --from=builder /www/_build/html /usr/share/nginx/html
+CMD make html && make livehtml

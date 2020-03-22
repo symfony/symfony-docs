@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+    symfony-docs:
+        build:
+            context: ./
+        image: symfony-docs:latest
+        user: ${CURRENT_UID}
+        ports:
+            - 8080:8000
+        volumes:
+            - .:/www
