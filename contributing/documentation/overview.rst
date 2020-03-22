@@ -255,7 +255,8 @@ automatically compile them:
 
 .. code-block:: terminal
 
-    $ docker-compose up
+    # We use the same user as outside to avoid permissions issues with generated files
+    $ CURRENT_UID=$(id -u):$(id -g) docker-compose up
 
 You can now read the docs at ``http://localhost:8080`` (if you use a virtual
 machine, browse its IP instead of localhost; e.g. ``http://192.168.99.100:8080``).
