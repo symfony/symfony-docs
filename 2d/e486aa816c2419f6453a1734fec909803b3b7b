@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-03-21T16:01:26Z
+
+I upgraded heading "3b" one level higher for consistency. Now I'm getting this error:
+
+> /home/runner/work/symfony-docs/symfony-docs/security.rst:370: SEVERE: Title level inconsistent:
+
+This is concerning chapter 4 which I didn't modify.
