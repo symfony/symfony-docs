@@ -179,7 +179,7 @@ Email Channel
 
 The email channel uses the :doc:`Symfony Mailer </mailer>` to send
 notifications using the special
-:class:`Symfony\\Bridge\\TwigBridge\\Mime\\NotificationEmail`. It is
+:class:`Symfony\\Bridge\\Twig\\Mime\\NotificationEmail`. It is
 required to install the Twig bridge along with the Inky and CSS Inliner
 Twig extensions:
 
