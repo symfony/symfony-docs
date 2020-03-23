@@ -50,6 +50,8 @@ on the new encoder to point to the old, legacy encoder(s):
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:security="http://symfony.com/schema/dic/security"
             xsi:schemaLocation="http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd
+                http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <security:config>

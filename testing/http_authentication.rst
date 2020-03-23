@@ -43,6 +43,15 @@ firewall, but only in the configuration file used by tests:
     .. code-block:: xml
 
         <!-- config/packages/test/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:security="http://symfony.com/schema/dic/security"
+            xsi:schemaLocation="http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
         <security:config>
             <!-- replace 'main' by the name of your own firewall -->
             <security:firewall name="main">
