@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-03-17T16:09:17Z
+
+Thanks Javier. I've updated the PR following your suggestions
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-03-17T16:19:13Z
+
+Note: I've put this on hold, let's first wait if https://github.com/symfony/symfony/pull/36112 gets merged
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-03-19T14:41:35Z
+
+PR closed, this ready to be merged imho
