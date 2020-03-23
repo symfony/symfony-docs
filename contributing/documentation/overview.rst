@@ -261,7 +261,7 @@ automatically compile them:
 You can now read the docs at ``http://localhost:8080`` (if you use a virtual
 machine, browse its IP instead of localhost; e.g. ``http://192.168.99.100:8080``).
 
-If por `8080` is already in use, you can change the mapping on `docker-compose.yaml`
+If port ``8080`` is already in use, you can change the mapping on ``docker-compose.yaml``
 file to any other free port.
 
 If you don't use Docker, follow these steps to build the docs locally:
