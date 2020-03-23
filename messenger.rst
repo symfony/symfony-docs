@@ -858,10 +858,10 @@ To use Symfony's built-in AMQP transport, you need the AMQP PHP extension.
 
 The transport has a number of other options, including ways to configure
 the exchange, queues binding keys and more. See the documentation on
-:class:`Symfony\\Component\\Messenger\\Transport\\AmqpExt\\Connection`.
+:class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\Connection`.
 
 You can also configure AMQP-specific settings on your message by adding
-:class:`Symfony\\Component\\Messenger\\Transport\\AmqpExt\\AmqpStamp` to
+:class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
 your Envelope::
 
     use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpStamp;
