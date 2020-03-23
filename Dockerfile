@@ -1,4 +1,4 @@
-FROM  python:2-stretch as builder
+FROM  python:3-stretch as builder
 
 COPY ./_build/.requirements.txt _build/
 
