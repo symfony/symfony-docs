@@ -119,10 +119,10 @@ This requires you to implement several methods::
 
         public function checkCredentials($credentials, UserInterface $user)
         {
-            // check credentials - e.g. make sure the password is valid
-            // no credential check is needed in this case
+            // Check credentials - e.g. make sure the password is valid.
+            // In case of an API token, no credential check is needed.
 
-            // return true to cause authentication success
+            // Return `true` to cause authentication success
             return true;
         }
 
