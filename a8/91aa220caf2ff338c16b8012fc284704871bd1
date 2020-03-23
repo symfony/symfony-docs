@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-03-21T10:09:15Z
+
+But if we enforce a string it’s clear it cannot be null, or?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-03-21T10:23:53Z
+
+The `TypeValidator` won't do anything if we pass `null`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Constraints/TypeValidator.php#L32-L34
