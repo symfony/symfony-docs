@@ -86,7 +86,7 @@ This requires you to implement several methods::
 
         /**
          * Called on every request to decide if this authenticator should be
-         * used for the request. Returning false will cause this authenticator
+         * used for the request. Returning `false` will cause this authenticator
          * to be skipped.
          */
         public function supports(Request $request)
@@ -106,7 +106,8 @@ This requires you to implement several methods::
         public function getUser($credentials, UserProviderInterface $userProvider)
         {
             if (null === $credentials) {
-                // The token header was empty, authentication fails with 401
+                // The token header was empty, authentication fails with HTTP Status
+                // Code 401 "Unauthorized"
                 return null;
             }
 
@@ -134,7 +135,7 @@ This requires you to implement several methods::
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
             $data = [
-                // you may ant to customize or obfuscate the message first
+                // you may want to customize or obfuscate the message first
                 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
 
                 // or to translate this message
