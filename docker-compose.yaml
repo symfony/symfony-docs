@@ -4,7 +4,6 @@ services:
         build:
             context: ./
         image: symfony-docs:latest
-        user: ${CURRENT_UID}
         ports:
             - 8080:8000
         volumes:
