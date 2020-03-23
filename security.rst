@@ -320,7 +320,7 @@ users to authenticate!
 .. _security-form-login:
 
 3b) Authenticating your Users
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Authentication in Symfony can feel a bit "magic" at first. That's because, instead
 of building a route & controller to handle login, you'll activate an
@@ -339,17 +339,15 @@ you to control *every* part of the authentication process (see the next section)
     bundle.
 
 Guard Authenticators
-....................
+~~~~~~~~~~~~~~~~~~~~
 
 A Guard authenticator is a class that gives you *complete* control over your
-authentication process. There are *many* different ways to build an authenticator,
-so here are a few common use-cases:
+authentication process. There are many different ways to build an authenticator;
+here are a few common use-cases:
 
 * :doc:`/security/form_login_setup`
-* :doc:`/security/guard_authentication`
-
-For the most detailed description of authenticators and how they work, see
-:doc:`/security/guard_authentication`.
+* :doc:`/security/guard_authentication` – see this for the most detailed description of
+   authenticators and how they work
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
