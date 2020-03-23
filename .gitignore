@@ -2,3 +2,4 @@
 /_build/spelling
 /_build/html
 *.pyc
+docker-compose.override.yaml

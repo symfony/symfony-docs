@@ -1,0 +1,5 @@
+version: '3.3'
+services:
+    symfony-docs:
+        ports:
+            - 8081:8000

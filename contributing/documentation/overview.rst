@@ -261,8 +261,17 @@ automatically compile them:
 You can now read the docs at ``http://localhost:8080`` (if you use a virtual
 machine, browse its IP instead of localhost; e.g. ``http://192.168.99.100:8080``).
 
-If port ``8080`` is already in use, you can change the mapping on ``docker-compose.yaml``
-file to any other free port.
+If port ``8080`` is already in use, you can change the mapping by creating a
+``docker-compose.override.yaml`` file and changing the port to any other free port,
+for example ``8081``:
+
+    .. code-block:: yaml
+
+        version: '3.3'
+        services:
+            symfony-docs:
+                ports:
+                    - 8081:8000
 
 If you don't use Docker, follow these steps to build the docs locally:
 
