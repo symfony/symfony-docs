@@ -180,10 +180,12 @@ wrapping their names with ``%`` characters).
     sense most of the times to prevent accessing those services directly instead
     of using the generic service alias.
 
-.. note::
+.. versionadded:: 5.1
 
-    You need to manually add the ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
-    compiler pass to the container for this feature to work.
+    In Symfony versions prior to 5.1, you needed to manually add the
+    ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
+    compiler pass to the container for this feature to work. This compiler pass
+    is now added automatically.
 
 console.command
 ---------------
