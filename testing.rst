@@ -567,6 +567,8 @@ command.
     If the information you need to check is available from the profiler, use
     it instead.
 
+.. _testing_logging_in_users:
+
 Logging in Users (Authentication)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
