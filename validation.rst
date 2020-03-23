@@ -45,7 +45,7 @@ of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules are usually defined using PHP code or
 annotations but they can also be defined as ``.yaml`` or
-``.xml`` files inside the ``config/validator/`` directory:
+``.xml`` files ``config/packages/validator.yml` or ``config/packages/validator.xml` :
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
@@ -70,7 +70,7 @@ following:
 
     .. code-block:: yaml
 
-        # config/validator/validation.yaml
+        # config/packages/validator.yaml
         App\Entity\Author:
             properties:
                 name:
@@ -78,7 +78,7 @@ following:
 
     .. code-block:: xml
 
-        <!-- config/validator/validation.xml -->
+        <!-- config/packages/validator.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
