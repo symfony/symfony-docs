@@ -45,7 +45,7 @@ of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
 follow in order to be valid. These rules are usually defined using PHP code or
 annotations but they can also be defined as ``.yaml`` or
-``.xml`` files ``config/packages/validator.yml` or ``config/packages/validator.xml` :
+``.xml`` files ``config/packages/validator.yml`` or ``config/packages/validator.xml`` :
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
