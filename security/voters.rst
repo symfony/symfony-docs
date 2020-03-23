@@ -125,7 +125,7 @@ would look like this::
                 return false;
             }
 
-            // only vote on Post objects inside this voter
+            // only vote on `Post` objects
             if (!$subject instanceof Post) {
                 return false;
             }
@@ -142,7 +142,7 @@ would look like this::
                 return false;
             }
 
-            // you know $subject is a Post object, thanks to supports
+            // you know $subject is a Post object, thanks to `supports()`
             /** @var Post $post */
             $post = $subject;
 
@@ -163,15 +163,13 @@ would look like this::
                 return true;
             }
 
-            // the Post object could have, for example, a method isPrivate()
-            // that checks a boolean $private property
+            // the Post object could have, for example, a method `isPrivate()`
             return !$post->isPrivate();
         }
 
         private function canEdit(Post $post, User $user)
         {
-            // this assumes that the data object has a getOwner() method
-            // to get the entity of the user who owns this data object
+            // this assumes that the Post object has a `getOwner()` method
             return $user === $post->getOwner();
         }
     }
@@ -261,9 +259,8 @@ voters vote for one action and object. For instance, suppose you have one voter 
 checks if the user is a member of the site and a second one that checks if the user
 is older than 18.
 
-To handle these cases, the access decision manager uses an access decision
-strategy. You can configure this to suit your needs. There are three
-strategies available:
+To handle these cases, the access decision manager uses a "strategy" which you can configure.
+There are three strategies available:
 
 ``affirmative`` (default)
     This grants access as soon as there is *one* voter granting access;

@@ -275,14 +275,13 @@ The Guard Authenticator Methods
 Each authenticator needs the following methods:
 
 **supports(Request $request)**
-    This will be called on *every* request and your job is to decide if the
+    This is called on *every* request and your job is to decide if the
     authenticator should be used for this request (return ``true``) or if it
     should be skipped (return ``false``).
 
 **getCredentials(Request $request)**
-    This will be called on *every* request and your job is to read the token (or
-    whatever your "authentication" information is) from the request and return it.
-    These credentials are later passed as the first argument of ``getUser()``.
+    Your job is to read the token (or whatever your "authentication" information is)
+    from the request and return it. These credentials are passed to ``getUser()``.
 
 **getUser($credentials, UserProviderInterface $userProvider)**
     The ``$credentials`` argument is the value returned by ``getCredentials()``.
