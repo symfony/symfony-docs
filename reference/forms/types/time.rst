@@ -157,10 +157,6 @@ reference_date
 
 **type**: ``DateTimeInterface`` **default**: ``null``
 
-.. versionadded:: 4.4
-
-    The ``reference_date`` option was introduced in Symfony 4.4.
-
 Configuring a reference date is required when the `model_timezone`_ and
 `view_timezone`_ are different. Timezone conversions will be calculated
 based on this date.
