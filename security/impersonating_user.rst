@@ -38,7 +38,9 @@ listener:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -165,7 +167,9 @@ also adjust the query parameter name via the ``parameter`` setting:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
             <config>
                 <!-- ... -->
 
@@ -198,7 +202,7 @@ Limiting User Switching
 
 If you need more control over user switching, you can use a security voter. First,
 configure ``switch_user`` to check for some new, custom attribute. This can be
-anything, but *cannot* start with ``ROLE_`` (to enforce that only your voter will 
+anything, but *cannot* start with ``ROLE_`` (to enforce that only your voter will
 be called):
 
 .. configuration-block::
@@ -222,7 +226,9 @@ be called):
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
             <config>
                 <!-- ... -->
 
