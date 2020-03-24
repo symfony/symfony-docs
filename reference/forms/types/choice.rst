@@ -183,8 +183,8 @@ Field Options
 
 .. versionadded:: 5.1
 
-    The :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class has
-    been introduced in Symfony 5.1, to help configuring choices options.
+    The :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class was
+    introduced in Symfony 5.1, to help configuring choices options.
 
 choices
 ~~~~~~~
