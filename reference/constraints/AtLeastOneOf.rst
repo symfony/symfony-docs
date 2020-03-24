@@ -1,8 +1,8 @@
 AtLeastOneOf
 ============
 
-This constraint enables you to create a set of constraints,
-allowing to interrupt the validation once the first constraint is satisfied.
+This constraint checks that the value satisfies at least one of the given
+constraints. The validation stops as soon as one constraint is satisfied.
 
 .. versionadded:: 5.1
 
@@ -25,9 +25,10 @@ Basic Usage
 
 The following constraints ensure that:
 
-* the ``password`` of a ``Student`` either contains ``#`` or is at least ``10`` characters long
-* the ``grades`` of a ``Student`` is an array which contains at least ``3`` elements or
-  that each element is greater than or equal to ``5``
+* the ``password`` of a ``Student`` either contains ``#`` or is at least ``10``
+  characters long;
+* the ``grades`` of a ``Student`` is an array which contains at least ``3``
+  elements or that each element is greater than or equal to ``5``.
 
 .. configuration-block::
 
