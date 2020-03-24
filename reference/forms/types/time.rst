@@ -23,6 +23,7 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `input_format`_                                                           |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
+|                      | - `reference_date`_                                                         |
 |                      | - `seconds`_                                                                |
 |                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
@@ -146,9 +147,32 @@ of the time. This must be a valid `PHP time format`_.
 
 .. include:: /reference/forms/types/options/model_timezone.rst.inc
 
+.. caution::
+
+    When using different values for ``model_timezone`` and `view_timezone`_,
+    a `reference_date`_ must be configured.
+
+reference_date
+~~~~~~~~~~~~~~
+
+**type**: ``DateTimeInterface`` **default**: ``null``
+
+.. versionadded:: 4.4
+
+    The ``reference_date`` option was introduced in Symfony 4.4.
+
+Configuring a reference date is required when the `model_timezone`_ and
+`view_timezone`_ are different. Timezone conversions will be calculated
+based on this date.
+
 .. include:: /reference/forms/types/options/seconds.rst.inc
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
+
+.. caution::
+
+    When using different values for `model_timezone`_ and ``view_timezone``,
+    a `reference_date`_ must be configured.
 
 widget
 ~~~~~~
