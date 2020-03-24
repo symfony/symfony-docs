@@ -165,6 +165,9 @@ based on this date.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
+When no `reference_date`_ is set the ``view_timezone`` defaults to the
+configured `model_timezone`_.
+
 .. caution::
 
     When using different values for `model_timezone`_ and ``view_timezone``,
