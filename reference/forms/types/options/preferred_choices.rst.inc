@@ -63,3 +63,17 @@ when rendering the field:
         <?= $view['form']->widget($form['publishAt'], [
             'separator' => '=====',
         ]) ?>
+
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'preferred_choices' => ChoiceList::preferred($this, 'taggedAsFavorite'),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.

@@ -181,6 +181,11 @@ To get fancier, use the `group_by`_ option instead.
 Field Options
 -------------
 
+.. versionadded:: 5.1
+
+    The :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class has
+    been introduced in Symfony 5.1, to help configuring choices options.
+
 choices
 ~~~~~~~
 
@@ -211,31 +216,9 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
-choice_loader
-~~~~~~~~~~~~~
+.. _reference-form-choice-loader:
 
-**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
-
-The ``choice_loader`` can be used to only partially load the choices in cases where
-a fully-loaded list is not necessary. This is only needed in advanced cases and
-would replace the ``choices`` option.
-
-You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader`
-if you want to take advantage of lazy loading::
-
-    use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('constants', ChoiceType::class, [
-        'choice_loader' => new CallbackChoiceLoader(function() {
-            return StaticClass::getConstants();
-        }),
-    ]);
-
-This will cause the call of ``StaticClass::getConstants()`` to not happen if the
-request is redirected and if there is no pre set or submitted data. Otherwise
-the choice options would need to be resolved thus triggering the callback.
+.. include:: /reference/forms/types/options/choice_loader.rst.inc
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
