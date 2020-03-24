@@ -317,7 +317,7 @@ this returns ``true`` if:
 * The :ref:`built-in PHP data type <components-property-info-type-builtin>`
   is ``array``;
 * The mutator method the property is derived from has a prefix of ``add``
-  or ``remove`` (which are defined as the list of array mutator prefixes);
+  or ``remove`` or ``set`` (which are defined as the list of array mutator prefixes. Read default Value : https://github.com/ghettovoice/api-platform-core/blob/master/src/Util/Reflection.php#L26);
 * The `phpDocumentor`_ annotation is of type "collection" (e.g.
   ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
   ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
