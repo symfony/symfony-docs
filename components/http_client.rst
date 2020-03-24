@@ -247,7 +247,7 @@ according to the ``multipart/form-data`` content-type. The
     $formData = new FormDataPart($formFields);
     $client->request('POST', 'https://...', [
         'headers' => $formData->getPreparedHeaders()->toArray(),
-        'body' => $formData->bodyToIterable(),
+        'body' => $formData->bodyToString(),
     ]);
 
 Cookies
