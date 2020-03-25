@@ -232,8 +232,8 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(resolve:FOO)``
-    Replaces the string ``FOO`` by the value of a config parameter with the
-    same name:
+    Replace all matches of ``%param_name%`` in the parameter ``FOO`` by the values of a config parameters with the
+    matched ``param_name``:
 
     .. configuration-block::
 
