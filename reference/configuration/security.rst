@@ -528,6 +528,14 @@ The user is considered to have changed when the user class implements
 required by the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 (like the username, password or salt) changes.
 
+``path``
+~~~~~~~~
+
+**type**: ``string`` **default**: ``/logout``
+
+The path which triggers logout. If you change it from the default value ``/logout``,
+you need to set up a route with a matching path.
+
 ``success_handler``
 ~~~~~~~~~~~~~~~~~~~
 
