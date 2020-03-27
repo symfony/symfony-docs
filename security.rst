@@ -796,7 +796,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <logout />
+                    <logout/>
                 </firewall>
             </config>
         </srv:container>
