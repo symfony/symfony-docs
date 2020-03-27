@@ -779,8 +779,62 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
             firewalls:
                 main:
                     # ...
+                    logout: ~
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="secured_area">
+                    <!-- ... -->
+                    <logout />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+
+            'firewalls' => [
+                'secured_area' => [
+                    // ...
+                    'logout' => [],
+                ],
+            ],
+        ]);
+
+
+And that's it! By sending a user to ``/logout``, Symfony will un-authenticate
+the current user.
+
+If you want to change the path from the default ``/logout`` to a custom url,
+you need to set the `path` option *and* setup a matching route like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
                     logout:
-                        path:   app_logout
+                        path:   /my-logout
 
                         # where to redirect after logout
                         # target: app_any_route
@@ -800,7 +854,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <logout path="app_logout"/>
+                    <logout path="/my-logout"/>
                 </firewall>
             </config>
         </srv:container>
@@ -814,12 +868,12 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
             'firewalls' => [
                 'secured_area' => [
                     // ...
-                    'logout' => ['path' => 'app_logout'],
+                    'logout' => ['path' => '/my-logout'],
                 ],
             ],
         ]);
 
-Next, you'll need to create a route for this URL (but not a controller):
+Now you need to create a route for this URL (but not a controller):
 
 .. configuration-block::
 
@@ -834,7 +888,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         class SecurityController extends AbstractController
         {
             /**
-             * @Route("/logout", name="app_logout", methods={"GET"})
+             * @Route("/my-logout", name="app_logout", methods={"GET"})
              */
             public function logout()
             {
@@ -847,7 +901,7 @@ Next, you'll need to create a route for this URL (but not a controller):
 
         # config/routes.yaml
         app_logout:
-            path: /logout
+            path: /my-logout
             methods: GET
 
     .. code-block:: xml
@@ -859,7 +913,7 @@ Next, you'll need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="GET"/>
+            <route id="app_logout" path="/my-logout" methods="GET"/>
         </routes>
 
     ..  code-block:: php
@@ -868,13 +922,10 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('logout', '/logout')
+            $routes->add('app_logout', '/my-logout')
                 ->methods(['GET'])
             ;
         };
-
-And that's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
-Symfony will un-authenticate the current user and redirect them.
 
 .. tip::
 
