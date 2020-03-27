@@ -212,11 +212,45 @@ with the following configuration:
         ]);
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
-to your class and choose which groups to use when serializing::
+to your class::
+
+    // src/Entity/Product.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Serializer\Annotation\Groups;
+
+    /**
+     * @ORM\Entity()
+     */
+    class Product
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(type="integer")
+         * @Groups({"show_product", "list_product"})
+         */
+        private $id;
+
+        /**
+         * @ORM\Column(type="string", length=255)
+         * @Groups({"show_product", "list_product"})
+         */
+        private $name;
+
+        /**
+         * @ORM\Column(type="integer")
+         * @Groups({"show_product"})
+         */
+        private $description;
+    }
+
+You can now choose which groups to use when serializing::
 
     $json = $serializer->serialize(
-        $someObject,
-        'json', ['groups' => ['group1']]
+        $product,
+        'json', ['groups' => 'show_product']
     );
 
 In addition to the ``@Groups`` annotation, the Serializer component also
