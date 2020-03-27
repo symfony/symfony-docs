@@ -29,6 +29,7 @@ Configuration
 
 * `access_denied_url`_
 * `always_authenticate_before_granting`_
+* `anonymous`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -60,6 +61,15 @@ always_authenticate_before_granting
 If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
 templates.
+
+anonymous
+~~~~~~~~~
+
+**type**: ``string`` **default**: ``~``
+
+When set to ``lazy``, Symfony loads the user (and starts the session) only if
+the application actually accesses the ``User`` object (e.g. via a ``is_granted()``
+call in a template or ``isGranted()`` in a controller or service).
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
