@@ -10,7 +10,7 @@ How to send SMS Messages
     :doc:`experimental feature </contributing/code/experimental>`.
 
 The :class:`Symfony\\Component\\Notifier\\TexterInterface` class allows
-you to sent SMS messages::
+you to send SMS messages::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
