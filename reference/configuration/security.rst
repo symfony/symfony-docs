@@ -29,6 +29,7 @@ Configuration
 
 * `access_denied_url`_
 * `always_authenticate_before_granting`_
+* `anonymous`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -60,6 +61,19 @@ always_authenticate_before_granting
 If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
 templates.
+
+anonymous
+~~~~~~~~~
+
+**type**: ``string`` **default**: ``~``
+
+When set to ``lazy``, Symfony loads the user (and starts the session) only if the
+application actually accesses the ``User`` object (e.g. via a ``is_granted()`` call
+in a template or ``isGranted()`` in a controller or service.
+
+.. versionadded:: 4.4
+
+    The option ``lazy`` was introduced in Symfony 4.4.
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
@@ -554,7 +568,7 @@ logout_on_user_change
     The ``logout_on_user_change`` option was deprecated in Symfony 4.1.
 
 If ``false`` this option makes Symfony to not trigger a logout when the user has
-changed. Doing that is deprecated, so this option should set to ``true`` or
+changed. Doing that is deprecated, so this option should be set to ``true`` or
 unset to avoid getting deprecation messages.
 
 The user is considered to have changed when the user class implements
