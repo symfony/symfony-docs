@@ -232,8 +232,8 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(resolve:FOO)``
-    Replaces the string ``FOO`` by the value of a config parameter with the
-    same name:
+    If the content of ``FOO`` includes container parameters (with the syntax
+    ``%parameter_name%``), it replaces the parameters by their values:
 
     .. configuration-block::
 
