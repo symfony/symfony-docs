@@ -67,13 +67,13 @@ anonymous
 
 **type**: ``string`` **default**: ``~``
 
-When set to ``lazy``, Symfony loads the user (and starts the session) only if the
-application actually accesses the ``User`` object (e.g. via a ``is_granted()`` call
-in a template or ``isGranted()`` in a controller or service.
+When set to ``lazy``, Symfony loads the user (and starts the session) only if
+the application actually accesses the ``User`` object (e.g. via a ``is_granted()``
+call in a template or ``isGranted()`` in a controller or service).
 
 .. versionadded:: 4.4
 
-    The option ``lazy`` was introduced in Symfony 4.4.
+    The ``lazy`` value of the ``anonymous`` option was introduced in Symfony 4.4.
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
