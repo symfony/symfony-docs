@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-03-27T07:37:16Z
+
+Thanks for this Tobias. I understand the issue ... but I wonder if showing two fully-working examples would make some people think that they need to run both commands.
+
+Maybe we should allow to copy commented contents in commands (except the prompt contents)?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-03-27T08:30:44Z
+
+> but I wonder if showing two fully-working examples would make some people think that they need to run both commands.
+
+I doubt that is the case.
+
+I like that I cannot copy comment, but could one only excluded comments like
+
+```
+# Cannot copy me
+# $ echo "can copy me since I start with '# $'"
+```
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2020-03-27T08:37:53Z
+
+I think it's already clear from the surrounding text that this an alternative to yarn.
+
+If I remember correctly yarn/npm will issue a warning to the user if they encounter each others lock file. I think both the text in the docs and that warning should be enough hints to prevent issues.
