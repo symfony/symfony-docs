@@ -35,7 +35,7 @@ Install Encore into your project via Yarn:
     $ yarn add @symfony/webpack-encore --dev
 
     # if you prefer npm, run this command instead:
-    # npm install @symfony/webpack-encore --save-dev
+    $ npm install @symfony/webpack-encore --save-dev
 
 This command creates (or modifies) a ``package.json`` file and downloads
 dependencies into a ``node_modules/`` directory. Yarn also creates/updates a
