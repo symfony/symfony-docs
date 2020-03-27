@@ -200,8 +200,8 @@ attributes).
     is the :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`.
     This class executes the routing layer, which returns an *array* of information
     about the matched request, including the ``_controller`` and any placeholders
-    that are in the route's pattern (e.g. ``{slug}``). See
-    :doc:`Routing component </components/routing>`.
+    that are in the route's pattern (e.g. ``{slug}``). See the
+    :doc:`Routing documentation </routing>`.
 
     This array of information is stored in the :class:`Symfony\\Component\\HttpFoundation\\Request`
     object's ``attributes`` array. Adding the routing information here doesn't
