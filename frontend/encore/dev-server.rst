@@ -26,6 +26,25 @@ by the normal `webpack-dev-server`_. For example:
 
 This will start a server at ``https://localhost:9000``.
 
+If you prefer, you can use ``Encore.configureDevServerOptions()`` to configure `webpack-dev-server`_ in your ``webpack.config.js`` file.
+For example:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .configureDevServerOptions(options => {
+            options.https = {
+                key: '/path/to/server.key',
+                cert: '/path/to/server.crt',
+            }
+        })
+    ;
+
 Hot Module Replacement HMR
 --------------------------
 
