@@ -12,9 +12,8 @@ that Task, right inside the same form.
 .. note::
 
     In this article, it's loosely assumed that you're using Doctrine as your
-    database store. But if you're not using Doctrine (e.g. Propel or just
-    a database connection), it's all very similar. There are only a few parts
-    of this tutorial that really care about "persistence".
+    database store. But if you're not using Doctrine, it's all very similar.
+    There are only a few parts of this tutorial that really care about "persistence".
 
     If you *are* using Doctrine, you'll need to add the Doctrine metadata,
     including the ``ManyToMany`` association mapping definition on the Task's
