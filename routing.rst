@@ -780,7 +780,7 @@ parameter:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page <\d+>?1}"
+            <route id="blog_list" path="/blog/{page<\d+>?1}"
                    controller="App\Controller\BlogController::list"/>
 
             <!-- ... -->
