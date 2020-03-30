@@ -191,6 +191,12 @@ uses, and replaces them by symbolic links to the ones in the Git repository.
 Before running the ``link`` command, be sure that the dependencies of the project you
 want to debug are installed by running ``composer install`` inside it.
 
+.. tip::
+
+    If symlinks to your local Symfony fork cannot be resolved inside your project due to 
+    your dev environment (for instance when using Vagrant where only the current project 
+    directory is mounted), you can alternatively use the ``--copy`` option.
+
 .. _work-on-your-patch:
 
 Work on your Pull Request
