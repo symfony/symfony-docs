@@ -867,7 +867,7 @@ Learn more
 .. _`NativeQuery`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/native-sql.html
 .. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
+.. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-limits.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
 .. _`PDO`: https://www.php.net/pdo
