@@ -262,16 +262,25 @@ add the ``allow_add`` option to your collection field::
         ]);
     }
 
-In addition to telling the field to accept any number of submitted objects, the
-``allow_add`` also makes a *"prototype"* variable available to you. This "prototype"
-is a little "template" that contains all the HTML to be able to render any
-new "tag" forms. To render it, make the following change to your template:
+The ``allow_add`` option also makes a ``prototype`` variable available to you.
+This "prototype" is a little "template" that contains all the HTML needed to
+dynamically create any new "tag" forms with JavaScript. To render the prototype, add
+the following ``data-prototype`` attribute to the existing ``<ul>`` in your template:
 
 .. code-block:: html+twig
 
     <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
-        ...
-    </ul>
+
+On the rendered page, the result will look something like this:
+
+.. code-block:: html
+
+    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+
+.. seealso::
+
+    If you want to customize the HTML code in the prototype, see
+    :ref:`form-custom-prototype`.
 
 .. note::
 
@@ -290,12 +299,6 @@ new "tag" forms. To render it, make the following change to your template:
     .. code-block:: twig
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
-
-On the rendered page, the result will look something like this:
-
-.. code-block:: html
-
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
@@ -380,11 +383,6 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 .. seealso::
 
     You can find a working example in this `JSFiddle`_.
-
-.. seealso::
-
-    If you want to customize the HTML code in the prototype, read
-    :ref:`form-custom-prototype`.
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
