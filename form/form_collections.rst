@@ -255,13 +255,9 @@ add the ``allow_add`` option to your collection field::
 
     // src/Form/TaskType.php
 
-    // ...
-    use Symfony\Component\Form\FormBuilderInterface;
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description');
-
+        // ...
         $builder->add('tags', CollectionType::class, [
             'entry_type' => TagType::class,
             'entry_options' => ['label' => false],
