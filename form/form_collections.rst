@@ -106,12 +106,10 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
         }
     }
 
-With this, you have enough to render a tag form by itself. But since the end
-goal is to allow the tags of a ``Task`` to be modified right inside the task
-form itself, create a form for the ``Task`` class.
-
-Notice that you embed a collection of ``TagType`` forms using the
-:doc:`CollectionType </reference/forms/types/collection>` field::
+Next, let's create a form for the ``Task`` entity, using a
+:doc:`CollectionType </reference/forms/types/collection>` field of
+``TagType`` forms. This will allow us to modify the ``Tag``s of a
+``Task`` right inside the task form itself::
 
     // src/AppBundle/Form/TaskType.php
     namespace AppBundle\Form;
