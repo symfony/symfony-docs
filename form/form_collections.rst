@@ -249,7 +249,6 @@ add the ``allow_add`` option to your collection field::
     // src/Form/TaskType.php
 
     // ...
-    use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
