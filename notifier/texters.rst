@@ -14,6 +14,10 @@ you to send SMS messages::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
+    
+    use Symfony\Component\Notifier\Message\SmsMessage;
+    use Symfony\Component\Notifier\TexterInterface;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class SecurityController
     {
