@@ -254,7 +254,7 @@ type expects to receive exactly two, otherwise an error will be thrown:
 add the ``allow_add`` option to your collection field::
 
     // src/Form/TaskType.php
-
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
