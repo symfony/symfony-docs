@@ -100,9 +100,7 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults([
-                'data_class' => Tag::class,
-            ]);
+            $resolver->setDefaults(['data_class' => Tag::class]);
         }
     }
 
@@ -136,9 +134,7 @@ Notice that you embed a collection of ``TagType`` forms using the
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults([
-                'data_class' => Task::class,
-            ]);
+            $resolver->setDefaults(['data_class' => Task::class]);
         }
     }
 
