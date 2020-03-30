@@ -157,7 +157,8 @@ In your controller, you'll create a new form from the ``TaskType``::
         {
             $task = new Task();
 
-            // dummy code - add some tags to the task to play with
+            // dummy code - add some example tags to the task
+            // (otherwise, the template will render an empty list of tags)
             $tag1 = new Tag();
             $tag1->setName('tag1');
             $task->getTags()->add($tag1);
@@ -180,7 +181,7 @@ In your controller, you'll create a new form from the ``TaskType``::
         }
     }
 
-In the template, we need to iterate over the existing ``TagType`` forms
+In the template, you can now iterate over the existing ``TagType`` forms
 to render them:
 
 .. code-block:: html+twig
@@ -191,6 +192,7 @@ to render them:
 
     {{ form_start(form) }}
         {{ form_row(form.description) }}
+
         <h3>Tags</h3>
         <ul class="tags">
             {% for tag in form.tags %}
@@ -198,6 +200,8 @@ to render them:
             {% endfor %}
         </ul>
     {{ form_end(form) }}
+
+    {# ... #}
 
 When the user submits the form, the submitted data for the ``tags`` field are
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
