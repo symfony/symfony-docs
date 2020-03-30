@@ -251,19 +251,21 @@ The first thing you need to do is to let the form collection know that it will
 receive an unknown number of tags. So far you've added two tags and the form
 type expects to receive exactly two, otherwise an error will be thrown:
 ``This form should not contain extra fields``. To make this flexible,
-add the ``allow_add`` option to your collection field::
+add the ``allow_add`` option to your collection field:
 
-    // src/Form/TaskType.php
-    
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        // ...
-        $builder->add('tags', CollectionType::class, [
-            'entry_type' => TagType::class,
-            'entry_options' => ['label' => false],
-            'allow_add' => true,
-        ]);
-    }
+```php
+// src/Form/TaskType.php
+
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    // ...
+    $builder->add('tags', CollectionType::class, [
+        'entry_type' => TagType::class,
+        'entry_options' => ['label' => false],
+        'allow_add' => true,
+    ]);
+}
+```
 
 In addition to telling the field to accept any number of submitted objects, the
 ``allow_add`` also makes a *"prototype"* variable available to you. This "prototype"
