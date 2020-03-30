@@ -19,7 +19,7 @@ that Task, right inside the same form.
     including the ``ManyToMany`` association mapping definition on the Task's
     ``tags`` property.
 
-Let's start by creating a simple ``Task`` entity::
+Let's start by creating a ``Task`` entity::
 
     // src/AppBundle/Entity/Task.php
     namespace AppBundle\Entity;
