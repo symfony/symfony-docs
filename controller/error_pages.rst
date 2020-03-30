@@ -54,7 +54,7 @@ this command to ensure both are installed:
 
 .. code-block:: terminal
 
-    $ composer require twig
+    $ composer require symfony/twig-pack
 
 When the error page loads, :class:`Symfony\\Bridge\\Twig\\ErrorRenderer\\TwigErrorRenderer`
 is used to render a Twig template to show the user.
@@ -201,7 +201,7 @@ To override non-HTML error output, the Serializer component needs to be installe
 
 .. code-block:: terminal
 
-    $ composer require serializer
+    $ composer require symfony/serializer-pack
 
 The Serializer component has a built-in ``FlattenException`` normalizer
 (:class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`) and
