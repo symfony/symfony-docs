@@ -157,8 +157,7 @@ In your controller, you'll create a new form from the ``TaskType``::
         {
             $task = new Task();
 
-            // dummy code - this is here just so that the Task has some tags
-            // otherwise, this isn't an interesting example
+            // dummy code - add some tags to the task to play with
             $tag1 = new Tag();
             $tag1->setName('tag1');
             $task->getTags()->add($tag1);
@@ -172,7 +171,7 @@ In your controller, you'll create a new form from the ``TaskType``::
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                // ... maybe do some form processing, like saving the Task and Tag objects
+                // ... do your form processing, like saving the Task and Tag entities
             }
 
             return $this->render('task/new.html.twig', [
@@ -181,11 +180,8 @@ In your controller, you'll create a new form from the ``TaskType``::
         }
     }
 
-The corresponding template is now able to render both the ``description``
-field for the task form as well as all the ``TagType`` forms for any tags
-that are already related to this ``Task``. In the above controller, I added
-some dummy code so that you can see this in action (since a ``Task`` has
-zero tags when first created).
+In the template, we need to iterate over the existing ``TagType`` forms
+to render them:
 
 .. code-block:: html+twig
 
@@ -194,19 +190,14 @@ zero tags when first created).
     {# ... #}
 
     {{ form_start(form) }}
-        {# render the task's only field: description #}
         {{ form_row(form.description) }}
-
         <h3>Tags</h3>
         <ul class="tags">
-            {# iterate over each existing tag and render its only field: name #}
             {% for tag in form.tags %}
                 <li>{{ form_row(tag.name) }}</li>
             {% endfor %}
         </ul>
     {{ form_end(form) }}
-
-    {# ... #}
 
 When the user submits the form, the submitted data for the ``tags`` field are
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
