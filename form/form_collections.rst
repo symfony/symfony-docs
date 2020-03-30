@@ -280,12 +280,6 @@ new "tag" forms. To render it, make the following change to your template:
         ...
     </ul>
 
-.. note::
-
-    If you render your whole "tags" sub-form at once (e.g. ``form_row(form.tags)``),
-    then the prototype is automatically available on the outer ``div`` as
-    the ``data-prototype`` attribute, similar to what you see above.
-
 .. tip::
 
     The ``form.tags.vars.prototype`` is a form element that looks and feels just
@@ -303,6 +297,12 @@ On the rendered page, the result will look something like this:
 .. code-block:: html
 
     <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+
+.. note::
+
+    If you render your whole "tags" sub-form at once (e.g. ``form_row(form.tags)``),
+    the ``data-prototype`` attribute is automatically added to the containing ``div``,
+    and you need to adjust the following JavaScript accordingly.
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
