@@ -19,8 +19,7 @@ that Task, right inside the same form.
     including the ``ManyToMany`` association mapping definition on the Task's
     ``tags`` property.
 
-First, suppose that each ``Task`` belongs to multiple ``Tag`` objects. Start
-by creating a simple ``Task`` class::
+Let's start by creating a simple ``Task`` entity::
 
     // src/AppBundle/Entity/Task.php
     namespace AppBundle\Entity;
@@ -30,7 +29,6 @@ by creating a simple ``Task`` class::
     class Task
     {
         protected $description;
-
         protected $tags;
 
         public function __construct()
