@@ -17,17 +17,15 @@ Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <lo
 in some other way), you're done: the paths in your templates will automatically point
 to the dev server.
 
-You can also pass options to the ``dev-server`` command: any options that are supported
-by the normal `webpack-dev-server`_. For example:
+The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
+You can set these options via command line options:
 
 .. code-block:: terminal
 
     $ yarn encore dev-server --https --port 9000
 
-This will start a server at ``https://localhost:9000``.
-
-If you prefer, you can use ``Encore.configureDevServerOptions()`` to configure `webpack-dev-server`_ in your ``webpack.config.js`` file.
-For example:
+You can also set these options using the ``Encore.configureDevServerOptions()``
+method in your ``webpack.config.js`` file:
 
 .. code-block:: javascript
 
@@ -44,6 +42,10 @@ For example:
             }
         })
     ;
+
+.. versionadded:: 0.28.4
+
+    The ``Encore.configureDevServerOptions()`` method was introduced in Encore 0.28.4.
 
 Hot Module Replacement HMR
 --------------------------
