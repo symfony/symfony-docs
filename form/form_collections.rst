@@ -273,6 +273,17 @@ new "tag" forms. To render it, make the following change to your template:
         ...
     </ul>
 
+On the rendered page, the result will look something like this:
+
+.. code-block:: html
+
+    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+
+.. seealso::
+
+    If you want to customize the HTML code in the prototype, see
+    :ref:`form-custom-prototype`.
+
 .. note::
 
     If you render your whole "tags" sub-form at once (e.g. ``form_row(form.tags)``),
@@ -290,12 +301,6 @@ new "tag" forms. To render it, make the following change to your template:
     .. code-block:: twig
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
-
-On the rendered page, the result will look something like this:
-
-.. code-block:: html
-
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
@@ -381,11 +386,6 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 .. seealso::
 
     You can find a working example in this `JSFiddle`_.
-
-.. seealso::
-
-    If you want to customize the HTML code in the prototype, read
-    :ref:`form-custom-prototype`.
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
