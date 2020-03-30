@@ -188,11 +188,11 @@ the correct tag:
                 <!-- command handlers -->
                 <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php" autoconfigure="false">
                     <tag name="messenger.message_handler" bus="command.bus"/>
-                </service>
+                </prototype>
                 <!-- query handlers -->
                 <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php" autoconfigure="false">
                     <tag name="messenger.message_handler" bus="query.bus"/>
-                </service>
+                </prototype>
             </services>
         </container>
 
