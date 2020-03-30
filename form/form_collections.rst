@@ -304,40 +304,23 @@ On the rendered page, the result will look something like this:
 
     <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
-The goal of this section will be to use JavaScript to read this attribute
-and dynamically add new tag forms when the user clicks a "Add a tag" link.
-This example uses jQuery and assumes you have it included somewhere on your page.
+Now we need some JavaScript to read this attribute and dynamically add new tag forms
+when the user clicks an "Add a tag" link. This example uses `jQuery`_.
 
-Add a ``script`` tag somewhere on your page so you can start writing some JavaScript.
+First, add the link somewhere in your template:
 
-First, add a link to the bottom of the "tags" list via JavaScript. Second,
-bind to the "click" event of that link so you can add a new tag form (``addTagForm()``
-will be show next):
+.. code-block:: html+twig
 
-.. code-block:: javascript
+    {# templates/task/new.html.twig #}
+    
+    {# ... #}
+    
+    {{ form_start(form) }}    
+        {# ... #}
+        <a href="#" class="add_tag_link">Add a tag</a>
+    {{ form_end(form) }}
 
-    var $collectionHolder;
-
-    // setup an "add a tag" link
-    var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
-    var $newLinkLi = $('<li></li>').append($addTagButton);
-
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.tags');
-
-        // add the "add a tag" anchor and li to the tags ul
-        $collectionHolder.append($newLinkLi);
-
-        // count the current form inputs we have (e.g. 2), use that as the new
-        // index when inserting a new item (e.g. 2)
-        $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-        $addTagButton.on('click', function(e) {
-            // add a new tag form (see next code block)
-            addTagForm($collectionHolder, $newLinkLi);
-        });
-    });
+Now add the required functionality with JavaScript:
 
 The ``addTagForm()`` function's job will be to use the ``data-prototype`` attribute
 to dynamically add a new form when this link is clicked. The ``data-prototype``
@@ -345,10 +328,14 @@ HTML contains the tag ``text`` input element with a name of ``task[tags][__name_
 and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
 which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
 
-The actual code needed to make this all work can vary quite a bit, but here's
-one example:
-
 .. code-block:: javascript
+
+    $(document).ready(function() {
+        $('.add_tag_link').click(function(e) {
+            e.preventDefault();
+            addTagForm();
+        });
+    });
 
     function addTagForm($collectionHolder, $newLinkLi) {
         // Get the data-prototype explained earlier
@@ -716,6 +703,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     the `symfony-collection`_ package based on jQuery for the rest of browsers.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
+.. _`jQuery`: http://jquery.com/
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
