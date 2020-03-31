@@ -285,6 +285,7 @@ Service       Port      Symfony default prefix
 MySQL         3306      ``DATABASE_``
 PostgreSQL    5432      ``DATABASE_``
 Redis         6379      ``REDIS_``
+Memcached     11211     ``MEMCACHED_``
 RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_DEFAULT_USER`` and ``RABBITMQ_DEFAULT_PASS`` env var)
 Elasticsearch 9200      ``ELASTICSEARCH_``
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
