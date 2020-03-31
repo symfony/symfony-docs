@@ -201,32 +201,20 @@ to render them:
 
     {# ... #}
 
-When the user submits the form, the submitted data for the ``tags`` field are
+When the user submits the form, the submitted data for the ``tags`` field is
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
-on the ``tag`` field of the ``Task`` instance.
+on the ``tag`` field of the ``Task``. It can be accessed via ``$task->getTags()``.
 
-The ``tags`` collection is accessible naturally via ``$task->getTags()``
-and can be persisted to the database or used however you need.
-
-So far, this works great, but this doesn't allow you to dynamically add new
-tags or delete existing tags. So, while editing existing tags will work
-great, your user can't actually add any new tags yet.
+So far, this works great, but only to edit *existing* tags. It doesn't allow us
+yet to add new tags or delete existing ones.
 
 .. caution::
 
-    In this article, you embed only one collection, but you are not limited
-    to this. You can also embed nested collection as many levels down as you
-    like. But if you use Xdebug in your development setup, you may receive
-    a ``Maximum function nesting level of '100' reached, aborting!`` error.
-    This is due to the ``xdebug.max_nesting_level`` PHP setting, which defaults
-    to ``100``.
-
-    This directive limits recursion to 100 calls which may not be enough for
-    rendering the form in the template if you render the whole form at
-    once (e.g ``form_widget(form)``). To fix this you can set this directive
-    to a higher value (either via a ``php.ini`` file or via :phpfunction:`ini_set`,
-    for example in ``app/autoload.php``) or render each form field by hand
-    using ``form_row()``.
+    You can embed nested collections as many levels down as you like. However,
+    if you use Xdebug, you may receive a ``Maximum function nesting level of '100'
+    reached, aborting!`` error. To fix this, increase the ``xdebug.max_nesting_level``
+    PHP setting, or render each form field by hand using ``form_row()`` instead of
+    rendering the whole form at once (e.g ``form_widget(form)``).
 
 .. _form-collections-new-prototype:
 
