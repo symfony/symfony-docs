@@ -268,12 +268,6 @@ On the rendered page, the result will look something like this:
     If you want to customize the HTML code in the prototype, see
     :ref:`form-custom-prototype`.
 
-.. note::
-
-    If you render your whole "tags" sub-form at once (e.g. ``form_row(form.tags)``),
-    then the prototype is automatically available on the outer ``div`` as
-    the ``data-prototype`` attribute, similar to what you see above.
-
 .. tip::
 
     The ``form.tags.vars.prototype`` is a form element that looks and feels just
@@ -285,6 +279,12 @@ On the rendered page, the result will look something like this:
     .. code-block:: twig
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
+
+.. note::
+
+    If you render your whole "tags" sub-form at once (e.g. ``form_row(form.tags)``),
+    the ``data-prototype`` attribute is automatically added to the containing ``div``,
+    and you need to adjust the following JavaScript accordingly.
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
