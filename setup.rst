@@ -51,8 +51,8 @@ The only difference between these two commands is the number of packages
 installed by default. The ``--full`` option installs all the packages that you
 usually need to build web applications, so the installation size will be bigger.
 
-If you can't or don't want to `install Symfony`_ for any reason, run these
-commands to create the new Symfony application using Composer:
+If you're not using the Symfony binary, run these commands to create the new 
+Symfony application using Composer:
 
 .. code-block:: terminal
 
