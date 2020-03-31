@@ -202,8 +202,8 @@ to render them:
     {# ... #}
 
 When the user submits the form, the submitted data for the ``tags`` field is
-used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
-on the ``tag`` field of the ``Task``. It can be accessed via ``$task->getTags()``.
+used to construct an ``ArrayCollection`` of ``Tag`` objects. The collection is
+then set on the ``tag`` field of the ``Task`` and can be accessed via ``$task->getTags()``.
 
 So far, this works great, but only to edit *existing* tags. It doesn't allow us
 yet to add new tags or delete existing ones.
