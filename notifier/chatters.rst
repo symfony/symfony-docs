@@ -10,14 +10,15 @@ How to send Chat Messages
     :doc:`experimental feature </contributing/code/experimental>`.
 
 The :class:`Symfony\\Component\\Notifier\\ChatterInterface` class allows
-you to sent messages to chat services like Slack or Telegram::
+you to send messages to chat services like Slack or Telegram::
 
     // src/Controller/CheckoutController.php
     namespace App\Controller;
 
-    use Symfony\Component\Notifier\Notification\Notification;
-    use Symfony\Component\Notifier\NotifierInterface;
-    use Symfony\Component\Notifier\Recipient\AdminRecipient;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Notifier\ChatterInterface;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class CheckoutController extends AbstractController
     {
