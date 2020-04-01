@@ -312,7 +312,7 @@ with the ``doctrine.orm.entity_listener`` tag:
         use App\EventListener\UserChangedNotifier;
 
         $container->autowire(UserChangedNotifier::class)
-            ->addTag('doctrine.orm.event_listener', [
+            ->addTag('doctrine.orm.entity_listener', [
                 // these are the basic options that define the entity listener
                 'event' => 'postUpdate',
                 'entity' => User::class,
