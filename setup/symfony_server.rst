@@ -57,6 +57,20 @@ run the Symfony server in the background:
     # show the latest log messages
     $ symfony server:log
 
+Enabling PHP-FPM
+----------------
+
+When the server starts it will check the ``public`` folder for an ``index.php``
+file. If this file is found the server will automatically start with PHP-FPM
+enabled. Otherwise the server will start without PHP-FPM and will show a
+``Page not found`` page when trying to access a ``.php`` file in the browser.
+
+.. tip::
+
+    When an index.html and an index.php file are present the server will still
+    start with PHP-FPM enabled but browsing the root of your website will serve
+    the index.html file.
+
 Enabling TLS
 ------------
 
