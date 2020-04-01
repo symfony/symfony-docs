@@ -20,11 +20,13 @@ Before creating your first Symfony application you must:
 * Install PHP 7.1 or higher and these PHP extensions (which are installed and
   enabled by default in most PHP 7 installations): `Ctype`_, `iconv`_, `JSON`_,
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
-* `Install Composer`_, which is used to install PHP packages;
-* `Install Symfony`_, which creates in your computer a binary called ``symfony``
-  that provides all the tools you need to develop your application locally.
+* `Install Composer`_, which is used to install PHP packages.
 
-The ``symfony`` binary provides a tool to check if your computer meets these
+Optionally, you can also `install Symfony`_. This creates a binary called
+``symfony`` that provides all the tools you need to develop and run your
+Symfony application locally.
+
+The ``symfony`` binary provides a tool to check if your computer meets all
 requirements. Open your console terminal and run this command:
 
 .. code-block:: terminal
