@@ -293,7 +293,6 @@ Learn More
 
 .. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
-.. _`Install Symfony CLI`: https://symfony.com/download
 .. _`install Symfony CLI`: https://symfony.com/download
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
