@@ -22,11 +22,11 @@ Before creating your first Symfony application you must:
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
 * `Install Composer`_, which is used to install PHP packages.
 
-Optionally, you can also `install Symfony`_. This creates a binary called
+Optionally, you can also `install Symfony CLI`_. This creates a binary called
 ``symfony`` that provides all the tools you need to develop and run your
 Symfony application locally.
 
-The ``symfony`` binary provides a tool to check if your computer meets all
+The ``symfony`` binary also provides a tool to check if your computer meets all
 requirements. Open your console terminal and run this command:
 
 .. code-block:: terminal
@@ -53,7 +53,7 @@ The only difference between these two commands is the number of packages
 installed by default. The ``--full`` option installs all the packages that you
 usually need to build web applications, so the installation size will be bigger.
 
-If you're not using the Symfony binary, run these commands to create the new 
+If you're not using the Symfony binary, run these commands to create the new
 Symfony application using Composer:
 
 .. code-block:: terminal
@@ -209,7 +209,7 @@ command to unpack the already installed packs: ``composer unpack PACK_NAME``
 Checking Security Vulnerabilities
 ---------------------------------
 
-The ``symfony`` binary created when you `install Symfony`_ provides a command to
+The ``symfony`` binary created when you `install Symfony CLI`_ provides a command to
 check whether your project's dependencies contain any known security
 vulnerability:
 
@@ -293,8 +293,8 @@ Learn More
 
 .. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
-.. _`Install Symfony`: https://symfony.com/download
-.. _`install Symfony`: https://symfony.com/download
+.. _`Install Symfony CLI`: https://symfony.com/download
+.. _`install Symfony CLI`: https://symfony.com/download
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
