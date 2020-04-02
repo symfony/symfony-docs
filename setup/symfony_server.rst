@@ -68,8 +68,10 @@ enabled. Otherwise the server will start without PHP-FPM and will show a
 .. tip::
 
     When an index.html and an index.php file are present the server will still
-    start with PHP-FPM enabled but browsing the root of your website will serve
-    the index.html file.
+    start with PHP-FPM enabled but the index.html will take precedence over the
+    index.php file. This means when an index.html file is present in 
+    ``public``, it will be displayed instead of the index.php which would show
+    e.g. the Symfony application.
 
 Enabling TLS
 ------------
