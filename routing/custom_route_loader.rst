@@ -214,7 +214,7 @@ extend or implement any special class, but the called method must return a
 If you're using :ref:`autoconfigure <services-autoconfigure>`, your class should
 implement the :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\RouteLoaderInterface`
 interface to be tagged automatically. If you're **not using autoconfigure**,
-tag it manually with ``routing.loader``.
+tag it manually with ``routing.route_loader``.
 
 .. note::
 
