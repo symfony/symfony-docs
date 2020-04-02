@@ -858,7 +858,7 @@ In practice, the ``base.html.twig`` template would look like this:
             <title>{% block title %}My Application{% endblock %}</title>
             {% block stylesheets %}
                 <link rel="stylesheet" type="text/css" href="/css/base.css"/>
-            {% endblock
+            {% endblock %}
         </head>
         <body>
             {% block body %}
