@@ -130,7 +130,7 @@ Below is the configuration for the pull request state machine.
                     </framework:marking-store>
 
                     <framework:support>App\Entity\PullRequest</framework:support>
-                    
+
                     <framework:initial_marking>start</framework:initial_marking>
 
                     <framework:place>start</framework:place>
@@ -301,5 +301,34 @@ to access the proper service::
 
         // ...
     }
+
+Automatic and Manual Validation
+-------------------------------
+
+During cache warmup, Symfony validates the workflows and state machines that are
+defined in configuration files. If your workflows or state machines are defined
+programmatically instead of in a configuration file, you can validate them with
+the :class:`Symfony\\Component\\Workflow\\Validator\\WorkflowValidator` and
+:class:`Symfony\\Component\\Workflow\\Validator\\StateMachineValidator`::
+
+    // ...
+    use Symfony\Component\Workflow\Definition;
+    use Symfony\Component\Workflow\StateMachine;
+    use Symfony\Component\Workflow\Validator\StateMachineValidator;
+
+    $states = ['created', 'activated', 'deleted'];
+    $stateTransitions = [
+        new Transition('activate', 'created', 'activated'),
+        // This duplicate event "from" the "created" state is invalid
+        new Transition('activate', 'created', 'deleted'),
+        new Transition('delete', 'activated', 'deleted'),
+    ];
+
+    // No validation is done upon initialization
+    $definition = new Definition($states, $stateTransitions);
+
+    $validator = new StateMachineValidator();
+    // Throws InvalidDefinitionException in case of an invalid definition
+    $validator->validate($definition, 'My First StateMachine');
 
 .. _`Petri nets`: https://en.wikipedia.org/wiki/Petri_net
