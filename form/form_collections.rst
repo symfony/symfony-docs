@@ -9,10 +9,6 @@ of many other forms. This could be useful, for example, if you had a ``Task``
 class and you wanted to edit/create/remove many ``Tag`` objects related to
 that Task, right inside the same form.
 
-.. note::
-
-    The example presented here is based on Doctrine.
-
 Let's start by creating a ``Task`` entity::
 
     // src/AppBundle/Entity/Task.php
