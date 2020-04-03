@@ -19,8 +19,9 @@ The Symfony server is part of the ``symfony`` binary created when you
 
 .. note::
 
-    If you want to report a bug or suggest a new feature, please create an issue
-    on `symfony/cli`_.
+    The Symfony binary is developped internally at Symfony. If you want to
+    report a bug or suggest a new feature, please create an issue on
+    `symfony/cli`_.
 
 Getting Started
 ---------------
