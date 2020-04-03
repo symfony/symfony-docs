@@ -211,16 +211,14 @@ yet to add new tags or delete existing ones.
 Allowing "new" Tags with the "Prototype"
 ----------------------------------------
 
-Allowing the user to dynamically add new tags means that you'll need to
-use some JavaScript. Previously you added two tags to your form in the controller.
-Now let the user add as many tag forms as they need directly in the browser.
-This will be done through a bit of JavaScript.
+Previously you added two tags to your task in the controller. Now let the users
+add as many tag forms as they need directly in the browser. This requires a bit
+of JavaScript code.
 
-The first thing you need to do is to let the form collection know that it will
-receive an unknown number of tags. So far you've added two tags and the form
-type expects to receive exactly two, otherwise an error will be thrown:
-``This form should not contain extra fields``. To make this flexible,
-add the ``allow_add`` option to your collection field::
+But first, you need to let the form collection know that instead of exactly two,
+it will receive an *unknown* number of tags. Otherwise, you'll see a
+*"This form should not contain extra fields"* error. This is done with the
+``allow_add`` option::
 
     // src/Form/TaskType.php
 
