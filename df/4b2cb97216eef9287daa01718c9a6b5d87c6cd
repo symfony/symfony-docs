@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-18T10:28:56Z
+
+I like this ... but in addition of explaining the problem, I think we should mention the possible solution. We did that in the new paragraph added at the end of the blog post that mentions this feature: https://symfony.com/blog/new-in-symfony-4-1-simpler-service-testing
+
+---------------------------------------------------------------------------
+
+by mmenozzi at 2019-12-06T08:09:27Z
+
+Hi @javiereguiluz and @flackovic, sorry for the delay.
+I updated the PR giving insights about possible solutions!
+
+---------------------------------------------------------------------------
+
+by mmenozzi at 2019-12-06T22:24:03Z
+
+For the same reason this blog post has been written https://symfony.com/blog/new-in-symfony-4-1-simpler-service-testing
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-12-07T06:51:05Z
+
+Thank you for the blog post reference, I wasn’t aware of it 👍🏻😊
+
+Anyway I couldn’t find a real world use case where I have a project and I wrote some tests for a Service which isn’t used in the same project 🤔
+
+@nicolas-grekas do you have an example?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2019-12-07T07:37:27Z
+
+A better way is to create a public alias, for tests only.
+Note that I wouldn't use the word solution in the text: there is no problem to solve as Oskar hints (I don't have an example sorry)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-12-07T08:36:58Z
+
+Thanks for the fast feedback Nicolas 👌🏻
+
+---------------------------------------------------------------------------
+
+by mmenozzi at 2019-12-07T08:40:35Z
+
+I do it very often. As TDD says I write a failing test before the implementation. In this test I get the service under test from the special test container but at that time the service isn’t used elsewhere in the application. Then, when the implementation is done and all tests are green I inject my new service where I need it.
+
+Anyway I think that it’s important that the docs says that a service is removed if not used in the application, because I wasted time on this before. The solution to this depends on the context I think. I never tried a test alias for example.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2020-02-26T14:01:11Z
+
+I just added some more details - it will allow us to merge symfony/recipes#744
