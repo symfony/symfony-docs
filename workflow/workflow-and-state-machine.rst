@@ -302,4 +302,27 @@ to access the proper service::
         // ...
     }
 
+Validation: automatic and manual
+--------------
+Workflows and state machines that are defined in a configuration file will be validated automatically during cache warmup. No validation is done upon object instantiation itself. This means that when a workflow or state machine is defined manually instead of using a configuration file, one should consider to perform validation manually as well using either (:class:`Symfony\\Component\\Workflow\\Validator\\WorkflowValidator`) or  (:class:`Symfony\\Component\\Workflow\\Validator\\StateMachineValidator`), for example::
+
+    // ...
+    use Symfony\Component\Workflow\Definition;
+    use Symfony\Component\Workflow\StateMachine;
+    use Symfony\Component\Workflow\Validator\StateMachineValidator;
+    
+    $states           = ['created', 'activated', 'deleted'];
+    $stateTransitions = [
+        new Transition('activate', 'created', 'activated'),
+        // This duplicate event "from" the "created" state is invalid
+        new Transition('activate', 'created', 'deleted'), 
+        new Transition('delete', 'activated', 'deleted'),
+    ];
+    
+    $definition = new Definition($states, $stateTransitions); // No validation is done upon initialization
+    
+    $validator = new StateMachineValidator();
+    $validator->validate($definition, 'My First StateMachine'); // Throws InvalidDefinitionException in case of an invalid definition
+    
+
 .. _`Petri nets`: https://en.wikipedia.org/wiki/Petri_net
