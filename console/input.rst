@@ -247,12 +247,11 @@ optionally accepts a value, but it's a bit tricky. Consider this example::
         )
     ;
 
-This option can be used in 3 ways: ``greet --yell``, ``greet yell=louder``, 
-and ``greet``. However, it's hard to distinguish between passing the option 
+This option can be used in 3 ways: ``greet --yell``, ``greet yell=louder``,
+and ``greet``. However, it's hard to distinguish between passing the option
 without a value (``greet --yell``) and not passing the option (``greet``).
 
-To solve this issue, you have to set the option's default value to 
-``false``::
+To solve this issue, you have to set the option's default value to ``false``::
 
     // ...
     use Symfony\Component\Console\Input\InputOption;
@@ -268,32 +267,31 @@ To solve this issue, you have to set the option's default value to
         )
     ;
 
-The input will now return the default value for the option when it is not 
-specified (``greet``), a null value when it is specified but not explicitly 
-defined  (``greet --yell``), and the defined value when defined  
-(``greet --yell=lounder``). Now check the value of the option::
+Now it's possible to differentiate between not passing the option and not
+passing any value for it::
 
     $optionValue = $input->getOption('yell');
-    if ($optionValue === false ) {
-        // option was not specified
+    if (false === $optionValue) {
+        // in this case, the option was not passed when running the command
         $yell = false;
-        $yellLouder = false;        
-    } elseif ($optionValue === null) {
-        // option was specified but no value given
+        $yellLouder = false;
+    } elseif (null === $optionValue) {
+        // in this case, the option was passed when running the command
+        // but no value was given to it
         $yell = true;
-        $yellLouder = false;        
+        $yellLouder = false;
     } else {
-        // option was specified with a value which is now stored in $optionValue
+        // in this case, the option was passed when running the command and
+        // some specific value was given to it
         $yell = true;
-        if ($optionValue === 'louder') {
-            $yellLouder = true;        
+        if ('louder' === $optionValue) {
+            $yellLouder = true;
         } else {
-            $yellLouder = false;        
+            $yellLouder = false;
         }
     }
 
-Once you are clear on how the default value is implemented you could consense the 
-above code into less lines of code since ``false !== null``::
+The above code can be simplified as follows because ``false !== null``::
 
     $optionValue = $input->getOption('yell');
     $yell = ($optionValue !== false);
