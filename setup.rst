@@ -33,6 +33,12 @@ requirements. Open your console terminal and run this command:
 
     $ symfony check:requirements
 
+.. note::
+
+    The Symfony binary is developped internally at Symfony. If you want to
+    report a bug or suggest a new feature, please create an issue on
+    `symfony/cli`_.
+
 .. _creating-symfony-applications:
 
 Creating Symfony Applications
@@ -78,14 +84,16 @@ started. In other words, your new application is ready!
 Running Symfony Applications
 ----------------------------
 
-On production, you should use a web server like Nginx or Apache (see
-:doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
-But for development, it's more convenient to use the
-:doc:`local web server </setup/symfony_server>` provided by Symfony.
+In production, you should install a webserver like Nginx or Apache and
+:doc:`configure it to run Symfony </setup/web_server_configuration>`. This
+method can also be used if you're not using the Symfony local web server for
+development.
 
-This local server provides support for HTTP/2, TLS/SSL, automatic generation of
-security certificates and many other features. It works with any PHP application,
-not only Symfony projects, so it's a very useful development tool.
+However for local development, the most convenient way of running Symfony is by
+using the :doc:`local web server </setup/symfony_server>` provided by the
+``symfony`` binary. This local server provides among other things support for
+HTTP/2, concurrent requests, TLS/SSL and automatic generation of security
+certificates.
 
 Open your console terminal, move into your new project directory and start the
 local web server as follows:
@@ -98,6 +106,11 @@ local web server as follows:
 Open your browser and navigate to ``http://localhost:8000/``. If everything is
 working, you'll see a welcome page. Later, when you are finished working, stop
 the server by pressing ``Ctrl+C`` from your terminal.
+
+.. tip::
+
+    The web server works with any PHP application, not only Symfony projects,
+    so it's a very useful generic development tool.
 
 .. _install-existing-app:
 
@@ -294,6 +307,7 @@ Learn More
 .. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
 .. _`install Symfony CLI`: https://symfony.com/download
+.. _`symfony/cli`: https://github.com/symfony/cli
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
