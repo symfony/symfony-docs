@@ -57,6 +57,24 @@ run the Symfony server in the background:
     # show the latest log messages
     $ symfony server:log
 
+Enabling PHP-FPM
+----------------
+
+When the server starts it will check for common patterns like ``web/app.php``,
+``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
+server will automatically start with PHP-FPM enabled. Otherwise the server will
+start without PHP-FPM and will show a ``Page not found`` page when trying to 
+access a ``.php`` file in the browser.
+
+.. tip::
+
+    When an ``index.html`` and a front controller like e.g. ``index.php`` are
+    both present the server will still start with PHP-FPM enabled but the 
+    ``index.html`` will take precedence over the front controller. This means
+    when an ``index.html`` file is present in ``public`` or ``web``, it will be
+    displayed instead of the ``index.php`` which would show e.g. the Symfony
+    application.
+
 Enabling TLS
 ------------
 
