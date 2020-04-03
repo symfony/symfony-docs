@@ -247,8 +247,8 @@ optionally accepts a value, but it's a bit tricky. Consider this example::
         )
     ;
 
-This option can be used in 3 ways: ``--yell``, ``yell=louder``, and not passing
-the option at all. However, it's hard to distinguish between passing the option
+This option can be used in 3 ways: ``greet --yell``, ``greet yell=louder``,
+and ``greet``. However, it's hard to distinguish between passing the option
 without a value (``greet --yell``) and not passing the option (``greet``).
 
 To solve this issue, you have to set the option's default value to ``false``::
@@ -267,7 +267,31 @@ To solve this issue, you have to set the option's default value to ``false``::
         )
     ;
 
-Now check the value of the option and keep in mind that ``false !== null``::
+Now it's possible to differentiate between not passing the option and not
+passing any value for it::
+
+    $optionValue = $input->getOption('yell');
+    if (false === $optionValue) {
+        // in this case, the option was not passed when running the command
+        $yell = false;
+        $yellLouder = false;
+    } elseif (null === $optionValue) {
+        // in this case, the option was passed when running the command
+        // but no value was given to it
+        $yell = true;
+        $yellLouder = false;
+    } else {
+        // in this case, the option was passed when running the command and
+        // some specific value was given to it
+        $yell = true;
+        if ('louder' === $optionValue) {
+            $yellLouder = true;
+        } else {
+            $yellLouder = false;
+        }
+    }
+
+The above code can be simplified as follows because ``false !== null``::
 
     $optionValue = $input->getOption('yell');
     $yell = ($optionValue !== false);
