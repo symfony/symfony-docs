@@ -560,55 +560,53 @@ allows fetching both public and all non-removed private services::
 For a list of services available in your application, use the ``debug:container``
 command.
 
-.. tip::
+If a private service is *never* used in your application (outside of your test),
+it is *removed* from the container and cannot be accessed as described above. In
+that case, you can create a public alias in the ``test`` environment and access
+it via that alias:
 
-    If a private service is *never* used in your application (outside of your test), it
-    is *removed* from the container and cannot be accessed as described above. In that
-    case, you can create a public alias in the ``test`` environment and access it
-    via that alias:
-    
-    .. configuration-block::
+.. configuration-block::
 
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            # config/services_test.yaml
-            services:
-                # access the service in your test via
-                # self::$container->get('test.App\Test\SomeTestHelper')
-                test.App\Test\SomeTestHelper:
-                    # the id of the private service
-                    alias: 'App\Test\SomeTestHelper'
-                    public: true
+        # config/services_test.yaml
+        services:
+            # access the service in your test via
+            # self::$container->get('test.App\Test\SomeTestHelper')
+            test.App\Test\SomeTestHelper:
+                # the id of the private service
+                alias: 'App\Test\SomeTestHelper'
+                public: true
 
-        .. code-block:: xml
+    .. code-block:: xml
 
-            <!-- config/services_test.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+        <!-- config/services_test.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-                <services>
-                    <!-- ... -->
+            <services>
+                <!-- ... -->
 
-                    <service id="test.App\Test\SomeTestHelper" alias="App\Test\SomeTestHelper" public="true"/>
-                </services>
-            </container>
+                <service id="test.App\Test\SomeTestHelper" alias="App\Test\SomeTestHelper" public="true"/>
+            </services>
+        </container>
 
-        .. code-block:: php
+    .. code-block:: php
 
-            // config/services_test.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+        // config/services_test.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            use App\Service\MessageGenerator;
-            use App\Updates\SiteUpdateManager;
+        use App\Service\MessageGenerator;
+        use App\Updates\SiteUpdateManager;
 
-            return function(ContainerConfigurator $configurator) {
-                // ...
+        return function(ContainerConfigurator $configurator) {
+            // ...
 
-                $services->alias('test.App\Test\SomeTestHelper', 'App\Test\SomeTestHelper')->public();
-            };
+            $services->alias('test.App\Test\SomeTestHelper', 'App\Test\SomeTestHelper')->public();
+        };
 
 .. tip::
 
