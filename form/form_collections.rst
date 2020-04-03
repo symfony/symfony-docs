@@ -211,12 +211,13 @@ yet to add new tags or delete existing ones.
 Allowing "new" Tags with the "Prototype"
 ----------------------------------------
 
-Previously we added two dummy tags to our task in the controller.
-Now let the users add as many tag forms as they need directly in the browser.
-This will be done through a bit of JavaScript.
+Previously you added two tags to your task in the controller. Now let the users
+add as many tag forms as they need directly in the browser. This requires a bit
+of JavaScript code.
 
-But first, we need to let the form collection know that instead of exactly two,
-it will receive an *unknown* number of tags. This is done with the
+But first, you need to let the form collection know that instead of exactly two,
+it will receive an *unknown* number of tags. Otherwise, you'll see a
+*"This form should not contain extra fields"* error. This is done with the
 ``allow_add`` option::
 
     // src/AppBundle/Form/TaskType.php
