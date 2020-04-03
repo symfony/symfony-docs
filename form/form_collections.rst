@@ -9,16 +9,6 @@ of many other forms. This could be useful, for example, if you had a ``Task``
 class and you wanted to edit/create/remove many ``Tag`` objects related to
 that Task, right inside the same form.
 
-.. note::
-
-    In this article, it's loosely assumed that you're using Doctrine as your
-    database store. But if you're not using Doctrine, it's all very similar.
-    There are only a few parts of this tutorial that really care about "persistence".
-
-    If you *are* using Doctrine, you'll need to add the Doctrine metadata,
-    including the ``ManyToMany`` association mapping definition on the Task's
-    ``tags`` property.
-
 Let's start by creating a ``Task`` entity::
 
     // src/Entity/Task.php
