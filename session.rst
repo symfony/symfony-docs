@@ -182,7 +182,7 @@ the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
         session:
             public: true
             class: Symfony\Component\HttpFoundation\Session\Session
-            arguments: ['@session.storage', '@session.namespacedattributebag', '@session.flash_bag']
+            arguments: ['@session.storage', '@session.namespacedattributebag']
 
         session.namespacedattributebag:
             class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
