@@ -228,7 +228,7 @@ vulnerability:
 
 .. code-block:: terminal
 
-    $ symfony check:security
+    $ symfony security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. The security
@@ -237,7 +237,7 @@ so your ``composer.lock`` file is not sent on the network.
 
 .. tip::
 
-    The ``check:security`` command terminates with a non-zero exit code if
+    The ``security:check`` command terminates with a non-zero exit code if
     any of your dependencies is affected by a known security vulnerability.
     This way you can add it to your project build process and your continuous
     integration workflows to make them fail when there are vulnerabilities.
