@@ -909,6 +909,28 @@ The transport with a ``failed_transport`` configuration defined, will override t
 If there is no ``failed_transport`` defined globally or on the transport level, the messages
 will be discarded after the number of retries.
 
+The failed commands have an optional argument to specify the ``failed_transport`` configured at the transport level:
+
+.. code-block:: terminal
+
+    # see all messages in the failure transport
+    $ php bin/console messenger:failed:show --failure-transport={failure_transport}
+
+    # see details about a specific failure
+    $ php bin/console messenger:failed:show 20 --failure-transport={failure_transport} -vv
+
+    # view and retry messages one-by-one
+    $ php bin/console messenger:failed:retry -vv
+
+    # retry specific messages
+    $ php bin/console messenger:failed:retry 20 30 --failure-transport={failure_transport} --force
+
+    # remove a message without retrying it
+    $ php bin/console messenger:failed:remove 20 --failure-transport={failure_transport}
+
+    # remove messages without retrying them and show each message before removing it
+    $ php bin/console messenger:failed:remove 20 30 --failure-transport={failure_transport} --show-messages
+
 .. _messenger-transports-config:
 
 Transport Configuration
