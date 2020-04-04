@@ -70,12 +70,10 @@ of default values for route attributes (``['name' => 'World']``).
 
 .. note::
 
-    Read the
-    :doc:`Routing component documentation </components/routing>` to
-    learn more about its many features like URL generation, attribute
-    requirements, HTTP method enforcement, loaders for YAML or XML files,
-    dumpers to PHP or Apache rewrite rules for enhanced performance and much
-    more.
+    Read the :doc:`Routing documentation </routing>` to learn more about
+    its many features like URL generation, attribute requirements, HTTP
+    method enforcement, loaders for YAML or XML files, dumpers to PHP or
+    Apache rewrite rules for enhanced performance and much more.
 
 Based on the information stored in the ``RouteCollection`` instance, a
 ``UrlMatcher`` instance can match URL paths::
