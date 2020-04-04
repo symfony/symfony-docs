@@ -867,10 +867,10 @@ some messages are more important than others:
                 <!-- after retrying, messages will be sent to the "failed" transport 
                 by default if no "failed-transport" is configured inside a transport -->
                 <framework:messenger failure-transport="failed">
-                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%" failure-transport="failed" /> 
+                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%" failure-transport="failed"/> 
                     <!-- since no "failed_transport" is configured, the one used will be
                     the global "failed_transport" set -->
-                    <framework:transport name="async_priority_low" dsn="doctrine://default?queue_name=async_priority_low" />
+                    <framework:transport name="async_priority_low" dsn="doctrine://default?queue_name=async_priority_low"/>
                     
                     <framework:transport name="failed" dsn="doctrine://default?queue_name=failed"/>
                     <framework:transport name="failed_other" dsn="doctrine://default?queue_name=failed_other"/>
