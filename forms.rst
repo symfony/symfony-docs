@@ -939,6 +939,7 @@ Advanced Features:
     /security/csrf
     /form/form_dependencies
     /form/create_custom_field_type
+    /form/create_custom_choice_type
     /form/data_transformers
     /form/data_mappers
     /form/create_form_type_extension

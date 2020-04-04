@@ -178,6 +178,12 @@ by passing a multi-dimensional ``choices`` array::
 
 To get fancier, use the `group_by`_ option instead.
 
+Using a Custom ChoiceType
+-------------------------
+
+To learn how re-use ``ChoiceType`` options in your application, read
+":doc:`</form/create_custom_choice_type>`".
+
 Field Options
 -------------
 
@@ -224,9 +230,13 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
+.. _reference-form-choice-value:
+
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
+
+.. _reference-form-group-by:
 
 .. include:: /reference/forms/types/options/group_by.rst.inc
 

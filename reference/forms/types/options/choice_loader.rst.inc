@@ -73,3 +73,8 @@ better performance::
             ]);
         }
     }
+
+.. tip::
+
+    To learn how to create a custom choice type with specific loaders, read
+    ":doc:`</form/create_custom_choice_type>`".

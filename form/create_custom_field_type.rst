@@ -14,9 +14,9 @@ Creating Form Types Based on Symfony Built-in Types
 
 The easiest way to create a form type is to base it on one of the
 :doc:`existing form types </reference/forms/types>`. Imagine that your project
-displays a list of "shipping options" as a ``<select>`` HTML element. This can
+displays a list of "category options" as a ``<select>`` HTML element. This can
 be implemented with a :doc:`ChoiceType </reference/forms/types/choice>` where the
-``choices`` option is set to the list of available shipping options.
+``choices`` option is set to the list of available category options.
 
 However, if you use the same form type in several forms, repeating the list of
 ``choices`` everytime you use it quickly becomes boring. In this example, a
@@ -24,82 +24,16 @@ better solution is to create a custom form type based on ``ChoiceType``. The
 custom type looks and behaves like a ``ChoiceType`` but the list of choices is
 already populated with the shipping options so you don't need to define them.
 
-Form types are PHP classes that implement :class:`Symfony\\Component\\Form\\FormTypeInterface`,
-but you should instead extend from :class:`Symfony\\Component\\Form\\AbstractType`,
-which already implements that interface and provides some utilities.
-By convention they are stored in the ``src/Form/Type/`` directory::
-
-    // src/Form/Type/ShippingType.php
-    namespace App\Form\Type;
-
-    use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    use Symfony\Component\OptionsResolver\OptionsResolver;
-
-    class ShippingType extends AbstractType
-    {
-        public function configureOptions(OptionsResolver $resolver)
-        {
-            $resolver->setDefaults([
-                'choices' => [
-                    'Standard Shipping' => 'standard',
-                    'Expedited Shipping' => 'expedited',
-                    'Priority Shipping' => 'priority',
-                ],
-            ]);
-        }
-
-        public function getParent()
-        {
-            return ChoiceType::class;
-        }
-    }
-
-The ``configureOptions()`` method, which is explained later in this article,
-defines the options that can be configured for the form type and sets the
-default value of those options.
-
-The ``getParent()`` method defines which is the form type used as the base of
-this type. In this case, the type extends from ``ChoiceType`` to reuse all of
-the logic and rendering of that field type.
-
-.. note::
-
-    The PHP class extension mechanism and the Symfony form field extension
-    mechanism are not the same. The parent type returned in ``getParent()`` is
-    what Symfony uses to build and manage the field type. Making the PHP class
-    extend from ``AbstractType`` is only a convenience way of implementing the
-    required ``FormTypeInterface``.
-
-Now you can add this form type when :doc:`creating Symfony forms </forms>`::
-
-    // src/Form/Type/OrderType.php
-    namespace App\Form\Type;
-
-    use App\Form\Type\ShippingType;
-    use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
-
-    class OrderType extends AbstractType
-    {
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder
-                // ...
-                ->add('shipping', ShippingType::class)
-            ;
-        }
-
-        // ...
-    }
-
-That's all. The ``shipping`` form field will be rendered correctly in any
-template because it reuses the templating logic defined by its parent type
-``ChoiceType``. If you prefer, you can also define a template for your custom
-types, as explained later in this article.
+You can read a dedicated article on this topic in
+":doc:`</form/create_custom_choice_type>`".
 
 Creating Form Types Created From Scratch
 ----------------------------------------
+
+Form types are PHP classes that implement :class:`Symfony\\Component\\Form\\FormTypeInterface`,
+but you should instead extend from :class:`Symfony\\Component\\Form\\AbstractType`,
+which already implements that interface and provides some utilities.
+By convention they are stored in the ``src/Form/Type/`` directory.
 
 Some form types are so specific to your projects that they cannot be based on
 any :doc:`existing form types </reference/forms/types>` because they are too
@@ -130,6 +64,14 @@ When a form type doesn't extend from another specific type, there's no need to
 implement the ``getParent()`` method (Symfony will make the type extend from the
 generic :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`,
 which is the parent of all the other types).
+
+.. note::
+
+    The PHP class extension mechanism and the Symfony form field extension
+    mechanism are not the same. The parent type returned in ``getParent()`` is
+    what Symfony uses to build and manage the field type. Making the PHP class
+    extend from ``AbstractType`` is only a convenience way of implementing the
+    required ``FormTypeInterface``.
 
 These are the most important methods that a form type class can define:
 
