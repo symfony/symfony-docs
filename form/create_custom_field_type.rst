@@ -144,12 +144,22 @@ These are the most important methods that a form type class can define:
 
 ``configureOptions()``
     It defines the options configurable when using the form type, which are also
-    the options that can be used in ``buildForm()`` and ``buildView()`` methods.
+    the options that can be used in ``buildForm()`` and ``buildView()``
+    methods. Options are inherited from parent types and parent type
+    extensions, but you can create any custom option you need.
 
 ``finishView()``
     When creating a form type that consists of many fields, this method allows
     to modify the "view" of any of those fields. For any other use case, it's
     recommended to use instead the ``buildView()`` method.
+
+``getParent()``
+    It returns a form type class name that is defined as the parent. All
+    the other form type methods will be called with this parent type, and
+    all its type extensions, before calling the ones defined in your custom
+    type.
+    By default, all classes extend the ``AbstractType`` class, which
+    defines the ``FormType`` as the parent type.
 
 Defining the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~
