@@ -821,6 +821,94 @@ If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
 retry has been hit, the message will be discarded permanently.
 
+Multiple failed transports
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes is not enough having one single global ``failed transport`` configured because 
+some messages are more important than others:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                # after retrying, messages will be sent to the "failed" transport 
+                # by default if no "failed_transport" is configured inside a transport 
+                failure_transport: failed
+
+                transports:
+                    async_priority_high:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        failed_transport: failed
+
+                    # since no failed transport is configured, the one used will be
+                    # the global "failed_transport" set
+                    async_priority_low:
+                        dsn: 'doctrine://default?queue_name=async_priority_low'
+
+                    failed: 'doctrine://default?queue_name=failed'
+                    failed_other: 'doctrine://default?queue_name=failed_other' 
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- after retrying, messages will be sent to the "failed" transport 
+                by default if no "failed-transport" is configured inside a transport -->
+                <framework:messenger failure-transport="failed">
+                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%" failure-transport="failed" /> 
+                    <!-- since no "failed_transport" is configured, the one used will be
+                    the global "failed_transport" set -->
+                    <framework:transport name="async_priority_low" dsn="doctrine://default?queue_name=async_priority_low" />
+                    
+                    <framework:transport name="failed" dsn="doctrine://default?queue_name=failed"/>
+                    <framework:transport name="failed_other" dsn="doctrine://default?queue_name=failed_other"/>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                // after retrying, messages will be sent to the "failed" transport 
+                // by default if no "failed_transport" is configured inside a transport
+                'failure_transport' => 'failed',
+
+                'transports' => [
+                    'async_priority_high' => [
+                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
+                        'failed_transport' => 'failed'
+                    ],
+                    // since no failed transport is configured, the one used will be
+                    // the global failed_transport set 
+                    'async_priority_low' => [
+                        'dsn' => 'doctrine://default?queue_name=async_priority_low',
+                    ],
+                    'failed' => [
+                        'dsn' => 'doctrine://default?queue_name=failed',
+                    ],
+                ],
+            ],
+        ]);
+
+The transport with a ``failed_transport`` configuration defined, will override the global ``failed_transport``.
+
+If there is no ``failed_transport`` defined globally or on the transport level, the messages
+will be discarded after the number of retries.
+
 .. _messenger-transports-config:
 
 Transport Configuration
