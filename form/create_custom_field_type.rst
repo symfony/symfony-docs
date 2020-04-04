@@ -67,14 +67,30 @@ check out the `ChoiceType`_ class.
     extend from ``AbstractType`` is only a convenience way of implementing the
     required ``FormTypeInterface``.
 
-There are three methods that are particularly important:
+There are a few methods that are particularly important:
 
 .. _form-type-methods-explanation:
 
+``getParent()``
+    This will define the type configuring the form before. It means all the
+    other methods below will be called with this parent type and all its type
+    extensions before calling the ones defined in your custom type.
+    By default, all classes extend the ``AbstractType`` which defines the
+    ``FormType`` as its parent type.
+
+``configureOptions()``
+    This defines options for your form type that
+    can be used in ``buildForm()`` and ``buildView()``. There are a lot of
+    options common to all fields (see :doc:`/reference/forms/types/form`),
+    but you can create any custom option you need.
+
 ``buildForm()``
     Each field type has a ``buildForm()`` method, which is where
-    you configure and build any field(s). Notice that this is the same method
-    you use to setup *your* forms, and it works the same here.
+    you configure and build any field(s) depending on options defined in
+    ``configureOptions()`` as well as those defined in parent types and
+    their type extensions.
+    Notice that this is the same method you use to set up *your* forms, and it
+    works the same here.
 
 ``buildView()``
     This method is used to set any extra variables you'll
@@ -83,16 +99,11 @@ There are three methods that are particularly important:
     set) the ``multiple`` attribute on the ``select`` field. See
     `Creating a Template for the Field`_ for more details.
 
-``configureOptions()``
-    This defines options for your form type that
-    can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-    options common to all fields (see :doc:`/reference/forms/types/form`),
-    but you can create any others that you need here.
-
 .. tip::
 
     If you're creating a field that consists of many fields, then be sure
-    to set your "parent" type as ``form`` or something that extends ``form``.
+    to set your "parent" type as ``FormType::class`` or something that extends
+    it.
     Also, if you need to modify the "view" of any of your child types from
     your parent type, use the ``finishView()`` method.
 
