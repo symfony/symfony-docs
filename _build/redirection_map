@@ -345,8 +345,8 @@
 /components/http_kernel/index /components/http_kernel
 /components/property_access/introduction /components/property_access
 /components/property_access/index /components/property_access
-/components/routing/index /components/routing
-/components/routing/introduction /components/routing
+/components/routing/index https://github.com/symfony/routing
+/components/routing/introduction https://github.com/symfony/routing
 /components/routing/hostname_pattern /routing/hostname_pattern
 /components/security/introduction /components/security
 /components/security/index /components/security
@@ -480,3 +480,4 @@
 /components/translation/custom_formats https://github.com/symfony/translation
 /components/translation/custom_message_formatter https://github.com/symfony/translation
 /components/notifier https://github.com/symfony/notifier
+/components/routing https://github.com/symfony/routing
