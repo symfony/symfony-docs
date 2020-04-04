@@ -817,44 +817,18 @@ loss, enable the compiler pass in your application.
 Public Versus Private Services
 ------------------------------
 
-From Symfony 4.0, every service defined is private by default.
+Every service defined is private by default. When a service is private,
+you cannot accees it directly from the container object (using
+``$container->get()``). As a best practice, you should only create
+*private* services, which will happen automatically. And also, you should
+*not* use the ``$container->get()`` method to fetch services, but instead
+use dependency injection.
 
-What does this mean? When a service **is** public, you can access it directly
-from the container object, which can also be injected thanks to autowiring.
-This is mostly useful when you want to fetch services lazily::
+If you need to fetch services lazily, instead of using public services you
+should consider using a :ref:`service locator <service-locators>` instead.
 
-    namespace App\Generator;
-
-    use Psr\Container\ContainerInterface;
-
-    class MessageGenerator
-    {
-        private $container;
-
-        public function __construct(ContainerInterface $container)
-        {
-            $this->container = $container;
-        }
-
-        public function generate(string $message, string $template = null, array $context = []): string
-        {
-            if ($template && $this->container->has('twig')) {
-                // there IS a public "twig" service in the container
-                $twig = $this->container->get('twig');
-
-                return $twig->render($template, $context + ['message' => $message]);
-            }
-
-            // if no template is passed, the "twig" service will not be loaded
-
-            // ...
-        }
-
-As a best practice, you should only create *private* services, which will happen
-automatically. And also, you should *not* use the ``$container->get()`` method to
-fetch public services.
-
-But, if you *do* need to make a service public, override the ``public`` setting:
+But, if you *do* need to make a service public, override the ``public``
+setting:
 
 .. configuration-block::
 
@@ -901,10 +875,10 @@ But, if you *do* need to make a service public, override the ``public`` setting:
             ;
         };
 
-.. note::
+.. deprecated:: 5.1
 
-    Instead of injecting the container you should consider using a
-    :ref:`service locator <service-locators>` instead.
+    As of Symfony 5.1, it is no longer possible to autowire the service
+    container by type-hinting ``Psr\Container\ContainerInterface``.
 
 .. _service-psr4-loader:
 
