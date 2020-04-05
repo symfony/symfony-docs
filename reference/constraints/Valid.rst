@@ -253,7 +253,7 @@ Options
 
 **type**: ``boolean`` **default**: ``true``
 
-If this constraint is applied to a ``Traversable``, then all containing values
+If this constraint is applied to a ``\Traversable``, then all containing values
 will be validated if this option is set to ``true``. This option is ignored on
 arrays: Arrays are traversed in either case. Keys are not validated.
 
