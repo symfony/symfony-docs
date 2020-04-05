@@ -36,6 +36,9 @@ in a single Twig template and they are enabled in the
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the default styles of the
   `Foundation CSS framework`_.
+* `bulma_0_layout.html.twig`_, wraps each form field inside a ``<div>``
+  element with the appropriate CSS classes to apply the styles used by the
+  `Bulma CSS framework`_.
 
 .. tip::
 
@@ -599,6 +602,8 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.4/
 .. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.4/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
+.. _`bulma_0_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bulma_0_layout.html.twig
 .. _`Foundation CSS framework`: https://get.foundation/
 .. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
 .. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html
+.. _`Bulma CSS framework`: https://bulma.io
