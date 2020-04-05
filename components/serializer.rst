@@ -126,7 +126,7 @@ exists in your project::
 Now, if you want to serialize this object into JSON, you only need to
 use the Serializer service created before::
 
-    $person = new App\Model\Person();
+    $person = new \App\Model\Person();
     $person->setName('foo');
     $person->setAge(99);
     $person->setSportsperson(false);
