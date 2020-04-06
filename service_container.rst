@@ -817,15 +817,13 @@ loss, enable the compiler pass in your application.
 Public Versus Private Services
 ------------------------------
 
-Every service defined is private by default. When a service is private,
-you cannot accees it directly from the container object (using
-``$container->get()``). As a best practice, you should only create
-*private* services, which will happen automatically. And also, you should
-*not* use the ``$container->get()`` method to fetch services, but instead
-use dependency injection.
+Every service defined is private by default. When a service is private, you
+cannot access it directly from the container using ``$container->get()``. As a
+best practice, you should only create *private* services and you should fetch
+services using dependency injection instead of using ``$container->get()``.
 
 If you need to fetch services lazily, instead of using public services you
-should consider using a :ref:`service locator <service-locators>` instead.
+should consider using a :ref:`service locator <service-locators>`.
 
 But, if you *do* need to make a service public, override the ``public``
 setting:
