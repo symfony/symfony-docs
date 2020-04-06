@@ -72,23 +72,24 @@ There are a few methods that are particularly important:
 .. _form-type-methods-explanation:
 
 ``getParent()``
-    This will define the type configuring the form before. It means all the
-    other methods below will be called with this parent type and all its type
-    extensions before calling the ones defined in your custom type.
-    By default, all classes extend the ``AbstractType`` which defines the
-    ``FormType`` as its parent type.
+    This return the class name of the type configuring the form before. It
+    means all the other methods below will be called with this parent type
+    and all its type extensions before calling the ones defined in your
+    custom type.
+    By default, all classes inherit the ``AbstractType::getParent()`` which
+    defines the ``FormType`` as parent type to re-use its options and
+    configuration.
 
 ``configureOptions()``
-    This defines options for your form type that
-    can be used in ``buildForm()`` and ``buildView()``. There are a lot of
-    options common to all fields (see :doc:`/reference/forms/types/form`),
-    but you can create any custom option you need.
+    This defines options for your type that
+    can be used in ``buildForm()`` and ``buildView()``. Options are inherited
+    from parent types and parent types extension but you can create any custom
+    option you need.
 
 ``buildForm()``
     Each field type has a ``buildForm()`` method, which is where
     you configure and build any field(s) depending on options defined in
-    ``configureOptions()`` as well as those defined in parent types and
-    their type extensions.
+    ``configureOptions()``.
     Notice that this is the same method you use to set up *your* forms, and it
     works the same here.
 
@@ -99,13 +100,14 @@ There are a few methods that are particularly important:
     set) the ``multiple`` attribute on the ``select`` field. See
     `Creating a Template for the Field`_ for more details.
 
+``finishView``
+    Same as ``buildView`` but to configure the nested field views.
+    This method as no use with types that build compound forms.
+
 .. tip::
 
-    If you're creating a field that consists of many fields, then be sure
-    to set your "parent" type as ``FormType::class`` or something that extends
-    it.
-    Also, if you need to modify the "view" of any of your child types from
-    your parent type, use the ``finishView()`` method.
+    If you're creating a field that consists of nested fields, then be sure to
+    set the parent type as ``FormType::class`` or one of its child.
 
 The goal of this field was to extend the choice type to enable selection of the
 shipping type. This is achieved by fixing the ``choices`` to a list of available
