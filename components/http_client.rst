@@ -46,14 +46,13 @@ with HTTP/2 and with doing concurrent asynchronous streamed and multiplexed
 requests/responses. Even when doing regular synchronous calls, this design
 allows keeping connections to remote hosts open between requests, improving
 performance by saving repetitive DNS resolution, SSL negotiation, etc.
-To leverage all these design benefits, the cURL extension is needed.
 
 Enabling cURL Support
 ~~~~~~~~~~~~~~~~~~~~~
 
 This component supports both the native PHP streams and cURL to make the HTTP
-requests. Although both are interchangeable and provide the same features,
-including concurrent requests, HTTP/2 is only supported when using cURL.
+requests. Both are interchangeable and provide the same features, including
+concurrent requests and HTTP/2 support.
 
 ``HttpClient::create()`` selects the cURL transport if the `cURL PHP extension`_
 is enabled and falls back to PHP streams otherwise. If you prefer to select
@@ -75,9 +74,21 @@ is installed and enabled. Otherwise, the native PHP streams will be used.
 HTTP/2 Support
 ~~~~~~~~~~~~~~
 
-When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.36
-is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
-the ``http_version`` option::
+.. versionadded:: 5.1
+
+    Integration with ``amphp/http-client`` was introduced in Symfony 5.1.
+    Prior to this version, HTTP/2 was only supported when ``libcurl`` was
+    installed.
+
+The component supports HTTP/2 if one of the following tools is
+installed:
+
+* The `libcurl`_ package version 7.36 or higher;
+* The `amphp/http-client`_ Packagist package version 4.2 or higher.
+
+When requesting an ``https`` URL and HTTP/2 is supported by your server,
+HTTP/2 is enabled by default. To force HTTP/2 for ``http`` URLs, you need
+to enable it explicitly via the ``http_version`` option::
 
     $client = HttpClient::create(['http_version' => '2.0']);
 
@@ -1021,3 +1032,5 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
 .. _`HTTPlug`: https://github.com/php-http/httplug/#readme
 .. _`Symfony Contracts`: https://github.com/symfony/contracts
+.. _`libcurl`: https://curl.haxx.se/libcurl/
+.. _`amphp/http-client`: https://packagist.org/packages/amphp/http-client
