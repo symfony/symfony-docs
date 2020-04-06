@@ -65,7 +65,7 @@ This will generate your new entity class::
 
     // src/Entity/Category.php
     namespace App\Entity;
-    
+
     // ...
 
     class Category
@@ -218,7 +218,7 @@ class that will hold these objects:
 
         // src/Entity/Category.php
         namespace App\Entity;
-        
+
         // ...
         use Doctrine\Common\Collections\ArrayCollection;
         use Doctrine\Common\Collections\Collection;
@@ -295,9 +295,9 @@ config.
 
     The code inside ``__construct()`` is important: The ``$products`` property must
     be a collection object that implements Doctrine's ``Collection`` interface.
-    In this case, an ``ArrayCollection`` object is used. This looks and acts almost
-    *exactly* like an array, but has some added flexibility. Just imagine that it's
-    an ``array`` and you'll be in good shape.
+    In this case, an `ArrayCollection`_ object is used. This looks and acts almost
+    *exactly* like an array, but has some added flexibility. Just imagine that
+    it is an ``array`` and you'll be in good shape.
 
 Your database is setup! Now, execute the migrations like normal:
 
@@ -316,7 +316,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
 
     // src/Controller/ProductController.php
     namespace App/Controller;
-    
+
     // ...
     use App\Entity\Category;
     use App\Entity\Product;
@@ -604,3 +604,4 @@ Doctrine's `Association Mapping Documentation`_.
 .. _`Association Mapping Documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/association-mapping.html
 .. _`orphanRemoval`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/working-with-associations.html#orphan-removal
 .. _`Mastering Doctrine Relations`: https://symfonycasts.com/screencast/doctrine-relations
+.. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
