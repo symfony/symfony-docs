@@ -117,22 +117,28 @@ The Response class contains methods that let you configure the HTTP cache. One
 of the most powerful is ``setCache()`` as it abstracts the most frequently used
 caching strategies into a single array::
 
-    $date = date_create_from_format('Y-m-d H:i:s', '2005-10-15 10:00:00');
-
     $response->setCache([
-        'public'        => true,
-        'etag'          => 'abcde',
-        'last_modified' => $date,
-        'max_age'       => 10,
-        's_maxage'      => 10,
+        'must_revalidate'  => false,
+        'no_cache'         => false,
+        'no_store'         => false,
+        'no_transform'     => false,
+        'public'           => true,
+        'private'          => false,
+        'proxy_revalidate' => false,
+        'max_age'          => 600,
+        's_maxage'         => 600,
+        'immutable'        => true,
+        'last_modified'    => new \DateTime(),
+        'etag'             => 'abcdef'
     ]);
 
     // it is equivalent to the following code
     $response->setPublic();
+    $response->setMaxAge(600);
+    $response->setSharedMaxAge(600);
+    $response->setImmutable();
+    $response->setLastModified(new \DateTime());
     $response->setEtag('abcde');
-    $response->setLastModified($date);
-    $response->setMaxAge(10);
-    $response->setSharedMaxAge(10);
 
 When using the validation model, the ``isNotModified()`` method allows you to
 cut on the response time by short-circuiting the response generation as early as
