@@ -295,9 +295,9 @@ config.
 
     The code inside ``__construct()`` is important: The ``$products`` property must
     be a collection object that implements Doctrine's ``Collection`` interface.
-    In this case, an ``ArrayCollection`` object is used. This looks and acts almost
-    *exactly* like an array, but has some added flexibility. Just imagine that it's
-    an ``array`` and you'll be in good shape.
+    In this case, an [``ArrayCollection``](`Doctrine_Collections`_) object is used.
+    This looks and acts almost *exactly* like an array, but has some added flexibility.
+    Just imagine that it is an ``array`` and you'll be in good shape.
 
 Your database is setup! Now, execute the migrations like normal:
 
@@ -604,3 +604,4 @@ Doctrine's `Association Mapping Documentation`_.
 .. _`Association Mapping Documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/association-mapping.html
 .. _`orphanRemoval`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/working-with-associations.html#orphan-removal
 .. _`Mastering Doctrine Relations`: https://symfonycasts.com/screencast/doctrine-relations
+.. _`Doctrine_Collections`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
