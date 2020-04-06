@@ -119,7 +119,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
                 ->html('<p>See Twig integration for better HTML integration!</p>');
-                
+
             $mailer->send($email);
 
             // ...
@@ -644,6 +644,32 @@ and it will select the appropriate certificate depending on the ``To`` option::
     $firstEncryptedEmail = $encrypter->encrypt($firstEmail);
     $secondEncryptedEmail = $encrypter->encrypt($secondEmail);
 
+Multiple Email Transports
+-------------------------
+
+You may want to use more than one mailer transport for delivery of your messages.
+This can be configured by replacing the ``dsn`` configuration entry with a
+``transports`` entry, like:
+
+.. code-block:: yaml
+
+    # config/packages/mailer.yaml
+    framework:
+        mailer:
+            transports:
+                main: '%env(MAILER_DSN)%'
+                alternative: '%env(MAILER_DSN_IMPORTANT)%'
+
+By default the first transport is used. The other transports can be used by
+adding a text header ``X-Transport`` to an email::
+
+    // Send using first "main" transport ...
+    $mailer->send($email);
+
+    // ... or use the "alternative" one
+    $email->getHeaders()->addTextHeader('X-Transport', 'alternative');
+    $mailer->send($email);
+
 Sending Messages Async
 ----------------------
 
@@ -704,32 +730,6 @@ you have a transport called ``async``, you can route the message there:
 
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
-
-Multiple Email Transports
--------------------------
-
-You may want to use more than one mailer transport for delivery of your messages.
-This can be configured by replacing the ``dsn`` configuration entry with a
-``transports`` entry, like:
-
-.. code-block:: yaml
-
-    # config/packages/mailer.yaml
-    framework:
-        mailer:
-            transports:
-                main: '%env(MAILER_DSN)%'
-                important: '%env(MAILER_DSN_IMPORTANT)%'
-
-By default the first transport is used. The other transports can be used by
-adding a text header ``X-Transport`` to an email::
-
-    // Send using first "main" transport ...
-    $mailer->send($email);
-
-    // ... or use the "important" one
-    $email->getHeaders()->addTextHeader('X-Transport', 'important');
-    $mailer->send($email);
 
 Adding Tags and Metadata to Emails
 ----------------------------------
