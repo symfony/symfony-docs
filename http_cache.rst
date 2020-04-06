@@ -342,7 +342,8 @@ the most useful ones::
 Additionally, most cache-related HTTP headers can be set via the single
 :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method::
 
-    // sets cache settings in one call
+    // use this method to set several cache settings in one call
+    // (this example lists all the available cache settings)
     $response->setCache([
         'must_revalidate'  => false,
         'no_cache'         => false,
@@ -357,6 +358,11 @@ Additionally, most cache-related HTTP headers can be set via the single
         'last_modified'    => new \DateTime(),
         'etag'             => 'abcdef'
     ]);
+
+.. versionadded:: 5.1
+
+    The ``must_revalidate``, ``no_cache``, ``no_store``, ``no_transform`` and
+    ``proxy_revalidate`` directives were introduced in Symfony 5.1.
 
 Cache Invalidation
 ------------------

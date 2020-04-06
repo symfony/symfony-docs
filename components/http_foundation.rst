@@ -503,6 +503,11 @@ call::
         'etag'             => 'abcdef'
     ]);
 
+.. versionadded:: 5.1
+
+    The ``must_revalidate``, ``no_cache``, ``no_store``, ``no_transform`` and
+    ``proxy_revalidate`` directives were introduced in Symfony 5.1.
+
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
 :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
