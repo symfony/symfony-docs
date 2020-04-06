@@ -344,12 +344,18 @@ Additionally, most cache-related HTTP headers can be set via the single
 
     // sets cache settings in one call
     $response->setCache([
-        'etag'          => $etag,
-        'last_modified' => $date,
-        'max_age'       => 10,
-        's_maxage'      => 10,
-        'public'        => true,
-        // 'private'    => true,
+        'must_revalidate'  => false,
+        'no_cache'         => false,
+        'no_store'         => false,
+        'no_transform'     => false,
+        'public'           => true,
+        'private'          => false,
+        'proxy_revalidate' => false,
+        'max_age'          => 600,
+        's_maxage'         => 600,
+        'immutable'        => true,
+        'last_modified'    => new \DateTime(),
+        'etag'             => 'abcdef'
     ]);
 
 Cache Invalidation

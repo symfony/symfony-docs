@@ -489,13 +489,18 @@ can be used to set the most commonly used cache information in one method
 call::
 
     $response->setCache([
-        'etag'          => 'abcdef',
-        'last_modified' => new \DateTime(),
-        'max_age'       => 600,
-        's_maxage'      => 600,
-        'private'       => false,
-        'public'        => true,
-        'immutable'     => true,
+        'must_revalidate'  => false,
+        'no_cache'         => false,
+        'no_store'         => false,
+        'no_transform'     => false,
+        'public'           => true,
+        'private'          => false,
+        'proxy_revalidate' => false,
+        'max_age'          => 600,
+        's_maxage'         => 600,
+        'immutable'        => true,
+        'last_modified'    => new \DateTime(),
+        'etag'             => 'abcdef'
     ]);
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
