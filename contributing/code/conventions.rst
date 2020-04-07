@@ -129,7 +129,7 @@ the Web Debug Toolbar or by the PHPUnit bridge).
 .. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
 
 When deprecating a whole class the ``trigger_error()`` call should be placed
-between the namespace and the use declarations, like in this example from
+after the use declarations, like in this example from
 `ServiceRouterLoader`_::
 
     namespace Symfony\Component\Routing\Loader\DependencyInjection;
