@@ -228,6 +228,8 @@ so, get the entity manager via the service container as follows::
             $this->entityManager = $kernel->getContainer()
                 ->get('doctrine')
                 ->getManager();
+            
+            self::ensureKernelShutdown();
         }
 
         public function testSearchByName()
