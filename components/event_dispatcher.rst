@@ -235,10 +235,10 @@ determine which instance is passed.
         use Symfony\Component\EventDispatcher\EventDispatcher;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
-        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
         $containerBuilder->addCompilerPass(new AddEventAliasesPass([
             \AcmeFooActionEvent::class => 'acme.foo.action',
         ]));
+        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING)
 
         $containerBuilder->register('event_dispatcher', EventDispatcher::class);
 
