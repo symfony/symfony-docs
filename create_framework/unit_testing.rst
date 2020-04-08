@@ -49,7 +49,7 @@ resolver. Modify the framework to make use of them::
     namespace Simplex;
 
     // ...
-    
+
     use Calendar\Controller\LeapYearController;
     use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
     use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
@@ -183,7 +183,7 @@ Response::
         $response = $framework->handle(new Request());
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('Yep, this is a leap year!', $response->getContent());
+        $this->assertStringContainsString('Yep, this is a leap year!', $response->getContent());
     }
 
 In this test, we simulate a route that matches and returns a simple
