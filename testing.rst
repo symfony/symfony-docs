@@ -270,7 +270,7 @@ Or test against the response content directly if you just want to assert that
 the content contains some text or in case that the response is not an XML/HTML
 document::
 
-    $this->assertContains(
+    $this->assertStringContainsString(
         'Hello World',
         $client->getResponse()->getContent()
     );
@@ -316,7 +316,7 @@ document::
         );
 
         // asserts that the response content contains a string
-        $this->assertContains('foo', $client->getResponse()->getContent());
+        $this->assertStringContainsString('foo', $client->getResponse()->getContent());
         // ...or matches a regex
         $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
 
