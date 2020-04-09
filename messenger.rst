@@ -614,6 +614,7 @@ times:
     command=php /path/to/your/app/bin/console messenger:consume async --time-limit=3600
     user=ubuntu
     numprocs=2
+    startsecs=0
     autostart=true
     autorestart=true
     process_name=%(program_name)s_%(process_num)02d
