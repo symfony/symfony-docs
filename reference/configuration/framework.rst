@@ -919,6 +919,12 @@ Unlike the other session options, ``cache_limiter`` is set as a regular
             'cache_limiter' => 0,
         ]);
 
+.. note::
+
+    Setting the ``cache_limiter`` parameter to ``0`` resets session parameters
+    like ``cookie_samesite``, ``cookie_secure`` and ``cookie_httponly`` to their
+    default values, regardless of their values in other configuration files.
+
 ``cookie_domain``
 .................
 
