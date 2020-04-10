@@ -124,13 +124,27 @@ in your form type::
             /** @var FormInterface[] $forms */
             $forms = iterator_to_array($forms);
 
+            $colors = [
+                'red' => $forms['red']->getData(),
+                'green' => $forms['green']->getData(),
+                'blue' => $forms['blue']->getData(),
+            ];
+
+            // TransformationFailedException will be transformed into a FormError
+            foreach ($colors as $name => $color) {
+                if ($color > 256 || $color < 0) {
+                    throw new TransformationFailedException(sprintf('Invalid color %s "%s" value', $name, $color));
+                }
+            }
+
+
             // as data is passed by reference, overriding it will change it in
             // the form object as well
             // beware of type inconsistency, see caution below
             $viewData = new Color(
-                $forms['red']->getData(),
-                $forms['green']->getData(),
-                $forms['blue']->getData()
+                $colors['red'],
+                $colors['green'],
+                $colors['blue']
             );
         }
     }
@@ -193,55 +207,3 @@ create a new ``Color`` object now.
 
     When a form has the ``inherit_data`` option set to ``true``, it does not use the data mapper and
     lets its parent map inner values.
-
-Trigger form errors from the DataMapper
----------------------------------------
-
-You may want to validate the form data to be sure it is conform to the API of your object. In this
-case Symfony provides an exception ``TransformationFailedException`` that will result in a FormError
-in the case it is throwed during the process::
-
-    // src/Form/Type/ColorType.php
-    namespace App\Form\Type;
-
-    // ...
-    use Symfony\Component\Form\Exception\TransformationFailedException;
-
-    final class ColorType extends AbstractType implements DataMapperInterface
-    {
-       // ...
-
-       public function mapFormsToData($forms, &$viewData)
-        {
-            /** @var FormInterface[] $forms */
-            $forms = iterator_to_array($forms);
-
-            $colors = [
-                'red' => $forms['red']->getData(),
-                'green' => $forms['green']->getData(),
-                'blue' => $forms['blue']->getData(),
-            ];
-
-            foreach ($colors as $name => $color) {
-                if ($color > 256 || $color < 0) {
-                    throw new TransformationFailedException(sprintf('Invalid color %s "%s" value', $name, $color));
-                }
-            }
-
-            // as data is passed by reference, overriding it will change it in
-            // the form object as well
-            // beware of type inconsistency, see caution below
-            $viewData = new Color(
-                $colors['red'],
-                $colors['green'],
-                $colors['blue']
-            );
-        }
-
-        // ...
-    }
-
-Aweome! You are now sure to not get an error while instantiating the ``Color`` object, and the error is properly
-given to the user via form errors.
-
-
