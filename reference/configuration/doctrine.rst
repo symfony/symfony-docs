@@ -222,6 +222,13 @@ Keep in mind that you can't use both syntaxes at the same time.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
+.. deprecated:: 4.4
+
+    All the Doctrine caching types are deprecated since Symfony 4.4 and won't
+    be available in Symfony 5.0 and higher. Replace them with either ``type: service``
+    or ``type: pool`` and use any of the cache pools/services defined with
+    :doc:`Symfony Cache </cache>`.
+
 The built-in types of caching drivers are: ``array``, ``apc``, ``apcu``,
 ``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata`` and ``xcache``.
 There is a special type called ``service`` which lets you define the ID of your
