@@ -122,6 +122,10 @@ The preload file path is the same as the compiled service container but with the
     ; php.ini
     opcache.preload=/path/to/project/var/cache/prod/srcApp_KernelProdContainer.preload.php
 
+Use the :ref:`container.preload <dic-tags-container-preload>` and
+:ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
+which classes should or should not be preloaded PHP.
+
 .. _performance-configure-opcache:
 
 Configure OPcache for Maximum Performance
