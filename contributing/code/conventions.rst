@@ -126,7 +126,7 @@ ready to cope with them (by adding a custom error handler like the one used by
 the Web Debug Toolbar or by the PHPUnit bridge).
 
 When deprecating a whole class the ``trigger_error()`` call should be placed
-between the namespace and the use declarations, like in this example from
+after the use declarations, like in this example from
 `ServiceRouterLoader`_::
 
     namespace Symfony\Component\Routing\Loader\DependencyInjection;
