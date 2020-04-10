@@ -89,6 +89,10 @@ fetched from the container::
 
     // gets a specific argument
     $firstArgument = $definition->getArgument(0);
+    
+    // adds a new argument with the name of the argument
+    // $argumentName = the name of the argument in the constructor
+    $argument = $definition->setArgument('$argumentName', $argumentValue);
 
     // adds a new argument
     $definition->addArgument($argument);
@@ -96,7 +100,7 @@ fetched from the container::
     // replaces argument on a specific index (0 = first argument)
     $definition->replaceArgument($index, $argument);
 
-    // replace all previously configured arguments with the passed array
+    // replaces all previously configured arguments with the passed array
     $definition->setArguments($arguments);
 
 .. caution::
