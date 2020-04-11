@@ -47,7 +47,7 @@ First, enable ``form_login`` under your firewall:
 
             <config>
                 <firewall name="main">
-                    <anonymous/>
+                    <anonymous lazy="true"/>
                     <form-login login-path="login" check-path="login"/>
                 </firewall>
             </config>
@@ -59,7 +59,7 @@ First, enable ``form_login`` under your firewall:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
-                    'anonymous'  => null,
+                    'anonymous'  => 'lazy',
                     'form_login' => [
                         'login_path' => 'login',
                         'check_path' => 'login',

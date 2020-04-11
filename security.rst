@@ -295,18 +295,33 @@ accidentally block Symfony's dev tools - which live under URLs like ``/_profiler
 and ``/_wdt``.
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
-it matches *all* URLs). But this does *not* mean that every URL requires authentication.
-Nope, thanks to the ``anonymous`` key, this firewall *is* accessible anonymously.
+it matches *all* URLs). A firewall can have many modes of authentication,
+in other words many ways to ask the question "Who are you?". Often, the
+user is unknown (i.e. not logged in) when they first visit your website. The
+``anonymous`` mode, if enabled, is used for these requests.
 
-In fact, if you go to the homepage right now, you *will* have access and you'll see
-that you're "authenticated" as ``anon.``. Don't be fooled by the "Yes" next to
-Authenticated. The firewall verified that it does not know your identity, and so,
-you are anonymous:
+In fact, if you go to the homepage right now, you *will* have access and you'll
+see that you're "authenticated" as ``anon.``. The firewall verified that it
+does not know your identity, and so, you are anonymous:
 
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
 
-You'll learn later how to deny access to certain URLs or controllers.
+It means any request can have an anonymous token to access some resource,
+while some actions (i.e. some pages or buttons) can still require specific
+privileges. A user can then access a form login without being authenticated
+as a unique user (otherwise an infinite redirection loop would happen
+asking the user to authenticate while trying to doing so).
+
+You'll learn later how to deny access to certain URLs, controllers, or part of
+templates.
+
+.. tip::
+
+    The ``lazy`` anonymous mode prevents the session from being started if
+    there is no need for authorization (i.e. explicit check for a user
+    privilege). This is important to keep requests cacheable (see
+    :doc:`/http_cache`).
 
 .. note::
 
