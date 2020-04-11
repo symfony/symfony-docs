@@ -1,8 +1,6 @@
 .. index::
    single: Cache
 
-.. _http-cache:
-
 HTTP Cache
 ==========
 
