@@ -220,6 +220,7 @@ Store                                         Scope   Blocking  Expiring
 ============================================  ======  ========  ========
 :ref:`FlockStore <lock-store-flock>`          local   yes       no
 :ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes
+:ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes
 :ref:`PdoStore <lock-store-pdo>`              remote  no        yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
@@ -268,6 +269,68 @@ support blocking, and expects a TTL to avoid stalled locks::
     Memcached does not support TTL lower than 1 second.
 
 .. _lock-store-pdo:
+
+.. _lock-store-mongodb:
+
+MongoDbStore
+~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``MongoDbStore`` was introduced in Symfony 5.1.
+
+The MongoDbStore saves locks on a MongoDB server ``>=2.2``, it requires a
+``\MongoDB\Collection`` or ``\MongoDB\Client`` from `mongodb/mongodb`_ or a
+`MongoDB Connection String`_.
+This store does not support blocking and expects a TTL to
+avoid stalled locks::
+
+    use Symfony\Component\Lock\Store\MongoDbStore;
+
+    $mongo = 'mongodb://localhost/database?collection=lock';
+    $options = [
+        'gcProbablity' => 0.001,
+        'database' => 'myapp',
+        'collection' => 'lock',
+        'uriOptions' => [],
+        'driverOptions' => [],
+    ];
+    $store = new MongoDbStore($mongo, $options);
+
+The ``MongoDbStore`` takes the following ``$options`` (depending on the first parameter type):
+
+=============  ================================================================================================
+Option         Description
+=============  ================================================================================================
+gcProbablity   Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
+database       The name of the database
+collection     The name of the collection
+uriOptions     Array of uri options for `MongoDBClient::__construct`_
+driverOptions  Array of driver options for `MongoDBClient::__construct`_
+=============  ================================================================================================
+
+When the first parameter is a:
+
+``MongoDB\Collection``:
+
+- ``$options['database']`` is ignored
+- ``$options['collection']`` is ignored
+
+``MongoDB\Client``:
+
+- ``$options['database']`` is mandatory
+- ``$options['collection']`` is mandatory
+
+MongoDB Connection String:
+
+- ``$options['database']`` is used otherwise ``/path`` from the DSN, at least one is mandatory
+- ``$options['collection']`` is used otherwise ``?collection=`` from the DSN, at least one is mandatory
+
+.. note::
+
+    The ``collection`` querystring parameter is not part of the `MongoDB Connection String`_ definition.
+    It is used to allow constructing a ``MongoDbStore`` using a `Data Source Name (DSN)`_ without ``$options``.
+
 
 PdoStore
 ~~~~~~~~
@@ -403,6 +466,7 @@ Remote Stores
 ~~~~~~~~~~~~~
 
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`MongoDbStore <lock-store-mongodb>`,
 :ref:`PdoStore <lock-store-pdo>`,
 :ref:`RedisStore <lock-store-redis>` and
 :ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
@@ -428,6 +492,7 @@ Expiring Stores
 ~~~~~~~~~~~~~~~
 
 Expiring stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`MongoDbStore <lock-store-mongodb>`,
 :ref:`PdoStore <lock-store-pdo>` and
 :ref:`RedisStore <lock-store-redis>`)
 guarantee that the lock is acquired only for the defined duration of time. If
@@ -545,6 +610,46 @@ method uses the Memcached's ``flush()`` method which purges and removes everythi
 
     The method ``flush()`` must not be called, or locks should be stored in a
     dedicated Memcached service away from Cache.
+
+MongoDbStore
+~~~~~~~~~~~~
+
+.. caution::
+
+    The locked resource name is indexed in the ``_id`` field of the lock
+    collection. Beware that in MongoDB an indexed field's value can be
+    `a maximum of 1024 bytes in length`_ inclusive of structural overhead.
+
+A TTL index must be used to automatically clean up expired locks.
+Such an index can be created manually:
+
+.. code-block:: javascript
+
+    db.lock.ensureIndex(
+        { "expires_at": 1 },
+        { "expireAfterSeconds": 0 }
+    )
+
+Alternatively, the method ``MongoDbStore::createTtlIndex(int $expireAfterSeconds = 0)``
+can be called once to create the TTL index during database setup. Read more
+about `Expire Data from Collections by Setting TTL`_ in MongoDB.
+
+.. tip::
+
+    ``MongoDbStore`` will attempt to automatically create a TTL index.
+    It's recommended to set constructor option ``gcProbablity = 0.0`` to
+    disable this behavior if you have manually dealt with TTL index creation.
+
+.. caution::
+
+    This store relies on all PHP application and database nodes to have
+    synchronized clocks for lock expiry to occur at the correct time. To ensure
+    locks don't expire prematurely; the lock TTL should be set with enough extra
+    time in ``expireAfterSeconds`` to account for any clock drift between nodes.
+
+``writeConcern``, ``readConcern`` and ``readPreference`` are not specified by
+MongoDbStore meaning the collection's settings will take effect. Read more
+about `Replica Set Read and Write Semantics`_ in MongoDB.
 
 PdoStore
 ~~~~~~~~~~
@@ -672,10 +777,16 @@ instance, during the deployment of a new version. Processes with new
 configuration must not be started while old processes with old configuration
 are still running.
 
+.. _`a maximum of 1024 bytes in length`: https://docs.mongodb.com/manual/reference/limits/#Index-Key-Limit
 .. _`ACID`: https://en.wikipedia.org/wiki/ACID
-.. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
-.. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
-.. _`PDO`: https://www.php.net/pdo
-.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
+.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
+.. _`Expire Data from Collections by Setting TTL`: https://docs.mongodb.com/manual/tutorial/expire-data/
+.. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
+.. _`MongoDB Connection String`: https://docs.mongodb.com/manual/reference/connection-string/
+.. _`mongodb/mongodb`: https://packagist.org/packages/mongodb/mongodb
+.. _`MongoDBClient::__construct`: https://docs.mongodb.com/php-library/current/reference/method/MongoDBClient__construct/
+.. _`PDO`: https://www.php.net/pdo
+.. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
+.. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/
 .. _`ZooKeeper`: https://zookeeper.apache.org/
