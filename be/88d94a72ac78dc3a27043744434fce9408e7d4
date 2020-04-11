@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by kralos at 2019-06-13T00:36:18Z
+
+see https://github.com/symfony/symfony/pull/31889
+
+---------------------------------------------------------------------------
+
+by kralos at 2019-08-22T05:03:04Z
+
+`git rebase origin/4.4` and squashed
+
+---------------------------------------------------------------------------
+
+by kralos at 2019-12-11T00:52:34Z
+
+Since @fabpot just merged https://github.com/symfony/symfony/pull/31889 I've re-based this from `symfony-docs/master` and bumped the introduced in version number to `5.1`
+
+---------------------------------------------------------------------------
+
+by kralos at 2020-02-16T23:10:26Z
+
+The code for this has been merged into `symfony/symfony` `master` https://github.com/symfony/symfony/pull/31889. It will be released in `symfony` `5.1`. I've updated this merge request accordingly (again). Can someone please review / merge?
+
+---------------------------------------------------------------------------
+
+by kralos at 2020-04-11T09:26:06Z
+
+@javiereguiluz I've fixed the branch, also noticed the DBAL link was broken (Doctrine dropped the DBAL dir using psr-4) so i've updated it
