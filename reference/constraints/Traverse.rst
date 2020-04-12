@@ -92,7 +92,7 @@ that all have constraints on their properties.
 
     .. code-block:: yaml
 
-        # config/validator/validation.yml
+        # config/validator/validation.yaml
         App\Entity\BookCollection:
             constraints:
                 - Traverse: ~
@@ -170,7 +170,7 @@ disable validating:
 
     .. code-block:: yaml
 
-        # config/validator/validation.yml
+        # config/validator/validation.yaml
         App\Entity\BookCollection:
             constraints:
                 - Traverse: false
