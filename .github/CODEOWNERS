@@ -3,9 +3,9 @@
 /components/console* @chalasr
 
 # Form
-/forms.rst @xabbuh
-/components/form* @xabbuh
-/reference/forms* @xabbuh
+/forms.rst @xabbuh @HeahDude
+/components/form* @xabbuh @HeahDude
+/reference/forms* @xabbuh @HeahDude
 
 # PropertyInfo
 /components/property_info* @dunglas
@@ -15,9 +15,9 @@
 /components/security* @chalasr
 
 # Validator
-/validation/*
-/components/validator* @xabbuh
-/reference/constraints* @xabbuh
+/validation/* @xabbuh @HeahDude
+/components/validator* @xabbuh @HeahDude
+/reference/constraints* @xabbuh @HeahDude
 
 # Workflow
 /workflow* @lyrixx
