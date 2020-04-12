@@ -127,7 +127,7 @@ integration with these chat services:
 ==========  ===============================  ============================================
 Service     Package                          DSN
 ==========  ===============================  ============================================
-Slack       ``symfony/slack-notifier``       ``slack://TOKEN@default?channel=CHANNEL``
+Slack       ``symfony/slack-notifier``       ``slack://default/ID``
 Telegram    ``symfony/telegram-notifier``    ``telegram://TOKEN@default?channel=CHAT_ID``
 Mattermost  ``symfony/mattermost-notifier``  ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
 RocketChat  ``symfony/rocketchat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
@@ -142,7 +142,7 @@ Chatters are configured using the ``chatter_transports`` setting:
 .. code-block:: bash
 
     # .env
-    SLACK_DSN=slack://TOKEN@default?channel=CHANNEL
+    SLACK_DSN=slack://default/ID
 
 .. configuration-block::
 
