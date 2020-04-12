@@ -135,7 +135,9 @@ RocketChat  ``symfony/rocketchat-notifier``  ``rocketchat://TOKEN@ENDPOINT?chann
 
 .. versionadded:: 5.1
 
-    The Mattermost and RocketChat integrations were introduced in Symfony 5.1.
+    The Mattermost and RocketChat integrations were introduced in Symfony
+    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
+    Webhooks instead of legacy tokens.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
