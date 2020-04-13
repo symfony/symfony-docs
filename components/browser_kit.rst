@@ -39,13 +39,13 @@ Creating a Client
 The component only provides an abstract client and does not provide any backend
 ready to use for the HTTP layer.
 
-To create your own client, you must extend the abstract ``Client`` class and
-implement the :method:`Symfony\\Component\\BrowserKit\\Client::doRequest` method.
+To create your own client, you must extend the abstract ``AbstractBrowser`` class and
+implement the :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::doRequest` method.
 This method accepts a request and should return a response::
 
     namespace Acme;
 
-    use Symfony\Component\BrowserKit\Client as BaseClient;
+    use Symfony\Component\BrowserKit\AbstractBrowser as BaseClient;
     use Symfony\Component\BrowserKit\Response;
 
     class Client extends BaseClient
