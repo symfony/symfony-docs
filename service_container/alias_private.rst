@@ -267,15 +267,20 @@ The following example shows how to inject an anonymous service into another serv
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->args([inline(AnonymousBar::class)])
+                ->args([service(AnonymousBar::class)])
         };
+
+.. versionadded:: 5.1
+
+    The ``service()`` function was introduced in Symfony 5.1. In previous
+    versions it was called ``inline()``.
 
 .. note::
 
     Anonymous services do *NOT* inherit the definitions provided from the
     defaults defined in the configuration. So you'll need to explicitly mark
     service as autowired or autoconfigured when doing an anonymous service
-    e.g.: ``inline(Foo::class)->autowire()->autoconfigure()``.
+    e.g.: ``service(Foo::class)->autowire()->autoconfigure()``.
 
 Using an anonymous service as a factory looks like this:
 
@@ -318,7 +323,7 @@ Using an anonymous service as a factory looks like this:
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->factory([inline(AnonymousBar::class), 'constructFoo'])
+                ->factory([service(AnonymousBar::class), 'constructFoo'])
         };
 
 Deprecating Services
