@@ -150,12 +150,6 @@ be called when ``App\Repository\DoctrineUserRepository`` is instantiated.
 All attributes on the parent service are shared with the child **except** for
 ``shared``, ``abstract`` and ``tags``. These are *not* inherited from the parent.
 
-.. note::
-
-    If you have a ``_defaults`` section in your file, all child services are required
-    to explicitly override those values to avoid ambiguity. You will see a clear
-    error message about this.
-
 .. tip::
 
     In the examples shown, the classes sharing the same configuration also
