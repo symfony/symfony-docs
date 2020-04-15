@@ -162,8 +162,8 @@ There is also a method to get the bytes stored at some position::
     b('नमस्ते')->bytesAt(0);   // [224]
     u('नमस्ते')->bytesAt(0);   // [224, 164, 168]
 
-    b('नमस्ते')->bytesAt(1);   // [168]
-    u('नमस्ते')->bytesAt(1);   // [224, 164, 184, 224, 165, 141]
+    b('नमस्ते')->bytesAt(1);   // [164]
+    u('नमस्ते')->bytesAt(1);   // [224, 164, 174]
 
 Methods Related to Length and White Spaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
