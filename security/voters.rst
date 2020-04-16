@@ -31,6 +31,17 @@ in the application, which can be: affirmative, consensus or unanimous.
 For more information take a look at
 :ref:`the section about access decision managers <components-security-access-decision-manager>`.
 
+The example used throughout this page features just two routes (``post_show`` and ``post_edit``).
+However, the main advantage of voters is that you can reuse them in *many* controllers. So if you
+really need to secure just one or two routes, you can get away without setting up voters, by
+doing the check right inside your controller(s)::
+
+    // src/AppBundle/Controller/PostController.php
+
+    if ($post->getOwner() !== $this->getUser()) {
+        throw new AccessDeniedException();
+    }
+
 The Voter Interface
 -------------------
 
