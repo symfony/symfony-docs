@@ -669,11 +669,11 @@ Securing other Services
 
 See :doc:`/security/securing_services`.
 
-Securing Individual Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setting Individual User Permissions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most applications require more specific access rules. For instance, a user
-should be able to only edit their own comments on a blog. Voters allow you
+should be able to only edit their *own* comments on a blog. Voters allow you
 to write *whatever* business logic you need to determine access. Using
 these voters is similar to the role-based access checks implemented in the
 previous chapters. Read :doc:`/security/voters` to learn how to implement
