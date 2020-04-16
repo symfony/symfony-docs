@@ -31,15 +31,20 @@ in the application, which can be: affirmative, consensus or unanimous.
 For more information take a look at
 :ref:`the section about access decision managers <components-security-access-decision-manager>`.
 
-The example used throughout this page features just two routes (``post_show`` and ``post_edit``).
-However, the main advantage of voters is that you can reuse them in *many* controllers. So if you
-really need to secure just one or two routes, you can get away without setting up voters, by
-doing the check right inside your controller(s)::
+.. tip::
 
-    // src/AppBundle/Controller/PostController.php
-    if ($post->getOwner() !== $this->getUser()) {
-        throw new AccessDeniedException();
-    }
+    The advantage of voters is that you can reuse them in *many* places and centralize
+    all permission logic. If you don't reuse permissions and the permissions are simple,
+    you might want to do the check in the controller directly and throw an ``AccessDeniedException``
+    to create the correct response::
+
+        // src/AppBundle/Controller/PostController.php
+        use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+        // ...
+        if ($post->getOwner() !== $this->getUser()) {
+            throw new AccessDeniedException();
+        }
 
 The Voter Interface
 -------------------
