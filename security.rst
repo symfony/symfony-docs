@@ -391,20 +391,24 @@ generated earlier, the roles are an array that's stored in the database, and
 every user is *always* given at least one role: ``ROLE_USER``::
 
     // src/Entity/User.php
+
     // ...
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    public function getRoles(): array
+    class User
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        /**
+         * @ORM\Column(type="json")
+         */
+        private $roles = [];
 
-        return array_unique($roles);
+        // ...
+        public function getRoles(): array
+        {
+            $roles = $this->roles;
+            // guarantee every user at least has ROLE_USER
+            $roles[] = 'ROLE_USER';
+
+            return array_unique($roles);
+        }
     }
 
 This is a nice default, but you can do *whatever* you want to determine which roles
@@ -659,6 +663,16 @@ Securing other Services
 
 See :doc:`/security/securing_services`.
 
+Securing Individual Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most applications require more specific access rules. For instance, a user
+should be able to only edit their own comments on a blog. Voters allow you
+to write *whatever* business logic you need to determine access. Using
+these voters is similar to the role-based access checks implemented in the
+previous chapters. Read :doc:`/security/voters` to learn how to implement
+your own voter.
+
 Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -695,22 +709,6 @@ like this:
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/security/access_control`.
-
-.. _security-secure-objects:
-
-Access Control Lists (ACLs): Securing individual Database Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Imagine you are designing a blog where users can comment on your posts. You
-also want a user to be able to edit their own comments, but not those of
-other users. Also, as the admin user, you want to be able to edit *all* comments.
-
-:doc:`Voters </security/voters>` allow you to write *whatever* business logic you
-need (e.g. the user can edit this post because they are the creator) to determine
-access. That's why voters are officially recommended by Symfony to create ACL-like
-security systems.
-
-If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 
 .. _retrieving-the-user-object:
 
@@ -1047,6 +1045,5 @@ Authorization (Denying Access)
 
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
-.. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
