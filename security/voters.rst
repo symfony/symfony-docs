@@ -37,7 +37,6 @@ really need to secure just one or two routes, you can get away without setting u
 doing the check right inside your controller(s)::
 
     // src/AppBundle/Controller/PostController.php
-
     if ($post->getOwner() !== $this->getUser()) {
         throw new AccessDeniedException();
     }
