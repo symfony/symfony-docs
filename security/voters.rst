@@ -40,11 +40,10 @@ For more information take a look at
     to create the correct response::
 
         // src/AppBundle/Controller/PostController.php
-        use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
         // ...
+
         if ($post->getOwner() !== $this->getUser()) {
-            throw new AccessDeniedException();
+            throw $this-> createAccessDeniedException();
         }
 
 The Voter Interface
