@@ -538,8 +538,17 @@ The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
+.. _reference-security-logout-success-handler:
+
 success_handler
 ~~~~~~~~~~~~~~~
+
+.. deprecated:: 5.1
+
+    This option is deprecated since Symfony 5.1. Register an
+    :doc:`event listener </event_dispatcher>` on the
+    :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
+    instead.
 
 **type**: ``string`` **default**: ``'security.logout.success_handler'``
 

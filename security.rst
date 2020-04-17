@@ -912,11 +912,93 @@ Next, you'll need to create a route for this URL (but not a controller):
 And that's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
 Symfony will un-authenticate the current user and redirect them.
 
+Customizing Logout
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``LogoutEvent`` was introduced in Symfony 5.1. Prior to this
+    version, you had to use a
+    :ref:`logout success handler <reference-security-logout-success-handler>`
+    to customize the logout.
+
+In some cases you need to execute extra logic upon logout (e.g. invalidate
+some tokens) or want to customize what happens after a logout. During
+logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
+is dispatched. Register an :doc:`event listener or subscriber </event_dispatcher>`
+to execute custom logic. The following information is available in the
+event class:
+
+``getToken()``
+    Returns the security token of the session that is about to be logged
+    out.
+``getRequest()``
+    Returns the current request.
+``getResponse()``
+    Returns a response, if it is already set by a custom listener. Use
+    ``setResponse()`` to configure a custom logout response.
+
+
 .. tip::
 
-    Need more control of what happens after logout? Add a ``success_handler`` key
-    under ``logout`` and point it to a service id of a class that implements
-    :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
+    Every Security firewall has its own event dispatcher
+    (``security.event_dispatcher.FIREWALLNAME``). The logout event is
+    dispatched on both the global and firewall dispatcher. You can register
+    on the firewall dispatcher if you want your listener to only be
+    executed for a specific firewall. For instance, if you have an ``api``
+    and ``main`` firewall, use this configuration to register only on the
+    logout event in the ``main`` firewall:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                # ...
+
+                App\EventListener\CustomLogoutSubscriber:
+                    tags:
+                        - name: kernel.event_subscriber
+                          dispacher: security.event_dispatcher.main
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- ... -->
+
+                    <service id="App\EventListener\CustomLogoutSubscriber">
+                        <tag name="kernel.event_subscriber"
+                             dispacher="security.event_dispatcher.main"
+                         />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use App\EventListener\CutomLogoutListener;
+            use App\EventListener\CutomLogoutSubscriber;
+            use Symfony\Component\Security\Http\Event\LogoutEvent;
+
+            return function(ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                $services->set(CustomLogoutSubscriber::class)
+                    ->tag('kernel.event_subscriber', [
+                        'dispatcher' => 'security.event_dispatcher.main',
+                    ]);
+            };
 
 .. _security-role-hierarchy:
 
