@@ -166,8 +166,7 @@ In those cases, use the
     // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
 
 If your JSON file is not on your local filesystem but is accessible over HTTP,
-you can use the ...
-:class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
+use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
 with the :doc:`HttpClient component </components/http_client>`::
 
     use Symfony\Component\Asset\Package;
@@ -178,6 +177,9 @@ with the :doc:`HttpClient component </components/http_client>`::
     $manifestUrl = 'https://cdn.example.com/rev-manifest.json';
     $package = new Package(new RemoteJsonManifestVersionStrategy($manifestUrl, $httpClient));
 
+.. versionadded:: 5.1
+
+    The ``RemoteJsonManifestVersionStrategy`` was introduced in Symfony 5.1.
 
 Custom Version Strategies
 .........................
