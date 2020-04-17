@@ -9,7 +9,7 @@
 
 When using predefined choice types from Symfony core or vendor libraries (i.e.
 :doc:`CountryType </reference/forms/types/country>`) this option lets you
-define a callable that take each choice as only argument and must return
+define a callable that takes each choice as the only argument and must return
 ``true`` to keep it or ``false`` to discard it::
 
     // src/Form/Type/AddressType.php
