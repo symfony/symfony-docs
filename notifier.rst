@@ -139,6 +139,7 @@ integration with these chat services:
 ==========  ================================  ===========================================================================
 Service     Package                           DSN
 ==========  ================================  ===========================================================================
+Discord     ``symfony/discord-notifier``      ``discord://TOKEN@default?webhook_id=ID``
 GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
 LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
@@ -156,7 +157,7 @@ Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:APIKEY@ENDPOINT?ch
 
 .. versionadded:: 5.2
 
-    The GoogleChat, LinkedIn and Zulip integrations were introduced in Symfony 5.2.
+    The GoogleChat, LinkedIn, Zulip and Discord integrations were introduced in Symfony 5.2.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
