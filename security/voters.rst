@@ -35,7 +35,7 @@ For more information take a look at
 
     The example used throughout this page features just two routes (``post_show`` and ``post_edit``).
     However, the advantage of voters is that you can reuse them in *many* places and centralize
-    all permission logic. If you don't reuse permissions and the rules are simple, you instead
+    all permission logic. If you don't reuse permissions or the rules are basic, you instead
     might want to do the check in the controller directly and throw an ``AccessDeniedException``
     to create the correct response::
 
