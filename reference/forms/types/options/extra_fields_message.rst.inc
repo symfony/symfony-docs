@@ -3,7 +3,7 @@
 
 .. versionadded:: 5.1
 
-The support for pluralization was introduced in Symfony 5.1.
+    Pluralization support was introduced in Symfony 5.1.
 
 **type**: ``string`` **default**: ``This form should not contain extra fields.``
 
