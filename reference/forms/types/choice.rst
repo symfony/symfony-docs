@@ -103,13 +103,12 @@ method::
             new Category('Cat3'),
             new Category('Cat4'),
         ],
-        // "name" is a property path, meaning Symfony will look for a public
-        // property or a public method like "getName()" to define the input
-        // string value that will be submitted by the form
+        // The value to be submitted by the form. `name` is a property path
+        // of the `Category` class
         'choice_value' => 'name',
-        // a callback to return the label for a given choice
-        // if a placeholder is used, its empty value (null) may be passed but
-        // its label is defined by its own "placeholder" option
+        // A property path or callback for the label. If the user selects the
+        // "placeholder" choice, `null` will be passed (but the placeholder's
+        // label is always taken from the `placeholder` option)
         'choice_label' => function(?Category $category) {
             return $category ? strtoupper($category->getName()) : '';
         },
