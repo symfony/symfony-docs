@@ -168,6 +168,9 @@ you to use literal text in the select statements:
     readable for translators and, as you can see in the ``other`` case, other
     parts of the sentence might be influenced by the variables.
 
+
+.. _component-translation-pluralization:
+
 Pluralization
 -------------
 
