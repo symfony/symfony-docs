@@ -1805,6 +1805,84 @@ with a locale. This can be done by defining a different prefix for each locale
             ;
         };
 
+.. _stateless-routing:
+
+Stateless Routes
+----------------
+
+.. versionadded:: 5.1
+
+    The ``stateless`` option was introduced in Symfony 5.1.
+
+Sometimes, when an HTTP response should be cached, it is important to ensure
+that can happen. However, whenever session is started during a request, Symfony
+turns the response into a private non-cacheable response.
+
+For details, see :doc:`/http_cache`.
+
+Routes can configure a ``stateless`` boolean option in order to declare that the
+session shouldn't be used when matching a request:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends AbstractController
+        {
+            /**
+             * @Route("/", name="homepage", stateless=true)
+             */
+            public function homepage()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        homepage:
+            controller: App\Controller\MainController::homepage
+            path: /
+            stateless: true
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+            <route id="homepage" controller="App\Controller\MainController::homepage" path="/" stateless="true"/>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use App\Controller\MainController;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('homepage', '/')
+                ->controller([MainController::class, 'homepage'])
+                ->stateless()
+            ;
+        };
+
+Now, if the session is used, the application will report it based on your
+``kernel.debug`` parameter:
+* ``enabled``: will throw an :class:`Symfony\\Component\\HttpKernel\\Exception\\UnexpectedSessionUsageException` exception
+* ``disabled``: will log a warning
+
+It well help you understanding and hopefully fixing unexpected behavior in your application.
+
 .. _routing-generating-urls:
 
 Generating URLs
