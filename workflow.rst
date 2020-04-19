@@ -596,6 +596,29 @@ transition. The value of this option is any valid expression created with the
             ],
         ]);
 
+.. note::
+
+    ``symfony/expression-language`` and ``symfony/security-core`` packages are required to
+    use ``guard`` configuration option.
+
+.. tip::
+
+    These expressions are available by default:
+
+    * ``subject``
+
+    These expressions are available if ``symfony/security-bundle`` is installed:
+
+    * ``is_anonymous``
+    * ``is_authenticated``
+    * ``is_fully_authenticated``
+    * ``is_granted``
+    * ``is_remember_me``
+
+    These expressions are available if ``symfony/validator`` is installed:
+
+    * ``is_valid``
+
 You can also use transition blockers to block and return a user-friendly error
 message when you stop a transition from happening.
 In the example we get this message from the
