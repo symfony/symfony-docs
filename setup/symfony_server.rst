@@ -110,10 +110,10 @@ root directory:
     $ cd my-project/
 
     # use a specific PHP version
-    $ echo "7.2" > .php-version
+    $ echo 7.2 > .php-version
 
     # use any PHP 7.x version available
-    $ echo "7" > .php-version
+    $ echo 7 > .php-version
 
 .. tip::
 
