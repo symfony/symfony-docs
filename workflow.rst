@@ -541,7 +541,7 @@ transition. The value of this option is any valid expression created with the
 
                     <framework:transition name="reject">
                         <!-- or any valid expression language with "subject" referring to the post -->
-                        <framework:guard>has_role("ROLE_ADMIN") and subject.isStatusReviewed()</framework:guard>
+                        <framework:guard>is_granted("ROLE_ADMIN") and subject.isStatusReviewed()</framework:guard>
                         <framework:from>reviewed</framework:from>
                         <framework:to>rejected</framework:to>
                     </framework:transition>
@@ -576,7 +576,7 @@ transition. The value of this option is any valid expression created with the
                         ],
                         'reject' => [
                             // or any valid expression language with "subject" referring to the post
-                            'guard' => 'has_role("ROLE_ADMIN") and subject.isStatusReviewed()',
+                            'guard' => 'is_granted("ROLE_ADMIN") and subject.isStatusReviewed()',
                             'from' => 'reviewed',
                             'to' => 'rejected',
                         ],
