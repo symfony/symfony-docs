@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-04-20T07:50:29Z
+
+@fabpot can you remember if these quotes were needed for some special case? Maybe for Windows? Thanks.
+
+---------------------------------------------------------------------------
+
+by seb-jean at 2020-04-20T07:52:32Z
+
+I am on Windows for information.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2020-04-20T07:54:47Z
+
+No, I don't think they are ever needed.
