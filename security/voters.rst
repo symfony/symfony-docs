@@ -20,8 +20,8 @@ this could look like, if you want to make a route accessible to the "owner" only
         throw $this->createAccessDeniedException();
     }
 
-In that sense, the following example used throughout this page is more like a
-minimal example for voters, rather than a real-world use case.
+In that sense, the following example used throughout this page is a minimal
+example for voters.
 
 .. tip::
 
