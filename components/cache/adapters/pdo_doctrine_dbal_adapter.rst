@@ -47,5 +47,5 @@ third, and forth parameters::
     calling its ``prune()`` method.
 
 .. _`PDO`: http://php.net/manual/en/class.pdo.php
-.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
+.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
