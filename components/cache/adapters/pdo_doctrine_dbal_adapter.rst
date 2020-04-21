@@ -48,5 +48,5 @@ your code.
     allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
     calling its ``prune()`` method.
 
-.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
+.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
