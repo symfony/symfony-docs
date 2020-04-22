@@ -215,12 +215,12 @@ new custom domain.
     Browse the http://127.0.0.1:7080 URL to get the full list of local project
     directories, their custom domains, and port numbers.
 
-When running console commands, add the ``HTTPS_PROXY`` env var to make custom
+When running console commands, add the ``https_proxy`` env var to make custom
 domains work:
 
 .. code-block:: terminal
 
-    $ HTTPS_PROXY=http://127.0.0.1:7080 curl https://my-domain.wip
+    $ https_proxy=http://127.0.0.1:7080 curl https://my-domain.wip
 
 .. tip::
 
