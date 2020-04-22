@@ -63,13 +63,13 @@ Enabling PHP-FPM
 When the server starts it will check for common patterns like ``web/app.php``,
 ``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
 server will automatically start with PHP-FPM enabled. Otherwise the server will
-start without PHP-FPM and will show a ``Page not found`` page when trying to 
+start without PHP-FPM and will show a ``Page not found`` page when trying to
 access a ``.php`` file in the browser.
 
 .. tip::
 
     When an ``index.html`` and a front controller like e.g. ``index.php`` are
-    both present the server will still start with PHP-FPM enabled but the 
+    both present the server will still start with PHP-FPM enabled but the
     ``index.html`` will take precedence over the front controller. This means
     when an ``index.html`` file is present in ``public`` or ``web``, it will be
     displayed instead of the ``index.php`` which would show e.g. the Symfony
@@ -221,6 +221,12 @@ domains work:
 .. code-block:: terminal
 
     $ https_proxy=http://127.0.0.1:7080 curl https://my-domain.wip
+
+.. note::
+
+    Although env var names are always defined in uppercase, the ``https_proxy``
+    env var `is treated differently`_ than other env vars and its name must be
+    spelled in lowercase.
 
 .. tip::
 
@@ -410,3 +416,4 @@ that Composer will also set the stability to ``dev`` for all root dependencies):
 .. _`proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
+.. `is treated differently`: https://ec.haxx.se/usingcurl/usingcurl-proxies#http_proxy-in-lower-case-only
