@@ -1,5 +1,5 @@
 How to Add Secure Password Reset Functionality
-==================================================
+==============================================
 
 Using `MakerBundle`_ & `Symfony Cast's Reset Password Bundle`_ you can create a
 secure out of the box solution to handle forgotten passwords.
@@ -7,11 +7,11 @@ secure out of the box solution to handle forgotten passwords.
 .. caution::
 
     Make sure you have created a ``User`` class with a getter method to retrieve
-    the users unique email address. The :doc:`Security Guide </security>` will help you
-    install security.
+    the users unique email address. The :doc:`Security Guide </security>` will
+    help you install security and create your user class.
 
 Bootstrap reset password functionality
----------------------------------------------
+--------------------------------------
 
 .. code-block:: terminal
 
