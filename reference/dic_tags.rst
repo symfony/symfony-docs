@@ -14,6 +14,8 @@ Tag Name                                  Usage
 `auto_alias`_                             Define aliases based on the value of container parameters
 `console.command`_                        Add a command
 `container.hot_path`_                     Add to list of always needed services
+`container.no_preload`_                   Remove a class from the list of classes preloaded by PHP
+`container.preload`_                      Add some class to the list of classes preloaded by PHP
 `controller.argument_value_resolver`_     Register a value resolver for controller arguments such as ``Request``
 `data_collector`_                         Create a class that collects custom data for the profiler
 `doctrine.event_listener`_                Add a Doctrine event listener
@@ -211,6 +213,109 @@ plain inlined ``include_once``. The benefit is a complete bypass of the autoload
 for services and their class hierarchy. The result is as significant performance improvement.
 
 Use this tag with great caution, you have to be sure that the tagged service is always used.
+
+.. _dic-tags-container-nopreload:
+
+container.no_preload
+--------------------
+
+**Purpose**: Remove a class from the list of classes preloaded by PHP
+
+.. versionadded:: 5.1
+
+    The ``container.no_preload`` tag was introduced in Symfony 5.1.
+
+Add this tag to a service and its class won't be preloaded when using
+`PHP class preloading`_:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\SomeNamespace\SomeService:
+                tags: ['container.no_preload']
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\SomeNamespace\SomeService">
+                    <tag name="container.no_preload"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\SomeNamespace\SomeService;
+
+        $container
+            ->register(SomeService::class)
+            ->addTag('container.no_preload')
+        ;
+
+.. _dic-tags-container-preload:
+
+container.preload
+-----------------
+
+**Purpose**: Add some class to the list of classes preloaded by PHP
+
+.. versionadded:: 5.1
+
+    The ``container.preload`` tag was introduced in Symfony 5.1.
+
+When using `PHP class preloading`_, this tag allows you to define which PHP
+classes should be preloaded. This can improve performance by making some of the
+classes used by your service always available for all requests (until the server
+is restarted):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\SomeNamespace\SomeService:
+                tags:
+                    - { name: 'container.preload', class: 'App\SomeClass' }
+                    - { name: 'container.preload', class: 'App\Some\OtherClass' }
+                    # ...
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\SomeNamespace\SomeService">
+                    <tag name="container.preload" class="App\SomeClass"/>
+                    <tag name="container.preload" class="App\Some\OtherClass"/>
+                    <!-- ... -->
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Some\OtherClass;
+        use App\SomeClass;
+        use App\SomeNamespace\SomeService;
+
+        $container
+            ->register(SomeService::class)
+            ->addTag('container.preload', ['class' => SomeClass::class)
+            ->addTag('container.preload', ['class' => OtherClass::class)
+            // ...
+        ;
 
 controller.argument_value_resolver
 ----------------------------------
@@ -1214,3 +1319,4 @@ Bridge.
 .. _`Twig's documentation`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
 .. _`SwiftMailer's Plugin Documentation`: https://swiftmailer.symfony.com/docs/plugins.html
 .. _`Twig Loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
+.. _`PHP class preloading`: https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.preload
