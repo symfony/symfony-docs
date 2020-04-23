@@ -1,4 +1,4 @@
-How To Add Secure Password Reset Functionality
+How to Add Secure Password Reset Functionality
 ==================================================
 
 Using `MakerBundle`_ & `Symfony Cast's Reset Password Bundle`_ you can create a
