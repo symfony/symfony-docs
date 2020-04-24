@@ -24,7 +24,20 @@ To use it, declare it as a service:
 
         # config/services.yaml
         services:
-            Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler: ~
+            Psr\Log\NullLogger:
+                class: Psr\Log\NullLogger
+        
+            'http_client_without_logs':
+                class: Symfony\Component\HttpClient\CurlHttpClient
+                calls:
+                    - [setLogger, ['@Psr\Log\NullLogger']]
+        
+            Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler:
+                class: Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler
+                arguments:
+                    - 'http://elasticsearch:9200'
+                    - 'monolog'
+                    - '@http_client_without_logs'
 
     .. code-block:: xml
 
