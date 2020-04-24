@@ -176,12 +176,12 @@ each time you ask for it.
                     <!-- Default configuration for services in *this* file -->
                     <defaults autowire="true" autoconfigure="true"/>
 
+                    <!-- makes classes in src/ available to be used as services -->
+                    <!-- this creates a service per class whose id is the fully-qualified class name -->
                     <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
 
-                    <!-- makes classes in src/AppBundle available to be used as services -->
-                    <prototype namespace="AppBundle\"
-                        resource="../../src/AppBundle/*"
-                        exclude="../../src/AppBundle/{Entity,Repository}"/>
+                    <!-- ... -->
+
                 </services>
             </container>
 
