@@ -159,6 +159,7 @@ to write logs using the :phpfunction:`syslog` function:
 This defines a *stack* of handlers and each handler is called in the order that it's
 defined.
 
+
 Handlers that Modify Log Entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -356,6 +357,106 @@ If you want to use in your own services a pre-configured logger which uses a
 specific channel (``app`` by default), you can either :ref:`autowire monolog channels <monolog-autowire-channels>`
 or use the ``monolog.logger`` tag  with the ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
+
+Adding stacktraces from exceptions
+----------------------------------
+
+To include stacktraces to your logs, set the `include_stacktraces` option on the "stream" handler to true and include the exception key in your logging statement:
+
+
+```php
+$logger->error($exception->getMessage(), ['exception' => $exception]);
+```
+
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/prod/monolog.yaml
+        monolog:
+            handlers:
+                filter_for_errors:
+                    type: fingers_crossed
+                    # if *one* log is error or higher, pass *all* to file_log
+                    action_level: error
+                    handler: file_log
+
+                # now passed *all* logs, but only if one log is error or higher
+                file_log:
+                    type: stream
+                    include_stacktraces: true
+                    path: "%kernel.logs_dir%/%kernel.environment%.log"
+
+                # still passed *all* logs, and still only logs error or higher
+                syslog_handler:
+                    type: syslog
+                    level: error
+
+    .. code-block:: xml
+
+        <!-- config/packages/prod/monolog.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/monolog
+                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
+
+            <monolog:config>
+                <!-- if *one* log is error or higher, pass *all* to file_log -->
+                <monolog:handler name="filter_for_errors"
+                    type="fingers_crossed"
+                    action-level="error"
+                    handler="file_log"
+                />
+
+                <!-- now passed *all* logs, but only if one log is error or higher -->
+                <monolog:handler name="file_log"
+                    type="stream"
+                    path="%kernel.logs_dir%/%kernel.environment%.log"
+                    level="debug"
+                    include-stacktraces="true"
+                />
+
+                <!-- still passed *all* logs, and still only logs error or higher -->
+                <monolog:handler name="syslog_handler"
+                    type="syslog"
+                    level="error"
+                />
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/prod/monolog.php
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'filter_for_errors' => [
+                    'type'         => 'fingers_crossed',
+                    // if *one* log is error or higher, pass *all* to file_log
+                    'action_level' => 'error',
+                    'handler'      => 'file_log',
+                ],
+
+                // now passed *all* logs, but only if one log is error or higher
+                'file_log' => [
+                    'type'  => 'stream',
+                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
+                    'level' => 'debug',
+                    'include_stacktraces' => true
+                ],
+
+                // still passed *all* logs, and still only logs error or higher
+                'syslog_handler' => [
+                    'type'  => 'syslog',
+                    'level' => 'error',
+                ],
+            ],
+        ]);
+
 
 Adding extra Data to each Log (e.g. a unique request token)
 -----------------------------------------------------------
