@@ -459,9 +459,15 @@ Before using validation, add support for it in your application:
 
     $ composer require symfony/validator
 
-Validation is done by adding a set of rules (called constraints) to a class. To
-see this in action, add validation constraints so that the ``task`` field cannot
-be empty and the ``dueDate`` field cannot be empty and must be a valid \DateTime
+Validation is done by adding a set of rules, called (validation) constraints,
+to a class.
+
+There are two approaches - you can either add the constraints to the entity,
+or you can add the constraints to the form.
+
+To see the first approach - adding constraints to the entity - in action, 
+add the validation constraints, so that the ``task`` field cannot be empty,
+and the ``dueDate`` field cannot be empty, and must be a valid \DateTime
 object.
 
 .. configuration-block::
@@ -544,9 +550,11 @@ object.
         }
 
 That's it! If you re-submit the form with invalid data, you'll see the
-corresponding errors printed out with the form. Read the
-:doc:`Symfony validation documentation </validation>` to learn more about this
-powerful feature.
+corresponding errors printed out with the form. 
+
+To see the second approach - adding constraints to the form and to
+learn more about the validation constraints, please refer to the
+:doc:`Symfony validation documentation </validation>`.
 
 Other Common Form Features
 --------------------------
