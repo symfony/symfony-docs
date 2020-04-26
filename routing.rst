@@ -354,7 +354,7 @@ evaluates them:
     blog_show         ANY      ANY      ANY    /blog/{slug}
     ----------------  -------  -------  -----  --------------------------------------------
 
-You can sort the routes by name or path using the ``--sort`` option
+You can sort the routes by name, path or priority using the ``--sort`` option
 
 .. code-block:: terminal
 
