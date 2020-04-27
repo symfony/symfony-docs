@@ -405,7 +405,7 @@ libraries are used in your application:
 
     {# templates/form/custom_types.html.twig #}
     {% block postal_address_row %}
-        {% for child in form.children|filter(v => not v.rendered) -%}
+        {% for child in form.children|filter(child => not child.rendered) %}
             <div class="form-group">
                 {{ form_label(child) }}
                 {{ form_widget(child) }}
