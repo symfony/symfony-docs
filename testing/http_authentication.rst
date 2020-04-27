@@ -12,6 +12,71 @@ OAuth authentication services.
 This article explains the two most popular techniques to avoid these issues and
 create fast tests when using authentication.
 
+Improving Password Encoder Speed in Tests
+-----------------------------------------
+
+By default, password encoders are resource intensive and take time. This is
+important to generate secure password hashes. In tests however, secure hashes
+are not important, waste resources and increase test times. You can reduce
+the *work factor* for your encoders by adding the following *only in your test
+environment*:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/test/security.yaml
+        encoders:
+                # Use your user class name here
+                App\Entity\User:
+                    algorithm: auto # This should be the same value as in config/packages/security.yaml
+                    cost: 4 # Lowest possible value for bcrypt
+                    time_cost: 3 # Lowest possible value for argon
+                    memory_cost: 10 # Lowest possible value for argon
+
+    .. code-block:: xml
+
+        <!-- config/packages/test/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- class: Use your user class name here -->
+                <!-- algorithm: This should be the same value as in config/packages/security.yaml -->
+                <!-- cost: Lowest possible value for bcrypt -->
+                <!-- time_cost: Lowest possible value for argon -->
+                <!-- memory_cost: Lowest possible value for argon -->
+                <encoder
+                    class="App\Entity\User"
+                    algorithm="auto"
+                    cost="4"
+                    time_cost="3"
+                    memory_cost="10"
+                />
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/test/security.php
+        use App\Entity\User;
+
+        $container->loadFromExtension('security', [
+            'encoders' => [
+                // Use your user class name here
+                User::class => [
+                    'algorithm' => 'auto', // This should be the same value as in config/packages/security.yaml
+                    'cost' => 4, // Lowest possible value for bcrypt
+                    'time_cost' => 3, // Lowest possible value for argon
+                    'memory_cost' => 10, // Lowest possible value for argon
+                ]
+            ],
+        ]);
+
 Using a Faster Authentication Mechanism Only for Tests
 ------------------------------------------------------
 
