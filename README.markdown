@@ -1,7 +1,24 @@
-Symfony Documentation
-=====================
+<div align="center">
+  <a href="https://symfony.com/doc/current/index.html" target="_blank">
+    <img src="https://symfony.com/logos/symfony_black_02.svg">
+  </a>
+</div>
 
-This documentation is rendered online at https://symfony.com/doc/current/
+<div align="center">
+  <h3>
+    <a href="https://symfony.com/doc/current/index.html">
+      Website
+    </a>
+    <span> | </span>
+    <a href="https://symfony.com/doc/current/contributing/documentation/overview.html">
+      Contributing
+    </a>
+    <span> | </span>
+    <a href="https://symfonycasts.com">
+      Screencasts
+    </a>
+  </h3>
+</div>
 
 Contributing
 ------------
@@ -11,8 +28,8 @@ Symfony documentation, please read
 [Contributing to the Documentation](https://symfony.com/doc/current/contributing/documentation/overview.html)
 
 > **Note**
-> Unless you're documenting a feature that was introduced *after* Symfony 3.4
-> (e.g. in Symfony 4.4), all pull requests must be based off of the **3.4** branch,
+> Unless you are documenting a feature that was introduced *after* Symfony 3.4
+> (e.g. in Symfony 4.4), all pull requests must be based on the **3.4** branch,
 > **not** the master or older branches.
 
 SymfonyCloud
@@ -24,7 +41,7 @@ server where Pull Requests are built and can be reviewed by contributors.
 Docker
 ------
 
-You can build the doc locally with these commands:
+You can build the documentation project locally with these commands:
 
 ```bash
 # build the image...
