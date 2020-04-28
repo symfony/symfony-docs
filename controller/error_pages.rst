@@ -212,6 +212,7 @@ contents, create a new Normalizer that supports the ``FlattenException`` input::
     # src/App/Serializer/MyCustomProblemNormalizer.php
     namespace App\Serializer;
 
+    use Symfony\Component\ErrorHandler\Exception\FlattenException;
     use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
     class MyCustomProblemNormalizer implements NormalizerInterface
