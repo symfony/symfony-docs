@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by jspaetzel at 2020-04-29T02:10:26Z
+
+https://github.com/symfony/symfony/blob/5.0/src/Symfony/Component/DependencyInjection/ServiceSubscriberInterface.php
+does not exist, should be
+https://github.com/symfony/symfony/blob/5.0/src/Symfony/Contracts/Service/ServiceSubscriberInterface.php
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-04-29T15:12:38Z
+
+Good catch! We fixed several occurrences of the deprecated interface ... but this one was missing. Thanks! and congrats on your first Symfony Docs contribution!
