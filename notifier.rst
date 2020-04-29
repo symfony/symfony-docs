@@ -52,18 +52,19 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-========  =============================  ===========================================
-Service   Package                        DSN
-========  =============================  ===========================================
-Twilio    ``symfony/twilio-notifier``    ``twilio://SID:TOKEN@default?from=FROM``
-Nexmo     ``symfony/nexmo-notifier``     ``nexmo://KEY:SECRET@default?from=FROM``
-OvhCloud  ``symfony/ovhcloud-notifier``  ``ovhcloud://KEY:SECRET@default?from=FROM``
-Sinch     ``symfony/sinch-notifier``     ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-========  =============================  ===========================================
+==========  ===============================  ====================================================
+Service     Package                          DSN
+==========  ===============================  ====================================================
+Twilio      ``symfony/twilio-notifier``      ``twilio://SID:TOKEN@default?from=FROM``
+Nexmo       ``symfony/nexmo-notifier``       ``nexmo://KEY:SECRET@default?from=FROM``
+OvhCloud    ``symfony/ovhcloud-notifier``    ``ovhcloud://KEY:SECRET@default?from=FROM``
+Sinch       ``symfony/sinch-notifier``       ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+FreeMobile  ``symfony/freemobile-notifier``  ``freemobile://LOGIN:PASS@default?phone=PHONE``
+==========  ===============================  ====================================================
 
 .. versionadded:: 5.1
 
-    The OvhCloud and Sinch integrations were introduced in Symfony 5.1.
+    The OvhCloud, Sinch and FreeMobile integrations were introduced in Symfony 5.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
