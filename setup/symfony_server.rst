@@ -181,19 +181,28 @@ local IP. However, sometimes it is preferable to associate a domain name to them
 Setting up the Local Proxy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Local domains are possible thanks to a local proxy provided by the Symfony
-server. First, start the proxy:
+Local domains are possible thanks to a local proxy provided by the Symfony server.
+If this is the first time you run the proxy, you must configure it as follows:
+
+#. Open the **proxy settings** of your operating system:
+
+   * `Proxy settings in Windows`_;
+   * `Proxy settings in macOS`_;
+   * `Proxy settings in Ubuntu`_.
+
+#. Set the following URL as the value of the **Automatic Proxy Configuration**:
+   ``http://127.0.0.1:7080/proxy.pac``
+
+Now run this command to start the proxy:
 
 .. code-block:: terminal
 
     $ symfony proxy:start
 
-If this is the first time you run the proxy, you must configure it as follows:
+.. note::
 
-* Open the **proxy settings** of your operating system (`proxy settings in Windows`_,
-  `proxy settings in macOS`_, `proxy settings in Ubuntu`_);
-* Set the following URL as the value of the **Automatic Proxy Configuration**:
-  ``http://127.0.0.1:7080/proxy.pac``
+    Some browsers (e.g. Chrome) require a full restart after starting the proxy.
+    Otherwise, you'll see a *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``).
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -362,7 +371,7 @@ debug any issues.
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
-.. _`proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
-.. _`proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
-.. _`proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
+.. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
+.. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
+.. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
 .. _`is treated differently`: https://ec.haxx.se/usingcurl/usingcurl-proxies#http_proxy-in-lower-case-only
