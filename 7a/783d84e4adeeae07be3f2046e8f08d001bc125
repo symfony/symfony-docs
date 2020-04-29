@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by 94noni at 2020-04-28T18:01:53Z
+
+@wouterj ok lets add a note then
+
+> is there a reason btw to make it special? Can't it set the phone number dynamically?
+
+This french phone provider allow to send free sms to your personal phone number
+
+edit: personal account :s
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-04-29T09:02:51Z
+
+I'm not sure about adding that note about Free Mobile. It's an internal detail of this service. Yes, I know it's important that you cannot send SMS but to yourself ... but what are the chances of being a client of that company and not knowing that?
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-04-29T09:18:58Z
+
+@javiereguiluz I see your point, maybe in the code itself then instead of the documentation?
+(I will remove it from here)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-04-29T09:21:04Z
+
+@noniagriconomie yes! Hopefully, in the code, we can return a perfect error message when someone tries to send a SMS to explain them that you can only send SMS to yourself.
