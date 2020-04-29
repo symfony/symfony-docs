@@ -1,24 +1,28 @@
-<div align="center">
+<p align="center">
   <a href="https://symfony.com/doc/current/index.html" target="_blank">
     <img src="https://symfony.com/logos/symfony_black_02.svg">
   </a>
-</div>
+</p>
 
-<div align="center">
-  <h3>
-    <a href="https://symfony.com/doc/current/index.html">
-      Website
-    </a>
-    <span> | </span>
-    <a href="https://symfony.com/doc/current/contributing/documentation/overview.html">
-      Contributing
-    </a>
-    <span> | </span>
-    <a href="https://symfonycasts.com">
-      Screencasts
-    </a>
-  </h3>
-</div>
+<h3 align="center">The official Symfony documentation.</h3>
+
+<p align="center">
+  <a href="https://symfony.com/doc/current/index.html">
+    Online version
+  </a>
+  <span> | </span>
+  <a href="https://symfonycasts.com">
+    Screencasts
+  </a>
+  <span> | </span>
+  <a href="https://symfony.com/doc/current/contributing/documentation/overview.html">
+    Contributing
+  </a>
+  <span> | </span>
+  <a href="https://github.com/symfony/symfony">
+    Code repository
+  </a>
+</p>
 
 Contributing
 ------------
