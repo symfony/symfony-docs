@@ -65,7 +65,7 @@ through a **Service Locator**, a separate lazy-loaded container.
 Defining a Service Subscriber
 -----------------------------
 
-First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`.
+First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`.
 Use its ``getSubscribedServices()`` method to include as many services as needed
 in the service subscriber and change the type hint of the container to
 a PSR-11 ``ContainerInterface``::
