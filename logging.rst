@@ -364,9 +364,7 @@ Adding Stacktraces from Exceptions
 To include stacktraces to your logs, set the ``include_stacktraces`` option on the "stream" handler to true and include the exception key in your logging statement::
 
 
-```php
-$logger->error($exception->getMessage(), ['exception' => $exception]);
-```
+    $logger->error($exception->getMessage(), ['exception' => $exception]);
 
 .. configuration-block::
 
