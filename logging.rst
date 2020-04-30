@@ -368,7 +368,6 @@ To include stacktraces to your logs, set the ``include_stacktraces`` option on t
 $logger->error($exception->getMessage(), ['exception' => $exception]);
 ```
 
-
 .. configuration-block::
 
     .. code-block:: yaml
