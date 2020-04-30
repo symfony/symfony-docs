@@ -361,7 +361,7 @@ or use the ``monolog.logger`` tag  with the ``channel`` property as explained in
 Adding Stacktraces from Exceptions
 ----------------------------------
 
-To include stacktraces to your logs, set the `include_stacktraces` option on the "stream" handler to true and include the exception key in your logging statement:
+To include stacktraces to your logs, set the ``include_stacktraces`` option on the "stream" handler to true and include the exception key in your logging statement::
 
 
 ```php
