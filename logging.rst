@@ -159,7 +159,6 @@ to write logs using the :phpfunction:`syslog` function:
 This defines a *stack* of handlers and each handler is called in the order that it's
 defined.
 
-
 Handlers that Modify Log Entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
