@@ -358,7 +358,7 @@ specific channel (``app`` by default), you can either :ref:`autowire monolog cha
 or use the ``monolog.logger`` tag  with the ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
 
-Adding stacktraces from exceptions
+Adding Stacktraces from Exceptions
 ----------------------------------
 
 To include stacktraces to your logs, set the `include_stacktraces` option on the "stream" handler to true and include the exception key in your logging statement:
