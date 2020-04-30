@@ -454,7 +454,6 @@ To include stacktraces to your logs, set the ``include_stacktraces`` option on t
             ],
         ]);
 
-
 Adding extra Data to each Log (e.g. a unique request token)
 -----------------------------------------------------------
 
