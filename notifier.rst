@@ -64,7 +64,8 @@ Sinch       ``symfony/sinch-notifier``         ``sinch://ACCOUNT_ID:AUTH_TOKEN@d
 FreeMobile  ``symfony/free-mobile-notifier``   ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 Smsapi      ``symfony/smsapi-notifier``        ``smsapi://TOKEN@default?from=FROM``
 Infobip     ``symfony/infobip-notifier``     ``infobip://TOKEN@default?from=FROM``
-==========  ================================  ====================================================
+Mobyt       ``symfony/mobyt-notifier``       ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
+==========  ===============================  ====================================================
 
 .. versionadded:: 5.1
 
@@ -72,7 +73,7 @@ Infobip     ``symfony/infobip-notifier``     ``infobip://TOKEN@default?from=FROM
 
 .. versionadded:: 5.2
 
-    The Smsapi and Infobip integrations were introduced in Symfony 5.2.
+    The Smsapi, Infobip and Mobyt integrations were introduced in Symfony 5.2.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
