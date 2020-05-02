@@ -146,11 +146,13 @@ I/O operations and increases the application performance.
 Your bundles can also add their own classes into this file thanks to the
 ``addClassesToCompile()`` and ``addAnnotatedClassesToCompile()`` methods (both
 work in the same way, but the second one is for classes that contain PHP
-annotations). Define the classes to compile as an array of their fully qualified
-class names::
+annotations). These methods are provied by the ``Extension`` class from the
+HttpKernel component. Define the classes to compile as an array of their
+fully qualified class names::
 
     use AppBundle\Manager\UserManager;
     use AppBundle\Utils\Slugger;
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
     // ...
     public function load(array $configs, ContainerBuilder $container)
@@ -181,6 +183,8 @@ class names::
     The option to add classes to compile using patterns was introduced in Symfony 3.2.
 
 The classes to compile can also be added using file path patterns::
+
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
     // ...
     public function load(array $configs, ContainerBuilder $container)
