@@ -90,9 +90,6 @@ instead of mutating the object they were called on::
     {
         private $logger;
 
-        /**
-         * @return static
-         */
         public function withLogger(LoggerInterface $logger)
         {
             $new = clone $this;
@@ -146,3 +143,19 @@ The configuration to tell the container it should do so would be like:
 
         $container->register(MessageGenerator::class)
             ->addMethodCall('withLogger', [new Reference('logger')], true);
+
+If autowire is enabled, you can also use annotations; with the previous exemple it would be::
+
+    /**
+     * @required
+     * @return static
+     */
+    public function withLogger(LoggerInterface $logger)
+    {
+        $new = clone $this;
+        $new->logger = $logger;
+
+        return $new;
+    }
+
+You can also leverage the PHP8 ``static`` return type instead of the ``@return static`` annotation. Note if you don't want a method with a PHP8 ``static`` return type and a ``@required`` annotation to behave as a wither, you can add a ``@return $this`` annotation to disable the *returns clone* feature.
