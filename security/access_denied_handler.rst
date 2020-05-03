@@ -70,3 +70,8 @@ configure it under your firewall:
 
 That's it! Any ``AccessDeniedException`` thrown by code under the ``main`` firewall
 will now be handled by your service.
+
+.. note::
+
+    The ``AccessDeniedHandler`` will not be invoked if an anonymous user is trying to
+    access a protected resource. That will be an ``InsufficientAuthenticationException``.
