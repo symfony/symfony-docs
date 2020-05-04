@@ -63,6 +63,7 @@ OvhCloud    ``symfony/ovhcloud-notifier``      ``ovhcloud://APPLICATION_KEY:APPL
 Sinch       ``symfony/sinch-notifier``         ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 FreeMobile  ``symfony/free-mobile-notifier``   ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 Smsapi      ``symfony/smsapi-notifier``        ``smsapi://TOKEN@default?from=FROM``
+Infobip     ``symfony/infobip-notifier``     ``infobip://TOKEN@default?from=FROM``
 ==========  ================================  ====================================================
 
 .. versionadded:: 5.1
@@ -71,7 +72,7 @@ Smsapi      ``symfony/smsapi-notifier``        ``smsapi://TOKEN@default?from=FRO
 
 .. versionadded:: 5.2
 
-    The Smsapi integration was introduced in Symfony 5.2.
+    The Smsapi and Infobip integrations were introduced in Symfony 5.2.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
