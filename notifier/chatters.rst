@@ -32,11 +32,15 @@ you to send messages to chat services like Slack or Telegram::
                 // default transport (the first one configured)
                 ->transport('slack');
 
-            $chatter->send($message);
+            $sentMessage = $chatter->send($message);
 
             // ...
         }
     }
+
+The ``$sentMessage`` (instance of
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage`) returned by
+``send()`` contains info about the sent message.
 
 .. seealso::
 
@@ -46,7 +50,7 @@ you to send messages to chat services like Slack or Telegram::
 Adding Interactions to a Slack Message
 --------------------------------------
 
-With a Slack message, you can use the 
+With a Slack message, you can use the
 :class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions` to add
 some interactive options called `Block elements`_::
 
