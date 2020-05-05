@@ -95,6 +95,10 @@ Now, you can start fixing the notices:
 Once you fixed them all, the command ends with ``0`` (success) and you're
 done!
 
+.. note::
+
+    Since some deprecations may be triggered during the cache warm-up, it's recommanded to run your final deprecation check with an empty cache.
+
 .. sidebar:: Using the Weak Deprecations Mode
 
     Sometimes, you can't fix all deprecations (e.g. something was deprecated
