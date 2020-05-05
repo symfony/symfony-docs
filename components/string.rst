@@ -133,10 +133,18 @@ There are also some specialized constructors::
 
     // ByteString can create a random string of the given length
     $foo = ByteString::fromRandom(12);
+    // by default, random strings use A-Za-z0-9 characters; you can restrict
+    // the characters to use with the second optional argument
+    $foo = ByteString::fromRandom(6, 'AEIOU0123456789');
+    $foo = ByteString::fromRandom(10, 'qwertyuiop');
 
     // CodePointString and UnicodeString can create a string from code points
     $foo = UnicodeString::fromCodePoints(0x928, 0x92E, 0x938, 0x94D, 0x924, 0x947);
     // equivalent to: $foo = new UnicodeString('नमस्ते');
+
+.. versionadded:: 5.1
+
+    The second argument of ``ByteString::fromRandom()`` was introduced in Symfony 5.1.
 
 Methods to Transform String Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
