@@ -61,9 +61,6 @@ What did this recipe do? In addition to automatically enabling the feature in
 ``config/packages/twig.yaml``
     A configuration file that sets up Twig with sensible defaults.
 
-``config/routes/dev/twig.yaml``
-    A route that helps you debug your error pages.
-
 ``templates/``
     This is the directory where template files will live. The recipe also added
     a ``base.html.twig`` layout file.
