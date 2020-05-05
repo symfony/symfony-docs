@@ -37,6 +37,9 @@ using these deprecated features in the last version before the major (e.g.
 you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
 (e.g. 4.4) so that you can see *all* the deprecations.
 
+Deprecations in Web Debug Toolbar
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To help you find deprecations, notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
 :ref:`dev environment <configuration-environments>`
@@ -84,7 +87,7 @@ Now, you can start fixing the notices:
     OK (10 tests, 20 assertions)
 
     Remaining deprecation notices (6)
-    
+
     The "request" service is deprecated and will be removed in 3.0. Add a type-hint for
     Symfony\Component\HttpFoundation\Request to your controller parameters to retrieve the
     request instead: 6x
@@ -123,6 +126,48 @@ done!
     .. code-block:: terminal
 
         $ SYMFONY_DEPRECATIONS_HELPER=max[total]=999999 php ./bin/phpunit
+
+Deprecations in logs
+~~~~~~~~~~~~~~~~~~~~
+If you use the Symfony default configuration, a part of the ``monolog`` configuration for the prod environment can be uncommented allowing to log deprecations in a ``prod.deprecations.log`` file:
+
+.. code-block:: yaml
+
+    monolog:
+        handlers:
+            # ...
+            deprecation:
+                type: stream
+                path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+            deprecation_filter:
+                type: filter
+                handler: deprecation
+                max_level: info
+                channels: ["php"]
+
+Under the hood, deprecations are logged on the ``php`` Monolog channel at ``INFO`` psr-3 level. But as soon as an extra ``deprecation`` channel exists; deprecations are logged into this channel instead. So you can log deprecations on this dedicated channel and make the ``deprecation_filter`` useless:
+
+.. code-block:: yaml
+
+    monolog:
+        channels:
+            - deprecation
+        handlers:
+            # ...
+            deprecation:
+                type: stream
+                channels: ["deprecation"]
+                path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
+
+.. versionadded:: 5.1
+
+    The deprecation logging into a dedicated channel was introduced in Symfony 5.1.
+
+Road to Code Deprecation Free
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Track the deprecations from the PHPUnit bridge and/or (depending on your test coverage) browse your application and note the deprecations on the web debug toolbar.
+2. Deploy your code (that should not have deprecations anymore) on production and check from time to time the content of this log file to be aware of the remaining deprecations you have to change/update.
+3. When you're sure there is no more deprecations, follow the steps below to upgrade your application.
 
 .. _upgrade-major-symfony-composer:
 
