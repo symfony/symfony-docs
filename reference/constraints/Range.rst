@@ -56,8 +56,7 @@ you might add the following:
                     - Range:
                         min: 120
                         max: 180
-                        minMessage: You must be at least {{ limit }}cm tall to enter
-                        maxMessage: You cannot be taller than {{ limit }}cm to enter
+                        notInRangeMessage: You must be between {{ min }}cm and {{ max }}cm tall to enter
 
     .. code-block:: xml
 
@@ -72,8 +71,7 @@ you might add the following:
                     <constraint name="Range">
                         <option name="min">120</option>
                         <option name="max">180</option>
-                        <option name="minMessage">You must be at least {{ limit }}cm tall to enter</option>
-                        <option name="maxMessage">You cannot be taller than {{ limit }}cm to enter</option>
+                        <option name="notInRangeMessage">You must be between {{ min }}cm and {{ max }}cm tall to enter</option>
                     </constraint>
                 </property>
             </class>
@@ -94,8 +92,7 @@ you might add the following:
                 $metadata->addPropertyConstraint('height', new Assert\Range([
                     'min' => 120,
                     'max' => 180,
-                    'minMessage' => 'You must be at least {{ limit }}cm tall to enter',
-                    'maxMessage' => 'You cannot be taller than {{ limit }}cm to enter',
+                    'notInRangeMessage' => 'You must be between {{ min }}cm and {{ max }}cm tall to enter',
                 ]));
             }
         }
@@ -350,7 +347,8 @@ maxMessage
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
 The message that will be shown if the underlying value is more than the
-`max`_ option.
+`max`_ option, and no `min`_ option has been defined (if both are defined, use
+`notInRangeMessage`_).
 
 You can use the following parameters in this message:
 
@@ -397,7 +395,8 @@ minMessage
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
 The message that will be shown if the underlying value is less than the
-`min`_ option.
+`min`_ option, and no `max`_ option has been defined (if both are defined, use
+`notInRangeMessage`_).
 
 You can use the following parameters in this message:
 
