@@ -77,6 +77,21 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
         {{ form(form) }}
     {% endblock %}
 
+Error Messages
+--------------
+
+Form errors are rendered **inside** the ``<label>`` element to make sure there
+is a strong connection between the error and its ``<input>``, as required by the
+`WCAG 2.0 standard`_. To achieve this, ``form_errors()`` is called by
+``form_label()`` internally. So you shouldn't use ``form_errors()`` at all; if you
+do, you'll get the error messages displayed *twice*.
+
+Checkboxes and Radios
+---------------------
+
+For a checkbox/radio field, calling ``form_label()`` doesn't render anything. Due to
+Bootstrap internals, the label is already rendered by ``form_widget()``.
+
 Accessibility
 -------------
 
@@ -99,17 +114,6 @@ and ``checkbox-custom`` respectively.
 
     {{ form_row(form.myRadio, {label_attr: {class: 'radio-custom'} }) }}
     {{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }}
-
-Labels and Errors
------------------
-
-When you use the Bootstrap form themes and render the fields manually, calling
-``form_label()`` for a checkbox/radio field doesn't render anything. Due to Bootstrap
-internals, the label is already rendered by ``form_widget()``.
-
-Form errors are rendered **inside** the ``<label>`` element to make sure there
-is a strong connection between the error and its ``<input>``, as required by the
-`WCAG 2.0 standard`_.
 
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`custom forms`: https://getbootstrap.com/docs/4.4/components/forms/#custom-forms
