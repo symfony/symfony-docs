@@ -905,21 +905,15 @@ The Doctrine transport can be used to store messages in a database table.
 
 The format is ``doctrine://<connection_name>``, in case you have multiple connections
 and want to use one other than the "default". The transport will automatically create
-a table named ``messenger_messages`` (this is configurable) when the transport is
-first used. You can disable that with the ``auto_setup`` option and set the table
-up manually by calling the ``messenger:setup-transports`` command.
+a table named ``messenger_messages``.
 
-.. tip::
+.. versionadded:: 5.1
 
-    To avoid tools like Doctrine Migrations from trying to remove this table because
-    it's not part of your normal schema, you can set the ``schema_filter`` option:
+    The ability to automatically generate a migration for the ``messenger_messages``
+    table was introduced in Symfony 5.1 and DoctrineBundle 2.1.
 
-    .. code-block:: yaml
-
-        # config/packages/doctrine.yaml
-        doctrine:
-            dbal:
-                schema_filter: '~^(?!messenger_messages)~'
+Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
+:ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
 
 The transport has a number of options:
 
