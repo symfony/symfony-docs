@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-05-08T07:14:47Z
+
+This is right! Even the newest events use `256` too. See https://github.com/symfony/symfony/blob/1308dd5553d743b23d95032e95ddb993468c22f6/src/Symfony/Component/Security/Http/EventListener/UserCheckerListener.php#L59
+
+Thanks @BafS and congrats on your first Symfony Docs contribution!
