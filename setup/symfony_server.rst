@@ -201,8 +201,10 @@ Now run this command to start the proxy:
 
 .. note::
 
-    Some browsers (e.g. Chrome) require a full restart after starting the proxy.
-    Otherwise, you'll see a *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``).
+    Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
+    ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
+    or a full restart after starting the proxy. Otherwise, you'll see a
+    *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``).
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
