@@ -464,6 +464,22 @@ called ``css`` that points to the directory where ``email.css`` lives:
             # point this wherever your css files live
             '%kernel.project_dir%/assets/css': css
 
+Using Encore CSS Files
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using :ref:`Webpack Encore <frontend-webpack-encore>`, you can also
+include the CSS from your built files. Suppose you create an ``email`` entry to
+contain your email styles:
+
+.. code-block:: html+twig
+
+    {% apply inline_css(encore_entry_css_source('email')) %}
+        <h1>Welcome {{ username }}!</h1>
+        {# ... #}
+    {% endapply %}
+
+Any CSS for your ``email`` entry will now be included and inlined.
+
 .. _mailer-markdown:
 
 Rendering Markdown Content
