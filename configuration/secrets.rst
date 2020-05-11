@@ -237,18 +237,18 @@ manually store this file somewhere and deploy it. There are 2 ways to do that:
 
 1) Uploading the file:
 
-The first option is to copy the **decryption key** -
-``/config/secrets/prod/prod.decrypt.private.php`` to your server(s).
+The first option is to copy the **production decryption key** -
+``config/secrets/prod/prod.decrypt.private.php`` to your server(s).
 
 2) Using an Environment Variable
 
 The second way is to set the ``SYMFONY_DECRYPTION_SECRET`` environment variable
-to the base64 encoded value of the **decryption key**. A fancy way to fetch the
-value of the key is:
+to the base64 encoded value of the **production decryption key**.
+A fancy way to define it is:
 
 .. code-block:: terminal
 
-    $ php -r 'echo base64_encode(require "config/secrets/prod/prod.decrypt.private.php");'
+    $ export SYMFONY_DECRYPTION_SECRET=`php -r 'echo base64_encode(require "config/secrets/prod/prod.decrypt.private.php");'`
 
 To improve performance (i.e. avoid decrypting secrets at runtime), you can decrypt
 your secrets during deployment to the "local" vault:
@@ -257,8 +257,8 @@ your secrets during deployment to the "local" vault:
 
     $ php bin/console secrets:decrypt-to-local --force --env=prod
 
-This will put all the decrypted secrets into ``.env.prod.local``. After doing this,
-the decryption key does *not* need to remain on the server.
+This will write all the decrypted secrets into the ``.env.prod.local`` file.
+After doing this, the decryption key does *not* need to remain on the server.
 
 Rotating Secrets
 ----------------
