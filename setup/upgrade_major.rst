@@ -170,7 +170,7 @@ Next, use Composer to download new versions of the libraries:
 
 .. code-block:: terminal
 
-    $ composer update symfony/*
+    $ composer update "symfony/*"
 
 .. include:: /setup/_update_dep_errors.rst.inc
 
