@@ -2,7 +2,7 @@ Setting up or Fixing File Permissions
 =====================================
 
 In Symfony 3.x, you needed to do some extra work to make sure that your cache directory
-was writable. But that is no longer true! In Symfony 4, everything works automatically:
+was writable. But that is no longer true! Since Symfony 4, everything works automatically:
 
 * In the ``dev`` environment, ``umask()`` is used in ``bin/console`` and ``public/index.php``
   so that any created files are writable by everyone.
