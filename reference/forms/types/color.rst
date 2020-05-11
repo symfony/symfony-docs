@@ -17,6 +17,8 @@ element.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``color`` field (a text box)                              |
 +-------------+---------------------------------------------------------------------+
+| Options     | - `html5`_                                                          |
++-------------+---------------------------------------------------------------------+
 | Inherited   | - `attr`_                                                           |
 | options     | - `data`_                                                           |
 |             | - `disabled`_                                                       |
@@ -40,6 +42,22 @@ element.
 +-------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
+
+Field Options
+-------------
+
+html5
+~~~~~
+
+**type**: ``bool`` **default**: ``false``
+
+.. versionadded:: 5.1
+
+    This option was introduced in Symfony 5.1.
+
+When this option is set to ``true``, the form type checks that its value matches
+the `HTML5 color format`_ (``/^#[0-9a-f]{6}$/i``). If it doesn't match it,
+you'll see the following error message: *"This value is not a valid HTML5 color"*.
 
 Inherited Options
 -----------------
@@ -83,3 +101,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. _`HTML5 color format`: https://www.w3.org/TR/html52/sec-forms.html#color-state-typecolor
