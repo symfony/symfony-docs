@@ -20,7 +20,6 @@ Calling a command from another one is straightforward::
         $command = $this->getApplication()->find('demo:greet');
 
         $arguments = [
-            'command' => 'demo:greet',
             'name'    => 'Fabien',
             '--yell'  => true,
         ];
