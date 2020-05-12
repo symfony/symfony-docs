@@ -5,7 +5,7 @@ rounding_mode
 
 If a submitted number needs to be rounded (based on the `scale`_ option), you
 have several configurable options for that rounding. Each option is a constant
-on the ``\NumberFormatter`` class:
+on the :phpclass:`NumberFormatter` class:
 
 * ``\NumberFormatter::ROUND_DOWN`` Round towards zero. It
   rounds ``1.4`` to ``1`` and ``-1.4`` to ``-1``.
@@ -35,4 +35,4 @@ on the ``\NumberFormatter`` class:
 
     In Symfony versions prior to 5.1, these constants were also defined as aliases
     in the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`
-    class, but they are now deprecated in favor of the ``\NumberFormatter`` constants.
+    class, but they are now deprecated in favor of the :phpclass:`NumberFormatter` constants.
