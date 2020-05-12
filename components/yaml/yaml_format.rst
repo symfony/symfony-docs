@@ -122,7 +122,13 @@ Numbers
 .. code-block:: yaml
 
     # an octal
-    014
+    0o14
+
+.. versionadded:: 5.1
+
+    In YAML 1.1, octal numbers used the notation ``0...``, whereas in YAML 1.2
+    the notation changed to ``0o...``. Symfony 5.1 adds support for YAML 1.2
+    notation and deprecates support for YAML 1.1 notation.
 
 .. code-block:: yaml
 
