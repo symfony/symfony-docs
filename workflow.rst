@@ -336,8 +336,8 @@ Guard Events
 ~~~~~~~~~~~~
 
 There are a special kind of events called "Guard events". Their event listeners
-are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or
-``Workflow::getEnabledTransitions`` is executed. With the guard events you may
+are invoked every time a call to ``Workflow::can()``, ``Workflow::apply()`` or
+``Workflow::getEnabledTransitions()`` is executed. With the guard events you may
 add custom logic to decide which transitions should be blocked or not. Here is a
 list of the guard event names.
 
