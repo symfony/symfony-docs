@@ -23,6 +23,38 @@ Any ``.vue`` files that you require will be processed correctly. You can also
 configure the `vue-loader options`_ by passing an options callback to
 ``enableVueLoader()``. See the `Encore's index.js file`_ for detailed documentation.
 
+Runtime Compiler Build
+----------------------
+
+By default, Encore uses a Vue "build" that allows you to compile templates at
+runtime. This means that you *can* do either of these:
+
+.. code-block:: javascript
+
+    new Vue({
+        template: '<div>{{ hi }}</div>'
+    })
+
+    new Vue({
+        el: '#app', // where <div id="app"> in your DOM contains the Vue template
+    });
+
+If you do *not* need this functionality (e.g. you use single file components),
+then you can tell Encore to create a *smaller* and CSP-compliant build:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+    ;
+
+You can also silence the recommendation by passing ``runtimeCompilerBuild: true``.
+
 Hot Module Replacement (HMR)
 ----------------------------
 
