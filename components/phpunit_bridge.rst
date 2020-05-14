@@ -329,6 +329,20 @@ notices at class autoloading time. This can be disabled with the
         </listener>
     </listeners>
 
+Compile-time Deprecations
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the ``debug:container`` command to list the deprecations generated during
+the compiling and warming up of the container:
+
+.. code-block:: terminal
+
+    $ debug:container --deprecations
+
+.. versionadded:: 5.1
+
+    The ``--deprecations`` option was introduced in Symfony 5.1.
+
 Write Assertions about Deprecations
 -----------------------------------
 
