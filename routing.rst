@@ -2031,49 +2031,57 @@ Generating URLs in Commands
 
 Generating URLs in commands works the same as
 :ref:`generating URLs in services <routing-generating-urls-in-services>`. The
-only difference is that commands are not executed in the HTTP context, so they
-don't have access to HTTP requests. In practice, this means that if you generate
-absolute URLs, you'll get ``http://localhost/`` as the host name instead of your
-real host name.
+only difference is that commands are not executed in the HTTP context. Therefore,
+if you generate absolute URLs, you'll get ``http://localhost/`` as the host name
+instead of your real host name.
 
-The solution is to configure the "request context" used by commands when they
-generate URLs. This context can be configured globally for all commands:
+The solution is to configure the ``default_uri`` option to define the
+"request context" used by commands when they generate URLs:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/services.yaml
-        parameters:
-            router.request_context.host: 'example.org'
-            router.request_context.base_url: 'my/path'
-            asset.request_context.base_path: '%router.request_context.base_url%'
+        # config/packages/routing.yaml
+        framework:
+            router:
+                # ...
+                default_uri: 'https://example.org/my/path/'
 
     .. code-block:: xml
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <!-- config/packages/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <parameters>
-                <parameter key="router.request_context.host">example.org</parameter>
-                <parameter key="router.request_context.base_url">my/path</parameter>
-                <parameter key="asset.request_context.base_path">%router.request_context.base_url%</parameter>
-            </parameters>
-
+            <framework:config>
+                <framework:router default-uri="https://example.org/my/path/">
+                    <!-- ... -->
+                </framework:router>
+            </framework:config>
         </container>
 
     .. code-block:: php
 
-        // config/services.php
-        $container->setParameter('router.request_context.host', 'example.org');
-        $container->setParameter('router.request_context.base_url', 'my/path');
-        $container->setParameter('asset.request_context.base_path', $container->getParameter('router.request_context.base_url'));
+        // config/packages/routing.php
+        $container->loadFromExtension('framework', [
+            'router' => [
+                // ...
+                'default_uri' => "https://example.org/my/path/",
+            ],
+        ]);
 
-This information can be configured per command too::
+.. versionadded:: 5.1
+
+    The ``default_uri`` option was introduced in Symfony 5.1.
+
+Now you'll get the expected results when generating URLs in your commands::
 
     // src/Command/SomeCommand.php
     namespace App\Command;
@@ -2098,11 +2106,6 @@ This information can be configured per command too::
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            // these values override any global configuration
-            $context = $this->router->getContext();
-            $context->setHost('example.com');
-            $context->setBaseUrl('my/path');
-
             // generate a URL with no route arguments
             $signUpPage = $this->router->generate('sign_up');
 
@@ -2122,6 +2125,12 @@ This information can be configured per command too::
             // ...
         }
     }
+
+.. note::
+
+    By default, the URLs generated for web assets use the same ``default_uri``
+    value, but you can change it with the ``asset.request_context.base_path``
+    and ``asset.request_context.secure`` container parameters.
 
 Checking if a Route Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
