@@ -1,0 +1,10 @@
+---------------------------------------------------------------------------
+
+by noemi-salaun at 2020-03-14T11:03:55Z
+
+@javiereguiluz
+It feels weird to put a `debug:container` command in the middle of PHPUnit doc. But as you said, there is no places where all the `debug:container` options are listed.
+
+Maybe we could add the `--deprecations` option along with all the others (`--types`, `--env-vars`, ...) on this page https://symfony.com/doc/current/service_container/debug.html
+
+But I don't know if it should be a single PR or a separated one that target previous version of the doc where `--deprecations` option was not available
