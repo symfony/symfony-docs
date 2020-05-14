@@ -799,7 +799,7 @@ environment:
 
 .. code-block:: yaml
 
-    # config/services_dev.yaml
+    # config/packages/dev/services.yaml
     services:
         mailer.dev.set_recipients:
             class: Symfony\Component\Mailer\EventListener\EnvelopeListener
