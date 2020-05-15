@@ -507,6 +507,44 @@ the injected slugger is the same as the request locale::
         }
     }
 
+.. _string-inflector:
+
+Inflector
+---------
+
+..versionadded:: 5.1
+
+    The inflector feature was introduced in Symfony 5.1.
+
+In some scenarios such as code generation and code introspection, you need to
+convert words from/to singular/plural. For example, to know the property
+associated with an *adder* method, you must convert from plural
+(``addStories()`` method) to singular (``$story`` property).
+
+Most human languages have simple pluralization rules, but at the same time they
+define lots of exceptions. For example, the general rule in English is to add an
+``s`` at the end of the word (``book`` -> ``books``) but there are lots of
+exceptions even for common words (``woman`` -> ``women``, ``life`` -> ``lives``,
+``news`` -> ``news``, ``radius`` -> ``radii``, etc.)
+
+This component provides an :class:`Symfony\\Component\\String\\Inflector\\EnglishInflector`
+class to convert English words from/to singular/plural with confidence::
+
+    use Symfony\Component\String\Inflector\EnglishInflector;
+
+    $inflector = new EnglishInflector();
+
+    $result = $inflector->singularize('teeth');   // ['tooth']
+    $result = $inflector->singularize('radii');   // ['radius']
+    $result = $inflector->singularize('leaves');  // ['leaf', 'leave', 'leaff']
+
+    $result = $inflector->pluralize('bacterium'); // ['bacteria']
+    $result = $inflector->pluralize('news');      // ['news']
+    $result = $inflector->pluralize('person');    // ['persons', 'people']
+
+The value returned by both methods is always an array because sometimes it's not
+possible to determine a unique singular/plural form for the given word.
+
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII
 .. _`Unicode`: https://en.wikipedia.org/wiki/Unicode
 .. _`Code points`: https://en.wikipedia.org/wiki/Code_point
