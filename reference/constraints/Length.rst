@@ -123,6 +123,10 @@ If set to ``true``, empty strings are considered valid (which is the same
 behavior as previous Symfony versions). The default ``false`` value considers
 empty strings not valid.
 
+.. caution::
+
+    This option does not have any effect when no minimum length is given.
+
 charset
 ~~~~~~~
 
