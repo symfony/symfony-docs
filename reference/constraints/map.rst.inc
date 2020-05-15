@@ -16,6 +16,7 @@ String Constraints
 ~~~~~~~~~~~~~~~~~~
 
 * :doc:`Email </reference/constraints/Email>`
+* :doc:`ExpressionLanguageSyntax </reference/constraints/ExpressionLanguageSyntax>`
 * :doc:`Length </reference/constraints/Length>`
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
