@@ -128,6 +128,10 @@ set to ``true``, empty strings are considered valid (which is the same behavior
 as previous Symfony versions). Set it to ``false`` to consider empty strings not
 valid.
 
+.. caution::
+
+    This option does not have any effect when no minimum length is given.
+
 charset
 ~~~~~~~
 
