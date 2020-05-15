@@ -4,7 +4,7 @@ Bic
 This constraint is used to ensure that a value has the proper format of a
 `Business Identifier Code (BIC)`_. BIC is an internationally agreed means to
 uniquely identify both financial and non-financial institutions. You may also
-check that the BIC is associated with a given IBAN.
+check that the BIC's country code is the same as a given IBAN's one.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -96,7 +96,7 @@ iban
 
     The ``iban`` option was introduced in Symfony 4.3.
 
-An IBAN value to validate that the BIC is associated with it.
+An IBAN value to validate that its country code is the same as the BIC's one.
 
 ibanMessage
 ~~~~~~~~~~~
