@@ -73,9 +73,10 @@ The basic usage of the MessageFormat allows you to use placeholders (called
 
 .. caution::
 
-    With the previous format, placeholders were often named between ``%``. This
-    character is no longer valid with the ICU MessageFormat syntax. Be careful
-    to rename your parameters.
+    In the previous translation format, placeholders were often wrapped in ``%``
+    (e.g. ``%name%``). This ``%`` character is no longer valid with the ICU
+    MessageFormat syntax, so you must rename your parameters if you are upgrading
+    from the previous format.
 
 Everything within the curly braces (``{...}``) is processed by the formatter
 and replaced by its placeholder::
