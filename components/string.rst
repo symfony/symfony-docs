@@ -512,7 +512,7 @@ the injected slugger is the same as the request locale::
 Inflector
 ---------
 
-..versionadded:: 5.1
+.. versionadded:: 5.1
 
     The inflector feature was introduced in Symfony 5.1.
 
