@@ -1047,7 +1047,7 @@ tls                 Enable TLS support for the connection  false
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
 
-The ``in-memory`` transport does not actually delivery messages. Instead, it
+The ``in-memory`` transport does not actually deliver messages. Instead, it
 holds them in memory during the request, which can be useful for testing.
 For example, if you have an ``async_priority_normal`` transport, you could
 override it in the ``test`` environment to use this transport:
