@@ -23,9 +23,9 @@ factory but it would be complex. It is better to pass it to FormFactory like it
 is done in a real application. It is simple to bootstrap and you can trust
 the Symfony components enough to use them as a testing base.
 
-There is already a class that you can benefit from for simple FormTypes
-testing: :class:`Symfony\\Component\\Form\\Test\\TypeTestCase`. It is used to
-test the core types and you can use it to test your types too.
+There is already a class that you can benefit from for testing:
+:class:`Symfony\\Component\\Form\\Test\\TypeTestCase`. It is used to test the
+core types and you can use it to test your types too.
 
 .. note::
 
@@ -54,27 +54,34 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test2' => 'test2',
             ];
 
-            $objectToCompare = new TestObject();
-            // $objectToCompare will retrieve data from the form submission; pass it as the second argument
-            $form = $this->factory->create(TestedType::class, $objectToCompare);
+            $formData = new TestObject();
+            // $formData will retrieve data from the form submission; pass it as the second argument
+            $form = $this->factory->create(TestedType::class, $formData);
 
-            $object = new TestObject();
+            $expected = new TestObject();
             // ...populate $object properties with the data stored in $formData
 
             // submit the data to the form directly
             $form->submit($formData);
 
+            // This check ensures there are no transformation failures
             $this->assertTrue($form->isSynchronized());
 
-            // check that $objectToCompare was modified as expected when the form was submitted
-            $this->assertEquals($object, $objectToCompare);
+            // check that $formData was modified as expected when the form was submitted
+            $this->assertEquals($expected, $formData);
+        }
 
-            $view = $form->createView();
-            $children = $view->children;
+        public function testCustomFormView()
+        {
+            $formData = new TestObject();
+            // ... prepare the data as you need
 
-            foreach (array_keys($formData) as $key) {
-                $this->assertArrayHasKey($key, $children);
-            }
+            // The initial data may be used to compute custom view variables
+            $view = $this->factory->create(TestedType::class, $formData)
+                ->createView();
+
+            $this->assertArrayHasKey('custom_var', $view->vars);
+            $this->assertSame('expected value', $view->vars['custom_var']);
         }
     }
 
@@ -84,7 +91,7 @@ First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm()`` function and options resolution. This should
 be the first test you write::
 
-    $form = $this->factory->create(TestedType::class, $objectToCompare);
+    $form = $this->factory->create(TestedType::class, $formData);
 
 This test checks that none of your data transformers used by the form
 failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
@@ -97,30 +104,38 @@ method is only set to ``false`` if a data transformer throws an exception::
 
     Don't test the validation: it is applied by a listener that is not
     active in the test case and it relies on validation configuration.
-    Instead, unit test your custom constraints directly.
+    Instead, unit test your custom constraints directly or read how
+    to :ref:`add custom extensions <form_unit_testing-adding_custom_extensions>`
+    in the last section of this page.
 
-Next, verify the submission and mapping of the form. The test below
-checks if all the fields are correctly specified::
+Next, verify the submission and mapping of the form. The test below checks if
+all the fields are correctly specified::
 
-    $this->assertEquals($object, $objectToCompare);
+    $this->assertEquals($expected, $formData);
 
-Finally, check the creation of the ``FormView``. You should check if all
-widgets you want to display are available in the children property::
+Finally, check the creation of the ``FormView``. You can check that a custom
+variable exists and will be available in your form themes::
 
-    $view = $form->createView();
-    $children = $view->children;
-
-    foreach (array_keys($formData) as $key) {
-        $this->assertArrayHasKey($key, $children);
-    }
+    $this->assertArrayHasKey('custom_var', $view->vars);
+    $this->assertSame('expected value', $view->vars['custom_var']);
 
 .. tip::
 
     Use :ref:`PHPUnit data providers <testing-data-providers>` to test multiple
     form conditions using the same test code.
 
-Testings Types from the Service Container
------------------------------------------
+.. caution::
+
+    When your type relies on the ``EntityType``, you should register the
+    :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmExtension`, which will
+    need to mock the ``ManagerRegistry``.
+
+    However, If you cannot use a mock to write your test, you should extend
+    the ``KernelTestCase`` instead and use the ``form.factory`` service to
+    create the form.
+
+Testings Types Registered as Services
+-------------------------------------
 
 Your form may be used as a service, as it depends on other services (e.g. the
 Doctrine entity manager). In these cases, using the above code won't work, as
@@ -165,13 +180,17 @@ make sure the ``FormRegistry`` uses the created instance::
 
         public function testSubmitValidData()
         {
+            // ...
+
             // Instead of creating a new instance, the one created in
             // getExtensions() will be used.
-            $form = $this->factory->create(TestedType::class);
+            $form = $this->factory->create(TestedType::class, $formData);
 
             // ... your test
         }
     }
+
+.. _form_unit_testing-adding_custom_extensions:
 
 Adding Custom Extensions
 ------------------------
@@ -210,6 +229,13 @@ allows you to return a list of extensions to register::
 
         // ... your tests
     }
+
+.. note::
+
+    By default only the
+    :class:`Symfony\\Component\\Form\\Extension\\Core\\CoreExtension` is
+    registered in tests. You can find other extensions from the Form component
+    in the ``Symfony\Component\Form\Extension`` namespace.
 
 It is also possible to load custom form types, form type extensions or type
 guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypes`,
