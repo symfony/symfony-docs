@@ -78,8 +78,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
             // The initial data may be used to compute custom view variables
             $view = $this->factory->create(TestedType::class, $formData)
-                ->createView()
-            ;
+                ->createView();
 
             $this->assertArrayHasKey('custom_var', $view->vars);
             $this->assertSame('expected value', $view->vars['custom_var']);
@@ -233,7 +232,7 @@ allows you to return a list of extensions to register::
 
 .. note::
 
-    By Default only the
+    By default only the
     :class:`Symfony\\Component\\Form\\Extension\\Core\\CoreExtension` is
     registered in tests. You can find other extensions from the Form component
     in the ``Symfony\Component\Form\Extension`` namespace.
