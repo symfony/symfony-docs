@@ -128,8 +128,9 @@ duplicated service definitions:
 
             $services->set(BaseDoctrineRepository::class)
                 ->abstract()
-                ->args([ref('doctrine.orm.entity_manager')])
-                ->call('setLogger', [ref('logger')])
+                ->args([service('doctrine.orm.entity_manager')])
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->call('setLogger', [service('logger')])
             ;
 
             $services->set(DoctrineUserRepository::class)
@@ -247,13 +248,13 @@ the child class:
 
                 // appends the '@app.username_checker' argument to the parent
                 // argument list
-                ->args([ref('app.username_checker')])
+                ->args([service('app.username_checker')])
             ;
 
             $services->set(DoctrinePostRepository::class)
                 ->parent(BaseDoctrineRepository::class)
 
                 # overrides the first argument
-                ->arg(0, ref('doctrine.custom_entity_manager'))
+                ->arg(0, service('doctrine.custom_entity_manager'))
             ;
         };
