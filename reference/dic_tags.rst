@@ -468,6 +468,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
     // src/Cache/MyCustomWarmer.php
     namespace App\Cache;
 
+    use App\Foo\Bar;
     use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
     class MyCustomWarmer implements CacheWarmerInterface
@@ -475,6 +476,17 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
         public function warmUp($cacheDirectory)
         {
             // ... do some sort of operations to "warm" your cache
+
+            $filesAndClassesToPreload = [];
+            $filesAndClassesToPreload[] = Bar::class;
+
+            foreach (scandir($someCacheDir) as $file) {
+                if (!is_dir($file = $someCacheDir.'/'.$file)) {
+                    $filesAndClassesToPreload[] = $file;
+                }
+            }
+
+            return $filesAndClassesToPreload;
         }
 
         public function isOptional()
@@ -482,6 +494,16 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
             return true;
         }
     }
+
+The ``warmUp()`` method must return an array with the files and classes to
+preload. Files must be absolute paths and classes must be fully-qualified class
+names. The only restriction is that files must be stored in the cache directory.
+If you don't need to preload anything, return an empty array
+
+.. deprecated:: 5.1
+
+    Not returning an array from the ``warmUp()`` method with the files to
+    preload is deprecated since Symfony 5.1.
 
 The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers
