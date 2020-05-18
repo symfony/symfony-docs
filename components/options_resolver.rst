@@ -720,18 +720,31 @@ In same way, parent options can access to the nested options as normal arrays::
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 5.1
+
+    The signature of the ``setDeprecated()`` method changed from
+    ``setDeprecated(string $option, ?string $message)`` to
+    ``setDeprecated(string $option, string $package, string $version, ?string $message)``
+    in Symfony 5.1.
+
 Once an option is outdated or you decided not to maintain it anymore, you can
 deprecate it using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
 method::
 
     $resolver
         ->setDefined(['hostname', 'host'])
-        // this outputs the following generic deprecation message:
-        // The option "hostname" is deprecated.
-        ->setDeprecated('hostname')
 
-        // you can also pass a custom deprecation message
-        ->setDeprecated('hostname', 'The option "hostname" is deprecated, use "host" instead.')
+        // this outputs the following generic deprecation message:
+        // Since acme/package 1.2: The option "hostname" is deprecated.
+        ->setDeprecated('hostname', 'acme/package', '1.2')
+
+        // you can also pass a custom deprecation message (%name% placeholder is available)
+        ->setDeprecated(
+            'hostname',
+            'acme/package',
+            '1.2',
+            'The option "hostname" is deprecated, use "host" instead.'
+        )
     ;
 
 .. note::
@@ -756,7 +769,7 @@ the option::
         ->setDefault('encryption', null)
         ->setDefault('port', null)
         ->setAllowedTypes('port', ['null', 'int'])
-        ->setDeprecated('port', function (Options $options, $value) {
+        ->setDeprecated('port', 'acme/package', '1.2', function (Options $options, $value) {
             if (null === $value) {
                 return 'Passing "null" to option "port" is deprecated, pass an integer instead.';
             }
