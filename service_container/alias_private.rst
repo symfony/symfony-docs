@@ -160,6 +160,12 @@ This means that when using the container directly, you can access the
 Deprecating Service Aliases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 5.1
+
+    The ``package`` and ``version`` options were introduced in Symfony 5.1.
+    Prior to 5.1, you had to use ``deprecated: true`` or
+    ``deprecated: 'Custom message'``.
+
 If you decide to deprecate the use of a service alias (because it is outdated
 or you decided not to maintain it anymore), you can deprecate its definition:
 
@@ -170,11 +176,17 @@ or you decided not to maintain it anymore), you can deprecate its definition:
         app.mailer:
             alias: '@App\Mail\PhpMailer'
 
-            # this will display a generic deprecation message...
-            deprecated: true
+            # this outputs the following generic deprecation message:
+            # Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
 
-            # ...but you can also define a custom deprecation message
-            deprecated: 'The "%alias_id%" alias is deprecated. Do not use it anymore.'
+            # you can also define a custom deprecation message (%alias_id% placeholder is available)
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
+                message: 'The "%alias_id%" alias is deprecated. Do not use it anymore.'
 
     .. code-block:: xml
 
@@ -185,11 +197,14 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
             <services>
                 <service id="app.mailer" alias="App\Mail\PhpMailer">
-                    <!-- this will display a generic deprecation message... -->
-                    <deprecated/>
+                    <!-- this outputs the following generic deprecation message:
+                         Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future -->
+                    <deprecated package="acme/package" version="1.2"/>
 
-                    <!-- ...but you can also define a custom deprecation message -->
-                    <deprecated>The "%alias_id%" service alias is deprecated. Don't use it anymore.</deprecated>
+                    <!-- you can also define a custom deprecation message (%alias_id% placeholder is available) -->
+                    <deprecated package="acme/package" version="1.2">
+                        The "%alias_id%" service alias is deprecated. Don't use it anymore.
+                    </deprecated>
                 </service>
             </services>
         </container>
@@ -199,12 +214,14 @@ or you decided not to maintain it anymore), you can deprecate its definition:
         $container
             ->setAlias('app.mailer', 'App\Mail\PhpMailer')
 
-            // this will display a generic deprecation message...
-            ->setDeprecated(true)
+            // this outputs the following generic deprecation message:
+            // Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
+            ->setDeprecated('acme/package', '1.2')
 
-            // ...but you can also define a custom deprecation message
+            // you can also define a custom deprecation message (%alias_id% placeholder is available)
             ->setDeprecated(
-                true,
+                'acme/package',
+                '1.2',
                 'The "%alias_id%" service alias is deprecated. Don\'t use it anymore.'
             )
         ;
