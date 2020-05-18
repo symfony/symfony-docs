@@ -133,7 +133,6 @@ following recommended configuration as the starting point of your own configurat
 .. code-block:: yaml
 
     language: php
-    sudo: false
     php:
         - 5.3
         - 5.6
