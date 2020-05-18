@@ -724,7 +724,7 @@ Deprecating the Option
 
     The signature of the ``setDeprecated()`` method changed from
     ``setDeprecated(string $option, ?string $message)`` to
-    ``setDeprecated(string $option, string $package, string $version, ?string $message)``
+    ``setDeprecated(string $option, string $package, string $version, $message)``
     in Symfony 5.1.
 
 Once an option is outdated or you decided not to maintain it anymore, you can
