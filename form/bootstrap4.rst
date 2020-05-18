@@ -83,14 +83,14 @@ Error Messages
 Form errors are rendered **inside** the ``<label>`` element to make sure there
 is a strong connection between the error and its ``<input>``, as required by the
 `WCAG 2.0 standard`_. To achieve this, ``form_errors()`` is called by
-``form_label()`` internally. So you shouldn't use ``form_errors()`` at all; if you
-do, you'll get the error messages displayed *twice*.
+``form_label()`` internally. If you call to ``form_errors()`` in your template,
+you'll get the error messages displayed *twice*.
 
 Checkboxes and Radios
 ---------------------
 
-For a checkbox/radio field, calling ``form_label()`` doesn't render anything. Due to
-Bootstrap internals, the label is already rendered by ``form_widget()``.
+For a checkbox/radio field, calling ``form_label()`` doesn't render anything.
+Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
 
 Accessibility
 -------------
