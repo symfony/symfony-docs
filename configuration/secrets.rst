@@ -243,12 +243,14 @@ The first option is to copy the **production decryption key** -
 2) Using an Environment Variable
 
 The second way is to set the ``SYMFONY_DECRYPTION_SECRET`` environment variable
-to the base64 encoded value of the **production decryption key**.
-A fancy way to define it is:
+to the base64 encoded value of the **production decryption key**. A fancy way to
+fetch the value of the key is:
 
 .. code-block:: terminal
 
-    $ export SYMFONY_DECRYPTION_SECRET=`php -r 'echo base64_encode(require "config/secrets/prod/prod.decrypt.private.php");'`
+    # this command only gets the value of the key; you must also set an env var
+    # in your system with this value (e.g. `export SYMFONY_DECRYPTION_SECRET=...`)
+    $ php -r 'echo base64_encode(require "config/secrets/prod/prod.decrypt.private.php");'
 
 To improve performance (i.e. avoid decrypting secrets at runtime), you can decrypt
 your secrets during deployment to the "local" vault:
