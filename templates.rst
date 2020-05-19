@@ -953,7 +953,7 @@ JavaScript popup window.
 
 This is known as a `Cross-Site Scripting`_ (XSS) attack. And while the previous
 example seems harmless, the attacker could write more advanced JavaScript code
-to performs malicious actions.
+to perform malicious actions.
 
 To prevent this attack, use *"output escaping"* to transform the characters
 which have special meaning (e.g. replace ``<`` by the ``&lt;`` HTML entity).
