@@ -77,13 +77,15 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
         {{ form(form) }}
     {% endblock %}
 
+.. _reference-forms-bootstrap-error-messages:
+
 Error Messages
 --------------
 
 Form errors are rendered **inside** the ``<label>`` element to make sure there
 is a strong connection between the error and its ``<input>``, as required by the
 `WCAG 2.0 standard`_. To achieve this, ``form_errors()`` is called by
-``form_label()`` internally. If you call to ``form_errors()`` in your template,
+``form_label()`` internally. If you call ``form_errors()`` in your template,
 you'll get the error messages displayed *twice*.
 
 Checkboxes and Radios
