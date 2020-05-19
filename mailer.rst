@@ -26,7 +26,12 @@ can deliver emails over ``smtp`` by configuring your ``.env`` file:
 .. code-block:: bash
 
     # .env
-    MAILER_DSN=smtp://user:pass@smtp.example.com
+    MAILER_DSN=smtp://user:pass@smtp.example.com:port
+
+The `user`, `pass` and `port` are optional. The port defaults to 25. If you have a custom port like 1025 which MailHog uses then the MAILER_DSN will be like this.
+
+    # .env
+    MAILER_DSN=smtp://localhost:1025
 
 .. warning::
 
