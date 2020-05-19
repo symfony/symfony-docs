@@ -21,17 +21,13 @@ Transport Setup
 ---------------
 
 Emails are delivered via a "transport". And without installing anything else, you
-can deliver emails over ``smtp`` by configuring your ``.env`` file:
+can deliver emails over ``smtp`` by configuring your ``.env`` file (the
+``user``, ``pass`` and ``port`` parameters are optional):
 
 .. code-block:: bash
 
     # .env
     MAILER_DSN=smtp://user:pass@smtp.example.com:port
-
-The `user`, `pass` and `port` are optional. The port defaults to 25. If you have a custom port like 1025 which MailHog uses then the MAILER_DSN will be like this.
-
-    # .env
-    MAILER_DSN=smtp://localhost:1025
 
 .. warning::
 
@@ -126,7 +122,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
                 ->html('<p>See Twig integration for better HTML integration!</p>');
-                
+
             $mailer->send($email);
 
             // ...
