@@ -9,15 +9,15 @@ CSS and one JS file, organized into an ``assets/`` directory:
 
 With Encore, think of your ``app.js`` file like a standalone JavaScript
 application: it will *require* all of the dependencies it needs (e.g. jQuery or React),
-*including* any CSS. Your ``app.js`` file is already doing this with a special
-``require()`` function:
+*including* any CSS. Your ``app.js`` file is already doing this with a JavaScript
+``import`` statement:
 
 .. code-block:: javascript
 
     // assets/js/app.js
     // ...
 
-    require('../css/app.css');
+    import '../css/app.css';
 
     // var $ = require('jquery');
 
