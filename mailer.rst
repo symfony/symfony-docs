@@ -19,12 +19,13 @@ Transport Setup
 ---------------
 
 Emails are delivered via a "transport". And without installing anything else, you
-can deliver emails over ``smtp`` by configuring your ``.env`` file:
+can deliver emails over ``smtp`` by configuring your ``.env`` file (the
+``user``, ``pass`` and ``port`` parameters are optional):
 
 .. code-block:: bash
 
     # .env
-    MAILER_DSN=smtp://user:pass@smtp.example.com
+    MAILER_DSN=smtp://user:pass@smtp.example.com:port
 
 .. warning::
 
