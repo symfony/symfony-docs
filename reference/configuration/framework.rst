@@ -1255,7 +1255,7 @@ You can also configure the session handler with a DSN. For example:
                 # ...
                 handler_id: 'redis://localhost'
                 handler_id: '%env(REDIS_URL)%'
-                handler_id: '%env(DATABASE_URL)%'
+                handler_id: '%env(resolve:DATABASE_URL)%'
                 handler_id: 'file://%kernel.project_dir%/var/sessions'
 
     .. code-block:: xml
@@ -1273,7 +1273,7 @@ You can also configure the session handler with a DSN. For example:
                 <framework:session enabled="true"
                     handler-id="redis://localhost"
                     handler-id="%env(REDIS_URL)%"
-                    handler-id="%env(DATABASE_URL)%"
+                    handler-id="%env(resolve:DATABASE_URL)%"
                     handler-id="file://%kernel.project_dir%/var/sessions"/>
             </framework:config>
         </container>
@@ -1286,7 +1286,7 @@ You can also configure the session handler with a DSN. For example:
                 // ...
                 'handler_id' => 'redis://localhost',
                 'handler_id' => '%env(REDIS_URL)%',
-                'handler_id' => '%env(DATABASE_URL)%',
+                'handler_id' => '%env(resolve:DATABASE_URL)%',
                 'handler_id' => 'file://%kernel.project_dir%/var/sessions',
             ],
         ]);
