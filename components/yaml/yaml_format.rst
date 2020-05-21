@@ -339,4 +339,4 @@ The following YAML features are not supported by the Symfony Yaml component:
 
 .. _`ISO-8601`: http://www.iso.org/iso/iso8601
 .. _`YAML website`: http://yaml.org/
-.. _`YAML specification`: http://www.yaml.org/spec/1.2/spec.html
+.. _`YAML specification`: https://yaml.org/spec/1.2/spec.html
