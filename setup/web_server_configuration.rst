@@ -351,6 +351,11 @@ The **minimum configuration** to get your application running under Nginx is:
         access_log /var/log/nginx/project_access.log;
     }
 
+.. tip::
+
+    If you use NGINX Unit, check out the official article about
+    `How to run Symfony applications using NGINX Unit`_.
+
 .. note::
 
     Depending on your PHP-FPM config, the ``fastcgi_pass`` can also be
@@ -381,3 +386,4 @@ For advanced Nginx configuration options, read the official `Nginx documentation
 .. _`Apache documentation`: https://httpd.apache.org/docs/
 .. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
 .. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/
+.. _`How to run Symfony applications using NGINX Unit`: https://unit.nginx.org/howto/symfony/
