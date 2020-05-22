@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-05-18T08:28:59Z
+
+I don't like the repeated deprecated directives, mostly because it clutters the docs even when someone is viewing Yaml example (which I think most people will still do in 5.1).
+
+What about using PHP comments instead? `// ! The service() function was introduced in Symfony 5.1 as a replacement of ref()` ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-05-20T13:52:52Z
+
+@wouterj I like your suggestion! So I did those changes. Thanks.
