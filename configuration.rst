@@ -453,7 +453,7 @@ This example shows how you could configure the database connection using an env 
         doctrine:
             dbal:
                 # by convention the env var names are always uppercase
-                url: '%env(DATABASE_URL)%'
+                url: '%env(resolve:DATABASE_URL)%'
             # ...
 
     .. code-block:: xml
@@ -470,7 +470,7 @@ This example shows how you could configure the database connection using an env 
 
             <doctrine:config>
                 <!-- by convention the env var names are always uppercase -->
-                <doctrine:dbal url="%env(DATABASE_URL)%"/>
+                <doctrine:dbal url="%env(resolve:DATABASE_URL)%"/>
             </doctrine:config>
 
         </container>
@@ -481,7 +481,7 @@ This example shows how you could configure the database connection using an env 
         $container->loadFromExtension('doctrine', [
             'dbal' => [
                 // by convention the env var names are always uppercase
-                'url' => '%env(DATABASE_URL)%',
+                'url' => '%env(resolve:DATABASE_URL)%',
             ]
         ]);
 

@@ -34,13 +34,13 @@ The following configuration code shows how you can configure two entity managers
                 connections:
                     default:
                         # configure these for your database server
-                        url: '%env(DATABASE_URL)%'
+                        url: '%env(resolve:DATABASE_URL)%'
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
                     customer:
                         # configure these for your database server
-                        url: '%env(DATABASE_CUSTOMER_URL)%'
+                        url: '%env(resolve:DATABASE_CUSTOMER_URL)%'
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
@@ -83,7 +83,7 @@ The following configuration code shows how you can configure two entity managers
                 <doctrine:dbal default-connection="default">
                     <!-- configure these for your database server -->
                     <doctrine:connection name="default"
-                        url="%env(DATABASE_URL)%"
+                        url="%env(resolve:DATABASE_URL)%"
                         driver="pdo_mysql"
                         server_version="5.7"
                         charset="utf8mb4"
@@ -91,7 +91,7 @@ The following configuration code shows how you can configure two entity managers
 
                     <!-- configure these for your database server -->
                     <doctrine:connection name="customer"
-                        url="%env(DATABASE_CUSTOMER_URL)%"
+                        url="%env(resolve:DATABASE_CUSTOMER_URL)%"
                         driver="pdo_mysql"
                         server_version="5.7"
                         charset="utf8mb4"
@@ -133,14 +133,14 @@ The following configuration code shows how you can configure two entity managers
                 'connections' => [
                     // configure these for your database server
                     'default' => [
-                        'url'            => '%env(DATABASE_URL)%',
+                        'url'            => '%env(resolve:DATABASE_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
                     ],
                     // configure these for your database server
                     'customer' => [
-                        'url'            => '%env(DATABASE_CUSTOMER_URL)%',
+                        'url'            => '%env(resolve:DATABASE_CUSTOMER_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
