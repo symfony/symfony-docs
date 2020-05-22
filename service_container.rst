@@ -526,7 +526,8 @@ parameter and in PHP config use the ``Reference`` class:
             $services = $configurator->services();
 
             $services->set(MessageGenerator::class)
-                ->args([ref('logger')])
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->args([service('logger')])
             ;
         };
 
@@ -633,7 +634,7 @@ But, you can control this and pass in a different logger:
 
             // explicitly configure the service
             $services->set(SiteUpdateManager::class)
-                ->arg('$logger', ref('monolog.logger.request'))
+                ->arg('$logger', service('monolog.logger.request'))
             ;
         };
 
@@ -738,15 +739,15 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
 
                     // pass this service to any $requestLogger argument for any
                     // service that's defined in this file
-                    ->bind('$requestLogger', ref('monolog.logger.request'))
+                    ->bind('$requestLogger', service('monolog.logger.request'))
 
                     // pass this service for any LoggerInterface type-hint for any
                     // service that's defined in this file
-                    ->bind(LoggerInterface::class, ref('monolog.logger.request'))
+                    ->bind(LoggerInterface::class, service('monolog.logger.request'))
 
                     // optionally you can define both the name and type of the argument to match
                     ->bind('string $adminEmail', 'manager@example.com')
-                    ->bind(LoggerInterface::class.' $requestLogger', ref('monolog.logger.request'))
+                    ->bind(LoggerInterface::class.' $requestLogger', service('monolog.logger.request'))
                     ->bind('iterable $rules', tagged_iterator('app.foo.rule'))
             ;
 
@@ -1113,16 +1114,16 @@ admin email. In this case, each needs to have a unique service id:
                 ->autowire(false)
                 // manually wire all arguments
                 ->args([
-                    ref(MessageGenerator::class),
-                    ref('mailer'),
+                   service(MessageGenerator::class),
+                   service('mailer'),
                     'superadmin@example.com',
                 ]);
 
             $services->set('site_update_manager.normal_users', SiteUpdateManager::class)
                 ->autowire(false)
                 ->args([
-                    ref(MessageGenerator::class),
-                    ref('mailer'),
+                    service(MessageGenerator::class),
+                    service('mailer'),
                     'contact@example.com',
                 ]);
 

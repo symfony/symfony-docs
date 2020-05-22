@@ -433,13 +433,14 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
             $services = $configurator->services();
 
             $services->set(WsseProvider::class)
-                ->arg('$cachePool', ref('cache.app'))
+                ->arg('$cachePool', service('cache.app'))
             ;
 
             $services->set(WsseListener::class)
                 ->args([
-                    ref('security.token_storage'),
-                    ref('security.authentication.manager'),
+                    // In versions earlier to Symfony 5.1 the service() function was called ref()
+                    service('security.token_storage'),
+                    service('security.authentication.manager'),
                 ])
             ;
         };
