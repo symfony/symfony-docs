@@ -72,9 +72,9 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
             // ...
 
             $services->set(MessageGenerator::class)
-                ->call('setLogger', [ref('logger')]);
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->call('setLogger', [service('logger')]);
         };
-
 
 To provide immutable services, some classes implement immutable setters.
 Such setters return a new instance of the configured class

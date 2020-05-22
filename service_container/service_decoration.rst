@@ -172,7 +172,8 @@ automatically changed to ``'.inner'``):
             $services->set(DecoratingMailer::class)
                 ->decorate(Mailer::class)
                 // pass the old service as an argument
-                ->args([ref('.inner')]);
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->args([service('.inner')]);
         };
 
 .. versionadded:: 5.1
@@ -242,7 +243,7 @@ automatically changed to ``'.inner'``):
 
                 $services->set(DecoratingMailer::class)
                     ->decorate(Mailer::class, DecoratingMailer::class.'.wooz')
-                    ->args([ref(DecoratingMailer::class.'.wooz')]);
+                    ->args([service(DecoratingMailer::class.'.wooz')]);
             };
 
 Decoration Priority
@@ -303,11 +304,11 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
 
             $services->set(Bar::class)
                 ->decorate(Foo::class, null, 5)
-                ->args([ref('.inner')]);
+                ->args([service('.inner')]);
 
             $services->set(Baz::class)
                 ->decorate(Foo::class, null, 1)
-                ->args([ref('.inner')]);
+                ->args([service('.inner')]);
         };
 
 
@@ -371,7 +372,7 @@ Three different behaviors are available:
 
             $services->set(Bar::class)
                 ->decorate(Foo::class, null, 0, ContainerInterface::IGNORE_ON_INVALID_REFERENCE)
-                ->args([ref('.inner')])
+                ->args([service('.inner')])
             ;
         };
 

@@ -507,7 +507,7 @@ the injection::
 
                 // If you wanted to choose the non-default service and do not
                 // want to use a named autowiring alias, wire it manually:
-                //     ->arg('$transformer', ref(UppercaseTransformer::class))
+                //     ->arg('$transformer', service(UppercaseTransformer::class))
                 // ...
         };
 

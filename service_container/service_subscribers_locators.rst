@@ -311,9 +311,10 @@ service definition to pass a collection of services to the service locator:
             $services = $configurator->services();
 
             $services->set('app.command_handler_locator', ServiceLocator::class)
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([[
-                    'App\FooCommand' => ref('app.command_handler.foo'),
-                    'App\BarCommand' => ref('app.command_handler.bar'),
+                    'App\FooCommand' => service('app.command_handler.foo'),
+                    'App\BarCommand' => service('app.command_handler.bar'),
                 ]])
                 // if you are not using the default service autoconfiguration,
                 // add the following tag to the service definition:
@@ -323,7 +324,7 @@ service definition to pass a collection of services to the service locator:
             // if the element has no key, the ID of the original service is used
             $services->set('app.another_command_handler_locator', ServiceLocator::class)
                 ->args([[
-                    ref('app.command_handler.baz'),
+                    service('app.command_handler.baz'),
                 ]])
             ;
         };
@@ -372,7 +373,7 @@ Now you can use the service locator by injecting it in any other service:
             $services = $configurator->services();
 
             $services->set(CommandBus::class)
-                ->args([ref('app.command_handler_locator')]);
+                ->args([service('app.command_handler_locator')]);
         };
 
 In :doc:`compiler passes </service_container/compiler_passes>` it's recommended

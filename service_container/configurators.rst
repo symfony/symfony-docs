@@ -179,11 +179,12 @@ all the classes are already loaded as services. All you need to do is specify th
             $services->load('App\\', '../src/*');
 
             // override the services to set the configurator
+            // In versions earlier to Symfony 5.1 the service() function was called ref()
             $services->set(NewsletterManager::class)
-                ->configurator(ref(EmailConfigurator::class), 'configure');
+                ->configurator(service(EmailConfigurator::class), 'configure');
 
             $services->set(GreetingCardManager::class)
-                ->configurator(ref(EmailConfigurator::class), 'configure');
+                ->configurator(service(EmailConfigurator::class), 'configure');
         };
 
 .. _configurators-invokable:
@@ -250,10 +251,10 @@ routes can reference :ref:`invokable controllers <controller-service-invoke>`.
 
             // override the services to set the configurator
             $services->set(NewsletterManager::class)
-                ->configurator(ref(EmailConfigurator::class));
+                ->configurator(service(EmailConfigurator::class));
 
             $services->set(GreetingCardManager::class)
-                ->configurator(ref(EmailConfigurator::class));
+                ->configurator(service(EmailConfigurator::class));
         };
 
 That's it! When requesting the ``App\Mail\NewsletterManager`` or

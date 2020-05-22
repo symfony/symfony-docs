@@ -77,9 +77,9 @@ service container configuration:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->args(ref('mailer'));
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->args(service('mailer'));
         };
-
 
 .. tip::
 
@@ -270,7 +270,7 @@ that accepts the dependency::
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->call('setMailer', [ref('mailer')]);
+                ->call('setMailer', [service('mailer')]);
         };
 
 This time the advantages are:
@@ -350,7 +350,7 @@ Another possibility is setting public fields of the class directly::
             $services = $configurator->services();
 
             $services->set('app.newsletter_manager', NewsletterManager::class)
-                ->property('mailer', ref('mailer'));
+                ->property('mailer', service('mailer'));
         };
 
 There are mainly only disadvantages to using property injection, it is similar

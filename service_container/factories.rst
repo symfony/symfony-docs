@@ -158,7 +158,8 @@ Configuration of the service container then looks like this:
             // second, use the factory service as the first argument of the 'factory'
             // method and the factory method as the second argument
             $services->set(NewsletterManager::class)
-                ->factory([ref(NewsletterManagerFactory::class), 'createNewsletterManager']);
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->factory([service(NewsletterManagerFactory::class), 'createNewsletterManager']);
         };
 
 .. _factories-invokable:
@@ -228,8 +229,8 @@ method name, just as routes can reference
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->args([ref('templating')])
-                ->factory(ref(NewsletterManagerFactory::class));
+                ->args([service('templating')])
+                ->factory(service(NewsletterManagerFactory::class));
         };
 
 .. _factories-passing-arguments-factory-method:
@@ -289,8 +290,8 @@ previous examples takes the ``templating`` service as an argument:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->factory([ref(NewsletterManagerFactory::class), 'createNewsletterManager'])
-                ->args([ref('templating')])
+                ->factory([service(NewsletterManagerFactory::class), 'createNewsletterManager'])
+                ->args([service('templating')])
             ;
         };
 
