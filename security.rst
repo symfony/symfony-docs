@@ -37,6 +37,49 @@ install the security feature before using it:
 
     $ composer require symfony/security-bundle
 
+
+.. tip::
+
+    A :doc:`new experimental Security </security/experimental_authenticators>`
+    was introduced in Symfony 5.1, which will eventually replace security in
+    Symfony 6.0. This system is almost fully backwards compatible with the
+    current Symfony security, add this line to your security configuration to start
+    using it:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            security:
+                enable_authenticator_manager: true
+                # ...
+
+        .. code-block:: xml
+
+            <!-- config/packages/security.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+                <config enable-authenticator-manager="true">
+                    <!-- ... -->
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            $container->loadFromExtension('security', [
+                'enable_authenticator_manager' => true,
+                // ...
+            ]);
+
 .. _initial-security-yml-setup-authentication:
 .. _initial-security-yaml-setup-authentication:
 .. _create-user-class:
@@ -1121,6 +1164,7 @@ Authentication (Identifying/Logging in the User)
 .. toctree::
     :maxdepth: 1
 
+    security/experimental_authenticators
     security/form_login_setup
     security/reset_password
     security/json_login_setup
