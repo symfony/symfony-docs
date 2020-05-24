@@ -60,6 +60,7 @@ Nexmo       ``symfony/nexmo-notifier``       ``nexmo://KEY:SECRET@default?from=F
 OvhCloud    ``symfony/ovhcloud-notifier``    ``ovhcloud://KEY:SECRET@default?from=FROM``
 Sinch       ``symfony/sinch-notifier``       ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 FreeMobile  ``symfony/freemobile-notifier``  ``freemobile://LOGIN:PASS@default?phone=PHONE``
+Smsapi      ``symfony/smsapi-notifier``      ``smsapi://TOKEN@default?from=FROM``
 ==========  ===============================  ====================================================
 
 .. versionadded:: 5.1
@@ -294,7 +295,7 @@ transport:
                         %env(SLACK_DSN)% || %env(TELEGRAM_DSN)%
                     </framework:chatter-transport>
 
-                    <!-- Send notifications to the next scheduled transport 
+                    <!-- Send notifications to the next scheduled transport
                          calculated by round robin -->
                     <framework:chatter-transport name="slack">
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
