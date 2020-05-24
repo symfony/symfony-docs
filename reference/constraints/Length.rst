@@ -42,8 +42,7 @@ and "50", you might add the following:
              *      min = 2,
              *      max = 50,
              *      minMessage = "Your first name must be at least {{ limit }} characters long",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters",
-             *      allowEmptyString = false
+             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
              * )
              */
             protected $firstName;
@@ -60,7 +59,6 @@ and "50", you might add the following:
                         max: 50
                         minMessage: 'Your first name must be at least {{ limit }} characters long'
                         maxMessage: 'Your first name cannot be longer than {{ limit }} characters'
-                        allowEmptyString: false
 
     .. code-block:: xml
 
@@ -81,7 +79,6 @@ and "50", you might add the following:
                         <option name="maxMessage">
                             Your first name cannot be longer than {{ limit }} characters
                         </option>
-                        <option name="allowEmptyString">false</option>
                     </constraint>
                 </property>
             </class>
@@ -104,7 +101,6 @@ and "50", you might add the following:
                     'max' => 50,
                     'minMessage' => 'Your first name must be at least {{ limit }} characters long',
                     'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters',
-                    'allowEmptyString' => false,
                 ]));
             }
         }
@@ -118,6 +114,13 @@ allowEmptyString
 ~~~~~~~~~~~~~~~~
 
 **type**: ``boolean``  **default**: ``false``
+
+.. deprecated:: 5.2
+
+    The ``allowEmptyString`` option is deprecated since Symfony 5.2. If you
+    want to allow empty strings too, combine the ``Length`` constraint with
+    the :doc:`Blank constraint </reference/constraints/Blank>` inside the
+    :doc:`AtLeastOneOf constraint </reference/constraints/AtLeastOneOf>`.
 
 If set to ``true``, empty strings are considered valid (which is the same
 behavior as previous Symfony versions). The default ``false`` value considers
