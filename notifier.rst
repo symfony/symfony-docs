@@ -57,6 +57,7 @@ Service  Package                      DSN
 =======  ===========================  ========================================
 Twilio   ``symfony/twilio-notifier``  ``twilio://SID:TOKEN@default?from=FROM``
 Nexmo    ``symfony/nexmo-notifier``   ``nexmo://KEY:SECRET@default?from=FROM``
+Smsapi   ``symfony/smsapi-notifier``  ``smsapi://TOKEN@default?from=FROM``
 =======  ===========================  ========================================
 
 To enable a texter, add the correct DSN in your ``.env`` file and
@@ -279,7 +280,7 @@ transport:
                         %env(SLACK_DSN)% || %env(TELEGRAM_DSN)%
                     </framework:chatter-transport>
 
-                    <!-- Send notifications to the next scheduled transport 
+                    <!-- Send notifications to the next scheduled transport
                          calculated by round robin -->
                     <framework:chatter-transport name="slack">
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
