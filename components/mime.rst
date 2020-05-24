@@ -166,7 +166,7 @@ different parts of the email by hand::
     ;
 
     $textContent = new TextPart('Lorem ipsum...');
-    $htmlContent = new TextPart('<h1>Lorem ipsum</h1> <p>...</p>', 'html');
+    $htmlContent = new TextPart('<h1>Lorem ipsum</h1> <p>...</p>', null, 'html');
     $body = new AlternativePart($textContent, $htmlContent);
 
     $email = new Message($headers, $body);
@@ -188,7 +188,7 @@ email multiparts::
     $textContent = new TextPart('Lorem ipsum...');
     $htmlContent = new TextPart(sprintf(
         '<img src="cid:%s"/> <h1>Lorem ipsum</h1> <p>...</p>', $imageCid
-    ), 'html');
+    ), null, 'html');
     $bodyContent = new AlternativePart($textContent, $htmlContent);
     $body = new RelatedPart($bodyContent, $embeddedImage);
 
