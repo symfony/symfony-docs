@@ -481,3 +481,4 @@
 /components/routing https://github.com/symfony/routing
 /doctrine/pdo_session_storage /session/database
 /doctrine/mongodb_session_storage /session/database
+/components/dotenv https://github.com/symfony/dotenv
