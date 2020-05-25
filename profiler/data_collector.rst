@@ -232,13 +232,12 @@ to specify a tag that contains the template:
         services:
             App\DataCollector\RequestCollector:
                 tags:
-                    -
-                        name:     data_collector
-                        template: 'data_collector/template.html.twig'
-                        # must match the value returned by the getName() method
-                        id:       'app.request_collector'
-                        # optional priority
-                        # priority: 300
+                   name: data_collector
+                   template: 'data_collector/template.html.twig'
+                   # must match the value returned by the getName() method
+                   id: 'app.request_collector'
+                   # optional priority
+                   # priority: 300
 
     .. code-block:: xml
 
