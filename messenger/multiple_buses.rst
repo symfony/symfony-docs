@@ -105,6 +105,11 @@ This will create three new services:
 
 * ``event.bus``: autowireable with ``MessageBusInterface $eventBus``.
 
+.. note::
+
+    The ``allow_no_handlers`` option allows ``event.bus`` to have no handler configured
+    and as a result, it will not end up with error if you define no handler for this bus.
+
 Restrict Handlers per Bus
 -------------------------
 
