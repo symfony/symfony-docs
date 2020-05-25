@@ -399,7 +399,7 @@
 /security/acl_advanced /security/acl
 /security/password_encoding /security
 /weblink /web_link
-/components/weblink /components/web_link
+/components/weblink https://github.com/symfony/web-link
 /frontend/encore/installation-no-flex /frontend/encore/installation
 /http_cache/form_csrf_caching /security/csrf
 /console/logging /console
@@ -499,3 +499,4 @@
 /components/polyfill_php72 https://github.com/symfony/polyfill-php72
 /components/polyfill_php73 https://github.com/symfony/polyfill-php73
 /components/polyfill_uuid https://github.com/symfony/polyfill-uuid
+/components/web_link https://github.com/symfony/web-link
