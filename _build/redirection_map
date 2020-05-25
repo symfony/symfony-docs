@@ -350,10 +350,10 @@
 /components/routing/hostname_pattern /routing/hostname_pattern
 /components/security/introduction /components/security
 /components/security/index /components/security
-/components/templating/introduction /components/templating
-/components/templating/index /components/templating
-/components/templating/helpers/assetshelper /components/templating/assetshelper
-/components/templating/helpers/slotshelper /components/templating/slotshelper
+/components/templating/introduction https://github.com/symfony/templating
+/components/templating/index https://github.com/symfony/templating
+/components/templating/helpers/assetshelper https://github.com/symfony/templating
+/components/templating/helpers/slotshelper https://github.com/symfony/templating
 /components/translation/introduction /components/translation
 /components/translation/index /components/translation
 /components/var_dumper/introduction /components/var_dumper
@@ -500,3 +500,4 @@
 /components/polyfill_php73 https://github.com/symfony/polyfill-php73
 /components/polyfill_uuid https://github.com/symfony/polyfill-uuid
 /components/web_link https://github.com/symfony/web-link
+/components/templating https://github.com/symfony/templating
