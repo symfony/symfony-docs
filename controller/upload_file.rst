@@ -117,6 +117,11 @@ to :doc:`customize form rendering </form/form_customization>`):
         {{ form_row(form.brochure) }}
     {{ form_end(form) }}
 
+.. note::
+
+    If you prefer to use raw html tags to render the form, don't forget to
+    add the `enctype="multipart/form-data"` attribute to the `form` tag.
+
 Finally, you need to update the code of the controller that handles the form::
 
     // src/Controller/ProductController.php
