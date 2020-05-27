@@ -27,9 +27,10 @@ has `high-level implementations`_ in many programming languages.
 
 Mercure comes with an authorization mechanism,
 automatic re-connection in case of network issues
-with retrieving of lost updates, "connection-less" push for smartphones and
-auto-discoverability (a supported client can automatically discover and
-subscribe to updates of a given resource thanks to a specific HTTP header).
+with retrieving of lost updates, a presence API,
+"connection-less" push for smartphones and auto-discoverability (a supported
+client can automatically discover and subscribe to updates of a given resource
+thanks to a specific HTTP header).
 
 All these features are supported in the Symfony integration.
 
@@ -71,7 +72,7 @@ Run the following command to start it:
 
 .. code-block:: terminal
 
-    $ ./mercure --jwt-key='aVerySecretKey' --addr='localhost:3000' --allow-anonymous --cors-allowed-origins='*'
+    $ ./mercure --jwt-key='!ChangeMe!' --addr='localhost:3000' --allow-anonymous --cors-allowed-origins='*'
 
 .. note::
 
@@ -102,7 +103,7 @@ to the Mercure Hub to be authorized to publish updates.
 This JWT should be stored in the ``MERCURE_JWT_TOKEN`` environment variable.
 
 The JWT must be signed with the same secret key as the one used by
-the Hub to verify the JWT (``aVerySecretKey`` in our example).
+the Hub to verify the JWT (``!ChangeMe!`` in our example).
 Its payload must contain at least the following structure to be allowed to
 publish:
 
@@ -120,7 +121,7 @@ public updates (see the authorization_ section for further information).
 .. tip::
 
     The jwt.io website is a convenient way to create and sign JWTs.
-    Checkout this `example JWT`_, that grants publishing rights for all *targets*
+    Checkout this `example JWT`_, that grants publishing rights for all *topics*
     (notice the star in the array).
     Don't forget to set your secret key properly in the bottom of the right panel of the form!
 
@@ -196,7 +197,8 @@ Subscribing to updates in JavaScript is straightforward:
     }
 
 Mercure also allows to subscribe to several topics,
-and to use URI Templates as patterns:
+and to use URI Templates or the special value ``*`` (matched by all topics)
+as patterns:
 
 .. code-block:: javascript
 
@@ -329,8 +331,8 @@ Authorization
 -------------
 
 Mercure also allows to dispatch updates only to authorized clients.
-To do so, set the list of **targets** allowed to receive the update
-as the third parameter of the ``Update`` constructor::
+To do so, mark the update as **private** by setting the third parameter
+of the ``Update`` constructor to ``true``::
 
     // src/Controller/Publish.php
     namespace App\Controller;
@@ -346,19 +348,19 @@ as the third parameter of the ``Update`` constructor::
             $update = new Update(
                 'http://example.com/books/1',
                 json_encode(['status' => 'OutOfStock']),
-                ['http://example.com/user/kevin', 'http://example.com/groups/admin'] // Here are the targets
+                true // private
             );
 
-            // Publisher's JWT must contain all of these targets or * in mercure.publish or you'll get a 401
-            // Subscriber's JWT must contain at least one of these targets or * in mercure.subscribe to receive the update
+            // Publisher's JWT must contain this topic, a URI template it matches or * in mercure.publish or you'll get a 401
+            // Subscriber's JWT must contain this topic, a URI template it matches or or * in mercure.subscribe to receive the update
             $publisher($update);
 
-            return new Response('published to the selected targets!');
+            return new Response('private update published!');
         }
     }
 
-To subscribe to private updates, subscribers must provide
-a JWT containing at least one target marking the update to the Hub.
+To subscribe to private updates, subscribers must provide to the Hub
+a JWT containing containing a topic selector matching by the update's topic.
 
 To provide this JWT, the subscriber can use a cookie,
 or a ``Authorization`` HTTP header.
@@ -380,9 +382,9 @@ If the client is not a web browser, then using an authorization header is the wa
         });
 
 In the following example controller,
-the generated cookie contains a JWT, itself containing the appropriate targets.
+the generated cookie contains a JWT, itself containing the appropriate topic selector.
 This cookie will be automatically sent by the web browser when connecting to the Hub.
-Then, the Hub will verify the validity of the provided JWT, and extract the targets
+Then, the Hub will verify the validity of the provided JWT, and extract the topic selectors
 from it.
 
 To generate the JWT, we'll use the ``lcobucci/jwt`` library. Install it:
@@ -414,8 +416,8 @@ And here is the controller::
             $username = $this->getUser()->getUsername(); // Retrieve the username of the current user
             $token = (new Builder())
                 // set other appropriate JWT claims, such as an expiration date
-                ->withClaim('mercure', ['subscribe' => ["http://example.com/user/$username"]]) // could also include the security roles, or anything else
-                ->getToken(new Sha256(), new Key($this->getParameter('mercure_secret_key'))); // don't forget to set this parameter! Test value: aVerySecretKey
+                ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
+                ->getToken(new Sha256(), new Key($this->getParameter('mercure_secret_key'))); // don't forget to set this parameter! Test value: !ChangeMe!
 
             $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
             $response->headers->set(
