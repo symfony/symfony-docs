@@ -26,7 +26,7 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 
 .. tip::
 
-    You need to be on ``master`` or version branch (eg. ``5.1``). Otherwise some dependencies
+    You need to be on ``master`` or version branch (e.g. ``5.1``). Otherwise some dependencies
     might cause ``composer update`` command to fail.
 
 .. _running:
