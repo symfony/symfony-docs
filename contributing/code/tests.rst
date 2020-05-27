@@ -26,8 +26,13 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 
 .. tip::
 
-    You need to be on ``master`` or version branch (e.g. ``5.1``). Otherwise some dependencies
-    might cause ``composer update`` command to fail.
+    Dependencies might fail to update and in this case Composer might need you to 
+    tell it what Symfony version you are working on.  
+    To do so set ``COMPOSER_ROOT_VERSION`` variable, e.g.:
+    
+    .. code-block:: terminal
+
+        $ COMPOSER_ROOT_VERSION=5.1.x-dev composer update
 
 .. _running:
 
