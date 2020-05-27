@@ -24,6 +24,11 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 
     $ composer update
 
+.. tip::
+
+    You need to be on ``master`` or version branch (eg. ``5.1``). Otherwise some dependencies
+    might cause ``composer update`` command to fail.
+
 .. _running:
 
 Running the Tests
