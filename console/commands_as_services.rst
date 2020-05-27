@@ -45,6 +45,8 @@ For example, suppose you want to log something from within your command::
         {
             $this->logger->info('Waking up the sun');
             // ...
+            
+            return 0;
         }
     }
 
