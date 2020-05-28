@@ -121,9 +121,8 @@ session metadata files:
         ]);
 
 Check out the Symfony config reference to learn more about the other available
-:ref:`Session configuration options <config-framework-session>`. Also, if you
-prefer to store session metadata in a database instead of the filesystem,
-check out this article: :doc:`/doctrine/pdo_session_storage`.
+:ref:`Session configuration options <config-framework-session>`. You can also
+:doc:`store sessions in a database </session/database>`.
 
 Basic Usage
 -----------
@@ -219,7 +218,9 @@ More about Sessions
 .. toctree::
     :maxdepth: 1
 
-    /doctrine/pdo_session_storage
+    session/sessions_directory
+    session/avoid_session_start
+    session/database
     session/locale_sticky_session
     session/php_bridge
     session/proxy_examples

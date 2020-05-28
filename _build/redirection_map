@@ -481,3 +481,5 @@
 /components/translation/custom_message_formatter https://github.com/symfony/translation
 /components/notifier https://github.com/symfony/notifier
 /components/routing https://github.com/symfony/routing
+/doctrine/pdo_session_storage /session/database
+/doctrine/mongodb_session_storage /session/database
