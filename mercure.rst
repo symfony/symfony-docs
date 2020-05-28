@@ -352,7 +352,7 @@ of the ``Update`` constructor to ``true``::
             );
 
             // Publisher's JWT must contain this topic, a URI template it matches or * in mercure.publish or you'll get a 401
-            // Subscriber's JWT must contain this topic, a URI template it matches or or * in mercure.subscribe to receive the update
+            // Subscriber's JWT must contain this topic, a URI template it matches or * in mercure.subscribe to receive the update
             $publisher($update);
 
             return new Response('private update published!');
@@ -360,7 +360,7 @@ of the ``Update`` constructor to ``true``::
     }
 
 To subscribe to private updates, subscribers must provide to the Hub
-a JWT containing containing a topic selector matching by the update's topic.
+a JWT containing a topic selector matching by the update's topic.
 
 To provide this JWT, the subscriber can use a cookie,
 or a ``Authorization`` HTTP header.
