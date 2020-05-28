@@ -849,10 +849,9 @@ Learn more
     doctrine/custom_dql_functions
     doctrine/dbal
     doctrine/multiple_entity_managers
-    doctrine/pdo_session_storage
-    doctrine/mongodb_session_storage
     doctrine/resolve_target_entity
     doctrine/reverse_engineering
+    session/database
     testing/database
 
 .. _`Doctrine`: https://www.doctrine-project.org/
