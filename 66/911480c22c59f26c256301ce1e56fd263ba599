@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by alcaeus at 2019-09-16T19:22:10Z
+
+> @alcaeus could you please review the section about MongoDB? I have some problems about the config needed to pass the MongoDB connection to MongoDBSessionHandler. Thanks!
+
+The docs are correct per se, but there's the issue of MongoDB ODM 1.x only working with the legacy driver, which is no longer supported by the session class. We've suggested people on PHP 7 use `alcaeus/mongo-php-adapter`, but even then this would require using private API to retrieve the underlying `\MongoDB\Client` object.
+
+The code you provided will work out of the box in MongoDB ODM 2.0, which will be released soon. Until then we're kind of stuck in limbo.
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2019-09-17T06:04:58Z
+
+@javiereguiluz I'm not seeing any specific about the Redis handler?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-17T06:22:02Z
+
+@dkarlovi maybe the new file `session/database.rst` is collapsed by GitHub by default? If you expand it, you'll see the first section dedicated to setting up Redis session handler.
+
+![image](https://user-images.githubusercontent.com/73419/65016292-2f78b280-d924-11e9-99c0-0c24d77f7a40.png)
+
+Could you please check if the Redis connection setup, etc. is correct? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-17T14:40:43Z
+
+Thanks for the reviews!
+
+@alcaeus I've added a note with what you said.
+@dkarlovi I mentioned that you can use other Redis classes.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-09-17T16:01:47Z
+
+@stof Memcached was a popular project a few years ago, but I think it's been overtaken by Redis:
+
+![image](https://user-images.githubusercontent.com/73419/65058789-1ea45d00-d975-11e9-9ef4-cbf9df632a2e.png)
+
+I've asked on Symfony's Slack and most people seem to use Redis only.
+
+---------------------------------------------------------------------------
+
+by stof at 2019-09-17T16:07:29Z
+
+I agree that Redis should be more prominent that Memcached. But given that we have support for Memcached in core, I think it deserves at least a mention in the doc.
+
+> I've asked on Symfony's Slack and most people seem to use Redis only.
+
+with that argument to reject MemcachedHandler, why is MongodbHandler documented then ?
