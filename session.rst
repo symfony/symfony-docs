@@ -218,7 +218,6 @@ More about Sessions
 .. toctree::
     :maxdepth: 1
 
-    session/avoid_session_start
     session/database
     session/locale_sticky_session
     session/php_bridge
