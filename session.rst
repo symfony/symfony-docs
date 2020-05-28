@@ -218,7 +218,6 @@ More about Sessions
 .. toctree::
     :maxdepth: 1
 
-    session/sessions_directory
     session/avoid_session_start
     session/database
     session/locale_sticky_session
