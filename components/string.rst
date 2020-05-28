@@ -468,6 +468,15 @@ that only includes safe ASCII characters::
     $slug = $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~');
     // $slug = 'Workspace-settings'
 
+    // you can also pass an array with additional character substitutions
+    $slugger = new AsciiSlugger('en', ['%' => 'percent', '€' => 'euro']);
+    $slug = $slugger->slug('10% or 5€');
+    // $slug = '10-percent-or-5-euro'
+
+.. versionadded:: 5.1
+
+    The feature to define additional substitutions was introduced in Symfony 5.1.
+
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::
 
