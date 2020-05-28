@@ -33,3 +33,10 @@ be used to validate the underlying object. To apply the ``registration``
 group *and* all constraints that are not in a group, use::
 
     'validation_groups' => ['Default', 'registration']
+
+.. note::
+
+    You can choose any name for your validation groups, but Symfony recommends
+    using "lower snake case" names (e.g. ``foo_bar``) in contrast with the
+    automatic validation groups created by Symfony, which use "upper camel case"
+    (e.g. ``Default``, ``SomeClassName``).
