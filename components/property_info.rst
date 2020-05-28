@@ -122,6 +122,7 @@ class exposes public methods to extract several types of information:
 
 * :ref:`List of properties <property-info-list>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface::getProperties`
 * :ref:`Property type <property-info-type>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getTypes`
+  (including typed properties since PHP 7.4)
 * :ref:`Property description <property-info-description>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getShortDescription` and :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getLongDescription`
 * :ref:`Property access details <property-info-access>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isReadable` and  :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isWritable`
 * :ref:`Property initializable through the constructor <property-info-initializable>`:  :method:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface::isInitializable`
@@ -291,6 +292,10 @@ string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
 
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
+
+.. versionadded:: 5.1
+
+    Support for typed properties (added in PHP 7.4) was introduced in Symfony 5.1.
 
 ``Type::isNullable()``
 ~~~~~~~~~~~~~~~~~~~~~~
