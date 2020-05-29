@@ -284,7 +284,7 @@ The following example shows how to inject an anonymous service into another serv
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                // In versions earlier to Symfony 5.1 the inline_service() function was called service()
+                // In versions earlier to Symfony 5.1 the inline_service() function was called inline()
                 ->args([inline_service(AnonymousBar::class)])
         };
 
