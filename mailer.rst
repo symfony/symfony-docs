@@ -183,6 +183,39 @@ Alternatively, you can pass multiple addresses to each method::
         // ...
     ;
 
+Message Headers
+~~~~~~~~~~~~~~~
+
+Messages include a number of header fields to describe their contents. Symfony
+sets all the required headers automatically, but you can set your own headers
+too. There are different types of headers (Id header, Mailbox header, Date
+header, etc.) but most of the times you'll set text headers::
+
+    $email = (new Email())
+        ->getHeaders()
+            // this header tells auto-repliers ("email holiday mode") to not
+            // reply to this message because it's an automated email
+            ->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
+
+        // ...
+    ;
+
+When using a mailer service that supports tags and metadata, consider using the
+``TagHeader`` and ``MetadataHeader`` headers instead of the plain text headers::
+
+    use Symfony\Component\Mailer\Header\MetadataHeader;
+    use Symfony\Component\Mailer\Header\TagHeader;
+
+    $email->getHeaders()->add(new TagHeader('password-reset'));
+    $email->getHeaders()->add(new MetadataHeader('Client-ID', '12345'));
+
+If your mailer doesn't support these tag/metadata headers, they are added to the
+message as text headers (``X-Tag: password-reset``, ``X-Metadata-Client-ID: 12345``).
+
+.. versionadded:: 5.1
+
+    The ``TagHeader`` and ``MetadataHeader`` headers were introduced in Symfony 5.1.
+
 Message Contents
 ~~~~~~~~~~~~~~~~
 
