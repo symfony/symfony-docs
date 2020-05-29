@@ -1,6 +1,11 @@
 Enabling Vue.js (``vue-loader``)
 ================================
 
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Vue screencast series`_.
+
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
@@ -188,3 +193,4 @@ you can import them with ``require()`` function:
 .. _`JSX with Vue.js`: https://github.com/vuejs/jsx
 .. _`Scoped Styles`: https://vue-loader.vuejs.org/guide/scoped-css.html
 .. _`CSS Modules`: https://github.com/css-modules/css-modules
+.. _`Vue screencast series`: https://symfonycasts.com/screencast/vue
