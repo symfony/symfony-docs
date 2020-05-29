@@ -501,7 +501,7 @@ CombinedStore
 ~~~~~~~~~~~~~
 
 Combined stores allow to store locks across several backends. It's a common
-mistake to think that the lock mechanism will be more reliable. This is wrong
+mistake to think that the lock mechanism will be more reliable. This is wrong.
 The ``CombinedStore`` will be, at best, as reliable as the least reliable of
 all managed stores. As soon as one managed store returns erroneous information,
 the ``CombinedStore`` won't be reliable.
