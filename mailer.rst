@@ -184,6 +184,23 @@ Alternatively, you can pass multiple addresses to each method::
         // ...
     ;
 
+Message Headers
+~~~~~~~~~~~~~~~
+
+Messages include a number of header fields to describe their contents. Symfony
+sets all the required headers automatically, but you can set your own headers
+too. There are different types of headers (Id header, Mailbox header, Date
+header, etc.) but most of the times you'll set text headers::
+
+    $email = (new Email())
+        ->getHeaders()
+            // this header tells auto-repliers ("email holiday mode") to not
+            // reply to this message because it's an automated email
+            ->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
+
+        // ...
+    ;
+
 Message Contents
 ~~~~~~~~~~~~~~~~
 
