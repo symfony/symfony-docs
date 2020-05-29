@@ -94,6 +94,14 @@ Checkboxes and Radios
 For a checkbox/radio field, calling ``form_label()`` doesn't render anything.
 Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
 
+File inputs
+-----------
+
+Files input are rendered using the Bootstrap "custom-file" class.
+
+Due to Bootstrap internals, the rendered field does not display the selected filename.
+To fix that missing display, you can use the "`bs-custom-file-input`_" plugin (vanilla javascript), as recommended by `Bootstrap Forms documentation`_.
+
 Accessibility
 -------------
 
@@ -126,6 +134,8 @@ Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the la
     {{ form_row(form.myCheckbox, {label_attr: {class: 'switch-custom'} }) }}
 
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
+.. _`bs-custom-file-input`: https://www.npmjs.com/package/bs-custom-file-input
+.. _`Bootstrap Forms documentation`: https://getbootstrap.com/docs/4.4/components/forms/#file-browser
 .. _`custom forms`: https://getbootstrap.com/docs/4.4/components/forms/#custom-forms
 .. _`custom radio`: https://getbootstrap.com/docs/4.4/components/forms/#radios
 .. _`custom checkbox`: https://getbootstrap.com/docs/4.4/components/forms/#checkboxes
