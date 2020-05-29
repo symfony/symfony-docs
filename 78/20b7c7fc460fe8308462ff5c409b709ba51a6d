@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by jrushlow at 2020-04-23T20:58:56Z
+
+Would it be worth adding an additional link to this doc in the bottom of the [Login Form Setup](https://github.com/symfony/symfony-docs/blob/master/security/form_login_setup.rst) guide? Or is the link sufficient?
