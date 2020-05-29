@@ -1122,6 +1122,7 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
+    security/reset_password
     security/json_login_setup
     security/guard_authentication
     security/password_migration
