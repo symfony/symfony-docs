@@ -264,7 +264,7 @@ The **minimum configuration** to get your application running under nginx is:
 
         location / {
             # try to serve file directly, fallback to app.php
-            # replace app.php by app_dev.php in dev
+            # replace app.php with app_dev.php in dev
             try_files $uri /app.php$is_args$args;
         }
         # DEV
