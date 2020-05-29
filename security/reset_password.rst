@@ -1,17 +1,14 @@
-How to Add Secure Password Reset Functionality
-==============================================
+How to Add a Reset Password Feature
+===================================
 
-Using `MakerBundle`_ & `Symfony Cast's Reset Password Bundle`_ you can create a
+Using `MakerBundle`_ & `SymfonyCastsResetPasswordBundle`_ you can create a
 secure out of the box solution to handle forgotten passwords.
 
-.. caution::
+First, make sure you have a security ``User`` class. Follow
+the :doc:`Security Guide </security>` if you don't have one already.
 
-    Make sure you have created a ``User`` class with a getter method to retrieve
-    the users unique email address. The :doc:`Security Guide </security>` will
-    help you install security and create your user class.
-
-Bootstrap reset password functionality
---------------------------------------
+Generating the Reset Password Code
+----------------------------------
 
 .. code-block:: terminal
 
@@ -19,14 +16,13 @@ Bootstrap reset password functionality
         .....
     $ php bin/console make:reset-password
 
+The `make:reset-password` command will ask you a few questions about your app and
+generate all the files you need! After, you'll see a success message and a list
+of any other steps you need to do.
 
-The reset password maker will then ask you a couple questions about your app and
-generate the required files. Afterword's you should see the success message,
-a list of the files generated, and any other task's that may need to be performed.
-
-You can customize the reset password bundle's behavior by editing ``reset_password.yaml``.
-For more information on the configuration, check out the
-`Symfony Cast's Reset Password Bundle`_  guide.
+You can customize the reset password bundle's behavior by updating the ``reset_password.yaml``
+file. For more information on the configuration, check out the
+`SymfonyCastsResetPasswordBundle`_  guide.
 
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`Symfony Cast's Reset Password Bundle`: https://github.com/symfonycasts/reset-password-bundle
