@@ -6,7 +6,14 @@ Enabling React.js
 
     Do you prefer video tutorials? Check out the `React.js screencast series`_.
 
-Using React? First enable support for it in ``webpack.config.js``:
+Using React? First add some dependencies with Yarn:
+
+.. code-block:: terminal
+
+    $ yarn add @babel/preset-react --dev
+    $ yarn add react react-dom prop-types
+
+Enable react in your ``webpack.config.js``:
 
 .. code-block:: diff
 
