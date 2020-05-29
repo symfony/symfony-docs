@@ -25,4 +25,4 @@ file. For more information on the configuration, check out the
 `SymfonyCastsResetPasswordBundle`_  guide.
 
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`Symfony Cast's Reset Password Bundle`: https://github.com/symfonycasts/reset-password-bundle
+.. _`SymfonyCastsResetPasswordBundle`: https://github.com/symfonycasts/reset-password-bundle
