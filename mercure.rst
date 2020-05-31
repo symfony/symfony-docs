@@ -413,7 +413,6 @@ And here is the controller::
             $hubUrl = $this->getParameter('mercure.default_hub');
             $this->addLink($request, new Link('mercure', $hubUrl));
 
-            $username = $this->getUser()->getUsername(); // Retrieve the username of the current user
             $token = (new Builder())
                 // set other appropriate JWT claims, such as an expiration date
                 ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
