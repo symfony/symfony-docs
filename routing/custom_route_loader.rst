@@ -92,20 +92,10 @@ What is a Custom Route Loader
 -----------------------------
 
 A custom route loader enables you to generate routes based on some
-conventions or patterns. A great example for this use-case is the
-`FOSRestBundle`_ where routes are generated based on the names of the
-action methods in a controller.
-
-You still need to modify your routing configuration (e.g.
-``config/routes.yaml``) manually, even when using a custom route
-loader.
-
-.. note::
-
-    There are many bundles out there that use their own route loaders to
-    accomplish cases like those described above, for instance
-    `FOSRestBundle`_, `JMSI18nRoutingBundle`_, `KnpRadBundle`_ and
-    `SonataAdminBundle`_.
+conventions, patterns or integrations. An example for this use-case is the
+`OpenAPI-Symfony-Routing`_ library where routes are generated based on
+OpenAPI/Swagger annotations. Another example is the `SonataAdminBundle`_ that
+creates routes based on CRUD conventions.
 
 Loading Routes
 --------------
@@ -452,8 +442,6 @@ configuration file - you can call the
     combined, for example to keep using the default Symfony routing system when
     writing a custom router.
 
-.. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
-.. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
-.. _`KnpRadBundle`: https://github.com/KnpLabs/KnpRadBundle
+.. _`OpenAPI-Symfony-Routing`: https://github.com/Tobion/OpenAPI-Symfony-Routing
 .. _`SonataAdminBundle`: https://github.com/sonata-project/SonataAdminBundle
 .. _`ChainRouter`: https://symfony.com/doc/current/cmf/components/routing/chain.html
