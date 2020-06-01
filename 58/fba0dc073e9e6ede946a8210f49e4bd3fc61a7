@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-01T07:11:01Z
+
+@l-vo thanks! I've just checked the code of Console ... and it's true that in `console/Application.php` and `console/EventListener/ErrorListener.php` the `TERMINATE` event is triggered after any ERROR event.
