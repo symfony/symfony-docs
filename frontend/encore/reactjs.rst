@@ -15,13 +15,6 @@ Using React? First add some dependencies with Yarn:
 
 Enable react in your ``webpack.config.js``:
 
-.. code-block:: terminal
-
-    $ yarn add @babel/preset-react --dev
-    $ yarn add react react-dom prop-types
-
-Enable react in your ``webpack.config.js``:
-
 .. code-block:: diff
 
     // webpack.config.js
