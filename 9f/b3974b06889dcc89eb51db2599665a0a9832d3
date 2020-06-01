@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-01T07:05:48Z
+
+If I'm right, this interface doesn't pass `$context` in any version, including `master` (https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Serializer/Normalizer/NormalizerInterface.php). To get the `context` you need to use the "context aware" interface.
+
+@zulkris thanks and congrats on your first Symfony Docs contribution!
