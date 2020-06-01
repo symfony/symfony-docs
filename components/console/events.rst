@@ -122,7 +122,7 @@ Listeners receive a
 
         $output->writeln(sprintf('Oops, exception thrown while running command <info>%s</info>', $command->getName()));
 
-        // gets the current exit code (the exception code or the exit code set by a ConsoleEvents::TERMINATE event)
+        // gets the current exit code (the exception code)
         $exitCode = $event->getExitCode();
 
         // changes the exception to another one
