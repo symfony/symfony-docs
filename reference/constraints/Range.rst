@@ -40,8 +40,7 @@ you might add the following:
              * @Assert\Range(
              *      min = 120,
              *      max = 180,
-             *      minMessage = "You must be at least {{ limit }}cm tall to enter",
-             *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+             *      notInRangeMessage = "You must be between {{ min }}cm and {{ max }}cm tall to enter",
              * )
              */
             protected $height;
