@@ -451,7 +451,7 @@ a new object with the modified property::
 
     $cookie = Cookie::create('foo')
         ->withValue('bar')
-        ->withExpiresTime(strtotime('Fri, 20-May-2011 15:25:52 GMT'))
+        ->withExpires(strtotime('Fri, 20-May-2011 15:25:52 GMT'))
         ->withDomain('.example.com')
         ->withSecure(true);
 
