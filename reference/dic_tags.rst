@@ -260,9 +260,9 @@ Add this tag to a service and its class won't be preloaded when using
             ->addTag('container.no_preload')
         ;
 
-If some service tagged with ``container.no_preload`` is added as an argument of
-other service, the ``container.no_preload`` tag is applied automatically to that
-service too.
+If you add some service tagged with ``container.no_preload`` as an argument of
+another service, the ``container.no_preload`` tag is applied automatically to
+that service too.
 
 .. _dic-tags-container-preload:
 
