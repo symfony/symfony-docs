@@ -17,6 +17,24 @@ Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <lo
 in some other way), you're done: the paths in your templates will automatically point
 to the dev server.
 
+Enabling https & the Symfony Web Server
+---------------------------------------
+
+If you're using the `Symfony web server`_ locally with https, you'll need to also
+tell the dev-server to use https. To do this, you can reuse the Symfony web
+server SSL certificate:
+
+.. code-block:: terminal
+
+    # Unix-based systems
+    $ yarn dev-server --https --pfx=$HOME/.symfony/certs/default.p12
+
+    # Windows
+    $ encore dev-server --https --pfx=%UserProfile%\.symfony\certs\default.p12
+
+dev-server Options
+------------------
+
 The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
 You can set these options via command line options:
 
