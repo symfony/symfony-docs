@@ -231,6 +231,11 @@ You can manually encode a password by running:
 3a) Authentication & Firewalls
 ------------------------------
 
+.. versionadded:: 5.1
+
+    The ``lazy: true`` option was introduced in Symfony 5.1. Prior to version 5.1,
+    it was enabled using ``anonymous: lazy``
+
 The security system is configured in ``config/packages/security.yaml``. The *most*
 important section is ``firewalls``:
 
@@ -245,7 +250,8 @@ important section is ``firewalls``:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: lazy
+                    anonymous: true
+                    lazy: true
 
     .. code-block:: xml
 
@@ -264,8 +270,9 @@ important section is ``firewalls``:
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false"/>
 
-                <firewall name="main">
-                    <anonymous lazy="true"/>
+                <firewall name="main"
+                    anonymous="true"
+                    lazy="true"/>
                 </firewall>
             </config>
         </srv:container>
@@ -280,7 +287,8 @@ important section is ``firewalls``:
                     'security' => false,
                 ],
                 'main' => [
-                    'anonymous' => 'lazy',
+                    'anonymous' => true,
+                    'lazy' => true,
                 ],
             ],
         ]);
