@@ -14,6 +14,7 @@ Validation Constraints Reference
    constraints/Type
 
    constraints/Email
+   constraints/ExpressionLanguageSyntax
    constraints/Length
    constraints/Url
    constraints/Regex
