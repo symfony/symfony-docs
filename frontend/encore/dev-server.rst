@@ -17,8 +17,8 @@ Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <lo
 in some other way), you're done: the paths in your templates will automatically point
 to the dev server.
 
-Enabling HTTPS & the Symfony Web Server
----------------------------------------
+Enabling HTTPS using the Symfony Web Server
+-------------------------------------------
 
 If you're using the :doc:`Symfony web server </setup/symfony_server>` locally with HTTPS,
 you'll need to also tell the dev-server to use HTTPS. To do this, you can reuse the Symfony web
