@@ -1,0 +1,59 @@
+---------------------------------------------------------------------------
+
+by Andrej-in-ua at 2020-05-21T16:18:46Z
+
+About `names` and `validateNames` proposal.
+```
+/**
+ * @Assert\ExpressionLanguageSyntax(
+ *     allowedVariables = false
+ * )
+ */
+protected $shippingOptions;
+```
+IMHO, it's ambiguous - it looks like any variables are forbidden, but actually any variables are allowed. I would be confused.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-05-22T14:09:32Z
+
+@Andrej-in-ua thanks for the review!
+
+About this ambiguity:
+
+```php
+/**
+ * @Assert\ExpressionLanguageSyntax(
+ *     allowedVariables = false
+ * )
+ */
+```
+
+The idea would be that `allowedVariables` only admits non-empty array values (or `null` to disable this option ... which is equivalent to not setting this option explicitly).
+
+Would that make it easier to understand? Thanks.
+
+---------------------------------------------------------------------------
+
+by Andrej-in-ua at 2020-05-22T22:23:35Z
+
+@javiereguiluz Then it makes sense to keep the `validateNames` and use it:
+- when `validateNames = []` we not allow any variables. This is default state
+- when `validateNames = ['foo', 'bar']` allowed only presented variables
+- when `validateNames = null` (or any other non array type) - not validate variables names
+
+It seems to me that this will eliminate the contradiction in the interpretation.
+
+But I still do not see much sense in this. Personally, I more like when a variable is responsible for only 1 state. But maybe this makes sense in this case. I don't known.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-05-30T07:31:14Z
+
+I think having only one option (defaulting to `null`) would be easier to explain and to use and the constraint would also be inline with how the linting process is used with the ExpressionLanguage component directly.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-05-30T08:27:45Z
+
+I have opened a pull request: symfony/symfony#37009
