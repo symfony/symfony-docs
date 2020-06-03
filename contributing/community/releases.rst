@@ -7,12 +7,12 @@ release and maintain its different versions.
 Symfony releases follow the `semantic versioning`_ strategy and they are
 published through a *time-based model*:
 
-* A new **Symfony patch version** (e.g. 2.8.15, 4.1.7) comes out roughly every
+* A new **Symfony patch version** (e.g. 3.4.41, 4.4.9) comes out roughly every
   month. It only contains bug fixes, so you can safely upgrade your applications;
-* A new **Symfony minor version** (e.g. 2.8, 3.2, 4.1) comes out every *six months*:
+* A new **Symfony minor version** (e.g. 4.4, 5.0, 5.1) comes out every *six months*:
   one in *May* and one in *November*. It contains bug fixes and new features, but
   it doesn't include any breaking change, so you can safely upgrade your applications;
-* A new **Symfony major version** (e.g. 3.0, 4.0) comes out every *two years*.
+* A new **Symfony major version** (e.g. 4.0, 5.0) comes out every *two years*.
   It can contain breaking changes, so you may need to do some changes in your
   applications before upgrading.
 
