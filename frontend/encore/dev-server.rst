@@ -20,7 +20,7 @@ to the dev server.
 Enabling https & the Symfony Web Server
 ---------------------------------------
 
-If you're using the `Symfony web server`_ locally with https, you'll need to also
+If you're using the :doc:`Symfony web server </setup/symfony_server>` locally with https, you'll need to also
 tell the dev-server to use https. To do this, you can reuse the Symfony web
 server SSL certificate:
 
