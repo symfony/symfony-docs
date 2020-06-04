@@ -14,6 +14,11 @@ Guard authentication can be used to:
 and many more. In this example, we'll build an API token authentication
 system, so we can learn more about Guard in detail.
 
+.. tip::
+
+    A :doc:`new experimental authenticator-based system </security/experimental_authenticators>`
+    was introduced in Symfony 5.1, which will eventually replace Guards in Symfony 6.0.
+
 Step 1) Prepare your User Class
 -------------------------------
 
