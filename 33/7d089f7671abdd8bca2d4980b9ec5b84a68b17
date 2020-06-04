@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-06-03T15:26:20Z
+
+Not related with this PR directly, but what if encore would automatically configure this for us using the [`devServer.pfx`](https://webpack.js.org/configuration/dev-server/#devserverpfx) config? Or maybe add an `symfony encore:dev-server` or the like command to the Symfony CLI?
+
+It's seems a bit contrary with everything the Symfony CLI does (seems like it requires you to type more static text that you for sure have to lookup every time you want to use it).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2020-06-04T10:19:51Z
+
+Yea, you're totally right. I'll check into possibly automatically detecting the `.p12` file and configuring the `pfx` for the user in Encore (unless they have configured it themselves). If that doesn't feel right or doesn't work, I'll ask about a possible Encore specific command.
+
+We should merge this for now though - I'll follow-up on that other solution.
