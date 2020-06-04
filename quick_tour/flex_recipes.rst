@@ -62,7 +62,7 @@ What did this recipe do? In addition to automatically enabling the feature in
     A configuration file that sets up Twig with sensible defaults.
 
 ``config/packages/test/twig.yaml``
-    A configuration file to override some of the settings previously configured in ``config/packages/twig.yaml``.
+    A configuration file that changes some Twig options when running tests.
 
 ``templates/``
     This is the directory where template files will live. The recipe also added
