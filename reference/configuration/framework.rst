@@ -2024,7 +2024,7 @@ performance a bit:
 
         # config/packages/translation.yaml
         framework:
-            translation:
+            translator:
                 enabled_locales: ['en', 'es']
 
     .. code-block:: xml
