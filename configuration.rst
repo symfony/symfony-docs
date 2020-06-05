@@ -576,10 +576,6 @@ Define a default value in case the environment variable is not set:
     DB_USER=
     DB_PASS=${DB_USER:-root}pass # results in DB_PASS=rootpass
 
-.. versionadded:: 4.4
-
-    The support for default values has been introduced in Symfony 4.4.
-
 Embed commands via ``$()`` (not supported on Windows):
 
 .. code-block:: bash
