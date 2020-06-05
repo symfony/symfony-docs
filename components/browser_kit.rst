@@ -99,7 +99,7 @@ make AJAX requests::
 Clicking Links
 ~~~~~~~~~~~~~~
 
-The ``Client`` object is capable of simulating link clicks. Pass the text
+The ``AbstractBrowser`` is capable of simulating link clicks. Pass the text
 content of the link and the client will perform the needed HTTP GET request to
 simulate the link click::
 
@@ -122,7 +122,7 @@ provides access to the link properties (e.g. ``$link->getMethod()``,
 Submitting Forms
 ~~~~~~~~~~~~~~~~
 
-The ``Client`` object is also capable of submitting forms. First, select the
+The ``AbstractBrowser`` is also capable of submitting forms. First, select the
 form using any of its buttons and then override any of its properties (method,
 field values, etc.) before submitting it::
 
@@ -173,7 +173,7 @@ Cookies
 Retrieving Cookies
 ~~~~~~~~~~~~~~~~~~
 
-The ``Client`` implementation exposes cookies (if any) through a
+The ``AbstractBrowser`` implementation exposes cookies (if any) through a
 :class:`Symfony\\Component\\BrowserKit\\CookieJar`, which allows you to store and
 retrieve any cookie while making requests with the client::
 
