@@ -953,7 +953,7 @@ The transport has a number of options:
         $container->loadFromExtension('framework', [
             'messenger' => [
                 'transports' => [
-                    'async_priority_high' => 'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority',
+                    'async_priority_high' => '%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority',
                     'async_priority_low' => [
                         'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
                         'options' => [
