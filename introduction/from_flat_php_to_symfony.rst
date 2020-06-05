@@ -243,8 +243,7 @@ the ``templates/layout.php``:
 You now have a setup that will allow you to reuse the layout.
 Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
-solves this using a :doc:`Templating </components/templating>` component.
-You'll see it in action shortly.
+solves this using a `Templating`_ component. You'll see it in action shortly.
 
 Adding a Blog "show" Page
 -------------------------
@@ -683,7 +682,7 @@ migrating the blog from flat PHP to Symfony has improved your life:
   :doc:`routing </routing>`, or rendering :doc:`controllers </controller>`;
 
 * Symfony gives you **access to open source tools** such as `Doctrine`_ and the
-  :doc:`Templating </components/templating>`,
+  `Templating`_,
   :doc:`Security </components/security>`,
   :doc:`Form </components/form>`, `Validator`_ and
   `Translation`_ components (to name
@@ -703,6 +702,7 @@ A good selection of `Symfony community tools`_ can be found on GitHub.
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: https://www.doctrine-project.org/
+.. _Templating: https://github.com/symfony/templating
 .. _Translation: https://github.com/symfony/translation
 .. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/

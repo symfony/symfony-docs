@@ -125,9 +125,8 @@ as this is very likely to expose sensitive data.
 
 .. tip::
 
-    PHP errors are turned into exceptions as well by default, so you can also access these
-    error details using ``exception``. For more on this see
-    :ref:`Turning PHP Errors into Exceptions <turning-php-errors-into-exceptions>`
+    PHP errors are turned into exceptions as well by default, so you can also
+    access these error details using ``exception``.
 
 Security & 404 Pages
 --------------------
