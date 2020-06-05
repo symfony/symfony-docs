@@ -543,6 +543,62 @@ In addition to your own env vars, this ``.env`` file also contains the env vars
 defined by the third-party packages installed in your application (they are
 added automatically by :ref:`Symfony Flex <symfony-flex>` when installing packages).
 
+.env File Syntax
+................
+
+Add comments by prefixing them with ``#``:
+
+.. code-block:: bash
+
+    # database credentials
+    DB_USER=root
+    DB_PASS=pass # this is the secret password
+
+Use environment variables in values by prefixing variables with ``$``:
+
+.. code-block:: bash
+
+    DB_USER=root
+    DB_PASS=${DB_USER}pass # include the user as a password prefix
+
+.. caution::
+
+    The order is important when some env var depends on the value of other env
+    vars. In the above example, ``DB_PASS`` must be defined after ``DB_USER``.
+    Moreover, if you define multiple ``.env`` files and put ``DB_PASS`` first,
+    its value will depend on the ``DB_USER`` value defined in other files
+    instead of the value defined in this file.
+
+Define a default value in case the environment variable is not set:
+
+.. code-block:: bash
+
+    DB_USER=
+    DB_PASS=${DB_USER:-root}pass # results in DB_PASS=rootpass
+
+.. versionadded:: 4.4
+
+    The support for default values has been introduced in Symfony 4.4.
+
+Embed commands via ``$()`` (not supported on Windows):
+
+.. code-block:: bash
+
+    START_TIME=$(date)
+
+.. caution::
+
+    Using ``$()`` might not work depending on your shell.
+
+.. tip::
+
+    As a ``.env`` file is a regular shell script, you can ``source`` it in
+    your own shell scripts:
+
+    .. code-block:: terminal
+
+        $ source .env
+
 .. _configuration-multiple-env-files:
 
 Overriding Environment Values via .env.local
