@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-06-04T06:42:44Z
+
+👍 Could you update the other config formats too?
+
+---------------------------------------------------------------------------
+
+by rcapile at 2020-06-04T13:01:47Z
+
+I always forget about them.
+
+But I never used XML (in Symfony configuration). Would that be right?
+```xml
+<firewall name="main"
+    anonymous="true"
+    lazy="true"/>
+```
