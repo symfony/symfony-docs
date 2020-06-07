@@ -2457,11 +2457,13 @@ debug
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 
-Whether to enable debug mode for caching. If enabled, the cache will
+If enabled, the cache will
 automatically update when the original file is changed (both with code and
 annotation changes). For performance reasons, it is recommended to disable
 debug mode in production, which will happen automatically if you use the
-default value.
+default value.  
+Also configures if Symfony's Welcome Page is shown when no home page is
+configured, or if a regular 404 error page is shown in that case.
 
 .. _configuration-framework-serializer:
 
