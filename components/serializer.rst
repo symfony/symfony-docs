@@ -1289,6 +1289,7 @@ context option::
     $data = $serializer->denormalize(
         ['foo' => 'Hello'],
         'MyObj',
+        null,
         [AbstractNormalizer::DEFAULT_CONSTRUCTOR_ARGUMENTS => [
             'MyObj' => ['foo' => '', 'bar' => ''],
         ]]
