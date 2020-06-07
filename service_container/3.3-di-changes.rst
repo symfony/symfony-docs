@@ -161,7 +161,7 @@ each service or load them all at once with this method.
 
     OK, but can I exclude some paths that I *know* won't contain services?
 
-Yes! The ``exclude`` key is a glob pattern that can be used to *blacklist* paths
+Yes! The ``exclude`` key is a glob pattern that can be used to *ignore* paths
 that you do *not* want to be included as services. But, since unused services are
 automatically removed from the container, ``exclude`` is not that important. The
 biggest benefit is that those paths are not *tracked* by the container, and so may
