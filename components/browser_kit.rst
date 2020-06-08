@@ -40,13 +40,7 @@ The component only provides an abstract client and does not provide any backend
 ready to use for the HTTP layer. To create your own client, you must extend the
 ``AbstractBrowser`` class and implement the
 :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::doRequest` method.
-
-.. deprecated:: 4.3
-
-    In Symfony 4.3 and earlier versions, the ``AbstractBrowser`` class was called
-    ``Client`` (which is now deprecated).
-
-The ``doRequest()`` method accepts a request and should return a response::
+This method accepts a request and should return a response::
 
     namespace Acme;
 
