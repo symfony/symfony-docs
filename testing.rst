@@ -484,7 +484,7 @@ script::
 AJAX Requests
 ~~~~~~~~~~~~~
 
-The Client provides a :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest`
+The Client provides a :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest`
 method, which has the same arguments as the ``request()`` method, and it's a
 shortcut to make AJAX requests::
 
