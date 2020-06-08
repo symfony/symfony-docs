@@ -152,10 +152,6 @@ is_granted
 
 Returns ``true`` if the current user has the given role.
 
-.. deprecated:: 4.4
-
-    The feature to pass an array of roles to ``is_granted()`` was deprecated in Symfony 4.4.
-
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
 
