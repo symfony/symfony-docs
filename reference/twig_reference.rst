@@ -144,15 +144,13 @@ is_granted
     {{ is_granted(role, object = null, field = null) }}
 
 ``role``
-    **type**: ``string``, ``string[]``
+    **type**: ``string``
 ``object`` *(optional)*
     **type**: ``object``
 ``field`` *(optional)*
     **type**: ``string``
 
-Returns ``true`` if the current user has the given role. If several roles are
-passed in an array, ``true`` is returned if the user has at least one of
-them.
+Returns ``true`` if the current user has the given role.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
