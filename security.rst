@@ -1038,8 +1038,8 @@ event class:
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            use App\EventListener\CutomLogoutListener;
-            use App\EventListener\CutomLogoutSubscriber;
+            use App\EventListener\CustomLogoutListener;
+            use App\EventListener\CustomLogoutSubscriber;
             use Symfony\Component\Security\Http\Event\LogoutEvent;
 
             return function(ContainerConfigurator $configurator) {
