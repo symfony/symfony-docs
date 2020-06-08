@@ -37,18 +37,17 @@ Creating a Client
 ~~~~~~~~~~~~~~~~~
 
 The component only provides an abstract client and does not provide any backend
-ready to use for the HTTP layer.
-
-To create your own client, you must extend the abstract ``Client`` class and
-implement the :method:`Symfony\\Component\\BrowserKit\\Client::doRequest` method.
+ready to use for the HTTP layer. To create your own client, you must extend the
+``AbstractBrowser`` class and implement the
+:method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::doRequest` method.
 This method accepts a request and should return a response::
 
     namespace Acme;
 
-    use Symfony\Component\BrowserKit\Client as BaseClient;
+    use Symfony\Component\BrowserKit\AbstractBrowser;
     use Symfony\Component\BrowserKit\Response;
 
-    class Client extends BaseClient
+    class Client extends AbstractBrowser
     {
         protected function doRequest($request)
         {
@@ -67,7 +66,7 @@ provided by the :doc:`HttpKernel component </components/http_kernel>`.
 Making Requests
 ~~~~~~~~~~~~~~~
 
-Use the :method:`Symfony\\Component\\BrowserKit\\Client::request` method to
+Use the :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::request` method to
 make HTTP requests. The first two arguments are the HTTP method and the requested
 URL::
 
@@ -81,7 +80,7 @@ The value returned by the ``request()`` method is an instance of the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
 
-The :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest` method,
+The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to
 make AJAX requests::
 
