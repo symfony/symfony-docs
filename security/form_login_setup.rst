@@ -250,6 +250,14 @@ a traditional HTML form that submits to ``/login``:
             return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         }
 
+        /**
+         * Used to upgrade (rehash) the user's password automatically over time.
+         */
+        public function getPassword($credentials): ?string
+        {
+            return $credentials['password'];
+        }
+        
         public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
         {
             if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
