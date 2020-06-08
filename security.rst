@@ -414,8 +414,8 @@ authentication process. There are many different ways to build an authenticator;
 here are a few common use-cases:
 
 * :doc:`/security/form_login_setup`
-* :doc:`/security/guard_authentication` – see this for the most detailed description of
-   authenticators and how they work
+* :doc:`/security/guard_authentication` – see this for the most detailed
+  description of authenticators and how they work
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
