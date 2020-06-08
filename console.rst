@@ -386,7 +386,7 @@ Whenever an exception is thrown while running commands, Symfony adds a log
 message for it including the entire failing command. In addition, Symfony
 registers an :doc:`event subscriber </event_dispatcher>` to listen to the
 :ref:`ConsoleEvents::TERMINATE event <console-events-terminate>` and adds a log
-message whenever a command doesn't finish with the ``0`` exit status.
+message whenever a command doesn't finish with the ``0`` `exit status`_.
 
 Learn More
 ----------
@@ -404,5 +404,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progressbar`: shows a progress bar
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
+* :doc:`/components/console/helpers/debug_formatter`: provides functions to
+  output debug information when running an external program
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status
