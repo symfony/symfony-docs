@@ -234,7 +234,8 @@ FlockStore
 
 The FlockStore uses the file system on the local computer to create the locks.
 It does not support expiration, but the lock is automatically released when the
-PHP process is terminated::
+lock object goes out of scope and is freed by the garbage collector (for example
+when the PHP process ends)::
 
     use Symfony\Component\Lock\Store\FlockStore;
 
