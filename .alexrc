@@ -1,0 +1,16 @@
+{
+  "allow": [
+      "attack",
+      "attacks",
+      "bigger",
+      "color",
+      "colors",
+      "failure",
+      "hook",
+      "hooks",
+      "host-hostess",
+      "invalid",
+      "remain",
+      "special"
+  ]
+}

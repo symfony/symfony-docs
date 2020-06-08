@@ -40,7 +40,7 @@ Move into your project directory and run this command:
 Starting the Web Server
 -----------------------
 
-To run a Symfony application using PHP's built-in web server, execute the
+To run a Symfony application using PHP's built-in web server, run the
 ``server:start`` command:
 
 .. code-block:: terminal

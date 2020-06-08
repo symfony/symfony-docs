@@ -58,9 +58,8 @@ Your child service classes may look like this::
         // ...
     }
 
-Just as you use PHP inheritance to avoid duplication in your PHP code, the
-service container allows you to extend parent services in order to avoid
-duplicated service definitions:
+The service container allows you to extend parent services in order to
+avoid duplicated service definitions:
 
 .. configuration-block::
 

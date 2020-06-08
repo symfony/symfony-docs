@@ -6,8 +6,8 @@ How to Customize Error Pages
 ============================
 
 In Symfony applications, all errors are treated as exceptions, no matter if they
-are just a 404 Not Found error or a fatal error triggered by throwing some
-exception in your code.
+are a 404 Not Found error or a fatal error triggered by throwing some exception
+in your code.
 
 In the :ref:`development environment <configuration-environments>`,
 Symfony catches all the exceptions and displays a special **exception page**
@@ -19,7 +19,7 @@ with lots of debug information to help you discover the root problem:
    :class: with-browser
 
 Since these pages contain a lot of sensitive internal information, Symfony won't
-display them in the production environment. Instead, it'll show a simple and
+display them in the production environment. Instead, it'll show a minimal and
 generic **error page**:
 
 .. image:: /_images/controller/error_pages/errors-in-prod-environment.png
@@ -30,7 +30,7 @@ generic **error page**:
 Error pages for the production environment can be customized in different ways
 depending on your needs:
 
-#. If you just want to change the contents and styles of the error pages to match
+#. If you only want to change the contents and styles of the error pages to match
    the rest of your application, :ref:`override the default error templates <use-default-error-controller>`;
 
 #. If you want to change the contents of non-HTML error output,
@@ -39,7 +39,7 @@ depending on your needs:
 #. If you also want to tweak the logic used by Symfony to generate error pages,
    :ref:`override the default error controller <custom-error-controller>`;
 
-#. If you need total control of exception handling to execute your own logic
+#. If you need total control of exception handling to run your own logic
    :ref:`use the kernel.exception event <use-kernel-exception-event>`.
 
 .. _use-default-error-controller:

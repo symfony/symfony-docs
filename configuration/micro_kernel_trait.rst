@@ -20,7 +20,7 @@ via Composer:
       symfony/http-foundation symfony/routing \
       symfony/dependency-injection symfony/framework-bundle
 
-Next, create an ``index.php`` file that defines the kernel class and executes it::
+Next, create an ``index.php`` file that defines the kernel class and runs it::
 
     // index.php
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;

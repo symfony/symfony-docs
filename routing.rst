@@ -4,7 +4,7 @@
 Routing
 =======
 
-When your application receives a request, it executes a
+When your application receives a request, it calls a
 :doc:`controller action </controller>` to generate the response. The routing
 configuration defines which action to run for each incoming URL. It also
 provides other useful features, like generating SEO-friendly URLs (e.g.

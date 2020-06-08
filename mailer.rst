@@ -675,7 +675,7 @@ Inky Email Templating Language
 
 Creating beautifully designed emails that work on every email client is so
 complex that there are HTML/CSS frameworks dedicated to that. One of the most
-popular frameworks is called `Inky`_. It defines a syntax based on some simple
+popular frameworks is called `Inky`_. It defines a syntax based on some HTML-like
 tags which are later transformed into the real HTML code sent to users:
 
 .. code-block:: html

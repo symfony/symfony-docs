@@ -15,7 +15,7 @@ There are **two** main relationship/association types:
 ``ManyToOne`` / ``OneToMany``
     The most common relationship, mapped in the database with a foreign
     key column (e.g. a ``category_id`` column on the ``product`` table). This is
-    actually just *one* association type, but seen from the two different *sides*
+    actually only *one* association type, but seen from the two different *sides*
     of the relation.
 
 ``ManyToMany``
@@ -299,7 +299,7 @@ config.
     *exactly* like an array, but has some added flexibility. Just imagine that
     it is an ``array`` and you'll be in good shape.
 
-Your database is setup! Now, execute the migrations like normal:
+Your database is setup! Now, run the migrations like normal:
 
 .. code-block:: terminal
 
@@ -374,8 +374,8 @@ Doctrine takes care of the rest when saving.
 Fetching Related Objects
 ------------------------
 
-When you need to fetch associated objects, your workflow looks just like it
-did before. First, fetch a ``$product`` object and then access its related
+When you need to fetch associated objects, your workflow looks like it did
+before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
     use App\Entity\Product;
@@ -395,7 +395,7 @@ did before. First, fetch a ``$product`` object and then access its related
     }
 
 In this example, you first query for a ``Product`` object based on the product's
-``id``. This issues a query for *just* the product data and hydrates the
+``id``. This issues a query to fetch *only* the product data and hydrates the
 ``$product``. Later, when you call ``$product->getCategory()->getName()``,
 Doctrine silently makes a second query to find the ``Category`` that's related
 to this ``Product``. It prepares the ``$category`` object and returns it to
@@ -493,7 +493,7 @@ This will *still* return an array of ``Product`` objects. But now, when you call
 ``$product->getCategory()`` and use that data, no second query is made.
 
 Now, you can use this method in your controller to query for a ``Product``
-object and its related ``Category`` with just one query::
+object and its related ``Category`` in one query::
 
     public function show($id)
     {

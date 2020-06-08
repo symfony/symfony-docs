@@ -5,8 +5,8 @@ How to Set Up Before and After Filters
 ======================================
 
 It is quite common in web application development to need some logic to be
-executed just before or just after your controller actions acting as filters
-or hooks.
+performed right before or directly after your controller actions acting as
+filters or hooks.
 
 Some web frameworks define methods like ``preExecute()`` and ``postExecute()``,
 but there is no such thing in Symfony. The good news is that there is a much

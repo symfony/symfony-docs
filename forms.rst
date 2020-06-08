@@ -35,7 +35,7 @@ The recommended workflow when working with Symfony forms is the following:
    data and do something with it (e.g. persist it in a database).
 
 Each of these steps is explained in detail in the next sections. To make
-examples easier to follow, all of them assume that you're building a simple Todo
+examples easier to follow, all of them assume that you're building a small Todo
 list application that displays "tasks".
 
 Users create and edit tasks using Symfony forms. Each task is an instance of the

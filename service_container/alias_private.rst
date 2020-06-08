@@ -80,11 +80,9 @@ from the container::
 
     $container->get(Foo::class);
 
-Simply said: A service can be marked as private if you do not want to access
-it directly from your code.
-
-However, if a service has been marked as private, you can still alias it
-(see below) to access this service (via the alias).
+Thus, a service can be marked as private if you do not want to access it
+directly from your code. However, if a service has been marked as private,
+you can still alias it (see below) to access this service (via the alias).
 
 .. _services-alias:
 

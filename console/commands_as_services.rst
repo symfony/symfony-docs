@@ -52,8 +52,9 @@ For example, suppose you want to log something from within your command::
 
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the command class will automatically be registered as a service and passed the ``$logger``
-argument (thanks to autowiring). In other words, *just* by creating this class, everything
-works! You can call the ``app:sunshine`` command and start logging.
+argument (thanks to autowiring). In other words, you only need to create this
+class and everything works automatically! You can call the ``app:sunshine``
+command and start logging.
 
 .. caution::
 

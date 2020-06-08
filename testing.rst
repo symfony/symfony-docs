@@ -62,8 +62,8 @@ want to test the overall behavior of your application, see the section about
 :ref:`Functional Tests <functional-tests>`.
 
 Writing Symfony unit tests is no different from writing standard PHPUnit
-unit tests. Suppose, for example, that you have an *incredibly* simple class
-called ``Calculator`` in the ``src/Util/`` directory of the app::
+unit tests. Suppose, for example, that you have an class called ``Calculator``
+in the ``src/Util/`` directory of the app::
 
     // src/Util/Calculator.php
     namespace App\Util;
@@ -104,8 +104,8 @@ of your application::
     ``src/Util/`` directory, put the test in the ``tests/Util/``
     directory.
 
-Just like in your real application - autoloading is automatically enabled
-via the ``vendor/autoload.php`` file (as configured by default in the
+Like in your real application - autoloading is automatically enabled via the
+``vendor/autoload.php`` file (as configured by default in the
 ``phpunit.xml.dist`` file).
 
 You can also limit a test run to a directory or a specific test file:
@@ -622,7 +622,7 @@ Accessing the Profiler Data
 
 On each request, you can enable the Symfony profiler to collect data about the
 internal handling of that request. For example, the profiler could be used to
-verify that a given page executes less than a certain number of database
+verify that a given page runs less than a certain number of database
 queries when loading.
 
 To get the Profiler for the last request, do the following::
