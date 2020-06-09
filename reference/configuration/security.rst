@@ -562,7 +562,7 @@ default service whose ID is ``security.csrf.token_manager``.
 csrf_token_id
 ~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'logout'``
+**type**: ``string`` **default**: ``'authenticate'``
 
 An arbitrary string used to identify the token (and check its validity afterwards).
 
