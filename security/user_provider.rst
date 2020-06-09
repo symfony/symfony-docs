@@ -356,10 +356,11 @@ command will generate a nice skeleton to get you started::
 
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+    use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-    class UserProvider implements UserProviderInterface
+    class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     {
         /**
          * Symfony calls this method if you use features like switch_user
@@ -411,6 +412,16 @@ command will generate a nice skeleton to get you started::
         public function supportsClass($class)
         {
             return User::class === $class || is_subclass_of($class, User::class);
+        }
+        
+        /**
+         * Upgrades the encoded password of a user, typically for using a better hash algorithm.
+         */
+        public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+        {
+            // TODO: when encoded passwords are in use, this method should:
+            // 1. persist the new password in the user storage
+            // 2. update the $user object with $user->setPassword($newEncodedPassword);
         }
     }
 
