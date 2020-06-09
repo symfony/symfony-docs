@@ -29,7 +29,7 @@ can deliver emails over ``smtp`` by configuring your ``.env`` file (the
     # .env
     MAILER_DSN=smtp://user:pass@smtp.example.com:port
 
-.. warning::
+.. caution::
 
     If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
     warned that the DSN format is different.
