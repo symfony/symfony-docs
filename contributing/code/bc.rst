@@ -32,7 +32,7 @@ The second section, "Working on Symfony Code", is targeted at Symfony
 contributors. This section lists detailed rules that every contributor needs to
 follow to ensure smooth upgrades for our users.
 
-.. warning::
+.. caution::
 
     :doc:`Experimental Features </contributing/code/experimental>` and code
     marked with the ``@internal`` tags are excluded from our Backward
