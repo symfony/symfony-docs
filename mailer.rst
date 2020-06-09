@@ -784,6 +784,14 @@ environment:
         mailer:
             dsn: 'null://null'
 
+You can also disable delivering with an environment variable in your `.env.test` file
+(or you can create a `.env.test.local` file for example) :
+
+.. code-block:: bash
+
+    # .env.test
+    MAILER_DSN=null://null
+
 .. note::
 
     If you're using Messenger and routing to a transport, the message will *still*
