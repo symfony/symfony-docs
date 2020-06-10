@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-03T13:22:17Z
+
+@yoannrenard thanks for this contribution. However, this is tricky. This object is both "the object to test" and "the form data" at the same time. When you submit the form, the object is modified and contains the data submitted in the form. @xabbuh @OskarStark what do you think? Should we update the example or leave it as is? Thanks!
