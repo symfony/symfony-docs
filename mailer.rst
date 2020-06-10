@@ -149,7 +149,7 @@ both strings or address objects::
 
         // defining the email address and name as a string
         // (the format must match: 'Name <email@example.com>')
-        ->from(Address::fromString('Fabien Potencier <fabien@example.com>'))
+        ->from(Address::create('Fabien Potencier <fabien@example.com>'))
 
         // ...
     ;
