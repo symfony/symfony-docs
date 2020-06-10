@@ -54,9 +54,9 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test2' => 'test2',
             ];
 
-            $formData = new TestObject();
+            $model = new TestObject();
             // $formData will retrieve data from the form submission; pass it as the second argument
-            $form = $this->factory->create(TestedType::class, $formData);
+            $form = $this->factory->create(TestedType::class, $model);
 
             $expected = new TestObject();
             // ...populate $object properties with the data stored in $formData
@@ -68,7 +68,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $this->assertTrue($form->isSynchronized());
 
             // check that $formData was modified as expected when the form was submitted
-            $this->assertEquals($expected, $formData);
+            $this->assertEquals($expected, $model);
         }
 
         public function testCustomFormView()
