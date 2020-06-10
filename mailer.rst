@@ -20,9 +20,9 @@ integration, CSS inlining, file attachments and a lot more. Get them installed w
 Transport Setup
 ---------------
 
-Emails are delivered via a "transport". And without installing anything else, you
-can deliver emails over ``smtp`` by configuring your ``.env`` file (the
-``user``, ``pass`` and ``port`` parameters are optional):
+Emails are delivered via a "transport". Out of the box, you can deliver emails
+over ``SMTP`` by configuring your ``.env`` file (the ``user``, ``pass`` and
+``port`` parameters are optional):
 
 .. code-block:: bash
 
@@ -37,8 +37,8 @@ can deliver emails over ``smtp`` by configuring your ``.env`` file (the
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-But an easier option is to send emails via a 3rd party provider. Mailer supports
-several - install whichever you want:
+Instead of using your own SMTP server, you can send emails via a 3rd party
+provider. Mailer supports several - install whichever you want:
 
 ==================  =============================================
 Service             Install with
@@ -52,7 +52,7 @@ SendGrid            ``composer require symfony/sendgrid-mailer``
 ==================  =============================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
-example configuration to your ``.env`` file. For example, suppose you want to
+a configuration example to your ``.env`` file. For example, suppose you want to
 use SendGrid. First, install it:
 
 .. code-block:: terminal
@@ -66,13 +66,11 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
     # .env
     MAILER_DSN=sendgrid://KEY@default
 
-The ``MAILER_DSN`` isn't a *real* address: it's a simple format that offloads
-most of the configuration work to mailer. The ``sendgrid`` scheme activates the
-SendGrid provider that you just installed, which knows all about how to deliver
-messages to SendGrid.
-
-The *only* part you need to change is to replace ``KEY`` in the ``MAILER_DSN`` (in
-``.env`` or ``.env.local``).
+The ``MAILER_DSN`` isn't a *real* address: it's a convenient format that
+offloads most of the configuration work to mailer. The ``sendgrid`` scheme
+activates the SendGrid provider that you just installed, which knows all about
+how to deliver messages via SendGrid. The *only* part you need to change is the
+``KEY`` placeholder.
 
 Each provider has different environment variables that the Mailer uses to
 configure the *actual* protocol, address and authentication for delivery. Some
@@ -95,8 +93,8 @@ Creating & Sending Messages
 ---------------------------
 
 To send an email, autowire the mailer using
-:class:`Symfony\\Component\\Mailer\\MailerInterface` (service id ``mailer.mailer``)
-and create an :class:`Symfony\\Component\\Mime\\Email` object::
+:class:`Symfony\\Component\\Mailer\\MailerInterface` and create an
+:class:`Symfony\\Component\\Mime\\Email` object::
 
     // src/Controller/MailerController.php
     namespace App\Controller;
@@ -129,7 +127,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
         }
     }
 
-That's it! The message will be sent via whatever transport you configured.
+That's it! The message will be sent via the transport you configured.
 
 Email Addresses
 ~~~~~~~~~~~~~~~
@@ -793,20 +791,15 @@ Always Send to the same Address
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of disabling delivery entirely, you might want to *always* send emails to
-a specific address, instead of the *real* address. To do that, you can take
-advantage of the ``EnvelopeListener`` and register it *only* for the ``dev``
-environment:
+a specific address, instead of the *real* address:
 
 .. code-block:: yaml
 
-    # config/services_dev.yaml
-    services:
-        mailer.dev.set_recipients:
-            class: Symfony\Component\Mailer\EventListener\EnvelopeListener
-            tags: ['kernel.event_subscriber']
-            arguments:
-                $sender: null
-                $recipients: ['youremail@example.com']
+    # config/packages/dev/mailer.yaml
+    framework:
+        mailer:
+            envelope:
+                recipients: ['youremail@example.com']
 
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
