@@ -402,6 +402,7 @@ And here is the controller::
     use Lcobucci\JWT\Signer\Hmac\Sha256;
     use Lcobucci\JWT\Signer\Key;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Cookie;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\WebLink\Link;
@@ -419,10 +420,14 @@ And here is the controller::
                 ->getToken(new Sha256(), new Key($this->getParameter('mercure_secret_key'))); // don't forget to set this parameter! Test value: !ChangeMe!
 
             $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
-            $response->headers->set(
-                'set-cookie',
-                sprintf('mercureAuthorization=%s; path=/.well-known/mercure; secure; httponly; SameSite=strict', $token)
-            );
+            $cookie = Cookie::create('mercureAuthorization')
+                ->withValue($token)
+                ->withPath('/.well-known/mercure')
+                ->withSecure(true)
+                ->withHttpOnly(true)
+                ->withSameSite('strict')
+            ;
+            $response->headers->setCookie($cookie);
 
             return $response;
         }
