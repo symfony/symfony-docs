@@ -23,7 +23,7 @@ Basic Usage
 
 The following constraints ensure that:
 
-* the ``promotion`` propery stores a value which is valid as an
+* the ``promotion`` property stores a value which is valid as an
   ExpressionLanguage expression;
 * the ``shippingOptions`` property also ensures that the expression only uses
   certain variables.
