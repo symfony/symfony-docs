@@ -104,7 +104,7 @@ Available Options
 ~~~~~~~~~~~~~~~~~
 
 ``username`` (type: ``string``)
-    Username for connection ``CoucbaseCluster``.
+    Username for connection ``CouchbaseCluster``.
 
 ``password`` (type: ``string``)
     Password of connection ``CouchbaseCluster``.
@@ -127,7 +127,7 @@ Available Options
 
 ``configDelay`` (type: ``int``, default: ``10000``)
     Config refresh throttling
-    Modify the amount of time (in microseconds) before the configiration error threshold will forcefully be set to its maximum number forcing a configuration refresh.
+    Modify the amount of time (in microseconds) before the configuration error threshold will forcefully be set to its maximum number forcing a configuration refresh.
 
 ``htconfigIdleTimeout`` (type: ``int``, default: ``4294967295``)
     Idling/Persistence for HTTP bootstrap (in microseconds).
