@@ -232,7 +232,6 @@ method name, just as routes can reference
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->args([ref('templating')])
                 ->factory(ref(NewsletterManagerFactory::class));
         };
 
