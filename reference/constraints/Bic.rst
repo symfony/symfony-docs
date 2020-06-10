@@ -122,7 +122,7 @@ It defines the object property whose value stores the IBAN used to check the BIC
 
 For example, if you want to compare the ``$bic`` property of some object
 with regard to the ``$iban`` property of the same object, use
-``propertyPath="iban"`` in the comparison constraint of ``$bic``.
+``ibanPropertyPath="iban"`` in the comparison constraint of ``$bic``.
 
 message
 ~~~~~~~
