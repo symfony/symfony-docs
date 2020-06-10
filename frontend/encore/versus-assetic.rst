@@ -52,5 +52,9 @@ Should I Upgrade from Assetic to Encore
 
 If you already have Assetic working in an application, and haven't needed any of
 the features that Encore offers over Assetic, continuing to use Assetic is fine.
+The bundle `symfony/assetic-bundle` has been forked as `sanpi/assetic-bundle`_
+to allow compatibility with Symfony 4.
 If you *do* start to need more features, then you might have a business case for
 changing to Encore.
+
+.. _`sanpi/assetic-bundle`: https://packagist.org/packages/sanpi/assetic-bundle
