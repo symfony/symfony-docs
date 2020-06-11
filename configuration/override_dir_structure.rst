@@ -41,8 +41,8 @@ at your project root directory.
 Override the Cache Directory
 ----------------------------
 
-You can change the default cache directory by overriding the ``getCacheDir()``
-method in the ``Kernel`` class of your application::
+Changing the cache directory can be achieved by overriding the
+``getCacheDir()`` method in the ``Kernel`` class of your application::
 
     // src/Kernel.php
 
@@ -61,6 +61,9 @@ In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
 In this case you have changed the location of the cache directory to
 ``var/{environment}/cache/``.
 
+This can also be achieved using a predefined environment variable named
+``APP_CACHE_DIR``. Its value must be the full path of the cache folder.
+
 .. caution::
 
     You should keep the cache directory different for each environment,
@@ -73,9 +76,11 @@ In this case you have changed the location of the cache directory to
 Override the Log Directory
 --------------------------
 
-Overriding the ``var/log/`` directory is the same as overriding the ``var/cache/``
-directory. The only difference is that you need to override the ``getLogDir()``
-method::
+Overriding the ``var/log/`` directory is almost the same as overriding the
+``var/cache/`` directory.
+
+You can do it overriding the ``getLogDir()`` method in the ``Kernel`` class of
+your application::
 
     // src/Kernel.php
 
@@ -91,6 +96,8 @@ method::
     }
 
 Here you have changed the location of the directory to ``var/{environment}/log/``.
+
+And you can also do it using the predefined ``APP_LOG_DIR`` environment variable.
 
 .. _override-templates-dir:
 
