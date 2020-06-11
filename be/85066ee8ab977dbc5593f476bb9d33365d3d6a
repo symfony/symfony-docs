@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-11T06:50:05Z
+
+In Symfony Docs we use American English (and recommend the American English Oxford dictionary as reference: https://symfony.com/doc/current/contributing/documentation/standards.html#english-language-standards) but this is a special case, because even if "advertize" is the American English word, most people use "advertise" (and even dictionaries and Google mark "advertize" in red as a wrong word). So, let's do this change. Thanks.
