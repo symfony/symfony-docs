@@ -569,14 +569,19 @@ directly from GitHub and save it in ``assets/css``.
 Signing and Encrypting Messages
 -------------------------------
 
-It's possible to sign and/or encrypt email messages applying the `S/MIME`_
-standard to increase their integrity/security. Both options can be combined to
-encrypt a signed message and/or to sign an encrypted message.
+It's possible to sign and/or encrypt email messages to increase their
+integrity/security. Both options can be combined to encrypt a signed message
+and/or to sign an encrypted message.
 
 Before signing/encrypting messages, make sure to have:
 
 * The `OpenSSL PHP extension`_ properly installed and configured;
 * A valid `S/MIME`_ security certificate.
+
+.. tip::
+
+    When using OpenSSL to generate certificates, make sure to add the
+    ``-addtrust emailProtection`` command option.
 
 Signing Messages
 ~~~~~~~~~~~~~~~~
@@ -586,7 +591,19 @@ of the message (including attachments). This hash is added as an attachment so
 the recipient can validate the integrity of the received message. However, the
 contents of the original message are still readable for mailing agents not
 supporting signed messages, so you must also encrypt the message if you want to
-hide its contents::
+hide its contents.
+
+You can sign messages using either ``S/MIME`` or ``DKIM``. In both cases, the
+certificate and private key must be `PEM encoded`_, and can be either created
+using for example OpenSSL or obtained at an official Certificate Authority (CA).
+The email recipient must have the CA certificate in the list of trusted issuers
+in order to verify the signature.
+
+S/MIME Signer
+.............
+
+`S/MIME`_ is a standard for public key encryption and signing of MIME data. It
+requires using both a certificate and a private key:
 
     use Symfony\Component\Mime\Crypto\SMimeSigner;
     use Symfony\Component\Mime\Email;
@@ -603,21 +620,50 @@ hide its contents::
     $signedEmail = $signer->sign($email);
     // now use the Mailer component to send this $signedEmail instead of the original email
 
-The certificate and private key must be `PEM encoded`_, and can be either
-created using for example OpenSSL or obtained at an official Certificate
-Authority (CA). The email recipient must have the CA certificate in the list of
-trusted issuers in order to verify the signature.
-
-.. tip::
-
-    When using OpenSSL to generate certificates, make sure to add the
-    ``-addtrust emailProtection`` command option.
-
 .. tip::
 
     The ``SMimeSigner`` class defines other optional arguments to pass
     intermediate certificates and to configure the signing process using a
     bitwise operator options for :phpfunction:`openssl_pkcs7_sign` PHP function.
+
+DKIM Signer
+...........
+
+`DKIM`_ is an email authentication method that affixes a digital signature,
+linked to a domain name, to each outgoing email messages. It requires a private
+key but not a certificate::
+
+    use Symfony\Component\Mime\Crypto\DkimSigner;
+    use Symfony\Component\Mime\Email;
+
+    $email = (new Email())
+        ->from('hello@example.com')
+        // ...
+        ->html('...');
+
+    // first argument: string with the contents or the absolute path of the private key
+    // second and third arguments: the domain name and "selector" used to perform a DNS lookup
+    // (the selector is a string used to point to a specific DKIM public key record in your DNS)
+    $signer = new DkimSigner('/path/to/private-key.key', 'example.com', 'sf');
+    // if the private key has a passphrase, pass it as the fourth argument
+    // new DkimSigner('/path/to/private-key.key', 'example.com', 'sf', [], 'the-passphrase');
+
+    $signedEmail = $signer->sign($email);
+    // now use the Mailer component to send this $signedEmail instead of the original email
+
+    // DKIM signer provides many config options and a helper object to configure them
+    use Symfony\Component\Mime\Crypto\DkimOptions;
+
+    $signedEmail = $signer->sign($email, (new DkimOptions())
+        ->bodyCanon('relaxed')
+        ->headerCanon('relaxed')
+        ->headersToIgnore(['Message-ID'])
+        ->toArray()
+    );
+
+.. versionadded:: 5.2
+
+    The DKIM signer was introduced in Symfony 5.2.
 
 Encrypting Messages
 ~~~~~~~~~~~~~~~~~~~
@@ -824,5 +870,6 @@ a specific address, instead of the *real* address:
 .. _`Markdown syntax`: https://commonmark.org/
 .. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`DKIM`: `https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
