@@ -1011,7 +1011,7 @@ event class:
                 App\EventListener\CustomLogoutSubscriber:
                     tags:
                         - name: kernel.event_subscriber
-                          dispacher: security.event_dispatcher.main
+                          dispatcher: security.event_dispatcher.main
 
         .. code-block:: xml
 
