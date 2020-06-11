@@ -706,7 +706,7 @@ regular expression applied to relative URLs::
             ],
         ],
         // this is the index in the previous array that defines
-        // the base URI that shoud be used to resolve relative URLs
+        // the base URI that should be used to resolve relative URLs
         'https://api\.github\.com/'
     );
 
