@@ -19,7 +19,7 @@ be implemented with a :doc:`ChoiceType </reference/forms/types/choice>` where th
 ``choices`` option is set to the list of available shipping options.
 
 However, if you use the same form type in several forms, repeating the list of
-``choices`` everytime you use it quickly becomes boring. In this example, a
+``choices`` every time you use it quickly becomes boring. In this example, a
 better solution is to create a custom form type based on ``ChoiceType``. The
 custom type looks and behaves like a ``ChoiceType`` but the list of choices is
 already populated with the shipping options so you don't need to define them.
