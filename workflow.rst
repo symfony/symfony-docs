@@ -453,7 +453,7 @@ This means that each event has access to the following information:
     Returns a metadata.
 
 For Guard Events, there is an extended :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent` class.
-This class has these additonal methods:
+This class has these additional methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::isBlocked`
     Returns if transition is blocked.

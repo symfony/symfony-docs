@@ -83,7 +83,7 @@ Take the following ``access_control`` entries as an example:
                 ],
                 [
                     'path' => '^/admin',
-                    'rolse' => 'ROLE_USER_HOST',
+                    'roles' => 'ROLE_USER_HOST',
                     'host' => 'symfony\.com$',
                 ],
                 [

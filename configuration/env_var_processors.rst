@@ -124,7 +124,7 @@ Symfony provides the following env var processors:
                     <parameter key="env(HTTP_METHOD_OVERRIDE)">true</parameter>
                 </parameters>
 
-                <framework:config http-methode-override="%env(bool:HTTP_METHOD_OVERRIDE)%"/>
+                <framework:config http-method-override="%env(bool:HTTP_METHOD_OVERRIDE)%"/>
             </container>
 
         .. code-block:: php
