@@ -1,5 +1,4 @@
 accessor
-advertize
 Akamai
 analytics
 Ansi

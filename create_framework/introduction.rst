@@ -41,7 +41,7 @@ a fully-featured full-stack web framework.
 And each step will be the occasion to learn more about some of the Symfony
 Components.
 
-Many modern web frameworks advertize themselves as being MVC frameworks. This
+Many modern web frameworks advertise themselves as being MVC frameworks. This
 tutorial won't talk about the MVC pattern, as the Symfony Components are able to
 create any type of frameworks, not just the ones that follow the MVC
 architecture. Anyway, if you have a look at the MVC semantics, this book is
