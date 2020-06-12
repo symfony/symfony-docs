@@ -118,7 +118,7 @@ would look like this::
         const VIEW = 'view';
         const EDIT = 'edit';
 
-        protected function supports($attribute, $subject)
+        protected function supports(string $attribute, $subject)
         {
             // if the attribute isn't one we support, return false
             if (!in_array($attribute, [self::VIEW, self::EDIT])) {
@@ -133,7 +133,7 @@ would look like this::
             return true;
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
         {
             $user = $token->getUser();
 
@@ -178,7 +178,7 @@ That's it! The voter is done! Next, :ref:`configure it <declaring-the-voter-as-a
 
 To recap, here's what's expected from the two abstract methods:
 
-``Voter::supports($attribute, $subject)``
+``Voter::supports(string $attribute, $subject)``
     When ``isGranted()`` (or ``denyAccessUnlessGranted()``) is called, the first
     argument is passed here as ``$attribute`` (e.g. ``ROLE_USER``, ``edit``) and
     the second argument (if any) is passed as ``$subject`` (e.g. ``null``, a ``Post``
@@ -188,7 +188,7 @@ To recap, here's what's expected from the two abstract methods:
     return ``true`` if the attribute is ``view`` or ``edit`` and if the object is
     a ``Post`` instance.
 
-``voteOnAttribute($attribute, $subject, TokenInterface $token)``
+``voteOnAttribute(string $attribute, $subject, TokenInterface $token)``
     If you return ``true`` from ``supports()``, then this method is called. Your
     job is simple: return ``true`` to allow access and ``false`` to deny access.
     The ``$token`` can be used to find the current user object (if any). In this
@@ -231,7 +231,7 @@ with ``ROLE_SUPER_ADMIN``::
             $this->security = $security;
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
         {
             // ...
 
