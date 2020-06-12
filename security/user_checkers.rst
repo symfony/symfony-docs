@@ -15,15 +15,17 @@ User checkers are classes that must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserCheckerInterface`. This interface
 defines two methods called ``checkPreAuth()`` and ``checkPostAuth()`` to
 perform checks before and after user authentication. If one or more conditions
-are not met, an exception should be thrown which extends the
-:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException`
-or :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`::
+are not met, throw an exception which extends the
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException` class.
+Consider using :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAccountStatusException`,
+which extends ``AccountStatusException`` and allows to customize the error message
+displayed to the user::
 
     namespace App\Security;
 
-    use App\Exception\AccountDeletedException;
     use App\Security\User as AppUser;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
     use Symfony\Component\Security\Core\User\UserCheckerInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,9 +37,9 @@ or :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationExceptio
                 return;
             }
 
-            // user is deleted, show a generic Account Not Found message.
             if ($user->isDeleted()) {
-                throw new AccountDeletedException();
+                // the message passed to this exception is meant to be displayed to the user
+                throw new CustomUserMessageAccountStatusException('Your user account no longer exists.');
             }
         }
 
@@ -53,6 +55,10 @@ or :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationExceptio
             }
         }
     }
+
+.. versionadded:: 5.1
+
+    The ``CustomUserMessageAccountStatusException`` class was introduced in Symfony 5.1.
 
 Enabling the Custom User Checker
 --------------------------------
