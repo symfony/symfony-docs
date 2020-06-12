@@ -185,7 +185,7 @@ expressions have access to a number of
     $object = ...;
 
     $expression = new Expression(
-        '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+        '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
     )
 
     $vote = $expressionVoter->vote($token, $object, [$expression]);
