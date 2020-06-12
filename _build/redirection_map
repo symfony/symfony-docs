@@ -503,3 +503,4 @@
 /components/templating https://github.com/symfony/templating
 /components/error_handler https://github.com/symfony/error-handler
 /components/class_loader https://github.com/symfony/class-loader
+/frontend/encore/versus-assetic /frontend
