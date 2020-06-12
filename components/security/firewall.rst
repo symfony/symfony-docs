@@ -96,7 +96,7 @@ entry point and access denied URL, is provided by instances of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallConfig` class.
 
 This object can be accessed through the ``getFirewallConfig(Request $request)``
-method of the :class:`Symfony\\Component\\Security\\Http\\FirewallMap` class and
+method of the :class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallMap` class and
 through the ``getConfig()``  method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallContext` class.
 
