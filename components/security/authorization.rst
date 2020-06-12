@@ -142,7 +142,7 @@ RoleVoter
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
 supports attributes starting with ``ROLE_`` and grants access to the user
 when at least one required ``ROLE_*`` attribute can be found in the array of
-roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
+roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoleNames`
 method::
 
     use Symfony\Component\Security\Core\Authorization\Voter\RoleVoter;
@@ -204,7 +204,7 @@ expressions have access to a number of
     $object = ...;
 
     $expression = new Expression(
-        '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+        '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
     )
 
     $vote = $expressionVoter->vote($token, $object, [$expression]);
