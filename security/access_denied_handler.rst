@@ -50,7 +50,7 @@ configure it under your firewall:
 
         <config>
             <firewall name="main">
-                <access_denied_handler>AppBundle\Security\AccessDeniedHandler</access_denied_handler>
+                <access-denied-handler>AppBundle\Security\AccessDeniedHandler</access-denied-handler>
             </firewall>
         </config>
 
