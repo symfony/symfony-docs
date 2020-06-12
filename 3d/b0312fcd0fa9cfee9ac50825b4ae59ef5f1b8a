@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-12T08:22:59Z
+
+Nice catch! For those curious, his can be checked at https://github.com/symfony/symfony/blob/6c4695f4ec0131a2ab91dac7ad6fb86fbda313b6/src/Symfony/Component/Security/Core/Authorization/Voter/ExpressionVoter.php#L80
