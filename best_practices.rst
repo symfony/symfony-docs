@@ -299,6 +299,10 @@ to add buttons in the templates. This also improves the separation of concerns,
 because the button styling (CSS class and other attributes) is defined in the
 template instead of in a PHP class.
 
+However, if you create a :doc:`form with multiple submit buttons </form/multiple_buttons>`
+you should define them in the controller instead of the template. Otherwise, you
+won't be able to check which button was clicked when handling the form in the controller.
+
 Define Validation Constraints on the Underlying Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
