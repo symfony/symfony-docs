@@ -307,7 +307,7 @@ create a class which implements
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint)
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
@@ -563,7 +563,7 @@ in order to put it to use::
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint)
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
