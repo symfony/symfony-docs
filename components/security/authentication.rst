@@ -278,7 +278,7 @@ The security component provides the following authentication events:
 ===============================  ================================================================= ==============================================================================
 Name                             Event Constant                                                    Argument Passed to the Listener
 ===============================  ================================================================= ==============================================================================
-security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationEvent`
+security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationSuccessEvent`
 security.authentication.failure  ``AuthenticationEvents::AUTHENTICATION_FAILURE``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationFailureEvent`
 security.interactive_login       ``SecurityEvents::INTERACTIVE_LOGIN``                             :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 security.switch_user             ``SecurityEvents::SWITCH_USER``                                   :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`
