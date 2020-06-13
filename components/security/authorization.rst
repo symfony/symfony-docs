@@ -19,7 +19,7 @@ by an instance of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Acc
 An authorization decision will always be based on a few things:
 
 * The current token
-    For instance, the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
+    For instance, the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoleNames`
     method may be used to retrieve the roles of the current user (e.g.
     ``ROLE_SUPER_ADMIN``), or a decision may be based on the class of the token.
 * A set of attributes
