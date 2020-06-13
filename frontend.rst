@@ -80,7 +80,6 @@ Issues & Questions
 ..................
 
 * :doc:`FAQ & Common Issues </frontend/encore/faq>`
-* :doc:`/frontend/encore/versus-assetic`
 
 Full API
 ........
