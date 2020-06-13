@@ -61,8 +61,8 @@ In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
 In this case you have changed the location of the cache directory to
 ``var/{environment}/cache/``.
 
-This can also be achieved using a predefined environment variable named
-``APP_CACHE_DIR``. Its value must be the full path of the cache folder.
+You can also change the cache directory defining an environment variable named
+``APP_CACHE_DIR`` whose value is the full path of the cache folder.
 
 .. caution::
 
@@ -97,7 +97,8 @@ your application::
 
 Here you have changed the location of the directory to ``var/{environment}/log/``.
 
-And you can also do it using the predefined ``APP_LOG_DIR`` environment variable.
+You can also change the log directory defining an environment variable named
+``APP_LOG_DIR`` whose value is the full path of the log folder.
 
 .. _override-templates-dir:
 
