@@ -197,7 +197,7 @@ Creating a custom Password Encoder
 There are many built-in password encoders. But if you need to create your
 own, it needs to follow these rules:
 
-#. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`;
+#. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`; or extend :class:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder`;
 
 #. The implementations of
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::encodePassword`
