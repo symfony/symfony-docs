@@ -75,6 +75,12 @@ addition, the installer checks if your system meets the technical requirements
 to execute Symfony applications. If not, you'll see the list of changes needed
 to meet those requirements.
 
+if you want to create a project with the website-skeleton, use this command :
+
+.. code-block:: terminal
+
+    $ symfony new my_project_name --full --version=3.4
+
 .. note::
 
     If the installer doesn't work for you or doesn't output anything, make sure
@@ -171,7 +177,7 @@ then, execute this command:
 .. code-block:: terminal
 
     $ cd my_project_name/
-    $ php bin/console server:run
+    $ symfony server:start
 
 Open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
@@ -186,7 +192,19 @@ a directory permission misconfiguration. The solution to this problem is
 explained in the :doc:`/setup/file_permissions`.
 
 When you are finished working on your Symfony application, stop the server by
-pressing ``Ctrl+C`` from the terminal or command console.
+running ``Ctrl+C`` from the terminal or command console.
+
+If you want to launch the server in the Web server in the background, just run:
+
+.. code-block:: terminal
+
+    $ symfony server:start -d
+    
+You can stop the server with this command : 
+
+.. code-block:: terminal
+
+    $ symfony server:stop
 
 .. tip::
 
@@ -203,9 +221,9 @@ PHP web configuration. For that reason, Symfony provides a visual configuration
 checker. Access the following URL to check your configuration and fix any issue
 before moving on:
 
-.. code-block:: text
+.. code-block:: terminal
 
-    http://localhost:8000/config.php
+    $ symfony check:requirements
 
 Fixing Permissions Problems
 ---------------------------
@@ -239,7 +257,7 @@ complexity of your project):
 
     .. code-block:: terminal
 
-        $ php bin/console security:check
+        $ symfony security:check
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
