@@ -102,6 +102,11 @@ For third-party providers, refer to the following table:
  Sendgrid             sendgrid+smtp://apikey:KEY@default         n/a                                         sendgrid+api://KEY@default
 ==================== ========================================== =========================================== ========================================
 
+.. caution::
+
+    If your credentials contain special characters, they must be provided to the DSN in URL encoded form.  
+    e.g. The DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
+
 Instead of choosing a specific protocol, you can also let Symfony pick the
 best one by omitting it from the scheme: for instance, ``mailgun://KEY:DOMAIN@default``
 is equivalent to ``mailgun+https://KEY:DOMAIN@default``.
