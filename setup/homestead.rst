@@ -4,7 +4,7 @@ Using Symfony with Homestead/Vagrant
 ====================================
 
 In order to develop a Symfony application, you might want to use a virtual
-development environment instead of the built-in server or WAMP/LAMP. `Homestead`_
+development environment instead of the built-in server or WAMP/LAMP/MAMP. `Homestead`_
 is an easy-to-use `Vagrant`_ box to get a virtual environment up and running
 quickly.
 
@@ -49,7 +49,7 @@ configuration:
     # ...
     sites:
         - map: symfony-demo.test
-          to: /home/vagrant/projects/symfony_demo/web
+          to: /home/vagrant/projects/symfony_demo/public
           type: symfony
 
 The ``type`` option tells Homestead to use the Symfony nginx configuration.
