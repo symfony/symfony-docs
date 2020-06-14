@@ -22,55 +22,10 @@ Initial Project Setup
 To get started, you'll need to download Symfony and get things running. See
 the :doc:`/setup` article for details.
 
-Once your project is running, just follow these simple steps:
-
-#. Initialize your Git repository:
-
-   .. code-block:: terminal
-
-        $ git init
-
-#. Add all of the initial files to Git:
-
-   .. code-block:: terminal
-
-        $ git add .
-
-   .. tip::
-
-      As you might have noticed, not all files that were downloaded by Composer in step 1,
-      have been staged for commit by Git. Certain files and folders, such as the project's
-      dependencies (which are managed by Composer), ``parameters.yml`` (which contains sensitive
-      information such as database credentials), log and cache files and dumped assets (which are
-      created automatically by your project), should not be committed in Git. To help you prevent
-      committing those files and folders by accident, the Standard Distribution comes with a
-      file called ``.gitignore``, which contains a list of files and folders that Git should
-      ignore.
-
-   .. tip::
-
-      You may also want to create a ``.gitignore`` file that can be used system-wide.
-      This allows you to exclude files/folders for all your projects that are created by
-      your IDE or operating system. For details, see `GitHub .gitignore`_.
-
-#. Create an initial commit with your started project:
-
-   .. code-block:: terminal
-
-        $ git commit -m "Initial commit"
-
-At this point, you have a fully-functional Symfony project that's correctly
-committed to Git. You can immediately begin development, committing the new
-changes to your Git repository.
+Symfony has already initialized a git repository and did a first commit.
 
 You can continue to follow along with the :doc:`/page_creation` article
 to learn more about how to configure and develop inside your application.
-
-.. tip::
-
-    The Symfony Standard Edition comes with some example functionality. To
-    remove the sample code, follow the instructions in the
-    ":doc:`/bundles/remove`" article.
 
 .. include:: _vendor_deps.rst.inc
 
