@@ -47,7 +47,9 @@ recognizes several strategies:
     grant access if there are more voters granting access than there are denying;
 
 ``unanimous``
-    only grant access if none of the voters has denied access. If all voters abstained from voting, the decision is based on the ``allow_if_all_abstain`` config option (which defaults to ``false``);
+    only grant access if none of the voters has denied access. If all voters
+    abstained from voting, the decision is based on the ``allow_if_all_abstain``
+    config option (which defaults to ``false``).
 
 Usage of the available options in detail::
 
