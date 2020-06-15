@@ -179,7 +179,7 @@ hold the kernel. Now it looks like this::
             }
 
             // load the annotation routes
-            $routes->import(DIR.'/../src/Controller/', 'annotation');
+            $routes->import(__DIR__.'/../src/Controller/', 'annotation');
         }
 
         // optional, to use the standard Symfony cache directory
