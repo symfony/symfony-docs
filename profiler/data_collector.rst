@@ -79,9 +79,11 @@ request::
     :doc:`/testing/profiling`) so it's recommended to return a string which is
     short, lowercase and without white spaces.
 
-Note that the data collect is triggered belatedly during the :ref:`kernel.response <component-http-kernel-kernel-response>` event. If you need to collect data that is only available
-later, you should implement :class:`Symfony\\Component\\HttpKernel\\DataCollector\\LateDataCollectorInterface` and its :method:`Symfony\\Component\\HttpKernel\\DataCollector\\LateDataCollectorInterface::lateCollect` method which is invoked just before
-the profiler data serialization (during :ref:`kernel.terminate <component-http-kernel-kernel-terminate>` phase).
+The ``collect()`` method is called during the :ref:`kernel.response <component-http-kernel-kernel-response>`
+event. If you need to collect data that is only available later, implement
+:class:`Symfony\\Component\\HttpKernel\\DataCollector\\LateDataCollectorInterface`
+and define the ``lateCollect()`` method, which is invoked just before the profiler
+data serialization (during :ref:`kernel.terminate <component-http-kernel-kernel-terminate>` event).
 
 .. _data_collector_tag:
 
