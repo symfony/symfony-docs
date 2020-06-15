@@ -15,6 +15,7 @@ control over when exactly your form is submitted and what data is passed to it::
 
     public function new(Request $request)
     {
+        $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
         if ($request->isMethod('POST')) {
