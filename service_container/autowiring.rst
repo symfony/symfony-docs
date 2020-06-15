@@ -530,8 +530,8 @@ You wire up the difficult arguments, Symfony takes care of the rest.
 
 .. _autowiring-calls:
 
-Autowiring other Methods (e.g. Setters)
----------------------------------------
+Autowiring other Methods (e.g. Setters and Public Typed Properties)
+-------------------------------------------------------------------
 
 When autowiring is enabled for a service, you can *also* configure the container
 to call methods on your class when it's instantiated. For example, suppose you want
@@ -561,6 +561,27 @@ to inject the ``logger`` service, and decide to use setter-injection::
 Autowiring will automatically call *any* method with the ``@required`` annotation
 above it, autowiring each argument. If you need to manually wire some of the arguments
 to a method, you can always explicitly :doc:`configure the method call </service_container/calls>`.
+
+Despite property injection has some :ref:`drawbacks <property-injection>`, autowiring with ``@required`` annotation
+can also be applied to public typed properties::
+
+    namespace App\Util;
+
+    class Rot13Transformer
+    {
+        /** @required */
+        public LoggerInterface $logger;
+
+        public function transform($value)
+        {
+            $this->logger->info('Transforming '.$value);
+            // ...
+        }
+    }
+
+.. versionadded:: 5.1
+
+    Public typed properties autowiring was introduced in Symfony 5.1.
 
 Autowiring Controller Action Methods
 ------------------------------------
