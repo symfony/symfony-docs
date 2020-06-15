@@ -272,7 +272,7 @@ that extension to improve the guessing performance.
 Adding a MIME Type Guesser
 ..........................
 
-You can register your own MIME type guesser by creating a class that implements
+You can add your own MIME type guesser by creating a class that implements
 :class:`Symfony\\Component\\Mime\\MimeTypeGuesserInterface`::
 
     namespace App;
@@ -295,6 +295,12 @@ You can register your own MIME type guesser by creating a class that implements
             return '...';
         }
     }
+
+MIME type guessers must be :ref:`registered as services <service-container-creating-service>`
+and :doc:`tagged </service_container/tags>` with the ``mime.mime_type_guesser`` tag.
+If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
 .. _`MIME`: https://en.wikipedia.org/wiki/MIME
 .. _`MIME types`: https://en.wikipedia.org/wiki/Media_type
