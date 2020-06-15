@@ -20,7 +20,7 @@ control over when exactly your form is submitted and what data is passed to it::
         if ($request->isMethod('POST')) {
             $form->submit($request->request->get($form->getName()));
 
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isValid()) {
                 // perform some action...
 
                 return $this->redirectToRoute('task_success');
