@@ -641,12 +641,13 @@ key but not a certificate::
         // ...
         ->html('...');
 
-    // first argument: string with the contents or the absolute path of the private key
+    // first argument: same as openssl_pkey_get_private(), either a string with the
+    // contents of the private key or the absolute path to it (prefixed with 'file://')
     // second and third arguments: the domain name and "selector" used to perform a DNS lookup
     // (the selector is a string used to point to a specific DKIM public key record in your DNS)
-    $signer = new DkimSigner('/path/to/private-key.key', 'example.com', 'sf');
+    $signer = new DkimSigner('file:///path/to/private-key.key', 'example.com', 'sf');
     // if the private key has a passphrase, pass it as the fourth argument
-    // new DkimSigner('/path/to/private-key.key', 'example.com', 'sf', [], 'the-passphrase');
+    // new DkimSigner('file:///path/to/private-key.key', 'example.com', 'sf', [], 'the-passphrase');
 
     $signedEmail = $signer->sign($email);
     // now use the Mailer component to send this $signedEmail instead of the original email
