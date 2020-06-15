@@ -193,6 +193,8 @@ of a single file or directory::
     $filesystem->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
     // renames a directory
     $filesystem->rename('/tmp/files', '/path/to/store/files');
+    // if the target already exists, a third boolean argument is available to overwrite.
+    $filesystem->rename('/tmp/processed_video2.ogg', '/path/to/store/video_647.ogg', true);
 
 ``symlink``
 ~~~~~~~~~~~
