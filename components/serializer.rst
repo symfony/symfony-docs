@@ -762,6 +762,9 @@ There are several types of normalizers available:
     :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`
     into a list of errors according to the `RFC 7807`_ standard.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
+    Normalizes errors according to the API Problem spec `RFC 7807`_.
+    
 .. _component-serializer-encoders:
 
 Encoders
