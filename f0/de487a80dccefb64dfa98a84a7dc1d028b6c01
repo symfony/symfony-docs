@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by borisklotz at 2020-06-16T11:03:51Z
+
+I would suggest to use a colon instead of a period sign, as most paragraphs followed by a code sample end with a colon not a period.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-17T07:45:21Z
+
+@Levure thanks! @borisklotz is right. The double `::` at the end of some text and before a code sample is needed. In RST, adding `::` before a code sample tells the doc parser to highlight the code as PHP. (We could use `.. code-block:: php` ... but we have so many PHP examples, that we use the `::` trick instead. Please note, we're not planning to change this, so no pull request to introduce `.. code-block:: php` 😅  Thanks!).
