@@ -1212,7 +1212,7 @@ These are the options available:
     Sets the root node name (default: ``response``).
 
 ``remove_empty_tags``
-    If set to true, removes all empty tags in the generated XML.
+    If set to true, removes all empty tags in the generated XML (default: ``false``).
 
 Handling Constructor Arguments
 ------------------------------
