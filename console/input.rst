@@ -52,6 +52,8 @@ You now have access to a ``last_name`` argument in your command::
             }
 
             $output->writeln($text.'!');
+
+            return Command::SUCCESS;
         }
     }
 
