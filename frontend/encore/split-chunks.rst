@@ -38,8 +38,8 @@ tags as needed:
     {#
         May now render multiple script tags:
             <script src="/build/runtime.js"></script>
-            <script src="/build/homepage.js"></script>
             <script src="/build/vendor~homepage.js"></script>
+            <script src="/build/homepage.js"></script>
     #}
     {{ encore_entry_script_tags('homepage') }}
 
