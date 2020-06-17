@@ -626,7 +626,7 @@ place::
             // Block the transition "publish" if it is more than 8 PM
             // with the message for end user
             $explanation = $event->getMetadata('explanation', $eventTransition);
-            $event->addTransitionBlocker(new TransitionBlocker($explanation , 0));
+            $event->addTransitionBlocker(new TransitionBlocker($explanation , '0'));
         }
 
         public static function getSubscribedEvents()
