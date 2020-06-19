@@ -1116,7 +1116,7 @@ admin email. In this case, each needs to have a unique service id:
                 ->args([
                    service(MessageGenerator::class),
                    service('mailer'),
-                    'superadmin@example.com',
+                   'superadmin@example.com',
                 ]);
 
             $services->set('site_update_manager.normal_users', SiteUpdateManager::class)
