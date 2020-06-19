@@ -104,8 +104,9 @@ For third-party providers, refer to the following table:
 
 .. caution::
 
-    If your credentials contain special characters, they must be provided to the DSN in URL encoded form.  
-    e.g. The DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
+    If your credentials contain special characters, you must URL-encode them.
+    For example, the DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be
+    configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
 
 Instead of choosing a specific protocol, you can also let Symfony pick the
 best one by omitting it from the scheme: for instance, ``mailgun://KEY:DOMAIN@default``
