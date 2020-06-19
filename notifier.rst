@@ -294,7 +294,7 @@ transport:
                         %env(SLACK_DSN)% || %env(TELEGRAM_DSN)%
                     </framework:chatter-transport>
 
-                    <!-- Send notifications to the next scheduled transport 
+                    <!-- Send notifications to the next scheduled transport
                          calculated by round robin -->
                     <framework:chatter-transport name="slack">
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
@@ -365,8 +365,7 @@ To send a notification, autowire the
 The ``Notification`` is created by using two arguments: the subject and
 channels. The channels specify which channel (or transport) should be used
 to send the notification. For instance, ``['email', 'sms']`` will send
-both an email and sms notification to the user. It is required to specify
-the transport when using chatters (e.g. ``['email', 'chat/telegram']``).
+both an email and sms notification to the user.
 
 The default notification also has a ``content()`` and ``emoji()`` method to
 set the notification content and icon.
