@@ -98,6 +98,12 @@ For third-party providers, refer to the following table:
  Sendgrid             sendgrid+smtp://apikey:KEY@default         n/a                                         sendgrid+api://KEY@default
 ==================== ========================================== =========================================== ========================================
 
+.. caution::
+
+    If your credentials contain special characters, you must URL-encode them.
+    For example, the DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be
+    configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
+
 .. note::
 
     When using SMTP, the default timeout for sending a message before throwing an
