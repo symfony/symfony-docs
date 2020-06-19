@@ -241,7 +241,9 @@ could look something like this::
     use Symfony\Component\Debug\Debug;
     use Symfony\Component\HttpFoundation\Request;
 
-    require dirname(__DIR__).'/config/bootstrap.php';
+    require dirname(__DIR__).'/vendor/autoload.php';
+
+    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
     /*
      * The kernel will always be available globally, allowing you to
