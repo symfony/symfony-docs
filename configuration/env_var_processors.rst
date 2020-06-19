@@ -96,7 +96,7 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(bool:FOO)``
-    Casts ``FOO`` to a bool:
+    Casts ``FOO`` to a bool (true values are `'true'`, `'on'`, `'yes'` and all numers unequal to `0`, everything else is false):
 
     .. configuration-block::
 
