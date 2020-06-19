@@ -2039,10 +2039,10 @@ performance a bit:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:translation>
+                <framework:translator>
                     <enabled-locale>en</enabled-locale>
                     <enabled-locale>es</enabled-locale>
-                </framework:translation>
+                </framework:translator>
             </framework:config>
         </container>
 
@@ -2050,7 +2050,7 @@ performance a bit:
 
         // config/packages/translation.php
         $container->loadFromExtension('framework', [
-            'translation' => [
+            'translator' => [
                 'enabled_locales' => ['en', 'es'],
             ],
         ]);
