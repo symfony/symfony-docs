@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by SimonHeimberg at 2020-06-09T06:43:00Z
+
+I had to change my config when updating from 3.4 to 4.4, after having found what has changed. Maybe this helps somebody else to avoid it.
+
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-06-14T20:52:32Z
+
+Or otherwise cited the php documentation on the filter: https://www.php.net/manual/en/filter.filters.validate.php instead of repeating it
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-19T09:44:21Z
+
+@maxhelias good suggestion! I was going to do that ... but I checked the source code of "bool" processor ... and it's more complex than that: `return (bool) (filter_var($env, FILTER_VALIDATE_BOOLEAN) ?: filter_var($env, FILTER_VALIDATE_INT) ?: filter_var($env, FILTER_VALIDATE_FLOAT));`  The contents of this PR are the most accurate description of that code, so let's merge it.
