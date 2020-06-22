@@ -65,8 +65,8 @@ that system::
          */
         public function handle(
             Request $request,
-            $type = self::MASTER_REQUEST,
-            $catch = true
+            int $type = self::MASTER_REQUEST,
+            bool $catch = true
         );
     }
 
