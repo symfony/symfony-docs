@@ -204,7 +204,7 @@ first register a new handler service with your database credentials:
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                    <argument>env(DATABASE_URL)</argument>
+                    <argument>%env(DATABASE_URL)%</argument>
 
                     <!-- you can also use PDO configuration, but requires passing two arguments: -->
                     <!-- <argument>mysql:dbname=mydatabase, host=myhost</argument>
@@ -296,7 +296,7 @@ passed to the ``PdoSessionHandler`` service:
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                    <argument>env(DATABASE_URL)</argument>
+                    <argument>%env(DATABASE_URL)%</argument>
                     <argument type="collection">
                         <argument key="db_table">customer_session</argument>
                         <argument key="db_id_col">guid</argument>

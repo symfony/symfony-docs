@@ -100,7 +100,7 @@ of your application::
 .. note::
 
     By convention, the ``tests/`` directory should replicate the directory
-    of your bundle for unit tests. So, if you're testing a class in the
+    of your application for unit tests. So, if you're testing a class in the
     ``src/Util/`` directory, put the test in the ``tests/Util/``
     directory.
 
