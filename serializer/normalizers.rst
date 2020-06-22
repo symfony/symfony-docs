@@ -36,6 +36,9 @@ Symfony includes the following normalizers but you can also
   transform :phpclass:`SplFileInfo` objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer` to
   normalize PHP object using an object that implements
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer` for
+  objects implementing the :class:`Symfony\\Component\\Form\\FormInterface` to
+  normalize form errors.
   :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` to
   normalize PHP object using the getter and setter methods of the object;

@@ -731,6 +731,12 @@ There are several types of normalizers available:
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default, it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer`
+    This normalizer works with classes that implement
+    :class:`Symfony\\Component\\Form\\FormInterface`.
+
+    It will get errors from the form and normalize them into an normalized array.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
     This normalizer converts objects that implement
     :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`

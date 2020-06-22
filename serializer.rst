@@ -67,6 +67,9 @@ As well as the following normalizers:
   for :phpclass:`DateInterval` objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
   transform :phpclass:`SplFileInfo` objects in `Data URIs`_
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer` for
+  objects implementing the :class:`Symfony\\Component\\Form\\FormInterface` to
+  normalize form errors.
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
   to deal with objects implementing the :phpclass:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
