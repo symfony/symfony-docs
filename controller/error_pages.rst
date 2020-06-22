@@ -317,7 +317,7 @@ error pages.
 
 .. note::
 
-    If your listener calls ``setResponse()`` on the
+    If your listener calls ``setThrowable()`` on the
     :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`,
     event, propagation will be stopped and the response will be sent to
     the client.

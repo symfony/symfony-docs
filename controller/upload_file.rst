@@ -309,7 +309,7 @@ Then, define a service for this class:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
-            <service id="App\FileUploader">
+            <service id="App\Service\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
         </container>

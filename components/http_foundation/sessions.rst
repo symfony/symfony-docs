@@ -151,6 +151,9 @@ the following API which is intended mainly for internal purposes:
 :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`
     Returns the name of the session bag.
 
+:method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::clear`
+    Clears out data from bag.
+
 .. _attribute-bag-interface:
 
 Attributes
