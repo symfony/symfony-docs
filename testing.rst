@@ -393,13 +393,13 @@ returns a ``Crawler`` instance.
     The full signature of the ``request()`` method is::
 
         request(
-            $method,
-            $uri,
+            string $method,
+            string $uri,
             array $parameters = [],
             array $files = [],
             array $server = [],
-            $content = null,
-            $changeHistory = true
+            string $content = null,
+            bool $changeHistory = true
         )
 
     The ``server`` array is the raw values that you'd expect to normally
