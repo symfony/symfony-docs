@@ -534,6 +534,14 @@ After processing the request, the controller sets a flash message in the session
 and then redirects. The message key (``notice`` in this example) can be anything:
 you'll use this key to retrieve the message.
 
+.. warning::
+
+    If you want avoid depending on concrete implementation of `Session` and relay on :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`:
+    you will find your self in a situation that `getFlashBag` is not declared in an interface.
+    In order fix this "problem" you must inject `FlashBagInterface`/`session.flash_bag` and relay on `FlashBagInterface`
+    instead of `Session` for access to "Flash Messages"
+
+
 In the template of the next page (or even better, in your base layout template),
 read any flash messages from the session using ``app.flashes()``:
 
