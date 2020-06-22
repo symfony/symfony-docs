@@ -273,7 +273,8 @@ For example, you may add the following transports as services:
             $services = $configurator->services();
 
             $services->set(\Swift_SmtpTransport::class)
-                ->args(['%mailer_host%'])
+                // the param() method was introduced in Symfony 5.2.
+                ->args([param('mailer_host')])
                 ->tag('app.mail_transport')
             ;
 
@@ -437,7 +438,8 @@ To answer this, change the service declaration:
             $services = $configurator->services();
 
             $services->set(\Swift_SmtpTransport::class)
-                ->args(['%mailer_host%'])
+                // the param() method was introduced in Symfony 5.2.
+                ->args([param('mailer_host')])
                 ->tag('app.mail_transport', ['alias' => 'smtp'])
             ;
 
