@@ -536,7 +536,7 @@ you'll use this key to retrieve the message.
 
 .. warning::
 
-    If you want avoid depending on concrete implementation of `Session` and relay on :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`:
+    If you want avoid depending on concrete implementation of `Session` and rely on :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`:
     you will find your self in a situation that `getFlashBag` is not declared in an interface.
     In order fix this "problem" you must inject `FlashBagInterface`/`session.flash_bag` and relay on `FlashBagInterface`
     instead of `Session` for access to "Flash Messages"
