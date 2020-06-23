@@ -148,7 +148,7 @@ utilities used in the functional tests:
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Functional tests are PHP files that typically live in the ``tests/Controller``
-directory for your bundle. If you want to test the pages handled by your
+directory of your application. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
