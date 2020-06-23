@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-22T07:46:49Z
+
+@nabbisen thanks for this contribution!
+
+I see this was introduced in MakerBundle in May 2019 (https://github.com/symfony/maker-bundle/commit/47ee44b23d6257684e2116da0e91184601a83370#diff-a8079906bb7a0cfe45b4b5733b0944d9). Is there any reason for adding these docs to Symfony 5.1 only? Could we merge this in 4.4 too?
+
+---------------------------------------------------------------------------
+
+by nabbisen at 2020-06-22T09:07:06Z
+
+@javiereguiluz
+Thank you for your reviewing.
+
+> Is there any reason for adding these docs to Symfony 5.1 only?
+
+No.
+
+> Could we merge this in 4.4 too?
+
+Yes, please.
