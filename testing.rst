@@ -310,7 +310,8 @@ document::
             ),
             'the "Content-Type" header is "application/json"' // optional message shown on failure
         );
-
+        //or
+        $this->assertResponseHeaderSame('Content-Type', 'application/json', 'the "Content-Type" header is "application/json"');
         // asserts that the response content contains a string
         $this->assertContains('foo', $client->getResponse()->getContent());
         // ...or matches a regex
@@ -318,6 +319,8 @@ document::
 
         // asserts that the response status code is 2xx
         $this->assertTrue($client->getResponse()->isSuccessful(), 'response status is 2xx');
+        // ...or simply
+        $this->assertResponseIsSuccessful('response status is 2xx');
         // asserts that the response status code is 404
         $this->assertTrue($client->getResponse()->isNotFound());
         // asserts a specific 200 status code
@@ -325,7 +328,8 @@ document::
             200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
             $client->getResponse()->getStatusCode()
         );
-
+        //...or simply
+        $this->assertResponseStatusCodeSame(200);
         // asserts that the response is a redirect to /demo/contact
         $this->assertTrue(
             $client->getResponse()->isRedirect('/demo/contact')
@@ -334,7 +338,8 @@ document::
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
-
+        // ...or simply
+        $this->assertResponseRedirects();
 .. _testing-data-providers:
 
 Testing against Different Sets of Data
