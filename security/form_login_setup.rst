@@ -44,11 +44,11 @@ and your generated code may be slightly different:
 
     Support for login form authentication was added to ``make:auth`` in MakerBundle 1.8.
 
-This generates the following: 1) a login route & controller, 2) a template that
+This generates the following: 1) login/logout routes & controller, 2) a template that
 renders the login form, 3) a :doc:`Guard authenticator </security/guard_authentication>`
 class that processes the login submit and 4) updates the main security config file.
 
-**Step 1.** The ``/login`` route & controller::
+**Step 1.** The ``/login``/``/logout`` routes & controller::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
@@ -65,6 +65,10 @@ class that processes the login submit and 4) updates the main security config fi
          */
         public function login(AuthenticationUtils $authenticationUtils): Response
         {
+            // if ($this->getUser()) {
+            //     return $this->redirectToRoute('target_path');
+            // }
+
             // get the login error if there is one
             $error = $authenticationUtils->getLastAuthenticationError();
             // last username entered by the user
@@ -75,10 +79,17 @@ class that processes the login submit and 4) updates the main security config fi
                 'error' => $error
             ]);
         }
+
+        /**
+         * @Route("/logout", name="app_logout")
+         */
+        public function logout()
+        {
+            throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        }
     }
 
-Edit the ``security.yaml`` file in order to allow access for anyone to the
-``/login`` route:
+Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
 
 .. configuration-block::
 
@@ -88,9 +99,12 @@ Edit the ``security.yaml`` file in order to allow access for anyone to the
         security:
             # ...
 
-            access_control:
-                - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            providers:
                 # ...
+                logout:
+                    path: app_logout
+                    # where to redirect after logout
+                    # target: app_any_route
 
     .. code-block:: xml
 
@@ -137,6 +151,12 @@ a traditional HTML form that submits to ``/login``:
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email</label>
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
@@ -171,7 +191,6 @@ a traditional HTML form that submits to ``/login``:
 
     use App\Entity\User;
     use Doctrine\ORM\EntityManagerInterface;
-
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -192,7 +211,7 @@ a traditional HTML form that submits to ``/login``:
     {
         use TargetPathTrait;
 
-        private const LOGIN_ROUTE = 'app_login';
+        public const LOGIN_ROUTE = 'app_login';
 
         private $entityManager;
         private $urlGenerator;
@@ -248,6 +267,14 @@ a traditional HTML form that submits to ``/login``:
         public function checkCredentials($credentials, UserInterface $user)
         {
             return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        }
+
+        /**
+         * Used to upgrade (rehash) the user's password automatically over time.
+         */
+        public function getPassword($credentials): ?string
+        {
+            return $credentials['password'];
         }
 
         public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
