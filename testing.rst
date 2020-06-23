@@ -292,54 +292,55 @@ document::
 
         // ...
 
-        // asserts that there is at least one h2 tag
-        // with the class "subtitle"
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('h2.subtitle')->count()
+        // asserts that there is at least one h2 tag with the class "subtitle"
+        // the third argument is an optional message shown on failed tests
+        $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count(),
+            'There is at least one subtitle'
         );
 
         // asserts that there are exactly 4 h2 tags on the page
         $this->assertCount(4, $crawler->filter('h2'));
 
         // asserts that the "Content-Type" header is "application/json"
-        $this->assertTrue(
-            $client->getResponse()->headers->contains(
-                'Content-Type',
-                'application/json'
-            ),
-            'the "Content-Type" header is "application/json"' // optional message shown on failure
-        );
-        //or
-        $this->assertResponseHeaderSame('Content-Type', 'application/json', 'the "Content-Type" header is "application/json"');
+        $this->assertResponseHeaderSame('Content-Type', 'application/json');
+        // equivalent to:
+        $this->assertTrue($client->getResponse()->headers->contains(
+            'Content-Type', 'application/json'
+        ));
+
         // asserts that the response content contains a string
         $this->assertContains('foo', $client->getResponse()->getContent());
         // ...or matches a regex
         $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
 
         // asserts that the response status code is 2xx
-        $this->assertTrue($client->getResponse()->isSuccessful(), 'response status is 2xx');
-        // ...or simply
-        $this->assertResponseIsSuccessful('response status is 2xx');
-        // asserts that the response status code is 404
+        $this->assertResponseIsSuccessful();
+        // equivalent to:
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // asserts that the response status code is 404 Not Found
         $this->assertTrue($client->getResponse()->isNotFound());
-        // asserts a specific 200 status code
-        $this->assertEquals(
-            200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
-            $client->getResponse()->getStatusCode()
-        );
-        //...or simply
-        $this->assertResponseStatusCodeSame(200);
+
+        // asserts a specific status code
+        $this->assertResponseStatusCodeSame(201);
+        // HTTP status numbers are available as constants too:
+        // e.g. 201 === Symfony\Component\HttpFoundation\Response::HTTP_CREATED
+        // equivalent to:
+        $this->assertEquals(201, $client->getResponse()->getStatusCode());
+
         // asserts that the response is a redirect to /demo/contact
-        $this->assertTrue(
-            $client->getResponse()->isRedirect('/demo/contact')
-            // if the redirection URL was generated as an absolute URL
-            // $client->getResponse()->isRedirect('http://localhost/demo/contact')
-        );
-        // ...or simply check that the response is a redirect to any URL
-        $this->assertTrue($client->getResponse()->isRedirect());
-        // ...or simply
+        $this->assertResponseRedirects('/demo/contact');
+        // equivalent to:
+        $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
+        // ...or check that the response is a redirect to any URL
         $this->assertResponseRedirects();
+
+.. versionadded:: 4.3
+
+    The ``assertResponseHeaderSame()``, ``assertResponseIsSuccessful()``,
+    ``assertResponseStatusCodeSame()``, ``assertResponseRedirects()`` and other
+    related methods were introduced in Symfony 4.3.
+
 .. _testing-data-providers:
 
 Testing against Different Sets of Data
