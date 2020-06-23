@@ -65,8 +65,8 @@ that system::
          */
         public function handle(
             Request $request,
-            $type = self::MASTER_REQUEST,
-            $catch = true
+            int $type = self::MASTER_REQUEST,
+            bool $catch = true
         );
     }
 
@@ -533,7 +533,7 @@ exception and create an appropriate error ``Response``.
 For example, to generate a 404 page, you might throw a special type of exception
 and then add a listener on this event that looks for this exception and
 creates and returns a 404 ``Response``. In fact, the HttpKernel component
-comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`,
+comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`,
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
 
@@ -547,10 +547,10 @@ below for more details).
     There are two main listeners to ``kernel.exception`` when using the
     Symfony Framework.
 
-    **ExceptionListener in the HttpKernel Component**
+    **ErrorListener in the HttpKernel Component**
 
     The first comes core to the HttpKernel component
-    and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`.
+    and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`.
     The listener has several goals:
 
     1) The thrown exception is converted into a
