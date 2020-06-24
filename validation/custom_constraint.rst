@@ -264,8 +264,8 @@ from it and implement the ``createValidator()`` method. This method must return 
 
 After that you can add any test cases you need to cover the validation logic::
 
-    use App\ContainsAlphanumeric;
-    use App\ContainsAlphanumericValidator;
+    use AppBundle\Validator\Constraints\ContainsAlphanumeric;
+    use AppBundle\Validator\Constraints\ContainsAlphanumericValidator;
     use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
     class ContainsAlphanumericValidatorTest extends ConstraintValidatorTestCase
