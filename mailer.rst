@@ -279,6 +279,30 @@ images inside the HTML contents::
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
     ;
 
+Catching Transport Exceptions
+-----------------------------
+
+If handing over the email to your transport fails, a
+:class:`Symfony\\Component\\Mailer\\Exception\\TransportExceptionInterface` is thrown. To
+make sure that sending the email was successful, you can catch that exception::
+
+    use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+
+    $email = new Email();
+    // ...
+    try {
+        $mailer->send($email);
+        // Display message that email was successfully sent
+    } catch (TransportExceptionInterface $e) {
+        // Display message that sending the email failed
+    }
+    
+.. caution::
+
+    For Mailer, the sending process was successful, if your transport (SMTP
+    server or 3rd party provider) accepted the mail for further delivery. This
+    does not mean that the email has already arrived at the recipient's mail server.
+
 Debugging Emails
 ----------------
 
