@@ -729,6 +729,8 @@ Extracting Information
 
 The Crawler can extract information from the nodes::
 
+    use Symfony\Component\DomCrawler\Crawler;
+    
     // returns the attribute value for the first node
     $crawler->attr('class');
 
@@ -749,7 +751,7 @@ The Crawler can extract information from the nodes::
     $info = $crawler->extract(['_text', 'href']);
 
     // executes a lambda for each node and return an array of results
-    $data = $crawler->each(function ($node, $i) {
+    $data = $crawler->each(function (Crawler $node, $i) {
         return $node->attr('href');
     });
 
