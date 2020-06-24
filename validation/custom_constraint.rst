@@ -250,3 +250,73 @@ not to the property:
                 $metadata->addConstraint(new ProtocolClass());
             }
         }
+
+How to Unit Test your Validator
+-------------------------------
+
+To create a unit test for you custom validator, you can use ``ConstraintValidatorTestCase`` class. All you need is to extend
+from it and implement the ``createValidator`` method. This method must return an instance of your custom constraint validator class::
+
+    protected function createValidator()
+    {
+        return new ContainsAlphanumericValidator();
+    }
+
+After that you can add any test cases you need to cover the validation logic::
+
+    use App\ContainsAlphanumeric;
+    use App\ContainsAlphanumericValidator;
+    use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
+
+    class ContainsAlphanumericValidatorTest extends ConstraintValidatorTestCase
+    {
+        protected function createValidator()
+        {
+            return new ContainsAlphanumericValidator();
+        }
+
+        /**
+         * @dataProvider getValidStrings
+         */
+        public function testValidStrings($string)
+        {
+            $this->validator->validate($string, new ContainsAlphanumeric());
+
+            $this->assertNoViolation();
+        }
+
+        public function getValidStrings()
+        {
+            return [
+                ['Fabien'],
+                ['SymfonyIsGreat'],
+                ['HelloWorld123'],
+            ];
+        }
+
+        /**
+         * @dataProvider getInvalidStrings
+         */
+        public function testInvalidStrings($string)
+        {
+            $constraint = new ContainsAlphanumeric([
+                'message' => 'myMessage',
+            ]);
+
+            $this->validator->validate($string, $constraint);
+
+            $this->buildViolation('myMessage')
+                ->setParameter('{{ string }}', $string)
+                ->assertRaised();
+        }
+
+        public function getInvalidStrings()
+        {
+            return [
+                ['example_'],
+                ['@$^&'],
+                ['hello-world'],
+                ['<body>'],
+            ];
+        }
+    }
