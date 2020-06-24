@@ -247,6 +247,33 @@ so ``DoctrineTokenProvider`` can store the tokens:
         `username` varchar(200) NOT NULL
     );
 
+.. note::
+
+    If you use DoctrineMigrationsBundle to manage your database migrations, you
+    will need to tell Doctrine to ignore this new ``rememberme_token`` table:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            doctrine:
+                dbal:
+                    schema_filter: ~^(?!rememberme_token)~
+
+        .. code-block:: xml
+
+            <doctrine:dbal schema-filter="~^(?!rememberme_token)~" .../>
+
+        .. code-block:: php
+
+            $container->loadFromExtension('doctrine', [
+                'dbal' => [
+                    'schema_filter'  => '~^(?!rememberme_token)~',
+                    // ...
+                ],
+                // ...
+            ]);
+
 Finally, set the ``token_provider`` option of the ``remember_me`` config to the
 service you just created:
 
