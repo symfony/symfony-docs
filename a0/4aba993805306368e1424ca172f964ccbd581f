@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-03-20T16:19:58Z
+
+@mpdude could you please review this? Thanks!
+
+---------------------------------------------------------------------------
+
+by mpdude at 2020-06-14T10:29:07Z
+
+Thank you @javiereguiluz for picking this up and sorry – I must have missed the notification back in March.
+
+I have a small recommendation/addition to make, but I'd like to leave it up to you to decide.
+
+Re-reading the docs on the topic, I find that we might want to dedicate a few lines to the difference between `public` and `private`, but I'll open another issue for that.
