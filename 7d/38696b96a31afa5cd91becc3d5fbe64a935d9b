@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-24T07:20:09Z
+
+@Surfoo thanks a lot for fixing this tricky error and I'm sorry you faced it when following Symfony Docs examples.
+
+Your fix is correct according to https://github.com/symfony/symfony/blob/51a1820deeae8de98700d829e66e152f2a38f221/src/Symfony/Bundle/FrameworkBundle/Kernel/MicroKernelTrait.php#L20. Congrats on your first Symfony Docs contribution!
