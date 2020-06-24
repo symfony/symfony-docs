@@ -898,12 +898,30 @@ up manually by calling the ``messenger:setup-transports`` command.
     To avoid tools like Doctrine Migrations from trying to remove this table because
     it's not part of your normal schema, you can set the ``schema_filter`` option:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # config/packages/doctrine.yaml
-        doctrine:
-            dbal:
-                schema_filter: '~^(?!messenger_messages)~'
+        .. code-block:: yaml
+
+            # config/packages/doctrine.yaml
+            doctrine:
+                dbal:
+                    schema_filter: '~^(?!messenger_messages)~'
+
+        .. code-block:: xml
+
+            # config/packages/doctrine.xml
+            <doctrine:dbal schema-filter="~^(?!messenger_messages)~" .../>
+
+        .. code-block:: php
+
+            # config/packages/doctrine.php
+            $container->loadFromExtension('doctrine', [
+                'dbal' => [
+                    'schema_filter'  => '~^(?!messenger_messages)~',
+                    // ...
+                ],
+                // ...
+            ]);
 
 The transport has a number of options:
 

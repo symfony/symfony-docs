@@ -256,16 +256,19 @@ so ``DoctrineTokenProvider`` can store the tokens:
 
         .. code-block:: yaml
 
+            # config/packages/doctrine.yaml
             doctrine:
                 dbal:
                     schema_filter: ~^(?!rememberme_token)~
 
         .. code-block:: xml
 
+            # config/packages/doctrine.xml
             <doctrine:dbal schema-filter="~^(?!rememberme_token)~" .../>
 
         .. code-block:: php
 
+            # config/packages/doctrine.php
             $container->loadFromExtension('doctrine', [
                 'dbal' => [
                     'schema_filter'  => '~^(?!rememberme_token)~',
