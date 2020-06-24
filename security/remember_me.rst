@@ -315,8 +315,8 @@ so ``DoctrineTokenProvider`` can store the tokens:
 
 .. note::
 
-    If you use DoctrineMigrationsBundle to manage your DB migrations, you will need to tell Doctrine to ignore this new
-    `rememberme_token` table with :
+    If you use DoctrineMigrationsBundle to manage your database migrations, you
+    will need to tell Doctrine to ignore this new ``rememberme_token`` table:
 
     .. configuration-block::
 
@@ -329,7 +329,6 @@ so ``DoctrineTokenProvider`` can store the tokens:
         .. code-block:: xml
 
             <doctrine:dbal schema-filter="~^(?!rememberme_token)~" .../>
-
 
         .. code-block:: php
 
