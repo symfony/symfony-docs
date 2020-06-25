@@ -25,7 +25,7 @@ the ``twig`` key in your application configuration.
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `auto_reload`_
 * `autoescape`_

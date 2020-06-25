@@ -1183,12 +1183,12 @@ unique string as the key of each service config:
             <services>
                 <prototype namespace="AppBundle\Domain"
                     resource="../../src/AppBundle/Domain/*/CommandHandler"/>
-                    <tag name"command_handler"/>
+                    <tag name="command_handler"/>
                 </prototype>
 
                 <prototype namespace="AppBundle\Domain"
                     resource="../../src/AppBundle/Domain/*/EventSubscriber"/>
-                    <tag name"event_subscriber"/>
+                    <tag name="event_subscriber"/>
                 </prototype>
 
                 <!-- ... -->

@@ -50,6 +50,7 @@ whitelist:
         - '/FOSUserBundle(.*)\.yml/'
         - '/``.yml``/'
         - '/(.*)\.orm\.yml/' # currently DoctrineBundle only supports .yml
+        - '/rst-class/'
     lines:
         - 'in config files, so the old ``app/config/config_dev.yml`` goes to'
         - '#. The most important config file is ``app/config/services.yml``, which now is'
@@ -72,3 +73,4 @@ whitelist:
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'
         - "`Deploying Symfony 4 Apps on Heroku`_."
         - ".. _`Deploying Symfony 4 Apps on Heroku`: https://devcenter.heroku.com/articles/deploying-symfony4"
+        - '.. code-block:: twig'

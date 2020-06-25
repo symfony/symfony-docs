@@ -25,7 +25,7 @@ to :doc:`send emails </email>`. All these options are configured under the
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `antiflood`_
 
