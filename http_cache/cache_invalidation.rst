@@ -90,7 +90,7 @@ to support the ``PURGE`` HTTP method::
     purging your cached data.
 
 **Purge** instructs the cache to drop a resource in *all its variants*
-(according to the ``Vary`` header, see above). An alternative to purging is
+(according to the ``Vary`` header, see :doc:`/http_cache/cache_vary`). An alternative to purging is
 **refreshing** a content. Refreshing means that the caching proxy is
 instructed to discard its local cache and fetch the content again. This way,
 the new content is already available in the cache. The drawback of refreshing
