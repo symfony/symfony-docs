@@ -155,6 +155,24 @@ you can import them with ``require()`` function:
         }
     }
 
+Embeded with Twig
+-----------------
+
+You can of course, inside a Twig template rendered from a controller,
+instantiate a Vue.js app as any other JavaScript code.
+
+.. tip::
+
+    You may in this case leverage the delimiters options
+ to not overlap with Twig ones.
+    For example, using `delimiters: ['${', '}$']` inside the Vue.js instance.
+ 
+ .. code-block:: twig
+ 
+    {{ twig_var }} renders a Twig variable
+    ${ vuejs_var }$ renders a Vue.js variable
+
+
 .. _`Vue.js`: https://vuejs.org/
 .. _`vue-loader options`: https://vue-loader.vuejs.org/options.html
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
