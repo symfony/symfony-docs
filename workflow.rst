@@ -165,9 +165,12 @@ like this:
 
 The configured property will be used via it's implemented getter/setter methods by the marking store::
 
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
     class BlogPost
     {
-        // the configured property must be declared
+        // the configured marking store property must be declared
         private $currentPlace;
         private $title;
         private $content;
@@ -236,11 +239,11 @@ Accessing the Workflow in a Class
 To access workflow inside a class, use dependency injection and inject the
 registry in the constructor::
 
+    use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
 
     class MyClass
     {
-
         private $workflowRegistry;
 
         public function __construct(Registry $workflowRegistry)
@@ -364,11 +367,14 @@ order:
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
 
+    // src/App/EventSubscriber/WorkflowLoggerSubscriber.php
+    namespace App\EventSubscriber;
+
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\Event;
 
-    class WorkflowLogger implements EventSubscriberInterface
+    class WorkflowLoggerSubscriber implements EventSubscriberInterface
     {
         private $logger;
 
@@ -414,14 +420,18 @@ list of the guard event names.
 This example stops any blog post being transitioned to "reviewed" if it is
 missing a title::
 
+    // src/App/EventSubscriber/BlogPostReviewSubscriber.php
+    namespace App\EventSubscriber;
+
+    use App\Entity\BlogPost;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\GuardEvent;
 
-    class BlogPostReviewListener implements EventSubscriberInterface
+    class BlogPostReviewSubscriber implements EventSubscriberInterface
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var App\Entity\BlogPost $post */
+            /** @var BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
@@ -606,13 +616,14 @@ This example has been simplified; in production you may prefer to use the
 :doc:`Translation </translation>` component to manage messages in one
 place::
 
-    namespace App\Listener\Workflow\Task;
+    // src/App/EventSubscriber/BlogPostPublishSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\Workflow\TransitionBlocker;
 
-    class BlogPostPublishListener implements EventSubscriberInterface
+    class BlogPostPublishSubscriber implements EventSubscriberInterface
     {
         public function guardPublish(GuardEvent $event)
         {
@@ -807,10 +818,12 @@ requires:
 
 Then you can access this metadata in your controller as follows::
 
+    // src/App/Controller/BlogPostController.php
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
+    // ...
 
-    public function myController(Registry $registry, BlogPost $post)
+    public function myAction(Registry $registry, BlogPost $post)
     {
         $workflow = $registry->get($post);
 
@@ -829,6 +842,8 @@ Then you can access this metadata in your controller as follows::
             ->getMetadataStore()
             ->getTransitionMetadata($aTransition)['priority'] ?? 0
         ;
+
+        // ...
     }
 
 There is a ``getMetadata()`` method that works with all kinds of metadata::
@@ -878,7 +893,7 @@ In Twig templates, metadata is available via the ``workflow_metadata()`` functio
             {% for transition in workflow_transitions(blog_post) %}
                 <li>
                     {{ transition.name }}:
-                    <code>{{ workflow_metadata(blog_post, 'priority', transition) ?: '0' }}</code>
+                    <code>{{ workflow_metadata(blog_post, 'priority', transition) ?: 0 }}</code>
                 </li>
             {% endfor %}
         </ul>
