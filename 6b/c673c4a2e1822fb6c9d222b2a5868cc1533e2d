@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-26T06:19:07Z
+
+@BafS thanks for this contribution. Lately we're receiving many issues and contributions related to this "RoutingConfiguration" feature. That's why this is more and more confusing to me. Your contribution looked OK ... but if I check the source code of the `RoutingConfigurator` class used in this example: https://github.com/symfony/symfony/blob/5.1/src/Symfony/Component/Routing/Loader/Configurator/RoutingConfigurator.php I can't see the `prefix()` method ... but there's a `withPath()` method. So, what am I missing here?
+
+---------------------------------------------------------------------------
+
+by BafS at 2020-06-26T09:50:26Z
+
+`RoutingConfigurator#import` returns `ImportConfigurator` which has the `prefix()` method. I tested and it works.
+
+I never used `withPath()` so I tried but it doesn't prefix the path, there is this logic inside `$clone->path = $clone->file = $path;`, so it should prefix the filepath and the url path ? There is no documentation about this methode and the phpdoc is empty in `RoutingConfigurator` so yes, I agree it's very confusing.
