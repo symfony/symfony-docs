@@ -254,8 +254,8 @@ not to the property:
 How to Unit Test your Validator
 -------------------------------
 
-To create a unit test for you custom validator, you can use ``ConstraintValidatorTestCase`` class. All you need is to extend
-from it and implement the ``createValidator()`` method. This method must return an instance of your custom constraint validator class::
+To create a unit test for you custom validator, your test case class should
+extend the ``ConstraintValidatorTestCase`` class and implement the ``createValidator()`` method::
 
     protected function createValidator()
     {
