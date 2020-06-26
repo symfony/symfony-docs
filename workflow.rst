@@ -365,7 +365,6 @@ Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
 
     // src/App/EventSubscriber/WorkflowLoggerSubscriber.php
-   
     namespace App\EventSubscriber;
 
     use Psr\Log\LoggerInterface;
@@ -419,9 +418,8 @@ This example stops any blog post being transitioned to "reviewed" if it is
 missing a title::
 
     // src/App/EventSubscriber/BlogPostReviewSubscriber.php
-    
     namespace App\EventSubscriber;
-    
+
     use App\Entity\BlogPost;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\GuardEvent;
@@ -823,7 +821,6 @@ requires:
 Then you can access this metadata in your controller as follows::
 
     // src/App/Controller/BlogPostController.php
-    
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
     // ...
@@ -847,7 +844,7 @@ Then you can access this metadata in your controller as follows::
             ->getMetadataStore()
             ->getTransitionMetadata($aTransition)['priority'] ?? 0
         ;
-        
+
         // ...
     }
 
