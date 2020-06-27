@@ -565,12 +565,9 @@ Checking if a Template Exists
 Templates are loaded in the application using a `Twig template loader`_, which
 also provides a method to check for template existence. First, get the loader::
 
-    // in a controller extending from AbstractController
-    $loader = $this->get('twig')->getLoader();
-
-    // in a service using autowiring
     use Twig\Environment;
 
+    // this code assumes that your service uses autowiring to inject dependencies
     public function __construct(Environment $twig)
     {
         $loader = $twig->getLoader();
