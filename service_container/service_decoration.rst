@@ -203,7 +203,7 @@ automatically changed to ``'.inner'``):
                 App\DecoratingMailer:
                     # ...
                     decoration_inner_name: App\DecoratingMailer.wooz
-                    arguments: ['@App\DecoratingMailer.wooz']
+                    arguments: ['@App\\DecoratingMailer.wooz']
 
         .. code-block:: xml
 
