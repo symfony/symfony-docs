@@ -568,6 +568,7 @@ also provides a method to check for template existence. First, get the loader::
     use Twig\Environment;
 
     // this code assumes that your service uses autowiring to inject dependencies
+    // otherwise, inject the service called 'twig' manually
     public function __construct(Environment $twig)
     {
         $loader = $twig->getLoader();
