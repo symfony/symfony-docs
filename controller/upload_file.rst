@@ -319,7 +319,7 @@ Now you're ready to use this service in the controller::
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $brochureFile */
-            $brochureFile = $form['brochure']->getData();
+            $brochureFile = $form->get('brochure')->getData();
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
                 $product->setBrochureFilename($brochureFileName);
