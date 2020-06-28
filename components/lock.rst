@@ -206,11 +206,6 @@ above), it is possible for an instance to lose the lock it acquired automaticall
     you have to use ``acquire()`` for this. The ``isAcquired()`` method is used to check
     if the lock has been acquired by the **current process** only!
 
-.. [1] Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
-    not ``Lock``. But from a user perspective, ``Key`` is internal and you will likely only be working
-    with the ``Lock`` instance so it's easier to think of the ``Lock`` instance as being the one that
-    is the owner of the lock.
-
 Available Stores
 ----------------
 
