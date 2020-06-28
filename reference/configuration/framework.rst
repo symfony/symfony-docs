@@ -27,7 +27,7 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `annotations`_
 
