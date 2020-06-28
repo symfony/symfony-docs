@@ -222,6 +222,9 @@ that accepts the dependency::
     {
         private $mailer;
 
+        /**
+         * @required
+         */
         public function setMailer(MailerInterface $mailer)
         {
             $this->mailer = $mailer;
