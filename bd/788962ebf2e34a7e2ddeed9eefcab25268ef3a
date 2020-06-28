@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-06-25T14:31:54Z
+
+@fabpot it seems like your Sphinx-PHP repository is not in sync with the changes you made on symfony.com? At least, the code I can see on GitHub are not compatible with Sphinx 1.8.5, which I heard you're now using on symfony.com.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2020-06-25T14:47:50Z
+
+That's quite possible. I'm going to submit a PR soon.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2020-06-25T14:57:21Z
+
+See https://github.com/fabpot/sphinx-php/pull/45
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-06-25T16:02:42Z
+
+Hmm, so the PHP domain extension that is now installed overwrites the `:class:` role of the Sphinx PHP package with its own class role (Referencing classes defined in the Sphinx PHP domain). I'm not sure why this error isn't fired on symfony.com
+
+---------------------------------------------------------------------------
+
+by fabpot at 2020-06-25T16:15:23Z
+
+I don't remember why I used the PHP domain extension, I think we can safely remove it.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-06-26T11:32:20Z
+
+@OskarStark do you maybe have some time to help out with the gitHub actions here? As you can see in the SymfonyCloud deployment, the build works fine (same locally), but it somehow fails on GitHub actions with an error I just fixed. Is there some cache that messes up the actions?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-06-27T10:42:31Z
+
+I've also cleaned up the build process a bit:
+
+* Removed unused dependencies from the requirements file
+* Installed the RTD theme using pip instead of copying the contents in our repository
+* Slightly tweaking the RTD theme to have same "feel" as the Symfony doc, while using the RTD looks. @javiereguiluz do you agree with the visual changes made in the SymfonyCloud deployments?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-27T10:54:29Z
+
+Wouter, thanks for these improvements. Yes, I like the visual changes you did. But I'd prefer if we don't make more changes ... because I believe it's "wasting" time. If RTD theme changes and breaks the changes you did ... we need to dedicate some effort to fix it. I think it's not worth it. We only need docs to be readable ... I don't think "visual parity" or "visual fidelity" with symfony.com is important or needed.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-06-27T11:48:20Z
+
+Yes, agreed. We should not "waste" time here, so I used the official RTD extension points + highlight and font family changes. Doing anything more (e.g. implementing configuration blocks or the like) is likely to break and doesn't improve much.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-06-27T19:37:32Z
+
+Fyi, this PR makes a change that is not yet done in the symfony.com build process: disabling the Sphinx Domains (to avoid conflicts with Symfony's own extension). This PR proves that the official docs aren't using Sphinx domains. We're checking internally if this applies to all projects build on symfony.com. I'll merge once I can confirm that these changes are applied on symfony.com as well (to avoid inconsistencies between the real build and our CI builds).
+
+---------------------------------------------------------------------------
+
+by fabpot at 2020-06-28T07:10:27Z
+
+I've just deployed symfony.com without the phpdomain extension... which also fixes the line numbers that were missing for PHP code snippets.
