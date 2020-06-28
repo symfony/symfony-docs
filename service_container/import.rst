@@ -19,8 +19,7 @@ the services in your application.
 External service configuration can be imported in two different ways. The first
 method, commonly used to import other resources, is via the ``imports``
 directive. The second method, using dependency injection extensions, is used by
-third-party bundles to load the configuration. Read on to learn more about both
-methods.
+third-party bundles to load the configuration.
 
 .. index::
     single: Service Container; Imports
