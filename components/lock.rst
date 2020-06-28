@@ -164,7 +164,7 @@ object) and ``isExpired()`` (which returns a boolean).
 The Owner of The Lock
 ---------------------
 
-Locks that are acquired for the first time are owned by the ``Lock`` instance that acquired
+Locks that are acquired for the first time are owned [1]_ by the ``Lock`` instance that acquired
 it. If you need to check whether the current ``Lock`` instance is (still) the owner of
 a lock, you can use the ``isAcquired()`` method::
 
