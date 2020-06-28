@@ -314,7 +314,7 @@ the argument by its name:
 
                 <!-- Explicitly configure the service -->
                 <service id="AppBundle\Controller\LuckyController">
-                    <tag name"controller.service_arguments"/>
+                    <tag name="controller.service_arguments"/>
                     <bind key="$logger"
                         type="service"
                         id="monolog.logger.doctrine"

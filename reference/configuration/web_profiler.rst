@@ -30,7 +30,7 @@ execution and displays it in both the web debug toolbar and the
 Configuration
 -------------
 
-.. class:: list-config-options
+.. rst-class:: list-config-options
 
 * `excluded_ajax_paths`_
 * `intercept_redirects`_

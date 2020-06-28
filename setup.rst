@@ -22,7 +22,7 @@ executable that needs to be installed on your system only once:
 
 **Linux and macOS systems**:
 
-.. class:: command-linux
+.. rst-class:: command-linux
 .. code-block:: terminal
 
     $ sudo mkdir -p /usr/local/bin
@@ -31,7 +31,7 @@ executable that needs to be installed on your system only once:
 
 **Windows systems**:
 
-.. class:: command-windows
+.. rst-class:: command-windows
 .. code-block:: terminal
 
     > php -r "file_put_contents('symfony', file_get_contents('https://symfony.com/installer'));"
@@ -43,7 +43,7 @@ executable that needs to be installed on your system only once:
     environment variable and create a ``symfony.bat`` file to create the global
     command or move it to any other directory convenient for you:
 
-    .. class:: command-windows
+    .. rst-class:: command-windows
     .. code-block:: terminal
 
         # for example, if WAMP is used ...

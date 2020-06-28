@@ -27,7 +27,7 @@ to create files and execute the following commands:
 
 **Linux and macOS systems**:
 
-.. class:: command-linux
+.. rst-class:: command-linux
 .. code-block:: terminal
 
     $ cd projects/
@@ -35,7 +35,7 @@ to create files and execute the following commands:
 
 **Windows systems**:
 
-.. class:: command-windows
+.. rst-class:: command-windows
 .. code-block:: terminal
 
     > cd projects/

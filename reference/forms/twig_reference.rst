@@ -197,7 +197,7 @@ array).
 
 .. code-block:: html+twig
 
-    <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
+    <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} {# ... #}>
 
 .. _form-twig-rootform:
 
@@ -247,7 +247,7 @@ of variables. By default, these blocks live inside `form_div_layout.html.twig`_.
 
 Look at the ``form_label`` as an example:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% block form_label %}
         {% if not compound %}
