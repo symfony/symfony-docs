@@ -546,7 +546,7 @@ configure these values with the second argument passed to the
             Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler:
                 arguments:
                     - '@doctrine_mongodb.odm.default_connection'
-                    - { id_field: '_guid', `expiry_field`: `eol` }
+                    - { id_field: '_guid', 'expiry_field': 'eol' }
 
     .. code-block:: xml
 

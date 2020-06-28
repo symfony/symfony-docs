@@ -901,7 +901,7 @@ up manually by calling the ``messenger:setup-transports`` command.
         .. code-block:: xml
 
             # config/packages/doctrine.xml
-            <doctrine:dbal schema-filter="~^(?!messenger_messages)~" .../>
+            <doctrine:dbal schema-filter="~^(?!messenger_messages)~"/>
 
         .. code-block:: php
 
