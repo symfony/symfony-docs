@@ -281,9 +281,9 @@ transport:
 
                     <!-- Send notifications to the next scheduled transport 
                          calculated by round robin -->
-                    <framework:chatter-transport name="slack">
+                    <framework:chatter-transport name="slack"><![CDATA[
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
-                    </framework:chatter-transport>
+                    ]]></framework:chatter-transport>
                 </framework:notifier>
             </framework:config>
         </container>
