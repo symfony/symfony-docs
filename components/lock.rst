@@ -169,7 +169,7 @@ object) and ``isExpired()`` (which returns a boolean).
 The Owner of The Lock
 ---------------------
 
-Locks that are acquired for the first time are owned by the ``Lock`` instance that acquired
+Locks that are acquired for the first time are owned [1]_ by the ``Lock`` instance that acquired
 it. If you need to check whether the current ``Lock`` instance is (still) the owner of
 a lock, you can use the ``isAcquired()`` method::
 
@@ -205,6 +205,11 @@ above), it is possible for an instance to lose the lock it acquired automaticall
     a lock has already been acquired by any process. As you can see in this example
     you have to use ``acquire()`` for this. The ``isAcquired()`` method is used to check
     if the lock has been acquired by the **current process** only!
+
+.. [1] Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
+    not ``Lock``. But from a user perspective, ``Key`` is internal and you will likely only be working
+    with the ``Lock`` instance so it's easier to think of the ``Lock`` instance as being the one that
+    is the owner of the lock.
 
 Available Stores
 ----------------
