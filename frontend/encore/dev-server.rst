@@ -58,9 +58,9 @@ option:
 
     $ ./node_modules/.bin/encore dev-server --hot
 
-If you want to use SSL with self-signed domain, add 
-the ``--https``, ``--pfx=``, and  ``--allowed-hosts``
-options to the ``dev-server`` command in the ``package.json`` file:
+If you want to use SSL with self-signed certificates, add the ``--https``,
+``--pfx=``, and  ``--allowed-hosts`` options to the ``dev-server`` command in
+the ``package.json`` file:
 
 .. code-block:: diff
 
