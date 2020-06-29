@@ -315,7 +315,7 @@ Saving Related Entities
 Now you can see this new code in action! Imagine you're inside a controller::
 
     // src/Controller/ProductController.php
-    namespace App/Controller;
+    namespace App\Controller;
 
     // ...
     use App\Entity\Category;

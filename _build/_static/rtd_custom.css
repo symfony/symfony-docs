@@ -1,0 +1,23 @@
+body {
+	font-family:Lucida Grande,Lucida Sans Unicode,Lucida Sans,Geneva,Verdana,sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family:Georgia,Times New Roman,Times,serif !important;
+	line-height:1.2 !important;
+	margin-top:0 !important;
+	margin-bottom:.5em !important;
+}
+p, .rst-content li{
+	font-size:14px !important;
+	line-height:1.45 !important;
+}
+.wy-menu-vertical a {
+	font-size:14px !important;
+	padding-right:0 !important;
+}
+
+.highlight {
+	background:#1e2125 !important;
+    color:#fafafa !important;
+}

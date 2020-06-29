@@ -337,7 +337,7 @@ array).
 
 .. code-block:: html+twig
 
-    <option {% if choice is selectedchoice(value) %}selected="selected"{% endif %} ...>
+    <option {% if choice is selectedchoice(value) %}selected="selected"{% endif %}>
 
 .. _form-twig-rootform:
 

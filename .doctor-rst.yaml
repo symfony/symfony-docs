@@ -59,6 +59,7 @@ whitelist:
         - '/FOSUserBundle(.*)\.yml/'
         - '/``.yml``/'
         - '/(.*)\.orm\.yml/' # currently DoctrineBundle only supports .yml
+        - '/rst-class/'
     lines:
         - 'in config files, so the old ``app/config/config_dev.yml`` goes to'
         - '#. The most important config file is ``app/config/services.yml``, which now is'
@@ -87,3 +88,4 @@ whitelist:
         - "//                  224, 165, 141, 224, 164, 164, 224, 165, 135])"
         - '.. versionadded:: 0.2' # MercureBundle
         - 'provides a ``loginUser()`` method to simulate logging in in your functional'
+        - '.. code-block:: twig'
