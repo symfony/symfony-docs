@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by dbrumann at 2020-05-04T18:03:20Z
+
+Private services can not be fetched from the container, public ones can (but should not). I think the point is, that fetching any service from the container is regarded bad practice.
+
+Instead this should probably point to [injecting services](https://symfony.com/doc/current/service_container.html#injecting-services-config-into-a-service) and [service subscribers & locators](https://symfony.com/doc/current/service_container/service_subscribers_locators.html) as recommended alternatives.
+
+---------------------------------------------------------------------------
+
+by zer0uno at 2020-05-05T22:56:04Z
+
+@dbrumann I understand and I agree you. So at this point I would say that the documentation should be a little bit clearer. It let me confused seeing in the example the use of `$container->get()` but then reading that it shouldn't be done. IMHO the sentence could be fine-tuned in this way:
+
+From:
+
+> As a best practice, you should only create *private* services, which will happen
+automatically. And also, you should *not* use the ``$container->get()`` method to
+fetch public services.
+
+To:
+
+> As a best practice, you should only create *private* services, which will happen
+automatically. And also, **despite the example shows it** , you should *not* use the ``$container->get()`` method to fetch public services.
