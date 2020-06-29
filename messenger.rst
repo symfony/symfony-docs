@@ -911,9 +911,6 @@ a table named ``messenger_messages``.
     The ability to automatically generate a migration for the ``messenger_messages``
     table was introduced in Symfony 5.1 and DoctrineBundle 2.1.
 
-Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
-:ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
-
 The transport has a number of options:
 
 .. configuration-block::
