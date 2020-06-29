@@ -58,6 +58,21 @@ option:
 
     $ ./node_modules/.bin/encore dev-server --hot
 
+If you want to use SSL with self-signed certificates, add the ``--https``,
+``--pfx=``, and  ``--allowed-hosts`` options to the ``dev-server`` command in
+the ``package.json`` file:
+
+.. code-block:: diff
+
+    {
+        ...
+        "scripts": {
+    -        "dev-server": "encore dev-server",
+    +        "dev-server": "encore dev-server --https --pfx=$HOME/.symfony/certs/default.p12 --allowed-hosts=mydomain.wip",
+            ...
+        }
+    }
+
 If you experience issues related to CORS (Cross Origin Resource Sharing), add
 the ``--disable-host-check`` and ``--port`` options to the ``dev-server``
 command in the ``package.json`` file:
@@ -77,6 +92,7 @@ command in the ``package.json`` file:
 
     Beware that `it's not recommended to disable host checking`_ in general, but
     here it's required to solve the CORS issue.
+
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
 .. _`HMR`: https://webpack.js.org/concepts/hot-module-replacement/
