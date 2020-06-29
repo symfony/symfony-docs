@@ -850,9 +850,12 @@ This is mostly useful when you want to fetch services lazily::
             // ...
         }
 
-As a best practice, you should only create *private* services, which will happen
-automatically. And also, you should *not* use the ``$container->get()`` method to
-fetch public services.
+As a best practice, you should only create *private* services. This allows for
+safe container optimizations, e.g. removing unused services. You should not use
+``$container->get()`` to fetch public services, as it will make it harder to
+make those services private later. Instead consider
+:ref:`injecting services <services-constructor-injection>` or using
+:doc:`Service Subscribers or Locators </service_container/service_subscribers_locators>`.
 
 But, if you *do* need to make a service public, override the ``public`` setting:
 
