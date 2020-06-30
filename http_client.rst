@@ -117,7 +117,7 @@ The HTTP client contains many options you might need to take full control of
 the way the request is performed, including DNS pre-resolution, SSL parameters,
 public key pinning, etc. They can be defined globally in the configuration (to
 apply it to all requests) and to each request (which overrides any global
-authentication)
+configuration).
 
 You can configure the global options using the ``default_options`` option:
 
