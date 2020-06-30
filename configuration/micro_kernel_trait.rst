@@ -56,9 +56,7 @@ Next, create an ``index.php`` file that creates a kernel class and executes it::
 
         protected function configureRoutes(RouteCollectionBuilder $routes)
         {
-            // kernel is a service that points to this class
-            // optional 3rd argument is the route name
-            $routes->add('/random/{limit}', 'kernel:randomAction');
+            $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
         }
 
         public function randomAction($limit)
@@ -159,7 +157,7 @@ hold the kernel. Now it looks like this::
             ];
 
             if ($this->getEnvironment() == 'dev') {
-                $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+                $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             }
 
             return $bundles;
