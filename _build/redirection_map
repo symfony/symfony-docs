@@ -507,3 +507,4 @@
 /components/class_loader https://github.com/symfony/class-loader
 /frontend/encore/versus-assetic /frontend
 /components/http_client /http_client
+/redirection_test /session/database.html#store-sessions-in-a-nosql-database-mongodb
