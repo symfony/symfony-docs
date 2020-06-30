@@ -1,0 +1,56 @@
+---------------------------------------------------------------------------
+
+by wow-apps at 2020-04-01T13:05:54Z
+
+can someone check - CI brokes, but not by a PR fault ...?
+https://github.com/symfony/symfony-docs/pull/13472/checks?check_run_id=551939846#step:7:10
+
+@fabpot I think, it will be good for newbies to add version option for a non-latest release docs
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-04-01T13:52:43Z
+
+@wow-apps I'm sorry about the CI errors. They have been fixed now (it's not necessary, but you can rebase this PR if you want to get rid of those errors).
+
+---------------------------------------------------------------------------
+
+by wow-apps at 2020-04-01T13:56:37Z
+
+@javiereguiluz no worries. But I think, I should rebase, because it will be closed for merging without all steps passed
+
+---------------------------------------------------------------------------
+
+by wow-apps at 2020-04-07T01:47:57Z
+
+@dbrumann
+Here's live case: I need to create a consumer for RabbitMQ, but AMQBundle didn't support version 5 ;)
+
+You're right, that better to select the latest version for a new project but version 4.4 still supported and client can decide which version he needs...
+
+---------------------------------------------------------------------------
+
+by skmedix at 2020-04-07T02:56:16Z
+
+I don't like this, as versions in commands are already selected in LTS section, and every minor someone would has to change those commands. Information about `--version` is really not that far away in the doc. (But info about LTS could be higher I guess) Also if we go further with that idea, we have to add versions to `composer require` commands for every component, as versions are not specified there.
+
+If it's really needed, then composer commands should point version `^4.4` not `v4.4.99`.
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2020-04-07T06:54:20Z
+
+@wow-apps I get that there are use cases for picking older versions, but in my opinion the default should be the current version.
+
+How about instead, in between the paragraphs (L55) we add a tip that you can select a version during setup with the `--version`-option? This way the current default can be kept and we still can tell people how to pick a different version.
+
+---------------------------------------------------------------------------
+
+by wow-apps at 2020-04-08T08:59:46Z
+
+@dbrumann
+That fix was not for default ... but for 4.4 version.
+Yes, sure, we can add `tip` ... I'll change it
+
+@skmedix
+The problem is when you change Symfony version in documentation - you see installation command for the latest version, not for choosed.
