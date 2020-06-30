@@ -167,7 +167,7 @@ In those cases, use the
 
 If your JSON file is not on your local filesystem but is accessible over HTTP,
 use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
-with the :doc:`HttpClient component </components/http_client>`::
+with the :doc:`HttpClient component </http_client>`::
 
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy;
