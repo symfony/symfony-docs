@@ -223,7 +223,6 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
     // src/Form/TaskType.php
 
     // ...
-    use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
