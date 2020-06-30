@@ -50,10 +50,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_name --version=4.4 --full
+    $ symfony new my_project_name --version=5.0 --full
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_name --version=4.4
+    $ symfony new my_project_name --version=5.0
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--full`` option installs all the packages that you
@@ -65,10 +65,10 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/website-skeleton:"^4.4" my_project_name
+    $ composer create-project symfony/website-skeleton:"^5.0" my_project_name
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"^4.4" my_project_name
+    $ composer create-project symfony/skeleton:"^5.0" my_project_name
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_name/`` directory, download some dependencies
