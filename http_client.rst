@@ -319,7 +319,6 @@ autoconfigure the HTTP client based on the requested URL:
                 ],
             ],
         ]);
->>>>>>> 5.0:http_client.rst
 
     .. code-block:: php-standalone
 
