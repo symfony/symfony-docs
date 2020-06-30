@@ -2,12 +2,8 @@
    single: HttpClient
    single: Components; HttpClient
 
-The HttpClient Component
-========================
-
-    The HttpClient component is a low-level HTTP client with support for both
-    PHP stream wrappers and cURL. It provides utilities to consume APIs and
-    supports synchronous and asynchronous operations.
+HTTP Client
+===========
 
 .. versionadded:: 4.3
 
@@ -16,89 +12,374 @@ The HttpClient Component
 Installation
 ------------
 
+The HttpClient component is a low-level HTTP client with support for both
+PHP stream wrappers and cURL. It provides utilities to consume APIs and
+supports synchronous and asynchronous operations. You can install it with:
+
 .. code-block:: terminal
 
     $ composer require symfony/http-client
-
-.. include:: /components/require_autoload.rst.inc
 
 Basic Usage
 -----------
 
 Use the :class:`Symfony\\Component\\HttpClient\\HttpClient` class to create the
-low-level HTTP client that makes requests, like the following ``GET`` request::
+low-level HTTP client that makes requests, like the following ``GET`` request:
 
-    use Symfony\Component\HttpClient\HttpClient;
+.. configuration-block::
 
-    $client = HttpClient::create();
-    $response = $client->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
+    .. code-block:: php-symfony
 
-    $statusCode = $response->getStatusCode();
-    // $statusCode = 200
-    $contentType = $response->getHeaders()['content-type'][0];
-    // $contentType = 'application/json'
-    $content = $response->getContent();
-    // $content = '{"id":521583, "name":"symfony-docs", ...}'
-    $content = $response->toArray();
-    // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
+        use Symfony\Component\HttpClient\HttpClientInterface;
 
-Performance
------------
+        class SymfonyDocs
+        {
+            private $client;
 
-The component is built for maximum HTTP performance. By design, it is compatible
-with HTTP/2 and with doing concurrent asynchronous streamed and multiplexed
-requests/responses. Even when doing regular synchronous calls, this design
-allows keeping connections to remote hosts open between requests, improving
-performance by saving repetitive DNS resolution, SSL negotiation, etc.
-To leverage all these design benefits, the cURL extension is needed.
+            public function __construct(HttpClientInterface $client)
+            {
+                $this->client = $client;
+            }
 
-Enabling cURL Support
-~~~~~~~~~~~~~~~~~~~~~
+            public function fetchGitHubInformation(): array
+            {
+                $response = $this->client->request(
+                    'GET',
+                    'https://api.github.com/repos/symfony/symfony-docs'
+                );
 
-This component supports both the native PHP streams and cURL to make the HTTP
-requests. Although both are interchangeable and provide the same features,
-including concurrent requests, HTTP/2 is only supported when using cURL.
+                $statusCode = $response->getStatusCode();
+                // $statusCode = 200
+                $contentType = $response->getHeaders()['content-type'][0];
+                // $contentType = 'application/json'
+                $content = $response->getContent();
+                // $content = '{"id":521583, "name":"symfony-docs", ...}'
+                $content = $response->toArray();
+                // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
 
-``HttpClient::create()`` selects the cURL transport if the `cURL PHP extension`_
-is enabled and falls back to PHP streams otherwise. If you prefer to select
-the transport explicitly, use the following classes to create the client::
+                return $content;
+            }
+        }
 
-    use Symfony\Component\HttpClient\CurlHttpClient;
-    use Symfony\Component\HttpClient\NativeHttpClient;
+    .. code-block:: php-standalone
 
-    // uses native PHP streams
-    $client = new NativeHttpClient();
+        use Symfony\Component\HttpClient\HttpClient;
 
-    // uses the cURL PHP extension
-    $client = new CurlHttpClient();
+        $client = HttpClient::create();
+        $response = $client->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
 
-When using this component in a full-stack Symfony application, this behavior is
-not configurable and cURL will be used automatically if the cURL PHP extension
-is installed and enabled. Otherwise, the native PHP streams will be used.
+        $statusCode = $response->getStatusCode();
+        // $statusCode = 200
+        $contentType = $response->getHeaders()['content-type'][0];
+        // $contentType = 'application/json'
+        $content = $response->getContent();
+        // $content = '{"id":521583, "name":"symfony-docs", ...}'
+        $content = $response->toArray();
+        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
 
-HTTP/2 Support
+In the Symfony framework, you have to enable the HTTP client integration in
+order for the ``HttpClientInterface`` to be :doc:`autowired </service_container/autowiring>`
+automatically:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config http-client="true"/>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => true,
+        ]);
+
+Configuration
+-------------
+
+The HTTP client contains many options you might need to take full control of
+the way the request is performed, including DNS pre-resolution, SSL parameters,
+public key pinning, etc. They can be defined globally in the configuration (to
+apply it to all requests) and to each request (which overrides any global
+authentication)
+
+You can configure the global options using the ``default_options`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                default_options:
+                    max_redirects: 7
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:default-options max-redirects="7"/>
+                </framework-http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'default_options' => [
+                    'max_redirects' => 7,
+                ],
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create([
+            'default_options' => [
+                'max_redirects' => 7,
+            ],
+        ]);
+
+Some options are described in this guide:
+
+* `Authentication`_
+* `Query String Parameters`_
+* `Headers`_
+* `Redirects`_
+* `HTTP Proxies`_
+
+Check out the full :ref:`http_client config reference <reference-http-client>`
+to learn about all the options.
+
+The HTTP client also has one configuration option called
+``max_host_connections``, this option can not be overridden by a request:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                max_host_connections: 10
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client max-host-connections="10">
+                    <!-- ... -->
+                </framework-http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'max_host_connections' => 10,
+                // ...
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create([
+            'max_host_connections' => 10,
+            // ...
+        ]);
+
+Scoping Client
 ~~~~~~~~~~~~~~
 
-When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.36
-is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
-the ``http_version`` option::
+It's common that some of the HTTP client options depend on the URL of the
+request (e.g. you must set some headers when making requests to GitHub API but
+not for other hosts). If that's your case, the component provides scoped
+clients (using :class:`Symfony\\Component\\HttpClient\\ScopingHttpClient`) to
+autoconfigure the HTTP client based on the requested URL:
 
-    $client = HttpClient::create(['http_version' => '2.0']);
+.. configuration-block::
 
-Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61 is used with
-PHP >= 7.2.17 / 7.3.4: pushed responses are put into a temporary cache and are
-used when a subsequent request is triggered for the corresponding URLs.
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    # only requests matching scope will use these options
+                    github:
+                        scope: 'https://api\.github\.com'
+                        headers:
+                            Accept: 'application/vnd.github.v3+json'
+                            Authorization: 'token %env(GITHUB_API_TOKEN)%'
+                        # ...
+
+                    # using base_uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
+                    # will default to these options
+                    github:
+                        base_uri: 'https://api.github.com'
+                        headers:
+                            Accept: 'application/vnd.github.v3+json'
+                            Authorization: 'token %env(GITHUB_API_TOKEN)%'
+                        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <!-- only requests matching scope will use these options -->
+                    <framework:scoped-client name="github"
+                        scope="https://api\.github\.com"
+                    >
+                        <framework:header name="Accept">application/vnd.github.v3+json</framework:header>
+                        <framework:header name="Authorization">token %env(GITHUB_API_TOKEN)%</framework:header>
+                    </framework:scoped-client>
+
+                    <!-- using base-uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
+                         will default to these options -->
+                    <framework:scoped-client name="github"
+                        base-uri="https://api.github.com"
+                    >
+                        <framework:header name="Accept">application/vnd.github.v3+json</framework:header>
+                        <framework:header name="Authorization">token %env(GITHUB_API_TOKEN)%</framework:header>
+                    </framework:scoped-client>
+                </framework:http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'scoped_clients' => [
+                    // only requests matching scope will use these options
+                    'github' => [
+                        'scope' => 'https://api\.github\.com',
+                        'headers' => [
+                            'Accept' => 'application/vnd.github.v3+json',
+                            'Authorization' => 'token %env(GITHUB_API_TOKEN)%',
+                        ],
+                        // ...
+                    ],
+
+                    // using base_url, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
+                    // will default to these options
+                    'github' => [
+                        'base_uri' => 'https://api.github.com',
+                        'headers' => [
+                            'Accept' => 'application/vnd.github.v3+json',
+                            'Authorization' => 'token %env(GITHUB_API_TOKEN)%',
+                        ],
+                        // ...
+                    ],
+                ],
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpClient\HttpClient;
+        use Symfony\Component\HttpClient\ScopingHttpClient;
+
+        $client = HttpClient::create();
+        $client = new ScopingHttpClient($client, [
+            // the options defined as values apply only to the URLs matching
+            // the regular expressions defined as keys
+            'https://api\.github\.com/' => [
+                'headers' => [
+                    'Accept' => 'application/vnd.github.v3+json',
+                    'Authorization' => 'token '.$githubToken,
+                ],
+            ],
+            // ...
+        ]);
+
+        // relative URLs will use the 2nd argument as base URI and use the options of the 3rd argument
+        $client = ScopingHttpClient::forBaseUri($client, 'https://api.github.com/', [
+            'headers' => [
+                'Accept' => 'application/vnd.github.v3+json',
+                'Authorization' => 'token '.$githubToken,
+            ],
+        ]);
+
+You can define several scopes, so that each set of options is added only if a
+requested URL matches one of the regular expressions set by the ``scope`` option.
+
+If you use scoped clients in the Symfony framework, you must use any of the
+methods defined by Symfony to :ref:`choose a specific service <services-wire-specific-service>`.
+Each client has a unique service named after its configuration.
+
+Each scoped client also defines a corresponding named autowiring alias.
+If you use for example
+``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
+as the type and name of an argument, autowiring will inject the ``my_api.client``
+service into your autowired classes.
 
 Making Requests
 ---------------
 
-The client created with the ``HttpClient`` class provides a single ``request()``
-method to perform all kinds of HTTP requests::
+The HTTP client provides a single ``request()`` method to perform all kinds of
+HTTP requests::
 
     $response = $client->request('GET', 'https://...');
     $response = $client->request('POST', 'https://...');
     $response = $client->request('PUT', 'https://...');
     // ...
+
+    // you can add request options (or override global ones) using the 3rd argument
+    $response = $client->request('GET', 'https://...', [
+        'headers' => [
+            'Accept' => 'application/json',
+        ],
+    ]);
 
 Responses are always asynchronous, so that the call to the method returns
 immediately instead of waiting to receive the response::
@@ -125,24 +406,96 @@ Authentication
 ~~~~~~~~~~~~~~
 
 The HTTP client supports different authentication mechanisms. They can be
-defined globally when creating the client (to apply it to all requests) and to
-each request (which overrides any global authentication)::
+defined globally in the configuration (to apply it to all requests) and to
+each request (which overrides any global authentication):
 
-    // Use the same authentication for all requests to https://example.com/
-    $client = HttpClient::createForBaseUri('https://example.com/', [
-        // HTTP Basic authentication (there are multiple ways of configuring it)
-        'auth_basic' => ['the-username'],
-        'auth_basic' => ['the-username', 'the-password'],
-        'auth_basic' => 'the-username:the-password',
+.. configuration-block::
 
-        // HTTP Bearer authentication (also called token authentication)
-        'auth_bearer' => 'the-bearer-token',
+    .. code-block:: yaml
 
-        // Microsoft NTLM authentication (there are multiple ways of configuring it)
-        'auth_ntlm' => ['the-username'],
-        'auth_ntlm' => ['the-username', 'the-password'],
-        'auth_ntlm' => 'the-username:the-password',
-    ]);
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    example_api:
+                        base_uri: 'https://example.com/'
+
+                        # HTTP Basic authentication
+                        auth_basic: 'the-username:the-password'
+
+                        # HTTP Bearer authentication (also called token authentication)
+                        auth_bearer: the-bearer-token
+
+                        # Microsoft NTLM authentication
+                        auth_ntlm: 'the-username:the-password'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <!-- Available authentication options:
+                         auth-basic: HTTP Basic authentication
+                         auth-bearer: HTTP Bearer authentication (also called token authentication)
+                         auth-ntlm: Microsoft NTLM authentication -->
+                    <framework:scoped-client name="example_api"
+                        base-uri="https://example.com/"
+                        auth-basic="the-username:the-password"
+                        auth-bearer="the-bearer-token"
+                        auth-ntlm="the-username:the-password"
+                    />
+                </framework-http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'scoped_clients' => [
+                    'example_api' => [
+                        'base_uri' => 'https://example.com/',
+
+                        // HTTP Basic authentication
+                        'auth_basic' => 'the-username:the-password',
+
+                        // HTTP Bearer authentication (also called token authentication)
+                        'auth_bearer' => 'the-bearer-token',
+
+                        // Microsoft NTLM authentication
+                        'auth_ntlm' => 'the-username:the-password',
+                    ],
+                ],
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::createForBaseUri('https://example.com/', [
+            // HTTP Basic authentication (there are multiple ways of configuring it)
+            'auth_basic' => ['the-username'],
+            'auth_basic' => ['the-username', 'the-password'],
+            'auth_basic' => 'the-username:the-password',
+
+            // HTTP Bearer authentication (also called token authentication)
+            'auth_bearer' => 'the-bearer-token',
+
+            // Microsoft NTLM authentication (there are multiple ways of configuring it)
+            'auth_ntlm' => ['the-username'],
+            'auth_ntlm' => ['the-username', 'the-password'],
+            'auth_ntlm' => 'the-username:the-password',
+        ]);
+
+.. code-block:: php
 
     $response = $client->request('GET', 'https://...', [
         // use a different HTTP Basic authentication only for this request
@@ -180,12 +533,57 @@ Headers
 ~~~~~~~
 
 Use the ``headers`` option to define both the default headers added to all
-requests and the specific headers for each request::
+requests and the specific headers for each request:
 
-    // this header is added to all requests made by this client
-    $client = HttpClient::create(['headers' => [
-        'User-Agent' => 'My Fancy App',
-    ]]);
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                headers:
+                    'User-Agent': 'My Fancy App'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:header name="User-Agent">My Fancy App</framework:header>
+                </framework-http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'headers' => [
+                    'User-Agent' => 'My Fancy App',
+                ],
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        // this header is added to all requests made by this client
+        $client = HttpClient::create([
+            'headers' => [
+                'User-Agent' => 'My Fancy App',
+            ],
+        ]);
+
+.. code-block:: php
 
     // this header is only included in this request and overrides the value
     // of the same header if defined globally by the HTTP client
@@ -318,12 +716,88 @@ called when new data is uploaded or downloaded and at least once per second::
 Any exceptions thrown from the callback will be wrapped in an instance of
 ``TransportExceptionInterface`` and will abort the request.
 
-Advanced Options
-~~~~~~~~~~~~~~~~
+Performance
+-----------
 
-The :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface` defines all the
-options you might need to take full control of the way the request is performed,
-including DNS pre-resolution, SSL parameters, public key pinning, etc.
+The component is built for maximum HTTP performance. By design, it is compatible
+with HTTP/2 and with doing concurrent asynchronous streamed and multiplexed
+requests/responses. Even when doing regular synchronous calls, this design
+allows keeping connections to remote hosts open between requests, improving
+performance by saving repetitive DNS resolution, SSL negotiation, etc.
+To leverage all these design benefits, the cURL extension is needed.
+
+Enabling cURL Support
+~~~~~~~~~~~~~~~~~~~~~
+
+This component supports both the native PHP streams and cURL to make the HTTP
+requests. Although both are interchangeable and provide the same features,
+including concurrent requests, HTTP/2 is only supported when using cURL.
+
+``HttpClient::create()`` selects the cURL transport if the `cURL PHP extension`_
+is enabled and falls back to PHP streams otherwise. If you prefer to select
+the transport explicitly, use the following classes to create the client::
+
+    use Symfony\Component\HttpClient\CurlHttpClient;
+    use Symfony\Component\HttpClient\NativeHttpClient;
+
+    // uses native PHP streams
+    $client = new NativeHttpClient();
+
+    // uses the cURL PHP extension
+    $client = new CurlHttpClient();
+
+When using this component in a full-stack Symfony application, this behavior is
+not configurable and cURL will be used automatically if the cURL PHP extension
+is installed and enabled. Otherwise, the native PHP streams will be used.
+
+HTTP/2 Support
+~~~~~~~~~~~~~~
+
+When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.36
+is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
+the ``http_version`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                http_version: '2.0'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client http-version="2.0"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'http_version' => '2.0',
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create(['http_version' => '2.0']);
+
+Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61 is used with
+PHP >= 7.2.17 / 7.3.4: pushed responses are put into a temporary cache and are
+used when a subsequent request is triggered for the corresponding URLs.
 
 Processing Responses
 --------------------
@@ -496,12 +970,7 @@ Thanks to responses being lazy, requests are always managed concurrently.
 On a fast enough network, the following code makes 379 requests in less than
 half a second when cURL is used::
 
-    use Symfony\Component\HttpClient\CurlHttpClient;
-
-    $client = new CurlHttpClient();
-
     $responses = [];
-
     for ($i = 0; $i < 379; ++$i) {
         $uri = "https://http2.akamai.com/demo/tile-$i.png";
         $responses[] = $client->request('GET', $uri);
@@ -605,6 +1074,9 @@ To catch errors, you need to wrap calls to ``$client->request()`` but also calls
 to any methods of the returned responses. This is because responses are lazy, so
 that network errors can happen when calling e.g. ``getStatusCode()`` too::
 
+    use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+
+    // ...
     try {
         // both lines can potentially throw
         $response = $client->request(...);
@@ -662,64 +1134,6 @@ installed in your application::
     $response = $client->request('GET', 'https://example.com/cacheable-resource');
 
 ``CachingHttpClient`` accepts a third argument to set the options of the ``HttpCache``.
-
-Scoping Client
---------------
-
-It's common that some of the HTTP client options depend on the URL of the
-request (e.g. you must set some headers when making requests to GitHub API but
-not for other hosts). If that's your case, this component provides a special
-HTTP client via the :class:`Symfony\\Component\\HttpClient\\ScopingHttpClient`
-class to autoconfigure the HTTP client based on the requested URL::
-
-    use Symfony\Component\HttpClient\HttpClient;
-    use Symfony\Component\HttpClient\ScopingHttpClient;
-
-    $client = HttpClient::create();
-    $client = new ScopingHttpClient($client, [
-        // the options defined as values apply only to the URLs matching
-        // the regular expressions defined as keys
-        'https://api\.github\.com/' => [
-            'headers' => [
-                'Accept' => 'application/vnd.github.v3+json',
-                'Authorization' => 'token '.$githubToken,
-            ],
-        ],
-        // ...
-    ]);
-
-You can define several scopes, so that each set of options is added only if a
-requested URL matches one of the regular expressions provided as keys.
-
-If the request URL is relative (because you use the ``base_uri`` option), the
-scoping HTTP client can't make a match. That's why you can define a third
-optional argument in its constructor which will be considered the default
-regular expression applied to relative URLs::
-
-    // ...
-
-    $client = new ScopingHttpClient($client,
-        [
-            'https://api\.github\.com/' => [
-                'base_uri' => 'https://api.github.com/',
-                // ...
-            ],
-        ],
-        // this is the index in the previous array that defines
-        // the base URI that should be used to resolve relative URLs
-        'https://api\.github\.com/'
-    );
-
-The above example can be reduced to a simpler call::
-
-    // ...
-
-    $client = ScopingHttpClient::forBaseUri($client, 'https://api.github.com/', [
-        // ...
-    ]);
-
-This way, the provided options will be used only if the requested URL is relative
-or if it matches the ``https://api.github.com/`` base URI.
 
 Interoperability
 ----------------
@@ -924,74 +1338,6 @@ This allows using them where native PHP streams are needed::
 
     // later on if you need to, you can access the response from the stream
     $response = stream_get_meta_data($streamResource)['wrapper_data']->getResponse();
-
-Symfony Framework Integration
------------------------------
-
-When using this component in a full-stack Symfony application, you can configure
-multiple clients with different configurations and inject them into your services.
-
-Configuration
-~~~~~~~~~~~~~
-
-Use the ``framework.http_client`` key to configure the default HTTP client used
-in the application. Check out the full
-:ref:`http_client config reference <reference-http-client>` to learn about all
-the available config options:
-
-.. code-block:: yaml
-
-    # config/packages/framework.yaml
-    framework:
-        # ...
-        http_client:
-            max_host_connections: 10
-            default_options:
-                max_redirects: 7
-
-If you want to define multiple HTTP clients, use this other expanded configuration:
-
-.. code-block:: yaml
-
-    # config/packages/framework.yaml
-    framework:
-        # ...
-        http_client:
-            scoped_clients:
-                crawler.client:
-                    headers: { 'X-Powered-By': 'ACME App' }
-                    http_version: '1.0'
-                some_api.client:
-                    max_redirects: 5
-
-Injecting the HTTP Client into Services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If your application only needs one HTTP client, you can inject the default one
-into any services by type-hinting a constructor argument with the
-:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`::
-
-    use Symfony\Contracts\HttpClient\HttpClientInterface;
-
-    class SomeService
-    {
-        private $client;
-
-        public function __construct(HttpClientInterface $client)
-        {
-            $this->client = $client;
-        }
-    }
-
-If you have several clients, you must use any of the methods defined by Symfony
-to :ref:`choose a specific service <services-wire-specific-service>`. Each client
-has a unique service named after its configuration.
-
-Each scoped client also defines a corresponding named autowiring alias.
-If you use for example
-``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
-as the type and name of an argument, autowiring will inject the ``my_api.client``
-service into your autowired classes.
 
 Testing HTTP Clients and Responses
 ----------------------------------

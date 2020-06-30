@@ -42,6 +42,7 @@ Topics
     forms
     frontend
     http_cache
+    http_client
     logging
     mailer
     mercure

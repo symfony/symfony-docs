@@ -13,7 +13,7 @@ The BrowserKit Component
     In Symfony versions prior to 4.3, the BrowserKit component could only make
     internal requests to your application. Starting from Symfony 4.3, this
     component can also :ref:`make HTTP requests to any public site <component-browserkit-external-requests>`
-    when using it in combination with the :doc:`HttpClient component </components/http_client>`.
+    when using it in combination with the :doc:`HttpClient component </http_client>`.
 
 Installation
 ------------
@@ -295,7 +295,7 @@ So far, all the examples in this article have assumed that you are making
 internal requests to your own application. However, you can run the exact same
 examples when making HTTP requests to external web sites and applications.
 
-First, install and configure the :doc:`HttpClient component </components/http_client>`.
+First, install and configure the :doc:`HttpClient component </http_client>`.
 Then, use the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` to create
 the client that will make the external HTTP requests::
 
