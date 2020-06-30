@@ -65,10 +65,10 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/website-skeleton:v4.4.99 my_project_name
+    $ composer create-project symfony/website-skeleton:"^4.4" my_project_name
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:v4.4.99 my_project_name
+    $ composer create-project symfony/skeleton:"^4.4" my_project_name
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_name/`` directory, download some dependencies
