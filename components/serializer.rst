@@ -830,8 +830,7 @@ always as a collection.
 .. tip::
 
     XML comments are ignored by default when decoding contents, but this
-    behavior can be changed with the optional ``$decoderIgnoredNodeTypes`` argument of
-    the ``XmlEncoder`` class constructor.
+    behavior can be changed with the optional context key ``XmlEncoder::DECODER_IGNORED_NODE_TYPES``.
 
     Data with ``#comment`` keys are encoded to XML comments by default. This can be
     changed with the optional ``$encoderIgnoredNodeTypes`` argument of the
@@ -1184,9 +1183,7 @@ Use the special ``#`` key to define the data of a node::
     // is encoded as follows:
     // <?xml version="1.0"?>
     // <response>
-    //     <foo bar="value">
-    //        baz
-    //     </foo>
+    //     <foo bar="value">baz</foo>
     // </response>
 
 Context
