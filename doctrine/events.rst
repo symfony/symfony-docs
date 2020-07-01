@@ -260,21 +260,23 @@ with the ``doctrine.orm.entity_listener`` tag:
             App\EventListener\UserChangedNotifier:
                 tags:
                     -
-                        # these are the basic options that define the entity listener
+                        # these are the options required to define the entity listener
                         name: 'doctrine.orm.entity_listener'
                         event: 'postUpdate'
                         entity: 'App\Entity\User'
 
-                        # set the 'lazy' option to TRUE to only instantiate listeners when they are used
-                        lazy: true
+                        # these are other options that you may define if needed
 
-                        # you can also associate an entity listener to a specific entity manager
-                        entity_manager: 'custom'
+                        # set the 'lazy' option to TRUE to only instantiate listeners when they are used
+                        # lazy: true
+
+                        # set the 'entity_manager' option if the listener is not associated to the default manager
+                        # entity_manager: 'custom'
 
                         # by default, Symfony looks for a method called after the event (e.g. postUpdate())
                         # if it doesn't exist, it tries to execute the '__invoke()' method, but you can
                         # configure a custom method name with the 'method' option
-                        method: 'checkUserChanges'
+                        # method: 'checkUserChanges'
 
     .. code-block:: xml
 
@@ -287,11 +289,15 @@ with the ``doctrine.orm.entity_listener`` tag:
 
                 <service id="App\EventListener\UserChangedNotifier">
                     <!--
-                        * 'event' and 'entity' are the basic options that define the entity listener
-                        * 'lazy': if TRUE, listeners are only instantiated when they are used
-                        * 'entity_manager': define it if the listener is not associated to the
-                        *                   default entity manager
-                        * 'method': by default, Symfony looks for a method called after the event (e.g. postUpdate())
+                        * These are the options required to define the entity listener:
+                        *   * name
+                        *   * event
+                        *   * entity
+                        *
+                        * These are other options that you may define if needed:
+                        *   * lazy: if TRUE, listeners are only instantiated when they are used
+                        *   * entity_manager: define it if the listener is not associated to the default manager
+                        *   * method: by default, Symfony looks for a method called after the event (e.g. postUpdate())
                         *           if it doesn't exist, it tries to execute the '__invoke()' method, but
                         *           you can configure a custom method name with the 'method' option
                     -->
@@ -313,20 +319,22 @@ with the ``doctrine.orm.entity_listener`` tag:
 
         $container->autowire(UserChangedNotifier::class)
             ->addTag('doctrine.orm.entity_listener', [
-                // these are the basic options that define the entity listener
+                // These are the options required to define the entity listener:
                 'event' => 'postUpdate',
                 'entity' => User::class,
 
-                // set the 'lazy' option to TRUE to only instantiate listeners when they are used
-                'lazy' => true,
+                // These are other options that you may define if needed:
 
-                // you can also associate an entity listener to a specific entity manager
-                'entity_manager' => 'custom',
+                // set the 'lazy' option to TRUE to only instantiate listeners when they are used
+                // 'lazy' => true,
+
+                // set the 'entity_manager' option if the listener is not associated to the default manager
+                // 'entity_manager' => 'custom',
 
                 // by default, Symfony looks for a method called after the event (e.g. postUpdate())
                 // if it doesn't exist, it tries to execute the '__invoke()' method, but you can
                 // configure a custom method name with the 'method' option
-                'method' => 'checkUserChanges',
+                // 'method' => 'checkUserChanges',
             ])
         ;
 
