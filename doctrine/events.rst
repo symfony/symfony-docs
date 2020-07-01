@@ -239,7 +239,7 @@ define a listener for the ``postUpdate`` Doctrine event::
     {
         // the entity listener methods receive two arguments:
         // the entity instance and the lifecycle event
-        public function postUpdate(User $user, LifecycleEventArgs $event)
+        public function checkUserChanges(User $user, LifecycleEventArgs $event)
         {
             // ... do something to notify the changes
         }
