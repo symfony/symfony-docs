@@ -220,9 +220,9 @@ Access the value of the first node of the current selection::
     // avoid the exception passing an argument that text() returns when node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
-    // pass TRUE as the second argument of text() to remove all extra white spaces, including
+    // pass false as the second argument of text() to not remove all extra white spaces, including
     // the internal ones (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
-    $crawler->filterXPath('//body/p')->text('Default text content', true);
+    $crawler->filterXPath('//body/p')->text('Default text content', false);
 
 Access the attribute value of the first node of the current selection::
 
