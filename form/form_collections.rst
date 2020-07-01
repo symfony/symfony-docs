@@ -227,8 +227,6 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description');
-
         $builder->add('tags', CollectionType::class, [
             'entry_type' => TagType::class,
             'entry_options' => ['label' => false],
