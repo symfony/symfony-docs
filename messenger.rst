@@ -255,7 +255,7 @@ transport and its handler(s) will *not* be called immediately. Any messages not
 matched under ``routing`` will still be handled immediately.
 
 You can also route classes by their parent class or interface. Or send messages
-to multiple transport:
+to multiple transports:
 
 .. configuration-block::
 
