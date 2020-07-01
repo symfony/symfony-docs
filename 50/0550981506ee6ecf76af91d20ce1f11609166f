@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-30T07:57:14Z
+
+@francisbesset thanks for this. However ... this is a bit tricky. The config example is only an optional config option ("if you want, use a custom method name") so it's not directly related to the example above. But I can see why that can be confusing. Let me think of an alternative solution for this.
+
+---------------------------------------------------------------------------
+
+by francisbesset at 2020-06-30T08:22:30Z
+
+Thank you for your answer.
+
+I understand, however the PHP code and the configuration are in same chapter section.
+If I copy paste two parts, the method name mismatch.
+
+I trust you to find the best solution. :pray:
