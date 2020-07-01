@@ -213,7 +213,7 @@ Now you can use CSS selectors with the crawler. To assert that the phrase
     $this->assertSelectorTextContains('html h1.title', 'Hello World');
 
 This assertion checks if the first element matching the CSS selector contains
-the given text. This asserts calls ``$crawler->filter('html h1.title')``
+the given text. This assert calls ``$crawler->filter('html h1.title')``
 internally, which allows you to use CSS selectors to filter any HTML element in
 the page and check for its existence, attributes, text, etc.
 
