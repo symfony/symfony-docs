@@ -425,16 +425,16 @@ call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
 
     class MyTest extends TestCase
     {
-        // when using the SetUpTearDownTrait, methods like doSetup() can
+        // when using the SetUpTearDownTrait, methods like doSetUp() can
         // be defined with and without the 'void' return type, as you wish
         use SetUpTearDownTrait;
 
-        private function doSetup()
+        private function doSetUp()
         {
             // ...
         }
 
-        protected function doSetup(): void
+        protected function doSetUp(): void
         {
             // ...
         }
