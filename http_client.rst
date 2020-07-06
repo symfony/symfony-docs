@@ -19,8 +19,10 @@ supports synchronous and asynchronous operations. You can install it with:
 Basic Usage
 -----------
 
-Use the :class:`Symfony\\Component\\HttpClient\\HttpClient` class to create the
-low-level HTTP client that makes requests, like the following ``GET`` request:
+Use the :class:`Symfony\\Component\\HttpClient\\HttpClient` class to make
+requests. In the Symfony framework, this class is available as the
+``http_client`` service. This service will be :doc:`autowired </service_container/autowiring>`
+automatically when type-hinting for :class:`Symfony\\Component\\HttpClient\\HttpClientInterface`:
 
 .. configuration-block::
 
@@ -73,38 +75,11 @@ low-level HTTP client that makes requests, like the following ``GET`` request:
         $content = $response->toArray();
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
 
-In the Symfony framework, you have to enable the HTTP client integration in
-order for the ``HttpClientInterface`` to be :doc:`autowired </service_container/autowiring>`
-automatically:
+.. tip::
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            http_client: true
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config http-client="true"/>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => true,
-        ]);
+    The HTTP client is interopable with many common HTTP client abstractions in
+    PHP. You can also use any of these abstractions to profit from autowirings.
+    See `Interoperability`_ for more information.
 
 Configuration
 -------------
@@ -1197,17 +1172,42 @@ To use it, you need the ``psr/http-client`` package and a `PSR-17`_ implementati
     # any already installed implementations from common vendors:
     # composer require php-http/discovery
 
-Now you can make HTTP requests with the PSR-18 client as follows::
+Now you can make HTTP requests with the PSR-18 client as follows:
 
-    use Symfony\Component\HttpClient\Psr18Client;
+.. configuration-block::
 
-    $client = new Psr18Client();
+    .. code-block:: php-symfony
 
-    $url = 'https://symfony.com/versions.json';
-    $request = $client->createRequest('GET', $url);
-    $response = $client->sendRequest($request);
+        use Psr\Http\Client\ClientInterface;
 
-    $content = json_decode($response->getBody()->getContents(), true);
+        class Symfony
+        {
+            private $client;
+
+            public function __construct(ClientInterface $client)
+            {
+                $this->client = $client;
+            }
+
+            public function getAvailableVersions(): array
+            {
+                $request = $this->client->createRequest('GET', 'https://symfony.com/versions.json');
+                $response = $this->client->sendRequest($request);
+
+                return json_decode($response->getBody()->getContents(), true);
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpClient\Psr18Client;
+
+        $client = new Psr18Client();
+
+        $request = $client->createRequest('GET', 'https://symfony.com/versions.json');
+        $response = $client->sendRequest($request);
+
+        $content = json_decode($response->getBody()->getContents(), true);
 
 HTTPlug
 ~~~~~~~
