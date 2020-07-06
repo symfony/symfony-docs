@@ -185,6 +185,22 @@ you can import them with ``require()`` function:
         }
     }
 
+Using Vue inside Twig templates
+-------------------------------
+
+Twig templates can instantiate a Vue.js app in the same way as any other
+JavaScript code. However, given that both Twig and Vue.js use the same delimiters
+for variables, you should configure the ``delimiters`` Vue.js option to change
+the default variable delimiters.
+
+If you set for example ``delimiters: ['${', '}$']``, then you can use the
+following in your Twig templates:
+
+ .. code-block:: twig
+
+    {{ twig_variable }}   {# renders a Twig variable #}
+    ${ vuejs_variable }$  {# renders a Vue.js variable #}
+
 .. _`Vue.js`: https://vuejs.org/
 .. _`vue-loader options`: https://vue-loader.vuejs.org/options.html
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
