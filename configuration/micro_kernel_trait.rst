@@ -54,9 +54,7 @@ Next, create an ``index.php`` file that defines the kernel class and executes it
 
         protected function configureRoutes(RoutingConfigurator $routes)
         {
-            // kernel is a service that points to this class
-            // optional 3rd argument is the route name
-            $routes->add('/random/{limit}', 'kernel::randomNumber');
+            $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
         }
 
         public function randomNumber($limit)
@@ -151,7 +149,7 @@ hold the kernel. Now it looks like this::
             ];
 
             if ($this->getEnvironment() == 'dev') {
-                $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+                $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             }
 
             return $bundles;
@@ -160,6 +158,7 @@ hold the kernel. Now it looks like this::
         protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
         {
             $loader->load(__DIR__.'/../config/framework.yaml');
+            $loader->load(__DIR__.'/../config/services.yaml');
 
             // configure WebProfilerBundle only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
@@ -200,6 +199,61 @@ Before continuing, run this command to add support for the new dependencies:
 .. code-block:: terminal
 
     $ composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle doctrine/annotations
+
+You need add the following service configuration, which is the default config for a new project:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # default configuration for services in *this* file
+            _defaults:
+                autowire: true      # Automatically injects dependencies in your services.
+                autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+            # makes classes in src/ available to be used as services
+            # this creates a service per class whose id is the fully-qualified class name
+            App\:
+                resource: '../src/*'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- Default configuration for services in *this* file -->
+                    <defaults autowire="true" autoconfigure="true"/>
+
+                    <!-- makes classes in src/ available to be used as services -->
+                    <!-- this creates a service per class whose id is the fully-qualified class name -->
+                    <prototype namespace="App\" resource="../src/*"/>
+                </services>
+            </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $configurator) {
+            // default configuration for services in *this* file
+            $services = $configurator->services()
+                ->defaults()
+                    ->autowire()      // Automatically injects dependencies in your services.
+                    ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
+            ;
+
+            // makes classes in src/ available to be used as services
+            // this creates a service per class whose id is the fully-qualified class name
+            $services->load('App\\', '../src/*');
+        };
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:
