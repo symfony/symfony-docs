@@ -24,8 +24,7 @@ Next, create an ``index.php`` file that defines the kernel class and executes it
 
     // index.php
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-    use Symfony\Component\Config\Loader\LoaderInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -37,27 +36,27 @@ Next, create an ``index.php`` file that defines the kernel class and executes it
     {
         use MicroKernelTrait;
 
-        public function registerBundles()
+        public function registerBundles(): array
         {
             return [
-                new Symfony\Bundle\FrameworkBundle\FrameworkBundle()
+                new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             ];
         }
 
-        protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
+        protected function configureContainer(ContainerConfigurator $c): void
         {
             // PHP equivalent of config/packages/framework.yaml
-            $c->loadFromExtension('framework', [
+            $c->extension('framework', [
                 'secret' => 'S0ME_SECRET'
             ]);
         }
 
-        protected function configureRoutes(RoutingConfigurator $routes)
+        protected function configureRoutes(RoutingConfigurator $routes): void
         {
             $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
         }
 
-        public function randomNumber($limit)
+        public function randomNumber(int $limit): JsonResponse
         {
             return new JsonResponse([
                 'number' => random_int(0, $limit),
@@ -89,9 +88,9 @@ that define your bundles, your services and your routes:
 **registerBundles()**
     This is the same ``registerBundles()`` that you see in a normal kernel.
 
-**configureContainer(ContainerBuilder $c, LoaderInterface $loader)**
+**configureContainer(ContainerConfigurator $c)**
     This method builds and configures the container. In practice, you will use
-    ``loadFromExtension`` to configure different bundles (this is the equivalent
+    ``extension()`` to configure different bundles (this is the equivalent
     of what you see in a normal ``config/packages/*`` file). You can also register
     services directly in PHP or load external configuration files (shown below).
 
@@ -132,8 +131,7 @@ hold the kernel. Now it looks like this::
     namespace App;
 
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-    use Symfony\Component\Config\Loader\LoaderInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
     use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
@@ -141,7 +139,7 @@ hold the kernel. Now it looks like this::
     {
         use MicroKernelTrait;
 
-        public function registerBundles()
+        public function registerBundles(): array
         {
             $bundles = [
                 new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
@@ -155,21 +153,27 @@ hold the kernel. Now it looks like this::
             return $bundles;
         }
 
-        protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
+        protected function configureContainer(ContainerConfigurator $c): void
         {
-            $loader->load(__DIR__.'/../config/framework.yaml');
-            $loader->load(__DIR__.'/../config/services.yaml');
+            $c->import(__DIR__.'/../config/framework.yaml');
+
+            // register all classes in /src/ as service
+            $c->services()
+                ->load('App\\', __DIR__.'/*')
+                ->autowire()
+                ->autoconfigure()
+            ;
 
             // configure WebProfilerBundle only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
-                $c->loadFromExtension('web_profiler', [
+                $c->extension('web_profiler', [
                     'toolbar' => true,
                     'intercept_redirects' => false,
                 ]);
             }
         }
 
-        protected function configureRoutes(RoutingConfigurator $routes)
+        protected function configureRoutes(RoutingConfigurator $routes): void
         {
             // import the WebProfilerRoutes, only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
@@ -178,17 +182,17 @@ hold the kernel. Now it looks like this::
             }
 
             // load the annotation routes
-            $routes->import(__DIR__.'/../src/Controller/', 'annotation');
+            $routes->import(__DIR__.'/Controller/', 'annotation');
         }
 
         // optional, to use the standard Symfony cache directory
-        public function getCacheDir()
+        public function getCacheDir(): string
         {
             return __DIR__.'/../var/cache/'.$this->getEnvironment();
         }
 
         // optional, to use the standard Symfony logs directory
-        public function getLogDir()
+        public function getLogDir(): string
         {
             return __DIR__.'/../var/log';
         }
@@ -199,61 +203,6 @@ Before continuing, run this command to add support for the new dependencies:
 .. code-block:: terminal
 
     $ composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle doctrine/annotations
-
-You need add the following service configuration, which is the default config for a new project:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # default configuration for services in *this* file
-            _defaults:
-                autowire: true      # Automatically injects dependencies in your services.
-                autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
-            # makes classes in src/ available to be used as services
-            # this creates a service per class whose id is the fully-qualified class name
-            App\:
-                resource: '../src/*'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <services>
-                    <!-- Default configuration for services in *this* file -->
-                    <defaults autowire="true" autoconfigure="true"/>
-
-                    <!-- makes classes in src/ available to be used as services -->
-                    <!-- this creates a service per class whose id is the fully-qualified class name -->
-                    <prototype namespace="App\" resource="../src/*"/>
-                </services>
-            </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        return function(ContainerConfigurator $configurator) {
-            // default configuration for services in *this* file
-            $services = $configurator->services()
-                ->defaults()
-                    ->autowire()      // Automatically injects dependencies in your services.
-                    ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
-            ;
-
-            // makes classes in src/ available to be used as services
-            // this creates a service per class whose id is the fully-qualified class name
-            $services->load('App\\', '../src/*');
-        };
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:
@@ -299,6 +248,7 @@ has one file in it::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class MicroController extends AbstractController
@@ -306,7 +256,7 @@ has one file in it::
         /**
          * @Route("/random/{limit}")
          */
-        public function randomNumber($limit)
+        public function randomNumber(int $limit): Response
         {
             $number = random_int(0, $limit);
 
@@ -381,7 +331,6 @@ As before you can use the :doc:`Symfony Local Web Server
 
 .. code-block:: terminal
 
-    cd public/
     $ symfony server:start
 
 Then visit the page in your browser: http://localhost:8000/random/10
