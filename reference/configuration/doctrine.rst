@@ -154,6 +154,12 @@ The ``database_connection`` service always refers to the *default* connection,
 which is the first one defined or the one configured via the
 ``default_connection`` parameter.
 
+.. note::
+When using multiple connections an error like this might happen:  
+``The service "doctrine.migrations.dependency_factory" has a dependency on a non-existent service
+"doctrine.dbal.default_connection".``  
+See here for a fix https://github.com/symfony/symfony/issues/36486 
+
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
 service where ``[name]`` is the name of the connection. In a controller
 extending ``AbstractController``, you can access it directly using the
