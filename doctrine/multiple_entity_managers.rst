@@ -192,8 +192,8 @@ for each entity manager.
     the connection or entity manager, the default (i.e. ``default``) is used.
 
     If you use a different name than ``default`` for the default entity manager,
-    you will need to redefine the default entity manager in ``prod`` environment
-    configuration too:
+    you will need to redefine the default entity manager in the ``prod`` environment
+    configuration and in the Doctrine migrations configuration (if you use that):
 
     .. code-block:: yaml
 
@@ -203,6 +203,13 @@ for each entity manager.
                 default_entity_manager: 'your default entity manager name'
 
         # ...
+
+    .. code-block:: yaml
+
+        # config/packages/doctrine_migrations.yaml
+        doctrine_migrations:
+            # ...
+            em: 'your default entity manager name'
 
 When working with multiple connections to create your databases:
 
