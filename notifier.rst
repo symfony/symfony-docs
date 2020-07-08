@@ -31,10 +31,10 @@ by using transports.
 
 The notifier component supports the following channels:
 
-* `SMS <SMS Channel>`_ sends notifications to phones via SMS messages
-* `Chat <Chat Channel>`_ sends notifications to chat services like Slack
+* SMS sends notifications to phones via SMS messages
+* Chat sends notifications to chat services like Slack
   and Telegram;
-* `Email <Email Channel>`_ integrates the :doc:`Symfony Mailer </mailer>`;
+* Email integrates the :doc:`Symfony Mailer </mailer>`;
 * Browser uses :ref:`flash messages <flash-messages>`.
 
 .. tip::
