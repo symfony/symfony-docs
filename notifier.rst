@@ -31,17 +31,19 @@ by using transports.
 
 The notifier component supports the following channels:
 
-* `SMS <SMS Channel>`_ sends notifications to phones via SMS messages
-* `Chat <Chat Channel>`_ sends notifications to chat services like Slack
-  and Telegram;
-* `Email <Email Channel>`_ integrates the :doc:`Symfony Mailer </mailer>`;
-* Browser uses :ref:`flash messages <flash-messages>`.
+* :ref:`SMS channel <notifier-sms-channel>` sends notifications to phones via
+  SMS messages;
+* :ref:`Chat channel <notifier-chat-channel>` sends notifications to chat
+  services like Slack and Telegram;
+* :ref:`Email channel <notifier-email-channel>` integrates the :doc:`Symfony Mailer </mailer>`;
+* Browser channel uses :ref:`flash messages <flash-messages>`.
 
 .. tip::
 
     Use :doc:`secrets </configuration/secrets>` to securily store your
     API's tokens.
 
+.. _notifier-sms-channel:
 .. _notifier-texter-dsn:
 
 SMS Channel
@@ -116,6 +118,7 @@ configure the ``texter_transports``:
             ],
         ]);
 
+.. _notifier-chat-channel:
 .. _notifier-chatter-dsn:
 
 Chat Channel
@@ -188,6 +191,8 @@ Chatters are configured using the ``chatter_transports`` setting:
                 ],
             ],
         ]);
+
+.. _notifier-email-channel:
 
 Email Channel
 ~~~~~~~~~~~~~
@@ -294,7 +299,7 @@ transport:
                         %env(SLACK_DSN)% || %env(TELEGRAM_DSN)%
                     </framework:chatter-transport>
 
-                    <!-- Send notifications to the next scheduled transport 
+                    <!-- Send notifications to the next scheduled transport
                          calculated by round robin -->
                     <framework:chatter-transport name="slack"><![CDATA[
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
