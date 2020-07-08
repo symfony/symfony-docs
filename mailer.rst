@@ -21,10 +21,10 @@ Transport Setup
 ---------------
 
 Emails are delivered via a "transport". Out of the box, you can deliver emails
-over ``SMTP`` by configuring your ``.env`` file (the ``user``, ``pass`` and
-``port`` parameters are optional):
+over SMTP by configuring the DNS in your ``.env`` file (the ``user``,
+``pass`` and ``port`` parameters are optional):
 
-.. code-block:: bash
+.. code-block:: env
 
     # .env
     MAILER_DSN=smtp://user:pass@smtp.example.com:port
@@ -61,7 +61,7 @@ use SendGrid. First, install it:
 
 You'll now have a new line in your ``.env`` file that you can uncomment:
 
-.. code-block:: bash
+.. code-block:: env
 
     # .env
     MAILER_DSN=sendgrid://KEY@default
@@ -79,22 +79,85 @@ also have options that can be configured with query parameters at the end of the
 sending via ``http``, ``api`` or ``smtp``. Symfony chooses the best available
 transport, but you can force to use one:
 
-.. code-block:: bash
+.. code-block:: env
 
     # .env
     # force to use SMTP instead of HTTP (which is the default)
     MAILER_DSN=sendgrid+smtp://$SENDGRID_KEY@default
 
+This table shows the full list of available DNS formats for each third
+party provider:
+
+==================== ========================================== =========================================== ========================================
+ Provider             SMTP                                       HTTP                                        API
+==================== ========================================== =========================================== ========================================
+ Amazon SES           ses+smtp://ACCESS_KEY:SECRET_KEY@default   ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
+ Google Gmail         gmail+smtp://USERNAME:PASSWORD@default     n/a                                         n/a
+ Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default  mandrill+https://KEY@default                mandrill+api://KEY@default
+ Mailgun              mailgun+smtp://USERNAME:PASSWORD@default   mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
+ Postmark             postmark+smtp://ID:ID@default              n/a                                         postmark+api://KEY@default
+ Sendgrid             sendgrid+smtp://apikey:KEY@default         n/a                                         sendgrid+api://KEY@default
+==================== ========================================== =========================================== ========================================
+
+.. caution::
+
+    If your credentials contain special characters, you must URL-encode them.
+    For example, the DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be
+    configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
+
 .. tip::
 
-    Check the :ref:`DSN formats <mailer_dsn>` for all supported providers.
+    If you want to override the default host for a provider (to debug an issue using
+    a service like ``requestbin.com``), change ``default`` by your host:
+
+    .. code-block:: env
+
+        # .env
+        MAILER_DSN=mailgun+https://KEY:DOMAIN@example.com
+        MAILER_DSN=mailgun+https://KEY:DOMAIN@example.com:99
+
+    Note that the protocol is *always* HTTPs and cannot be changed.
+
+High Availability
+~~~~~~~~~~~~~~~~~
+
+Symfony's mailer supports `high availability`_ via a technique called "failover"
+to ensure that emails are sent even if one mailer server fails.
+
+A failover transport is configured with two or more transports and the
+``failover`` keyword:
+
+.. code-block:: env
+
+    MAILER_DSN="failover(postmark+api://ID@default sendgrid+smtp://KEY@default)"
+
+The mailer will start using the first transport. If the sending fails, the
+mailer won't retry it with the other transports, but it will switch to the next
+transport automatically for the following deliveries.
+
+Load Balancing
+~~~~~~~~~~~~~~
+
+Symfony's mailer supports `load balancing`_ via a technique called "round-robin"
+to distribute the mailing workload across multiple transports.
+
+A round-robin transport is configured with two or more transports and the
+``roundrobin`` keyword:
+
+.. code-block:: env
+
+    MAILER_DSN="roundrobin(postmark+api://ID@default sendgrid+smtp://KEY@default)"
+
+The mailer will start using the first transport and if it fails, it will retry
+the same delivery with the next transports until one of them succeeds (or until
+all of them fail).
 
 Creating & Sending Messages
 ---------------------------
 
-To send an email, autowire the mailer using
-:class:`Symfony\\Component\\Mailer\\MailerInterface` and create an
-:class:`Symfony\\Component\\Mime\\Email` object::
+To send an email, get a :class:`Symfony\\Component\\Mailer\\Mailer`
+instance by type-hinting :class:`Symfony\\Component\\Mailer\\MailerInterface`
+and create an :class:`Symfony\\Component\\Mime\\Email` object::
 
     // src/Controller/MailerController.php
     namespace App\Controller;
@@ -343,6 +406,9 @@ frameworks to create complex HTML email messages. First, make sure Twig is insta
 
     $ composer require symfony/twig-bundle
 
+    # or if you're using the component in a non-Symfony app:
+    # composer require symfony/twig-bridge
+
 HTML Content
 ~~~~~~~~~~~~
 
@@ -426,15 +492,46 @@ previous sections, when using Twig to render email contents you can refer to
 image files as usual. First, to simplify things, define a Twig namespace called
 ``images`` that points to whatever directory your images are stored in:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/twig.yaml
-    twig:
-        # ...
+    .. code-block:: yaml
 
-        paths:
-            # point this wherever your images live
-            '%kernel.project_dir%/assets/images': images
+        # config/packages/twig.yaml
+        twig:
+            # ...
+
+            paths:
+                # point this wherever your images live
+                '%kernel.project_dir%/assets/images': images
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <!-- ... -->
+
+                <!-- point this wherever your images live -->
+                <twig:path namespace="images">%kernel.project_dir%/assets/images</twig:path>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        $container->loadFromExtension('twig', [
+            // ...
+            'paths' => [
+                // point this wherever your images live
+                '%kernel.project_dir%/assets/images' => 'images',
+            ],
+        ]);
 
 Now, use the special ``email.image()`` Twig helper to embed the images inside
 the email contents:
@@ -503,15 +600,46 @@ called ``css`` that points to the directory where ``email.css`` lives:
 
 .. _mailer-css-namespace:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/twig.yaml
-    twig:
-        # ...
+    .. code-block:: yaml
 
-        paths:
-            # point this wherever your css files live
-            '%kernel.project_dir%/assets/css': css
+        # config/packages/twig.yaml
+        twig:
+            # ...
+
+            paths:
+                # point this wherever your css files live
+                '%kernel.project_dir%/assets/css': css
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <!-- ... -->
+
+                <!-- point this wherever your css files live -->
+                <twig:path namespace="css">%kernel.project_dir%/assets/css</twig:path>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        $container->loadFromExtension('twig', [
+            // ...
+            'paths' => [
+                // point this wherever your css files live
+                '%kernel.project_dir%/assets/css' => 'css',
+            ],
+        ]);
 
 .. _mailer-markdown:
 
@@ -675,7 +803,7 @@ corresponding private key can read the original message contents::
     $encryptedEmail = $encrypter->encrypt($email);
     // now use the Mailer component to send this $encryptedEmail instead of the original email
 
-You can pass more than one certificate to the ``SMimeEncrypter()`` constructor
+You can pass more than one certificate to the ``SMimeEncrypter`` constructor
 and it will select the appropriate certificate depending on the ``To`` option::
 
     $firstEmail = (new Email())
@@ -708,14 +836,49 @@ You may want to use more than one mailer transport for delivery of your messages
 This can be configured by replacing the ``dsn`` configuration entry with a
 ``transports`` entry, like:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/mailer.yaml
-    framework:
-        mailer:
-            transports:
-                main: '%env(MAILER_DSN)%'
-                alternative: '%env(MAILER_DSN_IMPORTANT)%'
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                transports:
+                    main: '%env(MAILER_DSN)%'
+                    alternative: '%env(MAILER_DSN_IMPORTANT)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+            <framework:config>
+                <framework:mailer>
+                    <framework:transport name="main">%env(MAILER_DSN)%</framework:transport>
+                    <framework:transport name="alternative">%env(MAILER_DSN_IMPORTANT)%</framework:transport>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        $container->loadFromExtension('framework', [
+            // ...
+            'mailer' => [
+                'transports' => [
+                    'main' => '%env(MAILER_DSN)%',
+                    'alternative' => '%env(MAILER_DSN_IMPORTANT)%',
+                ],
+            ],
+        ]);
 
 By default the first transport is used. The other transports can be used by
 adding a text header ``X-Transport`` to an email::
@@ -798,12 +961,41 @@ While developing (or testing), you may want to disable delivery of messages enti
 You can do this by forcing Mailer to use the ``NullTransport`` in only the ``dev``
 environment:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/dev/mailer.yaml
-    framework:
-        mailer:
-            dsn: 'null://null'
+    .. code-block:: yaml
+
+        # config/packages/dev/mailer.yaml
+        framework:
+            mailer:
+                dsn: 'null://null'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+            <framework:config>
+                <framework:mailer dsn="null://null"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        $container->loadFromExtension('framework', [
+            // ...
+            'mailer' => [
+                'dsn' => 'null://null',
+            ],
+        ]);
 
 .. note::
 
@@ -816,14 +1008,51 @@ Always Send to the same Address
 Instead of disabling delivery entirely, you might want to *always* send emails to
 a specific address, instead of the *real* address:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/dev/mailer.yaml
-    framework:
-        mailer:
-            envelope:
-                recipients: ['youremail@example.com']
+    .. code-block:: yaml
 
+        # config/packages/dev/mailer.yaml
+        framework:
+            mailer:
+                envelope:
+                    recipients: ['youremail@example.com']
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+            <framework:config>
+                <framework:mailer>
+                    <framework:envelope>
+                        <framework:recipient>youremail@example.com</framework:recipient>
+                    </framework:envelope>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        $container->loadFromExtension('framework', [
+            // ...
+            'mailer' => [
+                'envelope' => [
+                    'recipients' => ['youremail@example.com'],
+                ],
+            ],
+        ]);
+
+.. _`high availability`: https://en.wikipedia.org/wiki/High_availability
+.. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`Markdown syntax`: https://commonmark.org/
