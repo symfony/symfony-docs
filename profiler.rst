@@ -26,10 +26,10 @@ Symfony Profiler, which will look like this:
 
 .. note::
 
-    The debug toolbar is only injected on HTML response.
-    In an API like project, profiler URL is available in the
-    `X-Debug-Token-Link` HTTP header of the response.
-    You can see all profiles by going to the ``/_profiler`` URL.
+    The debug toolbar is only injected into HTML responses. For other kinds of
+    contents (e.g. JSON responses in API requests) the profiler URL is available
+    in the ``X-Debug-Token-Link`` HTTP response header. Browse the ``/_profiler``
+    URL to see all profiles.
 
 Accessing Profiling Data Programmatically
 -----------------------------------------
@@ -213,7 +213,7 @@ event::
         if (!$this->getKernel()->isDebug()) {
             return;
         }
-        
+
         $request = $event->getRequest();
         if (!$request->isXmlHttpRequest()) {
             return;
