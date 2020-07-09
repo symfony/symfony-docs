@@ -15,7 +15,7 @@ install the ``profiler`` :ref:`Symfony pack <symfony-packs>` before using it:
 
     $ composer require --dev symfony/profiler-pack
 
-Now browse any page of your application in the development environment to let
+Now, browse any page of your application in the development environment to let
 the profiler collect information. Then, click on any element of the debug
 toolbar injected at the bottom of your pages to open the web interface of the
 Symfony Profiler, which will look like this:
@@ -23,6 +23,13 @@ Symfony Profiler, which will look like this:
 .. image:: /_images/profiler/web-interface.png
    :align: center
    :class: with-browser
+
+.. note::
+
+    The debug toolbar is only injected into HTML responses. For other kinds of
+    contents (e.g. JSON responses in API requests) the profiler URL is available
+    in the ``X-Debug-Token-Link`` HTTP response header. Browse the ``/_profiler``
+    URL to see all profiles.
 
 Accessing Profiling Data Programmatically
 -----------------------------------------
@@ -206,7 +213,7 @@ event::
         if (!$this->getKernel()->isDebug()) {
             return;
         }
-        
+
         $request = $event->getRequest();
         if (!$request->isXmlHttpRequest()) {
             return;
