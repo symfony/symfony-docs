@@ -496,6 +496,7 @@ service by defining it as a service with one or more of the following
 * ``property_info.type_extractor`` if it provides type information.
 * ``property_info.description_extractor`` if it provides description information.
 * ``property_info.access_extractor`` if it provides access information.
+* ``property_info.initializable_extractor`` if it provides initializable information.
 
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
