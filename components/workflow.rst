@@ -94,6 +94,16 @@ you can retrieve a workflow from it and use it as follows::
     $workflow->can($blogPost, 'publish'); // True
     $workflow->getEnabledTransitions($blogPost); // $blogPost can perform transition "publish" or "reject"
 
+If you want to initiate your worflow, you can simply call ``getMarking``::
+
+    // ...
+    $blogPost = new BlogPost();
+    $workflow = $registry->get($blogPost);
+
+    // initiate workflow
+    $workflow->getMarking($blogPost);
+
+
 Learn more
 ----------
 

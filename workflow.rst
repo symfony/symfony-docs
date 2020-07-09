@@ -356,10 +356,25 @@ order:
 
         The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
 
+    .. versionadded:: 5.2
+
+        The context will be accessible in all the events::
+
+            // $context must be an array
+            $context = ['context'];
+            $workflow->apply($subject, $transitionName, $context);
+
+            // in an event listener
+            $context = $event->getContext(); // returns ['context']
+
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
     in same place.
+
+.. note::
+
+    If you initialize the marking by calling ``$workflow->getMarking($object);``, then the ``workflow.[workflow name].entered.[initial place name]`` will be called with a default context ``Workflow::DEFAULT_INITIAL_CONTEXT``
 
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
