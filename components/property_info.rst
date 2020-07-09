@@ -490,10 +490,6 @@ service by defining it as a service with one or more of the following
 * ``property_info.initializable_extractor`` if it provides initializable information
   (it checks if a property can be initialized through the constructor).
 
-.. versionadded:: 4.2
-
-    The ``property_info.initializable_extractor`` was introduced in Symfony 4.2.
-
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
 .. _`Doctrine ORM`: https://www.doctrine-project.org/projects/orm.html
