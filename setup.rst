@@ -232,7 +232,7 @@ vulnerability:
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. The security
-check is done locally by cloning the public `PHP security advisories database`_,
+check is done locally by fetching the public `PHP security advisories database`_,
 so your ``composer.lock`` file is not sent on the network.
 
 .. tip::
