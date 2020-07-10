@@ -15,7 +15,7 @@ file to find known security vulnerabilities in your installed dependencies:
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. The security
-check is done locally by cloning the `security advisories database`_ published
+check is done locally by fetching the `security advisories database`_ published
 by the FriendsOfPHP organization, so your ``composer.lock`` file is not sent on
 the network.
 
