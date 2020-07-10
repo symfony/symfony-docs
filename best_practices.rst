@@ -307,7 +307,7 @@ Define Validation Constraints on the Underlying Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Attaching :doc:`validation constraints </reference/constraints>` to form fields
-instead of to the mapped object prevents the validation from being reused in
+instead of to the mapped object prevents the validation from being checked in
 other forms or other places where the object is used.
 
 .. _best-practice-handle-form:
@@ -318,7 +318,7 @@ Use a Single Action to Render and Process the Form
 :ref:`Rendering forms <rendering-forms>` and :ref:`processing forms <processing-forms>`
 are two of the main tasks when handling forms. Both are too similar (most of the
 times, almost identical), so it's much simpler to let a single controller action
-handle everything.
+handle both.
 
 Internationalization
 --------------------
@@ -327,8 +327,8 @@ Use the XLIFF Format for Your Translation Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Of all the translation formats supported by Symfony (PHP, Qt, ``.po``, ``.mo``,
-JSON, CSV, INI, etc.) XLIFF and gettext have the best support in the tools used
-by professional translators. And since it's based on XML, you can validate XLIFF
+JSON, CSV, INI, etc.), ``XLIFF`` and ``gettext`` have the best support in the tools used
+by professional translators. And since it's based on XML, you can validate ``XLIFF``
 file contents as you write them.
 
 Symfony also supports notes in XLIFF files, making them more user-friendly for
