@@ -109,6 +109,11 @@ the server by pressing ``Ctrl+C`` from your terminal.
 
 .. tip::
 
+    You can start the local web server in detach mode by adding `-d` option.
+
+
+.. tip::
+
     The web server works with any PHP application, not only Symfony projects,
     so it's a very useful generic development tool.
 
