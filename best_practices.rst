@@ -230,7 +230,7 @@ Using annotations for routing, caching and security simplifies configuration.
 You don't need to browse several files created with different formats (YAML, XML,
 PHP): all the configuration is just where you need it and it only uses one format.
 
-Don't Use Annotations to Configure the Controller Template
+Don't Use Annotations to Configure the Controller's Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``@Template`` annotation is useful, but also involves some *magic*.
@@ -244,7 +244,7 @@ Use Dependency Injection to Get Services
 If you extend the base ``AbstractController``, you can only access to the most
 common services (e.g ``twig``, ``router``, ``doctrine``, etc.), directly from the
 container via ``$this->container->get()`` or ``$this->get()``.
-Instead, you must use dependency injection to fetch services by
+However, you must use dependency injection to fetch custom services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
 constructor arguments.
 
@@ -253,7 +253,8 @@ Use ParamConverters If They Are Convenient
 
 If you're using :doc:`Doctrine </doctrine>`, then you can *optionally* use the
 `ParamConverter`_ to automatically query for an entity and pass it as an argument
-to your controller. It will also show a 404 page if no entity can be found.
+to your controller. Keep in mind that it will show a 404 page if no entity
+can be found.
 
 If the logic to get an entity from a route variable is more complex, instead of
 configuring the ParamConverter, it's better to make the Doctrine query inside
