@@ -464,7 +464,7 @@ the following badges are supported:
     authentication. The constructor requires a token ID (unique per form)
     and CSRF token (unique per request). See :doc:`/security/csrf`.
 
-:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\PreAuthenticatedBadge`
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\PreAuthenticatedUserBadge`
     Indicates that this user was pre-authenticated (i.e. before Symfony was
     initiated). This skips the
     :doc:`pre-authentication user checker </security/user_checkers>`.
