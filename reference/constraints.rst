@@ -62,6 +62,7 @@ Validation Constraints Reference
    constraints/Bic
    constraints/Isbn
    constraints/Issn
+   constraints/Isin
 
    constraints/AtLeastOneOf
    constraints/Sequentially
