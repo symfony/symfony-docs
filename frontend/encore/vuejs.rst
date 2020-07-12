@@ -55,10 +55,10 @@ then you can tell Encore to create a *smaller* and CSP-compliant build:
     Encore
         // ...
 
-        .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+        .enableVueLoader(() => {}, { runtimeCompilerBuild: true })
     ;
 
-You can also silence the recommendation by passing ``runtimeCompilerBuild: true``.
+You can also silence the recommendation by passing ``runtimeCompilerBuild: false``.
 
 Hot Module Replacement (HMR)
 ----------------------------
