@@ -120,13 +120,16 @@ configuration files, even if they use a different format:
     .. code-block:: php
 
         // config/services.php
-        $loader->import('legacy_config.xml');
-        // the third optional argument of import() is 'ignore_errors', which
-        // silently discards errors if the loaded file doesn't exist
-        $loader->import('my_config_file.yaml', null, true);
-        // glob expressions are also supported to load multiple files
-        $loader->import('/etc/myapp/*.yaml');
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        return static function (ContainerConfigurator $container) {
+            $container->import('legacy_config.php');
+            // ignore_errors (3rd parameter) silently discards errors if the loaded file doesn't exist
+            $container->import('my_config_file.xml', null, true);
+            // glob expressions are also supported to load multiple files
+            $container->import('/etc/myapp/*.yaml');
+        };
+        
         // ...
 
 .. _config-parameter-intro:
@@ -209,24 +212,25 @@ reusable configuration value. By convention, parameters are defined under the
     .. code-block:: php
 
         // config/services.php
-        // the parameter name is an arbitrary string (the 'app.' prefix is recommended
-        // to better differentiate your parameters from Symfony parameters).
-        $container->setParameter('app.admin_email', 'something@example.com');
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // boolean parameters
-        $container->setParameter('app.enable_v2_protocol', true);
-
-        // array/collection parameters
-        $container->setParameter('app.supported_locales', ['en', 'es', 'fr']);
-
-        // binary content parameters (use the PHP escape sequences)
-        $container->setParameter('app.some_parameter', 'This is a Bell char: \x07');
-
-        // PHP constants as parameter values
         use App\Entity\BlogPost;
 
-        $container->setParameter('app.some_constant', GLOBAL_CONSTANT);
-        $container->setParameter('app.another_constant', BlogPost::MAX_ITEMS);
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
+                // the parameter name is an arbitrary string (the 'app.' prefix is recommended
+                // to better differentiate your parameters from Symfony parameters).
+                ->set('app.admin_email', 'something@example.com')
+                // boolean parameters
+                ->set('app.enable_v2_protocol', true)
+                // array/collection parameters
+                ->set('app.supported_locales', ['en', 'es', 'fr'])
+                // binary content parameters (use the PHP escape sequences)
+                ->set('app.some_parameter', 'This is a Bell char: \x07')
+                // PHP constants as parameter values
+                ->set('app.some_constant', GLOBAL_CONSTANT)
+                ->set('app.another_constant', BlogPost::MAX_ITEMS);
+        };
 
         // ...
 
@@ -278,12 +282,17 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
     .. code-block:: php
 
         // config/packages/some_package.php
-        $container->loadFromExtension('some_package', [
-            // any string surrounded by two % is replaced by that parameter value
-            'email_address' => '%app.admin_email%',
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            // ...
-        ]);
+        return static function (ContainerConfigurator $container) {
+            $container->extension('some_package', [
+                // any string surrounded by two % is replaced by that parameter value
+                'email_address' => '%app.admin_email%',
+
+                // ...
+            ]);
+        };
+
 
 .. note::
 
@@ -310,7 +319,12 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
         .. code-block:: php
 
             // config/services.php
-            $container->setParameter('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
+            };
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
@@ -478,12 +492,16 @@ This example shows how you could configure the database connection using an env 
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                // by convention the env var names are always uppercase
-                'url' => '%env(resolve:DATABASE_URL)%',
-            ]
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('doctrine', [
+                'dbal' => [
+                    // by convention the env var names are always uppercase
+                    'url' => '%env(resolve:DATABASE_URL)%',
+                ]
+            ]);
+        };
 
 .. seealso::
 
@@ -780,13 +798,18 @@ doesn't work for parameters:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setParameter('app.contents_dir', '...');
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
+                ->set('app.contents_dir', '...');
 
-        $container->getDefinition(MessageGenerator::class)
-            ->setArgument('$contentsDir', '%app.contents_dir%');
+            $container->services()
+                ->get(MessageGenerator::class)
+                    ->arg('$contentsDir', '%app.contents_dir%');
+        };
 
 If you inject the same parameters over and over again, use the
 ``services._defaults.bind`` option instead. The arguments defined in that option are
@@ -832,18 +855,22 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Controller\LuckyController;
         use Psr\Log\LoggerInterface;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(LuckyController::class)
-            ->setPublic(true)
-            ->setBindings([
-                // pass this value to any $projectDir argument for any service
-                // that's created in this file (including controller arguments)
-                '$projectDir' => '%kernel.project_dir%',
-            ])
-        ;
+        return static function (ContainerConfigurator $container) {
+            $container->services()
+                ->set(LuckyController::class)
+                    ->public()
+                    ->args([
+                        // pass this value to any $projectDir argument for any service
+                        // that's created in this file (including controller arguments)
+                        '$projectDir' => '%kernel.project_dir%',
+                    ]);
+        };
 
 .. seealso::
 
