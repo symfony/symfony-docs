@@ -663,6 +663,9 @@ of domain logic in your templates:
 
 ``workflow_has_marked_place()``
     Returns ``true`` if the marking of the given object has the given state.
+    
+``workflow_transition_blockers()``
+    Returns :class:`Symfony\\Component\\Workflow\\TransitionBlockerList` for the given transition.
 
 The following example shows these functions in action:
 
@@ -695,6 +698,11 @@ The following example shows these functions in action:
     {% if 'reviewed' in workflow_marked_places(post) %}
         <span class="label">Reviewed</span>
     {% endif %}
+    
+    {# Loop through the transition blockers #}
+    {% for blocker in workflow_transition_blockers(post, 'publish') %}
+        <span class="error">{{ blocker.message }}</span>
+    {% endfor %}
 
 Storing Metadata
 ----------------
