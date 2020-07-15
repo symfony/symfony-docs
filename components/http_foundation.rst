@@ -272,6 +272,14 @@ this complexity and defines some methods for the most common tasks::
     HeaderUtils::unquote('"foo \"bar\""');
     // => 'foo "bar"'
 
+    // Parses a query string but maintains dots (PHP parse_str() replaces '.' by '_')
+    HeaderUtils::parseQuery('foo[bar.baz]=qux');
+    // => ['foo' => ['bar.baz' => 'qux']]
+
+.. versionadded:: 5.2
+
+    The ``parseQuery()`` method was introduced in Symfony 5.2.
+
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
