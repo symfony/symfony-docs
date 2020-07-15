@@ -325,7 +325,7 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             access_decision_manager:
                 service: App\Security\MyCustomAccessDecisionManager
@@ -333,7 +333,7 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -350,7 +350,7 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Security\MyCustomAccessDecisionManager;
 
         $container->loadFromExtension('security', [
