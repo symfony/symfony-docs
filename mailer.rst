@@ -161,6 +161,16 @@ both strings or address objects::
     :class:`Symfony\\Component\\Mailer\\Event\\MessageEvent` event to set the
     same ``From`` email to all messages.
 
+.. note::
+
+    The local part of the address (what goes before the ``@``) can include UTF-8
+    characters, except for the sender address (to avoid issues with bounced emails).
+    For example: ``föóbàr@example.com``, ``用户@example.com``, ``θσερ@example.com``, etc.
+
+    .. versionadded:: 5.2
+
+        Support for UTF-8 characters in email addresses was introduced in Symfony 5.2.
+
 Multiple addresses are defined with the ``addXXX()`` methods::
 
     $email = (new Email())
