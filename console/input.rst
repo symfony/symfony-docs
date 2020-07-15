@@ -106,7 +106,7 @@ There are three argument variants you can use:
     The argument can contain any number of values. For that reason, it must be
     used at the end of the argument list.
 
-You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
+You can combine ``IS_ARRAY`` with ``REQUIRED`` or ``OPTIONAL`` like this::
 
     $this
         // ...
