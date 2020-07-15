@@ -359,7 +359,7 @@ and save it::
          */
         public function createProduct(): Response
         {
-            // you can fetch the EntityManager via $this->getDoctrine()
+            // you can fetch the EntityManager via $this->getDoctrine()->getManager();
             // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
             $entityManager = $this->getDoctrine()->getManager();
 
