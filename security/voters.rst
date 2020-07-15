@@ -313,3 +313,49 @@ security configuration:
                 'allow_if_all_abstain' => false,
             ],
         ]);
+
+Custom Access Decision Strategy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If none of the built-in strategies fits your use case, define the ``service``
+option to use a custom service as the Access Decision Manager (your service
+must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface`):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            access_decision_manager:
+                service: App\Security\MyCustomAccessDecisionManager
+                # ...
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+
+            <config>
+                <access-decision-manager
+                    service="App\Security\MyCustomAccessDecisionManager"/>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        use App\Security\MyCustomAccessDecisionManager;
+
+        $container->loadFromExtension('security', [
+            'access_decision_manager' => [
+                'service' => MyCustomAccessDecisionManager::class,
+                // ...
+            ],
+        ]);
