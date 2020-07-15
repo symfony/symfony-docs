@@ -129,7 +129,7 @@ configuration files, even if they use a different format:
             // glob expressions are also supported to load multiple files
             $container->import('/etc/myapp/*.yaml');
         };
-        
+
         // ...
 
 .. _config-parameter-intro:
@@ -221,12 +221,16 @@ reusable configuration value. By convention, parameters are defined under the
                 // the parameter name is an arbitrary string (the 'app.' prefix is recommended
                 // to better differentiate your parameters from Symfony parameters).
                 ->set('app.admin_email', 'something@example.com')
+
                 // boolean parameters
                 ->set('app.enable_v2_protocol', true)
+
                 // array/collection parameters
                 ->set('app.supported_locales', ['en', 'es', 'fr'])
+
                 // binary content parameters (use the PHP escape sequences)
                 ->set('app.some_parameter', 'This is a Bell char: \x07')
+
                 // PHP constants as parameter values
                 ->set('app.some_constant', GLOBAL_CONSTANT)
                 ->set('app.another_constant', BlogPost::MAX_ITEMS);
