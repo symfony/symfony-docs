@@ -225,7 +225,7 @@ If everything worked, you should see something like this:
 
     SUCCESS!
 
-    Next: Review the new migration "src/Migrations/Version20180207231217.php"
+    Next: Review the new migration "migrations/Version20180207231217.php"
     Then: Run the migration with php bin/console doctrine:migrations:migrate
 
 If you open this file, it contains the SQL needed to update your database! To run
