@@ -36,7 +36,7 @@ Create your first page with React. Start by editing your ``app.js`` file:
 
     // assets/js/app.js
     
-    //...
+    // ...
     import ReactDOM from 'react-dom';
 
     ReactDOM.render('Hello from React', document.getElementById('app'));    
