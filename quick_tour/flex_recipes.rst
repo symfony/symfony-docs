@@ -75,6 +75,7 @@ Thanks to Flex, after one command, you can start using Twig immediately:
 
 .. code-block:: diff
 
+    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -153,6 +154,7 @@ Rich API Support
 
 Are you building an API? You can already return JSON from any controller::
 
+    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -189,6 +191,7 @@ But like usual, we can immediately start using the new library. Want to create a
 rich API for a ``product`` table? Create a ``Product`` entity and give it the
 ``@ApiResource()`` annotation::
 
+    <?php
     // src/Entity/Product.php
     namespace App\Entity;
 
