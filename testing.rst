@@ -57,8 +57,8 @@ Symfony application.
 Unit Tests
 ----------
 
-A unit test is a test against a single PHP class, also called a *unit*. If you
-want to test the overall behavior of your application, see the section about
+A unit test is a test against a single behavior, also called a *unit*. If you
+want to test the overall way of your application, see the section about
 :ref:`Functional Tests <functional-tests>`.
 
 Writing Symfony unit tests is no different from writing standard PHPUnit
