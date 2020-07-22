@@ -48,6 +48,16 @@ via FTP/SCP (or similar method). This has its disadvantages as you lack control
 over the system as the upgrade progresses. This method also requires you
 to take some manual steps after transferring the files (see `Common Post-Deployment Tasks`_)
 
+Shared Hosted Server
+~~~~~~~~~~~~~~~~~~~~
+
+On a shared hosted server, the simplest way to deploy your Symfony application is
+using symfony/apache-pack (which creates an .htaccess inside public folder) and
+uploading your entire code to the folder which belongs to desired domain.
+
+After doing that, go to your cPanel and configure the Document Root of your domain
+to point to the Symfony app public folder.
+
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
 
