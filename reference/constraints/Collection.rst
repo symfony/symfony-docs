@@ -207,7 +207,7 @@ you can do the following:
              *     }
              * )
              */
-            protected $profileData = ['personal_email'];
+            protected $profileData = ['personal_email' => 'email@example.com'];
         }
 
     .. code-block:: yaml
