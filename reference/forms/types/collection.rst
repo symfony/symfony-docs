@@ -19,6 +19,7 @@ photos).
 |             | - `delete_empty`_                                                           |
 |             | - `entry_options`_                                                          |
 |             | - `entry_type`_                                                             |
+|             | - `index_name`_                                                             |
 |             | - `prototype`_                                                              |
 |             | - `prototype_data`_                                                         |
 |             | - `prototype_name`_                                                         |
@@ -333,6 +334,16 @@ This is the field type for each item in this collection (e.g. ``TextType``,
 you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
 to embed a collection of some other form, pass the form type class as this
 option (e.g. ``MyFormType::class``).
+
+index_name
+~~~~~~~~~~
+
+**type**: ``mixed`` **default**: ``null``
+
+This option allows to use keys in submitted data. This is useful when you
+have an array with objects and you need to identify the values in it.
+So you can pass an ``function`` or ``string`` with the property name.
+Then your values will stay the same - even with an different order.
 
 prototype
 ~~~~~~~~~
