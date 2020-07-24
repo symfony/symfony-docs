@@ -331,7 +331,8 @@ Now, this new service is ready to be used. In a controller, for example,
 you can type-hint the new ``SiteUpdateManager`` class and use it::
 
     // src/Controller/SiteController.php
-
+    namespace App\Controller;
+    
     // ...
     use App\Updates\SiteUpdateManager;
 
