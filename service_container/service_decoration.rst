@@ -148,9 +148,9 @@ automatically changed to ``decorating_service_id + '.inner'``):
                 <service id="App\DecoratingMailer"
                     decorates="App\Mailer"
                 >
+                    <!-- pass the old service as an argument -->
                     <argument type="service" id="App\DecoratingMailer.inner"/>
                 </service>
-
             </services>
         </container>
 
@@ -172,7 +172,6 @@ automatically changed to ``decorating_service_id + '.inner'``):
                 // pass the old service as an argument
                 ->args([ref(DecoratingMailer::class.'.inner')]);
         };
-
 
 .. tip::
 
