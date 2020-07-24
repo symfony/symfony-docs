@@ -150,9 +150,9 @@ automatically changed to ``'.inner'``):
                 <service id="App\DecoratingMailer"
                     decorates="App\Mailer"
                 >
+                    <!-- pass the old service as an argument -->
                     <argument type="service" id=".inner"/>
                 </service>
-
             </services>
         </container>
 
