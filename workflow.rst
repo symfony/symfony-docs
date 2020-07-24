@@ -175,7 +175,7 @@ As configured, the following property is used by the marking store::
     The ``marking_store.type`` (the default value depends on the ``type`` value)
     and ``arguments`` (default value ``['marking']``) attributes of the
     ``marking_store`` option are optional. If omitted, their default values will
-    be used. It's highly recommenced to use the default value.
+    be used. It's highly recommended to use the default value.
 
 .. tip::
 
