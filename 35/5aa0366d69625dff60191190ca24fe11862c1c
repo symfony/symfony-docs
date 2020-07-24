@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-07-24T15:48:30Z
+
+Yes, this can be checked here: https://github.com/symfony/ovh-cloud-notifier/blob/5.1/OvhCloudTransport.php
+
+Thanks Iliya and congrats on your first Symfony Docs contribution!
