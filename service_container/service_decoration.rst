@@ -84,10 +84,14 @@ but keeps a reference of the old one as ``App\DecoratingMailer.inner``:
             <services>
                 <service id="AppBundle\Mailer"/>
 
+                <!-- overrides the AppBundle\Mailer service
+                     but that service is still available as AppBundle\DecoratingMailer.inner
+                     private, because usually you do not need to fetch AppBundle\DecoratingMailer directly -->
                 <service id="AppBundle\DecoratingMailer"
                     decorates="AppBundle\Mailer"
                     public="false"
                 >
+                    <!-- pass the old service as an argument -->
                     <argument type="service" id="AppBundle\DecoratingMailer.inner"/>
                 </service>
 
@@ -103,9 +107,13 @@ but keeps a reference of the old one as ``App\DecoratingMailer.inner``:
 
         $container->register(Mailer::class);
 
+        // overrides the AppBundle\Mailer service
+        // but that service is still available as AppBundle\DecoratingMailer.inner
         $container->register(DecoratingMailer::class)
             ->setDecoratedService(Mailer::class)
+            // pass the old service as an argument
             ->addArgument(new Reference(DecoratingMailer::class.'.inner'))
+            // private, because usually you do not need to fetch AppBundle\DecoratingMailer directly
             ->setPublic(false)
         ;
 
