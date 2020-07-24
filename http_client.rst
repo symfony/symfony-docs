@@ -77,7 +77,7 @@ automatically when type-hinting for :class:`Symfony\\Component\\HttpClient\\Http
 
 .. tip::
 
-    The HTTP client is interopable with many common HTTP client abstractions in
+    The HTTP client is interoperable with many common HTTP client abstractions in
     PHP. You can also use any of these abstractions to profit from autowirings.
     See `Interoperability`_ for more information.
 

@@ -15,7 +15,7 @@ your project and define the new value for the ``DATABASE_URL`` env var:
 .. code-block:: bash
 
     # .env.test.local
-    DATABASE_URL=mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME
+    DATABASE_URL=mysql://USERNAME:PASSWORD@127.0.0.1:3306/DB_NAME?serverVersion=5.7
 
 .. tip::
 
