@@ -80,6 +80,7 @@ doesn't exist yet, so let's create it!
 In ``src/Controller``, create a new ``DefaultController`` class and an ``index``
 method inside::
 
+    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -115,6 +116,7 @@ like a wildcard that matches anything. And it gets better! Update the controller
 
 .. code-block:: diff
 
+    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -153,6 +155,7 @@ Instead, add the route *right above* the controller method:
 
 .. code-block:: diff
 
+    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -173,6 +176,7 @@ This works just like before! But by using annotations, the route and controller
 live right next to each other. Need another page? Add another route and method
 in ``DefaultController``::
 
+    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
