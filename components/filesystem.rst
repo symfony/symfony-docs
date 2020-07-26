@@ -200,9 +200,9 @@ of a single file or directory::
 ~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::symlink` creates a
-symbolic link from the target to the destination. Though as the Windows filesystem does not support 
-symbolic links, you can instead use the third boolean argument as a fallback to enable copying of the 
-files while running on Windows::
+symbolic link from the target to the destination. Please note thoguh that the Windows filesystem
+does not support symbolic links, you should instead use the third boolean argument as a fallback
+to enable copying of the files while running on Windows::
 
     // creates a symbolic link
     $filesystem->symlink('/path/to/source', '/path/to/destination');
