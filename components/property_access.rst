@@ -193,8 +193,8 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At last, ``getValue()`` can use the magic ``__call()`` method, but you need to
-enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
+Finally you can use the magic ``__call()`` method to access ``getValue()``, though to
+enable this feature you create the ``PropertyAccessor`` using the ``PropertyAccessorBuilder`` and call the method :method:`PropertyAccessorBuilder::enableMagicCall<Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall>``enableMagicCall`::
 
     // ...
     class Person
