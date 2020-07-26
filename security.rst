@@ -459,7 +459,7 @@ but in a second, you'll change this to use ``bcrypt``.
 .. caution::
 
     When using a ``memory`` provider and the :class:`Symfony\\Component\\Security\\Core\\User\\User`,
-    class you have to choose an encoding without a separately stored salt (i.e. ``bcrypt``).
+    class you choose an encoding without a separately stored salt (i.e. ``bcrypt``).
 
 If you refresh now, you'll be logged in! The web debug toolbar even tells
 you who you are and what roles you have:
