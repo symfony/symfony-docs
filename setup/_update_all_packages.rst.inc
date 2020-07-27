@@ -17,3 +17,16 @@ this safely by running:
     breaking changes.
 
 .. _`version constraints`: https://getcomposer.org/doc/articles/versions.md
+
+If you are in a default Symfony application that uses :ref:`Symfony Flex <symfony-flex>`
+and Symfony Recipes, you may also want to reinstall them to their latest version:
+
+.. code-block:: terminal
+
+    $ composer sync-recipes --force
+
+.. caution::
+
+    By doing this, you reinstall all the recipes again for all packages.
+    It is your job to carefully verify the code changes as it may override
+    your custom code.
