@@ -234,6 +234,36 @@ You can also specify if you want to not trim the answer by setting it directly w
         $name = $helper->ask($input, $output, $question);
     }
 
+Accept Multiline Answers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``setMultiline()`` and ``isMultiline()`` methods were introduced in
+    Symfony 5.2.
+
+By default, the question helper stops reading user input when it receives a newline
+character (i.e., when the user hits ``ENTER`` once). However, you may specify that
+the response to a question should allow multiline answers by passing ``true`` to
+:method:`Symfony\\Component\\Console\\Question\\Question::setMultiline`::
+
+    use Symfony\Component\Console\Question\Question;
+
+    // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $helper = $this->getHelper('question');
+
+        $question = new Question('How do you solve world peace?');
+        $question->setMultiline(true);
+
+        $answer = $helper->ask($input, $output, $question);
+    }
+
+Multiline questions stop reading user input after receiving an end-of-transmission
+control character (``Ctrl-D`` on Unix systems or ``Ctrl-Z`` on Windows).
+
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
