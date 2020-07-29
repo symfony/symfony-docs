@@ -790,6 +790,11 @@ concise, but it can decrease route readability when requirements are complex:
             // ...
         };
 
+.. versionadded:: 5.2
+
+    Since Symfony 5.2, inline parameter requirements are also supported in the
+    host. Before Symfony 5.2, they were supported in the path only.
+
 Optional Parameters
 ~~~~~~~~~~~~~~~~~~~
 
@@ -983,6 +988,11 @@ parameter:
 
     To give a ``null`` default value to any parameter, add nothing after the
     ``?`` character (e.g. ``/blog/{page?}``).
+
+.. versionadded:: 5.2
+
+    Since Symfony 5.2, inline parameter default values are also supported in
+    the host. Before Symfony 5.2, they were supported in the path only.
 
 Priority Parameter
 ~~~~~~~~~~~~~~~~~~
