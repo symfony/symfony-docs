@@ -75,6 +75,7 @@ A better policy is to include the locale in the URL using the
             /**
              * @Route(
              *     "/{_locale}/contact",
+             *     name="contact",
              *     requirements={
              *         "_locale": "en|fr|de",
              *     }
