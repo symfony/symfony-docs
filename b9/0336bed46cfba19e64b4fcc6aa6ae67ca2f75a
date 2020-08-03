@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-04-16T17:12:19Z
+
+> *slightly* reworded
+
+lol
+
+I re-added the first sentence (plus an additional "instead"). We need to emphasize that this is not just some "introduction" to voters, but rather a completely different approach. And the first sentence somehow tries to explain that the following example isn't a good real-world example for the usage of voters. I thought about adding something like "for simplicity's sake", but couldn't find a good solution...
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-04-17T09:45:23Z
+
+> And the first sentence somehow tries to explain that the following example isn't a good real-world example for the usage of voters.
+
+I think it is. I wouldn't call the permission logic in this example "simple"/"basic" anymore (75+ lines of code). I don't think the first sentence adds much to the tip (it's really a separate tip) and I wanted to keep it as small as possible (long side blocks are often distracting), that's why I removed it.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-04-17T10:34:28Z
+
+What I'm trying to say: The following example is "basic" in the sense that it fulfills exactly our "new" criteria for doing it differently:
+
+> If you don't reuse permissions or the rules are basic, you instead might want to
+
+There's no reuse, and the rules are simple. So my full message would read:
+
+> If your app is exactly like ours here, don't use voters. We chose this unrealistically simplified example in order to be able to show you how voters work in just 75+ lines, not 200+.
+
+Don't know how to get this across in just one short sentence ;-)
