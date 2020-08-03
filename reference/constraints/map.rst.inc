@@ -81,6 +81,7 @@ Financial and other Number Constraints
 * :doc:`Iban </reference/constraints/Iban>`
 * :doc:`Isbn </reference/constraints/Isbn>`
 * :doc:`Issn </reference/constraints/Issn>`
+* :doc:`Isin </reference/constraints/Isin>`
 
 Other Constraints
 ~~~~~~~~~~~~~~~~~
