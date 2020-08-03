@@ -127,7 +127,8 @@ config_block = {
     'rst': 'reStructuredText',
     'varnish2': 'Varnish 2',
     'varnish3': 'Varnish 3',
-    'varnish4': 'Varnish 4'
+    'varnish4': 'Varnish 4',
+    'env': '.env'
 }
 
 # don't enable Sphinx Domains
