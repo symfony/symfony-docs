@@ -469,7 +469,7 @@ that only includes safe ASCII characters::
     // $slug = 'Workspace-settings'
 
     // you can also pass an array with additional character substitutions
-    $slugger = new AsciiSlugger('en', ['%' => 'percent', '€' => 'euro']);
+    $slugger = new AsciiSlugger('en', ['en' => ['%' => 'percent', '€' => 'euro']]);
     $slug = $slugger->slug('10% or 5€');
     // $slug = '10-percent-or-5-euro'
 
