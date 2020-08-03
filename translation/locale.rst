@@ -64,6 +64,28 @@ by the routing system using the special ``_locale`` parameter:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/ContactController.php
+        namespace AppBundle\Controller;
+
+        // ...
+        class ContactController extends AbstractController
+        {
+            /**
+             * @Route(
+             *     "/{_locale}/contact",
+             *     name="contact",
+             *     requirements={
+             *         "_locale": "en|fr|de",
+             *     }
+             * )
+             */
+            public function contact()
+            {
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
