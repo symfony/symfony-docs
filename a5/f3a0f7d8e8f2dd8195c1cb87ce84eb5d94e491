@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-07-13T08:38:52Z
+
+Thanks Vincent! Is the change related to `choice_translation_parameters.rst.inc` intended or was it some mistake to include it here?
+
+---------------------------------------------------------------------------
+
+by VincentLanglet at 2020-07-13T09:37:25Z
+
+Definitely not intended. Fixed @javiereguiluz
