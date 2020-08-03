@@ -64,6 +64,27 @@ A better policy is to include the locale in the URL using the
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+        
+        // src/Controller/ContactController.php
+        namespace App\Controller;
+
+        // ...
+        class ContactController extends AbstractController
+        {
+            /**
+             * @Route(
+             *     "/{_locale}/contact",
+             *     requirements={
+             *         "_locale": "en|fr|de",
+             *     }
+             * )
+             */
+            public function contact()
+            {
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
