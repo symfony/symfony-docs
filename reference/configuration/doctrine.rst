@@ -117,7 +117,7 @@ The following block shows all possible configuration keys:
     version).
 
     If you are running a MariaDB database, you must prefix the ``server_version``
-    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.2.12``).
+    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.4.13``).
 
     Always wrap the server version number with quotes to parse it as a string
     instead of a float number. Otherwise, the floating-point representation
