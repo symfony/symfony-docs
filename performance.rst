@@ -120,7 +120,7 @@ The preload file path is the same as the compiled service container but with the
 .. code-block:: ini
 
     ; php.ini
-    opcache.preload=/path/to/project/var/cache/prod/srcApp_KernelProdContainer.preload.php
+    opcache.preload=/path/to/project/var/cache/prod/App_KernelProdContainer.preload.php
 
 Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
