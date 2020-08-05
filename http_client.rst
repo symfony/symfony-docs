@@ -22,13 +22,13 @@ Basic Usage
 Use the :class:`Symfony\\Component\\HttpClient\\HttpClient` class to make
 requests. In the Symfony framework, this class is available as the
 ``http_client`` service. This service will be :doc:`autowired </service_container/autowiring>`
-automatically when type-hinting for :class:`Symfony\\Component\\HttpClient\\HttpClientInterface`:
+automatically when type-hinting for :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`:
 
 .. configuration-block::
 
     .. code-block:: php-symfony
 
-        use Symfony\Component\HttpClient\HttpClientInterface;
+        use Symfony\Contracts\HttpClient\HttpClientInterface;
 
         class SymfonyDocs
         {
