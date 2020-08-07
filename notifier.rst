@@ -338,7 +338,7 @@ To send a notification, autowire the
 
     use Symfony\Component\Notifier\Notification\Notification;
     use Symfony\Component\Notifier\NotifierInterface;
-    use Symfony\Component\Notifier\Recipient\AdminRecipient;
+    use Symfony\Component\Notifier\Recipient\Recipient;
 
     class InvoiceController extends AbstractController
     {
@@ -355,7 +355,7 @@ To send a notification, autowire the
                 ->content('You got a new invoice for 15 EUR.');
 
             // The receiver of the Notification
-            $recipient = new AdminRecipient(
+            $recipient = new Recipient(
                 $user->getEmail(),
                 $user->getPhonenumber()
             );
@@ -375,7 +375,7 @@ both an email and sms notification to the user.
 The default notification also has a ``content()`` and ``emoji()`` method to
 set the notification content and icon.
 
-Symfony provides three types of recipients:
+Symfony provides the following recipients:
 
 :class:`Symfony\\Component\\Notifier\\Recipient\\NoRecipient`
     This is the default and is useful when there is no need to have
@@ -383,13 +383,14 @@ Symfony provides three types of recipients:
     the current requests's :ref:`session flashbag <flash-messages>`;
 
 :class:`Symfony\\Component\\Notifier\\Recipient\\Recipient`
-    This contains only the email address of the user and can be used for
-    messages on the email and browser channel;
-
-:class:`Symfony\\Component\\Notifier\\Recipient\\AdminRecipient`
     This can contain both email address and phonenumber of the user. This
     recipient can be used for all channels (depending on whether they are
     actually set).
+
+.. versionadded:: 5.2
+
+    The ``AdminRecipient`` class was removed in Symfony 5.2, you should use
+    ``Recipient`` instead.
 
 Configuring Channel Policies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -505,7 +506,8 @@ very high and the recipient has a phone number::
     namespace App\Notifier;
 
     use Symfony\Component\Notifier\Notification\Notification;
-    use Symfony\Component\Notifier\Recipient\Recipient;
+    use Symfony\Component\Notifier\Recipient\RecipientInterface;
+    use Symfony\Component\Notifier\Recipient\SmsRecipientInterface;
 
     class InvoiceNotification extends Notification
     {
@@ -516,12 +518,11 @@ very high and the recipient has a phone number::
             $this->price = $price;
         }
 
-        public function getChannels(Recipient $recipient)
+        public function getChannels(RecipientInterface $recipient)
         {
             if (
                 $this->price > 10000
-                && $recipient instanceof AdminRecipient
-                && null !== $recipient->getPhone()
+                && $recipient instanceof SmsRecipientInterface
             ) {
                 return ['sms'];
             }
@@ -545,7 +546,7 @@ and its ``asChatMessage()`` method::
     use Symfony\Component\Notifier\Message\ChatMessage;
     use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
     use Symfony\Component\Notifier\Notification\Notification;
-    use Symfony\Component\Notifier\Recipient\Recipient;
+    use Symfony\Component\Notifier\Recipient\SmsRecipientInterface;
 
     class InvoiceNotification extends Notification implements ChatNotificationInterface
     {
@@ -556,7 +557,7 @@ and its ``asChatMessage()`` method::
             $this->price = $price;
         }
 
-        public function asChatMessage(Recipient $recipient, string $transport = null): ?ChatMessage
+        public function asChatMessage(RecipientInterface $recipient, string $transport = null): ?ChatMessage
         {
             // Add a custom emoji if the message is sent to Slack
             if ('slack' === $transport) {
