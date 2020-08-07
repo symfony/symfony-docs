@@ -299,7 +299,7 @@ compiler pass ``AddEventAliasesPass``::
         protected function build(ContainerBuilder $container)
         {
             $container->addCompilerPass(new AddEventAliasesPass([
-                MyCustomEvent::class => 'my_custom_event',
+                'my_custom_event' => MyCustomEvent::class,
             ]));
         }
     }
