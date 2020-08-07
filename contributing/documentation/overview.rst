@@ -273,7 +273,8 @@ If you don't use Docker, follow these steps to build the docs locally:
 
    .. code-block:: terminal
 
-        $ pip install sphinx~=1.3.0 git+https://github.com/fabpot/sphinx-php.git
+        $ cd _build/
+        $ pip install -r .requirements.txt
 
 #. Run the following command to build the documentation in HTML format:
 
