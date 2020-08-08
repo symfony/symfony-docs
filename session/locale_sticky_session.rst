@@ -128,6 +128,10 @@ method::
 Setting the Locale Based on the User's Preferences
 --------------------------------------------------
 
+.. note::
+
+    If you are using the :doc:`new experimental Security </security/experimental_authenticators>`, security events have changed. Please refer below.
+
 You might want to improve this technique even further and define the locale based on
 the user entity of the logged in user. However, since the ``LocaleSubscriber`` is called
 before the ``FirewallListener``, which is responsible for handling authentication and
@@ -185,3 +189,46 @@ event::
     In order to update the language immediately after a user has changed
     their language preferences, you also need to update the session when you change
     the ``User`` entity.
+    
+Setting the Locale Based on the User's Preferences when using the new Authenticator-based Security
+--------------------------------------------------------------------------------------------------
+
+Along with the :doc:`new experimental Security </security/experimental_authenticators>` system, Security events were revamped.
+Security's ``onInteractiveLogin`` event has been replaced by ``onLoginSuccess`` event, the new event also directly provides the user::
+
+    // src/EventSubscriber/UserLocaleSubscriber.php
+    namespace App\EventSubscriber;
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
+
+    /**
+     * Stores the locale of the user in the session after the
+     * login. This can be used by the LocaleSubscriber afterwards.
+     */
+    class UserLocaleSubscriber implements EventSubscriberInterface
+    {
+        private $session;
+
+        public function __construct(SessionInterface $session)
+        {
+            $this->session = $session;
+        }
+
+        public function onLoginSuccess(LoginSuccessEvent $event)
+        {
+            $user = $event->getUser();
+
+            if (null !== $user->getLocale()) {
+                $this->session->set('_locale', $user->getLocale());
+            }
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                LoginSuccessEvent::class => 'onLoginSuccess',
+            ];
+        }
+    }    
