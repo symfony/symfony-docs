@@ -35,7 +35,7 @@ The transport object needs to implement the
 and :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\ReceiverInterface`).
 Here is a simplified example of a database transport::
 
-    use Ramsey\Uuid\Uuid;
+    use Symfony\Component\Uid\Uuid;
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Stamp\TransportMessageIdStamp;
     use Symfony\Component\Messenger\Transport\Serialization\PhpSerializer;
@@ -108,8 +108,7 @@ Here is a simplified example of a database transport::
         public function send(Envelope $envelope): Envelope
         {
             $encodedMessage = $this->serializer->encode($envelope);
-            $uuid = Uuid::uuid4()->toString();
-
+            $uuid = (string) Uuid::v4();
             // Add a message to the "my_queue" table
             $this->db->createQuery(
                     'INSERT INTO my_queue (id, envelope, delivered_at, handled)
