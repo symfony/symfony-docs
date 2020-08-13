@@ -66,7 +66,7 @@ current PHP SAPI:
 
     You can also select the output format explicitly defining the
     ``VAR_DUMPER_FORMAT`` environment variable and setting its value to either
-    ``html`` or ``cli``.
+    ``html``, ``cli`` or :ref:`server <var-dumper-dump-server-format>`.
 
 .. note::
 
@@ -185,6 +185,39 @@ Then you can use the following command to start a server out-of-the-box:
 
      $ ./vendor/bin/var-dump-server
        [OK] Server listening on tcp://127.0.0.1:9912
+
+.. _var-dumper-dump-server-format:
+
+Debug any project with the server format
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There is a way to force the ``VarDumper`` to dump to a server, without the need to configure anything in your
+application: by using the ``VAR_DUMPER_FORMAT=server`` environment variable.
+It is especially useful to debug any project (as soon as the VarDumper component is installed),
+without altering its code by:
+
+* starting a server:
+
+    .. code-block:: terminal
+
+         $ ./vendor/bin/var-dump-server
+
+* running your code with the ``VAR_DUMPER_FORMAT=server`` env variable. For instance, for a CLI command:
+
+    .. code-block:: terminal
+
+         $ VAR_DUMPER_FORMAT=server [your-cli-command]
+
+    .. tip::
+
+        If your project loads environment variables from a dotenv file, you can set the ``VAR_DUMPER_FORMAT=server``
+        environment variable in there as well.
+
+.. note::
+
+    The host used to contact the server when using the ``server`` format is the one configured by the
+    ``VAR_DUMPER_SERVER`` var or defaults to ``127.0.0.1:9912``.
+    But you can configure the host through the ``VAR_DUMPER_FORMAT=tcp://127.0.0.1:1234`` environment variable as well.
 
 DebugBundle and Twig Integration
 --------------------------------
