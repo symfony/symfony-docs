@@ -25,7 +25,9 @@ Switching a Channel to a different Handler
 
 Now, suppose you want to log the ``security`` channel to a different file.
 To do this, create a new handler and configure it to log only messages
-from the ``security`` channel:
+from the ``security`` channel.
+You might add this in `config/packages/monolog.yaml` to log in all environments,
+or just `config/packages/prod/monolog.yaml` to happen only in prod:
 
 .. configuration-block::
 
