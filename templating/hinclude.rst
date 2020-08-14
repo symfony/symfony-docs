@@ -88,4 +88,16 @@ Or you can also specify a string to display as the default content:
 
     {{ render_hinclude(controller('...'), {default: 'Loading...'}) }}
 
+Use the ``attributes`` option to define the value of hinclude.js options:
+
+.. code-block:: twig
+
+    {# by default, cross-site requests don't use credentials such as cookies, authorization
+       headers or TLS client certificates; set this option to 'true' to use them
+    {{ render_hinclude(controller('...'), {attributes: {data-with-credentials: 'true'}}) }}
+
+    {# by default, the JavaScript code included in the loaded contents is not run;
+       set this option to 'true' to run that JavaScript code #}
+    {{ render_hinclude(controller('...'), {attributes: {evaljs: 'true'}}) }}
+
 .. _`hinclude.js`: http://mnot.github.io/hinclude/
