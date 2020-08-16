@@ -992,6 +992,102 @@ auto_setup          Whether the table should be created
                     automatically during send / get.     true
 ==================  ===================================  ======================
 
+Beanstalkd Transport
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    Install it by running:
+
+    .. code-block:: terminal
+
+        $ composer require symfony/beanstalkd-messenger
+
+.. code-block:: bash
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=beanstalkd://localhost
+
+The format is ``beanstalkd://<ip>:<port>?tube_name=<name>&timeout=<timeoutInSeconds>&ttr=<ttrInSeconds>``.
+
+The ``port`` setting is optional and defaults to ``11300`` if not set.
+
+The transport has a number of options:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    async_priority_high: "%env(MESSENGER_TRANSPORT_DSN)%?tube_name=high_priority"
+                    async_normal:
+                        dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+                        options:
+                            tube_name: normal_priority
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%?tube_name=high_priority"/>
+                    <framework:transport name="async_priority_low" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
+                        <framework:options>
+                            <framework:tube>
+                                <framework:name>normal_priority</framework:name>
+                            </framework:tube>
+                        </framework:options>
+                    </framework:transport>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'transports' => [
+                    'async_priority_high' => '%env(MESSENGER_TRANSPORT_DSN)%?tube_name=high_priority',
+                    'async_priority_low' => [
+                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
+                        'options' => [
+                            'tube_name' => 'normal_priority'
+                        ]
+                    ],
+                ],
+            ],
+        ]);
+
+Options defined under ``options`` take precedence over ones defined in the DSN.
+
+==================  ===================================  ======================
+     Option         Description                          Default
+==================  ===================================  ======================
+tube_name           Name of the queue                    default
+timeout             Message reservation timeout          0 (will cause the
+                    - in seconds.                        server to immediately
+                                                         return either a
+                                                         response or a
+                                                         TransportException
+                                                         will be thrown)
+ttr                 The message time to run before it
+                    is put back in the ready queue
+                    - in seconds.                        90
+==================  ===================================  ======================
+
 Redis Transport
 ~~~~~~~~~~~~~~~
 
