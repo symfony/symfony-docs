@@ -104,17 +104,24 @@ The information collected by your data collector can be displayed both in the
 web debug toolbar and in the web profiler. To do so, you need to create a Twig
 template that includes some specific blocks.
 
-However, first you must add some getters in the data collector class to give the
+However, first make your DataCollector to extends :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\AbstractDataCollector` instead of :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector`. When extending :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\AbstractDataCollector`, you don't need to implement `getName` method; your collector FQDN is returned as identifier (you can also override it if needed). Though you need to implement `getTemplate` with the template you're going to use in the profiler (see below).
+
+Then you must add some getters in the data collector class to give the
 template access to the collected information::
 
     // src/DataCollector/RequestCollector.php
     namespace App\DataCollector;
 
-    use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+    use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
 
-    class RequestCollector extends DataCollector
+    class RequestCollector extends AbstractDataCollector
     {
         // ...
+
+        public static function getTemplate(): ?string
+        {
+            return 'data_collector/template.html.twig';
+        }
 
         public function getMethod()
         {
@@ -227,8 +234,9 @@ The ``menu`` and ``panel`` blocks are the only required blocks to define the
 contents displayed in the web profiler panel associated with this data collector.
 All blocks have access to the ``collector`` object.
 
-Finally, to enable the data collector template, override your service configuration
-to specify a tag that contains the template:
+That's it ! Your data collector is now accessible in the toolbar.
+
+If you don't use the default configuration with :ref:`autowire and autoconfigure <service-container-services-load-example>`, you'll need to configure the data collector explicitely:
 
 .. configuration-block::
 
@@ -240,9 +248,8 @@ to specify a tag that contains the template:
                 tags:
                     -
                         name:     data_collector
-                        template: 'data_collector/template.html.twig'
                         # must match the value returned by the getName() method
-                        id:       'app.request_collector'
+                        id:       'App\DataCollector\RequestCollector'
                         # optional priority
                         # priority: 300
 
@@ -259,8 +266,7 @@ to specify a tag that contains the template:
                 <service id="App\DataCollector\RequestCollector">
                     <!-- priority="300" -->
                     <tag name="data_collector"
-                        template="data_collector/template.html.twig"
-                        id="app.request_collector"
+                        id="App\DataCollector\RequestCollector"
                     />
                 </service>
             </services>
@@ -277,10 +283,8 @@ to specify a tag that contains the template:
             $services = $configurator->services();
 
             $services->set(RequestCollector::class)
-                ->autowire()
                 ->tag('data_collector', [
-                    'template' => 'data_collector/template.html.twig',
-                    'id'       => 'app.request_collector',
+                    'id'       => RequestCollector::class,
                     // 'priority' => 300,
                 ]);
         };
@@ -289,3 +293,12 @@ The position of each panel in the toolbar is determined by the collector priorit
 Priorities are defined as positive or negative integers and they default to ``0``.
 Most built-in collectors use ``255`` as their priority. If you want your collector
 to be displayed before them, use a higher value (like 300).
+
+.. versionadded:: 5.2
+
+    :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\AbstractDataCollector` was introduced in Symfony 5.2.
+
+.. note::
+
+    Before the introduction of :class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\AbstractDataCollector`, template path was defined in the service configuration (`template` key). This is still possible to define the template in the service configuration. In this case **template in service configuration takes precedence over template defined in data collector code**.
+
