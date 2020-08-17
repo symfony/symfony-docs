@@ -46,6 +46,7 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
             <framework:config>
                 <framework:mailer dsn="%env(MAILER_DSN)%"/>
             </framework:config>
@@ -55,6 +56,7 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
 
         // config/packages/mailer.php
         use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
         return static function (ContainerConfigurator $containerConfigurator): void {
             $containerConfigurator->extension('framework', [
                 'mailer' => [
@@ -83,7 +85,7 @@ sendmail      ``sendmail://default``                    Mailer uses the local se
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using your own SMTP server, you can send emails via a 3rd party
+Instead of using your own SMTP server or sendmail binary, you can send emails via a 3rd party
 provider. Mailer supports several - install whichever you want:
 
 ==================  =============================================

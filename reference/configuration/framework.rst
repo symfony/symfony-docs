@@ -155,6 +155,7 @@ Configuration
 
   * :ref:`dsn <mailer-dsn>`
   * `transports`_
+  * `message_bus`_
   * `envelope`_
 
     * `sender`_
@@ -843,6 +844,8 @@ ciphers
 
 A list of the names of the ciphers allowed for the SSL/TLS connections. They
 can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
+
+.. _http-headers:
 
 .. _http-headers:
 
@@ -2813,6 +2816,18 @@ transports
 A :ref:`list of DSN <multiple-email-transports>` that can be used by the
 mailer. A transport name is the key and the dsn is the value.
 
+message_bus
+...........
+
+.. versionadded:: 5.1
+
+    The ``message_bus`` option was introduced in Symfony 5.1.
+
+**type**: ``string`` **default**: ``null`` or default bus if Messenger component is installed
+
+Service identifier of the message bus to use when using the
+:doc:`Messenger component </messenger>` (e.g. ``messenger.default_bus``).
+
 envelope
 ........
 
@@ -2867,6 +2882,7 @@ recipients set in the code.
 
         // config/packages/mailer.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         return static function (ContainerConfigurator $containerConfigurator): void {
             $containerConfigurator->extension('framework', [
                 'mailer' => [
