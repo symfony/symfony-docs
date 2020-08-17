@@ -825,6 +825,8 @@ and it will select the appropriate certificate depending on the ``To`` option::
     $firstEncryptedEmail = $encrypter->encrypt($firstEmail);
     $secondEncryptedEmail = $encrypter->encrypt($secondEmail);
 
+.. _multiple-email-transports:
+
 Multiple Email Transports
 -------------------------
 
