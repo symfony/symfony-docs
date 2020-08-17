@@ -13,6 +13,12 @@ if the service does not exist:
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
+        App\Newsletter\NewsletterManager:
+            arguments:
+                - '@?logger'
+
     .. code-block:: xml
 
         <!-- config/services.xml -->
@@ -48,7 +54,6 @@ if the service does not exist:
 
 .. note::
 
-    The "null" strategy is not currently supported by the YAML driver.
 
 Ignoring Missing Dependencies
 -----------------------------
