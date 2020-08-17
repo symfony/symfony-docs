@@ -131,16 +131,17 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
     // src/Entity/Product.php
     namespace App\Entity;
 
+    use App\Repository\ProductRepository;
     use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+     * @ORM\Entity(repositoryClass=ProductRepository::class)
      */
     class Product
     {
         /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
+         * @ORM\Id()
+         * @ORM\GeneratedValue()
          * @ORM\Column(type="integer")
          */
         private $id;
@@ -155,7 +156,7 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
          */
         private $price;
 
-        public function getId()
+        public function getId(): ?int
         {
             return $this->id;
         }
