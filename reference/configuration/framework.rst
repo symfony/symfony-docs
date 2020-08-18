@@ -1290,6 +1290,7 @@ The possible values for this option are:
 
 * ``null``, use it to disable this protection. Same behavior as in older Symfony
   versions.
+* ``none``, use it to explicit disable this protection.
 * ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
   send any cookie when the HTTP request is not originated from the same domain.
 * ``'lax'`` (or the ``Cookie::SAMESITE_LAX`` constant), use it to allow sending
@@ -1301,6 +1302,8 @@ The possible values for this option are:
 
     This option is available starting from PHP 7.3, but Symfony has a polyfill
     so you can use it with any older PHP version as well.
+    
+    Use 'none' value only works when cookie_secure is true.
 
 cookie_secure
 .............
