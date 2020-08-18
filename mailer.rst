@@ -45,6 +45,7 @@ Amazon SES          ``composer require symfony/amazon-mailer``
 Gmail               ``composer require symfony/google-mailer``
 MailChimp           ``composer require symfony/mailchimp-mailer``
 Mailgun             ``composer require symfony/mailgun-mailer``
+Mailjet             ``composer require symfony/mailjet-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 ==================  =============================================
@@ -86,16 +87,17 @@ transport, but you can force to use one:
 This table shows the full list of available DNS formats for each third
 party provider:
 
-==================== ========================================== =========================================== ========================================
- Provider             SMTP                                       HTTP                                        API
-==================== ========================================== =========================================== ========================================
- Amazon SES           ses+smtp://ACCESS_KEY:SECRET_KEY@default   ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
- Google Gmail         gmail+smtp://USERNAME:PASSWORD@default     n/a                                         n/a
- Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default  mandrill+https://KEY@default                mandrill+api://KEY@default
- Mailgun              mailgun+smtp://USERNAME:PASSWORD@default   mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
- Postmark             postmark+smtp://ID:ID@default              n/a                                         postmark+api://KEY@default
- Sendgrid             sendgrid+smtp://apikey:KEY@default         n/a                                         sendgrid+api://KEY@default
-==================== ========================================== =========================================== ========================================
+==================== ============================================= =========================================== ========================================
+ Provider             SMTP                                          HTTP                                        API
+==================== ============================================= =========================================== ========================================
+ Amazon SES           ses+smtp://ACCESS_KEY:SECRET_KEY@default     ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
+ Google Gmail         gmail+smtp://USERNAME:PASSWORD@default       n/a                                         n/a
+ Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default    mandrill+https://KEY@default                mandrill+api://KEY@default
+ Mailgun              mailgun+smtp://USERNAME:PASSWORD@default     mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
+ Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
+ Postmark             postmark+smtp://ID:ID@default                n/a                                         postmark+api://KEY@default
+ Sendgrid             sendgrid+smtp://apikey:KEY@default           n/a                                         sendgrid+api://KEY@default
+==================== ============================================= =========================================== ========================================
 
 .. caution::
 
