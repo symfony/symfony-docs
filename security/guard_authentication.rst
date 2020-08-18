@@ -189,7 +189,8 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
                 # ...
 
                 main:
-                    anonymous: lazy
+                    anonymous: true
+                    lazy: true
                     logout: ~
 
                     guard:
@@ -217,8 +218,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
 
                 <!-- if you want, disable storing the user in the session
                     add 'stateless="true"' to the firewall -->
-                <firewall name="main" pattern="^/">
-                    <anonymous lazy="true"/>
+                <firewall name="main" pattern="^/" anonymous="true" lazy="true">
                     <logout/>
 
                     <guard>
@@ -241,7 +241,8 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
             'firewalls' => [
                 'main'       => [
                     'pattern'        => '^/',
-                    'anonymous'      => 'lazy',
+                    'anonymous'      => true,
+                    'lazy'           => true,
                     'logout'         => true,
                     'guard'          => [
                         'authenticators'  => [
