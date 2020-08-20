@@ -99,12 +99,13 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
         security:
             # ...
 
-            providers:
-                # ...
-                logout:
-                    path: app_logout
-                    # where to redirect after logout
-                    # target: app_any_route
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        path: app_logout
+                        # where to redirect after logout
+                        # target: app_any_route
 
     .. code-block:: xml
 
