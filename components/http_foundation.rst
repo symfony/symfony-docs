@@ -554,7 +554,7 @@ or change its ``Content-Disposition``::
         'filename.txt'
     );
 
-It is possible to delete the file after the request is sent with the
+It is possible to delete the file after the response is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
