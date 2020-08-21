@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-08-19T07:59:49Z
+
+@wouterj maybe we could add a note for the new authenticator which no longer has `anonymous` security ?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-08-19T08:23:21Z
+
+There is a special document for the new authenticator. As it's still experimental, we've decided to not change any "main" security doc yet
