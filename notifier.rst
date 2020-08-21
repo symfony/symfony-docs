@@ -69,6 +69,10 @@ Smsapi      ``symfony/smsapi-notifier``      ``smsapi://TOKEN@default?from=FROM`
 
     The OvhCloud, Sinch and FreeMobile integrations were introduced in Symfony 5.1.
 
+.. versionadded:: 5.2
+
+    The Smsapi integration was introduced in Symfony 5.2.
+
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
 
