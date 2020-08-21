@@ -167,6 +167,16 @@ as you normally do:
     using :ref:`Symfony Flex <symfony-flex>`) before running this command so
     that the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
+.. tip::
+
+    To improve performance and you have Symfony Flex 1.2 or later, you may
+    leverage a (feature)[https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-production]
+    that dumps your environments variables into flat file:
+
+.. code-block:: terminal
+
+    $ composer dump-env prod
+
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
