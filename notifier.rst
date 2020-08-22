@@ -55,7 +55,7 @@ a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
 ==========  ================================  ====================================================
-Service     Package                          DSN
+Service     Package                           DSN
 ==========  ================================  ====================================================
 Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
 Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
