@@ -6,8 +6,22 @@
 How to Use Voters to Check User Permissions
 ===========================================
 
-Security voters are the most granular way of checking permissions (e.g. "can this
-specific user edit the given item?"). This article explains voters in detail.
+Voters are Symfony's most powerful way of managing permissions. They allow you
+to centralize all permission logic, then reuse them in many places.
+
+However, if you don't reuse permissions or your rules are basic, you can always
+put that logic directly into your controller instead. Here's an example how
+this could look like, if you want to make a route accessible to the "owner" only::
+
+    // src/AppBundle/Controller/PostController.php
+    // ...
+
+    if ($post->getOwner() !== $this->getUser()) {
+        throw $this->createAccessDeniedException();
+    }
+
+In that sense, the following example used throughout this page is a minimal
+example for voters.
 
 .. tip::
 
@@ -15,10 +29,7 @@ specific user edit the given item?"). This article explains voters in detail.
     :doc:`authorization </components/security/authorization>`
     article for an even deeper understanding on voters.
 
-How Symfony Uses Voters
------------------------
-
-In order to use voters, you have to understand how Symfony works with them.
+Here's how Symfony works with voters:
 All voters are called each time you use the ``isGranted()`` method on Symfony's
 authorization checker or call ``denyAccessUnlessGranted()`` in a controller (which
 uses the authorization checker), or by
