@@ -19,7 +19,7 @@ Transport Setup
 ---------------
 
 Emails are delivered via a "transport". Out of the box, you can deliver emails
-over SMTP by configuring the DNS in your ``.env`` file (the ``user``,
+over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
 ``pass`` and ``port`` parameters are optional):
 
 .. code-block:: env
@@ -83,7 +83,7 @@ transport, but you can force to use one:
     # force to use SMTP instead of HTTP (which is the default)
     MAILER_DSN=sendgrid+smtp://$SENDGRID_KEY@default
 
-This table shows the full list of available DNS formats for each third
+This table shows the full list of available DSN formats for each third
 party provider:
 
 ==================== ========================================== =========================================== ========================================

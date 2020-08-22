@@ -171,7 +171,7 @@ Finally, you need to update the code of the controller that handles the form::
 
                 // ... persist the $product variable or any other work
 
-                return $this->redirect($this->generateUrl('app_product_list'));
+                return $this->redirectToRoute('app_product_list');
             }
 
             return $this->render('product/new.html.twig', [

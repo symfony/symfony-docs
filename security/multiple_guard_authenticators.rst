@@ -27,7 +27,8 @@ This is how your security configuration can look in action:
             # ...
             firewalls:
                 default:
-                    anonymous: lazy
+                    anonymous: true
+                    lazy: true
                     guard:
                         authenticators:
                             - App\Security\LoginFormAuthenticator
@@ -48,8 +49,7 @@ This is how your security configuration can look in action:
 
             <config>
                 <!-- ... -->
-                <firewall name="default">
-                    <anonymous lazy="true"/>
+                <firewall name="default" anonymous="true" lazy="true">
                     <guard entry-point="App\Security\LoginFormAuthenticator">
                         <authenticator>App\Security\LoginFormAuthenticator</authenticator>
                         <authenticator>App\Security\FacebookConnectAuthenticator</authenticator>
@@ -68,7 +68,8 @@ This is how your security configuration can look in action:
             // ...
             'firewalls' => [
                 'default' => [
-                    'anonymous' => 'lazy',
+                    'anonymous' => true,
+                    'lazy' => true,
                     'guard' => [
                         'entry_point' => LoginFormAuthenticator::class,
                         'authenticators' => [
@@ -105,7 +106,8 @@ the solution is to split the configuration into two separate firewalls:
                         authenticators:
                             - App\Security\ApiTokenAuthenticator
                 default:
-                    anonymous: lazy
+                    anonymous: true
+                    lazy: true
                     guard:
                         authenticators:
                             - App\Security\LoginFormAuthenticator
@@ -133,8 +135,7 @@ the solution is to split the configuration into two separate firewalls:
                         <authenticator>App\Security\ApiTokenAuthenticator</authenticator>
                     </guard>
                 </firewall>
-                <firewall name="default">
-                    <anonymous lazy="true"/>
+                <firewall name="default" anonymous="true" lazy="true">
                     <guard>
                         <authenticator>App\Security\LoginFormAuthenticator</authenticator>
                     </guard>
@@ -163,7 +164,8 @@ the solution is to split the configuration into two separate firewalls:
                     ],
                 ],
                 'default' => [
-                    'anonymous' => 'lazy',
+                    'anonymous' => true,
+                    'lazy' => true,
                     'guard' => [
                         'authenticators' => [
                             LoginFormAuthenticator::class,

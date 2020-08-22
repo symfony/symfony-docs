@@ -99,12 +99,13 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
         security:
             # ...
 
-            providers:
-                # ...
-                logout:
-                    path: app_logout
-                    # where to redirect after logout
-                    # target: app_any_route
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        path: app_logout
+                        # where to redirect after logout
+                        # target: app_any_route
 
     .. code-block:: xml
 
@@ -119,8 +120,11 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
-                <rule path="^/login$" role="IS_AUTHENTICATED_ANONYMOUSLY"/>
                 <!-- ... -->
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout path="app_logout"/>
+                </firewall>
             </config>
         </srv:container>
 
@@ -129,12 +133,15 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
         // config/packages/security.php
         $container->loadFromExtension('security', [
             // ...
-            'access_control' => [
-                [
-                    'path' => '^/login',
-                    'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+            'firewalls' => [
+                'main' => [
+                    // ...
+                    'logout' => [
+                        'path' => 'app_logout',
+                        // where to redirect after logout
+                        'target' => 'app_any_route'
+                    ],
                 ],
-                // ...
             ],
         ]);
 

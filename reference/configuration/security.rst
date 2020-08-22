@@ -540,6 +540,14 @@ the current firewall and not the other ones.
 
 .. _reference-security-logout-success-handler:
 
+``path``
+~~~~~~~~
+
+**type**: ``string`` **default**: ``/logout``
+
+The path which triggers logout. If you change it from the default value ``/logout``,
+you need to set up a route with a matching path.
+
 success_handler
 ~~~~~~~~~~~~~~~
 

@@ -336,7 +336,7 @@ the compiling and warming up of the container:
 
 .. code-block:: terminal
 
-    $ debug:container --deprecations
+    $ php bin/console debug:container --deprecations
 
 .. versionadded:: 5.1
 
