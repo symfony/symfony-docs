@@ -136,12 +136,12 @@ integration with these chat services:
 ==========  ================================  ============================================================================
 Service     Package                           DSN
 ==========  ================================  ============================================================================
-Slack       ``symfony/slack-notifier``       ``slack://default/ID``
-Telegram    ``symfony/telegram-notifier``    ``telegram://TOKEN@default?channel=CHAT_ID``
+Slack       ``symfony/slack-notifier``        ``slack://default/ID``
+Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
 GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
-Mattermost  ``symfony/mattermost-notifier``  ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
-RocketChat  ``symfony/rocketchat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-Zulip       ``symfony/zulip-notifier``       ``zulip://EMAIL:APIKEY@ENDPOINT?channel=CHANNEL``
+Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
+RocketChat  ``symfony/rocketchat-notifier``   ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:APIKEY@ENDPOINT?channel=CHANNEL``
 ==========  ================================  ============================================================================
 
 .. versionadded:: 5.1
