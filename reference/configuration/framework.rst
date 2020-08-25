@@ -167,6 +167,8 @@ Configuration
 * `property_access`_
 
   * `magic_call`_
+  * `magic_get`_
+  * `magic_set`_
   * `throw_exception_on_invalid_index`_
   * `throw_exception_on_invalid_property_path`_
 
@@ -2126,6 +2128,32 @@ magic_call
 When enabled, the ``property_accessor`` service uses PHP's
 :ref:`magic __call() method <components-property-access-magic-call>` when
 its ``getValue()`` method is called.
+
+magic_get
+.........
+
+**type**: ``boolean`` **default**: ``true``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __get() method <components-property-access-magic-get>` when
+its ``getValue()`` method is called.
+
+.. versionadded:: 5.2
+
+    The magic `magic_get` option was introduced in Symfony 5.2.
+
+magic_set
+.........
+
+**type**: ``boolean`` **default**: ``true``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __set() method <components-property-access-writing-to-objects>` when
+its ``setValue()`` method is called.
+
+.. versionadded:: 5.2
+
+    The magic `magic_set` option was introduced in Symfony 5.2.
 
 throw_exception_on_invalid_index
 ................................
