@@ -134,7 +134,7 @@ Service     Package                          DSN
 Slack       ``symfony/slack-notifier``       ``slack://default/ID``
 Telegram    ``symfony/telegram-notifier``    ``telegram://TOKEN@default?channel=CHAT_ID``
 Mattermost  ``symfony/mattermost-notifier``  ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
-RocketChat  ``symfony/rocketchat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+RocketChat  ``symfony/rocket-chat-notifier`` ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 ==========  ===============================  ============================================
 
 .. versionadded:: 5.1
