@@ -57,12 +57,12 @@ with a couple popular SMS services:
 ==========  ================================  ====================================================
 Service     Package                           DSN
 ==========  ================================  ====================================================
-Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
-Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
-OvhCloud    ``symfony/ovhcloud-notifier``     ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
-Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-Smsapi      ``symfony/smsapi-notifier``       ``smsapi://TOKEN@default?from=FROM``
+Twilio      ``symfony/twilio-notifier``        ``twilio://SID:TOKEN@default?from=FROM``
+Nexmo       ``symfony/nexmo-notifier``         ``nexmo://KEY:SECRET@default?from=FROM``
+OvhCloud    ``symfony/ovhcloud-notifier``      ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+Sinch       ``symfony/sinch-notifier``         ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+FreeMobile  ``symfony/free-mobile-notifier``   ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+Smsapi      ``symfony/smsapi-notifier``        ``smsapi://TOKEN@default?from=FROM``
 ==========  ================================  ====================================================
 
 .. versionadded:: 5.1
