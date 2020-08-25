@@ -128,14 +128,14 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==========  ===============================  ============================================
-Service     Package                          DSN
-==========  ===============================  ============================================
-Slack       ``symfony/slack-notifier``       ``slack://default/ID``
-Telegram    ``symfony/telegram-notifier``    ``telegram://TOKEN@default?channel=CHAT_ID``
-Mattermost  ``symfony/mattermost-notifier``  ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
-RocketChat  ``symfony/rocket-chat-notifier`` ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-==========  ===============================  ============================================
+==========  ================================  ============================================
+Service     Package                           DSN
+==========  ================================  ============================================
+Slack       ``symfony/slack-notifier``        ``slack://default/ID``
+Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
+Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
+RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+==========  ================================  ============================================
 
 .. versionadded:: 5.1
 
