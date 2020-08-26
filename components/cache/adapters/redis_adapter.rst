@@ -188,6 +188,20 @@ Available Options
     When using the `Predis`_ library some additional Predis-specific options are available.
     Reference the `Predis Connection Parameters`_ documentation for more information.
 
+.. _redis-tag-aware:
+
+Working with Tags
+-----------------
+
+In order to use tag-based invalidation, you can wrap your adapter in :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, but when Redis is used as backend, it's often more interesting to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag invalidation logic is implemented in Redis itself, this adapter offers better performance when using tag-based invalidation::
+
+    use Symfony\Component\Cache\Adapter\RedisAdapter;
+    use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;
+
+    $client = RedisAdapter::createConnection('redis://localhost');
+    $cache = new RedisTagAwareAdapter($client);
+
+
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Redis server`: https://redis.io/
 .. _`Redis`: https://github.com/phpredis/phpredis
