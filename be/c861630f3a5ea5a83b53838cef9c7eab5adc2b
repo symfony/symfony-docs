@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-04-10T09:10:23Z
+
+friendly ping @weaverryan 😄
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2020-04-22T10:16:50Z
+
+Sorry I missed this. It makes total sense. When we have duplicated sections like this, we can isolate that section into its own file and use `include::` to include it - see `reference/constraints/Choice.rst` for an option it includes `/reference/constraints/_payload-option.rst.inc` (we always end the included files in .inc so that they are not parsed as standalone files). Could you isolate this section into a .inc file and include from both documents?
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-08-17T21:14:56Z
+
+poke @weaverryan or @wouterj  😉
