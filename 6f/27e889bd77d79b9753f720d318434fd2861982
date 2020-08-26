@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-08-26T07:46:17Z
+
+Could you please add a `versionadded` directive?
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-08-26T08:31:38Z
+
+@OskarStark the code PR ~is going to be backported~ is backported on 3.4 (https://github.com/symfony/symfony/pull/37952)
+
+so maybe i will rebase on 3.4, and i will add it at this moment :)
