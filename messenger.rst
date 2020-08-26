@@ -725,6 +725,15 @@ and should not be retried. If you throw
 :class:`Symfony\\Component\\Messenger\\Exception\\UnrecoverableMessageHandlingException`,
 the message will not be retried.
 
+
+Forcing Retrying
+~~~~~~~~~~~~~~~~
+
+Sometimes handling a message must fail in a way that you *know* is temporary
+and must be retried. If you throw
+:class:`Symfony\\Component\\Messenger\\Exception\\RecoverableMessageHandlingException`,
+the message will always be retried.
+
 .. _messenger-failure-transport:
 
 Saving & Retrying Failed Messages
