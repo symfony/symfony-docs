@@ -188,7 +188,7 @@ Available Options
     When using the `Predis`_ library some additional Predis-specific options are available.
     Reference the `Predis Connection Parameters`_ documentation for more information.
 
-.. _redis-tag-aware:
+.. _redis-tag-aware-adapter:
 
 Working with Tags
 -----------------

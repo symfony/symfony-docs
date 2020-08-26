@@ -60,7 +60,8 @@ method.
 
 .. note::
 
-    When using a Redis backend, consider using :ref:`RedisTagAwareAdapter <redis-tag-aware>` which is optimized for this purpose.
+    When using a Redis backend, consider using :ref:`RedisTagAwareAdapter <redis-tag-aware-adapter>`
+    which is optimized for this purpose.
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter` class implements
 instantaneous invalidation (time complexity is ``O(N)`` where ``N`` is the number
