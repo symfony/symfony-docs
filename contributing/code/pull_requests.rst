@@ -196,6 +196,8 @@ want to debug are installed by running ``composer install`` inside it.
     If symlinks to your local Symfony fork cannot be resolved inside your project due to 
     your dev environment (for instance when using Vagrant where only the current project 
     directory is mounted), you can alternatively use the ``--copy`` option.
+    When finishing testing your Symfony code into your project, you can use
+    the ``--rollback`` option to make your project back to its original dependencies.
 
 .. _work-on-your-patch:
 
