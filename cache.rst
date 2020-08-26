@@ -102,6 +102,11 @@ The Cache component comes with a series of adapters pre-configured:
 * :doc:`cache.adapter.pdo </components/cache/adapters/pdo_doctrine_dbal_adapter>`
 * :doc:`cache.adapter.psr6 </components/cache/adapters/proxy_adapter>`
 * :doc:`cache.adapter.redis </components/cache/adapters/redis_adapter>`
+* :ref:`cache.adapter.redis_tag_aware <redis-tag-aware-adapter>` (Redis adapter optimized to work with tags)
+
+.. versionadded:: 5.2
+
+    ``cache.adapter.redis_tag_aware`` has been introduced in Symfony 5.2.
 
 Some of these adapters could be configured via shortcuts. Using these shortcuts
 will create pools with service IDs that follow the pattern ``cache.[type]``.
