@@ -350,25 +350,11 @@ support blocking, and expects a TTL to avoid stalled locks::
 
     This store does not support TTL lower than 1 second.
 
-Before storing locks in the database, you must create the table that stores
-the information. The store provides a method called
-:method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable`
-to set up this table for you according to the database engine used::
-
-    try {
-        $store->createTable();
-    } catch (\PDOException $exception) {
-        // the table could not be created for some reason
-    }
-
-A great way to set up the table in production is to call the ``createTable()``
-method in your local computer and then generate a
-:ref:`database migration <doctrine-creating-the-database-tables-schema>`:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:migrations:diff
-    $ php bin/console doctrine:migrations:migrate
+The table where values are stored is created automatically on the first call to
+the :method:`Symfony\\Component\\Lock\\Store\\PdoStore::save` method.
+You can also create this table explicitly by calling the
+:method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
+your code.
 
 .. _lock-store-redis:
 
