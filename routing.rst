@@ -1881,7 +1881,7 @@ Now, if the session is used, the application will report it based on your
 * ``enabled``: will throw an :class:`Symfony\\Component\\HttpKernel\\Exception\\UnexpectedSessionUsageException` exception
 * ``disabled``: will log a warning
 
-It will help you in understanding and hopefully fixing unexpected behavior in your application.
+It will help you understand and hopefully fixing unexpected behavior in your application.
 
 .. _routing-generating-urls:
 
