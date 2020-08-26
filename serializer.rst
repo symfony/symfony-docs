@@ -250,7 +250,8 @@ You can now choose which groups to use when serializing::
 
     $json = $serializer->serialize(
         $product,
-        'json', ['groups' => 'show_product']
+        'json',
+        ['groups' => 'show_product']
     );
 
 In addition to the ``@Groups`` annotation, the Serializer component also
