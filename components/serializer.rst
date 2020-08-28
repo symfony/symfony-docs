@@ -413,8 +413,81 @@ As for groups, attributes can be selected during both the serialization and dese
 Ignoring Attributes
 -------------------
 
-As an option, there's a way to ignore attributes from the origin object.
-To remove those attributes provide an array via the ``AbstractNormalizer::IGNORED_ATTRIBUTES``
+All attributes are included by default when serializing objects. You have two alternatives to ignore some of those attributes.
+
+* `Option 1: Using @Ignore annotation`_
+* `Option 2: Using the context`_
+
+Option 1: Using ``@Ignore`` annotation
+--------------------------------------
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\Ignore;
+
+        class MyClass
+        {
+            public $foo;
+
+            /**
+             * @Ignore()
+             */
+            public $bar;
+        }
+
+    .. code-block:: yaml
+
+        App\Model\MyClass:
+            attributes:
+                foo:
+                    ignore: false
+                bar:
+                    ignore: true
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Model\MyClass">
+                <attribute name="foo">
+                    <ignore>false</ignore>
+                </attribute>
+
+                <attribute name="bar">
+                    <ignore>true</ignore>
+                </attribute>
+            </class>
+        </serializer>
+
+You are now able to ignore specific attributes during serialization::
+
+    use App\Model\MyClass;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $obj = new MyClass();
+    $obj->foo = 'foo';
+    $obj->bar = 'bar';
+
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $serializer = new Serializer([$normalizer]);
+
+    $data = $serializer->normalize($obj);
+    // $data = ['foo' => 'foo'];
+
+
+Option 2: Using the context
+---------------------------
+
+By providing an array via the ``AbstractNormalizer::IGNORED_ATTRIBUTES``
 key in the ``context`` parameter of the desired serializer method::
 
     use Acme\Person;
