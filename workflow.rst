@@ -265,6 +265,39 @@ registry in the constructor::
         }
     }
 
+Or use the typed + named parameter injection::
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\WorkflowInterface;
+
+    class MyClass
+    {
+        private $blogPostWorkflow;
+
+        public function __construct(WorkflowInterface $blogPostWorkflow)
+        {
+            $this->blogPostWorkflow = $blogPostWorkflow;
+        }
+
+        public function toReview(BlogPost $post)
+        {
+            // Update the currentState on the post
+            try {
+                $this->blogPostWorkflow->apply($post, 'to_review');
+            } catch (LogicException $exception) {
+                // ...
+            }
+            // ...
+        }
+    }
+
+.. tip::
+
+    You can find the list of available services with the following command::
+
+    php bin/console  debug:autowiring workflow
+
+
 Using Events
 ------------
 
@@ -665,7 +698,7 @@ of domain logic in your templates:
 
 ``workflow_has_marked_place()``
     Returns ``true`` if the marking of the given object has the given state.
-    
+
 ``workflow_transition_blockers()``
     Returns :class:`Symfony\\Component\\Workflow\\TransitionBlockerList` for the given transition.
 
@@ -700,7 +733,7 @@ The following example shows these functions in action:
     {% if 'reviewed' in workflow_marked_places(post) %}
         <span class="label">Reviewed</span>
     {% endif %}
-    
+
     {# Loop through the transition blockers #}
     {% for blocker in workflow_transition_blockers(post, 'publish') %}
         <span class="error">{{ blocker.message }}</span>
@@ -869,7 +902,7 @@ In a :ref:`flash message <flash-messages>` in your controller::
 
     // $transition = ...; (an instance of Transition)
 
-    // $workflow is a Workflow instance retrieved from the Registry (see above)
+    // $workflow is a Workflow instance retrieved from the Registry or injected directly (see above)
     $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
     $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
