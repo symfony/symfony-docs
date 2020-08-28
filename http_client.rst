@@ -1373,6 +1373,82 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 
     $mockResponse = new MockResponse($body());
 
+Using the Symfony Framework, if you want to use your callback in functional tests, you can do as follow:
+
+First, create an invokable or iterable class responsible of generating the response::
+
+    namespace App\Tests;
+
+    use Symfony\Contracts\HttpClient\ResponseInterface;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    class MockClientCallback
+    {
+        public function __invoke(string $method, string $url, array $options = []): ResponseInterface
+        {
+            // load a fixture file or generate data
+            // ...
+            return new MockResponse($data);
+        }
+    }
+
+Then configure the framework to use your callback:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services_test.yaml
+        services:
+            # ...
+            App\Tests\MockClientCallback: ~
+
+        # config/packages/test/framework.yaml
+        framework:
+            http_client:
+                mock_response_factory: App\Tests\MockClientCallback
+
+    .. code-block:: xml
+
+        <!-- config/services_test.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Tests\MockClientCallback"/>
+            </services>
+        </container>
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client mock-response-factory="App\Tests\MockClientCallback">
+                    <!-- ... -->
+                </framework-http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'mock_response_factory' => MockClientCallback::class,
+            ],
+        ]);
+
+
+The ``MockHttpClient`` will now be used in test environment with your callback to generate responses.
+
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
