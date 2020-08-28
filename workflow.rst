@@ -293,10 +293,7 @@ Or use the typed + named parameter injection::
 
 .. tip::
 
-    You can find the list of available services with the following command::
-
-    php bin/console  debug:autowiring workflow
-
+    You can find the list of available services with the following command ``php bin/console  debug:autowiring workflow``
 
 Using Events
 ------------
