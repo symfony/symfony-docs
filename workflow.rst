@@ -858,14 +858,14 @@ Then you can access this metadata in your controller as follows::
 
 There is a ``getMetadata()`` method that works with all kinds of metadata::
 
-    // pass no arguments to getMetadata() to get "workflow metadata"
-    $title = $workflow->getMetadataStore()->getMetadata()['title'];
+    // pass a string (the key of workflow metadata) to getMetadata() to get "workflow metadata" by key
+    $title = $workflow->getMetadataStore()->getMetadata('title');
 
-    // pass a string (the place name) to getMetadata() to get "place metadata"
-    $maxNumOfWords = $workflow->getMetadataStore()->getMetadata('draft')['max_num_of_words'];
+    // pass two arguments: a string (the key of place metadata) and a string (the place name) to getMetadata() to get "place metadata" by key
+    $maxNumOfWords = $workflow->getMetadataStore()->getMetadata('max_num_of_words', 'draft');
 
-    // pass a Transition object to getMetadata() to get "transition metadata"
-    $priority = $workflow->getMetadataStore()->getMetadata($aTransition)['priority'];
+    // pass two arguments: a string (the key of transition metadata) and a Transition object to getMetadata() to get "transition metadata" by key
+    $priority = $workflow->getMetadataStore()->getMetadata('priority', $aTransition);
 
 In a :ref:`flash message <flash-messages>` in your controller::
 
