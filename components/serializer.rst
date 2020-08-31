@@ -419,7 +419,7 @@ All attributes are included by default when serializing objects. You have two al
 * `Option 2: Using the context`_
 
 Option 1: Using ``@Ignore`` annotation
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
 
@@ -485,7 +485,7 @@ You are now able to ignore specific attributes during serialization::
 
 
 Option 2: Using the context
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By providing an array via the ``AbstractNormalizer::IGNORED_ATTRIBUTES``
 key in the ``context`` parameter of the desired serializer method::
