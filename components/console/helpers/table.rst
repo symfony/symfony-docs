@@ -393,3 +393,36 @@ This will display the following table in the terminal:
     | Love    |
     | Symfony |
     +---------+
+
+.. versionadded:: 5.2
+
+Styling of table cells
+----------------------
+
+You can customize a table cell via :class:`Symfony\\Component\\Console\\Helper\\TableCellStyle`::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableCellStyle;
+
+    $table = new Table($output);
+
+    $table->setRows([
+        [
+            '978-0804169127',
+            new TableCell(
+                'Divine Comedy',
+                [
+                    'style' => new TableCellStyle([
+                        'align' => 'center',
+                        'fg' => 'red',
+                        'bg' => 'green',
+
+                        // or
+                        'cellFormat' => '<info>%s</info>',
+                    ])
+                ]
+            )
+        ],
+    ]);
+
+    $table->render();
