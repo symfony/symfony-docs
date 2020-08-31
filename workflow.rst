@@ -351,14 +351,6 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
-    You can avoid triggering those events by using the context::
-
-        $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
-
-    .. versionadded:: 5.1
-
-        The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
-
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
@@ -451,6 +443,163 @@ missing a title::
 .. versionadded:: 5.1
 
     The optional second argument of ``setBlocked()`` was introduced in Symfony 5.1.
+
+Choosing which Events to Dispatch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    Ability to choose which events to dispatch was introduced in Symfony 5.2.
+
+You are able to specify which events (does not apply to Guard event) will be
+fired when performing each transition by passing an array of workflow events
+to the ``events_to_dispatch`` configuration option.
+
+Valid options for ``events_to_dispatch`` are:
+
+    * ``null`` - all events are dispatched
+    * ``[]`` - no events are dispatched
+    * ``['workflow.leave', 'workflow.completed']`` - only specific events are dispatched
+
+.. note::
+
+    Guard Events are still dispatched in all instances.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # ...
+                    events_to_dispatch: ['workflow.leave', 'workflow.completed']
+                    # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:workflow name="blog_publishing">
+                    <!-- ... -->
+                    <framework:event-to-dispatch>workflow.leave</framework:event-to-dispatch>
+                    <framework:event-to-dispatch>workflow.completed</framework:event-to-dispatch>
+                    <!-- ... -->
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        $container->loadFromExtension('framework', [
+            // ...
+            'workflows' => [
+                'blog_publishing' => [
+                    // ...
+                    'events_to_dispatch' => [
+                        'workflow.leave',
+                        'workflow.completed',
+                    ],
+                    // ...
+                ],
+            ],
+        ]);
+
+To specify that no events will be dispatched pass an empty array to the
+configuration option.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # ...
+                    events_to_dispatch: []
+                    # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://symfony.com/schema/dic/symfony
+            https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:workflow name="blog_publishing">
+                    <!-- ... -->
+                    <framework:event-to-dispatch></framework:event-to-dispatch>
+                    <!-- ... -->
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        $container->loadFromExtension('framework', [
+            // ...
+            'workflows' => [
+                'blog_publishing' => [
+                    // ...
+                    'events_to_dispatch' => [],
+                    // ...
+                ],
+            ],
+        ]);
+
+You are also able to explicitly disable a specific event from being fired
+when applying a transition::
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Exception\LogicException;
+
+    $post = new BlogPost();
+
+    $workflow = $this->container->get('workflow.blog_publishing');
+
+    try {
+        $workflow->apply($post, 'to_review', [
+            Workflow::DISABLE_ANNOUNCE_EVENT => true,
+            Workflow::DISABLE_LEAVE_EVENT => true,
+        ]);
+    } catch (LogicException $exception) {
+        // ...
+    }
+
+Choosing to disable an event for a specific transition will take precedence
+over any events specified in the workflow configuration. In the above example
+the ``workflow.leave`` event will not be fired, even if it has been specified
+as an event to be dispatched for all transitions in the workflow configuration.
+
+.. versionadded:: 5.1
+
+    The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
+
+.. versionadded:: 5.2
+
+    The constants for other events (as seen below) were introduced in Symfony 5.2.
+
+    * ``Workflow::DISABLE_LEAVE_EVENT``
+    * ``Workflow::DISABLE_TRANSITION_EVENT``
+    * ``Workflow::DISABLE_ENTER_EVENT``
+    * ``Workflow::DISABLE_ENTERED_EVENT``
+    * ``Workflow::DISABLE_COMPLETED_EVENT``
 
 Event Methods
 ~~~~~~~~~~~~~
@@ -665,7 +814,7 @@ of domain logic in your templates:
 
 ``workflow_has_marked_place()``
     Returns ``true`` if the marking of the given object has the given state.
-    
+
 ``workflow_transition_blockers()``
     Returns :class:`Symfony\\Component\\Workflow\\TransitionBlockerList` for the given transition.
 
@@ -700,7 +849,7 @@ The following example shows these functions in action:
     {% if 'reviewed' in workflow_marked_places(post) %}
         <span class="label">Reviewed</span>
     {% endif %}
-    
+
     {# Loop through the transition blockers #}
     {% for blocker in workflow_transition_blockers(post, 'publish') %}
         <span class="error">{{ blocker.message }}</span>
