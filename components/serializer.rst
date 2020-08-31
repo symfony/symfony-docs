@@ -443,8 +443,6 @@ Option 1: Using ``@Ignore`` annotation
 
         App\Model\MyClass:
             attributes:
-                foo:
-                    ignore: false
                 bar:
                     ignore: true
 
@@ -457,10 +455,6 @@ Option 1: Using ``@Ignore`` annotation
                 https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\MyClass">
-                <attribute name="foo">
-                    <ignore>false</ignore>
-                </attribute>
-
                 <attribute name="bar">
                     <ignore>true</ignore>
                 </attribute>
