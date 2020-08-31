@@ -217,7 +217,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
 .. versionadded:: 5.2
 
-    The magic `__get` method can be disabled since in Symfony 5.2.
+    The magic ``__get()`` method can be disabled since in Symfony 5.2.
     see `Enable other Features`_.
 
 .. _components-property-access-magic-call:
@@ -362,7 +362,7 @@ see `Enable other Features`_::
 
 .. versionadded:: 5.2
 
-    The magic `__set` method can be disabled since in Symfony 5.2.
+    The magic ``__set()`` method can be disabled since in Symfony 5.2.
     see `Enable other Features`_.
 
 Writing to Array Properties

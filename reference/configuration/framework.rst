@@ -2140,7 +2140,7 @@ its ``getValue()`` method is called.
 
 .. versionadded:: 5.2
 
-    The magic `magic_get` option was introduced in Symfony 5.2.
+    The ``magic_get`` option was introduced in Symfony 5.2.
 
 magic_set
 .........
@@ -2153,7 +2153,7 @@ its ``setValue()`` method is called.
 
 .. versionadded:: 5.2
 
-    The magic `magic_set` option was introduced in Symfony 5.2.
+    The ``magic_set`` option was introduced in Symfony 5.2.
 
 throw_exception_on_invalid_index
 ................................
