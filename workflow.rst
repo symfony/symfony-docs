@@ -451,19 +451,9 @@ Choosing which Events to Dispatch
 
     Ability to choose which events to dispatch was introduced in Symfony 5.2.
 
-You are able to specify which events (does not apply to Guard event) will be
-fired when performing each transition by passing an array of workflow events
-to the ``events_to_dispatch`` configuration option.
-
-Valid options for ``events_to_dispatch`` are:
-
-    * ``null`` - all events are dispatched
-    * ``[]`` - no events are dispatched
-    * ``['workflow.leave', 'workflow.completed']`` - only specific events are dispatched
-
-.. note::
-
-    Guard Events are still dispatched in all instances.
+If you prefer to control which events are fired when performing each transition,
+use the ``events_to_dispatch`` configuration option. This option does not apply
+to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
 
 .. configuration-block::
 
@@ -473,8 +463,12 @@ Valid options for ``events_to_dispatch`` are:
         framework:
             workflows:
                 blog_publishing:
-                    # ...
+                    # you can pass one or more event names
                     events_to_dispatch: ['workflow.leave', 'workflow.completed']
+
+                    # pass an empty array to not dispatch any event
+                    events_to_dispatch: []
+
                     # ...
 
     .. code-block:: xml
@@ -489,9 +483,13 @@ Valid options for ``events_to_dispatch`` are:
         >
             <framework:config>
                 <framework:workflow name="blog_publishing">
-                    <!-- ... -->
+                    <!-- you can pass one or more event names -->
                     <framework:event-to-dispatch>workflow.leave</framework:event-to-dispatch>
                     <framework:event-to-dispatch>workflow.completed</framework:event-to-dispatch>
+
+                    <!-- pass an empty array to not dispatch any event -->
+                    <framework:event-to-dispatch></framework:event-to-dispatch>
+
                     <!-- ... -->
                 </framework:workflow>
             </framework:config>
@@ -504,67 +502,21 @@ Valid options for ``events_to_dispatch`` are:
             // ...
             'workflows' => [
                 'blog_publishing' => [
-                    // ...
+                    // you can pass one or more event names
                     'events_to_dispatch' => [
                         'workflow.leave',
                         'workflow.completed',
                     ],
-                    // ...
-                ],
-            ],
-        ]);
 
-To specify that no events will be dispatched pass an empty array to the
-configuration option.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/workflow.yaml
-        framework:
-            workflows:
-                blog_publishing:
-                    # ...
-                    events_to_dispatch: []
-                    # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/workflow.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd
-            http://symfony.com/schema/dic/symfony
-            https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <framework:workflow name="blog_publishing">
-                    <!-- ... -->
-                    <framework:event-to-dispatch></framework:event-to-dispatch>
-                    <!-- ... -->
-                </framework:workflow>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/workflow.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'workflows' => [
-                'blog_publishing' => [
-                    // ...
+                    // pass an empty array to not dispatch any event
                     'events_to_dispatch' => [],
+
                     // ...
                 ],
             ],
         ]);
 
-You are also able to explicitly disable a specific event from being fired
-when applying a transition::
+You can also disable a specific event from being fired when applying a transition::
 
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Exception\LogicException;
@@ -582,10 +534,10 @@ when applying a transition::
         // ...
     }
 
-Choosing to disable an event for a specific transition will take precedence
-over any events specified in the workflow configuration. In the above example
-the ``workflow.leave`` event will not be fired, even if it has been specified
-as an event to be dispatched for all transitions in the workflow configuration.
+Disabling an event for a specific transition will take precedence over any
+events specified in the workflow configuration. In the above example the
+``workflow.leave`` event will not be fired, even if it has been specified as an
+event to be dispatched for all transitions in the workflow configuration.
 
 .. versionadded:: 5.1
 
