@@ -188,7 +188,7 @@ that different paths were handled by different PHP files.
 In any case you have to create a ``public/index.php`` that will start
 your Symfony application by either copying the file from the
 ``FrameworkBundle``-recipe or by using Flex and requiring the
-FrameworkBundle. You will also likely have to update you web server
+FrameworkBundle. You will also likely have to update your web server
 (e.g. Apache or nginx) to always use this front controller. You can
 look at :doc:`Web Server Configuration </setup/web_server_configuration>`
 for examples on how this might look. For example when using Apache you can

@@ -293,9 +293,9 @@ string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
 
-.. versionadded:: 5.1
+.. versionadded:: 4.4
 
-    Support for typed properties (added in PHP 7.4) was introduced in Symfony 5.1.
+    Support for typed properties (added in PHP 7.4) was introduced in Symfony 4.4.
 
 ``Type::isNullable()``
 ~~~~~~~~~~~~~~~~~~~~~~

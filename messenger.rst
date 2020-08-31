@@ -1491,7 +1491,7 @@ for each bus looks like this:
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
    message was dispatched into;
 
-#. ``dispatch_after_current_bus``- see :doc:`/messenger/message-recorder`;
+#. ``dispatch_after_current_bus``- see :doc:`/messenger/dispatch_after_current_bus`;
 
 #. ``failed_message_processing_middleware`` - processes messages that are being
    retried via the :ref:`failure transport <messenger-failure-transport>` to make
