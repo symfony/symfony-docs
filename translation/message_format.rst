@@ -96,6 +96,8 @@ typical usage of this is gender:
     .. code-block:: yaml
 
         # translations/messages+intl-icu.en.yaml
+
+        # the 'other' key is required, and is selected if no other case matches
         invitation_title: >-
             {organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
@@ -112,6 +114,7 @@ typical usage of this is gender:
                 <body>
                     <trans-unit id="invitation_title">
                         <source>invitation_title</source>
+                        <!-- the 'other' key is required, and is selected if no other case matches -->
                         <target>{organizer_gender, select,
                             female {{organizer_name} has invited you for her party!}
                             male {{organizer_name} has invited you for his party!}
@@ -126,6 +129,7 @@ typical usage of this is gender:
 
         // translations/messages+intl-icu.en.php
         return [
+            // the 'other' key is required, and is selected if no other case matches
             'invitation_title' => '{organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
                 male   {{organizer_name} has invited you for his party!}
