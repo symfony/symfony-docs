@@ -506,3 +506,4 @@
 /frontend/encore/versus-assetic /frontend
 /components/http_client /http_client
 /components/mailer /mailer
+/messenger/message-recorder messenger/dispatch_after_current_bus
