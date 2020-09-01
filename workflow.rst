@@ -236,8 +236,34 @@ what actions are allowed on a blog post::
 Accessing the Workflow in a Class
 ---------------------------------
 
-To access workflow inside a class, use dependency injection and inject the
-registry in the constructor::
+To access workflow inside a class, use dependency injection and inject the typed + named parameter injection in the constructor::
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\WorkflowInterface;
+
+    class MyClass
+    {
+        private $blogPublishingWorkflow;
+
+        public function __construct(WorkflowInterface $blogPublishingWorkflow)
+        {
+            $this->blogPublishingWorkflow = $blogPublishingWorkflow;
+        }
+
+        public function toReview(BlogPost $post)
+        {
+            // Update the currentState on the post
+            try {
+                $this->blogPublishingWorkflow->apply($post, 'to_review');
+            } catch (LogicException $exception) {
+                // ...
+            }
+            // ...
+        }
+    }
+
+
+Or use the registry::
 
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
@@ -253,37 +279,11 @@ registry in the constructor::
 
         public function toReview(BlogPost $post)
         {
-            $workflow = $this->workflowRegistry->get($post);
+            $blogPublishingWorkflow = $this->workflowRegistry->get($post);
 
             // Update the currentState on the post
             try {
-                $workflow->apply($post, 'to_review');
-            } catch (LogicException $exception) {
-                // ...
-            }
-            // ...
-        }
-    }
-
-Or use the typed + named parameter injection::
-
-    use App\Entity\BlogPost;
-    use Symfony\Component\Workflow\WorkflowInterface;
-
-    class MyClass
-    {
-        private $blogPostWorkflow;
-
-        public function __construct(WorkflowInterface $blogPostWorkflow)
-        {
-            $this->blogPostWorkflow = $blogPostWorkflow;
-        }
-
-        public function toReview(BlogPost $post)
-        {
-            // Update the currentState on the post
-            try {
-                $this->blogPostWorkflow->apply($post, 'to_review');
+                $blogPublishingWorkflow->apply($post, 'to_review');
             } catch (LogicException $exception) {
                 // ...
             }
@@ -293,7 +293,7 @@ Or use the typed + named parameter injection::
 
 .. tip::
 
-    You can find the list of available services with the following command ``php bin/console  debug:autowiring workflow``
+    You can find the list of available services with the following command ``php bin/console debug:autowiring workflow``
 
 Using Events
 ------------
@@ -861,20 +861,20 @@ Then you can access this metadata in your controller as follows::
     use Symfony\Component\Workflow\WorkflowInterface;
     // ...
 
-    public function myAction(WorkflowInterface $blogPostWorkflow, BlogPost $post)
+    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post)
     {
-        $title = $blogPostWorkflow
+        $title = $blogPublishingWorkflow
             ->getMetadataStore()
             ->getWorkflowMetadata()['title'] ?? 'Default title'
         ;
 
-        $maxNumOfWords = $blogPostWorkflow
+        $maxNumOfWords = $blogPublishingWorkflow
             ->getMetadataStore()
             ->getPlaceMetadata('draft')['max_num_of_words'] ?? 500
         ;
 
-        $aTransition = $blogPostWorkflow->getDefinition()->getTransitions()[0];
-        $priority = $blogPostWorkflow
+        $aTransition = $blogPublishingWorkflow->getDefinition()->getTransitions()[0];
+        $priority = $blogPublishingWorkflow
             ->getMetadataStore()
             ->getTransitionMetadata($aTransition)['priority'] ?? 0
         ;
