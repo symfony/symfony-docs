@@ -858,25 +858,23 @@ Then you can access this metadata in your controller as follows::
 
     // src/App/Controller/BlogPostController.php
     use App\Entity\BlogPost;
-    use Symfony\Component\Workflow\Registry;
+    use Symfony\Component\Workflow\WorkflowInterface;
     // ...
 
-    public function myAction(Registry $registry, BlogPost $post)
+    public function myAction(WorkflowInterface $blogPostWorkflow, BlogPost $post)
     {
-        $workflow = $registry->get($post);
-
-        $title = $workflow
+        $title = $blogPostWorkflow
             ->getMetadataStore()
             ->getWorkflowMetadata()['title'] ?? 'Default title'
         ;
 
-        $maxNumOfWords = $workflow
+        $maxNumOfWords = $blogPostWorkflow
             ->getMetadataStore()
             ->getPlaceMetadata('draft')['max_num_of_words'] ?? 500
         ;
 
-        $aTransition = $workflow->getDefinition()->getTransitions()[0];
-        $priority = $workflow
+        $aTransition = $blogPostWorkflow->getDefinition()->getTransitions()[0];
+        $priority = $blogPostWorkflow
             ->getMetadataStore()
             ->getTransitionMetadata($aTransition)['priority'] ?? 0
         ;
