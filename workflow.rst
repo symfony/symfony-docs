@@ -665,7 +665,7 @@ of domain logic in your templates:
 
 ``workflow_has_marked_place()``
     Returns ``true`` if the marking of the given object has the given state.
-    
+
 ``workflow_transition_blockers()``
     Returns :class:`Symfony\\Component\\Workflow\\TransitionBlockerList` for the given transition.
 
@@ -700,7 +700,7 @@ The following example shows these functions in action:
     {% if 'reviewed' in workflow_marked_places(post) %}
         <span class="label">Reviewed</span>
     {% endif %}
-    
+
     {# Loop through the transition blockers #}
     {% for blocker in workflow_transition_blockers(post, 'publish') %}
         <span class="error">{{ blocker.message }}</span>
@@ -856,14 +856,14 @@ Then you can access this metadata in your controller as follows::
 
 There is a ``getMetadata()`` method that works with all kinds of metadata::
 
-    // pass no arguments to getMetadata() to get "workflow metadata"
-    $title = $workflow->getMetadataStore()->getMetadata()['title'];
+    // get "workflow metadata" passing the metadata key as argument
+    $title = $workflow->getMetadataStore()->getMetadata('title');
 
-    // pass a string (the place name) to getMetadata() to get "place metadata"
-    $maxNumOfWords = $workflow->getMetadataStore()->getMetadata('draft')['max_num_of_words'];
+    // get "place metadata" passing the metadata key as the first argument and the place name as the second argument
+    $maxNumOfWords = $workflow->getMetadataStore()->getMetadata('max_num_of_words', 'draft');
 
-    // pass a Transition object to getMetadata() to get "transition metadata"
-    $priority = $workflow->getMetadataStore()->getMetadata($aTransition)['priority'];
+    // get "transition metadata" passing the metadata key as the first argument and a Transition object as the second argument
+    $priority = $workflow->getMetadataStore()->getMetadata('priority', $aTransition);
 
 In a :ref:`flash message <flash-messages>` in your controller::
 
