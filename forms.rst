@@ -548,11 +548,6 @@ corresponding errors printed out with the form. Read the
 :doc:`Symfony validation documentation </validation>` to learn more about this
 powerful feature.
 
-.. versionadded:: 5.2
-
-    Constraint message can contains ``{{ label }}`` placeholder that will be replaced
-    by corresponding form field label (in view of ``label_format`` option).
-
 Other Common Form Features
 --------------------------
 
