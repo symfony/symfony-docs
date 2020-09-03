@@ -13,9 +13,10 @@ However, if you don't reuse permissions or your rules are basic, you can always
 put that logic directly into your controller instead. Here's an example how
 this could look like, if you want to make a route accessible to the "owner" only::
 
-    // src/AppBundle/Controller/PostController.php
+    // src/Controller/PostController.php
     // ...
 
+    // inside your controller action
     if ($post->getOwner() !== $this->getUser()) {
         throw $this->createAccessDeniedException();
     }
