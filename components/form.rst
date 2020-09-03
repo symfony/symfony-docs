@@ -728,6 +728,11 @@ and the errors will display next to the fields on error.
     For a list of all of the built-in validation constraints, see
     :doc:`/reference/constraints`.
 
+.. versionadded:: 5.2
+
+    Constraint message can contains ``{{ label }}`` placeholder that will be replaced
+    by corresponding form field label (in view of ``label_format`` option).
+
 Accessing Form Errors
 ~~~~~~~~~~~~~~~~~~~~~
 
