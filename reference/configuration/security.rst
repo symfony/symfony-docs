@@ -162,7 +162,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     threads:      4     # Number of parallel threads
 
                 # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
-                AppBundle\Entity\User: 'sha512'
+                App\Entity\User: 'sha512'
 
     .. code-block:: xml
 
