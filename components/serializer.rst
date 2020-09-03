@@ -413,12 +413,10 @@ As for groups, attributes can be selected during both the serialization and dese
 Ignoring Attributes
 -------------------
 
-All attributes are included by default when serializing objects. You have two alternatives to ignore some of those attributes.
+All attributes are included by default when serializing objects. There are two
+options to ignore some of those attributes.
 
-* `Option 1: Using @Ignore annotation`_
-* `Option 2: Using the context`_
-
-Option 1: Using ``@Ignore`` annotation
+Option 1: Using ``@Ignore`` Annotation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
@@ -461,7 +459,7 @@ Option 1: Using ``@Ignore`` annotation
             </class>
         </serializer>
 
-You are now able to ignore specific attributes during serialization::
+You can now ignore specific attributes during serialization::
 
     use App\Model\MyClass;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -477,12 +475,12 @@ You are now able to ignore specific attributes during serialization::
     $data = $serializer->normalize($obj);
     // $data = ['foo' => 'foo'];
 
-
-Option 2: Using the context
+Option 2: Using the Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By providing an array via the ``AbstractNormalizer::IGNORED_ATTRIBUTES``
-key in the ``context`` parameter of the desired serializer method::
+Pass an array with the names of the attributes to ignore using the
+``AbstractNormalizer::IGNORED_ATTRIBUTES`` key in the ``context`` of the
+serializer method::
 
     use Acme\Person;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -805,7 +803,7 @@ There are several types of normalizers available:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
-    
+
 .. _component-serializer-encoders:
 
 Encoders
