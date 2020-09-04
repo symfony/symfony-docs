@@ -310,6 +310,30 @@ dedicated web crawler or scraper such as `Goutte`_::
     $openPullRequests = trim($browser->clickLink('Pull requests')->filter(
         '.table-list-header-toggle a:nth-child(1)'
     )->text());
+    
+Dealing with Headers
+~~~~~~~~~~~~~~~~~~~~
+
+The fifth parameter of `request()` accepts an array of headers in the same format
+you'd see in a FastCGI request: all-upper-case, dashes replaced with underscores,
+prefixed with `HTTP_`. Array keys are lower-cased, with `HTTP_` stripped, and
+underscores turned to dashes, before saving those headers to the request.
+
+If you're making a request to an application that has special rules about header
+capitalization or punctuation, you'll want to override HttpBrowser's `getHeaders()`
+method, which takes a Request object and returns an asociative array of headers.
+For example::
+
+    protected function getHeaders(Request $request): array
+    {
+        $headers = parent::getHeaders($request);
+        if (isset($request->getServer()['api_key'])) {
+            $headers['api_key'] = $request->getServer()['api_key'];
+        }
+        return $headers;
+    }
+    
+This override is available as of Symfony 5.2.
 
 Learn more
 ----------
