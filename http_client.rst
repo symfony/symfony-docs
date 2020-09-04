@@ -883,21 +883,18 @@ In case the response was canceled using ``$response->cancel()``,
 Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
 
-When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
-4xx or 5xx) your code is expected to handle it. If you don't do that, the
-``getHeaders()`` and ``getContent()`` methods throw an appropriate exception, all of
-which implement the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`::
+If the HTTP status code of the response is in the 300-599 range (i.e. 3xx, 4xx or 5xx),
+the ``getHeaders()`` and ``getContent()`` methods throw an appropriate
+exception, which implements the
+:class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`
 
-    // the response of this request will be a 403 HTTP error
-    $response = $client->request('GET', 'https://httpbin.org/status/403');
+The preferred way to handle this is to call ``$response->getStatusCode()``, cause this
+will prevent subsequent ``getHeaders()`` and ``getContent()`` calls from throwing an
+exception.
 
-    // this code results in a Symfony\Component\HttpClient\Exception\ClientException
-    // because it doesn't check the status code of the response
-    $content = $response->getContent();
-
-    // pass FALSE as the optional argument to not throw an exception and return
-    // instead the original response content (even if it's an error message)
-    $content = $response->getContent(false);
+Alternatively, if you pass ``false`` as the optional argument to ``getHeaders()``
+or ``getContent()``, the response content will be returned and no exception thrown,
+no matter which status code it is.
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
@@ -927,16 +924,14 @@ errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code, you will opt-out from these fallback mechanisms as the
 destructor won't have anything remaining to do.
 
-There are three types of exceptions:
+Additionally, if a lower level issue occurs, an exception implementing the
+:class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`
+is thrown.
 
-* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`
-  are thrown when your code does not handle the status codes in the 300-599 range.
-
-* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`
-  are thrown when a lower level issue occurs.
-
-* Exceptions implementing the :class:`Symfony\\Contracts\\HttpClient\\Exception\\DecodingExceptionInterface`
-  are thrown when a content-type cannot be decoded to the expected representation.
+Finally, if the content-type cannot be decoded to the expected representation, an
+exception implementing the
+:class:`Symfony\\Contracts\\HttpClient\\Exception\\DecodingExceptionInterface`
+is thrown.
 
 Concurrent Requests
 -------------------
