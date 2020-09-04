@@ -631,6 +631,15 @@ according to the ``multipart/form-data`` content-type. The
         'body' => $formData->bodyToIterable(),
     ]);
 
+HttpClient will stream the upload of the body by default. This might not work with all
+servers, resulting in HTTP status code 411 ("Length Required") cause there is no
+``Content-Length`` header. In this case, just turn the body into a string::
+
+    $client->request('POST', 'https://...', [
+        // ...
+        'body' => $formData->bodyToString(),
+    ]);
+
 Cookies
 ~~~~~~~
 
