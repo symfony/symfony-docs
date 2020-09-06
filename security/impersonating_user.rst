@@ -94,7 +94,7 @@ instance, to show a link to exit impersonation in a template:
 .. code-block:: html+twig
 
     {% if is_granted('IS_IMPERSONATOR') %}
-        <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
+        <a href="{{ impersonation_exit_path(path('homepage') ) }}">Exit impersonation</a>
     {% endif %}
 
 .. versionadded:: 5.1
