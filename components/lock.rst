@@ -113,7 +113,9 @@ method, the resource will stay locked until the timeout::
     // create an expiring lock that lasts 30 seconds
     $lock = $factory->createLock('charts-generation', 30);
 
-    $lock->acquire();
+    if (!$lock->acquire()) {
+        return;
+    }
     try {
         // perform a job during less than 30 seconds
     } finally {
@@ -132,7 +134,9 @@ to reset the TTL to its original value::
     // ...
     $lock = $factory->createLock('charts-generation', 30);
 
-    $lock->acquire();
+    if (!$lock->acquire()) {
+        return;
+    }
     try {
         while (!$finished) {
             // perform a small part of the job.
@@ -495,7 +499,9 @@ Using the above methods, a more robust code would be::
     // ...
     $lock = $factory->createLock('invoice-publication', 30);
 
-    $lock->acquire();
+    if (!$lock->acquire()) {
+        return;
+    }
     while (!$finished) {
         if ($lock->getRemainingLifetime() <= 5) {
             if ($lock->isExpired()) {
