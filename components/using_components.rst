@@ -69,10 +69,8 @@ Now what?
 
 Now, the component is installed and autoloaded. Read the specific component's
 documentation to find out more about how to use it.
-All `Symfony Components`_ are documented here as standalone libraries.
 
 And have fun!
 
 .. _Composer: https://getcomposer.org
 .. _Install Composer: https://getcomposer.org/download/
-.. _Symfony Components: https://symfony.com/components
