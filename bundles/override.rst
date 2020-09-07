@@ -53,9 +53,10 @@ inside a :doc:`compiler pass </service_container/compiler_passes>`.
 Entities & Entity Mapping
 -------------------------
 
-Entity mapping can only be overridden if a bundle provides a mapped superclass (such as the ``User`` entity in the
-FOSUserBundle). It's possible to override attributes and associations in this way. Learn more
-about this feature and its limitations in `the Doctrine documentation`_.
+Overriding entity mapping is only possible if a bundle provides a mapped
+superclass (such as the ``User`` entity in the FOSUserBundle). It's possible to
+override attributes and associations in this way. Learn more about this feature
+and its limitations in `the Doctrine documentation`_.
 
 Forms
 -----
