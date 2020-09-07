@@ -76,9 +76,9 @@ Suppose you want to store your database password as a secret. By using the
 
 .. code-block:: terminal
 
-    # the input is hidden as you type for security reason
+    # the input is hidden as you type for security reasons
 
-    # set your development value (default, can be overridden locally)
+    # set your default development value (can be overridden locally)
     $ php bin/console secrets:set DATABASE_PASSWORD
 
     # set your production value
@@ -238,7 +238,7 @@ manually store this file somewhere and deploy it. There are 2 ways to do that:
 1) Uploading the file:
 
 The first option is to copy the **production decryption key** -
-``config/secrets/prod/prod.decrypt.private.php`` to your server(s).
+``config/secrets/prod/prod.decrypt.private.php`` to your server.
 
 2) Using an Environment Variable
 
