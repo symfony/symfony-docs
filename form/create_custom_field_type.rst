@@ -64,7 +64,7 @@ check out the `ChoiceType`_ class.
     The PHP class extension mechanism and the Symfony form field extension
     mechanism are not the same. The parent type returned in ``getParent()`` is
     what Symfony uses to build and manage the field type. Making the PHP class
-    extend from ``AbstractType`` is only a convenience way of implementing the
+    extend from ``AbstractType`` is only a convenient way of implementing the
     required ``FormTypeInterface``.
 
 There are three methods that are particularly important:
