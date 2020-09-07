@@ -68,7 +68,7 @@ call if the service exists and remove the method call if it does not:
         services:
             App\Newsletter\NewsletterManager:
                 calls:
-                    - [setLogger, ['@?logger']]
+                    - setLogger: ['@?logger']
 
     .. code-block:: xml
 

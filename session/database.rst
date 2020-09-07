@@ -30,15 +30,13 @@ First, define a Symfony service for the connection to the Redis server:
                 # you can also use \RedisArray, \RedisCluster or \Predis\Client classes
                 class: Redis
                 calls:
-                    - method: connect
-                      arguments:
-                          - '%env(REDIS_HOST)%'
-                          - '%env(int:REDIS_PORT)%'
+                    - connect:
+                        - '%env(REDIS_HOST)%'
+                        - '%env(int:REDIS_PORT)%'
 
                     # uncomment the following if your Redis server requires a password
-                    # - method: auth
-                    #   arguments:
-                    #       - '%env(REDIS_PASSWORD)%'
+                    # - auth:
+                    #     - '%env(REDIS_PASSWORD)%'
 
     .. code-block:: xml
 
