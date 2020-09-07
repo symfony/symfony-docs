@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-02T14:28:57Z
+
+I don't know if we should remove this paragraph or not (some Doctrine experts will need to help us here). But if we remove it ... then we need to add some content saying that it's not possible to override that config. The current docs say "you can do XXX" ... so if it's not possible, we should say "you CANNOT do XXX" instead of deleting the original phrase.
+
+---------------------------------------------------------------------------
+
+by l-vo at 2020-09-03T20:41:19Z
+
+@javiereguiluz thank you for you feedback. I tweaked the update to underline the can/cannot idea (actually, the second paragraph explains it's possible via mapped superclasses, so I replaced "cannot" by "can only"). Now let's wait for Doctrine experts feedback :)
