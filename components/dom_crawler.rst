@@ -92,8 +92,8 @@ Using XPath expressions, you can select specific nodes within the document::
 
     ``DOMXPath::query`` is used internally to actually perform an XPath query.
 
-If you prefer CSS selectors over XPath, install the CssSelector component.
-It allows you to use jQuery-like selectors to traverse::
+If you prefer CSS selectors over XPath, install :doc:`/components/css_selector`.
+It allows you to use jQuery-like selectors::
 
     $crawler = $crawler->filter('body > p');
 
@@ -109,7 +109,7 @@ An anonymous function can be used to filter with more complex criteria::
             return ($i % 2) == 0;
         });
 
-To remove a node the anonymous function must return false.
+To remove a node, the anonymous function must return ``false``.
 
 .. note::
 
