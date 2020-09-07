@@ -277,9 +277,15 @@ impersonation_exit_path
 ``exitTo`` *(optional)*
     **type**: ``string``
 
-Generates a relative URL to exit impersonation. If `exitTo` is specified it will use its value to build the URl,
-elsewhere it will use the current URI.
-If we are not impersonating a user, it will return an empty string.
+.. versionadded:: 5.2
+
+    The ``impersonation_exit_path()` function was introduced in Symfony 5.2.
+
+Generates a URL that you can visit to exit :doc:`user impersonation </security/impersonating_user>`.
+After exiting impersonation, the user is redirected to the current URI. If you
+prefer to redirect to a different URI, define its value in the ``exitTo`` argument.
+
+If no user is being impersonated, the function returns an empty string.
 
 impersonation_exit_url
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -291,8 +297,12 @@ impersonation_exit_url
 ``exitTo`` *(optional)*
     **type**: ``string``
 
-Equal to the `impersonation_exit_path`_ function, but it'll generate an absolute URL
-instead of a relative one.
+.. versionadded:: 5.2
+
+    The ``impersonation_exit_url()` function was introduced in Symfony 5.2.
+
+It's similar to the `impersonation_exit_path`_ function, but it generates
+absolute URLs instead of relative URLs.
 
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
