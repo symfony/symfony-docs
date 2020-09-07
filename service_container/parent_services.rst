@@ -72,7 +72,7 @@ duplicated service definitions:
                 abstract:  true
                 arguments: ['@doctrine.orm.entity_manager']
                 calls:
-                    - [setLogger, ['@logger']]
+                    - setLogger: ['@logger']
 
             App\Repository\DoctrineUserRepository:
                 # extend the App\Repository\BaseDoctrineRepository service
