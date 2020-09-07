@@ -150,7 +150,7 @@ In order to use this type of injection, don't forget to configure it:
             app.newsletter_manager:
                 class: App\Mail\NewsletterManager
                 calls:
-                    - [withMailer, ['@mailer'], true]
+                    - withMailer: !returns_clone ['@mailer']
 
     .. code-block:: xml
 
@@ -244,7 +244,7 @@ that accepts the dependency::
             app.newsletter_manager:
                 class: App\Mail\NewsletterManager
                 calls:
-                    - [setMailer, ['@mailer']]
+                    - setMailer: ['@mailer']
 
     .. code-block:: xml
 
