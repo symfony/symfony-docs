@@ -114,7 +114,8 @@ To remove a node the anonymous function must return false.
 .. note::
 
     All filter methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
-    instance with filtered content.
+    instance with the filtered content. To check if the filter actually
+    found something, use ``$crawler->count() > 0`` on this new crawler.
 
 Both the :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` and
 :method:`Symfony\\Component\\DomCrawler\\Crawler::filter` methods work with
