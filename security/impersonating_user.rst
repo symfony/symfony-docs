@@ -72,6 +72,11 @@ as the value to the current URL:
 
     http://example.com/somewhere?_switch_user=thomas
 
+.. tip::
+
+    Instead of adding a ``_switch_user`` query string parameter, you can pass
+    the username in a ``HTTP_X_SWITCH_USER`` header.
+
 To switch back to the original user, use the special ``_exit`` username:
 
 .. code-block:: text
@@ -197,7 +202,7 @@ Limiting User Switching
 
 If you need more control over user switching, you can use a security voter. First,
 configure ``switch_user`` to check for some new, custom attribute. This can be
-anything, but *cannot* start with ``ROLE_`` (to enforce that only your voter will 
+anything, but *cannot* start with ``ROLE_`` (to enforce that only your voter will
 be called):
 
 .. configuration-block::
