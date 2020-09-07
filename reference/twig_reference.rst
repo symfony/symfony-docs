@@ -267,6 +267,33 @@ expression
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
 to the :doc:`ExpressionLanguage component </components/expression_language>`.
 
+impersonation_exit_path
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_path(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+Generates a relative URL to exit impersonation. If `exitTo` is specified it will use its value to build the URl,
+elsewhere it will use the current URI.
+If we are not impersonating a user, it will return an empty string.
+
+impersonation_exit_url
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_url(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+Equal to the `impersonation_exit_path`_ function, but it'll generate an absolute URL
+instead of a relative one.
+
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
 
