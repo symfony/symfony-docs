@@ -2,8 +2,8 @@
    single: HttpClient
    single: Components; HttpClient
 
-HTTP Client
-===========
+HttpClient
+==========
 
 .. versionadded:: 4.3
 
