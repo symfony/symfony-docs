@@ -66,15 +66,15 @@ This will generate ``config/secrets/prod/prod.encrypt.public.php`` and
 Create or Update Secrets
 ------------------------
 
-Suppose you want to store your database password a secret. By using the
+Suppose you want to store your database password as a secret. By using the
 ``secrets:set`` command, you should add this secret to both the ``dev`` *and*
 ``prod`` vaults:
 
 .. code-block:: terminal
 
-    # the input is hidden as you type for security
+    # the input is hidden as you type for security reasons
 
-    # set your a default development value (can be overridden locally)
+    # set your default development value (can be overridden locally)
     $ php bin/console secrets:set DATABASE_PASSWORD
 
     # set your production value
@@ -102,7 +102,7 @@ Secret values can be referenced in the same way as
 accidentally define a secret *and* an environment variable with the same name:
 **environment variables override secrets**.
 
-If you stored a ``DATABASE_PASSWORD`` secret, you can reference by:
+If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
 
 .. configuration-block::
 
@@ -234,7 +234,7 @@ manually store this file somewhere and deploy it. There are 2 ways to do that:
 1) Uploading the file:
 
 The first option is to copy the **production decryption key** -
-``config/secrets/prod/prod.decrypt.private.php`` to your server(s).
+``config/secrets/prod/prod.decrypt.private.php`` to your server.
 
 2) Using an Environment Variable
 
@@ -256,7 +256,7 @@ your secrets during deployment to the "local" vault:
     $ php bin/console secrets:decrypt-to-local --force --env=prod
 
 This will write all the decrypted secrets into the ``.env.prod.local`` file.
-After doing this, the decryption key does *not* need to remain on the server.
+After doing this, the decryption key does *not* need to remain on the server(s).
 
 Rotating Secrets
 ----------------

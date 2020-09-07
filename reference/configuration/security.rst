@@ -157,7 +157,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     time_cost:    2     # Number of iterations
 
                 # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
-                AppBundle\Entity\User: 'sha512'
+                App\Entity\User: 'sha512'
 
     .. code-block:: xml
 
