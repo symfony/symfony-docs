@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-09-07T08:14:19Z
+
+Is this true since the beginning? Then master is not the correct target 🎯 branch
+
+---------------------------------------------------------------------------
+
+by jderusse at 2020-09-07T08:53:16Z
+
+> Is this true since the beginning? Then master is not the correct target dart branch
+
+This is true since the beggining. SHould I update the oldest branch? Or 4.4 (maintained branch)?
