@@ -74,6 +74,11 @@ as the value to the current URL:
 
     http://example.com/somewhere?_switch_user=thomas
 
+.. tip::
+
+    Instead of adding a ``_switch_user`` query string parameter, you can pass
+    the username in a ``HTTP_X_SWITCH_USER`` header.
+
 To switch back to the original user, use the special ``_exit`` username:
 
 .. code-block:: text
