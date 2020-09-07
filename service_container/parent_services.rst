@@ -147,9 +147,9 @@ All attributes on the parent service are shared with the child **except** for
 
 .. note::
 
-    If you have a ``_defaults`` section in your file, all child services are required
-    to explicitly override those values to avoid ambiguity. You will see a clear
-    error message about this.
+    If you have a ``_defaults`` section in your ``services.yaml`` file, all child
+    services are required to explicitly override those values to avoid ambiguity.
+    You will see a clear error message about this.
 
 .. tip::
 
