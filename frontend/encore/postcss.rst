@@ -71,7 +71,8 @@ support. The best-practice is to configure this directly in your ``package.json`
     +  ]
     }
 
-The ``defaults`` option is reccommended for most users and would be equivilant to the following browserslist.
+The ``defaults`` option is recommended for most users and would be equivalent
+to the following browserslist:
 
 .. code-block:: diff
 
