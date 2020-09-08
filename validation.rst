@@ -119,7 +119,7 @@ following:
 .. index::
    single: Validation; Using the validator
 
-Using the ``validator`` Service
+Using the validator Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, to actually validate an ``Author`` object, use the ``validate()`` method
