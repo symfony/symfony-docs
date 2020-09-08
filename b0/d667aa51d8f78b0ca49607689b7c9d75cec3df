@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-07T18:28:45Z
+
+@l-vo thanks for this contribution! Do you know if this is also available in Symfony 4.4 ... or should we merge only in 5.1 and up?
+
+---------------------------------------------------------------------------
+
+by l-vo at 2020-09-07T18:35:57Z
+
+Yes the feature has been added in 5.1 so 5.1 is the proper target branch 🙂
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-08T12:44:34Z
+
+Thanks! I've found the related issue and updated the description of your PR with it.
