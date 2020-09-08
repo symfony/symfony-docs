@@ -719,16 +719,21 @@ constraint that's applied to the class itself. When that class is validated,
 methods specified by that constraint are simply executed so that each can
 provide more custom validation.
 
-Debugging the constraints
+Debugging the Constraints
 -------------------------
 
-The ``debug:validator 'App\Entity\DummyClassOne'`` command lists validation constraints of ``App\Entity\DummyClassOne`` resource.
+.. versionadded:: 5.2
+
+    The ``debug:validator`` command was introduced in Symfony 5.2.
+
+Use the ``debug:validator`` command to list the validation constraints of a
+given class:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:validator 'App\Entity\DummyClassOne'
+    $ php bin/console debug:validator 'App\Entity\SomeClass'
 
-        App\Entity\DummyClassOne
+        App\Entity\SomeClass
         -----------------------------------------------------
 
         +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
@@ -748,51 +753,11 @@ The ``debug:validator 'App\Entity\DummyClassOne'`` command lists validation cons
         |               |                                                  |         | ]                                                          |
         +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
 
-You can also list validation constraints for all resources of a path.
+You can also validate all the classes stored in a given directory:
 
 .. code-block:: terminal
 
     $ php bin/console debug:validator src/Entity
-
-        App\Entity\DummyClassOne
-        ------------------------
-
-        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
-        | Property      | Name                                             | Groups  | Options                                                    |
-        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
-        | firstArgument | Symfony\Component\Validator\Constraints\NotBlank | Default | [                                                          |
-        |               |                                                  |         |   "message" => "This value should not be blank.",          |
-        |               |                                                  |         |   "allowNull" => false,                                    |
-        |               |                                                  |         |   "normalizer" => null,                                    |
-        |               |                                                  |         |   "payload" => null                                        |
-        |               |                                                  |         | ]                                                          |
-        | firstArgument | Symfony\Component\Validator\Constraints\Email    | Default | [                                                          |
-        |               |                                                  |         |   "message" => "This value is not a valid email address.", |
-        |               |                                                  |         |   "mode" => null,                                          |
-        |               |                                                  |         |   "normalizer" => null,                                    |
-        |               |                                                  |         |   "payload" => null                                        |
-        |               |                                                  |         | ]                                                          |
-        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
-
-        App\Entity\DummyClassTwo
-        ------------------------
-
-        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
-        | Property      | Name                                             | Groups  | Options                                                    |
-        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
-        | firstArgument | Symfony\Component\Validator\Constraints\NotBlank | Default | [                                                          |
-        |               |                                                  |         |   "message" => "This value should not be blank.",          |
-        |               |                                                  |         |   "allowNull" => false,                                    |
-        |               |                                                  |         |   "normalizer" => null,                                    |
-        |               |                                                  |         |   "payload" => null                                        |
-        |               |                                                  |         | ]                                                          |
-        | firstArgument | Symfony\Component\Validator\Constraints\Email    | Default | [                                                          |
-        |               |                                                  |         |   "message" => "This value is not a valid email address.", |
-        |               |                                                  |         |   "mode" => null,                                          |
-        |               |                                                  |         |   "normalizer" => null,                                    |
-        |               |                                                  |         |   "payload" => null                                        |
-        |               |                                                  |         | ]                                                          |
-        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
 
 Final Thoughts
 --------------
