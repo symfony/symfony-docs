@@ -12,7 +12,7 @@ Generating the Reset Password Code
 
 .. code-block:: terminal
 
-    $ php composer require symfonycasts/reset-password-bundle
+    $ composer require symfonycasts/reset-password-bundle
         .....
     $ php bin/console make:reset-password
 
