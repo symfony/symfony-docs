@@ -119,8 +119,8 @@ following:
 .. index::
    single: Validation; Using the validator
 
-Using the validator Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the Validator Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, to actually validate an ``Author`` object, use the ``validate()`` method
 on the ``validator`` service (which implements :class:`Symfony\\Component\\Validator\\Validator\\ValidatorInterface`).
