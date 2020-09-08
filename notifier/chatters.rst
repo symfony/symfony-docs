@@ -77,7 +77,7 @@ some interactive options called `Block elements`_::
             ->text('The Symfony Community')
             ->accessory(
                 new SlackImageBlockElement(
-                    'https://example.com/symfony-logo.png',
+                    'https://symfony.com/favicons/apple-touch-icon.png',
                     'Symfony'
                 )
             )
