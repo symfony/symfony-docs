@@ -296,7 +296,13 @@ By default, the bridge will display a detailed output with the number of
 deprecations and where they arise. If this is too much for you, you can use
 ``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn the verbose output off.
 
-It's also possible to change verbosity per deprecation type, for instance ``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types "indirect" and "other".
+It's also possible to change verbosity per deprecation type. For example, using
+``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
+"indirect" and "other".
+
+.. versionadded:: 5.1
+
+    The ``quiet`` option was introduced in Symfony 5.1.
 
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
