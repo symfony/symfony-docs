@@ -27,7 +27,7 @@ Run this command once in your application to add support for annotations:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 In addition to installing the needed dependencies, this command creates the
 following configuration file:
