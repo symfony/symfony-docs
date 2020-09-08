@@ -46,7 +46,7 @@ like this:
 
     .. code-block:: yaml
 
-        # config/framework.yaml
+        # config/packages/workflow.yaml
         framework:
             workflows:
                 blog_publishing:
@@ -77,16 +77,18 @@ like this:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/workflow.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://symfony.com/schema/dic/symfony
+            https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
+                <!-- or type="state_machine" -->
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:audit-trail enabled="true"/>
                     <framework:marking-store type="single_state">
@@ -116,9 +118,10 @@ like this:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/workflow.php
+        use App\Entity\BlogPost;
+
         $container->loadFromExtension('framework', [
-            // ...
             'workflows' => [
                 'blog_publishing' => [
                     'type' => 'workflow', // or 'state_machine'
@@ -126,10 +129,10 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'method'
-                        'property' => 'currentPlace'
+                        'type' => 'method',
+                        'property' => 'currentPlace',
                     ],
-                    'supports' => ['App\Entity\BlogPost'],
+                    'supports' => [BlogPost::class],
                     'initial_marking' => 'draft',
                     'places' => [
                         'draft',
@@ -162,9 +165,12 @@ like this:
 
 The configured property will be used via it's implemented getter/setter methods by the marking store::
 
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
     class BlogPost
     {
-        // the configured property must be declared
+        // the configured marking store property must be declared
         private $currentPlace;
         private $title;
         private $content;
@@ -190,8 +196,8 @@ The configured property will be used via it's implemented getter/setter methods 
     configures the marking store according to the "type" by default, so it's
     preferable to not configure it.
 
-    A single state marking store uses a string to store the data. A multiple
-    state marking store uses an array to store the data.
+    A single state marking store uses a ``string`` to store the data. A multiple
+    state marking store uses an ``array`` to store the data.
 
 .. tip::
 
@@ -233,11 +239,11 @@ Accessing the Workflow in a Class
 To access workflow inside a class, use dependency injection and inject the
 registry in the constructor::
 
+    use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
 
     class MyClass
     {
-
         private $workflowRegistry;
 
         public function __construct(Registry $workflowRegistry)
@@ -353,11 +359,14 @@ order:
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
 
+    // src/App/EventSubscriber/WorkflowLoggerSubscriber.php
+    namespace App\EventSubscriber;
+
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\Event;
 
-    class WorkflowLogger implements EventSubscriberInterface
+    class WorkflowLoggerSubscriber implements EventSubscriberInterface
     {
         private $logger;
 
@@ -391,8 +400,8 @@ Guard Events
 ~~~~~~~~~~~~
 
 There are a special kind of events called "Guard events". Their event listeners
-are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or
-``Workflow::getEnabledTransitions`` is executed. With the guard events you may
+are invoked every time a call to ``Workflow::can()``, ``Workflow::apply()`` or
+``Workflow::getEnabledTransitions()`` is executed. With the guard events you may
 add custom logic to decide which transitions should be blocked or not. Here is a
 list of the guard event names.
 
@@ -403,14 +412,18 @@ list of the guard event names.
 This example stops any blog post being transitioned to "reviewed" if it is
 missing a title::
 
+    // src/App/EventSubscriber/BlogPostReviewSubscriber.php
+    namespace App\EventSubscriber;
+
+    use App\Entity\BlogPost;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\GuardEvent;
 
-    class BlogPostReviewListener implements EventSubscriberInterface
+    class BlogPostReviewSubscriber implements EventSubscriberInterface
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var App\Entity\BlogPost $post */
+            /** @var BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
@@ -450,7 +463,7 @@ This means that each event has access to the following information:
     Returns a metadata.
 
 For Guard Events, there is an extended :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent` class.
-This class has two more methods:
+This class has these additional methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::isBlocked`
     Returns if transition is blocked.
@@ -479,29 +492,108 @@ Alternatively, you can define a ``guard`` configuration option for the
 transition. The value of this option is any valid expression created with the
 :doc:`ExpressionLanguage component </components/expression_language>`:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/workflow.yaml
-    framework:
-        workflows:
-            blog_publishing:
-                # previous configuration
-                transitions:
-                    to_review:
-                        # the transition is allowed only if the current user has the ROLE_REVIEWER role.
-                        guard: "is_granted('ROLE_REVIEWER')"
-                        from: draft
-                        to:   reviewed
-                    publish:
-                        # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted", "is_valid"
-                        guard: "is_authenticated"
-                        from: reviewed
-                        to:   published
-                    reject:
-                        # or any valid expression language with "subject" referring to the supported object
-                        guard: "has_role('ROLE_ADMIN') and subject.isRejectable()"
-                        from: reviewed
-                        to:   rejected
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # previous configuration
+                    transitions:
+                        to_review:
+                            # the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                            guard: "is_granted('ROLE_REVIEWER')"
+                            from: draft
+                            to:   reviewed
+                        publish:
+                            # or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted", "is_valid"
+                            guard: "is_authenticated"
+                            from: reviewed
+                            to:   published
+                        reject:
+                            # or any valid expression language with "subject" referring to the supported object
+                            guard: "is_granted('ROLE_ADMIN') and subject.isRejectable()"
+                            from: reviewed
+                            to:   rejected
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://symfony.com/schema/dic/symfony
+            https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:workflow name="blog_publishing" type="workflow">
+
+                    <!-- ... previous configuration -->
+
+                    <framework:transition name="to_review">
+                        <!-- the transition is allowed only if the current user has the ROLE_REVIEWER role. -->
+                        <framework:guard>is_granted("ROLE_REVIEWER")</framework:guard>
+                        <framework:from>draft</framework:from>
+                        <framework:to>reviewed</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="publish">
+                        <!-- or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted" -->
+                        <framework:guard>is_authenticated</framework:guard>
+                        <framework:from>reviewed</framework:from>
+                        <framework:to>published</framework:to>
+                    </framework:transition>
+
+                    <framework:transition name="reject">
+                        <!-- or any valid expression language with "subject" referring to the post -->
+                        <framework:guard>is_granted("ROLE_ADMIN") and subject.isStatusReviewed()</framework:guard>
+                        <framework:from>reviewed</framework:from>
+                        <framework:to>rejected</framework:to>
+                    </framework:transition>
+
+                </framework:workflow>
+
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        use App\Entity\BlogPost;
+
+        $container->loadFromExtension('framework', [
+            'workflows' => [
+                'blog_publishing' => [
+                    // ... previous configuration
+
+                    'transitions' => [
+                        'to_review' => [
+                            // the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                            'guard' => 'is_granted("ROLE_REVIEWER")',
+                            'from' => 'draft',
+                            'to' => 'reviewed',
+                        ],
+                        'publish' => [
+                            // or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                            'guard' => 'is_authenticated',
+                            'from' => 'reviewed',
+                            'to' => 'published',
+                        ],
+                        'reject' => [
+                            // or any valid expression language with "subject" referring to the post
+                            'guard' => 'is_granted("ROLE_ADMIN") and subject.isStatusReviewed()',
+                            'from' => 'reviewed',
+                            'to' => 'rejected',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 You can also use transition blockers to block and return a user-friendly error
 message when you stop a transition from happening.
@@ -513,13 +605,14 @@ This example has been simplified; in production you may prefer to use the
 :doc:`Translation </translation>` component to manage messages in one
 place::
 
-    namespace App\Listener\Workflow\Task;
+    // src/App/EventSubscriber/BlogPostPublishSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\GuardEvent;
     use Symfony\Component\Workflow\TransitionBlocker;
 
-    class BlogPostPublishListener implements EventSubscriberInterface
+    class BlogPostPublishSubscriber implements EventSubscriberInterface
     {
         public function guardPublish(GuardEvent $event)
         {
@@ -533,7 +626,7 @@ place::
             // Block the transition "publish" if it is more than 8 PM
             // with the message for end user
             $explanation = $event->getMetadata('explanation', $eventTransition);
-            $event->addTransitionBlocker(new TransitionBlocker($explanation , 0));
+            $event->addTransitionBlocker(new TransitionBlocker($explanation , '0'));
         }
 
         public static function getSubscribedEvents()
@@ -714,10 +807,12 @@ requires:
 
 Then you can access this metadata in your controller as follows::
 
+    // src/App/Controller/BlogPostController.php
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
+    // ...
 
-    public function myController(Registry $registry, BlogPost $post)
+    public function myAction(Registry $registry, BlogPost $post)
     {
         $workflow = $registry->get($post);
 
@@ -736,6 +831,8 @@ Then you can access this metadata in your controller as follows::
             ->getMetadataStore()
             ->getTransitionMetadata($aTransition)['priority'] ?? 0
         ;
+
+        // ...
     }
 
 There is a ``getMetadata()`` method that works with all kinds of metadata::
@@ -785,7 +882,7 @@ In Twig templates, metadata is available via the ``workflow_metadata()`` functio
             {% for transition in workflow_transitions(blog_post) %}
                 <li>
                     {{ transition.name }}:
-                    <code>{{ workflow_metadata(blog_post, 'priority', transition) ?: '0' }}</code>
+                    <code>{{ workflow_metadata(blog_post, 'priority', transition) ?: 0 }}</code>
                 </li>
             {% endfor %}
         </ul>

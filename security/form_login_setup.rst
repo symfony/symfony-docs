@@ -44,11 +44,11 @@ and your generated code may be slightly different:
 
     Support for login form authentication was added to ``make:auth`` in MakerBundle 1.8.
 
-This generates the following: 1) a login route & controller, 2) a template that
+This generates the following: 1) login/logout routes & controller, 2) a template that
 renders the login form, 3) a :doc:`Guard authenticator </security/guard_authentication>`
 class that processes the login submit and 4) updates the main security config file.
 
-**Step 1.** The ``/login`` route & controller::
+**Step 1.** The ``/login``/``/logout`` routes & controller::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
@@ -65,6 +65,10 @@ class that processes the login submit and 4) updates the main security config fi
          */
         public function login(AuthenticationUtils $authenticationUtils): Response
         {
+            // if ($this->getUser()) {
+            //     return $this->redirectToRoute('target_path');
+            // }
+
             // get the login error if there is one
             $error = $authenticationUtils->getLastAuthenticationError();
             // last username entered by the user
@@ -75,10 +79,17 @@ class that processes the login submit and 4) updates the main security config fi
                 'error' => $error
             ]);
         }
+
+        /**
+         * @Route("/logout", name="app_logout")
+         */
+        public function logout()
+        {
+            throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        }
     }
 
-Edit the ``security.yaml`` file in order to allow access for anyone to the
-``/login`` route:
+Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
 
 .. configuration-block::
 
@@ -88,9 +99,12 @@ Edit the ``security.yaml`` file in order to allow access for anyone to the
         security:
             # ...
 
-            access_control:
-                - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            providers:
                 # ...
+                logout:
+                    path: app_logout
+                    # where to redirect after logout
+                    # target: app_any_route
 
     .. code-block:: xml
 
@@ -137,6 +151,12 @@ a traditional HTML form that submits to ``/login``:
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <label for="inputEmail" class="sr-only">Email</label>
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
@@ -171,10 +191,9 @@ a traditional HTML form that submits to ``/login``:
 
     use App\Entity\User;
     use Doctrine\ORM\EntityManagerInterface;
-
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -185,28 +204,31 @@ a traditional HTML form that submits to ``/login``:
     use Symfony\Component\Security\Csrf\CsrfToken;
     use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
     use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+    use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
     use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-    class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
+    class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
     {
         use TargetPathTrait;
 
+        public const LOGIN_ROUTE = 'app_login';
+
         private $entityManager;
-        private $router;
+        private $urlGenerator;
         private $csrfTokenManager;
         private $passwordEncoder;
 
-        public function __construct(EntityManagerInterface $entityManager, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+        public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
         {
             $this->entityManager = $entityManager;
-            $this->router = $router;
+            $this->urlGenerator = $urlGenerator;
             $this->csrfTokenManager = $csrfTokenManager;
             $this->passwordEncoder = $passwordEncoder;
         }
 
         public function supports(Request $request)
         {
-            return 'app_login' === $request->attributes->get('_route')
+            return self::LOGIN_ROUTE === $request->attributes->get('_route')
                 && $request->isMethod('POST');
         }
 
@@ -247,19 +269,27 @@ a traditional HTML form that submits to ``/login``:
             return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         }
 
+        /**
+         * Used to upgrade (rehash) the user's password automatically over time.
+         */
+        public function getPassword($credentials): ?string
+        {
+            return $credentials['password'];
+        }
+
         public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
         {
             if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
                 return new RedirectResponse($targetPath);
             }
 
-            // For example : return new RedirectResponse($this->router->generate('some_route'));
+            // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
             throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         }
 
         protected function getLoginUrl()
         {
-            return $this->router->generate('app_login');
+            return $this->urlGenerator->generate(self::LOGIN_ROUTE);
         }
     }
 
@@ -453,7 +483,11 @@ whenever the user browses a page::
         public function onKernelRequest(RequestEvent $event): void
         {
             $request = $event->getRequest();
-            if (!$event->isMasterRequest() || $request->isXmlHttpRequest()) {
+            if (
+                !$event->isMasterRequest()
+                || $request->isXmlHttpRequest()
+                || 'app_login' === $request->attributes->get('_route')
+            ) {
                 return;
             }
 

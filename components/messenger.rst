@@ -58,12 +58,12 @@ Concepts
    both when a message is originally dispatched and again later when a message
    is received from a transport,
 
-**Envelope**
+**Envelope**:
    Messenger specific concept, it gives full flexibility inside the message bus,
    by wrapping the messages into it, allowing to add useful information inside
    through *envelope stamps*.
 
-**Envelope Stamps**
+**Envelope Stamps**:
    Piece of information you need to attach to your message: serializer context
    to use for transport, markers identifying a received message or any sort of
    metadata your middleware or transport layer may use.
@@ -83,9 +83,12 @@ are configured for you:
 Example::
 
     use App\Message\MyMessage;
+    use App\MessageHandler\MyMessageHandler;
     use Symfony\Component\Messenger\Handler\HandlersLocator;
     use Symfony\Component\Messenger\MessageBus;
     use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
+
+    $handler = new MyMessageHandler();
 
     $bus = new MessageBus([
         new HandleMessageMiddleware(new HandlersLocator([
@@ -117,6 +120,8 @@ that will do the required processing for your message::
             // Message processing...
         }
     }
+
+.. _messenger-envelopes:
 
 Adding Metadata to Messages (Envelopes)
 ---------------------------------------

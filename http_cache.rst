@@ -137,7 +137,7 @@ method::
 
     class CacheKernel extends HttpCache
     {
-        protected function getOptions()
+        protected function getOptions(): array
         {
             return [
                 'default_ttl' => 0,
@@ -244,8 +244,9 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
         // somehow create a Response object, like by rendering a template
         $response = $this->render('blog/index.html.twig', []);
 
-        // cache for 3600 seconds
-        $response->setSharedMaxAge(3600);
+        // cache publicly for 3600 seconds
+        $response->setPublic();
+        $response->setMaxAge(3600);
 
         // (optional) set a custom Cache-Control directive
         $response->headers->addCacheControlDirective('must-revalidate', true);
@@ -257,7 +258,7 @@ Thanks to this new code, your HTTP response will have the following header:
 
 .. code-block:: text
 
-    Cache-Control: public, s-maxage=3600, must-revalidate
+    Cache-Control: public, maxage=3600, must-revalidate
 
 This tells your HTTP reverse proxy to cache this response for 3600 seconds. If *anyone*
 requests this URL again before 3600 seconds, your application *won't* be hit at all.
@@ -409,11 +410,11 @@ Learn more
 
     http_cache/*
 
-.. _`Things Caches Do`: http://2ndscale.com/writings/things-caches-do
-.. _`Cache Tutorial`: http://www.mnot.net/cache_docs/
-.. _`Varnish`: https://www.varnish-cache.org/
-.. _`Squid in reverse proxy mode`: http://wiki.squid-cache.org/SquidFaq/ReverseProxy
+.. _`Things Caches Do`: https://2ndscale.com/writings/things-caches-do
+.. _`Cache Tutorial`: https://www.mnot.net/cache_docs/
+.. _`Varnish`: https://varnish-cache.org/
+.. _`Squid in reverse proxy mode`: https://wiki.squid-cache.org/SquidFaq/ReverseProxy
 .. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
-.. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/
 .. _`they can be cached`: https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-20#section-2.3.4

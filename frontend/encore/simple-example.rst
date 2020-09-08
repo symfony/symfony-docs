@@ -9,15 +9,15 @@ CSS and one JS file, organized into an ``assets/`` directory:
 
 With Encore, think of your ``app.js`` file like a standalone JavaScript
 application: it will *require* all of the dependencies it needs (e.g. jQuery or React),
-*including* any CSS. Your ``app.js`` file is already doing this with a special
-``require()`` function:
+*including* any CSS. Your ``app.js`` file is already doing this with a JavaScript
+``import`` statement:
 
 .. code-block:: javascript
 
     // assets/js/app.js
     // ...
 
-    require('../css/app.css');
+    import '../css/app.css';
 
     // var $ = require('jquery');
 
@@ -50,7 +50,7 @@ of your project. It already holds the basic config you need:
 
     // ...
 
-They *key* part is ``addEntry()``: this tells Encore to load the ``assets/js/app.js``
+The *key* part is ``addEntry()``: this tells Encore to load the ``assets/js/app.js``
 file and follow *all* of the ``require()`` statements. It will then package everything
 together and - thanks to the first ``app`` argument - output final ``app.js`` and
 ``app.css`` files into the ``public/build`` directory.
@@ -306,14 +306,14 @@ Encore. When you do, you'll see an error!
 .. code-block:: terminal
 
     >   Error: Install sass-loader & node-sass to use enableSassLoader()
-    >     yarn add sass-loader@^7.0.1 node-sass --dev
+    >     yarn add sass-loader@^8.0.0 node-sass --dev
 
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
 
 .. code-block:: terminal
 
-    $ yarn add sass-loader@^7.0.1 node-sass --dev
+    $ yarn add sass-loader@^8.0.0 node-sass --dev
     $ yarn encore dev --watch
 
 Your app now supports Sass. Encore also supports LESS and Stylus. See

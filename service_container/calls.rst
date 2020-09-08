@@ -40,9 +40,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
             App\Service\MessageGenerator:
                 # ...
                 calls:
-                    - method: setLogger
-                      arguments:
-                          - '@logger'
+                    - [setLogger, ['@logger']]
 
     .. code-block:: xml
 
@@ -117,10 +115,7 @@ The configuration to tell the container it should do so would be like:
             App\Service\MessageGenerator:
                 # ...
                 calls:
-                    - method: withLogger
-                      arguments:
-                          - '@logger'
-                      returns_clone: true
+                    - withLogger: !returns_clone ['@logger']
 
     .. code-block:: xml
 

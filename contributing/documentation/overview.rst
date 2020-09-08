@@ -333,15 +333,15 @@ your proposal after you put all that hard work into making the changes. We
 definitely don't want you to waste your time!
 
 .. _`github.com/symfony/symfony-docs`: https://github.com/symfony/symfony-docs
-.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
+.. _`reStructuredText`: https://docutils.sourceforge.io/rst.html
 .. _`GitHub`: https://github.com/
-.. _`fork the repository`: https://help.github.com/articles/fork-a-repo
+.. _`fork the repository`: https://help.github.com/github/getting-started-with-github/fork-a-repo
 .. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
 .. _`SymfonyConnect`: https://connect.symfony.com/
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
 .. _`SymfonyCloud`: https://symfony.com/cloud
-.. _`roadmap`: https://symfony.com/roadmap
+.. _`roadmap`: https://symfony.com/releases
 .. _`pip`: https://pip.pypa.io/en/stable/
 .. _`pip installation`: https://pip.pypa.io/en/stable/installing/
-.. _`Sphinx`: http://sphinx-doc.org/
+.. _`Sphinx`: https://www.sphinx-doc.org/
 .. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php

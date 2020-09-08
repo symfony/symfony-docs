@@ -97,7 +97,7 @@ spends 5 seconds to compute data that is cached for 1 hour and this data is acce
 is fine. But after 1 hour, we get 10 new requests to a cold cache. So the data
 is computed again. The next second the same thing happens. So the data is computed
 about 50 times before the cache is warm again. This is where you need stampede
-prevention
+prevention.
 
 The first solution is to use locking: only allow one PHP process (on a per-host basis)
 to compute a specific key at a time. Locking is built-in by default, so
@@ -201,7 +201,7 @@ Advanced Usage
 
     cache/*
 
-.. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
+.. _`PSR-6`: https://www.php-fig.org/psr/psr-6/
 .. _`Cache Contracts`: https://github.com/symfony/contracts/blob/master/Cache/CacheInterface.php
 .. _`Stampede prevention`: https://en.wikipedia.org/wiki/Cache_stampede
 .. _Probabilistic early expiration: https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration

@@ -307,7 +307,7 @@ create a class which implements
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint)
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
@@ -560,7 +560,7 @@ in order to put it to use::
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint)
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
@@ -636,5 +636,5 @@ The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.
 
 
-.. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
+.. _`WSSE`: https://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce

@@ -144,15 +144,13 @@ is_granted
     {{ is_granted(role, object = null, field = null) }}
 
 ``role``
-    **type**: ``string``, ``string[]``
+    **type**: ``string``
 ``object`` *(optional)*
     **type**: ``object``
 ``field`` *(optional)*
     **type**: ``string``
 
-Returns ``true`` if the current user has the given role. If several roles are
-passed in an array, ``true`` is returned if the user has at least one of
-them.
+Returns ``true`` if the current user has the given role.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
@@ -237,7 +235,7 @@ absolute_url
 ``path``
     **type**: ``string``
 
-Returns the absolute URL from the passed relative path. Combine it with the
+Returns the absolute URL (with scheme and host) from the passed relative path. Combine it with the
 :ref:`asset() function <reference-twig-function-asset>` to generate absolute URLs
 for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Assets <templates-link-to-assets>`.
 

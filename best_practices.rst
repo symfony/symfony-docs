@@ -10,7 +10,8 @@ You can even ignore them completely and continue using your own best practices
 and methodologies. Symfony is flexible enough to adapt to your needs.
 
 This article assumes that you already have experience developing Symfony
-applications. If you don't, read first the rest of the `Symfony documentation`_.
+applications. If you don't, read first the :doc:`Getting Started </setup>`
+section of the documentation.
 
 .. tip::
 
@@ -298,6 +299,10 @@ to add buttons in the templates. This also improves the separation of concerns,
 because the button styling (CSS class and other attributes) is defined in the
 template instead of in a PHP class.
 
+However, if you create a :doc:`form with multiple submit buttons </form/multiple_buttons>`
+you should define them in the controller instead of the template. Otherwise, you
+won't be able to check which button was clicked when handling the form in the controller.
+
 Define Validation Constraints on the Underlying Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -440,7 +445,6 @@ That's why it's recommended to use raw URLs in tests instead of generating them
 from routes. Whenever a route changes, tests will break and you'll know that
 you must set up a redirection.
 
-.. _`Symfony documentation`: https://symfony.com/doc
 .. _`Symfony Demo`: https://github.com/symfony/demo
 .. _`download Symfony`: https://symfony.com/download
 .. _`Composer`: https://getcomposer.org/

@@ -27,7 +27,7 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `annotations`_
 
@@ -778,16 +778,16 @@ every request.
 
 Here are some common examples of how ``base_uri`` merging works in practice:
 
-===================  ==============  ======================
-``base_uri``         Relative URI    Actual Requested URI
-===================  ==============  ======================
-http://foo.com       /bar            http://foo.com/bar
-http://foo.com/foo   /bar            http://foo.com/bar
-http://foo.com/foo   bar             http://foo.com/bar
-http://foo.com/foo/  bar             http://foo.com/foo/bar
-http://foo.com       http://baz.com  http://baz.com
-http://foo.com/?bar  bar             http://foo.com/bar
-===================  ==============  ======================
+=======================  ==================  ==========================
+``base_uri``             Relative URI        Actual Requested URI
+=======================  ==================  ==========================
+http://example.org       /bar                http://example.org/bar
+http://example.org/foo   /bar                http://example.org/bar
+http://example.org/foo   bar                 http://example.org/bar
+http://example.org/foo/  bar                 http://example.org/foo/bar
+http://example.org       http://symfony.com  http://symfony.com
+http://example.org/?bar  bar                 http://example.org/bar
+=======================  ==================  ==========================
 
 bindto
 ......
@@ -1196,6 +1196,8 @@ The service id used for session storage. The ``session.storage`` service
 alias will be set to this service id. This class has to implement
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
 
+.. _config-framework-session-handler-id:
+
 handler_id
 ..........
 
@@ -1203,11 +1205,8 @@ handler_id
 
 The service id used for session storage. The default ``null`` value means to use
 the native PHP session mechanism. Set it to ``'session.handler.native_file'`` to
-let Symfony manage the sessions itself using files to store the session
-metadata.
-
-If you prefer to make Symfony store sessions in a database read
-:doc:`/doctrine/pdo_session_storage`.
+let Symfony manage the sessions itself using files to store the session metadata.
+You can also :doc:`store sessions in a database </session/database>`.
 
 .. _name:
 
@@ -1442,12 +1441,9 @@ metadata_update_threshold
 
 **type**: ``integer`` **default**: ``0``
 
-This is how many seconds to wait between updating/writing the session metadata. This
-can be useful if, for some reason, you want to limit the frequency at which the
-session persists.
-
-Starting in Symfony 3.4, session data is *only* written when the session data has
-changed. Previously, you needed to set this option to avoid that behavior.
+This is how many seconds to wait between updating/writing the session metadata.
+This can be useful if, for some reason, you want to limit the frequency at which
+the session persists, instead of doing that on every request.
 
 .. _reference-session-enabled:
 
@@ -1677,7 +1673,7 @@ version
 This option is used to *bust* the cache on assets by globally adding a query
 parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
 applies only to assets rendered via the Twig ``asset()`` function (or PHP
-equivalent) as well as assets rendered with Assetic.
+equivalent).
 
 For example, suppose you have the following:
 
@@ -2118,10 +2114,10 @@ If this option is enabled, validation constraints can be defined using annotatio
 translation_domain
 ..................
 
-**type**: ``string`` **default**: ``validators``
+**type**: ``string | false`` **default**: ``validators``
 
 The translation domain that is used when translating validation constraint
-error messages.
+error messages. Use false to disable translations.
 
 .. _reference-validation-not-compromised-password:
 
@@ -2192,7 +2188,7 @@ mapping
 paths
 """""
 
-**type**: ``array`` **default**: ``[]``
+**type**: ``array`` **default**: ``['config/validation/']``
 
 This option allows to define an array of paths with files or directories where
 the component will look for additional validation files:
@@ -2206,7 +2202,7 @@ the component will look for additional validation files:
             validation:
                 mapping:
                     paths:
-                        - "%kernel.project_dir%/validation/"
+                        - "%kernel.project_dir%/config/validation/"
 
     .. code-block:: xml
 
@@ -2222,7 +2218,7 @@ the component will look for additional validation files:
             <framework:config>
                 <framework:validation>
                     <framework:mapping>
-                        <framework:path>%kernel.project_dir%/validation</framework:path>
+                        <framework:path>%kernel.project_dir%/config/validation/</framework:path>
                     </framework:mapping>
                 </framework:validation>
             </framework:config>
@@ -2235,7 +2231,7 @@ the component will look for additional validation files:
             'validation' => [
                 'mapping' => [
                     'paths' => [
-                        '%kernel.project_dir%/validation',
+                        '%kernel.project_dir%/config/validation/',
                     ],
                 ],
             ],
@@ -2895,25 +2891,25 @@ Defines the kind of workflow that is going to be created, which can be either
 a normal workflow or a state machine. Read :doc:`this article </workflow/workflow-and-state-machine>`
 to know their differences.
 
-.. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
+.. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
-.. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
+.. _`Doctrine Cache`: https://www.doctrine-project.org/projects/doctrine-cache/en/current/index.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
 .. _`RFC 5322`: https://tools.ietf.org/html/rfc5322
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
-.. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
+.. _`blue/green deployment`: https://martinfowler.com/bliki/BlueGreenDeployment.html
 .. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
 .. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin
-.. _`error_reporting PHP option`: https://secure.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
+.. _`error_reporting PHP option`: https://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
 .. _`CSRF security attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`session.sid_length PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-length
-.. _`session.sid_bits_per_character PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
+.. _`session.sid_length PHP option`: https://www.php.net/manual/session.configuration.php#ini.session.sid-length
+.. _`session.sid_bits_per_character PHP option`: https://www.php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
 .. _`X-Robots-Tag HTTP header`: https://developers.google.com/search/reference/robots_meta_tag
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`default_socket_timeout`: https://php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
+.. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
 .. _`session.cache-limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter
-.. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/desktop/secauthn/microsoft-ntlm
+.. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/win32/secauthn/microsoft-ntlm
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers

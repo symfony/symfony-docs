@@ -207,7 +207,7 @@ use the ``ldap`` user provider.
     data. It's a static user defined by its username and password (for improved
     security, define the password as an environment variable).
 
-    If your LDAP server allows to retrieve information anonymously, you can
+    If your LDAP server allows retrieval of information anonymously, you can
     set the ``search_dn`` and ``search_password`` options to ``null``.
 
 The ``ldap`` user provider supports many different configuration options:
@@ -234,7 +234,7 @@ search_dn
 **type**: ``string`` **default**: ``null``
 
 This is your read-only user's DN, which will be used to authenticate
-against the LDAP server in order to fetch the user's information.
+against the LDAP server to fetch the user's information.
 
 search_password
 ...............
@@ -242,7 +242,7 @@ search_password
 **type**: ``string`` **default**: ``null``
 
 This is your read-only user's password, which will be used to authenticate
-against the LDAP server in order to fetch the user's information.
+against the LDAP server to fetch the user's information.
 
 default_roles
 .............
@@ -292,7 +292,7 @@ load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 If you pass ``null`` as the value of this option, the default filter is used
 ``({uid_key}={username})``.
 
-In order to prevent `LDAP injection`_, the username will be escaped.
+To prevent `LDAP injection`_, the username will be escaped.
 
 The syntax for the ``filter`` key is defined by `RFC4515`_.
 
@@ -319,7 +319,7 @@ dn_string
 
 **type**: ``string`` **default**: ``{username}``
 
-This key defines the form of the string used in order to compose the
+This key defines the form of the string used to compose the
 DN of the user, from the username. The ``{username}`` string is
 replaced by the actual username of the person trying to authenticate.
 
@@ -526,6 +526,6 @@ Configuration example for form login and query_string
             ]
         ]);
 
-.. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
+.. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection

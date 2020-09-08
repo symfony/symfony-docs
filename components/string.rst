@@ -145,6 +145,16 @@ Each string object can be transformed into the other two types of objects::
 If the conversion is not possible for any reason, you'll get an
 :class:`Symfony\\Component\\String\\Exception\\InvalidArgumentException`.
 
+There is also a method to get the bytes stored at some position::
+
+    // ('नमस्ते' bytes = [224, 164, 168, 224, 164, 174, 224, 164, 184,
+    //                  224, 165, 141, 224, 164, 164, 224, 165, 135])
+    b('नमस्ते')->bytesAt(0);   // [224]
+    u('नमस्ते')->bytesAt(0);   // [224, 164, 168]
+
+    b('नमस्ते')->bytesAt(1);   // [164]
+    u('नमस्ते')->bytesAt(1);   // [224, 164, 174]
+
 Methods Related to Length and White Spaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -366,12 +376,6 @@ These methods are only available for ``ByteString`` objects::
     // returns TRUE if the string contents are valid UTF-8 contents
     b('Lorem Ipsum')->isUtf8(); // true
     b("\xc3\x28")->isUtf8();    // false
-
-    // returns the value of the byte stored at the given position
-    // ('नमस्ते' bytes = [224, 164, 168, 224, 164, 174, 224, 164, 184,
-    //                  224, 165, 141, 224, 164, 164, 224, 165, 135])
-    b('नमस्ते')->byteCode(0);  // 224
-    b('नमस्ते')->byteCode(17); // 135
 
 Methods Added by CodePointString and UnicodeString
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

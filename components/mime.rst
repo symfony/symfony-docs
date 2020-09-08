@@ -166,7 +166,7 @@ different parts of the email by hand::
     ;
 
     $textContent = new TextPart('Lorem ipsum...');
-    $htmlContent = new TextPart('<h1>Lorem ipsum</h1> <p>...</p>', 'html');
+    $htmlContent = new TextPart('<h1>Lorem ipsum</h1> <p>...</p>', null, 'html');
     $body = new AlternativePart($textContent, $htmlContent);
 
     $email = new Message($headers, $body);
@@ -188,7 +188,7 @@ email multiparts::
     $textContent = new TextPart('Lorem ipsum...');
     $htmlContent = new TextPart(sprintf(
         '<img src="cid:%s"/> <h1>Lorem ipsum</h1> <p>...</p>', $imageCid
-    ), 'html');
+    ), null, 'html');
     $bodyContent = new AlternativePart($textContent, $htmlContent);
     $body = new RelatedPart($bodyContent, $embeddedImage);
 
@@ -272,7 +272,7 @@ that extension to improve the guessing performance.
 Adding a MIME Type Guesser
 ..........................
 
-You can register your own MIME type guesser by creating a class that implements
+You can add your own MIME type guesser by creating a class that implements
 :class:`Symfony\\Component\\Mime\\MimeTypeGuesserInterface`::
 
     namespace App;
@@ -296,6 +296,12 @@ You can register your own MIME type guesser by creating a class that implements
         }
     }
 
+MIME type guessers must be :ref:`registered as services <service-container-creating-service>`
+and :doc:`tagged </service_container/tags>` with the ``mime.mime_type_guesser`` tag.
+If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
 .. _`MIME`: https://en.wikipedia.org/wiki/MIME
 .. _`MIME types`: https://en.wikipedia.org/wiki/Media_type
-.. _`fileinfo extension`: https://php.net/fileinfo
+.. _`fileinfo extension`: https://www.php.net/fileinfo

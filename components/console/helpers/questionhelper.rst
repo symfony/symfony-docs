@@ -40,7 +40,7 @@ the following to your command::
             $question = new ConfirmationQuestion('Continue with this action?', false);
 
             if (!$helper->ask($input, $output, $question)) {
-                return;
+                return 0;
             }
         }
     }

@@ -311,4 +311,4 @@ Parameter                      Description
 
 .. include:: /reference/constraints/_comparison-value-option.rst.inc
 
-.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php
+.. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php

@@ -110,7 +110,7 @@ content and check that the number only changes every 10 seconds::
 Using HTTP cache headers to manage your application cache is very powerful and
 allows you to tune finely your caching strategy as you can use both the
 expiration and the validation models of the HTTP specification. If you are not
-comfortable with these concepts, read the `HTTP caching`_ chapter of the
+comfortable with these concepts, read the :doc:`HTTP caching </http_cache>` chapter of the
 Symfony documentation.
 
 The Response class contains methods that let you configure the HTTP cache. One
@@ -206,6 +206,5 @@ With the addition of a single interface, our framework can now benefit from
 the many features built into the HttpKernel component; HTTP caching being just
 one of them but an important one as it can make your applications fly!
 
-.. _`HTTP caching`: https://symfony.com/doc/current/http_cache.html
 .. _`ESI`: https://en.wikipedia.org/wiki/Edge_Side_Includes
-.. _`Varnish`: https://www.varnish-cache.org/
+.. _`Varnish`: https://varnish-cache.org/

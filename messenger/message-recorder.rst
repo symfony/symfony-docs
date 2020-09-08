@@ -42,8 +42,7 @@ DispatchAfterCurrentBusMiddleware Middleware
 For many applications, the desired behavior is to *only* handle messages that
 are dispatched by a handler once that handler has fully finished. This can be by
 using the ``DispatchAfterCurrentBusMiddleware`` and adding a
-``DispatchAfterCurrentBusStamp`` stamp to
-`the message Envelope </components/messenger#adding-metadata-to-messages-envelopes>`_::
+``DispatchAfterCurrentBusStamp`` stamp to :ref:`the message Envelope <messenger-envelopes>`::
 
     namespace App\Messenger\CommandHandler;
 

@@ -27,9 +27,10 @@ has `high-level implementations`_ in many programming languages.
 
 Mercure comes with an authorization mechanism,
 automatic re-connection in case of network issues
-with retrieving of lost updates, "connection-less" push for smartphones and
-auto-discoverability (a supported client can automatically discover and
-subscribe to updates of a given resource thanks to a specific HTTP header).
+with retrieving of lost updates, a presence API,
+"connection-less" push for smartphones and auto-discoverability (a supported
+client can automatically discover and subscribe to updates of a given resource
+thanks to a specific HTTP header).
 
 All these features are supported in the Symfony integration.
 
@@ -71,7 +72,7 @@ Run the following command to start it:
 
 .. code-block:: terminal
 
-    $ ./mercure --jwt-key='aVerySecretKey' --addr='localhost:3000' --allow-anonymous --cors-allowed-origins='*'
+    $ ./mercure --jwt-key='!ChangeMe!' --addr='localhost:3000' --allow-anonymous --cors-allowed-origins='*'
 
 .. note::
 
@@ -102,7 +103,7 @@ to the Mercure Hub to be authorized to publish updates.
 This JWT should be stored in the ``MERCURE_JWT_TOKEN`` environment variable.
 
 The JWT must be signed with the same secret key as the one used by
-the Hub to verify the JWT (``aVerySecretKey`` in our example).
+the Hub to verify the JWT (``!ChangeMe!`` in our example).
 Its payload must contain at least the following structure to be allowed to
 publish:
 
@@ -120,7 +121,7 @@ public updates (see the authorization_ section for further information).
 .. tip::
 
     The jwt.io website is a convenient way to create and sign JWTs.
-    Checkout this `example JWT`_, that grants publishing rights for all *targets*
+    Checkout this `example JWT`_, that grants publishing rights for all *topics*
     (notice the star in the array).
     Don't forget to set your secret key properly in the bottom of the right panel of the form!
 
@@ -149,12 +150,12 @@ service, including controllers::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Mercure\Publisher;
+    use Symfony\Component\Mercure\PublisherInterface;
     use Symfony\Component\Mercure\Update;
 
     class PublishController
     {
-        public function __invoke(Publisher $publisher): Response
+        public function __invoke(PublisherInterface $publisher): Response
         {
             $update = new Update(
                 'http://example.com/books/1',
@@ -196,7 +197,8 @@ Subscribing to updates in JavaScript is straightforward:
     }
 
 Mercure also allows to subscribe to several topics,
-and to use URI Templates as patterns:
+and to use URI Templates or the special value ``*`` (matched by all topics)
+as patterns:
 
 .. code-block:: javascript
 
@@ -286,7 +288,7 @@ by using the ``AbstractController::addLink`` helper method::
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\WebLink\LInk;
+    use Symfony\Component\WebLink\Link;
 
     class DiscoverController extends AbstractController
     {
@@ -329,36 +331,36 @@ Authorization
 -------------
 
 Mercure also allows to dispatch updates only to authorized clients.
-To do so, set the list of **targets** allowed to receive the update
-as the third parameter of the ``Update`` constructor::
+To do so, mark the update as **private** by setting the third parameter
+of the ``Update`` constructor to ``true``::
 
     // src/Controller/Publish.php
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Mercure\Publisher;
+    use Symfony\Component\Mercure\PublisherInterface;
     use Symfony\Component\Mercure\Update;
 
     class PublishController
     {
-        public function __invoke(Publisher $publisher): Response
+        public function __invoke(PublisherInterface $publisher): Response
         {
             $update = new Update(
                 'http://example.com/books/1',
                 json_encode(['status' => 'OutOfStock']),
-                ['http://example.com/user/kevin', 'http://example.com/groups/admin'] // Here are the targets
+                true // private
             );
 
-            // Publisher's JWT must contain all of these targets or * in mercure.publish or you'll get a 401
-            // Subscriber's JWT must contain at least one of these targets or * in mercure.subscribe to receive the update
+            // Publisher's JWT must contain this topic, a URI template it matches or * in mercure.publish or you'll get a 401
+            // Subscriber's JWT must contain this topic, a URI template it matches or * in mercure.subscribe to receive the update
             $publisher($update);
 
-            return new Response('published to the selected targets!');
+            return new Response('private update published!');
         }
     }
 
-To subscribe to private updates, subscribers must provide
-a JWT containing at least one target marking the update to the Hub.
+To subscribe to private updates, subscribers must provide to the Hub
+a JWT containing a topic selector matching by the update's topic.
 
 To provide this JWT, the subscriber can use a cookie,
 or a ``Authorization`` HTTP header.
@@ -380,9 +382,9 @@ If the client is not a web browser, then using an authorization header is the wa
         });
 
 In the following example controller,
-the generated cookie contains a JWT, itself containing the appropriate targets.
+the generated cookie contains a JWT, itself containing the appropriate topic selector.
 This cookie will be automatically sent by the web browser when connecting to the Hub.
-Then, the Hub will verify the validity of the provided JWT, and extract the targets
+Then, the Hub will verify the validity of the provided JWT, and extract the topic selectors
 from it.
 
 To generate the JWT, we'll use the ``lcobucci/jwt`` library. Install it:
@@ -398,6 +400,7 @@ And here is the controller::
 
     use Lcobucci\JWT\Builder;
     use Lcobucci\JWT\Signer\Hmac\Sha256;
+    use Lcobucci\JWT\Signer\Key;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -410,12 +413,10 @@ And here is the controller::
             $hubUrl = $this->getParameter('mercure.default_hub');
             $this->addLink($request, new Link('mercure', $hubUrl));
 
-            $username = $this->getUser()->getUsername(); // Retrieve the username of the current user
             $token = (new Builder())
                 // set other appropriate JWT claims, such as an expiration date
-                ->set('mercure', ['subscribe' => ["http://example.com/user/$username"]]) // could also include the security roles, or anything else
-                ->sign(new Sha256(), $this->getParameter('mercure_secret_key')) // don't forget to set this parameter! Test value: aVerySecretKey
-                ->getToken();
+                ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
+                ->getToken(new Sha256(), new Key($this->getParameter('mercure_secret_key'))); // don't forget to set this parameter! Test value: !ChangeMe!
 
             $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
             $response->headers->set(
@@ -551,9 +552,10 @@ be handled by a stub publisher::
     // tests/Functional/Fixtures/PublisherStub.php
     namespace App\Tests\Functional\Fixtures;
 
+    use Symfony\Component\Mercure\PublisherInterface;
     use Symfony\Component\Mercure\Update;
 
-    class PublisherStub
+    class PublisherStub implements PublisherInterface
     {
         public function __invoke(Update $update): string
         {
@@ -609,16 +611,16 @@ Enable the panel in your configuration, as follows:
 
 .. image:: /_images/mercure/panel.png
 
-.. _`the Mercure protocol`: https://github.com/dunglas/mercure#protocol-specification
-.. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/docs/Server-sent_events
+.. _`the Mercure protocol`: https://mercure.rocks/spec
+.. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
 .. _`a polyfill`: https://github.com/Yaffle/EventSource
-.. _`high-level implementations`: https://github.com/dunglas/mercure#tools
+.. _`high-level implementations`: https://mercure.rocks/docs/ecosystem/awesome
 .. _`In this recording`: https://www.youtube.com/watch?v=UI1l0JOjLeI
 .. _`Mercure.rocks`: https://mercure.rocks
 .. _`API Platform distribution`: https://api-platform.com/docs/distribution/
 .. _`JSON Web Token`: https://tools.ietf.org/html/rfc7519
 .. _`example JWT`: https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.iHLdpAEjX4BqCsHJEegxRmO-Y6sMxXwNATrQyRNt3GY
 .. _`IRI`: https://tools.ietf.org/html/rfc3987
-.. _`practical UI`: https://twitter.com/chromedevtools/status/562324683194785792
+.. _`practical UI`: https://twitter.com/ChromeDevTools/status/562324683194785792
 .. _`the dedicated API Platform documentation`: https://api-platform.com/docs/core/mercure/
 .. _`the online debugger`: https://uri-template-tester.mercure.rocks

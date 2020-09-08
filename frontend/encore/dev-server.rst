@@ -17,14 +17,53 @@ Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <lo
 in some other way), you're done: the paths in your templates will automatically point
 to the dev server.
 
-You can also pass options to the ``dev-server`` command: any options that are supported
-by the normal `webpack-dev-server`_. For example:
+Enabling HTTPS using the Symfony Web Server
+-------------------------------------------
+
+If you're using the :doc:`Symfony web server </setup/symfony_server>` locally with HTTPS,
+you'll need to also tell the dev-server to use HTTPS. To do this, you can reuse the Symfony web
+server SSL certificate:
+
+.. code-block:: terminal
+
+    # Unix-based systems
+    $ yarn dev-server --https --pfx=$HOME/.symfony/certs/default.p12
+
+    # Windows
+    $ encore dev-server --https --pfx=%UserProfile%\.symfony\certs\default.p12
+
+dev-server Options
+------------------
+
+The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
+You can set these options via command line options:
 
 .. code-block:: terminal
 
     $ yarn encore dev-server --https --port 9000
 
-This will start a server at ``https://localhost:9000``.
+You can also set these options using the ``Encore.configureDevServerOptions()``
+method in your ``webpack.config.js`` file:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .configureDevServerOptions(options => {
+            options.https = {
+                key: '/path/to/server.key',
+                cert: '/path/to/server.crt',
+            }
+        })
+    ;
+
+.. versionadded:: 0.28.4
+
+    The ``Encore.configureDevServerOptions()`` method was introduced in Encore 0.28.4.
 
 Hot Module Replacement HMR
 --------------------------
@@ -36,6 +75,21 @@ option:
 .. code-block:: terminal
 
     $ ./node_modules/.bin/encore dev-server --hot
+
+If you want to use SSL with self-signed certificates, add the ``--https``,
+``--pfx=``, and  ``--allowed-hosts`` options to the ``dev-server`` command in
+the ``package.json`` file:
+
+.. code-block:: diff
+
+    {
+        ...
+        "scripts": {
+    -        "dev-server": "encore dev-server",
+    +        "dev-server": "encore dev-server --https --pfx=$HOME/.symfony/certs/default.p12 --allowed-hosts=mydomain.wip",
+            ...
+        }
+    }
 
 If you experience issues related to CORS (Cross Origin Resource Sharing), add
 the ``--disable-host-check`` and ``--port`` options to the ``dev-server``
@@ -56,6 +110,7 @@ command in the ``package.json`` file:
 
     Beware that `it's not recommended to disable host checking`_ in general, but
     here it's required to solve the CORS issue.
+
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
 .. _`HMR`: https://webpack.js.org/concepts/hot-module-replacement/

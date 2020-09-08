@@ -390,7 +390,7 @@ Additionally, you can define several named autowiring aliases if you want to use
 one implementation in some cases, and another implementation in some
 other cases.
 
-For instance, you may want to use by default the ``Rot13Transformer``
+For instance, you may want to use the ``Rot13Transformer``
 implementation by default when the ``TransformerInterface`` interface is
 type hinted, but use the ``UppercaseTransformer`` implementation in some
 specific cases. To do so, you can create a normal alias from the

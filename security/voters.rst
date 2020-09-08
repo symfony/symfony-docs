@@ -44,8 +44,8 @@ which makes creating a voter even easier::
 
     abstract class Voter implements VoterInterface
     {
-        abstract protected function supports($attribute, $subject);
-        abstract protected function voteOnAttribute($attribute, $subject, TokenInterface $token);
+        abstract protected function supports(string $attribute, $subject);
+        abstract protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token);
     }
 
 .. _how-to-use-the-voter-in-a-controller:
@@ -118,14 +118,14 @@ would look like this::
         const VIEW = 'view';
         const EDIT = 'edit';
 
-        protected function supports($attribute, $subject)
+        protected function supports(string $attribute, $subject)
         {
             // if the attribute isn't one we support, return false
             if (!in_array($attribute, [self::VIEW, self::EDIT])) {
                 return false;
             }
 
-            // only vote on Post objects inside this voter
+            // only vote on `Post` objects
             if (!$subject instanceof Post) {
                 return false;
             }
@@ -133,7 +133,7 @@ would look like this::
             return true;
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
         {
             $user = $token->getUser();
 
@@ -142,7 +142,7 @@ would look like this::
                 return false;
             }
 
-            // you know $subject is a Post object, thanks to supports
+            // you know $subject is a Post object, thanks to `supports()`
             /** @var Post $post */
             $post = $subject;
 
@@ -163,15 +163,13 @@ would look like this::
                 return true;
             }
 
-            // the Post object could have, for example, a method isPrivate()
-            // that checks a boolean $private property
+            // the Post object could have, for example, a method `isPrivate()`
             return !$post->isPrivate();
         }
 
         private function canEdit(Post $post, User $user)
         {
-            // this assumes that the data object has a getOwner() method
-            // to get the entity of the user who owns this data object
+            // this assumes that the Post object has a `getOwner()` method
             return $user === $post->getOwner();
         }
     }
@@ -180,7 +178,7 @@ That's it! The voter is done! Next, :ref:`configure it <declaring-the-voter-as-a
 
 To recap, here's what's expected from the two abstract methods:
 
-``Voter::supports($attribute, $subject)``
+``Voter::supports(string $attribute, $subject)``
     When ``isGranted()`` (or ``denyAccessUnlessGranted()``) is called, the first
     argument is passed here as ``$attribute`` (e.g. ``ROLE_USER``, ``edit``) and
     the second argument (if any) is passed as ``$subject`` (e.g. ``null``, a ``Post``
@@ -190,7 +188,7 @@ To recap, here's what's expected from the two abstract methods:
     return ``true`` if the attribute is ``view`` or ``edit`` and if the object is
     a ``Post`` instance.
 
-``voteOnAttribute($attribute, $subject, TokenInterface $token)``
+``voteOnAttribute(string $attribute, $subject, TokenInterface $token)``
     If you return ``true`` from ``supports()``, then this method is called. Your
     job is simple: return ``true`` to allow access and ``false`` to deny access.
     The ``$token`` can be used to find the current user object (if any). In this
@@ -233,7 +231,7 @@ with ``ROLE_SUPER_ADMIN``::
             $this->security = $security;
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
         {
             // ...
 
@@ -261,9 +259,8 @@ voters vote for one action and object. For instance, suppose you have one voter 
 checks if the user is a member of the site and a second one that checks if the user
 is older than 18.
 
-To handle these cases, the access decision manager uses an access decision
-strategy. You can configure this to suit your needs. There are three
-strategies available:
+To handle these cases, the access decision manager uses a "strategy" which you can configure.
+There are three strategies available:
 
 ``affirmative`` (default)
     This grants access as soon as there is *one* voter granting access;
@@ -314,5 +311,51 @@ security configuration:
             'access_decision_manager' => [
                 'strategy' => 'unanimous',
                 'allow_if_all_abstain' => false,
+            ],
+        ]);
+
+Custom Access Decision Strategy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If none of the built-in strategies fits your use case, define the ``service``
+option to use a custom service as the Access Decision Manager (your service
+must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface`):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            access_decision_manager:
+                service: App\Security\MyCustomAccessDecisionManager
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+
+            <config>
+                <access-decision-manager
+                    service="App\Security\MyCustomAccessDecisionManager"/>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\MyCustomAccessDecisionManager;
+
+        $container->loadFromExtension('security', [
+            'access_decision_manager' => [
+                'service' => MyCustomAccessDecisionManager::class,
+                // ...
             ],
         ]);

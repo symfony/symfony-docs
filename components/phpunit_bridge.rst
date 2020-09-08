@@ -223,9 +223,9 @@ message contains the ``"foobar"`` string.
 Making Tests Fail
 ~~~~~~~~~~~~~~~~~
 
-By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation
-notices will make tests fail. Alternatively, you can configure an
-arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
+By default, any non-legacy-tagged or any non-`@-silenced <@-silencing operator>`_
+deprecation notices will make tests fail. Alternatively, you can configure
+an arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
 ``max[total]=320`` for instance. It will make the tests fails only if a
 higher number of deprecation notices is reached (``0`` is the default
 value).
@@ -311,9 +311,8 @@ Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the PHPUnit Bridge uses ``DebugClassLoader`` from the
-:doc:`ErrorHandler component </components/error_handler>` to throw deprecation
-notices at class autoloading time. This can be disabled with the
-``debug-class-loader`` option.
+`ErrorHandler component`_ to throw deprecation notices at class autoloading
+time. This can be disabled with the ``debug-class-loader`` option.
 
 .. code-block:: xml
 
@@ -414,16 +413,16 @@ call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
 
     class MyTest extends TestCase
     {
-        // when using the SetUpTearDownTrait, methods like doSetup() can
+        // when using the SetUpTearDownTrait, methods like doSetUp() can
         // be defined with and without the 'void' return type, as you wish
         use SetUpTearDownTrait;
 
-        private function doSetup()
+        private function doSetUp()
         {
             // ...
         }
 
-        protected function doSetup(): void
+        protected function doSetUp(): void
         {
             // ...
         }
@@ -741,7 +740,7 @@ Troubleshooting
 The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
 "by convention" and assume that the namespace of the tested class can be
 obtained just by removing the ``Tests\`` part from the test namespace. I.e.
-that if the your test case fully-qualified class name (FQCN) is
+if your test cases fully-qualified class name (FQCN) is
 ``App\Tests\Watch\DummyWatchTest``, it assumes the tested class namespace
 is ``App\Watch``.
 
@@ -936,7 +935,7 @@ your application, you can use your own SUT (System Under Test) solver:
     </listeners>
 
 The ``My\Namespace\SutSolver::solve`` can be any PHP callable and receives the
-current test classname as its first argument.
+current test as its first argument.
 
 Finally, the listener can also display warning messages when the SUT solver does
 not find the SUT:
@@ -954,12 +953,12 @@ not find the SUT:
 
 .. _`PHPUnit`: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
+.. _`ErrorHandler component`: https://github.com/symfony/error-handler
 .. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
-.. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
+.. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
-.. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
-.. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
 .. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
-.. _`PHP namespace resolutions rules`: https://php.net/manual/en/language.namespaces.rules.php
+.. _`PHP namespace resolutions rules`: https://www.php.net/manual/en/language.namespaces.rules.php

@@ -26,6 +26,14 @@ Symfony includes the following normalizers but you can also
 
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
   normalize PHP object using the :doc:`PropertyAccessor component </components/property_access>`;
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
+  for :phpclass:`DateTimeZone` objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
+  objects implementing the :phpclass:`DateTimeInterface` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
+  for :phpclass:`DateInterval` objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
+  transform :phpclass:`SplFileInfo` objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer` to
   normalize PHP object using an object that implements
   :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`;
@@ -33,5 +41,10 @@ Symfony includes the following normalizers but you can also
   normalize PHP object using the getter and setter methods of the object;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer` to
   normalize PHP object using `PHP reflection`_.
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
+  to deal with objects implementing the :phpclass:`JsonSerializable` interface
 
+.. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
 .. _`PHP reflection`: https://php.net/manual/en/book.reflection.php

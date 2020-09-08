@@ -22,10 +22,9 @@ wraps the original PHPUnit binary to provide additional features:
 
     $ composer require --dev symfony/phpunit-bridge
 
-Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the ``tests/`` directory of your application. If you follow
-this rule, then you can run all of your application's tests with the following
-command:
+After the library downloads, try executing PHPUnit by running (the first time
+you run this, it will download PHPUnit itself and make its classes available in
+your app):
 
 .. code-block:: terminal
 
@@ -38,6 +37,11 @@ command:
     can remove the package (``composer remove symfony/phpunit-bridge``) and install
     it again. Another solution is to remove the project's ``symfony.lock`` file and
     run ``composer install`` to force the execution of all Symfony Flex recipes.
+
+Each test - whether it's a unit test or a functional test - is a PHP class
+that should live in the ``tests/`` directory of your application. If you follow
+this rule, then you can run all of your application's tests with the same
+command as before.
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
@@ -96,7 +100,7 @@ of your application::
 .. note::
 
     By convention, the ``tests/`` directory should replicate the directory
-    of your bundle for unit tests. So, if you're testing a class in the
+    of your application for unit tests. So, if you're testing a class in the
     ``src/Util/`` directory, put the test in the ``tests/Util/``
     directory.
 
@@ -144,7 +148,7 @@ utilities used in the functional tests:
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 Functional tests are PHP files that typically live in the ``tests/Controller``
-directory for your bundle. If you want to test the pages handled by your
+directory of your application. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
@@ -208,21 +212,13 @@ Now you can use CSS selectors with the crawler. To assert that the phrase
 
     $this->assertSelectorTextContains('html h1.title', 'Hello World');
 
-This assertion will internally call ``$crawler->filter('html h1.title')``, which allows
-you to use CSS selectors to filter any HTML element in the page and check for
-its existence, attributes, text, etc.
+This assertion checks if the first element matching the CSS selector contains
+the given text. This assert calls ``$crawler->filter('html h1.title')``
+internally, which allows you to use CSS selectors to filter any HTML element in
+the page and check for its existence, attributes, text, etc.
 
 The ``assertSelectorTextContains`` method is not a native PHPUnit assertion and is
 available thanks to the ``WebTestCase`` class.
-
-.. seealso::
-
-    Using native PHPUnit methods, the same assertion would look like this::
-
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('html h1.title:contains("Hello World")')->count()
-        );
 
 The crawler can also be used to interact with the page. Click on a link by first
 selecting it with the crawler using either an XPath expression or a CSS selector,
@@ -266,7 +262,7 @@ Or test against the response content directly if you just want to assert that
 the content contains some text or in case that the response is not an XML/HTML
 document::
 
-    $this->assertContains(
+    $this->assertStringContainsString(
         'Hello World',
         $client->getResponse()->getContent()
     );
@@ -292,48 +288,48 @@ document::
 
         // ...
 
-        // asserts that there is at least one h2 tag
-        // with the class "subtitle"
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter('h2.subtitle')->count()
+        // asserts that there is at least one h2 tag with the class "subtitle"
+        // the third argument is an optional message shown on failed tests
+        $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count(),
+            'There is at least one subtitle'
         );
 
         // asserts that there are exactly 4 h2 tags on the page
         $this->assertCount(4, $crawler->filter('h2'));
 
         // asserts that the "Content-Type" header is "application/json"
-        $this->assertTrue(
-            $client->getResponse()->headers->contains(
-                'Content-Type',
-                'application/json'
-            ),
-            'the "Content-Type" header is "application/json"' // optional message shown on failure
-        );
+        $this->assertResponseHeaderSame('Content-Type', 'application/json');
+        // equivalent to:
+        $this->assertTrue($client->getResponse()->headers->contains(
+            'Content-Type', 'application/json'
+        ));
 
         // asserts that the response content contains a string
-        $this->assertContains('foo', $client->getResponse()->getContent());
+        $this->assertStringContainsString('foo', $client->getResponse()->getContent());
         // ...or matches a regex
         $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
 
         // asserts that the response status code is 2xx
-        $this->assertTrue($client->getResponse()->isSuccessful(), 'response status is 2xx');
-        // asserts that the response status code is 404
+        $this->assertResponseIsSuccessful();
+        // equivalent to:
+        $this->assertTrue($client->getResponse()->isSuccessful());
+
+        // asserts that the response status code is 404 Not Found
         $this->assertTrue($client->getResponse()->isNotFound());
-        // asserts a specific 200 status code
-        $this->assertEquals(
-            200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
-            $client->getResponse()->getStatusCode()
-        );
+
+        // asserts a specific status code
+        $this->assertResponseStatusCodeSame(201);
+        // HTTP status numbers are available as constants too:
+        // e.g. 201 === Symfony\Component\HttpFoundation\Response::HTTP_CREATED
+        // equivalent to:
+        $this->assertEquals(201, $client->getResponse()->getStatusCode());
 
         // asserts that the response is a redirect to /demo/contact
-        $this->assertTrue(
-            $client->getResponse()->isRedirect('/demo/contact')
-            // if the redirection URL was generated as an absolute URL
-            // $client->getResponse()->isRedirect('http://localhost/demo/contact')
-        );
-        // ...or simply check that the response is a redirect to any URL
-        $this->assertTrue($client->getResponse()->isRedirect());
+        $this->assertResponseRedirects('/demo/contact');
+        // equivalent to:
+        $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
+        // ...or check that the response is a redirect to any URL
+        $this->assertResponseRedirects();
 
 .. _testing-data-providers:
 
@@ -397,13 +393,13 @@ returns a ``Crawler`` instance.
     The full signature of the ``request()`` method is::
 
         request(
-            $method,
-            $uri,
+            string $method,
+            string $uri,
             array $parameters = [],
             array $files = [],
             array $server = [],
-            $content = null,
-            $changeHistory = true
+            string $content = null,
+            bool $changeHistory = true
         )
 
     The ``server`` array is the raw values that you'd expect to normally
@@ -552,6 +548,54 @@ allows fetching both public and all non-removed private services::
 For a list of services available in your application, use the ``debug:container``
 command.
 
+If a private service is *never* used in your application (outside of your test),
+it is *removed* from the container and cannot be accessed as described above. In
+that case, you can create a public alias in the ``test`` environment and access
+it via that alias:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services_test.yaml
+        services:
+            # access the service in your test via
+            # self::$container->get('test.App\Test\SomeTestHelper')
+            test.App\Test\SomeTestHelper:
+                # the id of the private service
+                alias: 'App\Test\SomeTestHelper'
+                public: true
+
+    .. code-block:: xml
+
+        <!-- config/services_test.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="test.App\Test\SomeTestHelper" alias="App\Test\SomeTestHelper" public="true"/>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services_test.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MessageGenerator;
+        use App\Updates\SiteUpdateManager;
+
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            $services->alias('test.App\Test\SomeTestHelper', 'App\Test\SomeTestHelper')->public();
+        };
+
 .. tip::
 
     The special container that gives access to private services exists only in
@@ -685,6 +729,8 @@ Extracting Information
 
 The Crawler can extract information from the nodes::
 
+    use Symfony\Component\DomCrawler\Crawler;
+    
     // returns the attribute value for the first node
     $crawler->attr('class');
 
@@ -705,7 +751,7 @@ The Crawler can extract information from the nodes::
     $info = $crawler->extract(['_text', 'href']);
 
     // executes a lambda for each node and return an array of results
-    $data = $crawler->each(function ($node, $i) {
+    $data = $crawler->each(function (Crawler $node, $i) {
         return $node->attr('href');
     });
 
@@ -1073,5 +1119,5 @@ Learn more
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.readthedocs.io/
 .. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
-.. _`$_SERVER`: https://php.net/manual/en/reserved.variables.server.php
+.. _`$_SERVER`: https://www.php.net/manual/en/reserved.variables.server.php
 .. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers

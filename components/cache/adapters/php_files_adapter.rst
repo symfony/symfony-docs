@@ -67,4 +67,4 @@ directory path as constructor arguments::
     allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
     calling its ``prune()`` method.
 
-.. _`OPcache`: http://php.net/manual/en/book.opcache.php
+.. _`OPcache`: https://www.php.net/manual/en/book.opcache.php

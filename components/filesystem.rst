@@ -193,6 +193,8 @@ of a single file or directory::
     $filesystem->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
     // renames a directory
     $filesystem->rename('/tmp/files', '/path/to/store/files');
+    // if the target already exists, a third boolean argument is available to overwrite.
+    $filesystem->rename('/tmp/processed_video2.ogg', '/path/to/store/video_647.ogg', true);
 
 ``symlink``
 ~~~~~~~~~~~
@@ -212,7 +214,7 @@ support symbolic links, a third boolean argument is available::
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
 
-PHP's ``readlink()`` function returns the target of a symbolic link. However, its behavior
+PHP's :phpfunction:`readlink` function returns the target of a symbolic link. However, its behavior
 is completely different under Windows and Unix. On Windows systems, ``readlink()``
 resolves recursively the children links of a link until a final target is found. On
 Unix-based systems ``readlink()`` only resolves the next link.

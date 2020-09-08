@@ -346,6 +346,13 @@ In order to maintain the array keys use the ``useAttributeAsKey()`` method::
         ->end()
     ;
 
+.. note::
+
+    In YAML, the ``'name'`` argument of ``useAttributeAsKey()`` has a special
+    meaning and refers to the key of the map (``sf_connection`` and ``default``
+    in this example). If a child node was defined for the ``connections`` node
+    with the key ``name``, then that key of the map would be lost.
+
 The argument of this method (``name`` in the example above) defines the name of
 the attribute added to each XML node to differentiate them. Now you can use the
 same YAML configuration shown before or the following XML configuration:

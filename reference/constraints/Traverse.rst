@@ -1,15 +1,16 @@
 Traverse
 ========
 
-Objects do not validate nested objects by default unless explicitly using
-this constraint.
-If only specific nested objects should be validated by cascade, consider
-using the :doc:`/reference/constraints/Valid` instead.
+Object properties are only validated if they are accessible, either by being
+public or having public accessor methods (e.g. a public getter).
+If your object needs to be traversed to validate its data, you can use this
+constraint.
 
 +----------------+-------------------------------------------------------------------------------------+
 | Applies to     | :ref:`class <validation-class-target>`                                              |
 +----------------+-------------------------------------------------------------------------------------+
 | Options        | - `payload`_                                                                        |
+|                | - :ref:`traverse <traverse-option>`                                                 |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Traverse`                       |
 +----------------+-------------------------------------------------------------------------------------+
@@ -17,19 +18,18 @@ using the :doc:`/reference/constraints/Valid` instead.
 Basic Usage
 -----------
 
-In the following example, create three classes ``Book``, ``Author`` and
-``Editor`` that all have constraints on their properties. Furthermore,
-``Book`` stores an ``Author`` and an ``Editor`` instance that must be
-valid too. Instead of adding the ``Valid`` constraint to both fields,
-configure the ``Traverse`` constraint on the ``Book`` class.
+In the following example, create two classes ``BookCollection`` and ``Book``
+that all have constraints on their properties.
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/Entity/Book.php
+        // src/Entity/BookCollection.php
         namespace App\Entity;
 
+        use Doctrine\Collections\ArrayCollection;
+        use Doctrine\Collections\Collection
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,31 +37,66 @@ configure the ``Traverse`` constraint on the ``Book`` class.
          * @ORM\Entity
          * @Assert\Traverse
          */
-        class Book
+        class BookCollection implements \IteratorAggregate
         {
             /**
-             * @var Author
+             * @var string
              *
-             * @ORM\ManyToOne(targetEntity="App\Entity\Author")
+             * @ORM\Column
+             *
+             * @Assert\NotBlank
              */
-            protected $author;
+            protected $name = '';
 
             /**
-             * @var Editor
+             * @var Collection|Book[]
              *
-             * @ORM\ManyToOne(targetEntity="App\Entity\Editor")
+             * @ORM\ManyToMany(targetEntity="App\Entity\Book")
              */
-            protected $editor;
+            protected $books;
 
-            // ...
+            // some other properties
+
+            public function __construct()
+            {
+                $this->books = new ArrayCollection();
+            }
+
+            // ... setter for name, adder and remover for books
+
+            // the name can be validated by calling the getter
+            public function getName(): string
+            {
+                return $this->name;
+            }
+
+            /**
+             * @return \Generator|Book[] The books for a given author
+             */
+            public function getBooksForAuthor(Author $author): iterable
+            {
+                foreach ($this->books as $book) {
+                    if ($book->isAuthoredBy($author)) {
+                        yield $book;
+                    }
+                }
+            }
+
+            // neither the method above nor any other specific getter
+            // could be used to validated all nested books;
+            // this object needs to be traversed to call the iterator
+            public function getIterator()
+            {
+                return $this->books->getIterator();
+            }
         }
 
     .. code-block:: yaml
 
         # config/validator/validation.yaml
-        App\Entity\Book:
+        App\Entity\BookCollection:
             constraints:
-                - Symfony\Component\Validator\Constraints\Traverse: ~
+                - Traverse: ~
 
     .. code-block:: xml
 
@@ -71,28 +106,106 @@ configure the ``Traverse`` constraint on the ``Book`` class.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="App\Entity\Book">
-                <constraint name="Symfony\Component\Validator\Constraints\Traverse"/>
+            <class name="App\Entity\BookCollection">
+                <constraint name="Traverse"/>
             </class>
         </constraint-mapping>
 
     .. code-block:: php
 
-        // src/Entity/Book.php
+        // src/Entity/BookCollection.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-        class Book
+        class BookCollection
         {
+            // ...
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addConstraint(new Assert\Traverse());
             }
         }
 
+When the object implements ``\Traversable`` (like here with its child
+``\IteratorAggregate``), its traversal strategy will implicitly be set and the
+object will be iterated over without defining the constraint.
+It's mostly useful to add it to be explicit or to disable the traversal using
+the ``traverse`` option.
+If a public getter exists to return the inner books collection like
+``getBooks(): Collection``, the :doc:`/reference/constraints/Valid` constraint
+can be used on the ``$books`` property instead.
+
 Options
 -------
+
+The ``groups`` option is not available for this constraint.
+
+.. _traverse-option:
+
+``traverse``
+~~~~~~~~~~~~
+
+**type**: ``bool`` **default**: ``true``
+
+Instances of ``\Traversable`` are traversed by default, use this option to
+disable validating:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/BookCollection.php
+
+        // ... same as above
+
+        /**
+         * ...
+         * @Assert\Traverse(false)
+         */
+         class BookCollection implements \IteratorAggregate
+         {
+             // ...
+         }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\BookCollection:
+            constraints:
+                - Traverse: false
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\BookCollection">
+                <constraint name="Traverse">false</constraint>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/BookCollection.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class BookCollection
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new Assert\Traverse(false));
+            }
+        }
 
 .. include:: /reference/constraints/_payload-option.rst.inc

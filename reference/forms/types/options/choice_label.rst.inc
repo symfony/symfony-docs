@@ -1,9 +1,9 @@
 ``choice_label``
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string``, ``callable`` or ``false`` **default**: ``null``
+**type**: ``string``, ``callable``, ``false`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``null``
 
-Normally, the array key of each item in the ``choices`` option is used as the
+By default, the array key of each item in the ``choices`` option is used as the
 text that's shown to the user. The ``choice_label`` option allows you to take
 more control::
 

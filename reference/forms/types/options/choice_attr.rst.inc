@@ -1,7 +1,7 @@
 ``choice_attr``
 ~~~~~~~~~~~~~~~
 
-**type**: ``array``, ``callable`` or ``string`` **default**: ``[]``
+**type**: ``array``, ``callable``, ``string`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``[]``
 
 Use this to add additional HTML attributes to each choice. This can be
 an associative array where the keys match the choice keys and the values

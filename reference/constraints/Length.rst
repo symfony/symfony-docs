@@ -42,7 +42,8 @@ and "50", you might add the following:
              *      min = 2,
              *      max = 50,
              *      minMessage = "Your first name must be at least {{ limit }} characters long",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters",
+             *      allowEmptyString = false
              * )
              */
             protected $firstName;
@@ -59,6 +60,7 @@ and "50", you might add the following:
                         max: 50
                         minMessage: 'Your first name must be at least {{ limit }} characters long'
                         maxMessage: 'Your first name cannot be longer than {{ limit }} characters'
+                        allowEmptyString: false
 
     .. code-block:: xml
 
@@ -79,6 +81,7 @@ and "50", you might add the following:
                         <option name="maxMessage">
                             Your first name cannot be longer than {{ limit }} characters
                         </option>
+                        <option name="allowEmptyString">false</option>
                     </constraint>
                 </property>
             </class>
@@ -101,6 +104,7 @@ and "50", you might add the following:
                     'max' => 50,
                     'minMessage' => 'Your first name must be at least {{ limit }} characters long',
                     'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters',
+                    'allowEmptyString' => false,
                 ]));
             }
         }
@@ -118,6 +122,10 @@ allowEmptyString
 If set to ``true``, empty strings are considered valid (which is the same
 behavior as previous Symfony versions). The default ``false`` value considers
 empty strings not valid.
+
+.. caution::
+
+    This option does not have any effect when no minimum length is given.
 
 charset
 ~~~~~~~

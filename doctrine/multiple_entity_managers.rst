@@ -19,8 +19,7 @@ entity manager that connects to another database might handle the rest.
 .. caution::
 
     Entities cannot define associations across different entity managers. If you
-    need that, there are `several alternatives <https://stackoverflow.com/a/11494543/2804294>`_
-    that require some custom setup.
+    need that, there are `several alternatives`_ that require some custom setup.
 
 The following configuration code shows how you can configure two entity managers:
 
@@ -35,13 +34,13 @@ The following configuration code shows how you can configure two entity managers
                 connections:
                     default:
                         # configure these for your database server
-                        url: '%env(DATABASE_URL)%'
+                        url: '%env(resolve:DATABASE_URL)%'
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
                     customer:
                         # configure these for your database server
-                        url: '%env(DATABASE_CUSTOMER_URL)%'
+                        url: '%env(resolve:DATABASE_CUSTOMER_URL)%'
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
@@ -84,7 +83,7 @@ The following configuration code shows how you can configure two entity managers
                 <doctrine:dbal default-connection="default">
                     <!-- configure these for your database server -->
                     <doctrine:connection name="default"
-                        url="%env(DATABASE_URL)%"
+                        url="%env(resolve:DATABASE_URL)%"
                         driver="pdo_mysql"
                         server_version="5.7"
                         charset="utf8mb4"
@@ -92,7 +91,7 @@ The following configuration code shows how you can configure two entity managers
 
                     <!-- configure these for your database server -->
                     <doctrine:connection name="customer"
-                        url="%env(DATABASE_CUSTOMER_URL)%"
+                        url="%env(resolve:DATABASE_CUSTOMER_URL)%"
                         driver="pdo_mysql"
                         server_version="5.7"
                         charset="utf8mb4"
@@ -134,14 +133,14 @@ The following configuration code shows how you can configure two entity managers
                 'connections' => [
                     // configure these for your database server
                     'default' => [
-                        'url'            => '%env(DATABASE_URL)%',
+                        'url'            => '%env(resolve:DATABASE_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
                     ],
                     // configure these for your database server
                     'customer' => [
-                        'url'            => '%env(DATABASE_CUSTOMER_URL)%',
+                        'url'            => '%env(resolve:DATABASE_CUSTOMER_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
@@ -283,3 +282,5 @@ The same applies to repository calls::
             ;
         }
     }
+
+.. _`several alternatives`: https://stackoverflow.com/a/11494543

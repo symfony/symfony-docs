@@ -96,7 +96,8 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(bool:FOO)``
-    Casts ``FOO`` to a bool:
+    Casts ``FOO`` to a bool (``true`` values are ``'true'``, ``'on'``, ``'yes'``
+    and all numbers except ``0`` and ``0.0``; everything else is ``false``):
 
     .. configuration-block::
 
@@ -124,7 +125,7 @@ Symfony provides the following env var processors:
                     <parameter key="env(HTTP_METHOD_OVERRIDE)">true</parameter>
                 </parameters>
 
-                <framework:config http-methode-override="%env(bool:HTTP_METHOD_OVERRIDE)%"/>
+                <framework:config http-method-override="%env(bool:HTTP_METHOD_OVERRIDE)%"/>
             </container>
 
         .. code-block:: php
@@ -232,8 +233,8 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(resolve:FOO)``
-    Replaces the string ``FOO`` by the value of a config parameter with the
-    same name:
+    If the content of ``FOO`` includes container parameters (with the syntax
+    ``%parameter_name%``), it replaces the parameters by their values:
 
     .. configuration-block::
 

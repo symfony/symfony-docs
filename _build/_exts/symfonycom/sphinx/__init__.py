@@ -1,80 +1,6 @@
-from sphinx.highlighting import lexers, PygmentsBridge
 from pygments.style import Style
-from pygments.formatters import HtmlFormatter
 from pygments.token import Keyword, Name, Comment, String, Error, \
      Number, Operator, Generic, Whitespace, Punctuation, Other, Literal
-
-from sphinx.writers.html import HTMLTranslator
-from docutils import nodes
-from sphinx.locale import admonitionlabels, lazy_gettext
-
-customadmonitionlabels = admonitionlabels
-l_ = lazy_gettext
-customadmonitionlabels['best-practice'] = l_('Best Practice')
-
-def _getType(path):
-    return path[:path.find('/')]
-
-def _isIndex(path):
-    return 'index' in path
-
-class SensioHTMLTranslator(HTMLTranslator):
-    def __init__(self, builder, *args, **kwds):
-        HTMLTranslator.__init__(self, builder, *args, **kwds)
-        builder.templates.environment.filters['get_type'] = _getType
-        builder.templates.environment.tests['index'] = _isIndex
-        self.highlightlinenothreshold = 0
-
-    def visit_literal(self, node):
-        self.body.append(self.starttag(node, 'code', '', CLASS='docutils literal notranslate'))
-
-    def depart_literal(self, node):
-        self.body.append('</code>')
-
-    def visit_admonition(self, node, name=''):
-        self.body.append(self.starttag(node, 'div', CLASS=('admonition-wrapper')))
-        self.body.append('<div class="admonition ' + name + '">')
-        if name and name != 'seealso':
-            node.insert(0, nodes.title(name, customadmonitionlabels[name]))
-        self.set_first_last(node)
-
-    def depart_admonition(self, node=None):
-        self.body.append('</div></div>\n')
-
-    def visit_sidebar(self, node):
-        self.body.append(self.starttag(node, 'div', CLASS=('admonition-wrapper')))
-        self.body.append('<div class="admonition admonition-sidebar">')
-        self.set_first_last(node)
-        self.in_sidebar = 1
-
-    def depart_sidebar(self, node):
-        self.body.append('</div></div>\n')
-        self.in_sidebar = None
-
-    # overriden to add a new highlight div around each block
-    def visit_literal_block(self, node):
-        if node.rawsource != node.astext():
-            # most probably a parsed-literal block -- don't highlight
-            return BaseTranslator.visit_literal_block(self, node)
-        lang = self.highlightlang
-        linenos = node.rawsource.count('\n') >= \
-                  self.highlightlinenothreshold - 1
-        highlight_args = node.get('highlight_args', {})
-        if node.has_key('language'):
-            # code-block directives
-            lang = node['language']
-            highlight_args['force'] = True
-        if node.has_key('linenos'):
-            linenos = node['linenos']
-        def warner(msg):
-            self.builder.warn(msg, (self.builder.current_docname, node.line))
-        highlighted = self.highlighter.highlight_block(
-            node.rawsource, lang, warn=warner, linenos=linenos,
-            **highlight_args)
-        starttag = self.starttag(node, 'div', suffix='',
-                                 CLASS='highlight-%s' % lang)
-        self.body.append('<div class="literal-block">' + starttag + highlighted + '</div></div>\n')
-        raise nodes.SkipNode
 
 class SensioStyle(Style):
     background_color = "#000000"
@@ -158,6 +84,3 @@ class SensioStyle(Style):
         Generic.Subheading: "bold #800080", # class: 'gu'
         Generic.Traceback: "bold #a40000", # class: 'gt'
     }
-
-def setup(app):
-    app.set_translator('html', SensioHTMLTranslator)

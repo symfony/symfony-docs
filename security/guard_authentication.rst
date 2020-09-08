@@ -4,18 +4,15 @@
 Custom Authentication System with Guard (API Token Example)
 ===========================================================
 
-Whether you need to build a traditional login form, an API token authentication system
-or you need to integrate with some proprietary single-sign-on system, the Guard
-component will be the right choice!
-
 Guard authentication can be used to:
 
-* :doc:`Build a Login Form </security/form_login_setup>`,
-* Create an API token authentication system (done on this page!)
-* `Social Authentication`_ (or use `HWIOAuthBundle`_ for a robust, but non-Guard solution)
+* :doc:`Build a Login Form </security/form_login_setup>`
+* Create an API token authentication system (see below)
+* `Social Authentication`_ (or use `HWIOAuthBundle`_ for a robust non-Guard solution)
+* Integrate with some proprietary single-sign-on system
 
-or anything else. In this example, we'll build an API token authentication
-system so we can learn more about Guard in detail.
+and many more. In this example, we'll build an API token authentication
+system, so we can learn more about Guard in detail.
 
 Step 1) Prepare your User Class
 -------------------------------
@@ -86,7 +83,7 @@ This requires you to implement several methods::
 
         /**
          * Called on every request to decide if this authenticator should be
-         * used for the request. Returning false will cause this authenticator
+         * used for the request. Returning `false` will cause this authenticator
          * to be skipped.
          */
         public function supports(Request $request)
@@ -106,8 +103,9 @@ This requires you to implement several methods::
         public function getUser($credentials, UserProviderInterface $userProvider)
         {
             if (null === $credentials) {
-                // The token header was empty, authentication fails with 401
-                return;
+                // The token header was empty, authentication fails with HTTP Status
+                // Code 401 "Unauthorized"
+                return null;
             }
 
             // if a User is returned, checkCredentials() is called
@@ -118,10 +116,10 @@ This requires you to implement several methods::
 
         public function checkCredentials($credentials, UserInterface $user)
         {
-            // check credentials - e.g. make sure the password is valid
-            // no credential check is needed in this case
+            // Check credentials - e.g. make sure the password is valid.
+            // In case of an API token, no credential check is needed.
 
-            // return true to cause authentication success
+            // Return `true` to cause authentication success
             return true;
         }
 
@@ -134,7 +132,7 @@ This requires you to implement several methods::
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
             $data = [
-                // you may ant to customize or obfuscate the message first
+                // you may want to customize or obfuscate the message first
                 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
 
                 // or to translate this message
@@ -277,14 +275,13 @@ The Guard Authenticator Methods
 Each authenticator needs the following methods:
 
 **supports(Request $request)**
-    This will be called on *every* request and your job is to decide if the
+    This is called on *every* request and your job is to decide if the
     authenticator should be used for this request (return ``true``) or if it
     should be skipped (return ``false``).
 
 **getCredentials(Request $request)**
-    This will be called on *every* request and your job is to read the token (or
-    whatever your "authentication" information is) from the request and return it.
-    These credentials are later passed as the first argument of ``getUser()``.
+    Your job is to read the token (or whatever your "authentication" information is)
+    from the request and return it. These credentials are passed to ``getUser()``.
 
 **getUser($credentials, UserProviderInterface $userProvider)**
     The ``$credentials`` argument is the value returned by ``getCredentials()``.

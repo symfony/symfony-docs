@@ -18,15 +18,16 @@ integration, CSS inlining, file attachments and a lot more. Get them installed w
 Transport Setup
 ---------------
 
-Emails are delivered via a "transport". And without installing anything else, you
-can deliver emails over ``smtp`` by configuring your ``.env`` file:
+Emails are delivered via a "transport". Out of the box, you can deliver emails
+over ``SMTP`` by configuring your ``.env`` file (the ``user``, ``pass`` and
+``port`` parameters are optional):
 
 .. code-block:: bash
 
     # .env
-    MAILER_DSN=smtp://user:pass@smtp.example.com
+    MAILER_DSN=smtp://user:pass@smtp.example.com:port
 
-.. warning::
+.. caution::
 
     If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
     warned that the DSN format is different.
@@ -34,8 +35,8 @@ can deliver emails over ``smtp`` by configuring your ``.env`` file:
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-But an easier option is to send emails via a 3rd party provider. Mailer supports
-several - install whichever you want:
+Instead of using your own SMTP server, you can send emails via a 3rd party
+provider. Mailer supports several - install whichever you want:
 
 ==================  =============================================
 Service             Install with
@@ -49,7 +50,7 @@ SendGrid            ``composer require symfony/sendgrid-mailer``
 ==================  =============================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
-example configuration to your ``.env`` file. For example, suppose you want to
+a configuration example to your ``.env`` file. For example, suppose you want to
 use SendGrid. First, install it:
 
 .. code-block:: terminal
@@ -63,18 +64,16 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
     # .env
     MAILER_DSN=sendgrid://KEY@default
 
-The ``MAILER_DSN`` isn't a *real* address: it's a simple format that offloads
-most of the configuration work to mailer. The ``sendgrid`` scheme activates the
-SendGrid provider that you just installed, which knows all about how to deliver
-messages to SendGrid.
-
-The *only* part you need to change is to replace ``KEY`` in the ``MAILER_DSN`` (in
-``.env`` or ``.env.local``).
+The ``MAILER_DSN`` isn't a *real* address: it's a convenient format that
+offloads most of the configuration work to mailer. The ``sendgrid`` scheme
+activates the SendGrid provider that you just installed, which knows all about
+how to deliver messages via SendGrid. The *only* part you need to change is the
+``KEY`` placeholder.
 
 Each provider has different environment variables that the Mailer uses to
 configure the *actual* protocol, address and authentication for delivery. Some
 also have options that can be configured with query parameters at the end of the
-``MAILER_DSN`` - like ``?region=`` for Amazon SES. Some providers support
+``MAILER_DSN`` - like ``?region=`` for Amazon SES or Mailgun. Some providers support
 sending via ``http``, ``api`` or ``smtp``. Symfony chooses the best available
 transport, but you can force to use one:
 
@@ -92,8 +91,8 @@ Creating & Sending Messages
 ---------------------------
 
 To send an email, autowire the mailer using
-:class:`Symfony\\Component\\Mailer\\MailerInterface` (service id ``mailer.mailer``)
-and create an :class:`Symfony\\Component\\Mime\\Email` object::
+:class:`Symfony\\Component\\Mailer\\MailerInterface` and create an
+:class:`Symfony\\Component\\Mime\\Email` object::
 
     // src/Controller/MailerController.php
     namespace App\Controller;
@@ -120,15 +119,13 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
                 ->text('Sending emails is fun again!')
                 ->html('<p>See Twig integration for better HTML integration!</p>');
 
-            /** @var Symfony\Component\Mailer\SentMessage $sentEmail */
-            $sentEmail = $mailer->send($email);
-            // $messageId = $sentEmail->getMessageId();
+            $mailer->send($email);
 
             // ...
         }
     }
 
-That's it! The message will be sent via whatever transport you configured.
+That's it! The message will be sent via the transport you configured.
 
 Email Addresses
 ~~~~~~~~~~~~~~~
@@ -181,6 +178,23 @@ Alternatively, you can pass multiple addresses to each method::
     $email = (new Email())
         ->to(...$toAddresses)
         ->cc('cc1@example.com', 'cc2@example.com')
+
+        // ...
+    ;
+
+Message Headers
+~~~~~~~~~~~~~~~
+
+Messages include a number of header fields to describe their contents. Symfony
+sets all the required headers automatically, but you can set your own headers
+too. There are different types of headers (Id header, Mailbox header, Date
+header, etc.) but most of the times you'll set text headers::
+
+    $email = (new Email())
+        ->getHeaders()
+            // this header tells auto-repliers ("email holiday mode") to not
+            // reply to this message because it's an automated email
+            ->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply');
 
         // ...
     ;
@@ -262,6 +276,29 @@ images inside the HTML contents::
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
     ;
+
+Handling Sending Failures
+-------------------------
+
+Symfony Mailer considers that sending was successful when your transport (SMTP
+server or third-party provider) accepts the mail for further delivery. The message
+can later be lost or not delivered because of some problem in your provider, but
+that's out of reach for your Symfony application.
+
+If there's an error when handing over the email to your transport, Symfony throws
+a :class:`Symfony\\Component\\Mailer\\Exception\\TransportExceptionInterface`.
+Catch that exception to recover from the error or to display some message::
+
+    use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+
+    $email = new Email();
+    // ...
+    try {
+        $mailer->send($email);
+    } catch (TransportExceptionInterface $e) {
+        // some error prevented the email sending; display an
+        // error message or try to resend the message
+    }
 
 Debugging Emails
 ----------------
@@ -479,7 +516,7 @@ several popular libraries):
 .. code-block:: terminal
 
     # instead of league/commonmark, you can also use erusev/parsedown or michelf/php-markdown
-    $ composer require twig/markdown-extra league/commonmark
+    $ composer require twig/extra-bundle twig/markdown-extra league/commonmark
 
 The extension adds a ``markdown_to_html`` filter, which you can use to convert parts or
 the entire email contents from Markdown to HTML:
@@ -562,7 +599,7 @@ encrypt a signed message and/or to sign an encrypted message.
 Before signing/encrypting messages, make sure to have:
 
 * The `OpenSSL PHP extension`_ properly installed and configured;
-* A valid S/MIME security certificate.
+* A valid `S/MIME`_ security certificate.
 
 Signing Messages
 ~~~~~~~~~~~~~~~~
@@ -646,6 +683,32 @@ and it will select the appropriate certificate depending on the ``To`` option::
     $firstEncryptedEmail = $encrypter->encrypt($firstEmail);
     $secondEncryptedEmail = $encrypter->encrypt($secondEmail);
 
+Multiple Email Transports
+-------------------------
+
+You may want to use more than one mailer transport for delivery of your messages.
+This can be configured by replacing the ``dsn`` configuration entry with a
+``transports`` entry, like:
+
+.. code-block:: yaml
+
+    # config/packages/mailer.yaml
+    framework:
+        mailer:
+            transports:
+                main: '%env(MAILER_DSN)%'
+                alternative: '%env(MAILER_DSN_IMPORTANT)%'
+
+By default the first transport is used. The other transports can be used by
+adding a text header ``X-Transport`` to an email::
+
+    // Send using first "main" transport ...
+    $mailer->send($email);
+
+    // ... or use the "alternative" one
+    $email->getHeaders()->addTextHeader('X-Transport', 'alternative');
+    $mailer->send($email);
+
 Sending Messages Async
 ----------------------
 
@@ -707,32 +770,6 @@ you have a transport called ``async``, you can route the message there:
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
 
-Multiple Email Transports
--------------------------
-
-You may want to use more than one mailer transport for delivery of your messages.
-This can be configured by replacing the ``dsn`` configuration entry with a
-``transports`` entry, like:
-
-.. code-block:: yaml
-
-    # config/packages/mailer.yaml
-    framework:
-        mailer:
-            transports:
-                main: '%env(MAILER_DSN)%'
-                important: '%env(MAILER_DSN_IMPORTANT)%'
-
-By default the first transport is used. The other transports can be used by
-adding a text header ``X-Transport`` to an email::
-
-    // Send using first "main" transport ...
-    $mailer->send($email);
-
-    // ... or use the "important" one
-    $email->getHeaders()->addTextHeader('X-Transport', 'important');
-    $mailer->send($email);
-
 Development & Debugging
 -----------------------
 
@@ -755,29 +792,24 @@ environment:
     If you're using Messenger and routing to a transport, the message will *still*
     be sent to that transport.
 
-Always Send to the Same Address
+Always Send to the same Address
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of disabling delivery entirely, you might want to *always* send emails to
-a specific address, instead of the *real* address. To do that, you can take
-advantage of the ``EnvelopeListener`` and register it *only* for the ``dev``
-environment:
+a specific address, instead of the *real* address:
 
 .. code-block:: yaml
 
-    # config/services_dev.yaml
-    services:
-        mailer.dev.set_recipients:
-            class: Symfony\Component\Mailer\EventListener\EnvelopeListener
-            tags: ['kernel.event_subscriber']
-            arguments:
-                $sender: null
-                $recipients: ['youremail@example.com']
+    # config/packages/dev/mailer.yaml
+    framework:
+        mailer:
+            envelope:
+                recipients: ['youremail@example.com']
 
-.. _`download the foundation-emails.css file`: https://github.com/zurb/foundation-emails/blob/develop/dist/foundation-emails.css
+.. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`Markdown syntax`: https://commonmark.org/
-.. _`Inky`: https://foundation.zurb.com/emails.html
+.. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
-.. _`OpenSSL PHP extension`: https://php.net/manual/en/book.openssl.php
+.. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail

@@ -103,14 +103,16 @@ a relative or absolute path to the imported file:
 
             <imports>
                 <import resource="services/mailer.xml"/>
+            </imports>
 
+            <services>
                 <defaults autowire="true" autoconfigure="true"/>
 
                 <prototype namespace="App\" resource="../src/*"
                     exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
 
                 <!-- ... -->
-            </imports>
+            </services>
         </container>
 
     .. code-block:: php

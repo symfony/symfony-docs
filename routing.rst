@@ -34,10 +34,14 @@ following configuration file:
 
 .. code-block:: yaml
 
-    # config/routes.yaml
+    # config/routes/annotations.yaml
     controllers:
-        resource: '../src/Controller/'
-        type:     annotation
+        resource: '../../src/Controller/'
+        type: annotation
+
+    kernel:
+        resource: ../../src/Kernel.php
+        type: annotation
 
 This configuration tells Symfony to look for routes defined as annotations in
 any PHP class stored in the ``src/Controller/`` directory.
@@ -132,8 +136,8 @@ the ``BlogController``:
                 ->controller([BlogController::class, 'list'])
 
                 // if the action is implemented as the __invoke() method of the
-                // controller class, you can skip the ', method_name]' part:
-                // ->controller([BlogController::class])
+                // controller class, you can skip the 'method_name' part:
+                // ->controller(BlogController::class)
             ;
         };
 
@@ -298,7 +302,7 @@ arbitrary matching logic:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('contact', '')
+            $routes->add('contact', '/contact')
                 ->controller([DefaultController::class, 'contact'])
                 ->condition('context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"')
                 // expressions can also include config parameters:
@@ -771,7 +775,7 @@ parameter:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page <\d+>?1}"
+            <route id="blog_list" path="/blog/{page<\d+>?1}"
                    controller="App\Controller\BlogController::list"/>
 
             <!-- ... -->
@@ -1370,7 +1374,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
                 ->controller(RedirectController::class)
                  ->defaults([
                     'route' => 'doc_page',
-                    // optionally you can define some arguments passed to the template
+                    // optionally you can define some arguments passed to the route
                     'page' => 'index',
                     'version' => 'current',
                     // redirections are temporary by default (code 302) but you can make them permanent (code 301)
@@ -1924,7 +1928,9 @@ generate URLs. This context can be configured globally for all commands:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="router.request_context.host">example.org</parameter>
@@ -1946,6 +1952,9 @@ This information can be configured per command too::
     // src/Command/SomeCommand.php
     namespace App\Command;
 
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Routing\RouterInterface;
     // ...
@@ -2034,7 +2043,9 @@ method) or globally with these configuration parameters:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="router.request_context.scheme">https</parameter>
@@ -2218,6 +2229,6 @@ Learn more about Routing
     routing/*
 
 .. _`PHP regular expressions`: https://www.php.net/manual/en/book.pcre.php
-.. _`PCRE Unicode properties`: http://php.net/manual/en/regexp.reference.unicode.php
+.. _`PCRE Unicode properties`: https://www.php.net/manual/en/regexp.reference.unicode.php
 .. _`full param converter documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

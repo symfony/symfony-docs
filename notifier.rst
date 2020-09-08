@@ -9,10 +9,13 @@ Creating and Sending Notifications
     The Notifier component was introduced in Symfony 5.0 as an
     :doc:`experimental feature </contributing/code/experimental>`.
 
+Installation
+------------
+
 Current web applications use many different channels to send messages to
 the users (e.g. SMS, Slack messages, emails, push notifications, etc.). The
 Notifier component in Symfony is an abstraction on top of all these
-channels. It provides a dynamic way to manage how the messages are send.
+channels. It provides a dynamic way to manage how the messages are sent.
 Get the Notifier installed using:
 
 .. code-block:: terminal
@@ -28,17 +31,19 @@ by using transports.
 
 The notifier component supports the following channels:
 
-* `SMS <SMS Channel>`_ sends notifications to phones via SMS messages
-* `Chat <Chat Channel>`_ sends notifications to chat services like Slack
-  and Telegram;
-* `Email <Email Channel>`_ integrates the :doc:`Symfony Mailer </mailer>`;
-* Browser uses :ref:`flash messages <flash-messages>`.
+* :ref:`SMS channel <notifier-sms-channel>` sends notifications to phones via
+  SMS messages;
+* :ref:`Chat channel <notifier-chat-channel>` sends notifications to chat
+  services like Slack and Telegram;
+* :ref:`Email channel <notifier-email-channel>` integrates the :doc:`Symfony Mailer </mailer>`;
+* Browser channel uses :ref:`flash messages <flash-messages>`.
 
 .. tip::
 
     Use :doc:`secrets </configuration/secrets>` to securily store your
     API's tokens.
 
+.. _notifier-sms-channel:
 .. _notifier-texter-dsn:
 
 SMS Channel
@@ -106,6 +111,7 @@ configure the ``texter_transports``:
             ],
         ]);
 
+.. _notifier-chat-channel:
 .. _notifier-chatter-dsn:
 
 Chat Channel
@@ -171,12 +177,14 @@ Chatters are configured using the ``chatter_transports`` setting:
             ],
         ]);
 
+.. _notifier-email-channel:
+
 Email Channel
 ~~~~~~~~~~~~~
 
 The email channel uses the :doc:`Symfony Mailer </mailer>` to send
 notifications using the special
-:class:`Symfony\\Bridge\\TwigBridge\\Mime\\NotificationEmail`. It is
+:class:`Symfony\\Bridge\\Twig\\Mime\\NotificationEmail`. It is
 required to install the Twig bridge along with the Inky and CSS Inliner
 Twig extensions:
 
@@ -253,8 +261,8 @@ transport:
                     # Slack errored
                     main: '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%'
 
-                    # Always send notifications to both Slack and Telegram
-                    all: '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%'
+                    # Send notifications to the next scheduled transport calculated by round robin
+                    roundrobin: '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%'
 
     .. code-block:: xml
 
@@ -276,10 +284,11 @@ transport:
                         %env(SLACK_DSN)% || %env(TELEGRAM_DSN)%
                     </framework:chatter-transport>
 
-                    <!-- Always send notifications to both Slack and Telegram -->
-                    <framework:chatter-transport name="slack">
+                    <!-- Send notifications to the next scheduled transport
+                         calculated by round robin -->
+                    <framework:chatter-transport name="slack"><![CDATA[
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
-                    </framework:chatter-transport>
+                    ]]></framework:chatter-transport>
                 </framework:notifier>
             </framework:config>
         </container>
@@ -294,8 +303,8 @@ transport:
                     // Slack errored
                     'main' => '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%',
 
-                    // Always send notifications to both Slack and Telegram
-                    'all' => '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%',
+                    // Send notifications to the next scheduled transport calculated by round robin
+                    'roundrobin' => '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%',
                 ],
             ],
         ]);
@@ -477,7 +486,7 @@ Customize Notifications
 You can extend the ``Notification`` or ``Recipient`` base classes to
 customize their behavior. For instance, you can overwrite the
 ``getChannels()`` method to only return ``sms`` if the invoice price is
-very high and the recipient has a phonenumber::
+very high and the recipient has a phone number::
 
     namespace App\Notifier;
 
@@ -500,10 +509,10 @@ very high and the recipient has a phonenumber::
                 && $recipient instanceof AdminRecipient
                 && null !== $recipient->getPhone()
             ) {
-                return ['sms', 'email'];
+                return ['sms'];
             }
 
-            return 'email';
+            return ['email'];
         }
     }
 
@@ -552,6 +561,24 @@ The
 and
 :class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`
 also exists to modify messages send to those channels.
+
+Disabling Delivery
+------------------
+
+While developing (or testing), you may want to disable delivery of notifications
+entirely. You can do this by forcing Notifier to use the ``NullTransport`` for
+all configured texter and chatter transports only in the ``dev`` (and/or
+``test``) environment:
+
+.. code-block:: yaml
+
+    # config/packages/dev/notifier.yaml
+    framework:
+        notifier:
+            texter_transports:
+                twilio: 'null://null'
+            chatter_transports:
+                slack: 'null://null'
 
 .. TODO
     - Using the message bus for asynchronous notification

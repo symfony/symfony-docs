@@ -395,6 +395,7 @@ use the ``render()`` helper::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class ProductController extends AbstractController
     {
@@ -402,10 +403,21 @@ use the ``render()`` helper::
         {
             // ...
 
+            // the `render()` method returns a `Response` object with the
+            // contents created by the template
             return $this->render('product/index.html.twig', [
                 'category' => '...',
                 'promotions' => ['...', '...'],
             ]);
+
+            // the `renderView()` method only returns the contents created by the
+            // template, so you can use those contents later in a `Response` object
+            $contents = $this->renderView('product/index.html.twig', [
+                'category' => '...',
+                'promotions' => ['...', '...'],
+            ]);
+
+            return new Response($contents);
         }
     }
 
@@ -477,6 +489,9 @@ provided by Symfony:
                 maxAge:    86400
                 sharedAge: 86400
 
+                # whether or not caching should apply for client caches only
+                private: true
+
     .. code-block:: xml
 
         <!-- config/routes.xml -->
@@ -494,6 +509,8 @@ provided by Symfony:
                 <!-- special options defined by Symfony to set the page cache -->
                 <default key="maxAge">86400</default>
                 <default key="sharedAge">86400</default>
+                 <!-- whether or not caching should apply for client caches only -->
+                <default key="private">true</default>
             </route>
         </routes>
 
@@ -513,6 +530,9 @@ provided by Symfony:
                     // special options defined by Symfony to set the page cache
                     'maxAge'    => 86400,
                     'sharedAge' => 86400,
+
+                    // whether or not caching should apply for client caches only
+                    'private' => true,
                 ])
             ;
         };
@@ -641,7 +661,7 @@ following code to display the user information is repeated in several places:
 
     {# ... #}
     <div class="user-profile">
-        <img src="{{ user.profileImageUrl }}"/>
+        <img src="{{ user.profileImageUrl }}" alt="{{ user.fullName }}"/>
         <p>{{ user.fullName }} - {{ user.email }}</p>
     </div>
 
@@ -786,8 +806,8 @@ template fragments. Configure that special URL in the ``fragments`` option:
 
 .. caution::
 
-    Embedding controllers require making requests to those controllers and
-    rendering some templates as result. This can have a significant impact in
+    Embedding controllers requires making requests to those controllers and
+    rendering some templates as result. This can have a significant impact on
     the application performance if you embed lots of controllers. If possible,
     :doc:`cache the template fragment </http_cache/esi>`.
 
@@ -830,25 +850,30 @@ In practice, the ``base.html.twig`` template would look like this:
         <head>
             <meta charset="UTF-8">
             <title>{% block title %}My Application{% endblock %}</title>
+            {% block stylesheets %}
+                <link rel="stylesheet" type="text/css" href="/css/base.css"/>
+            {% endblock %}
         </head>
         <body>
-            <div id="sidebar">
-                {% block sidebar %}
-                    <ul>
-                        <li><a href="{{ path('homepage') }}">Home</a></li>
-                        <li><a href="{{ path('blog_index') }}">Blog</a></li>
-                    </ul>
-                {% endblock %}
-            </div>
+            {% block body %}
+                <div id="sidebar">
+                    {% block sidebar %}
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Home</a></li>
+                            <li><a href="{{ path('blog_index') }}">Blog</a></li>
+                        </ul>
+                    {% endblock %}
+                </div>
 
-            <div id="content">
-                {% block body %}{% endblock %}
-            </div>
+                <div id="content">
+                    {% block content %}{% endblock %}
+                </div>
+            {% endblock %}
         </body>
     </html>
 
 The `Twig block tag`_ defines the page sections that can be overridden in the
-child templates. They can be empty, like the ``body`` block or define a default
+child templates. They can be empty, like the ``content`` block or define a default
 content, like the ``title`` block, which is displayed when child templates don't
 override them.
 
@@ -859,14 +884,14 @@ The ``blog/layout.html.twig`` template could be like this:
     {# templates/blog/layout.html.twig #}
     {% extends 'base.html.twig' %}
 
-    {% block body %}
+    {% block content %}
         <h1>Blog</h1>
 
-        {% block content %}{% endblock %}
+        {% block page_contents %}{% endblock %}
     {% endblock %}
 
 The template extends from ``base.html.twig`` and only defines the contents of
-the ``body`` block. The rest of the parent template blocks will display their
+the ``content`` block. The rest of the parent template blocks will display their
 default contents. However, they can be overridden by the third-level inheritance
 template, such as ``blog/index.html.twig``, which displays the blog index:
 
@@ -877,7 +902,7 @@ template, such as ``blog/index.html.twig``, which displays the blog index:
 
     {% block title %}Blog Index{% endblock %}
 
-    {% block content %}
+    {% block page_contents %}
         {% for article in articles %}
             <h2>{{ article.title }}</h2>
             <p>{{ article.body }}</p>
@@ -885,13 +910,29 @@ template, such as ``blog/index.html.twig``, which displays the blog index:
     {% endblock %}
 
 This template extends from the second-level template (``blog/layout.html.twig``)
-but overrides blocks of different parent templates: ``content`` from
+but overrides blocks of different parent templates: ``page_contents`` from
 ``blog/layout.html.twig`` and ``title`` from ``base.html.twig``.
 
 When you render the ``blog/index.html.twig`` template, Symfony uses three
 different templates to create the final contents. This inheritance mechanism
 boosts your productivity because each template includes only its unique contents
 and leaves the repeated contents and HTML structure to some parent templates.
+
+.. caution::
+
+    When using ``extends``, a child template is forbidden to define template
+    parts outside of a block. The following code throws a ``SyntaxError``:
+
+    .. code-block:: html+twig
+
+        {# app/Resources/views/blog/index.html.twig #}
+        {% extends 'base.html.twig' %}
+
+        {# the line below is not captured by a "block" tag #}
+        <div class="alert">Some Alert</div>
+
+        {# the following is valid #}
+        {% block content %}My cool blog posts{% endblock %}
 
 Read the `Twig template inheritance`_ docs to learn more about how to reuse
 parent block contents when overriding templates and other advanced features.
@@ -906,7 +947,7 @@ JavaScript popup window.
 
 This is known as a `Cross-Site Scripting`_ (XSS) attack. And while the previous
 example seems harmless, the attacker could write more advanced JavaScript code
-to performs malicious actions.
+to perform malicious actions.
 
 To prevent this attack, use *"output escaping"* to transform the characters
 which have special meaning (e.g. replace ``<`` by the ``&lt;`` HTML entity).

@@ -29,14 +29,19 @@ jobs:
             -   name: "Install Sphinx dependencies"
                 run: sudo apt-get install python-dev build-essential
 
-            -   name: "Install Sphinx"
-                run: pip install --user sphinx
+            -   name: "Cache pip"
+                uses: actions/cache@v2
+                with:
+                    path: ~/.cache/pip
+                    key: ${{ runner.os }}-pip-${{ hashFiles('_build/.requirements.txt') }}
+                    restore-keys: |
+                        ${{ runner.os }}-pip-
 
-            -   name: "Install custom requirements via pip"
+            -   name: "Install Sphinx + requirements via pip"
                 run: pip install -r _build/.requirements.txt
 
             -   name: "Build documentation"
-                run: make -C _build SPHINXOPTS=-nW html
+                run: make -C _build SPHINXOPTS="-nqW -j auto" html
 
     doctor-rst:
         name: DOCtor-RST
@@ -47,7 +52,20 @@ jobs:
             -   name: "Checkout"
                 uses: actions/checkout@v2
 
+            -   name: "Create cache dir"
+                run: mkdir .cache
+
+            -   name: "Extract base branch name"
+                run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:=${GITHUB_REF##*/}})"
+                id: extract_base_branch
+
+            -   name: "Cache DOCtor-RST"
+                uses: actions/cache@v1
+                with:
+                    path: .cache
+                    key: ${{ runner.os }}-doctor-rst-${{ steps.extract_base_branch.outputs.branch }}
+
             -   name: "Run DOCtor-RST"
                 uses: docker://oskarstark/doctor-rst
                 with:
-                    args: --short
+                    args: --short --cache-file=/github/workspace/.cache/doctor-rst.cache

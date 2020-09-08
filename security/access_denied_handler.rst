@@ -51,7 +51,7 @@ configure it under your firewall:
         <!-- config/packages/security.xml -->
         <config>
             <firewall name="main">
-                <access_denied_handler>App\Security\AccessDeniedHandler</access_denied_handler>
+                <access-denied-handler>App\Security\AccessDeniedHandler</access-denied-handler>
             </firewall>
         </config>
 

@@ -19,7 +19,7 @@ by an instance of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Acc
 An authorization decision will always be based on a few things:
 
 * The current token
-    For instance, the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
+    For instance, the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoleNames`
     method may be used to retrieve the roles of the current user (e.g.
     ``ROLE_SUPER_ADMIN``), or a decision may be based on the class of the token.
 * A set of attributes
@@ -47,7 +47,9 @@ recognizes several strategies:
     grant access if there are more voters granting access than there are denying;
 
 ``unanimous``
-    only grant access if none of the voters has denied access;
+    only grant access if none of the voters has denied access. If all voters
+    abstained from voting, the decision is based on the ``allow_if_all_abstain``
+    config option (which defaults to ``false``).
 
 Usage of the available options in detail::
 
@@ -123,7 +125,7 @@ RoleVoter
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
 supports attributes starting with ``ROLE_`` and grants access to the user
 when at least one required ``ROLE_*`` attribute can be found in the array of
-roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoles`
+roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoleNames`
 method::
 
     use Symfony\Component\Security\Core\Authorization\Voter\RoleVoter;
@@ -185,7 +187,7 @@ expressions have access to a number of
     $object = ...;
 
     $expression = new Expression(
-        '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+        '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
     )
 
     $vote = $expressionVoter->vote($token, $object, [$expression]);
@@ -221,15 +223,17 @@ which contains request matchers and a corresponding set of attributes that
 are required for the current user to get access to the application::
 
     use Symfony\Component\HttpFoundation\RequestMatcher;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
     use Symfony\Component\Security\Http\AccessMap;
     use Symfony\Component\Security\Http\Firewall\AccessListener;
 
     $accessMap = new AccessMap();
+    $tokenStorage = new TokenStorage();
     $requestMatcher = new RequestMatcher('^/admin');
     $accessMap->add($requestMatcher, ['ROLE_ADMIN']);
 
     $accessListener = new AccessListener(
-        $securityContext,
+        $tokenStorage,
         $accessDecisionManager,
         $accessMap,
         $authenticationManager

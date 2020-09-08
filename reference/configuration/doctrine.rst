@@ -222,26 +222,35 @@ Keep in mind that you can't use both syntaxes at the same time.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-The built-in types of caching drivers are: ``array``, ``apc``, ``apcu``,
-``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata`` and ``xcache``.
-There is a special type called ``service`` which lets you define the ID of your
-own caching service.
-
-The following example shows an overview of the caching configurations:
+Use any of the existing :doc:`Symfony Cache </cache>` pools or define new pools
+to cache each of Doctrine ORM elements (queries, results, etc.):
 
 .. code-block:: yaml
 
+    # config/packages/prod/doctrine.yaml
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system
+
     doctrine:
         orm:
-            auto_mapping: true
-            # each caching driver type defines its own config options
-            metadata_cache_driver: apc
+            # ...
+            metadata_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
             result_cache_driver:
-                type: memcache
-                host: localhost
-                port: 11211
-                instance_class: Memcache
-            # the 'service' type requires to define the 'id' option too
+                type: pool
+                pool: doctrine.result_cache_pool
+
+            # in addition to Symfony Cache pools, you can also use the
+            # 'type: service' option to use any service as the cache
             query_cache_driver:
                 type: service
                 id: App\ORM\MyCacheService
@@ -440,4 +449,4 @@ If the ``dir`` configuration is set and the ``is_bundle`` configuration
 is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
 the path of the bundle.
 
-.. _DBAL documentation: https://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
+.. _DBAL documentation: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html

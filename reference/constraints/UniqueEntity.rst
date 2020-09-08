@@ -276,9 +276,9 @@ message
 
 **type**: ``string`` **default**: ``This value is already used.``
 
-The message that's displayed when this constraint fails. This message is always
-mapped to the first field causing the violation, even when using multiple fields
-in the constraint.
+The message that's displayed when this constraint fails. This message is by default
+mapped to the first field causing the violation. When using multiple fields
+in the constraint, the mapping can be specified via the `errorPath`_ property.
 
 Messages can include the ``{{ value }}`` placeholder to display a string
 representation of the invalid entity. If the entity doesn't define the
@@ -304,7 +304,6 @@ The name of the repository method used to determine the uniqueness. If it's left
 blank, ``findBy()`` will be used. The method receives as its argument a
 ``fieldName => value`` associative array (where ``fieldName`` is each of the
 fields configured in the ``fields`` option). The method should return a
-`countable PHP variable`_.
+:phpfunction:`countable PHP variable <is_countable>`.
 
 .. _`race conditions`: https://en.wikipedia.org/wiki/Race_condition
-.. _`countable PHP variable`: https://php.net/manual/function.is-countable.php

@@ -292,10 +292,10 @@ and `ezPublish 5`_,  and `more`_).
 .. _`audited`: https://symfony.com/blog/symfony2-security-audit
 .. _`applications using it`: https://symfony.com/components/HttpFoundation
 .. _`Symfony`: https://symfony.com/
-.. _`Drupal 8`: https://drupal.org/
+.. _`Drupal 8`: https://www.drupal.org/
 .. _`phpBB 3`: https://www.phpbb.com/
 .. _`ezPublish 5`: https://ez.no/
 .. _`Laravel`: https://laravel.com/
-.. _`autoloaded`: https://php.net/autoload
+.. _`autoloaded`: https://www.php.net/autoload
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
 .. _`more`: https://symfony.com/components/HttpFoundation

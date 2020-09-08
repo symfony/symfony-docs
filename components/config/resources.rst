@@ -11,7 +11,11 @@ Loading Resources
     parameters to string values. To set parameters to other data types
     (e.g. boolean, integer, etc), the other loaders are recommended.
     
-Loaders populate the application's configuration from different sources like YAML files. The Config component defines the interface for such loaders. The :doc:`Dependency Injection </components/dependency_injection>` and :doc:`Routing </components/routing>` components come with specialized loaders for different file formats.
+Loaders populate the application's configuration from different sources
+like YAML files. The Config component defines the interface for such
+loaders. The :doc:`Dependency Injection </components/dependency_injection>`
+and `Routing`_ components come with specialized loaders for different file
+formats.
 
 Locating Resources
 ------------------
@@ -95,3 +99,5 @@ the resource::
     // YamlUserLoader is used to load this resource because it supports
     // files with the '.yaml' extension
     $delegatingLoader->load(__DIR__.'/users.yaml');
+
+.. _Routing: https://github.com/symfony/routing

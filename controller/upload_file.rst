@@ -129,13 +129,14 @@ Finally, you need to update the code of the controller that handles the form::
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\String\Slugger\SluggerInterface;
 
     class ProductController extends AbstractController
     {
         /**
          * @Route("/product/new", name="app_product_new")
          */
-        public function new(Request $request)
+        public function new(Request $request, SluggerInterface $slugger)
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -150,7 +151,7 @@ Finally, you need to update the code of the controller that handles the form::
                 if ($brochureFile) {
                     $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
                     // this is needed to safely include the file name as part of the URL
-                    $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                    $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
 
                     // Move the file to the directory where brochures are stored
@@ -238,20 +239,23 @@ logic to a separate service::
 
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\String\Slugger\SluggerInterface;
 
     class FileUploader
     {
         private $targetDirectory;
+        private $slugger;
 
-        public function __construct($targetDirectory)
+        public function __construct($targetDirectory, SluggerInterface $slugger)
         {
             $this->targetDirectory = $targetDirectory;
+            $this->slugger = $slugger;
         }
 
         public function upload(UploadedFile $file)
         {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+            $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
             try {
@@ -305,7 +309,7 @@ Then, define a service for this class:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
-            <service id="App\FileUploader">
+            <service id="App\Service\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
         </container>
@@ -331,7 +335,7 @@ Now you're ready to use this service in the controller::
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $brochureFile */
-            $brochureFile = $form['brochure']->getData();
+            $brochureFile = $form->get('brochure')->getData();
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
                 $product->setBrochureFilename($brochureFileName);

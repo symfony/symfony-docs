@@ -243,8 +243,7 @@ the ``templates/layout.php``:
 You now have a setup that will allow you to reuse the layout.
 Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
-solves this using a :doc:`Templating </components/templating>` component.
-You'll see it in action shortly.
+solves this using a `Templating`_ component. You'll see it in action shortly.
 
 Adding a Blog "show" Page
 -------------------------
@@ -532,8 +531,8 @@ a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone
-:doc:`Routing </components/routing>` component and :doc:`Twig </templates>`,
-which already solve these problems.
+:doc:`Routing </routing>` component and :doc:`Twig </templates>`, which
+already solve these problems.
 
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
@@ -683,7 +682,7 @@ migrating the blog from flat PHP to Symfony has improved your life:
   :doc:`routing </routing>`, or rendering :doc:`controllers </controller>`;
 
 * Symfony gives you **access to open source tools** such as `Doctrine`_ and the
-  :doc:`Templating </components/templating>`,
+  `Templating`_,
   :doc:`Security </components/security>`,
   :doc:`Form </components/form>`, `Validator`_ and
   `Translation`_ components (to name
@@ -702,10 +701,11 @@ set of **high-quality open source tools developed by the Symfony community**!
 A good selection of `Symfony community tools`_ can be found on GitHub.
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
-.. _`Doctrine`: http://www.doctrine-project.org
+.. _`Doctrine`: https://www.doctrine-project.org/
+.. _Templating: https://github.com/symfony/templating
 .. _Translation: https://github.com/symfony/translation
 .. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/
 .. _`Validator`: https://github.com/symfony/validator
-.. _`Varnish`: https://www.varnish-cache.org/
+.. _`Varnish`: https://varnish-cache.org/
 .. _`Symfony community tools`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories

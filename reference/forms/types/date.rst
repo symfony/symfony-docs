@@ -253,4 +253,4 @@ Field Variables
 | ``date_pattern`` | ``string`` | A string with the date format to use.                                |
 +------------------+------------+----------------------------------------------------------------------+
 
-.. _`Bootstrap Datepicker`: https://github.com/eternicode/bootstrap-datepicker
+.. _`Bootstrap Datepicker`: https://github.com/uxsolutions/bootstrap-datepicker

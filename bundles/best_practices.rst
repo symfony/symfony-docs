@@ -181,7 +181,7 @@ of Symfony and the latest beta release:
 .. code-block:: yaml
 
     language: php
-    sudo: false
+
     cache:
         directories:
             - $HOME/.composer/cache/files

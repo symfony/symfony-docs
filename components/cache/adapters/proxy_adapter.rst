@@ -36,5 +36,5 @@ and optionally a namespace and default cache lifetime as its second and third pa
         $defaultLifetime = 0
     );
 
-.. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
-.. _`cache item pool interface`: http://www.php-fig.org/psr/psr-6/#cacheitempoolinterface
+.. _`PSR-6`: https://www.php-fig.org/psr/psr-6/
+.. _`cache item pool interface`: https://www.php-fig.org/psr/psr-6/#cacheitempoolinterface

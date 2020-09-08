@@ -272,7 +272,7 @@ important section is ``firewalls``:
                 'dev' => [
                     'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
                     'security' => false,
-                ),
+                ],
                 'main' => [
                     'anonymous' => 'lazy',
                 ],
@@ -289,18 +289,33 @@ accidentally block Symfony's dev tools - which live under URLs like ``/_profiler
 and ``/_wdt``.
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
-it matches *all* URLs). But this does *not* mean that every URL requires authentication.
-Nope, thanks to the ``anonymous`` key, this firewall *is* accessible anonymously.
+it matches *all* URLs). A firewall can have many modes of authentication,
+in other words many ways to ask the question "Who are you?". Often, the
+user is unknown (i.e. not logged in) when they first visit your website. The
+``anonymous`` mode, if enabled, is used for these requests.
 
-In fact, if you go to the homepage right now, you *will* have access and you'll see
-that you're "authenticated" as ``anon.``. Don't be fooled by the "Yes" next to
-Authenticated. The firewall verified that it does not know your identity, and so,
-you are anonymous:
+In fact, if you go to the homepage right now, you *will* have access and you'll
+see that you're "authenticated" as ``anon.``. The firewall verified that it
+does not know your identity, and so, you are anonymous:
 
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
 
-You'll learn later how to deny access to certain URLs or controllers.
+It means any request can have an anonymous token to access some resource,
+while some actions (i.e. some pages or buttons) can still require specific
+privileges. A user can then access a form login without being authenticated
+as a unique user (otherwise an infinite redirection loop would happen
+asking the user to authenticate while trying to doing so).
+
+You'll learn later how to deny access to certain URLs, controllers, or part of
+templates.
+
+.. tip::
+
+    The ``lazy`` anonymous mode prevents the session from being started if
+    there is no need for authorization (i.e. explicit check for a user
+    privilege). This is important to keep requests cacheable (see
+    :doc:`/http_cache`).
 
 .. note::
 
@@ -316,7 +331,7 @@ users to authenticate!
 .. _security-form-login:
 
 3b) Authenticating your Users
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Authentication in Symfony can feel a bit "magic" at first. That's because, instead
 of building a route & controller to handle login, you'll activate an
@@ -335,17 +350,15 @@ you to control *every* part of the authentication process (see the next section)
     bundle.
 
 Guard Authenticators
-....................
+~~~~~~~~~~~~~~~~~~~~
 
 A Guard authenticator is a class that gives you *complete* control over your
-authentication process. There are *many* different ways to build an authenticator,
-so here are a few common use-cases:
+authentication process. There are many different ways to build an authenticator;
+here are a few common use-cases:
 
 * :doc:`/security/form_login_setup`
-* :doc:`/security/guard_authentication`
-
-For the most detailed description of authenticators and how they work, see
-:doc:`/security/guard_authentication`.
+* :doc:`/security/guard_authentication` – see this for the most detailed description of
+   authenticators and how they work
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
@@ -374,20 +387,24 @@ generated earlier, the roles are an array that's stored in the database, and
 every user is *always* given at least one role: ``ROLE_USER``::
 
     // src/Entity/User.php
+
     // ...
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    public function getRoles(): array
+    class User
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        /**
+         * @ORM\Column(type="json")
+         */
+        private $roles = [];
 
-        return array_unique($roles);
+        // ...
+        public function getRoles(): array
+        {
+            $roles = $this->roles;
+            // guarantee every user at least has ROLE_USER
+            $roles[] = 'ROLE_USER';
+
+            return array_unique($roles);
+        }
     }
 
 This is a nice default, but you can do *whatever* you want to determine which roles
@@ -642,6 +659,16 @@ Securing other Services
 
 See :doc:`/security/securing_services`.
 
+Setting Individual User Permissions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most applications require more specific access rules. For instance, a user
+should be able to only edit their *own* comments on a blog. Voters allow you
+to write *whatever* business logic you need to determine access. Using
+these voters is similar to the role-based access checks implemented in the
+previous chapters. Read :doc:`/security/voters` to learn how to implement
+your own voter.
+
 Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -678,22 +705,6 @@ like this:
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/security/access_control`.
-
-.. _security-secure-objects:
-
-Access Control Lists (ACLs): Securing individual Database Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Imagine you are designing a blog where users can comment on your posts. You
-also want a user to be able to edit their own comments, but not those of
-other users. Also, as the admin user, you want to be able to edit *all* comments.
-
-:doc:`Voters </security/voters>` allow you to write *whatever* business logic you
-need (e.g. the user can edit this post because they are the creator) to determine
-access. That's why voters are officially recommended by Symfony to create ACL-like
-security systems.
-
-If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 
 .. _retrieving-the-user-object:
 
@@ -866,7 +877,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('logout', '/logout')
+            $routes->add('app_logout', '/logout')
                 ->methods(['GET'])
             ;
         };
@@ -1000,6 +1011,7 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
+    security/reset_password
     security/json_login_setup
     security/guard_authentication
     security/password_migration
@@ -1030,6 +1042,5 @@ Authorization (Denying Access)
 
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
-.. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

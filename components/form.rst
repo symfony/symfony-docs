@@ -383,7 +383,7 @@ Creating a simple Form
 
     If you're using the Symfony Framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
-    base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
+    base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder()``
     on it.
 
@@ -535,7 +535,7 @@ Changing a Form's Method and Action
 By default, a form is submitted to the same URI that rendered the form with
 an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
 and :ref:`form-option-method` options (the ``method`` option is also used
-by ``handleRequest()`` to determine whether a form has been submitted):
+by :method:`Symfony\\Component\\Form\\Form::handleRequest` to determine whether a form has been submitted):
 
 .. configuration-block::
 
@@ -651,15 +651,15 @@ This defines a common form "workflow", which contains 3 different possibilities:
 1) On the initial GET request (i.e. when the user "surfs" to your page),
    build your form and render it;
 
-If the request is a POST, process the submitted data (via ``handleRequest()``).
+If the request is a POST, process the submitted data (via :method:`Symfony\\Component\\Form\\Form::handleRequest`).
 Then:
 
 2) if the form is invalid, re-render the form (which will now contain errors);
 3) if the form is valid, perform some action and redirect.
 
 Luckily, you don't need to decide whether or not a form has been submitted.
-Pass the current request to the ``handleRequest()`` method. Then, the Form
-component will do all the necessary work for you.
+Just pass the current request to the :method:`Symfony\\Component\\Form\\Form::handleRequest`
+method. Then, the Form component will do all the necessary work for you.
 
 .. _component-form-intro-validation:
 
@@ -763,8 +763,9 @@ method. This is useful when you'd like to validate the form without showing
 validation errors to the user (i.e. during a partial AJAX submission or
 :doc:`dynamic form modification </form/dynamic_form_modification>`).
 
-Because clearing the errors makes the form valid, ``clearErrors()`` should only
-be called after testing whether the form is valid.
+Because clearing the errors makes the form valid,
+:method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors`
+should only be called after testing whether the form is valid.
 
 Learn more
 ----------

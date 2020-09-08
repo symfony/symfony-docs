@@ -30,7 +30,7 @@ request::
 
     class RequestCollector extends DataCollector
     {
-        public function collect(Request $request, Response $response, \Exception $exception = null)
+        public function collect(Request $request, Response $response, \Throwable $exception = null)
         {
             $this->data = [
                 'method' => $request->getMethod(),
@@ -78,6 +78,12 @@ request::
     This value is used later to access the collector information (see
     :doc:`/testing/profiling`) so it's recommended to return a string which is
     short, lowercase and without white spaces.
+
+The ``collect()`` method is called during the :ref:`kernel.response <component-http-kernel-kernel-response>`
+event. If you need to collect data that is only available later, implement
+:class:`Symfony\\Component\\HttpKernel\\DataCollector\\LateDataCollectorInterface`
+and define the ``lateCollect()`` method, which is invoked just before the profiler
+data serialization (during :ref:`kernel.terminate <component-http-kernel-kernel-terminate>` event).
 
 .. _data_collector_tag:
 

@@ -80,9 +80,7 @@ That's it! To test it, start the :doc:`Symfony Local Web Server
 
     $ symfony server:start
 
-Then see the JSON response in your browser:
-
-    http://localhost:8000/random/10
+Then see the JSON response in your browser: http://localhost:8000/random/10
 
 The Methods of a "Micro" Kernel
 -------------------------------
@@ -332,6 +330,4 @@ As before you can use the :doc:`Symfony Local Web Server
     cd public/
     $ symfony server:start
 
-Then visit the page in your browser:
-
-    http://localhost:8000/random/10
+Then visit the page in your browser: http://localhost:8000/random/10

@@ -455,6 +455,6 @@ Learn More
 
     yaml/*
 
-.. _`YAML`: http://yaml.org/
-.. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html
-.. _`ISO-8601`: http://www.iso.org/iso/iso8601
+.. _`YAML`: https://yaml.org/
+.. _`YAML 1.2 version specification`: https://yaml.org/spec/1.2/spec.html
+.. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html

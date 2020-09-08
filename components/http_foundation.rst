@@ -453,17 +453,17 @@ Managing the HTTP Cache
 The :class:`Symfony\\Component\\HttpFoundation\\Response` class has a rich set
 of methods to manipulate the HTTP headers related to the cache:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`
 
 .. note::
 
@@ -721,5 +721,5 @@ Learn More
 
 .. _nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
 .. _Apache: https://tn123.org/mod_xsendfile/
-.. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
+.. _`JSON Hijacking`: https://haacked.com/archive/2009/06/25/json-hijacking.aspx/
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside

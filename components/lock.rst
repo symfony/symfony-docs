@@ -164,7 +164,7 @@ object) and ``isExpired()`` (which returns a boolean).
 The Owner of The Lock
 ---------------------
 
-Locks that are acquired for the first time are owned by the ``Lock`` instance that acquired
+Locks that are acquired for the first time are owned [1]_ by the ``Lock`` instance that acquired
 it. If you need to check whether the current ``Lock`` instance is (still) the owner of
 a lock, you can use the ``isAcquired()`` method::
 
@@ -233,7 +233,8 @@ FlockStore
 
 The FlockStore uses the file system on the local computer to create the locks.
 It does not support expiration, but the lock is automatically released when the
-PHP process is terminated::
+lock object goes out of scope and is freed by the garbage collector (for example
+when the PHP process ends)::
 
     use Symfony\Component\Lock\Store\FlockStore;
 
@@ -603,7 +604,7 @@ CombinedStore
 ~~~~~~~~~~~~~
 
 Combined stores allow to store locks across several backends. It's a common
-mistake to think that the lock mechanism will be more reliable. This is wrong
+mistake to think that the lock mechanism will be more reliable. This is wrong.
 The ``CombinedStore`` will be, at best, as reliable as the least reliable of
 all managed stores. As soon as one managed store returns erroneous information,
 the ``CombinedStore`` won't be reliable.
@@ -674,8 +675,8 @@ are still running.
 
 .. _`ACID`: https://en.wikipedia.org/wiki/ACID
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
-.. _`PHP semaphore functions`: https://php.net/manual/en/book.sem.php
-.. _`PDO`: https://php.net/pdo
+.. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
+.. _`PDO`: https://www.php.net/pdo
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`ZooKeeper`: https://zookeeper.apache.org/

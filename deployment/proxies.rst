@@ -107,10 +107,10 @@ In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
     // public/index.php
 
     // ...
-    $_SERVER['HEADER_X_FORWARDED_PROTO'] = $_SERVER['HEADER_CUSTOM_FORWARDED_PROTO'];
+    $_SERVER['HTTP_X_FORWARDED_PROTO'] = $_SERVER['HTTP_CUSTOM_FORWARDED_PROTO'];
     // ...
     $response = $kernel->handle($request);
 
-.. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
+.. _`security groups`: https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
 .. _`CloudFront IP ranges`: https://ip-ranges.amazonaws.com/ip-ranges.json

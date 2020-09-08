@@ -76,7 +76,7 @@ support. The best-practice is to configure this directly in your ``package.json`
 
 See `browserslist`_ for more details on the syntax.
 
-.. _`PostCSS`: http://postcss.org/
+.. _`PostCSS`: https://postcss.org/
 .. _`autoprefixing`: https://github.com/postcss/autoprefixer
 .. _`linting`: https://stylelint.io/
 .. _`browserslist`: https://github.com/browserslist/browserslist

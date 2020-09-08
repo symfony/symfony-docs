@@ -83,7 +83,7 @@ Take the following ``access_control`` entries as an example:
                 ],
                 [
                     'path' => '^/admin',
-                    'rolse' => 'ROLE_USER_HOST',
+                    'roles' => 'ROLE_USER_HOST',
                     'host' => 'symfony\.com$',
                 ],
                 [
@@ -290,7 +290,7 @@ key:
                     # the 'role' and 'allow-if' options work like an OR expression, so
                     # access is granted if the expression is TRUE or the user has ROLE_ADMIN
                     roles: 'ROLE_ADMIN'
-                    allow_if: "'127.0.0.1' == request.getClientIp() or request.header.has('X-Secure-Access')"
+                    allow_if: "'127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"
 
     .. code-block:: xml
 
@@ -308,7 +308,7 @@ key:
                      access is granted if the expression is TRUE or the user has ROLE_ADMIN -->
                 <rule path="^/_internal/secure"
                     role="ROLE_ADMIN"
-                    allow-if="'127.0.0.1' == request.getClientIp() or request.header.has('X-Secure-Access')"/>
+                    allow-if="'127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"/>
             </config>
         </srv:container>
 
@@ -323,7 +323,7 @@ key:
                     // the 'role' and 'allow-if' options work like an OR expression, so
                     // access is granted if the expression is TRUE or the user has ROLE_ADMIN
                     'roles' => 'ROLE_ADMIN',
-                    'allow_if' => '"127.0.0.1" == request.getClientIp() or request.header.has('X-Secure-Access')',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or request.headers.has("X-Secure-Access")',
                 ],
             ],
         ]);

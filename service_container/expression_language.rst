@@ -67,9 +67,8 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
             $services->set(MailerConfiguration::class);
 
             $services->set(Mailer::class)
-                ->args([expr(sprintf('service(%s).getMailerMethod()', MailerConfiguration::class))]);
+                ->args([expr("service('App\\Mail\\MailerConfiguration').getMailerMethod()")]);
         };
-
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
 

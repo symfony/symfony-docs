@@ -137,4 +137,4 @@ This matches the pattern used for the `HTML5 email input element`_.
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
-.. _HTML5 email input element: https://www.w3.org/TR/html5/sec-forms.html#email-state-typeemail
+.. _HTML5 email input element: https://www.w3.org/TR/html5/sec-forms.html#valid-e-mail-address

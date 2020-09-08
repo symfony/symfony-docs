@@ -286,6 +286,11 @@ Now you can configure all the user information in ``config/packages/security.yam
                         john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
                         jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
 
+.. caution::
+
+    When using a ``memory`` provider, and not the ``auto`` algorithm, you have
+    to choose an encoding without salt (i.e. ``bcrypt``).
+
 .. _security-ldap-user-provider:
 
 LDAP User Provider

@@ -235,10 +235,10 @@ determine which instance is passed.
         use Symfony\Component\EventDispatcher\EventDispatcher;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
-        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
         $containerBuilder->addCompilerPass(new AddEventAliasesPass([
             \AcmeFooActionEvent::class => 'acme.foo.action',
         ]));
+        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING)
 
         $containerBuilder->register('event_dispatcher', EventDispatcher::class);
 
@@ -328,7 +328,7 @@ Dispatch the Event
 The :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`
 method notifies all listeners of the given event. It takes two arguments:
 the ``Event`` instance to pass to each listener of that event and the name
-of the event to dispatch and ::
+of the event to dispatch::
 
     use Acme\Store\Event\OrderPlacedEvent;
     use Acme\Store\Order;
@@ -523,5 +523,5 @@ Learn More
 
 .. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
 .. _Observer: https://en.wikipedia.org/wiki/Observer_pattern
-.. _Closures: https://php.net/manual/en/functions.anonymous.php
-.. _PHP callable: https://php.net/manual/en/language.pseudo-types.php#language.types.callback
+.. _Closures: https://www.php.net/manual/en/functions.anonymous.php
+.. _PHP callable: https://www.php.net/manual/en/language.pseudo-types.php#language.types.callback

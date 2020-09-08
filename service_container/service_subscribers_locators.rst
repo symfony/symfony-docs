@@ -1,6 +1,8 @@
 .. index::
     single: DependencyInjection; Service Subscribers
 
+.. _service-locators:
+
 Service Subscribers & Locators
 ==============================
 
@@ -63,7 +65,7 @@ through a **Service Locator**, a separate lazy-loaded container.
 Defining a Service Subscriber
 -----------------------------
 
-First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`.
+First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`.
 Use its ``getSubscribedServices()`` method to include as many services as needed
 in the service subscriber and change the type hint of the container to
 a PSR-11 ``ContainerInterface``::
@@ -515,7 +517,7 @@ attribute to the locator service defining the name of this custom method:
             # ...
 
             App\HandlerCollection:
-                arguments: [!tagged_locator { tag: 'app.handler', default_index_method: 'myOwnMethodName' }]
+                arguments: [!tagged_locator { tag: 'app.handler', index_by: 'key', default_index_method: 'myOwnMethodName' }]
 
     .. code-block:: xml
 
@@ -531,7 +533,7 @@ attribute to the locator service defining the name of this custom method:
                 <!-- ... -->
 
                 <service id="App\HandlerCollection">
-                    <argument type="tagged_locator" tag="app.handler" default-index-method="myOwnMethodName"/>
+                    <argument type="tagged_locator" tag="app.handler" index-by="key" default-index-method="myOwnMethodName"/>
                 </service>
             </services>
         </container>
@@ -544,9 +546,15 @@ attribute to the locator service defining the name of this custom method:
         return function(ContainerConfigurator $configurator) {
             $configurator->services()
                 ->set(App\HandlerCollection::class)
-                    ->args([tagged_locator('app.handler', null, 'myOwnMethodName')])
+                    ->args([tagged_locator('app.handler', 'key', 'myOwnMethodName')])
             ;
         };
+
+.. note::
+
+    Since code should not be responsible for defining how the locators are
+    going to be used, a configuration key (``key`` in the example above) must
+    be set so the custom method may be called as a fallback.
 
 Service Subscriber Trait
 ------------------------

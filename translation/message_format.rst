@@ -69,9 +69,10 @@ The basic usage of the MessageFormat allows you to use placeholders (called
 
 .. caution::
 
-    With the previous format, placeholders were often named between ``%``. This
-    character is no longer valid with the ICU MessageFormat syntax. Be careful
-    to rename your parameters.
+    In the previous translation format, placeholders were often wrapped in ``%``
+    (e.g. ``%name%``). This ``%`` character is no longer valid with the ICU
+    MessageFormat syntax, so you must rename your parameters if you are upgrading
+    from the previous format.
 
 Everything within the curly braces (``{...}``) is processed by the formatter
 and replaced by its placeholder::
@@ -466,6 +467,6 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
 
 .. _`online editor`: http://format-message.github.io/icu-message-format-for-translators/
 .. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
-.. _`switch statement`: https://php.net/control-structures.switch
+.. _`switch statement`: https://www.php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
-.. _`constants defined by the IntlDateFormatter class`: https://php.net/manual/en/class.intldateformatter.php
+.. _`constants defined by the IntlDateFormatter class`: https://www.php.net/manual/en/class.intldateformatter.php

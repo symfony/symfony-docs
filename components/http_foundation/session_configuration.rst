@@ -29,7 +29,7 @@ All native save handlers are internal to PHP and as such, have no public facing 
 They must be configured by ``php.ini`` directives, usually ``session.save_path`` and
 potentially other driver specific directives. Specific details can be found in
 the docblock of the ``setOptions()`` method of each class. For instance, the one
-provided by the Memcached extension can be found on `php.net/memcached.setoption`_
+provided by the Memcached extension can be found on :phpmethod:`php.net <Memcached::setOption>`.
 
 While native save handlers can be activated by directly using
 ``ini_set('session.save_handler', $name);``, Symfony provides a convenient way to
@@ -286,6 +286,5 @@ particular cookie by reading the ``getLifetime()`` method::
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
 
-.. _`php.net/session.customhandler`: https://php.net/session.customhandler
-.. _`php.net/session.configuration`: https://php.net/session.configuration
-.. _`php.net/memcached.setoption`: https://php.net/memcached.setoption
+.. _`php.net/session.customhandler`: https://www.php.net/session.customhandler
+.. _`php.net/session.configuration`: https://www.php.net/session.configuration

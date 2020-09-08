@@ -159,7 +159,7 @@ each time you ask for it.
                 # this creates a service per class whose id is the fully-qualified class name
                 App\:
                     resource: '../src/*'
-                    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+                    exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
 
                 # ...
 
@@ -176,7 +176,12 @@ each time you ask for it.
                     <!-- Default configuration for services in *this* file -->
                     <defaults autowire="true" autoconfigure="true"/>
 
-                    <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+                    <!-- makes classes in src/ available to be used as services -->
+                    <!-- this creates a service per class whose id is the fully-qualified class name -->
+                    <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Tests,Kernel.php}"/>
+
+                    <!-- ... -->
+
                 </services>
             </container>
 
@@ -196,7 +201,7 @@ each time you ask for it.
                 // makes classes in src/ available to be used as services
                 // this creates a service per class whose id is the fully-qualified class name
                 $services->load('App\\', '../src/*')
-                    ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+                    ->exclude('../src/{DependencyInjection,Entity,Tests,Kernel.php}');
             };
 
     .. tip::
@@ -290,13 +295,15 @@ made. To do that, you create a new class::
     namespace App\Updates;
 
     use App\Service\MessageGenerator;
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\Email;
 
     class SiteUpdateManager
     {
         private $messageGenerator;
         private $mailer;
 
-        public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer)
+        public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
         {
             $this->messageGenerator = $messageGenerator;
             $this->mailer = $mailer;
@@ -306,19 +313,21 @@ made. To do that, you create a new class::
         {
             $happyMessage = $this->messageGenerator->getHappyMessage();
 
-            $message = (new \Swift_Message('Site update just happened!'))
-                ->setFrom('admin@example.com')
-                ->setTo('manager@example.com')
-                ->addPart(
-                    'Someone just updated the site. We told them: '.$happyMessage
-                );
+            $email = (new Email())
+                ->from('admin@example.com')
+                ->to('manager@example.com')
+                ->subject('Site update just happened!')
+                ->text('Someone just updated the site. We told them: '.$happyMessage);
 
-            return $this->mailer->send($message) > 0;
+            $this->mailer->send($email);
+
+            // ...
         }
     }
 
-This needs the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. That's no
-problem! In fact, this new service is ready to be used. In a controller, for example,
+This needs the ``MessageGenerator`` *and* the ``Mailer`` service. That's no
+problem, we ask them by type hinting their class and interface names!
+Now, this new service is ready to be used. In a controller, for example,
 you can type-hint the new ``SiteUpdateManager`` class and use it::
 
     // src/Controller/SiteController.php
@@ -394,12 +403,12 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         # config/services.yaml
         services:
-            # ...
+            # ... same as before
 
             # same as before
             App\:
                 resource: '../src/*'
-                exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+                exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
 
             # explicitly configure the service
             App\Updates\SiteUpdateManager:
@@ -416,11 +425,14 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... -->
+                <!-- ...  same as before -->
 
                 <!-- Same as before -->
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+                <prototype namespace="App\"
+                    resource="../src/*"
+                    exclude="../src/{DependencyInjection,Entity,Tests,Kernel.php}"
+                />
 
                 <!-- Explicitly configure the service -->
                 <service id="App\Updates\SiteUpdateManager">
@@ -441,7 +453,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
             // same as before
             $services->load('App\\', '../src/*')
-                ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+                ->exclude('../src/{DependencyInjection,Entity,Tests,Kernel.php}');
 
             $services->set(SiteUpdateManager::class)
                 ->arg('$adminEmail', 'manager@example.com')
@@ -714,6 +726,7 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
 
         use App\Controller\LuckyController;
         use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         return function(ContainerConfigurator $configurator) {
@@ -807,24 +820,42 @@ Public Versus Private Services
 From Symfony 4.0, every service defined is private by default.
 
 What does this mean? When a service **is** public, you can access it directly
-from the container object, which is accessible from any controller that extends
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`::
+from the container object, which can also be injected thanks to autowiring.
+This is mostly useful when you want to fetch services lazily::
 
-    use App\Service\MessageGenerator;
+    namespace App\Generator;
 
-    // ...
-    public function new()
+    use Psr\Container\ContainerInterface;
+
+    class MessageGenerator
     {
-        // there IS a public "logger" service in the container
-        $logger = $this->container->get('logger');
+        private $container;
 
-        // this will NOT work: MessageGenerator is a private service
-        $generator = $this->container->get(MessageGenerator::class);
-    }
+        public function __construct(ContainerInterface $container)
+        {
+            $this->container = $container;
+        }
 
-As a best practice, you should only create *private* services, which will happen
-automatically. And also, you should *not* use the ``$container->get()`` method to
-fetch public services.
+        public function generate(string $message, string $template = null, array $context = []): string
+        {
+            if ($template && $this->container->has('twig')) {
+                // there IS a public "twig" service in the container
+                $twig = $this->container->get('twig');
+
+                return $twig->render($template, $context + ['message' => $message]);
+            }
+
+            // if no template is passed, the "twig" service will not be loaded
+
+            // ...
+        }
+
+As a best practice, you should only create *private* services. This allows for
+safe container optimizations, e.g. removing unused services. You should not use
+``$container->get()`` to fetch public services, as it will make it harder to
+make those services private later. Instead consider
+:ref:`injecting services <services-constructor-injection>` or using
+:doc:`Service Subscribers or Locators </service_container/service_subscribers_locators>`.
 
 But, if you *do* need to make a service public, override the ``public`` setting:
 
@@ -837,7 +868,7 @@ But, if you *do* need to make a service public, override the ``public`` setting:
             # ... same code as before
 
             # explicitly configure the service
-            App\Service\MessageGenerator:
+            Acme\PublicService:
                 public: true
 
     .. code-block:: xml
@@ -853,7 +884,7 @@ But, if you *do* need to make a service public, override the ``public`` setting:
                 <!-- ... same code as before -->
 
                 <!-- Explicitly configure the service -->
-                <service id="App\Service\MessageGenerator" public="true"></service>
+                <service id="Acme\PublicService" public="true"></service>
             </services>
         </container>
 
@@ -862,16 +893,21 @@ But, if you *do* need to make a service public, override the ``public`` setting:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Service\MessageGenerator;
+        use Acme\PublicService;
 
         return function(ContainerConfigurator $configurator) {
             // ... same as code before
 
             // explicitly configure the service
-            $services->set(MessageGenerator::class)
+            $services->set(PublicService::class)
                 ->public()
             ;
         };
+
+.. note::
+
+    Instead of injecting the container you should consider using a
+    :ref:`service locator <service-locators>` instead.
 
 .. _service-psr4-loader:
 
@@ -887,13 +923,13 @@ key. For example, the default Symfony configuration contains this:
 
         # config/services.yaml
         services:
-            # ...
+            # ... same as before
 
             # makes classes in src/ available to be used as services
             # this creates a service per class whose id is the fully-qualified class name
             App\:
                 resource: '../src/*'
-                exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+                exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
 
     .. code-block:: xml
 
@@ -905,9 +941,9 @@ key. For example, the default Symfony configuration contains this:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... -->
+                <!-- ... same as before -->
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Tests,Kernel.php}"/>
             </services>
         </container>
 
@@ -922,7 +958,7 @@ key. For example, the default Symfony configuration contains this:
             // makes classes in src/ available to be used as services
             // this creates a service per class whose id is the fully-qualified class name
             $services->load('App\\', '../src/*')
-                ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+                ->exclude('../src/{DependencyInjection,Entity,Tests,Kernel.php}');
         };
 
 .. tip::
@@ -957,13 +993,49 @@ If you define services using the YAML config format, the PHP namespace is used
 as the key of each configuration, so you can't define different service configs
 for classes under the same namespace:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/services.yaml
-    services:
-        App\Domain\:
-            resource: '../src/Domain/*'
-            # ...
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Domain\:
+                resource: '../src/Domain/*'
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <prototype namespace="App\Domain"
+                    resource="../src/App/Domain/*"/>
+                </prototype>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $defaults = new Definition();
+
+        // $this is a reference to the current loader
+        $this->registerClasses(
+            $defaults,
+            'App\\Domain\\',
+            '../src/App/Domain/*'
+        );
+
+        // ...
 
 In order to have multiple definitions, add the ``namespace`` option and use any
 unique string as the key of each service config:

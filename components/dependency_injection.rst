@@ -318,4 +318,4 @@ Learn More
     /components/dependency_injection/*
     /service_container/*
 
-.. _`PSR-11`: http://www.php-fig.org/psr/psr-11/
+.. _`PSR-11`: https://www.php-fig.org/psr/psr-11/

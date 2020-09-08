@@ -15,6 +15,7 @@ The hidden type represents a hidden input field.
 +-------------+----------------------------------------------------------------------+
 | Inherited   | - `attr`_                                                            |
 | options     | - `data`_                                                            |
+|             | - `empty_data`_                                                      |
 |             | - `error_mapping`_                                                   |
 |             | - `mapped`_                                                          |
 |             | - `property_path`_                                                   |
@@ -54,6 +55,14 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 

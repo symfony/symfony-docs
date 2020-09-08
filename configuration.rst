@@ -25,7 +25,7 @@ the ``services.yaml`` file configures the services of the
 :doc:`service container </service_container>`; the ``bundles.php`` file enables/
 disables packages in your application.
 
-You'll be working most in the ``config/packages/`` directory. This directory
+You'll be working mostly in the ``config/packages/`` directory. This directory
 stores the configuration of every package installed in your application.
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
@@ -55,7 +55,7 @@ to change these files after package installation
 Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~
 
-Unlike other frameworks, Symfony doesn't impose you a specific format to
+Unlike other frameworks, Symfony doesn't impose a specific format on you to
 configure your applications. Symfony lets you choose between YAML, XML and PHP
 and throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
@@ -70,8 +70,8 @@ readable. These are the main advantages and disadvantages of each format:
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
   and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
 * **XML**:autocompleted/validated by most IDEs and is parsed natively by PHP,
-  but sometimes it generates too verbose configuration. `Learn the XML syntax`_;
-* **PHP**: very powerful and it allows to create dynamic configuration, but the
+  but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
+* **PHP**: very powerful and it allows you to create dynamic configuration, but the
   resulting configuration is less readable than the other formats.
 
 Importing Configuration Files
@@ -120,12 +120,15 @@ configuration files, even if they use a different format:
     .. code-block:: php
 
         // config/services.php
-        $loader->import('legacy_config.xml');
-        // the third optional argument of import() is 'ignore_errors', which
-        // silently discards errors if the loaded file doesn't exist
-        $loader->import('my_config_file.yaml', null, true);
-        // glob expressions are also supported to load multiple files
-        $loader->import('/etc/myapp/*.yaml');
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->import('legacy_config.php');
+            // ignore_errors (3rd parameter) silently discards errors if the loaded file doesn't exist
+            $container->import('my_config_file.xml', null, true);
+            // glob expressions are also supported to load multiple files
+            $container->import('/etc/myapp/*.yaml');
+        };
 
         // ...
 
@@ -209,24 +212,29 @@ reusable configuration value. By convention, parameters are defined under the
     .. code-block:: php
 
         // config/services.php
-        // the parameter name is an arbitrary string (the 'app.' prefix is recommended
-        // to better differentiate your parameters from Symfony parameters).
-        $container->setParameter('app.admin_email', 'something@example.com');
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // boolean parameters
-        $container->setParameter('app.enable_v2_protocol', true);
-
-        // array/collection parameters
-        $container->setParameter('app.supported_locales', ['en', 'es', 'fr']);
-
-        // binary content parameters (use the PHP escape sequences)
-        $container->setParameter('app.some_parameter', 'This is a Bell char: \x07');
-
-        // PHP constants as parameter values
         use App\Entity\BlogPost;
 
-        $container->setParameter('app.some_constant', GLOBAL_CONSTANT);
-        $container->setParameter('app.another_constant', BlogPost::MAX_ITEMS);
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
+                // the parameter name is an arbitrary string (the 'app.' prefix is recommended
+                // to better differentiate your parameters from Symfony parameters).
+                ->set('app.admin_email', 'something@example.com')
+
+                // boolean parameters
+                ->set('app.enable_v2_protocol', true)
+
+                // array/collection parameters
+                ->set('app.supported_locales', ['en', 'es', 'fr'])
+
+                // binary content parameters (use the PHP escape sequences)
+                ->set('app.some_parameter', 'This is a Bell char: \x07')
+
+                // PHP constants as parameter values
+                ->set('app.some_constant', GLOBAL_CONSTANT)
+                ->set('app.another_constant', BlogPost::MAX_ITEMS);
+        };
 
         // ...
 
@@ -278,12 +286,17 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
     .. code-block:: php
 
         // config/packages/some_package.php
-        $container->loadFromExtension('some_package', [
-            // any string surrounded by two % is replaced by that parameter value
-            'email_address' => '%app.admin_email%',
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            // ...
-        ]);
+        return static function (ContainerConfigurator $container) {
+            $container->extension('some_package', [
+                // any string surrounded by two % is replaced by that parameter value
+                'email_address' => '%app.admin_email%',
+
+                // ...
+            ]);
+        };
+
 
 .. note::
 
@@ -310,7 +323,12 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
         .. code-block:: php
 
             // config/services.php
-            $container->setParameter('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
+            };
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
@@ -368,7 +386,7 @@ Take the ``framework`` package, installed by default, as an example:
   ``config/packages/framework.yaml``.
 
 In reality, each environment differs only somewhat from others. This means that
-all environments share a large base of common configurations, which is put in
+all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
 .. seealso::
@@ -417,15 +435,15 @@ going to production:
 #. Create a configuration directory with the same name as the environment (in
    this case, ``config/packages/staging/``);
 #. Add the needed configuration files in ``config/packages/staging/`` to
-   define the behavior of the new environment. Symfony loads first the files in
-   ``config/packages/*.yaml``, so you must only configure the differences with
-   those files;
+   define the behavior of the new environment. Symfony loads the
+   ``config/packages/*.yaml`` files first, so you only need to configure the
+   differences to those files;
 #. Select the ``staging`` environment using the ``APP_ENV`` env var as explained
    in the previous section.
 
 .. tip::
 
-    It's common for environments to be similar between each other, so you can
+    It's common for environments to be similar to each other, so you can
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
 
@@ -453,7 +471,7 @@ This example shows how you could configure the database connection using an env 
         doctrine:
             dbal:
                 # by convention the env var names are always uppercase
-                url: '%env(DATABASE_URL)%'
+                url: '%env(resolve:DATABASE_URL)%'
             # ...
 
     .. code-block:: xml
@@ -470,7 +488,7 @@ This example shows how you could configure the database connection using an env 
 
             <doctrine:config>
                 <!-- by convention the env var names are always uppercase -->
-                <doctrine:dbal url="%env(DATABASE_URL)%"/>
+                <doctrine:dbal url="%env(resolve:DATABASE_URL)%"/>
             </doctrine:config>
 
         </container>
@@ -478,12 +496,16 @@ This example shows how you could configure the database connection using an env 
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                // by convention the env var names are always uppercase
-                'url' => '%env(DATABASE_URL)%',
-            ]
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('doctrine', [
+                'dbal' => [
+                    // by convention the env var names are always uppercase
+                    'url' => '%env(resolve:DATABASE_URL)%',
+                ]
+            ]);
+        };
 
 .. seealso::
 
@@ -542,6 +564,58 @@ should not contain production values.
 In addition to your own env vars, this ``.env`` file also contains the env vars
 defined by the third-party packages installed in your application (they are
 added automatically by :ref:`Symfony Flex <symfony-flex>` when installing packages).
+
+.env File Syntax
+................
+
+Add comments by prefixing them with ``#``:
+
+.. code-block:: bash
+
+    # database credentials
+    DB_USER=root
+    DB_PASS=pass # this is the secret password
+
+Use environment variables in values by prefixing variables with ``$``:
+
+.. code-block:: bash
+
+    DB_USER=root
+    DB_PASS=${DB_USER}pass # include the user as a password prefix
+
+.. caution::
+
+    The order is important when some env var depends on the value of other env
+    vars. In the above example, ``DB_PASS`` must be defined after ``DB_USER``.
+    Moreover, if you define multiple ``.env`` files and put ``DB_PASS`` first,
+    its value will depend on the ``DB_USER`` value defined in other files
+    instead of the value defined in this file.
+
+Define a default value in case the environment variable is not set:
+
+.. code-block:: bash
+
+    DB_USER=
+    DB_PASS=${DB_USER:-root}pass # results in DB_PASS=rootpass
+
+Embed commands via ``$()`` (not supported on Windows):
+
+.. code-block:: bash
+
+    START_TIME=$(date)
+
+.. caution::
+
+    Using ``$()`` might not work depending on your shell.
+
+.. tip::
+
+    As a ``.env`` file is a regular shell script, you can ``source`` it in
+    your own shell scripts:
+
+    .. code-block:: terminal
+
+        $ source .env
 
 .. _configuration-multiple-env-files:
 
@@ -720,18 +794,23 @@ doesn't work for parameters:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setParameter('app.contents_dir', '...');
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
+                ->set('app.contents_dir', '...');
 
-        $container->getDefinition(MessageGenerator::class)
-            ->setArgument('$contentsDir', '%app.contents_dir%');
+            $container->services()
+                ->get(MessageGenerator::class)
+                    ->arg('$contentsDir', '%app.contents_dir%');
+        };
 
-If you inject the same parameters over and over again, use instead the
-``services._defaults.bind`` option. The arguments defined in that option are
+If you inject the same parameters over and over again, use the
+``services._defaults.bind`` option instead. The arguments defined in that option are
 injected automatically whenever a service constructor or controller action
-define an argument with that exact name. For example, to inject the value of the
+defines an argument with that exact name. For example, to inject the value of the
 :ref:`kernel.project_dir parameter <configuration-kernel-project-directory>`
 whenever a service/controller defines a ``$projectDir`` argument, use this:
 
@@ -772,25 +851,29 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Controller\LuckyController;
         use Psr\Log\LoggerInterface;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(LuckyController::class)
-            ->setPublic(true)
-            ->setBindings([
-                // pass this value to any $projectDir argument for any service
-                // that's created in this file (including controller arguments)
-                '$projectDir' => '%kernel.project_dir%',
-            ])
-        ;
+        return static function (ContainerConfigurator $container) {
+            $container->services()
+                ->set(LuckyController::class)
+                    ->public()
+                    ->args([
+                        // pass this value to any $projectDir argument for any service
+                        // that's created in this file (including controller arguments)
+                        '$projectDir' => '%kernel.project_dir%',
+                    ]);
+        };
 
 .. seealso::
 
     Read the article about :ref:`binding arguments by name and/or type <services-binding>`
     to learn more about this powerful feature.
 
-Finally, if some service needs to access to lots of parameters, instead of
+Finally, if some service needs access to lots of parameters, instead of
 injecting each of them individually, you can inject all the application
 parameters at once by type-hinting any of its constructor arguments with the
 :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`::
@@ -822,14 +905,14 @@ parameters at once by type-hinting any of its constructor arguments with the
 Keep Going!
 -----------
 
-Congratulations! You've tackled the basics in Symfony. Next, learn about *each*
+Congratulations! You've tackled the basics of Symfony. Next, learn about *each*
 part of Symfony individually by following the guides. Check out:
 
 * :doc:`/forms`
 * :doc:`/doctrine`
 * :doc:`/service_container`
 * :doc:`/security`
-* :doc:`/email`
+* :doc:`/mailer`
 * :doc:`/logging`
 
 And all the other topics related to configuration:

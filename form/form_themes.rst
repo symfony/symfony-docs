@@ -596,9 +596,9 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
 .. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
 .. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
-.. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.3/
-.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.1/
+.. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.4/
+.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.4/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
-.. _`Foundation CSS framework`: http://foundation.zurb.com/
+.. _`Foundation CSS framework`: https://get.foundation/
 .. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
 .. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html

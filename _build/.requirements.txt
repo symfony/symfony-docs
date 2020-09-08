@@ -1,13 +1,6 @@
-alabaster==0.7.10
-Babel==2.4.0
 docutils==0.13.1
-imagesize==0.7.1
-Jinja2==2.10.1
-MarkupSafe==1.0
 Pygments==2.2.0
-pytz==2017.2
-requests==2.20.0
-six==1.10.0
-snowballstemmer==1.2.1
-sphinx==1.3.6
-git+https://github.com/fabpot/sphinx-php.git@7312eccce9465640752e51373a480da700e02345#egg_name=sphinx-php
+sphinx==1.8.5
+git+https://github.com/fabpot/sphinx-php.git@v2.0.0#egg_name=sphinx-php
+jsx-lexer===0.0.8
+sphinx_rtd_theme==0.5.0
