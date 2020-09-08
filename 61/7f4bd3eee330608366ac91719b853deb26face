@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-08T12:35:54Z
+
+There was a package called `annotations-pack` (see https://packagist.org/packages/symfony/annotations-pack) which allowed to run `composer require annotations` (when using Symfony Flex). But it's been removed, so thanks for fixing this!
