@@ -2186,7 +2186,9 @@ paths
 **type**: ``array`` **default**: ``[]``
 
 This option allows to define an array of paths where the component will look
-for translation files.
+for translation files. Translation entries from later directories overwrite
+earlyer ones. The last processed dir is `default_path <reference-translator-default_path>`
+(which has a default value).
 
 .. _reference-translator-default_path:
 
