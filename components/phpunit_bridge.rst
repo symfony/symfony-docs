@@ -836,8 +836,6 @@ its ``bin/simple-phpunit`` command. It has the following features:
 
 * Works with a standalone vendor directory that doesn't conflict with yours;
 * Does not embed ``prophecy`` to prevent any conflicts with its dependencies;
-* Uses PHPUnit 4.8 when run with PHP <=5.5, PHPUnit 5.7 when run with PHP >=5.6
-  and PHPUnit 6.5 when run with PHP >=7.2;
 * Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
   env var is defined: the env var should specify a file name that will be used for
   storing skipped tests on a first run, and replay them on the second run;

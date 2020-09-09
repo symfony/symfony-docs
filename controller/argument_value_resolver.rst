@@ -233,12 +233,12 @@ and adding a priority.
         ;
 
 While adding a priority is optional, it's recommended to add one to make sure
-the expected value is injected. The ``RequestAttributeValueResolver`` has a
-priority of 100. As this one is responsible for fetching attributes from the
-``Request``, it's recommended to trigger your custom value resolver with a
-lower priority. This makes sure the argument resolvers are not triggered when
-the attribute is present. For instance, when passing the user along a
-sub-requests.
+the expected value is injected. The built-in ``RequestAttributeValueResolver``,
+which fetches attributes from the ``Request``, has a priority of ``100``. If your
+resolver also fetches ``Request`` attributes, set a priority of ``100`` or more.
+Otherwise, set a priority lower than ``100`` to make sure the argument resolver
+is not triggered when the ``Request`` attribute is present (for example, when
+passing the user along sub-requests).
 
 .. tip::
 
