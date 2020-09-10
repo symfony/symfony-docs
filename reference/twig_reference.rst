@@ -279,7 +279,7 @@ impersonation_exit_path
 
 .. versionadded:: 5.2
 
-    The ``impersonation_exit_path()` function was introduced in Symfony 5.2.
+    The ``impersonation_exit_path()`` function was introduced in Symfony 5.2.
 
 Generates a URL that you can visit to exit :doc:`user impersonation </security/impersonating_user>`.
 After exiting impersonation, the user is redirected to the current URI. If you
@@ -299,7 +299,7 @@ impersonation_exit_url
 
 .. versionadded:: 5.2
 
-    The ``impersonation_exit_url()` function was introduced in Symfony 5.2.
+    The ``impersonation_exit_url()`` function was introduced in Symfony 5.2.
 
 It's similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
