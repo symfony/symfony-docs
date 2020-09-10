@@ -57,15 +57,15 @@ with a couple popular SMS services:
 ==========  ================================  ====================================================
 Service     Package                           DSN
 ==========  ================================  ====================================================
-Twilio      ``symfony/twilio-notifier``        ``twilio://SID:TOKEN@default?from=FROM``
-Nexmo       ``symfony/nexmo-notifier``         ``nexmo://KEY:SECRET@default?from=FROM``
-OvhCloud    ``symfony/ovhcloud-notifier``      ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
-Sinch       ``symfony/sinch-notifier``         ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-FreeMobile  ``symfony/free-mobile-notifier``   ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-Smsapi      ``symfony/smsapi-notifier``        ``smsapi://TOKEN@default?from=FROM``
-Infobip     ``symfony/infobip-notifier``     ``infobip://TOKEN@default?from=FROM``
-Mobyt       ``symfony/mobyt-notifier``       ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-==========  ===============================  ====================================================
+FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+Infobip     ``symfony/infobip-notifier``      ``infobip://TOKEN@default?from=FROM``
+Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
+Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
+OvhCloud    ``symfony/ovhcloud-notifier``     ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+Smsapi      ``symfony/smsapi-notifier``       ``smsapi://TOKEN@default?from=FROM``
+Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
+==========  ================================  ====================================================
 
 .. versionadded:: 5.1
 
@@ -138,13 +138,13 @@ integration with these chat services:
 ==========  ================================  ===========================================================================
 Service     Package                           DSN
 ==========  ================================  ===========================================================================
-Slack       ``symfony/slack-notifier``        ``slack://default/ID``
-Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
 GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
+LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+Slack       ``symfony/slack-notifier``        ``slack://default/ID``
+Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
 Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:APIKEY@ENDPOINT?channel=CHANNEL``
-LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 ==========  ================================  ===========================================================================
 
 .. versionadded:: 5.1
