@@ -57,11 +57,11 @@ with a couple popular SMS services:
 ==========  ================================  ====================================================
 Service     Package                           DSN
 ==========  ================================  ====================================================
-Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
+FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
 OvhCloud    ``symfony/ovhcloud-notifier``     ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
 Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
 ==========  ================================  ====================================================
 
 .. versionadded:: 5.1
@@ -131,10 +131,10 @@ integration with these chat services:
 ==========  ================================  ============================================
 Service     Package                           DSN
 ==========  ================================  ============================================
-Slack       ``symfony/slack-notifier``        ``slack://default/ID``
-Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+Slack       ``symfony/slack-notifier``        ``slack://default/ID``
+Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
 ==========  ================================  ============================================
 
 .. versionadded:: 5.1
