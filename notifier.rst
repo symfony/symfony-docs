@@ -57,6 +57,7 @@ with a couple popular SMS services:
 ==========  ================================  ====================================================
 Service     Package                           DSN
 ==========  ================================  ====================================================
+Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 Infobip     ``symfony/infobip-notifier``      ``infobip://TOKEN@default?from=FROM``
 Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
@@ -73,7 +74,7 @@ Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=
 
 .. versionadded:: 5.2
 
-    The Smsapi, Infobip and Mobyt integrations were introduced in Symfony 5.2.
+    The Smsapi, Infobip, Mobyt and Esendex integrations were introduced in Symfony 5.2.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
