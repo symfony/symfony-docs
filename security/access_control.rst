@@ -133,6 +133,73 @@ if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
     :ref:`Deny access in PHP code <security-securing-controller>` if you want
     to disallow access based on ``$_GET`` parameter values.
 
+.. versionadded:: 5.2
+
+    Environment variables can be used to pass comma separated ip addresses
+    (as a single value or as one of array values):
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            parameters:
+                env(TRUSTED_IPS): '10.0.0.1, 10.0.0.2'
+            security:
+                # ...
+                access_control:
+                    - { path: '^/admin', ips: '%env(TRUSTED_IPS)%' }
+                    - { path: '^/admin', ips: [127.0.0.1, ::1, '%env(TRUSTED_IPS)%'] }
+
+        .. code-block:: xml
+
+            <!-- config/packages/security.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(TRUSTED_IPS)">10.0.0.1, 10.0.0.2</parameter>
+                </parameters>
+
+                <config>
+                    <!-- ... -->
+                    <rule path="^/admin" ip="%env(TRUSTED_IPS)%"/>
+                    <rule path="^/admin">
+                        <ip>127.0.0.1</ip>
+                        <ip>::1</ip>
+                        <ip>%env(TRUSTED_IPS)%</ip>
+                    </rule>
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            $container->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
+            $container->loadFromExtension('security', [
+                // ...
+                'access_control' => [
+                    [
+                        'path' => '^/admin',
+                        'ips' => '%env(TRUSTED_IPS)%',
+                    ],
+                    [
+                        'path' => '^/admin',
+                        'ips' => [
+                            '127.0.0.1',
+                            '::1',
+                            '%env(TRUSTED_IPS)%',
+                        ],
+                    ],
+                ],
+            ]);
+
 .. _security-access-control-enforcement-options:
 
 2. Access Enforcement
