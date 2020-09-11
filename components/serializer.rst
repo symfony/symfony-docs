@@ -810,6 +810,10 @@ There are several types of normalizers available:
     denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
     or :class:`Symfony\\Component\\Uid\\Ulid`.
 
+.. versionadded:: 5.2
+
+    The ``UidNormalizer`` was introduced in Symfony 5.2.
+
 .. _component-serializer-encoders:
 
 Encoders
