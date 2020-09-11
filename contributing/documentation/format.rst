@@ -104,6 +104,7 @@ Markup Format        Use It to Display
 ``html+php``         PHP code blended with HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations
+``php-attributes``   PHP Attributes
 ===================  ======================================
 
 Adding Links

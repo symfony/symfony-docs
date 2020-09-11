@@ -15,22 +15,33 @@ provides other useful features, like generating SEO-friendly URLs (e.g.
 Creating Routes
 ---------------
 
-Routes can be configured in YAML, XML, PHP or using annotations. All formats
-provide the same features and performance, so choose your favorite.
-:ref:`Symfony recommends annotations <best-practice-controller-annotations>`
+Routes can be configured in YAML, XML, PHP or using either attributes or
+annotations. All formats provide the same features and performance, so choose
+your favorite.
+:ref:`Symfony recommends attributes <best-practice-controller-annotations>`
 because it's convenient to put the route and controller in the same place.
 
-Creating Routes as Annotations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating Routes as Attributes or Annotations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run this command once in your application to add support for annotations:
+On PHP 8, you can use native attributes to configure routes right away. On
+PHP 7, where attributes are not available, you can use annotations instead,
+provided by the Doctrine Annotations library.
+
+In case you want to use annotations instead of attributes, run this command
+once in your application to enable them:
 
 .. code-block:: terminal
 
     $ composer require annotations
 
-In addition to installing the needed dependencies, this command creates the
-following configuration file:
+.. versionadded:: 5.2
+
+    The ability to use PHP attributes to configure routes was introduced in
+    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
+    annotate controller actions with routing configuration.
+
+This command also creates the following configuration file:
 
 .. code-block:: yaml
 
@@ -49,22 +60,43 @@ any PHP class stored in the ``src/Controller/`` directory.
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following::
 
-    // src/Controller/BlogController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
+    .. code-block:: php-annotations
 
-    class BlogController extends AbstractController
-    {
-        /**
-         * @Route("/blog", name="blog_list")
-         */
-        public function list()
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
         {
-            // ...
+            /**
+             * @Route("/blog", name="blog_list")
+             */
+            public function list()
+            {
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            #[Route('/blog', name: 'blog_list')]
+            public function list()
+            {
+                // ...
+            }
+        }
 
 This configuration defines a route called ``blog_list`` that matches when the
 user requests the ``/blog`` URL. When the match occurs, the application runs
@@ -182,6 +214,28 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogApiController.php
+        namespace App\Controller;
+
+        // ...
+
+        class BlogApiController extends AbstractController
+        {
+            #[Route('/api/posts/{id}', methods: ['GET', 'HEAD'])]
+            public function show(int $id)
+            {
+                // ... return a JSON response with the post
+            }
+
+            #[Route('/api/posts/{id}', methods: ['PUT'])]
+            public function edit(int $id)
+            {
+                // ... edit a post
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -268,6 +322,29 @@ arbitrary matching logic:
              * expressions can also include config parameters:
              * condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
              */
+            public function contact()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class DefaultController extends AbstractController
+        {
+            #[Route(
+                '/contact',
+                name: 'contact',
+                condition: "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'",
+            )]
+            // expressions can also include config parameters:
+            // condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
             public function contact()
             {
                 // ...
@@ -424,6 +501,28 @@ defined as ``/blog/{slug}``:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            // ...
+
+            #[Route('/blog/{slug}', name: 'blog_show')]
+            public function show(string $slug)
+            {
+                // $slug will equal the dynamic part of the URL
+                // e.g. at /blog/yay-routing, then $slug='yay-routing'
+
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -501,6 +600,29 @@ the ``{page}`` parameter using the ``requirements`` option:
             /**
              * @Route("/blog/{slug}", name="blog_show")
              */
+            public function show($slug)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
+            public function list(int $page)
+            {
+                // ...
+            }
+
+            #[Route('/blog/{slug}', name: 'blog_show')]
             public function show($slug)
             {
                 // ...
@@ -610,6 +732,23 @@ concise, but it can decrease route readability when requirements are complex:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            #[Route('/blog/{page<\d+>}', name: 'blog_list')]
+            public function list(int $page)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -672,6 +811,23 @@ other configuration formats they are defined with the ``defaults`` option:
             /**
              * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
              */
+            public function list(int $page = 1)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
             public function list(int $page = 1)
             {
                 // ...
@@ -764,6 +920,23 @@ parameter:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            #[Route('/blog/{page<\d+>?1}', name: 'blog_list')]
+            public function list(int $page)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -816,36 +989,67 @@ matched.
 A ``priority`` optional parameter is available in order to let you choose the
 order of your routes, and it is only available when using annotations.
 
-.. code-block:: php-annotations
+.. configuration-block::
 
-    // src/Controller/BlogController.php
-    namespace App\Controller;
+    .. code-block:: php-annotations
 
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
+        // src/Controller/BlogController.php
+        namespace App\Controller;
 
-    class BlogController extends AbstractController
-    {
-        /**
-         * This route has a greedy pattern and is defined first.
-         *
-         * @Route("/blog/{slug}", name="blog_show")
-         */
-        public function show(string $slug)
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
         {
-            // ...
+            /**
+             * This route has a greedy pattern and is defined first.
+             *
+             * @Route("/blog/{slug}", name="blog_show")
+             */
+            public function show(string $slug)
+            {
+                // ...
+            }
+
+            /**
+             * This route could not be matched without defining a higher priority than 0.
+             *
+             * @Route("/blog/list", name="blog_list", priority=2)
+             */
+            public function list()
+            {
+                // ...
+            }
         }
 
-        /**
-         * This route could not be matched without defining a higher priority than 0.
-         *
-         * @Route("/blog/list", name="blog_list", priority=2)
-         */
-        public function list()
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
         {
-            // ...
+            /**
+             * This route has a greedy pattern and is defined first.
+             */
+            #[Route('/blog/{slug}', name: 'blog_show')]
+            public function show(string $slug)
+            {
+                // ...
+            }
+
+            /**
+             * This route could not be matched without defining a higher priority than 0.
+             */
+            #[Route('/blog/list', name: 'blog_list', priority: 2)]
+            public function list()
+            {
+                // ...
+            }
         }
-    }
 
 The priority parameter expects an integer value. Routes with higher priority
 are sorted before routes with lower priority. The default value when it is not
@@ -955,6 +1159,28 @@ and in route imports. Symfony defines some special attributes with the same name
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/ArticleController.php
+        namespace App\Controller;
+
+        // ...
+        class ArticleController extends AbstractController
+        {
+            #[Route(
+                path: '/articles/{_locale}/search.{_format}',
+                locale: 'en',
+                format: 'html',
+                requirements: [
+                    '_locale' => 'en|fr',
+                    '_format' => 'html|xml',
+                ],
+            )]
+            public function search()
+            {
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -1034,6 +1260,22 @@ the controllers of the routes:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController
+        {
+            #[Route('/blog/{page}', name: 'blog_index', defaults: ['page' => 1, 'title' => 'Hello world!'])]
+            public function index(int $page, string $title)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -1107,6 +1349,22 @@ A possible solution is to change the parameter requirements to be more permissiv
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
+
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class DefaultController
+        {
+            #[Route('/share/{token}', name: 'share', requirements: ['token' => '.+'])]
+            public function share($token)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -1171,9 +1429,10 @@ It's common for a group of routes to share some options (e.g. all routes related
 to the blog start with ``/blog``) That's why Symfony includes a feature to share
 route configuration.
 
-When defining routes as annotations, put the common configuration in the
-``@Route`` annotation of the controller class. In other routing formats, define
-the common configuration using options when importing the routes.
+When defining routes as attributes or annotations, put the common configuration
+in the ``#[Route]`` attribute (or ``@Route`` annotation) of the controller
+class. In other routing formats, define the common configuration using options
+when importing the routes.
 
 .. configuration-block::
 
@@ -1200,6 +1459,29 @@ the common configuration using options when importing the routes.
             /**
              * @Route("/{_locale}/posts/{slug}", name="show")
              */
+            public function show(Post $post)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Component\Routing\Annotation\Route;
+
+        #[Route('/blog', requirements: ['_locale' => 'en|es|fr'], name: 'blog_')]
+        class BlogController
+        {
+            #[Route('/{_locale}', name: 'index')]
+            public function index()
+            {
+                // ...
+            }
+
+            #[Route('/{_locale}/posts/{slug}', name: 'show')]
             public function show(Post $post)
             {
                 // ...
@@ -1515,6 +1797,29 @@ host name:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends AbstractController
+        {
+            #[Route('/', name: 'mobile_homepage', host: 'm.example.com')]
+            public function mobileHomepage()
+            {
+                // ...
+            }
+
+            #[Route('/', name: 'homepage')]
+            public function homepage()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -1594,6 +1899,35 @@ multi-tenant applications) and these parameters can be validated too with
             /**
              * @Route("/", name="homepage")
              */
+            public function homepage()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends AbstractController
+        {
+            #[Route(
+                '/',
+                name: 'mobile_homepage',
+                host: '{subdomain}.example.com',
+                defaults: ['subdomain' => 'm'],
+                requirements: ['subdomain' => 'm|mobile'],
+            )]
+            public function mobileHomepage()
+            {
+                // ...
+            }
+
+            #[Route('/', name: 'homepage')]
             public function homepage()
             {
                 // ...
@@ -1715,6 +2049,26 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/CompanyController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class CompanyController extends AbstractController
+        {
+            #[Route(path: [
+                'en' => '/about-us',
+                'nl' => '/over-ons'
+            ], name: 'about_us')]
+            public function about()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -1753,6 +2107,11 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
                 ->controller([CompanyController::class, 'about'])
             ;
         };
+
+.. note::
+
+    When using PHP attributes for localized routes, you have to use the `path`
+    named parameter to specify the array of paths.
 
 When a localized route is matched, Symfony uses the same locale automatically
 during the entire request.
@@ -1843,6 +2202,23 @@ session shouldn't be used when matching a request:
             /**
              * @Route("/", name="homepage", stateless=true)
              */
+            public function homepage()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends AbstractController
+        {
+            #[Route('/', name: 'homepage', stateless: true)]
             public function homepage()
             {
                 // ...
@@ -2218,6 +2594,23 @@ each route explicitly:
             /**
              * @Route("/login", name="login", schemes={"https"})
              */
+            public function login()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class SecurityController extends AbstractController
+        {
+            #[Route('/login', name: 'login', schemes: ['https'])]
             public function login()
             {
                 // ...

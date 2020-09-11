@@ -111,6 +111,7 @@ pygments_style = 'symfonycom.sphinx.SensioStyle'
 lexers['markdown'] = TextLexer()
 lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
+lexers['php-attributes'] = PhpLexer(startinline=True)
 lexers['php-standalone'] = PhpLexer(startinline=True)
 lexers['php-symfony'] = PhpLexer(startinline=True)
 lexers['rst'] = RstLexer()
