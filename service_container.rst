@@ -483,7 +483,7 @@ all their types (string, boolean, array, binary and PHP constant parameters).
 However, there is another type of parameter related to services. In YAML config,
 any string which starts with ``@`` is considered as the ID of a service, instead
 of a regular string. In XML config, use the ``type="service"`` type for the
-parameter and in PHP config use the ``Reference`` class:
+parameter and in PHP config use the ``ref`` function:
 
 .. configuration-block::
 
