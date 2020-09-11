@@ -1001,9 +1001,10 @@ Development & Debugging
 Disabling Delivery
 ~~~~~~~~~~~~~~~~~~
 
-While developing (or testing), you may want to disable delivery of messages entirely.
-You can do this by forcing Mailer to use the ``NullTransport`` in only the ``dev``
-environment:
+While developing (or testing), you may want to disable delivery of messages
+entirely. You can do this by using ``null://null`` as the mailer DSN, either in
+your :ref:`.env configuration files <configuration-multiple-env-files>` or in
+the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
 
 .. configuration-block::
 
