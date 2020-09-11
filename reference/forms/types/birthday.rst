@@ -64,7 +64,7 @@ Inherited Options
 
 These options inherit from the :doc:`DateType </reference/forms/types/date>`:
 
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
