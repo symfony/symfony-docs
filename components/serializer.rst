@@ -804,6 +804,12 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
+    This normalizer converts objects that implement
+    :class:`Symfony\\Component\\Uid\\AbstractUid` into strings. Also it can
+    denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
+    or :class:`Symfony\\Component\\Uid\\Ulid`.
+
 .. _component-serializer-encoders:
 
 Encoders
