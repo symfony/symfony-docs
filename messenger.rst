@@ -1009,11 +1009,13 @@ Beanstalkd Transport
 
 .. versionadded:: 5.2
 
-    Install it by running:
+    The Beanstalkd transport was introduced in Symfony 5.2.
 
-    .. code-block:: terminal
+Install it by running:
 
-        $ composer require symfony/beanstalkd-messenger
+.. code-block:: terminal
+
+    $ composer require symfony/beanstalkd-messenger
 
 .. code-block:: bash
 
