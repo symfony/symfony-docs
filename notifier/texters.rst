@@ -39,9 +39,13 @@ you to send SMS messages::
         }
     }
 
-The ``$sentMessage`` (instance of
-:class:`Symfony\\Component\\Notifier\\Message\\SentMessage`) returned by
-``send()`` contains info about the sent message.
+The ``send()`` method returns a variable of type
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
+information such as the message ID and the original message contents.
+
+.. versionadded:: 5.2
+
+    The ``SentMessage`` class was introduced in Symfony 5.2.
 
 .. seealso::
 

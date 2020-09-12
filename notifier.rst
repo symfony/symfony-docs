@@ -376,7 +376,7 @@ To send a notification, autowire the
             );
 
             // Send the notification to the recipient
-            $notifier->send($notification, $recipient);
+            $sentMessage = $notifier->send($notification, $recipient);
 
             // ...
         }
@@ -386,6 +386,14 @@ The ``Notification`` is created by using two arguments: the subject and
 channels. The channels specify which channel (or transport) should be used
 to send the notification. For instance, ``['email', 'sms']`` will send
 both an email and sms notification to the user.
+
+The ``send()`` method used to send the notification returns a variable of type
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
+information such as the message ID and the original message contents.
+
+.. versionadded:: 5.2
+
+    The ``SentMessage`` class was introduced in Symfony 5.2.
 
 The default notification also has a ``content()`` and ``emoji()`` method to
 set the notification content and icon.
