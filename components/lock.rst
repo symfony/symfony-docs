@@ -165,6 +165,56 @@ This component also provides two useful methods related to expiring locks:
 ``getExpiringDate()`` (which returns ``null`` or a ``\DateTimeImmutable``
 object) and ``isExpired()`` (which returns a boolean).
 
+Shared Locks
+------------
+
+Sometimes, a data structure cannot be updated atomically and is invalid during
+the time of the update. In this situation, other process should not read or
+write the data until the update is complete. But once updated, multiple process
+can read the data in parallel.
+
+In this situation, a common solution is to use shared lock which allows
+concurent access for read-only operations, while write operations require
+exclusive access.
+
+Use the :method:`Symfony\\Component\\Lock\\LockInterface::acquireRead` method
+to acquire a read-only lock, and the existing
+:method:`Symfony\\Component\\Lock\\LockInterface::acquire` method to acquire a
+write lock.::
+
+    $lock = $factory->createLock('user'.$user->id);
+    if (!$lock->acquireRead()) {
+        return;
+    }
+
+Similare to the ``acquire`` method, pass ``true`` as the argument of the ``acquireRead()``
+method to acquire the lock in a blocking mode.::
+
+    $lock = $factory->createLock('user'.$user->id);
+    $lock->acquireRead(true);
+
+When a read-only lock is acquired with the method ``acquireRead``, it's
+possible to **Promote** the lock, and change it to write lock, by calling the
+``acquire`` method.::
+
+    $lock = $factory->createLock('user'.$userId);
+    $lock->acquireRead(true);
+
+    if (!$this->shouldUpdate($userId)) {
+        return;
+    }
+
+    $lock->acquire(true); // Promote the lock to write lock
+    $this->update($userId);
+
+In the same way, it's possible to **Demote** a write lock, and change it to a
+read-only lock by calling the ``acquireRead`` method.
+
+.. versionadded:: 5.2
+
+    The ``Lock::acquireRead`` method and ``SharedLockStoreInterface`` interface
+    and were introduced in Symfony 5.2.
+
 The Owner of The Lock
 ---------------------
 
@@ -219,17 +269,17 @@ Locks are created and managed in ``Stores``, which are classes that implement
 
 The component includes the following built-in store types:
 
-============================================  ======  ========  ========
-Store                                         Scope   Blocking  Expiring
-============================================  ======  ========  ========
-:ref:`FlockStore <lock-store-flock>`          local   yes       no
-:ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes
-:ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes
-:ref:`PdoStore <lock-store-pdo>`              remote  no        yes
-:ref:`RedisStore <lock-store-redis>`          remote  no        yes
-:ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
-:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no
-============================================  ======  ========  ========
+============================================  ======  ========  ======== =======
+Store                                         Scope   Blocking  Expiring Sharing
+============================================  ======  ========  ======== =======
+:ref:`FlockStore <lock-store-flock>`          local   yes       no       yes
+:ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes      no
+:ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes      no
+:ref:`PdoStore <lock-store-pdo>`              remote  no        yes      no
+:ref:`RedisStore <lock-store-redis>`          remote  no        yes      yes
+:ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no       no
+:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no       no
+============================================  ======  ========  ======== =======
 
 .. _lock-store-flock:
 
