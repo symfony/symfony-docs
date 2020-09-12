@@ -104,6 +104,10 @@ For example::
     $event->getMemory();     // returns the max memory usage of all periods
     $event->getName();       // returns the event name
 
+.. versionadded:: 5.2
+
+    The ``getName()`` method was introduced in Symfony 5.2.
+
 Sections
 --------
 
