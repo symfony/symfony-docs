@@ -728,15 +728,19 @@ When using this component in a full-stack Symfony application, this behavior is
 not configurable and cURL will be used automatically if the cURL PHP extension
 is installed and enabled. Otherwise, the native PHP streams will be used.
 
-Providing Additional Options to CurlHttpClient
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configuring CurlHttpClient Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It is possible to provide additional cURL options to ``CurlHttpClient``. PHP exposes
-a lot of `cURL options`_ that can be passed to ``curl_setopt`` function, but only some
-of them are used in ``CurlHttpClient`` in favor of bigger component portability.
+.. versionadded:: 5.2
 
-To provide cURL-related parameters to request, add an ``extra.curl`` option in your
-configuration::
+    The feature to configure extra cURL options was introduced in Symfony 5.2.
+
+PHP allows to configure lots of `cURL options`_ via the :phpfunction:`curl_setopt`
+function. In order to make the component more portable when not using cURL, the
+``CurlHttpClient`` only uses some of those options (and they are ignored in the
+rest of clients).
+
+Add an ``extra.curl`` option in your configuration to pass those extra options::
 
     use Symfony\Component\HttpClient\CurlHttpClient;
 
@@ -751,15 +755,10 @@ configuration::
         ]
     ]);
 
-
-This option is available only when using ``CurlHttpClient``, other clients will ignore these options.
-
 .. note::
 
-    Some cURL options are impossible to override due of. e.g Thread Safety or existing options in
-    ``$options`` configuration which will set given attributes internally. An exception will be
-    thrown while overriding them.
-
+    Some cURL options are impossible to override (e.g. because of thread safety)
+    and you'll get an exception when trying to override them.
 
 HTTP/2 Support
 ~~~~~~~~~~~~~~
