@@ -728,6 +728,39 @@ When using this component in a full-stack Symfony application, this behavior is
 not configurable and cURL will be used automatically if the cURL PHP extension
 is installed and enabled. Otherwise, the native PHP streams will be used.
 
+Providing Additional Options to CurlHttpClient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is possible to provide additional cURL options to ``CurlHttpClient``. PHP exposes
+a lot of `cURL options`_ that can be passed to ``curl_setopt`` function, but only some
+of them are used in ``CurlHttpClient`` in favor of bigger component portability.
+
+To provide cURL-related parameters to request, add an ``extra.curl`` option in your
+configuration::
+
+    use Symfony\Component\HttpClient\CurlHttpClient;
+
+    $client = new CurlHttpClient();
+
+    $client->request('POST', 'https://...', [
+        // ...
+        'extra' => [
+            'curl' => [
+                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V6
+            ]
+        ]
+    ]);
+
+
+This option is available only when using ``CurlHttpClient``, other clients will ignore these options.
+
+.. note::
+
+    Some cURL options are impossible to override due of. e.g Thread Safety or existing options in
+    ``$options`` configuration which will set given attributes internally. An exception will be
+    thrown while overriding them.
+
+
 HTTP/2 Support
 ~~~~~~~~~~~~~~
 
@@ -1391,3 +1424,4 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 .. _`Symfony Contracts`: https://github.com/symfony/contracts
 .. _`libcurl`: https://curl.haxx.se/libcurl/
 .. _`amphp/http-client`: https://packagist.org/packages/amphp/http-client
+.. _`cURL options`: https://www.php.net/manual/en/function.curl-setopt.php
