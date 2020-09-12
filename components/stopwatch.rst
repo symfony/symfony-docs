@@ -102,6 +102,7 @@ For example::
     $event->getEndTime();    // returns the end time of the very last period
     $event->getDuration();   // returns the event duration, including all periods
     $event->getMemory();     // returns the max memory usage of all periods
+    $event->getName();       // returns the event name
 
 Sections
 --------
