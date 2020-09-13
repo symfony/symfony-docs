@@ -45,7 +45,7 @@ Creating a Bundle
 -----------------
 
 This section creates and enables a new bundle to show there are only a few steps required.
-The new bundle is called AcmeTestBundle, where the ``Acme`` portion is a dummy
+The new bundle is called AcmeTestBundle, where the ``Acme`` portion is an example
 name that should be replaced by some "vendor" name that represents you or your
 organization (e.g. ABCTestBundle for some company named ``ABC``).
 
