@@ -113,7 +113,7 @@ this is already done for you, thanks to :ref:`autoconfiguration <services-autoco
 Executing the Command
 ---------------------
 
-After configuring and registering the command, you can execute it in the terminal:
+After configuring and registering the command, you can run it in the terminal:
 
 .. code-block:: terminal
 

@@ -4,7 +4,7 @@
 Transactional Messages: Handle New Messages After Handling is Done
 ==================================================================
 
-A message handler can ``dispatch`` new messages during execution, to either the
+A message handler can ``dispatch`` new messages while handling others, to either the
 same or a different bus (if the application has
 :doc:`multiple buses </messenger/multiple_buses>`). Any errors or exceptions that
 occur during this process can have unintended consequences, such as:

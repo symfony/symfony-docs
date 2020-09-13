@@ -206,7 +206,7 @@ The base layout already has the code to output the title in the header:
     </head>
 
 The ``output()`` method inserts the content of a slot and optionally takes a
-default value if the slot is not defined. And ``_content`` is just a special
+default value if the slot is not defined. And ``_content`` is a special
 slot that contains the rendered child template.
 
 For large slots, there is also an extended syntax:

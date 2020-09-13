@@ -47,7 +47,7 @@ in your browser, these notices are shown in the web dev toolbar:
    :class: with-browser
 
 Ultimately, you should aim to stop using the deprecated functionality.
-Sometimes, this is easy: the warning might tell you exactly what to change.
+Sometimes the warning might tell you exactly what to change.
 
 But other times, the warning might be unclear: a setting somewhere might
 cause a class deeper to trigger the warning. In this case, Symfony does its

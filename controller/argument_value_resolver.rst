@@ -137,7 +137,7 @@ and defining a service for it. The interface defines two methods:
 
 ``supports()``
     This method is used to check whether the value resolver supports the
-    given argument. ``resolve()`` will only be executed when this returns ``true``.
+    given argument. ``resolve()`` will only be called when this returns ``true``.
 ``resolve()``
     This method will resolve the actual value for the argument. Once the value
     is resolved, you must `yield`_ the value to the ``ArgumentResolver``.

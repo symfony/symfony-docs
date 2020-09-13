@@ -184,13 +184,13 @@ flag:
         ;
 
 Note that to comply with the `docopt standard`_, long options can specify their
-values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
-``--iterations=5``), but short options can only use white spaces or no
+values after a whitespace or an ``=`` sign (e.g. ``--iterations 5`` or
+``--iterations=5``), but short options can only use whitespaces or no
 separation at all (e.g. ``-i 5`` or ``-i5``).
 
 .. caution::
 
-    While it is possible to separate an option from its value with a white space,
+    While it is possible to separate an option from its value with a whitespace,
     using this form leads to an ambiguity should the option appear before the
     command name. For example, ``php bin/console --iterations 5 app:greet Fabien``
     is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
