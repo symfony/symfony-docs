@@ -298,7 +298,7 @@ so ``DoctrineTokenProvider`` can store the tokens:
             ]);
 
 Finally, set the ``token_provider`` option of the ``remember_me`` config to the
-service you just created:
+service you created before:
 
 .. configuration-block::
 

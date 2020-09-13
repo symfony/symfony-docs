@@ -202,7 +202,7 @@ To recap, here's what's expected from the two abstract methods:
 
 ``voteOnAttribute(string $attribute, $subject, TokenInterface $token)``
     If you return ``true`` from ``supports()``, then this method is called. Your
-    job is simple: return ``true`` to allow access and ``false`` to deny access.
+    job is to return ``true`` to allow access and ``false`` to deny access.
     The ``$token`` can be used to find the current user object (if any). In this
     example, all of the complex business logic is included to determine access.
 
@@ -216,7 +216,7 @@ and tag it with ``security.voter``. But if you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that's done automatically for you! When you
 :ref:`call isGranted() with view/edit and pass a Post object <how-to-use-the-voter-in-a-controller>`,
-your voter will be executed and you can control access.
+your voter will be called and you can control access.
 
 Checking for Roles inside a Voter
 ---------------------------------

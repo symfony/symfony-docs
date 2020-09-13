@@ -201,8 +201,9 @@ so, here's the advantages of immutable-setters:
 
 The disadvantages are:
 
-* As the setter call is optional, a dependency can be null during execution,
-  you must check that the dependency is available before calling it.
+* As the setter call is optional, a dependency can be null when calling
+  methods of the service. You must check that the dependency is available
+  before using it.
 
 * Unless the service is declared lazy, it is incompatible with services
   that reference each other in what are called circular loops.
@@ -290,10 +291,10 @@ This time the advantages are:
 
 The disadvantages of setter injection are:
 
-* The setter can be called more than just at the time of construction so
-  you cannot be sure the dependency is not replaced during the lifetime
-  of the object (except by explicitly writing the setter method to check
-  if it has already been called).
+* The setter can be called more than once, also long after initialization,
+  so you cannot be sure the dependency is not replaced during the lifetime
+  of the object (except by explicitly writing the setter method to check if
+  it has already been called).
 
 * You cannot be sure the setter will be called and so you need to add checks
   that any required dependencies are injected.

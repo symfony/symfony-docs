@@ -8,8 +8,8 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony provides a `Validator`_ component that makes this task easy and
-transparent. This component is based on the `JSR303 Bean Validation specification`_.
+Symfony provides a `Validator`_ component to handle this for you. This
+component is based on the `JSR303 Bean Validation specification`_.
 
 Installation
 ------------
@@ -39,13 +39,13 @@ your application::
         private $name;
     }
 
-So far, this is just an ordinary class that serves some purpose inside your
-application. The goal of validation is to tell you if the data
-of an object is valid. For this to work, you'll configure a list of rules
-(called :ref:`constraints <validation-constraints>`) that the object must
-follow in order to be valid. These rules are usually defined using PHP code or
-annotations but they can also be defined as ``.yaml`` or
-``.xml`` files inside the ``config/validator/`` directory:
+So far, this is an ordinary class that serves some purpose inside your
+application. The goal of validation is to tell you if the data of an object is
+valid. For this to work, you'll configure a list of rules (called
+:ref:`constraints <validation-constraints>`) that the object must follow in
+order to be valid. These rules are usually defined using PHP code or
+annotations but they can also be defined as ``.yaml`` or ``.xml`` files inside
+the ``config/validator/`` directory:
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:

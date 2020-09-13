@@ -14,7 +14,7 @@ be achieved by the Form component.
 Embedding a Single Object
 -------------------------
 
-Suppose that each ``Task`` belongs to a simple ``Category`` object. Start by
+Suppose that each ``Task`` belongs to a ``Category`` object. Start by
 creating the ``Category`` object::
 
     // src/Entity/Category.php

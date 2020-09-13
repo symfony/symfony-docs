@@ -27,8 +27,8 @@ on each request with their API token. Your job is to read this and find the asso
 user (if any).
 
 First, make sure you've followed the main :doc:`Security Guide </security>` to
-create your ``User`` class. Then, to keep things simple, add an ``apiToken`` property
-directly to your ``User`` class (the ``make:entity`` command is a good way to do this):
+create your ``User`` class. Then add an ``apiToken`` property directly to
+your ``User`` class (the ``make:entity`` command is a good way to do this):
 
 .. code-block:: diff
 
@@ -47,7 +47,7 @@ directly to your ``User`` class (the ``make:entity`` command is a good way to do
         // the getter and setter methods
     }
 
-Don't forget to generate and execute the migration:
+Don't forget to generate and run the migration:
 
 .. code-block:: terminal
 
@@ -498,7 +498,7 @@ Frequently Asked Questions
 --------------------------
 
 **Can I have Multiple Authenticators?**
-    Yes! But when you do, you'll need to choose just *one* authenticator to be your
+    Yes! But when you do, you'll need to choose only *one* authenticator to be your
     "entry_point". This means you'll need to choose *which* authenticator's ``start()``
     method should be called when an anonymous user tries to access a protected resource.
     For more details, see :doc:`/security/multiple_guard_authenticators`.
@@ -509,12 +509,12 @@ Frequently Asked Questions
     collide with other ways to authenticate.
 
 **Can I use this with FOSUserBundle?**
-    Yes! Actually, FOSUserBundle doesn't handle security: it simply gives you a
+    Yes! Actually, FOSUserBundle doesn't handle security: it only gives you a
     ``User`` object and some routes and controllers to help with login, registration,
     forgot password, etc. When you use FOSUserBundle, you typically use ``form_login``
     to actually authenticate the user. You can continue doing that (see previous
     question) or use the ``User`` object from FOSUserBundle and create your own
-    authenticator(s) (just like in this article).
+    authenticator(s) (like in this article).
 
 .. _`Social Authentication`: https://github.com/knpuniversity/oauth2-client-bundle#authenticating-with-guard
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

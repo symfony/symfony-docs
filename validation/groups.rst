@@ -8,7 +8,7 @@ By default, when validating an object all constraints of this class will
 be checked whether or not they actually pass. In some cases, however, you
 will need to validate an object against only *some* constraints on that class.
 To do this, you can organize each constraint into one or more "validation
-groups" and then apply validation against just one group of constraints.
+groups" and then apply validation against one group of constraints.
 
 For example, suppose you have a ``User`` class, which is used both when a
 user registers and when a user updates their contact information later:

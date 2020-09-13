@@ -4,7 +4,7 @@
 How to Create a custom Route Loader
 ===================================
 
-Simple applications can define all their routes in a single configuration file -
+Basic applications can define all their routes in a single configuration file -
 usually ``config/routes.yaml`` (see :ref:`routing-creating-routes`).
 However, in most applications it's common to import routes definitions from
 different resources: PHP annotations in controller files, YAML, XML or PHP

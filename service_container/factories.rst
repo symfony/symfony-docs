@@ -183,8 +183,7 @@ factory service can be used as a callback::
     }
 
 Services can be created and configured via invokable factories by omitting the
-method name, just as routes can reference
-:ref:`invokable controllers <controller-service-invoke>`.
+method name:
 
 .. configuration-block::
 

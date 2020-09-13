@@ -128,7 +128,7 @@ While developing locally, you'll usually store these in ``.env`` and ``.env.loca
    on your setup: they can be set at the command line, in your Nginx configuration,
    or via other methods provided by your hosting service.
 
-2. Or, create a ``.env.local`` file just like your local development (see note below)
+2. Or, create a ``.env.local`` file like your local development (see note below)
 
 There is no significant advantage to either of the two options: use whatever is
 most natural in your hosting environment.

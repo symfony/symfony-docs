@@ -260,7 +260,7 @@ the external IP address ``10.0.0.1``:
 * The second access control rule is enabled (the only restriction being the
   ``path``) and so it matches. If you make sure that no users ever have
   ``ROLE_NO_ACCESS``, then access is denied (``ROLE_NO_ACCESS`` can be anything
-  that does not match an existing role, it just serves as a trick to always
+  that does not match an existing role, it only serves as a trick to always
   deny access).
 
 But if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback

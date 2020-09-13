@@ -170,10 +170,10 @@ following example:
     $ cd my-project/
     $ composer require logger
 
-If you execute that command in a Symfony application which doesn't use Flex,
-you'll see a Composer error explaining that ``logger`` is not a valid package
-name. However, if the application has Symfony Flex installed, that command
-installs and enables all the packages needed to use the official Symfony logger.
+If you run that command in a Symfony application which doesn't use Flex, you'll
+see a Composer error explaining that ``logger`` is not a valid package name.
+However, if the application has Symfony Flex installed, that command installs
+and enables all the packages needed to use the official Symfony logger.
 
 .. _recipes-description:
 

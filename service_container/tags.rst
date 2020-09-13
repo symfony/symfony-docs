@@ -55,7 +55,7 @@ initialization of TwigBundle and added to Twig as extensions.
 Other tags are used to integrate your services into other systems. For a list of
 all the tags available in the core Symfony Framework, check out
 :doc:`/reference/dic_tags`. Each of these has a different effect on your service
-and many tags require additional arguments (beyond just the ``name`` parameter).
+and many tags require additional arguments (beyond the ``name`` parameter).
 
 **For most users, this is all you need to know**. If you want to go further and
 learn how to create your own custom tags, keep reading.

@@ -351,7 +351,7 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 Configuration Environments
 --------------------------
 
-You have just one application, but whether you realize it or not, you need it
+You have only one application, but whether you realize it or not, you need it
 to behave differently at different times:
 
 * While **developing**, you want to log everything and expose nice debugging tools;
