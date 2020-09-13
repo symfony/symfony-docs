@@ -386,7 +386,7 @@ as before. But now that your controllers are services, you can use dependency in
 and autowiring like any other service.
 
 To make life even easier, it's now possible to autowire arguments to your controller
-action methods, just like you can with the constructor of services. For example::
+action methods, like you can with the constructor of services. For example::
 
     use Psr\Log\LoggerInterface;
 

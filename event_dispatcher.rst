@@ -106,15 +106,15 @@ using a special "tag":
             ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
         ;
 
-Symfony follows this logic to decide which method to execute inside the event
+Symfony follows this logic to decide which method to call inside the event
 listener class:
 
 #. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
-   the name of the method to be executed;
-#. If no ``method`` attribute is defined, try to execute the method whose name
+   the name of the method to be called;
+#. If no ``method`` attribute is defined, try to call the method whose name
    is ``on`` + "camel-cased event name" (e.g. ``onKernelException()`` method for
    the ``kernel.exception`` event);
-#. If that method is not defined either, try to execute the ``__invoke()`` magic
+#. If that method is not defined either, try to call the ``__invoke()`` magic
    method (which makes event listeners invokable);
 #. If the ``_invoke()`` method is not defined either, throw an exception.
 
@@ -142,7 +142,7 @@ If different event subscriber methods listen to the same event, their order is
 defined by the ``priority`` parameter. This value is a positive or negative
 integer which defaults to ``0``. The higher the number, the earlier the method
 is called. **Priority is aggregated for all listeners and subscribers**, so your
-methods could be executed before or after the methods defined in other listeners
+methods could be called before or after the methods defined in other listeners
 and subscribers. To learn more about event subscribers, read :doc:`/components/event_dispatcher`.
 
 The following example shows an event subscriber that defines several methods which

@@ -313,7 +313,7 @@ order:
     * ``workflow.[workflow name].transition.[transition name]``
 
 ``workflow.enter``
-    The subject is about to enter a new place. This event is triggered just
+    The subject is about to enter a new place. This event is triggered right
     before the subject places are updated, which means that the marking of the
     subject is not yet updated with the new places.
 
@@ -494,7 +494,7 @@ This class has these additional methods:
 Blocking Transitions
 --------------------
 
-The execution of the workflow can be controlled by executing custom logic to
+The execution of the workflow can be controlled by calling custom logic to
 decide if the current transition is blocked or allowed before applying it. This
 feature is provided by "guards", which can be used in two ways.
 
@@ -711,8 +711,7 @@ Storing Metadata
 
 In case you need it, you can store arbitrary metadata in workflows, their
 places, and their transitions using the ``metadata`` option. This metadata can
-be as simple as the title of the workflow or as complex as your own application
-requires:
+be only the title of the workflow or very complex objects:
 
 .. configuration-block::
 

@@ -110,7 +110,7 @@ Translation of text is done through the  ``translator`` service
 (:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
 of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
-for example, that you're translating a simple message from inside a controller::
+for example, that you're translating a static message from inside a controller::
 
     // ...
     use Symfony\Contracts\Translation\TranslatorInterface;
@@ -124,7 +124,7 @@ for example, that you're translating a simple message from inside a controller::
 
 .. _translation-resources:
 
-When this code is executed, Symfony will attempt to translate the message
+When this code is run, Symfony will attempt to translate the message
 "Symfony is great" based on the ``locale`` of the user. For this to work,
 you need to tell Symfony how to translate the message via a "translation
 resource", which is usually a file that contains a collection of translations

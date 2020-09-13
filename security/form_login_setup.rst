@@ -145,7 +145,7 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
             ],
         ]);
 
-**Step 2.** The template has very little to do with security: it just generates
+**Step 2.** The template has very little to do with security: it generates
 a traditional HTML form that submits to ``/login``:
 
 .. code-block:: html+twig
@@ -409,8 +409,6 @@ Controlling Error Messages
 
 You can cause authentication to fail with a custom message at any step by throwing
 a custom :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`.
-This is an easy way to control the error message.
-
 But in some cases, like if you return ``false`` from ``checkCredentials()``, you
 may see an error that comes from the core of Symfony - like ``Invalid credentials.``.
 

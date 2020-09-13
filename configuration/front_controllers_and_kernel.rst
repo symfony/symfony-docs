@@ -30,7 +30,7 @@ The `front controller`_ is a design pattern; it is a section of code that *all*
 requests served by an application run through.
 
 In the Symfony Skeleton, this role is taken by the ``index.php`` file in the
-``public/`` directory. This is the very first PHP script executed when a
+``public/`` directory. This is the very first PHP script that is run when a
 request is processed.
 
 The main purpose of the front controller is to create an instance of the

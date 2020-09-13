@@ -4,9 +4,9 @@ How to Hide Console Commands
 By default, all console commands are listed when executing the console application
 script without arguments or when using the ``list`` command.
 
-However, sometimes commands are not intended to be executed by end-users; for
+However, sometimes commands are not intended to be run by end-users; for
 example, commands for the legacy parts of the application, commands exclusively
-executed through scheduled tasks, etc.
+run through scheduled tasks, etc.
 
 In those cases, you can define the command as **hidden** by setting the
 ``setHidden()`` method to ``true`` in the command configuration::

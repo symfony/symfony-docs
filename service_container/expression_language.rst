@@ -77,7 +77,7 @@ In this context, you have access to 2 functions:
 ``service``
     Returns a given service (see the example above).
 ``parameter``
-    Returns a specific parameter value (syntax is just like ``service``).
+    Returns a specific parameter value (syntax is like ``service``).
 
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
 via a ``container`` variable. Here's another example:

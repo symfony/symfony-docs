@@ -13,7 +13,7 @@ the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
 This can typically be the case in your controllers, where you may inject several
-services in the constructor, but the action executed only uses some of them.
+services in the constructor, but the action called only uses some of them.
 Another example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::

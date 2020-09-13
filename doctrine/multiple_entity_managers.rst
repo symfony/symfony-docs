@@ -256,7 +256,7 @@ the default entity manager (i.e. ``default``) is returned::
         }
     }
 
-You can now use Doctrine just as you did before - using the ``default`` entity
+You can now use Doctrine like you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
 

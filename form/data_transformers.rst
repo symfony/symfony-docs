@@ -24,8 +24,8 @@ to render the form, and then back into a ``DateTime`` object on submit.
 
 .. _simple-example-sanitizing-html-on-user-input:
 
-Simple Example: Transforming String Tags from User Input to an Array
---------------------------------------------------------------------
+Example #1: Transforming Strings Form Data Tags from User Input to an Array
+---------------------------------------------------------------------------
 
 Suppose you have a Task form with a tags ``text`` type::
 
@@ -56,7 +56,7 @@ Suppose you have a Task form with a tags ``text`` type::
     }
 
 Internally the ``tags`` are stored as an array, but displayed to the user as a
-simple comma separated string to make them easier to edit.
+plain comma separated string to make them easier to edit.
 
 This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
@@ -115,8 +115,8 @@ slightly::
             ->addModelTransformer(...)
     );
 
-Harder Example: Transforming an Issue Number into an Issue Entity
------------------------------------------------------------------
+Example #2: Transforming an Issue Number into an Issue Entity
+-------------------------------------------------------------
 
 Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
 Task has an optional foreign key to its related Issue). Adding a list box with all
@@ -233,7 +233,7 @@ to and from the issue number and the ``Issue`` object::
         }
     }
 
-Just like in the first example, a transformer has two directions. The ``transform()``
+Like the first example, the transformer has two directions. The ``transform()``
 method is responsible for converting the data used in your code to a format that
 can be rendered in your form (e.g. an ``Issue`` object to its ``id``, a string).
 The ``reverseTransform()`` method does the reverse: it converts the submitted value

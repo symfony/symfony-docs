@@ -8,11 +8,11 @@ The :doc:`Console component documentation </components/console>` covers how to
 create a console command. This article covers how to use a console command
 directly from your controller.
 
-You may have the need to execute some function that is only available in a
-console command. Usually, you should refactor the command and move some logic
-into a service that can be reused in the controller. However, when the command
-is part of a third-party library, you wouldn't want to modify or duplicate
-their code. Instead, you can execute the command directly.
+You may have the need to call some function that is only available in a console
+command. Usually, you should refactor the command and move some logic into a
+service that can be reused in the controller. However, when the command is part
+of a third-party library, you don't want to modify or duplicate their code.
+Instead, you can run the command directly from the controller.
 
 .. caution::
 

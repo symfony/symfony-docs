@@ -79,7 +79,7 @@ Next, use Composer to download new versions of the libraries:
 
 In theory, you should be done! However, you *may* need to make a few changes
 to your code to get everything working. Additionally, some features you're
-using might still work, but might now be deprecated. While that's just fine,
+using might still work, but might now be deprecated. While that's fine,
 if you know about these deprecations, you can start to fix them over time.
 
 Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-4.4.md`_)

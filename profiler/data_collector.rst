@@ -82,7 +82,7 @@ request::
 The ``collect()`` method is called during the :ref:`kernel.response <component-http-kernel-kernel-response>`
 event. If you need to collect data that is only available later, implement
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\LateDataCollectorInterface`
-and define the ``lateCollect()`` method, which is invoked just before the profiler
+and define the ``lateCollect()`` method, which is invoked right before the profiler
 data serialization (during :ref:`kernel.terminate <component-http-kernel-kernel-terminate>` event).
 
 .. _data_collector_tag:
@@ -127,7 +127,7 @@ template access to the collected information::
         }
     }
 
-In the simplest case, you just want to display the information in the toolbar
+In the simplest case, you want to display the information in the toolbar
 without providing a profiler panel. This requires to define the ``toolbar``
 block and set the value of two variables called ``icon`` and ``text``:
 

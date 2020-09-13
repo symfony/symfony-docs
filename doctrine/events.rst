@@ -7,7 +7,7 @@ Doctrine Events
 `Doctrine`_, the set of PHP libraries used by Symfony to work with databases,
 provides a lightweight event system to update entities during the application
 execution. These events, called `lifecycle events`_, allow to perform tasks such
-as *"update the createdAt property automatically just before persisting entities
+as *"update the createdAt property automatically right before persisting entities
 of this type"*.
 
 Doctrine triggers events before/after performing the most common entity

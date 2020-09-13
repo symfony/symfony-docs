@@ -20,8 +20,8 @@ important changes:
 
 * B) The ``.env`` file **is** now committed to your repository. It was previously ignored
   via the ``.gitignore`` file (the updated recipe does not ignore this file). Because
-  this file is committed, it should contain non-sensitive, default values. Basically,
-  the ``.env.dist`` file was moved to ``.env``.
+  this file is committed, it should contain non-sensitive, default values. The
+  ``.env`` can be seen as the previous ``.env.dist`` file.
 
 * C) A ``.env.local`` file can now be created to *override* values in ``.env`` for
   your machine. This file is ignored in the new ``.gitignore``.

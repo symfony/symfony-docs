@@ -14,7 +14,7 @@ is around Symfony, this article is for you. Instead of *telling* you that
 Symfony allows you to develop faster and better software than with flat PHP,
 you'll see for yourself.
 
-In this article, you'll write a simple application in flat PHP, and then
+In this article, you'll write a basic application in flat PHP, and then
 refactor it to be more organized. You'll travel through time, seeing the
 decisions behind why web development has evolved over the past several years
 to where it is now.
@@ -22,8 +22,8 @@ to where it is now.
 By the end, you'll see how Symfony can rescue you from mundane tasks and
 let you take back control of your code.
 
-A Simple Blog in Flat PHP
--------------------------
+A Basic Blog in Flat PHP
+------------------------
 
 In this article, you'll build the token blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
@@ -61,7 +61,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     $connection = null;
     ?>
 
-That's quick to write, fast to execute, and, as your app grows, impossible
+That's quick to write, fast to deploy and run, and, as your app grows, impossible
 to maintain. There are several problems that need to be addressed:
 
 * **No error-checking**: What if the connection to the database fails?
@@ -181,7 +181,7 @@ of the application are isolated in a new file called ``model.php``::
     in this example, only a portion (or none) of the model is actually concerned
     with accessing a database.
 
-The controller (``index.php``) is now just a few lines of code::
+The controller (``index.php``) is now only a few lines of code::
 
     // index.php
     require_once 'model.php';
@@ -390,7 +390,7 @@ functions) is called. In reality, the front controller is beginning to look and
 act a lot like how Symfony handles and routes requests.
 
 But be careful not to confuse the terms *front controller* and *controller*. Your
-app will usually have just *one* front controller, which boots your code. You will
+app will usually have only *one* front controller, which boots your code. You will
 have *many* controller functions: one for each page.
 
 .. tip::
@@ -527,12 +527,11 @@ The Sample Application in Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The blog has come a *long* way, but it still contains a lot of code for such
-a simple application. Along the way, you've made a simple routing
-system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
-templates. If, for some reason, you needed to continue building this "framework"
-from scratch, you could at least use Symfony's standalone
-:doc:`Routing </routing>` component and :doc:`Twig </templates>`, which
-already solve these problems.
+a basic application. Along the way, you've made a basic routing system and
+a method using ``ob_start()`` and ``ob_get_clean()`` to render templates.
+If, for some reason, you needed to continue building this "framework" from
+scratch, you could at least use Symfony's standalone :doc:`Routing </routing>`
+component and :doc:`Twig </templates>`, which already solve these problems.
 
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
@@ -623,7 +622,7 @@ The ``layout.php`` file is nearly identical:
     really similar to updating the ``list.html.twig`` template.
 
 When Symfony's engine (called the Kernel) boots up, it needs a map so
-that it knows which controllers to execute based on the request information.
+that it knows which controllers to call based on the request information.
 A routing configuration map - ``config/routes.yaml`` - provides this information
 in a readable format:
 
@@ -655,8 +654,8 @@ The front controller's only job is to initialize Symfony's engine (called the
 Kernel) and pass it a ``Request`` object to handle. The Symfony core
 asks the router to inspect the request. The router matches the incoming URL
 to a specific route and returns information about the route, including the
-controller that should be executed. The correct controller from the matched
-route is executed and your code inside the controller creates and returns the
+controller that should be called. The correct controller from the matched
+route is called and your code inside the controller creates and returns the
 appropriate ``Response`` object. The HTTP headers and content of the ``Response``
 object are sent back to the client.
 

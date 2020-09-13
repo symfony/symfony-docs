@@ -115,7 +115,7 @@ it can't be re-used. Instead, you decide to create a new class::
         }
     }
 
-Congratulations! You've just created your first service class! You can use it immediately
+Congratulations! You've created your first service class! You can use it immediately
 inside your controller::
 
     use App\Service\MessageGenerator;
@@ -257,7 +257,7 @@ find the matching service. If it can't, you'll see a clear exception with a help
 suggestion.
 
 By the way, this method of adding dependencies to your ``__construct()`` method is
-called *dependency injection*. It's a scary term for a simple concept.
+called *dependency injection*.
 
 .. _services-debug-container-types:
 

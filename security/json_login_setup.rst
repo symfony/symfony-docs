@@ -136,7 +136,7 @@ system intercepts the request and initiates the authentication process:
 
 Symfony takes care of authenticating the user with the submitted username and
 password or triggers an error in case the authentication process fails. If the
-authentication is successful, the controller defined earlier will be executed.
+authentication is successful, the controller defined earlier will be called.
 
 If the JSON document has a different structure, you can specify the path to
 access the ``username`` and ``password`` properties using the ``username_path``

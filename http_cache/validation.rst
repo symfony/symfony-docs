@@ -48,7 +48,7 @@ An ``ETag`` is like a fingerprint and is used to quickly compare if two
 different versions of a resource are equivalent. Like fingerprints, each
 ``ETag`` must be unique across all representations of the same resource.
 
-To see a simple implementation, generate the ``ETag`` as the ``md5`` of the
+To see a short implementation, generate the ``ETag`` as the ``md5`` of the
 content::
 
     // src/Controller/DefaultController.php
@@ -96,8 +96,8 @@ to 304.
     app. This is how the cache and server communicate with each other and
     decide whether or not the resource has been updated since it was cached.
 
-This algorithm is simple enough and very generic, but you need to create the
-whole ``Response`` before being able to compute the ``ETag``, which is sub-optimal.
+This algorithm works and is very generic, but you need to create the whole
+``Response`` before being able to compute the ``ETag``, which is sub-optimal.
 In other words, it saves on bandwidth, but not CPU cycles.
 
 In the :ref:`optimizing-cache-validation` section, you'll see how validation
@@ -185,8 +185,7 @@ Optimizing your Code with Validation
 
 The main goal of any caching strategy is to lighten the load on the application.
 Put another way, the less you do in your application to return a 304 response,
-the better. The ``Response::isNotModified()`` method does exactly that by
-exposing a simple and efficient pattern::
+the better. The ``Response::isNotModified()`` method does exactly that::
 
     // src/Controller/ArticleController.php
     namespace App\Controller;

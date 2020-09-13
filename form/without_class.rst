@@ -8,8 +8,9 @@ In most cases, a form is tied to an object, and the fields of the form get
 and store their data on the properties of that object. This is exactly what
 you've seen so far in this article with the ``Task`` class.
 
-But sometimes, you may just want to use a form without a class, and get back
-an array of the submitted data. The ``getData()`` method allows you to do exactly that::
+But sometimes, you may want to use a form without a class, and get back an
+array of the submitted data. The ``getData()`` method allows you to do
+exactly that::
 
     // make sure you've imported the Request namespace above the class
     use Symfony\Component\HttpFoundation\Request;
@@ -72,7 +73,7 @@ you want to use. See :doc:`/validation` for more details.
 .. _form-option-constraints:
 
 But if the form is not mapped to an object and you instead want to retrieve a
-simple array of your submitted data, how can you add constraints to the data of
+array of your submitted data, how can you add constraints to the data of
 your form?
 
 The answer is to set up the constraints yourself, and attach them to the individual

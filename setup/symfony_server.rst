@@ -9,7 +9,7 @@ Although this server is not intended for production use, it supports HTTP/2,
 TLS/SSL, automatic generation of security certificates, local domains, and many
 other features that sooner or later you'll need when developing web projects.
 Moreover, the server is not tied to Symfony and you can also use it with any
-PHP application and even with HTML/SPA (single page applications).
+PHP application and even with HTML or single page applications.
 
 Installation
 ------------
