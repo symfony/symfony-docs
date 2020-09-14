@@ -493,7 +493,7 @@ authenticator, you would initialize the passport like this::
             return new Passport($user, new PasswordCredentials($password), [
                 // $this->userRepository must implement PasswordUpgraderInterface
                 new PasswordUpgradeBadge($password, $this->userRepository),
-                new CsrfTokenBadge('login', $csrfToken);
+                new CsrfTokenBadge('login', $csrfToken),
             ]);
         }
     }
