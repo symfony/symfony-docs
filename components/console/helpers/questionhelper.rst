@@ -105,6 +105,7 @@ from a predefined list::
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Please select your favorite color (defaults to red)',
+            // choices can also be PHP objects that implement __toString() method
             ['red', 'blue', 'yellow'],
             0
         );
@@ -115,6 +116,10 @@ from a predefined list::
 
         // ... do something with the color
     }
+
+.. versionadded:: 5.2
+
+    Support for using PHP objects as choice values was introduced in Symfony 5.2.
 
 The option which should be selected by default is provided with the third
 argument of the constructor. The default is ``null``, which means that no
