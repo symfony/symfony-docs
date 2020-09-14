@@ -102,6 +102,21 @@ with a non-zero code)::
     :method:`Symfony\\Component\\Process\\Process::getLastOutputTime` method.
     This method returns ``null`` if the process wasn't started!
 
+Configuring Process Options
+---------------------------
+
+.. versionadded:: 5.2
+
+    The feature to configure process options was introduced in Symfony 5.2.
+
+Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
+You can configure the options passed to the ``other_options`` argument of
+``proc_open()`` using the ``setOptions()`` method::
+
+    $process = new Process(['...', '...', '...']);
+    // this option allows a subprocess to continue running after the main script exited
+    $process->setOptions(['create_new_console' => true]);
+
 Using Features From the OS Shell
 --------------------------------
 
