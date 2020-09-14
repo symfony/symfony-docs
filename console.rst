@@ -376,6 +376,14 @@ console::
         }
     }
 
+If you are using a :doc:`single-command application </components/console/single_command_tool>`,
+call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``.
+
+.. versionadded:: 5.2
+
+    The ``setAutoExit()`` method for single-command applications was introduced
+    in Symfony 5.2.
+
 .. tip::
 
     You can also test a whole console application by using
