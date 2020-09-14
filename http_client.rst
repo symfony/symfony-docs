@@ -923,7 +923,7 @@ Handling Exceptions
 
 When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
 4xx or 5xx) your code is expected to handle it. If you don't do that, the
-``getHeaders()`` and ``getContent()`` methods throw an appropriate exception, all of
+``getHeaders()``, ``getContent()`` and ``toArray()`` methods throw an appropriate exception, all of
 which implement the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`::
 
     // the response of this request will be a 403 HTTP error
