@@ -112,6 +112,62 @@ UUID objects created with the ``Uuid`` class can use the following methods
     //   * int < 0 if $uuid1 is less than $uuid4
     $uuid1->compare($uuid4); // e.g. int(4)
 
+Storing UUIDs in Databases
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can store UUID values as any other regular string/binary values in the database.
+However, if you :doc:`use Doctrine </doctrine>`, it's more convenient to use the
+special Doctrine types which convert to/from UUID objects automatically::
+
+    // src/Entity/Product.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+
+    /**
+     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+     */
+    class Product
+    {
+        /**
+         * @ORM\Column(type="uuid")
+         */
+        private $someProperty;
+
+        /**
+         * @ORM\Column(type="uuid_binary")
+         */
+        private $anotherProperty;
+
+        // ...
+    }
+
+There's also a Doctrine generator to help autogenerate UUID values for the
+entity primary keys::
+
+    // there are generators for UUID V1 and V6 too
+    use Symfony\Bridge\Doctrine\Types\UuidV4Generator;
+
+    /**
+     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+     */
+    class Product
+    {
+        /**
+         * @ORM\Id
+         * @ORM\Column(type="uuid", unique=true)
+         * @ORM\GeneratedValue(strategy="CUSTOM")
+         * @ORM\CustomIdGenerator(class=UuidV4Generator::class)
+         */
+        private $id;
+
+        // ...
+    }
+
+.. versionadded:: 5.2
+
+    The UUID types and generators were introduced in Symfony 5.2.
+
 ULIDs
 -----
 
@@ -171,6 +227,61 @@ ULID objects created with the ``Ulid`` class can use the following methods::
     $ulid1->equals($ulid2); // false
     // this method returns $ulid1 <=> $ulid2
     $ulid1->compare($ulid2); // e.g. int(-1)
+
+Storing ULIDs in Databases
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can store ULID values as any other regular string/binary values in the database.
+However, if you :doc:`use Doctrine </doctrine>`, it's more convenient to use the
+special Doctrine types which convert to/from ULID objects automatically::
+
+    // src/Entity/Product.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+
+    /**
+     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+     */
+    class Product
+    {
+        /**
+         * @ORM\Column(type="ulid")
+         */
+        private $someProperty;
+
+        /**
+         * @ORM\Column(type="ulid_binary")
+         */
+        private $anotherProperty;
+
+        // ...
+    }
+
+There's also a Doctrine generator to help autogenerate ULID values for the
+entity primary keys::
+
+    use Symfony\Bridge\Doctrine\Types\UlidGenerator;
+
+    /**
+     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+     */
+    class Product
+    {
+        /**
+         * @ORM\Id
+         * @ORM\Column(type="uuid", unique=true)
+         * @ORM\GeneratedValue(strategy="CUSTOM")
+         * @ORM\CustomIdGenerator(class=UlidGenerator::class)
+         */
+        private $id;
+
+        // ...
+    }
+
+.. versionadded:: 5.2
+
+    The ULID types and generator were introduced in Symfony 5.2.
 
 .. _`unique identifiers`: https://en.wikipedia.org/wiki/UID
 .. _`UUIDs`: https://en.wikipedia.org/wiki/Universally_unique_identifier
