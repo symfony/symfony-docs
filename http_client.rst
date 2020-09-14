@@ -134,9 +134,7 @@ You can configure the global options using the ``default_options`` option:
     .. code-block:: php-standalone
 
         $client = HttpClient::create([
-            'default_options' => [
-                'max_redirects' => 7,
-            ],
+             'max_redirects' => 7,
         ]);
 
 Some options are described in this guide:
