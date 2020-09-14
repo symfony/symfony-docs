@@ -193,10 +193,7 @@ The HTTP client also has one configuration option called
 
     .. code-block:: php-standalone
 
-        $client = HttpClient::create([
-            'max_host_connections' => 10,
-            // ...
-        ]);
+        $client = HttpClient::create([], 10);
 
 Scoping Client
 ~~~~~~~~~~~~~~
