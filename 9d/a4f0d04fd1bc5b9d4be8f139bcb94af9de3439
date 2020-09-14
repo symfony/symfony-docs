@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-14T18:35:11Z
+
+Good catch Youssef! This is true since Symfony 4.4 (see https://github.com/symfony/symfony/blob/e368bb4517ee53c28c7f36bd4566168df2212a1f/src/Symfony/Component/HttpClient/HttpClient.php#L30) so we're merging this in 4.4 and upper branches. Thanks!
