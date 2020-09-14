@@ -304,6 +304,27 @@ impersonation_exit_url
 It's similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
 
+t
+~
+
+.. code-block:: twig
+
+    {{ t(message, parameters = [], domain = 'messages')|trans }}
+
+``message``
+    **type**: ``string``
+``parameters`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+``domain`` *(optional)*
+    **type**: ``string`` **default**: ``messages``
+
+.. versionadded:: 5.2
+
+    The ``t()`` function was introduced in Symfony 5.2.
+
+Creates a ``Translatable`` object that can be passed to the
+:ref:`trans filter <reference-twig-filter-trans>`.
+
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -341,6 +362,8 @@ Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
 
+.. _reference-twig-filter-trans:
+
 trans
 ~~~~~
 
@@ -349,13 +372,17 @@ trans
     {{ message|trans(arguments = [], domain = null, locale = null) }}
 
 ``message``
-    **type**: ``string``
+    **type**: ``string`` | ``Translatable``
 ``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
 ``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
+
+.. versionadded:: 5.2
+
+    ``message`` accepting ``Translatable`` as a valid type was introduced in Symfony 5.2.
 
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.

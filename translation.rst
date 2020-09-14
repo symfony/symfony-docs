@@ -292,6 +292,41 @@ To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
 
+Translatable Objects
+--------------------
+
+.. versionadded:: 5.2
+
+    Translatable objects were introduced in Symfony 5.2.
+
+Sometimes you may want to create a message, but at the time of creation aren't
+sure how it would be translated. For example, it could be translated multiple
+times if intended to be displayed to multiple users.
+
+Using translatable objects also allows preparing translations without having a
+dependency on an entrypoint (such as a router) where the context for performing
+the translation is provided. For example, entities could prepare translatable
+strings (such as labels) without the need for a translator.
+
+Instead of translating a string at the time of creation, a ``Translatable``
+object can be created that can then be translated when used. Later this message
+can be translated with a translator in either PHP or in Twig.
+
+PHP::
+
+    $message = new Translatable('Symfony is great!');
+    $message = t('Symfony is great!');
+
+    Translatable::trans($translator, $message);
+
+Twig:
+
+.. code-block:: html+twig
+
+    {% set message = t('Symfony is great!') %}
+
+    <h1>{{ message|trans }}</h1>
+
 .. _translation-in-templates:
 
 Translations in Templates
