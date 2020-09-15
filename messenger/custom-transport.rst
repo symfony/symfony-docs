@@ -35,12 +35,12 @@ The transport object needs to implement the
 and :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\ReceiverInterface`).
 Here is a simplified example of a database transport::
 
-    use Symfony\Component\Uid\Uuid;
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Stamp\TransportMessageIdStamp;
     use Symfony\Component\Messenger\Transport\Serialization\PhpSerializer;
     use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
     use Symfony\Component\Messenger\Transport\TransportInterface;
+    use Symfony\Component\Uid\Uuid;
 
     class YourTransport implements TransportInterface
     {
