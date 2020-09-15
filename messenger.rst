@@ -1110,8 +1110,8 @@ Then, while testing, messages will *not* be delivered to the real transport.
 Even better, in a test, you can check that exactly one message was sent
 during a request::
 
-    // tests/DefaultControllerTest.php
-    namespace App\Tests;
+    // tests/Controller/DefaultControllerTest.php
+    namespace App\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\Messenger\Transport\InMemoryTransport;
