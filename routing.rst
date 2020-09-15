@@ -834,7 +834,7 @@ order of your routes, and it is only available when using annotations.
         /**
          * This route could not be matched without defining a higher priority than 0.
          *
-         * @Route("/blog/list", name="blog_list", priority=2)
+         * @Route("/blog/{page}", name="blog_list", priority=2)
          */
         public function list()
         {
