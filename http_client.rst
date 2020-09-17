@@ -143,6 +143,7 @@ Some options are described in this guide:
 * `Query String Parameters`_
 * `Headers`_
 * `Redirects`_
+* `Retry Failed Requests`_
 * `HTTP Proxies`_
 
 Check out the full :ref:`http_client config reference <reference-http-client>`
@@ -653,6 +654,28 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
         // 0 means to not follow any redirect
         'max_redirects' => 0,
     ]);
+
+Retry Failed Requests
+~~~~~~~~~~~~~~~~~~~~~
+
+Some times, requests failed because of temporary issue in the server or
+because network issue. You can use the
+:class:`Symfony\\Component\\HttpClient\\RetryableHttpClient`
+client to automatically retry the request when it fails.::
+
+    use Symfony\Component\HttpClient\RetryableHttpClient;
+
+    $client = new RetryableHttpClient(HttpClient::create());
+
+The ``RetryableHttpClient`` uses a
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryDeciderInterface` to
+decide if the request should be retried, and a
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface` to
+define the waiting time between each retry.
+
+By default, it retries until 3 attemps, the requests responding with a
+status code in (423, 425, 429, 500, 502, 503, 504, 507 or 510) and wait
+expentially from 1 second for the first retry, to 4 seconds at the 3rd attempt.
 
 HTTP Proxies
 ~~~~~~~~~~~~

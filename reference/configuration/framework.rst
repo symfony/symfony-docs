@@ -137,10 +137,33 @@ Configuration
     * `proxy`_
     * `query`_
     * `resolve`_
+
+    * :ref:`retry_failed <reference-http-client-retry-failed>`
+
+      * `backoff_service`_
+      * `decider_service`_
+      * :ref:`enabled <reference-http-client-retry-enabled>`
+      * `delay`_
+      * `http_codes`_
+      * `max_delay`_
+      * `max_retries`_
+      * `multiplier`_
+
     * `timeout`_
     * `max_duration`_
     * `verify_host`_
     * `verify_peer`_
+
+  * :ref:`retry_failed <reference-http-client-retry-failed>`
+
+    * `backoff_service`_
+    * `decider_service`_
+    * :ref:`enabled <reference-http-client-retry-enabled>`
+    * `delay`_
+    * `http_codes`_
+    * `max_delay`_
+    * `max_retries`_
+    * `multiplier`_
 
 * `http_method_override`_
 * `ide`_
@@ -742,6 +765,33 @@ If you use for example
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
+.. _reference-http-client-retry-failed:
+
+By enabling the optional ``retry_failed`` configuration, the HTTP client service
+will automaticaly retry failed HTTP requests.
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        # ...
+        http_client:
+            # ...
+            retry_failed:
+                # backoff_service: app.custom_backoff
+                # decider_service:  app.custom_decider
+                http_codes: [429, 500]
+                max_retries: 2
+                delay: 1000
+                multiplier: 3
+                max_delay: 500
+
+            scoped_clients:
+                my_api.client:
+                    # ...
+                    retry_failed:
+                        max_retries: 4
+
 auth_basic
 ..........
 
@@ -768,6 +818,19 @@ The username and password used to create the ``Authorization`` HTTP header used
 in the `Microsoft NTLM authentication protocol`_. The value of this option must
 follow the format ``username:password``. This authentication mechanism requires
 using the cURL-based transport.
+
+backoff_service
+...............
+
+**type**: ``string``
+
+The service id used to compute the time to wait between retries. By default, it
+uses an instance of
+:class:`Symfony\\Component\\HttpClient\\Retry\\ExponentialBackOff` configured
+with ``delay``, ``max_delay`` and ``multiplier`` options. This class has to
+implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface`.
+This options cannot be used along `delay`_, `max_delay`_ or `multiplier`_
+options.
 
 base_uri
 ........
@@ -837,6 +900,36 @@ ciphers
 A list of the names of the ciphers allowed for the SSL/TLS connections. They
 can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
 
+decider_service
+...............
+
+**type**: ``string``
+
+The service id used to decide if a request should be retried. By default, it
+uses an instance of
+:class:`Symfony\\Component\\HttpClient\\Retry\\HttpStatusCodeDecider` configured
+with ``http_codes`` options. This class has to
+implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryDeciderInterface`.
+This options cannot be used along `http_codes`_ option.
+
+delay
+.....
+
+**type**: ``integer`` **default**: ``1000``
+
+The initial delay in milliseconds used to compute the waiting time between
+retries. This options cannot be used along `backoff_service`_ option.
+
+.. _reference-http-client-retry-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the support for retry failed HTTP request or not.
+This setting is automatically set to true when one of the child settings is configured.
+
 headers
 .......
 
@@ -844,6 +937,14 @@ headers
 
 An associative array of the HTTP headers added before making the request. This
 value must use the format ``['header-name' => header-value, ...]``.
+
+http_codes
+..........
+
+**type**: ``array`` **default**: ``[423, 425, 429, 500, 502, 503, 504, 507, 510]``
+
+The list of HTTP status codes that triggers a retry of the request.
+This options cannot be used along `decider_service`_ option.
 
 http_version
 ............
@@ -870,6 +971,15 @@ local_pk
 The path of a file that contains the `PEM formatted`_ private key of the
 certificate defined in the ``local_cert`` option.
 
+max_delay
+.........
+
+**type**: ``integer`` **default**: ``0``
+
+The maximum amount of milliseconds initial to wait between retries.
+Use ``0`` to not limit the duration.
+This options cannot be used along `backoff_service`_ option.
+
 max_duration
 ............
 
@@ -895,6 +1005,22 @@ max_redirects
 
 The maximum number of redirects to follow. Use ``0`` to not follow any
 redirection.
+
+max_retries
+...........
+
+**type**: ``integer`` **default**: ``3``
+
+The maximum number of retries before aborting. When the maximum is reach, the
+client returns the last received responses.
+
+multiplier
+..........
+
+**type**: ``float`` **default**: ``2``
+
+Multiplier to apply to the delay each time a retry occurs.
+This options cannot be used along `backoff_service`_ option.
 
 no_proxy
 ........
