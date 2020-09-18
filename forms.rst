@@ -352,7 +352,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
         ]);
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
-Bootstrap 3 and 4 and Foundation 5. You can also
+Bootstrap 3 and 4 as well as Foundation 5 and 6. You can also
 :ref:`create your own Symfony form theme <create-your-own-form-theme>`.
 
 In addition to form themes, Symfony allows you to
