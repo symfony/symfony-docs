@@ -70,7 +70,7 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
   to deal with objects implementing the :phpclass:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
-  denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
+  denormalize arrays of objects using for a `$type` parameter string in `MyObject[]` format (note the `[]` suffix)
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
 
