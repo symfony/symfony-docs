@@ -5,6 +5,7 @@ Contributing Code
     :maxdepth: 2
 
     bugs
+    stack_trace
     reproducer
     pull_requests
     maintenance
