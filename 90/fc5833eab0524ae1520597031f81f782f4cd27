@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by greg0ire at 2020-05-23T14:06:31Z
+
+@OskarStark can you please help DOCtor-RST? I think there is an issue with https://github.com/OskarStark/doctor-rst/blob/e4b46021e110dc5aed0ee62d6513a61ab9ebf64f/src/Rule/PhpPrefixBeforeBinConsole.php , it shouldn't report
+
+```
+
+contributing/code/stack_trace.rst ✘
+  161: Please add "php" prefix before "bin/console"
+   ->  Symfony\Component\Console\Application->run() at /home/greg/dev/sf-demo/bin/console:42
+```
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2020-06-06T09:01:16Z
+
+I made a PR to doctor-RST: https://github.com/OskarStark/doctor-rst/pull/697
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2020-06-08T17:49:44Z
+
+Aaaaand fixed :)
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2020-09-03T20:41:39Z
+
+@noniagriconomie I noticed today that I had local changes to address your comments that I had not commited. Please review again and mark discussions as resolved if they are indeed resolved.
