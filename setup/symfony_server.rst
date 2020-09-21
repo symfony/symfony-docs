@@ -361,6 +361,25 @@ When Docker services are running, browse a page of your Symfony application and
 check the "Symfony Server" section in the web debug toolbar; you'll see that
 "Docker Compose" is "Up".
 
+If your Docker Compose file is not at the root of the project, you can pass that information
+to the Symfony Server. It works exactly the same as for ``docker-compose``.
+
+Let's say you have your ``docker-compose.yaml`` file under a ``docker/`` directory.
+You start your containers like this:
+
+.. code-block:: bash
+
+    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
+
+And if you are using the same environment variables with the Symfony CLI, things will work. For instance:
+
+.. code-block:: bash
+
+    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export
+
+If you have more than one docker-compose files you can provide them all separated by ``:``
+more information here: https://docs.docker.com/compose/reference/envvars/
+
 SymfonyCloud Integration
 ------------------------
 
