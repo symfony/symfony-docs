@@ -27,7 +27,7 @@ displayed by default if the exception is not caught. When using Symfony,
 such exceptions go through a custom exception handler, which enhances
 them in various ways before displaying them according to the current
 Server API (CLI or not).
-This means a better way to get a stack trace when you do need the
+This means a better way to get a stack trace when you do not need the
 program to continue is to throw an exception, as follows:
 ``throw new \Exception();``
 
@@ -91,7 +91,7 @@ Several things need to be paid attention to when picking a stack trace
 from your development environment through a web browser:
 
 1. Are there several exceptions? If yes, the most interesting one is
-   often exception 1/n which, is shown _last_ in the example below (it
+   often exception 1/n which, is shown *last* in the example below (it
    is the one marked as exception [1/2]).
 2. Under the "Stack Traces" tab, you will find exceptions in plain
    text, so that you can easily share them in e.g. bug reports. Make
