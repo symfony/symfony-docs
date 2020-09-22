@@ -1,6 +1,3 @@
-.. index::
-   single: Rate limiter
-
 Rate Limiter Component
 ======================
 
