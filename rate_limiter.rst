@@ -2,7 +2,7 @@
    single: Rate limiter
 
 Rate Limiter Component
-========
+======================
 
 The Rate Limiter component provides a Token Bucket implementation to rate limit input and output in your application.
 
