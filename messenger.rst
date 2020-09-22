@@ -844,6 +844,12 @@ options.
 AMQP Transport
 ~~~~~~~~~~~~~~
 
+.. versionadded:: 5.2
+
+    Starting from Symfony 5.2, the AMQP transport can handle AMQPS DSN.
+    Be aware that using it without using CA certificate can throw an exception.
+    An alternative is to use AMQP DSN and specify the port to use.
+
 .. versionadded:: 5.1
 
     Starting from Symfony 5.1, the AMQP transport has moved to a separate package.
@@ -860,7 +866,13 @@ The ``amqp`` transport configuration looks like this:
     # .env
     MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
 
+    # or use the AMQPS protocol
+    MESSENGER_TRANSPORT_DSN=amqps://guest:guest@localhost/%2f/messages
+
+
 To use Symfony's built-in AMQP transport, you need the AMQP PHP extension.
+If you want to use TLS/SSL encrypted AMQP you must provide a CA certificate. You need to set it using ``amqp.cacert = /etc/ssl/certs`` (path depends on your system) in your ``php.ini`` file or by setting the ``cacert`` parameter (e.g ``amqps://localhost?cacert=/etc/ssl/certs/``)
+By default TLS/SSL encrypted AMQP uses port 5671. You can overwrite this behavior by setting the ``port`` parameter (e.g. ``amqps://localhost?cacert=/etc/ssl/certs/&port=12345``).
 
 .. note::
 
