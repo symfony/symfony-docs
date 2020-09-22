@@ -168,34 +168,37 @@ object) and ``isExpired()`` (which returns a boolean).
 Shared Locks
 ------------
 
-Sometimes, a data structure cannot be updated atomically and is invalid during
-the time of the update. In this situation, other process should not read or
-write the data until the update is complete. But once updated, multiple process
-can read the data in parallel.
+.. versionadded:: 5.2
 
-In this situation, a common solution is to use shared lock which allows
-concurent access for read-only operations, while write operations require
-exclusive access.
+    Shared locks (and the associated ``acquireRead()`` method and
+    ``SharedLockStoreInterface``) were introduced in Symfony 5.2.
+
+A shared or `readers–writer lock`_ is a synchronization primitive that allows
+concurrent access for read-only operations, while write operations require
+exclusive access. This means that multiple threads can read the data in parallel
+but an exclusive lock is needed for writing or modifying data. They are used for
+example for data structures that cannot be updated atomically and are invalid
+until the update is complete.
 
 Use the :method:`Symfony\\Component\\Lock\\LockInterface::acquireRead` method
 to acquire a read-only lock, and the existing
 :method:`Symfony\\Component\\Lock\\LockInterface::acquire` method to acquire a
-write lock.::
+write lock::
 
     $lock = $factory->createLock('user'.$user->id);
     if (!$lock->acquireRead()) {
         return;
     }
 
-Similare to the ``acquire`` method, pass ``true`` as the argument of the ``acquireRead()``
-method to acquire the lock in a blocking mode.::
+Similar to the ``acquire()`` method, pass ``true`` as the argument of ``acquireRead()``
+to acquire the lock in a blocking mode::
 
     $lock = $factory->createLock('user'.$user->id);
     $lock->acquireRead(true);
 
-When a read-only lock is acquired with the method ``acquireRead``, it's
-possible to **Promote** the lock, and change it to write lock, by calling the
-``acquire`` method.::
+When a read-only lock is acquired with the method ``acquireRead()``, it's
+possible to **promote** the lock, and change it to write lock, by calling the
+``acquire()`` method::
 
     $lock = $factory->createLock('user'.$userId);
     $lock->acquireRead(true);
@@ -207,13 +210,8 @@ possible to **Promote** the lock, and change it to write lock, by calling the
     $lock->acquire(true); // Promote the lock to write lock
     $this->update($userId);
 
-In the same way, it's possible to **Demote** a write lock, and change it to a
-read-only lock by calling the ``acquireRead`` method.
-
-.. versionadded:: 5.2
-
-    The ``Lock::acquireRead`` method and ``SharedLockStoreInterface`` interface
-    and were introduced in Symfony 5.2.
+In the same way, it's possible to **demote** a write lock, and change it to a
+read-only lock by calling the ``acquireRead()`` method.
 
 The Owner of The Lock
 ---------------------
@@ -833,3 +831,4 @@ are still running.
 .. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
 .. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/
 .. _`ZooKeeper`: https://zookeeper.apache.org/
+.. _`readers–writer lock`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock
