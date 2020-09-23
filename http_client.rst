@@ -326,7 +326,7 @@ Each client has a unique service named after its configuration.
 Each scoped client also defines a corresponding named autowiring alias.
 If you use for example
 ``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
-as the type and name of an argument, autowiring will inject the ``my_api.client``
+as the type and name of an argument and assuming you named your client `my_api.client`` in the ``framework`` section, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
 Making Requests
