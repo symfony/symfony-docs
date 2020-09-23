@@ -1157,6 +1157,8 @@ group               The Redis consumer group name          symfony
 consumer            Consumer name used in Redis            consumer
 auto_setup          Create the Redis group automatically?  true
 auth                The Redis password
+delete_after_ack    If ``true``, messages are deleted      false
+                    automatically after processing them
 serializer          How to serialize the final payload     ``Redis::SERIALIZER_PHP``
                     in Redis (the
                     ``Redis::OPT_SERIALIZER`` option)
@@ -1166,6 +1168,17 @@ stream_max_entries  The maximum number of entries which    ``0`` (which means "n
                     avoid losing pending messages
 tls                 Enable TLS support for the connection  false
 ==================  =====================================  =========================
+
+.. tip::
+
+    Set ``delete_after_ack`` to ``true`` (if you use a single group) or define
+    ``stream_max_entries`` (if you can estimate how many max entries is acceptable
+    in your case) to avoid memory leaks. Otherwise, all messages will remain
+    forever in Redis.
+
+.. versionadded:: 5.1
+
+    The ``delete_after_ack`` option was introduced in Symfony 5.1.
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
