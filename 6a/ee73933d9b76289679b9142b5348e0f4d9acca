@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by greg0ire at 2020-09-22T08:52:20Z
+
+Does anyone know how to fix the image issue?
+
+Why does this work for https://symfony.com/doc/current/components/console/helpers/progressbar.html
+
+The url of the gif in that page is not what I expect it to be (it doesn't mention `components/console`), but it works. Also, when I build the docs locally, it works too…
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2020-09-22T19:17:55Z
+
+Ah something I did not notice: the gif works on this page: https://symfony.com/doc/4.4/contributing/code/stack_trace.html#stack-traces-in-your-web-browser, but not on 5.1, 5.2, or current. It looks like a deploy issue, maybe?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-09-23T07:07:33Z
+
+@javiereguiluz could you have a look? Thanks
