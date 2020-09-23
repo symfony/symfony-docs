@@ -226,11 +226,17 @@ and adding a priority.
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\ArgumentResolver\UserValueResolver;
 
-        $container->autowire(UserValueResolver::class)
-            ->addTag('controller.argument_value_resolver', ['priority' => 50])
-        ;
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(UserValueResolver::class)
+                ->tag('controller.argument_value_resolver', ['priority' => 50])
+            ;
+        };
 
 While adding a priority is optional, it's recommended to add one to make sure
 the expected value is injected. The built-in ``RequestAttributeValueResolver``,
