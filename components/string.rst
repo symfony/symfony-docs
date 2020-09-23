@@ -473,9 +473,18 @@ that only includes safe ASCII characters::
     $slug = $slugger->slug('10% or 5€');
     // $slug = '10-percent-or-5-euro'
 
+    // for more dynamic substitutions, pass a PHP closure instead of an array
+    $slugger = new AsciiSlugger('en', function ($string, $locale) {
+        return str_replace('❤️', 'love', $string);
+    });
+
 .. versionadded:: 5.1
 
     The feature to define additional substitutions was introduced in Symfony 5.1.
+
+.. versionadded:: 5.2
+
+    The feature to use a PHP closure to define substitutions was introduced in Symfony 5.2.
 
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::
