@@ -1143,6 +1143,52 @@ installed in your application::
 
 ``CachingHttpClient`` accepts a third argument to set the options of the ``HttpCache``.
 
+Consuming Server-Sent Events
+----------------------------
+
+This component provides an `EventSource`_ implementation to consume Server-Sent Events.
+Use the :class:`Symfony\\Component\\HttpClient\\EventSourceHttpClient`, open a
+connection to a server with the `text/event-stream` content type and consume the stream::
+
+    use Symfony\Component\HttpClient\EventSourceHttpClient;
+
+    $client = new EventSourceHttpClient($client, 10);
+    $source = $client->connect('http://localhost:8080/events');
+    while ($source) {
+        foreach ($client->stream($source, 2) as $r => $chunk) {
+            // You should handle these chunks yourself
+            if ($chunk->isTimeout()) {
+                dump([
+                    'timeout' => [
+                        'retry' => 1 + count($r->getInfo('previous_info') ?? [])
+                    ],
+                ]);
+                continue;
+            }
+            if ($chunk->isLast()) {
+                dump([
+                    'eof' => [
+                        'retries' => count($r->getInfo('previous_info') ?? [])
+                    ],
+                ]);
+                $source = null;
+                return;
+            }
+
+            // This is a special ServerSentEvent chunk holding the pushed message
+            if ($chunk instanceof ServerSentEvent) {
+                dump($chunk);
+            }
+        }
+    }
+
+The default reconnection time is `10` seconds and is given onto the second argument of
+the :class:`Symfony\\Component\\HttpClient\\EventSourceHttpClient`. The method
+:method:`Symfony\\Component\\HttpClient\\Response\\AsyncResponse::stream` takes an
+optional timeout argument.
+The :class:`Symfony\\Component\\HttpClient\\Chunk\\ServerSentEvent` is a special chunk
+capable of parsing an event stream as specified by the `EventSource`_ specification.
+
 Interoperability
 ----------------
 
@@ -1419,3 +1465,4 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 .. _`libcurl`: https://curl.haxx.se/libcurl/
 .. _`amphp/http-client`: https://packagist.org/packages/amphp/http-client
 .. _`cURL options`: https://www.php.net/manual/en/function.curl-setopt.php
+.. _`EventSource`:  https://www.w3.org/TR/eventsource/#eventsource
