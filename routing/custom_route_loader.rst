@@ -327,11 +327,17 @@ Now define a service for the ``ExtraLoader``:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Routing\ExtraLoader;
 
-        $container->autowire(ExtraLoader::class)
-            ->addTag('routing.loader')
-        ;
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(ExtraLoader::class)
+                ->tag('routing.loader')
+            ;
+        };
 
 Notice the tag ``routing.loader``. All services with this *tag* will be marked
 as potential route loaders and added as specialized route loaders to the

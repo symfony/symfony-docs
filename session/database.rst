@@ -217,16 +217,22 @@ first register a new handler service with your database credentials:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        $storageDefinition = $container->autowire(PdoSessionHandler::class)
-            ->setArguments([
-                '%env(DATABASE_URL)%',
-                // you can also use PDO configuration, but requires passing two arguments:
-                // 'mysql:dbname=mydatabase; host=myhost; port=myport',
-                // ['db_username' => 'myuser', 'db_password' => 'mypassword'],
-            ])
-        ;
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(PdoSessionHandler::class)
+                ->args([
+                    '%env(DATABASE_URL)%',
+                    // you can also use PDO configuration, but requires passing two arguments:
+                    // 'mysql:dbname=mydatabase; host=myhost; port=myport',
+                    // ['db_username' => 'myuser', 'db_password' => 'mypassword'],
+                ])
+            ;
+        };
 
 Next, use the :ref:`handler_id <config-framework-session-handler-id>`
 configuration option to tell Symfony to use this service as the session handler:
@@ -306,15 +312,20 @@ passed to the ``PdoSessionHandler`` service:
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
-        // ...
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->autowire(PdoSessionHandler::class)
-            ->setArguments([
-                '%env(DATABASE_URL)%',
-                ['db_table' => 'customer_session', 'db_id_col' => 'guid'],
-            ])
-        ;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(PdoSessionHandler::class)
+                ->args([
+                    '%env(DATABASE_URL)%',
+                    ['db_table' => 'customer_session', 'db_id_col' => 'guid'],
+                ])
+            ;
+        };
 
 These are parameters that you can configure:
 
@@ -466,13 +477,19 @@ the MongoDB connection as argument:
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $storageDefinition = $container->autowire(MongoDbSessionHandler::class)
-            ->setArguments([
-                new Reference('doctrine_mongodb.odm.default_connection'),
-            ])
-        ;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(MongoDbSessionHandler::class)
+                ->args([
+                    service('doctrine_mongodb.odm.default_connection'),
+                ])
+            ;
+        };
 
 Next, use the :ref:`handler_id <config-framework-session-handler-id>`
 configuration option to tell Symfony to use this service as the session handler:
@@ -569,15 +586,20 @@ configure these values with the second argument passed to the
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
-        // ...
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->autowire(MongoDbSessionHandler::class)
-            ->setArguments([
-                '...',
-                ['id_field' => '_guid', 'expiry_field' => 'eol'],
-            ])
-        ;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(MongoDbSessionHandler::class)
+                ->args([
+                    service('doctrine_mongodb.odm.default_connection'),
+                    ['id_field' => '_guid', 'expiry_field' => 'eol'],,
+                ])
+            ;
+        };
 
 These are parameters that you can configure:
 
