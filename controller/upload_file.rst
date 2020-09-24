@@ -317,10 +317,17 @@ Then, define a service for this class:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\FileUploader;
 
-        $container->autowire(FileUploader::class)
-            ->setArgument('$targetDirectory', '%brochures_directory%');
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(FileUploader::class)
+                ->arg('$targetDirectory', '%brochures_directory%')
+            ;
+        };
 
 Now you're ready to use this service in the controller::
 
