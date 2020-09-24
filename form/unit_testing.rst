@@ -159,7 +159,7 @@ make sure the ``FormRegistry`` uses the created instance::
     {
         private $objectManager;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             // mock any dependencies
             $this->objectManager = $this->createMock(ObjectManager::class);
