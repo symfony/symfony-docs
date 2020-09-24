@@ -559,9 +559,6 @@ to enable this feature. This could be added by using the following configuration
     .. code-block:: php
 
         // config/packages/cache.php
-        use Symfony\Component\Cache\Adapter\ChainAdapter;
-        use Symfony\Component\DependencyInjection\Reference;
-
         $container->loadFromExtension('framework', [
             'cache' => [
                 'pools' => [
