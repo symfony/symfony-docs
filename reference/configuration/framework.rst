@@ -1348,7 +1348,7 @@ The possible values for this option are:
   versions.
 * ``'none'`` (or the ``Cookie::SAMESITE_NONE`` constant), use it to allow 
   sending of cookies when the HTTP request originated from a different domain 
-  (Previously this was the default behavior of null, but in newer browsers 'lax' 
+  (previously this was the default behavior of null, but in newer browsers ``'lax'``
   would be applied when the header has not been set)
 * ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
   send any cookie when the HTTP request is not originated from the same domain.
