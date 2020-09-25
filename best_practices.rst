@@ -307,7 +307,7 @@ Define Validation Constraints on the Underlying Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Attaching :doc:`validation constraints </reference/constraints>` to form fields
-instead of to the mapped object prevents the validation from being checked in
+instead of to the mapped object prevents the validation from being reused in
 other forms or other places where the object is used.
 
 .. _best-practice-handle-form:
