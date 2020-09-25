@@ -304,6 +304,8 @@ impersonation_exit_url
 It's similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
 
+.. _reference-twig-function-t:
+
 t
 ~
 

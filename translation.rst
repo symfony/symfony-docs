@@ -299,33 +299,37 @@ Translatable Objects
 
     Translatable objects were introduced in Symfony 5.2.
 
-Sometimes you may want to create a message, but at the time of creation aren't
-sure how it would be translated. For example, it could be translated multiple
-times if intended to be displayed to multiple users.
+Sometimes translating contents in templates is cumbersome because you need the
+original message, the translation parameters and the translation domain for
+each content. Making the translation in the controller or services simplifies
+your templates, but requires injecting the translator service in different
+parts of your application and mocking it in your tests.
 
-Using translatable objects also allows preparing translations without having a
-dependency on an entrypoint (such as a router) where the context for performing
-the translation is provided. For example, entities could prepare translatable
-strings (such as labels) without the need for a translator.
+Instead of translating a string at the time of creation, you can use a
+"translatable object", which is an instance of the
+:class:`Symfony\\Component\\Translation\\Translatable` class. This object stores
+all the information needed to fully translate its contents when needed::
 
-Instead of translating a string at the time of creation, a ``Translatable``
-object can be created that can then be translated when used. Later this message
-can be translated with a translator in either PHP or in Twig.
+    use Symfony\Component\Translation\Translatable;
 
-PHP::
-
+    // the first argument is required and it's the original message
     $message = new Translatable('Symfony is great!');
-    $message = t('Symfony is great!');
+    // the optional second argument defines the translation parameters and
+    // the optional third argument is the translation domain
+    $status = new Translatable('order.status', ['order' => $order], 'store');
 
-    Translatable::trans($translator, $message);
-
-Twig:
+Templates are now much simpler because you can pass translatable objects to the
+``trans`` filter:
 
 .. code-block:: html+twig
 
-    {% set message = t('Symfony is great!') %}
-
     <h1>{{ message|trans }}</h1>
+    <p>{{ status|trans }}</p>
+
+.. tip::
+
+    There's also a :ref:`function called t() <reference-twig-function-t>`,
+    available both in Twig and PHP, as a shortcut to create translatable objects.
 
 .. _translation-in-templates:
 
