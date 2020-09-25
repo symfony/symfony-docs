@@ -15,8 +15,7 @@ and can understand a number of different input formats via the `input`_ option.
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `choice_translation_domain`_                                              |
-|                      | - `days`_                                                                   |
+| Options              | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
 |                      | - `html5`_                                                                  |
@@ -29,6 +28,7 @@ and can understand a number of different input formats via the `input`_ option.
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
 | Overridden options   | - `by_reference`_                                                           |
+|                      | - `choice_translation_domain`_                                              |
 |                      | - `compound`_                                                               |
 |                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |
@@ -143,8 +143,6 @@ that Symfony should expect via the `format`_ option.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
-
 .. include:: /reference/forms/types/options/days.rst.inc
 
 ``placeholder``
@@ -200,6 +198,8 @@ Overridden Options
 **default**: ``false``
 
 The ``DateTime`` classes are treated as immutable objects.
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
