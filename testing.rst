@@ -48,13 +48,8 @@ Symfony application.
 
 .. tip::
 
-    Code coverage can be generated with the ``--coverage-*`` options, see the help information that is shown when using ``--help`` for more information.
-    To avoid the error "No code coverage driver is available" when you are generating code coverage you must install (xdebug, pcov,    phpdbg)
-    To install x-debug type on Ubuntu:
-
-.. code-block:: terminal
-
-    $ sudo apt-get install php-xdebug
+    Use the ``--coverage-*`` command options to generate code coverage reports.
+    Read the PHPUnit manual to learn more about `code coverage analysis`_.
 
 .. index::
    single: Tests; Unit tests
@@ -1144,3 +1139,4 @@ Learn more
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`$_SERVER`: https://www.php.net/manual/en/reserved.variables.server.php
 .. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers
+.. _`code coverage analysis`: https://phpunit.readthedocs.io/en/9.1/code-coverage-analysis.html
