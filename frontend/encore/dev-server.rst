@@ -8,14 +8,15 @@ While developing, instead of using ``yarn encore dev --watch``, you can use the
 
     $ yarn encore dev-server
 
-This serves the built assets from a new server at ``http://localhost:8080`` (it does
-not actually write any files to disk). This means your ``script`` and ``link`` tags
-need to change to point to this.
+This builds and serves the front-end assets from a new server. This server runs at 
+``localhost:8080`` by default, meaning your build assets are available at ``localhost:8080/build``. 
+This server does not actually write the files to disk; instead it servers them from memory, 
+allowing for hot module reloading.
 
-If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
-Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
-in some other way), you're done: the paths in your templates will automatically point
-to the dev server.
+As a consequence, the ``link`` and ``script`` tags need to point to the new server. If you're using the 
+``encore_entry_script_tags()`` and ``encore_entry_link_tags()`` Twig shortcuts (or are 
+:ref:`processing your assets through entrypoints.json <load-manifest-files>` in some other way), 
+you're done: the paths in your templates will automatically point to the dev server.
 
 The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
 You can set these options via command line options:
