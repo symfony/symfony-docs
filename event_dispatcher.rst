@@ -101,8 +101,10 @@ using a special "tag":
 
         // config/services.php
         use App\EventListener\ExceptionListener;
+        
+        $services = $containerConfigurator->services();
 
-        $container->register(ExceptionListener::class)
+        $services->set(ExceptionListener::class)
             ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
         ;
 
