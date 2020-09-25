@@ -17,6 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
+|             | - `html5`_.                                                         |
 |             | - `rounding_mode`_                                                  |
 |             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
@@ -87,6 +88,20 @@ value ``99``, it will be multiplied by ``100`` and ``9900`` will ultimately
 be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
+
+html5
+~~~~~
+
+**type**: ``bool`` **default**: ``false``
+
+.. versionadded:: 5.2
+
+    This option was introduced in Symfony 5.2.
+
+When this option is set to ``true``, Symfony renders the form field using an
+HTML5 ``<input type="number">`` element. In addition, the value is formatted
+according to `HTML5 number format`_, which is similar to English locale but
+doesn't groups numbers in thousands (e.g. ``1474.67``).
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
@@ -161,3 +176,4 @@ money_pattern  ``string``  The format to use to display the money, including the
 
 .. _`3 letter ISO 4217 code`: https://en.wikipedia.org/wiki/ISO_4217
 .. _`rounding errors`: https://0.30000000000000004.com/
+.. _`HTML5 number format`: https://www.w3.org/TR/html51/sec-forms.html#date-time-and-number-formats

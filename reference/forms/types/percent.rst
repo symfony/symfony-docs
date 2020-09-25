@@ -15,7 +15,8 @@ the input.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
-| Options     | - `rounding_mode`_                                                    |
+| Options     | - `html5`_                                                            |
+|             | - `rounding_mode`_                                                    |
 |             | - `scale`_                                                            |
 |             | - `symbol`_                                                           |
 |             | - `type`_                                                             |
@@ -50,6 +51,20 @@ the input.
 
 Field Options
 -------------
+
+html5
+~~~~~
+
+**type**: ``bool`` **default**: ``false``
+
+.. versionadded:: 5.2
+
+    This option was introduced in Symfony 5.2.
+
+When this option is set to ``true``, Symfony renders the form field using an
+HTML5 ``<input type="number">`` element. In addition, the value is formatted
+according to `HTML5 number format`_, which is similar to English locale but
+doesn't groups numbers in thousands (e.g. ``30.75``).
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
@@ -146,3 +161,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. _`HTML5 number format`: https://www.w3.org/TR/html51/sec-forms.html#date-time-and-number-formats
