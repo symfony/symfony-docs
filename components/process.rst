@@ -377,9 +377,9 @@ instead::
 Using a Prepared Command Line
 -----------------------------
 
-You can run a process by using a prepared command line with double quote variable notation. 
-This allows you to use placeholders so that only the parameterized values can be changed, 
-but not the rest of the script:
+You can run a process by using a prepared command line with double quote
+variable notation. This allows you to use placeholders so that only the
+parameterized values can be changed, but not the rest of the script:
 
     use Symfony\Component\Process\Process;
 
