@@ -105,6 +105,11 @@ shown to the user.
 The ``invalid_message`` is used to customize the error that will
 be displayed when the two fields do not match each other.
 
+.. note::
+
+    The ``mapped`` option is always ``true`` for both fields in order for the type
+    to work properly.
+
 Field Options
 -------------
 
