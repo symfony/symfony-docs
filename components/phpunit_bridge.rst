@@ -876,6 +876,10 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     It's also possible to set ``SYMFONY_PHPUNIT_VERSION`` as a real env var
     (not defined in a :ref:`dotenv file <config-dot-env>`).
 
+    In the same way, ``SYMFONY_MAX_PHPUNIT_VERSION`` will set the maximum version
+    of PHPUnit to be considered. This  is useful when testing a framework that does
+    not support the latest version(s) of PHPUnit.
+
 .. tip::
 
     If you still need to use ``prophecy`` (but not ``symfony/yaml``),
