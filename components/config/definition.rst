@@ -750,7 +750,7 @@ By changing a string value into an associative array with ``name`` as the key::
                     ->then(function ($v) { return ['name' => $v]; })
                 ->end()
                 ->children()
-                    ->scalarNode('name')->isRequired()
+                    ->scalarNode('name')->isRequired()->end()
                     // ...
                 ->end()
             ->end()
