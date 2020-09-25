@@ -27,7 +27,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Options     | - `choice_translation_locale`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
-| options     |                                                                        |
+| options     | - `choice_translation_domain`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
@@ -82,6 +82,8 @@ specify the language.
 
     If you want to override the built-in choices of the locale type, you
     will also have to set the ``choice_loader`` option to ``null``.
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 Inherited Options
 -----------------
