@@ -51,6 +51,10 @@ SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
 ==================  ==============================================
 
+.. versionadded:: 5.2
+
+    The Sendinblue integration was introduced in Symfony 5.2.
+
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
 use SendGrid. First, install it:
