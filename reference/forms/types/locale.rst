@@ -25,7 +25,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
-| options     |                                                                        |
+| options     | - `choice_translation_domain`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
@@ -69,6 +69,8 @@ specify the language.
     If you want to override the built-in choices of the locale type, you
     will also have to set the ``choice_loader`` option to ``null``. Not doing
     so is deprecated since Symfony 3.3.
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 Inherited Options
 -----------------
