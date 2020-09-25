@@ -90,7 +90,7 @@ values.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 placeholder
 ~~~~~~~~~~~

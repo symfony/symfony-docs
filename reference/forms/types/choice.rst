@@ -239,7 +239,7 @@ the choice options would need to be resolved thus triggering the callback.
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain_enabled.rst.inc
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 

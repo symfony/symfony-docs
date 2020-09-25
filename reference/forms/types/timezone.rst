@@ -22,7 +22,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `regions`_                                                           |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
-| options     |                                                                        |
+| options     | - `choice_translation_domain`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
@@ -125,6 +125,8 @@ The Timezone type defaults the choices to all timezones returned by
 
     If you want to override the built-in choices of the timezone type, you
     will also have to set the ``choice_loader`` option to ``null``.
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 Inherited Options
 -----------------
