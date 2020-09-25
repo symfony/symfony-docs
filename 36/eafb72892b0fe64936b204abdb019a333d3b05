@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by mattstauffer at 2020-07-28T16:09:41Z
+
+@matthewtrask Oops, I duplicated this; https://github.com/symfony/symfony-docs/pull/14006
+
+Yours is probably in the right branch, but mine has more changes. Would you mind reviewing mine and either adding my changes to your PR so I can close mine (assuming you got the right branch and I didn't) and then I can close mine? Thanks!
+
+---------------------------------------------------------------------------
+
+by matthewtrask at 2020-07-28T16:12:59Z
+
+@mattstauffer I looked to see if there was already a PR, I think we opened them at the same time :)
+
+I brought your changes in here, which was better than what I added. I will default to the maintainers on which branch is better to keep open.
