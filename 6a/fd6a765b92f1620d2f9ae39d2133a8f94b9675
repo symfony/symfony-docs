@@ -1,0 +1,79 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-08T18:37:25Z
+
+Thanks for this contribution. However, in the Symfony Docs we use one of these two formats:
+
+```php
+// config/services.php
+
+$container->register('...')->...
+```
+
+or
+
+```php
+// config/services.php
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+return static function (ContainerConfigurator $container) {
+    $container->register('...')->...
+};
+```
+
+We should update the docs to only use the first format, but your PR introduces a different format, so that's why I'm closing this without merging. If I missed something, please tell me and I'll reopen. Thanks!
+
+---------------------------------------------------------------------------
+
+by yivi at 2020-09-09T05:41:27Z
+
+I apologize Javier, I must be confused.
+
+But when I see the docs, for example [here](https://symfony.com/doc/current/service_container.html#public-versus-private-services), neither of the formats you mention is being used
+
+My PR attempted to have this part of the documentation consistent with the main documentation for service configuration.
+
+Check the difference:
+https://symfony.com/doc/current/service_container.html#service-parameters
+![imagen](https://user-images.githubusercontent.com/1815039/92558446-cf82c680-f26e-11ea-8fc0-b3b8dae2a01b.png)
+
+vs.
+https://symfony.com/doc/current/event_dispatcher.html#creating-an-event-listener
+<img width="748" alt="imagen" src="https://user-images.githubusercontent.com/1815039/92558494-f3460c80-f26e-11ea-882d-62cf37feb134.png">
+
+The styles are inconsistent, and a person following the main services configuration and encountering this style on the Event Dispatcher page can be easily confused. I've seen it happening and it happened to me. Since my `services.php` configuration file follows the format suggested in the main Service Container configuration, the docs on Event Dispatcher simply does not make sense.
+
+---------------------------------------------------------------------------
+
+by yivi at 2020-09-09T05:48:44Z
+
+Also, `Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator::register()` **does not exist**.
+
+If in other places of the documentation this is done:
+
+```php
+// config/services.php
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+return static function (ContainerConfigurator $container) {
+    $container->register('...')->...
+};
+```
+
+... that's a fatal error. Because it's calling an undefined method. It does look closer to actually working code, and one that's easier to understand (as the one in the in the main Service Container configuration), but it's critically missing the call to `services()`, and to `set('service')` on the result.
+
+(I think that you may mean `Symfony\Component\DependencyInjection\ContainerBuilder::register()`, but that's called on a different context, not inside the services configuration file)
+
+Thanks, kind regards.
+
+---------------------------------------------------------------------------
+
+by yivi at 2020-09-11T06:52:06Z
+
+@javiereguiluz Please, if you can let me know if my previous comments make sense.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-11T06:58:38Z
+
+Let me reopen this to review it again.
