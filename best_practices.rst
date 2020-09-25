@@ -81,8 +81,8 @@ Configuration
 Use Environment Variables for Infrastructure Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These are the options that their values changes from one machine to another (e.g. from your
-development machine to the production server) but which don't change the
+The values of these options change from one machine to another (e.g. from your
+development machine to the production server) but they don't modify the
 application behavior.
 
 :ref:`Use env vars in your project <config-env-vars>` to define these options
