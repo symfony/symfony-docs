@@ -1462,9 +1462,12 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 
     $mockResponse = new MockResponse($body());
 
-Using the Symfony Framework, if you want to use your callback in functional tests, you can do as follow:
+.. versionadded:: 5.2
 
-First, create an invokable or iterable class responsible of generating the response::
+    The feature explained below was introduced in Symfony 5.2.
+
+Finally, you can also create an invokable or iterable class that generates the
+responses and use it as a callback in functional tests::
 
     namespace App\Tests;
 
@@ -1481,7 +1484,7 @@ First, create an invokable or iterable class responsible of generating the respo
         }
     }
 
-Then configure the framework to use your callback:
+Then configure Symfony to use your callback:
 
 .. configuration-block::
 
@@ -1534,9 +1537,6 @@ Then configure the framework to use your callback:
                 'mock_response_factory' => MockClientCallback::class,
             ],
         ]);
-
-
-The ``MockHttpClient`` will now be used in test environment with your callback to generate responses.
 
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
