@@ -100,11 +100,17 @@ using a special "tag":
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\EventListener\ExceptionListener;
 
-        $container->register(ExceptionListener::class)
-            ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
-        ;
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(ExceptionListener::class)
+                ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
+            ;
+        };
 
 Symfony follows this logic to decide which method to call inside the event
 listener class:
