@@ -60,6 +60,10 @@ run the Symfony server in the background:
 Enabling PHP-FPM
 ----------------
 
+.. note::
+
+    PHP-FPM must be installed locally for the Symfony server to utilize.
+
 When the server starts it will check for common patterns like ``web/app.php``,
 ``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
 server will automatically start with PHP-FPM enabled. Otherwise the server will
