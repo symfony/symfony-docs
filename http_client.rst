@@ -1471,8 +1471,8 @@ responses and use it as a callback in functional tests::
 
     namespace App\Tests;
 
-    use Symfony\Contracts\HttpClient\ResponseInterface;
     use Symfony\Component\HttpClient\Response\MockResponse;
+    use Symfony\Contracts\HttpClient\ResponseInterface;
 
     class MockClientCallback
     {
