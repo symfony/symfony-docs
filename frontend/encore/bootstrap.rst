@@ -18,7 +18,7 @@ a ``global.scss`` file, import it from there:
 
 .. code-block:: scss
 
-    // assets/css/global.scss
+    // assets/styles/global.scss
 
     // customize some Bootstrap variables
     $primary: darken(#428bca, 20%);
