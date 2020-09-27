@@ -179,22 +179,113 @@ Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Besides validating a single property, a constraint can have an entire class
-as its scope. You only need to add this to the ``Constraint`` class::
+as its scope. Consider the following classes, that describe the receipt of some payment::
 
-    public function getTargets()
+    // src/AppBundle/Model/PaymentReceipt.php
+
+    class PaymentReceipt
     {
-        return self::CLASS_CONSTRAINT;
+        /**
+         * @var User
+         */
+        private $user;
+
+        /**
+         * @var array
+         */
+        private $payload;
+
+        public function __construct(User $user, array $payload)
+        {
+            $this->user = $user;
+            $this->payload = $payload;
+        }
+
+        public function getUser(): User
+        {
+            return $this->user;
+        }
+
+        public function getPayload(): array
+        {
+            return $this->payload;
+        }
+    }
+
+    // src/AppBundle/Model/User.php
+
+    class User
+    {
+        /**
+         * @var string
+         */
+        private $email;
+
+        public function __construct($email)
+        {
+            $this->email = $email;
+        }
+
+        public function getEmail(): string
+        {
+            return $this->email;
+        }
+    }
+
+As an example you're going to check if the email in receipt payload matches the user email.
+To validate the receipt, it is required to create the constraint first.
+You only need to add the ``getTargets()`` method to the ``Constraint`` class::
+
+    // src/AppBundle/Validator/Constraints/ConfirmedPaymentReceipt.php
+    namespace AppBundle\Validator\Constraints;
+
+    use Symfony\Component\Validator\Constraint;
+
+    /**
+     * @Annotation
+     */
+    class ConfirmedPaymentReceipt extends Constraint
+    {
+        public $userDoesntMatchMessage = 'User email does not match the receipt email';
+
+        public function getTargets()
+        {
+            return self::CLASS_CONSTRAINT;
+        }
     }
 
 With this, the validator's ``validate()`` method gets an object as its first argument::
 
-    class ProtocolClassValidator extends ConstraintValidator
+    // src/AppBundle/Validator/Constraints/ConfirmedPaymentReceiptValidator.php
+    namespace AppBundle\Validator\Constraints;
+
+    use Symfony\Component\Validator\Constraint;
+    use Symfony\Component\Validator\ConstraintValidator;
+    use Symfony\Component\Validator\Exception\UnexpectedValueException;
+
+    class ConfirmedPaymentReceiptValidator extends ConstraintValidator
     {
-        public function validate($protocol, Constraint $constraint)
+        /**
+         * @param PaymentReceipt $receipt
+         * @param Constraint|ConfirmedPaymentReceipt $constraint
+         */
+        public function validate($receipt, Constraint $constraint)
         {
-            if ($protocol->getFoo() != $protocol->getBar()) {
-                $this->context->buildViolation($constraint->message)
-                    ->atPath('foo')
+            if (!$receipt instanceof PaymentReceipt) {
+                throw new UnexpectedValueException($receipt, PaymentReceipt::class);
+            }
+
+            if (!$constraint instanceof ConfirmedPaymentReceipt) {
+                throw new UnexpectedValueException($constraint, ConfirmedPaymentReceipt::class);
+            }
+
+            $receiptEmail = $receipt->getPayload()['email'] ?? null;
+            $userEmail = $receipt->getUser()->getEmail();
+
+            if ($userEmail !== $receiptEmail) {
+                $this->context
+                    ->buildViolation($constraint->userDoesntMatchMessage)
+                    ->atPath('user.email')
                     ->addViolation();
             }
         }
@@ -214,9 +305,9 @@ not to the property:
     .. code-block:: php-annotations
 
         /**
-         * @AcmeAssert\ProtocolClass
+         * @AppAssert\ConfirmedPaymentReceipt
          */
-        class AcmeEntity
+        class PaymentReceipt
         {
             // ...
         }
@@ -224,30 +315,30 @@ not to the property:
     .. code-block:: yaml
 
         # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\AcmeEntity:
+        AppBundle\Model\PaymentReceipt:
             constraints:
-                - AppBundle\Validator\Constraints\ProtocolClass: ~
+                - AppBundle\Validator\Constraints\ConfirmedPaymentReceipt: ~
 
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/validation.xml -->
-        <class name="AppBundle\Entity\AcmeEntity">
-            <constraint name="AppBundle\Validator\Constraints\ProtocolClass"/>
+        <class name="AppBundle\Model\PaymentReceipt">
+            <constraint name="AppBundle\Validator\Constraints\ConfirmedPaymentReceipt"/>
         </class>
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/AcmeEntity.php
-        use AppBundle\Validator\Constraints\ProtocolClass;
+        // src/AppBundle/Model/PaymentReceipt.php
+        use AppBundle\Validator\Constraints\ConfirmedPaymentReceipt;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-        class AcmeEntity
+        class PaymentReceipt
         {
             // ...
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addConstraint(new ProtocolClass());
+                $metadata->addConstraint(new ConfirmedPaymentReceipt());
             }
         }
 
@@ -317,6 +408,70 @@ After that you can add any test cases you need to cover the validation logic::
                 ['@$^&'],
                 ['hello-world'],
                 ['<body>'],
+            ];
+        }
+    }
+
+You can also use the ``ConstraintValidatorTestCase`` class for creating test cases for class constraints::
+
+    use AppBundle\Validator\Constraints\ConfirmedPaymentReceipt;
+    use AppBundle\Validator\Constraints\ConfirmedPaymentReceiptValidator;
+    use Symfony\Component\Validator\Exception\UnexpectedValueException;
+    use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
+
+    class ConfirmedPaymentReceiptValidatorTest extends ConstraintValidatorTestCase
+    {
+        protected function createValidator()
+        {
+            return new ConfirmedPaymentReceiptValidator();
+        }
+
+        public function testValidReceipt()
+        {
+            $receipt = new PaymentReceipt(new User('foo@bar.com'), ['email' => 'foo@bar.com', 'data' => 'baz']);
+            $this->validator->validate($receipt, new ConfirmedPaymentReceipt());
+
+            $this->assertNoViolation();
+        }
+
+        /**
+         * @dataProvider getInvalidReceipts
+         */
+        public function testInvalidReceipt($paymentReceipt)
+        {
+            $this->validator->validate(
+                $paymentReceipt,
+                new ConfirmedPaymentReceipt(['userDoesntMatchMessage' => 'myMessage'])
+            );
+
+            $this->buildViolation('myMessage')
+                ->atPath('property.path.user.email')
+                ->assertRaised();
+        }
+
+        public function getInvalidReceipts()
+        {
+            return [
+                [new PaymentReceipt(new User('foo@bar.com'), [])],
+                [new PaymentReceipt(new User('foo@bar.com'), ['email' => 'baz@foo.com'])],
+            ];
+        }
+
+        /**
+         * @dataProvider getUnexpectedArguments
+         */
+        public function testUnexpectedArguments($value, $constraint)
+        {
+            self::expectException(UnexpectedValueException::class);
+
+            $this->validator->validate($value, $constraint);
+        }
+
+        public function getUnexpectedArguments()
+        {
+            return [
+                [new \stdClass(), new ConfirmedPaymentReceipt()],
+                [new PaymentReceipt(new User('foo@bar.com'), []), new Unique()],
             ];
         }
     }
