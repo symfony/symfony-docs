@@ -360,9 +360,9 @@ immediately instead of waiting to receive the response::
     // getting the response headers waits until they arrive
     $contentType = $response->getHeaders()['content-type'][0];
 
-    // trying to get the response contents will block the execution until
-    // the full response contents are received
-    $contents = $response->getContent();
+    // trying to get the response content will block the execution until
+    // the full response content is received
+    $content = $response->getContent();
 
 This component also supports :ref:`streaming responses <http-client-streaming-responses>`
 for full asynchronous applications.
