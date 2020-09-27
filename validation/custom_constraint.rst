@@ -182,7 +182,6 @@ Besides validating a single property, a constraint can have an entire class
 as its scope. Consider the following classes, that describe the receipt of some payment::
 
     // src/AppBundle/Model/PaymentReceipt.php
-
     class PaymentReceipt
     {
         /**
