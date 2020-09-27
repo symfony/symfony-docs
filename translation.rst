@@ -316,7 +316,7 @@ all the information needed to fully translate its contents when needed::
     $message = new Translatable('Symfony is great!');
     // the optional second argument defines the translation parameters and
     // the optional third argument is the translation domain
-    $status = new Translatable('order.status', ['order' => $order], 'store');
+    $status = new Translatable('order.status', ['%status%' => $order->getStatus()], 'store');
 
 Templates are now much simpler because you can pass translatable objects to the
 ``trans`` filter:
