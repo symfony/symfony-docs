@@ -15,7 +15,8 @@ the input.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
-| Options     | - `rounding_mode`_                                                    |
+| Options     | - `html5`_                                                            |
+|             | - `rounding_mode`_                                                    |
 |             | - `scale`_                                                            |
 |             | - `symbol`_                                                           |
 |             | - `type`_                                                             |
@@ -56,6 +57,17 @@ Field Options
 .. versionadded:: 5.1
 
     The ``rounding_mode`` option was introduced in Symfony 5.1.
+
+html5
+~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 5.2
+
+    This option was introduced in Symfony 5.2.
+
+If set to true, the HTML input will be rendered as a native HTML5 type="number" form.
 
 scale
 ~~~~~
