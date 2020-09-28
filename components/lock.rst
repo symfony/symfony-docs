@@ -90,6 +90,18 @@ they can be decorated with the ``RetryTillSaveStore`` class::
     $lock = $factory->createLock('notification-flush');
     $lock->acquire(true);
 
+When the provided store does not implements the
+:class:`Symfony\\Component\\Lock\\BlockingStoreInterface` interface, the
+``Lock`` class will try in a loop to acquire the lock in a non-blocking way
+until the lock is acquired.
+
+.. deprecated:: 5.2
+
+    As of Symfony 5.2, you don't need anymore using the ``RetryTillSaveStore``
+    class. The ``Lock`` class now provides the default logic to acquire locks in
+    blocking mode when the store does not implements the ``BlockingStoreInterface``
+    interface.
+
 Expiring Locks
 --------------
 
@@ -212,6 +224,11 @@ possible to **promote** the lock, and change it to write lock, by calling the
 
 In the same way, it's possible to **demote** a write lock, and change it to a
 read-only lock by calling the ``acquireRead()`` method.
+
+When the provided store does not implements the
+:class:`Symfony\\Component\\Lock\\SharedLockStoreInterface` interface, the
+``Lock`` class will fallback to a write lock by calling the ``acquire()``
+method.
 
 The Owner of The Lock
 ---------------------
