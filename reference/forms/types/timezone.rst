@@ -26,7 +26,6 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
-|             | - `choice_translation_domain`_                                         |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
 |             | - `placeholder`_                                                       |
