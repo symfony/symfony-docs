@@ -63,6 +63,7 @@ Infobip     ``symfony/infobip-notifier``      ``infobip://TOKEN@default?from=FRO
 Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
 Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
 OvhCloud    ``symfony/ovhcloud-notifier``     ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+Sendinblue  ``symfony/sendinblue-notifier``   ``sendinblue://API_KEY@default?sender=PHONE``
 Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 Smsapi      ``symfony/smsapi-notifier``       ``smsapi://TOKEN@default?from=FROM``
 Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
@@ -74,7 +75,7 @@ Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=
 
 .. versionadded:: 5.2
 
-    The Smsapi, Infobip, Mobyt and Esendex integrations were introduced in Symfony 5.2.
+    The Smsapi, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
