@@ -119,7 +119,7 @@ can configure PHP to use this preload file:
 .. code-block:: ini
 
     ; php.ini
-    opcache.preload=/path/to/project/src/.preload.php
+    opcache.preload=/path/to/project/config/preload.php
 
 .. _performance-configure-opcache:
 
