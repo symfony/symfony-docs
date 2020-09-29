@@ -798,7 +798,7 @@ following methods::
     // gets the response body as a string
     $content = $response->getContent();
 
-    // casts the response JSON contents to a PHP array
+    // casts the response JSON content to a PHP array
     $content = $response->toArray();
 
     // casts the response content to a PHP stream resource
@@ -842,7 +842,7 @@ response sequentially instead of waiting for the entire response::
         throw new \Exception('...');
     }
 
-    // get the response contents in chunk and save them in a file
+    // get the response content in chunks and save them in a file
     // response chunks implement Symfony\Contracts\HttpClient\ChunkInterface
     $fileHandler = fopen('/ubuntu.iso', 'w');
     foreach ($client->stream($response) as $chunk) {
