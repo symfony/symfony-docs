@@ -843,7 +843,7 @@ response sequentially instead of waiting for the entire response::
 
     // get the response content in chunks and save them in a file
     // response chunks implement Symfony\Contracts\HttpClient\ChunkInterface
-    $fileHandler = fopen('/ubuntu.iso', 'w');
+    $fileHandler = fopen('/ubuntu.iso', 'b');
     foreach ($client->stream($response) as $chunk) {
         fwrite($fileHandler, $chunk->getContent());
     }
