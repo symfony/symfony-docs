@@ -12,6 +12,7 @@ application there could be more tags available provided by third-party bundles:
 Tag Name                                  Usage
 ========================================  ========================================================================
 `auto_alias`_                             Define aliases based on the value of container parameters
+`assets.package`_                         Add an asset package
 `console.command`_                        Add a command
 `container.hot_path`_                     Add to list of always needed services
 `container.no_preload`_                   Remove a class from the list of classes preloaded by PHP
@@ -49,6 +50,57 @@ Tag Name                                  Usage
 `validator.constraint_validator`_         Create your own custom validation constraint
 `validator.initializer`_                  Register a service that initializes objects before validation
 ========================================  ========================================================================
+
+assets.package
+--------------
+
+**Purpose**: Add an asset package to the application
+
+This is an alternative way to declare a package in :doc:`/components/asset`.
+
+The name of the package is set in this order:
+* first, the `package` attribute of the tag
+* then, the value returned by the static method `getDefaultPackageName()` if defined
+* finally, the service name
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\Assets\AvatarPackage:
+                tags:
+                    - { name: assets.package, package: avatars }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Assets\AvatarPackage">
+                    <tag name="assets.package" package="avatars"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Assets\AvatarPackage;
+
+        $container
+            ->register(AvatarPackage::class)
+            ->addTag('assets.package', ['package' => 'avatars'])
+        ;
+
+Now you can use the ``avatars`` package in your templates:
+
+.. code-block:: html+twig
+
+    <img src="{{ asset('...', 'avatars') }}">
 
 auto_alias
 ----------
