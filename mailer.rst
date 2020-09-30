@@ -798,7 +798,7 @@ S/MIME Signer
 .............
 
 `S/MIME`_ is a standard for public key encryption and signing of MIME data. It
-requires using both a certificate and a private key:
+requires using both a certificate and a private key::
 
     use Symfony\Component\Mime\Crypto\SMimeSigner;
     use Symfony\Component\Mime\Email;
@@ -1168,7 +1168,7 @@ a specific address, instead of the *real* address:
 .. _`Markdown syntax`: https://commonmark.org/
 .. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
-.. _`DKIM`: `https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
+.. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
