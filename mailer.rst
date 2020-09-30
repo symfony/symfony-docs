@@ -644,7 +644,7 @@ called ``css`` that points to the directory where ``email.css`` lives:
 
             paths:
                 # point this wherever your css files live
-                '%kernel.project_dir%/assets/css': css
+                '%kernel.project_dir%/assets/styles': styles
 
     .. code-block:: xml
 
@@ -660,7 +660,7 @@ called ``css`` that points to the directory where ``email.css`` lives:
                 <!-- ... -->
 
                 <!-- point this wherever your css files live -->
-                <twig:path namespace="css">%kernel.project_dir%/assets/css</twig:path>
+                <twig:path namespace="styles">%kernel.project_dir%/assets/styles</twig:path>
             </twig:config>
         </container>
 
@@ -671,7 +671,7 @@ called ``css`` that points to the directory where ``email.css`` lives:
             // ...
             'paths' => [
                 // point this wherever your css files live
-                '%kernel.project_dir%/assets/css' => 'css',
+                '%kernel.project_dir%/assets/styles' => 'styles',
             ],
         ]);
 
@@ -759,7 +759,7 @@ You can combine all filters to create complex email messages:
 
 This makes use of the :ref:`css Twig namespace <mailer-css-namespace>` we created
 earlier. You could, for example, `download the foundation-emails.css file`_
-directly from GitHub and save it in ``assets/css``.
+directly from GitHub and save it in ``assets/styles``.
 
 Signing and Encrypting Messages
 -------------------------------

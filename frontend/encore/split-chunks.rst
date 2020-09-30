@@ -14,10 +14,10 @@ To enable this, call ``splitEntryChunks()``:
         // ...
 
         // multiple entry files, which probably import the same code
-        .addEntry('app', './assets/js/app.js')
-        .addEntry('homepage', './assets/js/homepage.js')
-        .addEntry('blog', './assets/js/blog.js')
-        .addEntry('store', './assets/js/store.js')
+        .addEntry('app', './assets/app.js')
+        .addEntry('homepage', './assets/homepage.js')
+        .addEntry('blog', './assets/blog.js')
+        .addEntry('store', './assets/store.js')
 
     +     .splitEntryChunks()
 
