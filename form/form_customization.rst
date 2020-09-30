@@ -24,11 +24,29 @@ enough to render an entire form, including all its fields and error messages:
       by calling to the $form->createView() method #}
     {{ form(form) }}
 
-The next step is to use the :ref:`form_start() <reference-forms-twig-start>`,
+As short as this rendering is, it's not very flexible. The next step is to use the
+:ref:`form_start() <reference-forms-twig-start>`,
 :ref:`form_end() <reference-forms-twig-end>`,
-:ref:`form_errors() <reference-forms-twig-errors>` and
-:ref:`form_row() <reference-forms-twig-row>` Twig functions to render the
+:ref:`field_name() <reference-forms-twig-field-name>`,
+:ref:`field_value() <reference-forms-twig-field-value>` and
+:ref:`field_errors() <reference-forms-twig-field-errors>` Twig functions to render the
 different form parts so you can customize them adding HTML elements and attributes:
+
+// TODO
+
+Generic Form Rendering
+----------------------
+
+If you want to let the PHP code defining the structure of the form also describes
+how it should be displayed (for instance in the case of a reusable PHP package),
+you may want to rely on generic form rendering instead of individual Twig functions.
+
+To do so, you can use the
+:ref:`form_row() <reference-forms-twig-row>`,
+:ref:`form_widget() <reference-forms-twig-widget>`,
+:ref:`form_errors() <reference-forms-twig-errors>` and
+:ref:`form_rest() <reference-forms-twig-rest>`
+Twig functions to render the form parts generically:
 
 .. code-block:: html+twig
 
@@ -73,6 +91,9 @@ control over how each form field is rendered, so you can fully customize them:
             {{ form_errors(form.dueDate) }}
         </div>
     </div>
+
+Using these generic functions to render forms allow PHP code and general form themes to affect
+the way your fields will be displayed.
 
 .. note::
 
