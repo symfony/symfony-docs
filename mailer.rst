@@ -841,7 +841,7 @@ key but not a certificate::
     // second and third arguments: the domain name and "selector" used to perform a DNS lookup
     // (the selector is a string used to point to a specific DKIM public key record in your DNS)
     $signer = new DkimSigner('file:///path/to/private-key.key', 'example.com', 'sf');
-    // if the private key has a passphrase, pass it as the fourth argument
+    // if the private key has a passphrase, pass it as the fifth argument
     // new DkimSigner('file:///path/to/private-key.key', 'example.com', 'sf', [], 'the-passphrase');
 
     $signedEmail = $signer->sign($email);
