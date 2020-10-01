@@ -109,8 +109,8 @@ make them available to all requests until the server is restarted, improving
 performance significantly.
 
 During container compilation (e.g. when running the ``cache:clear`` command),
-Symfony generates a file called ``.preload`` (with a leading ``.``) in the
-``src/`` directory with the list of classes to preload.
+Symfony generates a file called ``preload.php`` in the ``config/`` directory
+with the list of classes to preload.
 
 The only requirement is that you need to set both ``container.dumper.inline_factories``
 and ``container.dumper.inline_class_loader`` parameters to ``true``. Then, you
