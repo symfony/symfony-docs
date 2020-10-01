@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-29T10:20:33Z
+
+Note to mergers: update one of the previous paragraphs that explain that the file is called `.preload.php` (it's called `preload.php` now).
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2020-09-29T10:23:54Z
+
+Actually the full paragraph should be rephrased (or removed), Symfony won't generate anything soon (flex will, via recipes)
