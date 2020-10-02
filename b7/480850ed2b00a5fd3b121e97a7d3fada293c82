@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-28T16:01:06Z
+
+Thanks! ... but there was already a PR for this: #14285. We'll merge the best changes of both proposals.
+
+---------------------------------------------------------------------------
+
+by romaricdrigon at 2020-09-28T16:04:58Z
+
+> Thanks! ... but there was already a PR for this: #14285. We'll merge the best changes of both proposals.
+
+Err, I totally missed it!
+I think the mention about the "HTML5 number format" is not quite needed, as its is an internal format. Browser could decide to tweak the format presented to the user, in example according to browser locale. I don't think I ever saw it, but in theory, that's possible.
