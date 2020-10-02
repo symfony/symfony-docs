@@ -67,7 +67,8 @@ html5
 
     This option was introduced in Symfony 5.2.
 
-If set to true, the HTML input will be rendered as a native HTML5 type="number" form.
+If set to ``true``, the HTML input will be rendered as a native HTML5
+``<input type="number">`` element.
 
 scale
 ~~~~~
