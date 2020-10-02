@@ -792,6 +792,10 @@ will automaticaly retry failed HTTP requests.
                     retry_failed:
                         max_retries: 4
 
+.. versionadded:: 5.2
+
+    The ``retry_failed`` option was introduced in Symfony 5.2.
+
 auth_basic
 ..........
 
@@ -824,13 +828,15 @@ backoff_service
 
 **type**: ``string``
 
+.. versionadded:: 5.2
+
+    The ``backoff_service`` option was introduced in Symfony 5.2.
+
 The service id used to compute the time to wait between retries. By default, it
 uses an instance of
 :class:`Symfony\\Component\\HttpClient\\Retry\\ExponentialBackOff` configured
 with ``delay``, ``max_delay`` and ``multiplier`` options. This class has to
 implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface`.
-This options cannot be used along `delay`_, `max_delay`_ or `multiplier`_
-options.
 
 base_uri
 ........
@@ -905,20 +911,26 @@ decider_service
 
 **type**: ``string``
 
+.. versionadded:: 5.2
+
+    The ``decider_service`` option was introduced in Symfony 5.2.
+
 The service id used to decide if a request should be retried. By default, it
 uses an instance of
 :class:`Symfony\\Component\\HttpClient\\Retry\\HttpStatusCodeDecider` configured
-with ``http_codes`` options. This class has to
-implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryDeciderInterface`.
-This options cannot be used along `http_codes`_ option.
+with the ``http_codes`` option. This class has to implement
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryDeciderInterface`.
 
 delay
 .....
 
 **type**: ``integer`` **default**: ``1000``
 
-The initial delay in milliseconds used to compute the waiting time between
-retries. This options cannot be used along `backoff_service`_ option.
+.. versionadded:: 5.2
+
+    The ``delay`` option was introduced in Symfony 5.2.
+
+The initial delay in milliseconds used to compute the waiting time between retries.
 
 .. _reference-http-client-retry-enabled:
 
@@ -943,8 +955,11 @@ http_codes
 
 **type**: ``array`` **default**: ``[423, 425, 429, 500, 502, 503, 504, 507, 510]``
 
+.. versionadded:: 5.2
+
+    The ``http_codes`` option was introduced in Symfony 5.2.
+
 The list of HTTP status codes that triggers a retry of the request.
-This options cannot be used along `decider_service`_ option.
 
 http_version
 ............
@@ -976,9 +991,12 @@ max_delay
 
 **type**: ``integer`` **default**: ``0``
 
+.. versionadded:: 5.2
+
+    The ``max_delay`` option was introduced in Symfony 5.2.
+
 The maximum amount of milliseconds initial to wait between retries.
 Use ``0`` to not limit the duration.
-This options cannot be used along `backoff_service`_ option.
 
 max_duration
 ............
@@ -1011,16 +1029,24 @@ max_retries
 
 **type**: ``integer`` **default**: ``3``
 
-The maximum number of retries before aborting. When the maximum is reach, the
-client returns the last received responses.
+.. versionadded:: 5.2
+
+    The ``max_retries`` option was introduced in Symfony 5.2.
+
+The maximum number of retries for failing requests. When the maximum is reached,
+the client returns the last received response.
 
 multiplier
 ..........
 
 **type**: ``float`` **default**: ``2``
 
-Multiplier to apply to the delay each time a retry occurs.
-This options cannot be used along `backoff_service`_ option.
+.. versionadded:: 5.2
+
+    The ``multiplier`` option was introduced in Symfony 5.2.
+
+This value is multiplied to the delay each time a retry occurs, to distribute
+retries in time instead of making all of them sequentially.
 
 no_proxy
 ........
