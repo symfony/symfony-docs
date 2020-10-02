@@ -17,6 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
+|             | - `html5`_                                                          |
 |             | - `rounding_mode`_                                                  |
 |             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
@@ -89,6 +90,21 @@ be set back on your object.
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
+
+html5
+~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 5.2
+
+    This option was introduced in Symfony 5.2.
+
+If set to true, the HTML input will be rendered as a native HTML5 type="number" form.
+
+.. caution::
+
+    As HTML5 number format is normalized, it is incompatible with ``grouping`` option.
 
 scale
 ~~~~~
