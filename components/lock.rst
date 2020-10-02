@@ -582,7 +582,7 @@ Using the above methods, a more robust code would be::
 .. caution::
 
     Choose wisely the lifetime of the ``Lock`` and check whether its remaining
-    time to leave is enough to perform the task.
+    time to live is enough to perform the task.
 
 .. caution::
 
