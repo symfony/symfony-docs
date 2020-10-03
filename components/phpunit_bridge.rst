@@ -877,8 +877,13 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     (not defined in a :ref:`dotenv file <config-dot-env>`).
 
     In the same way, ``SYMFONY_MAX_PHPUNIT_VERSION`` will set the maximum version
-    of PHPUnit to be considered. This  is useful when testing a framework that does
+    of PHPUnit to be considered. This is useful when testing a framework that does
     not support the latest version(s) of PHPUnit.
+
+.. versionadded:: 5.2
+
+    The ``SYMFONY_MAX_PHPUNIT_VERSION`` env variable was introduced in
+    Symfony 5.2.
 
 .. tip::
 
