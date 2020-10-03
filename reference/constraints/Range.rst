@@ -6,6 +6,7 @@ Validates that a given number or ``DateTime`` object is *between* some minimum a
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
+            - `invalidDateTimeMessage`_
             - `invalidMessage`_
             - `max`_
             - `maxMessage`_
@@ -316,13 +317,33 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
+invalidDateTimeMessage
+~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be a valid number.``
+
+.. versionadded:: 5.2
+
+    The ``invalidDateTimeMessage`` option was introduced in Symfony 5.2.
+
+The message displayed when the ``min`` and ``max`` values are PHP datetimes but
+the given value is not.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
+
 invalidMessage
 ~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
-The message that will be shown if the underlying value is not a number (per
-the :phpfunction:`is_numeric` PHP function).
+The message displayed when the ``min`` and ``max`` values are numeric (per
+the :phpfunction:`is_numeric` PHP function) but the given value is not.
 
 You can use the following parameters in this message:
 
