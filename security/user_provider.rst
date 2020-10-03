@@ -413,7 +413,7 @@ command will generate a nice skeleton to get you started::
          */
         public function supportsClass($class)
         {
-            return User::class === $class;
+            return User::class === $class || is_subclass_of($class, User::class);
         }
     }
 
