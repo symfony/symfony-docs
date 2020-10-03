@@ -873,7 +873,7 @@ headers
 **type**: ``array``
 
 An associative array of the HTTP headers added before making the request. This
-value must use the format ``['header-name' => header-value, ...]``.
+value must use the format ``{'header-name': 'header-value', ...}``.
 
 http_version
 ............
