@@ -764,7 +764,7 @@ There are several types of normalizers available:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
-    
+
 .. _component-serializer-encoders:
 
 Encoders
@@ -1270,34 +1270,34 @@ These are the options available:
 
 ``csv_delimiter``
     Sets the field delimiter separating values (one character only, default: ``,``).
-    
+
 ``csv_enclosure``
     Sets the field enclosure (one character only, default: ``"``).
-    
+
 ``csv_escape_char``
     Sets the escape character (at most one character, default: empty string).
-    
+
 ``csv_key_separator``
     Sets the separator for array's keys during its flattening (default: ``.``).
-    
+
 ``csv_headers``
     Sets the headers for the data (default: ``[]``, inferred from input data's keys).
-    
+
 ``csv_escape_formulas``
     Escapes fields containg formulas by prepending them with a ``\t`` character (default: ``false``).
-    
-``as_collection``
-    Always returns results as a collection, even if only one line is decoded (default: ``false``).
-    
-.. deprecated:: 4.2
 
-    Relying on the default value ``false`` is deprecated since Symfony 4.2.
-    
+``as_collection``
+    Always returns results as a collection, even if only one line is decoded.
+
 ``no_headers``
     Disables header in the encoded CSV (default: ``false``).
-    
+
 ``output_utf8_bom``
     Outputs special `UTF-8 BOM`_ along with encoded data (default: ``false``).
+
+.. versionadded:: 4.4
+
+    The ``output_utf8_bom`` option was introduced in Symfony 4.4.
 
 Handling Constructor Arguments
 ------------------------------
