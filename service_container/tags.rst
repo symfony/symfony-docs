@@ -585,47 +585,117 @@ application handlers::
         }
     }
 
-.. tip::
+Tagged Services with Priority
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The collected services can be prioritized using the ``priority`` attribute:
+.. versionadded:: 4.4
 
-    .. configuration-block::
+    The ability to prioritize tagged services was introduced in Symfony 4.4.
 
-        .. code-block:: yaml
+The tagged services can be prioritized using the ``priority`` attribute,
+thus providing a way to inject a sorted collection of services:
 
-            # config/services.yaml
-            services:
-                App\Handler\One:
-                    tags:
-                        - { name: 'app.handler', priority: 20 }
+.. configuration-block::
 
-        .. code-block:: xml
+    .. code-block:: yaml
 
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+        # config/services.yaml
+        services:
+            App\Handler\One:
+                tags:
+                    - { name: 'app.handler', priority: 20 }
 
-                <services>
-                    <service id="App\Handler\One">
-                        <tag name="app.handler" priority="20"/>
-                    </service>
-                </services>
-            </container>
+    .. code-block:: xml
 
-        .. code-block:: php
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            // config/services.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+            <services>
+                <service id="App\Handler\One">
+                    <tag name="app.handler" priority="20"/>
+                </service>
+            </services>
+        </container>
 
-            return function(ContainerConfigurator $configurator) {
-                $services = $configurator->services();
+    .. code-block:: php
 
-                $services->set(App\Handler\One::class)
-                    ->tag('app.handler', ['priority' => 20])
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Handler\One;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(One::class)
+                ->tag('app.handler', ['priority' => 20])
+            ;
+        };
+
+Another option, which is particularly useful when using autoconfiguring
+tags, is to implement the static ``getDefaultPriority()`` method on the
+service itself::
+
+    // src/Handler/One.php
+    namespace App/Handler;
+
+    class One
+    {
+        public static function getDefaultPriority(): int
+        {
+            return 3;
+        }
+    }
+
+If you want to have another method defining the priority, you can define it
+in the configuration of the collecting service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\HandlerCollection:
+                # inject all services tagged with app.handler as first argument
+                arguments:
+                    - !tagged_iterator { tag: app.handler, default_priority_method: getPriority }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+            <services>
+                <service id="App\HandlerCollection">
+                    <argument type="tagged" tag="app.handler" default-priority-method="getPriority"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+        return function (ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            // ...
+
+            $services->set(App\HandlerCollection::class)
+                ->args([
+                        tagged_iterator('app.handler', null, null, 'getPriority'),
+                    ]
+                )
                 ;
-            };
-
-    Note that any other custom attributes will be ignored by this feature.
+        };

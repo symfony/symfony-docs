@@ -738,7 +738,7 @@ There are several types of normalizers available:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
-    
+
 .. _component-serializer-encoders:
 
 Encoders
@@ -1214,6 +1214,52 @@ These are the options available:
 ``remove_empty_tags``
     If set to true, removes all empty tags in the generated XML (default: ``false``).
 
+The ``CsvEncoder``
+------------------
+
+This encoder transforms arrays into CSV and vice versa.
+
+Context
+~~~~~~~
+
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the CsvEncoder an associative array::
+
+    $csvEncoder->encode($array, 'csv', $context);
+
+These are the options available:
+
+``csv_delimiter``
+    Sets the field delimiter separating values (one character only, default: ``,``).
+
+``csv_enclosure``
+    Sets the field enclosure (one character only, default: ``"``).
+
+``csv_escape_char``
+    Sets the escape character (at most one character, default: empty string).
+
+``csv_key_separator``
+    Sets the separator for array's keys during its flattening (default: ``.``).
+
+``csv_headers``
+    Sets the headers for the data (default: ``[]``, inferred from input data's keys).
+
+``csv_escape_formulas``
+    Escapes fields containg formulas by prepending them with a ``\t`` character (default: ``false``).
+
+``as_collection``
+    Always returns results as a collection, even if only one line is decoded.
+
+``no_headers``
+    Disables header in the encoded CSV (default: ``false``).
+
+``output_utf8_bom``
+    Outputs special `UTF-8 BOM`_ along with encoded data (default: ``false``).
+
+.. versionadded:: 4.4
+
+    The ``output_utf8_bom`` option was introduced in Symfony 4.4.
+
 Handling Constructor Arguments
 ------------------------------
 
@@ -1468,6 +1514,7 @@ Learn more
 .. _YAML: https://yaml.org/
 .. _CSV: https://tools.ietf.org/html/rfc4180
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
+.. _`UTF-8 BOM`: https://en.wikipedia.org/wiki/Byte_order_mark
 .. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object
 .. _`API Platform`: https://api-platform.com
 .. _`list of PHP timezones`: https://www.php.net/manual/en/timezones.php
