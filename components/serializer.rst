@@ -1256,10 +1256,6 @@ These are the options available:
 ``output_utf8_bom``
     Outputs special `UTF-8 BOM`_ along with encoded data (default: ``false``).
 
-.. versionadded:: 4.4
-
-    The ``output_utf8_bom`` option was introduced in Symfony 4.4.
-
 Handling Constructor Arguments
 ------------------------------
 

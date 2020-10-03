@@ -588,10 +588,6 @@ application handlers::
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    The ability to prioritize tagged services was introduced in Symfony 4.4.
-
 The tagged services can be prioritized using the ``priority`` attribute,
 thus providing a way to inject a sorted collection of services:
 
