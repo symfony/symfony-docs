@@ -188,8 +188,15 @@ Finally, the raw data sent with the request body can be accessed using
 
     $content = $request->getContent();
 
-For instance, this may be useful to process a JSON string sent to the
+For instance, this may be useful to process a XML string sent to the
 application by a remote service using the HTTP POST method.
+
+.. versionadded:: 5.2
+
+    If the request body is a JSON string, it can be accessed using
+    :method:`Symfony\\Component\\HttpFoundation\\Request::toArray`::
+
+        $data = $request->toArray();
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
