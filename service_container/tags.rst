@@ -585,7 +585,6 @@ application handlers::
         }
     }
 
-
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -593,8 +592,8 @@ Tagged Services with Priority
 
     The ability to prioritize tagged services was introduced in Symfony 4.4.
 
-The tagged services can be prioritized using the ``priority`` attribute, thus providing 
-a way to inject a sorted collection.
+The tagged services can be prioritized using the ``priority`` attribute,
+thus providing a way to inject a sorted collection of services:
 
 .. configuration-block::
 
@@ -627,23 +626,21 @@ a way to inject a sorted collection.
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        use App\Handler\One;
+
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
-            $services->set(App\Handler\One::class)
+            $services->set(One::class)
                 ->tag('app.handler', ['priority' => 20])
             ;
         };
 
-.. note::
+Another option, which is particularly useful when using autoconfiguring
+tags, is to implement the static ``getDefaultPriority()`` method on the
+service itself::
 
-    Note that any other custom attribute will be ignored by this feature.
-
-
-Another option, which is particularly useful when using autoconfiguring tags, is to implement the
-static ``getDefaultPriority`` method on the service itself::
-
-    // src/App/Handler/One.php
+    // src/Handler/One.php
     namespace App/Handler;
 
     class One
@@ -654,7 +651,8 @@ static ``getDefaultPriority`` method on the service itself::
         }
     }
 
-If you want to have another method defining the priority, you can define it in the configuration of the collecting service:
+If you want to have another method defining the priority, you can define it
+in the configuration of the collecting service:
 
 .. configuration-block::
 
