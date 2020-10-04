@@ -181,9 +181,9 @@ To lock the default resource, autowire the lock using
 .. caution::
 
     The same instance of ``LockInterface`` won't block when calling ``acquire``
-    multiple times. Inside the same process, when several services share the
-    same instance of ``LockInterface``, they won't lock each other. When the
-    same process run concurent tasks, inject the ``LockFactory`` instead.
+    multiple times inside the same process. When several services use the
+    same lock, inject the ``LockFactory`` instead to create a separate lock
+    instance for each service.
 
 Locking a Dynamic Resource
 --------------------------
