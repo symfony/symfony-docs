@@ -144,10 +144,6 @@ configuration files, even if they use a different format:
 
         // ...
 
-.. versionadded:: 4.4
-
-    The ``not_found`` option value for ``ignore_errors`` was introduced in Symfony 4.4.
-
 .. _config-parameter-intro:
 .. _config-parameters-yml:
 .. _configuration-parameters:
