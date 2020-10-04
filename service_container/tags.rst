@@ -585,6 +585,10 @@ application handlers::
         }
     }
 
+.. seealso::
+
+    See also :doc:`tagged locator services </service_container/service_subscribers_locators>`
+
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -690,8 +694,178 @@ in the configuration of the collecting service:
 
             $services->set(App\HandlerCollection::class)
                 ->args([
-                        tagged_iterator('app.handler', null, null, 'getPriority'),
-                    ]
-                )
-                ;
+                    tagged_iterator('app.handler', null, null, 'getPriority'),
+                ])
+            ;
         };
+
+Tagged Services with Index
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to retrieve a specific service within the injected collection
+you can use the ``index_by`` and ``default_index_method`` options of the
+argument in combination with ``!tagged``.
+
+Using the previous example, this service configuration creates a collection
+indexed by the ``key`` attribute:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Handler\One:
+                tags:
+                    - { name: 'app.handler', key: 'handler_one' }
+
+            App\Handler\Two:
+                tags:
+                    - { name: 'app.handler', key: 'handler_two' }
+
+            App\HandlerCollection:
+                arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'key' }]
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Handler\One">
+                    <tag name="app.handler" key="handler_one" />
+                </service>
+
+                <service id="App\Handler\Two">
+                    <tag name="app.handler" key="handler_two" />
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <argument type="tagged_iterator" tag="app.handler" index-by="key" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Handler\One;
+        use App\Handler\Two;
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+        return function (ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(One::class)
+                ->tag('app.handler', ['key' => 'handler_one']);
+
+            $services->set(Two::class)
+                ->tag('app.handler', ['key' => 'handler_two']);
+
+            $services->set(App\HandlerCollection::class)
+                ->args([
+                    // 2nd argument is the index attribute name
+                    tagged_iterator('app.handler', 'key'),
+                ])
+            ;
+        };
+
+After compilation the ``HandlerCollection`` is able to iterate over your
+application handlers. To retrieve a specific service by it's ``key`` attribute
+from the iterator, we can use ``iterator_to_array`` and retrieve the ``handler_two``:
+to get an array and then retrieve the ``handler_two`` handler::
+
+    // src/Handler/HandlerCollection.php
+    namespace App\Handler;
+
+    class HandlerCollection
+    {
+        public function __construct(iterable $handlers)
+        {
+            $handlers = iterator_to_array($handlers);
+
+            $handlerTwo = $handlers['handler_two']:
+        }
+    }
+
+.. tip::
+
+    Just like the priority, you can also implement a static
+    ``getDefaultIndexAttributeName()`` method in the handlers and omit the
+    index attribute (``key``)::
+
+        // src/Handler/One.php
+        namespace App\Handler;
+
+        class One
+        {
+            // ...
+            public static function getDefaultIndexName(): string
+            {
+                return 'handler_one';
+            }
+        }
+
+    You also can define the name of the static method to implement on each service
+    with the ``default_index_method`` attribute on the tagged argument:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                # ...
+
+                App\HandlerCollection:
+                    # use getIndex() instead of getDefaultIndexName()
+                    arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getIndex' }]
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- ... --!>
+
+                    <service id="App\HandlerCollection">
+                        <!-- use getIndex() instead of getDefaultIndexName() -->
+                        <argument type="tagged_iterator"
+                            tag="app.handler"
+                            default-index-method="someFunctionName"
+                        />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use App\HandlerCollection;
+            use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+            return function (ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                // ...
+
+                // use getIndex() instead of getDefaultIndexName()
+                $services->set(HandlerCollection::class)
+                    ->args([
+                        tagged_iterator('app.handler', null, 'getIndex'),
+                    ])
+                ;
+            };

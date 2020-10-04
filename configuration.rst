@@ -88,10 +88,14 @@ configuration files, even if they use a different format:
         # config/services.yaml
         imports:
             - { resource: 'legacy_config.php' }
-            # ignore_errors silently discards errors if the loaded file doesn't exist
-            - { resource: 'my_config_file.xml', ignore_errors: true }
+
             # glob expressions are also supported to load multiple files
             - { resource: '/etc/myapp/*.yaml' }
+
+            # ignore_errors: not_found silently discards errors if the loaded file doesn't exist
+            - { resource: 'my_config_file.xml', ignore_errors: not_found }
+            # ignore_errors: true silently discards all errors (including invalid code and not found)
+            - { resource: 'my_other_config_file.xml', ignore_errors: true }
 
         # ...
 
@@ -108,10 +112,13 @@ configuration files, even if they use a different format:
 
             <imports>
                 <import resource="legacy_config.php"/>
-                <!-- ignore_errors silently discards errors if the loaded file doesn't exist -->
-                <import resource="my_config_file.yaml" ignore-errors="true"/>
                 <!-- glob expressions are also supported to load multiple files -->
                 <import resource="/etc/myapp/*.yaml"/>
+
+                <!-- ignore-errors="not_found" silently discards errors if the loaded file doesn't exist -->
+                <import resource="my_config_file.yaml" ignore-errors="not_found"/>
+                <!-- ignore-errors="true" silently discards all errors (including invalid code and not found) -->
+                <import resource="my_other_config_file.yaml" ignore-errors="true"/>
             </imports>
 
             <!-- ... -->
@@ -124,13 +131,22 @@ configuration files, even if they use a different format:
 
         return static function (ContainerConfigurator $container) {
             $container->import('legacy_config.php');
-            // ignore_errors (3rd parameter) silently discards errors if the loaded file doesn't exist
-            $container->import('my_config_file.xml', null, true);
+
             // glob expressions are also supported to load multiple files
             $container->import('/etc/myapp/*.yaml');
+
+            // the third optional argument of import() is 'ignore_errors'
+            // 'ignore_errors' set to 'not_found' silently discards errors if the loaded file doesn't exist
+            $container->import('my_config_file.yaml', null, 'not_found');
+            // 'ignore_errors' set to true silently discards all errors (including invalid code and not found)
+            $container->import('my_config_file.yaml', null, true);
         };
 
         // ...
+
+.. versionadded:: 4.4
+
+    The ``not_found`` option value for ``ignore_errors`` was introduced in Symfony 4.4.
 
 .. _config-parameter-intro:
 .. _config-parameters-yml:

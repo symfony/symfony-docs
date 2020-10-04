@@ -1315,8 +1315,8 @@ The possible values for this option are:
 
 * ``null``, use it to disable this protection. Same behavior as in older Symfony
   versions.
-* ``'none'`` (or the ``Cookie::SAMESITE_NONE`` constant), use it to allow 
-  sending of cookies when the HTTP request originated from a different domain 
+* ``'none'`` (or the ``Cookie::SAMESITE_NONE`` constant), use it to allow
+  sending of cookies when the HTTP request originated from a different domain
   (previously this was the default behavior of null, but in newer browsers ``'lax'``
   would be applied when the header has not been set)
 * ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
@@ -2727,21 +2727,7 @@ A list of lock stores to be created by the framework extension.
 
         # config/packages/lock.yaml
         framework:
-            # these are all the supported lock stores
-            lock: ~
-            lock: 'flock'
-            lock: 'flock:///path/to/file'
-            lock: 'semaphore'
-            lock: 'memcached://m1.docker'
-            lock: ['memcached://m1.docker', 'memcached://m2.docker']
-            lock: 'redis://r1.docker'
-            lock: ['redis://r1.docker', 'redis://r2.docker']
-            lock: '%env(MEMCACHED_OR_REDIS_URL)%'
-
-            # named locks
-            lock:
-                invoice: ['redis://r1.docker', 'redis://r2.docker']
-                report: 'semaphore'
+            lock: '%env(LOCK_DSN)%'
 
     .. code-block:: xml
 
@@ -2756,29 +2742,7 @@ A list of lock stores to be created by the framework extension.
 
             <framework:config>
                 <framework:lock>
-                    <!-- these are all the supported lock stores -->
-                    <framework:resource>flock</framework:resource>
-
-                    <framework:resource>flock:///path/to/file</framework:resource>
-
-                    <framework:resource>semaphore</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-                    <framework:resource>memcached://m2.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-                    <framework:resource>redis://r2.docker</framework:resource>
-
-                    <framework:resource>%env(REDIS_URL)%</framework:resource>
-
-                    <!-- named locks -->
-                    <framework:resource name="invoice">redis://r1.docker</framework:resource>
-                    <framework:resource name="invoice">redis://r2.docker</framework:resource>
-                    <framework:resource name="report">semaphore</framework:resource>
+                    <framework:resource>%env(LOCK_DSN)%</framework:resource>
                 </framework:lock>
             </framework:config>
         </container>
@@ -2787,23 +2751,12 @@ A list of lock stores to be created by the framework extension.
 
         // config/packages/lock.php
         $container->loadFromExtension('framework', [
-            // these are all the supported lock stores
-            'lock' => null,
-            'lock' => 'flock',
-            'lock' => 'flock:///path/to/file',
-            'lock' => 'semaphore',
-            'lock' => 'memcached://m1.docker',
-            'lock' => ['memcached://m1.docker', 'memcached://m2.docker'],
-            'lock' => 'redis://r1.docker',
-            'lock' => ['redis://r1.docker', 'redis://r2.docker'],
-            'lock' => '%env(MEMCACHED_OR_REDIS_URL)%',
-
-            // named locks
-            'lock' => [
-                'invoice' => ['redis://r1.docker', 'redis://r2.docker'],
-                'report' => 'semaphore',
-            ],
+            'lock' => '%env(LOCK_DSN)%',
         ]);
+
+.. seealso::
+
+    For more details, see :doc:`/lock`.
 
 .. _reference-lock-resources-name:
 

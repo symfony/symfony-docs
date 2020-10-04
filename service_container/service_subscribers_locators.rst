@@ -384,7 +384,7 @@ will share identical locators among all the services referencing them::
     use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
-    
+
     public function process(ContainerBuilder $container)
     {
         // ...
