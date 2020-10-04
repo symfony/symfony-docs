@@ -8,6 +8,9 @@ The Lock Component
     The Lock Component creates and manages `locks`_, a mechanism to provide
     exclusive access to a shared resource.
 
+If you're using the Symfony Framework, read the
+:doc:`Symfony Framework Lock documentation </lock>`.
+
 Installation
 ------------
 

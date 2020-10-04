@@ -43,6 +43,7 @@ Topics
     frontend
     http_cache
     http_client
+    lock
     logging
     mailer
     mercure
