@@ -735,19 +735,19 @@ indexed by the ``key`` attribute:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="App\Handler\One">
-                    <tag name="app.handler" key="handler_one" />
+                    <tag name="app.handler" key="handler_one"/>
                 </service>
 
                 <service id="App\Handler\Two">
-                    <tag name="app.handler" key="handler_two" />
+                    <tag name="app.handler" key="handler_two"/>
                 </service>
 
                 <service id="App\HandlerCollection">
-                    <argument type="tagged_iterator" tag="app.handler" index-by="key" />
+                    <argument type="tagged_iterator" tag="app.handler" index-by="key"/>
                 </service>
             </services>
         </container>
@@ -836,7 +836,7 @@ to get an array and then retrieve the ``handler_two`` handler::
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
                     <!-- ... --!>
