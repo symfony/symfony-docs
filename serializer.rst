@@ -57,36 +57,18 @@ Encoders supporting the following formats are enabled:
 
 As well as the following normalizers:
 
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
-  handle typical data objects
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
-  objects implementing the :phpclass:`DateTimeInterface` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer` for
-  :phpclass:`DateTimeZone` objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
-  for :phpclass:`DateInterval` objects
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
-  transform :phpclass:`SplFileInfo` objects in `Data URIs`_
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
-  to deal with objects implementing the :phpclass:`JsonSerializable` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
-  denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
 
-.. versionadded:: 4.1
-
-    The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
-
-.. versionadded:: 4.3
-
-    The ``DateTimeZoneNormalizer`` was introduced in Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    The ``ProblemNormalizer`` was introduced in Symfony 4.4.
-
-Custom normalizers and/or encoders can also be loaded by tagging them as
+Other :ref:`built-in normalizers <component-serializer-normalizers>` and
+custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
@@ -97,7 +79,7 @@ possible to set the priority of the tag in order to decide the matching order.
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
     usage and exposing internal details.
 
-Here is an example on how to load the
+Here is an example on how to load the built-in
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
 faster alternative to the `ObjectNormalizer` when data objects always use
 getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
@@ -298,4 +280,3 @@ take a look at how this bundle works.
 .. _`GraphQL`: https://graphql.org
 .. _`JSON:API`: https://jsonapi.org
 .. _`HAL`: http://stateless.co/hal_specification.html
-.. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
