@@ -289,6 +289,8 @@ This alias mapping can be extended for custom events by registering the
 compiler pass ``AddEventAliasesPass``::
 
     // src/Kernel.php
+    namespace App;
+
     use App\Event\MyCustomEvent;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\EventDispatcher\DependencyInjection\AddEventAliasesPass;
