@@ -27,7 +27,7 @@ Calling a command from another one is straightforward::
         $greetInput = new ArrayInput($arguments);
         $returnCode = $command->run($greetInput, $output);
 
-        // ...
+        //...
     }
 
 First, you :method:`Symfony\\Component\\Console\\Application::find` the
