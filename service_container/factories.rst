@@ -19,6 +19,11 @@ Static Factories
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object by calling the static ``createNewsletterManager()`` method::
 
+    // src/Email\NewsletterManagerStaticFactory.php
+    namespace App\Email;
+
+    // ...
+
     class NewsletterManagerStaticFactory
     {
         public static function createNewsletterManager()
@@ -169,6 +174,10 @@ Invokable Factories
 Suppose you now change your factory method to ``__invoke()`` so that your
 factory service can be used as a callback::
 
+    // src/Email/InvokableNewsletterManagerFactory.php
+    namespace App\Email;
+
+    // ...
     class InvokableNewsletterManagerFactory
     {
         public function __invoke()

@@ -24,6 +24,7 @@ the alphabet.
 
 Start by creating a ROT13 transformer class::
 
+    // src/Util/Rot13Transformer.php
     namespace App\Util;
 
     class Rot13Transformer
@@ -36,6 +37,7 @@ Start by creating a ROT13 transformer class::
 
 And now a Twitter client using this transformer::
 
+    // src/Service/TwitterClient.php
     namespace App\Service;
 
     use App\Util\Rot13Transformer;
@@ -122,6 +124,7 @@ both services:
 
 Now, you can use the ``TwitterClient`` service immediately in a controller::
 
+    // src/Controller/DefaultController.php
     namespace App\Controller;
 
     use App\Service\TwitterClient;
@@ -152,6 +155,9 @@ Autowiring Logic Explained
 --------------------------
 
 Autowiring works by reading the ``Rot13Transformer`` *type-hint* in ``TwitterClient``::
+
+    // src/Service/TwitterClient.php
+    namespace App\Service;
 
     // ...
     use App\Util\Rot13Transformer;
@@ -277,6 +283,7 @@ of concrete classes as it replaces your dependencies with other objects.
 
 To follow this best practice, suppose you decide to create a ``TransformerInterface``::
 
+    // src/Util/TransformerInterface.php
     namespace App\Util;
 
     interface TransformerInterface
@@ -376,6 +383,7 @@ Dealing with Multiple Implementations of the Same Type
 Suppose you create a second class - ``UppercaseTransformer`` that implements
 ``TransformerInterface``::
 
+    // src/Util/UppercaseTransformer.php
     namespace App\Util;
 
     class UppercaseTransformer implements TransformerInterface
@@ -404,6 +412,7 @@ create a *named autowiring alias* from a special string containing the
 interface followed by a variable name matching the one you use when doing
 the injection::
 
+    // src/Service/MastodonClient.php
     namespace App\Service;
 
     use App\Util\TransformerInterface;
@@ -546,6 +555,7 @@ When autowiring is enabled for a service, you can *also* configure the container
 to call methods on your class when it's instantiated. For example, suppose you want
 to inject the ``logger`` service, and decide to use setter-injection::
 
+    // src/Util/Rot13Transformer.php
     namespace App\Util;
 
     class Rot13Transformer

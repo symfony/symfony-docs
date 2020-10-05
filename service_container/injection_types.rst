@@ -19,6 +19,7 @@ The most common way to inject dependencies is via a class's constructor.
 To do this you need to add an argument to the constructor signature to accept
 the dependency::
 
+    // src/Mail/NewsletterManager.php
     namespace App\Mail;
 
     // ...
@@ -114,6 +115,9 @@ Immutable-setter Injection
 
 Another possible injection is to use a method which returns a separate instance
 by cloning the original service, this approach allows you to make a service immutable::
+
+    // src/Mail/NewsletterManager.php
+    namespace App\Mail;
 
     // ...
     use Symfony\Component\Mailer\MailerInterface;
@@ -218,6 +222,9 @@ Setter Injection
 Another possible injection point into a class is by adding a setter method
 that accepts the dependency::
 
+    // src/Mail/NewsletterManager.php
+    namespace App\Mail;
+    
     // ...
     class NewsletterManager
     {

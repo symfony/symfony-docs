@@ -13,6 +13,7 @@ Usually, you'll want to inject your dependencies via the constructor. But someti
 especially if a dependency is optional, you may want to use "setter injection". For
 example::
 
+    // src/Service/MessageGenerator.php
     namespace App\Service;
 
     use Psr\Log\LoggerInterface;
@@ -84,6 +85,7 @@ To provide immutable services, some classes implement immutable setters.
 Such setters return a new instance of the configured class
 instead of mutating the object they were called on::
 
+    // src/Service/MessageGenerator.php
     namespace App\Service;
 
     use Psr\Log\LoggerInterface;
