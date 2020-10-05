@@ -68,4 +68,4 @@ jobs:
             -   name: "Run DOCtor-RST"
                 uses: docker://oskarstark/doctor-rst
                 with:
-                    args: --short --cache-file=/github/workspace/.cache/doctor-rst.cache
+                    args: --short --error-format=github --cache-file=/github/workspace/.cache/doctor-rst.cache
