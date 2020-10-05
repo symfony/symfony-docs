@@ -1,5 +1,10 @@
 on:
     push:
+        branches:
+            - '3.4'
+            - '4.4'
+            - '5.1'
+            - 'master'
         branches-ignore:
             - 'github-comments'
     pull_request:
