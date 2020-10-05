@@ -24,6 +24,7 @@ String Constraints
 * :doc:`Ip </reference/constraints/Ip>`
 * :doc:`Json </reference/constraints/Json>`
 * :doc:`Uuid </reference/constraints/Uuid>`
+* :doc:`Ulid </reference/constraints/Ulid>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 
