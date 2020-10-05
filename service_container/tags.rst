@@ -675,7 +675,7 @@ in the configuration of the collecting service:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
                 <service id="App\HandlerCollection">
-                    <argument type="tagged" tag="app.handler" default-priority-method="getPriority"/>
+                    <argument type="tagged_iterator" tag="app.handler" default-priority-method="getPriority"/>
                 </service>
             </services>
         </container>
@@ -704,7 +704,7 @@ Tagged Services with Index
 
 If you want to retrieve a specific service within the injected collection
 you can use the ``index_by`` and ``default_index_method`` options of the
-argument in combination with ``!tagged``.
+argument in combination with ``!tagged_iterator``.
 
 Using the previous example, this service configuration creates a collection
 indexed by the ``key`` attribute:
