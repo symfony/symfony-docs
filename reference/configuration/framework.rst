@@ -872,8 +872,15 @@ headers
 
 **type**: ``array``
 
-An associative array of the HTTP headers added before making the request. This
-value must use the format ``{'header-name': 'header-value', ...}``.
+An associative array of the HTTP headers added before making the request:
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        http_client:
+            default_options:
+                - 'header-name': 'header-value'
 
 http_version
 ............
