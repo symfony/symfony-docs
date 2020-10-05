@@ -169,9 +169,9 @@ as you normally do:
 
 .. tip::
 
-    To improve performance and you have Symfony Flex 1.2 or later, you may
+    To improve performance and if you have Symfony Flex 1.2 or later installed, you may
     leverage a (feature)[https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-production]
-    that dumps your environments variables into flat file:
+    that dumps your environments variables into a flat file:
 
 .. code-block:: terminal
 
