@@ -6,14 +6,12 @@ public or having public accessor methods (e.g. a public getter).
 If your object needs to be traversed to validate its data, you can use this
 constraint.
 
-+----------------+-------------------------------------------------------------------------------------+
-| Applies to     | :ref:`class <validation-class-target>`                                              |
-+----------------+-------------------------------------------------------------------------------------+
-| Options        | - `payload`_                                                                        |
-|                | - :ref:`traverse <traverse-option>`                                                 |
-+----------------+-------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Traverse`                       |
-+----------------+-------------------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`class <validation-class-target>`
+Options     - `payload`_
+            - :ref:`traverse <traverse-option>`
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Traverse`
+==========  ===================================================================
 
 Basic Usage
 -----------
