@@ -201,7 +201,7 @@ the AJAX request to force the refresh of the toolbar::
 
 Ideally this header should only be set during development and not for
 production. To do that, create an :doc:`event subscriber </event_dispatcher>`
-and listen to the :ref:`kernel.response<component-http-kernel-kernel-response>`
+and listen to the :ref:`kernel.response <component-http-kernel-kernel-response>`
 event::
 
     use Symfony\Component\HttpKernel\Event\ResponseEvent;

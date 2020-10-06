@@ -102,7 +102,7 @@ Referencing Secrets in Configuration Files
 ------------------------------------------
 
 Secret values can be referenced in the same way as
-:ref:`environment variables<config-env-vars>`. Be careful that you don't
+:ref:`environment variables <config-env-vars>`. Be careful that you don't
 accidentally define a secret *and* an environment variable with the same name:
 **environment variables override secrets**.
 
