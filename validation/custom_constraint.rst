@@ -185,7 +185,7 @@ Create a Reusable Set of Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In case you need to apply some common set of constraints in different places
-consistently across your application, you can extend the :doc:`Compound constraint</reference/constraints/Compound>`.
+consistently across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
 
 .. versionadded:: 5.1
 
