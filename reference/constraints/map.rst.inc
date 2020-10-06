@@ -21,7 +21,7 @@ String Constraints
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Ip </reference/constraints/Ip>`
 * :doc:`Json</reference/constraints/Json>`
-* :doc:`Uuid</reference/constraints/Uuid>`
+* :doc:`Uuid </reference/constraints/Uuid>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 
