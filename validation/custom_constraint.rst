@@ -110,6 +110,8 @@ You can use custom validators like the ones provided by Symfony itself:
     .. code-block:: php-annotations
 
         // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
         use App\Validator\Constraints as AcmeAssert;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -154,6 +156,8 @@ You can use custom validators like the ones provided by Symfony itself:
     .. code-block:: php
 
         // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
         use App\Validator\Constraints\ContainsAlphanumeric;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -254,6 +258,8 @@ not to the property:
     .. code-block:: php
 
         // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
         use App\Validator\Constraints\ProtocolClass;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 

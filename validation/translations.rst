@@ -28,6 +28,8 @@ property is not empty, add the following:
     .. code-block:: php-annotations
 
         // src/Entity/Author.php
+        namespace App\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -67,6 +69,7 @@ property is not empty, add the following:
     .. code-block:: php
 
         // src/Entity/Author.php
+        namespace App\Entity;
 
         // ...
         use Symfony\Component\Validator\Constraints\NotBlank;
