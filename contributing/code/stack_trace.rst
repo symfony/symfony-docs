@@ -137,7 +137,7 @@ going on:
 
 
 If that is not the case, you can obtain a stack trace by increasing the
-:doc:`verbosity level</console/verbosity>` with ``--verbose``:
+:doc:`verbosity level </console/verbosity>` with ``--verbose``:
 
 .. code-block:: terminal
 
