@@ -360,7 +360,7 @@ How to Sequentially Apply Constraints on a Single Property
 ----------------------------------------------------------
 
 Sometimes, you may want to apply constraints sequentially on a single
-property. The :doc:`Sequentially constraint</reference/constraints/Sequentially>`
+property. The :doc:`Sequentially constraint </reference/constraints/Sequentially>`
 can solve this for you in a more straightforward way than using a ``GroupSequence``.
 
 .. versionadded:: 5.1
