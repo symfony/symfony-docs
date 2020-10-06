@@ -94,7 +94,7 @@ following:
                 profileData:
                     - Collection:
                         fields:
-                            personal_email: 
+                            personal_email:
                                 - Email: ~
                             short_bio:
                                 - NotBlank: ~
