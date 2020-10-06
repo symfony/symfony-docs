@@ -149,6 +149,9 @@ that group are valid, the second group, ``Strict``, will be validated.
 
 You can also define a group sequence in the ``validation_groups`` form option::
 
+    // src/Form/MyType.php
+    namespace App\Form;
+    
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Validator\Constraints\GroupSequence;
