@@ -17,7 +17,7 @@ and that extra keys are not present.
 | Options        | - `allowExtraFields`_                                                    |
 |                | - `allowMissingFields`_                                                  |
 |                | - `extraFieldsMessage`_                                                  |
-|                | - `fields`_                                                              |
+|                | - `fields`_                                                                |
 |                | - `groups`_                                                              |
 |                | - `missingFieldsMessage`_                                                |
 |                | - `payload`_                                                             |
