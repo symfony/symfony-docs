@@ -37,7 +37,7 @@ Examples of unacceptable behavior by participants include:
 Our Responsibilities
 --------------------
 
-:doc:`CoC Active Response Ensurers, or CARE</contributing/code_of_conduct/care_team>`,
+:doc:`CoC Active Response Ensurers, or CARE </contributing/code_of_conduct/care_team>`,
 are responsible for clarifying the standards of acceptable
 behavior and are expected to take appropriate and fair corrective action in
 response to any instances of unacceptable behavior.

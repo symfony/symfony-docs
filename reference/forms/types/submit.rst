@@ -16,7 +16,7 @@ A submit button.
 |                      | - `translation_domain`_                                              |
 |                      | - `validation_groups`_                                               |
 +----------------------+----------------------------------------------------------------------+
-| Parent type          | :doc:`ButtonType</reference/forms/types/button>`                     |
+| Parent type          | :doc:`ButtonType </reference/forms/types/button>`                    |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType` |
 +----------------------+----------------------------------------------------------------------+

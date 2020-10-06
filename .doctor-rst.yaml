@@ -29,6 +29,7 @@ rules:
     replace_code_block_types: ~
     replacement: ~
     short_array_syntax: ~
+    space_between_label_and_link_in_doc: ~
     space_between_label_and_link_in_ref: ~
     typo: ~
     unused_links: ~
