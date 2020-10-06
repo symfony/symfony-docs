@@ -76,6 +76,7 @@ In the next example, you'll create a value resolver to inject the object that
 represents the current user whenever a controller method type-hints an argument
 with the ``User`` class::
 
+    // src/Controller/UserController.php
     namespace App\Controller;
 
     use App\Entity\User;

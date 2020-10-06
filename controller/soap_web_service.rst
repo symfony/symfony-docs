@@ -57,6 +57,7 @@ Finally, below is an example of a controller that is capable of handling a SOAP
 request. Because ``index()`` is accessible via ``/soap``, the WSDL document
 can be retrieved via ``/soap?wsdl``::
 
+    // src/Controller/HelloServiceController.php
     namespace App\Controller;
 
     use App\Service\HelloService;

@@ -548,6 +548,7 @@ What about *removing* a ``Product`` from a ``Category``? The ``make:entity`` com
 also generated a ``removeProduct()`` method::
 
     // src/Entity/Category.php
+    namespace App\Entity;
 
     // ...
     class Category

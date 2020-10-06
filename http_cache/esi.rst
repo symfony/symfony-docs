@@ -98,7 +98,8 @@ ticker at the bottom of the content. With ESI, you can cache the news ticker
 independently of the rest of the page::
 
     // src/Controller/DefaultController.php
-
+    namespace App\Controller;
+    
     // ...
     class DefaultController extends AbstractController
     {

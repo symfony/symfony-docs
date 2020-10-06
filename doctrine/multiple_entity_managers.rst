@@ -230,6 +230,9 @@ When working with multiple entity managers to generate migrations:
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
 
+    // src/Controller/UserController.php
+    namespace App\Controller;
+
     // ...
 
     use Doctrine\ORM\EntityManagerInterface;
@@ -255,6 +258,9 @@ manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
 
 The same applies to repository calls::
+
+    // src/Controller/UserController.php
+    namespace App\Controller;
 
     use AcmeStoreBundle\Entity\Customer;
     use AcmeStoreBundle\Entity\Product;

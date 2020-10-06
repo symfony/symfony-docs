@@ -327,6 +327,8 @@ Then, define a service for this class:
 Now you're ready to use this service in the controller::
 
     // src/Controller/ProductController.php
+    namespace App\Controller;
+
     use App\Service\FileUploader;
     use Symfony\Component\HttpFoundation\Request;
 

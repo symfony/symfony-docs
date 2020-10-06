@@ -251,6 +251,8 @@ may not be applied to it.
 Another option is to return multiple form types in the ``getExtendedTypes()``
 method to extend all of them::
 
+    // src/Form/Extension/DateTimeExtension.php
+    namespace App\Form\Extension;
     // ...
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
     use Symfony\Component\Form\Extension\Core\Type\DateType;

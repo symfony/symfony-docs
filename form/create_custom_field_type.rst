@@ -287,6 +287,8 @@ to define, validate and process their values::
 Now you can configure these options when using the form type::
 
     // src/Form/Type/OrderType.php
+    namespace App\Form\Type;
+
     // ...
 
     class OrderType extends AbstractType
@@ -310,6 +312,8 @@ Now you can configure these options when using the form type::
 The last step is to use these options when building the form::
 
     // src/Form/Type/PostalAddressType.php
+    namespace App\Form\Type;
+
     // ...
 
     class PostalAddressType extends AbstractType
@@ -453,6 +457,8 @@ defined by the form or be completely independent::
 
 
     // src/Form/Type/PostalAddressType.php
+    namespace App\Form\Type;
+
     use Doctrine\ORM\EntityManagerInterface;
     // ...
 
