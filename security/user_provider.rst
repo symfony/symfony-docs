@@ -128,23 +128,24 @@ interface only requires one method: ``loadUserByUsername($username)``::
     // src/Repository/UserRepository.php
     namespace App\Repository;
 
-    use Doctrine\ORM\EntityRepository;
+    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
-    class UserRepository extends EntityRepository implements UserLoaderInterface
+    class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
     {
         // ...
 
         public function loadUserByUsername($usernameOrEmail)
         {
-            return $this->createQuery(
+            $entityManager = $this->getEntityManager();
+            
+            return $entityManager->createQuery(
                     'SELECT u
                     FROM App\Entity\User u
                     WHERE u.username = :query
                     OR u.email = :query'
                 )
                 ->setParameter('query', $usernameOrEmail)
-                ->getQuery()
                 ->getOneOrNullResult();
         }
     }
