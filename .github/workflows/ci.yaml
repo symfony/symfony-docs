@@ -8,8 +8,6 @@ on:
         branches-ignore:
             - 'github-comments'
     pull_request:
-        branches-ignore:
-            - 'github-comments'
 
 name: CI
 
