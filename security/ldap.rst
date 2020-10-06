@@ -8,7 +8,7 @@ Symfony provides different means to work with an LDAP server.
 
 The Security component offers:
 
-* The ``ldap`` :doc:`user provider</security/user_provider>`, using the
+* The ``ldap`` :doc:`user provider </security/user_provider>`, using the
   :class:`Symfony\\Component\\Ldap\\Security\\LdapUserProvider`
   class. Like all other user providers, it can be used with any
   authentication provider.
