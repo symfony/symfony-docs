@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-10-05T15:46:07Z
+
+I missed, it should be in 4.4
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-10-06T06:27:57Z
+
+It is correct, but will not add so much additional value, its mostly clear through the filepath, I am against this change, sorry.
+
+---------------------------------------------------------------------------
+
+by TheGarious at 2020-10-06T06:32:57Z
+
+I add this because many page have and don't have namespace or filepath.
+
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-10-06T11:24:27Z
+
+I am in favor of this kind of addition and making it uniform over the examples. This allows the beginner to have a better reference in their project
