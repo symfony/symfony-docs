@@ -619,6 +619,35 @@ according to the ``multipart/form-data`` content-type. The
         'body' => $formData->bodyToIterable(),
     ]);
 
+.. tip::
+
+    When using multidimensional arrays the :class:`Symfony\\Component\\Mime\\Part\\Multipart\\FormDataPart`
+    automatically appends ``[key]`` to the name of the field::
+
+        $formData = new FormDataPart([
+            'array_field' => [
+                'some value',
+                'other value',
+            ],
+        ]);
+
+        $formData->getParts(); // Returns two instances of TextPart
+                               // with the names "array_field[0]" and "array_field[1]"
+
+    This behavior can be bypassed by using the following array structure::
+
+        $formData = new FormDataPart([
+            ['array_field' => 'some value'],
+            ['array_field' => 'other value'],
+        ]);
+
+        $formData->getParts(); // Returns two instances of TextPart both
+                               // with the name "array_field"
+
+    .. versionadded:: 5.2
+
+        The alternative array structure was introduced in Symfony 5.2.
+
 By default, HttpClient streams the body contents when uploading them. This might
 not work with all servers, resulting in HTTP status code 411 ("Length Required")
 because there is no ``Content-Length`` header. The solution is to turn the body
