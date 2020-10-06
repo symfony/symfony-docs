@@ -7,7 +7,7 @@ internationally agreed means of identifying bank accounts across national
 borders with a reduced risk of propagating transcription errors.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `groups`_                                                           |
 |                | - `message`_                                                          |

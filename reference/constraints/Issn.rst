@@ -5,7 +5,7 @@ Validates that a value is a valid
 `International Standard Serial Number (ISSN)`_.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `groups`_                                                           |
 |                | - `message`_                                                          |

@@ -12,7 +12,7 @@ the options. To force that a value is identical, see
     compare with ``!=``.
 
 +----------------+-----------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                       |
+| Applies to     | :ref:`property or method <validation-property-target>`                      |
 +----------------+-----------------------------------------------------------------------------+
 | Options        | - `value`_                                                                  |
 |                | - `groups`_                                                                 |

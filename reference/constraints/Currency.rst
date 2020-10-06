@@ -4,7 +4,7 @@ Currency
 Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
 +----------------+---------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                     |
+| Applies to     | :ref:`property or method <validation-property-target>`                    |
 +----------------+---------------------------------------------------------------------------+
 | Options        | - `groups`_                                                               |
 |                | - `message`_                                                              |

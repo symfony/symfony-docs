@@ -5,7 +5,7 @@ This constraint validates that an `International Standard Book Number (ISBN)`_
 is either a valid ISBN-10 or a valid ISBN-13.
 
 +----------------+----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                |
+| Applies to     | :ref:`property or method <validation-property-target>`               |
 +----------------+----------------------------------------------------------------------+
 | Options        | - `type`_                                                            |
 |                | - `groups`_                                                          |

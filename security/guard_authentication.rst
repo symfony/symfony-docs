@@ -255,7 +255,7 @@ This requires you to implement several methods::
     ``AuthenticatorInterface`` was introduced in Symfony 3.4. In previous Symfony
     versions, authenticators needed to implement ``GuardAuthenticatorInterface``.
 
-Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
+Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods <guard-auth-methods>`.
 
 Step 2) Configure the Authenticator
 -----------------------------------

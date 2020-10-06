@@ -6,7 +6,7 @@ the options. To force that a value is greater than another value, see
 :doc:`/reference/constraints/GreaterThan`.
 
 +----------------+----------------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                            |
+| Applies to     | :ref:`property or method <validation-property-target>`                           |
 +----------------+----------------------------------------------------------------------------------+
 | Options        | - `value`_                                                                       |
 |                | - `groups`_                                                                      |
