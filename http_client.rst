@@ -622,7 +622,7 @@ according to the ``multipart/form-data`` content-type. The
 .. tip::
 
     When using multidimensional arrays the :class:`Symfony\\Component\\Mime\\Part\\Multipart\\FormDataPart`
-    automatically appends ``[key]`` to the name of the field::
+    class automatically appends ``[key]`` to the name of the field::
 
         $formData = new FormDataPart([
             'array_field' => [
