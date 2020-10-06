@@ -4,16 +4,19 @@ Issn
 Validates that a value is a valid
 `International Standard Serial Number (ISSN)`_.
 
-==========  ===================================================================
-Applies to  :ref:`property or method <validation-property-target>`
-Options     - `caseSensitive`_
-            - `groups`_
-            - `message`_
-            - `payload`_
-            - `requireHyphen`_
-Class       :class:`Symfony\\Component\\Validator\\Constraints\\Issn`
-Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IssnValidator`
-==========  ===================================================================
++----------------+-----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                |
++----------------+-----------------------------------------------------------------------+
+| Options        | - `caseSensitive`_                                                    |
+|                | - `groups`_                                                           |
+|                | - `message`_                                                          |
+|                | - `payload`_                                                          |
+|                | - `requireHyphen`_                                                    |
++----------------+-----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Issn`             |
++----------------+-----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IssnValidator`    |
++----------------+-----------------------------------------------------------------------+
 
 Basic Usage
 -----------

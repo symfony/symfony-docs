@@ -11,16 +11,19 @@ the options. To force that a value is identical, see
     considered not equal. Use :doc:`/reference/constraints/NotEqualTo` to
     compare with ``!=``.
 
-==========  ===================================================================
-Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
-Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalTo`
-Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalToValidator`
-==========  ===================================================================
++----------------+-----------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                      |
++----------------+-----------------------------------------------------------------------------+
+| Options        | - `groups`_                                                                 |
+|                | - `message`_                                                                |
+|                | - `payload`_                                                                |
+|                | - `propertyPath`_                                                           |
+|                | - `value`_                                                                  |
++----------------+-----------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalTo`         |
++----------------+-----------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalToValidator`|
++----------------+-----------------------------------------------------------------------------+
 
 Basic Usage
 -----------

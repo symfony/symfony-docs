@@ -30,6 +30,7 @@ rules:
     replace_code_block_types: ~
     replacement: ~
     short_array_syntax: ~
+    space_between_label_and_link_in_ref: ~
     typo: ~
     unused_links: ~
     use_deprecated_directive_instead_of_versionadded: ~
