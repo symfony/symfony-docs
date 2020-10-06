@@ -350,7 +350,7 @@ Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
 two arguments: a timeout and a signal. Once the timeout is reached, the signal
 is sent to the running process. The default signal sent to a process is ``SIGKILL``.
-Please read the :ref:`signal documentation below<reference-process-signal>`
+Please read the :ref:`signal documentation below <reference-process-signal>`
 to find out more about signal handling in the Process component::
 
     $process = new Process(['ls', '-lsa']);
