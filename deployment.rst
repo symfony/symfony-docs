@@ -175,7 +175,7 @@ as you normally do:
 
 .. code-block:: terminal
 
-    $ composer dump-env prod
+        $ composer dump-env prod
 
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
