@@ -166,7 +166,7 @@ This requires you to implement several methods::
         }
     }
 
-Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
+Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods <guard-auth-methods>`.
 
 Step 3) Configure the Authenticator
 -----------------------------------

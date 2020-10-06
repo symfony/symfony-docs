@@ -6,16 +6,19 @@ force that a value is greater than or equal to another value, see
 :doc:`/reference/constraints/GreaterThanOrEqual`. To force a value is less
 than another value, see :doc:`/reference/constraints/LessThan`.
 
-==========  ===================================================================
-Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
-Class       :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThan`
-Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanValidator`
-==========  ===================================================================
++----------------+---------------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`                    |
++----------------+---------------------------------------------------------------------------+
+| Options        | - `groups`_                                                               |
+|                | - `message`_                                                              |
+|                | - `payload`_                                                              |
+|                | - `propertyPath`_                                                         |
+|                | - `value`_                                                                |
++----------------+---------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThan`          |
++----------------+---------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanValidator` |
++----------------+---------------------------------------------------------------------------+
 
 Basic Usage
 -----------
