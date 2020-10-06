@@ -15,17 +15,14 @@ password, but needs to enter their old password for security.
     In order to use this constraints, you should have installed the
     symfony/security-core component with Composer.
 
-+----------------+--------------------------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                                     |
-+----------------+--------------------------------------------------------------------------------------------+
-| Options        | - `groups`_                                                                                |
-|                | - `message`_                                                                               |
-|                | - `payload`_                                                                               |
-+----------------+--------------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`          |
-+----------------+--------------------------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPasswordValidator` |
-+----------------+--------------------------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`property or method <validation-property-target>`
+Options     - `groups`_
+            - `message`_
+            - `payload`_
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\UserPassword`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UserPasswordValidator`
+==========  ===================================================================
 
 Basic Usage
 -----------
