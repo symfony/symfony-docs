@@ -12,7 +12,7 @@ To force that a value is *not* identical, see
     with ``==``.
 
 +----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                    |
+| Applies to     | :ref:`property or method <validation-property-target>`                   |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `value`_                                                               |
 |                | - `groups`_                                                              |

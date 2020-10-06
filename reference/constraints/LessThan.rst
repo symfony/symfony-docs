@@ -7,7 +7,7 @@ force that a value is less than or equal to another value, see
 than another value, see :doc:`/reference/constraints/GreaterThan`.
 
 +----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                  |
+| Applies to     | :ref:`property or method <validation-property-target>`                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - `value`_                                                             |
 |                | - `groups`_                                                            |

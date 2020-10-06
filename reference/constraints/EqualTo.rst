@@ -11,7 +11,7 @@ To force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualT
     ``===``.
 
 +----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                 |
+| Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `value`_                                                            |
 |                | - `groups`_                                                           |
