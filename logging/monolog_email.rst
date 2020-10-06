@@ -4,7 +4,7 @@
 How to Configure Monolog to Email Errors
 ========================================
 
-.. versionadded:: 3.6.0
+.. versionadded:: 3.6
 
     Support for emailing errors using :doc:`Symfony mailer </mailer>` was added in MonologBundle 3.6.0.
 
