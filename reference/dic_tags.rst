@@ -57,7 +57,11 @@ assets.package
 **Purpose**: Add an asset package to the application
 
 This is an alternative way to declare a package in :doc:`/components/asset`.
-The `package` attribute of the tag is required to name the package.
+
+The name of the package is set in this order:
+* first, the `package` attribute of the tag
+* then, the value returned by the static method `getDefaultName()` if defined
+* finally, the service name
 
 .. configuration-block::
 
