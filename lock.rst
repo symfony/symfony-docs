@@ -56,10 +56,11 @@ this behavior by using the ``lock`` key like:
             lock: 'zookeeper://z1.docker'
             lock: 'zookeeper://z1.docker,z2.docker'
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
-            lock: 'mysql:host=127.0.0.1;dbname=lock'
-            lock: 'pgsql:host=127.0.0.1;dbname=lock'
-            lock: 'sqlsrv:server=localhost;Database=test'
-            lock: 'oci:host=localhost;dbname=test'
+            lock: 'mysql:host=127.0.0.1;dbname=app'
+            lock: 'pgsql:host=127.0.0.1;dbname=app'
+            lock: 'sqlsrv:server=127.0.0.1;Database=app'
+            lock: 'oci:host=127.0.0.1;dbname=app'
+            lock: 'mongodb://127.0.0.1/app?collection=lock'
             lock: '%env(LOCK_DSN)%'
 
             # named locks
@@ -102,13 +103,15 @@ this behavior by using the ``lock`` key like:
 
                     <framework:resource>sqlite:///%kernel.project_dir%/var/lock.db</framework:resource>
 
-                    <framework:resource>mysql:host=127.0.0.1;dbname=lock</framework:resource>
+                    <framework:resource>mysql:host=127.0.0.1;dbname=app</framework:resource>
 
-                    <framework:resource>pgsql:host=127.0.0.1;dbname=lock</framework:resource>
+                    <framework:resource>pgsql:host=127.0.0.1;dbname=app</framework:resource>
 
-                    <framework:resource>sqlsrv:server=localhost;Database=test</framework:resource>
+                    <framework:resource>sqlsrv:server=127.0.0.1;Database=app</framework:resource>
 
-                    <framework:resource>oci:host=localhost;dbname=test</framework:resource>
+                    <framework:resource>oci:host=127.0.0.1;dbname=app</framework:resource>
+
+                    <framework:resource>mongodb://127.0.0.1/app?collection=lock</framework:resource>
 
                     <framework:resource>%env(LOCK_DSN)%</framework:resource>
 
@@ -135,10 +138,11 @@ this behavior by using the ``lock`` key like:
             'lock' => 'zookeeper://z1.docker',
             'lock' => 'zookeeper://z1.docker,z2.docker',
             'lock' => 'sqlite:///%kernel.project_dir%/var/lock.db',
-            'lock' => 'mysql:host=127.0.0.1;dbname=lock',
-            'lock' => 'pgsql:host=127.0.0.1;dbname=lock',
-            'lock' => 'sqlsrv:server=localhost;Database=test',
-            'lock' => 'oci:host=localhost;dbname=test',
+            'lock' => 'mysql:host=127.0.0.1;dbname=app',
+            'lock' => 'pgsql:host=127.0.0.1;dbname=app',
+            'lock' => 'sqlsrv:server=127.0.0.1;Database=app',
+            'lock' => 'oci:host=127.0.0.1;dbname=app',
+            'lock' => 'mongodb://127.0.0.1/app?collection=lock',
             'lock' => '%env(LOCK_DSN)%',
 
             // named locks
