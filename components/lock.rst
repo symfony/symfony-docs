@@ -319,6 +319,7 @@ Store                                         Scope   Blocking  Expiring Sharing
 :ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes      no
 :ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes      no
 :ref:`PdoStore <lock-store-pdo>`              remote  no        yes      no
+:ref:`PostgreSqlStore <lock-store-pgsql>`     remote  yes       yes      yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes      yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no       no
 :ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no       no
@@ -452,6 +453,29 @@ You can also create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
 your code.
 
+.. _lock-store-pgsql:
+
+PostgreSqlStore
+~~~~~~~~~~~~~~~
+
+The PostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It requires a
+`PDO`_ connection, a `Doctrine DBAL Connection`_, or a
+`Data Source Name (DSN)`_. it nativly supports blocking, as weel as sharing
+locks.
+
+    use Symfony\Component\Lock\Store\PostgreSqlStore;
+
+    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'postgresql://myuser:mypassword@localhost:5634/lock';
+    $store = new PostgreSqlStore($databaseConnectionOrDSN);
+
+In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
+stores locks and does not expires.
+
+.. versionadded:: 5.2
+
+    PostgreSqlStore were introduced in Symfony 5.2.
+
 .. _lock-store-redis:
 
 RedisStore
@@ -551,6 +575,7 @@ Remote Stores
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
 :ref:`MongoDbStore <lock-store-mongodb>`,
 :ref:`PdoStore <lock-store-pdo>`,
+:ref:`PostgreSqlStore <lock-store-pgsql>`,
 :ref:`RedisStore <lock-store-redis>` and
 :ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
 the true owner of the lock. This token is stored in the
@@ -760,6 +785,20 @@ have synchronized clocks.
     To ensure locks don't expire prematurely; the TTLs should be set with
     enough extra time to account for any clock drift between nodes.
 
+PostgreSqlStore
+~~~~~~~~~~~~~~~
+
+The PdoStore relies on the `Advisory Locks`_ properties of the PostgreSQL
+database. That means that by using :ref:`PostgreSqlStore <lock-store-pgsql>`
+the locks will be automatically released at the end of the session in case the
+client cannot unlock for any reason.
+
+If the PostgreSQL service or the machine hosting it restarts, every lock would
+be lost without notifying the running processes.
+
+If the TCP connection is lost, the PostgreSQL may release locks without
+notifying the application.
+
 RedisStore
 ~~~~~~~~~~
 
@@ -864,6 +903,7 @@ are still running.
 
 .. _`a maximum of 1024 bytes in length`: https://docs.mongodb.com/manual/reference/limits/#Index-Key-Limit
 .. _`ACID`: https://en.wikipedia.org/wiki/ACID
+.. _`Advisory Locks`: https://www.postgresql.org/docs/current/explicit-locking.html
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
 .. _`Expire Data from Collections by Setting TTL`: https://docs.mongodb.com/manual/tutorial/expire-data/
