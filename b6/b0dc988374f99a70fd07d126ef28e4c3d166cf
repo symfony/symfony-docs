@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-07T10:56:23Z
+
+Would these changes apply to 4.4 branch too?
+
+---------------------------------------------------------------------------
+
+by jderusse at 2020-10-07T13:45:55Z
+
+> Would these changes apply to 4.4 branch too?
+
+Hmm it could, but they are cosmetic fix, and the https://github.com/symfony/symfony-docs/pull/14365/files#diff-1dc6462c0bc00fcdc7cba99d2f13e400L343 has been introduced in 5.1.
+That would requires to create 2 PR.
+
+TO you want me to rebase on 5.1.?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-07T13:47:13Z
+
+No, don't worry about that. 5.1 is fine then (we'll rebase while merging). Thanks!
