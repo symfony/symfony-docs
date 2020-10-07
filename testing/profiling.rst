@@ -69,6 +69,9 @@ The data collected by the Symfony Profiler can be used to check the number of
 database calls, the time spent in the framework, etc. All this information is
 provided by the collectors obtained through the ``$client->getProfile()`` call::
 
+    // tests/Controller/LuckyControllerTest.php
+    namespace App\Tests\Controller;
+    
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     class LuckyControllerTest extends WebTestCase
