@@ -46,6 +46,10 @@ following configuration file:
 This configuration tells Symfony to look for routes defined as annotations in
 any PHP class stored in the ``src/Controller/`` directory.
 
+.. caution::
+
+    If you define multiple PHP class per file, only the first declared class can be loaded, try to define one PHP class per file instead, visit `PSR-4 <https://www.php-fig.org/psr/psr-4/>`_ for more details.
+
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following::
 
