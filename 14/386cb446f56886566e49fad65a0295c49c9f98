@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by lyrixx at 2020-08-31T13:23:01Z
+
+@noniagriconomie Thanks for your feedback. I have addressed them
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-08-31T15:24:40Z
+
+Top, just i do not understood the « new Redis() » part, can you explain? Thx
+
+---------------------------------------------------------------------------
+
+by andrew-demb at 2020-08-31T17:34:48Z
+
+@noniagriconomie this class available with redis extension - https://github.com/phpredis/phpredis#classes-and-methods
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-08-31T20:11:52Z
+
+I see better thx
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-04T11:09:56Z
+
+Hi @lyrixx! Thanks for providing a documentation PR.
+
+In the docs, we're slowly migrating to focus on framework usage. This means that instead of writing component documentation, we write framework guides. Do you maybe have time to update this documentation to instead be in `/semaphore.rst` and focus on how to use the Semaphore component in the framework? (this probably means telling how to register specific services, as I can't find framework integration yet)
+
+> i just do not know if for the documentation it should be mentioned that the component is experimental for now in this version :)
+
+Yes, that should be mentioned :) See the 5.0 version of the string documentation for an example: https://github.com/symfony/symfony-docs/blob/a7e9a6f81cd06cbefda40f11404caab596337821/components/string.rst#L11-L14
