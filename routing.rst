@@ -76,6 +76,11 @@ the ``list()`` method of the ``BlogController`` class.
     example, URLs like ``/blog?foo=bar`` and ``/blog?foo=bar&bar=foo`` will
     also match the ``blog_list`` route.
 
+.. caution::
+
+    If you define multiple PHP classes in the same file, Symfony only loads the
+    routes of the first class, ignoring all the other routes.
+
 The route name (``blog_list``) is not important for now, but it will be
 essential later when :ref:`generating URLs <routing-generating-urls>`. You only
 have to keep in mind that each route name must be unique in the application.
