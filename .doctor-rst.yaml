@@ -92,3 +92,4 @@ whitelist:
         - '.. versionadded:: 0.2' # MercureBundle
         - 'provides a ``loginUser()`` method to simulate logging in in your functional'
         - '.. code-block:: twig'
+        - '.. versionadded:: 3.6' # MonologBundle
