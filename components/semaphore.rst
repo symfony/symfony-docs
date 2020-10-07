@@ -24,10 +24,14 @@ Installation
 Usage
 -----
 
-Semaphore are used to guarantee exclusive access to some shared resource.
+In computer science, a semaphore is a variable or abstract data type used to
+control access to a common resource by multiple processes in a concurrent
+system such as a multitasking operating system. The main difference
+with :doc:`locks </lock>` is that semaphores allow more than one process to
+access a resource, whereas locks only allow one process.
 
-Semaphore are created using a :class:`Symfony\\Component\\Semaphore\\SemaphoreFactory` class,
-which in turn requires another class to manage the storage of Semaphore::
+Create semaphores with the :class:`Symfony\\Component\\Semaphore\\SemaphoreFactory`
+class, which in turn requires another class to manage the storage::
 
     use Symfony\Component\Semaphore\SemaphoreFactory;
     use Symfony\Component\Semaphore\Store\RedisStore;
@@ -38,13 +42,12 @@ which in turn requires another class to manage the storage of Semaphore::
     $store = new RedisStore($redis);
     $factory = new SemaphoreFactory($store);
 
-
 The semaphore is created by calling the
 :method:`Symfony\\Component\\Semaphore\\SemaphoreFactory::createSemaphore`
 method. Its first argument is an arbitrary string that represents the locked
-resource. Its second argument is the number of process allowed. Then, a call to
-the :method:`Symfony\\Component\\Semaphore\\SemaphoreInterface::acquire` method
-will try to acquire the semaphore::
+resource. Its second argument is the maximum number of process allowed. Then, a
+call to the :method:`Symfony\\Component\\Semaphore\\SemaphoreInterface::acquire`
+method will try to acquire the semaphore::
 
     // ...
     $semaphore = $factory->createSemaphore('pdf-invoice-generation', 2);
@@ -62,7 +65,7 @@ already acquired.
 
 .. note::
 
-    Unlike other implementations, the Semaphore Component distinguishes
+    Unlike other implementations, the Semaphore component distinguishes
     semaphores instances even when they are created for the same resource. If a
     semaphore has to be used by several services, they should share the same
     ``Semaphore`` instance returned by the ``SemaphoreFactory::createSemaphore``
@@ -73,7 +76,6 @@ already acquired.
     If you don't release the semaphore explicitly, it will be released
     automatically on instance destruction. In some cases, it can be useful to
     lock a resource across several requests. To disable the automatic release
-    behavior, set the last argument of the ``createLock()`` method to
-    ``false``.
+    behavior, set the fifth argument of the ``createLock()`` method to ``false``.
 
 .. _`semaphores`: https://en.wikipedia.org/wiki/Semaphore_(programming)
