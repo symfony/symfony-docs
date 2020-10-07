@@ -1,36 +1,32 @@
 Setting up or Fixing File Permissions
 =====================================
 
-The ``var/`` directory in a Symfony application is used to store generated
-files (cache and logs) and file-based cache files. In the production
-environment, you often need to add explicit permissions to let Symfony
-write files into this directory.
+Symfony generates certain files in the ``var/`` directory of your project when
+running the application. In the ``dev`` :ref:`environment <configuration-environments>`,
+the ``bin/console`` and ``public/index.php`` files use ``umask()`` to make sure
+that the directory is writable. This means that you don't need to configure
+permissions when developing the application in your local machine.
 
-.. tip::
+However, using ``umask()`` is not considered safe in production. That's why you
+often need to configure some permissions explicitly in your production servers
+as explained in this article.
 
-    In dev environments, ``umask()`` is used in ``bin/console`` and
-    ``public/index.php`` to make sure the directory is writable. However,
-    this is not a safe method and should not be used in production.
+Permissions Required by Symfony Applications
+--------------------------------------------
 
-Setting up File Permissions in Production
------------------------------------------
-
-This section describes the required permissions. See
-:ref:`the next section <setup-file-permissions>` on how to add the
-permissions.
+These are the permissions required to run Symfony applications:
 
 * The ``var/log/`` directory must exist and must be writable by both your
   web server user and the terminal user;
 * The ``var/cache/`` directory must be writable by the terminal user (the
-  user running ``cache:warmup`` or ``cache:clear``). It must also be writable
-  by the web server user if you're using the
-  :doc:`filesystem cache provider </components/cache/adapters/filesystem_adapter>`;
-  or Doctrine query result cache.
+  user running ``cache:warmup`` or ``cache:clear`` commands);
+* The ``var/cache/`` directory must be writable by the web server user if you use
+  a :doc:`filesystem-based cache </components/cache/adapters/filesystem_adapter>`.
 
 .. _setup-file-permissions:
 
-Configuring File Permissions on Linux and macOS System
-------------------------------------------------------
+Configuring Permissions for Symfony Applications
+------------------------------------------------
 
 On Linux and macOS systems, if your web server user is different from your
 command line user, you need to configure permissions properly to avoid issues.
@@ -84,7 +80,7 @@ If none of the previous methods work for you, change the ``umask`` so that the
 cache and log directories are group-writable or world-writable (depending
 if the web server user and the command line user are in the same group or not).
 To achieve this, put the following line at the beginning of the ``bin/console``,
-``web/app.php`` and ``web/app_dev.php`` files::
+and ``public/index.php`` files::
 
     umask(0002); // This will let the permissions be 0775
 
