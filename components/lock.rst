@@ -276,8 +276,6 @@ support blocking, and expects a TTL to avoid stalled locks::
 
     Memcached does not support TTL lower than 1 second.
 
-.. _lock-store-pdo:
-
 .. _lock-store-mongodb:
 
 MongoDbStore
@@ -339,6 +337,7 @@ MongoDB Connection String:
     The ``collection`` querystring parameter is not part of the `MongoDB Connection String`_ definition.
     It is used to allow constructing a ``MongoDbStore`` using a `Data Source Name (DSN)`_ without ``$options``.
 
+.. _lock-store-pdo:
 
 PdoStore
 ~~~~~~~~
@@ -350,7 +349,7 @@ support blocking, and expects a TTL to avoid stalled locks::
     use Symfony\Component\Lock\Store\PdoStore;
 
     // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
-    $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=lock';
+    $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=app';
     $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
 .. note::
