@@ -44,6 +44,7 @@ are dispatched by a handler once that handler has fully finished. This can be by
 using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 ``DispatchAfterCurrentBusStamp`` stamp to :ref:`the message Envelope <messenger-envelopes>`::
 
+    // src/Messenger/CommandHandler/RegisterUserHandler.php
     namespace App\Messenger\CommandHandler;
 
     use App\Entity\User;
@@ -85,6 +86,7 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 
 .. code-block:: php
 
+    // src/Messenger/EventSubscriber/WhenUserRegisteredThenSendWelcomeEmail.php
     namespace App\Messenger\EventSubscriber;
 
     use App\Entity\User;

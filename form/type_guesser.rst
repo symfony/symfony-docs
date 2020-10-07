@@ -82,6 +82,7 @@ The ``TypeGuess`` constructor requires three options:
 With this knowledge, you can implement the ``guessType()`` method of the
 ``PHPDocTypeGuesser``::
 
+    // src/Form/TypeGuesser/PHPDocTypeGuesser.php
     namespace App\Form\TypeGuesser;
 
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -221,7 +222,7 @@ and tag it with ``form.type_guesser``:
     :method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuessers` of
     the ``FormFactoryBuilder`` to register new type guessers::
 
-        use Acme\Form\PHPDocTypeGuesser;
+        use App\Form\TypeGuesser\PHPDocTypeGuesser;
         use Symfony\Component\Form\Forms;
 
         $formFactory = Forms::createFormFactoryBuilder()

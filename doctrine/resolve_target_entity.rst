@@ -42,8 +42,8 @@ A Customer entity::
     // src/Entity/Customer.php
     namespace App\Entity;
 
-    use Acme\CustomerBundle\Entity\Customer as BaseCustomer;
-    use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
+    use App\Entity\CustomerInterface as BaseCustomer;
+    use App\Model\InvoiceSubjectInterface;
     use Doctrine\ORM\Mapping as ORM;
 
     /**
@@ -58,10 +58,10 @@ A Customer entity::
 
 An Invoice entity::
 
-    // src/Acme/InvoiceBundle/Entity/Invoice.php
-    namespace Acme\InvoiceBundle\Entity;
+    // src/Entity/Invoice.php
+    namespace App\Entity;
 
-    use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
+    use App\Model\InvoiceSubjectInterface;
     use Doctrine\ORM\Mapping as ORM;
 
     /**
@@ -73,7 +73,7 @@ An Invoice entity::
     class Invoice
     {
         /**
-         * @ORM\ManyToOne(targetEntity="Acme\InvoiceBundle\Model\InvoiceSubjectInterface")
+         * @ORM\ManyToOne(targetEntity="App\Model\InvoiceSubjectInterface")
          * @var InvoiceSubjectInterface
          */
         protected $subject;
@@ -81,8 +81,8 @@ An Invoice entity::
 
 An InvoiceSubjectInterface::
 
-    // src/Acme/InvoiceBundle/Model/InvoiceSubjectInterface.php
-    namespace Acme\InvoiceBundle\Model;
+    // src/Model/InvoiceSubjectInterface.php
+    namespace App\Model;
 
     /**
      * An interface that the invoice Subject object should implement.
@@ -115,7 +115,7 @@ about the replacement:
             orm:
                 # ...
                 resolve_target_entities:
-                    Acme\InvoiceBundle\Model\InvoiceSubjectInterface: App\Entity\Customer
+                    App\Model\InvoiceSubjectInterface: App\Entity\Customer
 
     .. code-block:: xml
 
@@ -132,7 +132,7 @@ about the replacement:
             <doctrine:config>
                 <doctrine:orm>
                     <!-- ... -->
-                    <doctrine:resolve-target-entity interface="Acme\InvoiceBundle\Model\InvoiceSubjectInterface">App\Entity\Customer</doctrine:resolve-target-entity>
+                    <doctrine:resolve-target-entity interface="App\Model\InvoiceSubjectInterface">App\Entity\Customer</doctrine:resolve-target-entity>
                 </doctrine:orm>
             </doctrine:config>
         </container>
@@ -140,8 +140,8 @@ about the replacement:
     .. code-block:: php
 
         // config/packages/doctrine.php
-        use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
         use App\Entity\Customer;
+        use App\Model\InvoiceSubjectInterface;
 
         $container->loadFromExtension('doctrine', [
             'orm' => [
