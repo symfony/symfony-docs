@@ -264,6 +264,8 @@ But in Symfony 3.3, thanks to autowiring, all you need to do is type-hint the
 argument with ``InvoiceGenerator``::
 
     // src/Service/InvoiceMailer.php
+    namespace App\Service;
+
     // ...
 
     class InvoiceMailer
@@ -388,6 +390,9 @@ and autowiring like any other service.
 To make life even easier, it's now possible to autowire arguments to your controller
 action methods, like you can with the constructor of services. For example::
 
+    // src/Controller/InvoiceController.php
+    namespace App\Controller;
+
     use Psr\Log\LoggerInterface;
 
     class InvoiceController extends AbstractController
@@ -417,6 +422,8 @@ this file. For example, suppose you want to create an event subscriber. First, y
 create the class::
 
     // src/EventSubscriber/SetHeaderSusbcriber.php
+    namespace App\EventSubscriber;
+
     // ...
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
