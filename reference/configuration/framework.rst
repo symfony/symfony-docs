@@ -148,6 +148,7 @@ Configuration
       * `max_delay`_
       * `max_retries`_
       * `multiplier`_
+      * `jitter`_
 
     * `timeout`_
     * `max_duration`_
@@ -164,6 +165,7 @@ Configuration
     * `max_delay`_
     * `max_retries`_
     * `multiplier`_
+    * `jitter`_
 
 * `http_method_override`_
 * `ide`_
@@ -784,7 +786,8 @@ will automaticaly retry failed HTTP requests.
                 max_retries: 2
                 delay: 1000
                 multiplier: 3
-                max_delay: 500
+                max_delay: 5000
+                jitter: 0.3
 
             scoped_clients:
                 my_api.client:
@@ -835,8 +838,8 @@ backoff_service
 The service id used to compute the time to wait between retries. By default, it
 uses an instance of
 :class:`Symfony\\Component\\HttpClient\\Retry\\ExponentialBackOff` configured
-with ``delay``, ``max_delay`` and ``multiplier`` options. This class has to
-implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface`.
+with ``delay``, ``max_delay``, ``multiplier`` and ``jitter`` options. This
+class has to implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface`.
 
 base_uri
 ........
@@ -968,6 +971,18 @@ http_version
 
 The HTTP version to use, typically ``'1.1'``  or ``'2.0'``. Leave it to ``null``
 to let Symfony select the best version automatically.
+
+jitter
+......
+
+**type**: ``float`` **default**: ``0.1``
+
+.. versionadded:: 5.2
+
+    The ``jitter`` option was introduced in Symfony 5.2.
+
+The probability (expressed with a float between ``0.0`` and ``1.0``) of
+randomness to apply to the delay to wait between retries.
 
 local_cert
 ..........
