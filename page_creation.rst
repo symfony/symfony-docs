@@ -176,6 +176,8 @@ the debugging routes in the next section.
 
 You'll learn about many more commands as you continue!
 
+.. _web-debug-toolbar:
+
 The Web Debug Toolbar: Debugging Dream
 --------------------------------------
 
