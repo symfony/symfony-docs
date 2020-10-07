@@ -9,6 +9,8 @@ application. This is necessary if you are using different databases or even
 vendors with entirely different sets of entities. In other words, one entity
 manager that connects to one database will handle some entities while another
 entity manager that connects to another database might handle the rest.
+It is also possible to use multiple entity managers to manage a common set of
+entities, each with their own database connection strings or separate cache configuration.
 
 .. note::
 
@@ -44,7 +46,6 @@ The following configuration code shows how you can configure two entity managers
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
-
             orm:
                 default_entity_manager: default
                 entity_managers:
@@ -183,7 +184,7 @@ In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
 ``src/Entity/Main`` directory, while the ``customer`` entity manager manages
 entities in ``src/Entity/Customer``. You've also defined two connections, one
-for each entity manager.
+for each entity manager, but you are free to define the same connection for both.
 
 .. caution::
 
@@ -282,5 +283,27 @@ The same applies to repository calls::
             ;
         }
     }
+
+.. caution::
+
+    One entity can be managed by more than one entity manager. This however
+    result in unexpected behavior when extending from ``ServiceEntityRepository``
+    in your custom repository. The ``ServiceEntityRepository`` always
+    uses the configured entity manager for that entity.
+
+    In order to fix this situation, extend ``EntityRepository`` instead and
+    no longer rely on autowiring::
+
+        // src/Repository/CustomerRepository.php
+        namespace App\Repository;
+
+        use Doctrine\ORM\EntityRepository;
+
+        class CustomerRepository extends EntityRepository
+        {
+            // ...
+        }
+
+	You should now always fetch this repository using ``ManagerRegistry::getRepository()``.
 
 .. _`several alternatives`: https://stackoverflow.com/a/11494543
