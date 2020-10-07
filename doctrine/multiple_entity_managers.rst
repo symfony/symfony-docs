@@ -287,7 +287,7 @@ The same applies to repository calls::
 .. caution::
 
     One entity can be managed by more than one entity manager. This however
-    result in unexpected behavior when extending from ``ServiceEntityRepository``
+    results in unexpected behavior when extending from ``ServiceEntityRepository``
     in your custom repository. The ``ServiceEntityRepository`` always
     uses the configured entity manager for that entity.
 
