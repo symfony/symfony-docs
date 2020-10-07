@@ -208,7 +208,7 @@ JSON/XML/CSV/YAML encoders. When your application throws an exception, Symfony
 can output it in one of those formats. If you want to change the output
 contents, create a new Normalizer that supports the ``FlattenException`` input::
 
-    # src/App/Serializer/MyCustomProblemNormalizer.php
+    # src/Serializer/MyCustomProblemNormalizer.php
     namespace App\Serializer;
 
     use Symfony\Component\ErrorHandler\Exception\FlattenException;

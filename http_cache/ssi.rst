@@ -85,7 +85,8 @@ to cache a static GDPR content block. With SSI, you can add some expiration
 on this block and keep the page private::
 
     // src/Controller/ProfileController.php
-
+    namespace App\Controller;
+    
     // ...
     class ProfileController extends AbstractController
     {

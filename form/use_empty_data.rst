@@ -44,6 +44,7 @@ that takes arguments. Remember, the default ``data_class`` option calls
 that constructor with no arguments::
 
     // src/Form/Type/BlogType.php
+    namespace App\Form\Type;
 
     // ...
     use App\Entity\Blog;

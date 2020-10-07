@@ -126,6 +126,8 @@ access the properties of the ``Customer`` instance instead. Convenient, eh?
 Finally, make this work by adding the location form to your two original forms::
 
     // src/Form/Type/CompanyType.php
+    namespace App\Form\Type;
+
     use App\Entity\Company;
     // ...
 
@@ -141,6 +143,8 @@ Finally, make this work by adding the location form to your two original forms::
 .. code-block:: php
 
     // src/Form/Type/CustomerType.php
+    namespace App\Form\Type;
+
     use App\Entity\Customer;
     // ...
 

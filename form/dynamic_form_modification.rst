@@ -255,6 +255,8 @@ Now that you have all the basics in place you can use the features of the
 security helper to fill in the listener logic::
 
     // src/Form/Type/FriendMessageFormType.php
+    namespace App\Form\Type;
+
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
