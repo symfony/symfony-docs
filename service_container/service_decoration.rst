@@ -378,6 +378,7 @@ Three different behaviors are available:
     When using ``null``, you may have to update the decorator constructor in
     order to make decorated dependency nullable::
 
+        // src/Service/DecoratorService.php
         namespace App\Service;
 
         use Acme\OptionalBundle\Service\OptionalService;
