@@ -609,15 +609,17 @@ trans_default_domain
 
 This will set the default domain in the current template.
 
+.. _reference-twig-tag-stopwatch:
+
 stopwatch
 ~~~~~~~~~
 
 .. code-block:: twig
 
-    {% stopwatch 'name' %}...{% endstopwatch %}
+    {% stopwatch 'event_name' %}...{% endstopwatch %}
 
-This will time the run time of the code inside it and put that on the timeline
-of the WebProfilerBundle.
+This measures the time and memory used to execute some code in the template and
+displays it in the Symfony profiler. See :ref:`how to profile Symfony applications <profiling-applications>`.
 
 .. _reference-twig-tests:
 
