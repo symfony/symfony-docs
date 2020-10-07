@@ -38,6 +38,8 @@ To change this value, override the ``getCharset()`` method and return another
 charset::
 
     // src/Kernel.php
+    namespace App;
+
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
     // ...
 
@@ -71,6 +73,8 @@ override the :method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir`
 method to return the right project directory::
 
     // src/Kernel.php
+    namespace App;
+
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
     // ...
 

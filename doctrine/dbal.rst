@@ -44,6 +44,9 @@ if you *don't* want to use the Doctrine ORM.
 You can then access the Doctrine DBAL connection by autowiring the ``Connection``
 object::
 
+    // src/Controller/UserController.php
+    namespace App\Controller;
+
     use Doctrine\DBAL\Driver\Connection;
 
     class UserController extends AbstractController

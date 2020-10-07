@@ -16,6 +16,7 @@ Sometimes it is hard to tell which entries in the log belong to which session
 and/or request. The following example will add a unique token for each request
 using a processor::
 
+    // src/Logger/SessionRequestProcessor.php
     namespace App\Logger;
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;

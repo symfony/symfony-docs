@@ -35,6 +35,9 @@ the current log level and the console verbosity.
 
 The example above could then be rewritten as::
 
+    // src/Command/YourCommand.php
+    namespace App\Command;
+
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;

@@ -56,6 +56,8 @@ define a callback for the ``prePersist`` Doctrine event:
     .. code-block:: php-annotations
 
         // src/Entity/Product.php
+        namespace App\Entity;
+
         use Doctrine\ORM\Mapping as ORM;
 
         // When using annotations, don't forget to add @ORM\HasLifecycleCallbacks()
