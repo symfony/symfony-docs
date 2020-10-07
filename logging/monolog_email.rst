@@ -4,10 +4,10 @@
 How to Configure Monolog to Email Errors
 ========================================
 
-.. caution::
+.. versionadded:: 3.6
 
-    This feature is not compatible yet with the new :doc:`Symfony mailer </mailer>`,
-    so it requires using SwiftMailer.
+    Support for emailing errors using :doc:`Symfony mailer </mailer>` was added
+    in MonologBundle 3.6.
 
 `Monolog`_ can be configured to send an email when an error occurs within an
 application. The configuration for this requires a few nested handlers
@@ -33,9 +33,9 @@ it is broken down.
                     handler:      deduplicated
                 deduplicated:
                     type:    deduplication
-                    handler: swift
-                swift:
-                    type:       swift_mailer
+                    handler: symfony_mailer
+                symfony_mailer:
+                    type:       symfony_mailer
                     from_email: 'error@example.com'
                     to_email:   'error@example.com'
                     # or list of recipients
@@ -73,11 +73,11 @@ it is broken down.
                 <monolog:handler
                     name="deduplicated"
                     type="deduplication"
-                    handler="swift"
+                    handler="symfony_mailer"
                 />
                 <monolog:handler
-                    name="swift"
-                    type="swift_mailer"
+                    name="symfony_mailer"
+                    type="symfony_mailer"
                     from-email="error@example.com"
                     subject="An Error Occurred! %%message%%"
                     level="debug"
@@ -114,10 +114,10 @@ it is broken down.
                 ],
                 'deduplicated' => [
                     'type'    => 'deduplication',
-                    'handler' => 'swift',
+                    'handler' => 'symfony_mailer',
                 ],
-                'swift' => [
-                    'type'         => 'swift_mailer',
+                'symfony_mailer' => [
+                    'type'         => 'symfony_mailer',
                     'from_email'   => 'error@example.com',
                     'to_email'     => 'error@example.com',
                     // or a list of recipients
@@ -162,7 +162,7 @@ You can adjust the time period using the ``time`` option:
                     type: deduplication
                     # the time in seconds during which duplicate entries are discarded (default: 60)
                     time: 10
-                    handler: swift
+                    handler: symfony_mailer
 
     .. code-block:: xml
 
@@ -172,7 +172,7 @@ You can adjust the time period using the ``time`` option:
         <monolog:handler name="deduplicated"
             type="deduplication"
             time="10"
-            handler="swift"/>
+            handler="symfony_mailer"/>
 
     .. code-block:: php
 
@@ -184,12 +184,12 @@ You can adjust the time period using the ``time`` option:
                     'type'    => 'deduplication',
                     // the time in seconds during which duplicate entries are discarded (default: 60)
                     'time' => 10,
-                    'handler' => 'swift',
+                    'handler' => 'symfony_mailer',
                 ],
             ],
         ]);
 
-The messages are then passed to the ``swift`` handler. This is the handler that
+The messages are then passed to the ``symfony_mailer`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are
 straightforward, the to and from addresses, the formatter, the content type
 and the subject.
@@ -217,9 +217,9 @@ get logged on the server as well as the emails being sent:
                     level: debug
                 deduplicated:
                     type:    deduplication
-                    handler: swift
-                swift:
-                    type:         swift_mailer
+                    handler: symfony_mailer
+                symfony_mailer:
+                    type:         symfony_mailer
                     from_email:   'error@example.com'
                     to_email:     'error@example.com'
                     subject:      'An Error Occurred! %%message%%'
@@ -259,11 +259,11 @@ get logged on the server as well as the emails being sent:
                 <monolog:handler
                     name="deduplicated"
                     type="deduplication"
-                    handler="swift"
+                    handler="symfony_mailer"
                 />
                 <monolog:handler
-                    name="swift"
-                    type="swift_mailer"
+                    name="symfony_mailer"
+                    type="symfony_mailer"
                     from-email="error@example.com"
                     subject="An Error Occurred! %%message%%"
                     level="debug"
@@ -303,10 +303,10 @@ get logged on the server as well as the emails being sent:
                 ],
                 'deduplicated' => [
                     'type'     => 'deduplication',
-                    'handler'  => 'swift',
+                    'handler'  => 'symfony_mailer',
                 ],
-                'swift' => [
-                    'type'         => 'swift_mailer',
+                'symfony_mailer' => [
+                    'type'         => 'symfony_mailer',
                     'from_email'   => 'error@example.com',
                     'to_email'     => 'error@example.com',
                     // or a list of recipients
