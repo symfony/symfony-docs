@@ -975,14 +975,16 @@ to let Symfony select the best version automatically.
 jitter
 ......
 
-**type**: ``float`` **default**: ``0.1``
+**type**: ``float`` **default**: ``0.1`` (must be between 0.0 and 1.0)
 
 .. versionadded:: 5.2
 
     The ``jitter`` option was introduced in Symfony 5.2.
 
-The probability (expressed with a float between ``0.0`` and ``1.0``) of
-randomness to apply to the delay to wait between retries.
+This option adds some randomness to the delay. It's useful to avoid sending
+multiple requests to the server at the exact same time. The randomness is
+calculated as ``delay * jitter``. For example: if delay is ``1000ms`` and jitter
+is ``0.2``, the actual delay will be a number between ``800`` and ``1200`` (1000 +/- 20%).
 
 local_cert
 ..........
