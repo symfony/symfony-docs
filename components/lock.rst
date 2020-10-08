@@ -460,8 +460,7 @@ PostgreSqlStore
 
 The PostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It requires a
 `PDO`_ connection, a `Doctrine DBAL Connection`_, or a
-`Data Source Name (DSN)`_. it nativly supports blocking, as weel as sharing
-locks.
+`Data Source Name (DSN)`_. It supports native blocking, as well as sharing locks.
 
     use Symfony\Component\Lock\Store\PostgreSqlStore;
 
@@ -470,11 +469,11 @@ locks.
     $store = new PostgreSqlStore($databaseConnectionOrDSN);
 
 In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
-stores locks and does not expires.
+store locks and does not expire.
 
 .. versionadded:: 5.2
 
-    PostgreSqlStore were introduced in Symfony 5.2.
+    The ``PostgreSqlStore`` was introduced in Symfony 5.2.
 
 .. _lock-store-redis:
 
