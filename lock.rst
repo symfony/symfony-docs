@@ -58,6 +58,7 @@ this behavior by using the ``lock`` key like:
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
             lock: 'mysql:host=127.0.0.1;dbname=app'
             lock: 'pgsql:host=127.0.0.1;dbname=app'
+            lock: 'pgsql+advisory:host=127.0.0.1;dbname=lock'
             lock: 'sqlsrv:server=127.0.0.1;Database=app'
             lock: 'oci:host=127.0.0.1;dbname=app'
             lock: 'mongodb://127.0.0.1/app?collection=lock'
@@ -107,6 +108,8 @@ this behavior by using the ``lock`` key like:
 
                     <framework:resource>pgsql:host=127.0.0.1;dbname=app</framework:resource>
 
+                    <framework:resource>pgsql+advisory:host=127.0.0.1;dbname=lock</framework:resource>
+
                     <framework:resource>sqlsrv:server=127.0.0.1;Database=app</framework:resource>
 
                     <framework:resource>oci:host=127.0.0.1;dbname=app</framework:resource>
@@ -140,6 +143,7 @@ this behavior by using the ``lock`` key like:
             'lock' => 'sqlite:///%kernel.project_dir%/var/lock.db',
             'lock' => 'mysql:host=127.0.0.1;dbname=app',
             'lock' => 'pgsql:host=127.0.0.1;dbname=app',
+            'lock' => 'pgsql+advisory:host=127.0.0.1;dbname=lock',
             'lock' => 'sqlsrv:server=127.0.0.1;Database=app',
             'lock' => 'oci:host=127.0.0.1;dbname=app',
             'lock' => 'mongodb://127.0.0.1/app?collection=lock',
