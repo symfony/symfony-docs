@@ -73,6 +73,33 @@ method can be safely called repeatedly, even if the lock is already acquired.
     across several requests. To disable the automatic release behavior, set the
     third argument of the ``createLock()`` method to ``false``.
 
+Serializing Locks
+------------------
+
+The ``Key`` contains the state of the ``Lock`` and can be serialized. This
+allows the user to begin a long job in a process by acquiring the lock, and
+to continue the job in an other process within the same lock.::
+
+    use Symfony\Component\Lock\Key;
+    use Symfony\Component\Lock\Lock;
+
+    $key = new Key('article.'.$article->getId());
+    $lock = new Lock($key, $this->store, 300, false);
+    $lock->acquire(true);
+
+    $this->bus->dispatch(new RefreshTaxonomy($article, $key));
+
+.. note::
+
+    Don't forget to disable the autoRelease to avoid releasing the lock when
+    the destructor will be called.
+
+All stores are not compatible with serialization and cross-process locking:
+For instance the kernel will automatically releases Semaphores acquires by the
+:ref:`SemaphoreStore <lock-store-semaphore>` store.
+Wen a lock is acquired with such store, and hte application try to serialize
+the key, and exception will be thrown
+
 .. _lock-blocking-locks:
 
 Blocking Locks
