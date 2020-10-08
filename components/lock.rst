@@ -76,9 +76,9 @@ method can be safely called repeatedly, even if the lock is already acquired.
 Serializing Locks
 ------------------
 
-The ``Key`` contains the state of the ``Lock`` and can be serialized. This
+The ``Key`` contains the state of the ``Lock`` and can be serialized. This
 allows the user to begin a long job in a process by acquiring the lock, and
-to continue the job in an other process within the same lock.::
+continue the job in an other process using the same lock::
 
     use Symfony\Component\Lock\Key;
     use Symfony\Component\Lock\Lock;
@@ -92,13 +92,12 @@ to continue the job in an other process within the same lock.::
 .. note::
 
     Don't forget to disable the autoRelease to avoid releasing the lock when
-    the destructor will be called.
+    the destructor is called.
 
-All stores are not compatible with serialization and cross-process locking:
-For instance the kernel will automatically releases Semaphores acquires by the
-:ref:`SemaphoreStore <lock-store-semaphore>` store.
-Wen a lock is acquired with such store, and hte application try to serialize
-the key, and exception will be thrown
+Not all stores are compatible with serialization and cross-process locking:
+for example, the kernel will automatically release semaphores acquired by the
+:ref:`SemaphoreStore <lock-store-semaphore>` store. If you use an incompatible
+store, an exception will be thrown when the application tries to serialize the key.
 
 .. _lock-blocking-locks:
 
