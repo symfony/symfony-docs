@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-07T14:58:53Z
+
+Is this a new feature or something that was already possible. If that's the case, which would be the best branch to merge this? 4.4. or 5.1? Thanks!
+
+---------------------------------------------------------------------------
+
+by jderusse at 2020-10-07T17:12:07Z
+
+You're right. This is a behavior that as never been documented.
+
+Rebased on top of 4.4
