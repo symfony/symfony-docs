@@ -52,6 +52,7 @@ Topics
     notifier
     performance
     profiler
+    rate_limiter
     routing
     security
     session
