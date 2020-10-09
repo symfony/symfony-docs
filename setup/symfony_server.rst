@@ -361,24 +361,22 @@ When Docker services are running, browse a page of your Symfony application and
 check the "Symfony Server" section in the web debug toolbar; you'll see that
 "Docker Compose" is "Up".
 
-If your Docker Compose file is not at the root of the project, you can pass that information
-to the Symfony Server. It works exactly the same as for ``docker-compose``.
-
-Let's say you have your ``docker-compose.yaml`` file under a ``docker/`` directory.
-You start your containers like this:
+If your Docker Compose file is not at the root of the project, use the
+``COMPOSE_FILE`` and ``COMPOSE_PROJECT_NAME`` environment variables to define
+its location, same as for ``docker-compose``:
 
 .. code-block:: bash
 
+    # start your containers:
     COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
 
-And if you are using the same environment variables with the Symfony CLI, things will work. For instance:
-
-.. code-block:: bash
-
+    # run any Symfony CLI command:
     COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export
 
-If you have more than one docker-compose files you can provide them all separated by ``:``
-more information here: https://docs.docker.com/compose/reference/envvars/
+.. note::
+
+    If you have more than one docker-compose files you can provide them all
+    separated by ``:``, as explained in the `Docker compose CLI env var reference`_.
 
 SymfonyCloud Integration
 ------------------------
@@ -400,3 +398,4 @@ debug any issues.
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
 .. _`is treated differently`: https://ec.haxx.se/usingcurl/usingcurl-proxies#http_proxy-in-lower-case-only
+.. _`Docker compose CLI env var reference`: https://docs.docker.com/compose/reference/envvars/
