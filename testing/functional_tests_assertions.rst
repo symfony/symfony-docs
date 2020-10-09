@@ -81,6 +81,10 @@ Crawler
 - ``assertPageTitleContains()``
 - ``assertInputValueSame()``
 - ``assertInputValueNotSame()``
+- ``assertCheckboxChecked()``
+- ``assertCheckboxNotChecked()``
+- ``assertFormValue()``
+- ``assertNoFormValue()``
 
 Mailer
 ~~~~~~
