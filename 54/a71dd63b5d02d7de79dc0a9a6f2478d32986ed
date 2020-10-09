@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-07T15:27:02Z
+
+Basically there are 2 "Sets" of configuration:
+
+```yaml
+framework:
+  rate_limiter:
+    some_window_limited_limiter:
+      strategy: fixed_window
+      interval: '1 min'
+      limit: 5
+
+    some_token_bucket_limiter:
+      strategy: token_bucket
+      limit: 5
+      rate: { interval: '1 min', amount: 1 }
+```
+
+In short explanation:
+
+A *fixed window* can be represented by "time windows". They start at the first hit and then allow a maximum number of hits (`limit`) in a window from that start time (`interval`). After that interval, the number of hits is reset and you can start registering hits again. Etc.
+
+A *token bucket* can be represented as a real bucket. It's initially filled with `limit` tokens. Each hit takes a token out of this bucket. When the bucket is empty, hits are rejected. The bucket is filled using `rate` as fill rate (e.g. 1 token every minute). The bucket's maximum fill capacity is `limit`.
+
+---
+
+Just like the docs, the config also needs some iteration I think. I now used the password hashing method of registration, but I'm not too sure. Maybe this is more clean and easier to understand?
+
+```yaml
+framework:
+  rate_limiter:
+    some_window_limited_limiter:
+      fixed_window:
+        interval: 1m
+        limit: 5
+
+    some_token_bucket_limiter:
+      token_bucket:
+        limit: 5
+        rate: { interval: 1m, amount: 1 }
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-08T08:21:29Z
+
+Thanks for your comments! It's more clear now, so I've updated the docs.
+
+About the config ... I prefer the current format instead of the other one proposed below.
+
+I still have a question about the `interval` option. Which are the possible formats/syntax of this parameter? Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-08T16:36:17Z
+
+> I still have a question about the interval option. Which are the possible formats/syntax of this parameter? Thanks!
+
+This is a bit difficult to explain, but it's everything that PHP's `DateTime` object supports after `+`. So `+1 minute`, `+1 min`, `+5 hours`, etc. but then without the `+` prefix. A formal list can be found here in the `unit` definition: https://www.php.net/datetime.formats.relative
+
+```
+unit    := (('sec' | 'second' | 'min' | 'minute' | 'hour' | 'day' | 'fortnight' | 'forthnight' | 'month' | 'year') 's'?) | 'weeks' | daytext
+daytext := 'weekday', 'weekdays'
+```
+
+Please note that my previous comment was using a wrong syntax - I've updated it accordingly.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-08T18:07:35Z
+
+Wouter, thanks for your amazing review 😍   I did all the requested changes!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-08T18:27:40Z
+
+Thanks again for the new review. Thanks to your help this doc is coming along nicely 👍
