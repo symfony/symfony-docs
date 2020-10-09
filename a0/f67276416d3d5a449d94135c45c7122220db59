@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-09T06:37:59Z
+
+A quick question: do these changes apply to 4.4 or 5.1 too? Or are the newly added stamps 5.x only? Thanks!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-10-09T06:40:09Z
+
+Correct. It applies to 4.4 and 5.1 too.
+
+Should I be more careful selecting base branch in the future?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-09T06:49:24Z
+
+No worries. It's common to have to change the branch while merging. We can do that with the tool we use to merge things, so it doesn't mean more work for maintainers. I'm going to merge it in 4.4 and up. Thanks!
