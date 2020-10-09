@@ -173,7 +173,7 @@ as you normally do:
     leverage a (feature)[https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-production]
     that dumps your environments variables into a flat file:
 
-.. code-block:: terminal
+    .. code-block:: terminal
 
         $ composer dump-env prod
 
