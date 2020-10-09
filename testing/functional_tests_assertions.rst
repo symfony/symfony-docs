@@ -86,6 +86,12 @@ Crawler
 - ``assertFormValue()``
 - ``assertNoFormValue()``
 
+.. versionadded:: 5.2
+
+    The ``assertCheckboxChecked()``, ``assertCheckboxNotChecked()``,
+    ``assertFormValue()`` and ``assertNoFormValue()`` methods were introduced
+    in Symfony 5.2.
+
 Mailer
 ~~~~~~
 
