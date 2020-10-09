@@ -84,6 +84,7 @@ method to return the right project directory::
         }
     }
 
+
 Cache Directory
 ~~~~~~~~~~~~~~~
 
@@ -91,12 +92,34 @@ Cache Directory
 
 This returns the absolute path of the cache directory of your Symfony project.
 It's calculated automatically based on the current
-:ref:`environment <configuration-environments>`.
+:ref:`environment <configuration-environments>`. Data might be written to this path
+at runtime.
 
 This value is exposed via the ``kernel.cache_dir`` configuration parameter and
 the :method:`Symfony\\Component\\HttpKernel\\Kernel::getCacheDir` method. To
-change this setting, override the ``getCacheDir()`` method to return the right
+change this setting, override the ``getCacheDir()`` method to return the correct
 cache directory.
+
+Build Directory
+~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``$this->getCacheDir()``
+
+.. versionadded:: 5.2
+
+    The build directory feature was introduced in Symfony 5.2.
+
+This returns the absolute path of a build directory of your Symfony project. This
+directory can be used to separate read-only cache (i.e. the compiled container)
+from read-write cache (i.e. cache pools). Specify a non-default value when the
+application is deployed in a read-only filesystem like a Docker container or AWS
+Lambda.
+
+This value is exposed via the ``kernel.build_dir`` configuration parameter and
+the :method:`Symfony\\Component\\HttpKernel\\Kernel::getBuildDir` method. To
+change this setting, override the ``getBuildDir()`` method to return the correct
+build directory.
+
 
 Log Directory
 ~~~~~~~~~~~~~
