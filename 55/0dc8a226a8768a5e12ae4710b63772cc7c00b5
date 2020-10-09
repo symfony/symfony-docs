@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-10-09T10:41:23Z
+
+I updated the PR. I placed this section under "Cache Directory" now because `$this->getCacheDir()` is the default value and we refer to the read-write cache.
