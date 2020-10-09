@@ -813,6 +813,7 @@ following methods::
     // returns info coming from the transport layer, such as "response_headers",
     // "redirect_count", "start_time", "redirect_url", etc.
     $httpInfo = $response->getInfo();
+
     // you can get individual info too
     $startTime = $response->getInfo('start_time');
 
