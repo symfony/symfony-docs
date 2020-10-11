@@ -11,6 +11,8 @@ In Symfony 5.1, a new authentication system was introduced. This system
 changes the internals of Symfony Security, to make it more extensible
 and more understandable.
 
+.. _security-enable-authenticator-manager:
+
 Enabling the System
 -------------------
 
