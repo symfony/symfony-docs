@@ -1176,27 +1176,27 @@ The ``SQS`` transport configuration looks like this:
     The transport will automatically create queues that are needed. This
     can be disabled setting the "auto_setup" option to ``false``.
 
-A number of options can be configured via the DSN or via the ``options`` key
+A numbeXr of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-==================  =====================================  ======================
-     Option         Description                            Default
-==================  =====================================  ======================
-endpoint            Absolute URL to the SQS service        https://sqs.eu-west-1.amazonaws.com
-region              Name of the AWS region                 eu-west-1
-queue_name          Name of the queue                      messages
-account             Identifier of the AWS account          The owner of the credentials
+==================  ======================================  ======================
+     Option         Description                             Default
+==================  ======================================  ======================
+endpoint            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
+region              Name of the AWS region                  eu-west-1
+queue_name          Name of the queue                       messages
+account             Identifier of the AWS account           The owner of the credentials
 access_key          AWS access key
 secret_key          AWS secret key
-buffer_size         Number of messages to prefetch         9
-wait_time           `Long polling`_ duration in seconds    20
-poll_timeout        Wait for new message duration in       0.1
+buffer_size         Number of messages to prefetch          9
+wait_time           `Long polling`_ duration in seconds     20
+poll_timeout        Wait for new message duration in        0.1
                     seconds
-visibility_timeout  Amount of seconds the message will     Queue's configuration
+visibility_timeout  Amount of seconds the message will      Queue's configuration
                     not be visible (`Visibility Timeout`_)
-auto_setup          Whether the table should be created    true
+auto_setup          Whether the table should be created     true
                     automatically during send / get.
-==================  =====================================  ======================
+==================  ======================================  ======================
 
 .. note::
 
@@ -1210,7 +1210,7 @@ auto_setup          Whether the table should be created    true
 
 .. note::
 
-    If the queue name is suffixed by ``.fifo``, AWS will creates a `FIFO queue`_
+    If the queue name is suffixed by ``.fifo``, AWS will creates a `FIFO queue`_.
     Use the stamp :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFifoStamp`
     to define the ``Message group ID`` and the ``Message deduplication ID``.
 
