@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by derrabus at 2020-09-12T12:55:12Z
+
+> So I think our code examples should always base on the lower bound of Symfony's PHP requirements, which at this moment is 7.2.5 for Symfony 5.2.
+
+That would likely mean we cannot switch the code examples to attributes before Symfony 7.0 in 2023. I'm rolling back the examples in question, but we might want to reconsider this rule in a year or so.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-09-12T14:14:44Z
+
+> That would likely mean we cannot switch the code examples to attributes before Symfony 7.0 in 2023. I'm rolling back the examples in question, but we might want to reconsider this rule in a year or so.
+
+Yeah, and maybe the other doc team members have another opinion than me :). Btw, I think it's also good to consider PHP 8 as lower bound for Symfony 6, given that it does bring significant new features (like attributes) and is released a year before Symfony 6.0.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-10-02T08:48:38Z
+
+@derrabus I merged https://github.com/OskarStark/doctor-rst/pull/758, can you please rebase to get the latest DOCtor-RST build? Thanks 🙏
+
+---------------------------------------------------------------------------
+
+by derrabus at 2020-10-02T12:13:05Z
+
+> @derrabus can you please rebase to get the latest DOCtor-RST build? Thanks 🙏
+
+Done!
+
+---------------------------------------------------------------------------
+
+by derrabus at 2020-10-11T19:08:02Z
+
+Sorry for the delay. The blocks are swapped now.
