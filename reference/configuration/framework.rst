@@ -2849,7 +2849,7 @@ default_lifetime
 
 **type**: ``integer`` | ``string``
 
-Default lifetime of your cache items. Given an integer value to set the default
+Default lifetime of your cache items. Give an integer value to set the default
 lifetime in seconds. A string value could be ISO 8601 time interval, like ``"PT5M"``
 or a PHP date expression that is accepted by ``strtotime()``, like ``"5 minutes"``.
 
