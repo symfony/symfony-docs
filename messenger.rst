@@ -1211,7 +1211,7 @@ auto_setup          Whether the table should be created    true
 .. note::
 
     If the queue name is suffixed by ``.fifo``, AWS will creates a `FIFO queue`_
-    Use the stamp :class:`Symfony\Component\Messenger\Bridge\AmazonSqs\Transport\AmazonSqsFifoStamp`
+    Use the stamp :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFifoStamp`
     to define the ``Message group ID`` and the ``Message deduplication ID``.
 
     FIFO queues don't support setting a delay per message, a value of ``delay: 0``
