@@ -1168,17 +1168,54 @@ The ``SQS`` transport configuration looks like this:
 .. code-block:: bash
 
     # .env
-    MESSENGER_TRANSPORT_DSN=sqs://guest:guest@sqs.eu-west-3.amazonaws.com/test?region=eu-west-3
-
+    MESSENGER_TRANSPORT_DSN=sqs://AKIAIOSFODNN7EXAMPLE:j17M97ffSVoKI0briFoo9a@sqs.eu-west-3.amazonaws.com/messages
+    #MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?sslmode=disable
 
 .. note::
 
-    By default, the transport will automatically create queue that are needed. That can be disabled.
-    
-The transport has a number of other options, including ways to configure
-the exchange, queues binding keys and more. See the documentation on
-:class:`Symfony\\Component\\Messenger\\Transport\\AmazonSqs\\Connection`.
+    The transport will automatically create queues that are needed. This
+    can be disabled setting the "auto_setup" option to ``false``.
 
+A number of options can be configured via the DSN or via the ``options`` key
+under the transport in ``messenger.yaml``:
+
+==================  =====================================  ======================
+     Option         Description                            Default
+==================  =====================================  ======================
+endpoint            Absolute URL to the SQS service        https://sqs.eu-west-1.amazonaws.com
+region              Name of the AWS region                 eu-west-1
+queue_name          Name of the queue                      messages
+account             Identifier of the AWS account          The owner of the credentials
+access_key          AWS access key
+secret_key          AWS secret key
+buffer_size         Number of messages to prefetch         9
+wait_time           `Long polling`_ duration in seconds    20
+poll_timeout        Wait for new message duration in       0.1
+                    seconds
+visibility_timeout  Amount of seconds the message will     Queue's configuration
+                    not be visible (`Visibility Timeout`_)
+auto_setup          Whether the table should be created    true
+                    automatically during send / get.
+==================  =====================================  ======================
+
+.. note::
+
+    The ``wait_time`` parameter define the maximum duration Amazon SQS should
+    wait until a message is available in a queue before sending a response.
+    It helps reducing the cost of using Amazon SQS by eliminating the number
+    of empty responses.
+
+    The ``poll_timeout`` parameter define the duration the receiver should wait
+    before returning null. It avoids blocking other receivers from being called.
+
+.. note::
+
+    If the queue name is suffixed by ``.fifo``, AWS will creates a `FIFO queue`_
+    Use the stamp :class:`Symfony\Component\Messenger\Bridge\AmazonSqs\Transport\AmazonSqsFifoStamp`
+    to define the ``Message group ID`` and the ``Message deduplication ID``.
+
+    FIFO queues don't support setting a delay per message, a value of ``delay: 0``
+    is required in the retry strategy settings.
 
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
@@ -1753,3 +1790,6 @@ Learn more
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
 .. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
+.. _`Long polling`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html
+.. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
+.. _`FIFO queue': https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
