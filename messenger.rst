@@ -1176,7 +1176,7 @@ The ``SQS`` transport configuration looks like this:
     The transport will automatically create queues that are needed. This
     can be disabled setting the "auto_setup" option to ``false``.
 
-A numbeXr of options can be configured via the DSN or via the ``options`` key
+A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
 ==================  ======================================  ======================
