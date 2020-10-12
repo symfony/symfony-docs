@@ -6,7 +6,7 @@ Service Method Calls and Setter Injection
 
 .. tip::
 
-    If you're using autowiring, you can use ``@required`` to
+    If you're using autowiring, you can use ``#[Required]`` or ``@required`` to
     :ref:`automatically configure method calls <autowiring-calls>`.
 
 Usually, you'll want to inject your dependencies via the constructor. But sometimes,

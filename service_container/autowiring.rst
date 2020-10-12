@@ -544,50 +544,107 @@ Autowiring other Methods (e.g. Setters and Public Typed Properties)
 
 When autowiring is enabled for a service, you can *also* configure the container
 to call methods on your class when it's instantiated. For example, suppose you want
-to inject the ``logger`` service, and decide to use setter-injection::
+to inject the ``logger`` service, and decide to use setter-injection:
 
-    // src/Util/Rot13Transformer.php
-    namespace App\Util;
+.. configuration-block::
 
-    class Rot13Transformer
-    {
-        private $logger;
+    .. code-block:: php-annotations
 
-        /**
-         * @required
-         */
-        public function setLogger(LoggerInterface $logger)
+        // src/Util/Rot13Transformer.php
+        namespace App\Util;
+
+        class Rot13Transformer
         {
-            $this->logger = $logger;
+            private $logger;
+
+            /**
+            * @required
+            */
+            public function setLogger(LoggerInterface $logger)
+            {
+                $this->logger = $logger;
+            }
+
+            public function transform($value)
+            {
+                $this->logger->info('Transforming '.$value);
+                // ...
+            }
         }
 
-        public function transform($value)
-        {
-            $this->logger->info('Transforming '.$value);
-            // ...
-        }
-    }
+    .. code-block:: php-attributes
 
-Autowiring will automatically call *any* method with the ``@required`` annotation
+        // src/Util/Rot13Transformer.php
+        namespace App\Util;
+
+        use Symfony\Contracts\Service\Attribute\Required;
+
+        class Rot13Transformer
+        {
+            private $logger;
+
+            #[Required]
+            public function setLogger(LoggerInterface $logger)
+            {
+                $this->logger = $logger;
+            }
+
+            public function transform($value)
+            {
+                $this->logger->info('Transforming '.$value);
+                // ...
+            }
+        }
+
+Autowiring will automatically call *any* method with the ``#[Required]`` attribute
 above it, autowiring each argument. If you need to manually wire some of the arguments
 to a method, you can always explicitly :doc:`configure the method call </service_container/calls>`.
 
-Despite property injection has some :ref:`drawbacks <property-injection>`, autowiring with ``@required`` annotation
-can also be applied to public typed properties::
+If you need to stay compatible with PHP 7 and thus cannot use attributes, you can use
+the ``@required`` annotation instead.
 
-    namespace App\Util;
+.. versionadded:: 5.2
 
-    class Rot13Transformer
-    {
-        /** @required */
-        public LoggerInterface $logger;
+    The ``#[Required]`` attribute was introduced in Symfony 5.2.
 
-        public function transform($value)
+Despite property injection has some :ref:`drawbacks <property-injection>`, autowiring with ``#[Required]``
+or ``@required`` can also be applied to public typed properties::
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App\Util;
+
+        class Rot13Transformer
         {
-            $this->logger->info('Transforming '.$value);
-            // ...
+            /** @required */
+            public LoggerInterface $logger;
+
+            public function transform($value)
+            {
+                $this->logger->info('Transforming '.$value);
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php-attributes
+
+        namespace App\Util;
+
+        use Symfony\Contracts\Service\Attribute\Required;
+
+        class Rot13Transformer
+        {
+            #[Required]
+            public LoggerInterface $logger;
+
+            public function transform($value)
+            {
+                $this->logger->info('Transforming '.$value);
+                // ...
+            }
+        }
 
 .. versionadded:: 5.1
 
