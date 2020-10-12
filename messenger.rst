@@ -1360,7 +1360,6 @@ by tagging the handler service with ``messenger.message_handler``
                 'handles' => SmsNotification::class,
             ]);
 
-
 Possible options to configure with tags are:
 
 * ``bus``
@@ -1660,7 +1659,6 @@ middleware and *only* include your own:
                 ],
             ],
         ]);
-
 
 .. note::
 
