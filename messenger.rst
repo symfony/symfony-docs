@@ -1200,17 +1200,17 @@ auto_setup          Whether the table should be created     true
 
 .. note::
 
-    The ``wait_time`` parameter define the maximum duration Amazon SQS should
+    The ``wait_time`` parameter defines the maximum duration Amazon SQS should
     wait until a message is available in a queue before sending a response.
     It helps reducing the cost of using Amazon SQS by eliminating the number
     of empty responses.
 
-    The ``poll_timeout`` parameter define the duration the receiver should wait
+    The ``poll_timeout`` parameter defines the duration the receiver should wait
     before returning null. It avoids blocking other receivers from being called.
 
 .. note::
 
-    If the queue name is suffixed by ``.fifo``, AWS will creates a `FIFO queue`_.
+    If the queue name is suffixed by ``.fifo``, AWS will create a `FIFO queue`_.
     Use the stamp :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFifoStamp`
     to define the ``Message group ID`` and the ``Message deduplication ID``.
 
