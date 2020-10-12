@@ -1182,20 +1182,20 @@ under the transport in ``messenger.yaml``:
 ==================  ======================================  ======================
      Option         Description                             Default
 ==================  ======================================  ======================
-endpoint            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
-region              Name of the AWS region                  eu-west-1
-queue_name          Name of the queue                       messages
-account             Identifier of the AWS account           The owner of the credentials
 access_key          AWS access key
-secret_key          AWS secret key
-buffer_size         Number of messages to prefetch          9
-wait_time           `Long polling`_ duration in seconds     20
-poll_timeout        Wait for new message duration in        0.1
-                    seconds
-visibility_timeout  Amount of seconds the message will      Queue's configuration
-                    not be visible (`Visibility Timeout`_)
+account             Identifier of the AWS account           The owner of the credentials
 auto_setup          Whether the table should be created     true
                     automatically during send / get.
+buffer_size         Number of messages to prefetch          9
+endpoint            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
+poll_timeout        Wait for new message duration in        0.1
+                    seconds
+queue_name          Name of the queue                       messages
+region              Name of the AWS region                  eu-west-1
+secret_key          AWS secret key
+visibility_timeout  Amount of seconds the message will      Queue's configuration
+                    not be visible (`Visibility Timeout`_)
+wait_time           `Long polling`_ duration in seconds     20
 ==================  ======================================  ======================
 
 .. note::
