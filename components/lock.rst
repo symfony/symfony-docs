@@ -221,7 +221,7 @@ but an exclusive lock is needed for writing or modifying data. They are used for
 example for data structures that cannot be updated atomically and are invalid
 until the update is complete.
 
-Use the :method:`Symfony\\Component\\Lock\\LockInterface::acquireRead` method
+Use the :method:`Symfony\\Component\\Lock\\SharedLockInterface::acquireRead` method
 to acquire a read-only lock, and the existing
 :method:`Symfony\\Component\\Lock\\LockInterface::acquire` method to acquire a
 write lock::
