@@ -29,6 +29,6 @@ For more information on valid formats, see `Date/Time Format Syntax`_::
     (the `RFC 3339`_ format) which is the default value if you use the
     ``single_text`` widget.
 
-.. _`Date/Time Format Syntax`: http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax
+.. _`Date/Time Format Syntax`: https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
 .. _`IntlDateFormatter::MEDIUM`: https://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
 .. _`RFC 3339`: https://tools.ietf.org/html/rfc3339
