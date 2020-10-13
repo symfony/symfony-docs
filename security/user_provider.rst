@@ -336,7 +336,7 @@ providers until the user is found:
 
             all_users:
                 chain:
-                    providers: ['legacy_users', 'users', 'backend']
+                    providers: ['legacy_users', 'users', 'backend_users']
 
 .. _custom-user-provider:
 
