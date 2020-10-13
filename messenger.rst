@@ -1268,6 +1268,73 @@ during a request::
         :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
         or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
 
+Amazon SQS
+~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The Amazon SQS transport as introduced in Symfony 5.1.
+
+Install Amazon SQS transport by running:
+
+.. code-block:: terminal
+
+    $ composer require symfony/amazon-sqs-messenger
+
+The ``SQS`` transport configuration looks like this:
+
+.. code-block:: env
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=sqs://AKIAIOSFODNN7EXAMPLE:j17M97ffSVoKI0briFoo9a@sqs.eu-west-3.amazonaws.com/messages
+    #MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?sslmode=disable
+
+.. note::
+
+    The transport will automatically create queues that are needed. This
+    can be disabled setting the ``auto_setup`` option to ``false``.
+
+A number of options can be configured via the DSN or via the ``options`` key
+under the transport in ``messenger.yaml``:
+
+======================  ======================================  ===================================
+     Option             Description                             Default
+======================  ======================================  ===================================
+``access_key``          AWS access key
+``account``             Identifier of the AWS account           The owner of the credentials
+``auto_setup``          Whether the table should be created     ``true``
+                        automatically during send / get.
+``buffer_size``         Number of messages to prefetch          9
+``endpoint``            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
+``poll_timeout``        Wait for new message duration in        0.1
+                        seconds
+``queue_name``          Name of the queue                       messages
+``region``              Name of the AWS region                  eu-west-1
+``secret_key``          AWS secret key
+``visibility_timeout``  Amount of seconds the message will      Queue's configuration
+                        not be visible (`Visibility Timeout`_)
+``wait_time``           `Long polling`_ duration in seconds     20
+======================  ======================================  ===================================
+
+.. note::
+
+    The ``wait_time`` parameter defines the maximum duration Amazon SQS should
+    wait until a message is available in a queue before sending a response.
+    It helps reducing the cost of using Amazon SQS by eliminating the number
+    of empty responses.
+
+    The ``poll_timeout`` parameter defines the duration the receiver should wait
+    before returning null. It avoids blocking other receivers from being called.
+
+.. note::
+
+    If the queue name is suffixed by ``.fifo``, AWS will create a `FIFO queue`_.
+    Use the stamp :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFifoStamp`
+    to define the ``Message group ID`` and the ``Message deduplication ID``.
+
+    FIFO queues don't support setting a delay per message, a value of ``delay: 0``
+    is required in the retry strategy settings.
+
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -1410,7 +1477,6 @@ by tagging the handler service with ``messenger.message_handler``
                 // only needed if can't be guessed by type-hint
                 'handles' => SmsNotification::class,
             ]);
-
 
 Possible options to configure with tags are:
 
@@ -1712,7 +1778,6 @@ middleware and *only* include your own:
             ],
         ]);
 
-
 .. note::
 
     If a middleware service is abstract, a different instance of the service will
@@ -1841,3 +1906,6 @@ Learn more
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
 .. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
+.. _`Long polling`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html
+.. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
+.. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
