@@ -1156,16 +1156,17 @@ Amazon SQS
 
 .. versionadded:: 5.1
 
-    The Amazon SQS transport has been added in Symfony 5.1
-    Install it by running:
+    The Amazon SQS transport as introduced in Symfony 5.1.
 
-    .. code-block:: terminal
+Install Amazon SQS transport by running:
 
-        $ composer require symfony/amazon-sqs-messenger
+.. code-block:: terminal
+
+    $ composer require symfony/amazon-sqs-messenger
 
 The ``SQS`` transport configuration looks like this:
 
-.. code-block:: bash
+.. code-block:: env
 
     # .env
     MESSENGER_TRANSPORT_DSN=sqs://AKIAIOSFODNN7EXAMPLE:j17M97ffSVoKI0briFoo9a@sqs.eu-west-3.amazonaws.com/messages
@@ -1174,29 +1175,29 @@ The ``SQS`` transport configuration looks like this:
 .. note::
 
     The transport will automatically create queues that are needed. This
-    can be disabled setting the "auto_setup" option to ``false``.
+    can be disabled setting the ``auto_setup`` option to ``false``.
 
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-==================  ======================================  ======================
-     Option         Description                             Default
-==================  ======================================  ======================
-access_key          AWS access key
-account             Identifier of the AWS account           The owner of the credentials
-auto_setup          Whether the table should be created     true
-                    automatically during send / get.
-buffer_size         Number of messages to prefetch          9
-endpoint            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
-poll_timeout        Wait for new message duration in        0.1
-                    seconds
-queue_name          Name of the queue                       messages
-region              Name of the AWS region                  eu-west-1
-secret_key          AWS secret key
-visibility_timeout  Amount of seconds the message will      Queue's configuration
-                    not be visible (`Visibility Timeout`_)
-wait_time           `Long polling`_ duration in seconds     20
-==================  ======================================  ======================
+======================  ======================================  ===================================
+     Option             Description                             Default
+======================  ======================================  ===================================
+``access_key``          AWS access key
+``account``             Identifier of the AWS account           The owner of the credentials
+``auto_setup``          Whether the table should be created     ``true``
+                        automatically during send / get.
+``buffer_size``         Number of messages to prefetch          9
+``endpoint``            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
+``poll_timeout``        Wait for new message duration in        0.1
+                        seconds
+``queue_name``          Name of the queue                       messages
+``region``              Name of the AWS region                  eu-west-1
+``secret_key``          AWS secret key
+``visibility_timeout``  Amount of seconds the message will      Queue's configuration
+                        not be visible (`Visibility Timeout`_)
+``wait_time``           `Long polling`_ duration in seconds     20
+======================  ======================================  ===================================
 
 .. note::
 
