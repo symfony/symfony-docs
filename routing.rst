@@ -33,7 +33,7 @@ once in your application to enable them:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 .. versionadded:: 5.2
 
@@ -1063,12 +1063,11 @@ integer acting as the user ID) into another value (e.g. the object that
 represents the user). This feature is called "param converter" and is only
 available when using annotations to define routes.
 
-In case you didn't run this command before, run it now to add support for
-annotations and "param converters":
+To add support for "param converters" we need SensioFrameworkExtraBundle:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require sensio/framework-extra-bundle
 
 Now, keep the previous route configuration, but change the arguments of the
 controller action. Instead of ``string $slug``, add ``BlogPost $post``::
