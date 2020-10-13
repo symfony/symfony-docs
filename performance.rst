@@ -116,7 +116,7 @@ can configure PHP to use this preload file:
 .. code-block:: ini
 
     ; php.ini
-    opcache.preload=/path/to/project/config/preload.php
+    opcache.preload=/path/to/project/src/.preload.php
 
 Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
