@@ -170,7 +170,7 @@ as you normally do:
 .. tip::
 
     To improve performance and if you have Symfony Flex 1.2 or later installed, you may
-    leverage a (feature)[https://symfony.com/doc/4.4/configuration.html#configuring-environment-variables-in-production]
+    leverage this :ref:`feature <configuration-env-var-in-prod>`
     that dumps your environments variables into a flat file:
 
     .. code-block:: terminal
