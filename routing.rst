@@ -33,7 +33,7 @@ once in your application to enable them:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 .. versionadded:: 5.2
 
