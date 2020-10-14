@@ -233,7 +233,7 @@ You can have even finer-grained control by using other keys of the ``max``
 array, which are ``self``, ``direct``, and ``indirect``. The
 ``SYMFONY_DEPRECATIONS_HELPER`` environment variable accepts a URL-encoded
 string, meaning you can combine thresholds and any other configuration setting,
-like this: ``SYMFONY_DEPRECATIONS_HELPER=max[total]=42&max[self]=0&verbose=0``
+like this: ``SYMFONY_DEPRECATIONS_HELPER='max[total]=42&max[self]=0&verbose=0'``
 
 Internal deprecations
 .....................
