@@ -2109,7 +2109,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
 
 .. note::
 
-    When using PHP attributes for localized routes, you have to use the `path`
+    When using PHP attributes for localized routes, you have to use the ``path``
     named parameter to specify the array of paths.
 
 When a localized route is matched, Symfony uses the same locale automatically
