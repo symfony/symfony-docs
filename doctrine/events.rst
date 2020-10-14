@@ -460,6 +460,9 @@ with the ``doctrine.event_subscriber`` tag:
             ;
         };
 
+Since doctrine 2.1.0 by implementing the ``Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface`` you
+don't need to add services configuration.
+
 If you need to associate the subscriber with a specific Doctrine connection, you
 can do it in the service configuration:
 
