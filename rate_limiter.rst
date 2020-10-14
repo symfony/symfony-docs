@@ -119,7 +119,7 @@ the number of requests to the API::
 
             // the argument of consume() is the number of tokens to consume
             // and returns an object of type Limit
-            if (false === $anonymous_api_limiter->consume(1)->isAccepted()) {
+            if (false === $limiter->consume(1)->isAccepted()) {
                 throw new TooManyRequestsHttpException();
             }
 
