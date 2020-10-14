@@ -49,6 +49,63 @@ Don't forget to generate and run the migration:
     $ php bin/console make:migration
     $ php bin/console doctrine:migrations:migrate
 
+Next, configure your "user provider" to use this new ``apiToken`` property:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            providers:
+                your_db_provider:
+                    entity:
+                        class: App\Entity\User
+                        property: apiToken
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="your_db_provider">
+                    <entity class="App\Entity\User" property="apiToken"/>
+                </provider>
+
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+
+            'providers' => [
+                'your_db_provider' => [
+                    'entity' => [
+                        'class' => 'App\Entity\User',
+                        'property' => 'apiToken',
+                    ],
+                ],
+            ],
+
+            // ...
+        ]);
+
 Step 2) Create the Authenticator Class
 --------------------------------------
 
@@ -108,10 +165,10 @@ This requires you to implement several methods::
                 return null;
             }
 
-            // if a User is returned, checkCredentials() is called
-            return $this->em->getRepository(User::class)
-                ->findOneBy(['apiToken' => $credentials])
-            ;
+            // The "username" in this case is the apiToken, see the key `property`
+            // of `your_db_provider` in `security.yaml`.
+            // If this returns a user, checkCredentials() is called next:
+            return $userProvider->loadUserByUsername($apiToken);
         }
 
         public function checkCredentials($credentials, UserInterface $user)
