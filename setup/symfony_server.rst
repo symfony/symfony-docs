@@ -375,8 +375,8 @@ its location, same as for ``docker-compose``:
 
 .. note::
 
-    If you have more than one docker-compose files you can provide them all
-    separated by ``:``, as explained in the `Docker compose CLI env var reference`_.
+    If you have more than one Docker Compose file, you can provide them all
+    separated by ``:`` as explained in the `Docker compose CLI env var reference`_.
 
 SymfonyCloud Integration
 ------------------------
