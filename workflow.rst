@@ -305,7 +305,7 @@ order:
 
 .. note::
 
-    The leaving and entering events are triggered even for transitions that stay
+    The leaving and enter events are triggered even for transitions that stay
     in same place.
 
 Here is an example of how to enable logging for every time a "blog_publishing"
