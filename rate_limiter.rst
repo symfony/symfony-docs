@@ -19,8 +19,8 @@ time, but you can use them for your own features too.
 Rate Limiting Strategies
 ------------------------
 
-Symfony's rate limiter implements two of the most common strategies to enforce
-rate limits: **fixed window** and **token bucket**.
+Symfony's rate limiter implements some of the most common strategies to enforce
+rate limits: **fixed window**, **sliding window** and **token bucket**.
 
 Fixed Window Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,6 +34,22 @@ it can overload the server at the window edges. In the previous example, a user
 could make the 4,999 requests in the last minute of some hour and another 5,000
 requests during the first minute of the next hour, making 9,999 requests in
 total in two minutes and possibly overloading the server.
+
+Sliding Window Rate Limiter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The sliding window algorithm is gracefully handling the drawback from the fixed
+window algorithm. To reduce bursts requests the rate limit is calculated based on
+the current window and the previous window.
+
+For example: The limit is 5,000 requests per hour. If a user made 4,000 requests
+the previous hour and 500 requests this hour. 15 minutes in to the current hour
+(25% of the window) the hit count would be calculated as: 75% * 4,000 + 500 = 3,500.
+At this point in time the user can only do 1,500 more requests.
+
+The math shows that the closer the last window is, the more will the hit count
+of the last window effect the current limit. This will make sure that a user can
+do 5.000 requests per hour but only if they are spread out evenly.
 
 Token Bucket Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
