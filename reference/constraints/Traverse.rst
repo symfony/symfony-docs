@@ -26,8 +26,8 @@ that all have constraints on their properties.
         // src/Entity/BookCollection.php
         namespace App\Entity;
 
-        use Doctrine\Collections\ArrayCollection;
-        use Doctrine\Collections\Collection
+        use Doctrine\Common\Collections\ArrayCollection;
+        use Doctrine\Common\Collections\Collection
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Component\Validator\Constraints as Assert;
 
