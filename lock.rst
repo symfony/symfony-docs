@@ -159,22 +159,23 @@ this behavior by using the ``lock`` key like:
 Locking a Resource
 ------------------
 
-To lock the default resource, autowire the lock using
-:class:`Symfony\\Component\\Lock\\LockInterface` (service id ``lock``)::
+To lock the default resource, autowire the lock factory using
+:class:`Symfony\\Component\\Lock\\LockFactory` (service id ``lock.factory``)::
 
     // src/Controller/PdfController.php
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Lock\LockInterface;
+    use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         /**
          * @Route("/download/terms-of-use.pdf")
          */
-        public function downloadPdf(LockInterface $lock, MyPdfGeneratorService $pdf)
+        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf)
         {
+            $lock = $factory->createLock('pdf-creation');
             $lock->acquire(true);
 
             // heavy computation
@@ -273,18 +274,12 @@ provides :ref:`named lock <reference-lock-resources-name>`::
             ],
         ]);
 
-Each name becomes a service where the service id suffixed by the name of the
-lock (e.g. ``lock.invoice``). An autowiring alias is also created for each lock
-using the camel case version of its name suffixed by ``Lock`` - e.g. ``invoice``
-can be injected automatically by naming the argument ``$invoiceLock`` and
-type-hinting it with :class:`Symfony\\Component\\Lock\\LockInterface`.
-
-Symfony also provide a corresponding factory and store following the same rules
-(e.g. ``invoice`` generates a ``lock.invoice.factory`` and
-``lock.invoice.store``, both can be injected automatically by naming
-respectively ``$invoiceLockFactory`` and ``$invoiceLockStore`` and type-hinted
-with :class:`Symfony\\Component\\Lock\\LockFactory` and
-:class:`Symfony\\Component\\Lock\\PersistingStoreInterface`)
+Each name becomes a service where the service id is part of the name of the
+lock (e.g. ``lock.invoice.factory``). An autowiring alias is also created for
+each lock using the camel case version of its name suffixed by ``LockFactory``
+- e.g. ``invoice`` can be injected automatically by naming the argument
+``$invoiceLockFactory`` and type-hinting it with
+:class:`Symfony\\Component\\Lock\\LockFactory`.
 
 Blocking Store
 --------------
