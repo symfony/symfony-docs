@@ -5,7 +5,7 @@
 
 Controls the internal field name of the choice. You normally don't care about this,
 but in some advanced cases, you might. For example, this "name" becomes the index
-of the choice views in the template and is used as part o the field name
+of the choice views in the template and is used as part of the field name
 attribute.
 
 This can be a callable or a property path. See `choice_label`_ for similar usage.
