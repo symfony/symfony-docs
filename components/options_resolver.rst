@@ -811,7 +811,9 @@ method::
             $resolver->define('host')
                 ->required()
                 ->default('smtp.example.org')
-                ->allowedTypes('string');
+                ->allowedTypes('string')
+                ->info('The IP address or hostname');
+
             $resolver->define('transport')
                 ->required()
                 ->default('transport')
