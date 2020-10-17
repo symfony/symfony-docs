@@ -83,7 +83,7 @@ Dispatching the Message
 -----------------------
 
 You're ready! To dispatch the message (and call the handler), inject the
-``message_bus`` service (via the ``MessageBusInterface``), like in a controller::
+``messenger.default_bus`` service (via the ``MessageBusInterface``), like in a controller::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
