@@ -33,23 +33,24 @@ Its main drawback is that resource usage is not evenly distributed in time and
 it can overload the server at the window edges. In the previous example, a user
 could make the 4,999 requests in the last minute of some hour and another 5,000
 requests during the first minute of the next hour, making 9,999 requests in
-total in two minutes and possibly overloading the server.
+total in two minutes and possibly overloading the server. These periods of
+excessive usage are called "bursts".
 
 Sliding Window Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The sliding window algorithm is gracefully handling the drawback from the fixed
-window algorithm. To reduce bursts requests the rate limit is calculated based on
+The sliding window algorithm is an alternative to the fixed window algorithm
+designed to reduce bursts. To do that, the rate limit is calculated based on
 the current window and the previous window.
 
-For example: The limit is 5,000 requests per hour. If a user made 4,000 requests
+For example: the limit is 5,000 requests per hour; a user made 4,000 requests
 the previous hour and 500 requests this hour. 15 minutes in to the current hour
 (25% of the window) the hit count would be calculated as: 75% * 4,000 + 500 = 3,500.
 At this point in time the user can only do 1,500 more requests.
 
 The math shows that the closer the last window is, the more will the hit count
 of the last window effect the current limit. This will make sure that a user can
-do 5.000 requests per hour but only if they are spread out evenly.
+do 5,000 requests per hour but only if they are spread out evenly.
 
 Token Bucket Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -85,11 +86,12 @@ enforce different levels of service (free or paid):
     framework:
         rate_limiter:
             anonymous_api:
-                strategy: fixed_window
+                # use 'sliding_window' if you prefer that strategy
+                strategy: 'fixed_window'
                 limit: 100
                 interval: '60 minutes'
             authenticated_api:
-                strategy: token_bucket
+                strategy: 'token_bucket'
                 limit: 5000
                 rate: { interval: '15 minutes', amount: 500 }
 
