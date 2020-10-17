@@ -776,7 +776,7 @@ based on PHP conditions)::
             ->orderBy('p.price', 'ASC');
 
         if (!$includeUnavailableProducts) {
-            $qb->andWhere('p.available = TRUE')
+            $qb->andWhere('p.available = TRUE');
         }
 
         $query = $qb->getQuery();
