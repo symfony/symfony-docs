@@ -2247,7 +2247,7 @@ session shouldn't be used when matching a request:
 
         // config/routes.php
         use App\Controller\MainController;
-        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('homepage', '/')
