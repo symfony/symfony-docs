@@ -589,7 +589,7 @@ it via that alias:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Service\MessageGenerator;
-        use App\Updates\SiteUpdateManager;
+        use App\Service\SiteUpdateManager;
 
         return function(ContainerConfigurator $configurator) {
             // ...
