@@ -823,8 +823,7 @@ method::
 
 .. versionadded:: 5.1
 
-    The :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::define` method
-    was introduced in Symfony 5.1.
+    The ``define()`` and ``info()`` methods were introduced in Symfony 5.1.
 
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~
