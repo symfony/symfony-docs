@@ -123,7 +123,7 @@ is capable of sending messages (e.g. to a queueing system) and then
 A transport is registered using a "DSN". Thanks to Messenger's Flex recipe, your
 ``.env`` file already has a few examples.
 
-.. code-block:: bash
+.. code-block:: env
 
     # MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
     # MESSENGER_TRANSPORT_DSN=doctrine://default
@@ -839,10 +839,70 @@ Transport Configuration
 -----------------------
 
 Messenger supports a number of different transport types, each with their own
-options.
+options. Options can be passed to the transport via a DSN string or configuration.
+
+.. code-block:: env
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=amqp://localhost/%2f/messages?auto_setup=false
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    my_transport:
+                        dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+                        options:
+                            auto_setup: false
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="my_transport" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
+                        <framework:options auto-setup="false"/>
+                    </framework:transport>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'transports' => [
+                    'my_transport' => [
+                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
+                        'options' => [
+                            'auto_setup' => false,
+                        ]
+                    ],
+                ],
+            ],
+        ]);
+
+Options defined under ``options`` take precedence over ones defined in the DSN.
 
 AMQP Transport
 ~~~~~~~~~~~~~~
+
+The AMQP transport uses the AMQP PHP extension to send messages to queues like
+RabbitMQ.
 
 .. versionadded:: 5.1
 
@@ -853,9 +913,9 @@ AMQP Transport
 
         $ composer require symfony/amqp-messenger
 
-The ``amqp`` transport configuration looks like this:
+The AMQP transport DSN may looks like this:
 
-.. code-block:: bash
+.. code-block:: env
 
     # .env
     MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
@@ -867,7 +927,6 @@ The ``amqp`` transport configuration looks like this:
 
     The AMQPS protocol support was introduced in Symfony 5.2.
 
-To use Symfony's built-in AMQP transport, you need the AMQP PHP extension.
 If you want to use TLS/SSL encrypted AMQP, you must also provide a CA certificate.
 Define the certificate path in the ``amqp.cacert`` PHP.ini setting
 (e.g. ``amqp.cacert = /etc/ssl/certs``) or in the ``cacert`` parameter of the
@@ -885,6 +944,66 @@ it in the ``port`` parameter of the DSN (e.g. ``amqps://localhost?cacert=/etc/ss
 The transport has a number of other options, including ways to configure
 the exchange, queues binding keys and more. See the documentation on
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\Connection`.
+
+The transport has a number of options:
+
+============================================  =================================================  ===================================
+     Option                                   Description                                        Default
+============================================  =================================================  ===================================
+``auto_setup``                                Whether the table should be created                ``true``
+                                              automatically during send / get.
+``cacert``                                    Path to the CA cert file in PEM format.
+``cert``                                      Path to the client certificate in PEM format.
+``channel_max``                               Specifies highest channel number that the server
+                                              permits. 0 means standard extension limit
+``confirm_timeout``                           Timeout in seconds for confirmation, if none
+                                              specified transport will not wait for message
+                                              confirmation. Note: 0 or greater seconds. May be
+                                              fractional.
+``connect_timeout``                           Connection timeout. Note: 0 or greater seconds.
+                                              May be fractional.
+``frame_max``                                 The largest frame size that the server proposes
+                                              for the connection, including frame header and
+                                              end-byte. 0 means standard extension limit
+                                              (depends on librabbimq default frame size limit)
+``heartbeat``                                 The delay, in seconds, of the connection
+                                              heartbeat that the server wants. 0 means the
+                                              server does not want a heartbeat. Note,
+                                              librabbitmq has limited heartbeat support, which
+                                              means heartbeats checked only during blocking
+                                              calls.
+``host``                                      Hostname of the AMQP service
+``key``                                       Path to the client key in PEM format.
+``password``                                  Password to use to connect to the AMQP service
+``persistent``                                                                                   ``'false'``
+``port``                                      Port of the AMQP service
+``prefetch_count``
+``read_timeout``                              Timeout in for income activity. Note: 0 or
+                                              greater seconds. May be fractional.
+``retry``
+``sasl_method``
+``user``                                      Username to use to connect the AMQP service
+``verify``                                    Enable or disable peer verification. If peer
+                                              verification is enabled then the common name in
+                                              the server certificate must match the server
+                                              name. Peer verification is enabled by default.
+``vhost``                                     Virtual Host to use with the AMQP service
+``write_timeout``                             Timeout in for outcome activity. Note: 0 or
+                                              greater seconds. May be fractional.
+``delay[queue_name_pattern]``                 Pattern to use to create the queues                ``delay_%exchange_name%_%routing_key%_%delay%``
+``delay[exchange_name]``                      Name of the exchange to be used for the            ``delays``
+                                              delayed/retried messages
+``queues[name][arguments]``                   Extra arguments
+``queues[name][binding_arguments]``           Arguments to be used while binding the queue.
+``queues[name][binding_keys]``                The binding keys (if any) to bind to this queue
+``queues[name][flags]``                       Queue flags                                        ``AMQP_DURABLE``
+``exchange[arguments]``
+``exchange[default_publish_routing_key]``     Routing key to use when publishing, if none is
+                                              specified on the message
+``exchange[flags]``                           Exchange flags                                     ``AMQP_DURABLE``
+``exchange[name]``                            Name of the exchange
+``exchange[type]``                            Type of exchange                                   ``fanout``
+============================================  =================================================  ===================================
 
 You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
@@ -912,6 +1031,8 @@ your Envelope::
 Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
 
+The Doctrine transport can be used to store messages in a database table.
+
 .. versionadded:: 5.1
 
     Starting from Symfony 5.1, the Doctrine transport has moved to a separate package.
@@ -921,9 +1042,9 @@ Doctrine Transport
 
         $ composer require symfony/doctrine-messenger
 
-The Doctrine transport can be used to store messages in a database table.
+The Doctrine transport DSN may looks like this:
 
-.. code-block:: bash
+.. code-block:: env
 
     # .env
     MESSENGER_TRANSPORT_DSN=doctrine://default
@@ -941,65 +1062,6 @@ Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
 
 The transport has a number of options:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                transports:
-                    async_priority_high: "%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority"
-                    async_normal:
-                        dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
-                        options:
-                            queue_name: normal_priority
-
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger>
-                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority"/>
-                    <framework:transport name="async_priority_low" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
-                        <framework:options>
-                            <framework:queue>
-                                <framework:name>normal_priority</framework:name>
-                            </framework:queue>
-                        </framework:options>
-                    </framework:transport>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async_priority_high' => '%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority',
-                    'async_priority_low' => [
-                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                        'options' => [
-                            'queue_name' => 'normal_priority'
-                        ]
-                    ],
-                ],
-            ],
-        ]);
-
-Options defined under ``options`` take precedence over ones defined in the DSN.
 
 ==================  =====================================  ======================
      Option         Description                            Default
@@ -1025,81 +1087,24 @@ Beanstalkd Transport
 
     The Beanstalkd transport was introduced in Symfony 5.2.
 
-Install it by running:
+The Beanstalkd transports sends messages directly to a Beanstalkd work queue. Install
+it by running:
 
 .. code-block:: terminal
 
     $ composer require symfony/beanstalkd-messenger
 
-.. code-block:: bash
+The Beanstalkd transport DSN may looks like this:
+
+.. code-block:: env
 
     # .env
+    MESSENGER_TRANSPORT_DSN=beanstalkd://localhost:11300?tube_name=foo&timeout=4&ttr=120
+
+    # If no port, it will default to 11300
     MESSENGER_TRANSPORT_DSN=beanstalkd://localhost
 
-The format is ``beanstalkd://<ip>:<port>?tube_name=<name>&timeout=<timeoutInSeconds>&ttr=<ttrInSeconds>``.
-
-The ``port`` setting is optional and defaults to ``11300`` if not set.
-
 The transport has a number of options:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                transports:
-                    async_priority_high: "%env(MESSENGER_TRANSPORT_DSN)%?tube_name=high_priority"
-                    async_normal:
-                        dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
-                        options:
-                            tube_name: normal_priority
-
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger>
-                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%?tube_name=high_priority"/>
-                    <framework:transport name="async_priority_low" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
-                        <framework:options>
-                            <framework:tube>
-                                <framework:name>normal_priority</framework:name>
-                            </framework:tube>
-                        </framework:options>
-                    </framework:transport>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async_priority_high' => '%env(MESSENGER_TRANSPORT_DSN)%?tube_name=high_priority',
-                    'async_priority_low' => [
-                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                        'options' => [
-                            'tube_name' => 'normal_priority'
-                        ]
-                    ],
-                ],
-            ],
-        ]);
-
-Options defined under ``options`` take precedence over ones defined in the DSN.
 
 ==================  ===================================  ======================
      Option         Description                          Default
@@ -1119,6 +1124,9 @@ ttr                 The message time to run before it
 Redis Transport
 ~~~~~~~~~~~~~~~
 
+The Redis transport uses `streams`_ to queue messages. This transport requires
+the Redis PHP extension (>=4.3) and a running Redis server (^5.0).
+
 .. versionadded:: 5.1
 
     Starting from Symfony 5.1, the Redis transport has moved to a separate package.
@@ -1128,9 +1136,9 @@ Redis Transport
 
         $ composer require symfony/redis-messenger
 
-The Redis transport uses `streams`_ to queue messages.
+The Redis transport DSN may looks like this:
 
-.. code-block:: bash
+.. code-block:: env
 
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
@@ -1143,11 +1151,7 @@ The Redis transport uses `streams`_ to queue messages.
 
     The Unix socket DSN was introduced in Symfony 5.1.
 
-To use the Redis transport, you will need the Redis PHP extension (>=4.3) and
-a running Redis server (^5.0).
-
-A number of options can be configured via the DSN or via the ``options`` key
-under the transport in ``messenger.yaml``:
+The transport has a number of options:
 
 ===================  =====================================  =========================
      Option               Description                       Default
@@ -1275,27 +1279,27 @@ Amazon SQS
 
     The Amazon SQS transport as introduced in Symfony 5.1.
 
-Install Amazon SQS transport by running:
+The Amazon SQS transport is perfect for application hosted on AWS. Install it by
+running:
 
 .. code-block:: terminal
 
     $ composer require symfony/amazon-sqs-messenger
 
-The ``SQS`` transport configuration looks like this:
+The SQS transport DSN may looks like this:
 
 .. code-block:: env
 
     # .env
     MESSENGER_TRANSPORT_DSN=sqs://AKIAIOSFODNN7EXAMPLE:j17M97ffSVoKI0briFoo9a@sqs.eu-west-3.amazonaws.com/messages
-    #MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?sslmode=disable
+    MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?sslmode=disable
 
 .. note::
 
     The transport will automatically create queues that are needed. This
     can be disabled setting the ``auto_setup`` option to ``false``.
 
-A number of options can be configured via the DSN or via the ``options`` key
-under the transport in ``messenger.yaml``:
+The transport has a number of options:
 
 ======================  ======================================  ===================================
      Option             Description                             Default
