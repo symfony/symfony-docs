@@ -128,8 +128,8 @@ the number of requests to the API::
 
     class ApiController extends AbstractController
     {
-        // the variable name must be: "rate limiter name" + "limiter" suffix
-        // if you're using autowiring for your services
+        // if you're using service autowiring, the variable name must be:
+        // "rate limiter name" (in camelCase) + "limiter" suffix
         public function index(RateLimiter $anonymousApiLimiter)
         {
             // create a limiter based on a unique identifier of the client
@@ -199,8 +199,8 @@ processes by reserving unused tokens.
 
 .. note::
 
-    Not all strategies allow reservering tokens in the future. These
-    strategies may throw an ``ReserveNotSupportedException`` when calling
+    Not all strategies allow reserving tokens in the future. These
+    strategies may throw a ``ReserveNotSupportedException`` when calling
     ``reserve()``.
 
     In these cases, you can use ``consume()`` together with ``wait()``, but
