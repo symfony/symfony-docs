@@ -124,12 +124,13 @@ the number of requests to the API::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
-    use Symfony\Component\RateLimiter\Limiter;
+    use Symfony\Component\RateLimiter\RateLimiter;
 
     class ApiController extends AbstractController
     {
         // the variable name must be: "rate limiter name" + "limiter" suffix
-        public function index(Limiter $anonymousApiLimiter)
+        // if you're using autowiring for your services
+        public function index(RateLimiter $anonymousApiLimiter)
         {
             // create a limiter based on a unique identifier of the client
             // (e.g. the client's IP address, a username/email, an API key, etc.)
@@ -158,34 +159,58 @@ the number of requests to the API::
     for the :ref:`kernel.request event <component-http-kernel-kernel-request>`
     and check the rate limiter once for all requests.
 
-In other scenarios you may want instead to wait as long as needed until a new
-token is available. In those cases, use the ``wait()`` method::
+Wait until a Token is Available
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of dropping a request or process when the limit has been reached,
+you might want to wait until a new token is available. This can be achieved
+using the ``reserve()`` method::
 
     // src/Controller/ApiController.php
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\RateLimiter\Limiter;
+    use Symfony\Component\RateLimiter\RateLimiter;
 
     class ApiController extends AbstractController
     {
-        public function registerUser(Request $request, Limiter $authenticatedApiLimiter)
+        public function registerUser(Request $request, RateLimiter $authenticatedApiLimiter)
         {
             $apiKey = $request->headers->get('apikey');
             $limiter = $authenticatedApiLimiter->create($apiKey);
 
             // this blocks the application until the given number of tokens can be consumed
-            do {
-                $limit = $limiter->consume(1);
-                $limit->wait();
-            } while (!$limit->isAccepted());
+            $limiter->reserve(1)->wait();
+
+            // optional, pass a maximum wait time (in seconds), a MaxWaitDurationExceededException
+            // is thrown if the process has to wait longer. E.g. to wait at most 20 seconds:
+            //$limiter->reserve(1, 20)->wait();
 
             // ...
         }
 
         // ...
     }
+
+The ``reserve()`` method is able to reserve a token in the future. Only use
+this method if you're planning to wait, otherwise you will block other
+processes by reserving unused tokens.
+
+.. note::
+
+    Not all strategies allow reservering tokens in the future. These
+    strategies may throw an ``ReserveNotSupportedException`` when calling
+    ``reserve()``.
+
+    In these cases, you can use ``consume()`` together with ``wait()``, but
+    there is no guarantee that a token is available after the wait::
+
+        // ...
+        do {
+            $limit = $limiter->consume(1);
+            $limit->wait();
+        } while (!$limit->isAccepted());
 
 Rate Limiter Storage and Locking
 --------------------------------
