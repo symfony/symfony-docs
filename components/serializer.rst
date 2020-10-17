@@ -784,7 +784,13 @@ The ``JsonEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
 The ``JsonEncoder`` encodes to and decodes from JSON strings, based on the PHP
-:phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
+:phpfunction:`json_encode` and :phpfunction:`json_decode` functions. It can be
+useful to modify how these functions operate in certain instances by providing
+options such as ``JSON_PRESERVE_ZERO_FRACTION``. You can use the serialization
+context to pass in these options using the key ``json_encode_options`` or
+``json_decode_options`` respectively::
+
+    $this->serializer->serialize($data, 'json', ['json_encode_options' => \JSON_PRESERVE_ZERO_FRACTION]);
 
 The ``CsvEncoder``
 ~~~~~~~~~~~~~~~~~~~
