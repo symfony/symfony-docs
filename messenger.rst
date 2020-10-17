@@ -467,7 +467,7 @@ On production, there are a few important things to think about:
     process control system like :ref:`Supervisor <messenger-supervisor>`.
 
 **Don't Let Workers Run Forever**
-    Some services (like Doctrine's EntityManager) will consume more memory
+    Some services (like Doctrine's ``EntityManager``) will consume more memory
     over time. So, instead of allowing your worker to run forever, use a flag
     like ``messenger:consume --limit=10`` to tell your worker to only handle 10
     messages before exiting (then Supervisor will create a new process). There
