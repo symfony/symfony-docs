@@ -26,7 +26,7 @@ you can create your own named set or requirements to be reused consistently ever
     // src/Validator/Constraints/PasswordRequirements.php
     namespace App\Validator\Constraints;
 
-    use Symfony\Component\Validator\Compound;
+    use Symfony\Component\Validator\Constraints\Compound;
     use Symfony\Component\Validator\Constraints as Assert;
 
     /**
