@@ -146,7 +146,7 @@ There's also a Doctrine generator to help autogenerate UUID values for the
 entity primary keys::
 
     // there are generators for UUID V1 and V6 too
-    use Symfony\Bridge\Doctrine\Types\UuidV4Generator;
+    use Symfony\Bridge\Doctrine\IdGenerator\UuidV4Generator;
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -261,7 +261,7 @@ special Doctrine types which convert to/from ULID objects automatically::
 There's also a Doctrine generator to help autogenerate ULID values for the
 entity primary keys::
 
-    use Symfony\Bridge\Doctrine\Types\UlidGenerator;
+    use Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator;
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
