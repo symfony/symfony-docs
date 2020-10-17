@@ -207,7 +207,7 @@ processes asking for the same ``$version``::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Lock\LockInterface;
+    use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
