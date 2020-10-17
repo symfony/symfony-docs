@@ -325,7 +325,7 @@ configuration decisions are discussed:
 
 * `Limit Login Link Lifetime`_
 * `Invalidate Login Links`_
-* `Only allow a Link to be used Once`_
+* `Allow a Link to only be Used Once`_
 
 Limit Login Link Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~~~
