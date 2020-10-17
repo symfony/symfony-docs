@@ -79,11 +79,11 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
                 (new Envelope($event))
                     ->with(new DispatchAfterCurrentBusStamp())
             );
+
             // It is also possible to use the following simplified syntax.
             // $this->eventBus->dispatch(
             //     new Envelope($event, [new DispatchAfterCurrentBusStamp()])
             // );
-
 
             // ...
         }
