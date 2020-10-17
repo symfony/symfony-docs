@@ -309,6 +309,6 @@ The PlantUML image will look like this:
 
 .. image:: /_images/components/workflow/pull_request_puml_styled.png
 
-.. _`Graphviz`: http://www.graphviz.org
+.. _`Graphviz`: https://www.graphviz.org
 .. _`PlantUML`: https://plantuml.com/
 .. _`PlantUML's color list`: https://plantuml.com/color
