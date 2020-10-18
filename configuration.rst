@@ -387,7 +387,8 @@ set in the previous ones):
 
 #. ``config/packages/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
 #. ``config/packages/<environment-name>/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
-#. ``config/packages/services.yaml`` (and ``services.xml`` and ``services.php`` files too);
+#. ``config/services.yaml`` (and ``services.xml`` and ``services.php`` files too);
+#. ``config/services_<environment-name>.yaml`` (and ``services_environment-name.xml`` and ``services_environment-name.php`` files too);
 
 Take the ``framework`` package, installed by default, as an example:
 
