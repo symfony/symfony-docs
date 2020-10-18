@@ -313,10 +313,10 @@ all the information needed to fully translate its contents when needed::
     use Symfony\Component\Translation\Translatable;
 
     // the first argument is required and it's the original message
-    $message = new TranslatableMessage('Symfony is great!');
+    $message = new Translatable('Symfony is great!');
     // the optional second argument defines the translation parameters and
     // the optional third argument is the translation domain
-    $status = new TranslatableMessage('order.status', ['%status%' => $order->getStatus()], 'store');
+    $status = new Translatable('order.status', ['%status%' => $order->getStatus()], 'store');
 
 Templates are now much simpler because you can pass translatable objects to the
 ``trans`` filter:
