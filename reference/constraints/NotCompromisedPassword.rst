@@ -79,7 +79,7 @@ The following constraint ensures that the ``rawPassword`` property of the
 
 In order to make the password validation, this constraint doesn't send the raw
 password value to the ``haveibeenpwned.com`` API. Instead, it follows a secure
-process known as `k-anonimity password validation`_.
+process known as `k-anonymity password validation`_.
 
 In practice, the raw password is hashed using SHA-1 and only the first bytes of
 the hash are sent. Then, the ``haveibeenpwned.com`` API compares those bytes
@@ -130,4 +130,4 @@ publicly to consider it compromised. Think carefully before setting this option
 to a higher value because it could decrease the security of your application.
 
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
-.. _`k-anonimity password validation`: https://blog.cloudflare.com/validating-leaked-passwords-with-k-anonymity/
+.. _`k-anonymity password validation`: https://blog.cloudflare.com/validating-leaked-passwords-with-k-anonymity/

@@ -2018,7 +2018,7 @@ Generating URLs in JavaScript
 
 If your JavaScript code is included in a Twig template, you can use the
 ``path()`` and ``url()`` Twig functions to generate the URLs and store them in
-JavaScript variables. The ``escape()`` function is needed to escape any
+JavaScript variables. The ``escape()`` filter is needed to escape any
 non-JavaScript-safe values:
 
 .. code-block:: html+twig
