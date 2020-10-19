@@ -1616,12 +1616,15 @@ middleware and *only* include your own:
             messenger:
                 buses:
                     messenger.bus.default:
+                        # disable the default middleware
+                        default_middleware: false
+
+                        # and/or add your own
                         middleware:
                             # service ids that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
                             - 'App\Middleware\MyMiddleware'
                             - 'App\Middleware\AnotherMiddleware'
 
-                        #default_middleware: false
 
     .. code-block:: xml
 
@@ -1637,9 +1640,12 @@ middleware and *only* include your own:
 
             <framework:config>
                 <framework:messenger>
+                    <!-- default-middleware: disable the default middleware -->
+                    <framework:bus name="messenger.bus.default" default-middleware="false"/>
+
+                    <!-- and/or add your own -->
                     <framework:middleware id="App\Middleware\MyMiddleware"/>
                     <framework:middleware id="App\Middleware\AnotherMiddleware"/>
-                    <framework:bus name="messenger.bus.default" default-middleware="false"/>
                 </framework:messenger>
             </framework:config>
         </container>
@@ -1651,11 +1657,14 @@ middleware and *only* include your own:
             'messenger' => [
                 'buses' => [
                     'messenger.bus.default' => [
+                        // disable the default middleware
+                        'default_middleware' => false,
+
+                        // and/or add your own
                         'middleware' => [
                             'App\Middleware\MyMiddleware',
                             'App\Middleware\AnotherMiddleware',
                         ],
-                        'default_middleware' => false,
                     ],
                 ],
             ],
