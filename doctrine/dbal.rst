@@ -64,8 +64,10 @@ This will pass you the ``database_connection`` service.
 Registering custom Mapping Types
 --------------------------------
 
-You can register custom mapping types through Symfony's configuration. They
-will be added to all configured connections. For more information on custom
+You can register custom mapping types through Symfony's configuration.
+Also, some bundles can register their types. As an example, the DoctrineBundle
+registers the UuidType and UlidType.
+Those types will be added to all configured connections. For more information on custom
 mapping types, read Doctrine's `Custom Mapping Types`_ section of their documentation.
 
 .. configuration-block::
