@@ -45,7 +45,7 @@ has this default logic::
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
     {
-        return \get_class($this).'Validator';
+        return static::class.'Validator';
     }
 
 In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
