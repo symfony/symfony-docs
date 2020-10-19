@@ -770,7 +770,7 @@ service into your autowired classes.
 .. _reference-http-client-retry-failed:
 
 By enabling the optional ``retry_failed`` configuration, the HTTP client service
-will automaticaly retry failed HTTP requests.
+will automatically retry failed HTTP requests.
 
 .. code-block:: yaml
 
