@@ -780,7 +780,9 @@ will automaticaly retry failed HTTP requests.
             retry_failed:
                 # backoff_service: app.custom_backoff
                 # decider_service:  app.custom_decider
-                http_codes: [429, 500]
+                http_codes:
+                    429: true
+                    500: ['GET', 'HEAD']
                 max_retries: 2
                 delay: 1000
                 multiplier: 3
@@ -953,13 +955,13 @@ value must use the format ``['header-name' => header-value, ...]``.
 http_codes
 ..........
 
-**type**: ``array`` **default**: ``[423, 425, 429, 500, 502, 503, 504, 507, 510]``
+**type**: ``array`` **default**: ``[0, 423, 425, 429, 500: ['GET', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE'], 502, 503, 504: ['GET', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE'], 507: ['GET', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE'], 510: ['GET', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE']]``
 
 .. versionadded:: 5.2
 
     The ``http_codes`` option was introduced in Symfony 5.2.
 
-The list of HTTP status codes that triggers a retry of the request.
+The list of HTTP status codes that triggers a retry of the request. You can pass a method(s) option after a HTTP status code to only retry a request on certain method(s).
 
 http_version
 ............
