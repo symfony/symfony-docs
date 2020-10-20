@@ -12,7 +12,7 @@ you may have multiple repository classes which need the
     // src/Repository/BaseDoctrineRepository.php
     namespace App\Repository;
 
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
     use Psr\Log\LoggerInterface;
 
     // ...
@@ -58,9 +58,8 @@ Your child service classes may look like this::
         // ...
     }
 
-Just as you use PHP inheritance to avoid duplication in your PHP code, the
-service container allows you to extend parent services in order to avoid
-duplicated service definitions:
+The service container allows you to extend parent services in order to
+avoid duplicated service definitions:
 
 .. configuration-block::
 
@@ -72,7 +71,7 @@ duplicated service definitions:
                 abstract:  true
                 arguments: ['@doctrine.orm.entity_manager']
                 calls:
-                    - [setLogger, ['@logger']]
+                    - setLogger: ['@logger']
 
             App\Repository\DoctrineUserRepository:
                 # extend the App\Repository\BaseDoctrineRepository service
@@ -128,8 +127,9 @@ duplicated service definitions:
 
             $services->set(BaseDoctrineRepository::class)
                 ->abstract()
-                ->args([ref('doctrine.orm.entity_manager')])
-                ->call('setLogger', [ref('logger')])
+                ->args([service('doctrine.orm.entity_manager')])
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->call('setLogger', [service('logger')])
             ;
 
             $services->set(DoctrineUserRepository::class)
@@ -149,12 +149,6 @@ be called when ``App\Repository\DoctrineUserRepository`` is instantiated.
 
 All attributes on the parent service are shared with the child **except** for
 ``shared``, ``abstract`` and ``tags``. These are *not* inherited from the parent.
-
-.. note::
-
-    If you have a ``_defaults`` section in your file, all child services are required
-    to explicitly override those values to avoid ambiguity. You will see a clear
-    error message about this.
 
 .. tip::
 
@@ -181,8 +175,8 @@ the child class:
             App\Repository\DoctrineUserRepository:
                 parent: App\Repository\BaseDoctrineRepository
 
-                # overrides the public setting of the parent service
-                public: false
+                # overrides the private setting of the parent service
+                public: true
 
                 # appends the '@app.username_checker' argument to the parent
                 # argument list
@@ -207,10 +201,10 @@ the child class:
             <services>
                 <!-- ... -->
 
-                <!-- overrides the public setting of the parent service -->
+                <!-- overrides the private setting of the parent service -->
                 <service id="App\Repository\DoctrineUserRepository"
                     parent="App\Repository\BaseDoctrineRepository"
-                    public="false"
+                    public="true"
                 >
                     <!-- appends the '@app.username_checker' argument to the parent
                          argument list -->
@@ -248,18 +242,18 @@ the child class:
             $services->set(DoctrineUserRepository::class)
                 ->parent(BaseDoctrineRepository::class)
 
-                // overrides the public setting of the parent service
-                ->private()
+                // overrides the private setting of the parent service
+                ->public()
 
                 // appends the '@app.username_checker' argument to the parent
                 // argument list
-                ->args([ref('app.username_checker')])
+                ->args([service('app.username_checker')])
             ;
 
             $services->set(DoctrinePostRepository::class)
                 ->parent(BaseDoctrineRepository::class)
 
                 # overrides the first argument
-                ->arg(0, ref('doctrine.custom_entity_manager'))
+                ->arg(0, service('doctrine.custom_entity_manager'))
             ;
         };

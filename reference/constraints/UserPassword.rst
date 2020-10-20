@@ -10,6 +10,11 @@ password, but needs to enter their old password for security.
     This should **not** be used to validate a login form, since this is
     done automatically by the security system.
 
+.. note::
+
+    In order to use this constraints, you should have installed the
+    symfony/security-core component with Composer.
+
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
@@ -100,8 +105,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``message`` **default**: ``This value should be the user current password.``
 

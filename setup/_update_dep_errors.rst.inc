@@ -1,16 +1,17 @@
 Dependency Errors
 ~~~~~~~~~~~~~~~~~
 
-If you get a dependency error, it may simply mean that you need to upgrade
-other Symfony dependencies too. In that case, try the following command:
+If you get a dependency error, it may mean that you also need to upgrade
+other libraries that are dependencies of the Symfony libraries. To allow
+that, pass the ``--with-all-dependencies`` flag:
 
 .. code-block:: terminal
 
     $ composer update "symfony/*" --with-all-dependencies
 
-This updates ``symfony/symfony`` and *all* packages that it depends on, which will
-include several other packages. By using tight version constraints in
-``composer.json``, you can control what versions each library upgrades to.
+This updates ``symfony/*`` and *all* packages that those packages depend on.
+By using tight version constraints in ``composer.json``, you can control what
+versions each library upgrades to.
 
 If this still doesn't work, your ``composer.json`` file may specify a version
 for a library that is not compatible with the newer Symfony version. In that

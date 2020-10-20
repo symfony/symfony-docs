@@ -42,6 +42,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `block_prefix`_                                                  |
 |           | - `disabled`_                                                      |
 |           | - `label`_                                                         |
+|           | - `label_html`_                                                    |
 |           | - `row_attr`_                                                      |
 |           | - `translation_domain`_                                            |
 |           | - `label_translation_parameters`_                                  |
@@ -63,8 +64,8 @@ Field Options
 
 .. _form-option-allow-extra-fields:
 
-allow_extra_fields
-~~~~~~~~~~~~~~~~~~
+``allow_extra_fields``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -171,6 +172,8 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 

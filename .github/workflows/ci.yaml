@@ -1,0 +1,71 @@
+on:
+    push:
+        branches-ignore:
+            - 'github-comments'
+    pull_request:
+        branches-ignore:
+            - 'github-comments'
+
+name: CI
+
+jobs:
+    build:
+        name: Build
+
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: "Checkout"
+                uses: actions/checkout@v2
+
+            -   name: "Set up Python 3.7"
+                uses: actions/setup-python@v1
+                with:
+                    python-version: '3.7' # Semantic version range syntax or exact version of a Python version
+
+            -   name: "Display Python version"
+                run: python -c "import sys; print(sys.version)"
+
+            -   name: "Install Sphinx dependencies"
+                run: sudo apt-get install python-dev build-essential
+
+            -   name: "Cache pip"
+                uses: actions/cache@v2
+                with:
+                    path: ~/.cache/pip
+                    key: ${{ runner.os }}-pip-${{ hashFiles('_build/.requirements.txt') }}
+                    restore-keys: |
+                        ${{ runner.os }}-pip-
+
+            -   name: "Install Sphinx + requirements via pip"
+                run: pip install -r _build/.requirements.txt
+
+            -   name: "Build documentation"
+                run: make -C _build SPHINXOPTS="-nqW -j auto" html
+
+    doctor-rst:
+        name: DOCtor-RST
+
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: "Checkout"
+                uses: actions/checkout@v2
+
+            -   name: "Create cache dir"
+                run: mkdir .cache
+
+            -   name: "Extract base branch name"
+                run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:=${GITHUB_REF##*/}})"
+                id: extract_base_branch
+
+            -   name: "Cache DOCtor-RST"
+                uses: actions/cache@v1
+                with:
+                    path: .cache
+                    key: ${{ runner.os }}-doctor-rst-${{ steps.extract_base_branch.outputs.branch }}
+
+            -   name: "Run DOCtor-RST"
+                uses: docker://oskarstark/doctor-rst
+                with:
+                    args: --short --error-format=github --cache-file=/github/workspace/.cache/doctor-rst.cache

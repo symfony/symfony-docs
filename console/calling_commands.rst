@@ -1,12 +1,12 @@
 How to Call Other Commands
 ==========================
 
-If a command depends on another one being run before it, instead of asking the
-user to remember the order of execution, you can call it directly yourself.
-This is also useful if you want to create a "meta" command that just runs a
-bunch of other commands (for instance, all commands that need to be run when
-the project's code has changed on the production servers: clearing the cache,
-generating Doctrine2 proxies, dumping web assets, ...).
+If a command depends on another one being run before it you can call in the
+console command itself. This is useful if a command depends on another command
+or if you want to create a "meta" command that runs a bunch of other commands
+(for instance, all commands that need to be run when the project's code has
+changed on the production servers: clearing the cache, generating Doctrine
+proxies, dumping web assets, ...).
 
 Calling a command from another one is straightforward::
 
@@ -20,7 +20,6 @@ Calling a command from another one is straightforward::
         $command = $this->getApplication()->find('demo:greet');
 
         $arguments = [
-            'command' => 'demo:greet',
             'name'    => 'Fabien',
             '--yell'  => true,
         ];
@@ -32,13 +31,13 @@ Calling a command from another one is straightforward::
     }
 
 First, you :method:`Symfony\\Component\\Console\\Application::find` the
-command you want to execute by passing the command name. Then, you need to create
+command you want to run by passing the command name. Then, you need to create
 a new :class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the arguments
 and options you want to pass to the command.
 
-Eventually, calling the ``run()`` method actually executes the command and
-returns the returned code from the command (return value from command's
-``execute()`` method).
+Eventually, calling the ``run()`` method actually runs the command and returns
+the returned code from the command (return value from command's ``execute()``
+method).
 
 .. tip::
 

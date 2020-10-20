@@ -1,5 +1,5 @@
-minutes
-~~~~~~~
+``minutes``
+~~~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 59
 

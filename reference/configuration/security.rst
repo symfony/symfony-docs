@@ -29,6 +29,7 @@ Configuration
 
 * `access_denied_url`_
 * `always_authenticate_before_granting`_
+* `anonymous`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -60,6 +61,15 @@ always_authenticate_before_granting
 If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
 templates.
+
+anonymous
+~~~~~~~~~
+
+**type**: ``string`` **default**: ``~``
+
+When set to ``lazy``, Symfony loads the user (and starts the session) only if
+the application actually accesses the ``User`` object (e.g. via a ``is_granted()``
+call in a template or ``isGranted()`` in a controller or service).
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
@@ -147,7 +157,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     time_cost:    2     # Number of iterations
 
                 # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
-                AppBundle\Entity\User: 'sha512'
+                App\Entity\User: 'sha512'
 
     .. code-block:: xml
 
@@ -157,7 +167,9 @@ encoding algorithm. Also, each algorithm defines different config options:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -329,7 +341,9 @@ application:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -381,8 +395,6 @@ depend on the authentication mechanism, which can be any of these:
                         # ...
                     remote_user:
                         # ...
-                    simple_preauth:
-                        # ...
                     guard:
                         # ...
                     form_login:
@@ -390,8 +402,6 @@ depend on the authentication mechanism, which can be any of these:
                     form_login_ldap:
                         # ...
                     json_login:
-                        # ...
-                    simple_form:
                         # ...
                     http_basic:
                         # ...
@@ -524,8 +534,25 @@ The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
+.. _reference-security-logout-success-handler:
+
+``path``
+~~~~~~~~
+
+**type**: ``string`` **default**: ``/logout``
+
+The path which triggers logout. If you change it from the default value ``/logout``,
+you need to set up a route with a matching path.
+
 success_handler
 ~~~~~~~~~~~~~~~
+
+.. deprecated:: 5.1
+
+    This option is deprecated since Symfony 5.1. Register an
+    :doc:`event listener </event_dispatcher>` on the
+    :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
+    instead.
 
 **type**: ``string`` **default**: ``'security.logout.success_handler'``
 
@@ -554,8 +581,7 @@ csrf_token_id
 
 **type**: ``string`` **default**: ``'logout'``
 
-An arbitrary string used to generate the token value (and check its validity
-afterwards).
+An arbitrary string used to identify the token (and check its validity afterwards).
 
 .. _reference-security-ldap:
 
@@ -653,7 +679,9 @@ multiple firewalls, the "context" could actually be shared:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <firewall name="somename" context="my_context">
@@ -718,7 +746,7 @@ role inheritance rules by creating a role hierarchy, as explained in
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`libsodium`: https://pecl.php.net/package/libsodium
-.. _`Session Fixation`: https://www.owasp.org/index.php/Session_fixation
+.. _`Session Fixation`: https://owasp.org/www-community/attacks/Session_fixation
 .. _`Argon2 key derivation function`: https://en.wikipedia.org/wiki/Argon2
 .. _`bcrypt password hashing function`: https://en.wikipedia.org/wiki/Bcrypt
 .. _`cryptographic salt`: https://en.wikipedia.org/wiki/Salt_(cryptography)

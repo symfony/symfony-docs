@@ -27,10 +27,15 @@ time of certain parts of code so that you don't constantly have to parse
     use Symfony\Component\Stopwatch\Stopwatch;
 
     $stopwatch = new Stopwatch();
+
     // starts event named 'eventName'
     $stopwatch->start('eventName');
-    // ... some code goes here
+
+    // ... run your code here
+
     $event = $stopwatch->stop('eventName');
+    // you can convert $event into a string for a quick summary
+    // e.g. (string) $event = '4.50 MiB - 26 ms'
 
 The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
 from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
@@ -97,6 +102,11 @@ For example::
     $event->getEndTime();    // returns the end time of the very last period
     $event->getDuration();   // returns the event duration, including all periods
     $event->getMemory();     // returns the max memory usage of all periods
+    $event->getName();       // returns the event name
+
+.. versionadded:: 5.2
+
+    The ``getName()`` method was introduced in Symfony 5.2.
 
 Sections
 --------

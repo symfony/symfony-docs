@@ -25,7 +25,7 @@ under the ``twig`` key in your application configuration.
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `auto_reload`_
 * `autoescape`_
@@ -42,7 +42,6 @@ Configuration
 
 * `debug`_
 * `default_path`_
-* `exception_controller`_
 * `form_themes`_
 * `globals`_
 * `number_format`_
@@ -85,7 +84,7 @@ If set to a string, the template contents are escaped using the strategy with
 that name. Allowed values are ``html``, ``js``, ``css``, ``url``, ``html_attr``
 and ``name``. The default value is ``name``. This strategy escapes contents
 according to the template name extension (e.g. it uses ``html`` for ``*.html.twig``
-templates and ``js`` for ``*.js.html`` templates).
+templates and ``js`` for ``*.js.twig`` templates).
 
 .. tip::
 
@@ -195,23 +194,6 @@ default_path
 The path to the directory where Symfony will look for the application Twig
 templates by default. If you store the templates in more than one directory, use
 the :ref:`paths <config-twig-paths>`  option too.
-
-.. _config-twig-exception-controller:
-
-exception_controller
-~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``twig.controller.exception:showAction``
-
-This is the controller that is activated after an exception is thrown anywhere
-in your application. The default controller
-(:class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`)
-is what's responsible for rendering specific templates under different error
-conditions (see :doc:`/controller/error_pages`). Modifying this
-option is advanced. If you need to customize an error page you should use
-the previous link. If you need to perform some behavior on an exception,
-you should add an :doc:`event listener </event_dispatcher>` to the
-:ref:`kernel.exception event <kernel-kernel.exception>`.
 
 .. _config-twig-form-themes:
 

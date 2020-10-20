@@ -1,5 +1,5 @@
-trim
-~~~~
+``trim``
+~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

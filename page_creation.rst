@@ -52,7 +52,7 @@ random) number and prints it. To do that, create a "Controller" class and a
 
     class LuckyController
     {
-        public function number()
+        public function number(): Response
         {
             $number = random_int(0, 100);
 
@@ -63,7 +63,7 @@ random) number and prints it. To do that, create a "Controller" class and a
     }
 
 Now you need to associate this controller function with a public URL (e.g. ``/lucky/number``)
-so that the ``number()`` method is executed when a user browses to it. This association
+so that the ``number()`` method is called when a user browses to it. This association
 is defined by creating a **route** in the ``config/routes.yaml`` file:
 
 .. code-block:: yaml
@@ -75,9 +75,7 @@ is defined by creating a **route** in the ``config/routes.yaml`` file:
         path: /lucky/number
         controller: App\Controller\LuckyController::number
 
-That's it! If you are using Symfony web server, try it out by going to:
-
-    http://localhost:8000/lucky/number
+That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
@@ -123,7 +121,7 @@ You can now add your route directly *above* the controller:
         }
     }
 
-That's it! The page - ``http://localhost:8000/lucky/number`` will work exactly
+That's it! The page - http://localhost:8000/lucky/number will work exactly
 like before! Annotations are the recommended way to configure routes.
 
 .. _flex-quick-intro:
@@ -138,7 +136,7 @@ special things happened, both thanks to a powerful Composer plugin called
 First, ``annotations`` isn't a real package name: it's an *alias* (i.e. shortcut)
 that Flex resolves to ``sensio/framework-extra-bundle``.
 
-Second, after this package was downloaded, Flex executed a *recipe*, which is a
+Second, after this package was downloaded, Flex runs a *recipe*, which is a
 set of automated instructions that tell Symfony how to integrate an external
 package. `Flex recipes`_ exist for many packages and have the ability
 to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
@@ -181,21 +179,22 @@ You'll learn about many more commands as you continue!
 The Web Debug Toolbar: Debugging Dream
 --------------------------------------
 
-One of Symfony's *killer* features is the Web Debug Toolbar: a bar that displays
+One of Symfony's *amazing* features is the Web Debug Toolbar: a bar that displays
 a *huge* amount of debugging information along the bottom of your page while
 developing. This is all included out of the box using a :ref:`Symfony pack <symfony-packs>`
 called ``symfony/profiler-pack``.
 
-You will see a black bar along the bottom of the page. You'll learn more about all the information it holds
-along the way, but feel free to experiment: hover over and click
-the different icons to get information about routing, performance, logging and more.
+You will see a dark bar along the bottom of the page. You'll learn more about
+all the information it holds along the way, but feel free to experiment: hover
+over and click the different icons to get information about routing,
+performance, logging and more.
 
 Rendering a Template
 --------------------
 
 If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
-easy, powerful and actually quite fun.
+minimal, powerful and actually quite fun.
 
 Install the twig package with:
 
@@ -308,7 +307,7 @@ What's Next?
 Congrats! You're already starting to master Symfony and learn a whole new
 way of building beautiful, functional, fast and maintainable applications.
 
-Ok, time to finish mastering the fundamentals by reading these articles:
+OK, time to finish mastering the fundamentals by reading these articles:
 
 * :doc:`/routing`
 * :doc:`/controller`

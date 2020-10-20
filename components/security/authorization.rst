@@ -47,7 +47,16 @@ recognizes several strategies:
     grant access if there are more voters granting access than there are denying;
 
 ``unanimous``
-    only grant access if none of the voters has denied access;
+    only grant access if none of the voters has denied access. If all voters
+    abstained from voting, the decision is based on the ``allow_if_all_abstain``
+    config option (which defaults to ``false``).
+
+``priority``
+    grants or denies access by the first voter that does not abstain;
+
+    .. versionadded:: 5.1
+
+        The ``priority`` version strategy was introduced in Symfony 5.1.
 
 Usage of the available options in detail::
 
@@ -56,7 +65,7 @@ Usage of the available options in detail::
     // instances of Symfony\Component\Security\Core\Authorization\Voter\VoterInterface
     $voters = [...];
 
-    // one of "affirmative", "consensus", "unanimous"
+    // one of "affirmative", "consensus", "unanimous", "priority"
     $strategy = ...;
 
     // whether or not to grant access when all voters abstain
@@ -98,10 +107,22 @@ AuthenticatedVoter
 ~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AuthenticatedVoter`
-voter supports the attributes ``IS_AUTHENTICATED_FULLY``, ``IS_AUTHENTICATED_REMEMBERED``,
-and ``IS_AUTHENTICATED_ANONYMOUSLY`` and grants access based on the current
-level of authentication, i.e. is the user fully authenticated, or only based
-on a "remember-me" cookie, or even authenticated anonymously?::
+voter supports the attributes ``IS_AUTHENTICATED_FULLY``,
+``IS_AUTHENTICATED_REMEMBERED``, ``IS_AUTHENTICATED_ANONYMOUSLY``,
+to grant access based on the current level of authentication, i.e. is the
+user fully authenticated, or only based on a "remember-me" cookie, or even
+authenticated anonymously?
+
+It also supports the attributes ``IS_ANONYMOUS``, ``IS_REMEMBERED``,
+``IS_IMPERSONATED`` to grant access based on a specific state of
+authentication.
+
+.. versionadded:: 5.1
+
+    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATED``
+    attributes were introduced in Symfony 5.1.
+
+::
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 
@@ -122,7 +143,7 @@ RoleVoter
 
 The :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\RoleVoter`
 supports attributes starting with ``ROLE_`` and grants access to the user
-when the required ``ROLE_*`` attributes can all be found in the array of
+when at least one required ``ROLE_*`` attribute can be found in the array of
 roles returned by the token's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface::getRoleNames`
 method::
 
@@ -185,7 +206,7 @@ expressions have access to a number of
     $object = ...;
 
     $expression = new Expression(
-        '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+        '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
     )
 
     $vote = $expressionVoter->vote($token, $object, [$expression]);
@@ -221,15 +242,17 @@ which contains request matchers and a corresponding set of attributes that
 are required for the current user to get access to the application::
 
     use Symfony\Component\HttpFoundation\RequestMatcher;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
     use Symfony\Component\Security\Http\AccessMap;
     use Symfony\Component\Security\Http\Firewall\AccessListener;
 
     $accessMap = new AccessMap();
+    $tokenStorage = new TokenStorage();
     $requestMatcher = new RequestMatcher('^/admin');
     $accessMap->add($requestMatcher, ['ROLE_ADMIN']);
 
     $accessListener = new AccessListener(
-        $securityContext,
+        $tokenStorage,
         $accessDecisionManager,
         $accessMap,
         $authenticationManager
@@ -256,4 +279,3 @@ decision manager::
     if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
-

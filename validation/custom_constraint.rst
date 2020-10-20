@@ -5,9 +5,9 @@ How to Create a custom Validation Constraint
 ============================================
 
 You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`.
-As an example you're going to create a simple validator that checks if a string
-contains only alphanumeric characters.
+:class:`Symfony\\Component\\Validator\\Constraint`. As an example you're
+going to create a basic validator that checks if a string contains only
+alphanumeric characters.
 
 Creating the Constraint Class
 -----------------------------
@@ -40,7 +40,7 @@ Creating the Validator itself
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by another "constraint validator" class. The constraint validator
 class is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic::
+has this default logic::
 
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
@@ -52,7 +52,7 @@ In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
 Symfony will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method ``validate()``::
+The validator class only has one required method ``validate()``::
 
     // src/Validator/Constraints/ContainsAlphanumericValidator.php
     namespace App\Validator\Constraints;
@@ -85,6 +85,7 @@ The validator class is also simple, and only has one required method ``validate(
             }
 
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
+                // the argument must be a string or an object implementing __toString()
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ string }}', $value)
                     ->addViolation();
@@ -102,7 +103,7 @@ The ``addViolation()`` method call finally adds the violation to the context.
 Using the new Validator
 -----------------------
 
-You can use custom validators just as the ones provided by Symfony itself:
+You can use custom validators like the ones provided by Symfony itself:
 
 .. configuration-block::
 
@@ -180,6 +181,16 @@ then your validator is already registered as a service and :doc:`tagged </servic
 with the necessary ``validator.constraint_validator``. This means you can
 :ref:`inject services or configuration <services-constructor-injection>` like any other service.
 
+Create a Reusable Set of Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In case you need to apply some common set of constraints in different places
+consistently across your application, you can extend the :doc:`Compound constraint</reference/constraints/Compound>`.
+
+.. versionadded:: 5.1
+
+    The ``Compound`` constraint was introduced in Symfony 5.1.
+
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -239,3 +250,19 @@ not to the property:
         <class name="App\Entity\AcmeEntity">
             <constraint name="App\Validator\Constraints\ProtocolClass"/>
         </class>
+
+    .. code-block:: php
+
+        // src/Entity/AcmeEntity.php
+        use App\Validator\Constraints\ProtocolClass;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class AcmeEntity
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new ProtocolClass());
+            }
+        }

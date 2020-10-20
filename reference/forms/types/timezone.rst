@@ -21,11 +21,10 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `intl`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
-| options     |                                                                        |
+| options     | - `choice_translation_domain`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
-|             | - `choice_translation_domain`_                                         |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
 |             | - `placeholder`_                                                       |
@@ -60,8 +59,8 @@ manually, but then you should just use the ``ChoiceType`` directly.
 Field Options
 -------------
 
-input
-~~~~~
+``input``
+~~~~~~~~~
 
 **type**: ``string`` **default**: ``string``
 
@@ -93,8 +92,8 @@ with the ``choice_translation_locale`` option.
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: An array of timezones.
 
@@ -106,12 +105,12 @@ The Timezone type defaults the choices to all timezones returned by
     If you want to override the built-in choices of the timezone type, you
     will also have to set the ``choice_loader`` option to ``null``.
 
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
+
 Inherited Options
 -----------------
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
-
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 

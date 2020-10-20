@@ -144,8 +144,8 @@ then you can supply the ``choices`` option directly::
 Field Options
 -------------
 
-choice_label
-~~~~~~~~~~~~
+``choice_label``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath`
 
@@ -196,8 +196,8 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
             'choice_label' => 'translations[en].name',
         ]);
 
-class
-~~~~~
+``class``
+~~~~~~~~~
 
 **type**: ``string`` **required**
 
@@ -205,16 +205,16 @@ The class of your entity (e.g. ``App:Category``). This can be
 a fully-qualified class name (e.g. ``App\Entity\Category``)
 or the short alias name (as shown prior).
 
-em
-~~
+``em``
+~~~~~~
 
-**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
+**type**: ``string`` | ``Doctrine\Persistence\ObjectManager`` **default**: the default entity manager
 
 If specified, this entity manager will be used to load the choices
 instead of the ``default`` entity manager.
 
-query_builder
-~~~~~~~~~~~~~
+``query_builder``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``Doctrine\ORM\QueryBuilder`` or a ``callable`` **default**: ``null``
 
@@ -249,8 +249,8 @@ In the ``EntityType``, this is overridden to use the ``id`` by default. When the
 ``id`` is used, Doctrine only queries for the objects for the ids that were actually
 submitted.
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **type**:  ``array`` | ``\Traversable`` **default**: ``null``
 
@@ -258,8 +258,8 @@ Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
 See :ref:`reference-forms-entity-choices`.
 
-data_class
-~~~~~~~~~~
+``data_class``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -273,7 +273,7 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
@@ -290,8 +290,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
-preferred_choices
-~~~~~~~~~~~~~~~~~
+``preferred_choices``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` or ``callable`` **default**: ``[]``
 

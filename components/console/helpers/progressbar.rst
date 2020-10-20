@@ -50,9 +50,9 @@ you can also set the current progress by calling the
 
     If your platform doesn't support ANSI codes, updates to the progress
     bar are added as new lines. To prevent the output from being flooded,
-    use the method :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws`
-    to limit the number of redraws and the method
-    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`
+    use the :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws`
+    method to limit the number of redraws and the
+    :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency` method
     to redraw every N iterations. By default, redraw frequency is
     **100ms** or **10%** of your ``max``.
 
@@ -105,13 +105,19 @@ which starts, advances and finishes the progress bar automatically::
 
     $progressBar = new ProgressBar($output);
 
-    // $iterable can be for example an array ([1, 2, 3, ...]) or a generator
-    // $iterable = function () { yield 1; yield 2; ... };
+    // $iterable can be array
+    $iterable = [1, 2];
     foreach ($progressBar->iterate($iterable) as $value) {
         // ... do some work
     }
 
-If ``$iterable = [1, 2]``, the previous code will output the following:
+    // or a generator
+    function iterable() { yield 1; yield 2; ... };
+    foreach ($progressBar->iterate(iterable()) as $value) {
+        // ... do some work
+    }
+
+The previous code will output:
 
 .. code-block:: text
 
@@ -141,9 +147,9 @@ level of verbosity of the ``OutputInterface`` instance:
      3/3 [============================] 100%  1 sec
 
     # OutputInterface::VERBOSITY_VERY_VERBOSE (-vv)
-     0/3 [>---------------------------]   0%  1 sec
-     1/3 [=========>------------------]  33%  1 sec
-     3/3 [============================] 100%  1 sec
+     0/3 [>---------------------------]   0%  1 sec/1 sec
+     1/3 [=========>------------------]  33%  1 sec/1 sec
+     3/3 [============================] 100%  1 sec/1 sec
 
     # OutputInterface::VERBOSITY_DEBUG (-vvv)
      0/3 [>---------------------------]   0%  1 sec/1 sec  1.0 MB

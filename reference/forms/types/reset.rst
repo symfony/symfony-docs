@@ -27,8 +27,8 @@ A button that resets all fields to their original values.
 Inherited Options
 -----------------
 
-attr
-~~~~
+``attr``
+~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 

@@ -43,13 +43,26 @@ by executing the following command:
     $ composer require symfony/apache-pack
 
 This pack installs a ``.htaccess`` file in the ``public/`` directory that contains
-the rewrite rules.
+the rewrite rules needed to serve the Symfony application.
 
-.. tip::
+In production servers, you should move the ``.htaccess`` rules into the main
+Apache configuration file to improve performance. To do so, copy the
+``.htaccess`` contents inside the ``<Directory>`` configuration associated to
+the Symfony application ``public/`` directory (and replace ``AllowOverride All``
+by ``AllowOverride None``):
 
-    A performance improvement can be achieved by moving the rewrite rules from the ``.htaccess``
-    file into the VirtualHost block of your Apache configuration and then changing
-    ``AllowOverride All`` to ``AllowOverride None`` in your VirtualHost block.
+.. code-block:: apache
+
+    <VirtualHost *:80>
+        # ...
+        DocumentRoot /var/www/project/public
+
+        <Directory /var/www/project/public>
+            AllowOverride None
+
+            # Copy .htaccess contents here
+        </Directory>
+    </VirtualHost>
 
 Apache with mod_php/PHP-CGI
 ---------------------------
@@ -338,6 +351,11 @@ The **minimum configuration** to get your application running under Nginx is:
         access_log /var/log/nginx/project_access.log;
     }
 
+.. tip::
+
+    If you use NGINX Unit, check out the official article about
+    `How to run Symfony applications using NGINX Unit`_.
+
 .. note::
 
     Depending on your PHP-FPM config, the ``fastcgi_pass`` can also be
@@ -368,3 +386,4 @@ For advanced Nginx configuration options, read the official `Nginx documentation
 .. _`Apache documentation`: https://httpd.apache.org/docs/
 .. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
 .. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/
+.. _`How to run Symfony applications using NGINX Unit`: https://unit.nginx.org/howto/symfony/

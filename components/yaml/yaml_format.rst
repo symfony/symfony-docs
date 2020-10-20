@@ -122,7 +122,13 @@ Numbers
 .. code-block:: yaml
 
     # an octal
-    014
+    0o14
+
+.. deprecated:: 5.1
+
+    In YAML 1.1, octal numbers use the notation ``0...``, whereas in YAML 1.2
+    the notation changes to ``0o...``. Symfony 5.1 added support for YAML 1.2
+    notation and deprecated support for YAML 1.1 notation.
 
 .. code-block:: yaml
 
@@ -333,6 +339,6 @@ The following YAML features are not supported by the Symfony Yaml component:
 * Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
   ``{foo: ~, bar: ~}`` instead).
 
-.. _`ISO-8601`: http://www.iso.org/iso/iso8601
-.. _`YAML website`: http://yaml.org/
-.. _`YAML specification`: http://www.yaml.org/spec/1.2/spec.html
+.. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
+.. _`YAML website`: https://yaml.org/
+.. _`YAML specification`: https://www.yaml.org/spec/1.2/spec.html

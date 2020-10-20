@@ -1,5 +1,5 @@
-with_seconds
-~~~~~~~~~~~~
+``with_seconds``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

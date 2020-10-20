@@ -1,9 +1,9 @@
-model_timezone
-~~~~~~~~~~~~~~
+``model_timezone``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: system default timezone
 
 Timezone that the input data is stored in. This must be one of the
 `PHP supported timezones`_.
 
-.. _`PHP supported timezones`: https://php.net/manual/en/timezones.php
+.. _`PHP supported timezones`: https://www.php.net/manual/en/timezones.php

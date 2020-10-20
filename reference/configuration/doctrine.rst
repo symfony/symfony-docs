@@ -117,7 +117,7 @@ The following block shows all possible configuration keys:
     version).
 
     If you are running a MariaDB database, you must prefix the ``server_version``
-    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.2.12``).
+    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.4.14``).
 
     Always wrap the server version number with quotes to parse it as a string
     instead of a float number. Otherwise, the floating-point representation
@@ -222,26 +222,35 @@ Keep in mind that you can't use both syntaxes at the same time.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-The built-in types of caching drivers are: ``array``, ``apc``, ``apcu``,
-``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata`` and ``xcache``.
-There is a special type called ``service`` which lets you define the ID of your
-own caching service.
-
-The following example shows an overview of the caching configurations:
+Use any of the existing :doc:`Symfony Cache </cache>` pools or define new pools
+to cache each of Doctrine ORM elements (queries, results, etc.):
 
 .. code-block:: yaml
 
+    # config/packages/prod/doctrine.yaml
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system
+
     doctrine:
         orm:
-            auto_mapping: true
-            # each caching driver type defines its own config options
-            metadata_cache_driver: apc
+            # ...
+            metadata_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
             result_cache_driver:
-                type: memcache
-                host: localhost
-                port: 11211
-                instance_class: Memcache
-            # the 'service' type requires to define the 'id' option too
+                type: pool
+                pool: doctrine.result_cache_pool
+
+            # in addition to Symfony Cache pools, you can also use the
+            # 'type: service' option to use any service as the cache
             query_cache_driver:
                 type: service
                 id: App\ORM\MyCacheService
@@ -253,32 +262,32 @@ Explicit definition of all the mapped entities is the only necessary
 configuration for the ORM and there are several configuration options that
 you can control. The following configuration options exist for a mapping:
 
-type
-....
+``type``
+........
 
 One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
 
-dir
-...
+``dir``
+.......
 
 Absolute path to the mapping or entity files (depending on the driver).
 
-prefix
-......
+``prefix``
+..........
 
 A common namespace prefix that all entities of this mapping share. This prefix
 should never conflict with prefixes of other defined mappings otherwise some of
 your entities cannot be found by Doctrine.
 
-alias
-.....
+``alias``
+.........
 
 Doctrine offers a way to alias entity namespaces to simpler, shorter names
 to be used in DQL queries or for Repository access.
 
-is_bundle
-.........
+``is_bundle``
+.............
 
 This option is ``false`` by default and it's considered a legacy option. It was
 only useful in previous Symfony versions, when it was recommended to use bundles
@@ -432,7 +441,7 @@ Default Value of Dir
 
 If ``dir`` is not specified, then its default value depends on which configuration
 driver is being used. For drivers that rely on the PHP files (annotation,
-staticphp) it will be ``[Bundle]/Entity``. For drivers that are using
+``staticphp``) it will be ``[Bundle]/Entity``. For drivers that are using
 configuration files (XML, YAML, ...) it will be
 ``[Bundle]/Resources/config/doctrine``.
 
@@ -440,4 +449,4 @@ If the ``dir`` configuration is set and the ``is_bundle`` configuration
 is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
 the path of the bundle.
 
-.. _DBAL documentation: https://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
+.. _DBAL documentation: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html

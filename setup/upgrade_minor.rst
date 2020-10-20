@@ -22,37 +22,43 @@ There are two steps to upgrading a minor version:
 ------------------------------------------
 
 The ``composer.json`` file is configured to allow Symfony packages to be
-upgraded to patch versions. But, if you would like the packages to be upgraded
-to minor versions, check that the version constrains of the Symfony dependencies
-are like this:
+upgraded to patch versions. But to upgrade to a new minor version, you will
+probably need to update the version constraint next to each library starting
+``symfony/``. Suppose you are upgrading from Symfony 4.3 to 4.4:
 
-.. code-block:: json
+.. code-block:: diff
 
     {
         "...": "...",
 
         "require": {
-            "symfony/cache": "^4.0",
-            "symfony/config": "^4.0",
-            "symfony/console": "^4.0",
-            "symfony/debug": "^4.0",
-            "symfony/dependency-injection": "^4.0",
-            "symfony/dotenv": "^4.0",
-            "...": "..."
+    -         "symfony/cache": "4.3.*",
+    +         "symfony/cache": "4.4.*",
+    -         "symfony/config": "4.3.*",
+    +         "symfony/config": "4.4.*",
+    -         "symfony/console": "4.3.*",
+    +         "symfony/console": "4.4.*",
+            "...": "...",
+
+            "...": "A few libraries starting with
+                    symfony/ follow their versioning scheme. You
+                    do not need to update these versions: you can
+                    upgrade them independently whenever you want",
+            "symfony/monolog-bundle": "^3.5",
         },
         "...": "...",
     }
 
-At the bottom of your ``composer.json`` file, in the ``extra`` block you can
-find a data setting for the symfony version. Make sure to also upgrade
-this one. For instance, update it to ``4.3.*`` to upgrade to Symfony 4.3:
+Your ``composer.json`` file should also have an ``extra`` block that you will
+*also* need to update:
 
-.. code-block:: json
+.. code-block:: diff
 
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "4.3.*"
+            "...": "...",
+    -         "require": "4.3.*"
+    +         "require": "4.4.*"
         }
     }
 
@@ -73,15 +79,19 @@ Next, use Composer to download new versions of the libraries:
 
 In theory, you should be done! However, you *may* need to make a few changes
 to your code to get everything working. Additionally, some features you're
-using might still work, but might now be deprecated. While that's just fine,
+using might still work, but might now be deprecated. While that's fine,
 if you know about these deprecations, you can start to fix them over time.
 
-Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-4.1.md`_)
+Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-4.4.md`_)
 included in the Symfony directory that describes these changes. If you follow
 the instructions in the document and update your code accordingly, it should be
 safe to update in the future.
 
 These documents can also be found in the `Symfony Repository`_.
 
+.. _updating-flex-recipes:
+
+.. include:: /setup/_update_recipes.rst.inc
+
 .. _`Symfony Repository`: https://github.com/symfony/symfony
-.. _`UPGRADE-4.1.md`: https://github.com/symfony/symfony/blob/4.1/UPGRADE-4.1.md
+.. _`UPGRADE-4.4.md`: https://github.com/symfony/symfony/blob/4.4/UPGRADE-4.4.md

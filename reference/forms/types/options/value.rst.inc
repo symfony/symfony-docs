@@ -1,5 +1,5 @@
-value
-~~~~~
+``value``
+~~~~~~~~~
 
 **type**: ``mixed`` **default**: ``1``
 

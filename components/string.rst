@@ -8,11 +8,6 @@ The String Component
     The String component provides a single object-oriented API to work with
     three "unit systems" of strings: bytes, code points and grapheme clusters.
 
-.. versionadded:: 5.0
-
-    The String component was introduced in Symfony 5.0 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
-
 Installation
 ------------
 
@@ -104,29 +99,52 @@ Use the ``wrap()`` static method to instantiate more than one string object::
         new UnicodeString('hello'), new UnicodeString('world'),
     ]); // $contents = ['hello', 'world']
 
-There are two shortcut functions called ``b()`` and ``u()`` to create
-``ByteString`` and ``UnicodeString`` objects::
+If you work with lots of String objects, consider using the shortcut functions
+to make your code more concise::
 
-    // ...
+    // the b() function creates byte strings
     use function Symfony\Component\String\b;
-    use function Symfony\Component\String\u;
 
-    // both are equivalent
+    // both lines are equivalent
     $foo = new ByteString('hello');
     $foo = b('hello');
 
-    // both are equivalent
-    $baz = new UnicodeString('hello');
-    $baz = u('hello');
+    // the u() function creates Unicode strings
+    use function Symfony\Component\String\u;
+
+    // both lines are equivalent
+    $foo = new UnicodeString('hello');
+    $foo = u('hello');
+
+    // the s() function creates a byte string or Unicode string
+    // depending on the given contents
+    use function Symfony\Component\String\s;
+
+    // creates a ByteString object
+    $foo = s("\xfe\xff");
+    // creates a UnicodeString object
+    $foo = s('अनुच्छेद');
+
+.. versionadded:: 5.1
+
+    The ``s()`` function was introduced in Symfony 5.1.
 
 There are also some specialized constructors::
 
     // ByteString can create a random string of the given length
     $foo = ByteString::fromRandom(12);
+    // by default, random strings use A-Za-z0-9 characters; you can restrict
+    // the characters to use with the second optional argument
+    $foo = ByteString::fromRandom(6, 'AEIOU0123456789');
+    $foo = ByteString::fromRandom(10, 'qwertyuiop');
 
     // CodePointString and UnicodeString can create a string from code points
     $foo = UnicodeString::fromCodePoints(0x928, 0x92E, 0x938, 0x94D, 0x924, 0x947);
-    // $foo = 'नमस्ते'
+    // equivalent to: $foo = new UnicodeString('नमस्ते');
+
+.. versionadded:: 5.1
+
+    The second argument of ``ByteString::fromRandom()`` was introduced in Symfony 5.1.
 
 Methods to Transform String Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -144,6 +162,16 @@ Each string object can be transformed into the other two types of objects::
 
 If the conversion is not possible for any reason, you'll get an
 :class:`Symfony\\Component\\String\\Exception\\InvalidArgumentException`.
+
+There is also a method to get the bytes stored at some position::
+
+    // ('नमस्ते' bytes = [224, 164, 168, 224, 164, 174, 224, 164, 184,
+    //                  224, 165, 141, 224, 164, 164, 224, 165, 135])
+    b('नमस्ते')->bytesAt(0);   // [224]
+    u('नमस्ते')->bytesAt(0);   // [224, 164, 168]
+
+    b('नमस्ते')->bytesAt(1);   // [164]
+    u('नमस्ते')->bytesAt(1);   // [224, 164, 174]
 
 Methods Related to Length and White Spaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -211,7 +239,7 @@ Methods to Change Case
 The methods of all string classes are case-sensitive by default. You can perform
 case-insensitive operations with the ``ignoreCase()`` method::
 
-    u('abc')->indexOf('B');               //  null
+    u('abc')->indexOf('B');               // null
     u('abc')->ignoreCase()->indexOf('B'); // 1
 
 Methods to Append and Prepend
@@ -238,7 +266,7 @@ Methods to Append and Prepend
 
     // returns the contents found before/after the first occurrence of the given string
     u('hello world')->before('world');   // 'hello '
-    u('hello world')->before('o');       // 'hell '
+    u('hello world')->before('o');       // 'hell'
     u('hello world')->before('o', true); // 'hello'
 
     u('hello world')->after('hello');   // ' world'
@@ -290,6 +318,11 @@ Methods to Search and Replace
     u('avatar-73647.png')->match('/avatar-(\d+)\.png/');
     // result = ['avatar-73647.png', '73647']
 
+    // checks if the string contains any of the other given strings
+    u('aeiou')->containsAny('a');                 // true
+    u('aeiou')->containsAny(['ab', 'efg']);       // false
+    u('aeiou')->containsAny(['eio', 'foo', 'z']); // true
+
     // finds the position of the first occurrence of the given string
     // (the second argument is the position where the search starts and negative
     // values have the same meaning as in PHP functions)
@@ -317,8 +350,12 @@ Methods to Search and Replace
         return '['.$match[0].']';
     }); // result = '[1][2][3]'
 
-Methods to Join, Split and Truncate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. versionadded:: 5.1
+
+    The ``containsAny()`` method was introduced in Symfony 5.1.
+
+Methods to Join, Split, Truncate and Reverse
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -338,9 +375,20 @@ Methods to Join, Split and Truncate
     u('Symfony is great')->slice(-5);    // 'great'
 
     // reduces the string to the length given as argument (if it's longer)
-    u('Lorem Ipsum')->truncate(80);     // 'Lorem Ipsum'
-    u('Lorem Ipsum')->truncate(3);      // 'Lor'
-    u('Lorem Ipsum')->truncate(8, '…'); // 'Lorem I…'
+    u('Lorem Ipsum')->truncate(3);             // 'Lor'
+    u('Lorem Ipsum')->truncate(80);            // 'Lorem Ipsum'
+    // the second argument is the character(s) added when a string is cut
+    // (the total length includes the length of this character(s))
+    u('Lorem Ipsum')->truncate(8, '…');        // 'Lorem I…'
+    // if the third argument is false, the last word before the cut is kept
+    // even if that generates a string longer than the desired length
+    u('Lorem Ipsum')->truncate(8, '…', false); // 'Lorem Ipsum'
+
+.. versionadded:: 5.1
+
+    The third argument of ``truncate()`` was introduced in Symfony 5.1.
+
+::
 
     // breaks the string into lines of the given length
     u('Lorem Ipsum')->wordwrap(4);             // 'Lorem\nIpsum'
@@ -358,6 +406,14 @@ Methods to Join, Split and Truncate
     // breaks the string into pieces of the length given as argument
     u('0123456789')->chunk(3);  // ['012', '345', '678', '9']
 
+    // reverses the order of the string contents
+    u('foo bar')->reverse(); // 'rab oof'
+    u('さよなら')->reverse(); // 'らなよさ'
+
+.. versionadded:: 5.1
+
+    The ``reverse()`` method was introduced in Symfony 5.1.
+
 Methods Added by ByteString
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -366,12 +422,6 @@ These methods are only available for ``ByteString`` objects::
     // returns TRUE if the string contents are valid UTF-8 contents
     b('Lorem Ipsum')->isUtf8(); // true
     b("\xc3\x28")->isUtf8();    // false
-
-    // returns the value of the byte stored at the given position
-    // ('नमस्ते' bytes = [224, 164, 168, 224, 164, 174, 224, 164, 184,
-    //                  224, 165, 141, 224, 164, 164, 224, 165, 135])
-    b('नमस्ते')->byteCode(0);  // 224
-    b('नमस्ते')->byteCode(17); // 135
 
 Methods Added by CodePointString and UnicodeString
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -386,10 +436,10 @@ objects::
     u('さよなら')->ascii(); // 'sayonara'
     u('спасибо')->ascii(); // 'spasibo'
 
-    // returns the value of the code point stored at the given position
+    // returns an array with the code point or points stored at the given position
     // (code points of 'नमस्ते' graphemes = [2344, 2350, 2360, 2340]
-    u('नमस्ते')->codePoint(0); // 2344
-    u('नमस्ते')->codePoint(2); // 2360
+    u('नमस्ते')->codePointsAt(0); // [2344]
+    u('नमस्ते')->codePointsAt(2); // [2360]
 
 `Unicode equivalence`_ is the specification by the Unicode standard that
 different sequences of code points represent the same character. For example,
@@ -417,6 +467,24 @@ that only includes safe ASCII characters::
     $slugger = new AsciiSlugger();
     $slug = $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~');
     // $slug = 'Workspace-settings'
+
+    // you can also pass an array with additional character substitutions
+    $slugger = new AsciiSlugger('en', ['en' => ['%' => 'percent', '€' => 'euro']]);
+    $slug = $slugger->slug('10% or 5€');
+    // $slug = '10-percent-or-5-euro'
+
+    // for more dynamic substitutions, pass a PHP closure instead of an array
+    $slugger = new AsciiSlugger('en', function ($string, $locale) {
+        return str_replace('❤️', 'love', $string);
+    });
+
+.. versionadded:: 5.1
+
+    The feature to define additional substitutions was introduced in Symfony 5.1.
+
+.. versionadded:: 5.2
+
+    The feature to use a PHP closure to define substitutions was introduced in Symfony 5.2.
 
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::
@@ -453,9 +521,47 @@ the injected slugger is the same as the request locale::
 
         public function someMethod()
         {
-            $slug = $slugger->slug('...');
+            $slug = $this->slugger->slug('...');
         }
     }
+
+.. _string-inflector:
+
+Inflector
+---------
+
+.. versionadded:: 5.1
+
+    The inflector feature was introduced in Symfony 5.1.
+
+In some scenarios such as code generation and code introspection, you need to
+convert words from/to singular/plural. For example, to know the property
+associated with an *adder* method, you must convert from plural
+(``addStories()`` method) to singular (``$story`` property).
+
+Most human languages have simple pluralization rules, but at the same time they
+define lots of exceptions. For example, the general rule in English is to add an
+``s`` at the end of the word (``book`` -> ``books``) but there are lots of
+exceptions even for common words (``woman`` -> ``women``, ``life`` -> ``lives``,
+``news`` -> ``news``, ``radius`` -> ``radii``, etc.)
+
+This component provides an :class:`Symfony\\Component\\String\\Inflector\\EnglishInflector`
+class to convert English words from/to singular/plural with confidence::
+
+    use Symfony\Component\String\Inflector\EnglishInflector;
+
+    $inflector = new EnglishInflector();
+
+    $result = $inflector->singularize('teeth');   // ['tooth']
+    $result = $inflector->singularize('radii');   // ['radius']
+    $result = $inflector->singularize('leaves');  // ['leaf', 'leave', 'leaff']
+
+    $result = $inflector->pluralize('bacterium'); // ['bacteria']
+    $result = $inflector->pluralize('news');      // ['news']
+    $result = $inflector->pluralize('person');    // ['persons', 'people']
+
+The value returned by both methods is always an array because sometimes it's not
+possible to determine a unique singular/plural form for the given word.
 
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII
 .. _`Unicode`: https://en.wikipedia.org/wiki/Unicode

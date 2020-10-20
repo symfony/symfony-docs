@@ -259,7 +259,7 @@ config files:
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - [setMailer, ['@mailer']]
+                    - setMailer: ['@mailer']
 
     .. code-block:: xml
 
@@ -299,14 +299,15 @@ config files:
             $services = $configurator->services();
 
             $services->set('mailer', 'Mailer')
-                ->args(['%mailer.transport%'])
+                // the param() method was introduced in Symfony 5.2.
+                ->args([param('mailer.transport')])
             ;
 
             $services->set('newsletter_manager', 'NewsletterManager')
-                ->call('setMailer', [ref('mailer')])
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->call('setMailer', [service('mailer')])
             ;
         };
-
 
 Learn More
 ----------
@@ -318,4 +319,4 @@ Learn More
     /components/dependency_injection/*
     /service_container/*
 
-.. _`PSR-11`: http://www.php-fig.org/psr/psr-11/
+.. _`PSR-11`: https://www.php-fig.org/psr/psr-11/

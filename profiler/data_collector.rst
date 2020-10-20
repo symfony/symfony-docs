@@ -14,9 +14,13 @@ Creating a custom Data Collector
 A data collector is a PHP class that implements the
 :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface`.
 For convenience, your data collectors can also extend from the
-:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` class, which
-implements the interface and provides some utilities and the ``$this->data``
-property to store the collected information.
+:class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\AbstractDataCollector`
+class, which implements the interface and provides some utilities and the
+``$this->data`` property to store the collected information.
+
+.. versionadded:: 5.2
+
+    The ``AbstractDataCollector`` class was introduced in Symfony 5.2.
 
 The following example shows a custom collector that stores information about the
 request::
@@ -24,38 +28,28 @@ request::
     // src/DataCollector/RequestCollector.php
     namespace App\DataCollector;
 
+    use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
-    class RequestCollector extends DataCollector
+    class RequestCollector extends AbstractDataCollector
     {
-        public function collect(Request $request, Response $response, \Exception $exception = null)
+        public function collect(Request $request, Response $response, \Throwable $exception = null)
         {
             $this->data = [
                 'method' => $request->getMethod(),
                 'acceptable_content_types' => $request->getAcceptableContentTypes(),
             ];
         }
-
-        public function reset()
-        {
-            $this->data = [];
-        }
-
-        public function getName()
-        {
-            return 'app.request_collector';
-        }
-
-        // ...
     }
+
+These are the method that you can define in the data collector class:
 
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect` method:
     Stores the collected data in local properties (``$this->data`` if you extend
-    from :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector`).
-    If the data to collect cannot be obtained through the request or response,
-    inject the needed services in the data collector.
+    from ``AbstractDataCollector``). If you need some services to collect the
+    data, inject those services in the data collector constructor.
 
     .. caution::
 
@@ -70,26 +64,28 @@ request::
         to provide your own ``serialize()`` method.
 
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::reset` method:
-    It's called between requests to reset the state of the profiler. Use it to
-    remove all the information collected with the ``collect()`` method.
+    It's called between requests to reset the state of the profiler. By default
+    it only empties the ``$this->data`` contents, but you can override this method
+    to do additional cleaning.
 
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName` method:
     Returns the collector identifier, which must be unique in the application.
+    By default it returns the FQCN of the data collector class, but you can
+    override this method to return a custom name (e.g. ``app.request_collector``).
     This value is used later to access the collector information (see
-    :doc:`/testing/profiling`) so it's recommended to return a string which is
-    short, lowercased and without white spaces.
+    :doc:`/testing/profiling`) so you may prefer using short strings instead of FQCN strings.
 
-.. _data_collector_tag:
+The ``collect()`` method is called during the :ref:`kernel.response <component-http-kernel-kernel-response>`
+event. If you need to collect data that is only available later, implement
+:class:`Symfony\\Component\\HttpKernel\\DataCollector\\LateDataCollectorInterface`
+and define the ``lateCollect()`` method, which is invoked right before the profiler
+data serialization (during :ref:`kernel.terminate <component-http-kernel-kernel-terminate>` event).
 
-Enabling Custom Data Collectors
--------------------------------
+.. note::
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
-with ``autoconfigure``, then Symfony will automatically see your new data collector!
-Your ``collect()`` method should be called next time your refresh.
-
-If you're not using ``autoconfigure``, you can also :ref:`manually wire your service <services-explicitly-configure-wire-services>`
-and :doc:`tag </service_container/tags>` it with ``data_collector``.
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+    with ``autoconfigure``, then Symfony will start using your data collector after the
+    next page refresh. Otherwise, :ref:`enable the data collector by hand <data_collector_tag>`.
 
 Adding Web Profiler Templates
 -----------------------------
@@ -98,17 +94,23 @@ The information collected by your data collector can be displayed both in the
 web debug toolbar and in the web profiler. To do so, you need to create a Twig
 template that includes some specific blocks.
 
-However, first you must add some getters in the data collector class to give the
-template access to the collected information::
+First, add the ``getTemplate()`` method in your data collector class to return
+the path of the Twig template to use. Then, add some *getters* to give the
+template access to the collected information::::
 
     // src/DataCollector/RequestCollector.php
     namespace App\DataCollector;
 
-    use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+    use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
 
-    class RequestCollector extends DataCollector
+    class RequestCollector extends AbstractDataCollector
     {
         // ...
+
+        public static function getTemplate(): ?string
+        {
+            return 'data_collector/template.html.twig';
+        }
 
         public function getMethod()
         {
@@ -121,12 +123,13 @@ template access to the collected information::
         }
     }
 
-In the simplest case, you just want to display the information in the toolbar
+In the simplest case, you want to display the information in the toolbar
 without providing a profiler panel. This requires to define the ``toolbar``
 block and set the value of two variables called ``icon`` and ``text``:
 
 .. code-block:: html+twig
 
+    {# templates/data_collector/template.html.twig #}
     {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
     {% block toolbar %}
@@ -172,6 +175,7 @@ must also define additional blocks:
 
 .. code-block:: html+twig
 
+    {# templates/data_collector/template.html.twig #}
     {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
     {% block toolbar %}
@@ -221,8 +225,25 @@ The ``menu`` and ``panel`` blocks are the only required blocks to define the
 contents displayed in the web profiler panel associated with this data collector.
 All blocks have access to the ``collector`` object.
 
-Finally, to enable the data collector template, override your service configuration
-to specify a tag that contains the template:
+.. note::
+
+    The position of each panel in the toolbar is determined by the collector
+    priority, which can only be defined when :ref:`configuring the data collector by hand <data_collector_tag>`.
+
+.. note::
+
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+    with ``autoconfigure``, then Symfony will start displaying your collector data
+    in the toolbar after the next page refresh. Otherwise, :ref:`enable the data collector by hand <data_collector_tag>`.
+
+.. _data_collector_tag:
+
+Enabling Custom Data Collectors
+-------------------------------
+
+If you don't use Symfony's default configuration with
+:ref:`autowire and autoconfigure <service-container-services-load-example>`
+you'll need to configure the data collector explicitly:
 
 .. configuration-block::
 
@@ -233,13 +254,13 @@ to specify a tag that contains the template:
             App\DataCollector\RequestCollector:
                 tags:
                     -
-                        name:     data_collector
-                        template: 'data_collector/template.html.twig'
+                        name: data_collector
                         # must match the value returned by the getName() method
-                        id:       'app.request_collector'
-                        # optional priority
+                        id: 'App\DataCollector\RequestCollector'
+                        # optional template (it has more priority than the value returned by getTemplate())
+                        template: 'data_collector/template.html.twig'
+                        # optional priority (positive or negative integer; default = 0)
                         # priority: 300
-                public: false
 
     .. code-block:: xml
 
@@ -251,12 +272,14 @@ to specify a tag that contains the template:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\DataCollector\RequestCollector" public="false">
-                    <!-- priority="300" -->
+                <service id="App\DataCollector\RequestCollector">
+                    <!-- the 'template' attribute has more priority than the value returned by getTemplate() -->
                     <tag name="data_collector"
+                        id="App\DataCollector\RequestCollector"
                         template="data_collector/template.html.twig"
-                        id="app.request_collector"
                     />
+                    <!-- optional 'priority' attribute (positive or negative integer; default = 0) -->
+                    <!-- priority="300" -->
                 </service>
             </services>
         </container>
@@ -264,19 +287,19 @@ to specify a tag that contains the template:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\DataCollector\RequestCollector;
 
-        $container
-            ->autowire(RequestCollector::class)
-            ->setPublic(false)
-            ->addTag('data_collector', [
-                'template' => 'data_collector/template.html.twig',
-                'id'       => 'app.request_collector',
-                // 'priority' => 300,
-            ])
-        ;
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-The position of each panel in the toolbar is determined by the collector priority.
-Priorities are defined as positive or negative integers and they default to ``0``.
-Most built-in collectors use ``255`` as their priority. If you want your collector
-to be displayed before them, use a higher value (like 300).
+            $services->set(RequestCollector::class)
+                ->tag('data_collector', [
+                    'id' => RequestCollector::class,
+                    // optional template (it has more priority than the value returned by getTemplate())
+                    'template' => 'data_collector/template.html.twig',
+                    // optional priority (positive or negative integer; default = 0)
+                    // 'priority' => 300,
+                ]);
+        };

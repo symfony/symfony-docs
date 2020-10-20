@@ -41,7 +41,7 @@ a fully-featured full-stack web framework.
 And each step will be the occasion to learn more about some of the Symfony
 Components.
 
-Many modern web frameworks advertize themselves as being MVC frameworks. This
+Many modern web frameworks advertise themselves as being MVC frameworks. This
 tutorial won't talk about the MVC pattern, as the Symfony Components are able to
 create any type of frameworks, not just the ones that follow the MVC
 architecture. Anyway, if you have a look at the MVC semantics, this book is
@@ -63,7 +63,7 @@ Before You Start
 Reading about how to create a framework is not enough. You will have to follow
 along and actually type all the examples included in this tutorial. For that,
 you need a recent version of PHP (5.5.9 or later is good enough), a web server
-(like Apache, NGinx or PHP's built-in web server), a good knowledge of PHP and
+(like Apache, nginx or PHP's built-in web server), a good knowledge of PHP and
 an understanding of Object Oriented programming.
 
 Ready to go? Read on!
@@ -113,5 +113,5 @@ In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
 introduce the HttpFoundation Component and see what it brings us.
 
 .. _`Symfony`: https://symfony.com/
-.. _`Composer`: http://packagist.org/about-composer
+.. _`Composer`: https//getcomposer.org/
 .. _`download and install Composer`: https://getcomposer.org/download/

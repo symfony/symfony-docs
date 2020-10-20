@@ -94,8 +94,8 @@ This option allows to validate a custom date format. See
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid datetime.``
 
@@ -107,6 +107,11 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

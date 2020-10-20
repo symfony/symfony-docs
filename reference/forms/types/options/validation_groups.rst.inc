@@ -1,5 +1,5 @@
-validation_groups
-~~~~~~~~~~~~~~~~~
+``validation_groups``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``, ``string``, ``callable``, :class:`Symfony\\Component\\Validator\\Constraints\\GroupSequence` or ``null`` **default**: ``null``
 

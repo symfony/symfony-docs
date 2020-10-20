@@ -9,7 +9,7 @@ Cache Invalidation
     "There are only two hard things in Computer Science: cache invalidation
     and naming things." -- Phil Karlton
 
-Once an URL is cached by a gateway cache, the cache will not ask the
+Once a URL is cached by a gateway cache, the cache will not ask the
 application for that content anymore. This allows the cache to provide fast
 responses and reduces the load on your application. However, you risk
 delivering outdated content. A way out of this dilemma is to use long
@@ -60,7 +60,7 @@ to support the ``PURGE`` HTTP method::
 
     class CacheKernel extends HttpCache
     {
-        protected function invalidate(Request $request, $catch = false)
+        protected function invalidate(Request $request, bool $catch = false)
         {
             if ('PURGE' !== $request->getMethod()) {
                 return parent::invalidate($request, $catch);
@@ -90,7 +90,7 @@ to support the ``PURGE`` HTTP method::
     purging your cached data.
 
 **Purge** instructs the cache to drop a resource in *all its variants*
-(according to the ``Vary`` header, see above). An alternative to purging is
+(according to the ``Vary`` header, see :doc:`/http_cache/cache_vary`). An alternative to purging is
 **refreshing** a content. Refreshing means that the caching proxy is
 instructed to discard its local cache and fetch the content again. This way,
 the new content is already available in the cache. The drawback of refreshing
@@ -104,4 +104,4 @@ different URLs. More flexible concepts exist for those cases:
 * **Cache tagging** lets you add a tag for each content used in a response
   so that you can invalidate all URLs containing a certain content.
 
-.. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/

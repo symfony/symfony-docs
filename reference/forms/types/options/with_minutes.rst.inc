@@ -1,5 +1,5 @@
-with_minutes
-~~~~~~~~~~~~
+``with_minutes``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

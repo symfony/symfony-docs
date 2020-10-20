@@ -36,19 +36,23 @@ access control:
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:srv="http://symfony.com/schema/dic/services"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
 
                 <config>
                     <!-- ... -->
 
-                    <rule path="^/secure" role="ROLE_ADMIN" requires_channel="https"/>
+                    <rule path="^/secure"
+                        role="ROLE_ADMIN"
+                        requires-channel="https"/>
                     <rule path="^/login"
                         role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        requires_channel="https"
+                        requires-channel="https"
                     />
                     <rule path="^/"
                         role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        requires_channel="https"
+                        requires-channel="https"
                     />
                 </config>
             </srv:container>

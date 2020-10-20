@@ -116,7 +116,7 @@ But, instead of working, you see an error:
 
     This dependency was not found:
 
-    * respond.js in ./assets/js/app.js
+    * respond.js in ./assets/app.js
 
 Typically, a package will "advertise" its "main" file by adding a ``main`` key to
 its ``package.json``. But sometimes, old libraries won't have this. Instead, you'll

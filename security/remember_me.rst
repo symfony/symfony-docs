@@ -38,7 +38,9 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -132,6 +134,14 @@ The ``remember_me`` firewall defines the following configuration options:
     Defines the service id of a token provider to use. If you want to store tokens
     in the database, see :ref:`remember-me-token-in-database`.
 
+``service`` (default value: ``null``)
+    Defines the ID of the service used to handle the Remember Me feature. It's
+    useful if you need to overwrite the current behavior entirely.
+
+    .. versionadded:: 5.1
+
+        The ``service`` option was introduced in Symfony 5.1.
+
 Forcing the User to Opt-Out of the Remember Me Feature
 ------------------------------------------------------
 
@@ -168,7 +178,8 @@ visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
 before accessing certain resources. For example, you might not allow "remember me"
-users to change their password. You can do this by leveraging a few special "roles"::
+users to change their password. You can do this by leveraging a few special
+"attributes"::
 
     // src/Controller/AccountController.php
     // ...
@@ -191,6 +202,15 @@ users to change their password. You can do this by leveraging a few special "rol
 
         // ...
     }
+
+.. tip::
+
+    There is also a ``IS_REMEMBERED`` attribute that grants *only* when the
+    user is authenticated via the remember me mechanism.
+
+.. versionadded:: 5.1
+
+    The ``IS_REMEMBERED`` attribute was introduced in Symfony 5.1.
 
 .. _remember-me-token-in-database:
 
@@ -241,14 +261,44 @@ so ``DoctrineTokenProvider`` can store the tokens:
 
     CREATE TABLE `rememberme_token` (
         `series`   char(88)     UNIQUE PRIMARY KEY NOT NULL,
-        `value`    char(88)     NOT NULL,
+        `value`    varchar(88)  NOT NULL,
         `lastUsed` datetime     NOT NULL,
         `class`    varchar(100) NOT NULL,
         `username` varchar(200) NOT NULL
     );
 
+.. note::
+
+    If you use DoctrineMigrationsBundle to manage your database migrations, you
+    will need to tell Doctrine to ignore this new ``rememberme_token`` table:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/doctrine.yaml
+            doctrine:
+                dbal:
+                    schema_filter: ~^(?!rememberme_token)~
+
+        .. code-block:: xml
+
+            # config/packages/doctrine.xml
+            <doctrine:dbal schema-filter="~^(?!rememberme_token)~"/>
+
+        .. code-block:: php
+
+            # config/packages/doctrine.php
+            $container->loadFromExtension('doctrine', [
+                'dbal' => [
+                    'schema_filter'  => '~^(?!rememberme_token)~',
+                    // ...
+                ],
+                // ...
+            ]);
+
 Finally, set the ``token_provider`` option of the ``remember_me`` config to the
-service you just created:
+service you created before:
 
 .. configuration-block::
 
@@ -273,7 +323,9 @@ service you just created:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -282,7 +334,7 @@ service you just created:
                     <!-- ... -->
 
                     <remember-me
-                        token_provider="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
+                        token-provider="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
                         />
                 </firewall>
             </config>
@@ -291,6 +343,7 @@ service you just created:
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
         $container->loadFromExtension('security', [
             // ...
 
@@ -299,7 +352,7 @@ service you just created:
                     // ...
                     'remember_me' => [
                         // ...
-                        'token_provider' => 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider',
+                        'token_provider' => DoctrineTokenProvider::class,
                     ],
                 ],
             ],

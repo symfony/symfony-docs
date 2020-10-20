@@ -1,5 +1,5 @@
-auto_initialize
-~~~~~~~~~~~~~~~
+``auto_initialize``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean``  **default**: ``true``
 

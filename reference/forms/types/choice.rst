@@ -14,6 +14,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 +-------------+------------------------------------------------------------------------------+
 | Options     | - `choices`_                                                                 |
 |             | - `choice_attr`_                                                             |
+|             | - `choice_filter`_                                                           |
 |             | - `choice_label`_                                                            |
 |             | - `choice_loader`_                                                           |
 |             | - `choice_name`_                                                             |
@@ -82,8 +83,8 @@ This will create a ``select`` drop-down like this:
 
 If the user selects ``No``, the form will return ``false`` for this field. Similarly,
 if the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
-In other words, the **value** of each item is the value you want to get/set in PHP
-code, while the **key** is what will be shown to the user.
+In other words, the **choice** of each item is the value you want to get/set in PHP
+code, while the **key** is the **label** that will be shown to the user.
 
 Advanced Example (with Objects!)
 --------------------------------
@@ -103,23 +104,40 @@ method::
             new Category('Cat3'),
             new Category('Cat4'),
         ],
-        'choice_label' => function(Category $category, $key, $value) {
-            return strtoupper($category->getName());
+        // "name" is a property path, meaning Symfony will look for a public
+        // property or a public method like "getName()" to define the input
+        // string value that will be submitted by the form
+        'choice_value' => 'name',
+        // a callback to return the label for a given choice
+        // if a placeholder is used, its empty value (null) may be passed but
+        // its label is defined by its own "placeholder" option
+        'choice_label' => function(?Category $category) {
+            return $category ? strtoupper($category->getName()) : '';
         },
-        'choice_attr' => function(Category $category, $key, $value) {
-            return ['class' => 'category_'.strtolower($category->getName())];
+        // returns the html attributes for each option input (may be radio/checkbox)
+        'choice_attr' => function(?Category $category) {
+            return $category ? ['class' => 'category_'.strtolower($category->getName())] : [];
         },
-        'group_by' => function(Category $category, $key, $value) {
+        // every option can use a string property path or any callable that get
+        // passed each choice as argument, but it may not be needed
+        'group_by' => function() {
             // randomly assign things into 2 groups
             return rand(0, 1) == 1 ? 'Group A' : 'Group B';
         },
-        'preferred_choices' => function(Category $category, $key, $value) {
-            return $category->getName() == 'Cat2' || $category->getName() == 'Cat3';
+        // a callback to return whether a category is preferred
+        'preferred_choices' => function(?Category $category) {
+            return $category && 100 < $category->getArticleCounts();
         },
     ]);
 
-You can also customize the `choice_name`_ and `choice_value`_ of each choice if
-you need further HTML customization.
+You can also customize the `choice_name`_ of each choice. You can learn more
+about all of these options in the sections below.
+
+.. caution::
+
+    The *placeholder* is a specific field, when the choices are optional the
+    first item in the list must be empty, so the user can unselect.
+    Be sure to always handle the empty choice ``null`` when using callbacks.
 
 .. _forms-reference-choice-tags:
 
@@ -159,10 +177,15 @@ by passing a multi-dimensional ``choices`` array::
 .. image:: /_images/reference/form/choice-example4.png
    :align: center
 
-To get fancier, use the `group_by`_ option.
+To get fancier, use the `group_by`_ option instead.
 
 Field Options
 -------------
+
+.. versionadded:: 5.1
+
+    The :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class was
+    introduced in Symfony 5.1, to help configuring choices options.
 
 choices
 ~~~~~~~
@@ -177,7 +200,10 @@ is the item's label and the array value is the item's value::
     // ...
 
     $builder->add('inStock', ChoiceType::class, [
-        'choices' => ['In Stock' => true, 'Out of Stock' => false],
+        'choices' => [
+            'In Stock' => true,
+            'Out of Stock' => false,
+        ],
     ]);
 
 If there are choice values that are not scalar or the stringified
@@ -187,39 +213,19 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
+.. include:: /reference/forms/types/options/choice_filter.rst.inc
+
 .. _reference-form-choice-label:
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
-choice_loader
-~~~~~~~~~~~~~
+.. _reference-form-choice-loader:
 
-**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
-
-The ``choice_loader`` can be used to only partially load the choices in cases where
-a fully-loaded list is not necessary. This is only needed in advanced cases and
-would replace the ``choices`` option.
-
-You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader`
-if you want to take advantage of lazy loading::
-
-    use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    // ...
-
-    $builder->add('constants', ChoiceType::class, [
-        'choice_loader' => new CallbackChoiceLoader(function() {
-            return StaticClass::getConstants();
-        }),
-    ]);
-
-This will cause the call of ``StaticClass::getConstants()`` to not happen if the
-request is redirected and if there is no pre set or submitted data. Otherwise
-the choice options would need to be resolved thus triggering the callback.
+.. include:: /reference/forms/types/options/choice_loader.rst.inc
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain_enabled.rst.inc
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 

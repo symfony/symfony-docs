@@ -44,10 +44,13 @@ The database connection information is stored as an environment variable called
     # .env (or override DATABASE_URL in .env.local to avoid committing your changes)
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
+    
+    # to use postgresql:
+    # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
 
 .. caution::
 
@@ -128,16 +131,17 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
     // src/Entity/Product.php
     namespace App\Entity;
 
+    use App\Repository\ProductRepository;
     use Doctrine\ORM\Mapping as ORM;
 
     /**
-     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+     * @ORM\Entity(repositoryClass=ProductRepository::class)
      */
     class Product
     {
         /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
+         * @ORM\Id()
+         * @ORM\GeneratedValue()
          * @ORM\Column(type="integer")
          */
         private $id;
@@ -152,7 +156,7 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
          */
         private $price;
 
-        public function getId()
+        public function getId(): ?int
         {
             return $this->id;
         }
@@ -225,7 +229,7 @@ If everything worked, you should see something like this:
 
     SUCCESS!
 
-    Next: Review the new migration "src/Migrations/Version20180207231217.php"
+    Next: Review the new migration "migrations/Version20180207231217.php"
     Then: Run the migration with php bin/console doctrine:migrations:migrate
 
 If you open this file, it contains the SQL needed to update your database! To run
@@ -519,6 +523,24 @@ be able to go to ``/product/1`` to see your new product::
         // return $this->render('product/show.html.twig', ['product' => $product]);
     }
 
+Another possibility is to use the ``ProductRepository`` using Symfony's autowiring
+and injected by the dependency injection container::
+
+    // src/Controller/ProductController.php
+    // ...
+    use App\Repository\ProductRepository;
+
+    /**
+     * @Route("/product/{id}", name="product_show")
+     */
+    public function show($id, ProductRepository $productRepository)
+    {
+        $product = $productRepository
+            ->find($id);
+
+        // ...
+    }
+
 Try it out!
 
     http://localhost:8000/product/1
@@ -669,7 +691,7 @@ But what if you need a more complex query? When you generated your entity with
 
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-    use Doctrine\Common\Persistence\ManagerRegistry;
+    use Doctrine\Persistence\ManagerRegistry;
 
     class ProductRepository extends ServiceEntityRepository
     {
@@ -738,7 +760,7 @@ Querying with the Query Builder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine also provides a `Query Builder`_, an object-oriented way to write
-queries. It is recommended to use this when queries and build dynamically (i.e.
+queries. It is recommended to use this when queries are built dynamically (i.e.
 based on PHP conditions)::
 
     // src/Repository/ProductRepository.php
@@ -831,27 +853,26 @@ Learn more
     doctrine/custom_dql_functions
     doctrine/dbal
     doctrine/multiple_entity_managers
-    doctrine/pdo_session_storage
-    doctrine/mongodb_session_storage
     doctrine/resolve_target_entity
     doctrine/reverse_engineering
+    session/database
     testing/database
 
-.. _`Doctrine`: http://www.doctrine-project.org/
+.. _`Doctrine`: https://www.doctrine-project.org/
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`Doctrine's Mapping Types documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
-.. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
-.. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
-.. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
+.. _`Doctrine's Mapping Types documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html
+.. _`Query Builder`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/query-builder.html
+.. _`Doctrine Query Language`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/dql-doctrine-query-language.html
+.. _`Reserved SQL keywords documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#quoting-reserved-words
 .. _`DoctrineMongoDBBundle docs`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
-.. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
+.. _`Transactions and Concurrency`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/transactions-and-concurrency.html
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
-.. _`NativeQuery`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/native-sql.html
-.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
+.. _`NativeQuery`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/native-sql.html
+.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-limits.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
-.. _`PDO`: https://php.net/pdo
+.. _`PDO`: https://www.php.net/pdo
 .. _`available Doctrine extensions`: https://github.com/Atlantic18/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/antishov/StofDoctrineExtensionsBundle

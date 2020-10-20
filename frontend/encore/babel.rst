@@ -25,10 +25,10 @@ Need to extend the Babel configuration further? The easiest way is via
         }, {
             // node_modules is not processed through Babel by default
             // but you can whitelist specific modules to process
-            include_node_modules: ['foundation-sites'],
+            includeNodeModules: ['foundation-sites'],
 
             // or completely control the exclude rule (note that you
-            // can't use both "include_node_modules" and "exclude" at
+            // can't use both "includeNodeModules" and "exclude" at
             // the same time)
             exclude: /bower_components/
         })
@@ -49,8 +49,8 @@ cache directory:
     # On Unix run this command. On Windows, clear this directory manually
     $ rm -rf node_modules/.cache/babel-loader/
 
-Creating a .babelrc File
-------------------------
+Creating a ``.babelrc`` File
+----------------------------
 
 Instead of calling ``configureBabel()``, you could create a ``.babelrc`` file
 at the root of your project. This is a more "standard" way of configuring
@@ -62,4 +62,4 @@ automatically be added to Babel: you must add it yourself in ``.babelrc``.
 As soon as a ``.babelrc`` file is present, it will take priority over the Babel
 configuration added by Encore.
 
-.. _`Babel`: http://babeljs.io/
+.. _`Babel`: https://babeljs.io/

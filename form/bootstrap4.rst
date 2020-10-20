@@ -12,10 +12,10 @@ template which other templates extend from):
 
     {# beware that the blocks in your template may be named different #}
     {% block head_css %}
-        <!-- Copy CSS from https://getbootstrap.com/docs/4.1/getting-started/introduction/#css -->
+        <!-- Copy CSS from https://getbootstrap.com/docs/4.4/getting-started/introduction/#css -->
     {% endblock %}
     {% block head_js %}
-        <!-- Copy JavaScript from https://getbootstrap.com/docs/4.1/getting-started/introduction/#js -->
+        <!-- Copy JavaScript from https://getbootstrap.com/docs/4.4/getting-started/introduction/#js -->
     {% endblock %}
 
 If your application uses modern front-end practices, it's better to use
@@ -77,6 +77,21 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
         {{ form(form) }}
     {% endblock %}
 
+Error Messages
+--------------
+
+Form errors are rendered **inside** the ``<label>`` element to make sure there
+is a strong connection between the error and its ``<input>``, as required by the
+`WCAG 2.0 standard`_. To achieve this, ``form_errors()`` is called by
+``form_label()`` internally. If you call to ``form_errors()`` in your template,
+you'll get the error messages displayed *twice*.
+
+Checkboxes and Radios
+---------------------
+
+For a checkbox/radio field, calling ``form_label()`` doesn't render anything.
+Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
+
 Accessibility
 -------------
 
@@ -104,19 +119,8 @@ Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the la
     {{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }}
     {{ form_row(form.myCheckbox, {label_attr: {class: 'switch-custom'} }) }}
 
-Labels and Errors
------------------
-
-When you use the Bootstrap form themes and render the fields manually, calling
-``form_label()`` for a checkbox/radio field doesn't render anything. Due to Bootstrap
-internals, the label is already rendered by ``form_widget()``.
-
-Form errors are rendered **inside** the ``<label>`` element to make sure there
-is a strong connection between the error and its ``<input>``, as required by the
-`WCAG 2.0 standard`_.
-
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
-.. _`custom forms`: https://getbootstrap.com/docs/4.3/components/forms/#custom-forms
-.. _`custom radio`: https://getbootstrap.com/docs/4.3/components/forms/#radios
-.. _`custom checkbox`: https://getbootstrap.com/docs/4.3/components/forms/#checkboxes
-.. _`switch instead of a checkbox`: https://getbootstrap.com/docs/4.3/components/forms/#switches
+.. _`custom forms`: https://getbootstrap.com/docs/4.4/components/forms/#custom-forms
+.. _`custom radio`: https://getbootstrap.com/docs/4.4/components/forms/#radios
+.. _`custom checkbox`: https://getbootstrap.com/docs/4.4/components/forms/#checkboxes
+.. _`switch instead of a checkbox`: https://getbootstrap.com/docs/4.4/components/forms/#switches

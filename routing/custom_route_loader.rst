@@ -4,7 +4,7 @@
 How to Create a custom Route Loader
 ===================================
 
-Simple applications can define all their routes in a single configuration file -
+Basic applications can define all their routes in a single configuration file -
 usually ``config/routes.yaml`` (see :ref:`routing-creating-routes`).
 However, in most applications it's common to import routes definitions from
 different resources: PHP annotations in controller files, YAML, XML or PHP
@@ -92,20 +92,10 @@ What is a Custom Route Loader
 -----------------------------
 
 A custom route loader enables you to generate routes based on some
-conventions or patterns. A great example for this use-case is the
-`FOSRestBundle`_ where routes are generated based on the names of the
-action methods in a controller.
-
-You still need to modify your routing configuration (e.g.
-``config/routes.yaml``) manually, even when using a custom route
-loader.
-
-.. note::
-
-    There are many bundles out there that use their own route loaders to
-    accomplish cases like those described above, for instance
-    `FOSRestBundle`_, `JMSI18nRoutingBundle`_, `KnpRadBundle`_ and
-    `SonataAdminBundle`_.
+conventions, patterns or integrations. An example for this use-case is the
+`OpenAPI-Symfony-Routing`_ library where routes are generated based on
+OpenAPI/Swagger annotations. Another example is the `SonataAdminBundle`_ that
+creates routes based on CRUD conventions.
 
 Loading Routes
 --------------
@@ -253,7 +243,7 @@ you do. The resource name itself is not actually used in the example::
     {
         private $isLoaded = false;
 
-        public function load($resource, $type = null)
+        public function load($resource, string $type = null)
         {
             if (true === $this->isLoaded) {
                 throw new \RuntimeException('Do not add the "extra" loader twice');
@@ -280,7 +270,7 @@ you do. The resource name itself is not actually used in the example::
             return $routes;
         }
 
-        public function supports($resource, $type = null)
+        public function supports($resource, string $type = null)
         {
             return 'extra' === $type;
         }
@@ -337,11 +327,17 @@ Now define a service for the ``ExtraLoader``:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Routing\ExtraLoader;
 
-        $container->autowire(ExtraLoader::class)
-            ->addTag('routing.loader')
-        ;
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(ExtraLoader::class)
+                ->tag('routing.loader')
+            ;
+        };
 
 Notice the tag ``routing.loader``. All services with this *tag* will be marked
 as potential route loaders and added as specialized route loaders to the
@@ -419,7 +415,7 @@ configuration file - you can call the
 
     class AdvancedLoader extends Loader
     {
-        public function load($resource, $type = null)
+        public function load($resource, string $type = null)
         {
             $routes = new RouteCollection();
 
@@ -433,7 +429,7 @@ configuration file - you can call the
             return $routes;
         }
 
-        public function supports($resource, $type = null)
+        public function supports($resource, string $type = null)
         {
             return 'advanced_extra' === $type;
         }
@@ -452,8 +448,6 @@ configuration file - you can call the
     combined, for example to keep using the default Symfony routing system when
     writing a custom router.
 
-.. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
-.. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
-.. _`KnpRadBundle`: https://github.com/KnpLabs/KnpRadBundle
+.. _`OpenAPI-Symfony-Routing`: https://github.com/Tobion/OpenAPI-Symfony-Routing
 .. _`SonataAdminBundle`: https://github.com/sonata-project/SonataAdminBundle
 .. _`ChainRouter`: https://symfony.com/doc/current/cmf/components/routing/chain.html

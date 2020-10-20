@@ -98,7 +98,7 @@ asset
 Returns the public path of the given asset path (which can be a CSS file, a
 JavaScript file, an image path, etc.). This function takes into account where
 the application is installed (e.g. in case the project is accessed in a host
-subirectory) and the optional asset package base path.
+subdirectory) and the optional asset package base path.
 
 Symfony provides various cache busting implementations via the
 :ref:`reference-framework-assets-version`, :ref:`reference-assets-version-strategy`,
@@ -131,7 +131,7 @@ csrf_token
     {{ csrf_token(intention) }}
 
 ``intention``
-    **type**: ``string`` - an arbitrary string used to generate the token value.
+    **type**: ``string`` - an arbitrary string used to identify the token.
 
 Renders a CSRF token. Use this function if you want :doc:`CSRF protection </security/csrf>`
 in a regular HTML form not managed by the Symfony Form component.
@@ -144,15 +144,13 @@ is_granted
     {{ is_granted(role, object = null, field = null) }}
 
 ``role``
-    **type**: ``string``, ``string[]``
+    **type**: ``string``
 ``object`` *(optional)*
     **type**: ``object``
 ``field`` *(optional)*
     **type**: ``string``
 
-Returns ``true`` if the current user has the given role. If several roles are
-passed in an array, ``true`` is returned if the user has at least one of
-them.
+Returns ``true`` if the current user has the given role.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
@@ -237,7 +235,7 @@ absolute_url
 ``path``
     **type**: ``string``
 
-Returns the absolute URL from the passed relative path. Combine it with the
+Returns the absolute URL (with scheme and host) from the passed relative path. Combine it with the
 :ref:`asset() function <reference-twig-function-asset>` to generate absolute URLs
 for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Assets <templates-link-to-assets>`.
 
@@ -268,6 +266,66 @@ expression
 
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
 to the :doc:`ExpressionLanguage component </components/expression_language>`.
+
+impersonation_exit_path
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_path(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``impersonation_exit_path()`` function was introduced in Symfony 5.2.
+
+Generates a URL that you can visit to exit :doc:`user impersonation </security/impersonating_user>`.
+After exiting impersonation, the user is redirected to the current URI. If you
+prefer to redirect to a different URI, define its value in the ``exitTo`` argument.
+
+If no user is being impersonated, the function returns an empty string.
+
+impersonation_exit_url
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_url(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``impersonation_exit_url()`` function was introduced in Symfony 5.2.
+
+It's similar to the `impersonation_exit_path`_ function, but it generates
+absolute URLs instead of relative URLs.
+
+.. _reference-twig-function-t:
+
+t
+~
+
+.. code-block:: twig
+
+    {{ t(message, parameters = [], domain = 'messages')|trans }}
+
+``message``
+    **type**: ``string``
+``parameters`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+``domain`` *(optional)*
+    **type**: ``string`` **default**: ``messages``
+
+.. versionadded:: 5.2
+
+    The ``t()`` function was introduced in Symfony 5.2.
+
+Creates a ``Translatable`` object that can be passed to the
+:ref:`trans filter <reference-twig-filter-trans>`.
 
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -306,6 +364,8 @@ Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
 
+.. _reference-twig-filter-trans:
+
 trans
 ~~~~~
 
@@ -314,13 +374,17 @@ trans
     {{ message|trans(arguments = [], domain = null, locale = null) }}
 
 ``message``
-    **type**: ``string``
+    **type**: ``string`` | ``Translatable``
 ``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
 ``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
+
+.. versionadded:: 5.2
+
+    ``message`` accepting ``Translatable`` as a valid type was introduced in Symfony 5.2.
 
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.

@@ -357,7 +357,7 @@ In XML, the `XML namespace`_ is used to determine which elements belong to the
 configuration of a specific bundle. The namespace is returned from the
 :method:`Extension::getNamespace() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getNamespace>`
 method. By convention, the namespace is a URL (it doesn't have to be a valid
-URL nor does it need to exists). By default, the namespace for a bundle is
+URL nor does it need to exist). By default, the namespace for a bundle is
 ``http://example.org/schema/dic/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
 the extension. You might want to change this to a more professional URL::
 
@@ -416,7 +416,9 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"
-        xsi:schemaLocation="http://acme_company.com/schema/dic/hello
+        xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://acme_company.com/schema/dic/hello
             https://acme_company.com/schema/dic/hello/hello-1.0.xsd">
 
         <acme-hello:config>

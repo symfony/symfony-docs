@@ -77,9 +77,9 @@ service container configuration:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->args(ref('mailer'));
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->args(service('mailer'));
         };
-
 
 .. tip::
 
@@ -146,7 +146,7 @@ In order to use this type of injection, don't forget to configure it:
             app.newsletter_manager:
                 class: App\Mail\NewsletterManager
                 calls:
-                    - [withMailer, ['@mailer'], true]
+                    - withMailer: !returns_clone ['@mailer']
 
     .. code-block:: xml
 
@@ -201,8 +201,9 @@ so, here's the advantages of immutable-setters:
 
 The disadvantages are:
 
-* As the setter call is optional, a dependency can be null during execution,
-  you must check that the dependency is available before calling it.
+* As the setter call is optional, a dependency can be null when calling
+  methods of the service. You must check that the dependency is available
+  before using it.
 
 * Unless the service is declared lazy, it is incompatible with services
   that reference each other in what are called circular loops.
@@ -218,6 +219,9 @@ that accepts the dependency::
     {
         private $mailer;
 
+        /**
+         * @required
+         */
         public function setMailer(MailerInterface $mailer)
         {
             $this->mailer = $mailer;
@@ -237,7 +241,7 @@ that accepts the dependency::
             app.newsletter_manager:
                 class: App\Mail\NewsletterManager
                 calls:
-                    - [setMailer, ['@mailer']]
+                    - setMailer: ['@mailer']
 
     .. code-block:: xml
 
@@ -270,7 +274,7 @@ that accepts the dependency::
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->call('setMailer', [ref('mailer')]);
+                ->call('setMailer', [service('mailer')]);
         };
 
 This time the advantages are:
@@ -287,13 +291,15 @@ This time the advantages are:
 
 The disadvantages of setter injection are:
 
-* The setter can be called more than just at the time of construction so
-  you cannot be sure the dependency is not replaced during the lifetime
-  of the object (except by explicitly writing the setter method to check
-  if it has already been called).
+* The setter can be called more than once, also long after initialization,
+  so you cannot be sure the dependency is not replaced during the lifetime
+  of the object (except by explicitly writing the setter method to check if
+  it has already been called).
 
 * You cannot be sure the setter will be called and so you need to add checks
   that any required dependencies are injected.
+
+.. _property-injection:
 
 Property Injection
 ------------------
@@ -349,8 +355,8 @@ Another possibility is setting public fields of the class directly::
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
-            $services->set('app.newsletter_manager, NewsletterManager::class)
-                ->property('mailer', ref('mailer'));
+            $services->set('app.newsletter_manager', NewsletterManager::class)
+                ->property('mailer', service('mailer'));
         };
 
 There are mainly only disadvantages to using property injection, it is similar

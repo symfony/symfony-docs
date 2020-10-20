@@ -1,5 +1,5 @@
-value
-~~~~~
+``value``
+~~~~~~~~~
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 

@@ -2,7 +2,7 @@
     single: Cache Pool
     single: PHP Array Cache
 
-Php Array Cache Adapter
+PHP Array Cache Adapter
 =======================
 
 This adapter is a high performance cache for static data (e.g. application configuration)

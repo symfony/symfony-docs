@@ -1,5 +1,5 @@
-block_name
-~~~~~~~~~~
+``block_name``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: the form's name (see :ref:`Knowing which
 block to customize <form-customization-sidebar>`)

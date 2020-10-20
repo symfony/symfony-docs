@@ -1,5 +1,5 @@
-hours
-~~~~~
+``hours``
+~~~~~~~~~
 
 **type**: ``array`` **default**: 0 to 23
 

@@ -4,13 +4,17 @@
 Using a Factory to Create Services
 ==================================
 
-Symfony's Service Container provides a powerful way of controlling the
-creation of objects, allowing you to specify arguments passed to the constructor
-as well as calling methods and setting parameters. Sometimes, however, this
-will not provide you with everything you need to construct your objects.
-For this situation, you can use a factory to create the object and tell
-the service container to call a method on the factory rather than directly
-instantiating the class.
+Symfony's Service Container provides multiple features to control the creation
+of objects, allowing you to specify arguments passed to the constructor as well
+as calling methods and setting parameters.
+
+However, sometimes you need to apply the `factory design pattern`_ to delegate
+the object creation to some special object called "the factory". In those cases,
+the service container can call a method on your factory to create the object
+rather than directly instantiating the class.
+
+Static Factories
+----------------
 
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object by calling the static ``createNewsletterManager()`` method::
@@ -27,9 +31,9 @@ object by calling the static ``createNewsletterManager()`` method::
         }
     }
 
-To make the ``NewsletterManager`` object available as a service, you can
-configure the service container to use the
-``NewsletterManagerStaticFactory::createNewsletterManager()`` factory method:
+To make the ``NewsletterManager`` object available as a service, use the
+``factory`` option to define which method of which class must be called to
+create its object:
 
 .. configuration-block::
 
@@ -40,7 +44,7 @@ configure the service container to use the
             # ...
 
             App\Email\NewsletterManager:
-                # call the static method
+                # the first argument is the class and the second argument is the static method
                 factory: ['App\Email\NewsletterManagerStaticFactory', 'createNewsletterManager']
 
     .. code-block:: xml
@@ -54,7 +58,7 @@ configure the service container to use the
 
             <services>
                 <service id="App\Email\NewsletterManager">
-                    <!-- call the static method -->
+                    <!-- the first argument is the class and the second argument is the static method -->
                     <factory class="App\Email\NewsletterManagerStaticFactory" method="createNewsletterManager"/>
 
                     <!-- if the factory class is the same as the service class, you can omit
@@ -77,8 +81,8 @@ configure the service container to use the
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
-            // call the static method
             $services->set(NewsletterManager::class)
+                // the first argument is the class and the second argument is the static method
                 ->factory([NewsletterManagerStaticFactory::class, 'createNewsletterManager']);
         };
 
@@ -91,11 +95,11 @@ configure the service container to use the
     the configured class name may be used by compiler passes and therefore
     should be set to a sensible value.
 
-If your factory is not using a static function to configure and create your
-service, but a regular method, you can instantiate the factory itself as a
-service too. Later, in the ":ref:`factories-passing-arguments-factory-method`"
-section, you learn how you can inject arguments in this method.
+Non-Static Factories
+--------------------
 
+If your factory is using a regular method instead of a static one to configure
+and create the service, instantiate the factory itself as a service too.
 Configuration of the service container then looks like this:
 
 .. configuration-block::
@@ -106,10 +110,12 @@ Configuration of the service container then looks like this:
         services:
             # ...
 
+            # first, create a service for the factory
             App\Email\NewsletterManagerFactory: ~
 
+            # second, use the factory service as the first argument of the 'factory'
+            # option and the factory method as the second argument
             App\Email\NewsletterManager:
-                # call a method on the specified factory service
                 factory: ['@App\Email\NewsletterManagerFactory', 'createNewsletterManager']
 
     .. code-block:: xml
@@ -122,10 +128,12 @@ Configuration of the service container then looks like this:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
+                <!-- first, create a service for the factory -->
                 <service id="App\Email\NewsletterManagerFactory"/>
 
+                <!-- second, use the factory service as the first argument of the 'factory'
+                     option and the factory method as the second argument -->
                 <service id="App\Email\NewsletterManager">
-                    <!-- call a method on the specified factory service -->
                     <factory service="App\Email\NewsletterManagerFactory"
                         method="createNewsletterManager"
                     />
@@ -144,14 +152,20 @@ Configuration of the service container then looks like this:
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
+            // first, create a service for the factory
             $services->set(NewsletterManagerFactory::class);
 
-            // call a method on the specified factory service
+            // second, use the factory service as the first argument of the 'factory'
+            // method and the factory method as the second argument
             $services->set(NewsletterManager::class)
-                ->factory([ref(NewsletterManagerFactory::class), 'createNewsletterManager']);
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->factory([service(NewsletterManagerFactory::class), 'createNewsletterManager']);
         };
 
 .. _factories-invokable:
+
+Invokable Factories
+-------------------
 
 Suppose you now change your factory method to ``__invoke()`` so that your
 factory service can be used as a callback::
@@ -169,8 +183,7 @@ factory service can be used as a callback::
     }
 
 Services can be created and configured via invokable factories by omitting the
-method name, just as routes can reference
-:ref:`invokable controllers <controller-service-invoke>`.
+method name:
 
 .. configuration-block::
 
@@ -215,8 +228,7 @@ method name, just as routes can reference
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->args([ref('templating')])
-                ->factory(ref(NewsletterManagerFactory::class));
+                ->factory(service(NewsletterManagerFactory::class));
         };
 
 .. _factories-passing-arguments-factory-method:
@@ -230,8 +242,8 @@ Passing Arguments to the Factory Method
     that's enabled for your service.
 
 If you need to pass arguments to the factory method you can use the ``arguments``
-options. For example, suppose the ``createNewsletterManager()`` method in the previous
-example takes the ``templating`` service as an argument:
+option. For example, suppose the ``createNewsletterManager()`` method in the
+previous examples takes the ``templating`` service as an argument:
 
 .. configuration-block::
 
@@ -276,8 +288,9 @@ example takes the ``templating`` service as an argument:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->factory([ref(NewsletterManagerFactory::class), 'createNewsletterManager'])
-                ->args([ref('templating')])
+                ->factory([service(NewsletterManagerFactory::class), 'createNewsletterManager'])
+                ->args([service('templating')])
             ;
         };
 
+.. _`factory design pattern`: https://en.wikipedia.org/wiki/Factory_(object-oriented_programming)

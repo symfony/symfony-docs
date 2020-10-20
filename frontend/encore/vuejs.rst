@@ -1,5 +1,10 @@
-Enabling Vue.js (vue-loader)
-============================
+Enabling Vue.js (``vue-loader``)
+================================
+
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Vue screencast series`_.
 
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
@@ -22,6 +27,38 @@ Encore, you're done!
 Any ``.vue`` files that you require will be processed correctly. You can also
 configure the `vue-loader options`_ by passing an options callback to
 ``enableVueLoader()``. See the `Encore's index.js file`_ for detailed documentation.
+
+Runtime Compiler Build
+----------------------
+
+By default, Encore uses a Vue "build" that allows you to compile templates at
+runtime. This means that you *can* do either of these:
+
+.. code-block:: javascript
+
+    new Vue({
+        template: '<div>{{ hi }}</div>'
+    })
+
+    new Vue({
+        el: '#app', // where <div id="app"> in your DOM contains the Vue template
+    });
+
+If you do *not* need this functionality (e.g. you use single file components),
+then you can tell Encore to create a *smaller* and CSP-compliant build:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+    ;
+
+You can also silence the recommendation by passing ``runtimeCompilerBuild: true``.
 
 Hot Module Replacement (HMR)
 ----------------------------
@@ -73,10 +110,9 @@ Using styles
 You can't use ``<style>`` in ``.jsx`` files. As a workaround, you can import
 ``.css``, ``.scss``, etc. files manually:
 
-.. code-block:: javascript
+.. code-block:: jsx
 
     // App.jsx
-
     import './App.css'
 
     export default {
@@ -102,10 +138,9 @@ You can't use `Scoped Styles`_ (``<style scoped>``) either in ``.jsx`` files. As
 a workaround, you can use `CSS Modules`_ by suffixing import paths with
 ``?module``:
 
-.. code-block:: javascript
+.. code-block:: jsx
 
     // Component.jsx
-
     import styles from './Component.css?module' // suffix with "?module"
 
     export default {
@@ -137,7 +172,7 @@ Using images
 You can't use ``<img src="./image.png">`` in ``.jsx`` files. As a workaround,
 you can import them with ``require()`` function:
 
-.. code-block:: javascript
+.. code-block:: jsx
 
     export default {
         name: 'Component',
@@ -150,9 +185,26 @@ you can import them with ``require()`` function:
         }
     }
 
+Using Vue inside Twig templates
+-------------------------------
+
+Twig templates can instantiate a Vue.js app in the same way as any other
+JavaScript code. However, given that both Twig and Vue.js use the same delimiters
+for variables, you should configure the ``delimiters`` Vue.js option to change
+the default variable delimiters.
+
+If you set for example ``delimiters: ['${', '}$']``, then you can use the
+following in your Twig templates:
+
+ .. code-block:: twig
+
+    {{ twig_variable }}   {# renders a Twig variable #}
+    ${ vuejs_variable }$  {# renders a Vue.js variable #}
+
 .. _`Vue.js`: https://vuejs.org/
 .. _`vue-loader options`: https://vue-loader.vuejs.org/options.html
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
 .. _`JSX with Vue.js`: https://github.com/vuejs/jsx
 .. _`Scoped Styles`: https://vue-loader.vuejs.org/guide/scoped-css.html
 .. _`CSS Modules`: https://github.com/css-modules/css-modules
+.. _`Vue screencast series`: https://symfonycasts.com/screencast/vue

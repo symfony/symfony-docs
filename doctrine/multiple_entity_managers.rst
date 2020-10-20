@@ -19,8 +19,7 @@ entity manager that connects to another database might handle the rest.
 .. caution::
 
     Entities cannot define associations across different entity managers. If you
-    need that, there are `several alternatives <https://stackoverflow.com/a/11494543/2804294>`_
-    that require some custom setup.
+    need that, there are `several alternatives`_ that require some custom setup.
 
 The following configuration code shows how you can configure two entity managers:
 
@@ -35,13 +34,13 @@ The following configuration code shows how you can configure two entity managers
                 connections:
                     default:
                         # configure these for your database server
-                        url: '%env(DATABASE_URL)%'
+                        url: '%env(resolve:DATABASE_URL)%'
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
                     customer:
                         # configure these for your database server
-                        url: '%env(DATABASE_CUSTOMER_URL)%'
+                        url: '%env(resolve:DATABASE_CUSTOMER_URL)%'
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
@@ -84,7 +83,7 @@ The following configuration code shows how you can configure two entity managers
                 <doctrine:dbal default-connection="default">
                     <!-- configure these for your database server -->
                     <doctrine:connection name="default"
-                        url="%env(DATABASE_URL)%"
+                        url="%env(resolve:DATABASE_URL)%"
                         driver="pdo_mysql"
                         server_version="5.7"
                         charset="utf8mb4"
@@ -92,7 +91,7 @@ The following configuration code shows how you can configure two entity managers
 
                     <!-- configure these for your database server -->
                     <doctrine:connection name="customer"
-                        url="%env(DATABASE_CUSTOMER_URL)%"
+                        url="%env(resolve:DATABASE_CUSTOMER_URL)%"
                         driver="pdo_mysql"
                         server_version="5.7"
                         charset="utf8mb4"
@@ -134,14 +133,14 @@ The following configuration code shows how you can configure two entity managers
                 'connections' => [
                     // configure these for your database server
                     'default' => [
-                        'url'            => '%env(DATABASE_URL)%',
+                        'url'            => '%env(resolve:DATABASE_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
                     ],
                     // configure these for your database server
                     'customer' => [
-                        'url'            => '%env(DATABASE_CUSTOMER_URL)%',
+                        'url'            => '%env(resolve:DATABASE_CUSTOMER_URL)%',
                         'driver'         => 'pdo_mysql',
                         'server_version' => '5.7',
                         'charset'        => 'utf8mb4',
@@ -156,11 +155,11 @@ The following configuration code shows how you can configure two entity managers
                         'connection' => 'default',
                         'mappings'   => [
                             'Main'  => [
-                                is_bundle => false,
-                                type => 'annotation',
-                                dir => '%kernel.project_dir%/src/Entity/Main',
-                                prefix => 'App\Entity\Main',
-                                alias => 'Main',
+                                'is_bundle' => false,
+                                'type' => 'annotation',
+                                'dir' => '%kernel.project_dir%/src/Entity/Main',
+                                'prefix' => 'App\Entity\Main',
+                                'alias' => 'Main',
                             ]
                         ],
                     ],
@@ -168,11 +167,11 @@ The following configuration code shows how you can configure two entity managers
                         'connection' => 'customer',
                         'mappings'   => [
                             'Customer'  => [
-                                is_bundle => false,
-                                type => 'annotation',
-                                dir => '%kernel.project_dir%/src/Entity/Customer',
-                                prefix => 'App\Entity\Customer',
-                                alias => 'Customer',
+                                'is_bundle' => false,
+                                'type' => 'annotation',
+                                'dir' => '%kernel.project_dir%/src/Entity/Customer',
+                                'prefix' => 'App\Entity\Customer',
+                                'alias' => 'Customer',
                             ]
                         ],
                     ],
@@ -193,8 +192,8 @@ for each entity manager.
     the connection or entity manager, the default (i.e. ``default``) is used.
 
     If you use a different name than ``default`` for the default entity manager,
-    you will need to redefine the default entity manager in ``prod`` environment
-    configuration too:
+    you will need to redefine the default entity manager in the ``prod`` environment
+    configuration and in the Doctrine migrations configuration (if you use that):
 
     .. code-block:: yaml
 
@@ -204,6 +203,13 @@ for each entity manager.
                 default_entity_manager: 'your default entity manager name'
 
         # ...
+
+    .. code-block:: yaml
+
+        # config/packages/doctrine_migrations.yaml
+        doctrine_migrations:
+            # ...
+            em: 'your default entity manager name'
 
 When working with multiple connections to create your databases:
 
@@ -250,7 +256,7 @@ the default entity manager (i.e. ``default``) is returned::
         }
     }
 
-You can now use Doctrine just as you did before - using the ``default`` entity
+You can now use Doctrine like you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
 
@@ -283,3 +289,5 @@ The same applies to repository calls::
             ;
         }
     }
+
+.. _`several alternatives`: https://stackoverflow.com/a/11494543

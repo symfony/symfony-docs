@@ -102,12 +102,27 @@ with a non-zero code)::
     :method:`Symfony\\Component\\Process\\Process::getLastOutputTime` method.
     This method returns ``null`` if the process wasn't started!
 
+Configuring Process Options
+---------------------------
+
+.. versionadded:: 5.2
+
+    The feature to configure process options was introduced in Symfony 5.2.
+
+Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
+You can configure the options passed to the ``other_options`` argument of
+``proc_open()`` using the ``setOptions()`` method::
+
+    $process = new Process(['...', '...', '...']);
+    // this option allows a subprocess to continue running after the main script exited
+    $process->setOptions(['create_new_console' => true]);
+
 Using Features From the OS Shell
 --------------------------------
 
 Using array of arguments is the recommended way to define commands. This
 saves you from any escaping and allows sending signals seamlessly
-(e.g. to stop processes before completion)::
+(e.g. to stop processes while they run)::
 
     $process = new Process(['/path/command', '--option', 'argument', 'etc.']);
     $process = new Process(['/path/to/php', '--define', 'memory_limit=1024M', '/path/to/script.php']);
@@ -133,6 +148,17 @@ environment variables using the second argument of the ``run()``,
 
     // On both Unix-like and Windows
     $process->run(null, ['MESSAGE' => 'Something to output']);
+
+If you prefer to create portable commands that are independent from the
+operating system, you can write the above command as follows::
+
+    // works the same on Windows , Linux and macOS
+    $process = Process::fromShellCommandline('echo "${:MESSAGE}"');
+
+Portable commands require using a syntax that is specific to the component: when
+enclosing a variable name into ``"${:`` and ``}"`` exactly, the process object
+will replace it with its escaped value, or will fail if the variable is not
+found in the list of environment variables attached to the command.
 
 Setting Environment Variables for Processes
 -------------------------------------------
@@ -366,10 +392,9 @@ instead::
 Using a Prepared Command Line
 -----------------------------
 
-You can run the process by using a a prepared command line using the
-double bracket notation. You can use a placeholder in order to have a
-process that can only be changed with the values and without changing
-the PHP code::
+You can run a process by using a prepared command line with double quote
+variable notation. This allows you to use placeholders so that only the
+parameterized values can be changed, but not the rest of the script:
 
     use Symfony\Component\Process\Process;
 
@@ -409,6 +434,14 @@ check regularly::
 
         usleep(200000);
     }
+
+.. tip::
+
+    You can get the process start time using the ``getStartTime()`` method.
+
+    .. versionadded:: 5.1
+
+        The ``getStartTime()`` method was introduced in Symfony 5.1.
 
 .. _reference-process-signal:
 

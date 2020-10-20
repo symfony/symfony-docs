@@ -79,7 +79,7 @@ In Symfony, you can register your custom DQL functions as follows:
 .. note::
 
     In case the ``entity_managers`` were named explicitly, configuring the functions with the
-    orm directly will trigger the exception `Unrecognized option "dql" under "doctrine.orm"`.
+    ORM directly will trigger the exception ``Unrecognized option "dql" under "doctrine.orm"``.
     The ``dql`` configuration block must be defined under the named entity manager.
 
     .. configuration-block::
@@ -148,4 +148,4 @@ In Symfony, you can register your custom DQL functions as follows:
                 ],
             ]);
 
-.. _`DQL User Defined Functions`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/cookbook/dql-user-defined-functions.html
+.. _`DQL User Defined Functions`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/cookbook/dql-user-defined-functions.html

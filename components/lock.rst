@@ -8,6 +8,9 @@ The Lock Component
     The Lock Component creates and manages `locks`_, a mechanism to provide
     exclusive access to a shared resource.
 
+If you're using the Symfony Framework, read the
+:doc:`Symfony Framework Lock documentation </lock>`.
+
 Installation
 ------------
 
@@ -90,6 +93,18 @@ they can be decorated with the ``RetryTillSaveStore`` class::
     $lock = $factory->createLock('notification-flush');
     $lock->acquire(true);
 
+When the provided store does not implement the
+:class:`Symfony\\Component\\Lock\\BlockingStoreInterface` interface, the
+``Lock`` class will retry to acquire the lock in a non-blocking way until the
+lock is acquired.
+
+.. deprecated:: 5.2
+
+    As of Symfony 5.2, you don't need to use the ``RetryTillSaveStore`` class
+    anymore. The ``Lock`` class now provides the default logic to acquire locks
+    in blocking mode when the store does not implement the
+    ``BlockingStoreInterface`` interface.
+
 Expiring Locks
 --------------
 
@@ -113,7 +128,9 @@ method, the resource will stay locked until the timeout::
     // create an expiring lock that lasts 30 seconds
     $lock = $factory->createLock('charts-generation', 30);
 
-    $lock->acquire();
+    if (!$lock->acquire()) {
+        return;
+    }
     try {
         // perform a job during less than 30 seconds
     } finally {
@@ -132,7 +149,9 @@ to reset the TTL to its original value::
     // ...
     $lock = $factory->createLock('charts-generation', 30);
 
-    $lock->acquire();
+    if (!$lock->acquire()) {
+        return;
+    }
     try {
         while (!$finished) {
             // perform a small part of the job.
@@ -161,10 +180,62 @@ This component also provides two useful methods related to expiring locks:
 ``getExpiringDate()`` (which returns ``null`` or a ``\DateTimeImmutable``
 object) and ``isExpired()`` (which returns a boolean).
 
+Shared Locks
+------------
+
+.. versionadded:: 5.2
+
+    Shared locks (and the associated ``acquireRead()`` method and
+    ``SharedLockStoreInterface``) were introduced in Symfony 5.2.
+
+A shared or `readers–writer lock`_ is a synchronization primitive that allows
+concurrent access for read-only operations, while write operations require
+exclusive access. This means that multiple threads can read the data in parallel
+but an exclusive lock is needed for writing or modifying data. They are used for
+example for data structures that cannot be updated atomically and are invalid
+until the update is complete.
+
+Use the :method:`Symfony\\Component\\Lock\\LockInterface::acquireRead` method
+to acquire a read-only lock, and the existing
+:method:`Symfony\\Component\\Lock\\LockInterface::acquire` method to acquire a
+write lock::
+
+    $lock = $factory->createLock('user'.$user->id);
+    if (!$lock->acquireRead()) {
+        return;
+    }
+
+Similar to the ``acquire()`` method, pass ``true`` as the argument of ``acquireRead()``
+to acquire the lock in a blocking mode::
+
+    $lock = $factory->createLock('user'.$user->id);
+    $lock->acquireRead(true);
+
+When a read-only lock is acquired with the method ``acquireRead()``, it's
+possible to **promote** the lock, and change it to write lock, by calling the
+``acquire()`` method::
+
+    $lock = $factory->createLock('user'.$userId);
+    $lock->acquireRead(true);
+
+    if (!$this->shouldUpdate($userId)) {
+        return;
+    }
+
+    $lock->acquire(true); // Promote the lock to write lock
+    $this->update($userId);
+
+In the same way, it's possible to **demote** a write lock, and change it to a
+read-only lock by calling the ``acquireRead()`` method.
+
+When the provided store does not implement the
+:class:`Symfony\\Component\\Lock\\SharedLockStoreInterface` interface, the
+``Lock`` class will fallback to a write lock by calling the ``acquire()`` method.
+
 The Owner of The Lock
 ---------------------
 
-Locks that are acquired for the first time are owned by the ``Lock`` instance that acquired
+Locks that are acquired for the first time are owned [1]_ by the ``Lock`` instance that acquired
 it. If you need to check whether the current ``Lock`` instance is (still) the owner of
 a lock, you can use the ``isAcquired()`` method::
 
@@ -210,21 +281,22 @@ Available Stores
 ----------------
 
 Locks are created and managed in ``Stores``, which are classes that implement
-:class:`Symfony\\Component\\Lock\\PersistStoreInterface` and, optionally,
+:class:`Symfony\\Component\\Lock\\PersistingStoreInterface` and, optionally,
 :class:`Symfony\\Component\\Lock\\BlockingStoreInterface`.
 
 The component includes the following built-in store types:
 
-============================================  ======  ========  ========
-Store                                         Scope   Blocking  Expiring
-============================================  ======  ========  ========
-:ref:`FlockStore <lock-store-flock>`          local   yes       no
-:ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes
-:ref:`PdoStore <lock-store-pdo>`              remote  no        yes
-:ref:`RedisStore <lock-store-redis>`          remote  no        yes
-:ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
-:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no
-============================================  ======  ========  ========
+============================================  ======  ========  ======== =======
+Store                                         Scope   Blocking  Expiring Sharing
+============================================  ======  ========  ======== =======
+:ref:`FlockStore <lock-store-flock>`          local   yes       no       yes
+:ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes      no
+:ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes      no
+:ref:`PdoStore <lock-store-pdo>`              remote  no        yes      no
+:ref:`RedisStore <lock-store-redis>`          remote  no        yes      yes
+:ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no       no
+:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no       no
+============================================  ======  ========  ======== =======
 
 .. _lock-store-flock:
 
@@ -233,12 +305,14 @@ FlockStore
 
 The FlockStore uses the file system on the local computer to create the locks.
 It does not support expiration, but the lock is automatically released when the
-PHP process is terminated::
+lock object goes out of scope and is freed by the garbage collector (for example
+when the PHP process ends)::
 
     use Symfony\Component\Lock\Store\FlockStore;
 
     // the argument is the path of the directory where the locks are created
-    $store = new FlockStore(sys_get_temp_dir());
+    // if none is given, sys_get_temp_dir() is used internally.
+    $store = new FlockStore('/var/stores');
 
 .. caution::
 
@@ -268,6 +342,68 @@ support blocking, and expects a TTL to avoid stalled locks::
 
 .. _lock-store-pdo:
 
+.. _lock-store-mongodb:
+
+MongoDbStore
+~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``MongoDbStore`` was introduced in Symfony 5.1.
+
+The MongoDbStore saves locks on a MongoDB server ``>=2.2``, it requires a
+``\MongoDB\Collection`` or ``\MongoDB\Client`` from `mongodb/mongodb`_ or a
+`MongoDB Connection String`_.
+This store does not support blocking and expects a TTL to
+avoid stalled locks::
+
+    use Symfony\Component\Lock\Store\MongoDbStore;
+
+    $mongo = 'mongodb://localhost/database?collection=lock';
+    $options = [
+        'gcProbablity' => 0.001,
+        'database' => 'myapp',
+        'collection' => 'lock',
+        'uriOptions' => [],
+        'driverOptions' => [],
+    ];
+    $store = new MongoDbStore($mongo, $options);
+
+The ``MongoDbStore`` takes the following ``$options`` (depending on the first parameter type):
+
+=============  ================================================================================================
+Option         Description
+=============  ================================================================================================
+gcProbablity   Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
+database       The name of the database
+collection     The name of the collection
+uriOptions     Array of uri options for `MongoDBClient::__construct`_
+driverOptions  Array of driver options for `MongoDBClient::__construct`_
+=============  ================================================================================================
+
+When the first parameter is a:
+
+``MongoDB\Collection``:
+
+- ``$options['database']`` is ignored
+- ``$options['collection']`` is ignored
+
+``MongoDB\Client``:
+
+- ``$options['database']`` is mandatory
+- ``$options['collection']`` is mandatory
+
+MongoDB Connection String:
+
+- ``$options['database']`` is used otherwise ``/path`` from the DSN, at least one is mandatory
+- ``$options['collection']`` is used otherwise ``?collection=`` from the DSN, at least one is mandatory
+
+.. note::
+
+    The ``collection`` querystring parameter is not part of the `MongoDB Connection String`_ definition.
+    It is used to allow constructing a ``MongoDbStore`` using a `Data Source Name (DSN)`_ without ``$options``.
+
+
 PdoStore
 ~~~~~~~~
 
@@ -285,25 +421,11 @@ support blocking, and expects a TTL to avoid stalled locks::
 
     This store does not support TTL lower than 1 second.
 
-Before storing locks in the database, you must create the table that stores
-the information. The store provides a method called
-:method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable`
-to set up this table for you according to the database engine used::
-
-    try {
-        $store->createTable();
-    } catch (\PDOException $exception) {
-        // the table could not be created for some reason
-    }
-
-A great way to set up the table in production is to call the ``createTable()``
-method in your local computer and then generate a
-:ref:`database migration <doctrine-creating-the-database-tables-schema>`:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:migrations:diff
-    $ php bin/console doctrine:migrations:migrate
+The table where values are stored is created automatically on the first call to
+the :method:`Symfony\\Component\\Lock\\Store\\PdoStore::save` method.
+You can also create this table explicitly by calling the
+:method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
+your code.
 
 .. _lock-store-redis:
 
@@ -402,6 +524,7 @@ Remote Stores
 ~~~~~~~~~~~~~
 
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`MongoDbStore <lock-store-mongodb>`,
 :ref:`PdoStore <lock-store-pdo>`,
 :ref:`RedisStore <lock-store-redis>` and
 :ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
@@ -427,6 +550,7 @@ Expiring Stores
 ~~~~~~~~~~~~~~~
 
 Expiring stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`MongoDbStore <lock-store-mongodb>`,
 :ref:`PdoStore <lock-store-pdo>` and
 :ref:`RedisStore <lock-store-redis>`)
 guarantee that the lock is acquired only for the defined duration of time. If
@@ -442,7 +566,9 @@ Using the above methods, a more robust code would be::
     // ...
     $lock = $factory->createLock('invoice-publication', 30);
 
-    $lock->acquire();
+    if (!$lock->acquire()) {
+        return;
+    }
     while (!$finished) {
         if ($lock->getRemainingLifetime() <= 5) {
             if ($lock->isExpired()) {
@@ -459,7 +585,7 @@ Using the above methods, a more robust code would be::
 .. caution::
 
     Choose wisely the lifetime of the ``Lock`` and check whether its remaining
-    time to leave is enough to perform the task.
+    time to live is enough to perform the task.
 
 .. caution::
 
@@ -545,6 +671,46 @@ method uses the Memcached's ``flush()`` method which purges and removes everythi
     The method ``flush()`` must not be called, or locks should be stored in a
     dedicated Memcached service away from Cache.
 
+MongoDbStore
+~~~~~~~~~~~~
+
+.. caution::
+
+    The locked resource name is indexed in the ``_id`` field of the lock
+    collection. Beware that in MongoDB an indexed field's value can be
+    `a maximum of 1024 bytes in length`_ inclusive of structural overhead.
+
+A TTL index must be used to automatically clean up expired locks.
+Such an index can be created manually:
+
+.. code-block:: javascript
+
+    db.lock.ensureIndex(
+        { "expires_at": 1 },
+        { "expireAfterSeconds": 0 }
+    )
+
+Alternatively, the method ``MongoDbStore::createTtlIndex(int $expireAfterSeconds = 0)``
+can be called once to create the TTL index during database setup. Read more
+about `Expire Data from Collections by Setting TTL`_ in MongoDB.
+
+.. tip::
+
+    ``MongoDbStore`` will attempt to automatically create a TTL index.
+    It's recommended to set constructor option ``gcProbablity = 0.0`` to
+    disable this behavior if you have manually dealt with TTL index creation.
+
+.. caution::
+
+    This store relies on all PHP application and database nodes to have
+    synchronized clocks for lock expiry to occur at the correct time. To ensure
+    locks don't expire prematurely; the lock TTL should be set with enough extra
+    time in ``expireAfterSeconds`` to account for any clock drift between nodes.
+
+``writeConcern``, ``readConcern`` and ``readPreference`` are not specified by
+MongoDbStore meaning the collection's settings will take effect. Read more
+about `Replica Set Read and Write Semantics`_ in MongoDB.
+
 PdoStore
 ~~~~~~~~~~
 
@@ -602,7 +768,7 @@ CombinedStore
 ~~~~~~~~~~~~~
 
 Combined stores allow to store locks across several backends. It's a common
-mistake to think that the lock mechanism will be more reliable. This is wrong
+mistake to think that the lock mechanism will be more reliable. This is wrong.
 The ``CombinedStore`` will be, at best, as reliable as the least reliable of
 all managed stores. As soon as one managed store returns erroneous information,
 the ``CombinedStore`` won't be reliable.
@@ -630,6 +796,14 @@ can be two running containers in parallel.
     All concurrent processes must use the same machine. Before starting a
     concurrent process on a new machine, check that other process are stopped
     on the old one.
+
+.. caution::
+
+    When running on systemd with non-system user and option ``RemoveIPC=yes``
+    (default value), locks are deleted by systemd when that user logs out.
+    Check that process is run with a system user (UID <= SYS_UID_MAX) with
+    ``SYS_UID_MAX`` defined in ``/etc/login.defs``, or set the option
+    ``RemoveIPC=off`` in ``/etc/systemd/logind.conf``.
 
 ZookeeperStore
 ~~~~~~~~~~~~~~
@@ -663,10 +837,17 @@ instance, during the deployment of a new version. Processes with new
 configuration must not be started while old processes with old configuration
 are still running.
 
+.. _`a maximum of 1024 bytes in length`: https://docs.mongodb.com/manual/reference/limits/#Index-Key-Limit
 .. _`ACID`: https://en.wikipedia.org/wiki/ACID
-.. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
-.. _`PHP semaphore functions`: https://php.net/manual/en/book.sem.php
-.. _`PDO`: https://php.net/pdo
-.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
+.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
+.. _`Expire Data from Collections by Setting TTL`: https://docs.mongodb.com/manual/tutorial/expire-data/
+.. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
+.. _`MongoDB Connection String`: https://docs.mongodb.com/manual/reference/connection-string/
+.. _`mongodb/mongodb`: https://packagist.org/packages/mongodb/mongodb
+.. _`MongoDBClient::__construct`: https://docs.mongodb.com/php-library/current/reference/method/MongoDBClient__construct/
+.. _`PDO`: https://www.php.net/pdo
+.. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
+.. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/
 .. _`ZooKeeper`: https://zookeeper.apache.org/
+.. _`readers–writer lock`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock

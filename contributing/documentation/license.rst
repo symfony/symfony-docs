@@ -54,6 +54,6 @@ Other Symfony Licenses
 Check out the :doc:`license of the Symfony code </contributing/code/license>`
 and other `Symfony licenses and trademarks`_.
 
-.. _`CC BY-SA 3.0`: http://creativecommons.org/licenses/by-sa/3.0/
-.. _Legal Code (the full license): http://creativecommons.org/licenses/by-sa/3.0/legalcode
+.. _`CC BY-SA 3.0`: https://creativecommons.org/licenses/by-sa/3.0/
+.. _Legal Code (the full license): https://creativecommons.org/licenses/by-sa/3.0/legalcode
 .. _`Symfony licenses and trademarks`: https://symfony.com/license

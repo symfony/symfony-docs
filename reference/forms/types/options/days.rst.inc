@@ -1,5 +1,5 @@
-days
-~~~~
+``days``
+~~~~~~~~
 
 **type**: ``array`` **default**: 1 to 31
 

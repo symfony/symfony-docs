@@ -35,7 +35,14 @@ in a single Twig template and they are enabled in the
   ``bootstrap_3_horizontal_layout.html.twig`` but updated for Bootstrap 4 styles.
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the default styles of the
-  `Foundation CSS framework`_.
+  version 5 of `Foundation CSS framework`_.
+* `foundation_6_layout.html.twig`_, wraps each form field inside a ``<div>``
+  element with the appropriate CSS classes to apply the default styles of the
+  version 6 of `Foundation CSS framework`_.
+
+.. versionadded:: 5.1
+
+    The ``foundation_6_layout.html.twig`` was introduced in Symfony 5.1.
 
 .. tip::
 
@@ -305,10 +312,36 @@ names.
 Fragment Naming for Collections
 ...............................
 
-When using a :doc:`collection of forms </form/form_collections>`, the fragment
-of each collection item follows a predefined pattern. For example, consider the
-following complex example where a ``TaskManagerType`` has a collection of
-``TaskListType`` which in turn has a collection of ``TaskType``::
+When using a :doc:`collection of forms </form/form_collections>`, you have
+several ways of customizing the collection and each of its entries. First,
+use the following blocks to customize each part of all form collections:
+
+.. code-block:: twig
+
+    {% block collection_row %} ... {% endblock %}
+    {% block collection_label %} ... {% endblock %}
+    {% block collection_widget %} ... {% endblock %}
+    {% block collection_help %} ... {% endblock %}
+    {% block collection_errors %} ... {% endblock %}
+
+You can also customize each entry of all collections with the following blocks:
+
+.. code-block:: twig
+
+    {% block collection_entry_row %} ... {% endblock %}
+    {% block collection_entry_label %} ... {% endblock %}
+    {% block collection_entry_widget %} ... {% endblock %}
+    {% block collection_entry_help %} ... {% endblock %}
+    {% block collection_entry_errors %} ... {% endblock %}
+
+.. versionadded:: 5.1
+
+    The ``collection_entry_*`` blocks were introduced in Symfony 5.1.
+
+Finally, you can customize specific form collections instead of all of them.
+For example, consider the following complex example where a ``TaskManagerType``
+has a collection of ``TaskListType`` which in turn has a collection of
+``TaskType``::
 
     class TaskManagerType extends AbstractType
     {
@@ -596,9 +629,10 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
 .. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
 .. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
-.. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.3/
-.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.1/
+.. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.4/
+.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.4/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
-.. _`Foundation CSS framework`: http://foundation.zurb.com/
+.. _`foundation_6_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_6_layout.html.twig
+.. _`Foundation CSS framework`: https://get.foundation/
 .. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
 .. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html

@@ -1,5 +1,5 @@
-error_bubbling
-~~~~~~~~~~~~~~
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false`` unless the form is ``compound``
 

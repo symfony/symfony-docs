@@ -15,8 +15,8 @@ handle this, the Translator component supports the `ICU MessageFormat`_ syntax.
 Using the ICU Message Format
 ----------------------------
 
-In order to use the ICU Message Format, the :ref:`message domain
-<using-message-domains>` has to be suffixed with ``+intl-icu``:
+In order to use the ICU Message Format, the message domain has to be
+suffixed with ``+intl-icu``:
 
 ======================  ===============================
 Normal file name        ICU Message Format filename
@@ -66,6 +66,14 @@ The basic usage of the MessageFormat allows you to use placeholders (called
             'say_hello' => "Hello {name}!",
         ];
 
+
+.. caution::
+
+    In the previous translation format, placeholders were often wrapped in ``%``
+    (e.g. ``%name%``). This ``%`` character is no longer valid with the ICU
+    MessageFormat syntax, so you must rename your parameters if you are upgrading
+    from the previous format.
+
 Everything within the curly braces (``{...}``) is processed by the formatter
 and replaced by its placeholder::
 
@@ -88,6 +96,8 @@ typical usage of this is gender:
     .. code-block:: yaml
 
         # translations/messages+intl-icu.en.yaml
+
+        # the 'other' key is required, and is selected if no other case matches
         invitation_title: >-
             {organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
@@ -104,7 +114,8 @@ typical usage of this is gender:
                 <body>
                     <trans-unit id="invitation_title">
                         <source>invitation_title</source>
-                        <target>{organizer_gender, select, 
+                        <!-- the 'other' key is required, and is selected if no other case matches -->
+                        <target>{organizer_gender, select,
                             female {{organizer_name} has invited you for her party!}
                             male {{organizer_name} has invited you for his party!}
                             other {{organizer_name} have invited you for their party!}
@@ -118,6 +129,7 @@ typical usage of this is gender:
 
         // translations/messages+intl-icu.en.php
         return [
+            // the 'other' key is required, and is selected if no other case matches
             'invitation_title' => '{organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
                 male   {{organizer_name} has invited you for his party!}
@@ -160,6 +172,9 @@ you to use literal text in the select statements:
     outermost structure of the message. The strings are in this way better
     readable for translators and, as you can see in the ``other`` case, other
     parts of the sentence might be influenced by the variables.
+
+
+.. _component-translation-pluralization:
 
 Pluralization
 -------------
@@ -459,6 +474,6 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
 
 .. _`online editor`: http://format-message.github.io/icu-message-format-for-translators/
 .. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
-.. _`switch statement`: https://php.net/control-structures.switch
+.. _`switch statement`: https://www.php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
-.. _`constants defined by the IntlDateFormatter class`: https://php.net/manual/en/class.intldateformatter.php
+.. _`constants defined by the IntlDateFormatter class`: https://www.php.net/manual/en/class.intldateformatter.php

@@ -1,5 +1,5 @@
-propertyPath
-~~~~~~~~~~~~
+``propertyPath``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string``
 

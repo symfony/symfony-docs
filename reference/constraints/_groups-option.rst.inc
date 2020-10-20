@@ -1,5 +1,5 @@
-groups
-~~~~~~
+``groups``
+~~~~~~~~~~
 
 **type**: ``array`` | ``string``
 

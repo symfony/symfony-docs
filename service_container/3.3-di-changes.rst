@@ -194,7 +194,7 @@ each service or load them all at once with this method.
 
     Ok, but can I exclude some paths that I *know* won't contain services?
 
-Yes! The ``exclude`` key is a glob pattern that can be used to *blacklist* paths
+Yes! The ``exclude`` key is a glob pattern that can be used to *ignore* paths
 that you do *not* want to be included as services. But, since unused services are
 automatically removed from the container, ``exclude`` is not that important. The
 biggest benefit is that those paths are not *tracked* by the container, and so may
@@ -386,7 +386,7 @@ as before. But now that your controllers are services, you can use dependency in
 and autowiring like any other service.
 
 To make life even easier, it's now possible to autowire arguments to your controller
-action methods, just like you can with the constructor of services. For example::
+action methods, like you can with the constructor of services. For example::
 
     use Psr\Log\LoggerInterface;
 

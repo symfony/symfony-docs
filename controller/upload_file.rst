@@ -74,7 +74,7 @@ so Symfony doesn't try to get/set its value from the related entity::
                     'mapped' => false,
 
                     // make it optional so you don't have to re-upload the PDF file
-                    // everytime you edit the Product details
+                    // every time you edit the Product details
                     'required' => false,
 
                     // unmapped fields can't define their validation using annotations
@@ -129,13 +129,14 @@ Finally, you need to update the code of the controller that handles the form::
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\String\Slugger\SluggerInterface;
 
     class ProductController extends AbstractController
     {
         /**
          * @Route("/product/new", name="app_product_new")
          */
-        public function new(Request $request)
+        public function new(Request $request, SluggerInterface $slugger)
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -143,14 +144,14 @@ Finally, you need to update the code of the controller that handles the form::
 
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var UploadedFile $brochureFile */
-                $brochureFile = $form['brochure']->getData();
+                $brochureFile = $form->get('brochure')->getData();
 
                 // this condition is needed because the 'brochure' field is not required
                 // so the PDF file must be processed only when a file is uploaded
                 if ($brochureFile) {
                     $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
                     // this is needed to safely include the file name as part of the URL
-                    $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                    $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
 
                     // Move the file to the directory where brochures are stored
@@ -170,7 +171,7 @@ Finally, you need to update the code of the controller that handles the form::
 
                 // ... persist the $product variable or any other work
 
-                return $this->redirect($this->generateUrl('app_product_list'));
+                return $this->redirectToRoute('app_product_list');
             }
 
             return $this->render('product/new.html.twig', [
@@ -238,20 +239,23 @@ logic to a separate service::
 
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\String\Slugger\SluggerInterface;
 
     class FileUploader
     {
         private $targetDirectory;
+        private $slugger;
 
-        public function __construct($targetDirectory)
+        public function __construct($targetDirectory, SluggerInterface $slugger)
         {
             $this->targetDirectory = $targetDirectory;
+            $this->slugger = $slugger;
         }
 
         public function upload(UploadedFile $file)
         {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+            $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
             try {
@@ -305,7 +309,7 @@ Then, define a service for this class:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
-            <service id="App\FileUploader">
+            <service id="App\Service\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
         </container>
@@ -313,10 +317,17 @@ Then, define a service for this class:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\FileUploader;
 
-        $container->autowire(FileUploader::class)
-            ->setArgument('$targetDirectory', '%brochures_directory%');
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(FileUploader::class)
+                ->arg('$targetDirectory', '%brochures_directory%')
+            ;
+        };
 
 Now you're ready to use this service in the controller::
 
@@ -331,7 +342,7 @@ Now you're ready to use this service in the controller::
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $brochureFile */
-            $brochureFile = $form['brochure']->getData();
+            $brochureFile = $form->get('brochure')->getData();
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
                 $product->setBrochureFilename($brochureFileName);

@@ -13,7 +13,7 @@ The BrowserKit Component
     In Symfony versions prior to 4.3, the BrowserKit component could only make
     internal requests to your application. Starting from Symfony 4.3, this
     component can also :ref:`make HTTP requests to any public site <component-browserkit-external-requests>`
-    when using it in combination with the :doc:`HttpClient component </components/http_client>`.
+    when using it in combination with the :doc:`HttpClient component </http_client>`.
 
 Installation
 ------------
@@ -37,18 +37,17 @@ Creating a Client
 ~~~~~~~~~~~~~~~~~
 
 The component only provides an abstract client and does not provide any backend
-ready to use for the HTTP layer.
-
-To create your own client, you must extend the abstract ``Client`` class and
-implement the :method:`Symfony\\Component\\BrowserKit\\Client::doRequest` method.
+ready to use for the HTTP layer. To create your own client, you must extend the
+``AbstractBrowser`` class and implement the
+:method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::doRequest` method.
 This method accepts a request and should return a response::
 
     namespace Acme;
 
-    use Symfony\Component\BrowserKit\Client as BaseClient;
+    use Symfony\Component\BrowserKit\AbstractBrowser;
     use Symfony\Component\BrowserKit\Response;
 
-    class Client extends BaseClient
+    class Client extends AbstractBrowser
     {
         protected function doRequest($request)
         {
@@ -59,14 +58,15 @@ This method accepts a request and should return a response::
     }
 
 For a simple implementation of a browser based on the HTTP layer, have a look
-at `Goutte`_. For an implementation based on ``HttpKernelInterface``, have
-a look at the :class:`Symfony\\Component\\HttpKernel\\Client` provided by
-the :doc:`HttpKernel component </components/http_kernel>`.
+at the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` provided by
+:ref:`this component <component-browserkit-external-requests>`. For an implementation based
+on ``HttpKernelInterface``, have a look at the :class:`Symfony\\Component\\HttpKernel\\Client`
+provided by the :doc:`HttpKernel component </components/http_kernel>`.
 
 Making Requests
 ~~~~~~~~~~~~~~~
 
-Use the :method:`Symfony\\Component\\BrowserKit\\Client::request` method to
+Use the :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::request` method to
 make HTTP requests. The first two arguments are the HTTP method and the requested
 URL::
 
@@ -80,7 +80,7 @@ The value returned by the ``request()`` method is an instance of the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
 
-The :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest` method,
+The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to
 make AJAX requests::
 
@@ -93,7 +93,7 @@ make AJAX requests::
 Clicking Links
 ~~~~~~~~~~~~~~
 
-The ``Client`` object is capable of simulating link clicks. Pass the text
+The ``AbstractBrowser`` is capable of simulating link clicks. Pass the text
 content of the link and the client will perform the needed HTTP GET request to
 simulate the link click::
 
@@ -116,7 +116,7 @@ provides access to the link properties (e.g. ``$link->getMethod()``,
 Submitting Forms
 ~~~~~~~~~~~~~~~~
 
-The ``Client`` object is also capable of submitting forms. First, select the
+The ``AbstractBrowser`` is also capable of submitting forms. First, select the
 form using any of its buttons and then override any of its properties (method,
 field values, etc.) before submitting it::
 
@@ -161,13 +161,39 @@ provides access to the form properties (e.g. ``$form->getUri()``,
     // submit that form
     $crawler = $client->submit($form);
 
+Custom Header Handling
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``getHeaders()`` method was introduced in Symfony 5.2.
+
+The optional HTTP headers passed to the ``request()`` method follows the FastCGI
+request format (uppercase, underscores instead of dashes and prefixed with ``HTTP_``).
+Before saving those headers to the request, they are lower-cased, with ``HTTP_``
+stripped, and underscores turned to dashes.
+
+If you're making a request to an application that has special rules about header
+capitalization or punctuation, override the ``getHeaders()`` method, which must
+return an associative array of headers::
+
+    protected function getHeaders(Request $request): array
+    {
+        $headers = parent::getHeaders($request);
+        if (isset($request->getServer()['api_key'])) {
+            $headers['api_key'] = $request->getServer()['api_key'];
+        }
+
+        return $headers;
+    }
+
 Cookies
 -------
 
 Retrieving Cookies
 ~~~~~~~~~~~~~~~~~~
 
-The ``Client`` implementation exposes cookies (if any) through a
+The ``AbstractBrowser`` implementation exposes cookies (if any) through a
 :class:`Symfony\\Component\\BrowserKit\\CookieJar`, which allows you to store and
 retrieve any cookie while making requests with the client::
 
@@ -289,7 +315,7 @@ So far, all the examples in this article have assumed that you are making
 internal requests to your own application. However, you can run the exact same
 examples when making HTTP requests to external web sites and applications.
 
-First, install and configure the :doc:`HttpClient component </components/http_client>`.
+First, install and configure the :doc:`HttpClient component </http_client>`.
 Then, use the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` to create
 the client that will make the external HTTP requests::
 

@@ -1,5 +1,5 @@
-data
-~~~~
+``data``
+~~~~~~~~
 
 **type**: ``mixed`` **default**: Defaults to field of the underlying structure.
 

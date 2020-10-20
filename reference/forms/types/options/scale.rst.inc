@@ -1,5 +1,5 @@
-scale
-~~~~~
+``scale``
+~~~~~~~~~
 
 **type**: ``integer`` **default**: Locale-specific (usually around ``3``)
 

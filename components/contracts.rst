@@ -19,6 +19,7 @@ your projects really need:
 
     $ composer require symfony/cache-contracts
     $ composer require symfony/event-dispatcher-contracts
+    $ composer require symfony/deprecation-contracts
     $ composer require symfony/http-client-contracts
     $ composer require symfony/service-contracts
     $ composer require symfony/translation-contracts

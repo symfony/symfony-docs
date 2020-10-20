@@ -4,20 +4,20 @@ Encore: Setting up your Project
 After :doc:`installing Encore </frontend/encore/installation>`, your app already has one
 CSS and one JS file, organized into an ``assets/`` directory:
 
-* ``assets/js/app.js``
-* ``assets/css/app.css``
+* ``assets/app.js``
+* ``assets/styles/app.css``
 
 With Encore, think of your ``app.js`` file like a standalone JavaScript
 application: it will *require* all of the dependencies it needs (e.g. jQuery or React),
-*including* any CSS. Your ``app.js`` file is already doing this with a special
-``require()`` function:
+*including* any CSS. Your ``app.js`` file is already doing this with a JavaScript
+``import`` statement:
 
 .. code-block:: javascript
 
-    // assets/js/app.js
+    // assets/app.js
     // ...
 
-    require('../css/app.css');
+    import '../css/app.css';
 
     // var $ = require('jquery');
 
@@ -43,14 +43,14 @@ of your project. It already holds the basic config you need:
         // public path used by the web server to access the output path
         .setPublicPath('/build')
 
-        .addEntry('app', './assets/js/app.js')
+        .addEntry('app', './assets/app.js')
 
         // ...
     ;
 
     // ...
 
-They *key* part is ``addEntry()``: this tells Encore to load the ``assets/js/app.js``
+The *key* part is ``addEntry()``: this tells Encore to load the ``assets/app.js``
 file and follow *all* of the ``require()`` statements. It will then package everything
 together and - thanks to the first ``app`` argument - output final ``app.js`` and
 ``app.css`` files into the ``public/build`` directory.
@@ -115,7 +115,7 @@ can do most of the work for you:
 .. _encore-entrypointsjson-simple-description:
 
 That's it! When you refresh your page, all of the JavaScript from
-``assets/js/app.js`` - as well as any other JavaScript files it included - will
+``assets/app.js`` - as well as any other JavaScript files it included - will
 be executed. All the CSS files that were required will also be displayed.
 
 The ``encore_entry_link_tags()`` and ``encore_entry_script_tags()`` functions
@@ -143,7 +143,7 @@ files. First, create a file that exports a function:
 
 .. code-block:: javascript
 
-    // assets/js/greet.js
+    // assets/greet.js
     module.exports = function(name) {
         return `Yo yo ${name} - welcome to Encore!`;
     };
@@ -158,7 +158,7 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
 
 .. code-block:: diff
 
-    // assets/js/app.js
+    // assets/app.js
     // ...
 
     + // loads the jquery package from node_modules
@@ -187,7 +187,7 @@ To export values using the alternate syntax, use ``export``:
 
 .. code-block:: diff
 
-    // assets/js/greet.js
+    // assets/greet.js
     - module.exports = function(name) {
     + export default function(name) {
         return `Yo yo ${name} - welcome to Encore!`;
@@ -197,7 +197,7 @@ To import values, use ``import``:
 
 .. code-block:: diff
 
-    // assets/js/app.js
+    // assets/app.js
     - require('../css/app.css');
     + import '../css/app.css';
 
@@ -219,12 +219,12 @@ etc.). To handle this, create a new "entry" JavaScript file for each page:
 
 .. code-block:: javascript
 
-    // assets/js/checkout.js
+    // assets/checkout.js
     // custom code for your checkout page
 
 .. code-block:: javascript
 
-    // assets/js/account.js
+    // assets/account.js
     // custom code for your account page
 
 Next, use ``addEntry()`` to tell Webpack to read these two new files when it builds:
@@ -234,9 +234,9 @@ Next, use ``addEntry()`` to tell Webpack to read these two new files when it bui
     // webpack.config.js
     Encore
         // ...
-        .addEntry('app', './assets/js/app.js')
-    +     .addEntry('checkout', './assets/js/checkout.js')
-    +     .addEntry('account', './assets/js/account.js')
+        .addEntry('app', './assets/app.js')
+    +     .addEntry('checkout', './assets/checkout.js')
+    +     .addEntry('account', './assets/account.js')
         // ...
 
 And because you just changed the ``webpack.config.js`` file, make sure to stop
@@ -285,7 +285,7 @@ file to ``app.scss`` and update the ``import`` statement:
 
 .. code-block:: diff
 
-    // assets/js/app.js
+    // assets/app.js
     - import '../css/app.css';
     + import '../css/app.scss';
 
@@ -306,14 +306,14 @@ Encore. When you do, you'll see an error!
 .. code-block:: terminal
 
     >   Error: Install sass-loader & node-sass to use enableSassLoader()
-    >     yarn add sass-loader@^7.0.1 node-sass --dev
+    >     yarn add sass-loader@^8.0.0 node-sass --dev
 
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
 
 .. code-block:: terminal
 
-    $ yarn add sass-loader@^7.0.1 node-sass --dev
+    $ yarn add sass-loader@^8.0.0 node-sass --dev
     $ yarn encore dev --watch
 
 Your app now supports Sass. Encore also supports LESS and Stylus. See
@@ -332,11 +332,11 @@ If you want to only compile a CSS file, that's possible via ``addStyleEntry()``:
 
 .. code-block:: javascript
 
-    // webpack/config.js
+    // webpack.config.js
     Encore
         // ...
 
-        .addStyleEntry('some_page', './assets/css/some_page.css')
+        .addStyleEntry('some_page', './assets/styles/some_page.css')
     ;
 
 This will output a new ``some_page.css``.

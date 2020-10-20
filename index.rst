@@ -42,11 +42,14 @@ Topics
     forms
     frontend
     http_cache
+    http_client
+    lock
     logging
     mailer
     mercure
     messenger
     migration
+    notifier
     performance
     profiler
     routing

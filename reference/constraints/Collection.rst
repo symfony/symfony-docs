@@ -209,7 +209,7 @@ you can do the following:
              *     }
              * )
              */
-            protected $profileData = ['personal_email'];
+            protected $profileData = ['personal_email' => 'email@example.com'];
         }
 
     .. code-block:: yaml
@@ -292,27 +292,27 @@ the ``NotBlank`` constraint will still be applied (since it is wrapped in
 Options
 -------
 
-allowExtraFields
-~~~~~~~~~~~~~~~~
+``allowExtraFields``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: false
 
 If this option is set to ``false`` and the underlying collection contains
 one or more elements that are not included in the `fields`_ option, a validation
-error will be returned. If set to ``true``, extra fields are ok.
+error will be returned. If set to ``true``, extra fields are OK.
 
-allowMissingFields
-~~~~~~~~~~~~~~~~~~
+``allowMissingFields``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: false
 
 If this option is set to ``false`` and one or more fields from the `fields`_
 option are not present in the underlying collection, a validation error
-will be returned. If set to ``true``, it's ok if some fields in the `fields`_
+will be returned. If set to ``true``, it's OK if some fields in the `fields`_
 option are not present in the underlying collection.
 
-extraFieldsMessage
-~~~~~~~~~~~~~~~~~~
+``extraFieldsMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This field was not expected.``
 
@@ -327,8 +327,8 @@ Parameter        Description
 ``{{ field }}``  The key of the extra field detected
 ===============  ==============================================================
 
-fields
-~~~~~~
+``fields``
+~~~~~~~~~~
 
 **type**: ``array`` [:ref:`default option <validation-default-option>`]
 
@@ -338,8 +338,8 @@ be executed against that element of the collection.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-missingFieldsMessage
-~~~~~~~~~~~~~~~~~~~~
+``missingFieldsMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This field is missing.``
 

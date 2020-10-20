@@ -1,5 +1,5 @@
-constraints
-~~~~~~~~~~~
+``constraints``
+~~~~~~~~~~~~~~~
 
 **type**: ``array`` or :class:`Symfony\\Component\\Validator\\Constraint` **default**: ``null``
 

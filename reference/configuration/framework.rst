@@ -27,7 +27,7 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `annotations`_
 
@@ -74,6 +74,7 @@ Configuration
 
 * `default_locale`_
 * `disallow_search_engine_index`_
+* `error_controller`_
 * `esi`_
 
   * :ref:`enabled <reference-esi-enabled>`
@@ -136,10 +137,33 @@ Configuration
     * `proxy`_
     * `query`_
     * `resolve`_
+
+    * :ref:`retry_failed <reference-http-client-retry-failed>`
+
+      * `backoff_service`_
+      * `decider_service`_
+      * :ref:`enabled <reference-http-client-retry-enabled>`
+      * `delay`_
+      * `http_codes`_
+      * `max_delay`_
+      * `max_retries`_
+      * `multiplier`_
+
     * `timeout`_
     * `max_duration`_
     * `verify_host`_
     * `verify_peer`_
+
+  * :ref:`retry_failed <reference-http-client-retry-failed>`
+
+    * `backoff_service`_
+    * `decider_service`_
+    * :ref:`enabled <reference-http-client-retry-enabled>`
+    * `delay`_
+    * `http_codes`_
+    * `max_delay`_
+    * `max_retries`_
+    * `multiplier`_
 
 * `http_method_override`_
 * `ide`_
@@ -166,6 +190,8 @@ Configuration
 * `property_access`_
 
   * `magic_call`_
+  * `magic_get`_
+  * `magic_set`_
   * `throw_exception_on_invalid_index`_
   * `throw_exception_on_invalid_property_path`_
 
@@ -226,6 +252,7 @@ Configuration
   * `cache_dir`_
   * :ref:`default_path <reference-translator-default_path>`
   * :ref:`enabled <reference-translator-enabled>`
+  * :ref:`enabled_locales <reference-translator-enabled-locales>`
   * `fallbacks`_
   * `formatter`_
   * `logging`_
@@ -581,6 +608,19 @@ If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
 
+.. _config-framework-error_controller:
+
+error_controller
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``error_controller``
+
+This is the controller that is called when an exception is thrown anywhere in
+your application. The default controller
+(:class:`Symfony\\Component\\HttpKernel\\Controller\\ErrorController`)
+renders specific templates under different error conditions (see
+:doc:`/controller/error_pages`).
+
 esi
 ~~~
 
@@ -725,6 +765,37 @@ If you use for example
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
+.. _reference-http-client-retry-failed:
+
+By enabling the optional ``retry_failed`` configuration, the HTTP client service
+will automaticaly retry failed HTTP requests.
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        # ...
+        http_client:
+            # ...
+            retry_failed:
+                # backoff_service: app.custom_backoff
+                # decider_service:  app.custom_decider
+                http_codes: [429, 500]
+                max_retries: 2
+                delay: 1000
+                multiplier: 3
+                max_delay: 500
+
+            scoped_clients:
+                my_api.client:
+                    # ...
+                    retry_failed:
+                        max_retries: 4
+
+.. versionadded:: 5.2
+
+    The ``retry_failed`` option was introduced in Symfony 5.2.
+
 auth_basic
 ..........
 
@@ -752,6 +823,21 @@ in the `Microsoft NTLM authentication protocol`_. The value of this option must
 follow the format ``username:password``. This authentication mechanism requires
 using the cURL-based transport.
 
+backoff_service
+...............
+
+**type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``backoff_service`` option was introduced in Symfony 5.2.
+
+The service id used to compute the time to wait between retries. By default, it
+uses an instance of
+:class:`Symfony\\Component\\HttpClient\\Retry\\ExponentialBackOff` configured
+with ``delay``, ``max_delay`` and ``multiplier`` options. This class has to
+implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface`.
+
 base_uri
 ........
 
@@ -764,16 +850,16 @@ every request.
 
 Here are some common examples of how ``base_uri`` merging works in practice:
 
-===================  ==============  ======================
-``base_uri``         Relative URI    Actual Requested URI
-===================  ==============  ======================
-http://foo.com       /bar            http://foo.com/bar
-http://foo.com/foo   /bar            http://foo.com/bar
-http://foo.com/foo   bar             http://foo.com/bar
-http://foo.com/foo/  bar             http://foo.com/foo/bar
-http://foo.com       http://baz.com  http://baz.com
-http://foo.com/?bar  bar             http://foo.com/bar
-===================  ==============  ======================
+=======================  ==================  ==========================
+``base_uri``             Relative URI        Actual Requested URI
+=======================  ==================  ==========================
+http://example.org       /bar                http://example.org/bar
+http://example.org/foo   /bar                http://example.org/bar
+http://example.org/foo   bar                 http://example.org/bar
+http://example.org/foo/  bar                 http://example.org/foo/bar
+http://example.org       http://symfony.com  http://symfony.com
+http://example.org/?bar  bar                 http://example.org/bar
+=======================  ==================  ==========================
 
 bindto
 ......
@@ -820,6 +906,42 @@ ciphers
 A list of the names of the ciphers allowed for the SSL/TLS connections. They
 can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
 
+decider_service
+...............
+
+**type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``decider_service`` option was introduced in Symfony 5.2.
+
+The service id used to decide if a request should be retried. By default, it
+uses an instance of
+:class:`Symfony\\Component\\HttpClient\\Retry\\HttpStatusCodeDecider` configured
+with the ``http_codes`` option. This class has to implement
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryDeciderInterface`.
+
+delay
+.....
+
+**type**: ``integer`` **default**: ``1000``
+
+.. versionadded:: 5.2
+
+    The ``delay`` option was introduced in Symfony 5.2.
+
+The initial delay in milliseconds used to compute the waiting time between retries.
+
+.. _reference-http-client-retry-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the support for retry failed HTTP request or not.
+This setting is automatically set to true when one of the child settings is configured.
+
 headers
 .......
 
@@ -827,6 +949,17 @@ headers
 
 An associative array of the HTTP headers added before making the request. This
 value must use the format ``['header-name' => header-value, ...]``.
+
+http_codes
+..........
+
+**type**: ``array`` **default**: ``[423, 425, 429, 500, 502, 503, 504, 507, 510]``
+
+.. versionadded:: 5.2
+
+    The ``http_codes`` option was introduced in Symfony 5.2.
+
+The list of HTTP status codes that triggers a retry of the request.
 
 http_version
 ............
@@ -853,6 +986,26 @@ local_pk
 The path of a file that contains the `PEM formatted`_ private key of the
 certificate defined in the ``local_cert`` option.
 
+max_delay
+.........
+
+**type**: ``integer`` **default**: ``0``
+
+.. versionadded:: 5.2
+
+    The ``max_delay`` option was introduced in Symfony 5.2.
+
+The maximum amount of milliseconds initial to wait between retries.
+Use ``0`` to not limit the duration.
+
+max_duration
+............
+
+**type**: ``float`` **default**: 0
+
+The maximum execution time, in seconds, that the request and the response are
+allowed to take. A value lower than or equal to 0 means it is unlimited.
+
 max_host_connections
 ....................
 
@@ -870,6 +1023,30 @@ max_redirects
 
 The maximum number of redirects to follow. Use ``0`` to not follow any
 redirection.
+
+max_retries
+...........
+
+**type**: ``integer`` **default**: ``3``
+
+.. versionadded:: 5.2
+
+    The ``max_retries`` option was introduced in Symfony 5.2.
+
+The maximum number of retries for failing requests. When the maximum is reached,
+the client returns the last received response.
+
+multiplier
+..........
+
+**type**: ``float`` **default**: ``2``
+
+.. versionadded:: 5.2
+
+    The ``multiplier`` option was introduced in Symfony 5.2.
+
+This value is multiplied to the delay each time a retry occurs, to distribute
+retries in time instead of making all of them sequentially.
 
 no_proxy
 ........
@@ -948,14 +1125,6 @@ Time, in seconds, to wait for a response. If the response stales for longer, a
 :class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
 Its default value is the same as the value of PHP's `default_socket_timeout`_
 config option.
-
-max_duration
-............
-
-**type**: ``float`` **default**: 0
-
-The maximum execution time, in seconds, that the request and the response are
-allowed to take. A value lower than or equal to 0 means it is unlimited.
 
 verify_host
 ...........
@@ -1158,6 +1327,11 @@ utf8
 
 **type**: ``boolean`` **default**: ``false``
 
+.. deprecated:: 5.1
+
+    Not setting this option is deprecated since Symfony 5.1. Moreover, the
+    default value of this option will change to ``true`` in Symfony 6.0.
+
 When this option is set to ``true``, the regular expressions used in the
 :ref:`requirements of route parameters <routing-requirements>` will be run
 using the `utf-8 modifier`_. This will for example match any UTF-8 character
@@ -1182,6 +1356,8 @@ The service id used for session storage. The ``session.storage`` service
 alias will be set to this service id. This class has to implement
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
 
+.. _config-framework-session-handler-id:
+
 handler_id
 ..........
 
@@ -1189,11 +1365,8 @@ handler_id
 
 The service id used for session storage. The default ``null`` value means to use
 the native PHP session mechanism. Set it to ``'session.handler.native_file'`` to
-let Symfony manage the sessions itself using files to store the session
-metadata.
-
-If you prefer to make Symfony store sessions in a database read
-:doc:`/doctrine/pdo_session_storage`.
+let Symfony manage the sessions itself using files to store the session metadata.
+You can also :doc:`store sessions in a database </session/database>`.
 
 .. _name:
 
@@ -1296,6 +1469,10 @@ The possible values for this option are:
 
 * ``null``, use it to disable this protection. Same behavior as in older Symfony
   versions.
+* ``'none'`` (or the ``Cookie::SAMESITE_NONE`` constant), use it to allow
+  sending of cookies when the HTTP request originated from a different domain
+  (previously this was the default behavior of null, but in newer browsers ``'lax'``
+  would be applied when the header has not been set)
 * ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
   send any cookie when the HTTP request is not originated from the same domain.
 * ``'lax'`` (or the ``Cookie::SAMESITE_LAX`` constant), use it to allow sending
@@ -1428,12 +1605,9 @@ metadata_update_threshold
 
 **type**: ``integer`` **default**: ``0``
 
-This is how many seconds to wait between updating/writing the session metadata. This
-can be useful if, for some reason, you want to limit the frequency at which the
-session persists.
-
-Starting in Symfony 3.4, session data is *only* written when the session data has
-changed. Previously, you needed to set this option to avoid that behavior.
+This is how many seconds to wait between updating/writing the session metadata.
+This can be useful if, for some reason, you want to limit the frequency at which
+the session persists, instead of doing that on every request.
 
 .. _reference-session-enabled:
 
@@ -1663,7 +1837,7 @@ version
 This option is used to *bust* the cache on assets by globally adding a query
 parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
 applies only to assets rendered via the Twig ``asset()`` function (or PHP
-equivalent) as well as assets rendered with Assetic.
+equivalent).
 
 For example, suppose you have the following:
 
@@ -1862,10 +2036,11 @@ json_manifest_path
 
 **type**: ``string`` **default**: ``null``
 
-The file path to a ``manifest.json`` file containing an associative array of asset
-names and their respective compiled names. A common cache-busting technique using
-a "manifest" file works by writing out assets with a "hash" appended to their
-file names (e.g. ``main.ae433f1cb.css``) during a front-end compilation routine.
+The file path or absolute URL to a ``manifest.json`` file containing an
+associative array of asset names and their respective compiled names. A common
+cache-busting technique using a "manifest" file works by writing out assets with
+a "hash" appended to their file names (e.g. ``main.ae433f1cb.css``) during a
+front-end compilation routine.
 
 .. tip::
 
@@ -1886,6 +2061,8 @@ package:
             assets:
                 # this manifest is applied to every asset (including packages)
                 json_manifest_path: "%kernel.project_dir%/public/build/manifest.json"
+                # you can use absolute URLs too and Symfony will download them automatically
+                # json_manifest_path: 'https://cdn.example.com/manifest.json'
                 packages:
                     foo_package:
                         # this package uses its own manifest (the default file is ignored)
@@ -1907,6 +2084,8 @@ package:
             <framework:config>
                 <!-- this manifest is applied to every asset (including packages) -->
                 <framework:assets json-manifest-path="%kernel.project_dir%/public/build/manifest.json">
+                <!-- you can use absolute URLs too and Symfony will download them automatically -->
+                <!-- <framework:assets json-manifest-path="https://cdn.example.com/manifest.json"> -->
                     <!-- this package uses its own manifest (the default file is ignored) -->
                     <framework:package
                         name="foo_package"
@@ -1926,6 +2105,8 @@ package:
             'assets' => [
                 // this manifest is applied to every asset (including packages)
                 'json_manifest_path' => '%kernel.project_dir%/public/build/manifest.json',
+                // you can use absolute URLs too and Symfony will download them automatically
+                // 'json_manifest_path' => 'https://cdn.example.com/manifest.json',
                 'packages' => [
                     'foo_package' => [
                         // this package uses its own manifest (the default file is ignored)
@@ -1939,6 +2120,11 @@ package:
             ],
         ]);
 
+.. versionadded:: 5.1
+
+    The option to use an absolute URL in  ``json_manifest_path`` was introduced
+    in Symfony 5.1.
+
 .. note::
 
     This parameter cannot be set at the same time as ``version`` or ``version_strategy``.
@@ -1949,6 +2135,10 @@ package:
 
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
+
+.. note::
+
+    If an URL is set, the JSON manifest is downloaded on each request using the `http_client`_.
 
 translator
 ~~~~~~~~~~
@@ -1969,6 +2159,63 @@ enabled
 **type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 Whether or not to enable the ``translator`` service in the service container.
+
+.. _reference-translator-enabled-locales:
+
+enabled_locales
+...............
+
+**type**: ``array`` **default**: ``[]`` (empty array = enable all locales)
+
+.. versionadded:: 5.1
+
+    The ``enabled_locales`` option was introduced in Symfony 5.1.
+
+Symfony applications generate by default the translation files for validation
+and security messages in all locales. If your application only uses some
+locales, use this option to restrict the files generated by Symfony and improve
+performance a bit:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            translator:
+                enabled_locales: ['en', 'es']
+
+    .. code-block:: xml
+
+        <!-- config/packages/translation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator>
+                    <enabled-locale>en</enabled-locale>
+                    <enabled-locale>es</enabled-locale>
+                </framework:translator>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/translation.php
+        $container->loadFromExtension('framework', [
+            'translator' => [
+                'enabled_locales' => ['en', 'es'],
+            ],
+        ]);
+
+If some user makes requests with a locale not included in this option, the
+application won't display any error because Symfony will display contents using
+the fallback locale.
 
 .. _fallback:
 
@@ -2006,10 +2253,6 @@ formatter
 The ID of the service used to format translation messages. The service class
 must implement the :class:`Symfony\\Component\\Translation\\Formatter\\MessageFormatterInterface`.
 
-.. seealso::
-
-    For more details, see :doc:`/components/translation/custom_message_formatter`.
-
 .. _reference-translator-paths:
 
 paths
@@ -2018,7 +2261,10 @@ paths
 **type**: ``array`` **default**: ``[]``
 
 This option allows to define an array of paths where the component will look
-for translation files.
+for translation files. The later a path is added, the more priority it has
+(translations from later paths overwrite earlier ones). Translations from the
+`default_path <reference-translator-default_path>` have more priority than
+translations from all these paths.
 
 .. _reference-translator-default_path:
 
@@ -2041,6 +2287,32 @@ magic_call
 When enabled, the ``property_accessor`` service uses PHP's
 :ref:`magic __call() method <components-property-access-magic-call>` when
 its ``getValue()`` method is called.
+
+magic_get
+.........
+
+**type**: ``boolean`` **default**: ``true``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __get() method <components-property-access-magic-get>` when
+its ``getValue()`` method is called.
+
+.. versionadded:: 5.2
+
+    The ``magic_get`` option was introduced in Symfony 5.2.
+
+magic_set
+.........
+
+**type**: ``boolean`` **default**: ``true``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __set() method <components-property-access-writing-to-objects>` when
+its ``setValue()`` method is called.
+
+.. versionadded:: 5.2
+
+    The ``magic_set`` option was introduced in Symfony 5.2.
 
 throw_exception_on_invalid_index
 ................................
@@ -2108,10 +2380,10 @@ If this option is enabled, validation constraints can be defined using annotatio
 translation_domain
 ..................
 
-**type**: ``string`` **default**: ``validators``
+**type**: ``string | false`` **default**: ``validators``
 
 The translation domain that is used when translating validation constraint
-error messages.
+error messages. Use false to disable translations.
 
 .. _reference-validation-not-compromised-password:
 
@@ -2182,7 +2454,7 @@ mapping
 paths
 """""
 
-**type**: ``array`` **default**: ``[]``
+**type**: ``array`` **default**: ``['config/validation/']``
 
 This option allows to define an array of paths with files or directories where
 the component will look for additional validation files:
@@ -2196,7 +2468,7 @@ the component will look for additional validation files:
             validation:
                 mapping:
                     paths:
-                        - "%kernel.project_dir%/validation/"
+                        - "%kernel.project_dir%/config/validation/"
 
     .. code-block:: xml
 
@@ -2212,7 +2484,7 @@ the component will look for additional validation files:
             <framework:config>
                 <framework:validation>
                     <framework:mapping>
-                        <framework:path>%kernel.project_dir%/validation</framework:path>
+                        <framework:path>%kernel.project_dir%/config/validation/</framework:path>
                     </framework:mapping>
                 </framework:validation>
             </framework:config>
@@ -2225,7 +2497,7 @@ the component will look for additional validation files:
             'validation' => [
                 'mapping' => [
                     'paths' => [
-                        '%kernel.project_dir%/validation',
+                        '%kernel.project_dir%/config/validation/',
                     ],
                 ],
             ],
@@ -2600,6 +2872,12 @@ It's also useful when using `blue/green deployment`_ strategies and more
 generally, when you need to abstract out the actual deployment directory (for
 example, when warming caches offline).
 
+.. versionadded:: 5.2
+
+    Starting from Symfony 5.2, the ``%kernel.container_class%`` parameter is no
+    longer appended automatically to the value of this option. This allows
+    sharing caches between applications or different environments.
+
 .. _reference-lock:
 
 lock
@@ -2635,21 +2913,7 @@ A list of lock stores to be created by the framework extension.
 
         # config/packages/lock.yaml
         framework:
-            # these are all the supported lock stores
-            lock: ~
-            lock: 'flock'
-            lock: 'flock:///path/to/file'
-            lock: 'semaphore'
-            lock: 'memcached://m1.docker'
-            lock: ['memcached://m1.docker', 'memcached://m2.docker']
-            lock: 'redis://r1.docker'
-            lock: ['redis://r1.docker', 'redis://r2.docker']
-            lock: '%env(MEMCACHED_OR_REDIS_URL)%'
-
-            # named locks
-            lock:
-                invoice: ['redis://r1.docker', 'redis://r2.docker']
-                report: 'semaphore'
+            lock: '%env(LOCK_DSN)%'
 
     .. code-block:: xml
 
@@ -2664,29 +2928,7 @@ A list of lock stores to be created by the framework extension.
 
             <framework:config>
                 <framework:lock>
-                    <!-- these are all the supported lock stores -->
-                    <framework:resource>flock</framework:resource>
-
-                    <framework:resource>flock:///path/to/file</framework:resource>
-
-                    <framework:resource>semaphore</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-                    <framework:resource>memcached://m2.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-                    <framework:resource>redis://r2.docker</framework:resource>
-
-                    <framework:resource>%env(REDIS_URL)%</framework:resource>
-
-                    <!-- named locks -->
-                    <framework:resource name="invoice">redis://r1.docker</framework:resource>
-                    <framework:resource name="invoice">redis://r2.docker</framework:resource>
-                    <framework:resource name="report">semaphore</framework:resource>
+                    <framework:resource>%env(LOCK_DSN)%</framework:resource>
                 </framework:lock>
             </framework:config>
         </container>
@@ -2695,23 +2937,12 @@ A list of lock stores to be created by the framework extension.
 
         // config/packages/lock.php
         $container->loadFromExtension('framework', [
-            // these are all the supported lock stores
-            'lock' => null,
-            'lock' => 'flock',
-            'lock' => 'flock:///path/to/file',
-            'lock' => 'semaphore',
-            'lock' => 'memcached://m1.docker',
-            'lock' => ['memcached://m1.docker', 'memcached://m2.docker'],
-            'lock' => 'redis://r1.docker',
-            'lock' => ['redis://r1.docker', 'redis://r2.docker'],
-            'lock' => '%env(MEMCACHED_OR_REDIS_URL)%',
-
-            // named locks
-            'lock' => [
-                'invoice' => ['redis://r1.docker', 'redis://r2.docker'],
-                'report' => 'semaphore',
-            ],
+            'lock' => '%env(LOCK_DSN)%',
         ]);
+
+.. seealso::
+
+    For more details, see :doc:`/lock`.
 
 .. _reference-lock-resources-name:
 
@@ -2732,7 +2963,7 @@ Name of the lock you want to create.
         lock.invoice.retry_till_save.store:
             class: Symfony\Component\Lock\Store\RetryTillSaveStore
             decorates: lock.invoice.store
-            arguments: ['@lock.invoice.retry.till.save.store.inner', 100, 50]
+            arguments: ['@.inner', 100, 50]
 
 workflows
 ~~~~~~~~~
@@ -2885,25 +3116,25 @@ Defines the kind of workflow that is going to be created, which can be either
 a normal workflow or a state machine. Read :doc:`this article </workflow/workflow-and-state-machine>`
 to know their differences.
 
-.. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
+.. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
-.. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
+.. _`Doctrine Cache`: https://www.doctrine-project.org/projects/doctrine-cache/en/current/index.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
 .. _`RFC 5322`: https://tools.ietf.org/html/rfc5322
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
-.. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
+.. _`blue/green deployment`: https://martinfowler.com/bliki/BlueGreenDeployment.html
 .. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
 .. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin
-.. _`error_reporting PHP option`: https://secure.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
+.. _`error_reporting PHP option`: https://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
 .. _`CSRF security attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`session.sid_length PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-length
-.. _`session.sid_bits_per_character PHP option`: https://php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
+.. _`session.sid_length PHP option`: https://www.php.net/manual/session.configuration.php#ini.session.sid-length
+.. _`session.sid_bits_per_character PHP option`: https://www.php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
 .. _`X-Robots-Tag HTTP header`: https://developers.google.com/search/reference/robots_meta_tag
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`default_socket_timeout`: https://php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
+.. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
 .. _`session.cache-limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter
-.. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/desktop/secauthn/microsoft-ntlm
+.. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/win32/secauthn/microsoft-ntlm
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers

@@ -10,7 +10,8 @@ You can even ignore them completely and continue using your own best practices
 and methodologies. Symfony is flexible enough to adapt to your needs.
 
 This article assumes that you already have experience developing Symfony
-applications. If you don't, read first the rest of the `Symfony documentation`_.
+applications. If you don't, read first the :doc:`Getting Started </setup>`
+section of the documentation.
 
 .. tip::
 
@@ -51,7 +52,8 @@ self-explanatory and not coupled to Symfony:
     ├─ config/
     │  ├─ packages/
     │  └─ services.yaml
-    └─ public/
+    ├─ migrations/
+    ├─ public/
     │  ├─ build/
     │  └─ index.php
     ├─ src/
@@ -62,7 +64,6 @@ self-explanatory and not coupled to Symfony:
     │  ├─ Entity/
     │  ├─ EventSubscriber/
     │  ├─ Form/
-    │  ├─ Migrations/
     │  ├─ Repository/
     │  ├─ Security/
     │  └─ Twig/
@@ -80,12 +81,18 @@ Configuration
 Use Environment Variables for Infrastructure Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These are the options that change from one machine to another (e.g. from your
-development machine to the production server) but which don't change the
+The values of these options change from one machine to another (e.g. from your
+development machine to the production server) but they don't modify the
 application behavior.
 
 :ref:`Use env vars in your project <config-env-vars>` to define these options
 and create multiple ``.env`` files to :ref:`configure env vars per environment <config-dot-env>`.
+
+Use Secret for Sensitive Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When your application has sensitive configuration - like an API key - you should
+store those securely via :doc:`Symfony’s secrets management system </configuration/secrets>`.
 
 Use Parameters for Application Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -292,6 +299,10 @@ to add buttons in the templates. This also improves the separation of concerns,
 because the button styling (CSS class and other attributes) is defined in the
 template instead of in a PHP class.
 
+However, if you create a :doc:`form with multiple submit buttons </form/multiple_buttons>`
+you should define them in the controller instead of the template. Otherwise, you
+won't be able to check which button was clicked when handling the form in the controller.
+
 Define Validation Constraints on the Underlying Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -307,7 +318,7 @@ Use a Single Action to Render and Process the Form
 :ref:`Rendering forms <rendering-forms>` and :ref:`processing forms <processing-forms>`
 are two of the main tasks when handling forms. Both are too similar (most of the
 times, almost identical), so it's much simpler to let a single controller action
-handle everything.
+handle both.
 
 Internationalization
 --------------------
@@ -316,8 +327,8 @@ Use the XLIFF Format for Your Translation Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Of all the translation formats supported by Symfony (PHP, Qt, ``.po``, ``.mo``,
-JSON, CSV, INI, etc.) XLIFF and gettext have the best support in the tools used
-by professional translators. And since it's based on XML, you can validate XLIFF
+JSON, CSV, INI, etc.), ``XLIFF`` and ``gettext`` have the best support in the tools used
+by professional translators. And since it's based on XML, you can validate ``XLIFF``
 file contents as you write them.
 
 Symfony also supports notes in XLIFF files, making them more user-friendly for
@@ -419,22 +430,21 @@ functional test that checks that all application URLs load successfully::
     }
 
 Add this test while creating your application because it requires little effort
-and checks that none of your pages returns an error. Later you'll add more
+and checks that none of your pages returns an error. Later, you'll add more
 specific tests for each page.
 
 Hardcode URLs in a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In Symfony applications it's recommended to :ref:`generate URLs <routing-generating-urls>`
+In Symfony applications, it's recommended to :ref:`generate URLs <routing-generating-urls>`
 using routes to automatically update all links when a URL changes. However, if a
 public URL changes, users won't be able to browse it unless you set up a
 redirection to the new URL.
 
 That's why it's recommended to use raw URLs in tests instead of generating them
-from routes. Whenever a route changes, tests will break and you'll know that
+from routes. Whenever a route changes, tests will fail and you'll know that
 you must set up a redirection.
 
-.. _`Symfony documentation`: https://symfony.com/doc
 .. _`Symfony Demo`: https://github.com/symfony/demo
 .. _`download Symfony`: https://symfony.com/download
 .. _`Composer`: https://getcomposer.org/

@@ -65,8 +65,8 @@ state of the current configuration to build a new one:
     Encore
         .setOutputPath('public/build/first_build/')
         .setPublicPath('/build/first_build')
-        .addEntry('app', './assets/js/app.js')
-        .addStyleEntry('global', './assets/css/global.scss')
+        .addEntry('app', './assets/app.js')
+        .addStyleEntry('global', './assets/styles/global.scss')
         .enableSassLoader()
         .autoProvidejQuery()
         .enableSourceMaps(!Encore.isProduction())
@@ -85,8 +85,8 @@ state of the current configuration to build a new one:
     Encore
         .setOutputPath('public/build/second_build/')
         .setPublicPath('/build/second_build')
-        .addEntry('mobile', './assets/js/mobile.js')
-        .addStyleEntry('mobile', './assets/css/mobile.less')
+        .addEntry('mobile', './assets/mobile.js')
+        .addStyleEntry('mobile', './assets/styles/mobile.less')
         .enableLessLoader()
         .enableSourceMaps(!Encore.isProduction())
     ;
@@ -219,6 +219,6 @@ The following loaders are configurable with ``configureLoaderRule()``:
   - ``handlebars``
 
 .. _`configuration options`: https://webpack.js.org/configuration/
-.. _`array of configurations`: https://github.com/webpack/docs/wiki/configuration#multiple-configurations
+.. _`array of configurations`: https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations
 .. _`Karma`: https://karma-runner.github.io
 .. _`Watching Options`: https://webpack.js.org/configuration/watch/#watchoptions

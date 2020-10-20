@@ -119,9 +119,7 @@ And it also works with user-defined streams::
 Files or Directories
 ~~~~~~~~~~~~~~~~~~~~
 
-By default, the Finder returns files and directories; but the
-:method:`Symfony\\Component\\Finder\\Finder::files` and
-:method:`Symfony\\Component\\Finder\\Finder::directories` methods control that::
+By default, the Finder returns both files and directories. If you need to find either files or directories only, use the :method:`Symfony\\Component\\Finder\\Finder::files` and :method:`Symfony\\Component\\Finder\\Finder::directories` methods::
 
     // look for files only; ignore directories
     $finder->files();
@@ -400,7 +398,7 @@ The contents of returned files can be read with
 .. _`fluent interface`: https://en.wikipedia.org/wiki/Fluent_interface
 .. _`symbolic links`: https://en.wikipedia.org/wiki/Symbolic_link
 .. _`Version Control Systems`: https://en.wikipedia.org/wiki/Version_control
-.. _`PHP wrapper for URL-style protocols`: https://php.net/manual/en/wrappers.php
-.. _`PHP streams`: https://php.net/streams
+.. _`PHP wrapper for URL-style protocols`: https://www.php.net/manual/en/wrappers.php
+.. _`PHP streams`: https://www.php.net/streams
 .. _`IEC standard`: https://physics.nist.gov/cuu/Units/binary.html
 .. _`natural sort order`: https://en.wikipedia.org/wiki/Natural_sort_order

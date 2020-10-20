@@ -1,4 +1,4 @@
-Uuid
+UUID
 ====
 
 Validates that a value is a valid `Universally unique identifier (UUID)`_ per `RFC 4122`_.
@@ -84,8 +84,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid UUID.``
 
@@ -97,14 +97,19 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-strict
-~~~~~~
+``strict``
+~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -116,12 +121,12 @@ will allow alternate input formats like:
 * ``{216fff40-98d9-11e3-a5e2-0800200c9a66}``
 * ``216fff4098d911e3a5e20800200c9a66``
 
-versions
-~~~~~~~~
+``versions``
+~~~~~~~~~~~~
 
-**type**: ``int[]`` **default**: ``[1,2,3,4,5]``
+**type**: ``int[]`` **default**: ``[1,2,3,4,5,6]``
 
-This option can be used to only allow specific `UUID versions`_.  Valid versions are 1 - 5.
+This option can be used to only allow specific `UUID versions`_.  Valid versions are 1 - 6.
 The following PHP constants can also be used:
 
 * ``Uuid::V1_MAC``
@@ -129,9 +134,14 @@ The following PHP constants can also be used:
 * ``Uuid::V3_MD5``
 * ``Uuid::V4_RANDOM``
 * ``Uuid::V5_SHA1``
+* ``Uuid::V6_SORTABLE``
 
-All five versions are allowed by default.
+All six versions are allowed by default.
 
-.. _`Universally unique identifier (UUID)`: http://en.wikipedia.org/wiki/Universally_unique_identifier
-.. _`RFC 4122`: http://tools.ietf.org/html/rfc4122
-.. _`UUID versions`: http://en.wikipedia.org/wiki/Universally_unique_identifier#Variants_and_versions
+.. versionadded:: 5.2
+
+    The UUID 6 version support was introduced in Symfony 5.2.
+
+.. _`Universally unique identifier (UUID)`: https://en.wikipedia.org/wiki/Universally_unique_identifier
+.. _`RFC 4122`: https://tools.ietf.org/html/rfc4122
+.. _`UUID versions`: https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions

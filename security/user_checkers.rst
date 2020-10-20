@@ -15,15 +15,17 @@ User checkers are classes that must implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\UserCheckerInterface`. This interface
 defines two methods called ``checkPreAuth()`` and ``checkPostAuth()`` to
 perform checks before and after user authentication. If one or more conditions
-are not met, an exception should be thrown which extends the
-:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException`::
+are not met, throw an exception which extends the
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException` class.
+Consider using :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAccountStatusException`,
+which extends ``AccountStatusException`` and allows to customize the error message
+displayed to the user::
 
     namespace App\Security;
 
-    use App\Exception\AccountDeletedException;
     use App\Security\User as AppUser;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
-    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
     use Symfony\Component\Security\Core\User\UserCheckerInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,9 +37,9 @@ are not met, an exception should be thrown which extends the
                 return;
             }
 
-            // user is deleted, show a generic Account Not Found message.
             if ($user->isDeleted()) {
-                throw new AccountDeletedException();
+                // the message passed to this exception is meant to be displayed to the user
+                throw new CustomUserMessageAccountStatusException('Your user account no longer exists.');
             }
         }
 
@@ -53,6 +55,10 @@ are not met, an exception should be thrown which extends the
             }
         }
     }
+
+.. versionadded:: 5.1
+
+    The ``CustomUserMessageAccountStatusException`` class was introduced in Symfony 5.1.
 
 Enabling the Custom User Checker
 --------------------------------
@@ -86,12 +92,15 @@ is the service id of your user checker:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
-                <firewall name="main" pattern="^/">
-                    <user-checker>App\Security\UserChecker</user-checker>
+                <firewall name="main"
+                        pattern="^/"
+                        user-checker="App\Security\UserChecker">
                     <!-- ... -->
                 </firewall>
             </config>
@@ -100,11 +109,10 @@ is the service id of your user checker:
     .. code-block:: php
 
         // config/packages/security.php
-
-        // ...
         use App\Security\UserChecker;
 
         $container->loadFromExtension('security', [
+            // ...
             'firewalls' => [
                 'main' => [
                     'pattern' => '^/',

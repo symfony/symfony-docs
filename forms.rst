@@ -35,7 +35,7 @@ The recommended workflow when working with Symfony forms is the following:
    data and do something with it (e.g. persist it in a database).
 
 Each of these steps is explained in detail in the next sections. To make
-examples easier to follow, all of them assume that you're building a simple Todo
+examples easier to follow, all of them assume that you're building a small Todo
 list application that displays "tasks".
 
 Users create and edit tasks using Symfony forms. Each task is an instance of the
@@ -262,10 +262,8 @@ to build another object with the visual representation of the form::
     namespace App\Controller;
 
     use App\Entity\Task;
+    use App\Form\Type\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\HttpFoundation\Request;
 
     class TaskController extends AbstractController
@@ -354,7 +352,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
         ]);
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
-Bootstrap 3 and 4 and Foundation 5. You can also
+Bootstrap 3 and 4 as well as Foundation 5 and 6. You can also
 :ref:`create your own Symfony form theme <create-your-own-form-theme>`.
 
 In addition to form themes, Symfony allows you to
@@ -461,9 +459,12 @@ Before using validation, add support for it in your application:
 
     $ composer require symfony/validator
 
-Validation is done by adding a set of rules (called constraints) to a class. To
-see this in action, add validation constraints so that the ``task`` field cannot
-be empty and the ``dueDate`` field cannot be empty and must be a valid \DateTime
+Validation is done by adding a set of rules, called (validation) constraints,
+to a class. You can add them either to the entity class or to the form class.
+
+To see the first approach - adding constraints to the entity - in action,
+add the validation constraints, so that the ``task`` field cannot be empty,
+and the ``dueDate`` field cannot be empty, and must be a valid ``DateTime``
 object.
 
 .. configuration-block::
@@ -546,9 +547,11 @@ object.
         }
 
 That's it! If you re-submit the form with invalid data, you'll see the
-corresponding errors printed out with the form. Read the
-:doc:`Symfony validation documentation </validation>` to learn more about this
-powerful feature.
+corresponding errors printed out with the form.
+
+To see the second approach - adding constraints to the form - and to
+learn more about the validation constraints, please refer to the
+:doc:`Symfony validation documentation </validation>`.
 
 Other Common Form Features
 --------------------------

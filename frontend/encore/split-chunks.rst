@@ -14,10 +14,10 @@ To enable this, call ``splitEntryChunks()``:
         // ...
 
         // multiple entry files, which probably import the same code
-        .addEntry('app', './assets/js/app.js')
-        .addEntry('homepage', './assets/js/homepage.js')
-        .addEntry('blog', './assets/js/blog.js')
-        .addEntry('store', './assets/js/store.js')
+        .addEntry('app', './assets/app.js')
+        .addEntry('homepage', './assets/homepage.js')
+        .addEntry('blog', './assets/blog.js')
+        .addEntry('store', './assets/store.js')
 
     +     .splitEntryChunks()
 
@@ -38,8 +38,8 @@ tags as needed:
     {#
         May now render multiple script tags:
             <script src="/build/runtime.js"></script>
-            <script src="/build/homepage.js"></script>
             <script src="/build/vendor~homepage.js"></script>
+            <script src="/build/homepage.js"></script>
     #}
     {{ encore_entry_script_tags('homepage') }}
 

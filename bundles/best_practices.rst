@@ -181,7 +181,7 @@ of Symfony and the latest beta release:
 .. code-block:: yaml
 
     language: php
-    sudo: false
+
     cache:
         directories:
             - $HOME/.composer/cache/files
@@ -227,8 +227,6 @@ of Symfony and the latest beta release:
         - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
 
     install:
-        # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-        - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
         - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
         - ./vendor/bin/simple-phpunit install
 
@@ -262,7 +260,7 @@ The index file (for example ``Resources/doc/index.rst`` or
 ``Resources/doc/index.md``) is the only mandatory file and must be the entry
 point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
-used to render the documentation on symfony.com.
+used to render the documentation on the Symfony website.
 
 Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~

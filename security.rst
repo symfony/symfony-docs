@@ -37,6 +37,49 @@ install the security feature before using it:
 
     $ composer require symfony/security-bundle
 
+
+.. tip::
+
+    A :doc:`new experimental Security </security/experimental_authenticators>`
+    was introduced in Symfony 5.1, which will eventually replace security in
+    Symfony 6.0. This system is almost fully backwards compatible with the
+    current Symfony security, add this line to your security configuration to start
+    using it:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            security:
+                enable_authenticator_manager: true
+                # ...
+
+        .. code-block:: xml
+
+            <!-- config/packages/security.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+                <config enable-authenticator-manager="true">
+                    <!-- ... -->
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            $container->loadFromExtension('security', [
+                'enable_authenticator_manager' => true,
+                // ...
+            ]);
+
 .. _initial-security-yml-setup-authentication:
 .. _initial-security-yaml-setup-authentication:
 .. _create-user-class:
@@ -137,7 +180,9 @@ command will pre-configure this for you:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -153,11 +198,13 @@ command will pre-configure this for you:
     .. code-block:: php
 
         // config/packages/security.php
+        use App\Entity\User;
+
         $container->loadFromExtension('security', [
             // ...
 
             'encoders' => [
-                'App\Entity\User' => [
+                User::class => [
                     'algorithm' => 'auto',
                     'cost' => 12,
                 ]
@@ -169,6 +216,8 @@ command will pre-configure this for you:
 Now that Symfony knows *how* you want to encode the passwords, you can use the
 ``UserPasswordEncoderInterface`` service to do this before saving your users to
 the database.
+
+.. _user-data-fixture:
 
 For example, by using :ref:`DoctrineFixturesBundle <doctrine-fixtures>`, you can
 create dummy database users:
@@ -225,6 +274,11 @@ You can manually encode a password by running:
 3a) Authentication & Firewalls
 ------------------------------
 
+.. versionadded:: 5.1
+
+    The ``lazy: true`` option was introduced in Symfony 5.1. Prior to version 5.1,
+    it was enabled using ``anonymous: lazy``
+
 The security system is configured in ``config/packages/security.yaml``. The *most*
 important section is ``firewalls``:
 
@@ -239,7 +293,8 @@ important section is ``firewalls``:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: ~
+                    anonymous: true
+                    lazy: true
 
     .. code-block:: xml
 
@@ -249,15 +304,18 @@ important section is ``firewalls``:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false"/>
 
-                <firewall name="main">
-                    <anonymous/>
+                <firewall name="main"
+                    anonymous="true"
+                    lazy="true"/>
                 </firewall>
             </config>
         </srv:container>
@@ -268,11 +326,12 @@ important section is ``firewalls``:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'dev' => [
-                    'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
-                    'security'  => false,
-                ),
+                    'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
+                    'security' => false,
+                ],
                 'main' => [
-                    'anonymous' => null,
+                    'anonymous' => true,
+                    'lazy' => true,
                 ],
             ],
         ]);
@@ -282,23 +341,38 @@ A "firewall" is your authentication system: the configuration below it defines
 
 Only one firewall is active on each request: Symfony uses the ``pattern`` key
 to find the first match (you can also :doc:`match by host or other things </security/firewall_restriction>`).
-The ``dev`` firewall is really a fake firewall: it just makes sure that you don't
+The ``dev`` firewall is really a fake firewall: it makes sure that you don't
 accidentally block Symfony's dev tools - which live under URLs like ``/_profiler``
 and ``/_wdt``.
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
-it matches *all* URLs). But this does *not* mean that every URL requires authentication.
-Nope, thanks to the ``anonymous`` key, this firewall *is* accessible anonymously.
+it matches *all* URLs). A firewall can have many modes of authentication,
+in other words many ways to ask the question "Who are you?". Often, the
+user is unknown (i.e. not logged in) when they first visit your website. The
+``anonymous`` mode, if enabled, is used for these requests.
 
-In fact, if you go to the homepage right now, you *will* have access and you'll see
-that you're "authenticated" as ``anon.``. Don't be fooled by the "Yes" next to
-Authenticated. The firewall verified that it does not know your identity, and so,
-you are anonymous:
+In fact, if you go to the homepage right now, you *will* have access and you'll
+see that you're "authenticated" as ``anon.``. The firewall verified that it
+does not know your identity, and so, you are anonymous:
 
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
 
-You'll learn later how to deny access to certain URLs or controllers.
+It means any request can have an anonymous token to access some resource,
+while some actions (i.e. some pages or buttons) can still require specific
+privileges. A user can then access a form login without being authenticated
+as a unique user (otherwise an infinite redirection loop would happen
+asking the user to authenticate while trying to doing so).
+
+You'll learn later how to deny access to certain URLs, controllers, or part of
+templates.
+
+.. tip::
+
+    The ``lazy`` anonymous mode prevents the session from being started if
+    there is no need for authorization (i.e. explicit check for a user
+    privilege). This is important to keep requests cacheable (see
+    :doc:`/http_cache`).
 
 .. note::
 
@@ -314,7 +388,7 @@ users to authenticate!
 .. _security-form-login:
 
 3b) Authenticating your Users
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Authentication in Symfony can feel a bit "magic" at first. That's because, instead
 of building a route & controller to handle login, you'll activate an
@@ -333,17 +407,15 @@ you to control *every* part of the authentication process (see the next section)
     bundle.
 
 Guard Authenticators
-....................
+~~~~~~~~~~~~~~~~~~~~
 
 A Guard authenticator is a class that gives you *complete* control over your
-authentication process. There are *many* different ways to build an authenticator,
-so here are a few common use-cases:
+authentication process. There are many different ways to build an authenticator;
+here are a few common use-cases:
 
 * :doc:`/security/form_login_setup`
-* :doc:`/security/guard_authentication`
-
-For the most detailed description of authenticators and how they work, see
-:doc:`/security/guard_authentication`.
+* :doc:`/security/guard_authentication` – see this for the most detailed
+  description of authenticators and how they work
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
@@ -372,20 +444,24 @@ generated earlier, the roles are an array that's stored in the database, and
 every user is *always* given at least one role: ``ROLE_USER``::
 
     // src/Entity/User.php
+
     // ...
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    public function getRoles(): array
+    class User
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        /**
+         * @ORM\Column(type="json")
+         */
+        private $roles = [];
 
-        return array_unique($roles);
+        // ...
+        public function getRoles(): array
+        {
+            $roles = $this->roles;
+            // guarantee every user at least has ROLE_USER
+            $roles[] = 'ROLE_USER';
+
+            return array_unique($roles);
+        }
     }
 
 This is a nice default, but you can do *whatever* you want to determine which roles
@@ -453,7 +529,9 @@ start with ``/admin``, you can:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -529,7 +607,9 @@ the list and stops when it finds the first match:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -579,7 +659,7 @@ You can deny access from inside a controller::
 
 That's it! If access is not granted, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-is thrown and no more code in your controller is executed. Then, one of two things
+is thrown and no more code in your controller is called. Then, one of two things
 will happen:
 
 1) If the user isn't logged in yet, they will be asked to log in (e.g. redirected
@@ -640,13 +720,23 @@ Securing other Services
 
 See :doc:`/security/securing_services`.
 
+Setting Individual User Permissions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most applications require more specific access rules. For instance, a user
+should be able to only edit their *own* comments on a blog. Voters allow you
+to write *whatever* business logic you need to determine access. Using
+these voters is similar to the role-based access checks implemented in the
+previous chapters. Read :doc:`/security/voters` to learn how to implement
+your own voter.
+
 Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you *only* want to check if a user is logged in (you don't care about roles),
 you have two options. First, if you've given *every* user ``ROLE_USER``, you can
-just check for that role. Otherwise, you can use a special "attribute" in place
-of a role::
+check for that role. Otherwise, you can use a special "attribute" in place of a
+role::
 
     // ...
 
@@ -661,7 +751,7 @@ You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
 ``access_control`` or in Twig.
 
 ``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
-user that has logged in will have this. Actually, there are 3 special attributes
+user that has logged in will have this. Actually, there are some special attributes
 like this:
 
 * ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
@@ -677,21 +767,20 @@ like this:
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/security/access_control`.
 
-.. _security-secure-objects:
+* ``IS_ANONYMOUS``: *Only* anonymous users are matched by this attribute.
 
-Access Control Lists (ACLs): Securing individual Database Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* ``IS_REMEMBERED``: *Only* users authenticated using the
+  :doc:`remember me functionality </security/remember_me>`, (i.e. a
+  remember-me cookie).
 
-Imagine you are designing a blog where users can comment on your posts. You
-also want a user to be able to edit their own comments, but not those of
-other users. Also, as the admin user, you want to be able to edit *all* comments.
+* ``IS_IMPERSONATOR``: When the current user is
+  :doc:`impersonating </security/impersonating_user>` another user in this
+  session, this attribute will match.
 
-:doc:`Voters </security/voters>` allow you to write *whatever* business logic you
-need (e.g. the user can edit this post because they are the creator) to determine
-access. That's why voters are officially recommended by Symfony to create ACL-like
-security systems.
+.. versionadded:: 5.1
 
-If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
+    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
+    attributes were introduced in Symfony 5.1.
 
 .. _retrieving-the-user-object:
 
@@ -789,7 +878,9 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -864,7 +955,7 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('logout', '/logout')
+            $routes->add('app_logout', '/logout')
                 ->methods(['GET'])
             ;
         };
@@ -872,11 +963,93 @@ Next, you'll need to create a route for this URL (but not a controller):
 And that's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
 Symfony will un-authenticate the current user and redirect them.
 
+Customizing Logout
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``LogoutEvent`` was introduced in Symfony 5.1. Prior to this
+    version, you had to use a
+    :ref:`logout success handler <reference-security-logout-success-handler>`
+    to customize the logout.
+
+In some cases you need to execute extra logic upon logout (e.g. invalidate
+some tokens) or want to customize what happens after a logout. During
+logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
+is dispatched. Register an :doc:`event listener or subscriber </event_dispatcher>`
+to execute custom logic. The following information is available in the
+event class:
+
+``getToken()``
+    Returns the security token of the session that is about to be logged
+    out.
+``getRequest()``
+    Returns the current request.
+``getResponse()``
+    Returns a response, if it is already set by a custom listener. Use
+    ``setResponse()`` to configure a custom logout response.
+
+
 .. tip::
 
-    Need more control of what happens after logout? Add a ``success_handler`` key
-    under ``logout`` and point it to a service id of a class that implements
-    :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
+    Every Security firewall has its own event dispatcher
+    (``security.event_dispatcher.FIREWALLNAME``). The logout event is
+    dispatched on both the global and firewall dispatcher. You can register
+    on the firewall dispatcher if you want your listener to only be
+    executed for a specific firewall. For instance, if you have an ``api``
+    and ``main`` firewall, use this configuration to register only on the
+    logout event in the ``main`` firewall:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                # ...
+
+                App\EventListener\CustomLogoutSubscriber:
+                    tags:
+                        - name: kernel.event_subscriber
+                          dispatcher: security.event_dispatcher.main
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- ... -->
+
+                    <service id="App\EventListener\CustomLogoutSubscriber">
+                        <tag name="kernel.event_subscriber"
+                             dispacher="security.event_dispatcher.main"
+                         />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use App\EventListener\CustomLogoutListener;
+            use App\EventListener\CustomLogoutSubscriber;
+            use Symfony\Component\Security\Http\Event\LogoutEvent;
+
+            return function(ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                $services->set(CustomLogoutSubscriber::class)
+                    ->tag('kernel.event_subscriber', [
+                        'dispatcher' => 'security.event_dispatcher.main',
+                    ]);
+            };
 
 .. _security-role-hierarchy:
 
@@ -906,7 +1079,9 @@ rules by creating a role hierarchy:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -997,7 +1172,9 @@ Authentication (Identifying/Logging in the User)
 .. toctree::
     :maxdepth: 1
 
+    security/experimental_authenticators
     security/form_login_setup
+    security/reset_password
     security/json_login_setup
     security/guard_authentication
     security/password_migration
@@ -1028,6 +1205,5 @@ Authorization (Denying Access)
 
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
-.. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

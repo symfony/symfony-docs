@@ -1,6 +1,8 @@
 .. index::
     single: DependencyInjection; Service Subscribers
 
+.. _service-locators:
+
 Service Subscribers & Locators
 ==============================
 
@@ -11,7 +13,7 @@ the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
 This can typically be the case in your controllers, where you may inject several
-services in the constructor, but the action executed only uses some of them.
+services in the constructor, but the action called only uses some of them.
 Another example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
@@ -63,7 +65,7 @@ through a **Service Locator**, a separate lazy-loaded container.
 Defining a Service Subscriber
 -----------------------------
 
-First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`.
+First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`.
 Use its ``getSubscribedServices()`` method to include as many services as needed
 in the service subscriber and change the type hint of the container to
 a PSR-11 ``ContainerInterface``::
@@ -309,9 +311,10 @@ service definition to pass a collection of services to the service locator:
             $services = $configurator->services();
 
             $services->set('app.command_handler_locator', ServiceLocator::class)
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([[
-                    'App\FooCommand' => ref('app.command_handler.foo'),
-                    'App\BarCommand' => ref('app.command_handler.bar'),
+                    'App\FooCommand' => service('app.command_handler.foo'),
+                    'App\BarCommand' => service('app.command_handler.bar'),
                 ]])
                 // if you are not using the default service autoconfiguration,
                 // add the following tag to the service definition:
@@ -321,7 +324,7 @@ service definition to pass a collection of services to the service locator:
             // if the element has no key, the ID of the original service is used
             $services->set('app.another_command_handler_locator', ServiceLocator::class)
                 ->args([[
-                    ref('app.command_handler.baz'),
+                    service('app.command_handler.baz'),
                 ]])
             ;
         };
@@ -370,16 +373,17 @@ Now you can use the service locator by injecting it in any other service:
             $services = $configurator->services();
 
             $services->set(CommandBus::class)
-                ->args([ref('app.command_handler_locator')]);
+                ->args([service('app.command_handler_locator')]);
         };
 
 In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
 to use the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\ServiceLocatorTagPass::register`
 method to create the service locators. This will save you some boilerplate and
-will share identical locators amongst all the services referencing them::
+will share identical locators among all the services referencing them::
 
     use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Reference;
 
     public function process(ContainerBuilder $container)
     {
@@ -515,7 +519,7 @@ attribute to the locator service defining the name of this custom method:
             # ...
 
             App\HandlerCollection:
-                arguments: [!tagged_locator { tag: 'app.handler', default_index_method: 'myOwnMethodName' }]
+                arguments: [!tagged_locator { tag: 'app.handler', index_by: 'key', default_index_method: 'myOwnMethodName' }]
 
     .. code-block:: xml
 
@@ -531,7 +535,7 @@ attribute to the locator service defining the name of this custom method:
                 <!-- ... -->
 
                 <service id="App\HandlerCollection">
-                    <argument type="tagged_locator" tag="app.handler" default-index-method="myOwnMethodName"/>
+                    <argument type="tagged_locator" tag="app.handler" index-by="key" default-index-method="myOwnMethodName"/>
                 </service>
             </services>
         </container>
@@ -544,9 +548,15 @@ attribute to the locator service defining the name of this custom method:
         return function(ContainerConfigurator $configurator) {
             $configurator->services()
                 ->set(App\HandlerCollection::class)
-                    ->args([service_locator(tagged('app.handler', null, 'myOwnMethodName'))])
+                    ->args([tagged_locator('app.handler', 'key', 'myOwnMethodName')])
             ;
         };
+
+.. note::
+
+    Since code should not be responsible for defining how the locators are
+    going to be used, a configuration key (``key`` in the example above) must
+    be set so the custom method may be called as a fallback.
 
 Service Subscriber Trait
 ------------------------

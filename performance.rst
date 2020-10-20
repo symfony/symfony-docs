@@ -11,16 +11,12 @@ performance checklists.
 Symfony Application Checklist
 -----------------------------
 
+These are the code and configuration changes that you can make in your Symfony
+application to improve its performance:
+
 #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
-
-Production Server Checklist
----------------------------
-
-#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
-#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
-#. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
-#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
-#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
+#. :ref:`Dump the service container into a single file <performance-service-container-single-file>`
+#. :ref:`Restrict the number of locales enabled in the application <performance-enabled-locales>`
 
 .. _performance-install-apcu-polyfill:
 
@@ -32,6 +28,68 @@ OPcache, install the `APCu Polyfill component`_ in your application to enable
 compatibility with `APCu PHP functions`_ and unlock support for advanced Symfony
 features, such as the APCu Cache adapter.
 
+.. _performance-service-container-single-file:
+
+Dump the Service Container into a Single File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony compiles the :doc:`service container </service_container>` into multiple
+small files by default. Set this parameter to ``true`` to compile the entire
+container into a single file, which could improve performance when using
+"class preloading" in PHP 7.4 or newer versions:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            # ...
+            container.dumper.inline_factories: true
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <!-- ... -->
+                <parameter key="container.dumper.inline_factories">true</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+
+        // ...
+        $container->setParameter('container.dumper.inline_factories', true);
+
+
+.. _performance-enabled-locales:
+
+Restrict the Number of Locales Enabled in the Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the :ref:`framework.translator.enabled_locales <reference-translator-enabled-locales>`
+option to only generate the translation files actually used in your application.
+
+Production Server Checklist
+---------------------------
+
+These are the changes that you can make in your production server to improve
+performance when running Symfony applications:
+
+#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
+#. :ref:`Use the OPcache class preloading <performance-use-preloading>`
+#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
+#. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
+#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
+#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
+
 .. _performance-use-opcache:
 
 Use the OPcache Byte Code Cache
@@ -41,6 +99,32 @@ OPcache stores the compiled PHP files to avoid having to recompile them for
 every request. There are some `byte code caches`_ available, but as of PHP
 5.5, PHP comes with `OPcache`_ built-in. For older versions, the most widely
 used byte code cache is `APC`_.
+
+.. _performance-use-preloading:
+
+Use the OPcache class preloading
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from PHP 7.4, OPcache can compile and load classes at start-up and
+make them available to all requests until the server is restarted, improving
+performance significantly.
+
+During container compilation (e.g. when running the ``cache:clear`` command),
+Symfony generates a file called ``preload.php`` in the ``config/`` directory
+with the list of classes to preload.
+
+The only requirement is that you need to set both ``container.dumper.inline_factories``
+and ``container.dumper.inline_class_loader`` parameters to ``true``. Then, you
+can configure PHP to use this preload file:
+
+.. code-block:: ini
+
+    ; php.ini
+    opcache.preload=/path/to/project/config/preload.php
+
+Use the :ref:`container.preload <dic-tags-container-preload>` and
+:ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
+which classes should or should not be preloaded by PHP.
 
 .. _performance-configure-opcache:
 
@@ -87,8 +171,8 @@ possible solutions:
 
 .. _performance-configure-realpath-cache:
 
-Configure the PHP realpath Cache
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure the PHP ``realpath`` Cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a relative path is transformed into its real and absolute path, PHP
 caches the result to improve performance. Applications that open many PHP files,
@@ -139,10 +223,10 @@ Learn more
 * :doc:`/http_cache/varnish`
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
-.. _`OPcache`: https://php.net/manual/en/book.opcache.php
+.. _`OPcache`: https://www.php.net/manual/en/book.opcache.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
-.. _`APC`: https://php.net/manual/en/book.apc.php
+.. _`APC`: https://www.php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
-.. _`APCu PHP functions`: https://php.net/manual/en/ref.apcu.php
+.. _`APCu PHP functions`: https://www.php.net/manual/en/ref.apcu.php
 .. _`cachetool`: https://github.com/gordalina/cachetool
-.. _`open_basedir`: https://php.net/manual/ini.core.php#ini.open-basedir
+.. _`open_basedir`: https://www.php.net/manual/ini.core.php#ini.open-basedir

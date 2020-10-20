@@ -32,3 +32,16 @@ The linter results can be exported to JSON using the ``--format`` option:
 
     $ php bin/console lint:yaml translations/ --format=json
     $ php bin/console lint:xliff translations/ --format=json
+
+.. tip::
+
+    The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
+    you to lint YAML files without having to create a console application:
+
+    .. code-block:: terminal
+
+        $ php vendor/bin/yaml-lint translations/
+
+    .. versionadded:: 5.1
+
+        The ``yaml-lint`` binary was introduced in Symfony 5.1.

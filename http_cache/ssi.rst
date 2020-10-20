@@ -114,7 +114,7 @@ The profile index page has not public caching, but the GDPR block has
     {# templates/profile/index.html.twig #}
 
     {# you can use a controller reference #}
-    {{ render_ssi(controller('App\Controller\ProfileController::gdpr')) }}
+    {{ render_ssi(controller('App\\Controller\\ProfileController::gdpr')) }}
 
     {# ... or a URL #}
     {{ render_ssi(url('profile_gdpr')) }}

@@ -17,7 +17,8 @@ First, enable the JSON login under your firewall:
 
             firewalls:
                 main:
-                    anonymous: ~
+                    anonymous: true
+                    lazy: true
                     json_login:
                         check_path: /login
 
@@ -29,11 +30,12 @@ First, enable the JSON login under your firewall:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
-                <firewall name="main">
-                    <anonymous/>
+                <firewall name="main" anonymous="true" lazy="true">
                     <json-login check-path="/login"/>
                 </firewall>
             </config>
@@ -45,7 +47,8 @@ First, enable the JSON login under your firewall:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
-                    'anonymous'  => null,
+                    'anonymous' => true,
+                    'lazy' => true,
                     'json_login' => [
                         'check_path' => '/login',
                     ],
@@ -133,7 +136,7 @@ system intercepts the request and initiates the authentication process:
 
 Symfony takes care of authenticating the user with the submitted username and
 password or triggers an error in case the authentication process fails. If the
-authentication is successful, the controller defined earlier will be executed.
+authentication is successful, the controller defined earlier will be called.
 
 If the JSON document has a different structure, you can specify the path to
 access the ``username`` and ``password`` properties using the ``username_path``
@@ -163,7 +166,8 @@ The security configuration should be:
 
             firewalls:
                 main:
-                    anonymous: ~
+                    anonymous: true
+                    lazy: true
                     json_login:
                         check_path:    login
                         username_path: security.credentials.login
@@ -177,14 +181,15 @@ The security configuration should be:
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
-                <firewall name="main">
-                    <anonymous/>
+                <firewall name="main" anonymous="true" lazy="true">
                     <json-login check-path="login"
-                                username-path="security.credentials.login"
-                                password-path="security.credentials.password"/>
+                        username-path="security.credentials.login"
+                        password-path="security.credentials.password"/>
                 </firewall>
             </config>
         </srv:container>
@@ -195,7 +200,8 @@ The security configuration should be:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
-                    'anonymous'  => null,
+                    'anonymous' => true,
+                    'lazy' => true,
                     'json_login' => [
                         'check_path' => 'login',
                         'username_path' => 'security.credentials.login',

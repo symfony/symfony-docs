@@ -1,5 +1,5 @@
-data_class
-~~~~~~~~~~
+``data_class``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 

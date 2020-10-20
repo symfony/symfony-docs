@@ -10,8 +10,10 @@ The Intl Component
 
 .. caution::
 
-    The replacement layer is limited to the locale "en". If you want to use
-    other locales, you should `install the intl extension`_ instead.
+    The replacement layer is limited to the ``en`` locale. If you want to use
+    other locales, you should `install the intl extension`_. There is no conflict 
+    between the two because, even if you use the extension, this package can still
+    be useful to access the ICU data.
 
 .. seealso::
 
@@ -208,10 +210,11 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 Locales
 ~~~~~~~
 
-A locale is the combination of a language and a region. For example, "Chinese"
-is the language and ``zh_Hans_MO`` is the locale for "Chinese" (language) +
-"Simplified" (script) + "Macau SAR China" (region). The ``Locales`` class
-provides access to the name of all locales::
+A locale is the combination of a language, a region and some parameters that
+define the interface preferences of the user. For example, "Chinese" is the 
+language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified" 
+(script) + "Macau SAR China" (region). The ``Locales`` class provides access to 
+the name of all locales::
 
     use Symfony\Component\Intl\Locales;
 
@@ -372,8 +375,8 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _intl extension: https://php.net/manual/en/book.intl.php
-.. _install the intl extension: https://php.net/manual/en/intl.setup.php
+.. _intl extension: https://www.php.net/manual/en/book.intl.php
+.. _install the intl extension: https://www.php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2

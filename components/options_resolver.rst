@@ -285,7 +285,7 @@ been set::
         }
     }
 
-The method :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getMissingOptions`
+The :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::getMissingOptions` method
 lets you access the names of all missing options.
 
 Type Validation
@@ -720,18 +720,31 @@ In same way, parent options can access to the nested options as normal arrays::
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 5.1
+
+    The signature of the ``setDeprecated()`` method changed from
+    ``setDeprecated(string $option, ?string $message)`` to
+    ``setDeprecated(string $option, string $package, string $version, $message)``
+    in Symfony 5.1.
+
 Once an option is outdated or you decided not to maintain it anymore, you can
 deprecate it using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
 method::
 
     $resolver
         ->setDefined(['hostname', 'host'])
-        // this outputs the following generic deprecation message:
-        // The option "hostname" is deprecated.
-        ->setDeprecated('hostname')
 
-        // you can also pass a custom deprecation message
-        ->setDeprecated('hostname', 'The option "hostname" is deprecated, use "host" instead.')
+        // this outputs the following generic deprecation message:
+        // Since acme/package 1.2: The option "hostname" is deprecated.
+        ->setDeprecated('hostname', 'acme/package', '1.2')
+
+        // you can also pass a custom deprecation message (%name% placeholder is available)
+        ->setDeprecated(
+            'hostname',
+            'acme/package',
+            '1.2',
+            'The option "hostname" is deprecated, use "host" instead.'
+        )
     ;
 
 .. note::
@@ -744,7 +757,7 @@ method::
 
     When using an option deprecated by you in your own library, you can pass
     ``false`` as the second argument of the
-    :method:`Symfony\\Component\\OptionsResolver\\Options::offsetGet()` method
+    :method:`Symfony\\Component\\OptionsResolver\\Options::offsetGet` method
     to not trigger the deprecation warning.
 
 Instead of passing the message, you may also pass a closure which returns
@@ -756,7 +769,7 @@ the option::
         ->setDefault('encryption', null)
         ->setDefault('port', null)
         ->setAllowedTypes('port', ['null', 'int'])
-        ->setDeprecated('port', function (Options $options, $value) {
+        ->setDeprecated('port', 'acme/package', '1.2', function (Options $options, $value) {
             if (null === $value) {
                 return 'Passing "null" to option "port" is deprecated, pass an integer instead.';
             }
@@ -777,6 +790,39 @@ the option::
 
 This closure receives as argument the value of the option after validating it
 and before normalizing it when the option is being resolved.
+
+Chaining Option Configurations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In many cases you may need to define multiple configurations for each option.
+For example, suppose the ``InvoiceMailer`` class has an ``host`` option that is required
+and a ``transport`` option which can be one of ``sendmail``, ``mail`` and ``smtp``.
+You can improve the readability of the code avoiding to duplicate option name for
+each configuration using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::define`
+method::
+
+    // ...
+    class InvoiceMailer
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // ...
+            $resolver->define('host')
+                ->required()
+                ->default('smtp.example.org')
+                ->allowedTypes('string');
+            $resolver->define('transport')
+                ->required()
+                ->default('transport')
+                ->allowedValues(['sendmail', 'mail', 'smtp']);
+        }
+    }
+
+.. versionadded:: 5.1
+
+    The :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::define` method
+    was introduced in Symfony 5.1.
 
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~

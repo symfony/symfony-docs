@@ -5,21 +5,20 @@ How to Migrate a Password Hash
 ==============================
 
 In order to protect passwords, it is recommended to store them using the latest
-hash algorithms. This means that if a better hash algorithm is supported on the
-system, the user's password should be rehashed and stored. Symfony provides this
-functionality when a user is successfully authenticated.
-
-To enable this, make sure you apply the following steps to your application:
+hash algorithms. This means that if a better hash algorithm is supported on your
+system, the user's password should be *rehashed* using the newer algorithm and
+stored. That's possible with the ``migrate_from`` option:
 
 #. `Configure a new Encoder Using "migrate_from"`_
 #. `Upgrade the Password`_
 #. Optionally, `Trigger Password Migration From a Custom Encoder`_
 
 Configure a new Encoder Using "migrate_from"
---------------------------------------------
+----------------------------------------------
 
-When configuring a new encoder, you can specify a list of legacy encoders by
-using the ``migrate_from`` option:
+When a better hashing algorithm becomes available, you should keep the existing
+encoder(s), rename it, and then define the new one. Set the ``migrate_from`` option
+on the new encoder to point to the old, legacy encoder(s):
 
 .. configuration-block::
 
@@ -30,6 +29,7 @@ using the ``migrate_from`` option:
             # ...
 
             encoders:
+                # an encoder used in the past for some users
                 legacy:
                     algorithm: sha256
                     encode_as_base64: false
@@ -50,6 +50,8 @@ using the ``migrate_from`` option:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:security="http://symfony.com/schema/dic/security"
             xsi:schemaLocation="http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd
+                http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <security:config>
@@ -98,6 +100,13 @@ using the ``migrate_from`` option:
             ],
         ]);
 
+With this setup:
+
+* New users will be encoded with the new algorithm;
+* Whenever a user logs in whose password is still stored using the old algorithm,
+  Symfony will verify the password with the old algorithm and then rehash
+  and update the password using the new algorithm.
+
 .. tip::
 
     The *auto*, *native*, *bcrypt* and *argon* encoders automatically enable
@@ -106,7 +115,7 @@ using the ``migrate_from`` option:
     #. :ref:`PBKDF2 <reference-security-pbkdf2>` (which uses :phpfunction:`hash_pbkdf2`);
     #. Message digest (which uses :phpfunction:`hash`)
 
-    Both use the ``hash_algorithm`` setting as algorithm. It is recommended to
+    Both use the ``hash_algorithm`` setting as the algorithm. It is recommended to
     use ``migrate_from`` instead of ``hash_algorithm``, unless the *auto*
     encoder is used.
 
@@ -115,13 +124,44 @@ Upgrade the Password
 
 Upon successful login, the Security system checks whether a better algorithm
 is available to hash the user's password. If it is, it'll hash the correct
-password using the new hash. You can enable this behavior by implementing how
-this newly hashed password should be stored:
+password using the new hash. If you use a Guard authenticator, you first need to
+:ref:`provide the original password to the Security system <provide-the-password-guard>`.
 
-* `When using Doctrine's entity user provider <Upgrade the Password when using Doctrine>`_
-* `When using a custom user provider <Upgrade the Password when using a custom User Provider>`_
+You can enable the upgrade behavior by implementing how this newly hashed
+password should be stored:
+
+* :ref:`When using Doctrine's entity user provider <upgrade-the-password-doctrine>`
+* :ref:`When using a custom user provider <upgrade-the-password-custom-provider>`
 
 After this, you're done and passwords are always hashed as secure as possible!
+
+.. _provide-the-password-guard:
+
+Provide the Password when using Guard
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you're using a custom :doc:`guard authenticator </security/guard_authentication>`,
+you need to implement :class:`Symfony\\Component\\Security\\Guard\\PasswordAuthenticatedInterface`.
+This interface defines a ``getPassword()`` method that returns the password
+for this login request. This password is used in the migration process::
+
+    // src/Security/CustomAuthenticator.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
+    // ...
+
+    class CustomAuthenticator extends AbstractGuardAuthenticator implements PasswordAuthenticatedInterface
+    {
+        // ...
+
+        public function getPassword($credentials): ?string
+        {
+            return $credentials['password'];
+        }
+    }
+
+.. _upgrade-the-password-doctrine:
 
 Upgrade the Password when using Doctrine
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -151,6 +191,8 @@ storing the newly created password hash::
             $this->getEntityManager()->flush($user);
         }
     }
+
+.. _upgrade-the-password-custom-provider:
 
 Upgrade the Password when using a Custom User Provider
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,7 +226,7 @@ Trigger Password Migration From a Custom Encoder
 If you're using a custom password encoder, you can trigger the password
 migration by returning ``true`` in the ``needsRehash()`` method::
 
-    // src/Security/UserProvider.php
+    // src/Security/CustomPasswordEncoder.php
     namespace App\Security;
 
     // ...

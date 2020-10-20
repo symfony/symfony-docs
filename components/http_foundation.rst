@@ -188,8 +188,17 @@ Finally, the raw data sent with the request body can be accessed using
 
     $content = $request->getContent();
 
-For instance, this may be useful to process a JSON string sent to the
+For instance, this may be useful to process a XML string sent to the
 application by a remote service using the HTTP POST method.
+
+If the request body is a JSON string, it can be accessed using
+:method:`Symfony\\Component\\HttpFoundation\\Request::toArray`::
+
+    $data = $request->toArray();
+
+.. versionadded:: 5.2
+
+    The ``toArray()`` method was introduced in Symfony 5.2.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -271,6 +280,14 @@ this complexity and defines some methods for the most common tasks::
     // Decodes a quoted string
     HeaderUtils::unquote('"foo \"bar\""');
     // => 'foo "bar"'
+
+    // Parses a query string but maintains dots (PHP parse_str() replaces '.' by '_')
+    HeaderUtils::parseQuery('foo[bar.baz]=qux');
+    // => ['foo' => ['bar.baz' => 'qux']]
+
+.. versionadded:: 5.2
+
+    The ``parseQuery()`` method was introduced in Symfony 5.2.
 
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -443,9 +460,21 @@ method takes an instance of
 You can clear a cookie via the
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::clearCookie` method.
 
-Note you can create a
-:class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header
-value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
+In addition to the ``Cookie::create()`` method, you can create a ``Cookie``
+object from a raw header value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`
+method. You can also use the ``with*()`` methods to change some Cookie property (or
+to build the entire Cookie using a fluent interface). Each ``with*()`` method returns
+a new object with the modified property::
+
+    $cookie = Cookie::create('foo')
+        ->withValue('bar')
+        ->withExpires(strtotime('Fri, 20-May-2011 15:25:52 GMT'))
+        ->withDomain('.example.com')
+        ->withSecure(true);
+
+.. versionadded:: 5.1
+
+    The ``with*()`` methods were introduced in Symfony 5.1.
 
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -453,17 +482,17 @@ Managing the HTTP Cache
 The :class:`Symfony\\Component\\HttpFoundation\\Response` class has a rich set
 of methods to manipulate the HTTP headers related to the cache:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`
 
 .. note::
 
@@ -477,14 +506,24 @@ can be used to set the most commonly used cache information in one method
 call::
 
     $response->setCache([
-        'etag'          => 'abcdef',
-        'last_modified' => new \DateTime(),
-        'max_age'       => 600,
-        's_maxage'      => 600,
-        'private'       => false,
-        'public'        => true,
-        'immutable'     => true,
+        'must_revalidate'  => false,
+        'no_cache'         => false,
+        'no_store'         => false,
+        'no_transform'     => false,
+        'public'           => true,
+        'private'          => false,
+        'proxy_revalidate' => false,
+        'max_age'          => 600,
+        's_maxage'         => 600,
+        'immutable'        => true,
+        'last_modified'    => new \DateTime(),
+        'etag'             => 'abcdef'
     ]);
+
+.. versionadded:: 5.1
+
+    The ``must_revalidate``, ``no_cache``, ``no_store``, ``no_transform`` and
+    ``proxy_revalidate`` directives were introduced in Symfony 5.1.
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
@@ -539,10 +578,10 @@ represented by a PHP callable instead of a string::
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
     server might also buffer based on its configuration. Some servers, such as
-    Nginx, let you disable buffering at the config level or by adding a special HTTP
+    nginx, let you disable buffering at the config level or by adding a special HTTP
     header in the response::
 
-        // disables FastCGI buffering in Nginx only for this response
+        // disables FastCGI buffering in nginx only for this response
         $response->headers->set('X-Accel-Buffering', 'no')
 
 .. _component-http-foundation-serving-files:
@@ -580,7 +619,7 @@ Alternatively, if you are serving a static file, you can use a
 
 The ``BinaryFileResponse`` will automatically handle ``Range`` and
 ``If-Range`` headers from the request. It also supports ``X-Sendfile``
-(see for `Nginx`_ and `Apache`_). To make use of it, you need to determine
+(see for `nginx`_ and `Apache`_). To make use of it, you need to determine
 whether or not the ``X-Sendfile-Type`` header should be trusted and call
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader`
 if it should::
@@ -617,7 +656,7 @@ or change its ``Content-Disposition``::
         'filename.txt'
     );
 
-It is possible to delete the file after the request is sent with the
+It is possible to delete the file after the response is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
@@ -706,6 +745,37 @@ Session
 
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
+Safe Content Preference
+-----------------------
+
+Some web sites have a "safe" mode to assist those who don't want to be exposed
+to content to which they might object. The  `RFC 8674`_ specification defines a
+way for user agents to ask for safe content to a server.
+
+The specification does not define what content might be considered objectionable,
+so the concept of "safe" is not precisely defined. Rather, the term is interpreted
+by the server and within the scope of each web site that chooses to act upon this information.
+
+Symfony offers two methods to interact with this preference:
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::preferSafeContent`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setContentSafe`;
+
+.. versionadded:: 5.1
+
+    The ``preferSafeContent()`` and ``setContentSafe()`` methods were introduced
+    in Symfony 5.1.
+
+The following example shows how to detect if the user agent prefers "safe" content::
+
+    if ($request->preferSafeContent()) {
+        $response = new Response($alternativeContent);
+        // this informs the user we respected their preferences
+        $response->setContentSafe();
+
+        return $response;
+    }
+
 Learn More
 ----------
 
@@ -719,7 +789,8 @@ Learn More
     /session/*
     /http_cache/*
 
-.. _Nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
+.. _nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
 .. _Apache: https://tn123.org/mod_xsendfile/
-.. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
-.. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside
+.. _`JSON Hijacking`: https://haacked.com/archive/2009/06/25/json-hijacking.aspx/
+.. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
+.. _RFC 8674: https://tools.ietf.org/html/rfc8674

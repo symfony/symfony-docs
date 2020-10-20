@@ -20,8 +20,12 @@ in order to construct your ``NewsletterManager``.
 
 Configuring lazy services is one answer to this. With a lazy service, a
 "proxy" of the ``mailer`` service is actually injected. It looks and acts
-just like the ``mailer``, except that the ``mailer`` isn't actually instantiated
+like the ``mailer``, except that the ``mailer`` isn't actually instantiated
 until you interact with the proxy in some way.
+
+.. caution::
+
+    Lazy services do not support `final`_ classes.
 
 Installation
 ------------
@@ -103,3 +107,4 @@ in the `documentation of ProxyManager`_.
 .. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
 .. _`documentation of ProxyManager`: https://github.com/Ocramius/ProxyManager/blob/master/docs/lazy-loading-value-holder.md
 .. _`ocramius/proxy-manager`: https://github.com/Ocramius/ProxyManager
+.. _`final`: https://www.php.net/manual/en/language.oop5.final.php

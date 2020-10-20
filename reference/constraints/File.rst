@@ -6,7 +6,7 @@ Validates that a value is a valid "file", which can be one of the following:
 * A string (or object with a ``__toString()`` method) path to an existing
   file;
 * A valid :class:`Symfony\\Component\\HttpFoundation\\File\\File` object
-  (including objects of class :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`).
+  (including objects of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` class).
 
 This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
 form field.
@@ -391,5 +391,5 @@ The message that is displayed if the uploaded file is only partially uploaded.
 
 This message has no parameters.
 
-.. _`IANA website`: http://www.iana.org/assignments/media-types/index.html
-.. _`Wikipedia: Binary prefix`: http://en.wikipedia.org/wiki/Binary_prefix
+.. _`IANA website`: http://www.iana.org/assignments/media-types/media-types.xhtml
+.. _`Wikipedia: Binary prefix`: https://en.wikipedia.org/wiki/Binary_prefix

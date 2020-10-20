@@ -7,7 +7,7 @@ Controller
 A controller is a PHP function you create that reads information from the
 ``Request`` object and creates and returns a ``Response`` object. The response could
 be an HTML page, JSON, XML, a file download, a redirect, a 404 error or anything
-else. The controller executes whatever arbitrary logic *your application* needs
+else. The controller runs whatever arbitrary logic *your application* needs
 to render the content of a page.
 
 .. tip::
@@ -16,9 +16,9 @@ to render the content of a page.
     :doc:`/page_creation` and then come back!
 
 .. index::
-   single: Controller; Simple example
+   single: Controller; Basic example
 
-A Simple Controller
+A Basic Controller
 -------------------
 
 While a controller can be any PHP callable (function, method on an object,
@@ -76,9 +76,7 @@ In order to *view* the result of this controller, you need to map a URL to it vi
 a route. This was done above with the ``@Route("/lucky/number/{max}")``
 :ref:`route annotation <annotation-routes>`.
 
-To see your page, go to this URL in your browser:
-
-    http://localhost:8000/lucky/number/100
+To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
 For more information on routing, see :doc:`/routing`.
 
@@ -190,7 +188,7 @@ Templating and Twig are explained more in the
 Fetching Services
 ~~~~~~~~~~~~~~~~~
 
-Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
+Symfony comes *packed* with a lot of useful classes and functionalities, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of.
 
@@ -231,7 +229,7 @@ the argument by its name:
 
             # explicitly configure the service
             App\Controller\LuckyController:
-                public: true
+                tags: [controller.service_arguments]
                 bind:
                     # for any $logger argument, pass this specific service
                     $logger: '@monolog.logger.doctrine'
@@ -251,7 +249,8 @@ the argument by its name:
                 <!-- ... -->
 
                 <!-- Explicitly configure the service -->
-                <service id="App\Controller\LuckyController" public="true">
+                <service id="App\Controller\LuckyController">
+                    <tag name="controller.service_arguments"/>
                     <bind key="$logger"
                         type="service"
                         id="monolog.logger.doctrine"
@@ -268,7 +267,7 @@ the argument by its name:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register(LuckyController::class)
-            ->setPublic(true)
+            ->addTag('controller.service_arguments')
             ->setBindings([
                 '$logger' => new Reference('monolog.logger.doctrine'),
                 '$projectDir' => '%kernel.project_dir%'
@@ -668,4 +667,4 @@ Learn more about Controllers
     controller/*
 
 .. _`Symfony Maker`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect
+.. _`unvalidated redirects security vulnerability`: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html

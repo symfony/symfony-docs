@@ -1,5 +1,5 @@
-method
-~~~~~~
+``method``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: ``POST``
 

@@ -66,22 +66,22 @@ framework: it matches the incoming request and populates the request
 attributes with route parameters.
 
 Our code is now much more concise and surprisingly more robust and more
-powerful than ever. For instance, use the built-in ``ExceptionListener`` to
+powerful than ever. For instance, use the built-in ``ErrorListener`` to
 make your error management configurable::
 
-    $errorHandler = function (Symfony\Component\ErrorRenderer\Exception\FlattenException $exception) {
+    $errorHandler = function (Symfony\Component\ErrorHandler\Exception\FlattenException $exception) {
         $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
         return new Response($msg, $exception->getStatusCode());
     };
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener($errorHandler));
+    $dispatcher->addSubscriber(new HttpKernel\EventListener\ErrorListener($errorHandler));
 
-``ExceptionListener`` gives you a ``FlattenException`` instance instead of the
+``ErrorListener`` gives you a ``FlattenException`` instance instead of the
 thrown ``Exception`` or ``Error`` instance to ease exception manipulation and
 display. It can take any valid controller as an exception handler, so you can
 create an ErrorController class instead of using a Closure::
 
-    $listener = new HttpKernel\EventListener\ExceptionListener(
+    $listener = new HttpKernel\EventListener\ErrorListener(
         'Calendar\Controller\ErrorController::exception'
     );
     $dispatcher->addSubscriber($listener);
@@ -91,7 +91,7 @@ The error controller reads as follows::
     // example.com/src/Calendar/Controller/ErrorController.php
     namespace Calendar\Controller;
 
-    use Symfony\Component\ErrorRenderer\Exception\FlattenException;
+    use Symfony\Component\ErrorHandler\Exception\FlattenException;
     use Symfony\Component\HttpFoundation\Response;
 
     class ErrorController

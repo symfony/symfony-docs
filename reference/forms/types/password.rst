@@ -39,8 +39,8 @@ The ``PasswordType`` field renders an input password text box.
 Field Options
 -------------
 
-always_empty
-~~~~~~~~~~~~
+``always_empty``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -54,8 +54,8 @@ entered into the box, set this to false and submit the form.
 Overridden Options
 ------------------
 
-trim
-~~~~
+``trim``
+~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

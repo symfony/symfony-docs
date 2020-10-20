@@ -74,6 +74,10 @@ distinguished name (DN) and the password of a user::
 
     $ldap->bind($dn, $password);
 
+.. caution::
+
+    When the LDAP server allows unauthenticated binds, a blank password will always be valid.
+
 Once bound (or if you enabled anonymous authentication on your
 LDAP server), you may query the LDAP server using the
 :method:`Symfony\\Component\\Ldap\\Ldap::query` method::

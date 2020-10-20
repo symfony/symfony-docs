@@ -10,8 +10,8 @@ There are special cases such as when you want, for instance, to use the
 ``%kernel.debug%`` parameter to make the services in your bundle enter
 debug mode. For this case there is more work to do in order
 to make the system understand the parameter value. By default,
-your parameter ``%kernel.debug%`` will be treated as a
-simple string. Consider the following example::
+your parameter ``%kernel.debug%`` will be treated as a string. Consider the
+following example::
 
     // inside Configuration class
     $rootNode
@@ -51,7 +51,11 @@ Now, examine the results to see this closely:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:my-bundle="http://example.org/schema/dic/my_bundle">
+            xmlns:my-bundle="http://example.org/schema/dic/my_bundle"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://example.org/schema/dic/my_bundle
+                https://example.org/schema/dic/my_bundle/my_bundle-1.0.xsd">
 
             <my-bundle:config logging="true"/>
             <!-- true, as expected -->

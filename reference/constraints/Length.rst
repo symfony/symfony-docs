@@ -115,9 +115,20 @@ allowEmptyString
 
 **type**: ``boolean``  **default**: ``false``
 
+.. deprecated:: 5.2
+
+    The ``allowEmptyString`` option is deprecated since Symfony 5.2. If you
+    want to allow empty strings too, combine the ``Length`` constraint with
+    the :doc:`Blank constraint </reference/constraints/Blank>` inside the
+    :doc:`AtLeastOneOf constraint </reference/constraints/AtLeastOneOf>`.
+
 If set to ``true``, empty strings are considered valid (which is the same
 behavior as previous Symfony versions). The default ``false`` value considers
 empty strings not valid.
+
+.. caution::
+
+    This option does not have any effect when no minimum length is given.
 
 charset
 ~~~~~~~

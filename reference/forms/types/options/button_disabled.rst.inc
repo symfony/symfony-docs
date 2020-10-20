@@ -1,5 +1,5 @@
-disabled
-~~~~~~~~
+``disabled``
+~~~~~~~~~~~~
 
 **type**: ``boolean``  **default**: ``false``
 

@@ -8,10 +8,7 @@ Array Cache Adapter
 Generally, this adapter is useful for testing purposes, as its contents are stored in memory
 and not persisted outside the running PHP process in any way. It can also be useful while
 warming up caches, due to the :method:`Symfony\\Component\\Cache\\Adapter\\ArrayAdapter::getValues`
-method.
-
-This adapter can be passed a default cache lifetime as its first parameter, and a boolean that
-toggles serialization as its second parameter::
+method::
 
     use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
@@ -23,5 +20,17 @@ toggles serialization as its second parameter::
         $defaultLifetime = 0,
 
         // if ``true``, the values saved in the cache are serialized before storing them
-        $storeSerialized = true
+        $storeSerialized = true,
+
+        // the maximum lifetime (in seconds) of the entire cache (after this time, the
+        // entire cache is deleted to avoid stale data from consuming memory)
+        $maxLifetime = 0,
+
+        // the maximum number of items that can be stored in the cache. When the limit
+        // is reached, cache follows the LRU model (least recently used items are deleted)
+        $maxItems = 0
     );
+
+.. versionadded:: 5.1
+
+    The ``maxLifetime`` and ``maxItems`` options were introduced in Symfony 5.1.

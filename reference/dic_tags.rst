@@ -14,6 +14,8 @@ Tag Name                                  Usage
 `auto_alias`_                             Define aliases based on the value of container parameters
 `console.command`_                        Add a command
 `container.hot_path`_                     Add to list of always needed services
+`container.no_preload`_                   Remove a class from the list of classes preloaded by PHP
+`container.preload`_                      Add some class to the list of classes preloaded by PHP
 `controller.argument_value_resolver`_     Register a value resolver for controller arguments such as ``Request``
 `data_collector`_                         Create a class that collects custom data for the profiler
 `doctrine.event_listener`_                Add a Doctrine event listener
@@ -63,13 +65,10 @@ services:
         services:
             app.mysql_lock:
                 class: App\Lock\MysqlLock
-                public: false
             app.postgresql_lock:
                 class: App\Lock\PostgresqlLock
-                public: false
             app.sqlite_lock:
                 class: App\Lock\SqliteLock
-                public: false
 
     .. code-block:: xml
 
@@ -80,24 +79,31 @@ services:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mysql_lock" public="false"
+                <service id="app.mysql_lock"
                     class="App\Lock\MysqlLock"/>
-                <service id="app.postgresql_lock" public="false"
+                <service id="app.postgresql_lock"
                     class="App\Lock\PostgresqlLock"/>
-                <service id="app.sqlite_lock" public="false"
+                <service id="app.sqlite_lock"
                     class="App\Lock\SqliteLock"/>
             </services>
         </container>
 
     .. code-block:: php
 
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Lock\MysqlLock;
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        $container->register('app.mysql_lock', MysqlLock::class)->setPublic(false);
-        $container->register('app.postgresql_lock', PostgresqlLock::class)->setPublic(false);
-        $container->register('app.sqlite_lock', SqliteLock::class)->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('app.mysql_lock', MysqlLock::class);
+            $services->set('app.postgresql_lock', PostgresqlLock::class);
+            $services->set('app.sqlite_lock', SqliteLock::class);
+        };
 
 Instead of dealing with these three services, your application needs a generic
 ``app.lock`` service that will be an alias to one of these services, depending on
@@ -131,11 +137,11 @@ the generic ``app.lock`` service can be defined as follows:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mysql_lock" public="false"
+                <service id="app.mysql_lock"
                     class="App\Lock\MysqlLock"/>
-                <service id="app.postgresql_lock" public="false"
+                <service id="app.postgresql_lock"
                     class="App\Lock\PostgresqlLock"/>
-                <service id="app.sqlite_lock" public="false"
+                <service id="app.sqlite_lock"
                     class="App\Lock\SqliteLock"/>
 
                 <service id="app.lock">
@@ -146,16 +152,24 @@ the generic ``app.lock`` service can be defined as follows:
 
     .. code-block:: php
 
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Lock\MysqlLock;
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        $container->register('app.mysql_lock', MysqlLock::class)->setPublic(false);
-        $container->register('app.postgresql_lock', PostgresqlLock::class)->setPublic(false);
-        $container->register('app.sqlite_lock', SqliteLock::class)->setPublic(false);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
 
-        $container->register('app.lock')
-            ->addTag('auto_alias', ['format' => 'app.%database_type%_lock']);
+            $services->set('app.mysql_lock', MysqlLock::class);
+            $services->set('app.postgresql_lock', PostgresqlLock::class);
+            $services->set('app.sqlite_lock', SqliteLock::class);
+
+            $services->set('app.lock')
+                ->tag('auto_alias', ['format' => 'app.%database_type%_lock'])
+            ;
+        };
 
 The ``format`` option defines the expression used to construct the name of the service
 to alias. This expression can use any container parameter (as usual,
@@ -168,10 +182,12 @@ wrapping their names with ``%`` characters).
     sense most of the times to prevent accessing those services directly instead
     of using the generic service alias.
 
-.. note::
+.. versionadded:: 5.1
 
-    You need to manually add the ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
-    compiler pass to the container for this feature to work.
+    In Symfony versions prior to 5.1, you needed to manually add the
+    ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
+    compiler pass to the container for this feature to work. This compiler pass
+    is now added automatically.
 
 console.command
 ---------------
@@ -197,6 +213,113 @@ plain inlined ``include_once``. The benefit is a complete bypass of the autoload
 for services and their class hierarchy. The result is as significant performance improvement.
 
 Use this tag with great caution, you have to be sure that the tagged service is always used.
+
+.. _dic-tags-container-nopreload:
+
+container.no_preload
+--------------------
+
+**Purpose**: Remove a class from the list of classes preloaded by PHP
+
+.. versionadded:: 5.1
+
+    The ``container.no_preload`` tag was introduced in Symfony 5.1.
+
+Add this tag to a service and its class won't be preloaded when using
+`PHP class preloading`_:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\SomeNamespace\SomeService:
+                tags: ['container.no_preload']
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\SomeNamespace\SomeService">
+                    <tag name="container.no_preload"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\SomeNamespace\SomeService;
+
+        $container
+            ->register(SomeService::class)
+            ->addTag('container.no_preload')
+        ;
+
+If you add some service tagged with ``container.no_preload`` as an argument of
+another service, the ``container.no_preload`` tag is applied automatically to
+that service too.
+
+.. _dic-tags-container-preload:
+
+container.preload
+-----------------
+
+**Purpose**: Add some class to the list of classes preloaded by PHP
+
+.. versionadded:: 5.1
+
+    The ``container.preload`` tag was introduced in Symfony 5.1.
+
+When using `PHP class preloading`_, this tag allows you to define which PHP
+classes should be preloaded. This can improve performance by making some of the
+classes used by your service always available for all requests (until the server
+is restarted):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\SomeNamespace\SomeService:
+                tags:
+                    - { name: 'container.preload', class: 'App\SomeClass' }
+                    - { name: 'container.preload', class: 'App\Some\OtherClass' }
+                    # ...
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\SomeNamespace\SomeService">
+                    <tag name="container.preload" class="App\SomeClass"/>
+                    <tag name="container.preload" class="App\Some\OtherClass"/>
+                    <!-- ... -->
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Some\OtherClass;
+        use App\SomeClass;
+        use App\SomeNamespace\SomeService;
+
+        $container
+            ->register(SomeService::class)
+            ->addTag('container.preload', ['class' => SomeClass::class)
+            ->addTag('container.preload', ['class' => OtherClass::class)
+            // ...
+        ;
 
 controller.argument_value_resolver
 ----------------------------------
@@ -349,6 +472,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
     // src/Cache/MyCustomWarmer.php
     namespace App\Cache;
 
+    use App\Foo\Bar;
     use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
     class MyCustomWarmer implements CacheWarmerInterface
@@ -356,6 +480,17 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
         public function warmUp($cacheDirectory)
         {
             // ... do some sort of operations to "warm" your cache
+
+            $filesAndClassesToPreload = [];
+            $filesAndClassesToPreload[] = Bar::class;
+
+            foreach (scandir($someCacheDir) as $file) {
+                if (!is_dir($file = $someCacheDir.'/'.$file)) {
+                    $filesAndClassesToPreload[] = $file;
+                }
+            }
+
+            return $filesAndClassesToPreload;
         }
 
         public function isOptional()
@@ -363,6 +498,16 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
             return true;
         }
     }
+
+The ``warmUp()`` method must return an array with the files and classes to
+preload. Files must be absolute paths and classes must be fully-qualified class
+names. The only restriction is that files must be stored in the cache directory.
+If you don't need to preload anything, return an empty array
+
+.. deprecated:: 5.1
+
+    Not returning an array from the ``warmUp()`` method with the files to
+    preload is deprecated since Symfony 5.1.
 
 The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers
@@ -827,11 +972,6 @@ translation.loader
 By default, translations are loaded from the filesystem in a variety of
 different formats (YAML, XLIFF, PHP, etc).
 
-.. seealso::
-
-    Learn how to :ref:`load custom formats <components-translation-custom-loader>`
-    in the components section.
-
 Now, register your loader as a service and tag it with ``translation.loader``:
 
 .. configuration-block::
@@ -1015,11 +1155,6 @@ This is the name that's used to determine which dumper should be used.
 
         $container->register(JsonFileDumper::class)
             ->addTag('translation.dumper', ['alias' => 'json']);
-
-.. seealso::
-
-    Learn how to :ref:`dump to custom formats <components-translation-custom-dumper>`
-    in the components section.
 
 .. _reference-dic-tags-twig-extension:
 
@@ -1208,5 +1343,6 @@ For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
 .. _`Twig's documentation`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
-.. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
+.. _`SwiftMailer's Plugin Documentation`: https://swiftmailer.symfony.com/docs/plugins.html
 .. _`Twig Loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
+.. _`PHP class preloading`: https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.preload

@@ -15,7 +15,7 @@ Before submitting a bug:
   framework;
 
 * Ask for assistance on `Stack Overflow`_, on the #support channel of
-  `the Symfony Slack`_ or on the #symfony `IRC channel`_ if you're not sure if
+  `the Symfony Slack`_ or on the ``#symfony`` `IRC channel`_ if you're not sure if
   your issue really is a bug.
 
 If your problem definitely looks like a bug, report it using the official bug
@@ -33,7 +33,10 @@ If your problem definitely looks like a bug, report it using the official bug
 * Give as much detail as possible about your environment (OS, PHP version,
   Symfony version, enabled extensions, ...);
 
-* If you want to provide a stack trace you got on an HTML page, be sure to
+* If there was an exception and you would like to report it, it is
+  valuable to provide the :doc:`stack trace
+  </contributing/code/stack_trace>` for that exception.
+  If you want to provide a stack trace you got on an HTML page, be sure to
   provide the plain text version, which should appear at the bottom of the
   page. *Do not* provide it as a screenshot, since search engines will not be
   able to index the text inside them. Same goes for errors encountered in a

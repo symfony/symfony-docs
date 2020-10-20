@@ -26,14 +26,24 @@ is used to specify many different cache directives::
 
     // sets the number of seconds after which the response
     // should no longer be considered fresh by shared caches
-    $response->setSharedMaxAge(600);
+    $response->setPublic();
+    $response->setMaxAge(600);
 
 The ``Cache-Control`` header would take on the following format (it may have
 additional directives):
 
 .. code-block:: text
 
-    Cache-Control: public, s-maxage=600
+    Cache-Control: public, maxage=600
+
+.. note::
+
+    Using the ``setSharedMaxAge()`` method is not equivalent to using both
+    ``setPublic()`` and ``setMaxAge()`` methods. According to the
+    `Serving Stale Responses`_ section of RFC 7234, the ``s-maxage`` setting
+    (added by ``setSharedMaxAge()`` method) prohibits a cache to use a stale
+    response in ``stale-if-error`` scenarios. That's why it's recommended to use
+    both ``public`` and ``max-age`` directives.
 
 .. index::
     single: Cache; Expires header
@@ -43,8 +53,7 @@ Expiration with the ``Expires`` Header
 --------------------------------------
 
 An alternative to the ``Cache-Control`` header is ``Expires``. There's no advantage
-or disadvantage to either: they're just different ways to set expiration caching
-on your response.
+or disadvantage to either.
 
 According to the HTTP specification, "the ``Expires`` header field gives
 the date/time after which the response is considered stale." The ``Expires``
@@ -76,9 +85,10 @@ servers should not send ``Expires`` dates more than one year in the future."
 
 .. note::
 
-    According to `RFC 7234 - Caching`_, the ``Expires`` header value is ignored
-    when the ``s-maxage`` or ``max-age`` directive of the ``Cache-Control``
-    header is defined.
+    According to the `Calculating Freshness Lifetime`_ section of RFC 7234,
+    the ``Expires`` header value is ignored when the ``s-maxage`` or ``max-age``
+    directive of the ``Cache-Control`` header is defined.
 
-.. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
-.. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234#section-4.2.1
+.. _`expiration model`: https://tools.ietf.org/html/rfc2616#section-13.2
+.. _`Calculating Freshness Lifetime`: https://tools.ietf.org/html/rfc7234#section-4.2.1
+.. _`Serving Stale Responses`: https://tools.ietf.org/html/rfc7234#section-4.2.4

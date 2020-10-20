@@ -6,7 +6,8 @@ Validates that a value is a valid language *Unicode language identifier*
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
+Options     - `alpha3`_
+            - `groups`_
             - `message`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Language`
@@ -77,10 +78,23 @@ Basic Usage
 Options
 -------
 
+alpha3
+~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``alpha3`` option was introduced in Symfony 5.1.
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is ``true``, the constraint checks that the value is a
+`ISO 639-2`_ three-letter code (e.g. French = ``fra``) instead of the default
+`ISO 639-1`_ two-letter code (e.g. French = ``fr``).
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid language.``
 
@@ -92,6 +106,14 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
+
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+.. _`ISO 639-2`: https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes

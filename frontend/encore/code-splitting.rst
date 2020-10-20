@@ -9,7 +9,7 @@ clicked a link:
 
 .. code-block:: javascript
 
-    // assets/js/app.js
+    // assets/app.js
 
     import $ from 'jquery';
     // a fictional "large" module (e.g. it imports video.js internally)
@@ -27,13 +27,13 @@ the code via AJAX when it's needed:
 
 .. code-block:: javascript
 
-    // assets/js/app.js
+    // assets/app.js
 
     import $ from 'jquery';
 
     $('.js-open-video').on('click', function() {
         // you could start a loading animation here
-    
+
         // use import() as a function - it returns a Promise
         import('./components/VideoPlayer').then(({ default: VideoPlayer }) => {
             // you could stop a loading animation here

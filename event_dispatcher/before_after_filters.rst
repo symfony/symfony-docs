@@ -5,8 +5,8 @@ How to Set Up Before and After Filters
 ======================================
 
 It is quite common in web application development to need some logic to be
-executed just before or just after your controller actions acting as filters
-or hooks.
+performed right before or directly after your controller actions acting as
+filters or hooks.
 
 Some web frameworks define methods like ``preExecute()`` and ``postExecute()``,
 but there is no such thing in Symfony. The good news is that there is a much
@@ -173,7 +173,7 @@ After Filters with the ``kernel.response`` Event
 
 In addition to having a "hook" that's executed *before* your controller, you
 can also add a hook that's executed *after* your controller. For this example,
-imagine that you want to add a sha1 hash (with a salt using that token) to
+imagine that you want to add a ``sha1`` hash (with a salt using that token) to
 all responses that have passed this token authentication.
 
 Another core Symfony event - called ``kernel.response`` (aka ``KernelEvents::RESPONSE``) -

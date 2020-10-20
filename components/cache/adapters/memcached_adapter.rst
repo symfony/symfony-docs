@@ -292,8 +292,8 @@ Available Options
 .. _`User Datagram Protocol (UDP)`: https://en.wikipedia.org/wiki/User_Datagram_Protocol
 .. _`no-delay`: https://en.wikipedia.org/wiki/TCP_NODELAY
 .. _`keep-alive`: https://en.wikipedia.org/wiki/Keepalive
-.. _`Memcached PHP extension`: http://php.net/manual/en/book.memcached.php
-.. _`predefined constants`: http://php.net/manual/en/memcached.constants.php
+.. _`Memcached PHP extension`: https://www.php.net/manual/en/book.memcached.php
+.. _`predefined constants`: https://www.php.net/manual/en/memcached.constants.php
 .. _`Memcached server`: https://memcached.org/
-.. _`Memcached`: http://php.net/manual/en/class.memcached.php
+.. _`Memcached`: https://www.php.net/manual/en/class.memcached.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name

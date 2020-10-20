@@ -17,7 +17,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Options     | - `choice_translation_locale`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
-| options     |                                                                        |
+| options     | - `choice_translation_domain`_                                         |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
@@ -59,8 +59,8 @@ Field Options
 Overridden Options
 ------------------
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **default**: ``Symfony\Component\Intl\Currencies::getNames()``
 
@@ -70,6 +70,8 @@ The choices option defaults to all currencies.
 
     If you want to override the built-in choices of the currency type, you
     will also have to set the ``choice_loader`` option to ``null``.
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 Inherited Options
 -----------------

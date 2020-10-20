@@ -4,7 +4,7 @@
 Routing
 =======
 
-When your application receives a request, it executes a
+When your application receives a request, it calls a
 :doc:`controller action </controller>` to generate the response. The routing
 configuration defines which action to run for each incoming URL. It also
 provides other useful features, like generating SEO-friendly URLs (e.g.
@@ -27,17 +27,21 @@ Run this command once in your application to add support for annotations:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 In addition to installing the needed dependencies, this command creates the
 following configuration file:
 
 .. code-block:: yaml
 
-    # config/routes.yaml
+    # config/routes/annotations.yaml
     controllers:
-        resource: '../src/Controller/'
-        type:     annotation
+        resource: '../../src/Controller/'
+        type: annotation
+
+    kernel:
+        resource: ../../src/Kernel.php
+        type: annotation
 
 This configuration tells Symfony to look for routes defined as annotations in
 any PHP class stored in the ``src/Controller/`` directory.
@@ -132,8 +136,8 @@ the ``BlogController``:
                 ->controller([BlogController::class, 'list'])
 
                 // if the action is implemented as the __invoke() method of the
-                // controller class, you can skip the ', method_name]' part:
-                // ->controller([BlogController::class])
+                // controller class, you can skip the 'method_name' part:
+                // ->controller(BlogController::class)
             ;
         };
 
@@ -298,7 +302,7 @@ arbitrary matching logic:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->add('contact', '')
+            $routes->add('contact', '/contact')
                 ->controller([DefaultController::class, 'contact'])
                 ->condition('context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"')
                 // expressions can also include config parameters:
@@ -771,7 +775,7 @@ parameter:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page <\d+>?1}"
+            <route id="blog_list" path="/blog/{page<\d+>?1}"
                    controller="App\Controller\BlogController::list"/>
 
             <!-- ... -->
@@ -793,6 +797,54 @@ parameter:
 
     To give a ``null`` default value to any parameter, add nothing after the
     ``?`` character (e.g. ``/blog/{page?}``).
+
+Priority Parameter
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``priority`` parameter was introduced in Symfony 5.1
+
+When defining a greedy pattern that matches many routes, this may be at the
+beginning of your routing collection and prevents any route defined after to be
+matched.
+A ``priority`` optional parameter is available in order to let you choose the
+order of your routes, and it is only available when using annotations.
+
+.. code-block:: php-annotations
+
+    // src/Controller/BlogController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class BlogController extends AbstractController
+    {
+        /**
+         * This route has a greedy pattern and is defined first.
+         *
+         * @Route("/blog/{slug}", name="blog_show")
+         */
+        public function show(string $slug)
+        {
+            // ...
+        }
+
+        /**
+         * This route could not be matched without defining a higher priority than 0.
+         *
+         * @Route("/blog/list", name="blog_list", priority=2)
+         */
+        public function list()
+        {
+            // ...
+        }
+    }
+
+The priority parameter expects an integer value. Routes with higher priority
+are sorted before routes with lower priority. The default value when it is not
+defined is ``0``.
 
 Parameter Conversion
 ~~~~~~~~~~~~~~~~~~~~
@@ -1153,7 +1205,7 @@ the common configuration using options when importing the routes.
 
         # config/routes/annotations.yaml
         controllers:
-            resource: '../src/Controller/'
+            resource: '../../src/Controller/'
             type: annotation
             # this is added to the beginning of all imported route URLs
             prefix: '/blog'
@@ -1165,6 +1217,8 @@ the common configuration using options when importing the routes.
             # An imported route with an empty URL will become "/blog/"
             # Uncomment this option to make that URL "/blog" instead
             # trailing_slash_on_root: false
+            # you can optionally exclude some files/subdirectories when loading annotations
+            # exclude: '../../src/Controller/{DebugEmailController}.php'
 
     .. code-block:: xml
 
@@ -1178,18 +1232,20 @@ the common configuration using options when importing the routes.
             <!--
                 the 'prefix' value is added to the beginning of all imported route URLs
                 the 'name-prefix' value is added to the beginning of all imported route names
+                the 'exclude' option defines the files or subdirectories ignored when loading annotations
             -->
-            <import resource="../src/Controller/"
+            <import resource="../../src/Controller/"
                 type="annotation"
                 prefix="/blog"
-                name-prefix="blog_">
+                name-prefix="blog_"
+                exclude="../../src/Controller/{DebugEmailController}.php">
                 <!-- these requirements are added to all imported routes -->
                 <requirement key="_locale">en|es|fr</requirement>
             </import>
 
             <!-- An imported route with an empty URL will become "/blog/"
                  Uncomment this option to make that URL "/blog" instead -->
-            <import resource="../src/Controller/" type="annotation"
+            <import resource="../../src/Controller/" type="annotation"
                     prefix="/blog"
                     trailing-slash-on-root="false">
                     <!-- ... -->
@@ -1202,7 +1258,9 @@ the common configuration using options when importing the routes.
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('../src/Controller/', 'annotation')
+            // use the optional fifth argument of import() to exclude some files
+            // or subdirectories when loading annotations
+            $routes->import('../../src/Controller/', 'annotation')
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
                 // An imported route with an empty URL will become "/blog/"
@@ -1364,7 +1422,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
                 ->controller(RedirectController::class)
                  ->defaults([
                     'route' => 'doc_page',
-                    // optionally you can define some arguments passed to the template
+                    // optionally you can define some arguments passed to the route
                     'page' => 'index',
                     'version' => 'current',
                     // redirections are temporary by default (code 302) but you can make them permanent (code 301)
@@ -1497,7 +1555,6 @@ host name:
             ;
         };
 
-        return $routes;
 
 The value of the ``host`` option can include parameters (which is useful in
 multi-tenant applications) and these parameters can be validated too with
@@ -1711,7 +1768,7 @@ with a locale. This can be done by defining a different prefix for each locale
 
         # config/routes/annotations.yaml
         controllers:
-            resource: '../src/Controller/'
+            resource: '../../src/Controller/'
             type: annotation
             prefix:
                 en: '' # don't prefix URLs for English, the default locale
@@ -1726,7 +1783,7 @@ with a locale. This can be done by defining a different prefix for each locale
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../src/Controller/" type="annotation">
+            <import resource="../../src/Controller/" type="annotation">
                 <!-- don't prefix URLs for English, the default locale -->
                 <prefix locale="en"></prefix>
                 <prefix locale="nl">/nl</prefix>
@@ -1739,7 +1796,7 @@ with a locale. This can be done by defining a different prefix for each locale
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'annotation')
                 ->prefix([
                     // don't prefix URLs for English, the default locale
                     'en' => '',
@@ -1747,6 +1804,84 @@ with a locale. This can be done by defining a different prefix for each locale
                 ])
             ;
         };
+
+.. _stateless-routing:
+
+Stateless Routes
+----------------
+
+.. versionadded:: 5.1
+
+    The ``stateless`` option was introduced in Symfony 5.1.
+
+Sometimes, when an HTTP response should be cached, it is important to ensure
+that can happen. However, whenever session is started during a request, Symfony
+turns the response into a private non-cacheable response.
+
+For details, see :doc:`/http_cache`.
+
+Routes can configure a ``stateless`` boolean option in order to declare that the
+session shouldn't be used when matching a request:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends AbstractController
+        {
+            /**
+             * @Route("/", name="homepage", stateless=true)
+             */
+            public function homepage()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        homepage:
+            controller: App\Controller\MainController::homepage
+            path: /
+            stateless: true
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+            <route id="homepage" controller="App\Controller\MainController::homepage" path="/" stateless="true"/>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use App\Controller\MainController;
+        use Symfony\Bundle\FrameworkBundle\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('homepage', '/')
+                ->controller([MainController::class, 'homepage'])
+                ->stateless()
+            ;
+        };
+
+Now, if the session is used, the application will report it based on your
+``kernel.debug`` parameter:
+* ``enabled``: will throw an :class:`Symfony\\Component\\HttpKernel\\Exception\\UnexpectedSessionUsageException` exception
+* ``disabled``: will log a warning
+
+It will help you understand and hopefully fixing unexpected behavior in your application.
 
 .. _routing-generating-urls:
 
@@ -1896,51 +2031,64 @@ Generating URLs in Commands
 
 Generating URLs in commands works the same as
 :ref:`generating URLs in services <routing-generating-urls-in-services>`. The
-only difference is that commands are not executed in the HTTP context, so they
-don't have access to HTTP requests. In practice, this means that if you generate
-absolute URLs, you'll get ``http://localhost/`` as the host name instead of your
-real host name.
+only difference is that commands are not executed in the HTTP context. Therefore,
+if you generate absolute URLs, you'll get ``http://localhost/`` as the host name
+instead of your real host name.
 
-The solution is to configure the "request context" used by commands when they
-generate URLs. This context can be configured globally for all commands:
+The solution is to configure the ``default_uri`` option to define the
+"request context" used by commands when they generate URLs:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/services.yaml
-        parameters:
-            router.request_context.host: 'example.org'
-            router.request_context.base_url: 'my/path'
-            asset.request_context.base_path: '%router.request_context.base_url%'
+        # config/packages/routing.yaml
+        framework:
+            router:
+                # ...
+                default_uri: 'https://example.org/my/path/'
 
     .. code-block:: xml
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <!-- config/packages/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <parameters>
-                <parameter key="router.request_context.host">example.org</parameter>
-                <parameter key="router.request_context.base_url">my/path</parameter>
-                <parameter key="asset.request_context.base_path">%router.request_context.base_url%</parameter>
-            </parameters>
-
+            <framework:config>
+                <framework:router default-uri="https://example.org/my/path/">
+                    <!-- ... -->
+                </framework:router>
+            </framework:config>
         </container>
 
     .. code-block:: php
 
-        // config/services.php
-        $container->setParameter('router.request_context.host', 'example.org');
-        $container->setParameter('router.request_context.base_url', 'my/path');
-        $container->setParameter('asset.request_context.base_path', $container->getParameter('router.request_context.base_url'));
+        // config/packages/routing.php
+        $container->loadFromExtension('framework', [
+            'router' => [
+                // ...
+                'default_uri' => "https://example.org/my/path/",
+            ],
+        ]);
 
-This information can be configured per command too::
+.. versionadded:: 5.1
+
+    The ``default_uri`` option was introduced in Symfony 5.1.
+
+Now you'll get the expected results when generating URLs in your commands::
 
     // src/Command/SomeCommand.php
     namespace App\Command;
 
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Routing\RouterInterface;
     // ...
@@ -1958,11 +2106,6 @@ This information can be configured per command too::
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            // these values override any global configuration
-            $context = $this->router->getContext();
-            $context->setHost('example.com');
-            $context->setBaseUrl('my/path');
-
             // generate a URL with no route arguments
             $signUpPage = $this->router->generate('sign_up');
 
@@ -1982,6 +2125,12 @@ This information can be configured per command too::
             // ...
         }
     }
+
+.. note::
+
+    By default, the URLs generated for web assets use the same ``default_uri``
+    value, but you can change it with the ``asset.request_context.base_path``
+    and ``asset.request_context.secure`` container parameters.
 
 Checking if a Route Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2029,7 +2178,9 @@ method) or globally with these configuration parameters:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="router.request_context.scheme">https</parameter>
@@ -2051,7 +2202,7 @@ each route explicitly:
 
     .. code-block:: php-annotations
 
-        // src/Controller/MainController.php
+        // src/Controller/SecurityController.php
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -2130,7 +2281,7 @@ defined as annotations:
 
         # config/routes/annotations.yaml
         controllers:
-            resource: '../src/Controller/'
+            resource: '../../src/Controller/'
             type: annotation
             defaults:
                 schemes: [https]
@@ -2144,8 +2295,8 @@ defined as annotations:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../src/Controller/" type="annotation">
-                <default locale="schemes">HTTPS</prefix>
+            <import resource="../../src/Controller/" type="annotation">
+                <default key="schemes">HTTPS</default>
             </import>
         </routes>
 
@@ -2155,7 +2306,7 @@ defined as annotations:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'annotation')
                 ->schemes(['https'])
             ;
         };
@@ -2213,6 +2364,6 @@ Learn more about Routing
     routing/*
 
 .. _`PHP regular expressions`: https://www.php.net/manual/en/book.pcre.php
-.. _`PCRE Unicode properties`: http://php.net/manual/en/regexp.reference.unicode.php
+.. _`PCRE Unicode properties`: https://www.php.net/manual/en/regexp.reference.unicode.php
 .. _`full param converter documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

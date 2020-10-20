@@ -155,7 +155,7 @@ stores an ``Address`` instance in the ``$address`` property::
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('zipCode', new Assert\Length(["max" => 5]));
+                $metadata->addPropertyConstraint('zipCode', new Assert\Length(['max' => 5]));
             }
         }
 
@@ -170,7 +170,7 @@ stores an ``Address`` instance in the ``$address`` property::
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
-                $metadata->addPropertyConstraint('firstName', new Assert\Length(["min" => 4]));
+                $metadata->addPropertyConstraint('firstName', new Assert\Length(['min' => 4]));
                 $metadata->addPropertyConstraint('lastName', new Assert\NotBlank());
             }
         }
@@ -255,6 +255,6 @@ traverse
 
 **type**: ``boolean`` **default**: ``true``
 
-If this constraint is applied to a ``Traversable``, then all containing values
+If this constraint is applied to a ``\Traversable``, then all containing values
 will be validated if this option is set to ``true``. This option is ignored on
 arrays: Arrays are traversed in either case. Keys are not validated.

@@ -99,8 +99,8 @@ be blank and to be at least 5 characters long.
 Options
 -------
 
-constraints
-~~~~~~~~~~~
+``constraints``
+~~~~~~~~~~~~~~~
 
 **type**: ``array`` [:ref:`default option <validation-default-option>`]
 

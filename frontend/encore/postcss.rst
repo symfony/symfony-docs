@@ -56,12 +56,23 @@ You can also pass options to the `postcss-loader`_ by passing a callback:
 
 .. _browserslist_package_config:
 
-Adding browserslist to package.json
------------------------------------
+Adding browserslist to ``package.json``
+---------------------------------------
 
 The ``autoprefixer`` (and many other tools) need to know what browsers you want to
 support. The best-practice is to configure this directly in your ``package.json``
 (so that all the tools can read this):
+
+.. code-block:: diff
+
+    {
+    +  "browserslist": [
+    +    "defaults"
+    +  ]
+    }
+
+The ``defaults`` option is recommended for most users and would be equivalent
+to the following browserslist:
 
 .. code-block:: diff
 
@@ -76,7 +87,7 @@ support. The best-practice is to configure this directly in your ``package.json`
 
 See `browserslist`_ for more details on the syntax.
 
-.. _`PostCSS`: http://postcss.org/
+.. _`PostCSS`: https://postcss.org/
 .. _`autoprefixing`: https://github.com/postcss/autoprefixer
 .. _`linting`: https://stylelint.io/
 .. _`browserslist`: https://github.com/browserslist/browserslist

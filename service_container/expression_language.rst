@@ -28,6 +28,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
             App\Mail\MailerConfiguration: ~
 
             App\Mailer:
+                # the '@=' prefix is required when using expressions for arguments in YAML files
                 arguments: ['@=service("App\\Mail\\MailerConfiguration").getMailerMethod()']
                 # when using double-quoted strings, the backslash needs to be escaped twice (see https://yaml.org/spec/1.2/spec.html#id2787109)
                 # arguments: ["@=service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()"]
@@ -66,9 +67,8 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
             $services->set(MailerConfiguration::class);
 
             $services->set(Mailer::class)
-                ->args([expr(sprintf('service(%s).getMailerMethod()', MailerConfiguration::class))]);
+                ->args([expr("service('App\\Mail\\MailerConfiguration').getMailerMethod()")]);
         };
-
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
 
@@ -77,7 +77,7 @@ In this context, you have access to 2 functions:
 ``service``
     Returns a given service (see the example above).
 ``parameter``
-    Returns a specific parameter value (syntax is just like ``service``).
+    Returns a specific parameter value (syntax is like ``service``).
 
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
 via a ``container`` variable. Here's another example:
@@ -89,6 +89,7 @@ via a ``container`` variable. Here's another example:
         # config/services.yaml
         services:
             App\Mailer:
+                # the '@=' prefix is required when using expressions for arguments in YAML files
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml

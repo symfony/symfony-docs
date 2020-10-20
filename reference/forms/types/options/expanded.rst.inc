@@ -1,5 +1,5 @@
-expanded
-~~~~~~~~
+``expanded``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

@@ -150,7 +150,7 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
    * Does the code break backward compatibility? If yes, does the PR header say
      so?
    * Does the PR contain deprecations? If yes, does the PR header say so? Does
-     the code contain ``trigger_error()`` statements for all deprecated
+     the code contain ``trigger_deprecation()`` statements for all deprecated
      features?
    * Are all deprecations and backward compatibility breaks documented in the
      latest UPGRADE-X.X.md file? Do those explanations contain "Before"/"After"
@@ -213,9 +213,9 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 .. _Symfony issue tracker: https://github.com/symfony/symfony/issues
 .. _`Symfony skeleton`: https://github.com/symfony/skeleton
 .. _`Symfony website skeleton`: https://github.com/symfony/website-skeleton
-.. _create a GitHub account: https://help.github.com/articles/signing-up-for-a-new-github-account/
+.. _create a GitHub account: https://help.github.com/github/getting-started-with-github/signing-up-for-a-new-github-account
 .. _bug reports in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22Bug%22+label%3A%22Status%3A+Needs+Review%22+
-.. _PRs in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Apr+label%3A%22Status%3A+Needs+Review%22+
-.. _Symfony Roadmap: https://symfony.com/roadmap
+.. _PRs in need of review: https://github.com/symfony/symfony/pulls?q=is%3Aopen+is%3Apr+label%3A%22Status%3A+Needs+Review%22
+.. _Symfony Roadmap: https://symfony.com/releases
 .. _Carson Bot: https://github.com/carsonbot/carsonbot
 .. _`Needs Review`: https://github.com/symfony/symfony/labels/Status%3A%20Needs%20Review

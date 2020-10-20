@@ -17,7 +17,7 @@ For example:
 
     <!-- ... -->
 
-    <a href="/"><img src="/images/logo.png"></a>
+    <a href="/"><img src="/images/logo.png" alt="logo"></a>
 
 This practice is no longer recommended unless the web application is extremely
 simple. Hardcoding URLs can be a disadvantage because:
@@ -147,7 +147,6 @@ corresponding output file:
 
 .. code-block:: json
 
-    // rev-manifest.json
     {
         "css/app.css": "build/css/app.b916426ea1d10021f3f17ce8031f93c2.css",
         "js/app.js": "build/js/app.13630905267b809161e71d0f8a0c017b.js",
@@ -160,10 +159,27 @@ In those cases, use the
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
+    // assumes the JSON file above is called "rev-manifest.json"
     $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/rev-manifest.json'));
 
     echo $package->getUrl('css/app.css');
     // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
+
+If your JSON file is not on your local filesystem but is accessible over HTTP,
+use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
+with the :doc:`HttpClient component </http_client>`::
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy;
+    use Symfony\Component\HttpClient\HttpClient;
+
+    $httpClient = HttpClient::create();
+    $manifestUrl = 'https://cdn.example.com/rev-manifest.json';
+    $package = new Package(new RemoteJsonManifestVersionStrategy($manifestUrl, $httpClient));
+
+.. versionadded:: 5.1
+
+    The ``RemoteJsonManifestVersionStrategy`` was introduced in Symfony 5.1.
 
 Custom Version Strategies
 .........................
@@ -401,6 +417,6 @@ Learn more
 ----------
 
 * :doc:`How to manage CSS and JavaScript assets in Symfony applications </frontend>`
-* :doc:`WebLink component </components/web_link>` to preload assets using HTTP/2.
+* :doc:`WebLink component </web_link>` to preload assets using HTTP/2.
 
 .. _`Webpack`: https://webpack.js.org/

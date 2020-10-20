@@ -13,6 +13,7 @@ A simple, non-responsive button.
 | options              | - `attr_translation_parameters`_                                     |
 |                      | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
+|                      | - `label_html`_                                                      |
 |                      | - `label_translation_parameters`_                                    |
 |                      | - `row_attr`_                                                        |
 |                      | - `translation_domain`_                                              |
@@ -33,8 +34,8 @@ The ``BaseType`` class is the parent class for both the ``button`` type
 and the :doc:`FormType </reference/forms/types/form>`, but it is not part
 of the form type tree (i.e. it cannot be used as a form type on its own).
 
-attr
-~~~~
+``attr``
+~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -52,6 +53,8 @@ as a key. This can be useful when you need to set a custom class for the button:
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/button_label.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 

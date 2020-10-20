@@ -193,9 +193,9 @@ If you customize these paths, some files copied from a recipe still may contain
 references to the original path. In other words: you may need to update some things
 manually after a recipe is installed.
 
-.. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/services.yaml
+.. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/config/services.yaml
 .. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
 .. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L44-L46
-.. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
-.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
+.. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.1/public/index.php
+.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/5.1/bin/console
 .. _`Symfony Requirements Checker`: https://github.com/symfony/requirements-checker

@@ -58,6 +58,11 @@ To store tags, you need to wrap a cache adapter with the
 :method:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface::invalidateTags`
 method.
 
+.. note::
+
+    When using a Redis backend, consider using :ref:`RedisTagAwareAdapter <redis-tag-aware-adapter>`
+    which is optimized for this purpose.
+
 The :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter` class implements
 instantaneous invalidation (time complexity is ``O(N)`` where ``N`` is the number
 of invalidated tags). It needs one or two cache adapters: the first required

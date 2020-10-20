@@ -3,6 +3,12 @@ DivisibleBy
 
 Validates that a value is divisible by another value, defined in the options.
 
+.. seealso::
+
+    If you need to validate that the number of elements in a collection is
+    divisible by a certain number, use the :doc:`Count </reference/constraints/Count>`
+    constraint with the ``divisibleBy`` option.
+
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_

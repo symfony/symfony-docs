@@ -6,16 +6,8 @@ How to Customize Error Pages
 ============================
 
 In Symfony applications, all errors are treated as exceptions, no matter if they
-are just a 404 Not Found error or a fatal error triggered by throwing some
-exception in your code.
-
-If your app has the `TwigBundle`_ installed, a special controller handles these
-exceptions. This controller displays debug information for errors and allows to
-customize error pages, so run this command to make sure the bundle is installed:
-
-.. code-block:: terminal
-
-    $ composer require twig
+are a 404 Not Found error or a fatal error triggered by throwing some exception
+in your code.
 
 In the :ref:`development environment <configuration-environments>`,
 Symfony catches all the exceptions and displays a special **exception page**
@@ -27,7 +19,7 @@ with lots of debug information to help you discover the root problem:
    :class: with-browser
 
 Since these pages contain a lot of sensitive internal information, Symfony won't
-display them in the production environment. Instead, it'll show a simple and
+display them in the production environment. Instead, it'll show a minimal and
 generic **error page**:
 
 .. image:: /_images/controller/error_pages/errors-in-prod-environment.png
@@ -38,38 +30,44 @@ generic **error page**:
 Error pages for the production environment can be customized in different ways
 depending on your needs:
 
-#. If you just want to change the contents and styles of the error pages to match
-   the rest of your application, :ref:`override the default error templates <use-default-exception-controller>`;
+#. If you only want to change the contents and styles of the error pages to match
+   the rest of your application, :ref:`override the default error templates <use-default-error-controller>`;
+
+#. If you want to change the contents of non-HTML error output,
+   :ref:`create a new normalizer <overriding-non-html-error-output>`;
 
 #. If you also want to tweak the logic used by Symfony to generate error pages,
-   :ref:`override the default exception controller <custom-exception-controller>`;
+   :ref:`override the default error controller <custom-error-controller>`;
 
-#. If you need total control of exception handling to execute your own logic
+#. If you need total control of exception handling to run your own logic
    :ref:`use the kernel.exception event <use-kernel-exception-event>`.
 
-.. _use-default-exception-controller:
-.. _using-the-default-exceptioncontroller:
+.. _use-default-error-controller:
+.. _using-the-default-errorcontroller:
 
 Overriding the Default Error Templates
 --------------------------------------
 
-When the error page loads, an internal :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`
+You can use the built-in Twig error renderer to override the default error
+templates. Both the TwigBundle and TwigBridge need to be installed for this. Run
+this command to ensure both are installed:
+
+.. code-block:: terminal
+
+    $ composer require symfony/twig-pack
+
+When the error page loads, :class:`Symfony\\Bridge\\Twig\\ErrorRenderer\\TwigErrorRenderer`
 is used to render a Twig template to show the user.
 
 .. _controller-error-pages-by-status-code:
 
-This controller uses the HTTP status code, the request format and the following
+This renderer uses the HTTP status code and the following
 logic to determine the template filename:
 
-#. Look for a template for the given format and status code (like ``error404.json.twig``
-   or ``error500.html.twig``);
+#. Look for a template for the given status code (like ``error500.html.twig``);
 
 #. If the previous template doesn't exist, discard the status code and look for
-   a generic template for the given format (like ``error.json.twig`` or
-   ``error.xml.twig``);
-
-#. If none of the previous templates exist, fall back to the generic HTML template
-   (``error.html.twig``).
+   a generic error template (``error.html.twig``).
 
 .. _overriding-or-adding-templates:
 
@@ -77,7 +75,7 @@ To override these templates, rely on the standard Symfony method for
 :ref:`overriding templates that live inside a bundle <override-templates>` and
 put them in the ``templates/bundles/TwigBundle/Exception/`` directory.
 
-A typical project that returns HTML and JSON pages might look like this:
+A typical project that returns HTML pages might look like this:
 
 .. code-block:: text
 
@@ -87,10 +85,7 @@ A typical project that returns HTML and JSON pages might look like this:
           └─ Exception/
              ├─ error404.html.twig
              ├─ error403.html.twig
-             ├─ error.html.twig      # All other HTML errors (including 500)
-             ├─ error404.json.twig
-             ├─ error403.json.twig
-             └─ error.json.twig      # All other JSON errors (including 500)
+             └─ error.html.twig      # All other HTML errors (including 500)
 
 Example 404 Error Template
 --------------------------
@@ -112,23 +107,26 @@ To override the 404 error template for HTML pages, create a new
         </p>
     {% endblock %}
 
-In case you need them, the ``ExceptionController`` passes some information to
+In case you need them, the ``TwigErrorRenderer`` passes some information to
 the error template via the ``status_code`` and ``status_text`` variables that
 store the HTTP status code and message respectively.
 
 .. tip::
 
-    You can customize the status code by implementing
+    You can customize the status code of an exception by implementing
     :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`
     and its required ``getStatusCode()`` method. Otherwise, the ``status_code``
     will default to ``500``.
 
-.. note::
+Additionally you have access to the Exception with ``exception``, which for example
+allows you to output the stack trace using ``{{ exception.traceAsString }}`` or
+access any other method on the object. You should be careful with this though,
+as this is very likely to expose sensitive data.
 
-    The exception pages shown in the development environment can be customized
-    in the same way as error pages. Create a new ``exception.html.twig`` template
-    for the standard HTML exception page or ``exception.json.twig`` for the JSON
-    exception page.
+.. tip::
+
+    PHP errors are turned into exceptions as well by default, so you can also
+    access these error details using ``exception``.
 
 Security & 404 Pages
 --------------------
@@ -146,41 +144,41 @@ While you're in the development environment, Symfony shows the big *exception*
 page instead of your shiny new customized error page. So, how can you see
 what it looks like and debug it?
 
-Fortunately, the default ``ExceptionController`` allows you to preview your
+Fortunately, the default ``ErrorController`` allows you to preview your
 *error* pages during development.
 
-To use this feature, you need to load some special routes provided by TwigBundle
+To use this feature, you need to load some special routes provided by FrameworkBundle
 (if the application uses :ref:`Symfony Flex <symfony-flex>` they are loaded
-automatically when installing Twig support):
+automatically when installing ``symfony/framework-bundle``):
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/routes/dev/twig.yaml
+        # config/routes/dev/framework.yaml
         _errors:
-            resource: '@TwigBundle/Resources/config/routing/errors.xml'
+            resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
             prefix:   /_error
 
     .. code-block:: xml
 
-        <!-- config/routes/dev/twig.xml -->
+        <!-- config/routes/dev/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@TwigBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
+            <import resource="@FrameworkBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
         </routes>
 
     .. code-block:: php
 
-        // config/routes/dev/twig.php
+        // config/routes/dev/framework.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('@TwigBundle/Resources/config/routing/errors.xml')
+            $routes->import('@FrameworkBundle/Resources/config/routing/errors.xml')
                 ->prefix('/_error')
             ;
         };
@@ -193,123 +191,104 @@ for a given status code as HTML or for a given status code and format.
      http://localhost/index.php/_error/{statusCode}
      http://localhost/index.php/_error/{statusCode}.{format}
 
-.. _custom-exception-controller:
-.. _replacing-the-default-exceptioncontroller:
+.. _overriding-non-html-error-output:
 
-Overriding the Default ExceptionController
-------------------------------------------
+Overriding Error output for non-HTML formats
+--------------------------------------------
+
+To override non-HTML error output, the Serializer component needs to be installed.
+
+.. code-block:: terminal
+
+    $ composer require symfony/serializer-pack
+
+The Serializer component has a built-in ``FlattenException`` normalizer
+(:class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`) and
+JSON/XML/CSV/YAML encoders. When your application throws an exception, Symfony
+can output it in one of those formats. If you want to change the output
+contents, create a new Normalizer that supports the ``FlattenException`` input::
+
+    # src/App/Serializer/MyCustomProblemNormalizer.php
+    namespace App\Serializer;
+
+    use Symfony\Component\ErrorHandler\Exception\FlattenException;
+    use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+    class MyCustomProblemNormalizer implements NormalizerInterface
+    {
+        public function normalize($exception, string $format = null, array $context = [])
+        {
+            return [
+                'content' => 'This is my custom problem normalizer.',
+                'exception'=> [
+                    'message' => $exception->getMessage(),
+                    'code' => $exception->getStatusCode(),
+                ],
+            ];
+        }
+
+        public function supportsNormalization($data, string $format = null)
+        {
+            return $data instanceof FlattenException;
+        }
+    }
+
+.. _custom-error-controller:
+.. _replacing-the-default-errorcontroller:
+
+Overriding the Default ErrorController
+--------------------------------------
 
 If you need a little more flexibility beyond just overriding the template,
 then you can change the controller that renders the error page. For example,
 you might need to pass some additional variables into your template.
 
 To do this, create a new controller anywhere in your application and set
-the :ref:`twig.exception_controller <config-twig-exception-controller>`
+the :ref:`framework.error_controller <config-framework-error_controller>`
 configuration option to point to it:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/packages/twig.yaml
-        twig:
-            exception_controller: App\Controller\ExceptionController::showAction
+        # config/packages/framework.yaml
+        framework:
+            error_controller: App\Controller\ErrorController::show
 
     .. code-block:: xml
 
-        <!-- config/packages/twig.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <twig:config>
-                <twig:exception-controller>App\Controller\ExceptionController::showAction</twig:exception-controller>
-            </twig:config>
+            <framework:config>
+                <framework:error-controller>App\Controller\ErrorController::show</framework:error-controller>
+            </framework:config>
 
         </container>
 
     .. code-block:: php
 
-        // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'exception_controller' => 'App\Controller\ExceptionController::showAction',
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'error_controller' => 'App\Controller\ErrorController::show',
             // ...
         ]);
 
-The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
-class used by the TwigBundle as a listener of the ``kernel.exception`` event creates
+The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`
+class used by the FrameworkBundle as a listener of the ``kernel.exception`` event creates
 the request that will be dispatched to your controller. In addition, your controller
 will be passed two parameters:
 
 ``exception``
-    A :class:`\\Symfony\\Component\\ErrorRenderer\\Exception\\FlattenException`
-    instance created from the exception being handled.
+    The original :class:`Throwable` instance being handled.
 
 ``logger``
     A :class:`\\Symfony\\Component\\HttpKernel\\Log\\DebugLoggerInterface`
     instance which may be ``null`` in some circumstances.
-
-Instead of creating a new exception controller from scratch you can also extend
-the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
-In that case, you might want to override one or both of the ``showAction()`` and
-``findTemplate()`` methods. The latter one locates the template to be used.
-
-.. note::
-
-    In case of extending the
-    :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController` you
-    may configure a service to pass the Twig environment and the ``debug`` flag
-    to the constructor.
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/services.yaml
-            services:
-                _defaults:
-                    # ... be sure autowiring is enabled
-                    autowire: true
-                # ...
-
-                App\Controller\CustomExceptionController:
-                    public: true
-                    arguments:
-                        $debug: '%kernel.debug%'
-
-        .. code-block:: xml
-
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <services>
-                    <!-- ... be sure autowiring is enabled -->
-                    <defaults autowire="true"/>
-                    <!-- ... -->
-
-                    <service id="App\Controller\CustomExceptionController" public="true">
-                        <argument key="$debug">%kernel.debug%</argument>
-                    </service>
-                </services>
-
-            </container>
-
-        .. code-block:: php
-
-            // config/services.php
-            use App\Controller\CustomExceptionController;
-
-            $container->autowire(CustomExceptionController::class)
-                ->setArgument('$debug', '%kernel.debug%');
 
 .. tip::
 
@@ -338,7 +317,7 @@ error pages.
 
 .. note::
 
-    If your listener calls ``setResponse()`` on the
+    If your listener calls ``setThrowable()`` on the
     :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`,
     event, propagation will be stopped and the response will be sent to
     the client.
@@ -355,5 +334,3 @@ time and again, you can have just one (or several) listeners deal with them.
     your application (like :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`)
     and takes measures like redirecting the user to the login page, logging them
     out and other things.
-
-.. _`TwigBundle`: https://github.com/symfony/twig-bundle

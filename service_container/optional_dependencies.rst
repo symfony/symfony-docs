@@ -42,9 +42,9 @@ if the service does not exist:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->args([ref('logger')->nullOnInvalid()]);
+                // In versions earlier to Symfony 5.1 the service() function was called ref()
+                ->args([service('logger')->nullOnInvalid()]);
         };
-
 
 .. note::
 
@@ -68,7 +68,7 @@ call if the service exists and remove the method call if it does not:
         services:
             App\Newsletter\NewsletterManager:
                 calls:
-                    - [setLogger, ['@?logger']]
+                    - setLogger: ['@?logger']
 
     .. code-block:: xml
 
@@ -99,7 +99,7 @@ call if the service exists and remove the method call if it does not:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->call('setLogger', [ref('logger')->ignoreOnInvalid()])
+                ->call('setLogger', [service('logger')->ignoreOnInvalid()])
             ;
         };
 

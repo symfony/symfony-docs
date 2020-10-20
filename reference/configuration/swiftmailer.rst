@@ -25,7 +25,7 @@ to :doc:`send emails </email>`. All these options are configured under the
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `antiflood`_
 
@@ -381,7 +381,6 @@ alternatives based on the :ref:`service binding <services-binding>` feature:
         // config/services.php
         use App\Some\Service;
         use Psr\Log\LoggerInterface;
-        use Symfony\Component\DependencyInjection\Reference;
 
 
         $container->register(Service::class)

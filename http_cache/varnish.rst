@@ -53,7 +53,7 @@ header. In this case, you need to add the following configuration snippet:
 Cookies and Caching
 -------------------
 
-By default, a sane caching proxy does not cache anything when a request is sent
+By default, most caching proxies do not cache anything when a request is sent
 with :ref:`cookies or a basic authentication header <http-cache-introduction>`.
 This is because the content of the page is supposed to depend on the cookie
 value or authentication header.
@@ -233,12 +233,12 @@ proxy before it has expired, it adds complexity to your caching setup.
     The documentation of the `FOSHttpCacheBundle`_ explains how to configure
     Varnish and other reverse proxies for cache invalidation.
 
-.. _`Varnish`: https://www.varnish-cache.org
+.. _`Varnish`: https://varnish-cache.org/
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
-.. _`clean the cookies header`: https://www.varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
+.. _`clean the cookies header`: https://varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
-.. _`cache invalidation`: http://tools.ietf.org/html/rfc2616#section-13.10
-.. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`cache invalidation`: https://tools.ietf.org/html/rfc2616#section-13.10
+.. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.io/en/latest/features/user-context.html
 .. _`default.vcl`: https://github.com/varnishcache/varnish-cache/blob/3.0/bin/varnishd/default.vcl
 .. _`builtin.vcl`: https://github.com/varnishcache/varnish-cache/blob/4.1/bin/varnishd/builtin.vcl
-.. _`User Context`: http://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html
+.. _`User Context`: https://foshttpcachebundle.readthedocs.org/en/latest/features/user-context.html

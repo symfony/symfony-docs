@@ -40,7 +40,7 @@ the following to your command::
             $question = new ConfirmationQuestion('Continue with this action?', false);
 
             if (!$helper->ask($input, $output, $question)) {
-                return;
+                return Command::SUCCESS;
             }
         }
     }
@@ -105,6 +105,7 @@ from a predefined list::
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Please select your favorite color (defaults to red)',
+            // choices can also be PHP objects that implement __toString() method
             ['red', 'blue', 'yellow'],
             0
         );
@@ -115,6 +116,10 @@ from a predefined list::
 
         // ... do something with the color
     }
+
+.. versionadded:: 5.2
+
+    Support for using PHP objects as choice values was introduced in Symfony 5.2.
 
 The option which should be selected by default is provided with the third
 argument of the constructor. The default is ``null``, which means that no
@@ -233,6 +238,36 @@ You can also specify if you want to not trim the answer by setting it directly w
         // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
         $name = $helper->ask($input, $output, $question);
     }
+
+Accept Multiline Answers
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``setMultiline()`` and ``isMultiline()`` methods were introduced in
+    Symfony 5.2.
+
+By default, the question helper stops reading user input when it receives a newline
+character (i.e., when the user hits ``ENTER`` once). However, you may specify that
+the response to a question should allow multiline answers by passing ``true`` to
+:method:`Symfony\\Component\\Console\\Question\\Question::setMultiline`::
+
+    use Symfony\Component\Console\Question\Question;
+
+    // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $helper = $this->getHelper('question');
+
+        $question = new Question('How do you solve world peace?');
+        $question->setMultiline(true);
+
+        $answer = $helper->ask($input, $output, $question);
+    }
+
+Multiline questions stop reading user input after receiving an end-of-transmission
+control character (``Ctrl-D`` on Unix systems or ``Ctrl-Z`` on Windows).
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

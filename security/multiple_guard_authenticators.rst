@@ -27,7 +27,8 @@ This is how your security configuration can look in action:
             # ...
             firewalls:
                 default:
-                    anonymous: ~
+                    anonymous: true
+                    lazy: true
                     guard:
                         authenticators:
                             - App\Security\LoginFormAuthenticator
@@ -42,12 +43,13 @@ This is how your security configuration can look in action:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
-                <firewall name="default">
-                    <anonymous/>
+                <firewall name="default" anonymous="true" lazy="true">
                     <guard entry-point="App\Security\LoginFormAuthenticator">
                         <authenticator>App\Security\LoginFormAuthenticator</authenticator>
                         <authenticator>App\Security\FacebookConnectAuthenticator</authenticator>
@@ -66,9 +68,10 @@ This is how your security configuration can look in action:
             // ...
             'firewalls' => [
                 'default' => [
-                    'anonymous' => null,
+                    'anonymous' => true,
+                    'lazy' => true,
                     'guard' => [
-                        'entry_point' => '',
+                        'entry_point' => LoginFormAuthenticator::class,
                         'authenticators' => [
                             LoginFormAuthenticator::class,
                             FacebookConnectAuthenticator::class,
@@ -103,7 +106,8 @@ the solution is to split the configuration into two separate firewalls:
                         authenticators:
                             - App\Security\ApiTokenAuthenticator
                 default:
-                    anonymous: ~
+                    anonymous: true
+                    lazy: true
                     guard:
                         authenticators:
                             - App\Security\LoginFormAuthenticator
@@ -120,7 +124,9 @@ the solution is to split the configuration into two separate firewalls:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -129,8 +135,7 @@ the solution is to split the configuration into two separate firewalls:
                         <authenticator>App\Security\ApiTokenAuthenticator</authenticator>
                     </guard>
                 </firewall>
-                <firewall name="default">
-                    <anonymous/>
+                <firewall name="default" anonymous="true" lazy="true">
                     <guard>
                         <authenticator>App\Security\LoginFormAuthenticator</authenticator>
                     </guard>
@@ -159,7 +164,8 @@ the solution is to split the configuration into two separate firewalls:
                     ],
                 ],
                 'default' => [
-                    'anonymous' => null,
+                    'anonymous' => true,
+                    'lazy' => true,
                     'guard' => [
                         'authenticators' => [
                             LoginFormAuthenticator::class,

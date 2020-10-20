@@ -153,7 +153,7 @@ a directory containing multiple test suites with their own ``phpunit.xml.dist``.
     $ ./vendor/bin/simple-phpunit tests/
 
 The modified PHPUnit script will recursively go through the provided directory,
-up to a depth of 3 subfolders or the value specified by the environment variable
+up to a depth of 3 subdirectories or the value specified by the environment variable
 ``SYMFONY_PHPUNIT_MAX_DEPTH``, looking for ``phpunit.xml.dist`` files and then
 running each suite it finds in parallel, collecting their output and displaying
 each test suite's results in their own section.
@@ -161,15 +161,14 @@ each test suite's results in their own section.
 Trigger Deprecation Notices
 ---------------------------
 
-Deprecation notices can be triggered by using::
+Deprecation notices can be triggered by using ``trigger_deprecation`` from
+the ``symfony/deprecation-contracts`` package::
 
-    @trigger_error('Your deprecation message', E_USER_DEPRECATED);
+    // indicates something is deprecated since version 1.3 of vendor-name/packagename
+    trigger_deprecation('vendor-name/package-name', '1.3', 'Your deprecation message');
 
-Without the `@-silencing operator`_, users would need to opt-out from deprecation
-notices. Silencing by default swaps this behavior and allows users to opt-in
-when they are ready to cope with them (by adding a custom error handler like the
-one provided by this bridge). When not silenced, deprecation notices will appear
-in the **Unsilenced** section of the deprecation report.
+    // you can also use printf format (all arguments after the message will be used)
+    trigger_deprecation('...', '1.3', 'Value "%s" is deprecated, use ...  instead.', $value);
 
 Mark Tests as Legacy
 --------------------
@@ -223,16 +222,16 @@ message contains the ``"foobar"`` string.
 Making Tests Fail
 ~~~~~~~~~~~~~~~~~
 
-By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation
-notices will make tests fail. Alternatively, you can configure an
-arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
+By default, any non-legacy-tagged or any non-`@-silenced <@-silencing operator>`_
+deprecation notices will make tests fail. Alternatively, you can configure
+an arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
 ``max[total]=320`` for instance. It will make the tests fails only if a
 higher number of deprecation notices is reached (``0`` is the default
 value).
 
 You can have even finer-grained control by using other keys of the ``max``
 array, which are ``self``, ``direct``, and ``indirect``. The
-``SYMFONY_DEPRECATIONS_HELPER`` environment variable accepts an URL-encoded
+``SYMFONY_DEPRECATIONS_HELPER`` environment variable accepts a URL-encoded
 string, meaning you can combine thresholds and any other configuration setting,
 like this: ``SYMFONY_DEPRECATIONS_HELPER=max[total]=42&max[self]=0&verbose=0``
 
@@ -297,6 +296,14 @@ By default, the bridge will display a detailed output with the number of
 deprecations and where they arise. If this is too much for you, you can use
 ``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn the verbose output off.
 
+It's also possible to change verbosity per deprecation type. For example, using
+``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
+"indirect" and "other".
+
+.. versionadded:: 5.1
+
+    The ``quiet`` option was introduced in Symfony 5.1.
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -311,8 +318,8 @@ Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the PHPUnit Bridge uses ``DebugClassLoader`` from the
-`Debug component`_ to throw deprecation notices at class autoloading time.
-This can be disabled with the ``debug-class-loader`` option.
+`ErrorHandler component`_ to throw deprecation notices at class autoloading
+time. This can be disabled with the ``debug-class-loader`` option.
 
 .. code-block:: xml
 
@@ -329,27 +336,59 @@ This can be disabled with the ``debug-class-loader`` option.
         </listener>
     </listeners>
 
+Compile-time Deprecations
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the ``debug:container`` command to list the deprecations generated during
+the compiling and warming up of the container:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --deprecations
+
+.. versionadded:: 5.1
+
+    The ``--deprecations`` option was introduced in Symfony 5.1.
+
 Write Assertions about Deprecations
 -----------------------------------
 
 When adding deprecations to your code, you might like writing tests that verify
 that they are triggered as required. To do so, the bridge provides the
-``@expectedDeprecation`` annotation that you can use on your test methods.
+``expectDeprecation()`` method that you can use on your test methods.
 It requires you to pass the expected message, given in the same format as for
 the `PHPUnit's assertStringMatchesFormat()`_ method. If you expect more than one
-deprecation message for a given test method, you can use the annotation several
+deprecation message for a given test method, you can use the method several
 times (order matters)::
 
-    /**
-     * @group legacy
-     * @expectedDeprecation This "%s" method is deprecated.
-     * @expectedDeprecation The second argument of the "%s" method is deprecated.
-     */
-    public function testDeprecatedCode()
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
+
+    class MyTest extends TestCase
     {
-        @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
-        @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
+        use ExpectDeprecationTrait;
+
+        /**
+         * @group legacy
+         */
+        public function testDeprecatedCode()
+        {
+            // test some code that triggers the following deprecation:
+            // trigger_deprecation('vendor-name/package-name', '5.1', 'This "Foo" method is deprecated.');
+            $this->expectDeprecation('Since vendor-name/package-name 5.1: This "%s" method is deprecated');
+
+            // ...
+
+            // test some code that triggers the following deprecation:
+            // trigger_deprecation('vendor-name/package-name', '4.4', 'The second argument of the "Bar" method is deprecated.');
+            $this->expectDeprecation('Since vendor-name/package-name 4.4: The second argument of the "%s" method is deprecated.');
+        }
     }
+
+.. deprecated:: 5.1
+
+    Symfony versions previous to 5.1 also included a ``@expectedDeprecation``
+    annotation to test deprecations, but it was deprecated in favor of the method.
 
 Display the Full Stack Trace
 ----------------------------
@@ -413,16 +452,16 @@ call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
 
     class MyTest extends TestCase
     {
-        // when using the SetUpTearDownTrait, methods like doSetup() can
+        // when using the SetUpTearDownTrait, methods like doSetUp() can
         // be defined with and without the 'void' return type, as you wish
         use SetUpTearDownTrait;
 
-        private function doSetup()
+        private function doSetUp()
         {
             // ...
         }
 
-        protected function doSetup(): void
+        protected function doSetUp(): void
         {
             // ...
         }
@@ -740,7 +779,7 @@ Troubleshooting
 The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
 "by convention" and assume that the namespace of the tested class can be
 obtained just by removing the ``Tests\`` part from the test namespace. I.e.
-that if the your test case fully-qualified class name (FQCN) is
+if your test cases fully-qualified class name (FQCN) is
 ``App\Tests\Watch\DummyWatchTest``, it assumes the tested class namespace
 is ``App\Watch``.
 
@@ -773,7 +812,7 @@ classes' namespace. In order to work as expected, the listener has to run before
 the tested class ever runs. By default, the mocked functions are created when the
 annotation are found and the corresponding tests are run. Depending on how your
 tests are constructed, this might be too late. In this case, you will need to declare
-the namespaces of the tested classes in your phpunit.xml.dist
+the namespaces of the tested classes in your ``phpunit.xml.dist``.
 
 .. code-block:: xml
 
@@ -797,8 +836,6 @@ its ``bin/simple-phpunit`` command. It has the following features:
 
 * Works with a standalone vendor directory that doesn't conflict with yours;
 * Does not embed ``prophecy`` to prevent any conflicts with its dependencies;
-* Uses PHPUnit 4.8 when run with PHP <=5.5, PHPUnit 5.7 when run with PHP >=5.6
-  and PHPUnit 6.5 when run with PHP >=7.2;
 * Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
   env var is defined: the env var should specify a file name that will be used for
   storing skipped tests on a first run, and replay them on the second run;
@@ -838,6 +875,15 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
     It's also possible to set ``SYMFONY_PHPUNIT_VERSION`` as a real env var
     (not defined in a :ref:`dotenv file <config-dot-env>`).
+
+    In the same way, ``SYMFONY_MAX_PHPUNIT_VERSION`` will set the maximum version
+    of PHPUnit to be considered. This is useful when testing a framework that does
+    not support the latest version(s) of PHPUnit.
+
+.. versionadded:: 5.2
+
+    The ``SYMFONY_MAX_PHPUNIT_VERSION`` env variable was introduced in
+    Symfony 5.2.
 
 .. tip::
 
@@ -935,7 +981,7 @@ your application, you can use your own SUT (System Under Test) solver:
     </listeners>
 
 The ``My\Namespace\SutSolver::solve`` can be any PHP callable and receives the
-current test classname as its first argument.
+current test as its first argument.
 
 Finally, the listener can also display warning messages when the SUT solver does
 not find the SUT:
@@ -953,13 +999,12 @@ not find the SUT:
 
 .. _`PHPUnit`: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
+.. _`ErrorHandler component`: https://github.com/symfony/error-handler
 .. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
-.. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
+.. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
-.. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
-.. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
 .. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
-.. _`PHP namespace resolutions rules`: https://php.net/manual/en/language.namespaces.rules.php
-.. _Debug component: https://github.com/symfony/debug
+.. _`PHP namespace resolutions rules`: https://www.php.net/manual/en/language.namespaces.rules.php

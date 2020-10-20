@@ -73,7 +73,6 @@ both services:
             _defaults:
                 autowire: true
                 autoconfigure: true
-                public: false
             # ...
 
             App\Service\TwitterClient:
@@ -92,7 +91,7 @@ both services:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" autoconfigure="true" public="false"/>
+                <defaults autowire="true" autoconfigure="true"/>
                 <!-- ... -->
 
                 <!-- autowire is redundant thanks to defaults, but value is overridable on each service -->
@@ -391,7 +390,7 @@ Additionally, you can define several named autowiring aliases if you want to use
 one implementation in some cases, and another implementation in some
 other cases.
 
-For instance, you may want to use by default the ``Rot13Transformer``
+For instance, you may want to use the ``Rot13Transformer``
 implementation by default when the ``TransformerInterface`` interface is
 type hinted, but use the ``UppercaseTransformer`` implementation in some
 specific cases. To do so, you can create a normal alias from the
@@ -508,7 +507,7 @@ the injection::
 
                 // If you wanted to choose the non-default service and do not
                 // want to use a named autowiring alias, wire it manually:
-                //     ->arg('$transformer', ref(UppercaseTransformer::class))
+                //     ->arg('$transformer', service(UppercaseTransformer::class))
                 // ...
         };
 
@@ -531,8 +530,8 @@ You wire up the difficult arguments, Symfony takes care of the rest.
 
 .. _autowiring-calls:
 
-Autowiring other Methods (e.g. Setters)
----------------------------------------
+Autowiring other Methods (e.g. Setters and Public Typed Properties)
+-------------------------------------------------------------------
 
 When autowiring is enabled for a service, you can *also* configure the container
 to call methods on your class when it's instantiated. For example, suppose you want
@@ -563,6 +562,27 @@ Autowiring will automatically call *any* method with the ``@required`` annotatio
 above it, autowiring each argument. If you need to manually wire some of the arguments
 to a method, you can always explicitly :doc:`configure the method call </service_container/calls>`.
 
+Despite property injection has some :ref:`drawbacks <property-injection>`, autowiring with ``@required`` annotation
+can also be applied to public typed properties::
+
+    namespace App\Util;
+
+    class Rot13Transformer
+    {
+        /** @required */
+        public LoggerInterface $logger;
+
+        public function transform($value)
+        {
+            $this->logger->info('Transforming '.$value);
+            // ...
+        }
+    }
+
+.. versionadded:: 5.1
+
+    Public typed properties autowiring was introduced in Symfony 5.1.
+
 Autowiring Controller Action Methods
 ------------------------------------
 
@@ -583,6 +603,10 @@ Public and Reusable Bundles
 ---------------------------
 
 Public bundles should explicitly configure their services and not rely on autowiring.
+Autowiring depends on the services that are available in the container and bundles have
+no control over the service container of applications they are included in. You can use
+autowiring when building reusable bundles within your company, as you have full control
+over all code.
 
 .. _ROT13: https://en.wikipedia.org/wiki/ROT13
 .. _service definition prototype: https://symfony.com/blog/new-in-symfony-3-3-psr-4-based-service-discovery

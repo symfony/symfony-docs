@@ -6,6 +6,7 @@ Validates that a given number or ``DateTime`` object is *between* some minimum a
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
+            - `invalidDateTimeMessage`_
             - `invalidMessage`_
             - `max`_
             - `maxMessage`_
@@ -40,8 +41,7 @@ you might add the following:
              * @Assert\Range(
              *      min = 120,
              *      max = 180,
-             *      minMessage = "You must be at least {{ limit }}cm tall to enter",
-             *      maxMessage = "You cannot be taller than {{ limit }}cm to enter"
+             *      notInRangeMessage = "You must be between {{ min }}cm and {{ max }}cm tall to enter",
              * )
              */
             protected $height;
@@ -56,8 +56,7 @@ you might add the following:
                     - Range:
                         min: 120
                         max: 180
-                        minMessage: You must be at least {{ limit }}cm tall to enter
-                        maxMessage: You cannot be taller than {{ limit }}cm to enter
+                        notInRangeMessage: You must be between {{ min }}cm and {{ max }}cm tall to enter
 
     .. code-block:: xml
 
@@ -72,8 +71,7 @@ you might add the following:
                     <constraint name="Range">
                         <option name="min">120</option>
                         <option name="max">180</option>
-                        <option name="minMessage">You must be at least {{ limit }}cm tall to enter</option>
-                        <option name="maxMessage">You cannot be taller than {{ limit }}cm to enter</option>
+                        <option name="notInRangeMessage">You must be between {{ min }}cm and {{ max }}cm tall to enter</option>
                     </constraint>
                 </property>
             </class>
@@ -94,8 +92,7 @@ you might add the following:
                 $metadata->addPropertyConstraint('height', new Assert\Range([
                     'min' => 120,
                     'max' => 180,
-                    'minMessage' => 'You must be at least {{ limit }}cm tall to enter',
-                    'maxMessage' => 'You cannot be taller than {{ limit }}cm to enter',
+                    'notInRangeMessage' => 'You must be between {{ min }}cm and {{ max }}cm tall to enter',
                 ]));
             }
         }
@@ -320,13 +317,17 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-invalidMessage
-~~~~~~~~~~~~~~
+invalidDateTimeMessage
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
-The message that will be shown if the underlying value is not a number (per
-the `is_numeric`_ PHP function).
+.. versionadded:: 5.2
+
+    The ``invalidDateTimeMessage`` option was introduced in Symfony 5.2.
+
+The message displayed when the ``min`` and ``max`` values are PHP datetimes but
+the given value is not.
 
 You can use the following parameters in this message:
 
@@ -335,6 +336,27 @@ Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
+
+invalidMessage
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value should be a valid number.``
+
+The message displayed when the ``min`` and ``max`` values are numeric (per
+the :phpfunction:`is_numeric` PHP function) but the given value is not.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
+===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 max
 ~~~
@@ -350,7 +372,8 @@ maxMessage
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
 The message that will be shown if the underlying value is more than the
-`max`_ option.
+`max`_ option, and no `min`_ option has been defined (if both are defined, use
+`notInRangeMessage`_).
 
 You can use the following parameters in this message:
 
@@ -393,7 +416,8 @@ minMessage
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
 The message that will be shown if the underlying value is less than the
-`min`_ option.
+`min`_ option, and no `max`_ option has been defined (if both are defined, use
+`notInRangeMessage`_).
 
 You can use the following parameters in this message:
 
@@ -442,5 +466,4 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
-.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php
+.. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php

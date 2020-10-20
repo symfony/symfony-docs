@@ -52,8 +52,8 @@ Field Options
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-rounding_mode
-~~~~~~~~~~~~~
+``rounding_mode``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``IntegerToLocalizedStringTransformer::ROUND_DOWN``
 

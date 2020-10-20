@@ -173,7 +173,9 @@ To finish this, remove the ``property`` key from the user provider in
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
                 <!-- ... -->
@@ -238,7 +240,9 @@ users will encode their passwords:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd"
         >
             <config>
                 <!-- ... -->
@@ -285,6 +289,11 @@ Now you can configure all the user information in ``config/packages/security.yam
                     users:
                         john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
                         jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+
+.. caution::
+
+    When using a ``memory`` provider, and not the ``auto`` algorithm, you have
+    to choose an encoding without salt (i.e. ``bcrypt``).
 
 .. _security-ldap-user-provider:
 
@@ -404,7 +413,7 @@ command will generate a nice skeleton to get you started::
          */
         public function supportsClass($class)
         {
-            return User::class === $class;
+            return User::class === $class || is_subclass_of($class, User::class);
         }
     }
 

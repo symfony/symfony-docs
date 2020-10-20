@@ -92,14 +92,10 @@ inside a :doc:`compiler pass </service_container/compiler_passes>`.
 Entities & Entity Mapping
 -------------------------
 
-If a bundle defines its entity mapping in configuration files instead of
-annotations, you can override them as any other regular bundle configuration
-file. The only caveat is that you must override all those mapping configuration
-files and not just the ones you actually want to override.
-
-If a bundle provides a mapped superclass (such as the ``User`` entity in the
-FOSUserBundle) you can override its attributes and associations. Learn more
-about this feature and its limitations in `the Doctrine documentation`_.
+Overriding entity mapping is only possible if a bundle provides a mapped
+superclass (such as the ``User`` entity in the FOSUserBundle). It's possible to
+override attributes and associations in this way. Learn more about this feature
+and its limitations in `the Doctrine documentation`_.
 
 Forms
 -----
@@ -172,7 +168,7 @@ instead of the original ones.
 Translations
 ------------
 
-Translations are not related to bundles, but to :ref:`translation domains <using-message-domains>`.
+Translations are not related to bundles, but to translation domains.
 For this reason, you can override any bundle translation file from the main
 ``translations/`` directory, as long as the new file uses the same domain.
 
@@ -180,4 +176,4 @@ For example, to override the translations defined in the
 ``Resources/translations/FOSUserBundle.es.yml`` file of the FOSUserBundle,
 create a ``<your-project>/translations/FOSUserBundle.es.yml`` file.
 
-.. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
+.. _`the Doctrine documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/inheritance-mapping.html#overrides

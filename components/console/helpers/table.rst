@@ -265,6 +265,39 @@ Here is a full list of things you can customize:
 
     This method can also be used to override a built-in style.
 
+.. versionadded:: 5.2
+
+    The option to style table cells was introduced in Symfony 5.2.
+
+In addition to the built-in table styles, you can also apply different styles
+to each table cell via :class:`Symfony\\Component\\Console\\Helper\\TableCellStyle`::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableCellStyle;
+
+    $table = new Table($output);
+
+    $table->setRows([
+        [
+            '978-0804169127',
+            new TableCell(
+                'Divine Comedy',
+                [
+                    'style' => new TableCellStyle([
+                        'align' => 'center',
+                        'fg' => 'red',
+                        'bg' => 'green',
+
+                        // or
+                        'cellFormat' => '<info>%s</info>',
+                    ])
+                ]
+            )
+        ],
+    ]);
+
+    $table->render();
+
 Spanning Multiple Columns and Rows
 ----------------------------------
 

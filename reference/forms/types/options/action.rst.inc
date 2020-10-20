@@ -1,5 +1,5 @@
-action
-~~~~~~
+``action``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: empty string
 

@@ -19,7 +19,7 @@ be implemented with a :doc:`ChoiceType </reference/forms/types/choice>` where th
 ``choices`` option is set to the list of available shipping options.
 
 However, if you use the same form type in several forms, repeating the list of
-``choices`` everytime you use it quickly becomes boring. In this example, a
+``choices`` every time you use it quickly becomes boring. In this example, a
 better solution is to create a custom form type based on ``ChoiceType``. The
 custom type looks and behaves like a ``ChoiceType`` but the list of choices is
 already populated with the shipping options so you don't need to define them.
@@ -68,7 +68,7 @@ the logic and rendering of that field type.
     The PHP class extension mechanism and the Symfony form field extension
     mechanism are not the same. The parent type returned in ``getParent()`` is
     what Symfony uses to build and manage the field type. Making the PHP class
-    extend from ``AbstractType`` is only a convenience way of implementing the
+    extend from ``AbstractType`` is only a convenient way of implementing the
     required ``FormTypeInterface``.
 
 Now you can add this form type when :doc:`creating Symfony forms </forms>`::
@@ -405,7 +405,7 @@ libraries are used in your application:
 
     {# templates/form/custom_types.html.twig #}
     {% block postal_address_row %}
-        {% for child in form.children if not child.rendered %}
+        {% for child in form.children|filter(child => not child.rendered) %}
             <div class="form-group">
                 {{ form_label(child) }}
                 {{ form_widget(child) }}

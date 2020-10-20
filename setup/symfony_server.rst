@@ -9,7 +9,7 @@ Although this server is not intended for production use, it supports HTTP/2,
 TLS/SSL, automatic generation of security certificates, local domains, and many
 other features that sooner or later you'll need when developing web projects.
 Moreover, the server is not tied to Symfony and you can also use it with any
-PHP application and even with HTML/SPA (single page applications).
+PHP application and even with HTML or single page applications.
 
 Installation
 ------------
@@ -19,8 +19,9 @@ The Symfony server is part of the ``symfony`` binary created when you
 
 .. note::
 
-    If you want to report a bug or suggest a new feature, please create an issue
-    on `symfony/cli`_.
+    The Symfony binary is developed internally at Symfony. If you want to
+    report a bug or suggest a new feature, please create an issue on
+    `symfony/cli`_.
 
 Getting Started
 ---------------
@@ -55,6 +56,28 @@ run the Symfony server in the background:
 
     # show the latest log messages
     $ symfony server:log
+
+Enabling PHP-FPM
+----------------
+
+.. note::
+
+    PHP-FPM must be installed locally for the Symfony server to utilize.
+
+When the server starts it will check for common patterns like ``web/app.php``,
+``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
+server will automatically start with PHP-FPM enabled. Otherwise the server will
+start without PHP-FPM and will show a ``Page not found`` page when trying to
+access a ``.php`` file in the browser.
+
+.. tip::
+
+    When an ``index.html`` and a front controller like e.g. ``index.php`` are
+    both present the server will still start with PHP-FPM enabled but the
+    ``index.html`` will take precedence over the front controller. This means
+    when an ``index.html`` file is present in ``public`` or ``web``, it will be
+    displayed instead of the ``index.php`` which would show e.g. the Symfony
+    application.
 
 Enabling TLS
 ------------
@@ -91,10 +114,10 @@ root directory:
     $ cd my-project/
 
     # use a specific PHP version
-    $ echo "7.2" > .php-version
+    $ echo 7.2 > .php-version
 
     # use any PHP 7.x version available
-    $ echo "7" > .php-version
+    $ echo 7 > .php-version
 
 .. tip::
 
@@ -133,7 +156,7 @@ to override:
 Running Commands with Different PHP Versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When running different PHP versions it's useful to use the main ``symfony``
+When running different PHP versions, it is useful to use the main ``symfony``
 command as a wrapper for the ``php`` command. This allows you to always select
 the most appropriate PHP version according to the project which is running the
 commands. It also loads the env vars automatically, which is important when
@@ -147,20 +170,6 @@ running non-Symfony commands:
     # runs the command with the PHP version selected by the project
     # (or the default PHP version if the project didn't select one)
     $ symfony php -r "..."
-
-If you are using this wrapper frequently, consider aliasing the ``php`` command
-to it:
-
-.. code-block:: terminal
-
-    $ cd ~/.symfony/bin
-    $ cp symfony php
-    # now you can run "php ..." and the "symfony" command will be executed instead
-
-    # other PHP commands can be wrapped too using this trick
-    $ cp symfony php-config
-    $ cp symfony pear
-    $ cp symfony pecl
 
 Local Domain Names
 ------------------
@@ -176,19 +185,30 @@ local IP. However, sometimes it is preferable to associate a domain name to them
 Setting up the Local Proxy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Local domains are possible thanks to a local proxy provided by the Symfony
-server. First, start the proxy:
+Local domains are possible thanks to a local proxy provided by the Symfony server.
+If this is the first time you run the proxy, you must configure it as follows:
+
+#. Open the **proxy settings** of your operating system:
+
+   * `Proxy settings in Windows`_;
+   * `Proxy settings in macOS`_;
+   * `Proxy settings in Ubuntu`_.
+
+#. Set the following URL as the value of the **Automatic Proxy Configuration**:
+   ``http://127.0.0.1:7080/proxy.pac``
+
+Now run this command to start the proxy:
 
 .. code-block:: terminal
 
     $ symfony proxy:start
 
-If this is the first time you run the proxy, you must configure it as follows:
+.. note::
 
-* Open the **proxy settings** of your operating system (`proxy settings in Windows`_,
-  `proxy settings in macOS`_, `proxy settings in Ubuntu`_);
-* Set the following URL as the value of the **Automatic Proxy Configuration**:
-  ``http://127.0.0.1:7080/proxy.pac``
+    Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
+    ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
+    or a full restart after starting the proxy. Otherwise, you'll see a
+    *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``).
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -210,12 +230,18 @@ new custom domain.
     Browse the http://127.0.0.1:7080 URL to get the full list of local project
     directories, their custom domains, and port numbers.
 
-When running console commands, add the ``HTTPS_PROXY`` env var to make custom
+When running console commands, add the ``https_proxy`` env var to make custom
 domains work:
 
 .. code-block:: terminal
 
-    $ HTTPS_PROXY=http://127.0.0.1:7080 curl https://my-domain.wip
+    $ https_proxy=http://127.0.0.1:7080 curl https://my-domain.wip
+
+.. note::
+
+    Although env var names are always defined in uppercase, the ``https_proxy``
+    env var `is treated differently`_ than other env vars and its name must be
+    spelled in lowercase.
 
 .. tip::
 
@@ -299,11 +325,12 @@ Service       Port      Symfony default prefix
 MySQL         3306      ``DATABASE_``
 PostgreSQL    5432      ``DATABASE_``
 Redis         6379      ``REDIS_``
+Memcached     11211     ``MEMCACHED_``
 RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_DEFAULT_USER`` and ``RABBITMQ_DEFAULT_PASS`` env var)
 Elasticsearch 9200      ``ELASTICSEARCH_``
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
 Kafka         9092      ``KAFKA_``
-Mailcatcher   1025/1080 ``MAILER_``
+MailCatcher   1025/1080 ``MAILER_``
               or 25/80
 Blackfire     8707      ``BLACKFIRE_``
 ============= ========= ======================
@@ -350,6 +377,7 @@ debug any issues.
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
-.. _`proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
-.. _`proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
-.. _`proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
+.. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
+.. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
+.. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
+.. _`is treated differently`: https://ec.haxx.se/usingcurl/usingcurl-proxies#http_proxy-in-lower-case-only

@@ -1,5 +1,5 @@
-mapped
-~~~~~~
+``mapped``
+~~~~~~~~~~
 
 **type**: ``boolean``  **default**: ``true``
 

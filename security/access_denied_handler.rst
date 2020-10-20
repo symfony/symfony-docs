@@ -10,7 +10,7 @@ with a service to return a custom response.
 First, create a class that implements
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
 This interface defines one method called ``handle()`` where you can implement whatever
-logic that should execute when access is denied for the current user (e.g. send a
+logic that should run when access is denied for the current user (e.g. send a
 mail, log a message, or generally return a custom response)::
 
     namespace App\Security;
@@ -51,7 +51,7 @@ configure it under your firewall:
         <!-- config/packages/security.xml -->
         <config>
             <firewall name="main">
-                <access_denied_handler>App\Security\AccessDeniedHandler</access_denied_handler>
+                <access-denied-handler>App\Security\AccessDeniedHandler</access-denied-handler>
             </firewall>
         </config>
 

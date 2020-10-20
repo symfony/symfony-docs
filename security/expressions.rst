@@ -18,7 +18,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
     public function index()
     {
         $this->denyAccessUnlessGranted(new Expression(
-            '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+            '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
         ));
 
         // ...
@@ -39,9 +39,9 @@ Inside the expression, you have access to a number of variables:
 ``user``
     The user object (or the string ``anon`` if you're not authenticated).
 ``roles``
-    The array of roles the user has, including from the
-    :ref:`role hierarchy <security-role-hierarchy>` but not including the
-    ``IS_AUTHENTICATED_*`` attributes (see the functions below).
+    The array of roles the user has. This array includes any roles granted
+    indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
+    does not include the ``IS_AUTHENTICATED_*`` attributes (see the functions below).
 ``object``
     The object (if any) that's passed as the second argument to ``isGranted()``.
 ``token``

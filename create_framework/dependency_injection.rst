@@ -27,7 +27,7 @@ to it::
             $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
             $dispatcher = new EventDispatcher();
-            $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener(
+            $dispatcher->addSubscriber(new HttpKernel\EventListener\ErrorListener(
                 'Calendar\Controller\ErrorController::exception'
             ));
             $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, $requestStack));
@@ -124,7 +124,7 @@ Create a new file to host the dependency injection container configuration::
     $containerBuilder->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
         ->setArguments(['UTF-8'])
     ;
-    $containerBuilder->register('listener.exception', HttpKernel\EventListener\ExceptionListener::class)
+    $containerBuilder->register('listener.exception', HttpKernel\EventListener\ErrorListener::class)
         ->setArguments(['Calendar\Controller\ErrorController::exception'])
     ;
     $containerBuilder->register('dispatcher', EventDispatcher\EventDispatcher::class)

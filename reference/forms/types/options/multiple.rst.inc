@@ -1,5 +1,5 @@
-multiple
-~~~~~~~~
+``multiple``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

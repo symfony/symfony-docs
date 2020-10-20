@@ -17,9 +17,8 @@ The listener should then store the authenticated token using
     use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-    use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
-    class SomeAuthenticationListener implements ListenerInterface
+    class SomeAuthenticationListener
     {
         /**
          * @var TokenStorageInterface
@@ -38,7 +37,7 @@ The listener should then store the authenticated token using
 
         // ...
 
-        public function handle(RequestEvent $event)
+        public function __invoke(RequestEvent $event)
         {
             $request = $event->getRequest();
 
@@ -100,10 +99,10 @@ Authentication Providers
 
 Each provider (since it implements
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface`)
-has a method :method:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::supports`
+has a :method:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::supports` method
 by which the ``AuthenticationProviderManager``
 can determine if it supports the given token. If this is the case, the
-manager then calls the provider's method :method:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::authenticate`.
+manager then calls the provider's :method:`Symfony\\Component\\Security\\Core\\Authentication\\Provider\\AuthenticationProviderInterface::authenticate` method.
 This method should return an authenticated token or throw an
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`
 (or any other exception extending it).
@@ -198,7 +197,8 @@ Creating a custom Password Encoder
 There are many built-in password encoders. But if you need to create your
 own, it needs to follow these rules:
 
-#. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`;
+#. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`
+   (you can also extend :class:`Symfony\\Component\\Security\\Core\\Encoder\\BasePasswordEncoder`);
 
 #. The implementations of
    :method:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface::encodePassword`
@@ -274,12 +274,12 @@ in) is correct, you can use::
 Authentication Events
 ---------------------
 
-The security component provides 4 related authentication events:
+The security component provides the following authentication events:
 
 ===============================  ================================================================= ==============================================================================
 Name                             Event Constant                                                    Argument Passed to the Listener
 ===============================  ================================================================= ==============================================================================
-security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationEvent`
+security.authentication.success  ``AuthenticationEvents::AUTHENTICATION_SUCCESS``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationSuccessEvent`
 security.authentication.failure  ``AuthenticationEvents::AUTHENTICATION_FAILURE``                  :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationFailureEvent`
 security.interactive_login       ``SecurityEvents::INTERACTIVE_LOGIN``                             :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 security.switch_user             ``SecurityEvents::SWITCH_USER``                                   :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`

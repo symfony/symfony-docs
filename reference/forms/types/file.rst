@@ -93,8 +93,8 @@ upload associated with a Doctrine entity.
 Field Options
 -------------
 
-multiple
-~~~~~~~~
+``multiple``
+~~~~~~~~~~~~
 
 **type**: ``Boolean`` **default**: ``false``
 
@@ -105,15 +105,15 @@ Overridden Options
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
-data_class
-~~~~~~~~~~
+``data_class``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: :class:`Symfony\\Component\\HttpFoundation\\File\\File`
 
 This option sets the appropriate file-related data mapper to be used by the type.
 
-empty_data
-~~~~~~~~~~
+``empty_data``
+~~~~~~~~~~~~~~
 
 **type**: ``mixed`` **default**: ``null``
 
@@ -157,5 +157,5 @@ Form Variables
 ========  ==========  ===============================================================================
 Variable  Type        Usage
 ========  ==========  ===============================================================================
-type      ``string``  The type variable is set to ``file``, in order to render as a file input field.
+``type``  ``string``  The type variable is set to ``file``, in order to render as a file input field.
 ========  ==========  ===============================================================================

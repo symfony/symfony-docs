@@ -33,9 +33,11 @@ it will be removed/changed in the future and that you should stop using it.
 When the major version is released (e.g. 5.0.0), all deprecated features and
 functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
-4.4.*), you should be able to upgrade without a problem.
+``4.4.*``), you should be able to upgrade without a problem. That means that
+you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
+(e.g. 4.4) so that you can see *all* the deprecations.
 
-To help you with this, deprecation notices are triggered whenever you end up
+To help you find deprecations, notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
 :ref:`dev environment <configuration-environments>`
 in your browser, these notices are shown in the web dev toolbar:
@@ -45,7 +47,7 @@ in your browser, these notices are shown in the web dev toolbar:
    :class: with-browser
 
 Ultimately, you should aim to stop using the deprecated functionality.
-Sometimes, this is easy: the warning might tell you exactly what to change.
+Sometimes the warning might tell you exactly what to change.
 
 But other times, the warning might be unclear: a setting somewhere might
 cause a class deeper to trigger the warning. In this case, Symfony does its
@@ -82,7 +84,7 @@ Now, you can start fixing the notices:
     OK (10 tests, 20 assertions)
 
     Remaining deprecation notices (6)
-    
+
     The "request" service is deprecated and will be removed in 3.0. Add a type-hint for
     Symfony\Component\HttpFoundation\Request to your controller parameters to retrieve the
     request instead: 6x
@@ -123,36 +125,44 @@ done!
 2) Update to the New Major Version via Composer
 -----------------------------------------------
 
-Once your code is deprecation free, you can update all the Symfony packages via
-Composer by modifying your ``composer.json`` file. In this file update all
-mentions of ``4.*`` to ``5.0.*``:
+Once your code is deprecation free, you can update the Symfony library via
+Composer by modifying your ``composer.json`` file and changing all the libraries
+starting with ``symfony/`` to the new major version:
 
-.. code-block:: json
+.. code-block:: diff
 
     {
         "...": "...",
 
         "require": {
-            "symfony/console": "^5.0",
-            "symfony/dotenv": "^5.0",
-            "symfony/flex": "^1.3.1",
-            "symfony/framework-bundle": "^5.0",
-            "symfony/validator": "^5.0",
-            "symfony/yaml": "^5.0"
+    -         "symfony/cache": "4.4.*",
+    +         "symfony/cache": "5.0.*",
+    -         "symfony/config": "4.4.*",
+    +         "symfony/config": "5.0.*",
+    -         "symfony/console": "4.4.*",
+    +         "symfony/console": "5.0.*",
+            "...": "...",
+
+            "...": "A few libraries starting with
+                    symfony/ follow their own versioning scheme. You
+                    do not need to update these versions: you can
+                    upgrade them independently whenever you want",
+            "symfony/monolog-bundle": "^3.5",
         },
-        "...": "..."
+        "...": "...",
     }
 
 At the bottom of your ``composer.json`` file, in the ``extra`` block you can
 find a data setting for the Symfony version. Make sure to also upgrade
 this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
 
-.. code-block:: json
+.. code-block:: diff
 
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.0.*"
+    -       "require": "4.4.*"
+    +       "require": "5.0.*"
         }
     }
 
@@ -168,10 +178,11 @@ Next, use Composer to download new versions of the libraries:
 
 .. _upgrade-major-symfony-after:
 
-3) Update your Code to Work with the New Version
+.. include:: /setup/_update_recipes.rst.inc
+
+4) Update your Code to Work with the New Version
 ------------------------------------------------
 
-The next major version *may* also contain new BC breaks as a BC layer is not always
-a possibility. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major
-version) included in the Symfony repository for any BC break that you need to be aware
-of.
+In some rare situations, the next major version *may* contain backwards-compatibility
+breaks. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major version)
+included in the Symfony repository for any BC break that you need to be aware of.

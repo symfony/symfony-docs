@@ -34,5 +34,5 @@ The target controller method might look something like this::
         // ... create and return a Response object
     }
 
-Just like when creating a controller for a route, the order of the arguments
-of the ``fancy()`` method doesn't matter: the matching is done by name.
+Like when creating a controller for a route, the order of the arguments of the
+``fancy()`` method doesn't matter: the matching is done by name.

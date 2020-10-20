@@ -188,7 +188,7 @@ that different paths were handled by different PHP files.
 In any case you have to create a ``public/index.php`` that will start
 your Symfony application by either copying the file from the
 ``FrameworkBundle``-recipe or by using Flex and requiring the
-FrameworkBundle. You will also likely have to update you web server
+FrameworkBundle. You will also likely have to update your web server
 (e.g. Apache or nginx) to always use this front controller. You can
 look at :doc:`Web Server Configuration </setup/web_server_configuration>`
 for examples on how this might look. For example when using Apache you can
@@ -241,7 +241,9 @@ could look something like this::
     use Symfony\Component\Debug\Debug;
     use Symfony\Component\HttpFoundation\Request;
 
-    require dirname(__DIR__).'/config/bootstrap.php';
+    require dirname(__DIR__).'/vendor/autoload.php';
+
+    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
     /*
      * The kernel will always be available globally, allowing you to
@@ -268,7 +270,7 @@ could look something like this::
         Request::setTrustedHosts([$trustedHosts]);
     }
 
-    $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG'], dirname(__DIR__));
+    $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
     $request = Request::createFromGlobals();
     $response = $kernel->handle($request);
 
@@ -433,7 +435,7 @@ which script to call and wrap the output in a response class::
     {
         public function loadLegacyScript(string $requestPath, string $legacyScript)
         {
-            return StreamedResponse::create(
+            return new StreamedResponse(
                 function () use ($requestPath, $legacyScript) {
                     $_SERVER['PHP_SELF'] = $requestPath;
                     $_SERVER['SCRIPT_NAME'] = $requestPath;
@@ -461,7 +463,7 @@ chance to use Symfony's event lifecycle. For instance, this allows you to
 transition the authentication and authorization of the legacy application over
 to the Symfony application using the Security component and its firewalls.
 
-.. _`Strangler Application`: https://www.martinfowler.com/bliki/StranglerApplication.html
+.. _`Strangler Application`: https://martinfowler.com/bliki/StranglerFigApplication.html
 .. _`autoload`: https://getcomposer.org/doc/04-schema.md#autoload
 .. _`Modernizing with Symfony`: https://youtu.be/YzyiZNY9htQ
 .. _`Symfony Panther`: https://github.com/symfony/panther

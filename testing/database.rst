@@ -15,7 +15,7 @@ your project and define the new value for the ``DATABASE_URL`` env var:
 .. code-block:: bash
 
     # .env.test.local
-    DATABASE_URL=mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME
+    DATABASE_URL=mysql://USERNAME:PASSWORD@127.0.0.1:3306/DB_NAME?serverVersion=5.7
 
 .. tip::
 
@@ -48,12 +48,12 @@ Now, enable it as a PHPUnit extension or listener:
     <phpunit>
         <!-- ... -->
 
-        <!-- Add this for PHPUnit 7.1 or higher -->
+        <!-- Add this for PHPUnit 7.5 or higher -->
         <extensions>
             <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
         </extensions>
 
-        <!-- Add this for PHPUnit 7.0 -->
+        <!-- Add this for PHPUnit 7.0 until 7.4 -->
         <listeners>
             <listener class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener"/>
         </listeners>
@@ -93,7 +93,7 @@ Customize the new class to load ``Product`` objects into Doctrine::
 
     use App\Entity\Product;
     use Doctrine\Bundle\FixturesBundle\Fixture;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
 
     class ProductFixture extends Fixture
     {
@@ -132,7 +132,7 @@ Suppose the class you want to test looks like this::
     namespace App\Salary;
 
     use App\Entity\Employee;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectManager;
 
     class SalaryCalculator
     {
@@ -161,8 +161,8 @@ constructor, you can pass a mock object within a test::
 
     use App\Entity\Employee;
     use App\Salary\SalaryCalculator;
-    use Doctrine\Common\Persistence\ObjectManager;
-    use Doctrine\Common\Persistence\ObjectRepository;
+    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\Persistence\ObjectRepository;
     use PHPUnit\Framework\TestCase;
 
     class SalaryCalculatorTest extends TestCase
@@ -221,7 +221,7 @@ so, get the entity manager via the service container as follows::
          */
         private $entityManager;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             $kernel = self::bootKernel();
 
@@ -240,7 +240,7 @@ so, get the entity manager via the service container as follows::
             $this->assertSame(14.50, $product->getPrice());
         }
 
-        protected function tearDown()
+        protected function tearDown(): void
         {
             parent::tearDown();
 
