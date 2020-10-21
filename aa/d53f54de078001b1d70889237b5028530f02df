@@ -1,0 +1,215 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-11-28T15:04:26Z
+
+Thanks for your contribution. Can you explain why we should add this? Thanks
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2019-11-28T16:55:27Z
+
+@OskarStark
+
+Because without the added code, we will have the following error :
+
+Error: Class App\ApiKernel contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (App\ApiKernel::configureRoutes)
+
+N.B :
+An abstract method can not contain a body, its presence simply indicates that each non-abstract daughter class will have to redefine this method by respecting its signature.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-29T15:03:59Z
+
+@amine-betari thanks for this contribution ... but I'm having some problems trying to understand the change.
+
+In this example, the code extends from `Kernel` (https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/Kernel.php) which doesn't define these methods as abstract. When using the MicroKernelTrait (https://symfony.com/doc/current/configuration/micro_kernel_trait.html) you import the MicroKernelTrait (https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Kernel/MicroKernelTrait.php) which defines an abstract `configureContainer()` method, but `configureRouting ()` is not abstract.
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2019-11-29T15:15:48Z
+
+Hi @javiereguiluz
+
+it's normal because your links pointenst to master which is branch 5.0 I think
+
+On the other hand if you check the version by putting 4.3 or 4.4 you will have well the error
+
+https://github.com/symfony/symfony/blob/4.4/src/Symfony/Bundle/FrameworkBundle/Kernel/MicroKernelTrait.php
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2019-11-29T15:36:55Z
+
+@amine-betari sorry! You are right.
+
+However, in this article we don't use the MicroKernelTrait but the normal Kernel class, right?
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2019-11-29T15:52:59Z
+
+Hi @javiereguiluz
+
+For me, you just have to add
+use MicroKernelTrait;
+
+also add the configureRoutes method
+
+Why ?
+
+Because if you do not use the **MicroKernelTrait** and extend the **Kernel class** you will have another problem which is the following one:
+
+**Error: Class App\ApiKernel contains 1 abstract method and must therefore be declared abstract or implement the remaining methods (Symfony\Component\HttpKernel\KernelInterface::registerContainerConfiguration)**
+
+Because the **MicroKernelTrait**  defines the method: **registerContainerConfiguration**
+
+Exemple
+`class ApiKernel extends BaseKernel
+{
+    use MicroKernelTrait;
+    private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+
+    public function registerBundles(): iterable
+    {
+        $contents = require $this->getProjectDir().'/config/bundles.php';
+        foreach ($contents as $class => $envs) {
+            if ($envs[$this->environment] ?? $envs['all'] ?? false) {
+                yield new $class();
+            }
+        }
+    }
+
+    public function getProjectDir(): string
+    {
+        return \dirname(__DIR__);
+    }
+
+    public function getCacheDir()
+    {
+        return dirname(__DIR__).'/var/cache/api/'.$this->getEnvironment();
+    }
+
+    public function getLogDir()
+    {
+        return dirname(__DIR__).'/var/log/api';
+    }
+
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
+    {
+        // load only the config files strictly needed for the API
+        $confDir = $this->getProjectDir().'/config';
+        $loader->load($confDir.'/api/*'.self::CONFIG_EXTS, 'glob');
+        if (is_dir($confDir.'/api/'.$this->environment)) {
+            $loader->load($confDir.'/api/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+        }
+        $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+    }
+
+    protected function configureRoutes(RouteCollectionBuilder $routes): void
+    {
+        $confDir = $this->getProjectDir().'/config';
+        // load config routes
+          .......
+    }
+
+}
+`
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2019-12-03T07:09:24Z
+
+Close/reopen because Travis was stuck
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2019-12-09T09:44:26Z
+
+@ostark @javiereguiluz  any news ?
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2020-01-12T16:31:12Z
+
+@ostark  @javiereguiluz  any news please ?
+
+---------------------------------------------------------------------------
+
+by ostark at 2020-01-13T07:02:34Z
+
+FYI @amine-betari you used the wrong handle, I'm not Oskar.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-01-13T07:04:00Z
+
+It’s me 😊
+
+I am currently on a phone 📱 but will have a look later
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2020-01-17T22:43:20Z
+
+@amine-betari, thank you for working on this. I agree we should update the example to use the `MicroKernelTrait` instead.
+
+But I propose the following changes:
+```php
+public function registerBundles(): iterable
+{
+    $contents = require $this->getProjectDir().'/config/api_bundles.php';
+    // ...
+}
+
+// ...
+
+protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
+    {
+        $container->addResource(new FileResource($this->getProjectDir().'/config/api_bundles.php'));
+        $container->setParameter('container.dumper.inline_factories', true);
+        $confDir = $this->getProjectDir().'/config/api';
+
+        $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/{packages}/'.$this->environment.'/*'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+        $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+    }
+
+protected function configureRoutes(RouteCollectionBuilder $routes): void
+{
+    $confDir = $this->getProjectDir().'/config/api';
+    // load specific api routes
+}
+```
+
+We could even add the routes configuration since we fully implement `configureContainer`, for completeness?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-04T12:28:47Z
+
+Hi @amine-betari! Do you have any time/motivation to finish this PR based on the comments by @HeahDude?
+
+(please also explicitly add `use MicroKernelTrait;` to the example, to make it clear that the example is based on the micro kernel)
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2020-10-06T09:50:02Z
+
+@wouterj
+I'll do this ASAP (this week).   We like community so we're ready to give our time :)
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2020-10-09T10:09:47Z
+
+> FYI @amine-betari you used the wrong handle, I'm not Oskar.
+
+Sorry man :)
+
+---------------------------------------------------------------------------
+
+by amine-betari at 2020-10-09T10:30:21Z
+
+@wouterj   done :)
