@@ -58,7 +58,7 @@ This configuration tells Symfony to look for routes defined as annotations in
 any PHP class stored in the ``src/Controller/`` directory.
 
 Suppose you want to define a route for the ``/blog`` URL in your application. To
-do so, create a :doc:`controller class </controller>` like the following::
+do so, create a :doc:`controller class </controller>` like the following:
 
 .. configuration-block::
 
