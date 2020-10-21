@@ -657,10 +657,8 @@ must be named according to the following path: ``domain.locale.loader``:
 
 * **domain**: Domains are a way to organize messages into groups. Unless
   parts of the application are explicitly separated from each other, it is
-  recommended to only use default ``messages`` domain.
-
-  If no domains are explicitly defined while using the translator, Symfony 
-  will default to the ``messages`` domain (e.g. ``messages.en.yaml``)
+  recommended to only use the default ``messages`` domain (e.g.
+  ``messages.en.yaml``).
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
