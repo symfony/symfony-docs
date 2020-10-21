@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by henry2778 at 2019-10-21T18:31:29Z
+
+@nicolas-grekas in our project we have API implemented with Symfony and Admin site with legacy Yii framework. So now if Symfony application creates cache items, say in Redis - then the other app cannot have the access to that item. In my case Admin site cannot invalidate the cache that was created by Symfony. So the solution is to make namespace more explicit, so to say.
