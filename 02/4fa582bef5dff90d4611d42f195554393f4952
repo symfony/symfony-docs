@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by cristi-contiu at 2020-05-01T08:45:04Z
+
+With the latest changes to the `FrameworkBundle` recipe https://github.com/symfony/recipes/pull/734 , the `DotEnv` component can no longer be moved to `required-dev` (without changing the `bootstrap.php` file), so the note currently displayed in the deployment docs should be fixed - this PR fixes it.
+
+---------------------------------------------------------------------------
+
+by beephotography at 2020-07-14T07:57:37Z
+
+Thanks @cristi-contiu !
+If I could, I would approve these changes because they are very important in my opinion.
+
+Maybe one should also consider changing the docs here:
+https://symfony.com/doc/current/setup/flex.html
+(as it's suggested to install dotenv via --dev)
+
+Could you also change these docs, please?
+And could somebody approve this pull request?
