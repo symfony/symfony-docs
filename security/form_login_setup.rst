@@ -74,10 +74,15 @@ class that processes the login submit and 4) updates the main security config fi
             // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
 
-            return $this->render('security/login.html.twig', [
-                'last_username' => $lastUsername,
-                'error' => $error
-            ]);
+            return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        }
+
+        /**
+         * @Route("/logout", name="app_logout")
+         */
+        public function logout()
+        {
+            throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
         }
 
         /**
@@ -165,10 +170,10 @@ a traditional HTML form that submits to ``/login``:
         {% endif %}
 
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail" class="sr-only">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputEmail">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" required>
 
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
@@ -300,7 +305,7 @@ a traditional HTML form that submits to ``/login``:
         }
     }
 
-**Step 4.** Updates the main security config file to enable the Guard authenticator:
+**Step 4.** Updates the main security config file to enable the Guard authenticator and configure logout route:
 
 .. configuration-block::
 
@@ -316,6 +321,8 @@ a traditional HTML form that submits to ``/login``:
                     guard:
                         authenticators:
                             - App\Security\LoginFormAuthenticator
+                    logout:
+                        path: app_logout
 
     .. code-block:: xml
 
