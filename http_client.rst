@@ -693,11 +693,13 @@ Retry Failed Requests
 
 Sometimes, requests fail because of network issues or temporary server errors.
 Symfony's HttpClient allows to retry failed requests automatically using the
-:ref:`retry_failed option <reference-http-client-retry-failed>`. When enabled,
-each failed request with an HTTP status of ``423``, ``425``, ``429``, ``502``,
-``503`` or with an `idempotent method`_ and a HTTP status of ``500``, ``504``,
-``507`` or ``510`` is retried up to 3 times, with an exponential delay between
-retries (first retry = 1 second; third retry: 4 seconds).
+:ref:`retry_failed option <reference-http-client-retry-failed>`.
+
+By default, failed requests are retried up to 3 times, with an exponential delay
+between retries (first retry = 1 second; third retry: 4 seconds) and only for
+the following HTTP status codes: ``423``, ``425``, ``429``, ``502`` and ``503``
+when using any HTTP method and ``500``, ``504``, ``507`` and ``510`` when using
+an HTTP `idempotent method`_.
 
 Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
 to learn how to tweak each of them to fit your application needs.
