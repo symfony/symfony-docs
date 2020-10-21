@@ -1291,7 +1291,7 @@ Then you're ready to go::
 
     $httpClient = new HttplugClient();
     $request = $httpClient->createRequest('GET', 'https://my.api.com/');
-    $promise = $httpClient->sendRequest($request)
+    $promise = $httpClient->sendAsyncRequest($request)
         ->then(
             function (ResponseInterface $response) {
                 echo 'Got status '.$response->getStatusCode();
