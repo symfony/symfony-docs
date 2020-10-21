@@ -271,4 +271,4 @@ Field Variables
 +----------+------------+----------------------------------------------------------------------+
 
 .. _`datetime local`: http://w3c.github.io/html-reference/datatypes.html#form.data.datetime-local
-.. _`Date/Time Format Syntax`: http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax
+.. _`Date/Time Format Syntax`: https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
