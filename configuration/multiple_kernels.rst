@@ -88,31 +88,50 @@ files so they don't collide with the files from ``src/Kernel.php``::
 
     class ApiKernel extends Kernel
     {
-        // ...
+        use MicroKernelTrait;
 
         public function registerBundles()
         {
-            // load only the bundles strictly needed for the API...
+            // load only the bundles strictly needed for the API
+            $contents = require $this->getProjectDir().'/config/api_bundles.php';
+            foreach ($contents as $class => $envs) {
+                if ($envs[$this->environment] ?? $envs['all'] ?? false) {
+                    yield new $class();
+                }
+            }
         }
 
-        public function getCacheDir()
+        public function getProjectDir(): string
         {
-            return dirname(__DIR__).'/var/cache/api/'.$this->getEnvironment();
+            return \dirname(__DIR__);
         }
 
-        public function getLogDir()
+        public function getCacheDir(): string
         {
-            return dirname(__DIR__).'/var/log/api';
+            return $this->getProjectDir().'/var/cache/api/'.$this->getEnvironment();
+        }
+
+        public function getLogDir(): string
+        {
+            return $this->getProjectDir().'/var/log/api';
         }
 
         public function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
         {
-            // load only the config files strictly needed for the API
-            $confDir = $this->getProjectDir().'/config';
-            $loader->load($confDir.'/api/*'.self::CONFIG_EXTS, 'glob');
-            if (is_dir($confDir.'/api/'.$this->environment)) {
-                $loader->load($confDir.'/api/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
-            }
+            $container->addResource(new FileResource($this->getProjectDir().'/config/api_bundles.php'));
+            $container->setParameter('container.dumper.inline_factories', true);
+            $confDir = $this->getProjectDir().'/config/api';
+
+            $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
+            $loader->load($confDir.'/{packages}/'.$this->environment.'/*'.self::CONFIG_EXTS, 'glob');
+            $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+            $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+        }
+
+        protected function configureRoutes(RouteCollectionBuilder $routes): void
+        {
+            $confDir = $this->getProjectDir().'/config/api';
+            // ... load only the config routes strictly needed for the API
         }
     }
 

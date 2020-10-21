@@ -875,4 +875,4 @@ Learn more
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
 .. _`PDO`: https://www.php.net/pdo
 .. _`available Doctrine extensions`: https://github.com/Atlantic18/DoctrineExtensions
-.. _`StofDoctrineExtensionsBundle`: https://github.com/antishov/StofDoctrineExtensionsBundle
+.. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle

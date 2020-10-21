@@ -681,7 +681,7 @@ defines a ``Person`` entity with a ``firstName`` property:
 This custom mapping is used to convert property names when serializing and
 deserializing objects::
 
-    $serialized = $serializer->serialize(new Person("Kévin"));
+    $serialized = $serializer->serialize(new Person("Kévin"), 'json');
     // {"customer_name": "Kévin"}
 
 Serializing Boolean Attributes
@@ -1537,7 +1537,7 @@ and ``BitBucketCodeRepository`` classes:
 
 Once configured, the serializer uses the mapping to pick the correct class::
 
-    $serialized = $serializer->serialize(new GitHubCodeRepository());
+    $serialized = $serializer->serialize(new GitHubCodeRepository(), 'json');
     // {"type": "github"}
 
     $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');

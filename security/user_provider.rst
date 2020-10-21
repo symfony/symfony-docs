@@ -135,7 +135,7 @@ interface only requires one method: ``loadUserByUsername($username)``::
     {
         // ...
 
-        public function loadUserByUsername($usernameOrEmail)
+        public function loadUserByUsername(string $usernameOrEmail)
         {
             $entityManager = $this->getEntityManager();
             
@@ -376,7 +376,7 @@ command will generate a nice skeleton to get you started::
          *
          * @throws UsernameNotFoundException if the user is not found
          */
-        public function loadUserByUsername($username)
+        public function loadUserByUsername(string $username)
         {
             // Load a User object from your data source or throw UsernameNotFoundException.
             // The $username argument may not actually be a username:
@@ -412,7 +412,7 @@ command will generate a nice skeleton to get you started::
         /**
          * Tells Symfony to use this provider for this User class.
          */
-        public function supportsClass($class)
+        public function supportsClass(string $class)
         {
             return User::class === $class || is_subclass_of($class, User::class);
         }

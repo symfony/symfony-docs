@@ -410,7 +410,7 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
 
             <services>
                 <service id="App\Security\Authentication\Provider\WsseProvider">
-                    <argument key="$cachePool" type="service" id="cache.app"></argument>
+                    <argument key="$cachePool" type="service" id="cache.app"/>
                 </service>
 
                 <service id="App\Security\Firewall\WsseListener">
