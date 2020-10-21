@@ -672,7 +672,7 @@ Set the ``label`` option on fields to define their labels explicitly::
 
     ->add('dueDate', DateType::class, [
         // set it to FALSE to not display the label for this field
-        'label'  => 'To Be Completed Before',
+        'label' => 'To Be Completed Before',
     ])
 
 .. tip::

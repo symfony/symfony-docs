@@ -92,7 +92,7 @@ Take the following ``access_control`` entries as an example:
                     'path' => '^/admin',
                     'roles' => 'ROLE_USER_METHOD',
                     'methods' => 'POST, PUT',
-                ]
+                ],
             ],
         ]);
 

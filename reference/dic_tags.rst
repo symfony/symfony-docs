@@ -410,7 +410,7 @@ service class::
 
     class MyClearer implements CacheClearerInterface
     {
-        public function clear($cacheDirectory)
+        public function clear(string $cacheDirectory)
         {
             // clear your cache
         }
@@ -1062,7 +1062,7 @@ required option: ``alias``, which defines the name of the extractor::
         /**
          * Sets the prefix that should be used for new found messages.
          */
-        public function setPrefix($prefix)
+        public function setPrefix(string $prefix)
         {
             $this->prefix = $prefix;
         }
