@@ -140,8 +140,7 @@ Configuration
 
     * :ref:`retry_failed <reference-http-client-retry-failed>`
 
-      * `backoff_service`_
-      * `decider_service`_
+      * `retry_strategy`_
       * :ref:`enabled <reference-http-client-retry-enabled>`
       * `delay`_
       * `http_codes`_
@@ -157,8 +156,7 @@ Configuration
 
   * :ref:`retry_failed <reference-http-client-retry-failed>`
 
-    * `backoff_service`_
-    * `decider_service`_
+    * `retry_strategy`_
     * :ref:`enabled <reference-http-client-retry-enabled>`
     * `delay`_
     * `http_codes`_
@@ -780,8 +778,7 @@ will automatically retry failed HTTP requests.
         http_client:
             # ...
             retry_failed:
-                # backoff_service: app.custom_backoff
-                # decider_service:  app.custom_decider
+                # retry_strategy: app.custom_strategy
                 http_codes: [429, 500]
                 max_retries: 2
                 delay: 1000
@@ -825,21 +822,6 @@ The username and password used to create the ``Authorization`` HTTP header used
 in the `Microsoft NTLM authentication protocol`_. The value of this option must
 follow the format ``username:password``. This authentication mechanism requires
 using the cURL-based transport.
-
-backoff_service
-...............
-
-**type**: ``string``
-
-.. versionadded:: 5.2
-
-    The ``backoff_service`` option was introduced in Symfony 5.2.
-
-The service id used to compute the time to wait between retries. By default, it
-uses an instance of
-:class:`Symfony\\Component\\HttpClient\\Retry\\ExponentialBackOff` configured
-with ``delay``, ``max_delay``, ``multiplier`` and ``jitter`` options. This
-class has to implement :class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface`.
 
 base_uri
 ........
@@ -908,21 +890,6 @@ ciphers
 
 A list of the names of the ciphers allowed for the SSL/TLS connections. They
 can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
-
-decider_service
-...............
-
-**type**: ``string``
-
-.. versionadded:: 5.2
-
-    The ``decider_service`` option was introduced in Symfony 5.2.
-
-The service id used to decide if a request should be retried. By default, it
-uses an instance of
-:class:`Symfony\\Component\\HttpClient\\Retry\\HttpStatusCodeDecider` configured
-with the ``http_codes`` option. This class has to implement
-:class:`Symfony\\Component\\HttpClient\\Retry\\RetryDeciderInterface`.
 
 delay
 .....
@@ -1123,6 +1090,22 @@ client and to make your tests easier.
 
 The value of this option is an associative array of ``domain => IP address``
 (e.g ``['symfony.com' => '46.137.106.254', ...]``).
+
+retry_strategy
+...............
+
+**type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``retry_strategy`` option was introduced in Symfony 5.2.
+
+The service is used to decide if a request should be retried and to compute the
+time to wait between retries. By default, it uses an instance of
+:class:`Symfony\\Component\\HttpClient\\Retry\\GenericRetryStrategy` configured
+with ``http_codes``, ``delay``, ``max_delay``, ``multiplier`` and ``jitter``
+options. This class has to implement
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryStrategyInterface`.
 
 scope
 .....

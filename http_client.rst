@@ -710,10 +710,9 @@ original HTTP client::
     $client = new RetryableHttpClient(HttpClient::create());
 
 The ``RetryableHttpClient`` uses a
-:class:`Symfony\\Component\\HttpClient\\Retry\\RetryDeciderInterface` to
-decide if the request should be retried, and a
-:class:`Symfony\\Component\\HttpClient\\Retry\\RetryBackOffInterface` to
-define the waiting time between each retry.
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryStrategyInterface` to
+decide if the request should be retried, and to define the waiting time between
+each retry.
 
 HTTP Proxies
 ~~~~~~~~~~~~
