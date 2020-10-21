@@ -90,12 +90,13 @@ passes to it the needed variables::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class UserController extends AbstractController
     {
         // ...
 
-        public function notifications()
+        public function notifications(): Response
         {
             // get the user information and notifications somehow
             $userFirstName = '...';
@@ -191,6 +192,7 @@ Consider the following routing configuration:
         namespace App\Controller;
 
         // ...
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
@@ -198,7 +200,7 @@ Consider the following routing configuration:
             /**
              * @Route("/", name="blog_index")
              */
-            public function index()
+            public function index(): Response
             {
                 // ...
             }
@@ -206,7 +208,7 @@ Consider the following routing configuration:
             /**
              * @Route("/article/{slug}", name="blog_post")
              */
-            public function show(string $slug)
+            public function show(string $slug): Response
             {
                 // ...
             }
@@ -399,7 +401,7 @@ use the ``render()`` helper::
 
     class ProductController extends AbstractController
     {
-        public function index()
+        public function index(): Response
         {
             // ...
 
@@ -739,11 +741,12 @@ First, create the controller that renders a certain number of recent articles::
     // src/Controller/BlogController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
     class BlogController extends AbstractController
     {
-        public function recentArticles($max = 3)
+        public function recentArticles(int $max = 3): Response
         {
             // get the recent articles somehow (e.g. making a database query)
             $articles = ['...', '...', '...'];

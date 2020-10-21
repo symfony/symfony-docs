@@ -325,6 +325,53 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
         // ...
     }
 
+.. tip::
+
+    If you need the namespace to be interoperable with a third-party app,
+    you can take control over auto-generation by setting the ``namespace``
+    attribute of the ``cache.pool`` service tag. For example, you can
+    override the service definition of the adapter:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                app.cache.adapter.redis:
+                    parent: 'cache.adapter.redis'
+                    tags:
+                        - { name: 'cache.pool', namespace: 'my_custom_namespace' }
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="app.cache.adapter.redis" parent="cache.adapter.redis">
+                        <tag name="cache.pool" namespace="my_custom_namespace"/>
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return function(ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                $services->set('app.cace.adapter.redis')
+                    ->parent('cache.adapter.redis')
+                    ->tag('cache.pool', ['namespace' => 'my_custom_namespace'])
+            };
+
 Custom Provider Options
 -----------------------
 

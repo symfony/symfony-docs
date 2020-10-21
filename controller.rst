@@ -36,7 +36,7 @@ class::
         /**
          * @Route("/lucky/number/{max}", name="app_lucky_number")
          */
-        public function number($max)
+        public function number(int $max): Response
         {
             $number = random_int(0, $max);
 
@@ -134,7 +134,7 @@ and ``redirect()`` methods::
     use Symfony\Component\HttpFoundation\RedirectResponse;
 
     // ...
-    public function index()
+    public function index(): RedirectResponse
     {
         // redirects to the "homepage" route
         return $this->redirectToRoute('homepage');
@@ -196,12 +196,13 @@ If you need a service in a controller, type-hint an argument with its class
 (or interface) name. Symfony will automatically pass you the service you need::
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
     /**
      * @Route("/lucky/number/{max}")
      */
-    public function number($max, LoggerInterface $logger)
+    public function number(int $max, LoggerInterface $logger): Response
     {
         $logger->info('We are logging!');
         // ...
@@ -322,10 +323,11 @@ Managing Errors and 404 Pages
 When things are not found, you should return a 404 response. To do this, throw a
 special type of exception::
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
     // ...
-    public function index()
+    public function index(): Response
     {
         // retrieve the object from database
         $product = ...;
@@ -370,8 +372,10 @@ object. To access it in your controller, add it as an argument and
 **type-hint it with the Request class**::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
 
-    public function index(Request $request, $firstName, $lastName)
+    public function index(Request $request, string $firstName, string $lastName): Response
     {
         $page = $request->query->get('page', 1);
 
@@ -401,9 +405,11 @@ Session storage and other configuration can be controlled under the
 To get the session, add an argument and type-hint it with
 :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    // ...
 
-    public function index(SessionInterface $session)
+    public function index(SessionInterface $session): Response
     {
         // stores an attribute for reuse during a later user request
         $session->set('foo', 'bar');
@@ -413,6 +419,8 @@ To get the session, add an argument and type-hint it with
 
         // uses a default value if the attribute doesn't exist
         $filters = $session->get('filters', []);
+
+        // ...
     }
 
 Stored attributes remain in the session for the remainder of that user's session.
@@ -435,8 +443,10 @@ from the session automatically as soon as you retrieve them. This feature makes
 For example, imagine you're processing a :doc:`form </forms>` submission::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
 
-    public function update(Request $request)
+    public function update(Request $request): Response
     {
         // ...
 
@@ -515,8 +525,9 @@ pass the ``Request`` object to any controller argument that is type-hinted with
 the ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -572,7 +583,7 @@ To get the value of any :ref:`configuration parameter <configuration-parameters>
 from a controller, use the ``getParameter()`` helper method::
 
     // ...
-    public function index()
+    public function index(): Response
     {
         $contentsDir = $this->getParameter('kernel.project_dir').'/contents';
         // ...
@@ -584,8 +595,10 @@ Returning JSON Response
 To return JSON from a controller, use the ``json()`` helper method. This returns a
 ``JsonResponse`` object that encodes the data automatically::
 
+    use Symfony\Component\HttpFoundation\Response;
     // ...
-    public function index()
+
+    public function index(): Response
     {
         // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
         return $this->json(['username' => 'jane.doe']);
@@ -604,7 +617,10 @@ Streaming File Responses
 You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::file`
 helper to serve a file from inside a controller::
 
-    public function download()
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    public function download(): Response
     {
         // send the file contents and force the browser to download it
         return $this->file('/path/to/some_file.pdf');
@@ -614,8 +630,9 @@ The ``file()`` helper provides some arguments to configure its behavior::
 
     use Symfony\Component\HttpFoundation\File\File;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+    // ...
 
-    public function download()
+    public function download(): Response
     {
         // load the file from the filesystem
         $file = new File('/path/to/some_file.pdf');

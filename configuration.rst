@@ -753,12 +753,13 @@ use the ``getParameter()`` helper::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class UserController extends AbstractController
     {
         // ...
 
-        public function index()
+        public function index(): Response
         {
             $projectDir = $this->getParameter('kernel.project_dir');
             $adminEmail = $this->getParameter('app.admin_email');

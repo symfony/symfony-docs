@@ -226,13 +226,15 @@ variable so you can use it in Twig::
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     // ...
+
     class LuckyController extends AbstractController
     {
         /**
          * @Route("/lucky/number")
          */
-        public function number()
+        public function number(): Response
         {
             $number = random_int(0, 100);
 
