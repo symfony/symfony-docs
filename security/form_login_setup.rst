@@ -341,7 +341,7 @@ a traditional HTML form that submits to ``/login``:
                     <guard>
                         <authenticator class="App\Security\LoginFormAuthenticator"/>
                     </guard>
-                    <logout path="app_logout" />
+                    <logout path="app_logout"/>
                 </firewall>
             </config>
         </srv:container>
