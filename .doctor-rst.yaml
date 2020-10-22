@@ -25,6 +25,8 @@ rules:
     no_namespace_after_use_statements: ~
     no_php_open_tag_in_code_block_php_directive: ~
     no_space_before_self_xml_closing_tag: ~
+    only_backslashes_in_namespace_in_php_code_block: ~
+    only_backslashes_in_use_statements_in_php_code_block: ~
     ordered_use_statements: ~
     php_prefix_before_bin_console: ~
     replace_code_block_types: ~
