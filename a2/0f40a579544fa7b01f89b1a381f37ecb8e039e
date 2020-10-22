@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-10-06T13:14:16Z
+
+Thanks for this contribution!
+
+I like the idea of always showing the file path ... but the "namespace" is not always displayed. If an article is always showing the same example, we use `// ...` in the following examples to hide the "namespace" and the previous "use" (we only display the new "use").
+
+Also, this kind of PRs are tricky because they can introduce several merge conflicts, so it's better to create them in the lowest maintained branch that needs these changes (e.g. 4.4.)
+
+---------------------------------------------------------------------------
+
+by TheGarious at 2020-10-06T13:28:25Z
+
+No problem @javiereguiluz,
+
+I see many page where namespace and filepath is always implemented and the other page not.
+I was thinking is better to add all time.
+I correct relicat Bundle present into security/named_encoders.rst.
+
+I need to change the branch target ?
+
+---------------------------------------------------------------------------
+
+by TheGarious at 2020-10-19T10:54:42Z
+
+@javiereguiluz @xabbuh  up
