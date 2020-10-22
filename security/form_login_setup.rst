@@ -82,14 +82,6 @@ class that processes the login submit and 4) updates the main security config fi
          */
         public function logout()
         {
-            throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
-        }
-
-        /**
-         * @Route("/logout", name="app_logout")
-         */
-        public function logout()
-        {
             throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
         }
     }
