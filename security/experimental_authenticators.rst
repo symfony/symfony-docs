@@ -472,6 +472,9 @@ the following badges are supported:
 For instance, if you want to add CSRF and password migration to your custom
 authenticator, you would initialize the passport like this::
 
+    // src/Service/LoginAuthenticator.php
+    namespace App\Service;
+
     // ...
     use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
     use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
