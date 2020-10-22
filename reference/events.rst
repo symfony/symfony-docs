@@ -251,7 +251,7 @@ sent as response::
 
 .. note::
 
-    The TwigBundle registers an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
+    The TwigBundle registers an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`
     that forwards the ``Request`` to a given controller defined by the
     ``exception_listener.controller`` parameter.
 
