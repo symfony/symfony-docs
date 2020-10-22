@@ -641,7 +641,7 @@ tags, is to implement the static ``getDefaultPriority()`` method on the
 service itself::
 
     // src/Handler/One.php
-    namespace App/Handler;
+    namespace App\Handler;
 
     class One
     {
