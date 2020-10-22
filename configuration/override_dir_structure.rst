@@ -148,8 +148,8 @@ Override the Translations Directory
 -----------------------------------
 
 If your translation files are not stored in the default ``translations/``
-directory, use the :ref:`framework.translator.paths <reference-translator-paths>`
-configuration option to define your own translations directory (or directories):
+directory, use the :ref:`framework.translator.default_path <reference-translator-default_path>`
+configuration option to define your own translations directory (use :ref:`framework.translator.paths <reference-translator-paths>` for multiple directories):
 
 .. configuration-block::
 
@@ -159,7 +159,7 @@ configuration option to define your own translations directory (or directories):
         framework:
             translator:
                 # ...
-                paths: ["%kernel.project_dir%/i18n"]
+                default_path: "%kernel.project_dir%/i18n"
 
     .. code-block:: xml
 
@@ -175,7 +175,7 @@ configuration option to define your own translations directory (or directories):
 
             <framework:config>
                 <framework:translator>
-                    <framework:path>%kernel.project_dir%/i18n</framework:path>
+                    <framework:default-path>%kernel.project_dir%/i18n</framework:default-path>
                 </framework:translator>
             </framework:config>
 
@@ -186,9 +186,7 @@ configuration option to define your own translations directory (or directories):
         // config/packages/translation.php
         $container->loadFromExtension('framework', [
             'translator' => [
-                'paths' => [
-                    '%kernel.project_dir%/i18n',
-                ],
+                'default_path' => '%kernel.project_dir%/i18n',
             ],
         ]);
 
@@ -199,7 +197,7 @@ Override the Public Directory
 -----------------------------
 
 If you need to rename or move your ``public/`` directory, the only thing you
-need to guarantee is that the path to the ``var/`` directory is still correct in
+need to guarantee is that the path to the ``vendor/`` directory is still correct in
 your ``index.php`` front controller. If you renamed the directory, you're fine.
 But if you moved it in some way, you may need to modify these paths inside those
 files::
