@@ -408,9 +408,10 @@ priority message files.
 The filename of the translation files is also important: each message file
 must be named according to the following path: ``domain.locale.loader``:
 
-* **domain**: An optional way to organize messages into groups. Unless
+* **domain**: Domains are a way to organize messages into groups. Unless
   parts of the application are explicitly separated from each other, it is
-  recommended to only use default ``messages`` domain;
+  recommended to only use the default ``messages`` domain (e.g.
+  ``messages.en.yaml``).
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
