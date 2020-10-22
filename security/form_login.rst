@@ -93,6 +93,7 @@ configuration (``login``):
     .. code-block:: php-annotations
 
         // src/Controller/SecurityController.php
+        namespace App\Controller;
 
         // ...
         use Symfony\Component\Routing\Annotation\Route;

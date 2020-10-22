@@ -65,6 +65,7 @@ The next step is to configure a route in your app matching this path:
     .. code-block:: php-annotations
 
         // src/Controller/SecurityController.php
+        namespace App\Controller;
 
         // ...
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

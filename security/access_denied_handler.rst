@@ -13,6 +13,7 @@ This interface defines one method called ``handle()`` where you can implement wh
 logic that should run when access is denied for the current user (e.g. send a
 mail, log a message, or generally return a custom response)::
 
+    // src/Security/AccessDeniedHandler.php
     namespace App\Security;
 
     use Symfony\Component\HttpFoundation\Request;

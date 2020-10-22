@@ -83,6 +83,9 @@ protected against CSRF attacks.
 By default Symfony adds the CSRF token in a hidden field called ``_token``, but
 this can be customized on a form-by-form basis::
 
+    // src/Form/TaskType.php
+    namespace App\Form;
+    
     // ...
     use App\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
