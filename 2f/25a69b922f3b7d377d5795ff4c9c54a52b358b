@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-22T12:23:12Z
+
+Hi @l-vo! I was about to merge this PR, but I'm a bit confused by the target branch. If I understand https://github.com/symfony/symfony/pull/24860 correctly, this option is introduced in Symfony 3.4, is there a reason you submitted this to 4.4?
+
+---------------------------------------------------------------------------
+
+by l-vo at 2020-10-22T13:27:48Z
+
+Hi @wouterj, you're right, it seems I made a mistake, I think it's because the second fix (`var` instead of `vendor`) targets 4.4. I will push a new version for this PR and another to fix `default_path` in 3.4.
+
+---------------------------------------------------------------------------
+
+by l-vo at 2020-10-22T20:15:36Z
+
+@wouterj Finally it was not a mistake, I targeted 4.4 because overriding translation directories is not documented in [3.4](https://symfony.com/doc/3.4/configuration/override_dir_structure.html) ^^
