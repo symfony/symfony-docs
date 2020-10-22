@@ -74,6 +74,21 @@ To build the assets, run:
 
     Stop and restart ``encore`` each time you update your ``webpack.config.js`` file.
 
+.. note::
+
+    If you prefer npm, run these commands instead:
+    
+    .. code-block:: terminal
+
+        # compile assets once
+        $ npm run dev
+
+        # or, recompile assets automatically when files change
+        $ npm run watch
+
+        # on deploy, create a production build
+        $ npm run build
+
 Congrats! You now have three new files:
 
 * ``public/build/app.js`` (holds all the JavaScript for your "app" entry)
