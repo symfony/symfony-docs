@@ -94,8 +94,8 @@ Override the Templates Directory
 --------------------------------
 
 If your templates are not stored in the default ``app/Resources/views/``
-directory, use the :ref:`twig.paths <config-twig-paths>` configuration option to
-define your own templates directory (or directories):
+directory, use the :ref:`twig.default_path <config-twig-default-path>` configuration option to
+define your own templates directory (use :ref:`twig.paths <config-twig-paths>` for multiple directories):
 
 .. configuration-block::
 
@@ -104,7 +104,7 @@ define your own templates directory (or directories):
         # app/config/config.yml
         twig:
             # ...
-            paths: ["%kernel.project_dir%/templates"]
+            default_path: "%kernel.project_dir%/templates"
 
     .. code-block:: xml
 
@@ -119,7 +119,7 @@ define your own templates directory (or directories):
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:path>%kernel.project_dir%/templates</twig:path>
+                <twig:default-path>%kernel.project_dir%/templates</twig:default-path>
             </twig:config>
 
         </container>
@@ -128,9 +128,7 @@ define your own templates directory (or directories):
 
         // app/config/config.php
         $container->loadFromExtension('twig', [
-            'paths' => [
-                '%kernel.project_dir%/templates',
-            ],
+            'default_path' => '%kernel.project_dir%/templates',
         ]);
 
 .. _override-web-dir:
