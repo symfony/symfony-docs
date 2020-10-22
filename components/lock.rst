@@ -237,6 +237,11 @@ to acquire the lock in a blocking mode::
     $lock = $factory->createLock('user'.$user->id);
     $lock->acquireRead(true);
 
+.. note::
+
+    The `priority policy`_ of Symfony's shared locks depends on the underlying
+    store (e.g. Redis store prioritizes readers vs writers).
+
 When a read-only lock is acquired with the method ``acquireRead()``, it's
 possible to **promote** the lock, and change it to write lock, by calling the
 ``acquire()`` method::
@@ -915,3 +920,4 @@ are still running.
 .. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/
 .. _`ZooKeeper`: https://zookeeper.apache.org/
 .. _`readers–writer lock`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock
+.. _`priority policy`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock#Priority_policies
