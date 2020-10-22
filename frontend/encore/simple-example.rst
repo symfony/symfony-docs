@@ -63,31 +63,22 @@ To build the assets, run:
 
     # compile assets once
     $ yarn encore dev
+    # if you prefer npm, run:
+    $ npm run dev
 
     # or, recompile assets automatically when files change
     $ yarn encore dev --watch
+    # if you prefer npm, run:
+    $ npm run watch
 
     # on deploy, create a production build
     $ yarn encore production
+    # if you prefer npm, run:
+    $ npm run build
 
 .. note::
 
     Stop and restart ``encore`` each time you update your ``webpack.config.js`` file.
-
-.. note::
-
-    If you prefer npm, run these commands instead:
-    
-    .. code-block:: terminal
-
-        # compile assets once
-        $ npm run dev
-
-        # or, recompile assets automatically when files change
-        $ npm run watch
-
-        # on deploy, create a production build
-        $ npm run build
 
 Congrats! You now have three new files:
 
