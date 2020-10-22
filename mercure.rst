@@ -448,7 +448,7 @@ And here is the controller::
     To use the cookie authentication method, the Symfony app and the Hub
     must be served from the same domain (can be different sub-domains).
 
-Generating Programmatically The JWT Used to Publish
+Programmatically Generating The JWT Used to Publish
 ---------------------------------------------------
 
 Instead of directly storing a JWT in the configuration,
