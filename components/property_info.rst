@@ -434,15 +434,12 @@ with the ``property_info`` service in the Symfony Framework::
     );
     $serializerExtractor = new SerializerExtractor($serializerClassMetadataFactory);
 
-    // List information.
+    // the `serializer_groups` option must be configured (may be set to null)
     $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
-    
-.. note::
-
-    The ``serializer_groups`` option must be provided in order to have a value different than ``null`` returned.
    
-    If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be checked but you will get only the properties 
-    considered by the Serializer Component (notably the ``@Ignore`` annotation is taken into account).
+If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
+checked but you will get only the properties considered by the Serializer
+Component (notably the ``@Ignore`` annotation is taken into account).
 
 .. versionadded:: 5.2
 
