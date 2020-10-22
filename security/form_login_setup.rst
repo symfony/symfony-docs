@@ -481,6 +481,7 @@ If you also want to apply this behavior to public pages, you can create an
 :doc:`event subscriber </event_dispatcher>` to set the target path manually
 whenever the user browses a page::
 
+    // src/EventSubscriber/RequestSubscriber.php
     namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;

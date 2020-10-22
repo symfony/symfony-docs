@@ -121,8 +121,8 @@ to use it, the class must implement
 The interface requires one method - ``getEncoderName()`` - which should return
 the name of the encoder to use::
 
-    // src/Acme/UserBundle/Entity/User.php
-    namespace Acme\UserBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
