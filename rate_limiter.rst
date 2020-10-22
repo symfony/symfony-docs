@@ -212,6 +212,50 @@ processes by reserving unused tokens.
             $limit->wait();
         } while (!$limit->isAccepted());
 
+Exposing the Rate Limiter Status
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using a rate limiter in APIs, it's common to include some standard HTTP
+headers in the response to expose the limit status (e.g. remaining tokens, when
+new tokens will be available, etc.)
+
+Use the :class:`Symfony\\Component\\RateLimiter\\RateLimit` object returned by
+the ``consume()`` method (also available via the ``getRateLimit()`` method of
+the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
+``reserve()`` method) to get the value of those HTTP headers::
+
+    // src/Controller/ApiController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\RateLimiter\RateLimiter;
+
+    class ApiController extends AbstractController
+    {
+        public function index(RateLimiter $anonymousApiLimiter)
+        {
+            $limiter = $anonymousApiLimiter->create($request->getClientIp());
+            $limit = $limiter->consume();
+            $headers = [
+                'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
+                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp(),
+                'X-RateLimit-Limit' => $limit->getLimit(),
+            ];
+
+            if (false === $limit->isAccepted()) {
+                return new Response(null, Response::HTTP_TOO_MANY_REQUESTS, $headers);
+            }
+
+            // ...
+
+            $reponse = new Response('...');
+            $response->headers->add($headers);
+
+            return $response;
+        }
+    }
+
 Rate Limiter Storage and Locking
 --------------------------------
 
