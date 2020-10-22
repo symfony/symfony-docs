@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-21T15:01:11Z
+
+Hi @spike31! A very late thanks to you for creating this PR!
+
+I don't have much knowledge about this topic. Let's ask @dunglas if he can maybe have a look at this PR. Is this a known issue that should be somehow mitigated in the `GetSetMethodNormalizer`? Or should we add this little caution to the docs instead?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2020-10-21T17:20:28Z
+
+Actually it's the case for all object normalizers, not only this one.
+
+This will also leak a lot of useless internal details (which could even help an attacker).
+
++1 on my side for a (more general) warning.
