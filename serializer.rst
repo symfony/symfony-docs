@@ -91,6 +91,12 @@ Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
 
+.. caution::
+
+    Always make sure to load the ``DateTimeNormalizer`` when serializing the
+    ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
+    usage and exposing internal details.
+
 Here is an example on how to load the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
 faster alternative to the `ObjectNormalizer` when data objects always use
