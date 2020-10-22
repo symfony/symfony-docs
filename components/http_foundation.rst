@@ -83,17 +83,19 @@ can be accessed via several public properties:
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
 instance (or a sub-class of), which is a data holder class:
 
-* ``request``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``request``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` or
+  :class:`Symfony\\Component\\HttpFoundation\\InputBag` if the data is
+  coming from ``$_POST`` parameters;
 
-* ``query``:   :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``query``: :class:`Symfony\\Component\\HttpFoundation\\InputBag`;
 
-* ``cookies``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``cookies``: :class:`Symfony\\Component\\HttpFoundation\\InputBag`;
 
 * ``attributes``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
 
-* ``files``:   :class:`Symfony\\Component\\HttpFoundation\\FileBag`;
+* ``files``: :class:`Symfony\\Component\\HttpFoundation\\FileBag`;
 
-* ``server``:  :class:`Symfony\\Component\\HttpFoundation\\ServerBag`;
+* ``server``: :class:`Symfony\\Component\\HttpFoundation\\ServerBag`;
 
 * ``headers``: :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`.
 
