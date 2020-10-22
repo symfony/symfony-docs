@@ -17,6 +17,7 @@ process. For that you'll have to create your own normalizer. But it's usually
 preferable to let Symfony normalize the object, then hook into the normalization
 to customize the normalized data. To do that, leverage the ``ObjectNormalizer``::
 
+    // src/Serializer/TopicNormalizer.php
     namespace App\Serializer;
 
     use App\Entity\Topic;

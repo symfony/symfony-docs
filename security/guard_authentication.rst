@@ -33,6 +33,8 @@ your ``User`` class (the ``make:entity`` command is a good way to do this):
 .. code-block:: diff
 
     // src/Entity/User.php
+    namespace App\Entity;
+
     // ...
 
     class User implements UserInterface
@@ -419,6 +421,8 @@ You can throw this from ``getCredentials()``, ``getUser()`` or ``checkCredential
 to cause a failure::
 
     // src/Security/TokenAuthenticator.php
+    namespace App\Security;
+
     // ...
 
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -461,8 +465,9 @@ completes registration. To do that, use your authenticator and a service called
 ``GuardAuthenticatorHandler``::
 
     // src/Controller/RegistrationController.php
+    namespace App\Controller;
+    
     // ...
-
     use App\Security\LoginFormAuthenticator;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;

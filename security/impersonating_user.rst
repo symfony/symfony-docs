@@ -116,6 +116,9 @@ stored in the token storage will be a ``SwitchUserToken`` instance. Use the
 following snippet to obtain the original token which gives you access to
 the impersonator user::
 
+    // src/Service/SomeService.php
+    namespace App\Service;
+
     use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
     use Symfony\Component\Security\Core\Security;
     // ...
@@ -263,6 +266,7 @@ be called):
 Then, create a voter class that responds to this role and includes whatever custom
 logic you want::
 
+    // src/Service/Voter/SwitchToCustomerVoter.php
     namespace App\Security\Voter;
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
