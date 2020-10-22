@@ -98,8 +98,9 @@ Override the Templates Directory
 --------------------------------
 
 If your templates are not stored in the default ``templates/`` directory, use
-the :ref:`twig.paths <config-twig-paths>` configuration option to define your
-own templates directory (or directories):
+the :ref:`twig.default_path <config-twig-default-path>` configuration
+option to define your own templates directory (use :ref:`twig.paths <config-twig-paths>`
+for multiple directories):
 
 .. configuration-block::
 
@@ -108,7 +109,7 @@ own templates directory (or directories):
         # config/packages/twig.yaml
         twig:
             # ...
-            paths: ["%kernel.project_dir%/resources/views"]
+            default_path: "%kernel.project_dir%//resources/views"
 
     .. code-block:: xml
 
@@ -123,7 +124,7 @@ own templates directory (or directories):
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:path>%kernel.project_dir%/resources/views</twig:path>
+                <twig:default-path>%kernel.project_dir%/resources/views</twig:default-path>
             </twig:config>
 
         </container>
@@ -132,9 +133,7 @@ own templates directory (or directories):
 
         // config/packages/twig.php
         $container->loadFromExtension('twig', [
-            'paths' => [
-                '%kernel.project_dir%/resources/views',
-            ],
+            'default_path' => '%kernel.project_dir%/resources/views',
         ]);
 
 Override the Translations Directory
