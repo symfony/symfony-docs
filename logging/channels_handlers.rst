@@ -182,10 +182,11 @@ How to Autowire Logger Channels
 
 Starting from `MonologBundle`_ 3.5 you can autowire different Monolog channels
 by type-hinting your service arguments with the following syntax:
-``Psr\Log\LoggerInterface $<channel>Logger``. The ``<channel>`` must have been 
-predefined in your Monolog configuration.
+``Psr\Log\LoggerInterface $<channel>Logger``. The ``<channel>`` must have been
+:ref:`predefined in your Monolog configuration <monolog-channels-config>`.
 
-An example to inject the service related to the ``app`` logger channel:
+For example to inject the service related to the ``app`` logger channel,
+change your constructor like this:
 
 .. code-block:: diff
 
