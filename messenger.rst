@@ -1167,6 +1167,10 @@ auto_setup           Create the Redis group automatically?  true
 auth                 The Redis password
 delete_after_ack     If ``true``, messages are deleted      false
                      automatically after processing them
+delete_after_reject  If ``true``, messages are deleted      true
+                     automatically if they are rejected
+lazy                 Connect only when a connection is      false
+                     really needed
 serializer           How to serialize the final payload     ``Redis::SERIALIZER_PHP``
                      in Redis (the
                      ``Redis::OPT_SERIALIZER`` option)
@@ -1207,7 +1211,7 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 
 .. versionadded:: 5.2
 
-    The ``delete_after_reject`` option was introduced in Symfony 5.2.
+    The ``delete_after_reject`` and ``lazy`` options were introduced in Symfony 5.2.
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
