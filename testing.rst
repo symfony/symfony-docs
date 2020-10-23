@@ -544,74 +544,51 @@ You can also get the objects related to the latest request::
 Accessing the Container
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-It's highly recommended that a functional test only tests the response. But
-under certain very rare circumstances, you might want to access some services
-to write assertions. Given that services are private by default, test classes
-define a property that stores a special container created by Symfony which
-allows fetching both public and all non-removed private services::
+Functional tests should only test the response (e.g. its contents or its HTTP
+status code). However, in some rare circumstances you may need to access the
+container to use some service.
 
-    // gives access to the same services used in your test, unless you're using
-    // $client->insulate() or using real HTTP requests to test your application
-    // don't forget to call self::bootKernel() before, otherwise, the container
-    // will be empty
-    $container = self::$container;
+First, you can get the same container used in the application, which only
+includes the public services::
 
-For a list of services available in your application, use the ``debug:container``
-command.
+    public function testSomething()
+    {
+        $client = self::createClient();
+        $container = $client->getContainer();
+        // $someService = $container->get('the-service-ID');
 
-If a private service is *never* used in your application (outside of your test),
-it is *removed* from the container and cannot be accessed as described above. In
-that case, you can create a public alias in the ``test`` environment and access
-it via that alias:
+        // ...
+    }
 
-.. configuration-block::
+Symfony tests also have access to a special container that includes both the
+public services and the non-removed :ref:`private services <container-public>`
+services::
 
-    .. code-block:: yaml
+    public function testSomething()
+    {
+        // this call is needed; otherwise the container will be empty
+        self::bootKernel();
 
-        # config/services_test.yaml
-        services:
-            # access the service in your test via
-            # self::$container->get('test.App\Test\SomeTestHelper')
-            test.App\Test\SomeTestHelper:
-                # the id of the private service
-                alias: 'App\Test\SomeTestHelper'
-                public: true
+        $container = self::$container;
+        // $someService = $container->get('the-service-ID');
 
-    .. code-block:: xml
+        // ...
+    }
 
-        <!-- config/services_test.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+Finally, for the most rare edge-cases, Symfony includes a special container
+which provides access to all services, public and private. This special
+container is a service that can be get via the normal container::
 
-            <services>
-                <!-- ... -->
+    public function testSomething()
+    {
+        $client = self::createClient();
+        $normalContainer = $client->getContainer();
+        $specialContainer = $normalContainer->get('test.service_container');
 
-                <service id="test.App\Test\SomeTestHelper" alias="App\Test\SomeTestHelper" public="true"/>
-            </services>
-        </container>
+        // $somePrivateService = $specialContainer->get('the-service-ID');
 
-    .. code-block:: php
-
-        // config/services_test.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Service\MessageGenerator;
-        use App\Service\SiteUpdateManager;
-
-        return function(ContainerConfigurator $configurator) {
-            // ...
-
-            $services->alias('test.App\Test\SomeTestHelper', 'App\Test\SomeTestHelper')->public();
-        };
-
-.. tip::
-
-    The special container that gives access to private services exists only in
-    the ``test`` environment and is itself a service that you can get from the
-    real container using the ``test.service_container`` id.
+        // ...
+    }
 
 .. tip::
 
