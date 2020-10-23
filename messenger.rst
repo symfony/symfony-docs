@@ -1083,7 +1083,8 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 
 .. versionadded:: 5.1
 
-    The ``delete_after_ack`` option was introduced in Symfony 5.1.
+    The ``delete_after_ack``, ``redeliver_timeout`` and ``claim_interval``
+    options were introduced in Symfony 5.1.
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
