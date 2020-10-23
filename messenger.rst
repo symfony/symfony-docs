@@ -1069,7 +1069,7 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 
 .. caution::
 
-    There should never be more than one `messenger:consume` command running with the same
+    There should never be more than one ``messenger:consume`` command running with the same
     config (stream, group and consumer name) to avoid having a message handled more than once.
     Using the ``HOSTNAME`` as the consumer might often be a good idea. In case you are using
     Kubernetes to orchestrate your containers, consider using a ``StatefulSet``.
