@@ -101,7 +101,7 @@ some interactive options called `Block elements`_::
 .. _`Block elements`: https://api.slack.com/reference/block-kit/block-elements
 
 Adding Interactions to a Discord Message
---------------------------------------
+----------------------------------------
 
 With a Discord message, you can use the
 :class:`Symfony\\Component\\Notifier\\Bridge\\Discord\\DiscordOptions` to add
