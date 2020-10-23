@@ -1151,29 +1151,47 @@ The Redis transport DSN may looks like this:
 
     The Unix socket DSN was introduced in Symfony 5.1.
 
-The transport has a number of options:
+To use the Redis transport, you will need the Redis PHP extension (>=4.3) and
+a running Redis server (^5.0).
 
-===================  =====================================  =========================
+A number of options can be configured via the DSN or via the ``options`` key
+under the transport in ``messenger.yaml``:
+
+===================  =====================================  =================================
      Option               Description                       Default
-===================  =====================================  =========================
-stream               The Redis stream name                  messages
-group                The Redis consumer group name          symfony
-consumer             Consumer name used in Redis            consumer
-auto_setup           Create the Redis group automatically?  true
-auth                 The Redis password
-delete_after_ack     If ``true``, messages are deleted      false
-                     automatically after processing them
-delete_after_reject  If ``true``, messages are deleted      true
-                     automatically if they are rejected
-serializer           How to serialize the final payload     ``Redis::SERIALIZER_PHP``
-                     in Redis (the
-                     ``Redis::OPT_SERIALIZER`` option)
-stream_max_entries   The maximum number of entries which    ``0`` (which means "no trimming")
-                     the stream will be trimmed to. Set
-                     it to a large enough number to
-                     avoid losing pending messages
-tls                  Enable TLS support for the connection  false
-===================  =====================================  =========================
+===================  =====================================  =================================
+stream              The Redis stream name                  messages
+group               The Redis consumer group name          symfony
+consumer            Consumer name used in Redis            consumer
+auto_setup          Create the Redis group automatically?  true
+auth                The Redis password
+delete_after_ack    If ``true``, messages are deleted      false
+                    automatically after processing them
+serializer          How to serialize the final payload     ``Redis::SERIALIZER_PHP``
+                    in Redis (the
+                    ``Redis::OPT_SERIALIZER`` option)
+stream_max_entries  The maximum number of entries which    ``0`` (which means "no trimming")
+                    the stream will be trimmed to. Set
+                    it to a large enough number to
+                    avoid losing pending messages
+tls                 Enable TLS support for the connection  false
+redeliver_timeout    Timeout before retrying a pending      ``3600``
+                     message which is owned by an
+                     abandoned consumer (if a worker died
+                     for some reason, this will occur,
+                     eventually you should retry the
+                     message) - in seconds.
+claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
+                     messages should be checked for to
+                     claim - in milliseconds
+===================  =====================================  =================================
+
+.. caution::
+
+    There should never be more than one ``messenger:consume`` command running with the same
+    config (stream, group and consumer name) to avoid having a message handled more than once.
+    Using the ``HOSTNAME`` as the consumer might often be a good idea. In case you are using
+    Kubernetes to orchestrate your containers, consider using a ``StatefulSet``.
 
 .. tip::
 
@@ -1184,7 +1202,8 @@ tls                  Enable TLS support for the connection  false
 
 .. versionadded:: 5.1
 
-    The ``delete_after_ack`` option was introduced in Symfony 5.1.
+    The ``delete_after_ack``, ``redeliver_timeout`` and ``claim_interval``
+    options were introduced in Symfony 5.1.
 
 .. versionadded:: 5.2
 

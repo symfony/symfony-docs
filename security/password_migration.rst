@@ -188,7 +188,7 @@ storing the newly created password hash::
             $user->setPassword($newEncodedPassword);
 
             // execute the queries on the database
-            $this->getEntityManager()->flush($user);
+            $this->getEntityManager()->flush();
         }
     }
 
