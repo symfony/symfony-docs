@@ -253,7 +253,7 @@ number::
                     'Welcome to MY WEBSITE!' // email subject
                 );
                 // create a recipient for this user
-                $recipient = (new Recipient())->email($user->getEmail());
+                $recipient = new Recipient($user->getEmail());
 
                 // send the notification to the user
                 $notifier->send($notification, $recipient);
@@ -620,7 +620,7 @@ user create this POST request (e.g. by clicking a button)::
         /**
          * @Route("/login_check", name="login_check")
          */
-        public function check()
+        public function check(Request $request)
         {
             // get the login link query parameters
             $expires = $request->query->get('expires');
