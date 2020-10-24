@@ -526,6 +526,20 @@ absolute path of the executable PHP binary available on your server::
     $phpBinaryPath = $phpBinaryFinder->find();
     // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
 
+If you want to find the PHP binary by a specific name, you can use the methods
+:method:`Symfony\\Component\\Process\\PhpExecutableFinder::findByName` and
+:method:`Symfony\\Component\\Process\\PhpExecutableFinder::tryNames`.
+
+    $phpBinaryPath1 = $phpBinaryFinder->findByName('php-cli');
+    $phpBinaryPath2 = $phpBinaryFinder->tryNames(['php-cli', 'php']);
+
+If you want to find the PHP binary by a specific version, you can use the methods
+:method:`Symfony\\Component\\Process\\PhpExecutableFinder::findByVersion` and
+:method:`Symfony\\Component\\Process\\PhpExecutableFinder::tryVersions`.
+
+    $phpBinaryPath1 = $phpBinaryFinder->findByVersion('7.4');
+    $phpBinaryPath2 = $phpBinaryFinder->tryVersions(['7.4', '7.3']);
+
 Checking for TTY Support
 ------------------------
 
