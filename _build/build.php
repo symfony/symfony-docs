@@ -33,7 +33,8 @@ use Symfony\Component\Console\Input\InputOption;
 
         $process = new Process($command);
         $process->setTimeout(3600);
-        $process->run();
+
+        $this->getHelper('process')->run($output, $process);
 
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);

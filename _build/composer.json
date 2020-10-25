@@ -1,5 +1,6 @@
 {
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "repositories": [
         { "type": "git", "url": "https://github.com/weaverryan/docs-builder" }
     ],
