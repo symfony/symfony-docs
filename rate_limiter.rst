@@ -16,11 +16,11 @@ Symfony uses these rate limiters in built-in features like "login throttling",
 which limits how many failed login attempts a user can make in a given period of
 time, but you can use them for your own features too.
 
-Rate Limiting Strategies
-------------------------
+Rate Limiting Policies
+----------------------
 
-Symfony's rate limiter implements some of the most common strategies to enforce
-rate limits: **fixed window**, **sliding window** and **token bucket**.
+Symfony's rate limiter implements some of the most common policies to enforce
+rate limits: **fixed window**, **sliding window**, **token bucket**.
 
 Fixed Window Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,12 +86,12 @@ enforce different levels of service (free or paid):
     framework:
         rate_limiter:
             anonymous_api:
-                # use 'sliding_window' if you prefer that strategy
-                strategy: 'fixed_window'
+                # use 'sliding_window' if you prefer that policy
+                policy: 'fixed_window'
                 limit: 100
                 interval: '60 minutes'
             authenticated_api:
-                strategy: 'token_bucket'
+                policy: 'token_bucket'
                 limit: 5000
                 rate: { interval: '15 minutes', amount: 500 }
 
@@ -124,13 +124,13 @@ the number of requests to the API::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
-    use Symfony\Component\RateLimiter\RateLimiter;
+    use Symfony\Component\RateLimiter\RateLimiterFactory;
 
     class ApiController extends AbstractController
     {
         // if you're using service autowiring, the variable name must be:
         // "rate limiter name" (in camelCase) + "limiter" suffix
-        public function index(RateLimiter $anonymousApiLimiter)
+        public function index(RateLimiterFactory $anonymousApiLimiter)
         {
             // create a limiter based on a unique identifier of the client
             // (e.g. the client's IP address, a username/email, an API key, etc.)
@@ -171,11 +171,11 @@ using the ``reserve()`` method::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\RateLimiter\RateLimiter;
+    use Symfony\Component\RateLimiter\RateLimiterFactory;
 
     class ApiController extends AbstractController
     {
-        public function registerUser(Request $request, RateLimiter $authenticatedApiLimiter)
+        public function registerUser(Request $request, RateLimiterFactory $authenticatedApiLimiter)
         {
             $apiKey = $request->headers->get('apikey');
             $limiter = $authenticatedApiLimiter->create($apiKey);
@@ -229,11 +229,11 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\RateLimiter\RateLimiter;
+    use Symfony\Component\RateLimiter\RateLimiterFactory;
 
     class ApiController extends AbstractController
     {
-        public function index(RateLimiter $anonymousApiLimiter)
+        public function index(RateLimiterFactory $anonymousApiLimiter)
         {
             $limiter = $anonymousApiLimiter->create($request->getClientIp());
             $limit = $limiter->consume();
