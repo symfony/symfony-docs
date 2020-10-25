@@ -129,7 +129,7 @@ work:
   </contributing/code/maintenance>` (you may have to choose a higher branch if
   the feature you are fixing was introduced in a later version);
 
-* ``master``, if you are adding a new feature.
+* ``5.x``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
   (4.0, 5.0, etc.) comes out every two years. Because of the
@@ -142,7 +142,7 @@ work:
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a PR
     for the ``3.4`` branch, the PR will also be applied by the core team on
-    the ``master`` branch.
+    the ``5.x`` branch.
 
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
@@ -152,14 +152,14 @@ topic branch:
 
 .. code-block:: terminal
 
-    $ git checkout -b BRANCH_NAME master
+    $ git checkout -b BRANCH_NAME 5.x
 
 Or, if you want to provide a bug fix for the ``3.4`` branch, first track the remote
 ``3.4`` branch locally:
 
 .. code-block:: terminal
 
-    $ git checkout -t origin/3.4
+    $ git checkout --track origin/3.4
 
 Then create a new branch off the ``3.4`` branch to work on the bug fix:
 
@@ -277,15 +277,15 @@ while to finish your changes):
 
 .. code-block:: terminal
 
-    $ git checkout master
+    $ git checkout 5.x
     $ git fetch upstream
-    $ git merge upstream/master
+    $ git merge upstream/5.x
     $ git checkout BRANCH_NAME
-    $ git rebase master
+    $ git rebase 5.x
 
 .. tip::
 
-    Replace ``master`` with the branch you selected previously (e.g. ``3.4``)
+    Replace ``5.x`` with the branch you selected previously (e.g. ``3.4``)
     if you are working on a bug fix.
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
@@ -402,12 +402,12 @@ Rework your Pull Request
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Based on the feedback on the pull request, you might need to rework your
-PR. Before re-submitting the PR, rebase with ``upstream/master`` or
+PR. Before re-submitting the PR, rebase with ``upstream/5.x`` or
 ``upstream/3.4``, don't merge; and force the push to the origin:
 
 .. code-block:: terminal
 
-    $ git rebase -f upstream/master
+    $ git rebase -f upstream/5.x
     $ git push --force origin BRANCH_NAME
 
 .. note::
