@@ -609,7 +609,7 @@ you can use the ``@required`` annotation instead.
 
 Despite property injection has some :ref:`drawbacks <property-injection>`,
 autowiring with ``#[Required]`` or ``@required`` can also be applied to public
-typed properties::
+typed properties:
 
 .. configuration-block::
 
