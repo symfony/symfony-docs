@@ -159,7 +159,7 @@ Or, if you want to provide a bug fix for the ``3.4`` branch, first track the rem
 
 .. code-block:: terminal
 
-    $ git checkout -t origin/3.4
+    $ git checkout --track origin/3.4
 
 Then create a new branch off the ``3.4`` branch to work on the bug fix:
 
