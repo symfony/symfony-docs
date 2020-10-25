@@ -107,11 +107,11 @@ With a Discord message, you can use the
 :class:`Symfony\\Component\\Notifier\\Bridge\\Discord\\DiscordOptions` to add
 some interactive options called `Embed elements`_::
 
-    use Symfony\Component\Notifier\Bridge\Discord\Block\DiscordEmbed;
-    use Symfony\Component\Notifier\Bridge\Discord\Block\DiscordFieldEmbedObject;
-    use Symfony\Component\Notifier\Bridge\Discord\Block\DiscordFooterEmbedObject;
-    use Symfony\Component\Notifier\Bridge\Discord\Block\DiscordMediaEmbedObject;
     use Symfony\Component\Notifier\Bridge\Discord\DiscordOptions;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordEmbed;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFieldEmbedObject;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFooterEmbedObject;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordMediaEmbedObject;
     use Symfony\Component\Notifier\Message\ChatMessage;
 
     $chatMessage = new ChatMessage('');
