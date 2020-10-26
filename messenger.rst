@@ -1041,21 +1041,21 @@ under the transport in ``messenger.yaml``:
 ===================  =====================================  =================================
      Option               Description                       Default
 ===================  =====================================  =================================
-stream              The Redis stream name                  messages
-group               The Redis consumer group name          symfony
-consumer            Consumer name used in Redis            consumer
-auto_setup          Create the Redis group automatically?  true
-auth                The Redis password
-delete_after_ack    If ``true``, messages are deleted      false
-                    automatically after processing them
-serializer          How to serialize the final payload     ``Redis::SERIALIZER_PHP``
-                    in Redis (the
-                    ``Redis::OPT_SERIALIZER`` option)
-stream_max_entries  The maximum number of entries which    ``0`` (which means "no trimming")
-                    the stream will be trimmed to. Set
-                    it to a large enough number to
-                    avoid losing pending messages
-tls                 Enable TLS support for the connection  false
+stream               The Redis stream name                  messages
+group                The Redis consumer group name          symfony
+consumer             Consumer name used in Redis            consumer
+auto_setup           Create the Redis group automatically?  true
+auth                 The Redis password
+delete_after_ack     If ``true``, messages are deleted      false
+                     automatically after processing them
+serializer           How to serialize the final payload     ``Redis::SERIALIZER_PHP``
+                     in Redis (the
+                     ``Redis::OPT_SERIALIZER`` option)
+stream_max_entries   The maximum number of entries which    ``0`` (which means "no trimming")
+                     the stream will be trimmed to. Set
+                     it to a large enough number to
+                     avoid losing pending messages
+tls                  Enable TLS support for the connection  false
 redeliver_timeout    Timeout before retrying a pending      ``3600``
                      message which is owned by an
                      abandoned consumer (if a worker died
