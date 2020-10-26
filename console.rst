@@ -45,9 +45,16 @@ want a command to create a user::
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            // ...
+            // ... put here the code to run in your command
 
+            // this method must return an integer number with the "exit status code"
+            // of the command.
+
+            // return this if there was no problem running the command
             return 0;
+
+            // or return this if some error happened during the execution
+            // return 1;
         }
     }
 
