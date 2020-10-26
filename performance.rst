@@ -211,8 +211,8 @@ deployment process too):
 
 .. _profiling-applications:
 
-Profiling Applications
-----------------------
+Profiling Applications and Stopwatch
+------------------------------------
 
 `Blackfire`_ is the best tool to profile and optimize performance of Symfony
 applications during development, test and production. It's a commercial service,
@@ -223,8 +223,8 @@ Symfony provides a basic performance profiler in the development
 of the :ref:`web debug toolbar <web-debug-toolbar>` to see how much time Symfony
 spent on tasks such as making database queries and rendering templates.
 
-Custom Profiling
-~~~~~~~~~~~~~~~~
+Custom Profiling with the Symfony Stopwatch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can measure the execution time and memory consumption of your own code and
 display the result in the Symfony profiler thanks to the `Stopwatch component`_.
