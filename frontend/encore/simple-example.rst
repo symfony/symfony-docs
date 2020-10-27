@@ -107,13 +107,14 @@ can do most of the work for you:
         </head>
         <body>
             <!-- ... -->
+            {{ encore_entry_script_tags('app') }}
 
+            <!-- Renders app.js & a webpack runtime.js file
+                <script src="/build/runtime.js"></script>
+                <script src="/build/app.js"></script> -->
+                    
             {% block javascripts %}
-                {{ encore_entry_script_tags('app') }}
-
-                <!-- Renders app.js & a webpack runtime.js file
-                    <script src="/build/runtime.js"></script>
-                    <script src="/build/app.js"></script> -->
+                
             {% endblock %}
         </body>
     </html>
