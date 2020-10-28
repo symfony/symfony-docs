@@ -279,7 +279,7 @@ value:
 Enabling Circular Reference Handler
 -----------------------------------
 
-The use of :ref:`circular reference handler <component-serializer-handling-circular-references>` service can be defined
+The use of the :ref:`circular reference handler <component-serializer-handling-circular-references>` service can be defined
 in the configuration using :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>` option.
 
 The service has to implement magic ``__invoke($object)`` method, like in example::
