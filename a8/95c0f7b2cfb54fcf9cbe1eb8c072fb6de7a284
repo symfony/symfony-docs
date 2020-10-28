@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-26T09:48:53Z
+
+Hi @yann-eugone!
+
+This is intended, the `getDefaultPriority` is the default value for the `default_priority_method` option. You can use this option to use another method name (e.g. `getPriority`).
+
+Maybe we should emphasize this by improving the sentence in between the code examples. For instance, like this:
+
+```rst
+If you want to have another method defining the priority (e.g. ``getPriority()``),
+you can define it in the configuration of the collecting service:
+```
+
+If you agree, can you please update this PR/create a new PR with this change?
+
+---------------------------------------------------------------------------
+
+by yann-eugone at 2020-10-26T10:17:03Z
+
+Thank you @wouterj ! :)
+
+Look like I read the docblock to fast. But yeah, I think this part of documentation can be more clear with some minor changes.
+Will apply your suggestion (and remove my changes)
+
+---------------------------------------------------------------------------
+
+by yann-eugone at 2020-10-26T10:38:28Z
+
+Does the pipeline failure has something to do with the changes we introduced ?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-26T10:49:24Z
+
+No, I see we have an error in the 5.1 version of the docs. It's not related to your changes
