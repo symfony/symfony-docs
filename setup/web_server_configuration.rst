@@ -374,13 +374,6 @@ The **minimum configuration** to get your application running under Nginx is:
     After you deploy to production, make sure that you **cannot** access the ``index.php``
     script (i.e. ``http://example.com/index.php``).
 
-.. note::
-
-    By default, Symfony applications include several ``.htaccess`` files to
-    configure redirections and to prevent unauthorized access to some sensitive
-    directories. Those files are only useful when using Apache, so you can
-    safely remove them when using Nginx.
-
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
 .. _`Apache documentation`: https://httpd.apache.org/docs/
