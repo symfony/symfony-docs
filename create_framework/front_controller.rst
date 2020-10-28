@@ -132,7 +132,7 @@ its sub-directories (only if needed -- see above tip).
     like ``$request = Request::create('/hello?name=Fabien');`` where the
     argument is the URL path you want to simulate.
 
-Now that the web server always access the same script (``front.php``) for all
+Now that the web server always accesses the same script (``front.php``) for all
 pages, we can secure the code further by moving all other PHP files outside the
 web root directory:
 

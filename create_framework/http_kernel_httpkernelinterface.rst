@@ -46,8 +46,8 @@ Update your framework so that it implements this interface::
         }
     }
 
-Even if this change looks not too complex, it brings us a lot! Let's talk about one of
-the most impressive one: transparent :doc:`HTTP caching </http_cache>` support.
+With this change, a little goes a long way! Let's talk about one of
+the most impressive upsides: transparent :doc:`HTTP caching </http_cache>` support.
 
 The ``HttpCache`` class implements a fully-featured reverse proxy, written in
 PHP; it implements ``HttpKernelInterface`` and wraps another
@@ -64,7 +64,8 @@ PHP; it implements ``HttpKernelInterface`` and wraps another
         new HttpKernel\HttpCache\Store(__DIR__.'/../cache')
     );
 
-    $framework->handle($request)->send();
+    $response = $framework->handle($request);
+    $response->send();
 
 That's all it takes to add HTTP caching support to our framework. Isn't it
 amazing?
