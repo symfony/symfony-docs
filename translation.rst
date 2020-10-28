@@ -307,16 +307,16 @@ parts of your application and mocking it in your tests.
 
 Instead of translating a string at the time of creation, you can use a
 "translatable object", which is an instance of the
-:class:`Symfony\\Component\\Translation\\Translatable` class. This object stores
+:class:`Symfony\\Component\\Translation\\TranslatableMessage` class. This object stores
 all the information needed to fully translate its contents when needed::
 
-    use Symfony\Component\Translation\Translatable;
+    use Symfony\Component\Translation\TranslatableMessage;
 
     // the first argument is required and it's the original message
-    $message = new Translatable('Symfony is great!');
+    $message = new TranslatableMessage('Symfony is great!');
     // the optional second argument defines the translation parameters and
     // the optional third argument is the translation domain
-    $status = new Translatable('order.status', ['%status%' => $order->getStatus()], 'store');
+    $status = new TranslatableMessage('order.status', ['%status%' => $order->getStatus()], 'store');
 
 Templates are now much simpler because you can pass translatable objects to the
 ``trans`` filter:
