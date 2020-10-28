@@ -5,12 +5,12 @@
 name: symfonydocs
 
 # The toolstack used to build the application.
-type: "python:3.7"
+type: "php:7.2"
 
 # The configuration of app when it is exposed to the web.
 web:
     # The public directory of the app, relative to its root.
-    document_root: "/_build/html"
+    document_root: "/_build/output"
     index_files:
       - index.html
     whitelist:
@@ -40,19 +40,9 @@ web:
 # The size of the persistent disk of the application (in MB).
 disk: 512
 
-# Build time dependencies.
-dependencies:
-  python:
-    virtualenv: 15.1.0
-
 # The hooks that will be performed when the package is deployed.
 hooks:
     build: |
-      virtualenv .virtualenv
-      . .virtualenv/bin/activate
-      # SymfonyCloud currently sets PIP_USER=1.
-      export PIP_USER=
-      pip install pip==9.0.1 wheel==0.29.0
-      pip install -r _build/.requirements.txt
-      find .virtualenv -type f -name "*.rst" -delete
-      make -C _build html
+      cd _build
+      composer install --prefer-dist --no-progress
+      php build.php
