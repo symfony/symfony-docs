@@ -655,8 +655,9 @@ service itself::
         }
     }
 
-If you want to have another method defining the priority, you can define it
-in the configuration of the collecting service:
+If you want to have another method defining the priority 
+(e.g. ``getPriority()`` rather than ``getDefaultPriority()``),
+you can define it in the configuration of the collecting service:
 
 .. configuration-block::
 
