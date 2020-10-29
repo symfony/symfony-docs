@@ -895,16 +895,12 @@ When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
 throw an appropriate exception, all of which implement the
 :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`.
 
-You can prevent the exception from being thrown by either:
+To prevent the exception from being thrown, you need to pass ``false`` as the optional argument
+to every call of those methods, e.g. ``$response->getHeaders(false);``.
 
-* Checking for the exact status code::
-    
-    $response = $client->request('GET', 'https://httpbin.org/status/403');
-    if (403 === $response->getStatusCode()) {
-        $response->getContent();
-    }
-
-* Or passing ``false`` as the optional argument to the methods, e.g. ``$response->getHeaders(false);``
+If you do not call any of these 3 methods at all, the exception will still be thrown
+when the Symfony kernel delivers the final response.
+You can prevent this by calling ``$response->getStatusCode()``.
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
