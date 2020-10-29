@@ -900,7 +900,7 @@ You can prevent the exception from being thrown by either:
 * Checking for the exact status code::
     
     $response = $client->request('GET', 'https://httpbin.org/status/403');
-    if ('403' === $response->getStatusCode()) {
+    if (403 === $response->getStatusCode()) {
         $response->getContent();
     }
 
