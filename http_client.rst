@@ -904,8 +904,7 @@ You can prevent the exception from being thrown by either:
         $response->getContent();
     }
 
-* Or passing ``false`` as the optional argument to the methods, e.g.
-``$response->getHeaders(false);``
+* Or passing ``false`` as the optional argument to the methods, e.g. ``$response->getHeaders(false);``
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
