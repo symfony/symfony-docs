@@ -891,20 +891,21 @@ Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
 
 When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
-4xx or 5xx) your code is expected to handle it. If you don't do that, the
-``getHeaders()``, ``getContent()`` and ``toArray()`` methods throw an appropriate exception, all of
-which implement the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`::
+4xx or 5xx), the ``getHeaders()``, ``getContent()`` and ``toArray()`` methods
+throw an appropriate exception, all of which implement the
+:class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`.
 
-    // the response of this request will be a 403 HTTP error
+You can prevent the exception from being thrown by either:
+
+* Checking for the exact status code::
+    
     $response = $client->request('GET', 'https://httpbin.org/status/403');
+    if ('403' === $response->getStatusCode()) {
+        $response->getContent();
+    }
 
-    // this code results in a Symfony\Component\HttpClient\Exception\ClientException
-    // because it doesn't check the status code of the response
-    $content = $response->getContent();
-
-    // pass FALSE as the optional argument to not throw an exception and return
-    // instead the original response content (even if it's an error message)
-    $content = $response->getContent(false);
+* Or passing ``false`` as the optional argument to the methods, e.g.
+``$response->getHeaders(false);``
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
