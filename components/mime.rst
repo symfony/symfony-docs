@@ -99,12 +99,12 @@ extension:
 
 .. code-block:: terminal
 
-    $ composer require twig/cssinliner-extension
+    $ composer require twig/cssinliner-extra
 
 Now, enable the extension::
 
     // ...
-    use Twig\CssInliner\CssInlinerExtension;
+    use Twig\Extra\CssInliner\CssInlinerExtension;
 
     $loader = new FilesystemLoader(__DIR__.'/templates');
     $twig = new Environment($loader);
