@@ -23,7 +23,7 @@ version of this pattern:
 How does it work? The *dispatcher*, the central object of the event dispatcher
 system, notifies *listeners* of an *event* dispatched to it. Put another way:
 your code dispatches an event to the dispatcher, the dispatcher notifies all
-registered listeners for the event, and each listener do whatever it wants
+registered listeners for the event, and each listener does whatever it wants
 with the event.
 
 As an example, let's create a listener that transparently adds the Google

@@ -273,7 +273,7 @@ cases by yourself. Why not using a technology that already works?
     a look at the ``Symfony\Component\HttpFoundation`` API or read
     its dedicated :doc:`documentation </components/http_foundation>`.
 
-Believe or not but we have our first framework. You can stop now if you want.
+Believe it or not but we have our first framework. You can stop now if you want.
 Using just the Symfony HttpFoundation component already allows you to write
 better and more testable code. It also allows you to write code faster as many
 day-to-day problems have already been solved for you.
@@ -282,7 +282,7 @@ As a matter of fact, projects like Drupal have adopted the HttpFoundation
 component; if it works for them, it will probably work for you. Don't reinvent
 the wheel.
 
-I've almost forgot to talk about one added benefit: using the HttpFoundation
+I've almost forgotten to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
 `applications using it`_ (like `Symfony`_, `Drupal 8`_, `phpBB 3`_, `Laravel`_
 and `ezPublish 5`_,  and `more`_).

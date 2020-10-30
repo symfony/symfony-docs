@@ -205,7 +205,7 @@ Now, here is how you can register a custom listener in the front controller::
         ->addMethodCall('addSubscriber', [new Reference('listener.string_response')])
     ;
 
-Beside describing your objects, the dependency injection container can also be
+Besides describing your objects, the dependency injection container can also be
 configured via parameters. Let's create one that defines if we are in debug
 mode or not::
 
