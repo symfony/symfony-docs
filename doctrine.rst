@@ -808,7 +808,7 @@ In addition, you can query directly with SQL if you need to::
         $stmt->execute(['price' => $price]);
 
         // returns an array of arrays (i.e. a raw data set)
-        return $stmt->fetchAll();
+        return $stmt->fetchAllAssociative();
     }
 
 With SQL, you will get back raw data, not objects (unless you use the `NativeQuery`_
