@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-10-08T17:28:37Z
+
+Well, the linked issue is about the question how to add a custom header when doing a file upload. Since @nicolas-grekas confirmed that what I guessed is indeed the right way, I'd like to include this.
+
+Why do you think it's incomplete? Which changes do you suggest?
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-10-29T15:42:11Z
+
+@nicolas-grekas Could you please take a look and approve this?
