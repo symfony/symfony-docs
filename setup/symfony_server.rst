@@ -378,6 +378,16 @@ its location, same as for ``docker-compose``:
     If you have more than one Docker Compose file, you can provide them all
     separated by ``:`` as explained in the `Docker compose CLI env var reference`_.
 
+.. caution::
+
+    When using Symfony binary with ``php bin/console`` (``symfony console ...``)
+    the binay will **always** use environment variables detected via Docker and will
+    ignore local environment variables.
+    For example if you set up a different database name in your ``.env.test`` file
+    (``DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/test``) and if you run
+    ``symfony console doctrine:database:drop --force --env=test`` the command will drop the database
+    defined in your Docker configuration and not the "test" one.
+
 SymfonyCloud Integration
 ------------------------
 
