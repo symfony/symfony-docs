@@ -659,6 +659,11 @@ when the streams are large)::
         'body' => $formData->bodyToString(),
     ]);
 
+If you need to add a custom HTTP header to the upload, you can do::
+
+    $headers = $formData->getPreparedHeaders()->toArray();
+    $headers[] = 'X-Foo: bar';
+
 Cookies
 ~~~~~~~
 
