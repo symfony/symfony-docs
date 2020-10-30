@@ -61,7 +61,7 @@ method.
 .. note::
 
     When using a Redis backend, consider using :ref:`RedisTagAwareAdapter <redis-tag-aware-adapter>`
-    which is optimized for this purpose. When using File system, likewise consider to use
+    which is optimized for this purpose. When using filesystem, likewise consider to use
     :ref:`FilesystemTagAwareAdapter <filesystem-tag-aware-adapter>`.
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter` class implements
