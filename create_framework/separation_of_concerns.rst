@@ -27,9 +27,9 @@ request handling logic into its own ``Simplex\Framework`` class::
 
     class Framework
     {
-        protected $matcher;
-        protected $controllerResolver;
-        protected $argumentResolver;
+        private $matcher;
+        private $controllerResolver;
+        private $argumentResolver;
 
         public function __construct(UrlMatcher $matcher, ControllerResolver $controllerResolver, ArgumentResolver $argumentResolver)
         {
