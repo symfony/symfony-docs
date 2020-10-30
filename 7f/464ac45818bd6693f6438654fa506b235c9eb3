@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-10-28T13:39:16Z
+
+Thank you for this contribution, just a minor comment from my side.
+
+> the nearest named color is used.
+
+Can you explain this a little bit "better" or add an example?
+
+Thanks
+
+---------------------------------------------------------------------------
+
+by freezy-sk at 2020-10-28T14:23:32Z
+
+@OskarStark thanks, good point. I also made a test for that hidden feature symfony/symfony#38866
