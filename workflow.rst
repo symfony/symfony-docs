@@ -236,8 +236,36 @@ what actions are allowed on a blog post::
 Accessing the Workflow in a Class
 ---------------------------------
 
-To access workflow inside a class, use dependency injection and inject the
-registry in the constructor::
+You can use the workflow inside a class by using
+:doc:`service autowiring </service_container/autowiring>` and using
+``camelCased workflow name + Workflow`` as parameter name::
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\WorkflowInterface;
+
+    class MyClass
+    {
+        private $blogPublishingWorkflow;
+
+        // this injects the blog_publishing workflow configured before
+        public function __construct(WorkflowInterface $blogPublishingWorkflow)
+        {
+            $this->blogPublishingWorkflow = $blogPublishingWorkflow;
+        }
+
+        public function toReview(BlogPost $post)
+        {
+            // Update the currentState on the post
+            try {
+                $this->blogPublishingWorkflow->apply($post, 'to_review');
+            } catch (LogicException $exception) {
+                // ...
+            }
+            // ...
+        }
+    }
+
+Alternatively, use the registry::
 
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\Registry;
@@ -253,17 +281,16 @@ registry in the constructor::
 
         public function toReview(BlogPost $post)
         {
-            $workflow = $this->workflowRegistry->get($post);
+            $blogPublishingWorkflow = $this->workflowRegistry->get($post);
 
-            // Update the currentState on the post
-            try {
-                $workflow->apply($post, 'to_review');
-            } catch (LogicException $exception) {
-                // ...
-            }
             // ...
         }
     }
+
+.. tip::
+
+    You can find the list of available workflow services with the
+    ``php bin/console debug:autowiring workflow`` command.
 
 Using Events
 ------------
@@ -928,25 +955,23 @@ Then you can access this metadata in your controller as follows::
 
     // src/App/Controller/BlogPostController.php
     use App\Entity\BlogPost;
-    use Symfony\Component\Workflow\Registry;
+    use Symfony\Component\Workflow\WorkflowInterface;
     // ...
 
-    public function myAction(Registry $registry, BlogPost $post)
+    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post)
     {
-        $workflow = $registry->get($post);
-
-        $title = $workflow
+        $title = $blogPublishingWorkflow
             ->getMetadataStore()
             ->getWorkflowMetadata()['title'] ?? 'Default title'
         ;
 
-        $maxNumOfWords = $workflow
+        $maxNumOfWords = $blogPublishingWorkflow
             ->getMetadataStore()
             ->getPlaceMetadata('draft')['max_num_of_words'] ?? 500
         ;
 
-        $aTransition = $workflow->getDefinition()->getTransitions()[0];
-        $priority = $workflow
+        $aTransition = $blogPublishingWorkflow->getDefinition()->getTransitions()[0];
+        $priority = $blogPublishingWorkflow
             ->getMetadataStore()
             ->getTransitionMetadata($aTransition)['priority'] ?? 0
         ;
@@ -969,7 +994,7 @@ In a :ref:`flash message <flash-messages>` in your controller::
 
     // $transition = ...; (an instance of Transition)
 
-    // $workflow is a Workflow instance retrieved from the Registry (see above)
+    // $workflow is a Workflow instance retrieved from the Registry or injected directly (see above)
     $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
     $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 

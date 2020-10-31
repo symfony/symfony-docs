@@ -77,6 +77,8 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
         {{ form(form) }}
     {% endblock %}
 
+.. _reference-forms-bootstrap-error-messages:
+
 Error Messages
 --------------
 

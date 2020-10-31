@@ -504,6 +504,14 @@ target_path_parameter
 When using a login form, if you include an HTML element to set the target path,
 this option lets you change the name of the HTML element itself.
 
+failure_path_parameter
+......................
+
+**type**: ``string`` **default**: ``_failure_path``
+
+When using a login form, if you include an HTML element to set the failure path,
+this option lets you change the name of the HTML element itself.
+
 use_referer
 ...........
 
