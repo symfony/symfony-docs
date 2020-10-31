@@ -171,73 +171,59 @@ Continuous Integration
 
 Testing bundle code continuously, including all its commits and pull requests,
 is a good practice called Continuous Integration. There are several services
-providing this feature for free for open source projects. The most popular
-service for Symfony bundles is called `Travis CI`_.
+providing this feature for free for open source projects, like `GitHub Actions`_
+and `Travis CI`_.
 
-Here is the recommended configuration file (``.travis.yml``) for Symfony bundles,
-which test the two latest :doc:`LTS versions </contributing/community/releases>`
-of Symfony and the latest beta release:
+A bundle should at least test:
 
-.. code-block:: yaml
+* The lower bound of their dependencies (by running ``composer update --prefer-lowest``);
+* The supported PHP versions;
+* All supported major Symfony versions (e.g. both ``3.x`` and ``4.x`` if
+  support is claimed for both).
 
-    language: php
+Thus, a bundle support PHP 7.3, 7.4 and 8.0, and Symfony 3.4 and 4.x should
+have at least this test matrix:
 
-    cache:
-        directories:
-            - $HOME/.composer/cache/files
-            - $HOME/symfony-bridge/.phpunit
+===========  ===============  ===================
+PHP version  Symfony version  Composer flags
+===========  ===============  ===================
+7.3          ``3.*``          ``--prefer-lowest``
+7.4          ``4.*``
+8.0          ``4.*``
+===========  ===============  ===================
 
-    env:
-        global:
-            - PHPUNIT_FLAGS="-v"
-            - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+.. tip::
 
-    matrix:
-        fast_finish: true
-        include:
-              # Minimum supported dependencies with the latest and oldest PHP version
-            - php: 7.2
-              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="max[self]=0"
-            - php: 7.1
-              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="max[self]=0"
+    The tests should be run with the ``SYMFONY_DEPRECATIONS_HELPER``
+    env variable set to ``max[direct]=0``. This ensures no code in the
+    bundle uses deprecated features directly.
 
-              # Test the latest stable release
-            - php: 7.1
-            - php: 7.2
-              env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+    The lowest dependency tests can be run with this variable set to
+    ``disabled=1``.
 
-              # Test LTS versions. This makes sure we do not use Symfony packages with version greater
-              # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
-            - php: 7.2
-              env: DEPENDENCIES="symfony/lts:^2"
-            - php: 7.2
-              env: DEPENDENCIES="symfony/lts:^3"
+Require a Specific Symfony Version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-              # Latest commit to master
-            - php: 7.2
-              env: STABILITY="dev"
+You can use the special ``SYMFONY_REQUIRE`` environment variable together
+with Symfony Flex to install a specific Symfony version:
 
-        allow_failures:
-              # Dev-master is allowed to fail.
-            - env: STABILITY="dev"
+.. code-block:: bash
 
-    before_install:
-        - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-        - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-        - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+    # this requires Symfony 5.x for all Symfony packages
+    export SYMFONY_REQUIRE=5.*
 
-    install:
-        - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-        - ./vendor/bin/simple-phpunit install
+    # install Symfony Flex in the CI environment
+    composer global require --no-progress --no-scripts --no-plugins symfony/flex
 
-    script:
-        - composer validate --strict --no-check-lock
-        # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
-        # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
-        - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
+    # install the dependencies (using --prefer-dist and --no-progress is
+    # recommended to have a better output and faster download time)
+    composer update --prefer-dist --no-progress
 
-Consider using the `Travis cron`_ tool to make sure your project is built even if
-there are no new pull requests or commits.
+.. caution::
+
+    If you want to cache your Composer dependencies, **do not** cache the
+    ``vendor/`` directory as this has side-effects. Instead cache
+    ``$HOME/.composer/cache/files``.
 
 Installation
 ------------
@@ -529,5 +515,5 @@ Learn more
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: https://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
-.. _`Travis CI`: https://travis-ci.org/
-.. _`Travis cron`: https://docs.travis-ci.com/user/cron-jobs/
+.. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
+.. _`Travis CI`: https://docs.travis-ci.com/
