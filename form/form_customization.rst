@@ -255,6 +255,11 @@ Renders any errors for the given field.
     {# render any "global" errors not associated to any form field #}
     {{ form_errors(form) }}
 
+.. caution::
+
+    In the Bootstrap 4 form theme, ``form_errors()`` is already included
+    in ``form_label()``, see ":ref:`reference-forms-bootstrap-error-messages`"
+
 .. _reference-forms-twig-widget:
 
 form_widget(form_view, variables)
