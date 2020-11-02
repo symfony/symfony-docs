@@ -221,8 +221,8 @@ Profiling with Blackfire
 applications during development, test and production. It's a commercial service,
 but provides free features that you can use to find bottlenecks in your projects.
 
-Profilwing with Symfony Stopwatch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Profiling with Symfony Stopwatch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony provides a basic performance profiler in the development
 :ref:`config environment <configuration-environments>`. Click on the "time panel"
