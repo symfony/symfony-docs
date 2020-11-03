@@ -6,25 +6,17 @@ HiddenType Field
 
 The hidden type represents a hidden input field.
 
-+-------------+----------------------------------------------------------------------+
-| Rendered as | ``input`` ``hidden`` field                                           |
-+-------------+----------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                        |
-| options     | - `error_bubbling`_                                                  |
-|             | - `required`_                                                        |
-+-------------+----------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                            |
-| options     | - `data`_                                                            |
-|             | - `empty_data`_                                                      |
-|             | - `error_mapping`_                                                   |
-|             | - `mapped`_                                                          |
-|             | - `property_path`_                                                   |
-|             | - `row_attr`_                                                        |
-+-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                        |
-+-------------+----------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
-+-------------+----------------------------------------------------------------------+
++---------------------------+----------------------------------------------------------------------+
+| Rendered as               | ``input`` ``hidden`` field                                           |
++---------------------------+----------------------------------------------------------------------+
+| Default invalid message   | The hidden field is invalid.                                         |
++---------------------------+----------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
++---------------------------+----------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
++---------------------------+----------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
++---------------------------+----------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -39,6 +31,8 @@ Overridden Options
 **default**: ``true``
 
 Pass errors to the root form, otherwise they will not be visible.
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 ``required``
 ~~~~~~~~~~~~
@@ -56,13 +50,11 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``''`` (the empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 

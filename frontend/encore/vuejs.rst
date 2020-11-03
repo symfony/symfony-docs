@@ -10,15 +10,15 @@ Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        // ...
-        .addEntry('main', './assets/main.js')
+      Encore
+          // ...
+          .addEntry('main', './assets/main.js')
 
     +     .enableVueLoader()
-    ;
+      ;
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
@@ -45,7 +45,7 @@ runtime. This means that you *can* do either of these:
     });
 
 If you do *not* need this functionality (e.g. you use single file components),
-then you can tell Encore to create a *smaller* and CSP-compliant build:
+then you can tell Encore to create a *smaller* build following Content Security Policy:
 
 .. code-block:: javascript
 
@@ -65,11 +65,15 @@ Hot Module Replacement (HMR)
 
 The ``vue-loader`` supports hot module replacement: just update your code and watch
 your Vue.js app update *without* a browser refresh! To activate it, use the
-``dev-server`` with the ``--hot`` option:
+``dev-server``:
 
 .. code-block:: terminal
 
-    $ yarn encore dev-server --hot
+    # if you use the Yarn package manager
+    $ yarn encore dev-server
+
+    # if you use the npm package manager
+    $ npm run dev-server
 
 That's it! Change one of your ``.vue`` files and watch your browser update. But
 note: this does *not* currently work for *style* changes in a ``.vue`` file. Seeing
@@ -85,18 +89,18 @@ You can enable `JSX with Vue.js`_ by configuring the second parameter of the
 
 .. code-block:: diff
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        // ...
-        .addEntry('main', './assets/main.js')
+      Encore
+          // ...
+          .addEntry('main', './assets/main.js')
 
     -     .enableVueLoader()
     +     .enableVueLoader(() => {}, {
     +         useJsx: true
     +     })
-    ;
+      ;
 
 Next, run or restart Encore. When you do, you will see an error message helping
 you install any missing dependencies. After running that command and restarting

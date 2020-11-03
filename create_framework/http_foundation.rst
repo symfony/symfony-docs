@@ -11,7 +11,7 @@ top of the Symfony components is better than creating a framework from scratch.
 
     We won't talk about the traditional benefits of using a framework when
     working on big applications with more than a few developers; the Internet
-    has already plenty of good resources on that topic.
+    already has plenty of good resources on that topic.
 
 Even if the "application" we wrote in the previous chapter was simple enough,
 it suffers from a few problems::
@@ -25,7 +25,7 @@ First, if the ``name`` query parameter is not defined in the URL query string,
 you will get a PHP warning; so let's fix it::
 
     // framework/index.php
-    $name = isset($_GET['name']) ? $_GET['name'] : 'World';
+    $name = $_GET['name'] ?? 'World';
 
     printf('Hello %s', $name);
 
@@ -33,7 +33,7 @@ Then, this *application is not secure*. Can you believe it? Even this simple
 snippet of PHP code is vulnerable to one of the most widespread Internet
 security issue, XSS (Cross-Site Scripting). Here is a more secure version::
 
-    $name = isset($_GET['name']) ? $_GET['name'] : 'World';
+    $name = $_GET['name'] ?? 'World';
 
     header('Content-Type: text/html; charset=utf-8');
 
@@ -141,7 +141,7 @@ Now, let's rewrite our application by using the ``Request`` and the
 
     $request = Request::createFromGlobals();
 
-    $name = $request->get('name', 'World');
+    $name = $request->attributes->get('name', 'World');
 
     $response = new Response(sprintf('Hello %s', htmlspecialchars($name, ENT_QUOTES, 'UTF-8')));
 
@@ -265,7 +265,7 @@ So, the ``getClientIp()`` method works securely in all circumstances. You can
 use it in all your projects, whatever the configuration is, it will behave
 correctly and safely. That's one of the goals of using a framework. If you were
 to write a framework from scratch, you would have to think about all these
-cases by yourself. Why not using a technology that already works?
+cases by yourself. Why not use a technology that already works?
 
 .. note::
 

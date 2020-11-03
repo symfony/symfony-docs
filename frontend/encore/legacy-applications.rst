@@ -32,10 +32,11 @@ jQuery plugins often expect that jQuery is already available via the ``$`` or
 
 .. code-block:: diff
 
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
     +     .autoProvidejQuery()
-    ;
+      ;
 
 After restarting Encore, Webpack will look for all uninitialized ``$`` and ``jQuery``
 variables and automatically require ``jquery`` and set those variables for you.
@@ -74,8 +75,10 @@ page, add:
 
 .. code-block:: diff
 
-    // require jQuery normally
-    const $ = require('jquery');
+      // app.js
+
+      // require jQuery normally
+      const $ = require('jquery');
 
     + // create global $ and jQuery variables
     + global.$ = global.jQuery = $;
@@ -84,3 +87,19 @@ The ``global`` variable is a special way of setting things in the ``window``
 variable. In a web context, using ``global`` and ``window`` are equivalent,
 except that ``window.jQuery`` won't work when using ``autoProvidejQuery()``.
 In other words, use ``global``.
+
+Additionally, be sure to set the ``script_attributes.defer`` option to ``false``
+in your ``webpack_encore.yaml`` file:
+
+.. code-block:: yaml
+
+    # config/packages/webpack_encore.yaml
+    webpack_encore:
+        # ...
+        script_attributes:
+            defer: false
+
+This will make sure there is *not* a ``defer`` attribute on your ``script``
+tags. For more information, see `Moving <script> inside <head> and the "defer" Attribute`_
+
+.. _`Moving <script> inside <head> and the "defer" Attribute`: https://symfony.com/blog/moving-script-inside-head-and-the-defer-attribute

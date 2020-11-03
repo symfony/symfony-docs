@@ -6,9 +6,6 @@ want to allow zero as value, use :doc:`/reference/constraints/Negative` instead.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NegativeOrZero`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LesserThanOrEqualValidator`
 ==========  ===================================================================
@@ -33,6 +30,19 @@ is a negative number or equal to zero:
             /**
              * @Assert\NegativeOrZero
              */
+            protected $level;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/TransferItem.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class UnderGroundGarage
+        {
+            #[Assert\NegativeOrZero]
             protected $level;
         }
 
@@ -80,8 +90,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be either negative or zero.``
 

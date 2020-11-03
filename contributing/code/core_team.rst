@@ -24,27 +24,21 @@ The Symfony Core groups, in descending order of priority, are as follows:
 
 1. **Project Leader**
 
-* Elects members in any other group;
-* Merges pull requests in all Symfony repositories.
+   * Elects members in any other group;
+   * Merges pull requests in all Symfony repositories.
 
 2. **Mergers Team**
 
-* Merge pull requests on the main Symfony repository.
+   * Merge pull requests on the main Symfony repository.
 
 In addition, there are other groups created to manage specific topics:
 
-**Security Team**
+* **Security Team**: manages the whole security process (triaging reported vulnerabilities,
+  fixing the reported issues, coordinating the release of security fixes, etc.)
 
-* Manage the whole security process (triaging reported vulnerabilities, fixing
-  the reported issues, coordinating the release of security fixes, etc.)
+* **Recipes Team**: manages the recipes in the main and contrib recipe repositories.
 
-**Recipes Team**
-
-* Manage the recipes in the main and contrib recipe repositories.
-
-**Documentation Team**
-
-* Manage the whole `symfony-docs repository`_.
+* **Documentation Team**: manages the whole `symfony-docs repository`_.
 
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -60,18 +54,22 @@ Active Core Members
   * **Christian Flothmann** (`xabbuh`_);
   * **Tobias Schultze** (`Tobion`_);
   * **Kévin Dunglas** (`dunglas`_);
-  * **Jakub Zalas** (`jakzal`_);
   * **Javier Eguiluz** (`javiereguiluz`_);
   * **Grégoire Pineau** (`lyrixx`_);
   * **Ryan Weaver** (`weaverryan`_);
   * **Robin Chalas** (`chalasr`_);
   * **Maxime Steinhausser** (`ogizanagi`_);
-  * **Samuel Rozé** (`sroze`_);
   * **Yonel Ceruto** (`yceruto`_);
   * **Tobias Nyholm** (`Nyholm`_);
   * **Wouter De Jong** (`wouterj`_);
   * **Alexander M. Turek** (`derrabus`_);
-  * **Jérémy Derussé** (`jderusse`_).
+  * **Jérémy Derussé** (`jderusse`_);
+  * **Titouan Galopin** (`tgalopin`_);
+  * **Oskar Stark** (`OskarStark`_);
+  * **Thomas Calvet** (`fancyweb`_);
+  * **Mathieu Santostefano** (`welcomattic`_);
+  * **Kevin Bond** (`kbond`_);
+  * **Jérôme Tamarelle** (`gromnan`_).
 
 * **Security Team** (``@symfony/security`` on GitHub):
 
@@ -90,7 +88,6 @@ Active Core Members
   * **Ryan Weaver** (`weaverryan`_);
   * **Christian Flothmann** (`xabbuh`_);
   * **Wouter De Jong** (`wouterj`_);
-  * **Jules Pietri** (`HeahDude`_);
   * **Javier Eguiluz** (`javiereguiluz`_).
   * **Oskar Stark** (`OskarStark`_).
 
@@ -104,12 +101,15 @@ Symfony contributions:
 * **Abdellatif AitBoudad** (`aitboudad`_);
 * **Romain Neutron** (`romainneutron`_);
 * **Jordi Boggiano** (`Seldaek`_);
-* **Lukas Kahwe Smith** (`lsmith77`_).
+* **Lukas Kahwe Smith** (`lsmith77`_);
+* **Jules Pietri** (`HeahDude`_);
+* **Jakub Zalas** (`jakzal`_);
+* **Samuel Rozé** (`sroze`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At present, new Symfony Core membership applications are not accepted.
+About once a year, the core team discuss the opportunity to invite new members.
 
 Core Membership Revocation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,9 +120,6 @@ A Symfony Core membership can be revoked for any of the following reasons:
 * Lack of activity for the past six months;
 * Willful negligence or intent to harm the Symfony project;
 * Upon decision of the **Project Leader**.
-
-Should new Symfony Core memberships be accepted in the future, revoked
-members must wait at least 12 months before re-applying.
 
 Code Development Rules
 ----------------------
@@ -153,8 +150,8 @@ A pull request **can be merged** if:
 
 * Enough time was given for peer reviews;
 
-* At least two **Merger Team** members voted ``+1`` (only one if the submitter
-  is part of the Merger team) and no Core member voted ``-1`` (via GitHub
+* At least two **Mergers Team** members voted ``+1`` (only one if the submitter
+  is part of the Mergers team) and no Core member voted ``-1`` (via GitHub
   reviews or as comments).
 
 Pull Request Merging Process
@@ -207,3 +204,8 @@ discretion of the **Project Leader**.
 .. _`lsmith77`: https://github.com/lsmith77/
 .. _`derrabus`: https://github.com/derrabus/
 .. _`jderusse`: https://github.com/jderusse/
+.. _`tgalopin`: https://github.com/tgalopin/
+.. _`fancyweb`: https://github.com/fancyweb/
+.. _`welcomattic`: https://github.com/welcomattic/
+.. _`kbond`: https://github.com/kbond/
+.. _`gromnan`: https://github.com/gromnan/

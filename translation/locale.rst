@@ -65,7 +65,7 @@ A better policy is to include the locale in the URL using the
 .. configuration-block::
 
     .. code-block:: php-annotations
-        
+
         // src/Controller/ContactController.php
         namespace App\Controller;
 
@@ -177,6 +177,8 @@ the framework:
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'default_locale' => 'en',
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->defaultLocale('en');
+        };

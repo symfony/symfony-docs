@@ -11,7 +11,7 @@ You can use this to get the value returned by the handler(s)::
     use Symfony\Component\Messenger\MessageBusInterface;
     use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-    $envelope = $messageBus->dispatch(SomeMessage());
+    $envelope = $messageBus->dispatch(new SomeMessage());
 
     // get the value that was returned by the last message handler
     $handledStamp = $envelope->last(HandledStamp::class);
@@ -62,7 +62,7 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
         }
 
         // Creating such a method is optional, but allows type-hinting the result
-        private function query(ListItemsQuery $query): ListItemsResult
+        private function query(ListItemsQuery $query): ListItemsQueryResult
         {
             return $this->handle($query);
         }

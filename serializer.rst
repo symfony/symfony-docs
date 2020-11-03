@@ -41,6 +41,19 @@ you need it or it can be used in a controller::
         }
     }
 
+Or you can use the ``serialize`` Twig filter in a template:
+
+.. code-block:: twig
+
+    {{ object|serialize(format = 'json') }}
+
+See the :doc:`twig reference </reference/twig_reference>` for
+more information.
+
+.. versionadded:: 5.3
+
+    A ``serialize`` filter was introduced in Symfony 5.3 that uses the Serializer component.
+
 Adding Normalizers and Encoders
 -------------------------------
 
@@ -107,7 +120,7 @@ properties and setters (``setXxx()``) to change properties:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -134,6 +147,33 @@ properties and setters (``setXxx()``) to change properties:
                 ->tag('serializer.normalizer')
             ;
         };
+
+Serializer Context
+------------------
+
+The serializer can define a context to control how the (de)serialization of
+resources. This context is passed to all normalizers. For example:
+
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` uses
+  ``datetime_format`` key as date time format;
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer`
+  uses ``empty_iterable_as_object`` to represent empty objects as ``{}`` instead
+  of ``[]`` in JSON.
+
+.. versionadded:: 5.4
+
+    The usage of the ``empty_array_as_object`` option by default in the
+    Serializer was introduced in Symfony 5.4.
+
+You can pass the context like following::
+
+    $serializer->serialize($something, 'json', [
+        DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
+    ]);
+
+    $serializer->deserialize($someJson, Something::class, 'json', [
+        DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
+    ]);
 
 .. _serializer-using-serialization-groups-annotations:
 
@@ -246,12 +286,11 @@ value:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'serializer' => [
-                'name_converter' => 'serializer.name_converter.camel_case_to_snake_case',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->serializer()->nameConverter('serializer.name_converter.camel_case_to_snake_case');
+        };
 
 Going Further with the Serializer
 ---------------------------------

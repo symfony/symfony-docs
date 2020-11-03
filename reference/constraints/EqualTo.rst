@@ -13,11 +13,6 @@ To force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualT
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\EqualTo`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\EqualToValidator`
 ==========  ===================================================================
@@ -49,6 +44,24 @@ and that the ``age`` is ``20``, you could do the following:
              *     value = 20
              * )
              */
+            protected $age;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\EqualTo('Mary')]
+            protected $firstName;
+
+            #[Assert\EqualTo(
+                value: 20,
+            )]
             protected $age;
         }
 

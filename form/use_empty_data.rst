@@ -9,7 +9,7 @@ form class. This empty data set would be used if you submit your form, but
 haven't called ``setData()`` on your form or passed in data when you created
 your form. For example, in a controller::
 
-    public function index()
+    public function index(): Response
     {
         $blog = ...;
 
@@ -61,7 +61,7 @@ that constructor with no arguments::
         }
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'empty_data' => new Blog($this->someDependency),
@@ -96,7 +96,7 @@ The closure must accept a ``FormInterface`` instance as the first argument::
     use Symfony\Component\OptionsResolver\OptionsResolver;
     // ...
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'empty_data' => function (FormInterface $form) {

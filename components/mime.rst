@@ -238,10 +238,10 @@ MIME types and file name extensions::
     $exts = $mimeTypes->getExtensions('image/jpeg');
     // $exts = ['jpeg', 'jpg', 'jpe']
 
-    $mimeTypes = $mimeTypes->getMimeTypes('js');
-    // $mimeTypes = ['application/javascript', 'application/x-javascript', 'text/javascript']
-    $mimeTypes = $mimeTypes->getMimeTypes('apk');
-    // $mimeTypes = ['application/vnd.android.package-archive']
+    $types = $mimeTypes->getMimeTypes('js');
+    // $types = ['application/javascript', 'application/x-javascript', 'text/javascript']
+    $types = $mimeTypes->getMimeTypes('apk');
+    // $types = ['application/vnd.android.package-archive']
 
 These methods return arrays with one or more elements. The element position
 indicates its priority, so the first returned extension is the preferred one.

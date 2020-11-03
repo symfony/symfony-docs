@@ -29,7 +29,7 @@ All native save handlers are internal to PHP and as such, have no public facing 
 They must be configured by ``php.ini`` directives, usually ``session.save_path`` and
 potentially other driver specific directives. Specific details can be found in
 the docblock of the ``setOptions()`` method of each class. For instance, the one
-provided by the Memcached extension can be found on :phpmethod:`php.net <Memcached::setOption>`.
+provided by the Memcached extension can be found on :phpmethod:`php.net <Memcached::setOptions>`.
 
 While native save handlers can be activated by directly using
 ``ini_set('session.save_handler', $name);``, Symfony provides a convenient way to
@@ -154,28 +154,54 @@ Configuring Garbage Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a session opens, PHP will call the ``gc`` handler randomly according to the
-probability set by ``session.gc_probability`` / ``session.gc_divisor``. For
-example if these were set to ``5/100`` respectively, it would mean a probability
-of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
+probability set by ``session.gc_probability`` / ``session.gc_divisor`` in ``php.ini``.
+For example if these were set to ``5/100``, it would mean a probability of 5%.
 
-If the garbage collection handler is invoked, PHP will pass the value stored in
-the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is
-that any stored session that was saved more than ``gc_maxlifetime`` ago should be
-deleted. This allows one to expire records based on idle time.
+If the garbage collection handler is invoked, PHP will pass the value of
+``session.gc_maxlifetime``, meaning that any stored session that was saved more
+than ``gc_maxlifetime`` seconds ago should be deleted. This allows to expire records
+based on idle time.
 
 However, some operating systems (e.g. Debian) do their own session handling and set
-the ``session.gc_probability`` variable to ``0`` to stop PHP doing garbage
+the ``session.gc_probability`` directive to ``0`` to stop PHP doing garbage
 collection. That's why Symfony now overwrites this value to ``1``.
 
 If you wish to use the original value set in your ``php.ini``, add the following
 configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/framework.yaml
-    framework:
-        session:
-            gc_probability: null
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                gc_probability: null
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:session gc_probability="null"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'session' => [
+                'gc_probability' => null,
+            ],
+        ]);
 
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
 and ``gc_maxlifetime`` in an array to the constructor of

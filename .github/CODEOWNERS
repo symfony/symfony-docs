@@ -1,3 +1,6 @@
+# GithubActions workflows
+/.github/workflows* @OskarStark
+
 # Console
 /console* @chalasr
 /components/console* @chalasr

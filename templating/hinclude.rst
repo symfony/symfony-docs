@@ -60,12 +60,14 @@ default content rendering some template:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'fragments' => [
-                'hinclude_default_template' => 'hinclude.html.twig',
-            ],
-        ]);
+            $framework->fragments()
+                ->hincludeDefaultTemplate('hinclude.html.twig')
+            ;
+        };
 
 You can define default templates per ``render()`` function (which will override
 any global default template that is defined):
@@ -88,7 +90,7 @@ Use the ``attributes`` option to define the value of hinclude.js options:
 
     {# by default, cross-site requests don't use credentials such as cookies, authorization
        headers or TLS client certificates; set this option to 'true' to use them #}
-    {{ render_hinclude(controller('...'), {attributes: {data-with-credentials: 'true'}}) }}
+    {{ render_hinclude(controller('...'), {attributes: {'data-with-credentials': 'true'}}) }}
 
     {# by default, the JavaScript code included in the loaded contents is not run;
        set this option to 'true' to run that JavaScript code #}

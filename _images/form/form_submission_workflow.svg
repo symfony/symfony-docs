@@ -1,0 +1,76 @@
+<svg width="400" viewBox="977 1538 524 566" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="submission">
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke: none" x="1300" y="1901.61" width="109" height="23.3724"/>
+      <text font-size="18.0622" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1300" y="1920">
+        <tspan xml:space="preserve" x="1300" y="1920">  denormalization</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke: none" x="1300" y="1781.61" width="93.75" height="23.3724"/>
+      <text font-size="18.0622" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1300" y="1800">
+        <tspan xml:space="preserve" x="1300" y="1800">  normalization</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1100" y="1540" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1180" y="1579.84">
+        <tspan x="1180" y="1579.84">New form</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1340" y="1540" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1420" y="1579.84">
+        <tspan x="1420" y="1579.84">Prepopulated form</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1220" y="2040" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1300" y="2079.84">
+        <tspan x="1300" y="2079.84">Submitted form</tspan>
+      </text>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="1180,1603.71 1180,1640 1300,1640 1300,2028 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1295,2028 1300,2038 1305,2028 "/>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="1420,1603.71 1420,1640 1300,1640 1300,2029 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1295,2029 1300,2039 1305,2029 "/>
+    </g>
+    <g>
+      <path style="fill: #b2d4eb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" d="M 1004.16 1645 L 1100.81,1645 C 1114.16,1645 1124.98,1655.5 1124.98,1668.45 C 1124.98,1681.4 1114.16,1691.9 1100.81,1691.9 L 1004.16,1691.9 C 990.818,1691.9 980,1681.4 980,1668.45 C 980,1655.5 990.818,1645 1004.16,1645z"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1052.49" y="1676.43">
+        <tspan x="1052.49" y="1676.43">Request data</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke: none" x="1220" y="1613.61" width="158.75" height="23.3724"/>
+      <text font-size="18.0622" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1220" y="1632">
+        <tspan x="1220" y="1632">handleRequest($request) </tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="1124.98" y1="1668.45" x2="1286" y2="1669.67"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1285.96,1674.67 1296,1669.74 1286.04,1664.67 "/>
+    </g>
+    <g>
+      <rect style="fill: #fddfbb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1240" y="1700" width="120" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1300" y="1739.84">
+        <tspan x="1300" y="1739.84">PRE_SUBMIT</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #fddfbb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1240" y="1820" width="120" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1300" y="1859.84">
+        <tspan x="1300" y="1859.84">SUBMIT</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #fddfbb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1240" y="1940" width="120" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1300" y="1979.84">
+        <tspan x="1300" y="1979.84">POST_SUBMIT</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

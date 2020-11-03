@@ -1,0 +1,54 @@
+<svg width="700" viewBox="918 1177 943 167" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="prepopulation">
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="920" y="1280" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1000" y="1319.84">
+        <tspan x="1000" y="1319.84">New form</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1700" y="1280" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1780" y="1319.84">
+        <tspan x="1780" y="1319.84">Prepopulated form</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="1080" y1="1311.85" x2="1689" y2="1311.85"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1689,1316.85 1699,1311.85 1689,1306.85 "/>
+    </g>
+    <g>
+      <path style="fill: #b2d4eb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" d="M 1106.67 1180 L 1213.33,1180 C 1228.06,1180 1240,1190.5 1240,1203.45 C 1240,1216.4 1228.06,1226.9 1213.33,1226.9 L 1106.67,1226.9 C 1091.94,1226.9 1080,1216.4 1080,1203.45 C 1080,1190.5 1091.94,1180 1106.67,1180z"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1160" y="1211.43">
+        <tspan x="1160" y="1211.43">Model data</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #fddfbb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1480" y="1280" width="140" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1550" y="1319.84">
+        <tspan x="1550" y="1319.84">POST_SET_DATA</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #fddfbb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1200" y="1280" width="145.381" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1272.69" y="1319.84">
+        <tspan x="1272.69" y="1319.84">PRE_SET_DATA</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke: none" x="1088.7" y="1314.61" width="102.6" height="23.3724"/>
+      <text font-size="18.0622" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1140" y="1333">
+        <tspan xml:space="preserve" x="1140" y="1333">  setData($data) </tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="1160" y1="1226.9" x2="1160" y2="1300.85"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1155,1300.85 1160,1310.85 1165,1300.85 "/>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke: none" x="1366.97" y="1285.47" width="86.05" height="23.3724"/>
+      <text font-size="18.0622" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1410" y="1303.85">
+        <tspan x="1410" y="1303.85">normalization</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

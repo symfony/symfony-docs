@@ -7,9 +7,6 @@ want to allow zero as value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Negative`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LesserThanValidator`
 ==========  ===================================================================
@@ -34,6 +31,19 @@ The following constraint ensures that the ``withdraw`` of a  bank account
             /**
              * @Assert\Negative
              */
+            protected $withdraw;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/TransferItem.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class TransferItem
+        {
+            #[Assert\Negative]
             protected $withdraw;
         }
 
@@ -81,8 +91,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be negative.``
 

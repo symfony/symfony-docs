@@ -4,10 +4,13 @@ Our Backward Compatibility Promise
 Ensuring smooth upgrades of your projects is our first priority. That's why
 we promise you backward compatibility (BC) for all minor Symfony releases.
 You probably recognize this strategy as `Semantic Versioning`_. In short,
-Semantic Versioning means that only major releases (such as 2.0, 3.0 etc.) are
-allowed to break backward compatibility. Minor releases (such as 2.5, 2.6 etc.)
+Semantic Versioning means that only major releases (such as 5.0, 6.0 etc.) are
+allowed to break backward compatibility. Minor releases (such as 5.1, 5.2 etc.)
 may introduce new features, but must do so without breaking the existing API of
-that release branch (2.x in the previous example).
+that release branch (5.x in the previous example).
+
+We also provide deprecation message triggered in the code base to help you with
+the migration process across major release.
 
 .. caution::
 
@@ -72,7 +75,7 @@ backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Type hint against the interface               | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a method                                 | Yes                         |
+| Call a method                                 | Yes [10]_                   |
 +-----------------------------------------------+-----------------------------+
 | **If you implement the interface and...**     | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
@@ -114,13 +117,13 @@ covered by our backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Access a public property                      | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a public method                          | Yes                         |
+| Call a public method                          | Yes [10]_                   |
 +-----------------------------------------------+-----------------------------+
 | **If you extend the class and...**            | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
 | Access a protected property                   | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a protected method                       | Yes                         |
+| Call a protected method                       | Yes [10]_                   |
 +-----------------------------------------------+-----------------------------+
 | Override a public property                    | Yes                         |
 +-----------------------------------------------+-----------------------------+
@@ -444,5 +447,9 @@ Turn static into non static                         No
        Changing a return type is only possible with a child type.
 
 .. [9] Allowed for the ``void`` return type.
+
+.. [10] Parameter names are only covered by the compatibility promise for
+        constructors of Attribute classes. Using PHP named arguments might
+        break your code when upgrading to newer Symfony versions.
 
 .. _`Semantic Versioning`: https://semver.org/

@@ -5,8 +5,8 @@ Symfony code is contributed by thousands of developers around the world. To make
 every piece of code look and feel familiar, Symfony defines some coding standards
 that all contributions must follow.
 
-These Symfony coding standards are based on the `PSR-1`_, `PSR-2`_ and `PSR-4`_
-standards, so you may already know most of them.
+These Symfony coding standards are based on the `PSR-1`_, `PSR-2`_, `PSR-4`_
+and `PSR-12`_ standards, so you may already know most of them.
 
 Making your Code Follow the Coding Standards
 --------------------------------------------
@@ -220,6 +220,9 @@ Naming Conventions
 
 * Suffix exceptions with ``Exception``;
 
+* Prefix PHP attributes with ``As`` where applicable (e.g. ``#[AsCommand]``
+  instead of ``#[Command]``, but ``#[When]`` is kept as-is);
+
 * Use UpperCamelCase for naming PHP files (e.g. ``EnvVarProcessor.php``) and
   snake case for naming Twig templates and web assets (``section_layout.html.twig``,
   ``index.scss``);
@@ -283,6 +286,7 @@ License
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
+.. _`PSR-12`: https://www.php-fig.org/psr/psr-12/
 .. _`identical comparison`: https://www.php.net/manual/en/language.operators.comparison.php
 .. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions
 .. _`camelCase`: https://en.wikipedia.org/wiki/Camel_case

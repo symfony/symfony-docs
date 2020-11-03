@@ -7,17 +7,17 @@ Tired of deploying and having browser's cache the old version of your assets?
 By calling ``enableVersioning()``, each filename will now include a hash that
 changes whenever the *contents* of that file change (e.g. ``app.123abc.js``
 instead of ``app.js``). This allows you to use aggressive caching strategies
-(e.g. a far future ``Expires``) because, whenever a file change, its hash will change,
+(e.g. a far future ``Expires``) because, whenever a file changes, its hash will change,
 ignoring any existing cache:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
 
-    Encore
-        .setOutputPath('public/build/')
-        // ...
+      // ...
+      Encore
+          .setOutputPath('public/build/')
+          // ...
     +     .enableVersioning()
 
 To link to these assets, Encore creates two files ``entrypoints.json`` and
@@ -28,11 +28,12 @@ To link to these assets, Encore creates two files ``entrypoints.json`` and
 Loading Assets from ``entrypoints.json`` & ``manifest.json``
 ------------------------------------------------------------
 
-Whenever you run Encore, two configuration files are generated: ``entrypoints.json``
+Whenever you run Encore, two configuration files are generated in your
+output folder (default location: ``public/build/``): ``entrypoints.json``
 and ``manifest.json``. Each file is similar, and contains a map to the final, versioned
-filename.
+filenames.
 
-The first file - ``entrypoints.json`` - is used by the ``encore_entry_script_tags()``
+The first file – ``entrypoints.json`` – is used by the ``encore_entry_script_tags()``
 and ``encore_entry_link_tags()`` Twig helpers. If you're using these, then your
 CSS and JavaScript files will render with the new, versioned filename. If you're
 not using Symfony, your app will need to read this file in a similar way.

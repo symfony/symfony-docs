@@ -7,18 +7,18 @@ How to Dynamically Modify Forms Using Form Events
 Often times, a form can't be created statically. In this article, you'll learn
 how to customize your form based on three common use-cases:
 
-1) :ref:`form-events-underlying-data`
+1) :ref:`Customizing your Form Based on the Underlying Data <form-events-underlying-data>`
 
    Example: you have a "Product" form and need to modify/add/remove a field
    based on the data on the underlying Product being edited.
 
-2) :ref:`form-events-user-data`
+2) :ref:`How to dynamically Generate Forms Based on user Data <form-events-user-data>`
 
    Example: you create a "Friend Message" form and need to build a drop-down
    that contains only users that are friends with the *current* authenticated
    user.
 
-3) :ref:`form-events-submitted-data`
+3) :ref:`Dynamic Generation for Submitted Forms <form-events-submitted-data>`
 
    Example: on a registration form, you have a "country" field and a "state"
    field which should populate dynamically based on the value in the "country"
@@ -45,13 +45,13 @@ a bare form class looks like::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('name');
             $builder->add('price');
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Product::class,
@@ -92,7 +92,7 @@ creating that particular field is delegated to an event listener::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('price');
 
@@ -109,7 +109,7 @@ object is new (e.g. hasn't been persisted to the database). Based on that,
 the event listener might look like the following::
 
     // ...
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -151,14 +151,14 @@ you can also move the logic for creating the ``name`` field to an
 
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             // Tells the dispatcher that you want to listen on the form.pre_set_data
             // event and that the preSetData method should be called.
             return [FormEvents::PRE_SET_DATA => 'preSetData'];
         }
 
-        public function preSetData(FormEvent $event)
+        public function preSetData(FormEvent $event): void
         {
             $product = $event->getData();
             $form = $event->getForm();
@@ -179,7 +179,7 @@ Great! Now use that in your form class::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('price');
 
@@ -217,7 +217,7 @@ Using an event listener, your form might look like this::
 
     class FriendMessageFormType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('subject', TextType::class)
@@ -274,7 +274,7 @@ security helper to fill in the listener logic::
             $this->security = $security;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('subject', TextType::class)
@@ -337,10 +337,12 @@ and :doc:`tag it </service_container/tags>` with the ``form.type`` tag.
 In a controller, create the form like normal::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class FriendMessageController extends AbstractController
     {
-        public function new(Request $request)
+        public function new(Request $request): Response
         {
             $form = $this->createForm(FriendMessageFormType::class);
 
@@ -351,7 +353,7 @@ In a controller, create the form like normal::
 You can also  embed the form type into another form::
 
     // inside some other "form type" class
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('message', FriendMessageFormType::class);
     }
@@ -375,6 +377,8 @@ sport like this::
     // src/Form/Type/SportMeetupType.php
     namespace App\Form\Type;
 
+    use App\Entity\Position;
+    use App\Entity\Sport;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -384,11 +388,11 @@ sport like this::
 
     class SportMeetupType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('sport', EntityType::class, [
-                    'class'       => 'App\Entity\Sport',
+                    'class' => Sport::class,
                     'placeholder' => '',
                 ])
             ;
@@ -405,7 +409,7 @@ sport like this::
                     $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                     $form->add('position', EntityType::class, [
-                        'class' => 'App\Entity\Position',
+                        'class' => Position::class,
                         'placeholder' => '',
                         'choices' => $positions,
                     ]);
@@ -441,6 +445,7 @@ The type would now look like::
     // src/Form/Type/SportMeetupType.php
     namespace App\Form\Type;
 
+    use App\Entity\Position;
     use App\Entity\Sport;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\FormInterface;
@@ -448,11 +453,11 @@ The type would now look like::
 
     class SportMeetupType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('sport', EntityType::class, [
-                    'class'       => 'App\Entity\Sport',
+                    'class' => Sport::class,
                     'placeholder' => '',
                 ])
             ;
@@ -461,7 +466,7 @@ The type would now look like::
                 $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, [
-                    'class' => 'App\Entity\Position',
+                    'class' => Position::class,
                     'placeholder' => '',
                     'choices' => $positions,
                 ]);
@@ -515,11 +520,12 @@ your application. Assume that you have a sport meetup creation controller::
     use App\Form\Type\SportMeetupType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
     class MeetupController extends AbstractController
     {
-        public function create(Request $request)
+        public function create(Request $request): Response
         {
             $meetup = new SportMeetup();
             $form = $this->createForm(SportMeetupType::class, $meetup);
@@ -528,10 +534,9 @@ your application. Assume that you have a sport meetup creation controller::
                 // ... save the meetup, redirect etc.
             }
 
-            return $this->render(
-                'meetup/create.html.twig',
-                ['form' => $form->createView()]
-            );
+            return $this->renderForm('meetup/create.html.twig', [
+                'form' => $form,
+            ]);
         }
 
         // ...
@@ -563,11 +568,11 @@ field according to the current selection in the ``sport`` field:
         url : $form.attr('action'),
         type: $form.attr('method'),
         data : data,
-        success: function(html) {
+        complete: function(html) {
           // Replace current position field ...
           $('#meetup_position').replaceWith(
             // ... with the returned one from the AJAX response.
-            $(html).find('#meetup_position')
+            $(html.responseText).find('#meetup_position')
           );
           // Position field now displays the appropriate positions.
         }

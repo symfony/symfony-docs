@@ -22,11 +22,13 @@ String Constraints
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Hostname </reference/constraints/Hostname>`
 * :doc:`Ip </reference/constraints/Ip>`
+* :doc:`Cidr </reference/constraints/Cidr>`
 * :doc:`Json </reference/constraints/Json>`
 * :doc:`Uuid </reference/constraints/Uuid>`
 * :doc:`Ulid </reference/constraints/Ulid>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
+* :doc:`CssColor </reference/constraints/CssColor>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~

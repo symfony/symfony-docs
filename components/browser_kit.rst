@@ -60,7 +60,7 @@ This method accepts a request and should return a response::
 For a simple implementation of a browser based on the HTTP layer, have a look
 at the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` provided by
 :ref:`this component <component-browserkit-external-requests>`. For an implementation based
-on ``HttpKernelInterface``, have a look at the :class:`Symfony\\Component\\HttpKernel\\Client`
+on ``HttpKernelInterface``, have a look at the :class:`Symfony\\Component\\HttpKernel\\HttpClientKernel`
 provided by the :doc:`HttpKernel component </components/http_kernel>`.
 
 Making Requests
@@ -79,6 +79,20 @@ The value returned by the ``request()`` method is an instance of the
 :class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
+
+The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::jsonRequest` method,
+which defines the same arguments as the ``request()`` method, is a shortcut to
+convert the request parameters into a JSON string and set the needed HTTP headers::
+
+    use Acme\Client;
+
+    $client = new Client();
+    // this encodes parameters as JSON and sets the required CONTENT_TYPE and HTTP_ACCEPT headers
+    $crawler = $client->jsonRequest('GET', '/', ['some_parameter' => 'some_value']);
+
+.. versionadded:: 5.3
+
+    The ``jsonRequest()`` method was introduced in Symfony 5.3.
 
 The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to

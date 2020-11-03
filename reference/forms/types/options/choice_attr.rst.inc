@@ -13,6 +13,20 @@ If an array, the keys of the ``choices`` array must be used as keys::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
+    $builder->add('fruits', ChoiceType::class, [
+        'choices' => [
+            'Apple' => 1,
+            'Banana' => 2,
+            'Durian' => 3,
+        ],
+        'choice_attr' => [
+            'Apple' => ['data-color' => 'Red'],
+            'Banana' => ['data-color' => 'Yellow'],
+            'Durian' => ['data-color' => 'Green'],
+        ],
+    ]);
+
+    // or use a callable
     $builder->add('attending', ChoiceType::class, [
         'choices' => [
             'Yes' => true,
@@ -35,7 +49,7 @@ If an array, the keys of the ``choices`` array must be used as keys::
 
         // ...
         $builder->add('choices', ChoiceType::class, [
-            'choice_label' => ChoiceList::attr($this, function (?Category $category) {
+            'choice_attr' => ChoiceList::attr($this, function (?Category $category) {
                 return $category ? ['data-uuid' => $category->getUuid()] : [];
             }),
         ]);

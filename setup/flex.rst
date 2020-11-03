@@ -58,14 +58,14 @@ manual steps:
 
    .. code-block:: diff
 
-       {
-           "require": {
-               "symfony/flex": "^1.0",
-       +     },
-       +     "conflict": {
-       +         "symfony/symfony": "*"
-           }
-       }
+         {
+             "require": {
+                 "symfony/flex": "^1.0",
+       +   },
+       +   "conflict": {
+       +       "symfony/symfony": "*"
+             }
+         }
 
    Now you must add in ``composer.json`` all the Symfony dependencies required
    by your project. A quick way to do that is to add all the components that
@@ -89,7 +89,7 @@ manual steps:
        $ rm -rf vendor/*
        $ composer install
 
-#. No matter which of the previous steps you followed. At this point, you'll have
+#. Regardless of which of the previous steps you followed, at this point you'll have
    lots of new config files in ``config/``. They contain the default config
    defined by Symfony, so you must check your original files in ``app/config/``
    and make the needed changes in the new files. Flex config doesn't use suffixes
@@ -100,7 +100,7 @@ manual steps:
    located at ``config/services.yaml``. Copy the contents of the
    `default services.yaml file`_ and then add your own service configuration.
    Later you can revisit this file because thanks to Symfony's
-   :doc:`autowiring feature </service_container/3.3-di-changes>` you can remove
+   :doc:`autowiring feature </service_container/autowiring>` you can remove
    most of the service configuration.
 
    .. note::
@@ -117,14 +117,14 @@ manual steps:
    * ``app/Resources/<BundleName>/views/`` -> ``templates/bundles/<BundleName>/``
    * rest of ``app/Resources/`` files -> ``src/Resources/``
 
-#. Move the original PHP source code from ``src/AppBundle/*``, except bundle
+#. Move the original PHP source code files from ``src/AppBundle/*``, except bundle
    specific files (like ``AppBundle.php`` and ``DependencyInjection/``), to
-   ``src/``.
+   ``src/`` and update the namespace of each moved file to be ``App\...`` (advanced
+   IDEs can do this automatically).
 
    In addition to moving the files, update the ``autoload`` and ``autoload-dev``
    values of the ``composer.json`` file as `shown in this example`_ to use
-   ``App\`` and ``App\Tests\`` as the application namespaces (advanced IDEs can
-   do this automatically).
+   ``App\`` and ``App\Tests\`` as the application namespaces.
 
    If you used multiple bundles to organize your code, you must reorganize your
    code into ``src/``. For example, if you had ``src/UserBundle/Controller/DefaultController.php``
@@ -133,6 +133,8 @@ manual steps:
 
 #. Move the public assets, such as images or compiled CSS/JS files, from
    ``src/AppBundle/Resources/public/`` to ``public/`` (e.g. ``public/images/``).
+
+#. Remove ``src/AppBundle/``.
 
 #. Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
    :doc:`Webpack Encore </frontend>` to manage and compile them.
@@ -148,12 +150,6 @@ manual steps:
 
 #. Update the ``bin/console`` script `copying Symfony's bin/console source`_
    and changing anything according to your original console script.
-
-#. Remove ``src/AppBundle/``.
-
-#. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
-   update the namespaces of every PHP file to be ``App\...`` (advanced IDEs can do
-   this automatically).
 
 #. Remove the ``bin/symfony_requirements`` script and if you need a replacement
    for it, use the new `Symfony Requirements Checker`_.
@@ -193,9 +189,14 @@ If you customize these paths, some files copied from a recipe still may contain
 references to the original path. In other words: you may need to update some things
 manually after a recipe is installed.
 
-.. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/config/services.yaml
-.. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
-.. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L44-L46
-.. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.1/public/index.php
-.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/5.1/bin/console
+Learn more
+----------
+
+* :doc:`/setup/flex_private_recipes`
+
+.. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.3/config/services.yaml
+.. _`shown in this example`: https://github.com/symfony/skeleton/blob/a0770a7f26eeda9890a104fa3de8f68c4120fca5/composer.json#L30-L39
+.. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/a0770a7f26eeda9890a104fa3de8f68c4120fca5/composer.json#L55-L57
+.. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.3/public/index.php
+.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/5.3/bin/console
 .. _`Symfony Requirements Checker`: https://github.com/symfony/requirements-checker

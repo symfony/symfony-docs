@@ -23,7 +23,7 @@ To do so, :ref:`override the "logger" service definition <service-psr4-loader>`.
 Logging a Message
 -----------------
 
-To log a message, inject the default logger in your controller::
+To log a message, inject the default logger in your controller or service::
 
     use Psr\Log\LoggerInterface;
 
@@ -64,13 +64,15 @@ The following sections assume that Monolog is installed.
 Where Logs are Stored
 ---------------------
 
-By default, log entries are written to the ``var/log/dev.log`` file when you're in
-the ``dev`` environment. In the ``prod`` environment, logs are written to ``var/log/prod.log``,
-but *only* during a request where an error or high-priority log entry was made
-(i.e. ``error()`` , ``critical()``, ``alert()`` or ``emergency()``).
+By default, log entries are written to the ``var/log/dev.log`` file when you're
+in the ``dev`` environment.
 
-To control this, you'll configure different *handlers* that handle log entries, sometimes
-modify them, and ultimately store them.
+In the ``prod`` environment, logs are written to `STDERR PHP stream`_, which
+works best in modern containerized applications deployed to servers without
+disk write permissions.
+
+If you prefer to store production logs in a file, set the ``path`` of your
+log handler(s) to the path of the file to use (e.g. ``var/log/prod.log``).
 
 Handlers: Writing Logs to different Locations
 ---------------------------------------------
@@ -138,26 +140,34 @@ to write logs using the :phpfunction:`syslog` function:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                // this "file_log" key could be anything
-                'file_log' => [
-                    'type'  => 'stream',
-                    // log to var/logs/(environment).log
-                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                    // log *all* messages (debug is lowest level)
-                    'level' => 'debug',
-                ],
-                'syslog_handler' => [
-                    'type'  => 'syslog',
-                    // log error-level messages and higher
-                    'level' => 'error',
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            // this "file_log" key could be anything
+            $monolog->handler('file_log')
+                ->type('stream')
+                // log to var/logs/(environment).log
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                // log *all* messages (debug is lowest level)
+                ->level('debug');
+
+            $monolog->handler('syslog_handler')
+                ->type('syslog')
+                // log error-level messages and higher
+                ->level('error');
+        };
 
 This defines a *stack* of handlers and each handler is called in the order that it's
 defined.
+
+.. note::
+
+    If you want to override the ``monolog`` configuration via another config
+    file, you will need to redefine the entire ``handlers`` stack. The configuration
+    from the two files cannot be merged because the order matters and a merge does
+    not allow to control the order.
+
+.. _logging-handler-fingers_crossed:
 
 Handlers that Modify Log Entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -229,29 +239,29 @@ one of the messages reaches an ``action_level``. Take this example:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'filter_for_errors' => [
-                    'type'         => 'fingers_crossed',
-                    // if *one* log is error or higher, pass *all* to file_log
-                    'action_level' => 'error',
-                    'handler'      => 'file_log',
-                ],
+        use Symfony\Config\MonologConfig;
 
-                // now passed *all* logs, but only if one log is error or higher
-                'file_log' => [
-                    'type'  => 'stream',
-                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                    'level' => 'debug',
-                ],
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('filter_for_errors')
+                ->type('fingers_crossed')
+                // if *one* log is error or higher, pass *all* to file_log
+                ->actionLevel('error')
+                ->handler('file_log')
+            ;
 
-                // still passed *all* logs, and still only logs error or higher
-                'syslog_handler' => [
-                    'type'  => 'syslog',
-                    'level' => 'error',
-                ],
-            ],
-        ]);
+            // now passed *all* logs, but only if one log is error or higher
+            $monolog->handler('file_log')
+                ->type('stream')
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                ->level('debug')
+            ;
+
+            // still passed *all* logs, and still only logs error or higher
+            $monolog->handler('syslog_handler')
+                ->type('syslog')
+                ->level('error')
+            ;
+        };
 
 Now, if even one log entry has an ``error`` level or higher, then *all* log entries
 for that request are saved to a file via the ``file_log`` handler. That means that
@@ -262,13 +272,6 @@ debugging much easier!
 
     The handler named "file_log" will not be included in the stack itself as
     it is used as a nested handler of the ``fingers_crossed`` handler.
-
-.. note::
-
-    If you want to override the ``monolog`` configuration via another config
-    file, you will need to redefine the entire ``handlers`` stack. The configuration
-    from the two files cannot be merged because the order matters and a merge does
-    not allow to control the order.
 
 All Built-in Handlers
 ---------------------
@@ -331,18 +334,17 @@ option of your handler to ``rotating_file``:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'main' => [
-                    'type'  => 'rotating_file',
-                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                    'level' => 'debug',
-                    // max number of log files to keep
-                    // defaults to zero, which means infinite files
-                    'max_files' => 10,
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('main')
+                ->type('rotating_file')
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                ->level('debug')
+                // max number of log files to keep
+                // defaults to zero, which means infinite files
+                ->maxFiles(10);
+        };
 
 Using a Logger inside a Service
 -------------------------------
@@ -379,15 +381,11 @@ Learn more
     logging/monolog_exclude_http_codes
     logging/monolog_console
 
-.. toctree::
-    :hidden:
-
-    logging/monolog_regex_based_excludes
-
 .. _`the twelve-factor app methodology`: https://12factor.net/logs
-.. _PSR-3: https://www.php-fig.org/psr/psr-3/
+.. _`PSR-3`: https://www.php-fig.org/psr/psr-3/
 .. _`stderr`: https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)
-.. _Monolog: https://github.com/Seldaek/monolog
-.. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
+.. _`Monolog`: https://github.com/Seldaek/monolog
+.. _`LoggerInterface`: https://github.com/php-fig/log/blob/master/src/LoggerInterface.php
 .. _`logrotate`: https://github.com/logrotate/logrotate
 .. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php#L25
+.. _`STDERR PHP stream`: https://www.php.net/manual/en/features.commandline.io-streams.php

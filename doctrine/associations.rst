@@ -171,6 +171,32 @@ the ``Product`` entity (and getter & setter methods):
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Product.php
+        namespace App\Entity;
+
+        // ...
+        class Product
+        {
+            // ...
+
+            #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: "products")]
+            private $category;
+
+            public function getCategory(): ?Category
+            {
+                return $this->category;
+            }
+
+            public function setCategory(?Category $category): self
+            {
+                $this->category = $category;
+
+                return $this;
+            }
+        }
+
     .. code-block:: yaml
 
         # src/Resources/config/doctrine/Product.orm.yml
@@ -230,6 +256,38 @@ class that will hold these objects:
             /**
              * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
              */
+            private $products;
+
+            public function __construct()
+            {
+                $this->products = new ArrayCollection();
+            }
+
+            /**
+             * @return Collection|Product[]
+             */
+            public function getProducts(): Collection
+            {
+                return $this->products;
+            }
+
+            // addProduct() and removeProduct() were also added
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Category.php
+        namespace App\Entity;
+
+        // ...
+        use Doctrine\Common\Collections\ArrayCollection;
+        use Doctrine\Common\Collections\Collection;
+
+        class Category
+        {
+            // ...
+
+            #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category")]
             private $products;
 
             public function __construct()
@@ -320,6 +378,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
     // ...
     use App\Entity\Category;
     use App\Entity\Product;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Component\HttpFoundation\Response;
 
     class ProductController extends AbstractController
@@ -327,7 +386,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
         /**
          * @Route("/product", name="product")
          */
-        public function index()
+        public function index(ManagerRegistry $doctrine): Response
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -340,7 +399,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relates this product to the category
             $product->setCategory($category);
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($category);
             $entityManager->persist($product);
             $entityManager->flush();
@@ -378,20 +437,23 @@ When you need to fetch associated objects, your workflow looks like it did
 before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
     use App\Entity\Product;
     // ...
 
-    public function show($id)
+    class ProductController extends AbstractController
     {
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->find($id);
+        public function show(ManagerRegistry $doctrine, int $id): Response
+        {
+            $product = $doctrine->getRepository(Product::class)->find($id);
+            // ...
 
-        // ...
+            $categoryName = $product->getCategory()->getName();
 
-        $categoryName = $product->getCategory()->getName();
-
-        // ...
+            // ...
+        }
     }
 
 In this example, you first query for a ``Product`` object based on the product's
@@ -411,15 +473,19 @@ the category (i.e. it's "lazily loaded").
 Because we mapped the optional ``OneToMany`` side, you can also query in the other
 direction::
 
-    public function showProducts($id)
+    // src/Controller/ProductController.php
+
+    // ...
+    class ProductController extends AbstractController
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->find($id);
+        public function showProducts(ManagerRegistry $doctrine, int $id): Response
+        {
+            $category = $doctrine->getRepository(Category::class)->find($id);
 
-        $products = $category->getProducts();
+            $products = $category->getProducts();
 
-        // ...
+            // ...
+        }
     }
 
 In this case, the same things occur: you first query for a single ``Category``
@@ -433,9 +499,7 @@ by adding JOINs.
     a "proxy" object in place of the true object. Look again at the above
     example::
 
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->find($id);
+        $product = $doctrine->getRepository(Product::class)->find($id);
 
         $category = $product->getCategory();
 
@@ -475,18 +539,23 @@ can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
     // src/Repository/ProductRepository.php
-    public function findOneByIdJoinedToCategory($productId)
+
+    // ...
+    class ProductRepository extends ServiceEntityRepository
     {
-        $entityManager = $this->getEntityManager();
+        public function findOneByIdJoinedToCategory(int $productId): ?Product
+        {
+            $entityManager = $this->getEntityManager();
 
-        $query = $entityManager->createQuery(
-            'SELECT p, c
-            FROM App\Entity\Product p
-            INNER JOIN p.category c
-            WHERE p.id = :id'
-        )->setParameter('id', $productId);
+            $query = $entityManager->createQuery(
+                'SELECT p, c
+                FROM App\Entity\Product p
+                INNER JOIN p.category c
+                WHERE p.id = :id'
+            )->setParameter('id', $productId);
 
-        return $query->getOneOrNullResult();
+            return $query->getOneOrNullResult();
+        }
     }
 
 This will *still* return an array of ``Product`` objects. But now, when you call
@@ -495,15 +564,19 @@ This will *still* return an array of ``Product`` objects. But now, when you call
 Now, you can use this method in your controller to query for a ``Product``
 object and its related ``Category`` in one query::
 
-    public function show($id)
+    // src/Controller/ProductController.php
+
+    // ...
+    class ProductController extends AbstractController
     {
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->findOneByIdJoinedToCategory($id);
+        public function show(ManagerRegistry $doctrine, int $id): Response
+        {
+            $product = $doctrine->getRepository(Product::class)->findOneByIdJoinedToCategory($id);
 
-        $category = $product->getCategory();
+            $category = $product->getCategory();
 
-        // ...
+            // ...
+        }
     }
 
 .. _associations-inverse-side:
@@ -574,16 +647,30 @@ on that ``Product`` will be set to ``null`` in the database.
 
 But, instead of setting the ``category_id`` to null, what if you want the ``Product``
 to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choose
-that behavior, use the `orphanRemoval`_ option inside ``Category``::
+that behavior, use the `orphanRemoval`_ option inside ``Category``:
 
-    // src/Entity/Category.php
+.. configuration-block::
 
-    // ...
+    .. code-block:: php-annotations
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
-     */
-    private $products;
+        // src/Entity/Category.php
+
+        // ...
+
+        /**
+         * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
+         */
+        private $products;
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Category.php
+
+        // ...
+
+        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category", orphanRemoval: true)]
+        private $products;
+
 
 Thanks to this, if the ``Product`` is removed from the ``Category``, it will be
 removed from the database entirely.

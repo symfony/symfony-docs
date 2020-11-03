@@ -11,10 +11,6 @@ function).
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `requireTld`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Hostname`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\HostnameValidator`
 ==========  ===================================================================
@@ -39,6 +35,19 @@ will contain a host name.
             /**
              * @Assert\Hostname(message="The server name must be a valid hostname.")
              */
+            protected $name;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/ServerSettings.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class ServerSettings
+        {
+            #[Assert\Hostname(message: 'The server name must be a valid hostname.')]
             protected $name;
         }
 
@@ -122,7 +131,7 @@ Parameter        Description
 ``requireTld``
 ~~~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 By default, hostnames are considered valid only when they are fully qualified
 and include their TLDs (top-level domain names). For instance, ``example.com``

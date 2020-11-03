@@ -1,0 +1,66 @@
+<svg width="400" viewBox="1357 517 524 407" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="global workflow">
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1480" y="620" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1560" y="659.838">
+        <tspan x="1560" y="659.838">New form</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1720" y="620" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1800" y="659.838">
+        <tspan x="1800" y="659.838">Prepopulated form</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #f2f2f2; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x="1600" y="860" width="160" height="63.7055" rx="6" ry="6"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1680" y="899.838">
+        <tspan x="1680" y="899.838">Submitted form</tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" x1="1640" y1="651.853" x2="1709" y2="651.853"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1709,656.853 1719,651.853 1709,646.853 "/>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="1560,683.706 1560,740 1680,740 1680,847.996 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1675,847.996 1680,857.996 1685,847.996 "/>
+    </g>
+    <g>
+      <polyline style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke: #000000" points="1800,683.706 1800,740 1680,740 1680,849 "/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1675,849 1680,859 1685,849 "/>
+    </g>
+    <g>
+      <path style="fill: #b2d4eb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" d="M 1626.67 520 L 1733.33,520 C 1748.06,520 1760,530.499 1760,543.449 C 1760,556.4 1748.06,566.898 1733.33,566.898 L 1626.67,566.898 C 1611.94,566.898 1600,556.4 1600,543.449 C 1600,530.499 1611.94,520 1626.67,520z"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1680" y="551.435">
+        <tspan x="1680" y="551.435">Model data</tspan>
+      </text>
+    </g>
+    <g>
+      <path style="fill: #b2d4eb; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" d="M 1384.16 780 L 1480.81,780 C 1494.16,780 1504.98,790.499 1504.98,803.449 C 1504.98,816.4 1494.16,826.898 1480.81,826.898 L 1384.16,826.898 C 1370.82,826.898 1360,816.4 1360,803.449 C 1360,790.499 1370.82,780 1384.16,780z"/>
+      <text font-size="20.32" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:middle;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1432.49" y="811.435">
+        <tspan x="1432.49" y="811.435">Request data</tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke: none" x="1680" y="581.613" width="102.6" height="23.3724"/>
+      <text font-size="18.0622" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1680" y="600">
+        <tspan xml:space="preserve" x="1680" y="600">  setData($data) </tspan>
+      </text>
+    </g>
+    <g>
+      <rect style="fill: #ffffff; fill-opacity: 1; stroke: none" x="1510" y="776.613" width="158.75" height="23.3724"/>
+      <text font-size="18.0622" style="fill: #000000; fill-opacity: 1; stroke: none;text-anchor:start;font-family:PT Sans Narrow;font-style:normal;font-weight:normal" x="1510" y="795">
+        <tspan x="1510" y="795">handleRequest($request) </tspan>
+      </text>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="1504.98" y1="803.449" x2="1666" y2="804.667"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1665.96,809.667 1676,804.742 1666.04,799.667 "/>
+    </g>
+    <g>
+      <line style="fill: none; stroke-opacity: 1; stroke-width: 2; stroke-dasharray: 4; stroke: #000000" x1="1680" y1="566.898" x2="1680" y2="640.853"/>
+      <polygon style="fill: #000000; fill-opacity: 1; stroke-opacity: 1; stroke-width: 2; stroke: #000000" fill-rule="evenodd" points="1675,640.853 1680,650.853 1685,640.853 "/>
+    </g>
+  </g>
+</svg>

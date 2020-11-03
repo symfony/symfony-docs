@@ -93,20 +93,20 @@ caching kernel:
 
 .. code-block:: diff
 
-    // public/index.php
+      // public/index.php
 
     + use App\CacheKernel;
-    use App\Kernel;
+      use App\Kernel;
 
-    // ...
-    $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+      // ...
+      $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
     + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
     + if ('prod' === $kernel->getEnvironment()) {
     +     $kernel = new CacheKernel($kernel);
     + }
 
-    $request = Request::createFromGlobals();
-    // ...
+      $request = Request::createFromGlobals();
+      // ...
 
 The caching kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.
@@ -155,7 +155,7 @@ header to the response. You can also use the ``trace_level`` config
 option and set it to either ``none``, ``short`` or ``full`` to
 add this information.
 
-``short`` will add the information for the master request only.
+``short`` will add the information for the main request only.
 It's written in a concise way that makes it easy to record the
 information in your server log files. For example, in Apache you can
 use ``%{X-Symfony-Cache}o`` in ``LogFormat`` format statements.
@@ -310,7 +310,7 @@ Safe Methods: Only caching GET or HEAD requests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HTTP caching only works for "safe" HTTP methods (like GET and HEAD). This means
-two things:
+three things:
 
 * Don't try to cache PUT or DELETE requests. It won't work and with good reason.
   These methods are meant to be used when mutating the state of your application

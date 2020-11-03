@@ -1,7 +1,7 @@
 ``label_html``
 ~~~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 5.1
 

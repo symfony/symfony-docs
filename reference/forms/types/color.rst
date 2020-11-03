@@ -14,32 +14,17 @@ The value of the underlying ``<input type="color">`` field is always a
 That's why it's not possible to select semi-transparent colors with this
 element.
 
-+-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``color`` field (a text box)                              |
-+-------------+---------------------------------------------------------------------+
-| Options     | - `html5`_                                                          |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `data`_                                                           |
-|             | - `disabled`_                                                       |
-|             | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-|             | - `trim`_                                                           |
-+-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`TextType </reference/forms/types/text>`                       |
-+-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ColorType` |
-+-------------+---------------------------------------------------------------------+
++---------------------------+---------------------------------------------------------------------+
+| Rendered as               | ``input`` ``color`` field (a text box)                              |
++---------------------------+---------------------------------------------------------------------+
+| Default invalid message   | Please select a valid color.                                        |
++---------------------------+---------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
++---------------------------+---------------------------------------------------------------------+
+| Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
++---------------------------+---------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ColorType` |
++---------------------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -49,7 +34,7 @@ Field Options
 html5
 ~~~~~
 
-**type**: ``bool`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 5.1
 
@@ -58,6 +43,11 @@ html5
 When this option is set to ``true``, the form type checks that its value matches
 the `HTML5 color format`_ (``/^#[0-9a-f]{6}$/i``). If it doesn't match it,
 you'll see the following error message: *"This value is not a valid HTML5 color"*.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------
@@ -70,13 +60,11 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``''`` (the empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 

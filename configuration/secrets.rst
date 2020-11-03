@@ -48,7 +48,7 @@ running:
 
 .. code-block:: terminal
 
-    $ php bin/console secrets:generate-keys --env=prod
+    $ APP_RUNTIME_ENV=prod php bin/console secrets:generate-keys
 
 This will generate ``config/secrets/prod/prod.encrypt.public.php`` and
 ``config/secrets/prod/prod.decrypt.private.php``.
@@ -78,7 +78,7 @@ Suppose you want to store your database password as a secret. By using the
     $ php bin/console secrets:set DATABASE_PASSWORD
 
     # set your production value
-    $ php bin/console secrets:set DATABASE_PASSWORD --env=prod
+    $ APP_RUNTIME_ENV=prod php bin/console secrets:set DATABASE_PASSWORD
 
 This will create a new file for the secret in ``config/secrets/dev`` and another
 in ``config/secrets/prod``. You can also set the secret in a few other ways:
@@ -93,6 +93,11 @@ in ``config/secrets/prod``. You can also set the secret in a few other ways:
 
     # or let Symfony generate a random value for you
     $ php bin/console secrets:set REMEMBER_ME --random
+
+.. note::
+
+    There's no command to rename secrets, so you'll need to create a new secret
+    and remove the old one.
 
 Referencing Secrets in Configuration Files
 ------------------------------------------
@@ -138,11 +143,14 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'password' => '%env(DATABASE_PASSWORD)%',
-            ]
-        ]);
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine) {
+            $doctrine->dbal()
+                ->connection('default')
+                    ->password('%env(DATABASE_PASSWORD)%')
+            ;
+        };
 
 The actual value will be resolved at runtime: container compilation and cache
 warmup don't need the **decryption key**.
@@ -208,9 +216,9 @@ Listing the secrets will now also display the local variable:
       DATABASE_PASSWORD   "dev value"   "root"
      ------------------- ------------- -------------
 
-Symfony also provides the ``secrets:decrypt-to-local`` command to decrypts
-all secrets and stores them in the local vault and ``secrets:encrypt-from-local``
-to encrypt all local secrets to the vault.
+Symfony also provides the ``secrets:decrypt-to-local`` command which decrypts
+all secrets and stores them in the local vault and the ``secrets:encrypt-from-local``
+command to encrypt all local secrets to the vault.
 
 Secrets in the test Environment
 -------------------------------
@@ -253,7 +261,7 @@ your secrets during deployment to the "local" vault:
 
 .. code-block:: terminal
 
-    $ php bin/console secrets:decrypt-to-local --force --env=prod
+    $ APP_RUNTIME_ENV=prod php bin/console secrets:decrypt-to-local --force
 
 This will write all the decrypted secrets into the ``.env.prod.local`` file.
 After doing this, the decryption key does *not* need to remain on the server(s).
@@ -305,13 +313,15 @@ The secrets system is enabled by default and some of its behavior can be configu
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'secrets' => [
-                // 'vault_directory' => '%kernel.project_dir%/config/secrets/%kernel.environment%',
-                // 'local_dotenv_file' => '%kernel.project_dir%/.env.%kernel.environment%.local',
-                // 'decryption_env_var' => 'base64:default::SYMFONY_DECRYPTION_SECRET',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->secrets()
+                // ->vaultDirectory('%kernel.project_dir%/config/secrets/%kernel.environment%')
+                // ->localDotenvFile('%kernel.project_dir%/.env.%kernel.environment%.local')
+                // ->decryptionEnvVar('base64:default::SYMFONY_DECRYPTION_SECRET')
+            ;
+        };
 
 
 .. _`libsodium`: https://pecl.php.net/package/libsodium

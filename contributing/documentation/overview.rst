@@ -112,16 +112,16 @@ memorable name for the new branch (if you are fixing a reported issue, use
 
 .. code-block:: terminal
 
-    $ git checkout -b improve_install_article upstream/3.4
+    $ git checkout -b improve_install_article upstream/4.4
 
 In this example, the name of the branch is ``improve_install_article`` and the
-``upstream/3.4`` value tells Git to create this branch based on the ``3.4``
+``upstream/4.4`` value tells Git to create this branch based on the ``4.4``
 branch of the ``upstream`` remote, which is the original Symfony Docs repository.
 
 Fixes should always be based on the **oldest maintained branch** which contains
-the error. Nowadays this is the ``3.4`` branch. If you are instead documenting a
+the error. Nowadays this is the ``4.4`` branch. If you are instead documenting a
 new feature, switch to the first Symfony version that included it, e.g.
-``upstream/3.1``. Not sure? That's OK! Just use the ``upstream/master`` branch.
+``upstream/5.4``.
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
 even remove any content and do your best to comply with the
@@ -155,7 +155,7 @@ changes should be applied:
    :align: center
 
 In this example, the **base fork** should be ``symfony/symfony-docs`` and
-the **base** branch should be the ``3.4``, which is the branch that you selected
+the **base** branch should be the ``4.4``, which is the branch that you selected
 to base your changes on. The **head fork** should be your forked copy
 of ``symfony-docs`` and the **compare** branch should be ``improve_install_article``,
 which is the name of the branch you created and where you made your changes.
@@ -205,7 +205,7 @@ contribution to the Symfony docs:
     # create a new branch based on the oldest maintained version
     $ cd projects/symfony-docs/
     $ git fetch upstream
-    $ git checkout -b my_changes upstream/3.4
+    $ git checkout -b my_changes upstream/4.4
 
     # ... do your changes
 
@@ -295,16 +295,16 @@ Please be patient. It can take up to several days before your pull request can
 be fully reviewed. After merging the changes, it could take again several hours
 before your changes appear on the Symfony website.
 
-Why Should I Use the Oldest Maintained Branch Instead of the Master Branch?
+Why Should I Use the Oldest Maintained Branch Instead of the Latest Branch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Consistent with Symfony's source code, the documentation repository is split
 into multiple branches, corresponding to the different versions of Symfony itself.
-The ``master`` branch holds the documentation for the development branch of
+The latest (e.g. ``5.x``) branch holds the documentation for the development branch of
 the code.
 
-Unless you're documenting a feature that was introduced after Symfony 3.4,
-your changes should always be based on the ``3.4`` branch. Documentation managers
+Unless you're documenting a feature that was introduced after Symfony 4.4,
+your changes should always be based on the ``4.4`` branch. Documentation managers
 will use the necessary Git-magic to also apply your changes to all the active
 branches of the documentation.
 
@@ -338,7 +338,7 @@ definitely don't want you to waste your time!
 .. _`GitHub`: https://github.com/
 .. _`fork the repository`: https://help.github.com/github/getting-started-with-github/fork-a-repo
 .. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
-.. _`SymfonyConnect`: https://connect.symfony.com/
+.. _`SymfonyConnect`: https://symfony.com/connect/login
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
 .. _`SymfonyCloud`: https://symfony.com/cloud
 .. _`roadmap`: https://symfony.com/releases

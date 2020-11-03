@@ -15,9 +15,6 @@ But be careful as ``NotBlank`` is *not* strictly the opposite of ``Blank``.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Blank`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\BlankValidator`
 ==========  ===================================================================
@@ -42,6 +39,19 @@ of an ``Author`` class were blank, you could do the following:
             /**
              * @Assert\Blank
              */
+            protected $firstName;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Blank]
             protected $firstName;
         }
 

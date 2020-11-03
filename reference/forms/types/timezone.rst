@@ -14,45 +14,17 @@ Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses a large list of timezones. You *can* specify the option
 manually, but then you should just use the ``ChoiceType`` directly.
 
-+-------------+------------------------------------------------------------------------+
-| Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
-+-------------+------------------------------------------------------------------------+
-| Options     | - `input`_                                                             |
-|             | - `intl`_                                                              |
-+-------------+------------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                           |
-| options     | - `choice_translation_domain`_                                         |
-+-------------+------------------------------------------------------------------------+
-| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
-| options     |                                                                        |
-|             | - `expanded`_                                                          |
-|             | - `multiple`_                                                          |
-|             | - `placeholder`_                                                       |
-|             | - `preferred_choices`_                                                 |
-|             | - `trim`_                                                              |
-|             |                                                                        |
-|             | from the :doc:`FormType </reference/forms/types/form>`                 |
-|             |                                                                        |
-|             | - `attr`_                                                              |
-|             | - `data`_                                                              |
-|             | - `disabled`_                                                          |
-|             | - `empty_data`_                                                        |
-|             | - `error_bubbling`_                                                    |
-|             | - `error_mapping`_                                                     |
-|             | - `help`_                                                              |
-|             | - `help_attr`_                                                         |
-|             | - `help_html`_                                                         |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `label_format`_                                                      |
-|             | - `mapped`_                                                            |
-|             | - `required`_                                                          |
-|             | - `row_attr`_                                                          |
-+-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
-+-------------+------------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
-+-------------+------------------------------------------------------------------------+
++---------------------------+------------------------------------------------------------------------+
+| Rendered as               | can be various tags (see :ref:`forms-reference-choice-tags`)           |
++---------------------------+------------------------------------------------------------------------+
+| Default invalid message   | Please select a valid timezone.                                        |
++---------------------------+------------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                    |
++---------------------------+------------------------------------------------------------------------+
+| Parent type               | :doc:`ChoiceType </reference/forms/types/choice>`                      |
++---------------------------+------------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
++---------------------------+------------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -107,6 +79,8 @@ The Timezone type defaults the choices to all timezones returned by
 
 .. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
 Inherited Options
 -----------------
 
@@ -130,8 +104,7 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The actual default value of this option depends on other field options:
 
@@ -139,8 +112,7 @@ The actual default value of this option depends on other field options:
   (empty string);
 * Otherwise ``[]`` (empty array).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 

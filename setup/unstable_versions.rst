@@ -8,7 +8,7 @@ Creating a New Project Based on an Unstable Symfony Version
 -----------------------------------------------------------
 
 
-Suppose that the Symfony 4.0 version hasn't been released yet and you want to create
+Suppose that the Symfony 5.4 version hasn't been released yet and you want to create
 a new project to test its features. First, `install the Composer package manager`_.
 Then, open a command console, enter your project's directory and
 run the following command:
@@ -24,7 +24,7 @@ in the ``my_project/`` directory.
 Upgrading your Project to an Unstable Symfony Version
 -----------------------------------------------------
 
-Suppose again that Symfony 4.0 hasn't been released yet and you want to upgrade
+Suppose again that Symfony 5.4 hasn't been released yet and you want to upgrade
 an existing application to test that your project works with it.
 
 First, open the ``composer.json`` file located in the root directory of your
@@ -33,18 +33,18 @@ new version and change your ``minimum-stability`` to ``beta``:
 
 .. code-block:: diff
 
-    {
-        "require": {
-    +         "symfony/framework-bundle": "^4.0",
-    +         "symfony/finder": "^4.0",
-            "...": "..."
-        },
+      {
+          "require": {
+    +         "symfony/framework-bundle": "^5.4",
+    +         "symfony/finder": "^5.4",
+              "...": "..."
+          },
     +     "minimum-stability": "beta"
-    }
+      }
 
 You can also use set ``minimum-stability`` to ``dev``, or omit this line
 entirely, and opt into your stability on each package by using constraints
-like ``4.0.*@beta``.
+like ``5.4.*@beta``.
 
 Finally, from a terminal, update your project's dependencies:
 
@@ -68,7 +68,7 @@ Symfony version has deprecated some of its features.
         $ cd projects/my_project/
         $ git checkout -b testing_new_symfony
         # ... update composer.json configuration
-        $ composer update symfony/symfony
+        $ composer update "symfony/*"
 
         # ... after testing the new Symfony version
         $ git checkout master

@@ -13,11 +13,6 @@ options. To force that a value is equal, see
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualTo`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualToValidator`
 ==========  ===================================================================
@@ -50,6 +45,24 @@ the following:
              *     value = 15
              * )
              */
+            protected $age;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\NotEqualTo('Mary')]
+            protected $firstName;
+
+            #[Assert\NotEqualTo(
+                value: 15,
+            )]
             protected $age;
         }
 

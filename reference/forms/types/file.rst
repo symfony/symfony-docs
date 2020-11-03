@@ -6,33 +6,17 @@ FileType Field
 
 The ``FileType`` represents a file input in your form.
 
-+-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``file`` field                                            |
-+-------------+---------------------------------------------------------------------+
-| Options     | - `multiple`_                                                       |
-+-------------+---------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                       |
-| options     | - `data_class`_                                                     |
-|             | - `empty_data`_                                                     |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `disabled`_                                                       |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-+-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
-+-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
-+-------------+---------------------------------------------------------------------+
++---------------------------+--------------------------------------------------------------------+
+| Rendered as               | ``input`` ``file`` field                                           |
++---------------------------+--------------------------------------------------------------------+
+| Default invalid message   | Please select a valid file.                                        |
++---------------------------+--------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                |
++---------------------------+--------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                      |
++---------------------------+--------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType` |
++---------------------------+--------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -119,6 +103,11 @@ This option sets the appropriate file-related data mapper to be used by the type
 
 This option determines what value the field will return when the submitted
 value is empty.
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------

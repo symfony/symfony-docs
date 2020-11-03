@@ -7,29 +7,17 @@ RangeType Field
 The ``RangeType`` field is a slider that is rendered using the HTML5
 ``<input type="range"/>`` tag.
 
-+-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``range`` field (slider in HTML5 supported browser)       |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `data`_                                                           |
-|             | - `disabled`_                                                       |
-|             | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-|             | - `trim`_                                                           |
-+-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`TextType </reference/forms/types/text>`                       |
-+-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType` |
-+-------------+---------------------------------------------------------------------+
++---------------------------+---------------------------------------------------------------------+
+| Rendered as               | ``input`` ``range`` field (slider in HTML5 supported browser)       |
++---------------------------+---------------------------------------------------------------------+
+| Default invalid message   | Please choose a valid range.                                        |
++---------------------------+---------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
++---------------------------+---------------------------------------------------------------------+
+| Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
++---------------------------+---------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType` |
++---------------------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -45,8 +33,13 @@ Basic Usage
         'attr' => [
             'min' => 5,
             'max' => 50
-        ]
+        ],
     ]);
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------
@@ -59,13 +52,11 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``''`` (the empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 

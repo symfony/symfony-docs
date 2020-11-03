@@ -6,9 +6,6 @@ you to apply a collection of constraints to each element of the array.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `constraints`_
-            - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\All`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\AllValidator`
 ==========  ===================================================================

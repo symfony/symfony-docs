@@ -7,9 +7,6 @@ want to allow zero as value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Positive`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanValidator`
 ==========  ===================================================================
@@ -34,6 +31,19 @@ positive number (greater than zero):
             /**
              * @Assert\Positive
              */
+            protected $income;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Employee.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Employee
+        {
+            #[Assert\Positive]
             protected $income;
         }
 
@@ -82,8 +92,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be positive.``
 

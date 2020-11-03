@@ -1,5 +1,5 @@
-normalizer
-~~~~~~~~~~
+``normalizer``
+~~~~~~~~~~~~~~
 
 **type**: a `PHP callable`_ **default**: ``null``
 

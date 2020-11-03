@@ -25,13 +25,6 @@ key in your application configuration.
 Configuration
 -------------
 
-.. rst-class:: list-config-options
-
-* `dump_destination`_
-* `max_items`_
-* `min_depth`_
-* `max_string_length`_
-
 max_items
 ~~~~~~~~~
 
@@ -67,9 +60,10 @@ dump_destination
 
 Configures the output destination of the dumps.
 
-By default, the dumps are shown in the toolbar. Since this is not always
-possible (e.g. when working on a JSON API), you can have an alternate output
-destination for dumps. Typically, you would set this to ``php://stderr``:
+By default, dumps are shown in the WebDebugToolbar when returning HTML.
+Since this is not always possible (e.g. when working on a JSON API),
+you can have an alternate output destination for dumps.
+Typically, you would set this to ``php://stderr``:
 
 .. configuration-block::
 

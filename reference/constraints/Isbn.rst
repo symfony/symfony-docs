@@ -6,13 +6,6 @@ is either a valid ISBN-10 or a valid ISBN-13.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `bothIsbnMessage`_
-            - `groups`_
-            - `isbn10Message`_
-            - `isbn13Message`_
-            - `message`_
-            - `payload`_
-            - `type`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsbnValidator`
 ==========  ===================================================================
@@ -37,9 +30,25 @@ on an object that will contain an ISBN.
             /**
              * @Assert\Isbn(
              *     type = "isbn10",
-             *     message = "This value is not  valid."
+             *     message = "This value is not valid."
              * )
              */
+            protected $isbn;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Book.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Book
+        {
+            #[Assert\Isbn(
+                type: Assert\Isbn::ISBN_10,
+                message: 'This value is not valid.',
+            )]
             protected $isbn;
         }
 
@@ -51,7 +60,7 @@ on an object that will contain an ISBN.
                 isbn:
                     - Isbn:
                         type: isbn10
-                        message: This value is not  valid.
+                        message: This value is not valid.
 
     .. code-block:: xml
 
@@ -65,7 +74,7 @@ on an object that will contain an ISBN.
                 <property name="isbn">
                     <constraint name="Isbn">
                         <option name="type">isbn10</option>
-                        <option name="message">This value is not  valid.</option>
+                        <option name="message">This value is not valid.</option>
                     </constraint>
                 </property>
             </class>
@@ -84,7 +93,7 @@ on an object that will contain an ISBN.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('isbn', new Assert\Isbn([
-                    'type' => 'isbn10',
+                    'type' => Assert\Isbn::ISBN_10,
                     'message' => 'This value is not valid.',
                 ]));
             }
@@ -95,8 +104,8 @@ on an object that will contain an ISBN.
 Available Options
 -----------------
 
-bothIsbnMessage
-~~~~~~~~~~~~~~~
+``bothIsbnMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
 
@@ -118,8 +127,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-isbn10Message
-~~~~~~~~~~~~~
+``isbn10Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-10.``
 
@@ -139,8 +148,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-isbn13Message
-~~~~~~~~~~~~~
+``isbn13Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-13.``
 
@@ -160,8 +169,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -183,8 +192,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-type
-~~~~
+``type``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 

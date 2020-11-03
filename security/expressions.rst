@@ -12,16 +12,23 @@ Security: Complex Access Controls with Expressions
 In addition to a role like ``ROLE_ADMIN``, the ``isGranted()`` method also
 accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
+    // src/Controller/MyController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\ExpressionLanguage\Expression;
-    // ...
+    use Symfony\Component\HttpFoundation\Response;
 
-    public function index()
+    class MyController extends AbstractController
     {
-        $this->denyAccessUnlessGranted(new Expression(
-            '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
-        ));
+        public function index(): Response
+        {
+            $this->denyAccessUnlessGranted(new Expression(
+                '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
+            ));
 
-        // ...
+            // ...
+        }
     }
 
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
@@ -38,12 +45,14 @@ Inside the expression, you have access to a number of variables:
 
 ``user``
     The user object (or the string ``anon`` if you're not authenticated).
-``roles``
-    The array of roles the user has. This array includes any roles granted
-    indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
+``role_names``
+    An array with the string representation of the roles the user has. This array
+    includes any roles granted indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
     does not include the ``IS_AUTHENTICATED_*`` attributes (see the functions below).
 ``object``
     The object (if any) that's passed as the second argument to ``isGranted()``.
+``subject``
+    It stores the same value as ``object``, so they are equivalent.
 ``token``
     The token object.
 ``trust_resolver``
@@ -64,10 +73,10 @@ Additionally, you have access to a number of functions inside the expression:
 ``is_fully_authenticated()``
     Equal to checking if the user has the ``IS_AUTHENTICATED_FULLY`` role.
 ``is_granted()``
-    Checks if the user has the given permission. Optionally accepts a second argument
-    with the object where permission is checked on. It's equivalent to using
-    the :doc:`isGranted() method </security/securing_services>` from the authorization
-    checker service.
+    Checks if the user has the given permission. Optionally accepts a
+    second argument with the object where permission is checked on. It's
+    equivalent to using the :ref:`isGranted() method <security-isgranted>`
+    from the security service.
 
 .. sidebar:: ``is_remember_me()`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
@@ -80,7 +89,7 @@ Additionally, you have access to a number of functions inside the expression:
         use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         // ...
 
-        public function index(AuthorizationCheckerInterface $authorizationChecker)
+        public function index(AuthorizationCheckerInterface $authorizationChecker): Response
         {
             $access1 = $authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED');
 

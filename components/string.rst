@@ -8,6 +8,10 @@ The String Component
     The String component provides a single object-oriented API to work with
     three "unit systems" of strings: bytes, code points and grapheme clusters.
 
+.. versionadded:: 5.0
+
+    The String component was introduced in Symfony 5.0.
+
 Installation
 ------------
 
@@ -302,6 +306,21 @@ Methods to Pad and Trim
     u('   Lorem Ipsum   ')->trimStart(); // 'Lorem Ipsum   '
     u('   Lorem Ipsum   ')->trimEnd();   // '   Lorem Ipsum'
 
+    // removes the given content from the start/end of the string
+    u('file-image-0001.png')->trimPrefix('file-');           // 'image-0001.png'
+    u('file-image-0001.png')->trimPrefix('image-');          // 'file-image-0001.png'
+    u('file-image-0001.png')->trimPrefix('file-image-');     // '0001.png'
+    u('template.html.twig')->trimSuffix('.html');            // 'template.html.twig'
+    u('template.html.twig')->trimSuffix('.twig');            // 'template.html'
+    u('template.html.twig')->trimSuffix('.html.twig');       // 'template'
+    // when passing an array of prefix/sufix, only the first one found is trimmed
+    u('file-image-0001.png')->trimPrefix(['file-', 'image-']); // 'image-0001.png'
+    u('template.html.twig')->trimSuffix(['.twig', '.html']);   // 'template.html'
+
+.. versionadded:: 5.4
+
+    The ``trimPrefix()`` and ``trimSuffix()`` methods were introduced in Symfony 5.4.
+
 Methods to Search and Replace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -473,6 +492,12 @@ that only includes safe ASCII characters::
     $slug = $slugger->slug('10% or 5€');
     // $slug = '10-percent-or-5-euro'
 
+    // if there is no symbols map for your locale (e.g. 'en_GB') then the parent locale's symbols map
+    // will be used instead (i.e. 'en')
+    $slugger = new AsciiSlugger('en_GB', ['en' => ['%' => 'percent', '€' => 'euro']]);
+    $slug = $slugger->slug('10% or 5€');
+    // $slug = '10-percent-or-5-euro'
+
     // for more dynamic substitutions, pass a PHP closure instead of an array
     $slugger = new AsciiSlugger('en', function ($string, $locale) {
         return str_replace('❤️', 'love', $string);
@@ -485,6 +510,10 @@ that only includes safe ASCII characters::
 .. versionadded:: 5.2
 
     The feature to use a PHP closure to define substitutions was introduced in Symfony 5.2.
+
+.. versionadded:: 5.3
+
+    The feature to fallback to the parent locale's symbols map was introduced in Symfony 5.3.
 
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::

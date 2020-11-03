@@ -38,14 +38,14 @@ want a command to create a user::
         // the name of the command (the part after "bin/console")
         protected static $defaultName = 'app:create-user';
 
-        protected function configure()
+        protected function configure(): void
         {
             // ...
         }
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
-            // ... put here the code to run in your command
+            // ... put here the code to create the user
 
             // this method must return an integer number with the "exit status code"
             // of the command. You can also use these constants to make code more readable
@@ -57,6 +57,10 @@ want a command to create a user::
             // or return this if some error happened during the execution
             // (it's equivalent to returning int(1))
             // return Command::FAILURE;
+
+            // or return this to indicate incorrect command usage; e.g. invalid options
+            // or missing arguments (it's equivalent to returning int(2))
+            // return Command::INVALID
         }
     }
 
@@ -65,6 +69,10 @@ want a command to create a user::
     The ``Command::SUCCESS`` and ``Command::FAILURE`` constants were introduced
     in Symfony 5.1.
 
+.. versionadded:: 5.3
+
+    The ``Command::INVALID`` constant was introduced in Symfony 5.3
+
 Configuring the Command
 -----------------------
 
@@ -72,17 +80,36 @@ You can optionally define a description, help message and the
 :doc:`input options and arguments </console/input>`::
 
     // ...
-    protected function configure()
+    // the command description shown when running "php bin/console list"
+    protected static $defaultDescription = 'Creates a new user.';
+
+    // ...
+    protected function configure(): void
     {
         $this
-            // the short description shown while running "php bin/console list"
-            ->setDescription('Creates a new user.')
+            // If you don't like using the $defaultDescription static property,
+            // you can also define the short description using this method:
+            // ->setDescription('...')
 
-            // the full command description shown when running the command with
-            // the "--help" option
+            // the command help shown when running the command with the "--help" option
             ->setHelp('This command allows you to create a user...')
         ;
     }
+
+Defining the ``$defaultDescription`` static property instead of using the
+``setDescription()`` method allows to get the command description without
+instantiating its class. This makes the ``php bin/console list`` command run
+much faster.
+
+If you want to always run the ``list`` command fast, add the ``--short`` option
+to it (``php bin/console list --short``). This will avoid instantiating command
+classes, but it won't show any description for commands that use the
+``setDescription()`` method instead of the static property.
+
+.. versionadded:: 5.3
+
+    The ``$defaultDescription`` static property and the ``--short`` option
+    were introduced in Symfony 5.3.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -107,7 +134,7 @@ available in the ``configure()`` method::
             parent::__construct();
         }
 
-        protected function configure()
+        protected function configure(): void
         {
             $this
                 // ...
@@ -143,7 +170,7 @@ The ``execute()`` method has access to the output stream to write messages to
 the console::
 
     // ...
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([
@@ -187,16 +214,24 @@ called "output sections". Create one or more of these sections when you need to
 clear and overwrite the output information.
 
 Sections are created with the
-:method:`Symfony\\Component\\Console\\Output\\ConsoleOutput::section` method,
-which returns an instance of
+:method:`ConsoleOutput::section() <Symfony\\Component\\Console\\Output\\ConsoleOutput::section>`
+method, which returns an instance of
 :class:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput`::
+
+    // ...
+    use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
     class MyCommand extends Command
     {
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
+            if (!$output instanceof ConsoleOutputInterface) {
+                throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
+            }
+
             $section1 = $output->section();
             $section2 = $output->section();
+
             $section1->writeln('Hello');
             $section2->writeln('World!');
             // Output displays "Hello\nWorld!\n"
@@ -235,7 +270,7 @@ Use input options or arguments to pass information to the command::
     use Symfony\Component\Console\Input\InputArgument;
 
     // ...
-    protected function configure()
+    protected function configure(): void
     {
         $this
             // configure an argument
@@ -245,7 +280,7 @@ Use input options or arguments to pass information to the command::
     }
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([
             'User Creator',
@@ -299,7 +334,7 @@ as a service, you can use normal dependency injection. Imagine you have a
 
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ...
 
@@ -355,7 +390,7 @@ console::
     {
         public function testExecute()
         {
-            $kernel = static::createKernel();
+            $kernel = self::bootKernel();
             $application = new Application($kernel);
 
             $command = $application->find('app:create-user');
@@ -367,6 +402,8 @@ console::
                 // prefix the key with two dashes when passing options,
                 // e.g: '--some-option' => 'option_value',
             ]);
+
+            $commandTester->assertCommandIsSuccessful();
 
             // the output of the command in the console
             $output = $commandTester->getDisplay();
@@ -384,6 +421,10 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
     The ``setAutoExit()`` method for single-command applications was introduced
     in Symfony 5.2.
 
+.. versionadded:: 5.4
+
+    The ``assertCommandIsSuccessful()`` method was introduced in Symfony 5.4.
+
 .. tip::
 
     You can also test a whole console application by using
@@ -395,10 +436,20 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
     not dispatched. If you need to test those events, use the
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester` instead.
 
+.. caution::
+
+    When testing commands using the :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`
+    class, don't forget to disable the auto exit flag::
+
+        $application = new Application();
+        $application->setAutoExit(false);
+        
+        $tester = new ApplicationTester($application);
+
 .. note::
 
     When using the Console component in a standalone project, use
-    :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
+    :class:`Symfony\\Component\\Console\\Application`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
 
 Logging Command Errors
@@ -428,5 +479,6 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
 * :doc:`/components/console/helpers/debug_formatter`: provides functions to
   output debug information when running an external program
+* :doc:`/components/console/helpers/cursor`: allows to manipulate the cursor in the terminal
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status

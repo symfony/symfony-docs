@@ -76,6 +76,6 @@ already acquired.
     If you don't release the semaphore explicitly, it will be released
     automatically on instance destruction. In some cases, it can be useful to
     lock a resource across several requests. To disable the automatic release
-    behavior, set the fifth argument of the ``createLock()`` method to ``false``.
+    behavior, set the fifth argument of the ``createSemaphore()`` method to ``false``.
 
 .. _`semaphores`: https://en.wikipedia.org/wiki/Semaphore_(programming)

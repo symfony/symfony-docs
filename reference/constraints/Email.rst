@@ -6,11 +6,6 @@ cast to a string before being validated.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `mode`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Email`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\EmailValidator`
 ==========  ===================================================================
@@ -34,6 +29,21 @@ Basic Usage
              *     message = "The email '{{ value }}' is not a valid email."
              * )
              */
+            protected $email;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Email(
+                message: 'The email {{ value }} is not a valid email.',
+            )]
             protected $email;
         }
 
@@ -88,8 +98,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid email address.``
 
@@ -108,34 +118,26 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-mode
-~~~~
+.. _reference-constraint-email-mode:
 
-**type**: ``string`` **default**: ``loose``
+``mode``
+~~~~~~~~
 
-This option is optional and defines the pattern the email address is validated against.
-Valid values are:
+**type**: ``string`` **default**: (see below)
 
-* ``loose``
-* ``strict``
-* ``html5``
+This option defines the pattern used to validate the email address. Valid values are:
 
-loose
-.....
+* ``loose`` uses a simple regular expression (just checks that at least one ``@``
+  character is present, etc.). This validation is too simple and it's recommended
+  to use one of the other modes instead;
+* ``html5`` uses the same regular expression as the `HTML5 email input element`_,
+  making the backend validation consistent with the one provided by browsers;
+* ``strict`` uses the `egulias/email-validator`_ library (which you must
+  install separately) for validation according to `RFC 5322`_.
 
-A simple regular expression. Allows all values with an "@" symbol in, and a "."
-in the second host part of the email address.
-
-strict
-......
-
-Uses the `egulias/email-validator`_ library to perform an RFC compliant
-validation. You will need to install that library to use this mode.
-
-html5
-.....
-
-This matches the pattern used for the `HTML5 email input element`_.
+The default value used by this option is set in the
+:ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`
+configuration option.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
@@ -143,3 +145,4 @@ This matches the pattern used for the `HTML5 email input element`_.
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
 .. _HTML5 email input element: https://www.w3.org/TR/html5/sec-forms.html#valid-e-mail-address
+.. _RFC 5322: https://tools.ietf.org/html/rfc5322

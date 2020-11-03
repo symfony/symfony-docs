@@ -40,9 +40,11 @@ as integration of other related components:
 
     .. code-block:: php
 
-        $container->loadFromExtension('framework', [
-            'form' => true,
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->form()->enabled(true);
+        };
 
 Using the Bundle Extension
 --------------------------
@@ -64,7 +66,7 @@ can add some configuration that looks like this:
     .. code-block:: xml
 
         <!-- config/packages/acme_social.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:acme-social="http://example.org/schema/dic/acme_social"
@@ -81,12 +83,13 @@ can add some configuration that looks like this:
     .. code-block:: php
 
         // config/packages/acme_social.php
-        $container->loadFromExtension('acme_social', [
-            'twitter' => [
-                'client_id'     => 123,
-                'client_secret' => 'your_secret',
-            ],
-        ]);
+        use Symfony\Config\AcmeSocialConfig;
+
+        return static function (AcmeSocialConfig $acmeSocial) {
+            $acmeSocial->twitter()
+                ->clientId(123)
+                ->clientSecret('your_secret');
+        };
 
 The basic idea is that instead of having the user override individual
 parameters, you let the user configure just a few, specifically created,
@@ -330,7 +333,7 @@ As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have
 a constructor it will work automatically. If you
 have something different, your ``Extension`` class must override the
-:method:`Extension::getConfiguration() <Symfony\\Component\\HttpKernel\\DependencyInjection\\Extension::getConfiguration>`
+:method:`Extension::getConfiguration() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getConfiguration>`
 method and return an instance of your ``Configuration``.
 
 Supporting XML
@@ -412,7 +415,7 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 .. code-block:: xml
 
     <!-- config/packages/acme_hello.xml -->
-    <?xml version="1.0" ?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"

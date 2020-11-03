@@ -108,7 +108,7 @@ using a special "tag":
             $services = $configurator->services();
 
             $services->set(ExceptionListener::class)
-                ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
+                ->tag('kernel.event_listener', ['event' => 'kernel.exception'])
             ;
         };
 
@@ -118,11 +118,11 @@ listener class:
 #. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
    the name of the method to be called;
 #. If no ``method`` attribute is defined, try to call the method whose name
-   is ``on`` + "camel-cased event name" (e.g. ``onKernelException()`` method for
+   is ``on`` + "PascalCased event name" (e.g. ``onKernelException()`` method for
    the ``kernel.exception`` event);
 #. If that method is not defined either, try to call the ``__invoke()`` magic
    method (which makes event listeners invokable);
-#. If the ``_invoke()`` method is not defined either, throw an exception.
+#. If the ``__invoke()`` method is not defined either, throw an exception.
 
 .. note::
 
@@ -206,10 +206,10 @@ the ``EventSubscriber`` directory. Symfony takes care of the rest.
 Request Events, Checking Types
 ------------------------------
 
-A single page can make several requests (one master request, and then multiple
+A single page can make several requests (one main request, and then multiple
 sub-requests - typically when :ref:`embedding controllers in templates <templates-embed-controllers>`).
 For the core Symfony events, you might need to check to see if the event is for
-a "master" request or a "sub request"::
+a "main" request or a "sub request"::
 
     // src/EventListener/RequestListener.php
     namespace App\EventListener;
@@ -220,8 +220,10 @@ a "master" request or a "sub request"::
     {
         public function onKernelRequest(RequestEvent $event)
         {
-            if (!$event->isMasterRequest()) {
-                // don't do anything if it's not the master request
+            // The isMainRequest() method was introduced in Symfony 5.3.
+            // In previous versions it was called isMasterRequest()
+            if (!$event->isMainRequest()) {
+                // don't do anything if it's not the main request
                 return;
             }
 
@@ -321,6 +323,29 @@ its name:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.exception
+
+or can get everything which partial matches the event name:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel // matches "kernel.exception", "kernel.response" etc.
+    $ php bin/console debug:event-dispatcher Security // matches "Symfony\Component\Security\Http\Event\CheckPassportEvent"
+
+.. versionadded:: 5.3
+
+    The ability to match partial event names was introduced in Symfony 5.3.
+
+The :doc:`security </security>` system uses an event dispatcher per
+firewall. Use the ``--dispatcher`` option to get the registered listeners
+for a particular event dispatcher:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher --dispatcher=security.event_dispatcher.main
+
+.. versionadded:: 5.3
+
+    The ``dispatcher`` option was introduced in Symfony 5.3.
 
 Learn more
 ----------

@@ -65,7 +65,7 @@ Here is a simplified example of a database transport::
                     WHERE (delivered_at IS NULL OR delivered_at < :redeliver_timeout)
                     AND handled = FALSE'
                 )
-                ->setParameter('redeliver_timeout', new DateTimeImmutable('-5minutes'))
+                ->setParameter('redeliver_timeout', new DateTimeImmutable('-5 minutes'))
                 ->getOneOrNullResult();
 
             if (null === $row) {
@@ -203,13 +203,14 @@ named transport using your own DSN:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'yours' => 'my-transport://...',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->messenger()
+                ->transport('yours')
+                    ->dsn('my-transport://...')
+            ;
+        };
 
 In addition of being able to route your messages to the ``yours`` sender, this
 will give you access to the following services:

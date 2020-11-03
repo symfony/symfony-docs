@@ -60,6 +60,13 @@ configure your applications. Symfony lets you choose between YAML, XML and PHP
 and throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
+.. versionadded:: 5.1
+
+    Starting from Symfony 5.1, by default Symfony only loads the configuration
+    files defined in YAML format. If you define configuration in XML and/or PHP
+    formats, update the ``src/Kernel.php`` file to add support for the ``.xml``
+    and ``.php`` file extensions.
+
 There isn't any practical difference between formats. In fact, Symfony
 transforms and caches all of them into PHP before running the application, so
 there's not even any performance difference between them.
@@ -69,10 +76,10 @@ readable. These are the main advantages and disadvantages of each format:
 
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
   and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
-* **XML**:autocompleted/validated by most IDEs and is parsed natively by PHP,
+* **XML**: autocompleted/validated by most IDEs and is parsed natively by PHP,
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
-* **PHP**: very powerful and it allows you to create dynamic configuration, but the
-  resulting configuration is less readable than the other formats.
+* **PHP**: very powerful and it allows you to create dynamic configuration with
+  arrays or a :ref:`ConfigBuilder <config-config-builder>`.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -517,7 +524,7 @@ This example shows how you could configure the database connection using an env 
                 'dbal' => [
                     // by convention the env var names are always uppercase
                     'url' => '%env(resolve:DATABASE_URL)%',
-                ]
+                ],
             ]);
         };
 
@@ -711,8 +718,41 @@ you can encrypt the value using the :doc:`secrets management system </configurat
 Listing Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Regardless of how you set environment variables, you can see a full list with
-their values by running:
+Use the ``debug:dotenv`` command to understand how Symfony parses the different
+``.env`` files to set the value of each environment variable:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:dotenv
+
+    Dotenv Variables & Files
+    ========================
+
+    Scanned Files (in descending priority)
+    --------------------------------------
+
+    * ⨯ .env.local.php
+    * ⨯ .env.dev.local
+    * ✓ .env.dev
+    * ⨯ .env.local
+    * ✓ .env
+
+    Variables
+    ---------
+
+    ---------- ------- ---------- ------
+     Variable   Value   .env.dev   .env
+    ---------- ------- ---------- ------
+     FOO        BAR     n/a        BAR
+     ALICE      BOB     BOB        bob
+    ---------- ------- ---------- ------
+
+.. versionadded:: 5.4
+
+    The ``debug:dotenv`` command was introduced in Symfony 5.4.
+
+Additionally, and regardless of how you set environment variables, you can see all
+environment variables, with their values, referenced in Symfony's container configuration:
 
 .. code-block:: terminal
 
@@ -869,18 +909,15 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Controller\LuckyController;
-        use Psr\Log\LoggerInterface;
-        use Symfony\Component\DependencyInjection\Reference;
 
         return static function (ContainerConfigurator $container) {
             $container->services()
-                ->set(LuckyController::class)
-                    ->public()
-                    ->args([
-                        // pass this value to any $projectDir argument for any service
-                        // that's created in this file (including controller arguments)
-                        '$projectDir' => '%kernel.project_dir%',
-                    ]);
+                ->defaults()
+                    // pass this value to any $projectDir argument for any service
+                    // that's created in this file (including controller arguments)
+                    ->bind('$projectDir', '%kernel.project_dir%');
+
+            // ...
         };
 
 .. seealso::
@@ -916,6 +953,50 @@ parameters at once by type-hinting any of its constructor arguments with the
             // ...
         }
     }
+
+.. _config-config-builder:
+
+Using PHP ConfigBuilders
+------------------------
+
+.. versionadded:: 5.3
+
+    The "ConfigBuilders" feature was introduced in Symfony 5.3.
+
+Writing PHP config is sometimes difficult because you end up with large nested
+arrays and you have no autocompletion help from your favorite IDE. A way to
+address this is to use "ConfigBuilders". They are objects that will help you
+build these arrays.
+
+Symfony generates the ConfigBuilder classes automatically in the
+:ref:`kernel build directory <configuration-kernel-build-directory>` for all the
+bundles installed in your application. By convention they all live in the
+namespace ``Symfony\Config``::
+
+    // config/packages/security.php
+    use Symfony\Config\SecurityConfig;
+
+    return static function (SecurityConfig $security) {
+        $security->firewall('main')
+            ->pattern('^/*')
+            ->lazy(true)
+            ->anonymous();
+
+        $security
+            ->roleHierarchy('ROLE_ADMIN', ['ROLE_USER'])
+            ->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'])
+            ->accessControl()
+                ->path('^/user')
+                ->role('ROLE_USER');
+
+        $security->accessControl(['path' => '^/admin', 'roles' => 'ROLE_ADMIN']);
+    };
+
+.. note::
+
+    Only root classes in the namespace ``Symfony\Config`` are ConfigBuilders.
+    Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are regular
+    PHP objects which aren't autowired when using them as an argument type.
 
 Keep Going!
 -----------

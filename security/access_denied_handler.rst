@@ -15,6 +15,8 @@ generates a response based on the authentication state:
 * **If the user is authenticated, but does not have the required
   permissions**, a *403 Forbidden* response is generated.
 
+.. _security-entry-point:
+
 Customize the Unauthorized Response
 -----------------------------------
 
@@ -28,25 +30,23 @@ unauthenticated user tries to access a protected resource::
 
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
         private $urlGenerator;
-        private $session;
 
-        public function __construct(UrlGeneratorInterface $urlGenerator, SessionInterface $session)
+        public function __construct(UrlGeneratorInterface $urlGenerator)
         {
             $this->urlGenerator = $urlGenerator;
-            $this->session = $session;
         }
 
         public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
         {
             // add a custom flash message and redirect to the login page
-            $this->session->getFlashBag()->add('note', 'You have to login in order to access this page.');
+            $request->getSession()->getFlashBag()->add('note', 'You have to login in order to access this page.');
 
             return new RedirectResponse($this->urlGenerator->generate('security_login'));
         }
@@ -72,7 +72,7 @@ Now, configure this service ID as the entry point for the firewall:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -92,15 +92,14 @@ Now, configure this service ID as the entry point for the firewall:
 
         // config/packages/security.php
         use App\Security\AuthenticationEntryPoint;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'entry_point' => AuthenticationEntryPoint::class,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                // ....
+                ->entryPoint(AuthenticationEntryPoint::class)
+            ;
+        };
 
 Customize the Forbidden Response
 --------------------------------
@@ -122,7 +121,7 @@ response)::
 
     class AccessDeniedHandler implements AccessDeniedHandlerInterface
     {
-        public function handle(Request $request, AccessDeniedException $accessDeniedException)
+        public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
         {
             // ...
 
@@ -149,7 +148,7 @@ configure it under your firewall:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -169,15 +168,14 @@ configure it under your firewall:
 
         // config/packages/security.php
         use App\Security\AccessDeniedHandler;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'access_denied_handler' => AccessDeniedHandler::class,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                // ....
+                ->accessDeniedHandler(AccessDeniedHandler::class)
+            ;
+        };
 
 Customizing All Access Denied Responses
 ---------------------------------------
@@ -209,7 +207,7 @@ configure a :ref:`kernel.exception listener <use-kernel-exception-event>`::
 
         public function onKernelException(ExceptionEvent $event): void
         {
-            $exception = $event->getException();
+            $exception = $event->getThrowable();
             if (!$exception instanceof AccessDeniedException) {
                 return;
             }

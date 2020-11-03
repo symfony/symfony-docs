@@ -5,9 +5,6 @@ Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Currency`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CurrencyValidator`
 ==========  ===================================================================
@@ -32,6 +29,19 @@ a valid currency, you could do the following:
             /**
              * @Assert\Currency
              */
+            protected $currency;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\Currency]
             protected $currency;
         }
 

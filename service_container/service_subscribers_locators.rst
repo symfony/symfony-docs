@@ -87,7 +87,7 @@ a PSR-11 ``ContainerInterface``::
             $this->locator = $locator;
         }
 
-        public static function getSubscribedServices()
+        public static function getSubscribedServices(): array
         {
             return [
                 'App\FooCommand' => FooHandler::class,
@@ -130,7 +130,7 @@ service locator::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -142,7 +142,7 @@ Service types can also be keyed by a service name for internal use::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -159,7 +159,7 @@ typically happens when extending ``AbstractController``::
 
     class MyController extends AbstractController
     {
-        public static function getSubscribedServices()
+        public static function getSubscribedServices(): array
         {
             return array_merge(parent::getSubscribedServices(), [
                 // ...
@@ -176,7 +176,7 @@ errors if there's no matching service found in the service container::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -246,9 +246,70 @@ service type to a service.
 Defining a Service Locator
 --------------------------
 
-To manually define a service locator, create a new service definition and add
-the ``container.service_locator`` tag to it. Use the first argument of the
-service definition to pass a collection of services to the service locator:
+To manually define a service locator and inject it to another service, create an
+argument of type ``service_locator``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\CommandBus:
+                arguments: !service_locator
+                    App\FooCommand: '@app.command_handler.foo'
+                    App\BarCommand: '@app.command_handler.bar'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\CommandBus">
+                    <argument type="service_locator">
+                        <argument key="App\FooCommand" type="service" id="sapp.command_handler.foo"/>
+                        <argument key="App\BarCommandr" type="service" id="app.command_handler.bar"/>
+                        <!-- if the element has no key, the ID of the original service is used -->
+                        <argument type="service" id="app.command_handler.baz"/>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\CommandBus;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(CommandBus::class)
+                ->args([service_locator([
+                    'App\FooCommand' => ref('app.command_handler.foo'),
+                    'App\BarCommand' => ref('app.command_handler.bar'),
+                    // if the element has no key, the ID of the original service is used
+                    ref('app.command_handler.baz'),
+                ])]);
+        };
+
+As shown in the previous sections, the constructor of the ``CommandBus`` class
+must type-hint its argument with ``ContainerInterface``. Then, you can get any of
+the service locator services via their ID (e.g. ``$this->locator->get('App\FooCommand')``).
+
+Reusing a Service Locator in Multiple Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you inject the same service locator in several services, it's better to
+define the service locator as a stand-alone service and then inject it in the
+other services. To do so, create a new service definition using the
+``ServiceLocator`` class:
 
 .. configuration-block::
 
@@ -334,7 +395,7 @@ service definition to pass a collection of services to the service locator:
     The services defined in the service locator argument must include keys,
     which later become their unique identifiers inside the locator.
 
-Now you can use the service locator by injecting it in any other service:
+Now you can inject the service locator in any other services:
 
 .. configuration-block::
 
@@ -376,6 +437,9 @@ Now you can use the service locator by injecting it in any other service:
                 ->args([service('app.command_handler_locator')]);
         };
 
+Using Service Locators in Compiler Passes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
 to use the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\ServiceLocatorTagPass::register`
 method to create the service locators. This will save you some boilerplate and
@@ -385,7 +449,7 @@ will share identical locators among all the services referencing them::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         // ...
 
@@ -421,7 +485,7 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
                 tags:
                     - { name: 'app.handler', key: 'handler_two' }
 
-            App\HandlerCollection:
+            App\Handler\HandlerCollection:
                 # inject all services tagged with app.handler as first argument
                 arguments: [!tagged_locator { tag: 'app.handler', index_by: 'key' }]
 
@@ -563,8 +627,9 @@ Service Subscriber Trait
 
 The :class:`Symfony\\Contracts\\Service\\ServiceSubscriberTrait` provides an
 implementation for :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`
-that looks through all methods in your class that have no arguments and a return
-type. It provides a ``ServiceLocator`` for the services of those return types.
+that looks through all methods in your class that are marked with the
+:class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute. It
+provides a ``ServiceLocator`` for the services of each method's return type.
 The service id is ``__METHOD__``. This allows you to add dependencies to your
 services based on type-hinted helper methods::
 
@@ -573,6 +638,7 @@ services based on type-hinted helper methods::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
     use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
@@ -586,11 +652,13 @@ services based on type-hinted helper methods::
             // $this->logger() ...
         }
 
+        #[SubscribedService]
         private function router(): RouterInterface
         {
             return $this->container->get(__METHOD__);
         }
 
+        #[SubscribedService]
         private function logger(): LoggerInterface
         {
             return $this->container->get(__METHOD__);
@@ -604,9 +672,11 @@ and compose your services with them::
     namespace App\Service;
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
 
     trait LoggerAware
     {
+        #[SubscribedService]
         private function logger(): LoggerInterface
         {
             return $this->container->get(__CLASS__.'::'.__FUNCTION__);
@@ -617,9 +687,11 @@ and compose your services with them::
     namespace App\Service;
 
     use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
 
     trait RouterAware
     {
+        #[SubscribedService]
         private function router(): RouterInterface
         {
             return $this->container->get(__CLASS__.'::'.__FUNCTION__);
@@ -648,5 +720,13 @@ and compose your services with them::
     When creating these helper traits, the service id cannot be ``__METHOD__``
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
+
+.. deprecated:: 5.4
+
+    Defining your *subscribed service* methods with the
+    :class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute
+    was added in Symfony 5.4. Previously, any methods with no arguments and a
+    return type were *subscribed*. This still works in 5.4 but is deprecated (only
+    when using PHP 8) and will be removed in 6.0.
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern

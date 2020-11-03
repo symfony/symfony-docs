@@ -20,6 +20,10 @@ Before creating your first Symfony application you must:
 * Install PHP 7.2.5 or higher and these PHP extensions (which are installed and
   enabled by default in most PHP 7 installations): `Ctype`_, `iconv`_, `JSON`_,
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
+
+  * Note that all newer, released versions of PHP will be supported during the
+    lifetime of each Symfony release (including new major versions).
+    For example, PHP 8.0 is supported.
 * `Install Composer`_, which is used to install PHP packages.
 
 Optionally, you can also `install Symfony CLI`_. This creates a binary called
@@ -50,10 +54,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_name --version=next --full
+    $ symfony new my_project_name --version=5.4 --full
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_name --version=next
+    $ symfony new my_project_name --version=5.4
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--full`` option installs all the packages that you
@@ -65,10 +69,10 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/website-skeleton:"5.2.x@dev" my_project_name
+    $ composer create-project symfony/website-skeleton:"^5.4" my_project_name
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"5.2.x@dev" my_project_name
+    $ composer create-project symfony/skeleton:"^5.4" my_project_name
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_name/`` directory, download some dependencies
@@ -80,37 +84,6 @@ started. In other words, your new application is ready!
     The project's cache and logs directory (by default, ``<project>/var/cache/``
     and ``<project>/var/log/``) must be writable by the web server. If you have
     any issue, read how to :doc:`set up permissions for Symfony applications </setup/file_permissions>`.
-
-Running Symfony Applications
-----------------------------
-
-In production, you should install a webserver like Nginx or Apache and
-:doc:`configure it to run Symfony </setup/web_server_configuration>`. This
-method can also be used if you're not using the Symfony local web server for
-development.
-
-However for local development, the most convenient way of running Symfony is by
-using the :doc:`local web server </setup/symfony_server>` provided by the
-``symfony`` binary. This local server provides among other things support for
-HTTP/2, concurrent requests, TLS/SSL and automatic generation of security
-certificates.
-
-Open your console terminal, move into your new project directory and start the
-local web server as follows:
-
-.. code-block:: terminal
-
-    $ cd my-project/
-    $ symfony server:start
-
-Open your browser and navigate to ``http://localhost:8000/``. If everything is
-working, you'll see a welcome page. Later, when you are finished working, stop
-the server by pressing ``Ctrl+C`` from your terminal.
-
-.. tip::
-
-    The web server works with any PHP application, not only Symfony projects,
-    so it's a very useful generic development tool.
 
 .. _install-existing-app:
 
@@ -140,6 +113,44 @@ to run this command which displays information about the project:
 .. code-block:: terminal
 
     $ php bin/console about
+
+Running Symfony Applications
+----------------------------
+
+In production, you should install a webserver like Nginx or Apache and
+:doc:`configure it to run Symfony </setup/web_server_configuration>`. This
+method can also be used if you're not using the Symfony local web server for
+development.
+
+.. _symfony-binary-web-server:
+
+However for local development, the most convenient way of running Symfony is by
+using the :doc:`local web server </setup/symfony_server>` provided by the
+``symfony`` binary. This local server provides among other things support for
+HTTP/2, concurrent requests, TLS/SSL and automatic generation of security
+certificates.
+
+Open your console terminal, move into your new project directory and start the
+local web server as follows:
+
+.. code-block:: terminal
+
+    $ cd my-project/
+    $ symfony server:start
+
+Open your browser and navigate to ``http://localhost:8000/``. If everything is
+working, you'll see a welcome page. Later, when you are finished working, stop
+the server by pressing ``Ctrl+C`` from your terminal.
+
+.. tip::
+
+    The web server works with any PHP application, not only Symfony projects,
+    so it's a very useful generic development tool.
+
+Symfony Docker Integration
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you'd like to use Docker with Symfony, see :doc:`setup/docker`
 
 .. _symfony-flex:
 
@@ -210,12 +221,11 @@ For example, to add debugging features in your application, you can run the
 which in turn installs several packages like ``symfony/debug-bundle``,
 ``symfony/monolog-bundle``, ``symfony/var-dumper``, etc.
 
-By default, when installing Symfony packs, your ``composer.json`` file shows the
-pack dependency (e.g. ``"symfony/debug-pack": "^1.0"``) instead of the actual
-packages installed. To show the packages, add the ``--unpack`` option when
-installing a pack (e.g. ``composer require debug --dev --unpack``) or run this
-command to unpack the already installed packs: ``composer unpack PACK_NAME``
-(e.g. ``composer unpack debug``).
+You won't see the ``symfony/debug-pack`` dependency in your ``composer.json``,
+as Flex automatically unpacks the pack. This means that it only adds the real
+packages as dependencies (e.g. you will see a new ``symfony/var-dumper`` in
+``require-dev``). While it is not recommended, you can use the ``composer
+require --no-unpack ...`` option to disable unpacking.
 
 .. _security-checker:
 
@@ -261,14 +271,14 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
     $ symfony new my_project_name --version=next
 
     # you can also select an exact specific Symfony version
-    $ symfony new my_project_name --version=4.4
+    $ symfony new my_project_name --version=5.4
 
 The ``lts`` and ``next`` shortcuts are only available when using Symfony to
 create new projects. If you use Composer, you need to tell the exact version:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/website-skeleton:"^4.4" my_project_name
+    $ composer create-project symfony/skeleton:"^5.4" my_project_name
 
 The Symfony Demo application
 ----------------------------
@@ -300,6 +310,7 @@ Learn More
     :maxdepth: 1
     :glob:
 
+    setup/docker
     setup/homestead
     setup/web_server_configuration
     setup/*

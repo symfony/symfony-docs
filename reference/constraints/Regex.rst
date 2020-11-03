@@ -5,13 +5,6 @@ Validates that a value matches a regular expression.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `htmlPattern`_
-            - `match`_
-            - `message`_
-            - `pattern`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Regex`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RegexValidator`
 ==========  ===================================================================
@@ -38,6 +31,19 @@ more word characters at the beginning of your string:
             /**
              * @Assert\Regex("/^\w+/")
              */
+            protected $description;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Regex('/^\w+/')]
             protected $description;
         }
 
@@ -110,6 +116,23 @@ it a custom message:
             protected $firstName;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Regex(
+                pattern: '/\d/',
+                match: false,
+                message: 'Your name cannot contain a number',
+            )]
+            protected $firstName;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -167,20 +190,20 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-htmlPattern
-~~~~~~~~~~~
+``htmlPattern``
+~~~~~~~~~~~~~~~
 
 **type**: ``string|boolean`` **default**: null
 
 This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
 You usually don't need to specify this option because by default, the constraint
 will convert the pattern given in the `pattern`_ option into an HTML5 compatible
-pattern. This means that the delimiters are removed (e.g. ``/[a-z]+/`` becomes
-``[a-z]+``).
+pattern. Notably, the delimiters are removed and the anchors are implicit (e.g.
+``/^[a-z]+$/`` becomes ``[a-z]+``, and ``/[a-z]+/`` becomes ``.*[a-z]+.*``).
 
 However, there are some other incompatibilities between both patterns which
 cannot be fixed by the constraint. For instance, the HTML5 ``pattern`` attribute
-does not support flags. If you have a pattern like ``/[a-z]+/i``, you
+does not support flags. If you have a pattern like ``/^[a-z]+$/i``, you
 need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
@@ -197,9 +220,25 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
             /**
              * @Assert\Regex(
              *     pattern     = "/^[a-z]+$/i",
-             *     htmlPattern = "^[a-zA-Z]+$"
+             *     htmlPattern = "[a-zA-Z]+"
              * )
              */
+            protected $name;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Regex(
+                pattern: '/^[a-z]+$/i',
+                htmlPattern: '^[a-zA-Z]+$'
+            )]
             protected $name;
         }
 
@@ -211,7 +250,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
                 name:
                     - Regex:
                         pattern: '/^[a-z]+$/i'
-                        htmlPattern: '^[a-zA-Z]+$'
+                        htmlPattern: '[a-zA-Z]+'
 
     .. code-block:: xml
 
@@ -225,7 +264,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
                 <property name="name">
                     <constraint name="Regex">
                         <option name="pattern">/^[a-z]+$/i</option>
-                        <option name="htmlPattern">^[a-zA-Z]+$</option>
+                        <option name="htmlPattern">[a-zA-Z]+</option>
                     </constraint>
                 </property>
             </class>
@@ -245,15 +284,15 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
             {
                 $metadata->addPropertyConstraint('name', new Assert\Regex([
                     'pattern' => '/^[a-z]+$/i',
-                    'htmlPattern' => '^[a-zA-Z]+$',
+                    'htmlPattern' => '[a-zA-Z]+',
                 ]));
             }
         }
 
 Setting ``htmlPattern`` to false will disable client side validation.
 
-match
-~~~~~
+``match``
+~~~~~~~~~
 
 **type**: ``boolean`` default: ``true``
 
@@ -262,8 +301,8 @@ the given `pattern`_ regular expression. However, when this option is set
 to ``false``, the opposite will occur: validation will pass only if the
 given string does **not** match the `pattern`_ regular expression.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not valid.``
 
@@ -282,8 +321,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-pattern
-~~~~~~~
+``pattern``
+~~~~~~~~~~~
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 

@@ -40,7 +40,7 @@ DispatchAfterCurrentBusMiddleware Middleware
 --------------------------------------------
 
 For many applications, the desired behavior is to *only* handle messages that
-are dispatched by a handler once that handler has fully finished. This can be by
+are dispatched by a handler once that handler has fully finished. This can be done by
 using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 ``DispatchAfterCurrentBusStamp`` stamp to :ref:`the message Envelope <messenger-envelopes>`::
 

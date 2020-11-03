@@ -26,7 +26,7 @@ you may have multiple repository classes which need the
             $this->objectManager = $objectManager;
         }
 
-        public function setLogger(LoggerInterface $logger)
+        public function setLogger(LoggerInterface $logger): void
         {
             $this->logger = $logger;
         }

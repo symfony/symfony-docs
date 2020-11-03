@@ -99,9 +99,6 @@ You're ready! To dispatch the message (and call the handler), inject the
             // will cause the SmsNotificationHandler to be called
             $bus->dispatch(new SmsNotification('Look! I created a message!'));
 
-            // or use the shortcut
-            $this->dispatchMessage(new SmsNotification('Look! I created a message!'));
-
             // ...
         }
     }
@@ -179,19 +176,20 @@ that uses this configuration:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async' => '%env(MESSENGER_TRANSPORT_DSN)%',
+        use Symfony\Config\FrameworkConfig;
 
-                    // or expanded to configure more options
-                    'async' => [
-                       'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                       'options' => []
-                    ],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $framework->messenger()
+                ->transport('async')
+                    ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+            ;
+
+            $framework->messenger()
+                ->transport('async')
+                    ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                    ->options([])
+            ;
+        };
 
 .. _messenger-routing:
 
@@ -213,7 +211,7 @@ you can configure them to be sent to a transport:
 
                 routing:
                     # async is whatever name you gave your transport above
-                    'App\Message\SmsNotification':  async
+                    'App\Message\SmsNotification': async
 
     .. code-block:: xml
 
@@ -240,14 +238,14 @@ you can configure them to be sent to a transport:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'routing' => [
-                    // async is whatever name you gave your transport above
-                    'App\Message\SmsNotification' => 'async',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->messenger()
+                // async is whatever name you gave your transport above
+                ->routing('App\Message\SmsNotification')->senders(['async'])
+            ;
+        };
 
 Thanks to this, the ``App\Message\SmsNotification`` will be sent to the ``async``
 transport and its handler(s) will *not* be called immediately. Any messages not
@@ -302,16 +300,22 @@ to multiple transports:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'routing' => [
-                    // route all messages that extend this example base class or interface
-                    'App\Message\AbstractAsyncMessage' => 'async',
-                    'App\Message\AsyncMessageInterface' => 'async',
-                    'My\Message\ToBeSentToTwoSenders' => ['async', 'audit'],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+            // route all messages that extend this example base class or interface
+            $messenger->routing('App\Message\AbstractAsyncMessage')->senders(['async']);
+            $messenger->routing('App\Message\AsyncMessageInterface')->senders(['async']);
+            $messenger->routing('My\Message\ToBeSentToTwoSenders')->senders(['async', 'audit']);
+        };
+
+.. note::
+
+    If you configure routing for both a child and parent class, both rules
+    are used. E.g. if you have an ``SmsNotification`` object that extends
+    from ``Notification``, both the routing for ``Notification`` and
+    ``SmsNotification`` will be used.
 
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -418,18 +422,16 @@ transport and "sending" messages there to be handled immediately:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    // ... other transports
+        use Symfony\Config\FrameworkConfig;
 
-                    'sync' => 'sync://',
-                ],
-                'routing' => [
-                    'App\Message\SmsNotification' => 'sync',
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            // ... other transports
+
+            $messenger->transport('sync')->dsn('sync://');
+            $messenger->routing('App\Message\SmsNotification')->senders(['sync']);
+        };
 
 Creating your Own Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -456,6 +458,16 @@ The first argument is the receiver's name (or service id if you routed to a
 custom service). By default, the command will run forever: looking for new messages
 on your transport and handling them. This command is called your "worker".
 
+.. tip::
+
+    To properly stop a worker, throw an instance of
+    :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`.
+
+    .. versionadded:: 5.4
+
+        The :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`
+        class was introduced in Symfony 5.4.
+
 Deploying to Production
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -479,6 +491,14 @@ On production, there are a few important things to think about:
     it's currently handling and shut down gracefully. Then, Supervisor will create
     new worker processes. The command uses the :ref:`app <cache-configuration-with-frameworkbundle>`
     cache internally - so make sure this is configured to use an adapter you like.
+
+**Use the Same Cache Between Deploys**
+    If your deploy strategy involves the creation of new target directories, you
+    should set a value for the :ref:`cache.prefix.seed <reference-cache-prefix-seed>`
+    configuration option in order to use the same cache namespace between deployments.
+    Otherwise, the ``cache.app`` pool will use the value of the ``kernel.project_dir``
+    parameter as base for the namespace, which will lead to different namespaces
+    each time a new deployment is made.
 
 Prioritized Transports
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -554,28 +574,22 @@ different messages to them. For example:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async_priority_high' => [
-                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                        'options' => [
-                            'queue_name' => 'high',
-                        ],
-                    ],
-                    'async_priority_low' => [
-                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                        'options' => [
-                            'queue_name' => 'low',
-                        ],
-                    ],
-                ],
-                'routing' => [
-                    'App\Message\SmsNotification' => 'async_priority_low',
-                    'App\Message\NewUserWelcomeEmail' => 'async_priority_high',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('async_priority_high')
+                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->options(['queue_name' => 'high']);
+
+            $messenger->transport('async_priority_low')
+                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->options(['queue_name' => 'low']);
+
+            $messenger->routing('App\Message\SmsNotification')->senders(['async_priority_low']);
+            $messenger->routing('App\Message\NewUserWelcomeEmail')->senders(['async_priority_high']);
+        };
 
 You can then run individual workers for each transport or instruct one worker
 to handle messages in a priority order:
@@ -586,6 +600,29 @@ to handle messages in a priority order:
 
 The worker will always first look for messages waiting on ``async_priority_high``. If
 there are none, *then* it will consume messages from ``async_priority_low``.
+
+.. _messenger-limit-queues:
+
+Limit Consuming to Specific Queues
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some transports (notably AMQP) have the concept of exchanges and queues. A Symfony
+transport is always bound to an exchange. By default, the worker consumes from all
+queues attached to the exchange of the specified transport. However, there are use
+cases to want a worker to only consume from specific queues.
+
+You can limit the worker to only process messages from specific queues:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume my_transport --queues=fasttrack
+
+To allow using the ``queues`` option, the receiver must implement the
+:class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
+
+.. versionadded:: 5.3
+
+    Limiting the worker to specific queues was introduced in Symfony 5.3.
 
 .. _messenger-supervisor:
 
@@ -619,8 +656,18 @@ times:
     process_name=%(program_name)s_%(process_num)02d
 
 Change the ``async`` argument to use the name of your transport (or transports)
-and ``user`` to the Unix user on your server. Next, tell Supervisor to read your
-config and start your workers:
+and ``user`` to the Unix user on your server.
+
+If you use the Redis Transport, note that each worker needs a unique consumer
+name to avoid the same message being handled by multiple workers. One way to
+achieve this is to set an environment variable in the Supervisor configuration
+file, which you can then refer to in ``messenger.yaml`` (see Redis section above):
+
+.. code-block:: ini
+
+    environment=MESSENGER_CONSUMER_NAME=%(program_name)s_%(process_num)02d
+
+Next, tell Supervisor to read your config and start your workers:
 
 .. code-block:: terminal
 
@@ -631,6 +678,89 @@ config and start your workers:
     $ sudo supervisorctl start messenger-consume:*
 
 See the `Supervisor docs`_ for more details.
+
+Graceful Shutdown
+~~~~~~~~~~~~~~~~~
+
+If you install the `PCNTL`_ PHP extension in your project, workers will handle
+the ``SIGTERM`` POSIX signal to finish processing their current message before
+exiting.
+
+In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g. stopping
+a Docker container having Supervisor as its entrypoint). In these cases you
+need to add a ``stopwaitsecs`` key to the program configuration (with a value
+of the desired grace period in seconds) in order to perform a graceful shutdown:
+
+.. code-block:: ini
+
+    [program:x]
+    stopwaitsecs=20
+
+Stateless Worker
+~~~~~~~~~~~~~~~~
+
+PHP is designed to be stateless, there are no shared resources across different
+requests. In HTTP context PHP cleans everything after sending the response, so
+you can decide to not take care of services that may leak memory.
+
+On the other hand, workers usually run in long-running CLI processes, which don't
+finish after processing a message. That's why you need to be careful about services
+state to not leak information and/or memory from one message to another message.
+
+However, certain Symfony services, such as the Monolog
+:ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
+In those cases, use the ``reset_on_message`` transport option to automatically
+reset the service container between two messages:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                reset_on_message: true
+                transports:
+                    async:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%" reset-on-message="true">
+                    </framework:transport>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('async')
+                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->resetOnMessage(true)
+            ;
+        };
+
+.. versionadded:: 5.4
+
+    The ``reset_on_message`` option was introduced in Symfony 5.4.
 
 .. _messenger-retries-failures:
 
@@ -692,29 +822,36 @@ this is configurable for each transport:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async_priority_high' => [
-                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
+        use Symfony\Config\FrameworkConfig;
 
-                        // default configuration
-                        'retry_strategy' => [
-                            'max_retries' => 3,
-                            // milliseconds delay
-                            'delay' => 1000,
-                            // causes the delay to be higher before each retry
-                            // e.g. 1 second delay, 2 seconds, 4 seconds
-                            'multiplier' => 2,
-                            'max_delay' => 0,
-                            // override all of this with a service that
-                            // implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
-                            // 'service' => null,
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('async_priority_high')
+                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                // default configuration
+                ->retryStrategy()
+                    ->maxRetries(3)
+                    // milliseconds delay
+                    ->delay(1000)
+                    // causes the delay to be higher before each retry
+                    // e.g. 1 second delay, 2 seconds, 4 seconds
+                    ->multiplier(2)
+                    ->maxDelay(0)
+                    // override all of this with a service that
+                    // implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
+                    ->service(null)
+            ;
+        };
+
+.. tip::
+
+    Symfony triggers a :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageRetriedEvent`
+    when a message is retried so you can run your own logic.
+
+    .. versionadded:: 5.2
+
+        The ``WorkerMessageRetriedEvent`` class was introduced in Symfony 5.2.
 
 Avoiding Retrying
 ~~~~~~~~~~~~~~~~~
@@ -734,7 +871,7 @@ Forcing Retrying
 Sometimes handling a message must fail in a way that you *know* is temporary
 and must be retried. If you throw
 :class:`Symfony\\Component\\Messenger\\Exception\\RecoverableMessageHandlingException`,
-the message will always be retried.
+the message will always be retried infinitely and ``max_retries`` setting will be ignored.
 
 .. _messenger-failure-transport:
 
@@ -784,20 +921,19 @@ be discarded. To avoid this happening, you can instead configure a ``failure_tra
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                // after retrying, messages will be sent to the "failed" transport
-                'failure_transport' => 'failed',
+        use Symfony\Config\FrameworkConfig;
 
-                'transports' => [
-                    // ... other transports
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
 
-                    'failed' => [
-                        'dsn' => 'doctrine://default?queue_name=failed',
-                    ],
-                ],
-            ],
-        ]);
+            // after retrying, messages will be sent to the "failed" transport
+            $messenger->failureTransport('failed');
+
+            // ... other transports
+
+            $messenger->transport('failed')
+                ->dsn('doctrine://default?queue_name=failed');
+        };
 
 In this example, if handling a message fails 3 times (default ``max_retries``),
 it will then be sent to the ``failed`` transport. While you *can* use
@@ -832,6 +968,113 @@ to retry them:
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
 retry has been hit, the message will be discarded permanently.
+
+Multiple Failed Transports
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.3
+
+    The possibility to use multiple failed transports was introduced in Symfony 5.3.
+
+Sometimes it is not enough to have a single, global ``failed transport`` configured
+because some messages are more important than others. In those cases, you can
+override the failure transport for only specific transports:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                # after retrying, messages will be sent to the "failed" transport
+                # by default if no "failed_transport" is configured inside a transport
+                failure_transport: failed_default
+
+                transports:
+                    async_priority_high:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        failure_transport: failed_high_priority
+
+                    # since no failed transport is configured, the one used will be
+                    # the global "failure_transport" set
+                    async_priority_low:
+                        dsn: 'doctrine://default?queue_name=async_priority_low'
+
+                    failed_default: 'doctrine://default?queue_name=failed_default'
+                    failed_high_priority: 'doctrine://default?queue_name=failed_high_priority'
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- after retrying, messages will be sent to the "failed" transport
+                by default if no "failed-transport" is configured inside a transport -->
+                <framework:messenger failure-transport="failed_default">
+                    <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%" failure-transport="failed_high_priority"/>
+                    <!-- since no "failed_transport" is configured, the one used will be
+                    the global "failed_transport" set -->
+                    <framework:transport name="async_priority_low" dsn="doctrine://default?queue_name=async_priority_low"/>
+
+                    <framework:transport name="failed_default" dsn="doctrine://default?queue_name=failed_default"/>
+                    <framework:transport name="failed_high_priority" dsn="doctrine://default?queue_name=failed_high_priority"/>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            // after retrying, messages will be sent to the "failed" transport
+            // by default if no "failure_transport" is configured inside a transport
+            $messenger->failureTransport('failed_default');
+
+            $messenger->transport('async_priority_high')
+                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->failureTransport('failed_high_priority');
+
+            // since no failed transport is configured, the one used will be
+            // the global failure_transport set
+           $messenger->transport('async_priority_low')
+                ->dsn('doctrine://default?queue_name=async_priority_low');
+
+           $messenger->transport('failed_default')
+                ->dsn('doctrine://default?queue_name=failed_default');
+
+           $messenger->transport('failed_high_priority')
+                ->dsn('doctrine://default?queue_name=failed_high_priority');
+        };
+
+If there is no ``failure_transport`` defined globally or on the transport level,
+the messages will be discarded after the number of retries.
+
+The failed commands have an optional option ``--transport`` to specify
+the ``failure_transport`` configured at the transport level.
+
+.. code-block:: terminal
+
+    # see all messages in "failure_transport" transport
+    $ php bin/console messenger:failed:show --transport=failure_transport
+
+    # retry specific messages from "failure_transport"
+    $ php bin/console messenger:failed:retry 20 30 --transport=failure_transport --force
+
+    # remove a message without retrying it from "failure_transport"
+    $ php bin/console messenger:failed:remove 20 --transport=failure_transport
 
 .. _messenger-transports-config:
 
@@ -883,18 +1126,15 @@ options. Options can be passed to the transport via a DSN string or configuratio
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'my_transport' => [
-                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                        'options' => [
-                            'auto_setup' => false,
-                        ]
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('my_transport')
+                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->options(['auto_setup' => false]);
+        };
 
 Options defined under ``options`` take precedence over ones defined in the DSN.
 
@@ -941,6 +1181,11 @@ it in the ``port`` parameter of the DSN (e.g. ``amqps://localhost?cacert=/etc/ss
     binding keys that are needed. That can be disabled, but some functionality
     may not work correctly (like delayed queues).
 
+.. note::
+
+    With Symfony 5.3 or newer, you can limit the consumer of an AMQP transport to only
+    process messages from some queues of an exchange. See :ref:`messenger-limit-queues`.
+
 The transport has a number of other options, including ways to configure
 the exchange, queues binding keys and more. See the documentation on
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\Connection`.
@@ -956,8 +1201,8 @@ The transport has a number of options:
 ``cert``                                      Path to the client certificate in PEM format.
 ``channel_max``                               Specifies highest channel number that the server
                                               permits. 0 means standard extension limit
-``confirm_timeout``                           Timeout in seconds for confirmation, if none
-                                              specified transport will not wait for message
+``confirm_timeout``                           Timeout in seconds for confirmation; if none
+                                              specified, transport will not wait for message
                                               confirmation. Note: 0 or greater seconds. May be
                                               fractional.
 ``connect_timeout``                           Connection timeout. Note: 0 or greater seconds.
@@ -997,13 +1242,23 @@ The transport has a number of options:
 ``queues[name][binding_arguments]``           Arguments to be used while binding the queue.
 ``queues[name][binding_keys]``                The binding keys (if any) to bind to this queue
 ``queues[name][flags]``                       Queue flags                                        ``AMQP_DURABLE``
-``exchange[arguments]``
+``exchange[arguments]``                       Extra arguments for the exchange (e.g.
+                                              ``alternate-exchange``)
 ``exchange[default_publish_routing_key]``     Routing key to use when publishing, if none is
                                               specified on the message
 ``exchange[flags]``                           Exchange flags                                     ``AMQP_DURABLE``
 ``exchange[name]``                            Name of the exchange
 ``exchange[type]``                            Type of exchange                                   ``fanout``
 ============================================  =================================================  ===================================
+
+.. versionadded:: 5.2
+
+    The ``confirm_timeout`` option was introduced in Symfony 5.2.
+
+.. deprecated:: 5.3
+
+    The ``prefetch_count`` option was deprecated in Symfony 5.3 because it has
+    no effect on the AMQP Messenger transport.
 
 You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
@@ -1014,7 +1269,7 @@ your Envelope::
 
     $attributes = [];
     $bus->dispatch(new SmsNotification(), [
-        new AmqpStamp('custom-routing-key', AMQP_NOPARAM, $attributes)
+        new AmqpStamp('custom-routing-key', AMQP_NOPARAM, $attributes),
     ]);
 
 .. caution::
@@ -1061,10 +1316,16 @@ a table named ``messenger_messages``.
 Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
 
+.. caution::
+
+    The datetime property of the messages stored in the database uses the
+    timezone of the current system. This may cause issues if multiple machines
+    with different timezone configuration use the same storage.
+
 The transport has a number of options:
 
 ==================  =====================================  ======================
-     Option         Description                            Default
+Option              Description                            Default
 ==================  =====================================  ======================
 table_name          Name of the table                      messenger_messages
 queue_name          Name of the queue (a column in the     default
@@ -1080,6 +1341,29 @@ auto_setup          Whether the table should be created
                     automatically during send / get.       true
 ==================  =====================================  ======================
 
+.. versionadded:: 5.1
+
+    The ability to leverage PostgreSQL's LISTEN/NOTIFY was introduced
+    in Symfony 5.1.
+
+When using PostgreSQL, you have access to the following options to leverage
+the `LISTEN/NOTIFY`_ feature. This allow for a more performant approach
+than the default polling behavior of the Doctrine transport because
+PostgreSQL will directly notify the workers when a new message is inserted
+in the table.
+
+=======================  ==========================================  ======================
+Option                   Description                                 Default
+=======================  ==========================================  ======================
+use_notify               Whether to use LISTEN/NOTIFY.               true
+check_delayed_interval   The interval to check for delayed           1000
+                         messages, in milliseconds.
+                         Set to 0 to disable checks.
+get_notify_timeout       The length of time to wait for a            0
+                         response when calling
+                         ``PDO::pgsqlGetNotify``, in milliseconds.
+=======================  ==========================================  ======================
+
 Beanstalkd Transport
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -1087,7 +1371,7 @@ Beanstalkd Transport
 
     The Beanstalkd transport was introduced in Symfony 5.2.
 
-The Beanstalkd transports sends messages directly to a Beanstalkd work queue. Install
+The Beanstalkd transport sends messages directly to a Beanstalkd work queue. Install
 it by running:
 
 .. code-block:: terminal
@@ -1143,7 +1427,9 @@ The Redis transport DSN may looks like this:
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
     # Full DSN Example
-    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0
+    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0&delete_after_ack=true
+    # Redis Cluster Example
+    MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
 
@@ -1151,51 +1437,62 @@ The Redis transport DSN may looks like this:
 
     The Unix socket DSN was introduced in Symfony 5.1.
 
-To use the Redis transport, you will need the Redis PHP extension (>=4.3) and
-a running Redis server (^5.0).
-
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-===================  =====================================  =================================
-     Option               Description                       Default
-===================  =====================================  =================================
-stream               The Redis stream name                  messages
-group                The Redis consumer group name          symfony
-consumer             Consumer name used in Redis            consumer
-auto_setup           Create the Redis group automatically?  true
-auth                 The Redis password
-delete_after_ack     If ``true``, messages are deleted      false
-                     automatically after processing them
-delete_after_reject  If ``true``, messages are deleted      true
-                     automatically if they are rejected
-lazy                 Connect only when a connection is      false
-                     really needed
-serializer           How to serialize the final payload     ``Redis::SERIALIZER_PHP``
-                     in Redis (the
-                     ``Redis::OPT_SERIALIZER`` option)
-stream_max_entries   The maximum number of entries which    ``0`` (which means "no trimming")
-                     the stream will be trimmed to. Set
-                     it to a large enough number to
-                     avoid losing pending messages
-tls                  Enable TLS support for the connection  false
-redeliver_timeout    Timeout before retrying a pending      ``3600``
-                     message which is owned by an
-                     abandoned consumer (if a worker died
-                     for some reason, this will occur,
-                     eventually you should retry the
-                     message) - in seconds.
-claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
-                     messages should be checked for to
-                     claim - in milliseconds
-===================  =====================================  =================================
+
+=======================  =====================================  =================================
+Option                   Description                            Default
+=======================  =====================================  =================================
+stream                   The Redis stream name                  messages
+group                    The Redis consumer group name          symfony
+consumer                 Consumer name used in Redis            consumer
+auto_setup               Create the Redis group automatically?  true
+auth                     The Redis password
+delete_after_ack         If ``true``, messages are deleted      false
+                         automatically after processing them
+delete_after_reject      If ``true``, messages are deleted      true
+                         automatically if they are rejected
+lazy                     Connect only when a connection is      false
+                         really needed
+serializer               How to serialize the final payload     ``Redis::SERIALIZER_PHP``
+                         in Redis (the
+                         ``Redis::OPT_SERIALIZER`` option)
+stream_max_entries       The maximum number of entries which    ``0`` (which means "no trimming")
+                         the stream will be trimmed to. Set
+                         it to a large enough number to
+                         avoid losing pending messages
+tls                      Enable TLS support for the connection  false
+redeliver_timeout        Timeout before retrying a pending      ``3600``
+                         message which is owned by an
+                         abandoned consumer (if a worker died
+                         for some reason, this will occur,
+                         eventually you should retry the
+                         message) - in seconds.
+claim_interval           Interval on which pending/abandoned    ``60000`` (1 Minute)
+                         messages should be checked for to
+                         claim - in milliseconds
+sentinel_persistent_id   String, if null connection is          null
+                         non-persistent.
+sentinel_retry_interval  Int, value in milliseconds             ``0``
+sentinel_read_timeout    Float, value in seconds                ``0``
+                         default indicates unlimited
+sentinel_timeout         Float, value in seconds                ``0``
+                         default indicates unlimited
+sentinel_master          String, if null or empty Sentinel      null
+                         support is disabled
+=======================  =====================================  =================================
 
 .. caution::
 
     There should never be more than one ``messenger:consume`` command running with the same
-    config (stream, group and consumer name) to avoid having a message handled more than once.
-    Using the ``HOSTNAME`` as the consumer might often be a good idea. In case you are using
-    Kubernetes to orchestrate your containers, consider using a ``StatefulSet``.
+    combination of ``stream``, ``group`` and ``consumer``, or messages could end up being
+    handled more than once. If you run multiple queue workers, ``consumer`` can be set to an
+    environment variable (like ``%env(MESSENGER_CONSUMER_NAME)%``) set by Supervisor
+    (example below) or any other service used to manage the worker processes.
+    In a container environment, the ``HOSTNAME`` can be used as the consumer name, since
+    there is only one worker per container/host. If using Kubernetes to orchestrate the
+    containers, consider using a ``StatefulSet`` to have stable names.
 
 .. tip::
 
@@ -1212,6 +1509,17 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 .. versionadded:: 5.2
 
     The ``delete_after_reject`` and ``lazy`` options were introduced in Symfony 5.2.
+
+.. versionadded:: 5.4
+
+    The ``sentinel_persistent_id``, ``sentinel_retry_interval``, ``sentinel_read_timeout``,
+    ``sentinel_timeout``, and ``sentinel_master`` options were introduced in Symfony 5.4.
+
+.. deprecated:: 5.4
+
+    Not setting a explicit value for the ``delete_after_ack`` option is
+    deprecated since Symfony 5.4. In Symfony 6.0, the default value of this
+    option changes from ``false`` to ``true``.
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
@@ -1253,15 +1561,14 @@ override it in the ``test`` environment to use this transport:
     .. code-block:: php
 
         // config/packages/test/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async_priority_normal' => [
-                        'dsn' => 'in-memory://',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('async_priority_normal')
+                ->dsn('in-memory://');
+        };
 
 Then, while testing, messages will *not* be delivered to the real transport.
 Even better, in a test, you can check that exactly one message was sent
@@ -1283,10 +1590,20 @@ during a request::
             $this->assertSame(200, $client->getResponse()->getStatusCode());
 
             /* @var InMemoryTransport $transport */
-            $transport = self::$container->get('messenger.transport.async_priority_normal');
+            $transport = $this->getContainer()->get('messenger.transport.async_priority_normal');
             $this->assertCount(1, $transport->getSent());
         }
     }
+
+The transport has a number of options:
+
+``serialize`` (boolean, default: ``false``)
+    Whether to serialize messages or not. This is useful to test an additional
+    layer, especially when you use your own message serializer.
+
+.. versionadded:: 5.3
+
+    The ``serialize`` option was introduced in Symfony 5.3.
 
 .. note::
 
@@ -1300,7 +1617,7 @@ Amazon SQS
 
 .. versionadded:: 5.1
 
-    The Amazon SQS transport as introduced in Symfony 5.1.
+    The Amazon SQS transport was introduced in Symfony 5.1.
 
 The Amazon SQS transport is perfect for application hosted on AWS. Install it by
 running:
@@ -1314,7 +1631,7 @@ The SQS transport DSN may looks like this:
 .. code-block:: env
 
     # .env
-    MESSENGER_TRANSPORT_DSN=sqs://AKIAIOSFODNN7EXAMPLE:j17M97ffSVoKI0briFoo9a@sqs.eu-west-3.amazonaws.com/messages
+    MESSENGER_TRANSPORT_DSN=https://sqs.eu-west-3.amazonaws.com/123456789012/messages?access_key=AKIAIOSFODNN7EXAMPLE&secret_key=j17M97ffSVoKI0briFoo9a
     MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?sslmode=disable
 
 .. note::
@@ -1322,26 +1639,42 @@ The SQS transport DSN may looks like this:
     The transport will automatically create queues that are needed. This
     can be disabled setting the ``auto_setup`` option to ``false``.
 
+.. tip::
+
+    Before sending or receiving a message, Symfony needs to convert the queue
+    name into an AWS queue URL by calling the ``GetQueueUrl`` API in AWS. This
+    extra API call can be avoided by providing a DSN which is the queue URL.
+
+    .. versionadded:: 5.2
+
+        The feature to provide the queue URL in the DSN was introduced in Symfony 5.2.
+
 The transport has a number of options:
 
 ======================  ======================================  ===================================
      Option             Description                             Default
 ======================  ======================================  ===================================
-``access_key``          AWS access key
+``access_key``          AWS access key                          must be urlencoded
 ``account``             Identifier of the AWS account           The owner of the credentials
-``auto_setup``          Whether the table should be created     ``true``
+``auto_setup``          Whether the queue should be created     ``true``
                         automatically during send / get.
 ``buffer_size``         Number of messages to prefetch          9
+``debug``               If ``true`` it logs all HTTP requests   ``false``
+                        and responses (it impacts performance)
 ``endpoint``            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
 ``poll_timeout``        Wait for new message duration in        0.1
                         seconds
 ``queue_name``          Name of the queue                       messages
 ``region``              Name of the AWS region                  eu-west-1
-``secret_key``          AWS secret key
+``secret_key``          AWS secret key                          must be urlencoded
 ``visibility_timeout``  Amount of seconds the message will      Queue's configuration
                         not be visible (`Visibility Timeout`_)
 ``wait_time``           `Long polling`_ duration in seconds     20
 ======================  ======================================  ===================================
+
+.. versionadded:: 5.3
+
+    The ``debug`` option was introduced in Symfony 5.3.
 
 .. note::
 
@@ -1416,23 +1749,21 @@ this globally (or for each transport) to a service that implements
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'serializer' => [
-                    'default_serializer' => 'messenger.transport.symfony_serializer',
-                    'symfony_serializer' => [
-                        'format' => 'json',
-                        'context' => [],
-                    ],
-                ],
-                'transports' => [
-                    'async_priority_normal' => [
-                        'dsn' => // ...
-                        'serializer' => 'messenger.transport.symfony_serializer',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->serializer()
+                ->defaultSerializer('messenger.transport.symfony_serializer')
+                ->symfonySerializer()
+                    ->format('json')
+                    ->context('foo', 'bar');
+
+            $messenger->transport('async_priority_normal')
+                ->dsn(...)
+                ->serializer('messenger.transport.symfony_serializer');
+        };
 
 The ``messenger.transport.symfony_serializer`` is a built-in service that uses
 the :doc:`Serializer component </serializer>` and can be configured in a few ways.
@@ -1654,17 +1985,17 @@ Then, make sure to "route" your message to *both* transports:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async_priority_normal' => '...',
-                    'image_transport' => '...',
-                ],
-                'routing' => [
-                    'App\Message\UploadedImage' => ['image_transport', 'async_priority_normal']
-                ]
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('async_priority_normal')->dsn(...);
+            $messenger->transport('image_transport')->dsn(...);
+
+            $messenger->routing('App\Message\UploadedImage')
+                ->senders(['image_transport', 'async_priority_normal']);
+        };
 
 That's it! You can now consume each transport:
 
@@ -1699,12 +2030,12 @@ to your message::
     {
         $bus->dispatch(new SmsNotification('...'), [
             // wait 5 seconds before processing
-            new DelayStamp(5000)
+            new DelayStamp(5000),
         ]);
 
         // or explicitly create an Envelope
         $bus->dispatch(new Envelope(new SmsNotification('...'), [
-            new DelayStamp(5000)
+            new DelayStamp(5000),
         ]));
 
         // ...
@@ -1797,22 +2128,16 @@ middleware and *only* include your own:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'buses' => [
-                    'messenger.bus.default' => [
-                        // disable the default middleware
-                        'default_middleware' => false,
+        use Symfony\Config\FrameworkConfig;
 
-                        // and/or add your own
-                        'middleware' => [
-                            'App\Middleware\MyMiddleware',
-                            'App\Middleware\AnotherMiddleware',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $bus = $messenger->bus('messenger.bus.default')
+                ->defaultMiddleware(false);
+            $bus->middleware()->id('App\Middleware\MyMiddleware');
+            $bus->middleware()->id('App\Middleware\AnotherMiddleware');
+        };
 
 .. note::
 
@@ -1891,21 +2216,77 @@ may want to use:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'buses' => [
-                    'command_bus' => [
-                        'middleware' => [
-                            'doctrine_transaction',
-                            'doctrine_ping_connection',
-                            'doctrine_close_connection',
-                            // Using another entity manager
-                            ['id' => 'doctrine_transaction', 'arguments' => ['custom']],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $bus = $messenger->bus('command_bus');
+            $bus->middleware()->id('doctrine_transaction');
+            $bus->middleware()->id('doctrine_ping_connection');
+            $bus->middleware()->id('doctrine_close_connection');
+            // Using another entity manager
+            $bus->middleware()->id('doctrine_transaction')
+                ->arguments(['custom']);
+        };
+
+Other Middlewares
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.3
+
+    The ``router_context`` middleware was introduced in Symfony 5.3.
+
+Add the ``router_context`` middleware if you need to generate absolute URLs in
+the consumer (e.g. render a template with links). This middleware stores the
+original request context (i.e. the host, the HTTP port, etc.) which is needed
+when building absolute URLs.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    command_bus:
+                        middleware:
+                            - router_context
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:bus name="command_bus">
+                        <framework:middleware id="router_context"/>
+                    </framework:bus>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $bus = $messenger->bus('command_bus');
+            $bus->middleware()->id('router_context');
+        };
+
 
 Messenger Events
 ~~~~~~~~~~~~~~~~
@@ -1941,7 +2322,9 @@ Learn more
 .. _`Enqueue's transport`: https://github.com/sroze/messenger-enqueue-transport
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
+.. _`PCNTL`: https://www.php.net/manual/book.pcntl.php
 .. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
 .. _`Long polling`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
+.. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html

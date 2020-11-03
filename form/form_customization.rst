@@ -20,8 +20,9 @@ enough to render an entire form, including all its fields and error messages:
 
 .. code-block:: twig
 
-    {# form is a variable passed from the controller and created
-      by calling to the $form->createView() method #}
+    {# form is a variable passed from the controller via either
+      $this->renderForm('...', ['form' => $form])
+      or $this->render('...', ['form' => $form->createView()]) #}
     {{ form(form) }}
 
 The next step is to use the :ref:`form_start() <reference-forms-twig-start>`,
@@ -204,7 +205,7 @@ article) unless you set ``render_rest`` to false:
 .. code-block:: twig
 
     {# don't render unrendered fields #}
-    {{ form_end(form, {'render_rest': false}) }}
+    {{ form_end(form, {render_rest: false}) }}
 
 .. _reference-forms-twig-label:
 
@@ -257,8 +258,8 @@ Renders any errors for the given field.
 
 .. caution::
 
-    In the Bootstrap 4 form theme, ``form_errors()`` is already included
-    in ``form_label()``, see ":ref:`reference-forms-bootstrap-error-messages`"
+    In the :ref:`error messages of Bootstrap 4 Form Theme <reference-forms-bootstrap4-error-messages>`,
+    ``form_errors()`` is already included in ``form_label()``.
 
 .. _reference-forms-twig-widget:
 

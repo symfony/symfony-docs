@@ -11,31 +11,13 @@ Validates that a value is a valid "file", which can be one of the following:
 This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
 form field.
 
-.. tip::
+.. seealso::
 
     If the file you're validating is an image, try the :doc:`Image </reference/constraints/Image>`
     constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `binaryFormat`_
-            - `disallowEmptyMessage`_
-            - `groups`_
-            - `maxSize`_
-            - `maxSizeMessage`_
-            - `mimeTypes`_
-            - `mimeTypesMessage`_
-            - `notFoundMessage`_
-            - `notReadableMessage`_
-            - `payload`_
-            - `uploadCantWriteErrorMessage`_
-            - `uploadErrorMessage`_
-            - `uploadExtensionErrorMessage`_
-            - `uploadFormSizeErrorMessage`_
-            - `uploadIniSizeErrorMessage`_
-            - `uploadNoFileErrorMessage`_
-            - `uploadNoTmpDirErrorMessage`_
-            - `uploadPartialErrorMessage`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\File`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`
 ==========  ===================================================================
@@ -90,6 +72,23 @@ below a certain file size and a valid PDF, add the following:
              *     mimeTypesMessage = "Please upload a valid PDF"
              * )
              */
+            protected $bioFile;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\File(
+                maxSize: '1024k',
+                mimeTypes: ['application/pdf', 'application/x-pdf'],
+                mimeTypesMessage: 'Please upload a valid PDF',
+            )]
             protected $bioFile;
         }
 
@@ -158,8 +157,8 @@ have been specified.
 Options
 -------
 
-binaryFormat
-~~~~~~~~~~~~
+``binaryFormat``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -171,8 +170,8 @@ the value defined in the ``maxSize`` option.
 For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
 
-disallowEmptyMessage
-~~~~~~~~~~~~~~~~~~~~
+``disallowEmptyMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``An empty file is not allowed.``
 
@@ -190,8 +189,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-maxSize
-~~~~~~~
+``maxSize``
+~~~~~~~~~~~
 
 **type**: ``mixed``
 
@@ -212,8 +211,8 @@ Suffix  Unit Name  Value            Example
 For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
 
-maxSizeMessage
-~~~~~~~~~~~~~~
+``maxSizeMessage``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.``
 
@@ -231,8 +230,8 @@ Parameter         Description
 ``{{ suffix }}``  Suffix for the used file size unit (see above)
 ================  =============================================================
 
-mimeTypes
-~~~~~~~~~
+``mimeTypes``
+~~~~~~~~~~~~~
 
 **type**: ``array`` or ``string``
 
@@ -252,8 +251,8 @@ You can find a list of existing mime types on the `IANA website`_.
     (i.e. the form type is not defined explicitly in the ``->add()`` method of
     the form builder) and when the field doesn't define its own ``accept`` value.
 
-mimeTypesMessage
-~~~~~~~~~~~~~~~~
+``mimeTypesMessage``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
 
@@ -271,8 +270,8 @@ Parameter        Description
 ``{{ types }}``  The list of allowed MIME types
 ===============  ==============================================================
 
-notFoundMessage
-~~~~~~~~~~~~~~~
+``notFoundMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file could not be found.``
 
@@ -288,8 +287,8 @@ Parameter        Description
 ``{{ file }}``   Absolute file path
 ===============  ==============================================================
 
-notReadableMessage
-~~~~~~~~~~~~~~~~~~
+``notReadableMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is not readable.``
 
@@ -306,8 +305,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-uploadCantWriteErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadCantWriteErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Cannot write temporary file to disk.``
 
@@ -316,8 +315,8 @@ temporary folder.
 
 This message has no parameters.
 
-uploadErrorMessage
-~~~~~~~~~~~~~~~~~~
+``uploadErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file could not be uploaded.``
 
@@ -326,8 +325,8 @@ for some unknown reason.
 
 This message has no parameters.
 
-uploadExtensionErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadExtensionErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``A PHP extension caused the upload to fail.``
 
@@ -336,8 +335,8 @@ fail.
 
 This message has no parameters.
 
-uploadFormSizeErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadFormSizeErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is too large.``
 
@@ -346,8 +345,8 @@ by the HTML file input field.
 
 This message has no parameters.
 
-uploadIniSizeErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadIniSizeErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.``
 
@@ -363,8 +362,8 @@ Parameter         Description
 ``{{ suffix }}``  Suffix for the used file size unit (see above)
 ================  =============================================================
 
-uploadNoFileErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadNoFileErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``No file was uploaded.``
 
@@ -372,8 +371,8 @@ The message that is displayed if no file was uploaded.
 
 This message has no parameters.
 
-uploadNoTmpDirErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadNoTmpDirErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``No temporary folder was configured in php.ini.``
 
@@ -382,8 +381,8 @@ missing.
 
 This message has no parameters.
 
-uploadPartialErrorMessage
-~~~~~~~~~~~~~~~~~~~~~~~~~
+``uploadPartialErrorMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file was only partially uploaded.``
 

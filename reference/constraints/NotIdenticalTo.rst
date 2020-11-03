@@ -13,11 +13,6 @@ the options. To force that a value is identical, see
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalTo`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalToValidator`
 ==========  ===================================================================
@@ -51,6 +46,24 @@ The following constraints ensure that:
              *     value = 15
              * )
              */
+            protected $age;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\NotIdenticalTo('Mary')]
+            protected $firstName;
+
+            #[Assert\NotIdenticalTo(
+                value: 15,
+            )]
             protected $age;
         }
 

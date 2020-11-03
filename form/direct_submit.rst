@@ -11,9 +11,10 @@ to detect when the form has been submitted. However, you can also use the
 control over when exactly your form is submitted and what data is passed to it::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function new(Request $request)
+    public function new(Request $request): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -28,9 +29,27 @@ control over when exactly your form is submitted and what data is passed to it::
             }
         }
 
-        return $this->render('task/new.html.twig', [
-            'form' => $form->createView(),
+        return $this->renderForm('task/new.html.twig', [
+            'form' => $form,
         ]);
+    }
+
+The list of fields submitted with the ``submit()`` method must be the same as
+the fields defined by the form class. Otherwise, you'll see a form validation error::
+
+    public function new(Request $request): Response
+    {
+        // ...
+
+        if ($request->isMethod('POST')) {
+            // '$json' represents payload data sent by React/Angular/Vue
+            // the merge of parameters is needed to submit all form fields
+            $form->submit(array_merge($json, $request->request->all()));
+
+            // ...
+        }
+
+        // ...
     }
 
 .. tip::

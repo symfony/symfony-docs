@@ -2,8 +2,9 @@ Unique
 ======
 
 Validates that all the elements of the given collection are unique (none of them
-is present more than once). Elements are compared strictly, so ``'7'`` and ``7``
-are considered different elements (a string and an integer, respectively).
+is present more than once). By default elements are compared strictly,
+so ``'7'`` and ``7`` are considered different elements (a string and an integer, respectively).
+If you want to apply any other comparison logic, use the `normalizer`_ option.
 
 .. seealso::
 
@@ -19,9 +20,6 @@ are considered different elements (a string and an integer, respectively).
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Unique`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UniqueValidator`
 ==========  ===================================================================
@@ -47,6 +45,19 @@ strings:
             /**
              * @Assert\Unique
              */
+            protected $contactEmails;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\Unique]
             protected $contactEmails;
         }
 
@@ -94,8 +105,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain only unique elements.``
 
@@ -107,7 +118,25 @@ You can use the following parameters in this message:
 =============================  ================================================
 Parameter                      Description
 =============================  ================================================
-``{{ value }}``                The repeated value
+``{{ value }}``                The current (invalid) value
 =============================  ================================================
 
+``normalizer``
+~~~~~~~~~~~~~~
+
+**type**: a `PHP callable`_ **default**: ``null``
+
+.. versionadded:: 5.3
+
+    The ``normalizer`` option was introduced in Symfony 5.3.
+
+This option defined the PHP callable applied to each element of the given
+collection before checking if the collection is valid.
+
+For example, you can pass the ``'trim'`` string to apply the :phpfunction:`trim`
+PHP function to each element of the collection in order to ignore leading and
+trailing whitespace during validation.
+
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`PHP callable`: https://www.php.net/callable

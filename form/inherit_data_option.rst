@@ -52,7 +52,7 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     class CompanyType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('name', TextType::class)
@@ -71,7 +71,7 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     class CustomerType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('firstName', TextType::class)
@@ -94,7 +94,7 @@ for that::
 
     class LocationType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('address', TextareaType::class)
@@ -103,7 +103,7 @@ for that::
                 ->add('country', TextType::class);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'inherit_data' => true,
@@ -129,15 +129,20 @@ Finally, make this work by adding the location form to your two original forms::
     namespace App\Form\Type;
 
     use App\Entity\Company;
+    use Symfony\Component\Form\AbstractType;
+
     // ...
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    class CompanyType extends AbstractType
     {
-        // ...
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            // ...
 
-        $builder->add('foo', LocationType::class, [
-            'data_class' => Company::class,
-        ]);
+            $builder->add('foo', LocationType::class, [
+                'data_class' => Company::class,
+            ]);
+        }
     }
 
 .. code-block:: php
@@ -146,15 +151,18 @@ Finally, make this work by adding the location form to your two original forms::
     namespace App\Form\Type;
 
     use App\Entity\Customer;
-    // ...
+    use Symfony\Component\Form\AbstractType;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    class CustomerType extends AbstractType
     {
-        // ...
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            // ...
 
-        $builder->add('bar', LocationType::class, [
-            'data_class' => Customer::class,
-        ]);
+            $builder->add('bar', LocationType::class, [
+                'data_class' => Customer::class,
+            ]);
+        }
     }
 
 That's it! You have extracted duplicated field definitions to a separate

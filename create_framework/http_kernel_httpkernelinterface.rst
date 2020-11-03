@@ -16,7 +16,7 @@ goal by making our framework implement ``HttpKernelInterface``::
          */
         public function handle(
             Request $request,
-            $type = self::MASTER_REQUEST,
+            $type = self::MAIN_REQUEST,
             $catch = true
         );
     }
@@ -39,7 +39,7 @@ Update your framework so that it implements this interface::
 
         public function handle(
             Request $request,
-            $type = HttpKernelInterface::MASTER_REQUEST,
+            $type = HttpKernelInterface::MAIN_REQUEST,
             $catch = true
         ) {
             // ...

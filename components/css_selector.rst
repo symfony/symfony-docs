@@ -25,8 +25,8 @@ Usage
     component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
     article to learn about how to use it when creating Symfony tests.
 
-Why to Use CSS selectors?
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Why Use CSS selectors?
+~~~~~~~~~~~~~~~~~~~~~~
 
 When you're parsing an HTML or an XML document, by far the most powerful
 method is `XPath`_.
@@ -40,7 +40,7 @@ long and unwieldy expressions.
 Many developers -- particularly web developers -- are more comfortable
 using CSS selectors to find elements. As well as working in stylesheets,
 CSS selectors are used in JavaScript with the ``querySelectorAll()`` function
-and in popular JavaScript libraries such as jQuery, Prototype and MooTools.
+and in popular JavaScript libraries such as jQuery.
 
 CSS selectors are less powerful than XPath, but far easier to write, read
 and understand. Since they are less powerful, almost all CSS selectors can

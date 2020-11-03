@@ -7,9 +7,6 @@ an object and all sub-objects associated with it.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `payload`_
-            - `traverse`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Valid`
 ==========  ===================================================================
 
@@ -82,6 +79,40 @@ stores an ``Address`` instance in the ``$address`` property::
             /**
              * @Assert\NotBlank
              */
+            protected $lastName;
+
+            protected $address;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Address.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Address
+        {
+            #[Assert\NotBlank]
+            protected $street;
+
+            #[Assert\NotBlank]
+            #[Assert\Length(max: 5)]
+            protected $zipCode;
+        }
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\NotBlank]
+            #[Assert\Length(min: 4)]
+            protected $firstName;
+
+            #[Assert\NotBlank]
             protected $lastName;
 
             protected $address;
@@ -196,6 +227,19 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
             protected $address;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Valid]
+            protected $address;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -243,6 +287,11 @@ the validation of the ``Address`` fields failed.
     App\Entity\Author.address.zipCode:
         This value is too long. It should have 5 characters or less.
 
+.. tip::
+
+    If you also want to validate that the ``address`` property is an instance of
+    the ``App\Entity\Address`` class, add the :doc:`Type constraint </reference/constraints/Type>`.
+
 Options
 -------
 
@@ -250,8 +299,8 @@ Options
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-traverse
-~~~~~~~~
+``traverse``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

@@ -77,16 +77,16 @@ Now, examine the results to see this closely:
         $container->loadFromExtension('my_bundle', [
                 'logging' => true,
                 // true, as expected
-            )
-        ];
+            ]
+        );
 
         $container->loadFromExtension('my_bundle', [
                 'logging' => "%kernel.debug%",
                 // true/false (depends on 2nd parameter of Kernel),
                 // as expected, because %kernel.debug% inside configuration
                 // gets evaluated before being passed to the extension
-            )
-        ];
+            ]
+        );
 
         $container->loadFromExtension('my_bundle');
         // passes the string "%kernel.debug%".
@@ -106,7 +106,7 @@ be injected with this parameter via the extension as follows::
     {
         private $debug;
 
-        public function  __construct($debug)
+        public function __construct($debug)
         {
             $this->debug = (bool) $debug;
         }

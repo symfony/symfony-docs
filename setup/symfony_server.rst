@@ -64,8 +64,8 @@ Enabling PHP-FPM
 
     PHP-FPM must be installed locally for the Symfony server to utilize.
 
-When the server starts it will check for common patterns like ``web/app.php``,
-``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
+When the server starts, it checks for ``web/index_dev.php``, ``web/index.php``,
+``public/app_dev.php``, ``public/app.php`` in that order. If one is found, the
 server will automatically start with PHP-FPM enabled. Otherwise the server will
 start without PHP-FPM and will show a ``Page not found`` page when trying to
 access a ``.php`` file in the browser.
@@ -114,10 +114,10 @@ root directory:
     $ cd my-project/
 
     # use a specific PHP version
-    $ echo 7.2 > .php-version
+    $ echo 7.4 > .php-version
 
-    # use any PHP 7.x version available
-    $ echo 7 > .php-version
+    # use any PHP 8.x version available
+    $ echo 8 > .php-version
 
 .. tip::
 
@@ -275,15 +275,20 @@ server provides a ``run`` command to wrap them as follows:
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
 
+.. _symfony-server-docker:
+
 Docker Integration
 ------------------
 
 The local Symfony server provides full `Docker`_ integration for projects that
-use it.
+use it. To learn more about Docker & Symfony, see :doc:`docker`.
 
 When the web server detects that Docker Compose is running for the project, it
-automatically exposes environment variables according to the exposed port and
-the name of the ``docker-compose`` services.
+automatically exposes some environment variables.
+
+Via the ``docker-compose`` API, it looks for exposed ports used for common
+services. When it detects one it knows about, it uses the service name to
+expose environment variables.
 
 Consider the following configuration:
 
@@ -298,6 +303,9 @@ The web server detects that a service exposing port ``3306`` is running for the
 project. It understands that this is a MySQL service and creates environment
 variables accordingly with the service name (``database``) as a prefix:
 ``DATABASE_URL``, ``DATABASE_HOST``, ...
+
+If the service is not in the supported list below, generic environment
+variables are set: ``PORT``, ``IP``, and ``HOST``.
 
 If the ``docker-compose.yaml`` names do not match Symfony's conventions, add a
 label to override the environment variables prefix:
@@ -333,6 +341,7 @@ Kafka         9092      ``KAFKA_``
 MailCatcher   1025/1080 ``MAILER_``
               or 25/80
 Blackfire     8707      ``BLACKFIRE_``
+Mercure       80        Always exposes ``MERCURE_PUBLIC_URL`` and ``MERCURE_URL`` (only works with the ``dunglas/mercure`` Docker image)
 ============= ========= ======================
 
 You can open web management interfaces for the services that expose them:
@@ -347,7 +356,7 @@ Or click on the links in the "Server" section of the web debug toolbar.
 .. tip::
 
     To debug and list all exported environment variables, run ``symfony
-    var:export``.
+    var:export --debug``.
 
 .. tip::
 
@@ -360,6 +369,20 @@ Or click on the links in the "Server" section of the web debug toolbar.
 When Docker services are running, browse a page of your Symfony application and
 check the "Symfony Server" section in the web debug toolbar; you'll see that
 "Docker Compose" is "Up".
+
+.. note::
+
+    If you don't want environment variables to be exposed for a service, set
+    the ``com.symfony.server.service-ignore`` label to ``true``:
+
+    .. code-block:: yaml
+
+        # docker-compose.yaml
+        services:
+            db:
+                ports: [3306]
+                labels:
+                    com.symfony.server.service-ignore: true
 
 If your Docker Compose file is not at the root of the project, use the
 ``COMPOSE_FILE`` and ``COMPOSE_PROJECT_NAME`` environment variables to define

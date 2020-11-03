@@ -9,9 +9,6 @@ Also see :doc:`NotNull <NotNull>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\IsNull`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsNullValidator`
 ==========  ===================================================================
@@ -36,6 +33,19 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
             /**
              * @Assert\IsNull
              */
+            protected $firstName;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\IsNull]
             protected $firstName;
         }
 

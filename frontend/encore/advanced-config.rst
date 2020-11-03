@@ -12,12 +12,12 @@ To do that, modify the config after fetching it from Encore:
 
     // webpack.config.js
 
-    var Encore = require('@symfony/webpack-encore');
+    const Encore = require('@symfony/webpack-encore');
 
     // ... all Encore config here
 
     // fetch the config, then modify it!
-    var config = Encore.getWebpackConfig();
+    const config = Encore.getWebpackConfig();
 
     // add an extension
     config.resolve.extensions.push('json');
@@ -105,7 +105,11 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
 .. code-block:: terminal
 
+    # if you use the Yarn package manager
     $ yarn encore dev --config-name firstConfig
+
+    # if you use the npm package manager
+    $ npm run dev -- --config-name firstConfig
 
 Next, define the output directories of each build:
 
@@ -117,6 +121,19 @@ Next, define the output directories of each build:
         builds:
             firstConfig: '%kernel.project_dir%/public/first_build'
             secondConfig: '%kernel.project_dir%/public/second_build'
+
+Also define the asset manifests for each build:
+
+.. code-block:: yaml
+
+    # config/packages/assets.yaml
+    framework:
+        assets:
+            packages:
+                first_build:
+                    json_manifest_path: '%kernel.project_dir%/public/first_build/manifest.json'
+                second_build:
+                    json_manifest_path: '%kernel.project_dir%/public/second_build/manifest.json'
 
 Finally, use the third optional parameter of the ``encore_entry_*_tags()``
 functions to specify which build to use:
@@ -208,8 +225,8 @@ The following code is equivalent:
 The following loaders are configurable with ``configureLoaderRule()``:
   - ``javascript`` (alias ``js``)
   - ``css``
-  - ``images``
-  - ``fonts``
+  - ``images`` (but use ``configureImageRule()`` instead)
+  - ``fonts`` (but use ``configureFontRule()`` instead)
   - ``sass`` (alias ``scss``)
   - ``less``
   - ``stylus``

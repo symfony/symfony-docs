@@ -40,12 +40,12 @@ Suppose you have a Task form with a tags ``text`` type::
     // ...
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('tags', TextType::class);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Task::class,
@@ -72,7 +72,7 @@ class::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('tags', TextType::class);
 
@@ -136,7 +136,7 @@ Start by setting up the text field like normal::
     // ...
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('description', TextareaType::class)
@@ -144,7 +144,7 @@ Start by setting up the text field like normal::
             ;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Task::class,
@@ -188,9 +188,8 @@ to and from the issue number and the ``Issue`` object::
          * Transforms an object (issue) to a string (number).
          *
          * @param  Issue|null $issue
-         * @return string
          */
-        public function transform($issue)
+        public function transform($issue): string
         {
             if (null === $issue) {
                 return '';
@@ -203,14 +202,13 @@ to and from the issue number and the ``Issue`` object::
          * Transforms a string (number) to an object (issue).
          *
          * @param  string $issueNumber
-         * @return Issue|null
          * @throws TransformationFailedException if object (issue) is not found.
          */
-        public function reverseTransform($issueNumber)
+        public function reverseTransform($issueNumber): ?Issue
         {
             // no issue number? It's optional, so that's ok
             if (!$issueNumber) {
-                return;
+                return null;
             }
 
             $issue = $this->entityManager
@@ -273,7 +271,7 @@ and type-hint the new class::
             $this->transformer = $transformer;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('description', TextareaType::class)
@@ -306,7 +304,7 @@ end-user error message in the data transformer using the
     {
         // ...
 
-        public function reverseTransform($issueNumber)
+        public function reverseTransform($issueNumber): ?Issue
         {
             // ...
 
@@ -390,19 +388,19 @@ First, create the custom field type class::
             $this->transformer = $transformer;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->addModelTransformer($this->transformer);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'invalid_message' => 'The selected issue does not exist',
             ]);
         }
 
-        public function getParent()
+        public function getParent(): string
         {
             return TextType::class;
         }
@@ -423,7 +421,7 @@ As long as you're using :ref:`autowire <services-autowire>` and
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('description', TextareaType::class)
@@ -479,6 +477,20 @@ types of data:
 Which transformer you need depends on your situation.
 
 To use the view transformer, call ``addViewTransformer()``.
+
+.. caution::
+
+    Be careful with model transformers and
+    :doc:`Collection </reference/forms/types/collection>` field types.
+    Collection's children are created early at ``PRE_SET_DATA`` by its
+    ``ResizeFormListener`` and their data is populated later from the normalized
+    data. So your model transformer cannot reduce the number of items within the
+    Collection (i.e. filtering out some items), as in that case the collection
+    ends up with some empty children.
+    
+    A possible workaround for that limitation could be not using the underlying
+    object directly, but a DTO (Data Transfer Object) instead, that implements
+    the transformation of such incompatible data structures.
 
 So why Use the Model Transformer?
 ---------------------------------

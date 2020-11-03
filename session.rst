@@ -55,18 +55,20 @@ sessions, check their default configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
                 // enables the support of sessions in the app
-                'enabled' => true,
+                ->enabled(true)
                 // ID of the service used for session storage
                 // NULL means that Symfony uses PHP default session mechanism
-                'handler_id' => null,
+                ->handlerId(null)
                 // improves the security of the cookies used for sessions
-                'cookie_secure' => 'auto',
-                'cookie_samesite' => 'lax',
-            ],
-        ]);
+                ->cookieSecure('auto')
+                ->cookieSamesite('lax')
+            ;
+        };
 
 Setting the ``handler_id`` config option to ``null`` means that Symfony will
 use the native PHP session mechanism. The session metadata files will be stored
@@ -112,13 +114,15 @@ session metadata files:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
                 // ...
-                'handler_id' => 'session.handler.native_file',
-                'save_path' => '%kernel.project_dir%/var/sessions/%kernel.environment%',
-            ],
-        ]);
+                ->handlerId('session.handler.native_file')
+                ->savePath('%kernel.project_dir%/var/sessions/%kernel.environment%')
+            ;
+        };
 
 Check out the Symfony config reference to learn more about the other available
 :ref:`Session configuration options <config-framework-session>`. You can also
@@ -127,64 +131,121 @@ Check out the Symfony config reference to learn more about the other available
 Basic Usage
 -----------
 
-Symfony provides a session service that is injected in your services and
+The session is available through the Request and the RequestStack.
+Symfony provides a request_stack service that is injected in your services and
 controllers if you type-hint an argument with
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
+:class:`Symfony\\Component\\HttpFoundation\\RequestStack`::
 
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpFoundation\RequestStack;
 
     class SomeService
     {
-        private $session;
+        private $requestStack;
 
-        public function __construct(SessionInterface $session)
+        public function __construct(RequestStack $requestStack)
         {
-            $this->session = $session;
+            $this->requestStack = $requestStack;
         }
 
         public function someMethod()
         {
+            $session = $this->requestStack->getSession();
+
             // stores an attribute in the session for later reuse
-            $this->session->set('attribute-name', 'attribute-value');
+            $session->set('attribute-name', 'attribute-value');
 
             // gets an attribute by name
-            $foo = $this->session->get('foo');
+            $foo = $session->get('foo');
 
             // the second argument is the value returned when the attribute doesn't exist
-            $filters = $this->session->get('filters', []);
+            $filters = $session->get('filters', []);
 
             // ...
         }
     }
 
-.. tip::
+.. deprecated:: 5.3
 
-    Every ``SessionInterface`` implementation is supported. If you have your
-    own implementation, type-hint this in the argument instead.
+    The ``SessionInterface`` and ``session`` service were deprecated in
+    Symfony 5.3. Instead, inject the ``RequestStack`` service to get the session
+    object of the current request.
 
 Stored attributes remain in the session for the remainder of that user's session.
 By default, session attributes are key-value pairs managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
 class.
 
+.. deprecated:: 5.3
+
+    The ``NamespacedAttributeBag`` class is deprecated since Symfony 5.3.
+    If you need this feature, you will have to implement the class yourself.
+
 If your application needs are complex, you may prefer to use
 :ref:`namespaced session attributes <namespaced-attributes>` which are managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
-class. Before using them, override the ``session`` service definition to replace
-the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
+class. Before using them, override the ``session_listener`` service definition to build
+your ``Session`` object with the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/services.yaml
-        session:
-            public: true
-            class: Symfony\Component\HttpFoundation\Session\Session
-            arguments: ['@session.storage', '@session.namespacedattributebag']
+        session.factory:
+            autoconfigure: true
+            class: App\Session\SessionFactory
+            arguments:
+            - '@request_stack'
+            - '@session.storage.factory'
+            - ['@session_listener', 'onSessionUsage']
+            - '@session.namespacedattributebag'
 
         session.namespacedattributebag:
             class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="session" class="Symfony\Component\HttpFoundation\Session\Session" public="true">
+                    <argument type="service" id="session.storage"/>
+                    <argument type="service" id="session.namespacedattributebag"/>
+                    <argument type="service" id="session.flash_bag"/>
+                </service>
+
+                <service id="session.namespacedattributebag"
+                    class="Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag"
+                />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+        use Symfony\Component\HttpFoundation\Session\Session;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('session', Session::class)
+                ->public()
+                ->args([
+                    ref('session.storage'),
+                    ref('session.namespacedattributebag'),
+                    ref('session.flash_bag'),
+                ])
+            ;
+
+            $services->set('session.namespacedattributebag', NamespacedAttributeBag::class);
+        };
 
 .. _session-avoid-start:
 
@@ -195,22 +256,6 @@ Sessions are automatically started whenever you read, write or even check for
 the existence of data in the session. This may hurt your application performance
 because all users will receive a session cookie. In order to prevent that, you
 must *completely* avoid accessing the session.
-
-For example, if your templates include some code to display the
-:ref:`flash messages <flash-messages>`, sessions will start even if the user
-is not logged in and even if you haven't created any flash messages. To avoid
-this behavior, add a check before trying to access the flash messages:
-
-.. code-block:: html+twig
-
-    {# this check prevents starting a session when there are no flash messages #}
-    {% if app.request.hasPreviousSession %}
-        {% for message in app.flashes('notice') %}
-            <div class="flash-notice">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
 
 More about Sessions
 -------------------

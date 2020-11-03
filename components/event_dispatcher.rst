@@ -238,7 +238,7 @@ determine which instance is passed.
         $containerBuilder->addCompilerPass(new AddEventAliasesPass([
             \AcmeFooActionEvent::class => 'acme.foo.action',
         ]));
-        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING)
+        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
 
         $containerBuilder->register('event_dispatcher', EventDispatcher::class);
 
@@ -305,7 +305,7 @@ order. Start by creating this custom event class and documenting it::
             $this->order = $order;
         }
 
-        public function getOrder()
+        public function getOrder(): Order
         {
             return $this->order;
         }

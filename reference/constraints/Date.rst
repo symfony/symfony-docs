@@ -6,9 +6,6 @@ be cast into a string) that follows a valid ``YYYY-MM-DD`` format.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Date`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\DateValidator`
 ==========  ===================================================================
@@ -31,6 +28,19 @@ Basic Usage
              * @Assert\Date
              * @var string A "Y-m-d" formatted value
              */
+            protected $birthday;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Date]
             protected $birthday;
         }
 

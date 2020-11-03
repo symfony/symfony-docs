@@ -65,7 +65,7 @@ that system::
          */
         public function handle(
             Request $request,
-            int $type = self::MASTER_REQUEST,
+            int $type = self::MAIN_REQUEST,
             bool $catch = true
         );
     }
@@ -498,12 +498,6 @@ as possible to the client (e.g. sending emails).
     Using the ``kernel.terminate`` event is optional, and should only be
     called if your kernel implements :class:`Symfony\\Component\\HttpKernel\\TerminableInterface`.
 
-.. sidebar:: ``kernel.terminate`` in the Symfony Framework
-
-    If you use the :ref:`memory spooling <email-spool-memory>` option of the
-    default Symfony mailer, then the `EmailSenderListener`_ is activated, which
-    actually delivers any emails that you scheduled to send during the request.
-
 .. _component-http-kernel-kernel-exception:
 
 Handling Exceptions: the ``kernel.exception`` Event
@@ -516,7 +510,7 @@ Handling Exceptions: the ``kernel.exception`` Event
 
 If an exception is thrown at any point inside ``HttpKernel::handle()``, another
 event - ``kernel.exception`` is thrown. Internally, the body of the ``handle()``
-function is wrapped in a try-catch block. When any exception is thrown, the
+method is wrapped in a try-catch block. When any exception is thrown, the
 ``kernel.exception`` event is dispatched so that your system can somehow respond
 to the exception.
 
@@ -701,12 +695,12 @@ argument as follows::
 
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
-listeners (e.g. security) may only act upon the master request. Each listener
+listeners (e.g. security) may only act upon the main request. Each listener
 is passed some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
-whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
-can be used to check if the current request is a "master" or "sub" request.
+whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMainRequest`
+can be used to check if the current request is a "main" or "sub" request.
 
-For example, a listener that only needs to act on the master request may
+For example, a listener that only needs to act on the main request may
 look like this::
 
     use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -714,7 +708,7 @@ look like this::
 
     public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -758,5 +752,4 @@ Learn more
 .. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
-.. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php
 .. _variadic: https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list

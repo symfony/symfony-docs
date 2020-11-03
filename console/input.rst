@@ -21,7 +21,7 @@ and make the ``name`` argument required::
     {
         // ...
 
-        protected function configure()
+        protected function configure(): void
         {
             $this
                 // ...
@@ -42,7 +42,7 @@ You now have access to a ``last_name`` argument in your command::
     {
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $text = 'Hi '.$input->getArgument('name');
 
@@ -199,14 +199,15 @@ separation at all (e.g. ``-i 5`` or ``-i5``).
     this situation, always place options after the command name, or avoid using
     a space to separate the option name from its value.
 
-There are four option variants you can use:
+There are five option variants you can use:
 
 ``InputOption::VALUE_IS_ARRAY``
     This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``);
 
 ``InputOption::VALUE_NONE``
-    Do not accept input for this option (e.g. ``--yell``). This is the default
-    behavior of options;
+    Do not accept input for this option (e.g. ``--yell``). The value returned
+    from is a boolean (``false`` if the option is not provided).
+    This is the default behavior of options;
 
 ``InputOption::VALUE_REQUIRED``
     This value is required (e.g. ``--iterations=5`` or ``-i5``), the option
@@ -215,6 +216,14 @@ There are four option variants you can use:
 ``InputOption::VALUE_OPTIONAL``
     This option may or may not have a value (e.g. ``--yell`` or
     ``--yell=loud``).
+
+``InputOption::VALUE_NEGATABLE``
+    Accept either the flag (e.g. ``--yell``) or its negation (e.g.
+    ``--no-yell``).
+
+.. versionadded:: 5.3
+
+    The ``InputOption::VALUE_NEGATABLE`` constant was introduced in Symfony 5.3.
 
 You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
@@ -249,7 +258,7 @@ optionally accepts a value, but it's a bit tricky. Consider this example::
         )
     ;
 
-This option can be used in 3 ways: ``greet --yell``, ``greet yell=louder``,
+This option can be used in 3 ways: ``greet --yell``, ``greet --yell=louder``,
 and ``greet``. However, it's hard to distinguish between passing the option
 without a value (``greet --yell``) and not passing the option (``greet``).
 

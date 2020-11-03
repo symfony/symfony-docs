@@ -13,9 +13,6 @@ using :doc:`GroupSequence </validation/sequence_provider>` which allows more con
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `constraints`_
-            - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Sequentially`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\SequentiallyValidator`
 ==========  ===================================================================
@@ -35,7 +32,7 @@ In such situations, you may encounter three issues:
 
 * the ``Length`` or ``Regex`` constraints may fail hard with a :class:`Symfony\\Component\\Validator\\Exception\\UnexpectedValueException`
   exception if the actual value is not a string, as enforced by ``Type``.
-* you may end with multiple error messages for the same property
+* you may end with multiple error messages for the same property.
 * you may perform a useless and heavy external call to geolocalize the address,
   while the format isn't valid.
 
@@ -120,7 +117,7 @@ You can validate each of these constraints sequentially to solve these issues:
             {
                 $metadata->addPropertyConstraint('address', new Assert\Sequentially([
                     new Assert\NotNull(),
-                    new Assert\Type("string"),
+                    new Assert\Type('string'),
                     new Assert\Length(['min' => 10]),
                     new Assert\Regex(self::ADDRESS_REGEX),
                     new AcmeAssert\Geolocalizable(),

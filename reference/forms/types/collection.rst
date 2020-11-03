@@ -11,37 +11,17 @@ forms, which is useful when creating forms that expose one-to-many
 relationships (e.g. a product from where you can manage many related product
 photos).
 
-+-------------+-----------------------------------------------------------------------------+
-| Rendered as | depends on the `entry_type`_ option                                         |
-+-------------+-----------------------------------------------------------------------------+
-| Options     | - `allow_add`_                                                              |
-|             | - `allow_delete`_                                                           |
-|             | - `delete_empty`_                                                           |
-|             | - `entry_options`_                                                          |
-|             | - `entry_type`_                                                             |
-|             | - `prototype`_                                                              |
-|             | - `prototype_data`_                                                         |
-|             | - `prototype_name`_                                                         |
-+-------------+-----------------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                                   |
-| options     | - `by_reference`_                                                           |
-|             | - `empty_data`_                                                             |
-|             | - `error_bubbling`_                                                         |
-|             | - `error_mapping`_                                                          |
-|             | - `help`_                                                                   |
-|             | - `help_attr`_                                                              |
-|             | - `help_html`_                                                              |
-|             | - `label`_                                                                  |
-|             | - `label_attr`_                                                             |
-|             | - `label_format`_                                                           |
-|             | - `mapped`_                                                                 |
-|             | - `required`_                                                               |
-|             | - `row_attr`_                                                               |
-+-------------+-----------------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                               |
-+-------------+-----------------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`    |
-+-------------+-----------------------------------------------------------------------------+
++---------------------------+--------------------------------------------------------------------------+
+| Rendered as               | depends on the `entry_type`_ option                                      |
++---------------------------+--------------------------------------------------------------------------+
+| Default invalid message   | The collection is invalid.                                               |
++---------------------------+--------------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                      |
++---------------------------+--------------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                            |
++---------------------------+--------------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType` |
++---------------------------+--------------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -396,6 +376,11 @@ If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are
 not replaced with the same value.
 
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
 Inherited Options
 -----------------
 
@@ -408,13 +393,11 @@ Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``[]`` (empty array).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~

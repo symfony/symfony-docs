@@ -6,15 +6,6 @@ Countable) element count is *between* some minimum and maximum value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `divisibleBy`_
-            - `divisibleByMessage`_
-            - `exactMessage`_
-            - `groups`_
-            - `max`_
-            - `maxMessage`_
-            - `min`_
-            - `minMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Count`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountValidator`
 ==========  ===================================================================
@@ -44,6 +35,24 @@ you might add the following:
              *      maxMessage = "You cannot specify more than {{ limit }} emails"
              * )
              */
+            protected $emails = [];
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Participant.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            #[Assert\Count(
+                min: 1,
+                max: 5,
+                minMessage: 'You must specify at least one email',
+                maxMessage: 'You cannot specify more than {{ limit }} emails',
+            )]
             protected $emails = [];
         }
 
@@ -103,8 +112,8 @@ you might add the following:
 Options
 -------
 
-divisibleBy
-~~~~~~~~~~~
+``divisibleBy``
+~~~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: null
 
@@ -121,8 +130,8 @@ a certain number.
     are divisible by a certain number, use the
     :doc:`DivisibleBy </reference/constraints/DivisibleBy>` constraint.
 
-divisibleByMessage
-~~~~~~~~~~~~~~~~~~
+``divisibleByMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The number of elements in this collection should be a multiple of {{ compared_value }}.``
 
@@ -141,8 +150,8 @@ Parameter                 Description
 ``{{ compared_value }}``  The number configured in the ``divisibleBy`` option
 ========================  ===================================================
 
-exactMessage
-~~~~~~~~~~~~
+``exactMessage``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
 
@@ -160,8 +169,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -170,8 +179,8 @@ collection elements count is **greater** than this max value.
 
 This option is required when the ``min`` option is not defined.
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or less.``
 
@@ -187,8 +196,8 @@ Parameter        Description
 ``{{ limit }}``  The upper limit
 ===============  ==============================================================
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -197,8 +206,8 @@ collection elements count is **less** than this min value.
 
 This option is required when the ``max`` option is not defined.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``
 

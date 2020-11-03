@@ -4,7 +4,8 @@
 The Filesystem Component
 ========================
 
-    The Filesystem component provides basic utilities for the filesystem.
+    The Filesystem component provides platform-independent utilities for
+    filesystem operations and for file/directory paths manipulation.
 
 Installation
 ------------
@@ -18,38 +19,32 @@ Installation
 Usage
 -----
 
-The :class:`Symfony\\Component\\Filesystem\\Filesystem` class is the unique
-endpoint for filesystem operations::
+The component contains two main classes called :class:`Symfony\\Component\\Filesystem\\Filesystem`
+and :class:`Symfony\\Component\\Filesystem\\Path`::
 
     use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
     use Symfony\Component\Filesystem\Filesystem;
+    use Symfony\Component\Filesystem\Path;
 
     $filesystem = new Filesystem();
 
     try {
-        $filesystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
+        $filesystem->mkdir(
+            Path::normalize(sys_get_temp_dir().'/'.random_int(0, 1000)),
+        );
     } catch (IOExceptionInterface $exception) {
         echo "An error occurred while creating your directory at ".$exception->getPath();
     }
 
-.. note::
-
-    Methods :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::exists`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` and
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` can receive a
-    string, an array or any object implementing :phpclass:`Traversable` as
-    the target argument.
+Filesystem Utilities
+--------------------
 
 ``mkdir``
 ~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory recursively.
 On POSIX filesystems, directories are created with a default mode value
-`0777`. You can use the second argument to set your own mode::
+``0777``. You can use the second argument to set your own mode::
 
     $filesystem->mkdir('/tmp/photos', 0700);
 
@@ -162,7 +157,7 @@ permissions of a file. The fourth argument is a boolean recursive option::
 
     // sets the mode of the video to 0600
     $filesystem->chmod('video.ogg', 0600);
-    // changes the mod of the src directory recursively
+    // changes the mode of the src directory recursively
     $filesystem->chmod('src', 0700, 0000, true);
 
 .. note::
@@ -214,13 +209,9 @@ support symbolic links, a third boolean argument is available::
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
 
-PHP's :phpfunction:`readlink` function returns the target of a symbolic link. However, its behavior
-is completely different under Windows and Unix. On Windows systems, ``readlink()``
-resolves recursively the children links of a link until a final target is found. On
-Unix-based systems ``readlink()`` only resolves the next link.
-
-The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method provided
-by the Filesystem component always behaves in the same way::
+The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method
+provided by the Filesystem component behaves in the same way on all operating
+systems (unlike PHP's :phpfunction:`readlink` function)::
 
     // returns the next direct target of the link without considering the existence of the target
     $filesystem->readlink('/path/to/link');
@@ -240,6 +231,11 @@ Its behavior is the following::
     * if ``$path`` does not exist, it returns null.
     * if ``$path`` exists, it returns its absolute fully resolved final version.
 
+.. note::
+
+    If you wish to canonicalize the path without checking its existence, you can
+    use :method:`Symfony\\Component\\Filesystem\\Path::canonicalize` method instead.
+
 ``makePathRelative``
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -252,7 +248,7 @@ absolute paths and returns the relative path from the second path to the first o
         '/var/lib/symfony/src/Symfony/Component'
     );
     // returns 'videos/'
-    $filesystem->makePathRelative('/tmp/videos', '/tmp')
+    $filesystem->makePathRelative('/tmp/videos', '/tmp');
 
 ``mirror``
 ~~~~~~~~~~
@@ -315,9 +311,199 @@ The ``file.txt`` file contains ``Hello World`` now.
 contents at the end of some file::
 
     $filesystem->appendToFile('logs.txt', 'Email sent to user@example.com');
+    // the third argument tells whether the file should be locked when writing to it
+    $filesystem->appendToFile('logs.txt', 'Email sent to user@example.com', true);
 
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
+
+.. versionadded:: 5.4
+
+    The third argument of ``appendToFile()`` was introduced in Symfony 5.4.
+
+Path Manipulation Utilities
+---------------------------
+
+.. versionadded:: 5.4
+
+    The :class:`Symfony\\Component\\Filesystem\\Path` class was introduced in Symfony 5.4.
+
+Dealing with file paths usually involves some difficulties:
+
+- Platform differences: file paths look different on different platforms. UNIX
+  file paths start with a slash ("/"), while Windows file paths start with a
+  system drive ("C:"). UNIX uses forward slashes, while Windows uses backslashes
+  by default.
+- Absolute/relative paths: web applications frequently need to deal with absolute
+  and relative paths. Converting one to the other properly is tricky and repetitive.
+
+:class:`Symfony\\Component\\Filesystem\\Path` provides utility methods to tackle
+those issues.
+
+Canonicalization
+~~~~~~~~~~~~~~~~
+
+Returns the shortest path name equivalent to the given path. It applies the
+following rules iteratively until no further processing can be done:
+
+- "." segments are removed;
+- ".." segments are resolved;
+- backslashes ("\") are converted into forward slashes ("/");
+- root paths ("/" and "C:/") always terminate with a slash;
+- non-root paths never terminate with a slash;
+- schemes (such as "phar://") are kept;
+- replace "~" with the user's home directory.
+
+You can canonicalize a path with :method:`Symfony\\Component\\Filesystem\\Path::canonicalize`::
+
+    echo Path::canonicalize('/var/www/vhost/webmozart/../config.ini');
+    // => /var/www/vhost/config.ini
+
+You can pass absolute paths and relative paths to the
+:method:`Symfony\\Component\\Filesystem\\Path::canonicalize` method. When a
+relative path is passed, ".." segments at the beginning of the path are kept::
+
+    echo Path::canonicalize('../uploads/../config/config.yaml');
+    // => ../config/config.yaml
+
+Malformed paths are returned unchanged::
+
+    echo Path::canonicalize('C:Programs/PHP/php.ini');
+    // => C:Programs/PHP/php.ini
+
+Converting Absolute/Relative Paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Absolute/relative paths can be converted with the methods
+:method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute`
+and :method:`Symfony\\Component\\Filesystem\\Path::makeRelative`.
+
+:method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute` method expects a
+relative path and a base path to base that relative path upon::
+
+    echo Path::makeAbsolute('config/config.yaml', '/var/www/project');
+    // => /var/www/project/config/config.yaml
+
+If an absolute path is passed in the first argument, the absolute path is
+returned unchanged::
+
+    echo Path::makeAbsolute('/usr/share/lib/config.ini', '/var/www/project');
+    // => /usr/share/lib/config.ini
+
+The method resolves ".." segments, if there are any::
+
+    echo Path::makeAbsolute('../config/config.yaml', '/var/www/project/uploads');
+    // => /var/www/project/config/config.yaml
+
+This method is very useful if you want to be able to accept relative paths (for
+example, relative to the root directory of your project) and absolute paths at
+the same time.
+
+:method:`Symfony\\Component\\Filesystem\\Path::makeRelative` is the inverse
+operation to :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute`::
+
+    echo Path::makeRelative('/var/www/project/config/config.yaml', '/var/www/project');
+    // => config/config.yaml
+
+If the path is not within the base path, the method will prepend ".." segments
+as necessary::
+
+    echo Path::makeRelative('/var/www/project/config/config.yaml', '/var/www/project/uploads');
+    // => ../config/config.yaml
+
+Use :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute` and
+:method:`Symfony\\Component\\Filesystem\\Path::makeRelative` to check whether a
+path is absolute or relative::
+
+    Path::isAbsolute('C:\Programs\PHP\php.ini')
+    // => true
+
+All four methods internally canonicalize the passed path.
+
+Finding Longest Common Base Paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you store absolute file paths on the file system, this leads to a lot of
+duplicated information::
+
+    return [
+        '/var/www/vhosts/project/httpdocs/config/config.yaml',
+        '/var/www/vhosts/project/httpdocs/config/routing.yaml',
+        '/var/www/vhosts/project/httpdocs/config/services.yaml',
+        '/var/www/vhosts/project/httpdocs/images/banana.gif',
+        '/var/www/vhosts/project/httpdocs/uploads/images/nicer-banana.gif',
+    ];
+
+Especially when storing many paths, the amount of duplicated information is
+noticeable. You can use :method:`Symfony\\Component\\Filesystem\\Path::getLongestCommonBasePath`
+to check a list of paths for a common base path::
+
+    $paths = [
+        '/var/www/vhosts/project/httpdocs/config/config.yaml',
+        '/var/www/vhosts/project/httpdocs/config/routing.yaml',
+        '/var/www/vhosts/project/httpdocs/config/services.yaml',
+        '/var/www/vhosts/project/httpdocs/images/banana.gif',
+        '/var/www/vhosts/project/httpdocs/uploads/images/nicer-banana.gif',
+    ];
+
+    Path::getLongestCommonBasePath($paths);
+    // => /var/www/vhosts/project/httpdocs
+
+Use this path together with :method:`Symfony\\Component\\Filesystem\\Path::makeRelative`
+to shorten the stored paths::
+
+    $bp = '/var/www/vhosts/project/httpdocs';
+
+    return [
+        $bp.'/config/config.yaml',
+        $bp.'/config/routing.yaml',
+        $bp.'/config/services.yaml',
+        $bp.'/images/banana.gif',
+        $bp.'/uploads/images/nicer-banana.gif',
+    ];
+
+:method:`Symfony\\Component\\Filesystem\\Path::getLongestCommonBasePath` always
+returns canonical paths.
+
+Use :method:`Symfony\\Component\\Filesystem\\Path::isBasePath` to test whether a
+path is a base path of another path::
+
+    Path::isBasePath("/var/www", "/var/www/project");
+    // => true
+
+    Path::isBasePath("/var/www", "/var/www/project/..");
+    // => true
+
+    Path::isBasePath("/var/www", "/var/www/project/../..");
+    // => false
+
+Finding Directories/Root Directories
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHP offers the function :phpfunction:`dirname` to obtain the directory path of a
+file path. This method has a few quirks::
+
+- `dirname()` does not accept backslashes on UNIX
+- `dirname("C:/Programs")` returns "C:", not "C:/"
+- `dirname("C:/")` returns ".", not "C:/"
+- `dirname("C:")` returns ".", not "C:/"
+- `dirname("Programs")` returns ".", not ""
+- `dirname()` does not canonicalize the result
+
+:method:`Symfony\\Component\\Filesystem\\Path::getDirectory` fixes these
+shortcomings::
+
+    echo Path::getDirectory("C:\Programs");
+    // => C:/
+
+Additionally, you can use :method:`Symfony\\Component\\Filesystem\\Path::getRoot`
+to obtain the root of a path::
+
+    echo Path::getRoot("/etc/apache2/sites-available");
+    // => /
+
+    echo Path::getRoot("C:\Programs\Apache\Config");
+    // => C:/
 
 Error Handling
 --------------

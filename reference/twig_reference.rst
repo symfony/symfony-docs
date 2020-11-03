@@ -225,6 +225,8 @@ Returns the absolute URL (with scheme and host) for the given route. If
     Read more about :doc:`Symfony routing </routing>` and about
     :ref:`creating links in Twig templates <templates-link-to-pages>`.
 
+.. _reference-twig-function-absolute-url:
+
 absolute_url
 ~~~~~~~~~~~~
 
@@ -238,6 +240,8 @@ absolute_url
 Returns the absolute URL (with scheme and host) from the passed relative path. Combine it with the
 :ref:`asset() function <reference-twig-function-asset>` to generate absolute URLs
 for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Assets <templates-link-to-assets>`.
+
+.. _reference-twig-function-relative-path:
 
 relative_path
 ~~~~~~~~~~~~~
@@ -557,6 +561,29 @@ project's root directory:
 
 If the given file path is out of the project directory, a ``null`` value
 will be returned.
+
+serialize
+~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ object|serialize(format = 'json', context = []) }}
+
+``object``
+    **type**: ``mixed``
+
+``format`` *(optional)*
+    **type**: ``string``
+
+``context`` *(optional)*
+    **type**: ``array``
+
+.. versionadded:: 5.3
+
+    The ``serialize`` filter was introduced in Symfony 5.3.
+
+Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
+and returns a serialized string in the specified ``format``.
 
 .. _reference-twig-tags:
 

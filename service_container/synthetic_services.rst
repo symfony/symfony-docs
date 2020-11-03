@@ -18,7 +18,7 @@ from within the ``Kernel`` class::
     {
         // ...
 
-        protected function initializeContainer()
+        protected function initializeContainer(): void
         {
             // ...
             $this->container->set('kernel', $this);

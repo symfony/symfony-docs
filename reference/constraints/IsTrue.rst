@@ -2,15 +2,12 @@ IsTrue
 ======
 
 Validates that a value is ``true``. Specifically, this checks if the value is
-exactly ``true``, exactly the integer ``1``, or exactly the string ``"1"``.
+exactly ``true``, exactly the integer ``1``, or exactly the string ``'1'``.
 
 Also see :doc:`IsFalse <IsFalse>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\IsTrue`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsTrueValidator`
 ==========  ===================================================================
@@ -54,6 +51,24 @@ Then you can validate this method with ``IsTrue`` as follows:
             /**
              * @Assert\IsTrue(message="The token is invalid.")
              */
+            public function isTokenValid()
+            {
+                return $this->token == $this->generateToken();
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            protected $token;
+
+            #[Assert\IsTrue(message: 'The token is invalid.')]
             public function isTokenValid()
             {
                 return $this->token == $this->generateToken();
@@ -110,6 +125,8 @@ Then you can validate this method with ``IsTrue`` as follows:
         }
 
 If the ``isTokenValid()`` returns false, the validation will fail.
+
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
 
 Options
 -------

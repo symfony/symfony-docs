@@ -4,16 +4,10 @@ UUID
 Validates that a value is a valid `Universally unique identifier (UUID)`_ per `RFC 4122`_.
 By default, this will validate the format according to the RFC's guidelines, but this can
 be relaxed to accept non-standard UUIDs that other systems (like PostgreSQL) accept.
-UUID versions can also be restricted using a whitelist.
+UUID versions can also be restricted using a list of allowed versions.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
-            - `strict`_
-            - `versions`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Uuid`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UuidValidator`
 ==========  ===================================================================
@@ -35,6 +29,19 @@ Basic Usage
             /**
              * @Assert\Uuid
              */
+            protected $identifier;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/File.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class File
+        {
+            #[Assert\Uuid]
             protected $identifier;
         }
 

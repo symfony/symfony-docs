@@ -10,10 +10,6 @@ expression.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowedVariables`_
-            - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntax`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntaxValidator`
 ==========  ===================================================================
@@ -40,15 +36,33 @@ The following constraints ensure that:
         class Order
         {
             /**
-             * @Assert\ExpressionLanguageSyntax()
+             * @Assert\ExpressionLanguageSyntax
              */
             protected $promotion;
 
             /**
              * @Assert\ExpressionLanguageSyntax(
-             *     allowedVariables = ['user', 'shipping_centers']
+             *     allowedVariables={"user", "shipping_centers"}
              * )
              */
+            protected $shippingOptions;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\ExpressionLanguageSyntax]
+            protected $promotion;
+
+            #[Assert\ExpressionLanguageSyntax(
+                allowedVariables: ['user', 'shipping_centers'],
+            )]
             protected $shippingOptions;
         }
 
@@ -77,7 +91,10 @@ The following constraints ensure that:
                 </property>
                 <property name="shippingOptions">
                     <constraint name="ExpressionLanguageSyntax">
-                        <option name="allowedVariables">['user', 'shipping_centers']</option>
+                        <option name="allowedVariables">
+                            <value>user</value>
+                            <value>shipping_centers</value>
+                        </option>
                     </constraint>
                 </property>
             </class>

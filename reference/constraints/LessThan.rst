@@ -8,11 +8,6 @@ than another value, see :doc:`/reference/constraints/GreaterThan`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\LessThan`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanValidator`
 ==========  ===================================================================
@@ -46,6 +41,24 @@ The following constraints ensure that:
              *     value = 80
              * )
              */
+            protected $age;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\LessThan(5)]
+            protected $siblings;
+
+            #[Assert\LessThan(
+                value: 80,
+            )]
             protected $age;
         }
 
@@ -126,6 +139,19 @@ that a date must be in the past like this:
             protected $dateOfBirth;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\LessThan('today')]
+            protected $dateOfBirth;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -185,6 +211,19 @@ dates. If you want to fix the timezone, append it to the date string:
             protected $dateOfBirth;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\LessThan('today UTC')]
+            protected $dateOfBirth;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -241,6 +280,19 @@ can check that a person must be at least 18 years old like this:
             /**
              * @Assert\LessThan("-18 years")
              */
+            protected $dateOfBirth;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\LessThan('-18 years')]
             protected $dateOfBirth;
         }
 

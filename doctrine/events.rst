@@ -16,7 +16,7 @@ on other common tasks (e.g. ``loadClassMetadata``, ``onClear``).
 
 There are different ways to listen to these Doctrine events:
 
-* **Lifecycle callbacks**, they are defined as methods on the entity classes and
+* **Lifecycle callbacks**, they are defined as public methods on the entity classes and
   they are called when the events are triggered;
 * **Lifecycle listeners and subscribers**, they are classes with callback
   methods for one or more events and they are called for all entities;
@@ -46,7 +46,7 @@ to learn everything about them.
 Doctrine Lifecycle Callbacks
 ----------------------------
 
-Lifecycle callbacks are defined as methods inside the entity you want to modify.
+Lifecycle callbacks are defined as public methods inside the entity you want to modify.
 For example, suppose you want to set a ``createdAt`` date column to the current
 date, but only when the entity is first persisted (i.e. inserted). To do so,
 define a callback for the ``prePersist`` Doctrine event:
@@ -74,9 +74,9 @@ define a callback for the ``prePersist`` Doctrine event:
             /**
              * @ORM\PrePersist
              */
-            public function setCreatedAtValue()
+            public function setCreatedAtValue(): void
             {
-                $this->createdAt = new \DateTime();
+                $this->createdAt = new \DateTimeImmutable();
             }
         }
 
@@ -132,7 +132,7 @@ do so, define a listener for the ``postPersist`` Doctrine event::
     {
         // the listener methods receive an argument which gives you access to
         // both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args)
+        public function postPersist(LifecycleEventArgs $args): void
         {
             $entity = $args->getObject();
 
@@ -166,7 +166,7 @@ with the ``doctrine.event_listener`` tag:
                         # this is the only required option for the lifecycle listener tag
                         event: 'postPersist'
 
-                        # listeners can define their priority in case multiple listeners are associated
+                        # listeners can define their priority in case multiple subscribers or listeners are associated
                         # to the same event (default priority = 0; higher numbers = listener is run earlier)
                         priority: 500
 
@@ -176,7 +176,7 @@ with the ``doctrine.event_listener`` tag:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
@@ -184,7 +184,7 @@ with the ``doctrine.event_listener`` tag:
 
                 <!--
                     * 'event' is the only required option that defines the lifecycle listener
-                    * 'priority': used when multiple listeners are associated to the same event
+                    * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
                 -->
@@ -213,7 +213,7 @@ with the ``doctrine.event_listener`` tag:
                     // this is the only required option for the lifecycle listener tag
                     'event' => 'postPersist',
 
-                    // listeners can define their priority in case multiple listeners are associated
+                    // listeners can define their priority in case multiple subscribers or listeners are associated
                     // to the same event (default priority = 0; higher numbers = listener is run earlier)
                     'priority' => 500,
 
@@ -228,6 +228,16 @@ with the ``doctrine.event_listener`` tag:
     Symfony loads (and instantiates) Doctrine listeners only when the related
     Doctrine event is actually fired; whereas Doctrine subscribers are always
     loaded (and instantiated) by Symfony, making them less performant.
+
+.. tip::
+
+    The value of the ``connection`` option can also be a
+    :ref:`configuration parameter <configuration-parameters>`.
+
+    .. versionadded:: 5.4
+
+        The feature to allow using configuration parameters in ``connection``
+        was introduced in Symfony 5.4.
 
 Doctrine Entity Listeners
 -------------------------
@@ -247,7 +257,7 @@ define a listener for the ``postUpdate`` Doctrine event::
     {
         // the entity listener methods receive two arguments:
         // the entity instance and the lifecycle event
-        public function postUpdate(User $user, LifecycleEventArgs $event)
+        public function postUpdate(User $user, LifecycleEventArgs $event): void
         {
             // ... do something to notify the changes
         }
@@ -289,7 +299,7 @@ with the ``doctrine.orm.entity_listener`` tag:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
@@ -365,15 +375,15 @@ want to log all the database activity. To do so, define a subscriber for the
     namespace App\EventListener;
 
     use App\Entity\Product;
-    use Doctrine\Common\EventSubscriber;
+    use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
     use Doctrine\ORM\Events;
     use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-    class DatabaseActivitySubscriber implements EventSubscriber
+    class DatabaseActivitySubscriber implements EventSubscriberInterface
     {
         // this method can only return the event names; you cannot define a
         // custom method name to execute when each event triggers
-        public function getSubscribedEvents()
+        public function getSubscribedEvents(): array
         {
             return [
                 Events::postPersist,
@@ -385,22 +395,22 @@ want to log all the database activity. To do so, define a subscriber for the
         // callback methods must be called exactly like the events they listen to;
         // they receive an argument of type LifecycleEventArgs, which gives you access
         // to both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args)
+        public function postPersist(LifecycleEventArgs $args): void
         {
             $this->logActivity('persist', $args);
         }
 
-        public function postRemove(LifecycleEventArgs $args)
+        public function postRemove(LifecycleEventArgs $args): void
         {
             $this->logActivity('remove', $args);
         }
 
-        public function postUpdate(LifecycleEventArgs $args)
+        public function postUpdate(LifecycleEventArgs $args): void
         {
             $this->logActivity('update', $args);
         }
 
-        private function logActivity(string $action, LifecycleEventArgs $args)
+        private function logActivity(string $action, LifecycleEventArgs $args): void
         {
             $entity = $args->getObject();
 
@@ -414,9 +424,13 @@ want to log all the database activity. To do so, define a subscriber for the
         }
     }
 
-The next step is to enable the Doctrine subscriber in the Symfony application by
-creating a new service for it and :doc:`tagging it </service_container/tags>`
-with the ``doctrine.event_subscriber`` tag:
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+and DoctrineBundle 2.1 (released May 25, 2020) or newer, this example will already
+work! Otherwise, :ref:`create a service <service-container-creating-service>` for this
+subscriber and :doc:`tag it </service_container/tags>` with ``doctrine.event_subscriber``.
+
+If you need to configure some option of the subscriber (e.g. its priority or
+Doctrine connection to use) you must do that in the manual service configuration:
 
 .. configuration-block::
 
@@ -428,19 +442,31 @@ with the ``doctrine.event_subscriber`` tag:
 
             App\EventListener\DatabaseActivitySubscriber:
                 tags:
-                    - { name: 'doctrine.event_subscriber' }
+                    - name: 'doctrine.event_subscriber'
+
+                      # subscribers can define their priority in case multiple subscribers or listeners are associated
+                      # to the same event (default priority = 0; higher numbers = listener is run earlier)
+                      priority: 500
+
+                      # you can also restrict listeners to a specific Doctrine connection
+                      connection: 'default'
 
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
                 <!-- ... -->
 
+                <!--
+                    * 'priority': used when multiple subscribers or listeners are associated to the same event
+                    *             (default priority = 0; higher numbers = listener is run earlier)
+                    * 'connection': restricts the listener to a specific Doctrine connection
+                -->
                 <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber"/>
+                    <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
                 </service>
             </services>
         </container>
@@ -456,54 +482,20 @@ with the ``doctrine.event_subscriber`` tag:
             $services = $configurator->services();
 
             $services->set(DatabaseActivitySubscriber::class)
-                ->tag('doctrine.event_subscriber')
+                ->tag('doctrine.event_subscriber'[
+                    // subscribers can define their priority in case multiple subscribers or listeners are associated
+                    // to the same event (default priority = 0; higher numbers = listener is run earlier)
+                    'priority' => 500,
+
+                    // you can also restrict listeners to a specific Doctrine connection
+                    'connection' => 'default',
+                ])
             ;
         };
 
-If you need to associate the subscriber with a specific Doctrine connection, you
-can do it in the service configuration:
+.. versionadded:: 5.3
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\EventListener\DatabaseActivitySubscriber:
-                tags:
-                    - { name: 'doctrine.event_subscriber', connection: 'default' }
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber" connection="default"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\EventListener\DatabaseActivitySubscriber;
-
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
-
-            $services->set(DatabaseActivitySubscriber::class)
-                ->tag('doctrine.event_subscriber', ['connection' => 'default'])
-            ;
-        };
+    Subscriber priority was introduced in Symfony 5.3.
 
 .. tip::
 

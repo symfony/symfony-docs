@@ -14,9 +14,6 @@ issues with wrong uppercase/lowercase values and to remove unneeded elements
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Locale`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`
 ==========  ===================================================================
@@ -40,6 +37,21 @@ Basic Usage
              *     canonicalize = true
              * )
              */
+            protected $locale;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            #[Assert\Locale(
+                canonicalize: true,
+            )]
             protected $locale;
         }
 

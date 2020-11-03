@@ -47,7 +47,7 @@ The basic usage of the MessageFormat allows you to use placeholders (called
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -108,7 +108,7 @@ typical usage of this is gender:
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -173,6 +173,22 @@ you to use literal text in the select statements:
     readable for translators and, as you can see in the ``other`` case, other
     parts of the sentence might be influenced by the variables.
 
+.. tip::
+
+    It's possible to translate ICU MessageFormat messages directly in code,
+    without having to define them in any file::
+
+        $invitation = '{organizer_gender, select,
+            female {{organizer_name} has invited you for her party!}
+            male   {{organizer_name} has invited you for his party!}
+            other  {{organizer_name} have invited you for their party!}
+        }';
+
+        // prints "Ryan has invited you for his party!"
+        echo $translator->trans($invitation, [
+            'organizer_name' => 'Ryan',
+            'organizer_gender' => 'male',
+        ]);
 
 .. _component-translation-pluralization:
 
@@ -198,7 +214,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -255,27 +271,24 @@ Usage of this string is the same as with variables and select::
     .. code-block:: text
 
         {gender_of_host, select,
-            female {
-                {num_guests, plural, offset:1
+            female {{num_guests, plural, offset:1
                 =0    {{host} does not give a party.}
                 =1    {{host} invites {guest} to her party.}
                 =2    {{host} invites {guest} and one other person to her party.}
-                other {{host} invites {guest} and # other people to her party.}}
-            }
-            male {
-                {num_guests, plural, offset:1
+                other {{host} invites {guest} and # other people to her party.}
+            }}
+            male {{num_guests, plural, offset:1
                 =0    {{host} does not give a party.}
                 =1    {{host} invites {guest} to his party.}
                 =2    {{host} invites {guest} and one other person to his party.}
-                other {{host} invites {guest} and # other people to his party.}}
-            }
-            other {
-                {num_guests, plural, offset:1
+                other {{host} invites {guest} and # other people to his party.}
+            }}
+            other {{num_guests, plural, offset:1
                 =0    {{host} does not give a party.}
                 =1    {{host} invites {guest} to their party.}
                 =2    {{host} invites {guest} and one other person to their party.}
-                other {{host} invites {guest} and # other people to their party.}}
-            }
+                other {{host} invites {guest} and # other people to their party.}
+            }}
         }
 
 .. sidebar:: Using Ranges in Messages
@@ -329,7 +342,7 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -393,7 +406,7 @@ using the :phpclass:`IntlDateFormatter`:
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -435,7 +448,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -473,7 +486,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
     echo $translator->trans('value_of_object', ['value' => 9988776.65]);
 
 .. _`online editor`: http://format-message.github.io/icu-message-format-for-translators/
-.. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
+.. _`ICU MessageFormat`: https://unicode-org.github.io/icu/userguide/format_parse/messages/
 .. _`switch statement`: https://www.php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
 .. _`constants defined by the IntlDateFormatter class`: https://www.php.net/manual/en/class.intldateformatter.php

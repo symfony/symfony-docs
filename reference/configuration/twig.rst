@@ -25,35 +25,6 @@ under the ``twig`` key in your application configuration.
 Configuration
 -------------
 
-.. rst-class:: list-config-options list-config-options--complex
-
-* `auto_reload`_
-* `autoescape`_
-* `autoescape_service`_
-* `autoescape_service_method`_
-* `base_template_class`_
-* `cache`_
-* `charset`_
-* `date`_
-
-  * `format`_
-  * `interval_format`_
-  * `timezone`_
-
-* `debug`_
-* `default_path`_
-* `form_themes`_
-* `globals`_
-* `number_format`_
-
-  * `decimals`_
-  * `decimal_point`_
-  * `thousands_separator`_
-
-* `optimizations`_
-* `paths`_
-* `strict_variables`_
-
 auto_reload
 ~~~~~~~~~~~
 
@@ -235,13 +206,16 @@ all the forms of the application:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
                 'bootstrap_4_layout.html.twig',
                 'form/my_theme.html.twig',
-            ],
+            ]);
+
             // ...
-        ]);
+        };
 
 The order in which themes are defined is important because each theme overrides
 all the previous one. When rendering a form field whose block is not defined in
@@ -294,7 +268,7 @@ no specific character is passed as argument to the ``number_format`` filter.
 optimizations
 ~~~~~~~~~~~~~
 
-**type**: ``int`` **default**: ``-1``
+**type**: ``integer`` **default**: ``-1``
 
 Twig includes an extension called ``optimizer`` which is enabled by default in
 Symfony applications. This extension analyzes the templates to optimize them
@@ -348,20 +322,23 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                'email/default/templates' => null,
-                'backend/templates' => 'admin',
-            ],
-        ]);
+
+            $twig->path('email/default/templates', null);
+            $twig->path('backend/templates', 'admin');
+        };
 
 Read more about :ref:`template directories and namespaces <templates-namespaces>`.
+
+.. _config-twig-strict-variables:
 
 strict_variables
 ~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If set to ``true``, Symfony shows an exception whenever a Twig variable,
 attribute or method doesn't exist. If set to ``false`` these errors are ignored

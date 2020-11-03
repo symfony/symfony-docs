@@ -121,16 +121,17 @@ The following snippet adds CSRF protection to the form factory::
 
     use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
     use Symfony\Component\Form\Forms;
-    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\Security\Csrf\CsrfTokenManager;
     use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
     use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
 
-    // creates a Session object from the HttpFoundation component
-    $session = new Session();
+    // creates a RequestStack object using the current request
+    $requestStack = new RequestStack();
+    $requestStack->push($request);
 
     $csrfGenerator = new UriSafeTokenGenerator();
-    $csrfStorage = new SessionTokenStorage($session);
+    $csrfStorage = new SessionTokenStorage($requestStack);
     $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
 
     $formFactory = Forms::createFormFactoryBuilder()
@@ -646,6 +647,12 @@ method:
             }
         }
 
+.. caution::
+
+    The form's ``createView()`` method should be called *after* ``handleRequest()`` is
+    called. Otherwise, when using :doc:`form events </form/events>`, changes done
+    in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
+
 This defines a common form "workflow", which contains 3 different possibilities:
 
 1) On the initial GET request (i.e. when the user "surfs" to your page),
@@ -686,7 +693,7 @@ option when building each field:
                 'constraints' => [
                     new NotBlank(),
                     new Type(\DateTime::class),
-                ]
+                ],
             ])
             ->getForm();
 
@@ -713,7 +720,7 @@ option when building each field:
                         'constraints' => [
                             new NotBlank(),
                             new Type(\DateTime::class),
-                        ]
+                        ],
                     ])
                     ->getForm();
                 // ...

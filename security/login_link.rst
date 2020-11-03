@@ -14,10 +14,12 @@ This authentication method can help you eliminate most of the customer support
 related to authentication (e.g. I forgot my password, how can I change or reset
 my password, etc.)
 
-Login links are supported by Symfony when using the experimental
-authenticator system. You must
-:ref:`enable the authenticator system <security-enable-authenticator-manager>`
-in your configuration to use this feature.
+.. note::
+
+    Login links are only supported by Symfony when using the
+    :doc:`authenticator system </security>`. Before using this
+    authenticator, make sure you have enabled it with
+    ``enable_authenticator_manager: true`` in your ``security.yaml`` file.
 
 Using the Login Link Authenticator
 ----------------------------------
@@ -67,15 +69,14 @@ under the firewall. You must configure a ``check_route`` and
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'login_link' => [
-                        'check_route' => 'login_check',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->loginLink()
+                    ->checkRoute('login_check')
+            ;
+        };
 
 The ``signature_properties`` are used to create a signed URL. This must
 contain at least one property of your ``User`` object that uniquely
@@ -102,6 +103,23 @@ intercept requests to this route:
             /**
              * @Route("/login_check", name="login_check")
              */
+            public function check()
+            {
+                throw new \LogicException('This code should never be reached');
+            }
+        }
+        
+    .. code-block:: php-attributes
+    
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class SecurityController extends AbstractController
+        {
+            #[Route('/login_check', name: 'login_check')]
             public function check()
             {
                 throw new \LogicException('This code should never be reached');
@@ -373,17 +391,16 @@ seconds). You can customize this using the ``lifetime`` option:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'login_link' => [
-                        'check_route' => 'login_check',
-                        // lifetime in seconds
-                        'lifetime' => 300,
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->loginLink()
+                    ->checkRoute('login_check')
+                    // lifetime in seconds
+                    ->lifetime(300)
+            ;
+        };
 
 .. _security-login-link-signature:
 
@@ -401,7 +418,7 @@ The signed URL contains 3 parameters:
     The UNIX timestamp when the link expires.
 
 ``user``
-    The value returned from ``$user->getUsername()`` for this user.
+    The value returned from ``$user->getUserIdentifier()`` for this user.
 
 ``hash``
     A hash of ``expires``, ``user`` and any configured signature
@@ -448,16 +465,15 @@ You can add more properties to the ``hash`` by using the
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'login_link' => [
-                        'check_route' => 'login_check',
-                        'signature_properties' => ['id', 'email'],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->loginLink()
+                    ->checkRoute('login_check')
+                    ->signatureProperties(['id', 'email'])
+            ;
+        };
 
 The properties are fetched from the user object using the
 :doc:`PropertyAccess component </components/property_access>` (e.g. using
@@ -521,20 +537,20 @@ cache. Enable this support by setting the ``max_uses`` option:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'login_link' => [
-                        'check_route' => 'login_check',
-                        // only allow the link to be used 3 times
-                        'max_uses' => 3,
+        use Symfony\Config\SecurityConfig;
 
-                        // optionally, configure the cache pool
-                        //'used_link_cache' => 'cache.redis',
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->loginLink()
+                    ->checkRoute('login_check')
+
+                    // only allow the link to be used 3 times
+                    ->maxUses(3)
+
+                    // optionally, configure the cache pool
+                    //->usedLinkCache('cache.redis')
+            ;
+        };
 
 Make sure there is enough space left in the cache, otherwise invalid links
 can no longer be stored (and thus become valid again). Expired invalid
@@ -594,17 +610,16 @@ the authenticator only handle HTTP POST methods:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'login_link' => [
-                        'check_route' => 'login_check',
-                        'check_post_only' => true,
-                        'max_uses' => 1,
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->loginLink()
+                    ->checkRoute('login_check')
+                    ->checkPostOnly(true)
+                    ->maxUses(1)
+            ;
+        };
 
 Then, use the ``check_route`` controller to render a page that lets the
 user create this POST request (e.g. by clicking a button)::
@@ -654,3 +669,138 @@ user create this POST request (e.g. by clicking a button)::
             <button type="submit">Continue</button>
         </form>
     {% endblock %}
+
+Customizing the Success Handler
+-------------------------------
+
+Sometimes, the default success handling does not fit your use-case (e.g.
+when you need to generate and return an API key). To customize how the
+success handler behaves, create your own handler as a class that implements
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`::
+
+    // src/Security/Authentication/AuthenticationSuccessHandler.php
+    namespace App\Security\Authentication;
+
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+
+    class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface
+    {
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token): JsonResponse
+        {
+            $user = $token->getUser();
+            $userApiToken = $user->getApiToken();
+
+            return new JsonResponse(['apiToken' => 'userApiToken']);
+        }
+    }
+
+Then, configure this service ID as the ``success_handler``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    login_link:
+                        check_route: login_check
+                        lifetime: 600
+                        max_uses: 1
+                        success_handler: App\Security\Authentication\AuthenticationSuccessHandler
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <login-link check-route="login_check"
+                        check-post-only="true"
+                        max-uses="1"
+                        lifetime="600"
+                        success-handler="App\Security\Authentication\AuthenticationSuccessHandler"
+                    />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\Authentication\AuthenticationSuccessHandler;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->loginLink()
+                    ->checkRoute('login_check')
+                    ->lifetime(600)
+                    ->maxUses(1)
+                    ->successHandler(AuthenticationSuccessHandler::class)
+            ;
+        };
+
+.. tip::
+
+    If you want to customize the default failure handling, use the
+    ``failure_handler`` option and create a class that implements
+    :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
+
+Customizing the Login Link
+--------------------------
+
+.. versionadded:: 5.3
+
+    The possibility to customize the login link was introduced in Symfony 5.3.
+
+The ``createLoginLink()`` method accepts a second optional argument to pass the
+``Request`` object used when generating the login link. This allows to customize
+features such as the locale used to generate the link::
+
+    // src/Controller/SecurityController.php
+    namespace App\Controller;
+
+    // ...
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
+
+    class SecurityController extends AbstractController
+    {
+        /**
+         * @Route("/login", name="login")
+         */
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request)
+        {
+            // check if login form is submitted
+            if ($request->isMethod('POST')) {
+                // ... load the user in some way
+
+                // clone and customize Request
+                $userRequest = clone $request;
+                $userRequest->setLocale($user->getLocale() ?? $request->getDefaultLocale());
+
+                // create a login link for $user (this returns an instance of LoginLinkDetails)
+                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $userRequest);
+                $loginLink = $loginLinkDetails->getUrl();
+
+                // ...
+            }
+
+            return $this->render('security/login.html.twig');
+        }
+
+        // ...
+    }

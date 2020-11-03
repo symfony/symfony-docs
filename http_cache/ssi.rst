@@ -76,9 +76,13 @@ First, to use SSI, be sure to enable it in your application configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'ssi' => ['enabled' => true],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->ssi()
+                ->enabled(true)
+            ;
+        };
 
 Suppose you have a page with private content like a Profile page and you want
 to cache a static GDPR content block. With SSI, you can add some expiration
@@ -86,7 +90,7 @@ on this block and keep the page private::
 
     // src/Controller/ProfileController.php
     namespace App\Controller;
-    
+
     // ...
     class ProfileController extends AbstractController
     {
@@ -126,7 +130,7 @@ The ``render_ssi`` twig helper will generate something like:
 
     <!--#include virtual="/_fragment?_hash=abcdef1234&_path=_controller=App\Controller\ProfileController::gdpr" -->
 
-``render_ssi`` ensures that SSI directive are generated only if the request
+``render_ssi`` ensures that SSI directive is generated only if the request
 has the header requirement like ``Surrogate-Capability: device="SSI/1.0"``
 (normally given by the web server).
 Otherwise it will embed directly the sub-response.

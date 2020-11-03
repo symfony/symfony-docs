@@ -23,11 +23,7 @@ parameter::
             $this->service2 = $service2;
         }
 
-        /**
-         * @param FormInterface $form
-         * @return array
-         */
-        public function __invoke(FormInterface $form)
+        public function __invoke(FormInterface $form): array
         {
             $groups = [];
 
@@ -42,8 +38,8 @@ Then in your form, inject the resolver and set it as the ``validation_groups``::
     // src/Form/MyClassType.php;
     namespace App\Form;
 
-    use App\Validator\ValidationGroupResolver;
-    use Symfony\Component\Form\AbstractType
+    use App\Validation\ValidationGroupResolver;
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class MyClassType extends AbstractType
@@ -56,7 +52,7 @@ Then in your form, inject the resolver and set it as the ``validation_groups``::
         }
 
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'validation_groups' => $this->groupResolver,

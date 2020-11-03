@@ -34,6 +34,8 @@ an **event bus**. The event bus could have zero or more subscribers.
                         middleware:
                             - validation
                     event.bus:
+                        # the 'allow_no_handlers' middleware allows to have no handler
+                        # configured for this bus without throwing an exception
                         default_middleware: allow_no_handlers
                         middleware:
                             - validation
@@ -56,13 +58,15 @@ an **event bus**. The event bus could have zero or more subscribers.
                     <framework:bus name="command.bus">
                         <framework:middleware id="validation"/>
                         <framework:middleware id="doctrine_transaction"/>
-                    <framework:bus>
+                    </framework:bus>
                     <framework:bus name="query.bus">
                         <framework:middleware id="validation"/>
-                    <framework:bus>
+                    </framework:bus>
+                    <!-- the 'allow_no_handlers' middleware allows to have no handler
+                         configured for this bus without throwing an exception -->
                     <framework:bus name="event.bus" default-middleware="allow_no_handlers">
                         <framework:middleware id="validation"/>
-                    <framework:bus>
+                    </framework:bus>
                 </framework:messenger>
             </framework:config>
         </container>
@@ -70,31 +74,25 @@ an **event bus**. The event bus could have zero or more subscribers.
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                // The bus that is going to be injected when injecting MessageBusInterface
-                'default_bus' => 'command.bus',
-                'buses' => [
-                    'command.bus' => [
-                        'middleware' => [
-                            'validation',
-                            'doctrine_transaction',
-                        ],
-                    ],
-                    'query.bus' => [
-                        'middleware' => [
-                            'validation',
-                        ],
-                    ],
-                    'event.bus' => [
-                        'default_middleware' => 'allow_no_handlers',
-                        'middleware' => [
-                            'validation',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // The bus that is going to be injected when injecting MessageBusInterface
+            $framework->messenger()->defaultBus('command.bus');
+
+            $commandBus = $framework->messenger()->bus('command.bus');
+            $commandBus->middleware()->id('validation');
+            $commandBus->middleware()->id('doctrine_transaction');
+
+            $queryBus = $framework->messenger()->bus('query.bus');
+            $queryBus->middleware()->id('validation');
+
+            $eventBus = $framework->messenger()->bus('event.bus');
+            // the 'allow_no_handlers' middleware allows to have no handler
+            // configured for this bus without throwing an exception
+            $eventBus->defaultMiddleware('allow_no_handlers');
+            $eventBus->middleware()->id('validation');
+        };
 
 This will create three new services:
 
@@ -150,30 +148,30 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
 This way, the ``App\MessageHandler\SomeCommandHandler`` handler will only be
 known by the ``command.bus`` bus.
 
-You can also automatically add this tag to a number of classes by following
-a naming convention and registering all of the handler services by name with
-the correct tag:
+You can also automatically add this tag to a number of classes by using
+the :ref:`_instanceof service configuration <di-instanceof>`. Using this,
+you can determine the message bus based on an implemented interface:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/services.yaml
+        services:
+            # ...
 
-        # put this after the "App\" line that registers all your services
-        command_handlers:
-            namespace: App\MessageHandler\
-            resource: '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php'
-            autoconfigure: false
-            tags:
-                - { name: messenger.message_handler, bus: command.bus }
+            _instanceof:
+                # all services implementing the CommandHandlerInterface
+                # will be registered on the command.bus bus
+                App\MessageHandler\CommandHandlerInterface:
+                    tags:
+                        - { name: messenger.message_handler, bus: command.bus }
 
-        query_handlers:
-            namespace: App\MessageHandler\
-            resource: '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php'
-            autoconfigure: false
-            tags:
-                - { name: messenger.message_handler, bus: query.bus }
+                # while those implementing QueryHandlerInterface will be
+                # registered on the query.bus bus
+                App\MessageHandler\QueryHandlerInterface:
+                    tags:
+                        - { name: messenger.message_handler, bus: query.bus }
 
     .. code-block:: xml
 
@@ -185,32 +183,45 @@ the correct tag:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- command handlers -->
-                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*CommandHandler.php" autoconfigure="false">
+                <!-- ... -->
+
+                <!-- all services implementing the CommandHandlerInterface
+                     will be registered on the command.bus bus -->
+                <instanceof id="App\MessageHandler\CommandHandlerInterface">
                     <tag name="messenger.message_handler" bus="command.bus"/>
-                </prototype>
-                <!-- query handlers -->
-                <prototype namespace="App\MessageHandler\" resource="%kernel.project_dir%/src/MessageHandler/*QueryHandler.php" autoconfigure="false">
+                </instanceof>
+
+                <!-- while those implementing QueryHandlerInterface will be
+                     registered on the query.bus bus -->
+                <instanceof id="App\MessageHandler\QueryHandlerInterface">
                     <tag name="messenger.message_handler" bus="query.bus"/>
-                </prototype>
+                </instanceof>
             </services>
         </container>
 
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // Command handlers
-        $container->services()
-            ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*CommandHandler.php')
-            ->autoconfigure(false)
-            ->tag('messenger.message_handler', ['bus' => 'command.bus']);
+        use App\MessageHandler\CommandHandlerInterface;
+        use App\MessageHandler\QueryHandlerInterface;
 
-        // Query handlers
-        $container->services()
-            ->load('App\MessageHandler\\', '%kernel.project_dir%/src/MessageHandler/*QueryHandler.php')
-            ->autoconfigure(false)
-            ->tag('messenger.message_handler', ['bus' => 'query.bus']);
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            // ...
+
+            // all services implementing the CommandHandlerInterface
+            // will be registered on the command.bus bus
+            $services->instanceof(CommandHandlerInterface::class)
+                ->tag('messenger.message_handler', ['bus' => 'command.bus']);
+
+            // while those implementing QueryHandlerInterface will be
+            // registered on the query.bus bus
+            $services->instanceof(QueryHandlerInterface::class)
+                ->tag('messenger.message_handler', ['bus' => 'query.bus']);
+        };
 
 Debugging the Buses
 -------------------
@@ -248,5 +259,10 @@ You can also restrict the list to a specific bus by providing its name as argume
         App\Message\MultipleBusesMessage
             handled by App\MessageHandler\MultipleBusesMessageHandler
        ---------------------------------------------------------------------------------------
+
+.. tip::
+
+    Since Symfony 5.1, the command will also show the PHPDoc description of
+    the message and handler classes.
 
 .. _article about CQRS: https://martinfowler.com/bliki/CQRS.html

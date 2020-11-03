@@ -9,10 +9,6 @@ Validates that a value is a valid `Universally Unique Lexicographically Sortable
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Ulid`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UlidValidator`
 ==========  ===================================================================
@@ -34,6 +30,19 @@ Basic Usage
             /**
              * @Assert\Ulid
              */
+            protected $identifier;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/File.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class File
+        {
+            #[Assert\Ulid]
             protected $identifier;
         }
 

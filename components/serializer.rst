@@ -174,6 +174,8 @@ when this happens, set the ``AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES`` contex
 ``false`` and provide an object that implements ``ClassMetadataFactoryInterface``
 when constructing the normalizer::
 
+    use App\Model\Person;
+
     $data = <<<EOF
     <person>
         <name>foo</name>
@@ -189,7 +191,7 @@ when constructing the normalizer::
 
     // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
     // because "city" is not an attribute of the Person class
-    $person = $serializer->deserialize($data, 'App\Model\Person', 'xml', [
+    $person = $serializer->deserialize($data, Person::class, 'xml', [
         AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
     ]);
 
@@ -315,6 +317,26 @@ Then, create your groups definition:
             // ...
         }
 
+    .. code-block:: php-attributes
+
+        namespace Acme;
+
+        use Symfony\Component\Serializer\Annotation\Groups;
+
+        class MyObj
+        {
+            #[Groups(['group1', 'group2'])]
+            public $foo;
+
+            #[Groups(['group3'])]
+            public function getBar() // is* methods are also supported
+            {
+                return $this->bar;
+            }
+
+            // ...
+        }
+
     .. code-block:: yaml
 
         Acme\MyObj:
@@ -326,7 +348,7 @@ Then, create your groups definition:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
@@ -434,6 +456,20 @@ Option 1: Using ``@Ignore`` Annotation
             /**
              * @Ignore()
              */
+            public $bar;
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\Ignore;
+
+        class MyClass
+        {
+            public $foo;
+
+            #[Ignore]
             public $bar;
         }
 
@@ -658,6 +694,25 @@ defines a ``Person`` entity with a ``firstName`` property:
             // ...
         }
 
+    .. code-block:: php-attributes
+
+        namespace App\Entity;
+
+        use Symfony\Component\Serializer\Annotation\SerializedName;
+
+        class Person
+        {
+            #[SerializedName('customer_name')]
+            private $firstName;
+
+            public function __construct($firstName)
+            {
+                $this->firstName = $firstName;
+            }
+
+            // ...
+        }
+
     .. code-block:: yaml
 
         App\Entity\Person:
@@ -667,7 +722,7 @@ defines a ``Person`` entity with a ``firstName`` property:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
@@ -681,7 +736,7 @@ defines a ``Person`` entity with a ``firstName`` property:
 This custom mapping is used to convert property names when serializing and
 deserializing objects::
 
-    $serialized = $serializer->serialize(new Person("Kévin"), 'json');
+    $serialized = $serializer->serialize(new Person('Kévin'), 'json');
     // {"customer_name": "Kévin"}
 
 Serializing Boolean Attributes
@@ -734,7 +789,24 @@ When serializing, you can set a callback to format a specific object property::
 Normalizers
 -----------
 
-There are several types of normalizers available:
+Normalizers turn **object** into **array** and vice versa. They implement
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
+for normalize (object to array) and
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizableInterface` for denormalize
+(array to object).
+
+You can add new normalizers to a Serializer instance by using its first constructor argument::
+
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $normalizers = [new ObjectNormalizer()];
+    $serializer = new Serializer($normalizers, []);
+
+Built-in Normalizers
+~~~~~~~~~~~~~~~~~~~~
+
+The Serializer component provides several built-in normalizers:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
     This normalizer leverages the :doc:`PropertyAccess Component </components/property_access>`
@@ -800,7 +872,7 @@ There are several types of normalizers available:
     This normalizer works with classes that implement
     :class:`Symfony\\Component\\Form\\FormInterface`.
 
-    It will get errors from the form and normalize them into an normalized array.
+    It will get errors from the form and normalize them into a normalized array.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
     This normalizer converts objects that implement
@@ -810,15 +882,30 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer`
+    Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
     This normalizer converts objects that implement
-    :class:`Symfony\\Component\\Uid\\AbstractUid` into strings. Also it can
-    denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
-    or :class:`Symfony\\Component\\Uid\\Ulid`.
+    :class:`Symfony\\Component\\Uid\\AbstractUid` into strings.
+    The default normalization format for objects that implement :class:`Symfony\\Component\\Uid\\Uuid`
+    is the `RFC 4122`_ format (example: ``d9e7a184-5d5b-11ea-a62a-3499710062d0``).
+    The default normalization format for objects that implement :class:`Symfony\\Component\\Uid\\Ulid`
+    is the Base 32 format (example: ``01E439TP9XJZ9RPFH3T1PYBCR8``).
+    You can change the string format by setting the serializer context option
+    ``UidNormalizer::NORMALIZATION_FORMAT_KEY`` to ``UidNormalizer::NORMALIZATION_FORMAT_BASE_58``,
+    ``UidNormalizer::NORMALIZATION_FORMAT_BASE_32`` or ``UidNormalizer::NORMALIZATION_FORMAT_RFC_4122``.
+
+    Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
+    or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
 .. versionadded:: 5.2
 
     The ``UidNormalizer`` was introduced in Symfony 5.2.
+
+.. versionadded:: 5.3
+
+    The ``UidNormalizer`` normalization formats were introduced in Symfony 5.3.
 
 .. _component-serializer-encoders:
 
@@ -858,6 +945,11 @@ The Serializer component provides several built-in encoders:
 :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
     This encoder encodes and decodes data in `CSV`_.
 
+.. note::
+
+    You can also create your own Encoder to use another structure. Read more at
+    :doc:`/serializer/custom_encoders`.
+
 All these encoders are enabled by default when using the Serializer component
 in a Symfony application.
 
@@ -878,6 +970,44 @@ The ``CsvEncoder``
 
 The ``CsvEncoder`` encodes to and decodes from CSV.
 
+The ``CsvEncoder`` Context Options
+..................................
+
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the CsvEncoder an associative array::
+
+    $csvEncoder->encode($array, 'csv', $context);
+
+These are the options available:
+
+======================= =====================================================  ==========================
+Option                  Description                                            Default
+======================= =====================================================  ==========================
+``csv_delimiter``       Sets the field delimiter separating values (one        ``,``
+                        character only)
+``csv_enclosure``       Sets the field enclosure (one character only)          ``"``
+``csv_end_of_line``     Sets the character(s) used to mark the end of each     ``\n``
+                        line in the CSV file
+``csv_escape_char``     Sets the escape character (at most one character)      empty string
+``csv_key_separator``   Sets the separator for array's keys during its         ``.``
+                        flattening
+``csv_headers``         Sets the order of the header and data columns
+                        E.g.: if ``$data = ['c' => 3, 'a' => 1, 'b' => 2]``
+                        and ``$options = ['csv_headers' => ['a', 'b', 'c']]``
+                        then ``serialize($data, 'csv', $options)`` returns
+                        ``a,b,c\n1,2,3``                                       ``[]``, inferred from input data's keys
+``csv_escape_formulas`` Escapes fields containing formulas by prepending them  ``false``
+                        with a ``\t`` character
+``as_collection``       Always returns results as a collection, even if only   ``true``
+                        one line is decoded.
+``no_headers``          Disables header in the encoded CSV                     ``false``
+``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data   ``false``
+======================= =====================================================  ==========================
+
+.. versionadded:: 5.3
+
+    The ``csv_end_of_line`` option was introduced in Symfony 5.3.
+
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
 
@@ -887,17 +1017,31 @@ For example, take an object normalized as following::
 
     ['foo' => [1, 2], 'bar' => true];
 
-The ``XmlEncoder`` will encode this object like that::
+The ``XmlEncoder`` will encode this object like that:
 
-    <?xml version="1.0"?>
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8" ?>
     <response>
         <foo>1</foo>
         <foo>2</foo>
         <bar>1</bar>
     </response>
 
-Be aware that this encoder will consider keys beginning with ``@`` as attributes, and will use
-the key  ``#comment`` for encoding XML comments::
+The special ``#`` key can be used to define the data of a node::
+
+    ['foo' => ['@bar' => 'value', '#' => 'baz']];
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value">
+    //        baz
+    //     </foo>
+    // </response>
+
+Furthermore, keys beginning with ``@`` will be considered attributes, and
+the key  ``#comment`` can be used for encoding XML comments::
 
     $encoder = new XmlEncoder();
     $encoder->encode([
@@ -923,11 +1067,96 @@ always as a collection.
     changed with the optional ``$encoderIgnoredNodeTypes`` argument of the
     ``XmlEncoder`` class constructor.
 
+The ``XmlEncoder`` Context Options
+..................................
+
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the XmlEncoder an associative array::
+
+    $xmlEncoder->encode($array, 'xml', $context);
+
+These are the options available:
+
+==============================  =================================================  ==========================
+Option                          Description                                        Default
+==============================  =================================================  ==========================
+``xml_format_output``           If set to true, formats the generated XML with     ``false``
+                                line breaks and indentation
+``xml_version``                 Sets the XML version attribute                     ``1.1``
+``xml_encoding``                Sets the XML encoding attribute                    ``utf-8``
+``xml_standalone``              Adds standalone attribute in the generated XML     ``true``
+``xml_type_cast_attributes``    This provides the ability to forget the attribute  ``true``
+                                type casting
+``xml_root_node_name``          Sets the root node name                            ``response``
+``as_collection``               Always returns results as a collection, even if    ``false``
+                                only one line is decoded
+``decoder_ignored_node_types``  Array of node types (`DOM XML_* constants`_)       ``[\XML_PI_NODE, \XML_COMMENT_NODE]``
+                                to be ignored while decoding
+``encoder_ignored_node_types``  Array of node types (`DOM XML_* constants`_)       ``[]``
+                                to be ignored while encoding
+``load_options``                XML loading `options with libxml`_                 ``\LIBXML_NONET | \LIBXML_NOBLANKS``
+``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
+                                generated XML
+==============================  =================================================  ==========================
+
+Example with custom ``context``::
+
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+
+    // create encoder with specified options as new default settings
+    $xmlEncoder = new XmlEncoder(['xml_format_output' => true]);
+
+    $data = [
+        'id' => 'IDHNQIItNyQ',
+        'date' => '2019-10-24',
+    ];
+
+    // encode with default context
+    $xmlEncoder->encode($data, 'xml');
+    // outputs:
+    // <?xml version="1.0"?>
+    // <response>
+    //   <id>IDHNQIItNyQ</id>
+    //   <date>2019-10-24</date>
+    // </response>
+
+    // encode with modified context
+    $xmlEncoder->encode($data, 'xml', [
+        'xml_root_node_name' => 'track',
+        'encoder_ignored_node_types' => [
+            \XML_PI_NODE, // removes XML declaration (the leading xml tag)
+        ],
+    ]);
+    // outputs:
+    // <track>
+    //   <id>IDHNQIItNyQ</id>
+    //   <date>2019-10-24</date>
+    // </track>
+
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
 This encoder requires the :doc:`Yaml Component </components/yaml>` and
 transforms from and to Yaml.
+
+The ``YamlEncoder`` Context Options
+...................................
+
+The ``encode()`` method, like other encoder, uses ``context`` to set
+configuration options for the YamlEncoder an associative array::
+
+    $yamlEncoder->encode($array, 'yaml', $context);
+
+These are the options available:
+
+=============== ========================================================  ==========================
+Option          Description                                               Default
+=============== ========================================================  ==========================
+``yaml_inline`` The level where you switch to inline YAML                 ``0``
+``yaml_indent`` The level of indentation (used internally)                ``0``
+``yaml_flags``  A bit field of ``Yaml::DUMP_*`` / ``PARSE_*`` constants   ``0``
+                to customize the encoding / decoding YAML string
+=============== ========================================================  ==========================
 
 Skipping ``null`` Values
 ------------------------
@@ -946,6 +1175,39 @@ to ``true``::
     // ['bar' => 'notNull']
 
 .. _component-serializer-handling-circular-references:
+
+Collecting Type Errors While Denormalizing
+------------------------------------------
+
+When denormalizing a payload to an object with typed properties, you'll get an
+exception if the payload contains properties that don't have the same type as
+the object.
+
+In those situations, use the ``COLLECT_DENORMALIZATION_ERRORS`` option to
+collect all exceptions at once, and to get the object partially denormalized::
+
+    try {
+        $dto = $serializer->deserialize($request->getContent(), MyDto::class, 'json', [
+            DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
+        ]);
+    } catch (PartialDenormalizationException $e) {
+        $violations = new ConstraintViolationList();
+        /** @var NotNormalizableValueException */
+        foreach ($e->getErrors() as $exception) {
+            $message = sprintf('The type must be one of "%s" ("%s" given).', implode(', ', $exception->getExpectedTypes()), $exception->getCurrentType());
+            $parameters = [];
+            if ($exception->canUseMessageForUser()) {
+                $parameters['hint'] = $exception->getMessage();
+            }
+            $violations->add(new ConstraintViolation($message, '', $parameters, null, $exception->getPath(), null));
+        };
+
+        return $this->json($violations, 400);
+    }
+
+.. versionadded:: 5.4
+
+    The ``COLLECT_DENORMALIZATION_ERRORS`` option was introduced in Symfony 5.4.
 
 Handling Circular References
 ----------------------------
@@ -1091,6 +1353,20 @@ Here, we set it to 2 for the ``$child`` property:
             // ...
         }
 
+    .. code-block:: php-attributes
+
+        namespace Acme;
+
+        use Symfony\Component\Serializer\Annotation\MaxDepth;
+
+        class MyObj
+        {
+            #[MaxDepth(2)]
+            public $child;
+
+            // ...
+        }
+
     .. code-block:: yaml
 
         Acme\MyObj:
@@ -1100,7 +1376,7 @@ Here, we set it to 2 for the ``$child`` property:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
@@ -1233,115 +1509,6 @@ you indicate that you're expecting an array instead of a single object::
 
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
-
-The ``XmlEncoder``
-------------------
-
-This encoder transforms arrays into XML and vice versa. For example, take an
-object normalized as following::
-
-    ['foo' => [1, 2], 'bar' => true];
-
-The ``XmlEncoder`` encodes this object as follows:
-
-.. code-block:: xml
-
-    <?xml version="1.0"?>
-    <response>
-        <foo>1</foo>
-        <foo>2</foo>
-        <bar>1</bar>
-    </response>
-
-The array keys beginning with ``@`` are considered XML attributes::
-
-    ['foo' => ['@bar' => 'value']];
-
-    // is encoded as follows:
-    // <?xml version="1.0"?>
-    // <response>
-    //     <foo bar="value"/>
-    // </response>
-
-Use the special ``#`` key to define the data of a node::
-
-    ['foo' => ['@bar' => 'value', '#' => 'baz']];
-
-    // is encoded as follows:
-    // <?xml version="1.0"?>
-    // <response>
-    //     <foo bar="value">baz</foo>
-    // </response>
-
-Context
-~~~~~~~
-
-The ``encode()`` method defines a third optional parameter called ``context``
-which defines the configuration options for the XmlEncoder an associative array::
-
-    $xmlEncoder->encode($array, 'xml', $context);
-
-These are the options available:
-
-``xml_format_output``
-    If set to true, formats the generated XML with line breaks and indentation.
-
-``xml_version``
-    Sets the XML version attribute (default: ``1.1``).
-
-``xml_encoding``
-    Sets the XML encoding attribute (default: ``utf-8``).
-
-``xml_standalone``
-    Adds standalone attribute in the generated XML (default: ``true``).
-
-``xml_root_node_name``
-    Sets the root node name (default: ``response``).
-
-``remove_empty_tags``
-    If set to true, removes all empty tags in the generated XML (default: ``false``).
-
-The ``CsvEncoder``
-------------------
-
-This encoder transforms arrays into CSV and vice versa.
-
-Context
-~~~~~~~
-
-The ``encode()`` method defines a third optional parameter called ``context``
-which defines the configuration options for the CsvEncoder an associative array::
-
-    $csvEncoder->encode($array, 'csv', $context);
-
-These are the options available:
-
-``csv_delimiter``
-    Sets the field delimiter separating values (one character only, default: ``,``).
-
-``csv_enclosure``
-    Sets the field enclosure (one character only, default: ``"``).
-
-``csv_escape_char``
-    Sets the escape character (at most one character, default: empty string).
-
-``csv_key_separator``
-    Sets the separator for array's keys during its flattening (default: ``.``).
-
-``csv_headers``
-    Sets the headers for the data (default: ``[]``, inferred from input data's keys).
-
-``csv_escape_formulas``
-    Escapes fields containg formulas by prepending them with a ``\t`` character (default: ``false``).
-
-``as_collection``
-    Always returns results as a collection, even if only one line is decoded.
-
-``no_headers``
-    Disables header in the encoded CSV (default: ``false``).
-
-``output_utf8_bom``
-    Outputs special `UTF-8 BOM`_ along with encoded data (default: ``false``).
 
 Handling Constructor Arguments
 ------------------------------
@@ -1505,7 +1672,24 @@ and ``BitBucketCodeRepository`` classes:
          *    "bitbucket"="App\BitBucketCodeRepository"
          * })
          */
-        interface CodeRepository
+        abstract class CodeRepository
+        {
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App;
+
+        use App\BitBucketCodeRepository;
+        use App\GitHubCodeRepository;
+        use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
+
+        #[DiscriminatorMap(typeProperty: 'type', mapping: [
+            'github' => GitHubCodeRepository::class,
+            'bitbucket' => BitBucketCodeRepository::class,
+        ])]
+        abstract class CodeRepository
         {
             // ...
         }
@@ -1521,7 +1705,7 @@ and ``BitBucketCodeRepository`` classes:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
@@ -1542,32 +1726,6 @@ Once configured, the serializer uses the mapping to pick the correct class::
 
     $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');
     // instanceof GitHubCodeRepository
-
-Performance
------------
-
-To figure which normalizer (or denormalizer) must be used to handle an object,
-the :class:`Symfony\\Component\\Serializer\\Serializer` class will call the
-:method:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface::supportsNormalization`
-(or :method:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface::supportsDenormalization`)
-of all registered normalizers (or denormalizers) in a loop.
-
-The result of these methods can vary depending on the object to serialize, the
-format and the context. That's why the result **is not cached** by default and
-can result in a significant performance bottleneck.
-
-However, most normalizers (and denormalizers) always return the same result when
-the object's type and the format are the same, so the result can be cached. To
-do so, make those normalizers (and denormalizers) implement the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface`
-and return ``true`` when
-:method:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface::hasCacheableSupportsMethod`
-is called.
-
-.. note::
-
-    All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
-    as well the ones included in `API Platform`_ natively implement this interface.
 
 Learn more
 ----------
@@ -1592,6 +1750,8 @@ Learn more
 .. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
+.. _`options with libxml`: https://www.php.net/manual/en/libxml.constants.php
+.. _`DOM XML_* constants`: https://www.php.net/manual/en/dom.constants.php
 .. _JSON: http://www.json.org/
 .. _XML: https://www.w3.org/XML/
 .. _YAML: https://yaml.org/
@@ -1601,3 +1761,4 @@ Learn more
 .. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object
 .. _`API Platform`: https://api-platform.com
 .. _`list of PHP timezones`: https://www.php.net/manual/en/timezones.php
+.. _`RFC 4122`: https://tools.ietf.org/html/rfc4122

@@ -43,7 +43,7 @@ features, such as the APCu Cache adapter.
 Restrict the Number of Locales Enabled in the Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the :ref:`framework.translator.enabled_locales <reference-translator-enabled-locales>`
+Use the :ref:`framework.enabled_locales <reference-enabled-locales>`
 option to only generate the translation files actually used in your application.
 
 .. _performance-service-container-single-file:
@@ -84,7 +84,7 @@ container into a single file, which could improve performance when using
         // config/services.php
 
         // ...
-        $container->setParameter('container.dumper.inline_factories', true);
+        $container->parameters()->set('container.dumper.inline_factories', true);
 
 .. _performance-use-opcache:
 
@@ -106,17 +106,21 @@ make them available to all requests until the server is restarted, improving
 performance significantly.
 
 During container compilation (e.g. when running the ``cache:clear`` command),
-Symfony generates a file called ``preload.php`` in the ``config/`` directory
-with the list of classes to preload.
-
-The only requirement is that you need to set both ``container.dumper.inline_factories``
-and ``container.dumper.inline_class_loader`` parameters to ``true``. Then, you
-can configure PHP to use this preload file:
+Symfony generates a file with the list of classes to preload in the
+``var/cache/`` directory. Rather than use this file directly, use the
+``config/preload.php`` file that is created when
+:doc:`using Symfony Flex in your project </setup/flex>`:
 
 .. code-block:: ini
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
+
+    ; required for opcache.preload:
+    opcache.preload_user=www-data
+
+If this file is missing, run this command to reinstall the Symfony Flex recipe:
+``composer recipes:install symfony/framework-bundle --force -v``.
 
 Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
@@ -193,14 +197,14 @@ such as Symfony projects, should use at least these values:
 Optimize Composer Autoloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The class loader used while developing the application is optimized to find
-new and changed classes. In production servers, PHP files should never change,
+The class loader used while developing the application is optimized to find new
+and changed classes. In production servers, PHP files should never change,
 unless a new application version is deployed. That's why you can optimize
-Composer's autoloader to scan the entire application once and build a "class map",
-which is a big array of the locations of all the classes and it's stored
-in ``vendor/composer/autoload_classmap.php``.
+Composer's autoloader to scan the entire application once and build an
+optimized "class map", which is a big array of the locations of all the classes
+and it's stored in ``vendor/composer/autoload_classmap.php``.
 
-Execute this command to generate the class map (and make it part of your
+Execute this command to generate the new class map (and make it part of your
 deployment process too):
 
 .. code-block:: terminal
@@ -281,7 +285,7 @@ You can also profile your template code with the :ref:`stopwatch Twig tag <refer
 .. code-block:: twig
 
     {% stopwatch 'render-blog-posts' %}
-        {% for post in blog_posts%}
+        {% for post in blog_posts %}
             {# ... #}
         {% endfor %}
     {% endstopwatch %}

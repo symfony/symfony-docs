@@ -10,12 +10,6 @@ constraints. The validation stops as soon as one constraint is satisfied.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `constraints`_
-            - `includeInternalMessages`_
-            - `message`_
-            - `messageCollection`_
-            - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\AtLeastOneOf`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\AtLeastOneOfValidator`
 ==========  ===================================================================
@@ -141,7 +135,7 @@ The following constraints ensure that:
                         new Assert\Count(['min' => 3]),
                         new Assert\All([
                             'constraints' => [
-                                new Assert\GreaterThanOrEqual(['value' => 5]),
+                                new Assert\GreaterThanOrEqual(5),
                             ],
                         ]),
                     ],
@@ -163,7 +157,7 @@ has to be satisfied in order for the validation to succeed.
 includeInternalMessages
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If set to ``true``, the message that is shown if the validation fails,
 will include the list of messages for the internal constraints. See option

@@ -6,9 +6,6 @@ want to allow zero as value, use :doc:`/reference/constraints/Positive` instead.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\PositiveOrZero`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqualValidator`
 ==========  ===================================================================
@@ -33,6 +30,19 @@ is positive or zero:
             /**
              * @Assert\PositiveOrZero
              */
+            protected $siblings;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\PositiveOrZero]
             protected $siblings;
         }
 
@@ -80,8 +90,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be either positive or zero.``
 

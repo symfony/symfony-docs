@@ -109,7 +109,8 @@ via some "Change Locale" route & controller), or create a route with the :ref:`_
             $container->register(LocaleSubscriber::class)
                 ->addArgument('%kernel.default_locale%')
                 // uncomment the next line if you are not using autoconfigure
-                // ->addTag('kernel.event_subscriber');
+                // ->addTag('kernel.event_subscriber')
+            ;
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
 sticky throughout the request.
@@ -146,7 +147,7 @@ event::
     namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
     use Symfony\Component\Security\Http\SecurityEvents;
 
@@ -156,11 +157,11 @@ event::
      */
     class UserLocaleSubscriber implements EventSubscriberInterface
     {
-        private $session;
+        private $requestStack;
 
-        public function __construct(SessionInterface $session)
+        public function __construct(RequestStack $requestStack)
         {
-            $this->session = $session;
+            $this->requestStack = $requestStack;
         }
 
         public function onInteractiveLogin(InteractiveLoginEvent $event)
@@ -168,7 +169,7 @@ event::
             $user = $event->getAuthenticationToken()->getUser();
 
             if (null !== $user->getLocale()) {
-                $this->session->set('_locale', $user->getLocale());
+                $this->requestStack->getSession()->set('_locale', $user->getLocale());
             }
         }
 

@@ -34,7 +34,7 @@ additional directives):
 
 .. code-block:: text
 
-    Cache-Control: public, maxage=600
+    Cache-Control: public, max-age=600
 
 .. note::
 

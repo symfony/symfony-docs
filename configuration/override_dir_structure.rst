@@ -25,7 +25,58 @@ override it to create your own structure:
     │  ├─ cache/
     │  ├─ log/
     │  └─ ...
-    └─ vendor/
+    ├─ vendor/
+    └─ .env
+
+.. _override-env-dir:
+
+Override the Environment (DotEnv) Files Directory
+-------------------------------------------------
+
+By default, the :ref:`.env configuration file <config-dot-env>` is located at
+the root directory of the project. If you store it in a different location,
+define the ``runtime.dotenv_path`` option in the ``composer.json`` file:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+        "extra": {
+            "...": "...",
+            "runtime": {
+                "dotenv_path": "my/custom/path/to/.env"
+            }
+        }
+    }
+
+Then, update your Composer files (running ``composer update``, for instance),
+so that the ``vendor/autoload_runtime.php`` files gets regenerated with the new
+``.env`` path.
+
+You can also set up different ``.env`` paths for your console and web server
+calls. Edit the ``public/index.php`` and/or ``bin/console`` files to define the
+new file path.
+
+Console script::
+
+    // bin/console
+
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'some/custom/path/to/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
+Web front-controller::
+
+    // public/index.php
+    
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'another/custom/path/to/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
 
 .. _override-config-dir:
 
@@ -85,7 +136,7 @@ your application::
     // src/Kernel.php
 
     // ...
-    class Kernel extends Kernel
+    class Kernel extends BaseKernel
     {
         // ...
 
@@ -117,12 +168,12 @@ for multiple directories):
         # config/packages/twig.yaml
         twig:
             # ...
-            default_path: "%kernel.project_dir%//resources/views"
+            default_path: "%kernel.project_dir%/resources/views"
 
     .. code-block:: xml
 
         <!-- config/packages/twig.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -140,9 +191,11 @@ for multiple directories):
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'default_path' => '%kernel.project_dir%/resources/views',
-        ]);
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->defaultPath('%kernel.project_dir%/resources/views');
+        };
 
 Override the Translations Directory
 -----------------------------------
@@ -164,7 +217,7 @@ configuration option to define your own translations directory (use :ref:`framew
     .. code-block:: xml
 
         <!-- config/packages/translation.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -184,11 +237,13 @@ configuration option to define your own translations directory (use :ref:`framew
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => [
-                'default_path' => '%kernel.project_dir%/i18n',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->translator()
+                ->defaultPath('%kernel.project_dir%/i18n')
+            ;
+        };
 
 .. _override-web-dir:
 .. _override-the-web-directory:
@@ -238,7 +293,7 @@ option in your ``composer.json`` file like this:
         "config": {
             "bin-dir": "bin",
             "vendor-dir": "/some/dir/vendor"
-        },
+        }
     }
 
 .. tip::

@@ -5,8 +5,6 @@ Validates that a value has valid `JSON`_ syntax.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Json`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\JsonValidator`
 ==========  ===================================================================
@@ -32,6 +30,21 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
              *     message = "You've entered an invalid Json."
              * )
              */
+            private $chapters;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Book.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Book
+        {
+            #[Assert\Json(
+                message: "You've entered an invalid Json."
+            )]
             private $chapters;
         }
 
@@ -82,8 +95,8 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
 Options
 -------
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be valid JSON.``
 

@@ -163,19 +163,24 @@ exist::
     // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
-``foo[bar]=baz`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element::
+``foo[bar]=baz`` in a special way as it creates an array. The ``get()`` method
+doesn't support returning arrays, so you need to use the following code::
 
     // the query string is '?foo[bar]=baz'
 
-    $request->query->get('foo');
+    // don't use $request->query->get('foo'); use the following instead:
+    $request->query->all()['foo'];
     // returns ['bar' => 'baz']
 
     $request->query->get('foo[bar]');
     // returns null
 
-    $request->query->get('foo')['bar'];
+    $request->query->all()['foo']['bar'];
     // returns 'baz'
+
+.. deprecated:: 5.1
+
+    The array support in ``get()`` method was deprecated in Symfony 5.1.
 
 .. _component-foundation-attributes:
 
@@ -190,7 +195,7 @@ Finally, the raw data sent with the request body can be accessed using
 
     $content = $request->getContent();
 
-For instance, this may be useful to process a XML string sent to the
+For instance, this may be useful to process an XML string sent to the
 application by a remote service using the HTTP POST method.
 
 If the request body is a JSON string, it can be accessed using
@@ -247,9 +252,9 @@ Accessing the Session
 ~~~~~~~~~~~~~~~~~~~~~
 
 If you have a session attached to the request, you can access it via the
-:method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
-the
-:method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
+``getSession()`` method of the :class:`Symfony\\Component\\HttpFoundation\\Request`
+or :class:`Symfony\\Component\\HttpFoundation\\RequestStack` class;
+the :method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
@@ -346,11 +351,11 @@ analysis purposes. Use the ``anonymize()`` method from the
     use Symfony\Component\HttpFoundation\IpUtils;
 
     $ipv4 = '123.234.235.236';
-    $anonymousIpv4 = IPUtils::anonymize($ipv4);
+    $anonymousIpv4 = IpUtils::anonymize($ipv4);
     // $anonymousIpv4 = '123.234.235.0'
 
     $ipv6 = '2a01:198:603:10:396e:4789:8e99:890f';
-    $anonymousIpv6 = IPUtils::anonymize($ipv6);
+    $anonymousIpv6 = IpUtils::anonymize($ipv6);
     // $anonymousIpv6 = '2a01:198:603:10::'
 
 Accessing other Data
@@ -519,7 +524,7 @@ call::
         's_maxage'         => 600,
         'immutable'        => true,
         'last_modified'    => new \DateTime(),
-        'etag'             => 'abcdef'
+        'etag'             => 'abcdef',
     ]);
 
 .. versionadded:: 5.1
@@ -584,7 +589,7 @@ represented by a PHP callable instead of a string::
     header in the response::
 
         // disables FastCGI buffering in nginx only for this response
-        $response->headers->set('X-Accel-Buffering', 'no')
+        $response->headers->set('X-Accel-Buffering', 'no');
 
 .. _component-http-foundation-serving-files:
 
@@ -670,7 +675,7 @@ handling, switching to chunked encoding instead::
     use Symfony\Component\HttpFoundation\BinaryFileResponse;
     use Symfony\Component\HttpFoundation\File\Stream;
 
-    $stream  = new Stream('path/to/stream');
+    $stream = new Stream('path/to/stream');
     $response = new BinaryFileResponse($stream);
 
 .. note::
@@ -705,9 +710,11 @@ class, which can make this even easier::
     // if you know the data to send when creating the response
     $response = new JsonResponse(['data' => 123]);
 
-    // if you don't know the data to send when creating the response
+    // if you don't know the data to send or if you want to customize the encoding options
     $response = new JsonResponse();
     // ...
+    // configure any custom encoding options (if needed, it must be called before "setData()")
+    //$response->setEncodingOptions(JsonResponse::DEFAULT_ENCODING_OPTIONS | \JSON_PRESERVE_ZERO_FRACTION);
     $response->setData(['data' => 123]);
 
     // if the data to send is already encoded in JSON
@@ -776,6 +783,43 @@ The following example shows how to detect if the user agent prefers "safe" conte
         $response->setContentSafe();
 
         return $response;
+
+Generating Relative and Absolute URLs
+-------------------------------------
+
+.. versionadded:: 5.4
+
+    The feature to generate relative and absolute URLs was introduced in Symfony 5.4.
+
+Generating absolute and relative URLs for a given path is a common need
+in some applications. In Twig templates you can use the
+:ref:`absolute_url() <reference-twig-function-absolute-url>` and
+:ref:`relative_path() <reference-twig-function-relative-path>` functions to do that.
+
+The :class:`Symfony\\Component\\HttpFoundation\\UrlHelper` class provides the
+same functionality for PHP code via the ``getAbsoluteUrl()`` and ``getRelativePath()``
+methods. You can inject this as a service anywhere in your application::
+
+    // src/Normalizer/UserApiNormalizer.php
+    namespace App\Normalizer;
+
+    use Symfony\Component\HttpFoundation\UrlHelper;
+
+    class UserApiNormalizer
+    {
+        private UrlHelper $urlHelper;
+
+        public function __construct(UrlHelper $urlHelper)
+        {
+            $this->urlHelper = $urlHelper;
+        }
+
+        public function normalize($user)
+        {
+            return [
+                'avatar' => $this->urlHelper->getAbsoluteUrl($user->avatar()->path()),
+            ];
+        }
     }
 
 Learn More

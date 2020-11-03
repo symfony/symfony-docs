@@ -1,12 +1,9 @@
 {
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        { "type": "git", "url": "https://github.com/weaverryan/docs-builder" }
-    ],
     "config": {
         "platform": {
-            "php": "7.2.9"
+            "php": "7.4.14"
         },
         "preferred-install": {
             "*": "dist"
@@ -14,9 +11,9 @@
         "sort-packages": true
     },
     "require": {
-        "php": ">=7.2.9",
-        "symfony/console": "^4.1",
-        "symfony/docs-builder": "dev-master",
-        "symfony/process": "9999999-dev"
+        "php": ">=7.4",
+        "symfony/console": "^5.4",
+        "symfony/process": "^5.4",
+        "symfony-tools/docs-builder": "^0.18"
     }
 }

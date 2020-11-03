@@ -7,11 +7,6 @@ the options. To force that a value is greater than another value, see
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqual`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqualValidator`
 ==========  ===================================================================
@@ -45,6 +40,24 @@ The following constraints ensure that:
              *     value = 18
              * )
              */
+            protected $age;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\GreaterThanOrEqual(5)]
+            protected $siblings;
+
+            #[Assert\GreaterThanOrEqual(
+                value: 18,
+            )]
             protected $age;
         }
 
@@ -125,6 +138,19 @@ that a date must at least be the current day:
             protected $deliveryDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\GreaterThanOrEqual('today')]
+            protected $deliveryDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -181,6 +207,19 @@ dates. If you want to fix the timezone, append it to the date string:
             /**
              * @Assert\GreaterThanOrEqual("today UTC")
              */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\GreaterThanOrEqual('today UTC')]
             protected $deliveryDate;
         }
 
@@ -241,6 +280,19 @@ current time:
             /**
              * @Assert\GreaterThanOrEqual("+5 hours")
              */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\GreaterThanOrEqual('+5 hours')]
             protected $deliveryDate;
         }
 

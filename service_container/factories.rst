@@ -26,7 +26,7 @@ object by calling the static ``createNewsletterManager()`` method::
 
     class NewsletterManagerStaticFactory
     {
-        public static function createNewsletterManager()
+        public static function createNewsletterManager(): NewsletterManager
         {
             $newsletterManager = new NewsletterManager();
 
@@ -181,7 +181,7 @@ factory service can be used as a callback::
     // ...
     class InvokableNewsletterManagerFactory
     {
-        public function __invoke()
+        public function __invoke(): NewsletterManager
         {
             $newsletterManager = new NewsletterManager();
 
@@ -204,7 +204,7 @@ method name:
 
             App\Email\NewsletterManager:
                 class:   App\Email\NewsletterManager
-                factory: '@App\Email\NewsletterManagerFactory'
+                factory: '@App\Email\InvokableNewsletterManagerFactory'
 
     .. code-block:: xml
 
@@ -220,7 +220,7 @@ method name:
 
                 <service id="App\Email\NewsletterManager"
                          class="App\Email\NewsletterManager">
-                    <factory service="App\Email\NewsletterManagerFactory"/>
+                    <factory service="App\Email\InvokableNewsletterManagerFactory"/>
                 </service>
             </services>
         </container>
@@ -237,7 +237,7 @@ method name:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->factory(service(NewsletterManagerFactory::class));
+                ->factory(service(InvokableNewsletterManagerFactory::class));
         };
 
 .. _factories-passing-arguments-factory-method:

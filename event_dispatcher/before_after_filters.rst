@@ -189,7 +189,7 @@ serve as a basic flag that this request underwent token authentication::
     {
         // ...
 
-        if ($controller[0] instanceof TokenAuthenticatedController) {
+        if ($controller instanceof TokenAuthenticatedController) {
             $token = $event->getRequest()->query->get('token');
             if (!in_array($token, $this->tokens)) {
                 throw new AccessDeniedHttpException('This action needs a valid token!');

@@ -55,7 +55,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             ];
 
             $model = new TestObject();
-            // $formData will retrieve data from the form submission; pass it as the second argument
+            // $model will retrieve data from the form submission; pass it as the second argument
             $form = $this->factory->create(TestedType::class, $model);
 
             $expected = new TestObject();
@@ -67,7 +67,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             // This check ensures there are no transformation failures
             $this->assertTrue($form->isSynchronized());
 
-            // check that $formData was modified as expected when the form was submitted
+            // check that $model was modified as expected when the form was submitted
             $this->assertEquals($expected, $model);
         }
 
@@ -88,7 +88,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 So, what does it test? Here comes a detailed explanation.
 
 First you verify if the ``FormType`` compiles. This includes basic class
-inheritance, the ``buildForm()`` function and options resolution. This should
+inheritance, the ``buildForm()`` method and options resolution. This should
 be the first test you write::
 
     $form = $this->factory->create(TestedType::class, $formData);
@@ -121,8 +121,8 @@ variable exists and will be available in your form themes::
 
 .. tip::
 
-    Use :ref:`PHPUnit data providers <testing-data-providers>` to test multiple
-    form conditions using the same test code.
+    Use `PHPUnit data providers`_ to test multiple form conditions using
+    the same test code.
 
 .. caution::
 
@@ -219,7 +219,8 @@ allows you to return a list of extensions to register::
 
             // or if you also need to read constraints from annotations
             $validator = Validation::createValidatorBuilder()
-                ->enableAnnotationMapping()
+                ->enableAnnotationMapping(true)
+                ->addDefaultDoctrineAnnotationReader()
                 ->getValidator();
 
             return [
@@ -242,3 +243,5 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeExtensions`
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
+
+.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html#data-providers

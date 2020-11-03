@@ -18,13 +18,6 @@ and that extra keys are not present.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowExtraFields`_
-            - `allowMissingFields`_
-            - `extraFieldsMessage`_
-            - `fields`_
-            - `groups`_
-            - `missingFieldsMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Collection`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CollectionValidator`
 ==========  ===================================================================
@@ -288,6 +281,40 @@ property completely from the ``profileData`` array, since it is ``Optional``.
 However, if the ``personal_email`` field does not exist in the array,
 the ``NotBlank`` constraint will still be applied (since it is wrapped in
 ``Required``) and you will receive a constraint violation.
+
+When you define groups in nested constraints they are automatically added to
+the ``Collection`` constraint itself so it can be traversed for all nested
+groups. Take the following example::
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    $constraint = new Assert\Collection([
+        'fields' => [
+            'name' => new Assert\NotBlank(['groups' => 'basic']),
+            'email' => new Assert\NotBlank(['groups' => 'contact']),
+        ],
+    ]);
+
+This will result in the following configuration::
+
+    $constraint = new Assert\Collection([
+        'fields' => [
+            'name' => new Assert\Required([
+                'constraints' => new Assert\NotBlank(['groups' => 'basic']),
+                'groups' => ['basic', 'strict'],
+            ]),
+            'email' => new Assert\Required([
+                "constraints" => new Assert\NotBlank(['groups' => 'contact']),
+                'groups' => ['basic', 'strict'],
+            ]),
+        ],
+        'groups' => ['basic', 'strict'],
+    ]);
+
+The default ``allowMissingFields`` option requires the fields in all groups.
+So when validating in ``contact`` group, ``$name`` can be empty but the key is
+still required. If this is not the intended behavior, use the ``Optional``
+constraint explicitly instead of ``Required``.
 
 Options
 -------

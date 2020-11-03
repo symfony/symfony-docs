@@ -38,7 +38,7 @@ Let's see it in action::
     // framework/index.php
     require_once __DIR__.'/init.php';
 
-    $name = $request->get('name', 'World');
+    $name = $request->attributes->get('name', 'World');
 
     $response->setContent(sprintf('Hello %s', htmlspecialchars($name, ENT_QUOTES, 'UTF-8')));
     $response->send();
@@ -56,9 +56,9 @@ not feel like a good abstraction, does it? We still have the ``send()`` method
 for all pages, our pages do not look like templates and we are still not able
 to test this code properly.
 
-Moreover, adding a new page means that we need to create a new PHP script,
-which name is exposed to the end user via the URL
-(``http://127.0.0.1:4321/bye.php``): there is a direct mapping between the PHP
+Moreover, adding a new page means that we need to create a new PHP script, the name of
+which is exposed to the end user via the URL
+(``http://127.0.0.1:4321/bye.php``). There is a direct mapping between the PHP
 script name and the client URL. This is because the dispatching of the request
 is done by the web server directly. It might be a good idea to move this
 dispatching to our code for better flexibility. This can be achieved by routing
@@ -98,14 +98,14 @@ Such a script might look like the following::
 And here is for instance the new ``hello.php`` script::
 
     // framework/hello.php
-    $name = $request->get('name', 'World');
+    $name = $request->attributes->get('name', 'World');
     $response->setContent(sprintf('Hello %s', htmlspecialchars($name, ENT_QUOTES, 'UTF-8')));
 
 In the ``front.php`` script, ``$map`` associates URL paths with their
 corresponding PHP script paths.
 
 As a bonus, if the client asks for a path that is not defined in the URL map,
-we return a custom 404 page; you are now in control of your website.
+we return a custom 404 page. You are now in control of your website.
 
 To access a page, you must now use the ``front.php`` script:
 
@@ -133,7 +133,7 @@ its sub-directories (only if needed -- see above tip).
     argument is the URL path you want to simulate.
 
 Now that the web server always accesses the same script (``front.php``) for all
-pages, we can secure the code further by moving all other PHP files outside the
+pages, we can secure the code further by moving all other PHP files outside of the
 web root directory:
 
 .. code-block:: text
@@ -151,7 +151,7 @@ web root directory:
         └── front.php
 
 Now, configure your web server root directory to point to ``web/`` and all
-other files won't be accessible from the client anymore.
+other files will no longer be accessible from the client.
 
 To test your changes in a browser (``http://localhost:4321/hello?name=Fabien``),
 run the :doc:`Symfony Local Web Server </setup/symfony_server>`:
@@ -166,7 +166,7 @@ run the :doc:`Symfony Local Web Server </setup/symfony_server>`:
     various PHP files; the changes are left as an exercise for the reader.
 
 The last thing that is repeated in each page is the call to ``setContent()``.
-We can convert all pages to "templates" by just echoing the content and calling
+We can convert all pages to "templates" by echoing the content and calling
 the ``setContent()`` directly from the front controller script::
 
     // example.com/web/front.php
@@ -185,10 +185,12 @@ the ``setContent()`` directly from the front controller script::
 
     // ...
 
-And the ``hello.php`` script can now be converted to a template::
+And the ``hello.php`` script can now be converted to a template:
+
+.. code-block:: html+php
 
     <!-- example.com/src/pages/hello.php -->
-    <?php $name = $request->get('name', 'World') ?>
+    <?php $name = $request->attributes->get('name', 'World') ?>
 
     Hello <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 

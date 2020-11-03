@@ -53,7 +53,7 @@ and the built files. Your ``.gitignore`` file should include:
     # whatever path you're passing to Encore.setOutputPath()
     /public/build
 
-You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock``.
+You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock`` or ``package-lock.json``.
 
 My App Lives under a Subdirectory
 ---------------------------------
@@ -63,11 +63,11 @@ like ``/myAppSubdir``), you will need to configure that when calling ``Encore.se
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
 
-        .setOutputPath('public/build/')
+          .setOutputPath('public/build/')
 
     -     .setPublicPath('/build')
     +     // this is your *true* public path
@@ -76,7 +76,7 @@ like ``/myAppSubdir``), you will need to configure that when calling ``Encore.se
     +     // this is now needed so that your manifest.json keys are still `build/foo.js`
     +     // (which is a file that's used by Symfony's `asset()` function)
     +     .setManifestKeyPrefix('build')
-    ;
+      ;
 
 If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
 Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
@@ -105,8 +105,9 @@ file script tag is rendered automatically.
 This dependency was not found: some-module in ./path/to/file.js
 ---------------------------------------------------------------
 
-Usually, after you install a package via yarn, you can require / import it to use
-it. For example, after running ``yarn add respond.js``, you try to require that module:
+Usually, after you install a package via yarn or npm, you can require / import
+it to use it. For example, after running ``yarn add respond.js`` or ``npm install respond.js``,
+you try to require that module:
 
 .. code-block:: javascript
 

@@ -76,6 +76,7 @@ Validation Constraints Reference
    constraints/NotCompromisedPassword
    constraints/Valid
    constraints/Traverse
+   constraints/CssColor
 
 The Validator is designed to validate objects against *constraints*.
 In real life, a constraint could be: "The cake must not be burned". In

@@ -96,10 +96,7 @@ An InvoiceSubjectInterface::
         // will need to access on the subject so that you can
         // be sure that you have access to those methods.
 
-        /**
-         * @return string
-         */
-        public function getName();
+        public function getName(): string;
     }
 
 Next, you need to configure the listener, which tells the DoctrineBundle
@@ -142,15 +139,13 @@ about the replacement:
         // config/packages/doctrine.php
         use App\Entity\Customer;
         use App\Model\InvoiceSubjectInterface;
+        use Symfony\Config\DoctrineConfig;
 
-        $container->loadFromExtension('doctrine', [
-            'orm' => [
-                // ...
-                'resolve_target_entities' => [
-                    InvoiceSubjectInterface::class => Customer::class,
-                ],
-            ],
-        ]);
+        return static function (DoctrineConfig $doctrine) {
+            $orm = $doctrine->orm();
+            // ...
+            $orm->resolveTargetEntity(InvoiceSubjectInterface::class, Customer::class);
+        };
 
 Final Thoughts
 --------------

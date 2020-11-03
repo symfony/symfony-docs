@@ -56,10 +56,11 @@ method can be safely called repeatedly, even if the lock is already acquired.
 
 .. note::
 
-    Unlike other implementations, the Lock Component distinguishes locks
-    instances even when they are created for the same resource. If a lock has
-    to be used by several services, they should share the same ``Lock`` instance
-    returned by the ``LockFactory::createLock`` method.
+    Unlike other implementations, the Lock Component distinguishes lock
+    instances even when they are created for the same resource. It means that for
+    a given scope and resource one lock instance can be acquired multiple times.
+    If a lock has to be used by several services, they should share the same ``Lock``
+    instance returned by the ``LockFactory::createLock`` method.
 
 .. tip::
 
@@ -165,7 +166,7 @@ method, the resource will stay locked until the timeout::
 
 .. tip::
 
-    To avoid letting the lock in a locking state, it's recommended to wrap the
+    To avoid leaving the lock in a locked state, it's recommended to wrap the
     job in a try/catch/finally block to always try to release the expiring lock.
 
 In case of long-running tasks, it's better to start with a not too long TTL and
@@ -203,8 +204,40 @@ to reset the TTL to its original value::
         $lock->refresh(600);
 
 This component also provides two useful methods related to expiring locks:
-``getExpiringDate()`` (which returns ``null`` or a ``\DateTimeImmutable``
-object) and ``isExpired()`` (which returns a boolean).
+``getRemainingLifetime()`` (which returns ``null`` or a ``float``
+as seconds) and ``isExpired()`` (which returns a boolean).
+
+Automatically Releasing The Lock
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Lock are automatically released when their Lock objects are destructed. This is
+an implementation detail that will be important when sharing Locks between
+processes. In the example below, ``pcntl_fork()`` creates two processes and the
+Lock will be released automatically as soon as one process finishes::
+
+    // ...
+    $lock = $factory->createLock('report-generation', 3600);
+    if (!$lock->acquire()) {
+        return;
+    }
+
+    $pid = pcntl_fork();
+    if (-1 === $pid) {
+        // Could not fork
+        exit(1);
+    } elseif ($pid) {
+        // Parent process
+        sleep(30);
+    } else {
+        // Child process
+        echo 'The lock will be released now.';
+        exit(0);
+    }
+    // ...
+
+To disable this behavior, set to ``false`` the third argument of
+``LockFactory::createLock()``. That will make the lock acquired for 3600 seconds
+or until ``Lock::release()`` is called.
 
 Shared Locks
 ------------
@@ -324,7 +357,7 @@ Store                                         Scope   Blocking  Expiring Sharing
 :ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes      no
 :ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes      no
 :ref:`PdoStore <lock-store-pdo>`              remote  no        yes      no
-:ref:`PostgreSqlStore <lock-store-pgsql>`     remote  yes       yes      yes
+:ref:`PostgreSqlStore <lock-store-pgsql>`     remote  yes       no       yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes      yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no       no
 :ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no       no
@@ -465,7 +498,8 @@ PostgreSqlStore
 
 The PostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It requires a
 `PDO`_ connection, a `Doctrine DBAL Connection`_, or a
-`Data Source Name (DSN)`_. It supports native blocking, as well as sharing locks.
+`Data Source Name (DSN)`_. It supports native blocking, as well as sharing
+locks::
 
     use Symfony\Component\Lock\Store\PostgreSqlStore;
 
@@ -570,7 +604,7 @@ PHP process is terminated::
 Reliability
 -----------
 
-The component guarantees that the same resource can't be lock twice as long as
+The component guarantees that the same resource can't be locked twice as long as
 the component is used in the following way.
 
 Remote Stores
@@ -584,12 +618,7 @@ Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
 :ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
 the true owner of the lock. This token is stored in the
 :class:`Symfony\\Component\\Lock\\Key` object and is used internally by
-the ``Lock``, therefore this key must not be shared between processes (session,
-caching, fork, ...).
-
-.. caution::
-
-    Do not share a key between processes.
+the ``Lock``.
 
 Every concurrent process must store the ``Lock`` in the same server. Otherwise two
 different machines may allow two different processes to acquire the same ``Lock``.
@@ -739,7 +768,7 @@ Such an index can be created manually:
 
 .. code-block:: javascript
 
-    db.lock.ensureIndex(
+    db.lock.createIndex(
         { "expires_at": 1 },
         { "expireAfterSeconds": 0 }
     )
@@ -761,9 +790,10 @@ about `Expire Data from Collections by Setting TTL`_ in MongoDB.
     locks don't expire prematurely; the lock TTL should be set with enough extra
     time in ``expireAfterSeconds`` to account for any clock drift between nodes.
 
-``writeConcern``, ``readConcern`` and ``readPreference`` are not specified by
-MongoDbStore meaning the collection's settings will take effect. Read more
-about `Replica Set Read and Write Semantics`_ in MongoDB.
+``writeConcern`` and ``readConcern`` are not specified by MongoDbStore meaning
+the collection's settings will take effect.
+``readPreference`` is ``primary`` for all queries.
+Read more about `Replica Set Read and Write Semantics`_ in MongoDB.
 
 PdoStore
 ~~~~~~~~~~
@@ -862,7 +892,7 @@ can be two running containers in parallel.
 .. caution::
 
     All concurrent processes must use the same machine. Before starting a
-    concurrent process on a new machine, check that other process are stopped
+    concurrent process on a new machine, check that other processes are stopped
     on the old one.
 
 .. caution::

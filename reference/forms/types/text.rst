@@ -9,26 +9,6 @@ The TextType field represents the most basic input text field.
 +-------------+--------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                          |
-| options     | - `data`_                                                          |
-|             | - `disabled`_                                                      |
-|             | - `empty_data`_                                                    |
-|             | - `error_bubbling`_                                                |
-|             | - `error_mapping`_                                                 |
-|             | - `help`_                                                          |
-|             | - `help_attr`_                                                     |
-|             | - `help_html`_                                                     |
-|             | - `label`_                                                         |
-|             | - `label_attr`_                                                    |
-|             | - `label_format`_                                                  |
-|             | - `mapped`_                                                        |
-|             | - `required`_                                                      |
-|             | - `row_attr`_                                                      |
-|             | - `trim`_                                                          |
-+-------------+--------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                      |
-| options     |                                                                    |
-+-------------+--------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                      |
 +-------------+--------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType` |
@@ -47,15 +27,13 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 From an HTTP perspective, submitted data is always a string or an array of strings.
 So by default, the form will treat any empty string as null. If you prefer to get
 an empty string, explicitly set the ``empty_data`` option to an empty string.
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 

@@ -5,17 +5,6 @@ Validates that a given number or ``DateTime`` object is *between* some minimum a
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `invalidDateTimeMessage`_
-            - `invalidMessage`_
-            - `max`_
-            - `maxMessage`_
-            - `maxPropertyPath`_
-            - `min`_
-            - `minMessage`_
-            - `minPropertyPath`_
-            - `notInRangeMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Range`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator`
 ==========  ===================================================================
@@ -23,7 +12,7 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator`
 Basic Usage
 -----------
 
-To verify that the "height" field of a class is between "120" and "180",
+To verify that the ``height`` field of a class is between ``120`` and ``180``,
 you might add the following:
 
 .. configuration-block::
@@ -44,6 +33,23 @@ you might add the following:
              *      notInRangeMessage = "You must be between {{ min }}cm and {{ max }}cm tall to enter",
              * )
              */
+            protected $height;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Participant.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            #[Assert\Range(
+                min: 120,
+                max: 180,
+                notInRangeMessage: 'You must be between {{ min }}cm and {{ max }}cm tall to enter',
+            )]
             protected $height;
         }
 
@@ -125,6 +131,22 @@ date must lie within the current year like this:
             protected $startDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            #[Assert\Range(
+                min: 'first day of January',
+                max: 'first day of January next year',
+            )]
+            protected $startDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -192,6 +214,22 @@ dates. If you want to fix the timezone, append it to the date string:
              *      max = "first day of January next year UTC"
              * )
              */
+            protected $startDate;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            #[Assert\Range(
+                min: 'first day of January UTC',
+                max: 'first day of January next year UTC',
+            )]
             protected $startDate;
         }
 
@@ -265,6 +303,22 @@ can check that a delivery date starts within the next five hours like this:
             protected $deliveryDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\Range(
+                min: 'now',
+                max: '+5 hours',
+            )]
+            protected $deliveryDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -317,8 +371,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-invalidDateTimeMessage
-~~~~~~~~~~~~~~~~~~~~~~
+``invalidDateTimeMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
@@ -337,8 +391,8 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-invalidMessage
-~~~~~~~~~~~~~~
+``invalidMessage``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
@@ -358,16 +412,16 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``number`` or ``string`` (date format)
 
 This required option is the "max" value. Validation will fail if the given
 value is **greater** than this max value.
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
@@ -384,8 +438,8 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-maxPropertyPath
-~~~~~~~~~~~~~~~
+``maxPropertyPath``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string``
 
@@ -402,16 +456,16 @@ with regard to the ``$deadline`` property of the same object, use
     include it in the error messages displayed to end users, it's useful when
     using APIs for doing any mapping logic on client-side.
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``number`` or ``string`` (date format)
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
@@ -428,8 +482,8 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-minPropertyPath
-~~~~~~~~~~~~~~~
+``minPropertyPath``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string``
 
@@ -446,8 +500,8 @@ with regard to the ``$startDate`` property of the same object, use
     include it in the error messages displayed to end users, it's useful when
     using APIs for doing any mapping logic on client-side.
 
-notInRangeMessage
-~~~~~~~~~~~~~~~~~
+``notInRangeMessage``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be between {{ min }} and {{ max }}.``
 

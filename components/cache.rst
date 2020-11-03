@@ -20,6 +20,11 @@ The Cache Component
     Doctrine caches. See :doc:`/components/cache/psr6_psr16_adapters` and
     :doc:`/components/cache/adapters/doctrine_adapter`.
 
+    .. deprecated:: 5.4
+
+        Support for Doctrine Cache was deprecated in Symfony 5.4
+        and it will be removed in Symfony 6.0.
+
 Installation
 ------------
 
@@ -90,7 +95,10 @@ generate and return the value::
     Use cache tags to delete more than one key at the time. Read more at
     :doc:`/components/cache/cache_invalidation`.
 
-The Cache Contracts also comes with built in `Stampede prevention`_. This will
+Stampede Prevention
+~~~~~~~~~~~~~~~~~~~
+
+The Cache Contracts also come with built in `Stampede prevention`_. This will
 remove CPU spikes at the moments when the cache is cold. If an example application
 spends 5 seconds to compute data that is cached for 1 hour and this data is accessed
 10 times every second, this means that you mostly have cache hits and everything
@@ -192,6 +200,34 @@ Now you can create, retrieve, update and delete items using this cache pool::
 
 For a list of all of the supported adapters, see :doc:`/components/cache/cache_pools`.
 
+Marshalling (Serializing) Data
+------------------------------
+
+.. note::
+
+    `Marshalling`_ and `serializing`_ are similar concepts. Serializing is the
+    process of translating an object state into a format that can be stored
+    (e.g. in a file). Marshalling is the process of translating both the object
+    state and its codebase into a format that can be stored or transmitted.
+
+    Unmarshalling an object produces a copy of the original object, possibly by
+    automatically loading the class definitions of the object.
+
+Symfony uses *marshallers* (classes which implement
+:class:`Symfony\\Component\\Cache\\Marshaller\\MarshallerInterface`) to process
+the cache items before storing them.
+
+The :class:`Symfony\\Component\\Cache\\Marshaller\\DefaultMarshaller` uses PHP's
+``serialize()`` or ``igbinary_serialize()`` if the `Igbinary extension`_ is installed.
+There are other *marshallers* that can encrypt or compress the data before storing it::
+
+    use Symfony\Component\Cache\Adapter\RedisAdapter;
+    use Symfony\Component\Cache\DefaultMarshaller;
+    use Symfony\Component\Cache\DeflateMarshaller;
+
+    $marshaller = new DeflateMarshaller(new DefaultMarshaller());
+    $cache = new RedisAdapter(new \Redis(), 'namespace', 0, $marshaller);
+
 Advanced Usage
 --------------
 
@@ -205,3 +241,6 @@ Advanced Usage
 .. _`Cache Contracts`: https://github.com/symfony/contracts/blob/master/Cache/CacheInterface.php
 .. _`Stampede prevention`: https://en.wikipedia.org/wiki/Cache_stampede
 .. _Probabilistic early expiration: https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration
+.. _`Marshalling`: https://en.wikipedia.org/wiki/Marshalling_(computer_science)
+.. _`serializing`: https://en.wikipedia.org/wiki/Serialization
+.. _`Igbinary extension`: https://github.com/igbinary/igbinary

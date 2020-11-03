@@ -37,26 +37,8 @@ Access Decision Manager
 Since deciding whether or not a user is authorized to perform a certain
 action can be a complicated process, the standard :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManager`
 itself depends on multiple voters, and makes a final verdict based on all
-the votes (either positive, negative or neutral) it has received. It
-recognizes several strategies:
-
-``affirmative`` (default)
-    grant access as soon as there is one voter granting access;
-
-``consensus``
-    grant access if there are more voters granting access than there are denying;
-
-``unanimous``
-    only grant access if none of the voters has denied access. If all voters
-    abstained from voting, the decision is based on the ``allow_if_all_abstain``
-    config option (which defaults to ``false``).
-
-``priority``
-    grants or denies access by the first voter that does not abstain;
-
-    .. versionadded:: 5.1
-
-        The ``priority`` version strategy was introduced in Symfony 5.1.
+the votes (either positive, negative or neutral) it has received and the
+given strategy.
 
 Usage of the available options in detail::
 
@@ -65,26 +47,68 @@ Usage of the available options in detail::
     // instances of Symfony\Component\Security\Core\Authorization\Voter\VoterInterface
     $voters = [...];
 
-    // one of "affirmative", "consensus", "unanimous", "priority"
+    // instance of Symfony\Component\Security\Core\Authorization\Strategy\AccessDecisionStrategyInterface
     $strategy = ...;
 
-    // whether or not to grant access when all voters abstain
-    $allowIfAllAbstainDecisions = ...;
-
-    // whether or not to grant access when there is no majority (applies only to the "consensus" strategy)
-    $allowIfEqualGrantedDeniedDecisions = ...;
-
-    $accessDecisionManager = new AccessDecisionManager(
-        $voters,
-        $strategy,
-        $allowIfAllAbstainDecisions,
-        $allowIfEqualGrantedDeniedDecisions
-    );
+    $accessDecisionManager = new AccessDecisionManager($voters, $strategy);
 
 .. seealso::
 
     You can change the default strategy in the
     :ref:`configuration <security-voters-change-strategy>`.
+
+Strategies
+----------
+
+.. versionadded:: 5.4
+
+    The strategy classes were introduced in Symfony 5.4. In earlier versions, the strategy was passed as a string.
+
+The following strategies are bundled with the component:
+
+``AffirmativeStrategy`` (default)
+    grant access as soon as there is one voter granting access;
+
+``ConsensusStrategy``
+    grant access if there are more voters granting access than there are denying;
+    if there is a draw between votes, the decision is made based on the
+    ``$allowIfEqualGrantedDeniedDecisions`` constructor parameter which defaults to ``true``.
+
+``UnanimousStrategy``
+    only grant access if none of the voters has denied access.
+
+``PriorityStrategy``
+    grants or denies access by the first voter that does not abstain;
+
+    .. versionadded:: 5.1
+
+        The "priority" version strategy was introduced in Symfony 5.1.
+
+If all voters abstained from voting, the decision is based on the ``$allowIfAllAbstainDecisions``
+constructor parameter which is supported by all of the built-in strategies and defaults to ``false``.
+
+If none of the built-in strategies seem to fit, a custom strategy may be provided. The strategy will
+receive a stream of votes and may return as soon as it has seen enough votes to come to a conclusion.
+
+::
+
+    /**
+     * Always picks the third voter.
+     */
+    class ThirdVoterStrategy implements AccessDecisionStrategyInterface
+    {
+        public function decide(\Traversable $results): bool
+        {
+            $votes = 0;
+            foreach ($results as $result) {
+                if (++$votes === 3) {
+                    return $result === VoterInterface::ACCESS_GRANTED;
+                }
+            }
+
+            return false;
+        }
+    }
 
 Voters
 ------
@@ -207,7 +231,7 @@ expressions have access to a number of
 
     $expression = new Expression(
         '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
-    )
+    );
 
     $vote = $expressionVoter->vote($token, $object, [$expression]);
 

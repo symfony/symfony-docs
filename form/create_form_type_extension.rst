@@ -35,11 +35,11 @@ First, create the form type extension class extending from
     class ImageTypeExtension extends AbstractTypeExtension
     {
         /**
-         * Return the class of the type being extended.
+         * Returns an array of extended types.
          */
         public static function getExtendedTypes(): iterable
         {
-            // return FormType::class to modify (nearly) every field in the system
+            // return [FormType::class] to modify (nearly) every field in the system
             return [FileType::class];
         }
     }
@@ -114,7 +114,7 @@ the database::
 
         // ...
 
-        public function getWebPath()
+        public function getWebPath(): string
         {
             // ... $webPath being the full image URL, to be used in templates
 
@@ -145,17 +145,17 @@ For example::
     {
         public static function getExtendedTypes(): iterable
         {
-            // return FormType::class to modify (nearly) every field in the system
+            // return [FormType::class] to modify (nearly) every field in the system
             return [FileType::class];
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // makes it legal for FileType fields to have an image_property option
             $resolver->setDefined(['image_property']);
         }
 
-        public function buildView(FormView $view, FormInterface $form, array $options)
+        public function buildView(FormView $view, FormInterface $form, array $options): void
         {
             if (isset($options['image_property'])) {
                 // this will be whatever class/entity is bound to your form (e.g. Media)
@@ -191,14 +191,10 @@ Specifically, you need to override the ``file_widget`` block:
     {% extends 'form_div_layout.html.twig' %}
 
     {% block file_widget %}
-        {% spaceless %}
-
         {{ block('form_widget') }}
         {% if image_url is not null %}
             <img src="{{ asset(image_url) }}"/>
         {% endif %}
-
-        {% endspaceless %}
     {% endblock %}
 
 Be sure to :ref:`configure this form theme template <forms-theming-global>` so that
@@ -221,7 +217,7 @@ next to the file field. For example::
 
     class MediaType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('name', TextType::class)

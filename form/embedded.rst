@@ -46,12 +46,12 @@ Next, add a new ``category`` property to the ``Task`` class::
 
         // ...
 
-        public function getCategory()
+        public function getCategory(): ?Category
         {
             return $this->category;
         }
 
-        public function setCategory(Category $category = null)
+        public function setCategory(?Category $category)
         {
             $this->category = $category;
         }
@@ -76,12 +76,12 @@ create a form class so that a ``Category`` object can be modified by the user::
 
     class CategoryType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('name');
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Category::class,
@@ -97,7 +97,7 @@ class::
     use App\Form\CategoryType;
     use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 

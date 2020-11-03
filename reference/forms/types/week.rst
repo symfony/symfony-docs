@@ -10,39 +10,19 @@ This field type allows the user to modify data that represents a specific
 Can be rendered as a text input or select tags. The underlying format of
 the data can be a string or an array.
 
-+----------------------+-----------------------------------------------------------------------------+
-| Underlying Data Type | can be a string, or array (see the ``input`` option)                        |
-+----------------------+-----------------------------------------------------------------------------+
-| Rendered as          | single text box, two text boxes or two select fields                        |
-+----------------------+-----------------------------------------------------------------------------+
-| Options              | - `choice_translation_domain`_                                              |
-|                      | - `placeholder`_                                                            |
-|                      | - `html5`_                                                                  |
-|                      | - `input`_                                                                  |
-|                      | - `widget`_                                                                 |
-|                      | - `weeks`_                                                                  |
-|                      | - `years`_                                                                  |
-+----------------------+-----------------------------------------------------------------------------+
-| Overridden options   | - `compound`_                                                               |
-|                      | - `empty_data`_                                                             |
-|                      | - `error_bubbling`_                                                         |
-+----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                                   |
-| options              | - `data`_                                                                   |
-|                      | - `disabled`_                                                               |
-|                      | - `help`_                                                                   |
-|                      | - `help_attr`_                                                              |
-|                      | - `help_html`_                                                              |
-|                      | - `inherit_data`_                                                           |
-|                      | - `invalid_message`_                                                        |
-|                      | - `invalid_message_parameters`_                                             |
-|                      | - `mapped`_                                                                 |
-|                      | - `row_attr`_                                                               |
-+----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
-+----------------------+-----------------------------------------------------------------------------+
-| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\WeekType`          |
-+----------------------+-----------------------------------------------------------------------------+
++---------------------------+--------------------------------------------------------------------+
+| Underlying Data Type      | can be a string, or array (see the ``input`` option)               |
++---------------------------+--------------------------------------------------------------------+
+| Rendered as               | single text box, two text boxes or two select fields               |
++---------------------------+--------------------------------------------------------------------+
+| Default invalid message   | Please enter a valid week.                                         |
++---------------------------+--------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                |
++---------------------------+--------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                      |
++---------------------------+--------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\WeekType` |
++---------------------------+--------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -75,7 +55,7 @@ values for the year and week fields::
         'placeholder' => [
             'year' => 'Year',
             'week' => 'Week',
-        ]
+        ],
     ]);
 
 .. include:: /reference/forms/types/options/html5.rst.inc
@@ -122,21 +102,21 @@ Overridden Options
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The actual default value of this option depends on other field options:
 
 * If ``widget`` is ``single_text``, then ``''`` (empty string);
 * Otherwise ``[]`` (empty array).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~
 
 **default**: ``false``
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------
@@ -156,8 +136,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 

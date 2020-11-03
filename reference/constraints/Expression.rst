@@ -9,11 +9,6 @@ gives you similar flexibility.
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
             or :ref:`property/method <validation-property-target>`
-Options     - :ref:`expression <reference-constraint-expression-option>`
-            - `groups`_
-            - `message`_
-            - `payload`_
-            - `values`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Expression`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionValidator`
 ==========  ===================================================================
@@ -73,6 +68,22 @@ One way to accomplish this is with the Expression constraint:
          *     message="If this is a tech post, the category should be either php or symfony!"
          * )
          */
+        class BlogPost
+        {
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Model/BlogPost.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        #[Assert\Expression(
+            "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()",
+            message: 'If this is a tech post, the category should be either php or symfony!',
+        )]
         class BlogPost
         {
             // ...
@@ -158,6 +169,26 @@ more about the expression language syntax, see
                  *     message="If this is a tech post, the category should be either php or symfony!"
                  * )
                  */
+                private $isTechnicalPost;
+
+                // ...
+            }
+
+        .. code-block:: php-attributes
+
+            // src/Model/BlogPost.php
+            namespace App\Model;
+
+            use Symfony\Component\Validator\Constraints as Assert;
+
+            class BlogPost
+            {
+                // ...
+
+                #[Assert\Expression(
+                    "this.getCategory() in ['php', 'symfony'] or value == false",
+                    message: 'If this is a tech post, the category should be either php or symfony!',
+                )]
                 private $isTechnicalPost;
 
                 // ...
@@ -269,8 +300,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-values
-~~~~~~
+``values``
+~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
 
@@ -294,6 +325,24 @@ type (numeric, boolean, strings, null, etc.)
              *     values = { "error_margin": 0.25, "threshold": 1.5 }
              * )
              */
+            private $metric;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Model/Analysis.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Analysis
+        {
+            #[Assert\Expression(
+                'value + error_margin < threshold',
+                values: ['error_margin' => 0.25, 'threshold' => 1.5],
+            )]
             private $metric;
 
             // ...

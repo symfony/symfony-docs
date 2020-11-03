@@ -33,21 +33,32 @@ in a single Twig template and they are enabled in the
   updated for `Bootstrap 4 CSS framework`_ styles.
 * `bootstrap_4_horizontal_layout.html.twig`_, same as
   ``bootstrap_3_horizontal_layout.html.twig`` but updated for Bootstrap 4 styles.
+* `bootstrap_5_layout.html.twig`_, same as ``bootstrap_4_layout.html.twig``, but
+  updated for `Bootstrap 5 CSS framework`_ styles.
+* `bootstrap_5_horizontal_layout.html.twig`_, same as
+  ``bootstrap_4_horizontal_layout.html.twig`` but updated for Bootstrap 5 styles.
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the default styles of the
   version 5 of `Foundation CSS framework`_.
 * `foundation_6_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the default styles of the
   version 6 of `Foundation CSS framework`_.
+* `tailwind_2_layout.html.twig`_, wraps each form field inside a ``<div>``
+  element with the absolute minimum styles to make them usable. It is based on the
+  `Tailwind CSS form plugin`_.
 
 .. versionadded:: 5.1
 
     The ``foundation_6_layout.html.twig`` was introduced in Symfony 5.1.
 
+.. versionadded:: 5.3
+
+    The ``bootstrap_5_layout.html.twig``, ``bootstrap_5_horizontal_layout.html.twig`` and ``tailwind_2_layout.html.twig`` were introduced in Symfony 5.3.
+
 .. tip::
 
-    Read the article about the :doc:`Bootstrap 4 Symfony form theme </form/bootstrap4>`
-    to learn more about it.
+    Read the articles about :doc:`Bootstrap 4 Symfony form theme </form/bootstrap4>` and :doc:`Bootstrap 5 Symfony form theme </form/bootstrap5>`
+    to learn more about them.
 
 .. _forms-theming-global:
 .. _forms-theming-twig:
@@ -88,12 +99,15 @@ want to use another theme for all the forms of your app, configure it in the
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
                 'bootstrap_4_horizontal_layout.html.twig',
-            ],
+            ]);
+
             // ...
-        ]);
+        };
 
 You can pass multiple themes to this option because sometimes form themes only
 redefine a few elements. This way, if some theme doesn't override some element,
@@ -273,7 +287,7 @@ form. You can also define this value explicitly with the ``block_name`` option::
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 
@@ -297,7 +311,7 @@ field without having to :doc:`create a custom form type </form/create_custom_fie
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('name', TextType::class, [
             'block_prefix' => 'wrapped_text',
@@ -345,7 +359,7 @@ has a collection of ``TaskListType`` which in turn has a collection of
 
     class TaskManagerType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = [])
+        public function buildForm(FormBuilderInterface $builder, array $options = []): void
         {
             // ...
             $builder->add('taskLists', CollectionType::class, [
@@ -357,7 +371,7 @@ has a collection of ``TaskListType`` which in turn has a collection of
 
     class TaskListType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = [])
+        public function buildForm(FormBuilderInterface $builder, array $options = []): void
         {
             // ...
             $builder->add('tasks', CollectionType::class, [
@@ -366,9 +380,9 @@ has a collection of ``TaskListType`` which in turn has a collection of
         }
     }
 
-    class TaskType
+    class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = [])
+        public function buildForm(FormBuilderInterface $builder, array $options = []): void
         {
             $builder->add('name');
             // ...
@@ -514,12 +528,15 @@ you want to apply the theme globally to all forms, define the
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
                 'form/my_theme.html.twig',
-            ],
+            ]);
+
             // ...
-        ]);
+        };
 
 If you only want to apply it to some specific forms, use the ``form_theme`` tag:
 
@@ -629,10 +646,15 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
 .. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
 .. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
+.. _`bootstrap_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_5_layout.html.twig
+.. _`bootstrap_5_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_5_horizontal_layout.html.twig
 .. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.4/
-.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.4/
+.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.6/
+.. _`Bootstrap 5 CSS framework`: https://getbootstrap.com/docs/5.0/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
 .. _`foundation_6_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_6_layout.html.twig
 .. _`Foundation CSS framework`: https://get.foundation/
+.. _`tailwind_2_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/tailwind_2_layout.html.twig
+.. _`Tailwind CSS form plugin`: https://tailwindcss-forms.vercel.app/
 .. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
 .. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html

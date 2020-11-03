@@ -26,7 +26,7 @@ before running the tests:
 .. code-block:: xml
 
     <!-- phpunit.xml.dist -->
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <phpunit
         bootstrap="tests/bootstrap.php"
     >
@@ -39,7 +39,7 @@ cache to be cleared:
 .. code-block:: xml
 
     <!-- phpunit.xml.dist -->
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <phpunit>
         <!-- ... -->
 

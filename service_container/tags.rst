@@ -60,6 +60,8 @@ and many tags require additional arguments (beyond the ``name`` parameter).
 **For most users, this is all you need to know**. If you want to go further and
 learn how to create your own custom tags, keep reading.
 
+.. _di-instanceof:
+
 Autoconfiguring Tags
 --------------------
 
@@ -87,7 +89,7 @@ If you want to apply tags automatically for your own services, use the
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
                 <!-- this config only applies to the services created by this file -->
@@ -126,7 +128,7 @@ In a Symfony application, call this method in your kernel class::
     {
         // ...
 
-        protected function build(ContainerBuilder $container)
+        protected function build(ContainerBuilder $container): void
         {
             $container->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
@@ -142,7 +144,7 @@ In a Symfony bundle, call this method in the ``load()`` method of the
     {
         // ...
 
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             $container->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
@@ -178,7 +180,7 @@ To begin with, define the ``TransportChain`` class::
             $this->transports = [];
         }
 
-        public function addTransport(\Swift_Transport $transport)
+        public function addTransport(\Swift_Transport $transport): void
         {
             $this->transports[] = $transport;
         }
@@ -305,7 +307,7 @@ container for any services with the ``app.mail_transport`` tag::
 
     class MailTransportPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // always first check if the primary service is defined
             if (!$container->has(TransportChain::class)) {
@@ -342,7 +344,7 @@ or from your kernel::
     {
         // ...
 
-        protected function build(ContainerBuilder $container)
+        protected function build(ContainerBuilder $container): void
         {
             $container->addCompilerPass(new MailTransportPass());
         }
@@ -373,16 +375,18 @@ To begin with, change the ``TransportChain`` class::
             $this->transports = [];
         }
 
-        public function addTransport(\Swift_Transport $transport, $alias)
+        public function addTransport(\Swift_Transport $transport, $alias): void
         {
             $this->transports[$alias] = $transport;
         }
 
-        public function getTransport($alias)
+        public function getTransport($alias): ?\Swift_Transport
         {
             if (array_key_exists($alias, $this->transports)) {
                 return $this->transports[$alias];
             }
+
+            return null;
         }
     }
 
@@ -478,7 +482,7 @@ use this, update the compiler::
 
     class TransportCompilerPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // ...
 
@@ -488,7 +492,7 @@ use this, update the compiler::
                 foreach ($tags as $attributes) {
                     $definition->addMethodCall('addTransport', [
                         new Reference($id),
-                        $attributes['alias']
+                        $attributes['alias'],
                     ]);
                 }
             }
@@ -594,8 +598,9 @@ application handlers::
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The tagged services can be prioritized using the ``priority`` attribute,
-thus providing a way to inject a sorted collection of services:
+The tagged services can be prioritized using the ``priority`` attribute. The
+priority is a positive or negative integer that defaults to ``0``. The higher
+the number, the earlier the tagged service will be located in the collection:
 
 .. configuration-block::
 
@@ -653,7 +658,7 @@ service itself::
         }
     }
 
-If you want to have another method defining the priority 
+If you want to have another method defining the priority
 (e.g. ``getPriority()`` rather than ``getDefaultPriority()``),
 you can define it in the configuration of the collecting service:
 
@@ -780,9 +785,9 @@ indexed by the ``key`` attribute:
         };
 
 After compilation the ``HandlerCollection`` is able to iterate over your
-application handlers. To retrieve a specific service by it's ``key`` attribute
-from the iterator, we can use ``iterator_to_array`` and retrieve the ``handler_two``:
-to get an array and then retrieve the ``handler_two`` handler::
+application handlers. To retrieve a specific service from the iterator, call the
+``iterator_to_array()`` function and then use the ``key`` attribute to get the
+array element. For example, to retrieve the ``handler_two`` handler::
 
     // src/Handler/HandlerCollection.php
     namespace App\Handler;
@@ -791,16 +796,16 @@ to get an array and then retrieve the ``handler_two`` handler::
     {
         public function __construct(iterable $handlers)
         {
-            $handlers = iterator_to_array($handlers);
+            $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
-            $handlerTwo = $handlers['handler_two']:
+            $handlerTwo = $handlers['handler_two'];
         }
     }
 
 .. tip::
 
     Just like the priority, you can also implement a static
-    ``getDefaultIndexAttributeName()`` method in the handlers and omit the
+    ``getDefaultIndexName()`` method in the handlers and omit the
     index attribute (``key``)::
 
         // src/Handler/One.php
@@ -840,7 +845,7 @@ to get an array and then retrieve the ``handler_two`` handler::
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <!-- ... --!>
+                    <!-- ... -->
 
                     <service id="App\HandlerCollection">
                         <!-- use getIndex() instead of getDefaultIndexName() -->

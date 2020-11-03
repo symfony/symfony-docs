@@ -22,7 +22,7 @@ that adds two convenient methods to lock and release commands::
 
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             if (!$this->lock()) {
                 $output->writeln('The command is already running in another process.');
@@ -38,6 +38,8 @@ that adds two convenient methods to lock and release commands::
             // if not released explicitly, Symfony releases the lock
             // automatically when the execution of the command ends
             $this->release();
+
+            return Command::SUCCESS;
         }
     }
 

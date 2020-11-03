@@ -62,7 +62,8 @@ helper method allows creating and configuring the Redis client class instance us
     );
 
 The DSN can specify either an IP/host (and an optional port) or a socket path, as well as a
-password and a database index.
+password and a database index. To enable TLS for connections, the scheme ``redis`` must be
+replaced by ``rediss`` (the second ``s`` means "secure").
 
 .. note::
 
@@ -70,7 +71,7 @@ password and a database index.
 
     .. code-block:: text
 
-        redis://[pass@][ip|host|socket[:port]][/db-index]
+        redis[s]://[pass@][ip|host|socket[:port]][/db-index]
 
 Below are common examples of valid DSNs showing a combination of available values::
 
@@ -95,8 +96,8 @@ Below are common examples of valid DSNs showing a combination of available value
     );
 
 `Redis Sentinel`_, which provides high availability for Redis, is also supported
-when using the Predis library. Use the ``redis_sentinel`` parameter to set the
-name of your service group::
+when using the PHP Redis Extension v5.2+ or the Predis library. Use the ``redis_sentinel``
+parameter to set the name of your service group::
 
     RedisAdapter::createConnection(
         'redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster'
@@ -123,7 +124,6 @@ array of ``key => value`` pairs representing option names and their respective v
 
         // associative array of configuration options
         [
-            'compression' => true,
             'lazy' => false,
             'persistent' => 0,
             'persistent_id' => null,
@@ -142,10 +142,6 @@ Available Options
     Specifies the connection library to return, either ``\Redis`` or ``\Predis\Client``.
     If none is specified, it will return ``\Redis`` if the ``redis`` extension is
     available, and ``\Predis\Client`` otherwise.
-
-``compression`` (type: ``bool``, default: ``true``)
-    Enables or disables compression of items. This requires phpredis v4 or higher with
-    LZF support enabled.
 
 ``lazy`` (type: ``bool``, default: ``false``)
     Enables or disables lazy connections to the backend. It's ``false`` by
@@ -193,6 +189,23 @@ In order to use tag-based invalidation, you can wrap your adapter in :class:`Sym
     $client = RedisAdapter::createConnection('redis://localhost');
     $cache = new RedisTagAwareAdapter($client);
 
+Configuring Redis
+~~~~~~~~~~~~~~~~~
+
+When using Redis as cache, you should configure the ``maxmemory`` and ``maxmemory-policy``
+settings. By setting ``maxmemory``, you limit how much memory Redis is allowed to consume.
+If the amount is too low, Redis will drop entries that would still be useful and you benefit
+less from your cache. Setting the ``maxmemory-policy`` to ``allkeys-lru`` tells Redis that
+it is ok to drop data when it runs out of memory, and to first drop the oldest entries (least
+recently used). If you do not allow Redis to drop entries, it will return an error when you
+try to add data when no memory is available. An example setting could look as follows:
+
+.. code-block:: ini
+
+    maxmemory 100mb
+    maxmemory-policy allkeys-lru
+
+Read more about this topic in the offical `Redis LRU Cache Documentation`_.
 
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Redis server`: https://redis.io/
@@ -203,3 +216,4 @@ In order to use tag-based invalidation, you can wrap your adapter in :class:`Sym
 .. _`Predis Connection Parameters`: https://github.com/nrk/predis/wiki/Connection-Parameters#list-of-connection-parameters
 .. _`TCP-keepalive`: https://redis.io/topics/clients#tcp-keepalive
 .. _`Redis Sentinel`: https://redis.io/topics/sentinel
+.. _`Redis LRU Cache Documentation`: https://redis.io/topics/lru-cache

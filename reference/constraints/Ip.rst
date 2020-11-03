@@ -7,11 +7,6 @@ IPv6 and many other combinations.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
-            - `version`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Ip`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IpValidator`
 ==========  ===================================================================
@@ -33,6 +28,19 @@ Basic Usage
             /**
              * @Assert\Ip
              */
+            protected $ipAddress;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Ip]
             protected $ipAddress;
         }
 
@@ -82,8 +90,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid IP address.``
 
@@ -106,8 +114,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-version
-~~~~~~~
+``version``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``4``
 

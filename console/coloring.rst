@@ -46,11 +46,17 @@ It is possible to define your own styles using the
     $output->writeln('<fire>foo</>');
 
 Any hex color is supported for foreground and background colors. Besides that, these named colors are supported:
-``black``, ``red``, ``green``, ``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
+``black``, ``red``, ``green``, ``yellow``, ``blue``, ``magenta``, ``cyan``, ``white``,
+``gray``, ``bright-red``, ``bright-green``, ``bright-yellow``, ``bright-blue``,
+``bright-magenta``, ``bright-cyan`` and ``bright-white``.
 
 .. versionadded:: 5.2
 
     True (hex) color support was introduced in Symfony 5.2
+
+.. versionadded:: 5.3
+
+    Support for bright colors was introduced in Symfony 5.3.
 
 .. note::
 
@@ -65,10 +71,10 @@ commonly used when asking the user to type sensitive information).
 
 You can also set these colors and options directly inside the tag name::
 
-    // green text
+    // using named colors
     $output->writeln('<fg=green>foo</>');
 
-    // red text
+    // using hexadecimal colors
     $output->writeln('<fg=#c0392b>foo</>');
 
     // black text on a cyan background

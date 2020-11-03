@@ -6,11 +6,6 @@ Validates that a value is a valid
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `caseSensitive`_
-            - `groups`_
-            - `message`_
-            - `payload`_
-            - `requireHyphen`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Issn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IssnValidator`
 ==========  ===================================================================
@@ -32,6 +27,19 @@ Basic Usage
             /**
              * @Assert\Issn
              */
+            protected $issn;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Journal.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Journal
+        {
+            #[Assert\Issn]
             protected $issn;
         }
 
@@ -79,8 +87,8 @@ Basic Usage
 Options
 -------
 
-caseSensitive
-~~~~~~~~~~~~~
+``caseSensitive``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 
@@ -89,8 +97,8 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` default: ``This value is not a valid ISSN.``
 
@@ -111,8 +119,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-requireHyphen
-~~~~~~~~~~~~~
+``requireHyphen``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 

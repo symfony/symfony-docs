@@ -1,6 +1,6 @@
 .. index::
     single: Cache Pool
-    single: Couchabase Cache
+    single: Couchbase Cache
 
 .. _couchbase-adapter:
 
@@ -22,7 +22,7 @@ is also available.
 
     **Requirements:** The `Couchbase PHP extension`_ as well as a `Couchbase server`_
     must be installed, active, and running to use this adapter. Version ``2.6`` or
-    greater of the `Couchbase PHP extension`_ is required for this adapter.
+    less than 3.0 of the `Couchbase PHP extension`_ is required for this adapter.
 
 This adapter expects a `Couchbase Bucket`_ instance to be passed as the first
 parameter. A namespace and default cache lifetime can optionally be passed as
@@ -32,17 +32,17 @@ the second and third parameters::
 
     $cache = new CouchbaseBucketAdapter(
         // the client object that sets options and adds the server instance(s)
-        \CouchbaseBucket $client,
+        $client,
 
         // the name of bucket
-        string $bucket,
+        $bucket,
 
         // a string prefixed to the keys of the items stored in this cache
-        $namespace = '',
+        $namespace,
 
         // the default lifetime (in seconds) for cache items that do not define their
         // own lifetime, with a value 0 causing items to be stored indefinitely
-        $defaultLifetime = 0,
+        $defaultLifetime
     );
 
 
@@ -60,7 +60,7 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
         'couchbase://localhost'
         // the DSN can include config options (pass them as a query string):
         // 'couchbase://localhost:11210?operationTimeout=10'
-        // 'couchbase://localhost:11210?operationTimeout=10&configTimout=20'
+        // 'couchbase://localhost:11210?operationTimeout=10&configTimeout=20'
     );
 
     // pass an array of DSN strings to register multiple servers with the client
