@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-03T16:43:31Z
+
+This is correct according to https://github.com/symfony/symfony/tree/5.x/src/Symfony/Component/Notifier/Bridge/Discord/Embeds so let's merge. Thanks Tobias!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-11-03T16:44:19Z
+
+Thank you
