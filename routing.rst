@@ -1243,7 +1243,7 @@ the common configuration using options when importing the routes.
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            // use the optional fifth argument of import() to exclude some files
+            // use the optional fourth argument of import() to exclude some files
             // or subdirectories when loading annotations
             $routes->import('../../src/Controller/', 'annotation')
                 // this is added to the beginning of all imported route URLs
