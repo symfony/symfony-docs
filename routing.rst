@@ -2266,8 +2266,11 @@ generating the route::
 
     $this->generateUrl('blog_show', ['slug' => 'slug-value']);
 
-    // or, in Twig
-    // {{ path('blog_show', {slug: 'slug-value'}) }}
+or, in Twig:
+
+.. code-block:: twig
+
+    {{ path('blog_show', {slug: 'slug-value'}) }}
 
 Learn more about Routing
 ------------------------
