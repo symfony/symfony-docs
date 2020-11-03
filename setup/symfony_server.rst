@@ -380,12 +380,12 @@ its location, same as for ``docker-compose``:
 
 .. caution::
 
-    When using Symfony binary with ``php bin/console`` (``symfony console ...``)
-    the binay will **always** use environment variables detected via Docker and will
+    When using the Symfony binary with ``php bin/console`` (``symfony console ...``),
+    the binary will **always** use environment variables detected via Docker and will
     ignore local environment variables.
     For example if you set up a different database name in your ``.env.test`` file
     (``DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/test``) and if you run
-    ``symfony console doctrine:database:drop --force --env=test`` the command will drop the database
+    ``symfony console doctrine:database:drop --force --env=test``, the command will drop the database
     defined in your Docker configuration and not the "test" one.
 
 SymfonyCloud Integration
