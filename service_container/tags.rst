@@ -596,8 +596,9 @@ Tagged Services with Priority
 
     The ability to prioritize tagged services was introduced in Symfony 4.4.
 
-The tagged services can be prioritized using the ``priority`` attribute,
-thus providing a way to inject a sorted collection of services:
+The tagged services can be prioritized using the ``priority`` attribute.
+The priority is a positive or negative integer. The higher the number,
+the earlier the tagged service will be located in the collection:
 
 .. configuration-block::
 
@@ -655,7 +656,7 @@ service itself::
         }
     }
 
-If you want to have another method defining the priority 
+If you want to have another method defining the priority
 (e.g. ``getPriority()`` rather than ``getDefaultPriority()``),
 you can define it in the configuration of the collecting service:
 
