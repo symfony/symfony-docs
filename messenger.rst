@@ -695,7 +695,7 @@ be discarded. To avoid this happening, you can instead configure a ``failure_tra
                 transports:
                     # ... other transports
 
-                    failed: 'doctrine://default?queue_name=failed'
+                    failed: '%env(MESSENGER_TRANSPORT_DSN)%?queue_name=failed'
 
 In this example, if handling a message fails 3 times (default ``max_retries``),
 it will then be sent to the ``failed`` transport. While you *can* use
