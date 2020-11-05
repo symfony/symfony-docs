@@ -1300,7 +1300,7 @@ Amazon SQS
 
 .. versionadded:: 5.1
 
-    The Amazon SQS transport has been introduced in Symfony 5.1.
+    The Amazon SQS transport was introduced in Symfony 5.1.
 
 The Amazon SQS transport is perfect for application hosted on AWS. Install it by
 running:
@@ -1328,10 +1328,9 @@ The SQS transport DSN may looks like this:
     name into an AWS queue URL by calling the ``GetQueueUrl`` API in AWS. This
     extra API call can be avoided by providing a DSN which is the queue URL.
 
-.. versionadded:: 5.2
+    .. versionadded:: 5.2
 
-    Providing a DSN equals to the queue URL to avoid call to ``GetQueueUrl``
-    has been introduced in Symfony 5.2.
+        The feature to provide the queue URL in the DSN was introduced in Symfony 5.2.
 
 The transport has a number of options:
 
