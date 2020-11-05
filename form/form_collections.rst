@@ -242,7 +242,13 @@ the following ``data-prototype`` attribute to the existing ``<ul>`` in your temp
 
 .. code-block:: html+twig
 
-    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
+
+Now add a button just next to the ``<ul>`` to dynamically add a new tag
+
+.. code-block:: html+twig
+
+    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
 
 On the rendered page, the result will look something like this:
 
@@ -285,27 +291,18 @@ will be show next):
 
 .. code-block:: javascript
 
-    var $collectionHolder;
-
-    // setup an "add a tag" link
-    var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
-    var $newLinkLi = $('<li></li>').append($addTagButton);
-
     jQuery(document).ready(function() {
         // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.tags');
-
-        // add the "add a tag" anchor and li to the tags ul
-        $collectionHolder.append($newLinkLi);
-
+        var $tagsCollectionHolder = $('ul.tags');
         // count the current form inputs we have (e.g. 2), use that as the new
         // index when inserting a new item (e.g. 2)
-        $collectionHolder.data('index', $collectionHolder.find('input').length);
+        $tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
 
-        $addTagButton.on('click', function(e) {
+        $('body').on('click', '.add_item_link', function(e) {
+            var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
             // add a new tag form (see next code block)
-            addTagForm($collectionHolder, $newLinkLi);
-        });
+            addFormToCollection($collectionHolderClass);
+        })
     });
 
 The ``addTagForm()`` function's job will be to use the ``data-prototype`` attribute
@@ -319,7 +316,10 @@ one example:
 
 .. code-block:: javascript
 
-    function addTagForm($collectionHolder, $newLinkLi) {
+    function addFormToCollection($collectionHolderClass) {
+        // Get the ul that holds the collection of tags
+        var $collectionHolder = $('.' + $collectionHolderClass);
+
         // Get the data-prototype explained earlier
         var prototype = $collectionHolder.data('prototype');
 
@@ -341,7 +341,8 @@ one example:
 
         // Display the form in the page in an li, before the "Add a tag" link li
         var $newFormLi = $('<li></li>').append(newForm);
-        $newLinkLi.before($newFormLi);
+        // Add the new form at the end of the list
+        $collectionHolder.append($newFormLi)
     }
 
 .. note::
