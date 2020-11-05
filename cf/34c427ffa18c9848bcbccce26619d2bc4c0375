@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by armin-github at 2020-02-27T17:24:48Z
+
+In the patch: the title 'The Context parameter of XmlEncoder' will probably need to be entirely underlined with the correct markup (~~~~~~~~~~~~~~~~~~), so the markup test will pass.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-27T21:02:23Z
+
+Thanks for your contribution, however I am unable to see the real difference, as most of the content is just moved around.
+
+Can you please point me to the lines which makes sth more clear than before? Thanks
+
+---------------------------------------------------------------------------
+
+by armin-github at 2020-02-27T21:19:22Z
+
+Sure!
+The original issue (#11786) point out the repeated entry regarding XMLEncoder in the documentation. The original documentation is split regarding this into two separate sections which is indeed confusing. what I have done is basically merging the two sections into one in an order that is now easier to follow for the reader.
