@@ -408,6 +408,45 @@ and ``removeChild()`` methods to access to the ``children`` property.
 
 If available, *adder* and *remover* methods have priority over a *setter* method.
 
+Using non-standard adder/remover methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`` prefix, like in this example::
+
+    // ...
+    class PeopleList
+    {
+        // ...
+
+        public function joinPeople(string $people): void
+        {
+            $this->peoples[] = $people;
+        }
+
+        public function leavePeople(string $people): void
+        {
+            foreach ($this->peoples as $id => $item) {
+                if ($people === $item) {
+                    unset($this->peoples[$id]);
+                    break;
+                }
+            }
+        }
+    }
+
+    use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+    use Symfony\Component\PropertyAccess\PropertyAccessor;
+
+    $list = new PeopleList();
+    $reflectionExtractor = new ReflectionExtractor(null, null, ['join', 'leave']);
+    $propertyAccessor = new PropertyAccessor(false, false, null, true, $reflectionExtractor, $reflectionExtractor);
+    $propertyAccessor->setValue($person, 'peoples', ['kevin', 'wouter']);
+
+    var_dump($person->getPeoples()); // ['kevin', 'wouter']
+
+Instead of calling ``add<SingularOfThePropertyName>()`` and ``remove<SingularOfThePropertyName>()``, the PropertyAccess
+component will call ``join<SingularOfThePropertyName>()`` and ``leave<SingularOfThePropertyName>()`` methods.
+
 Checking Property Paths
 -----------------------
 
