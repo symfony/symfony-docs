@@ -144,18 +144,30 @@ The configuration to tell the container it should do so would be like:
         $container->register(MessageGenerator::class)
             ->addMethodCall('withLogger', [new Reference('logger')], true);
 
-If autowire is enabled, you can also use annotations; with the previous exemple it would be::
+.. tip::
 
-    /**
-     * @required
-     * @return static
-     */
-    public function withLogger(LoggerInterface $logger)
-    {
-        $new = clone $this;
-        $new->logger = $logger;
+    If autowire is enabled, you can also use annotations; with the previous
+    example it would be::
 
-        return $new;
-    }
+        /**
+         * @required
+         * @return static
+         */
+        public function withLogger(LoggerInterface $logger)
+        {
+            $new = clone $this;
+            $new->logger = $logger;
 
-You can also leverage the PHP8 ``static`` return type instead of the ``@return static`` annotation. Note if you don't want a method with a PHP8 ``static`` return type and a ``@required`` annotation to behave as a wither, you can add a ``@return $this`` annotation to disable the *returns clone* feature.
+            return $new;
+        }
+
+    You can also leverage the PHP 8 ``static`` return type instead of the
+    ``@return static`` annotation. If you don't want a method with a
+    PHP 8 ``static`` return type and a ``@required`` annotation to behave as
+    a wither, you can add a ``@return $this`` annotation to disable the
+    *returns clone* feature.
+
+    .. versionadded:: 5.1
+
+        Support for the PHP 8 ``static`` return type was introduced in
+        Symfony 5.1.
