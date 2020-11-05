@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-22T11:47:05Z
+
+Fyi: Marked as "waiting code merge" as I think it depends on https://github.com/symfony/symfony/pull/38515
+
+---------------------------------------------------------------------------
+
+by Korbeil at 2020-10-22T11:49:39Z
+
+@wouterj I does not depends on that PR, it was dependant on https://github.com/symfony/symfony/pull/30704 which I finished a long time ago ^^
+The PR you linked is only DX to make that overwrite easier (but not covered in this documentation).
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-22T12:00:49Z
+
+Oh, I'm sorry. I thought that PR only did changes to PropertyInfo and missed the big changes to the PropertyAccessor.
+
+---------------------------------------------------------------------------
+
+by Korbeil at 2020-10-23T11:46:18Z
+
+@wouterj I made all requested changes
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-31T23:28:16Z
+
+Hi @Korbeil. I was about to merge this PR but I'm lost in all the core commits and PRs again.. This PR has got the "4.4" milestone, which makes me think it should be merged in 4.4. But it appears like the feature is introduced in 5.1. Can you please confirm which version should be used?
+
+---------------------------------------------------------------------------
+
+by Korbeil at 2020-11-01T20:37:22Z
+
+@wouterj, As you can see in related PR: https://github.com/symfony/symfony/pull/30704 It was firstly tagged in `v5.1.0-BETA1`
+
+Or maybe it's my github enhanced addon that shows it ?
+![image](https://user-images.githubusercontent.com/944409/97814832-5f028f80-1c8a-11eb-8e6c-312843df55ac.png)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-01T21:26:54Z
+
+Oh, I don't have that feature. That seems extremely useful :smile:
+
+![image](https://user-images.githubusercontent.com/749025/97815811-1a2e2700-1c91-11eb-9fc4-27781b253f21.png)
+
+You probably submitted this PR when 4.4 was in development, causing a doc team member to flag it as `4.4` a bit too quickly. I'll merge in 5.1 then, thanks for confirming.
