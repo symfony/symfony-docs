@@ -280,14 +280,12 @@ On the rendered page, the result will look something like this:
     and you need to adjust the following JavaScript accordingly.
 
 The goal of this section will be to use JavaScript to read this attribute
-and dynamically add new tag forms when the user clicks a "Add a tag" link.
+and dynamically add new tag forms when the user clicks the "Add a tag" button.
 This example uses jQuery and assumes you have it included somewhere on your page.
 
-Add a ``script`` tag somewhere on your page so you can start writing some JavaScript.
-
-First, add a link to the bottom of the "tags" list via JavaScript. Second,
-bind to the "click" event of that link so you can add a new tag form (``addTagForm()``
-will be show next):
+Add a ``script`` tag somewhere on your page so you can start writing some
+JavaScript. In this script, bind to the "click" event of the "Add a tag"
+button so you can add a new tag form (``addFormToCollection()`` will be show next):
 
 .. code-block:: javascript
 
