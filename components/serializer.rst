@@ -841,8 +841,20 @@ The ``XmlEncoder`` will encode this object like that::
         <bar>1</bar>
     </response>
 
-Be aware that this encoder will consider keys beginning with ``@`` as attributes, and will use
-the key  ``#comment`` for encoding XML comments::
+The special ``#`` key can be used to define the data of a node::
+
+    ['foo' => ['@bar' => 'value', '#' => 'baz']];
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value">
+    //        baz
+    //     </foo>
+    // </response>
+
+Furthermore, keys beginning with ``@`` will be considered attributes, and
+the key  ``#comment`` can be used for encoding XML comments::
 
     $encoder = new XmlEncoder();
     $encoder->encode([
@@ -868,6 +880,34 @@ always as a collection.
     Data with ``#comment`` keys are encoded to XML comments by default. This can be
     changed with the optional ``$encoderIgnoredNodeTypes`` argument of the
     ``XmlEncoder`` class constructor.
+
+The ``XmlEncoder`` Context Options
+..................................
+
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the XmlEncoder an associative array::
+
+    $xmlEncoder->encode($array, 'xml', $context);
+
+These are the options available:
+
+``xml_format_output``
+    If set to true, formats the generated XML with line breaks and indentation.
+
+``xml_version``
+    Sets the XML version attribute (default: ``1.1``).
+
+``xml_encoding``
+    Sets the XML encoding attribute (default: ``utf-8``).
+
+``xml_standalone``
+    Adds standalone attribute in the generated XML (default: ``true``).
+
+``xml_root_node_name``
+    Sets the root node name (default: ``response``).
+
+``remove_empty_tags``
+    If set to true, removes all empty tags in the generated XML (default: ``false``).
 
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
@@ -1192,72 +1232,6 @@ you indicate that you're expecting an array instead of a single object::
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
-The ``XmlEncoder``
-------------------
-
-This encoder transforms arrays into XML and vice versa. For example, take an
-object normalized as following::
-
-    ['foo' => [1, 2], 'bar' => true];
-
-The ``XmlEncoder`` encodes this object as follows:
-
-.. code-block:: xml
-
-    <?xml version="1.0"?>
-    <response>
-        <foo>1</foo>
-        <foo>2</foo>
-        <bar>1</bar>
-    </response>
-
-The array keys beginning with ``@`` are considered XML attributes::
-
-    ['foo' => ['@bar' => 'value']];
-
-    // is encoded as follows:
-    // <?xml version="1.0"?>
-    // <response>
-    //     <foo bar="value"/>
-    // </response>
-
-Use the special ``#`` key to define the data of a node::
-
-    ['foo' => ['@bar' => 'value', '#' => 'baz']];
-
-    // is encoded as follows:
-    // <?xml version="1.0"?>
-    // <response>
-    //     <foo bar="value">baz</foo>
-    // </response>
-
-Context
-~~~~~~~
-
-The ``encode()`` method defines a third optional parameter called ``context``
-which defines the configuration options for the XmlEncoder an associative array::
-
-    $xmlEncoder->encode($array, 'xml', $context);
-
-These are the options available:
-
-``xml_format_output``
-    If set to true, formats the generated XML with line breaks and indentation.
-
-``xml_version``
-    Sets the XML version attribute (default: ``1.1``).
-
-``xml_encoding``
-    Sets the XML encoding attribute (default: ``utf-8``).
-
-``xml_standalone``
-    Adds standalone attribute in the generated XML (default: ``true``).
-
-``xml_root_node_name``
-    Sets the root node name (default: ``response``).
-
-``remove_empty_tags``
-    If set to true, removes all empty tags in the generated XML (default: ``false``).
 
 The ``CsvEncoder``
 ------------------
