@@ -129,7 +129,7 @@ the number of requests to the API::
     class ApiController extends AbstractController
     {
         // if you're using service autowiring, the variable name must be:
-        // "rate limiter name" (in camelCase) + "limiter" suffix
+        // "rate limiter name" (in camelCase) + "Limiter" suffix
         public function index(RateLimiterFactory $anonymousApiLimiter)
         {
             // create a limiter based on a unique identifier of the client
