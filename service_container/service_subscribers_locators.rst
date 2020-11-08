@@ -87,7 +87,7 @@ a PSR-11 ``ContainerInterface``::
             $this->locator = $locator;
         }
 
-        public static function getSubscribedServices()
+        public static function getSubscribedServices(): array
         {
             return [
                 'App\FooCommand' => FooHandler::class,
@@ -130,7 +130,7 @@ service locator::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -142,7 +142,7 @@ Service types can also be keyed by a service name for internal use::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -159,7 +159,7 @@ typically happens when extending ``AbstractController``::
 
     class MyController extends AbstractController
     {
-        public static function getSubscribedServices()
+        public static function getSubscribedServices(): array
         {
             return array_merge(parent::getSubscribedServices(), [
                 // ...
@@ -176,7 +176,7 @@ errors if there's no matching service found in the service container::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -395,7 +395,7 @@ will share identical locators among all the services referencing them::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         // ...
 

@@ -29,7 +29,7 @@ Start by creating a ROT13 transformer class::
 
     class Rot13Transformer
     {
-        public function transform($value)
+        public function transform(string $value): string
         {
             return str_rot13($value);
         }
@@ -41,6 +41,7 @@ And now a Twitter client using this transformer::
     namespace App\Service;
 
     use App\Util\Rot13Transformer;
+    // ...
 
     class TwitterClient
     {
@@ -51,7 +52,7 @@ And now a Twitter client using this transformer::
             $this->transformer = $transformer;
         }
 
-        public function tweet($user, $key, $status)
+        public function tweet(User $user, string $key, string $status): void
         {
             $transformedStatus = $this->transformer->transform($status);
 
@@ -129,6 +130,8 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
 
     use App\Service\TwitterClient;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
@@ -136,7 +139,7 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
         /**
          * @Route("/tweet", methods={"POST"})
          */
-        public function tweet(TwitterClient $twitterClient)
+        public function tweet(TwitterClient $twitterClient, Request $request): Response
         {
             // fetch $user, $key, $status from the POST'ed data
 
@@ -288,7 +291,7 @@ To follow this best practice, suppose you decide to create a ``TransformerInterf
 
     interface TransformerInterface
     {
-        public function transform($value);
+        public function transform(string $value): string;
     }
 
 Then, you update ``Rot13Transformer`` to implement it::
@@ -388,7 +391,7 @@ Suppose you create a second class - ``UppercaseTransformer`` that implements
 
     class UppercaseTransformer implements TransformerInterface
     {
-        public function transform($value)
+        public function transform(string $value): string
         {
             return strtoupper($value);
         }
@@ -426,7 +429,7 @@ the injection::
             $this->transformer = $shoutyTransformer;
         }
 
-        public function toot($user, $key, $status)
+        public function toot(User $user, string $key, string $status): void
         {
             $transformedStatus = $this->transformer->transform($status);
 
@@ -565,12 +568,12 @@ to inject the ``logger`` service, and decide to use setter-injection::
         /**
          * @required
          */
-        public function setLogger(LoggerInterface $logger)
+        public function setLogger(LoggerInterface $logger): void
         {
             $this->logger = $logger;
         }
 
-        public function transform($value)
+        public function transform(string $value): string
         {
             $this->logger->info('Transforming '.$value);
             // ...

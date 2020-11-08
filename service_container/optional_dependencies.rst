@@ -113,7 +113,7 @@ In YAML, the special ``@?`` syntax tells the service container that the
 dependency is optional. The ``NewsletterManager`` must also be rewritten by
 adding a ``setLogger()`` method::
 
-        public function setLogger(LoggerInterface $logger)
+        public function setLogger(LoggerInterface $logger): void
         {
             // ...
         }

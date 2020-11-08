@@ -22,7 +22,7 @@ example::
     {
         private $logger;
 
-        public function setLogger(LoggerInterface $logger)
+        public function setLogger(LoggerInterface $logger): void
         {
             $this->logger = $logger;
         }
@@ -97,7 +97,7 @@ instead of mutating the object they were called on::
         /**
          * @return static
          */
-        public function withLogger(LoggerInterface $logger)
+        public function withLogger(LoggerInterface $logger): self
         {
             $new = clone $this;
             $new->logger = $logger;
