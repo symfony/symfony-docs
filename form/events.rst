@@ -308,7 +308,7 @@ callback for better readability::
     // ...
     class SubscriptionType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('username', TextType::class)
@@ -320,7 +320,7 @@ callback for better readability::
             ;
         }
 
-        public function onPreSetData(FormEvent $event)
+        public function onPreSetData(FormEvent $event): void
         {
             // ...
         }
@@ -347,7 +347,7 @@ Consider the following example of a form event subscriber::
 
     class AddEmailFieldListener implements EventSubscriberInterface
     {
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 FormEvents::PRE_SET_DATA => 'onPreSetData',
@@ -355,7 +355,7 @@ Consider the following example of a form event subscriber::
             ];
         }
 
-        public function onPreSetData(FormEvent $event)
+        public function onPreSetData(FormEvent $event): void
         {
             $user = $event->getData();
             $form = $event->getForm();
@@ -367,7 +367,7 @@ Consider the following example of a form event subscriber::
             }
         }
 
-        public function onPreSubmit(FormEvent $event)
+        public function onPreSubmit(FormEvent $event): void
         {
             $user = $event->getData();
             $form = $event->getForm();

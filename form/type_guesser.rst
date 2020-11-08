@@ -40,22 +40,24 @@ Start by creating the class and these methods. Next, you'll learn how to fill ea
     namespace App\Form\TypeGuesser;
 
     use Symfony\Component\Form\FormTypeGuesserInterface;
+    use Symfony\Component\Form\Guess\TypeGuess;
+    use Symfony\Component\Form\Guess\ValueGuess;
 
     class PHPDocTypeGuesser implements FormTypeGuesserInterface
     {
-        public function guessType($class, $property)
+        public function guessType($class, $property): ?TypeGuess
         {
         }
 
-        public function guessRequired($class, $property)
+        public function guessRequired($class, $property): ?ValueGuess
         {
         }
 
-        public function guessMaxLength($class, $property)
+        public function guessMaxLength($class, $property): ?ValueGuess
         {
         }
 
-        public function guessPattern($class, $property)
+        public function guessPattern($class, $property): ?ValueGuess
         {
         }
     }
@@ -94,7 +96,7 @@ With this knowledge, you can implement the ``guessType()`` method of the
 
     class PHPDocTypeGuesser implements FormTypeGuesserInterface
     {
-        public function guessType($class, $property)
+        public function guessType($class, $property): ?TypeGuess
         {
             $annotations = $this->readPhpDocAnnotations($class, $property);
 
@@ -129,7 +131,7 @@ With this knowledge, you can implement the ``guessType()`` method of the
             }
         }
 
-        protected function readPhpDocAnnotations($class, $property)
+        protected function readPhpDocAnnotations(string $class, string $property): array
         {
             $reflectionProperty = new \ReflectionProperty($class, $property);
             $phpdoc = $reflectionProperty->getDocComment();
