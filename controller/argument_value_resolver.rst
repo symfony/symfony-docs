@@ -4,11 +4,11 @@
 Extending Action Argument Resolving
 ===================================
 
-In the :doc:`controller guide </controller>`, you've learned that you can get the
+In the :doc:`controll er guide </cont  roller>`,  you've learned that you can get the
 :class:`Symfony\\Component\\HttpFoundation\\Request` object via an argument in
 your controller. This argument has to be type-hinted by the ``Request`` class
-in order to be recognized. This is done via the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`. By
+in order to be rec ognized. This is done via the
+:class:`Symfony\\Component\\HttpKernel \\Controller\\ArgumentResolver`. By
 creating and registering custom argument value resolvers, you can extend this
 functionality.
 
