@@ -878,6 +878,34 @@ The ``CsvEncoder``
 
 The ``CsvEncoder`` encodes to and decodes from CSV.
 
+The ``CsvEncoder`` Context Options
+..................................
+
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the CsvEncoder an associative array::
+
+    $csvEncoder->encode($array, 'csv', $context);
+
+These are the options available:
+
+======================= ====================================================  ==========================
+Option                  Description                                           Default
+======================= ====================================================  ==========================
+``csv_delimiter``       Sets the field delimiter separating values (one       ``,``
+                        character only)
+``csv_enclosure``       Sets the field enclosure (one character only)         ``"``
+``csv_escape_char``     Sets the escape character (at most one character)
+``csv_key_separator``   Sets the separator for array's keys during its        ``.``
+                        flattening
+``csv_headers``         Sets the headers for the data                         ``[]``, inferred from input data's keys
+``csv_escape_formulas`` Escapes fields containg formulas by prepending them   ``false``
+                        with a ``\t`` character
+``as_collection``       Always returns results as a collection, even if only
+                        one line is decoded.
+``no_headers``          Disables header in the encoded CSV                    ``false``
+``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data  ``false``
+======================= ====================================================  ==========================
+
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
 
@@ -945,23 +973,18 @@ which defines the configuration options for the XmlEncoder an associative array:
 
 These are the options available:
 
-``xml_format_output``
-    If set to true, formats the generated XML with line breaks and indentation.
-
-``xml_version``
-    Sets the XML version attribute (default: ``1.1``).
-
-``xml_encoding``
-    Sets the XML encoding attribute (default: ``utf-8``).
-
-``xml_standalone``
-    Adds standalone attribute in the generated XML (default: ``true``).
-
-``xml_root_node_name``
-    Sets the root node name (default: ``response``).
-
-``remove_empty_tags``
-    If set to true, removes all empty tags in the generated XML (default: ``false``).
+======================  ==================================================== ==========================
+Option                  Description                                          Default
+======================  ==================================================== ==========================
+``xml_format_output``   If set to true, formats the generated XML with line
+                        breaks and indentation.
+``xml_version``         Sets the XML version attribute                       ``1.1``
+``xml_encoding``        Sets the XML encoding attribute                      ``utf-8``
+``xml_standalone``      Adds standalone attribute in the generated XML       ``true``
+``xml_root_node_name``  Sets the root node name (default: ``response``).
+``remove_empty_tags``   If set to true, removes all empty tags in the        ``false``
+                        generated XML
+======================  ==================================================== ==========================
 
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
@@ -1273,49 +1296,6 @@ you indicate that you're expecting an array instead of a single object::
 
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
-
-
-The ``CsvEncoder``
-------------------
-
-This encoder transforms arrays into CSV and vice versa.
-
-Context
-~~~~~~~
-
-The ``encode()`` method defines a third optional parameter called ``context``
-which defines the configuration options for the CsvEncoder an associative array::
-
-    $csvEncoder->encode($array, 'csv', $context);
-
-These are the options available:
-
-``csv_delimiter``
-    Sets the field delimiter separating values (one character only, default: ``,``).
-
-``csv_enclosure``
-    Sets the field enclosure (one character only, default: ``"``).
-
-``csv_escape_char``
-    Sets the escape character (at most one character, default: empty string).
-
-``csv_key_separator``
-    Sets the separator for array's keys during its flattening (default: ``.``).
-
-``csv_headers``
-    Sets the headers for the data (default: ``[]``, inferred from input data's keys).
-
-``csv_escape_formulas``
-    Escapes fields containg formulas by prepending them with a ``\t`` character (default: ``false``).
-
-``as_collection``
-    Always returns results as a collection, even if only one line is decoded.
-
-``no_headers``
-    Disables header in the encoded CSV (default: ``false``).
-
-``output_utf8_bom``
-    Outputs special `UTF-8 BOM`_ along with encoded data (default: ``false``).
 
 Handling Constructor Arguments
 ------------------------------
