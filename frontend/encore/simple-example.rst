@@ -17,9 +17,9 @@ application: it will *require* all of the dependencies it needs (e.g. jQuery or 
     // assets/app.js
     // ...
 
-    import '../css/app.css';
+    import './styles/app.css';
 
-    // var $ = require('jquery');
+    // import $ from 'jquery';
 
 Encore's job (via Webpack) is simple: to read and follow *all* of the ``require()``
 statements and create one final ``app.js`` (and ``app.css``) that contains *everything*
@@ -204,8 +204,8 @@ To import values, use ``import``:
 .. code-block:: diff
 
     // assets/app.js
-    - require('../css/app.css');
-    + import '../css/app.css';
+    - require('../styles/app.css');
+    + import './styles/app.css';
 
     - var $ = require('jquery');
     + import $ from 'jquery';
@@ -292,8 +292,8 @@ file to ``app.scss`` and update the ``import`` statement:
 .. code-block:: diff
 
     // assets/app.js
-    - import '../css/app.css';
-    + import '../css/app.scss';
+    - import './styles/app.css';
+    + import './styles/app.scss';
 
 Then, tell Encore to enable the Sass pre-processor:
 
