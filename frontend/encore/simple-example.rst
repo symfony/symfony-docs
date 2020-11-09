@@ -17,7 +17,7 @@ application: it will *require* all of the dependencies it needs (e.g. jQuery or 
     // assets/app.js
     // ...
 
-    import '../css/app.css';
+    import './styles/app.css';
 
     // var $ = require('jquery');
 
