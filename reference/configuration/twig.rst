@@ -294,7 +294,7 @@ no specific character is passed as argument to the ``number_format`` filter.
 optimizations
 ~~~~~~~~~~~~~
 
-**type**: ``int`` **default**: ``-1``
+**type**: ``integer`` **default**: ``-1``
 
 Twig includes an extension called ``optimizer`` which is enabled by default in
 Symfony applications. This extension analyzes the templates to optimize them
