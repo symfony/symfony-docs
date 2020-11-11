@@ -269,7 +269,7 @@ every ``number_format`` filter call.
 decimals
 ........
 
-**type**: ``integer`` **default**: ``0``
+**type**: ``int`` **default**: ``0``
 
 The number of decimals used to format numeric values when no specific number is
 passed as argument to the ``number_format`` filter.
