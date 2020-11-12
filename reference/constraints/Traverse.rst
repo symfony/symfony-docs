@@ -146,7 +146,7 @@ The ``groups`` option is not available for this constraint.
 ``traverse``
 ~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 Instances of ``\Traversable`` are traversed by default, use this option to
 disable validating:
