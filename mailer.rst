@@ -605,7 +605,7 @@ arguments to the filter:
 
 .. code-block:: html+twig
 
-    {% apply inline_css(source('@css/email.css')) %}
+    {% apply inline_css(source('@styles/email.css')) %}
         <h1>Welcome {{ username }}!</h1>
         {# ... #}
     {% endapply %}
