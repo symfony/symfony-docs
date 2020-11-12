@@ -101,7 +101,7 @@ with the ``choice_translation_locale`` option.
 ``regions``
 ~~~~~~~~~~~
 
-**type**: ``int`` **default**: ``\DateTimeZone::ALL``
+**type**: ``integer`` **default**: ``\DateTimeZone::ALL``
 
 .. deprecated:: 4.2
 

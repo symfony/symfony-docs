@@ -829,7 +829,7 @@ outgoing network interface.
 buffer
 ......
 
-**type**: ``bool`` | ``Closure``
+**type**: ``boolean`` | ``Closure``
 
 Buffering the response means that you can access its content multiple times
 without performing the request again. Buffering is enabled by default when the
@@ -2960,7 +2960,7 @@ Name of the workflow you want to create.
 audit_trail
 """""""""""
 
-**type**: ``bool``
+**type**: ``boolean``
 
 If set to ``true``, the :class:`Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener`
 will be enabled.
