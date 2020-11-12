@@ -382,6 +382,8 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
 
 Read more about :ref:`template directories and namespaces <templates-namespaces>`.
 
+.. _config-twig-strict-variables:
+
 strict_variables
 ~~~~~~~~~~~~~~~~
 

@@ -164,7 +164,9 @@ in the following order:
 #. ``$foo->getBar()`` (object and *getter* method);
 #. ``$foo->isBar()`` (object and *isser* method);
 #. ``$foo->hasBar()`` (object and *hasser* method);
-#. If none of the above exists, use ``null`` or throw a ``Twig\Error\RuntimeError`` exception if ``strict_variables`` config is enabled.
+#. If none of the above exists, use ``null`` (or throw a ``Twig\Error\RuntimeError``
+   exception if the :ref:`strict_variables <config-twig-strict-variables>`
+   option is enabled).
 
 This allows to evolve your application code without having to change the
 template code (you can start with array variables for the application proof of
