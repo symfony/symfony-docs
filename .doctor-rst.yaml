@@ -34,6 +34,7 @@ rules:
     short_array_syntax: ~
     space_between_label_and_link_in_doc: ~
     space_between_label_and_link_in_ref: ~
+    string_replacement: ~
     typo: ~
     unused_links: ~
     use_deprecated_directive_instead_of_versionadded: ~
