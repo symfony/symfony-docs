@@ -85,7 +85,7 @@ Options
 allowNull
 ~~~~~~~~~
 
-**type**: ``bool`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If set to ``true``, ``null`` values are considered valid and won't trigger a
 constraint violation.

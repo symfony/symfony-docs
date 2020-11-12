@@ -49,7 +49,7 @@ Field Options
 html5
 ~~~~~
 
-**type**: ``bool`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 5.1
 

@@ -117,7 +117,7 @@ Parameter        Description
 ``requireTld``
 ~~~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 By default, hostnames are considered valid only when they are fully qualified
 and include their TLDs (top-level domain names). For instance, ``example.com``
