@@ -40,7 +40,7 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
     namespace App\Action;
 
     use App\Message\ListItemsQuery;
-    use App\MessageHandler\ListItemsQueryResult;
+    use App\MessageHandler\ListItemsResult;
     use Symfony\Component\Messenger\HandleTrait;
     use Symfony\Component\Messenger\MessageBusInterface;
 
