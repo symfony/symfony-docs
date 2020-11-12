@@ -47,7 +47,7 @@ This command also creates the following configuration file:
 
     # config/routes/annotations.yaml
     controllers:
-        resource: '../../src/Controller/'
+        resource: ../../src/Controller/
         type: annotation
 
     kernel:
