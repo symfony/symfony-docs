@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-12T08:55:38Z
+
+@ybenhssaien thanks for this contribution! However, the fix should be the opposite. We use `**type**: integer` everywhere, so we should update the occurrences of `**type**: int`  Could you please update this PR to do that changes? Thanks!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-11-12T09:24:01Z
+
+@javiereguiluz I created a new rule for this case
+https://github.com/OskarStark/doctor-rst/pull/811
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-11-12T10:38:59Z
+
+@ybenhssaien would you like to fix `**type**: bool` to `**type**: boolean` too?
+
+You can see what needs to be fixed for `4.4` in https://github.com/symfony/symfony-docs/pull/14536/checks?check_run_id=1389913297
+
+---------------------------------------------------------------------------
+
+by ybenhssaien at 2020-11-12T11:09:28Z
+
+Done for `twig.rst` I will do it for th rest of pages .. in progress
+
+---------------------------------------------------------------------------
+
+by ybenhssaien at 2020-11-12T13:20:52Z
+
+@OskarStark done
