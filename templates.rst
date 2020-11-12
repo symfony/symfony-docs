@@ -118,8 +118,8 @@ Template Naming
 
 Symfony recommends the following for template names:
 
-* Use `snake case`_ for filenames and directories (e.g. ``blog_posts.twig``,
-  ``admin/default_theme/blog/index.twig``, etc.);
+* Use `snake case`_ for filenames and directories (e.g. ``blog_posts.html.twig``,
+  ``admin/default_theme/blog/index.html.twig``, etc.);
 * Define two extensions for filenames (e.g. ``index.html.twig`` or
   ``blog_posts.xml.twig``) being the first extension (``html``, ``xml``, etc.)
   the final format that the template will generate.
