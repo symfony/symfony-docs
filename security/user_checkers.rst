@@ -21,7 +21,7 @@ are not met, an exception should be thrown which extends the
     namespace AppBundle\Security;
 
     use AppBundle\Exception\AccountDeletedException;
-    use AppBundle\Security\User as AppUser;
+    use AppBundle\Entity\User as AppUser;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
     use Symfony\Component\Security\Core\User\UserCheckerInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
