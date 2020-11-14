@@ -21,8 +21,8 @@ or :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationExceptio
 
     namespace App\Security;
 
+    use App\Entity\User as AppUser;
     use App\Exception\AccountDeletedException;
-    use App\Security\User as AppUser;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
     use Symfony\Component\Security\Core\User\UserCheckerInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
