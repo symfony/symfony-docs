@@ -41,6 +41,19 @@ more word characters at the beginning of your string:
             protected $description;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Regex("/^\w+/")]
+            protected $description;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -107,6 +120,23 @@ it a custom message:
              *     message="Your name cannot contain a number"
              * )
              */
+            protected $firstName;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Regex(
+                pattern: "/\d/",
+                match: false,
+                message: "Your name cannot contain a number"
+            )]
             protected $firstName;
         }
 
@@ -200,6 +230,22 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
              *     htmlPattern = "^[a-zA-Z]+$"
              * )
              */
+            protected $name;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Regex(
+                pattern: "/^[a-z]+$/i",
+                match: "^[a-zA-Z]+$"
+            )]
             protected $name;
         }
 

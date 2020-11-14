@@ -43,6 +43,21 @@ Basic Usage
             protected $locale;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            #[Assert\Locale(
+                canonicalize: true
+            )]
+            protected $locale;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

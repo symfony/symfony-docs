@@ -40,6 +40,21 @@ will contain an International Bank Account Number.
             protected $bankAccountNumber;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Transaction.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            #[Assert\Iban(
+                message: "This is not a valid International Bank Account Number (IBAN)."
+            )]
+            protected $bankAccountNumber;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

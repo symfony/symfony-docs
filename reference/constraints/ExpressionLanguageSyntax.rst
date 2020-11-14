@@ -52,6 +52,24 @@ The following constraints ensure that:
             protected $shippingOptions;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\ExpressionLanguageSyntax]
+            protected $promotion;
+
+            #[Assert\ExpressionLanguageSyntax(
+                allowedVariables: ["user", "shipping_centers"]
+            )]
+            protected $shippingOptions;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

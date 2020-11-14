@@ -60,6 +60,24 @@ Then you can validate this method with ``IsTrue`` as follows:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            protected $token;
+
+            #[Assert\IsTrue(message: "The token is invalid.")]
+            public function isTokenValid()
+            {
+                return $this->token == $this->generateToken();
+            }
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

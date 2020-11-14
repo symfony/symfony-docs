@@ -35,6 +35,19 @@ Basic Usage
             protected $bioUrl;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url]
+            protected $bioUrl;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -124,6 +137,21 @@ Parameter        Description
             protected $bioUrl;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url(
+                message: "The url '{{ value }}' is not a valid url"
+            )]
+            protected $bioUrl;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -200,6 +228,21 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
             protected $bioUrl;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url(
+                protocols: ["http", "https", "ftp"]
+            )]
+            protected $bioUrl;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -272,6 +315,21 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
              *    relativeProtocol = true
              * )
              */
+            protected $bioUrl;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url(
+                relativeProtocol: true
+            )]
             protected $bioUrl;
         }
 

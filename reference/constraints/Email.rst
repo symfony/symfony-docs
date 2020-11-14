@@ -37,6 +37,21 @@ Basic Usage
             protected $email;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Email(
+                message: "The email '{{ value }}' is not a valid email."
+            )]
+            protected $email;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

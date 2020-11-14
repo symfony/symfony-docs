@@ -35,6 +35,19 @@ a valid currency, you could do the following:
             protected $currency;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\Currency]
+            protected $currency;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
