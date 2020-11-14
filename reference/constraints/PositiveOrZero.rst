@@ -36,6 +36,19 @@ is positive or zero:
             protected $siblings;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\PositiveOrZero]
+            protected $siblings;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

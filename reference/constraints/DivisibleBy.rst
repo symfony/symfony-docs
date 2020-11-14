@@ -53,6 +53,24 @@ The following constraints ensure that:
             protected $quantity;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Item.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Item
+        {
+            #[Assert\DivisibleBy(0.25)]
+            protected $weight;
+
+            #[Assert\DivisibleBy(
+                value: 5,
+            )]
+            protected $quantity;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

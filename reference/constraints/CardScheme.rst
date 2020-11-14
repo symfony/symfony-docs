@@ -41,6 +41,22 @@ on an object that will contain a credit card number.
             protected $cardNumber;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Transaction.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            #[Assert\CardScheme(
+                schemes: [Assert\CardScheme::VISA],
+                message: 'Your credit card number is invalid.',
+            )]
+            protected $cardNumber;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

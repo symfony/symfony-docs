@@ -43,6 +43,22 @@ on an object that will contain an ISBN.
             protected $isbn;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Book.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Book
+        {
+            #[Assert\Isbn(
+                type: Assert\Isbn::ISBN_10,
+                message: 'This value is not valid.',
+            )]
+            protected $isbn;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

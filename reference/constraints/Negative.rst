@@ -37,6 +37,19 @@ The following constraint ensures that the ``withdraw`` of a  bank account
             protected $withdraw;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/TransferItem.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class TransferItem
+        {
+            #[Assert\Negative]
+            protected $withdraw;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
