@@ -33,7 +33,6 @@ The following constraints ensure that:
 
         class Item
         {
-
             /**
              * @Assert\DivisibleBy(0.25)
              */
