@@ -181,8 +181,18 @@ which returns an instance of
     {
         protected function execute(InputInterface $input, OutputInterface $output)
         {
+            // The section() method is only available in classes that implement ConsoleOutputInterface
+            if (!$output instanceof ConsoleOutputInterface) {
+                throw new LogicException(sprintf(
+                    'This command accepts only an instance of "%s", an instance of "%s" is given',
+                    ConsoleOutputInterface::class,
+                    \get_class($output)
+                ));
+            }
+
             $section1 = $output->section();
             $section2 = $output->section();
+
             $section1->writeln('Hello');
             $section2->writeln('World!');
             // Output displays "Hello\nWorld!\n"
