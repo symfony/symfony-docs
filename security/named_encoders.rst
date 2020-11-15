@@ -52,7 +52,7 @@ to apply to all instances of a specific class:
 Another option is to use a "named" encoder and then select which encoder
 you want to use dynamically.
 
-In the previous example, you've set the ``sha512`` algorithm for ``Acme\UserBundle\Entity\User``.
+In the previous example, you've set the ``sha512`` algorithm for ``AppBundle\Entity\User``.
 This may be secure enough for a regular user, but what if you want your admins
 to have a stronger algorithm, for example ``bcrypt``. This can be done with
 named encoders:
@@ -113,8 +113,8 @@ to use it, the class must implement
 The interface requires one method - ``getEncoderName()`` - which should return
 the name of the encoder to use::
 
-    // src/Acme/UserBundle/Entity/User.php
-    namespace Acme\UserBundle\Entity;
+    // src/AppBundle/Entity/User.php
+    namespace AppBundle\Entity\User;
 
     use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
