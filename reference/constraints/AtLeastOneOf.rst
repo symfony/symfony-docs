@@ -163,7 +163,7 @@ has to be satisfied in order for the validation to succeed.
 includeInternalMessages
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If set to ``true``, the message that is shown if the validation fails,
 will include the list of messages for the internal constraints. See option
