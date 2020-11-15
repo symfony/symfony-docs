@@ -37,7 +37,7 @@ on an object that will contain an ISBN.
             /**
              * @Assert\Isbn(
              *     type = "isbn10",
-             *     message = "This value is not  valid."
+             *     message = "This value is not valid."
              * )
              */
             protected $isbn;
@@ -51,7 +51,7 @@ on an object that will contain an ISBN.
                 isbn:
                     - Isbn:
                         type: isbn10
-                        message: This value is not  valid.
+                        message: This value is not valid.
 
     .. code-block:: xml
 
@@ -65,7 +65,7 @@ on an object that will contain an ISBN.
                 <property name="isbn">
                     <constraint name="Isbn">
                         <option name="type">isbn10</option>
-                        <option name="message">This value is not  valid.</option>
+                        <option name="message">This value is not valid.</option>
                     </constraint>
                 </property>
             </class>
