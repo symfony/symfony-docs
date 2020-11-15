@@ -23,7 +23,8 @@ displayed to the user::
 
     namespace App\Security;
 
-    use App\Security\User as AppUser;
+    use App\Entity\User as AppUser;
+    use App\Exception\AccountDeletedException;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
     use Symfony\Component\Security\Core\User\UserCheckerInterface;
