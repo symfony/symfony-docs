@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-15T09:22:05Z
+
+@wkania thanks for this improvement. For future pull requests, please note that Symfony 3.4 is no longer maintained, so new pull requests should be mage against a supported branch. Here you can find the list of currently maintained branches: https://symfony.com/releases Thanks!
