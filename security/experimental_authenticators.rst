@@ -538,3 +538,40 @@ authenticator, you would initialize the passport like this::
             ]);
         }
     }
+
+.. tip::
+
+    Besides badges, passports can define attributes, which allows the
+    ``authenticate()`` method to store arbitrary information in the
+    passport to access it from other authenticator methods (e.g.
+    ``createAuthenticatedToken()``)::
+
+        // ...
+        use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+
+        class LoginAuthenticator extends AbstractAuthenticator
+        {
+            // ...
+
+            public function authenticate(Request $request): PassportInterface
+            {
+                // ... process the request
+
+                $passport = new SelfValidatingPassport($username, []);
+
+                // set a custom attribute (e.g. scope)
+                $passport->setAttribute('scope', $oauthScope);
+
+                return $passport;
+            }
+
+            public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface
+            {
+                // read the attribute value
+                return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
+            }
+        }
+
+.. versionadded:: 5.2
+
+    Passport attributes were introduced in Symfony 5.2.
