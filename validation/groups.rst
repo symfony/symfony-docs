@@ -185,3 +185,13 @@ will be applied.
 You'll usually work with validation indirectly through the form
 library. For information on how to use validation groups inside forms, see
 :doc:`/form/validation_groups`.
+
+.. caution::
+
+    When using groups on a composite constraint (like ``All`` and
+    ``Collection``), the groups will propagate to the nested constraints,
+    unless some groups are explicitely defined on these.
+
+    However, note that using a composite constraint inside another one will
+    *not* propagate the parent groups, you should explicitly redefine them on
+    the nested composite constraint.
