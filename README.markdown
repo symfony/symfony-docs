@@ -11,9 +11,9 @@ Symfony documentation, please read
 [Contributing to the Documentation](https://symfony.com/doc/current/contributing/documentation/overview.html)
 
 > **Note**
-> Unless you're documenting a feature that was introduced *after* Symfony 3.4
-> (e.g. in Symfony 4.4), all pull requests must be based off of the **3.4** branch,
-> **not** the master or older branches.
+> All pull requests must be based off of the **3.4** branch,
+> unless you're documenting a feature that was introduced *after* Symfony 3.4
+> (e.g. in Symfony 4.4), **not** the master or older branches.
 
 SymfonyCloud
 ------------
