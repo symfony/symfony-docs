@@ -318,6 +318,22 @@ value:
             ],
         ]);
 
+Enabling Circular Reference Handler
+-----------------------------------
+
+The use of the :ref:`circular reference handler <component-serializer-handling-circular-references>` service can be defined
+in the configuration using the :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>` option.
+
+A circular reference handler service has to implement the magic ``__invoke($object)`` method, like in example::
+
+    class MyCircularReferenceHandler
+    {
+        public function __invoke($object)
+        {
+            return $object->getName();
+        }
+    }
+
 Going Further with the Serializer
 ---------------------------------
 
