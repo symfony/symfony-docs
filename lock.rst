@@ -227,7 +227,7 @@ Named Lock
 ----------
 
 If the application needs different kind of Stores alongside each other, Symfony
-provides :ref:`named lock <reference-lock-resources-name>`::
+provides :ref:`named lock <reference-lock-resources-name>`:
 
 .. configuration-block::
 
