@@ -350,6 +350,16 @@ the compiling and warming up of the container:
 
     The ``--deprecations`` option was introduced in Symfony 5.1.
 
+Log Deprecations
+~~~~~~~~~~~~~~~~
+
+For turning the verbose output off and write it to a log file instead you can use
+``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
+
+.. versionadded:: 5.3
+
+    The ``logFile`` option was introduced in Symfony 5.3.
+
 Write Assertions about Deprecations
 -----------------------------------
 
