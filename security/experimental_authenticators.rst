@@ -135,6 +135,42 @@ unauthenticated access (e.g. the login page):
             ],
         ]);
 
+Granting Anonymous Users Access in a Custom Voter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``NullToken`` class was introduced in Symfony 5.2.
+
+If you're using a :doc:`custom voter </security/voters>`, you can allow
+anonymous users access by checking for a special
+:class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\NullToken`. This token is used
+in the voters to represent the unauthenticated access::
+
+    // src/Security/PostVoter.php
+    namespace App\Security;
+
+    // ...
+    use Symfony\Component\Security\Core\Authentication\Token\NullToken;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+
+    class PostVoter extends Voter
+    {
+        // ...
+
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+        {
+            // ...
+
+            if ($token instanceof NullToken) {
+                // the user is not authenticated, e.g. only allow them to
+                // see public posts
+                return $subject->isPublic();
+            }
+        }
+    }
+
 .. _authenticators-required-entry-point:
 
 Configuring the Authentication Entry Point
@@ -502,3 +538,40 @@ authenticator, you would initialize the passport like this::
             ]);
         }
     }
+
+.. tip::
+
+    Besides badges, passports can define attributes, which allows the
+    ``authenticate()`` method to store arbitrary information in the
+    passport to access it from other authenticator methods (e.g.
+    ``createAuthenticatedToken()``)::
+
+        // ...
+        use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+
+        class LoginAuthenticator extends AbstractAuthenticator
+        {
+            // ...
+
+            public function authenticate(Request $request): PassportInterface
+            {
+                // ... process the request
+
+                $passport = new SelfValidatingPassport($username, []);
+
+                // set a custom attribute (e.g. scope)
+                $passport->setAttribute('scope', $oauthScope);
+
+                return $passport;
+            }
+
+            public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface
+            {
+                // read the attribute value
+                return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
+            }
+        }
+
+.. versionadded:: 5.2
+
+    Passport attributes were introduced in Symfony 5.2.
