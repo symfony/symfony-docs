@@ -122,7 +122,7 @@ listener class:
    the ``kernel.exception`` event);
 #. If that method is not defined either, try to call the ``__invoke()`` magic
    method (which makes event listeners invokable);
-#. If the ``_invoke()`` method is not defined either, throw an exception.
+#. If the ``__invoke()`` method is not defined either, throw an exception.
 
 .. note::
 
