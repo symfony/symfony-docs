@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by ybenhssaien at 2020-11-17T09:04:06Z
+
+The base branch updated on `3.4`
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-17T09:20:06Z
+
+For your information, as 3.4 support ends in just 2 weeks, we have stopped updating the 3.4 branch already (unless major errors exists). But we can change the base to 4.4 during the merge as well, so you don't need to worry about updating it again.
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-11-17T09:26:09Z
+
+@wouterj understood, thank you for this clarification :)
