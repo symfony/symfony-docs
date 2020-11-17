@@ -249,7 +249,7 @@ optionally accepts a value, but it's a bit tricky. Consider this example::
         )
     ;
 
-This option can be used in 3 ways: ``greet --yell``, ``greet yell=louder``,
+This option can be used in 3 ways: ``greet --yell``, ``greet --yell=louder``,
 and ``greet``. However, it's hard to distinguish between passing the option
 without a value (``greet --yell``) and not passing the option (``greet``).
 
