@@ -133,7 +133,7 @@ Let's inject the ``$year`` request attribute for our controller::
     {
         public function index($year)
         {
-            if (is_leap_year($year)) {
+            if (is_leap_year($year[0])) {
                 return new Response('Yep, this is a leap year!');
             }
 
