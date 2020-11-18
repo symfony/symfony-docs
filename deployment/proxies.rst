@@ -40,16 +40,22 @@ and what headers your reverse proxy uses to send information::
         // or, if your proxy instead uses the "Forwarded" header
         // Request::HEADER_FORWARDED
 
-        // or, if you're using a wellknown proxy
+        // or, if you're using a well-known proxy
         // Request::HEADER_X_FORWARDED_AWS_ELB
         // Request::HEADER_X_FORWARDED_TRAEFIK
     );
 
+.. deprecated:: 5.2
+
+    In previous Symfony versions, the above example used ``HEADER_X_FORWARDED_ALL``
+    to trust all "X-Forwarded-*" headers, but that constant is deprecated since
+    Symfony 5.2 in favor of the individual ``HEADER_X_FORWARDED_*`` constants.
+
 .. caution::
 
     Enabling the ``Request::HEADER_X_FORWARDED_HOST`` option exposes the
-    application to "`HTTP Host header attacks`_". Make sure the proxy really
-    send a ``x-forwarded-host`` header.
+    application to `HTTP Host header attacks`_. Make sure the proxy really
+    sends an ``x-forwarded-host`` header.
 
 The Request object has several ``Request::HEADER_*`` constants that control exactly
 *which* headers from your reverse proxy are trusted. The argument is a bit field,
