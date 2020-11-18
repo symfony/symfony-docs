@@ -100,7 +100,7 @@ manual steps:
    located at ``config/services.yaml``. Copy the contents of the
    `default services.yaml file`_ and then add your own service configuration.
    Later you can revisit this file because thanks to Symfony's
-   :doc:`autowiring feature </service_container/3.3-di-changes>` you can remove
+   :doc:`autowiring feature </service_container/autowiring>` you can remove
    most of the service configuration.
 
    .. note::
