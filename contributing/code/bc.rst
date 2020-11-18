@@ -72,7 +72,7 @@ backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Type hint against the interface               | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a method                                 | Yes                         |
+| Call a method                                 | Yes [10]_                   |
 +-----------------------------------------------+-----------------------------+
 | **If you implement the interface and...**     | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
@@ -114,13 +114,13 @@ covered by our backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Access a public property                      | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a public method                          | Yes                         |
+| Call a public method                          | Yes [10]_                   |
 +-----------------------------------------------+-----------------------------+
 | **If you extend the class and...**            | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
 | Access a protected property                   | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a protected method                       | Yes                         |
+| Call a protected method                       | Yes [10]_                   |
 +-----------------------------------------------+-----------------------------+
 | Override a public property                    | Yes                         |
 +-----------------------------------------------+-----------------------------+
@@ -444,5 +444,9 @@ Turn static into non static                         No
        Changing a return type is only possible with a child type.
 
 .. [9] Allowed for the ``void`` return type.
+
+.. [10] Parameter names are not part of the compatibility promise. Using
+        PHP 8's named arguments feature might break your code when upgrading to
+        newer Symfony versions.
 
 .. _`Semantic Versioning`: https://semver.org/
