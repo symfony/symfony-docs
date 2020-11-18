@@ -35,14 +35,27 @@ and what headers your reverse proxy uses to send information::
         ['192.0.0.1', '10.0.0.0/8'],
 
         // trust *all* "X-Forwarded-*" headers
-        Request::HEADER_X_FORWARDED_ALL
+        Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO
 
         // or, if your proxy instead uses the "Forwarded" header
         // Request::HEADER_FORWARDED
 
-        // or, if you're using AWS ELB
+        // or, if you're using a well-known proxy
         // Request::HEADER_X_FORWARDED_AWS_ELB
+        // Request::HEADER_X_FORWARDED_TRAEFIK
     );
+
+.. deprecated:: 5.2
+
+    In previous Symfony versions, the above example used ``HEADER_X_FORWARDED_ALL``
+    to trust all "X-Forwarded-*" headers, but that constant is deprecated since
+    Symfony 5.2 in favor of the individual ``HEADER_X_FORWARDED_*`` constants.
+
+.. caution::
+
+    Enabling the ``Request::HEADER_X_FORWARDED_HOST`` option exposes the
+    application to `HTTP Host header attacks`_. Make sure the proxy really
+    sends an ``x-forwarded-host`` header.
 
 The Request object has several ``Request::HEADER_*`` constants that control exactly
 *which* headers from your reverse proxy are trusted. The argument is a bit field,
@@ -114,3 +127,4 @@ In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
 .. _`security groups`: https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
 .. _`CloudFront IP ranges`: https://ip-ranges.amazonaws.com/ip-ranges.json
+.. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
