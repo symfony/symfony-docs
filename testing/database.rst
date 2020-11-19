@@ -23,6 +23,13 @@ your project and define the new value for the ``DATABASE_URL`` env var:
     names in tests. If the database name in production is called ``project_acme``
     the name of the testing database could be ``project_acme_test``.
 
+If you want to configure a database in test environment, you can run:
+
+.. code-block:: terminal
+
+    $ php ./bin/console doctrine:database:create --env=test
+
+
 The above assumes that each developer/machine uses a different database for the
 tests. If the entire team uses the same settings for tests, edit or create the
 ``.env.test`` file instead and commit it to the shared repository. Learn more
