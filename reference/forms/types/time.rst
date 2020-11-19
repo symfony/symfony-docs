@@ -10,48 +10,52 @@ This can be rendered as a text field, a series of text fields (e.g. hour,
 minute, second) or a series of select fields. The underlying data can be
 stored as a ``DateTime`` object, a string, a timestamp or an array.
 
-+----------------------+-----------------------------------------------------------------------------+
-| Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
-+----------------------+-----------------------------------------------------------------------------+
-| Rendered as          | can be various tags (see below)                                             |
-+----------------------+-----------------------------------------------------------------------------+
-| Options              | - `choice_translation_domain`_                                              |
-|                      | - `placeholder`_                                                            |
-|                      | - `hours`_                                                                  |
-|                      | - `html5`_                                                                  |
-|                      | - `input`_                                                                  |
-|                      | - `input_format`_                                                           |
-|                      | - `minutes`_                                                                |
-|                      | - `model_timezone`_                                                         |
-|                      | - `reference_date`_                                                         |
-|                      | - `seconds`_                                                                |
-|                      | - `view_timezone`_                                                          |
-|                      | - `widget`_                                                                 |
-|                      | - `with_minutes`_                                                           |
-|                      | - `with_seconds`_                                                           |
-+----------------------+-----------------------------------------------------------------------------+
-| Overridden options   | - `by_reference`_                                                           |
-|                      | - `compound`_                                                               |
-|                      | - `data_class`_                                                             |
-|                      | - `error_bubbling`_                                                         |
-+----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                                   |
-| options              | - `data`_                                                                   |
-|                      | - `disabled`_                                                               |
-|                      | - `error_mapping`_                                                          |
-|                      | - `help`_                                                                   |
-|                      | - `help_attr`_                                                              |
-|                      | - `help_html`_                                                              |
-|                      | - `inherit_data`_                                                           |
-|                      | - `invalid_message`_                                                        |
-|                      | - `invalid_message_parameters`_                                             |
-|                      | - `mapped`_                                                                 |
-|                      | - `row_attr`_                                                               |
-+----------------------+-----------------------------------------------------------------------------+
-| Parent type          | FormType                                                                    |
-+----------------------+-----------------------------------------------------------------------------+
-| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
-+----------------------+-----------------------------------------------------------------------------+
++---------------------------+-----------------------------------------------------------------------------+
+| Underlying Data Type      | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
++---------------------------+-----------------------------------------------------------------------------+
+| Rendered as               | can be various tags (see below)                                             |
++---------------------------+-----------------------------------------------------------------------------+
+| Options                   | - `choice_translation_domain`_                                              |
+|                           | - `placeholder`_                                                            |
+|                           | - `hours`_                                                                  |
+|                           | - `html5`_                                                                  |
+|                           | - `input`_                                                                  |
+|                           | - `input_format`_                                                           |
+|                           | - `minutes`_                                                                |
+|                           | - `model_timezone`_                                                         |
+|                           | - `reference_date`_                                                         |
+|                           | - `seconds`_                                                                |
+|                           | - `view_timezone`_                                                          |
+|                           | - `widget`_                                                                 |
+|                           | - `with_minutes`_                                                           |
+|                           | - `with_seconds`_                                                           |
++---------------------------+-----------------------------------------------------------------------------+
+| Overridden options        | - `by_reference`_                                                           |
+|                           | - `compound`_                                                               |
+|                           | - `data_class`_                                                             |
+|                           | - `error_bubbling`_                                                         |
+|                           | - `invalid_message`_                                                        |
++---------------------------+-----------------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                                   |
+|                           | - `data`_                                                                   |
+|                           | - `disabled`_                                                               |
+|                           | - `error_mapping`_                                                          |
+|                           | - `help`_                                                                   |
+|                           | - `help_attr`_                                                              |
+|                           | - `help_html`_                                                              |
+|                           | - `inherit_data`_                                                           |
+|                           | - `invalid_message_parameters`_                                             |
+|                           | - `mapped`_                                                                 |
+|                           | - `row_attr`_                                                               |
++---------------------------+-----------------------------------------------------------------------------+
+| Default `invalid_message` | Please enter a valid time.                                                  |
++---------------------------+-----------------------------------------------------------------------------+
+| Legacy `invalid_message`  | The value {{ value }} is not valid.                                         |
++---------------------------+-----------------------------------------------------------------------------+
+| Parent type               | FormType                                                                    |
++---------------------------+-----------------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
++---------------------------+-----------------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -220,6 +224,8 @@ error_bubbling
 
 **default**: ``false``
 
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
 Inherited Options
 -----------------
 
@@ -240,8 +246,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
