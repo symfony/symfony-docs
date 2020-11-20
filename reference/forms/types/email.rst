@@ -7,32 +7,43 @@ EmailType Field
 The ``EmailType`` field is a text field that is rendered using the HTML5
 ``<input type="email"/>`` tag.
 
-+-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``email`` field (a text box)                              |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `data`_                                                           |
-|             | - `disabled`_                                                       |
-|             | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-|             | - `trim`_                                                           |
-+-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`TextType </reference/forms/types/text>`                       |
-+-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
-+-------------+---------------------------------------------------------------------+
++---------------------------+---------------------------------------------------------------------+
+| Rendered as               | ``input`` ``email`` field (a text box)                              |
++---------------------------+---------------------------------------------------------------------+
+| Overridden options        | - `invalid_message`_                                                |
++---------------------------+---------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                           |
+|                           | - `data`_                                                           |
+|                           | - `disabled`_                                                       |
+|                           | - `empty_data`_                                                     |
+|                           | - `error_bubbling`_                                                 |
+|                           | - `error_mapping`_                                                  |
+|                           | - `help`_                                                           |
+|                           | - `help_attr`_                                                      |
+|                           | - `help_html`_                                                      |
+|                           | - `label`_                                                          |
+|                           | - `label_attr`_                                                     |
+|                           | - `label_format`_                                                   |
+|                           | - `mapped`_                                                         |
+|                           | - `required`_                                                       |
+|                           | - `row_attr`_                                                       |
+|                           | - `trim`_                                                           |
++---------------------------+---------------------------------------------------------------------+
+| Default invalid message   | Please enter a valid email address.                                 |
++---------------------------+---------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
++---------------------------+---------------------------------------------------------------------+
+| Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
++---------------------------+---------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
++---------------------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------

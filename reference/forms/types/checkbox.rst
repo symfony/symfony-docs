@@ -11,34 +11,39 @@ you can specify an array of values that, if submitted, will be evaluated
 to "false" as well (this differs from what HTTP defines, but can be handy
 if you want to handle submitted values like "0" or "false").
 
-+-------------+------------------------------------------------------------------------+
-| Rendered as | ``input`` ``checkbox`` field                                           |
-+-------------+------------------------------------------------------------------------+
-| Options     | - `false_values`_                                                      |
-|             | - `value`_                                                             |
-+-------------+------------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                          |
-| options     | - `empty_data`_                                                        |
-+-------------+------------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                              |
-| options     | - `data`_                                                              |
-|             | - `disabled`_                                                          |
-|             | - `error_bubbling`_                                                    |
-|             | - `error_mapping`_                                                     |
-|             | - `help`_                                                              |
-|             | - `help_attr`_                                                         |
-|             | - `help_html`_                                                         |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `label_format`_                                                      |
-|             | - `mapped`_                                                            |
-|             | - `required`_                                                          |
-|             | - `row_attr`_                                                          |
-+-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                          |
-+-------------+------------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
-+-------------+------------------------------------------------------------------------+
++---------------------------+------------------------------------------------------------------------+
+| Rendered as               | ``input`` ``checkbox`` field                                           |
++---------------------------+------------------------------------------------------------------------+
+| Options                   | - `false_values`_                                                      |
+|                           | - `value`_                                                             |
++---------------------------+------------------------------------------------------------------------+
+| Overridden options        | - `compound`_                                                          |
+|                           | - `empty_data`_                                                        |
+|                           | - `invalid_message`_                                                   |
++---------------------------+------------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                              |
+|                           | - `data`_                                                              |
+|                           | - `disabled`_                                                          |
+|                           | - `error_bubbling`_                                                    |
+|                           | - `error_mapping`_                                                     |
+|                           | - `help`_                                                              |
+|                           | - `help_attr`_                                                         |
+|                           | - `help_html`_                                                         |
+|                           | - `label`_                                                             |
+|                           | - `label_attr`_                                                        |
+|                           | - `label_format`_                                                      |
+|                           | - `mapped`_                                                            |
+|                           | - `required`_                                                          |
+|                           | - `row_attr`_                                                          |
++---------------------------+------------------------------------------------------------------------+
+| Default invalid message   | The checkbox has an invalid value.                                     |
++---------------------------+------------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                    |
++---------------------------+------------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                          |
++---------------------------+------------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
++---------------------------+------------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -73,6 +78,8 @@ Overridden Options
 .. include:: /reference/forms/types/options/checkbox_compound.rst.inc
 
 .. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------

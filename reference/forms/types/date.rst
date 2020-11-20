@@ -10,46 +10,50 @@ different HTML elements.
 This field can be rendered in a variety of different ways via the `widget`_ option
 and can understand a number of different input formats via the `input`_ option.
 
-+----------------------+-----------------------------------------------------------------------------+
-| Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
-+----------------------+-----------------------------------------------------------------------------+
-| Rendered as          | single text box or three select fields                                      |
-+----------------------+-----------------------------------------------------------------------------+
-| Options              | - `days`_                                                                   |
-|                      | - `placeholder`_                                                            |
-|                      | - `format`_                                                                 |
-|                      | - `html5`_                                                                  |
-|                      | - `input`_                                                                  |
-|                      | - `input_format`_                                                           |
-|                      | - `model_timezone`_                                                         |
-|                      | - `months`_                                                                 |
-|                      | - `view_timezone`_                                                          |
-|                      | - `widget`_                                                                 |
-|                      | - `years`_                                                                  |
-+----------------------+-----------------------------------------------------------------------------+
-| Overridden options   | - `by_reference`_                                                           |
-|                      | - `choice_translation_domain`_                                              |
-|                      | - `compound`_                                                               |
-|                      | - `data_class`_                                                             |
-|                      | - `error_bubbling`_                                                         |
-+----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                                   |
-| options              | - `data`_                                                                   |
-|                      | - `disabled`_                                                               |
-|                      | - `error_mapping`_                                                          |
-|                      | - `help`_                                                                   |
-|                      | - `help_attr`_                                                              |
-|                      | - `help_html`_                                                              |
-|                      | - `inherit_data`_                                                           |
-|                      | - `invalid_message`_                                                        |
-|                      | - `invalid_message_parameters`_                                             |
-|                      | - `mapped`_                                                                 |
-|                      | - `row_attr`_                                                               |
-+----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
-+----------------------+-----------------------------------------------------------------------------+
-| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
-+----------------------+-----------------------------------------------------------------------------+
++---------------------------+-----------------------------------------------------------------------------+
+| Underlying Data Type      | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
++---------------------------+-----------------------------------------------------------------------------+
+| Rendered as               | single text box or three select fields                                      |
++---------------------------+-----------------------------------------------------------------------------+
+| Options                   | - `days`_                                                                   |
+|                           | - `placeholder`_                                                            |
+|                           | - `format`_                                                                 |
+|                           | - `html5`_                                                                  |
+|                           | - `input`_                                                                  |
+|                           | - `input_format`_                                                           |
+|                           | - `model_timezone`_                                                         |
+|                           | - `months`_                                                                 |
+|                           | - `view_timezone`_                                                          |
+|                           | - `widget`_                                                                 |
+|                           | - `years`_                                                                  |
++---------------------------+-----------------------------------------------------------------------------+
+| Overridden options        | - `by_reference`_                                                           |
+|                           | - `choice_translation_domain`_                                              |
+|                           | - `compound`_                                                               |
+|                           | - `data_class`_                                                             |
+|                           | - `error_bubbling`_                                                         |
+|                           | - `invalid_message`_                                                        |
++---------------------------+-----------------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                                   |
+|                           | - `data`_                                                                   |
+|                           | - `disabled`_                                                               |
+|                           | - `error_mapping`_                                                          |
+|                           | - `help`_                                                                   |
+|                           | - `help_attr`_                                                              |
+|                           | - `help_html`_                                                              |
+|                           | - `inherit_data`_                                                           |
+|                           | - `invalid_message_parameters`_                                             |
+|                           | - `mapped`_                                                                 |
+|                           | - `row_attr`_                                                               |
++---------------------------+-----------------------------------------------------------------------------+
+| Default invalid message   | Please enter a valid date.                                                  |
++---------------------------+-----------------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                         |
++---------------------------+-----------------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                               |
++---------------------------+-----------------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
++---------------------------+-----------------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -210,6 +214,8 @@ The ``DateTime`` classes are treated as immutable objects.
 
 **default**: ``false``
 
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
 Inherited Options
 -----------------
 
@@ -230,8 +236,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 

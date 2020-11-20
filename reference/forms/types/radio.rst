@@ -13,37 +13,48 @@ The ``RadioType`` isn't usually used directly. More commonly it's used
 internally by other types such as :doc:`ChoiceType </reference/forms/types/choice>`.
 If you want to have a boolean field, use :doc:`CheckboxType </reference/forms/types/checkbox>`.
 
-+-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``radio`` field                                           |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | from the :doc:`CheckboxType </reference/forms/types/checkbox>`:     |
-| options     |                                                                     |
-|             | - `value`_                                                          |
-|             |                                                                     |
-|             | from the :doc:`FormType </reference/forms/types/form>`:             |
-|             |                                                                     |
-|             | - `attr`_                                                           |
-|             | - `data`_                                                           |
-|             | - `disabled`_                                                       |
-|             | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-+-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`CheckboxType </reference/forms/types/checkbox>`               |
-+-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
-+-------------+---------------------------------------------------------------------+
++---------------------------+---------------------------------------------------------------------+
+| Rendered as               | ``input`` ``radio`` field                                           |
++---------------------------+---------------------------------------------------------------------+
+| Overridden options        | - `invalid_message`_                                                |
++---------------------------+---------------------------------------------------------------------+
+| Inherited options         | from the :doc:`CheckboxType </reference/forms/types/checkbox>`:     |
+|                           |                                                                     |
+|                           | - `value`_                                                          |
+|                           |                                                                     |
+|                           | from the :doc:`FormType </reference/forms/types/form>`:             |
+|                           |                                                                     |
+|                           | - `attr`_                                                           |
+|                           | - `data`_                                                           |
+|                           | - `disabled`_                                                       |
+|                           | - `empty_data`_                                                     |
+|                           | - `error_bubbling`_                                                 |
+|                           | - `error_mapping`_                                                  |
+|                           | - `help`_                                                           |
+|                           | - `help_attr`_                                                      |
+|                           | - `help_html`_                                                      |
+|                           | - `label`_                                                          |
+|                           | - `label_attr`_                                                     |
+|                           | - `label_format`_                                                   |
+|                           | - `mapped`_                                                         |
+|                           | - `required`_                                                       |
+|                           | - `row_attr`_                                                       |
++---------------------------+---------------------------------------------------------------------+
+| Default invalid message   | Please select a valid option.                                       |
++---------------------------+---------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
++---------------------------+---------------------------------------------------------------------+
+| Parent type               | :doc:`CheckboxType </reference/forms/types/checkbox>`               |
++---------------------------+---------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
++---------------------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------
