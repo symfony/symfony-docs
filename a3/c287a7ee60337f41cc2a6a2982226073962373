@@ -1,0 +1,62 @@
+---------------------------------------------------------------------------
+
+by derrabus at 2020-11-18T12:18:50Z
+
+We should attach that footnote to `Create a new instance` as well because that is a constructor call that could also be done with named arguments.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-18T12:19:31Z
+
+For reference: It's maybe good to include "unless specified otherwise". For instance, it might make sense to support named arguments in attributes or specific data objects (I'm thinking about some of the newer "configuration" data objects in the RateLimiter and Mailer components).
+
+However, before I want to document that, I think we should have a standardized (in Symfony) way of indicating this in the PHPdoc or the like (documentation?).
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2020-11-18T12:24:21Z
+
+> before I want to document that, I think we should have a standardized (in Symfony) way of indicating this in the PHPdoc or the like (documentation?).
+
+I agree. A PHP8 attribute would be nice. The only issue is where to put it. Maybe we don't need a package for that? After all, that's not mandatory: attributes can be added/read without any implementation. We'd just need to settle on its name (and we could provide an optional package of course).
+
+---------------------------------------------------------------------------
+
+by derrabus at 2020-11-18T12:48:01Z
+
+We could build a new contracts package for attributes like that, e.g. `compatibility-contracts`. Naming is hard, so ideas for a better name are welcome. 🙃
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-18T13:01:15Z
+
+I'm not exactly sure what this package should do. Do we want to trigger notices when using an uncovered named argument, like we do when extending a class that's `@final`?
+
+---------------------------------------------------------------------------
+
+by derrabus at 2020-11-18T13:08:51Z
+
+Static code analyzers (phpstan, psalm, PhpStorm) could pick this up and issue a warning. I don't think that we can trigger notices in such a case, can we?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-18T13:19:09Z
+
+I think it would be better to not jump the line and introduce attributes for documentation purposes, before there is a common direction that the tools are moving into. At the moment I can't find anything about attribute support for PhpDocumentor and PHPstan. Psalm seems to [lean against attributes for static analysis](https://psalm.dev/articles/php-8-attributes) (but has support for people wanting to use it like that), while PHPstorm [added attributes for static analysis](https://blog.jetbrains.com/phpstorm/2020/10/phpstorm-2020-3-eap-4/).
+
+I think - if we can't do any analysis on it ourselves - the best option is to just add it to the PHPdoc description and e.g. include a small "tip" or "note" in documentation when named arguments are covered (e.g. when introducing the `Route` attribute, add a small tip "Hey, these named arguments are backwards compatible").
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2020-11-18T14:43:35Z
+
+I definitely think that attributes should be used by static analyzers/IDEs yes.
+This attribute would tell them when named args are wrongly used, or must be used, etc.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2020-11-18T15:03:09Z
+
+Named arguments is a major feature of PHP8, and is very pleasant to use.
+
+Shouldn't we progressively move from promoting ordered argument to promote named arguments? We could use the proposed annotation to indicate if the class supports the old (ordered) or the new (named) BC promise. Supporting both doesn't worth it in my opinion (too much work).
