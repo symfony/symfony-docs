@@ -6,6 +6,7 @@ rules:
     composer_dev_option_not_at_the_end: ~
     correct_code_block_directive_based_on_the_content: ~
     deprecated_directive_should_have_version: ~
+    ensure_exactly_one_space_between_link_definition_and_link: ~
     ensure_order_of_code_blocks_in_configuration_block: ~
     extend_abstract_controller: ~
     extension_xlf_instead_of_xliff: ~
