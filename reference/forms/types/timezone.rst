@@ -50,9 +50,9 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |                           | - `required`_                                                          |
 |                           | - `row_attr`_                                                          |
 +---------------------------+------------------------------------------------------------------------+
-| Default `invalid_message` | Please select a valid timezone.                                        |
+| Default invalid message   | Please select a valid timezone.                                        |
 +---------------------------+------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                    |
+| Legacy invalid message    | The value {{ value }} is not valid.                                    |
 +---------------------------+------------------------------------------------------------------------+
 | Parent type               | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +---------------------------+------------------------------------------------------------------------+

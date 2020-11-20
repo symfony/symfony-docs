@@ -39,9 +39,9 @@ the data can be a string or an array.
 |                           | - `mapped`_                                                        |
 |                           | - `row_attr`_                                                      |
 +---------------------------+--------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid week.                                         |
+| Default invalid message   | Please enter a valid week.                                         |
 +---------------------------+--------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                |
+| Legacy invalid message    | The value {{ value }} is not valid.                                |
 +---------------------------+--------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                      |
 +---------------------------+--------------------------------------------------------------------+

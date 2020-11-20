@@ -48,9 +48,9 @@ on all types for which ``FormType`` is the parent.
 |                           | - `label_translation_parameters`_                                  |
 |                           | - `attr_translation_parameters`_                                   |
 +---------------------------+--------------------------------------------------------------------+
-| Default `invalid_message` | This value is not valid.                                           |
+| Default invalid message   | This value is not valid.                                           |
 +---------------------------+--------------------------------------------------------------------+
-| Legacy `invalid_message`  | This value is not valid.                                           |
+| Legacy invalid message    | This value is not valid.                                           |
 +---------------------------+--------------------------------------------------------------------+
 | Parent                    | none                                                               |
 +---------------------------+--------------------------------------------------------------------+

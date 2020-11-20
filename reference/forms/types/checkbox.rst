@@ -36,9 +36,9 @@ if you want to handle submitted values like "0" or "false").
 |                           | - `required`_                                                          |
 |                           | - `row_attr`_                                                          |
 +---------------------------+------------------------------------------------------------------------+
-| Default `invalid_message` | The checkbox has an invalid value.                                     |
+| Default invalid message   | The checkbox has an invalid value.                                     |
 +---------------------------+------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                    |
+| Legacy invalid message    | The value {{ value }} is not valid.                                    |
 +---------------------------+------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                          |
 +---------------------------+------------------------------------------------------------------------+

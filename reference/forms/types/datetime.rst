@@ -55,9 +55,9 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                           | - `mapped`_                                                                 |
 |                           | - `row_attr`_                                                               |
 +---------------------------+-----------------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid date and time.                                         |
+| Default invalid message   | Please enter a valid date and time.                                         |
 +---------------------------+-----------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                         |
+| Legacy invalid message    | The value {{ value }} is not valid.                                         |
 +---------------------------+-----------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                               |
 +---------------------------+-----------------------------------------------------------------------------+

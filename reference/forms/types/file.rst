@@ -30,9 +30,9 @@ The ``FileType`` represents a file input in your form.
 |                           | - `required`_                                                      |
 |                           | - `row_attr`_                                                      |
 +---------------------------+--------------------------------------------------------------------+
-| Default `invalid_message` | Please select a valid file.                                        |
+| Default invalid message   | Please select a valid file.                                        |
 +---------------------------+--------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                |
+| Legacy invalid message    | The value {{ value }} is not valid.                                |
 +---------------------------+--------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                      |
 +---------------------------+--------------------------------------------------------------------+

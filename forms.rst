@@ -555,10 +555,9 @@ learn more about the validation constraints, please refer to the
 
 .. versionadded:: 5.2
 
-    Validation messages for forms have been rewritten to be more user-friendly.
-    These newer messages can be enabled by setting the `legacy_error_messages`
-    option to "false". Details about these messages can be found in the corresponding
-    form type documentation.
+    In Symfony 5.2, the form validation messages have been rewritten to be more
+    user-friendly. Set the ``legacy_error_messages`` option to ``false`` to
+    enable these new messages:
 
     .. configuration-block::
 
@@ -594,7 +593,6 @@ learn more about the validation constraints, please refer to the
                     'legacy-error-messages' => false,
                 ],
             ]);
-
 
 Other Common Form Features
 --------------------------

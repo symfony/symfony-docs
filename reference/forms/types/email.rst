@@ -29,9 +29,9 @@ The ``EmailType`` field is a text field that is rendered using the HTML5
 |                           | - `row_attr`_                                                       |
 |                           | - `trim`_                                                           |
 +---------------------------+---------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid email address.                                 |
+| Default invalid message   | Please enter a valid email address.                                 |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                 |
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
 +---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
 +---------------------------+---------------------------------------------------------------------+

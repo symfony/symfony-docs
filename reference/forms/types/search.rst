@@ -30,9 +30,9 @@ Read about the input search field at `DiveIntoHTML5.info`_
 |                           | - `row_attr`_                                                        |
 |                           | - `trim`_                                                            |
 +---------------------------+----------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid search term.                                    |
+| Default invalid message   | Please enter a valid search term.                                    |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                  |
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
 +---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                        |
 +---------------------------+----------------------------------------------------------------------+

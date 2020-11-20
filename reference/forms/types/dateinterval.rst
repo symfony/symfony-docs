@@ -50,9 +50,9 @@ or an array (see `input`_).
 |                           | - `mapped`_                                                                      |
 |                           | - `row_attr`_                                                                    |
 +---------------------------+----------------------------------------------------------------------------------+
-| Default `invalid_message` | Please choose a valid date interval.                                             |
+| Default invalid message   | Please choose a valid date interval.                                             |
 +---------------------------+----------------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                              |
+| Legacy invalid message    | The value {{ value }} is not valid.                                              |
 +---------------------------+----------------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                                    |
 +---------------------------+----------------------------------------------------------------------------------+

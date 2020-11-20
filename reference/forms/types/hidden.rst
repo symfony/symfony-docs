@@ -22,9 +22,9 @@ The hidden type represents a hidden input field.
 |                           | - `property_path`_                                                   |
 |                           | - `row_attr`_                                                        |
 +---------------------------+----------------------------------------------------------------------+
-| Default `invalid_message` | The hidden field is invalid.                                         |
+| Default invalid message   | The hidden field is invalid.                                         |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                  |
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
 +---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+

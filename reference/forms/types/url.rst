@@ -32,9 +32,9 @@ have a protocol.
 |                           | - `row_attr`_                                                     |
 |                           | - `trim`_                                                         |
 +---------------------------+-------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid URL.                                         |
+| Default invalid message   | Please enter a valid URL.                                         |
 +---------------------------+-------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                               |
+| Legacy invalid message    | The value {{ value }} is not valid.                               |
 +---------------------------+-------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                     |
 +---------------------------+-------------------------------------------------------------------+

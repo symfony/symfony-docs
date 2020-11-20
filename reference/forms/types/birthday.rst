@@ -49,9 +49,9 @@ option defaults to 120 years ago to the current year.
 |                           | - `mapped`_                                                                   |
 |                           | - `row_attr`_                                                                 |
 +---------------------------+-------------------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid birthdate.                                               |
+| Default invalid message   | Please enter a valid birthdate.                                               |
 +---------------------------+-------------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                           |
+| Legacy invalid message    | The value {{ value }} is not valid.                                           |
 +---------------------------+-------------------------------------------------------------------------------+
 | Parent type               | :doc:`DateType </reference/forms/types/date>`                                 |
 +---------------------------+-------------------------------------------------------------------------------+

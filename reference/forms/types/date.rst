@@ -46,9 +46,9 @@ and can understand a number of different input formats via the `input`_ option.
 |                           | - `mapped`_                                                                 |
 |                           | - `row_attr`_                                                               |
 +---------------------------+-----------------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid date.                                                  |
+| Default invalid message   | Please enter a valid date.                                                  |
 +---------------------------+-----------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                         |
+| Legacy invalid message    | The value {{ value }} is not valid.                                         |
 +---------------------------+-----------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                               |
 +---------------------------+-----------------------------------------------------------------------------+

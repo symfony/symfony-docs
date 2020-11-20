@@ -32,9 +32,9 @@ accuracy.
 |                           | - `mapped`_                                                            |
 |                           | - `row_attr`_                                                          |
 +---------------------------+------------------------------------------------------------------------+
-| Default `invalid_message` | The values do not match.                                               |
+| Default invalid message   | The values do not match.                                               |
 +---------------------------+------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                    |
+| Legacy invalid message    | The value {{ value }} is not valid.                                    |
 +---------------------------+------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                          |
 +---------------------------+------------------------------------------------------------------------+

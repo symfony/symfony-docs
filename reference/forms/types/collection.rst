@@ -40,9 +40,9 @@ photos).
 |                           | - `required`_                                                            |
 |                           | - `row_attr`_                                                            |
 +---------------------------+--------------------------------------------------------------------------+
-| Default `invalid_message` | The collection is invalid.                                               |
+| Default invalid message   | The collection is invalid.                                               |
 +---------------------------+--------------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                      |
+| Legacy invalid message    | The value {{ value }} is not valid.                                      |
 +---------------------------+--------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                            |
 +---------------------------+--------------------------------------------------------------------------+

@@ -41,9 +41,9 @@ how the input and output of the data is handled.
 |                           | - `required`_                                                       |
 |                           | - `row_attr`_                                                       |
 +---------------------------+---------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a valid money amount.                                  |
+| Default invalid message   | Please enter a valid money amount.                                  |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                 |
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
 +---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                       |
 +---------------------------+---------------------------------------------------------------------+

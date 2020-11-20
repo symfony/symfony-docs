@@ -52,9 +52,9 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |                           | - `attr_translation_parameters`_                                     |
 |                           | - `help_translation_parameters`_                                     |
 +---------------------------+----------------------------------------------------------------------+
-| Default `invalid_message` | The selected choice is invalid.                                      |
+| Default invalid message   | The selected choice is invalid.                                      |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                  |
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
 +---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+

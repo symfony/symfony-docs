@@ -38,9 +38,9 @@ element.
 |                           | - `row_attr`_                                                       |
 |                           | - `trim`_                                                           |
 +---------------------------+---------------------------------------------------------------------+
-| Default `invalid_message` | Please select a valid color.                                        |
+| Default invalid message   | Please select a valid color.                                        |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                 |
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
 +---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
 +---------------------------+---------------------------------------------------------------------+

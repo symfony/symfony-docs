@@ -28,9 +28,9 @@ The ``RangeType`` field is a slider that is rendered using the HTML5
 |                           | - `row_attr`_                                                       |
 |                           | - `trim`_                                                           |
 +---------------------------+---------------------------------------------------------------------+
-| Default `invalid_message` | Please choose a valid range.                                        |
+| Default invalid message   | Please choose a valid range.                                        |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                 |
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
 +---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
 +---------------------------+---------------------------------------------------------------------+

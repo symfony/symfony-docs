@@ -37,9 +37,9 @@ that you want to use for your number.
 |                           | - `required`_                                                        |
 |                           | - `row_attr`_                                                        |
 +---------------------------+----------------------------------------------------------------------+
-| Default `invalid_message` | Please enter a number.                                               |
+| Default invalid message   | Please enter a number.                                               |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy `invalid_message`  | The value {{ value }} is not valid.                                  |
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
 +---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+
