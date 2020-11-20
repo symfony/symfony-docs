@@ -1032,7 +1032,7 @@ need in your ``.env.test`` file:
 .. code-block:: text
 
     # .env.test
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test?serverVersion=5.7"
 
     # use SQLITE
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
