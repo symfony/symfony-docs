@@ -1616,5 +1616,5 @@ Then configure Symfony to use your callback:
 .. _`amphp/http-client`: https://packagist.org/packages/amphp/http-client
 .. _`cURL options`: https://www.php.net/manual/en/function.curl-setopt.php
 .. _`Server-sent events`: https://html.spec.whatwg.org/multipage/server-sent-events.html
-.. _`EventSource`:  https://www.w3.org/TR/eventsource/#eventsource
-.. _`idempotent method`:  https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods_and_web_applications
+.. _`EventSource`: https://www.w3.org/TR/eventsource/#eventsource
+.. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods_and_web_applications
