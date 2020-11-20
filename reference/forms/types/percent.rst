@@ -12,40 +12,43 @@ you can use this field out-of-the-box. If you store your data as a number
 When ``symbol`` is not ``false``, the field will render the given string after
 the input.
 
-+-------------+-----------------------------------------------------------------------+
-| Rendered as | ``input`` ``text`` field                                              |
-+-------------+-----------------------------------------------------------------------+
-| Options     | - `html5`_                                                            |
-|             | - `rounding_mode`_                                                    |
-|             | - `scale`_                                                            |
-|             | - `symbol`_                                                           |
-|             | - `type`_                                                             |
-+-------------+-----------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                         |
-| options     |                                                                       |
-+-------------+-----------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                             |
-| options     | - `data`_                                                             |
-|             | - `disabled`_                                                         |
-|             | - `empty_data`_                                                       |
-|             | - `error_bubbling`_                                                   |
-|             | - `error_mapping`_                                                    |
-|             | - `help`_                                                             |
-|             | - `help_attr`_                                                        |
-|             | - `help_html`_                                                        |
-|             | - `invalid_message`_                                                  |
-|             | - `invalid_message_parameters`_                                       |
-|             | - `label`_                                                            |
-|             | - `label_attr`_                                                       |
-|             | - `label_format`_                                                     |
-|             | - `mapped`_                                                           |
-|             | - `required`_                                                         |
-|             | - `row_attr`_                                                         |
-+-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                         |
-+-------------+-----------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
-+-------------+-----------------------------------------------------------------------+
++---------------------------+-----------------------------------------------------------------------+
+| Rendered as               | ``input`` ``text`` field                                              |
++---------------------------+-----------------------------------------------------------------------+
+| Options                   | - `html5`_                                                            |
+|                           | - `rounding_mode`_                                                    |
+|                           | - `scale`_                                                            |
+|                           | - `symbol`_                                                           |
+|                           | - `type`_                                                             |
++---------------------------+-----------------------------------------------------------------------+
+| Overridden options        | - `compound`_                                                         |
+|                           | - `invalid_message`_                                                  |
++---------------------------+-----------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                             |
+|                           | - `data`_                                                             |
+|                           | - `disabled`_                                                         |
+|                           | - `empty_data`_                                                       |
+|                           | - `error_bubbling`_                                                   |
+|                           | - `error_mapping`_                                                    |
+|                           | - `help`_                                                             |
+|                           | - `help_attr`_                                                        |
+|                           | - `help_html`_                                                        |
+|                           | - `invalid_message_parameters`_                                       |
+|                           | - `label`_                                                            |
+|                           | - `label_attr`_                                                       |
+|                           | - `label_format`_                                                     |
+|                           | - `mapped`_                                                           |
+|                           | - `required`_                                                         |
+|                           | - `row_attr`_                                                         |
++---------------------------+-----------------------------------------------------------------------+
+| Default `invalid_message` | Please enter a percentage value.                                      |
++---------------------------+-----------------------------------------------------------------------+
+| Legacy `invalid_message`  | The value {{ value }} is not valid.                                   |
++---------------------------+-----------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                         |
++---------------------------+-----------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
++---------------------------+-----------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -115,6 +118,8 @@ Overridden Options
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
 Inherited Options
 -----------------
 
@@ -143,8 +148,6 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/help_attr.rst.inc
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
