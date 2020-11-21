@@ -145,7 +145,7 @@ This requires you to implement several methods::
          * used for the request. Returning `false` will cause this authenticator
          * to be skipped.
          */
-        public function supports(Request $request)
+        public function supports(Request $request): bool
         {
             return $request->headers->has('X-AUTH-TOKEN');
         }
@@ -159,7 +159,7 @@ This requires you to implement several methods::
             return $request->headers->get('X-AUTH-TOKEN');
         }
 
-        public function getUser($credentials, UserProviderInterface $userProvider)
+        public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
         {
             if (null === $credentials) {
                 // The token header was empty, authentication fails with HTTP Status
@@ -173,7 +173,7 @@ This requires you to implement several methods::
             return $userProvider->loadUserByUsername($credentials);
         }
 
-        public function checkCredentials($credentials, UserInterface $user)
+        public function checkCredentials($credentials, UserInterface $user): bool
         {
             // Check credentials - e.g. make sure the password is valid.
             // In case of an API token, no credential check is needed.
@@ -182,13 +182,13 @@ This requires you to implement several methods::
             return true;
         }
 
-        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
         {
             // on success, let the request continue
             return null;
         }
 
-        public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+        public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
         {
             $data = [
                 // you may want to customize or obfuscate the message first
@@ -204,7 +204,7 @@ This requires you to implement several methods::
         /**
          * Called when authentication is needed, but it's not sent
          */
-        public function start(Request $request, AuthenticationException $authException = null)
+        public function start(Request $request, AuthenticationException $authException = null): Response
         {
             $data = [
                 // you might translate this message
@@ -214,7 +214,7 @@ This requires you to implement several methods::
             return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
         }
 
-        public function supportsRememberMe()
+        public function supportsRememberMe(): bool
         {
             return false;
         }
@@ -466,7 +466,7 @@ completes registration. To do that, use your authenticator and a service called
 
     class RegistrationController extends AbstractController
     {
-        public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $request)
+        public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $request): Response
         {
             // ...
 
@@ -496,7 +496,7 @@ the user's session is "migrated" to a new session id.
 This is an edge-case, and unless you're having session or CSRF token issues, you
 can ignore this. Here is an example of good and bad behavior::
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         // GOOD behavior: only authenticate (i.e. return true) on a specific route
         return 'login_route' === $request->attributes->get('_route') && $request->isMethod('POST');
@@ -532,7 +532,7 @@ are two possible fixes:
     +         $this->security = $security;
     +     }
 
-          public function supports(Request $request)
+          public function supports(Request $request): bool
           {
     +         // if there is already an authenticated user (likely due to the session)
     +         // then return false and skip authentication: there is no need.

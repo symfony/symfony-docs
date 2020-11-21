@@ -226,6 +226,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Mime\Email;
 
@@ -234,7 +235,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
         /**
          * @Route("/email")
          */
-        public function sendEmail(MailerInterface $mailer)
+        public function sendEmail(MailerInterface $mailer): Response
         {
             $email = (new Email())
                 ->from('hello@example.com')

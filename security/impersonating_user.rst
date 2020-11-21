@@ -276,13 +276,13 @@ logic you want::
             $this->security = $security;
         }
 
-        protected function supports($attribute, $subject)
+        protected function supports($attribute, $subject): bool
         {
             return in_array($attribute, ['CAN_SWITCH_USER'])
                 && $subject instanceof UserInterface;
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
         {
             $user = $token->getUser();
             // if the user is anonymous or if the subject is not a user, do not grant access
@@ -334,7 +334,7 @@ you switch users, add an event subscriber on this event::
 
     class SwitchUserSubscriber implements EventSubscriberInterface
     {
-        public function onSwitchUser(SwitchUserEvent $event)
+        public function onSwitchUser(SwitchUserEvent $event): void
         {
             $request = $event->getRequest();
 
@@ -347,7 +347,7 @@ you switch users, add an event subscriber on this event::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 // constant for security.switch_user

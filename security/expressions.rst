@@ -15,7 +15,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
     use Symfony\Component\ExpressionLanguage\Expression;
     // ...
 
-    public function index()
+    public function index(): Response
     {
         $this->denyAccessUnlessGranted(new Expression(
             '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
@@ -86,7 +86,7 @@ Additionally, you have access to a number of functions inside the expression:
         use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         // ...
 
-        public function index(AuthorizationCheckerInterface $authorizationChecker)
+        public function index(AuthorizationCheckerInterface $authorizationChecker): Response
         {
             $access1 = $authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
