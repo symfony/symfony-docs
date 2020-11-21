@@ -98,7 +98,7 @@ Configuration
     * `cafile`_
     * `capath`_
     * `ciphers`_
-    * `headers`_
+    * :ref:`headers <http-headers>`
     * `http_version`_
     * `local_cert`_
     * `local_pk`_
@@ -126,7 +126,7 @@ Configuration
     * `cafile`_
     * `capath`_
     * `ciphers`_
-    * `headers`_
+    * :ref:`headers <http-headers>`
     * `http_version`_
     * `local_cert`_
     * `local_pk`_
@@ -151,6 +151,17 @@ Configuration
 
     * :ref:`name <reference-lock-resources-name>`
 
+* `mailer`_
+
+  * :ref:`dsn <mailer-dsn>`
+  * `transports`_
+  * `envelope`_
+
+    * `sender`_
+    * `recipients`_
+
+  * :ref:`headers <mailer-headers>`
+
 * `php_errors`_
 
   * `log`_
@@ -159,7 +170,7 @@ Configuration
 * `profiler`_
 
   * `collect`_
-  * `dsn`_
+  * :ref:`dsn <profiler-dsn>`
   * :ref:`enabled <reference-profiler-enabled>`
   * `only_exceptions`_
   * `only_master_requests`_
@@ -867,6 +878,8 @@ ciphers
 A list of the names of the ciphers allowed for the SSL/TLS connections. They
 can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
 
+.. _http-headers:
+
 headers
 .......
 
@@ -1074,6 +1087,8 @@ only_master_requests
 
 When this is set to ``true``, the profiler will only be enabled on the master
 requests (and not on the subrequests).
+
+.. _profiler-dsn:
 
 dsn
 ...
@@ -2887,6 +2902,101 @@ Name of the lock you want to create.
             class: Symfony\Component\Lock\Store\RetryTillSaveStore
             decorates: lock.invoice.store
             arguments: ['@lock.invoice.retry_till_save.store.inner', 100, 50]
+
+mailer
+~~~~~~
+
+.. _mailer-dsn:
+
+dsn
+...
+
+**type**: ``string``
+
+The DSN used by the mailer. When several DSN may be used, use `transports` (see below) instead.
+
+transports
+..........
+
+**type**: ``array``
+
+A :ref:`list of DSN <multiple-email-transports>` that can be used by the mailer. A transport name is the key and the dsn is the value.
+
+envelope
+........
+
+sender
+""""""
+
+**type**: ``string``
+
+Sender used by the ``Mailer``. Keep in mind that this setting override a sender set in the code.
+
+recipients
+""""""""""
+
+**type**: ``array``
+
+Recipients used by the ``Mailer``. Keep in mind that this setting override recipients set in the code.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                dsn: 'smtp://localhost:25'
+                envelope:
+                    recipients: ['admin@symfony.com', 'lead@symfony.com']
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:mailer dsn="smtp://localhost:25">
+                    <framework:envelope>
+                        <framework:recipients>admin@symfony.com</framework:recipients>
+                        <framework:recipients>lead@symfony.com</framework:recipients>
+                    </framework:envelope>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+        return static function (ContainerConfigurator $containerConfigurator): void {
+            $containerConfigurator->extension('framework', [
+                'mailer' => [
+                    'dsn' => 'smtp://localhost:25',
+                    'envelope' => [
+                        'recipients' => [
+                            'admin@symfony.com',
+                            'lead@symfony.com',
+                        ]
+                    ]
+                ]
+            ]);
+        };
+
+.. _mailer-headers:
+
+headers
+.......
+
+**type**: ``array``
+
+Headers to add to emails. key (``name`` attribute in xml format)
+is the header name and value the header value.
 
 workflows
 ~~~~~~~~~
