@@ -560,46 +560,51 @@ To see the second approach - adding constraints to the form - and to
 learn more about the validation constraints, please refer to the
 :doc:`Symfony validation documentation </validation>`.
 
+Form Validation Messages
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. versionadded:: 5.2
 
-    In Symfony 5.2, the form validation messages have been rewritten to be more
-    user-friendly. Set the ``legacy_error_messages`` option to ``false`` to
-    enable these new messages:
+    The ``framework.form.legacy_error_messages`` option was introduced in Symfony 5.2
 
-    .. configuration-block::
+The form validation messages have been rewritten to be more user-friendly.
+To enable these new messages set the ``legacy_error_messages`` option in ``framework``,
+``form`` to ``false``:
 
-        .. code-block:: yaml
+.. configuration-block::
 
-            # config/packages/framework.yaml
-            framework:
-                form:
-                    legacy_error_messages: false
+    .. code-block:: yaml
 
-        .. code-block:: xml
+        # config/packages/framework.yaml
+        framework:
+            form:
+                legacy_error_messages: false
 
-            <!-- config/packages/framework.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+    .. code-block:: xml
 
-                <framework:config>
-                    <framework:form legacy-error-messages="false"/>
-                </framework:config>
-            </container>
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        .. code-block:: php
+            <framework:config>
+                <framework:form legacy-error-messages="false"/>
+            </framework:config>
+        </container>
 
-            // config/packages/framework.php
-            $container->loadFromExtension('framework', [
-                'form' => [
-                    'legacy-error-messages' => false,
-                ],
-            ]);
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'form' => [
+                'legacy_error_messages' => false,
+            ],
+        ]);
 
 Other Common Form Features
 --------------------------
