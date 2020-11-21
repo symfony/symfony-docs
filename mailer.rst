@@ -70,16 +70,17 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
     If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
     warned that the DSN format is different.
 
-Using built-in transports
+Using Built-in Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-============ ==================================== ===========
-DSN protocol Example                              Description
-============ ==================================== ===========
-smtp         smtp://user:pass@smtp.example.com:25 Mailer uses an SMTP server to send emails
-sendmail     sendmail://default                   Mailer uses the local sendmail binary to send emails
-============ ==================================== ===========
-
+============  ========================================  ==============================
+DSN protocol  Example                                   Description
+============  ========================================  ==============================
+smtp          ``smtp://user:pass@smtp.example.com:25``  Mailer uses an SMTP server to
+                                                        send emails
+sendmail      ``sendmail://default``                    Mailer uses the local sendmail
+                                                        binary to send emails
+============  ========================================  ==============================
 
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

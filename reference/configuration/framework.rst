@@ -2906,21 +2906,27 @@ Name of the lock you want to create.
 mailer
 ~~~~~~
 
+.. versionadded:: 4.3
+
+    The ``mailer`` settings were introduced in Symfony 4.3.
+
 .. _mailer-dsn:
 
 dsn
 ...
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
-The DSN used by the mailer. When several DSN may be used, use `transports` (see below) instead.
+The DSN used by the mailer. When several DSN may be used, use
+``transports`` option (see below) instead.
 
 transports
 ..........
 
 **type**: ``array``
 
-A :ref:`list of DSN <multiple-email-transports>` that can be used by the mailer. A transport name is the key and the dsn is the value.
+A :ref:`list of DSN <multiple-email-transports>` that can be used by the
+mailer. A transport name is the key and the dsn is the value.
 
 envelope
 ........
@@ -2930,14 +2936,16 @@ sender
 
 **type**: ``string``
 
-Sender used by the ``Mailer``. Keep in mind that this setting override a sender set in the code.
+Sender used by the ``Mailer``. Keep in mind that this setting override a
+sender set in the code.
 
 recipients
 """"""""""
 
 **type**: ``array``
 
-Recipients used by the ``Mailer``. Keep in mind that this setting override recipients set in the code.
+Recipients used by the ``Mailer``. Keep in mind that this setting override
+recipients set in the code.
 
 .. configuration-block::
 
@@ -2963,8 +2971,8 @@ Recipients used by the ``Mailer``. Keep in mind that this setting override recip
             <framework:config>
                 <framework:mailer dsn="smtp://localhost:25">
                     <framework:envelope>
-                        <framework:recipients>admin@symfony.com</framework:recipients>
-                        <framework:recipients>lead@symfony.com</framework:recipients>
+                        <framework:recipient>admin@symfony.com</framework:recipient>
+                        <framework:recipient>lead@symfony.com</framework:recipient>
                     </framework:envelope>
                 </framework:mailer>
             </framework:config>
