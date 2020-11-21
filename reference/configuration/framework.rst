@@ -178,6 +178,7 @@ Configuration
 
   * :ref:`dsn <mailer-dsn>`
   * `transports`_
+  * `message_bus`_
   * `envelope`_
 
     * `sender`_
@@ -923,6 +924,8 @@ enabled
 
 Whether to enable the support for retry failed HTTP request or not.
 This setting is automatically set to true when one of the child settings is configured.
+
+.. _http-headers:
 
 .. _http-headers:
 
@@ -3007,6 +3010,18 @@ transports
 A :ref:`list of DSN <multiple-email-transports>` that can be used by the
 mailer. A transport name is the key and the dsn is the value.
 
+message_bus
+...........
+
+.. versionadded:: 5.1
+
+    The ``message_bus`` option was introduced in Symfony 5.1.
+
+**type**: ``string`` **default**: ``null`` or default bus if Messenger component is installed
+
+Service identifier of the message bus to use when using the
+:doc:`Messenger component </messenger>` (e.g. ``messenger.default_bus``).
+
 envelope
 ........
 
@@ -3061,6 +3076,7 @@ recipients set in the code.
 
         // config/packages/mailer.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         return static function (ContainerConfigurator $containerConfigurator): void {
             $containerConfigurator->extension('framework', [
                 'mailer' => [
