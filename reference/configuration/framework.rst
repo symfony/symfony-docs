@@ -184,6 +184,8 @@ Configuration
     * `sender`_
     * `recipients`_
 
+  * :ref:`headers <mailer-headers>`
+
 * `php_errors`_
 
   * `log`_
@@ -924,8 +926,6 @@ enabled
 
 Whether to enable the support for retry failed HTTP request or not.
 This setting is automatically set to true when one of the child settings is configured.
-
-.. _http-headers:
 
 .. _http-headers:
 
@@ -3090,6 +3090,20 @@ recipients set in the code.
                 ]
             ]);
         };
+
+.. _mailer-headers:
+
+headers
+.......
+
+.. versionadded:: 5.2
+
+    The ``headers`` mailer option was introduced in Symfony 5.2.
+
+**type**: ``array``
+
+Headers to add to emails. The key (``name`` attribute in xml format) is the
+header name and value the header value.
 
 workflows
 ~~~~~~~~~
