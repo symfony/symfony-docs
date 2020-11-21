@@ -11,9 +11,10 @@ to detect when the form has been submitted. However, you can also use the
 control over when exactly your form is submitted and what data is passed to it::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function new(Request $request)
+    public function new(Request $request): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);

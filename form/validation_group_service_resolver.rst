@@ -23,11 +23,7 @@ parameter::
             $this->service2 = $service2;
         }
 
-        /**
-         * @param FormInterface $form
-         * @return array
-         */
-        public function __invoke(FormInterface $form)
+        public function __invoke(FormInterface $form): array
         {
             $groups = [];
 
@@ -56,7 +52,7 @@ Then in your form, inject the resolver and set it as the ``validation_groups``::
         }
 
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'validation_groups' => $this->groupResolver,

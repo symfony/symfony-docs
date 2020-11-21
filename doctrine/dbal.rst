@@ -48,10 +48,12 @@ object::
     namespace App\Controller;
 
     use Doctrine\DBAL\Driver\Connection;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class UserController extends AbstractController
     {
-        public function index(Connection $connection)
+        public function index(Connection $connection): Response
         {
             $users = $connection->fetchAll('SELECT * FROM users');
 
