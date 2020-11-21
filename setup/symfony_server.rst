@@ -299,6 +299,9 @@ project. It understands that this is a MySQL service and creates environment
 variables accordingly with the service name (``database``) as a prefix:
 ``DATABASE_URL``, ``DATABASE_HOST``, ...
 
+If the service is not in the supported list below, generic environment
+variables are set: ``PORT``, ``IP``, and ``HOST``.
+
 If the ``docker-compose.yaml`` names do not match Symfony's conventions, add a
 label to override the environment variables prefix:
 
@@ -360,6 +363,20 @@ Or click on the links in the "Server" section of the web debug toolbar.
 When Docker services are running, browse a page of your Symfony application and
 check the "Symfony Server" section in the web debug toolbar; you'll see that
 "Docker Compose" is "Up".
+
+.. note::
+
+    If you don't want environment variables to be exposed for a service, set
+    the ``com.symfony.server.service-ignore`` label to ``true``:
+
+    .. code-block:: yaml
+
+        # docker-compose.yaml
+        services:
+            db:
+                ports: [3306]
+                labels:
+                    com.symfony.server.service-ignore: true
 
 If your Docker Compose file is not at the root of the project, use the
 ``COMPOSE_FILE`` and ``COMPOSE_PROJECT_NAME`` environment variables to define
