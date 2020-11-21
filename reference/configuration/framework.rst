@@ -927,8 +927,6 @@ enabled
 Whether to enable the support for retry failed HTTP request or not.
 This setting is automatically set to true when one of the child settings is configured.
 
-.. _http-headers:
-
 headers
 .......
 
