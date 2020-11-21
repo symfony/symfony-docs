@@ -55,13 +55,10 @@ By convention they are stored in the ``src/Form/Type/`` directory::
         }
     }
 
-The ``configureOptions()`` method, which is explained later in this article,
-defines the options that can be configured for the form type and sets the
-default value of those options.
-
-The ``getParent()`` method defines which is the form type used as the base of
-this type. In this case, the type extends from ``ChoiceType`` to reuse all of
-the logic and rendering of that field type.
+The methods of the ``FormTypeInterface`` are explained in detail later in
+this article. Here, ``getParent()`` method defines the base type
+(``ChoiceType``) and ``configureOptions()`` overrides some of its options.
+The resulting form type is a choice field with predefined choices.
 
 .. note::
 
@@ -154,12 +151,16 @@ These are the most important methods that a form type class can define:
     recommended to use instead the ``buildView()`` method.
 
 ``getParent()``
-    It returns a form type class name that is defined as the parent. All
-    the other form type methods will be called with this parent type, and
-    all its type extensions, before calling the ones defined in your custom
-    type.
-    By default, all classes extend the ``AbstractType`` class, which
-    defines the ``FormType`` as the parent type.
+    If your custom type is based on another type (i.e. they share some
+    functionality) add this method to return the fully-qualified class name
+    of that original type. Do not use PHP inheritance for this.
+    Symfony will call all the form type methods (``buildForm()``,
+    ``buildView()``, etc.) of the parent type and it will call all its type
+    extensions before calling the ones defined in your custom type.
+
+    By default, the ``AbstractType`` class returns the generic
+    :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`
+    type, which is the root parent for all form types in the Form component.
 
 Defining the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~
