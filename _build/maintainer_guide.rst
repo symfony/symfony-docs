@@ -338,8 +338,8 @@ in the tree as follows:
 Merging in the wrong branch
 ...........................
 
-A Pull Request was made against `5.x` but it should be merged in `5.1` and you
-forgot to merge as `gh merge NNNNN -s 5.1` to change the merge branch. Solution:
+A Pull Request was made against ``5.x`` but it should be merged in ``5.1`` and you
+forgot to merge as ``gh merge NNNNN -s 5.1`` to change the merge branch. Solution:
 
 .. code-block:: terminal
 
