@@ -565,11 +565,11 @@ Form Validation Messages
 
 .. versionadded:: 5.2
 
-    The ``framework.form.legacy_error_messages`` option was introduced in Symfony 5.2
+    The ``legacy_error_messages`` option was introduced in Symfony 5.2
 
-The form validation messages have been rewritten to be more user-friendly.
-To enable these new messages set the ``legacy_error_messages`` option in ``framework``,
-``form`` to ``false``:
+The form types have default error messages that are more clear and
+user-friendly than the ones provided by the validation constraints. To enable
+these new messages set the ``legacy_error_messages`` option to ``false``:
 
 .. configuration-block::
 
