@@ -74,7 +74,7 @@ define a callback for the ``prePersist`` Doctrine event:
             /**
              * @ORM\PrePersist
              */
-            public function setCreatedAtValue()
+            public function setCreatedAtValue(): void
             {
                 $this->createdAt = new \DateTime();
             }
@@ -132,7 +132,7 @@ do so, define a listener for the ``postPersist`` Doctrine event::
     {
         // the listener methods receive an argument which gives you access to
         // both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args)
+        public function postPersist(LifecycleEventArgs $args): void
         {
             $entity = $args->getObject();
 
@@ -247,7 +247,7 @@ define a listener for the ``postUpdate`` Doctrine event::
     {
         // the entity listener methods receive two arguments:
         // the entity instance and the lifecycle event
-        public function postUpdate(User $user, LifecycleEventArgs $event)
+        public function postUpdate(User $user, LifecycleEventArgs $event): void
         {
             // ... do something to notify the changes
         }
@@ -373,7 +373,7 @@ want to log all the database activity. To do so, define a subscriber for the
     {
         // this method can only return the event names; you cannot define a
         // custom method name to execute when each event triggers
-        public function getSubscribedEvents()
+        public function getSubscribedEvents(): array
         {
             return [
                 Events::postPersist,
@@ -385,22 +385,22 @@ want to log all the database activity. To do so, define a subscriber for the
         // callback methods must be called exactly like the events they listen to;
         // they receive an argument of type LifecycleEventArgs, which gives you access
         // to both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args)
+        public function postPersist(LifecycleEventArgs $args): void
         {
             $this->logActivity('persist', $args);
         }
 
-        public function postRemove(LifecycleEventArgs $args)
+        public function postRemove(LifecycleEventArgs $args): void
         {
             $this->logActivity('remove', $args);
         }
 
-        public function postUpdate(LifecycleEventArgs $args)
+        public function postUpdate(LifecycleEventArgs $args): void
         {
             $this->logActivity('update', $args);
         }
 
-        private function logActivity(string $action, LifecycleEventArgs $args)
+        private function logActivity(string $action, LifecycleEventArgs $args): void
         {
             $entity = $args->getObject();
 

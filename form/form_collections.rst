@@ -15,6 +15,7 @@ Let's start by creating a ``Task`` entity::
     namespace App\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\Common\Collections\Collection;
 
     class Task
     {
@@ -26,17 +27,17 @@ Let's start by creating a ``Task`` entity::
             $this->tags = new ArrayCollection();
         }
 
-        public function getDescription()
+        public function getDescription(): string
         {
             return $this->description;
         }
 
-        public function setDescription($description)
+        public function setDescription(string $description): void
         {
             $this->description = $description;
         }
 
-        public function getTags()
+        public function getTags(): Collection
         {
             return $this->tags;
         }
@@ -58,12 +59,12 @@ objects::
     {
         private $name;
 
-        public function getName()
+        public function getName(): string
         {
             return $this->name;
         }
 
-        public function setName($name)
+        public function setName(string $name): void
         {
             $this->name = $name;
         }
@@ -81,12 +82,12 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
 
     class TagType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('name');
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Tag::class,
@@ -110,7 +111,7 @@ inside the task form itself::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('description');
 
@@ -120,7 +121,7 @@ inside the task form itself::
             ]);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Task::class,
@@ -138,10 +139,11 @@ In your controller, you'll create a new form from the ``TaskType``::
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class TaskController extends AbstractController
     {
-        public function new(Request $request)
+        public function new(Request $request): Response
         {
             $task = new Task();
 
@@ -224,7 +226,7 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
 
     // ...
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 
@@ -367,12 +369,12 @@ for the tags in the ``Task`` class::
     {
         // ...
 
-        public function addTag(Tag $tag)
+        public function addTag(Tag $tag): void
         {
             $this->tags->add($tag);
         }
 
-        public function removeTag(Tag $tag)
+        public function removeTag(Tag $tag): void
         {
             // ...
         }
@@ -383,7 +385,7 @@ Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false`
     // src/Form/TaskType.php
 
     // ...
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 
@@ -484,7 +486,7 @@ you will learn about next!).
         // src/Entity/Task.php
 
         // ...
-        public function addTag(Tag $tag)
+        public function addTag(Tag $tag): void
         {
             // for a many-to-many association:
             $tag->addTask($this);
@@ -501,7 +503,7 @@ you will learn about next!).
         // src/Entity/Tag.php
 
         // ...
-        public function addTask(Task $task)
+        public function addTask(Task $task): void
         {
             if (!$this->tasks->contains($task)) {
                 $this->tasks->add($task);
@@ -521,7 +523,7 @@ Start by adding the ``allow_delete`` option in the form Type::
     // src/Form/TaskType.php
 
     // ...
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 
@@ -540,7 +542,7 @@ Now, you need to put some code into the ``removeTag()`` method of ``Task``::
     {
         // ...
 
-        public function removeTag(Tag $tag)
+        public function removeTag(Tag $tag): void
         {
             $this->tags->removeElement($tag);
         }
@@ -617,52 +619,56 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     is handling the "update" of your Task::
 
         // src/Controller/TaskController.php
+
+        // ...
         use App\Entity\Task;
         use Doctrine\Common\Collections\ArrayCollection;
 
-        // ...
-        public function edit($id, Request $request, EntityManagerInterface $entityManager)
+        class TaskController extends AbstractController
         {
-            if (null === $task = $entityManager->getRepository(Task::class)->find($id)) {
-                throw $this->createNotFoundException('No task found for id '.$id);
-            }
-
-            $originalTags = new ArrayCollection();
-
-            // Create an ArrayCollection of the current Tag objects in the database
-            foreach ($task->getTags() as $tag) {
-                $originalTags->add($tag);
-            }
-
-            $editForm = $this->createForm(TaskType::class, $task);
-
-            $editForm->handleRequest($request);
-
-            if ($editForm->isSubmitted() && $editForm->isValid()) {
-                // remove the relationship between the tag and the Task
-                foreach ($originalTags as $tag) {
-                    if (false === $task->getTags()->contains($tag)) {
-                        // remove the Task from the Tag
-                        $tag->getTasks()->removeElement($task);
-
-                        // if it was a many-to-one relationship, remove the relationship like this
-                        // $tag->setTask(null);
-
-                        $entityManager->persist($tag);
-
-                        // if you wanted to delete the Tag entirely, you can also do that
-                        // $entityManager->remove($tag);
-                    }
+            public function edit($id, Request $request, EntityManagerInterface $entityManager): Response
+            {
+                if (null === $task = $entityManager->getRepository(Task::class)->find($id)) {
+                    throw $this->createNotFoundException('No task found for id '.$id);
                 }
 
-                $entityManager->persist($task);
-                $entityManager->flush();
+                $originalTags = new ArrayCollection();
 
-                // redirect back to some edit page
-                return $this->redirectToRoute('task_edit', ['id' => $id]);
+                // Create an ArrayCollection of the current Tag objects in the database
+                foreach ($task->getTags() as $tag) {
+                    $originalTags->add($tag);
+                }
+
+                $editForm = $this->createForm(TaskType::class, $task);
+
+                $editForm->handleRequest($request);
+
+                if ($editForm->isSubmitted() && $editForm->isValid()) {
+                    // remove the relationship between the tag and the Task
+                    foreach ($originalTags as $tag) {
+                        if (false === $task->getTags()->contains($tag)) {
+                            // remove the Task from the Tag
+                            $tag->getTasks()->removeElement($task);
+
+                            // if it was a many-to-one relationship, remove the relationship like this
+                            // $tag->setTask(null);
+
+                            $entityManager->persist($tag);
+
+                            // if you wanted to delete the Tag entirely, you can also do that
+                            // $entityManager->remove($tag);
+                        }
+                    }
+
+                    $entityManager->persist($task);
+                    $entityManager->flush();
+
+                    // redirect back to some edit page
+                    return $this->redirectToRoute('task_edit', ['id' => $id]);
+                }
+
+                // ... render some form template
             }
-
-            // render some form template
         }
 
     As you can see, adding and removing the elements correctly can be tricky.

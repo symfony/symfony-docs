@@ -126,7 +126,7 @@ by cloning the original service, this approach allows you to make a service immu
          * @required
          * @return static
          */
-        public function withMailer(MailerInterface $mailer)
+        public function withMailer(MailerInterface $mailer): self
         {
             $new = clone $this;
             $new->mailer = $mailer;
@@ -220,7 +220,7 @@ that accepts the dependency::
 
     // src/Mail/NewsletterManager.php
     namespace App\Mail;
-    
+
     // ...
     class NewsletterManager
     {
@@ -229,7 +229,7 @@ that accepts the dependency::
         /**
          * @required
          */
-        public function setMailer(MailerInterface $mailer)
+        public function setMailer(MailerInterface $mailer): void
         {
             $this->mailer = $mailer;
         }

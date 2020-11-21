@@ -273,7 +273,7 @@ form. You can also define this value explicitly with the ``block_name`` option::
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 
@@ -297,7 +297,7 @@ field without having to :doc:`create a custom form type </form/create_custom_fie
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('name', TextType::class, [
             'block_prefix' => 'wrapped_text',
@@ -345,7 +345,7 @@ has a collection of ``TaskListType`` which in turn has a collection of
 
     class TaskManagerType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = [])
+        public function buildForm(FormBuilderInterface $builder, array $options = []): void
         {
             // ...
             $builder->add('taskLists', CollectionType::class, [
@@ -357,7 +357,7 @@ has a collection of ``TaskListType`` which in turn has a collection of
 
     class TaskListType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = [])
+        public function buildForm(FormBuilderInterface $builder, array $options = []): void
         {
             // ...
             $builder->add('tasks', CollectionType::class, [
@@ -368,7 +368,7 @@ has a collection of ``TaskListType`` which in turn has a collection of
 
     class TaskType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options = [])
+        public function buildForm(FormBuilderInterface $builder, array $options = []): void
         {
             $builder->add('name');
             // ...

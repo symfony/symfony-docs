@@ -96,10 +96,7 @@ An InvoiceSubjectInterface::
         // will need to access on the subject so that you can
         // be sure that you have access to those methods.
 
-        /**
-         * @return string
-         */
-        public function getName();
+        public function getName(): string;
     }
 
 Next, you need to configure the listener, which tells the DoctrineBundle

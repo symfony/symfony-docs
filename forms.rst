@@ -49,22 +49,22 @@ following ``Task`` class::
         protected $task;
         protected $dueDate;
 
-        public function getTask()
+        public function getTask(): string
         {
             return $this->task;
         }
 
-        public function setTask($task)
+        public function setTask(string $task): void
         {
             $this->task = $task;
         }
 
-        public function getDueDate()
+        public function getDueDate(): ?\DateTime
         {
             return $this->dueDate;
         }
 
-        public function setDueDate(\DateTime $dueDate = null)
+        public function setDueDate(?\DateTime $dueDate): void
         {
             $this->dueDate = $dueDate;
         }
@@ -122,10 +122,11 @@ use the ``createFormBuilder()`` helper::
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class TaskController extends AbstractController
     {
-        public function new(Request $request)
+        public function new(Request $request): Response
         {
             // creates a task object and initializes some data for this example
             $task = new Task();
@@ -178,7 +179,7 @@ implements the interface and provides some utilities::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('task', TextType::class)
@@ -206,7 +207,7 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             // creates a task object and initializes some data for this example
             $task = new Task();
@@ -241,7 +242,7 @@ the ``data_class`` option by adding the following to your form type class::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Task::class,
@@ -265,10 +266,11 @@ to build another object with the visual representation of the form::
     use App\Form\Type\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class TaskController extends AbstractController
     {
-        public function new(Request $request)
+        public function new(Request $request): Response
         {
             $task = new Task();
             // ...
@@ -374,34 +376,39 @@ Processing a form means to translate user-submitted data back to the properties
 of an object. To make this happen, the submitted data from the user must be
 written into the form object::
 
+    // src/Controller/TaskController.php
+
     // ...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function new(Request $request)
+    class TaskController extends AbstractController
     {
-        // just setup a fresh $task object (remove the example data)
-        $task = new Task();
+        public function new(Request $request): Response
+        {
+            // just setup a fresh $task object (remove the example data)
+            $task = new Task();
 
-        $form = $this->createForm(TaskType::class, $task);
+            $form = $this->createForm(TaskType::class, $task);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $task = $form->getData();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // $form->getData() holds the submitted values
+                // but, the original `$task` variable has also been updated
+                $task = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($task);
-            // $entityManager->flush();
+                // ... perform some action, such as saving the task to the database
+                // for example, if Task is a Doctrine entity, save it!
+                // $entityManager = $this->getDoctrine()->getManager();
+                // $entityManager->persist($task);
+                // $entityManager->flush();
 
-            return $this->redirectToRoute('task_success');
+                return $this->redirectToRoute('task_success');
+            }
+
+            return $this->render('task/new.html.twig', [
+                'form' => $form->createView(),
+            ]);
         }
-
-        return $this->render('task/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
 This controller follows a common pattern for handling forms and has three
@@ -534,7 +541,7 @@ object.
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('task', new NotBlank());
 
@@ -612,7 +619,7 @@ argument of ``createForm()``::
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             $task = new Task();
             // use some PHP logic to decide if this form field is required or not
@@ -640,7 +647,7 @@ options they accept using the ``configureOptions()`` method::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 // ...,
@@ -664,7 +671,7 @@ Now you can use this new form option inside the ``buildForm()`` method::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -740,6 +747,7 @@ use the ``setAction()`` and ``setMethod()`` methods to change this::
     // src/Controller/TaskController.php
     namespace App\Controller;
 
+    // ...
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -747,7 +755,7 @@ use the ``setAction()`` and ``setMethod()`` methods to change this::
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             // ...
 
@@ -768,10 +776,11 @@ When building the form in a class, pass the action and method as form options::
 
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    // ...
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             // ...
 
@@ -816,10 +825,11 @@ method::
 
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    // ...
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             $task = ...;
             $form = $this->get('form.factory')->createNamed('my_name', TaskType::class, $task);
@@ -880,7 +890,7 @@ pass ``null`` to it, to enable Symfony's "guessing mechanism"::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // if you don't define field options, you can omit the second argument
@@ -939,16 +949,20 @@ If you need extra fields in the form that won't be stored in the object (for
 example to add an *"I agree with these terms"* checkbox), set the ``mapped``
 option to ``false`` in those fields::
 
+    // ...
     use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    class TaskType extends AbstractType
     {
-        $builder
-            ->add('task')
-            ->add('dueDate')
-            ->add('agreeTerms', CheckboxType::class, ['mapped' => false])
-            ->add('save', SubmitType::class)
-        ;
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder
+                ->add('task')
+                ->add('dueDate')
+                ->add('agreeTerms', CheckboxType::class, ['mapped' => false])
+                ->add('save', SubmitType::class)
+            ;
+        }
     }
 
 These "unmapped fields" can be set and accessed in a controller with::
