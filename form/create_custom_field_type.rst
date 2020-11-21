@@ -38,7 +38,7 @@ By convention they are stored in the ``src/Form/Type/`` directory::
 
     class ShippingType extends AbstractType
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'choices' => [
@@ -49,7 +49,7 @@ By convention they are stored in the ``src/Form/Type/`` directory::
             ]);
         }
 
-        public function getParent()
+        public function getParent(): string
         {
             return ChoiceType::class;
         }
@@ -82,7 +82,7 @@ Now you can add this form type when :doc:`creating Symfony forms </forms>`::
 
     class OrderType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -168,7 +168,7 @@ in the postal address. For the moment, all fields are of type ``TextType``::
     {
         // ...
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('addressLine1', TextType::class, [
@@ -209,7 +209,7 @@ correctly rendered in any template::
 
     class OrderType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -254,7 +254,7 @@ to define, validate and process their values::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // this defines the available options and their default values when
             // they are not configured explicitly when using the form type
@@ -293,7 +293,7 @@ Now you can configure these options when using the form type::
 
     class OrderType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -320,7 +320,7 @@ The last step is to use these options when building the form::
     {
         // ...
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             // ...
 
@@ -473,7 +473,7 @@ defined by the form or be completely independent::
 
         // ...
 
-        public function buildView(FormView $view, FormInterface $form, array $options)
+        public function buildView(FormView $view, FormInterface $form, array $options): void
         {
             // pass the form type option directly to the template
             $view->vars['isExtendedAddress'] = $options['is_extended_address'];

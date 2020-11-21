@@ -52,7 +52,7 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     class CompanyType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('name', TextType::class)
@@ -71,7 +71,7 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
     class CustomerType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('firstName', TextType::class)
@@ -94,7 +94,7 @@ for that::
 
     class LocationType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('address', TextareaType::class)
@@ -103,7 +103,7 @@ for that::
                 ->add('country', TextType::class);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'inherit_data' => true,
@@ -131,7 +131,7 @@ Finally, make this work by adding the location form to your two original forms::
     use App\Entity\Company;
     // ...
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 
@@ -148,7 +148,7 @@ Finally, make this work by adding the location form to your two original forms::
     use App\Entity\Customer;
     // ...
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 

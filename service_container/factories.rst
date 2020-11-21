@@ -26,7 +26,7 @@ object by calling the static ``createNewsletterManager()`` method::
 
     class NewsletterManagerStaticFactory
     {
-        public static function createNewsletterManager()
+        public static function createNewsletterManager(): NewsletterManager
         {
             $newsletterManager = new NewsletterManager();
 
@@ -180,7 +180,7 @@ factory service can be used as a callback::
     // ...
     class InvokableNewsletterManagerFactory
     {
-        public function __invoke()
+        public function __invoke(): NewsletterManager
         {
             $newsletterManager = new NewsletterManager();
 

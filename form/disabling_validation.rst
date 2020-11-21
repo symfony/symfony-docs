@@ -9,7 +9,7 @@ these cases you can set the ``validation_groups`` option to ``false``::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => false,
