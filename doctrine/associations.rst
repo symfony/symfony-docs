@@ -327,7 +327,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
         /**
          * @Route("/product", name="product")
          */
-        public function index()
+        public function index(): Response
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -378,20 +378,26 @@ When you need to fetch associated objects, your workflow looks like it did
 before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
     use App\Entity\Product;
     // ...
 
-    public function show($id)
+    class ProductController extends AbstractController
     {
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->find($id);
+        public function show(int $id): Response
+        {
+            $product = $this->getDoctrine()
+                ->getRepository(Product::class)
+                ->find($id);
 
-        // ...
+            // ...
 
-        $categoryName = $product->getCategory()->getName();
+            $categoryName = $product->getCategory()->getName();
 
-        // ...
+            // ...
+        }
     }
 
 In this example, you first query for a ``Product`` object based on the product's
@@ -411,15 +417,21 @@ the category (i.e. it's "lazily loaded").
 Because we mapped the optional ``OneToMany`` side, you can also query in the other
 direction::
 
-    public function showProducts($id)
+    // src/Controller/ProductController.php
+
+    // ...
+    class ProductController extends AbstractController
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->find($id);
+        public function showProducts(int $id): Response
+        {
+            $category = $this->getDoctrine()
+                ->getRepository(Category::class)
+                ->find($id);
 
-        $products = $category->getProducts();
+            $products = $category->getProducts();
 
-        // ...
+            // ...
+        }
     }
 
 In this case, the same things occur: you first query for a single ``Category``
@@ -475,18 +487,23 @@ can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
     // src/Repository/ProductRepository.php
-    public function findOneByIdJoinedToCategory($productId)
+
+    // ...
+    class ProductRepository extends ServiceEntityRepository
     {
-        $entityManager = $this->getEntityManager();
+        public function findOneByIdJoinedToCategory(int $productId): ?Product
+        {
+            $entityManager = $this->getEntityManager();
 
-        $query = $entityManager->createQuery(
-            'SELECT p, c
-            FROM App\Entity\Product p
-            INNER JOIN p.category c
-            WHERE p.id = :id'
-        )->setParameter('id', $productId);
+            $query = $entityManager->createQuery(
+                'SELECT p, c
+                FROM App\Entity\Product p
+                INNER JOIN p.category c
+                WHERE p.id = :id'
+            )->setParameter('id', $productId);
 
-        return $query->getOneOrNullResult();
+            return $query->getOneOrNullResult();
+        }
     }
 
 This will *still* return an array of ``Product`` objects. But now, when you call
@@ -495,15 +512,21 @@ This will *still* return an array of ``Product`` objects. But now, when you call
 Now, you can use this method in your controller to query for a ``Product``
 object and its related ``Category`` in one query::
 
-    public function show($id)
+    // src/Controller/ProductController.php
+
+    // ...
+    class ProductController extends AbstractController
     {
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->findOneByIdJoinedToCategory($id);
+        public function show(int $id): Response
+        {
+            $product = $this->getDoctrine()
+                ->getRepository(Product::class)
+                ->findOneByIdJoinedToCategory($id);
 
-        $category = $product->getCategory();
+            $category = $product->getCategory();
 
-        // ...
+            // ...
+        }
     }
 
 .. _associations-inverse-side:

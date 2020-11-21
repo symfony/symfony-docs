@@ -12,28 +12,35 @@ But sometimes, you may want to use a form without a class, and get back an
 array of the submitted data. The ``getData()`` method allows you to do
 exactly that::
 
-    // make sure you've imported the Request namespace above the class
+    // src/Controller/ContactController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function contact(Request $request)
+    class ContactController extends AbstractController
     {
-        $defaultData = ['message' => 'Type your message here'];
-        $form = $this->createFormBuilder($defaultData)
-            ->add('name', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('message', TextareaType::class)
-            ->add('send', SubmitType::class)
-            ->getForm();
+        public function contact(Request $request): Response
+        {
+            $defaultData = ['message' => 'Type your message here'];
+            $form = $this->createFormBuilder($defaultData)
+                ->add('name', TextType::class)
+                ->add('email', EmailType::class)
+                ->add('message', TextareaType::class)
+                ->add('send', SubmitType::class)
+                ->getForm();
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $data = $form->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
+                // data is an array with "name", "email", and "message" keys
+                $data = $form->getData();
+            }
+
+            // ... render the form
         }
-
-        // ... render the form
     }
 
 By default, a form actually assumes that you want to work with arrays of
@@ -85,7 +92,7 @@ but here's a short example::
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('firstName', TextType::class, [

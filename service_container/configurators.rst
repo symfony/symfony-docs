@@ -28,7 +28,7 @@ You start defining a ``NewsletterManager`` class like this::
     {
         private $enabledFormatters;
 
-        public function setEnabledFormatters(array $enabledFormatters)
+        public function setEnabledFormatters(array $enabledFormatters): void
         {
             $this->enabledFormatters = $enabledFormatters;
         }
@@ -45,7 +45,7 @@ and also a ``GreetingCardManager`` class::
     {
         private $enabledFormatters;
 
-        public function setEnabledFormatters(array $enabledFormatters)
+        public function setEnabledFormatters(array $enabledFormatters): void
         {
             $this->enabledFormatters = $enabledFormatters;
         }
@@ -65,7 +65,7 @@ in the application::
     {
         // ...
 
-        public function getEnabledFormatters()
+        public function getEnabledFormatters(): array
         {
             // code to configure which formatters to use
             $enabledFormatters = [...];
@@ -92,7 +92,7 @@ to create a configurator class to configure these instances::
             $this->formatterManager = $formatterManager;
         }
 
-        public function configure(EmailFormatterAwareInterface $emailManager)
+        public function configure(EmailFormatterAwareInterface $emailManager): void
         {
             $emailManager->setEnabledFormatters(
                 $this->formatterManager->getEnabledFormatters()

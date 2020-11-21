@@ -12,7 +12,7 @@ to an array callback::
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => [
@@ -32,7 +32,7 @@ example).  You can also define whole logic inline by using a ``Closure``::
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -56,7 +56,7 @@ of the entity as well you have to adjust the option as follows::
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {

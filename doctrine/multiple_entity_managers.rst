@@ -241,12 +241,11 @@ the default entity manager (i.e. ``default``) is returned::
     namespace App\Controller;
 
     // ...
-
     use Doctrine\ORM\EntityManagerInterface;
 
     class UserController extends AbstractController
     {
-        public function index(EntityManagerInterface $entityManager)
+        public function index(EntityManagerInterface $entityManager): Response
         {
             // These methods also return the default entity manager, but it's preferred
             // to get it by injecting EntityManagerInterface in the action method
@@ -257,6 +256,8 @@ the default entity manager (i.e. ``default``) is returned::
             // Both of these return the "customer" entity manager
             $customerEntityManager = $this->getDoctrine()->getManager('customer');
             $customerEntityManager = $this->get('doctrine.orm.customer_entity_manager');
+
+            // ...
         }
     }
 
@@ -275,7 +276,7 @@ The same applies to repository calls::
 
     class UserController extends AbstractController
     {
-        public function index()
+        public function index(): Response
         {
             // Retrieves a repository managed by the "default" em
             $products = $this->getDoctrine()
@@ -294,6 +295,8 @@ The same applies to repository calls::
                 ->getRepository(Customer::class, 'customer')
                 ->findAll()
             ;
+
+            // ...
         }
     }
 

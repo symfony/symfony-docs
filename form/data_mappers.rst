@@ -98,7 +98,7 @@ in your form type::
         /**
          * @param Color|null $viewData
          */
-        public function mapDataToForms($viewData, iterable $forms)
+        public function mapDataToForms($viewData, iterable $forms): void
         {
             // there is no data yet, so nothing to prepopulate
             if (null === $viewData) {
@@ -119,7 +119,7 @@ in your form type::
             $forms['blue']->setData($viewData->getBlue());
         }
 
-        public function mapFormsToData(iterable $forms, &$viewData)
+        public function mapFormsToData(iterable $forms, &$viewData): void
         {
             /** @var FormInterface[] $forms */
             $forms = iterator_to_array($forms);
@@ -158,7 +158,7 @@ method::
 
     final class ColorType extends AbstractType implements DataMapperInterface
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('red', IntegerType::class, [
@@ -177,7 +177,7 @@ method::
             ;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // when creating a new color, the initial data should be null
             $resolver->setDefault('empty_data', null);
