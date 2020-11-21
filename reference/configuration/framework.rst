@@ -178,6 +178,7 @@ Configuration
 
   * :ref:`dsn <mailer-dsn>`
   * `transports`_
+  * `message_bus`_
   * `envelope`_
 
     * `sender`_
@@ -3009,6 +3010,18 @@ transports
 A :ref:`list of DSN <multiple-email-transports>` that can be used by the
 mailer. A transport name is the key and the dsn is the value.
 
+message_bus
+...........
+
+.. versionadded:: 5.1
+
+    The ``message_bus`` option was introduced in Symfony 5.1.
+
+**type**: ``string`` **default**: ``null`` or default bus if Messenger component is installed
+
+Service identifier of the message bus to use when using the
+:doc:`Messenger component </messenger>` (e.g. ``messenger.default_bus``).
+
 envelope
 ........
 
@@ -3063,6 +3076,7 @@ recipients set in the code.
 
         // config/packages/mailer.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         return static function (ContainerConfigurator $containerConfigurator): void {
             $containerConfigurator->extension('framework', [
                 'mailer' => [
@@ -3082,10 +3096,14 @@ recipients set in the code.
 headers
 .......
 
+.. versionadded:: 5.2
+
+    The ``headers`` mailer option was introduced in Symfony 5.2.
+
 **type**: ``array``
 
-Headers to add to emails. key (``name`` attribute in xml format)
-is the header name and value the header value.
+Headers to add to emails. The key (``name`` attribute in xml format) is the
+header name and value the header value.
 
 workflows
 ~~~~~~~~~
