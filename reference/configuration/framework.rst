@@ -2797,10 +2797,6 @@ Name of the lock you want to create.
 mailer
 ~~~~~~
 
-.. versionadded:: 4.3
-
-    The ``mailer`` settings were introduced in Symfony 4.3.
-
 .. _mailer-dsn:
 
 dsn
