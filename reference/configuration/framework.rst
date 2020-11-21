@@ -847,8 +847,6 @@ can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-
 
 .. _http-headers:
 
-.. _http-headers:
-
 headers
 .......
 
