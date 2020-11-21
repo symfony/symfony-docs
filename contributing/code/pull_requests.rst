@@ -124,7 +124,7 @@ Choose the right Branch
 Before working on a PR, you must determine on which branch you need to
 work:
 
-* ``3.4``, if you are fixing a bug for an existing feature or want to make a
+* ``4.4``, if you are fixing a bug for an existing feature or want to make a
   change that falls into the :doc:`list of acceptable changes in patch versions
   </contributing/code/maintenance>` (you may have to choose a higher branch if
   the feature you are fixing was introduced in a later version);
@@ -132,16 +132,16 @@ work:
 * ``5.x``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
-  (4.0, 5.0, etc.) comes out every two years. Because of the
+  (5.0, 6.0, etc.) comes out every two years. Because of the
   :ref:`special development process <major-version-development>` of those versions,
-  you need to use the previous minor version for the features (e.g. use ``3.4``
-  instead of ``4.0``, use ``4.4`` instead of ``5.0``, etc.)
+  you need to use the previous minor version for the features (e.g. use ``4.4``
+  instead of ``5.0``, use ``5.4`` instead of ``6.0``, etc.)
 
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a PR
-    for the ``3.4`` branch, the PR will also be applied by the core team on
+    for the ``4.4`` branch, the PR will also be applied by the core team on
     the ``5.x`` branch.
 
 Create a Topic Branch
@@ -154,18 +154,18 @@ topic branch:
 
     $ git checkout -b BRANCH_NAME 5.x
 
-Or, if you want to provide a bug fix for the ``3.4`` branch, first track the remote
-``3.4`` branch locally:
+Or, if you want to provide a bug fix for the ``4.4`` branch, first track the remote
+``4.4`` branch locally:
 
 .. code-block:: terminal
 
-    $ git checkout --track origin/3.4
+    $ git checkout --track origin/4.4
 
-Then create a new branch off the ``3.4`` branch to work on the bug fix:
+Then create a new branch off the ``4.4`` branch to work on the bug fix:
 
 .. code-block:: terminal
 
-    $ git checkout -b BRANCH_NAME 3.4
+    $ git checkout -b BRANCH_NAME 4.4
 
 .. tip::
 
@@ -285,7 +285,7 @@ while to finish your changes):
 
 .. tip::
 
-    Replace ``5.x`` with the branch you selected previously (e.g. ``3.4``)
+    Replace ``5.x`` with the branch you selected previously (e.g. ``4.4``)
     if you are working on a bug fix.
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
@@ -312,8 +312,8 @@ You can now make a pull request on the ``symfony/symfony`` GitHub repository.
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:3.4`` if you want
-    the core team to pull a bug fix based on the ``3.4`` branch.
+    Take care to point your pull request towards ``symfony:4.4`` if you want
+    the core team to pull a bug fix based on the ``4.4`` branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
@@ -403,7 +403,7 @@ Rework your Pull Request
 
 Based on the feedback on the pull request, you might need to rework your
 PR. Before re-submitting the PR, rebase with ``upstream/5.x`` or
-``upstream/3.4``, don't merge; and force the push to the origin:
+``upstream/4.4``, don't merge; and force the push to the origin:
 
 .. code-block:: terminal
 

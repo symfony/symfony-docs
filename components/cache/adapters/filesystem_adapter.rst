@@ -50,11 +50,9 @@ and cache root path as constructor parameters::
 
 .. note::
 
-    Since Symfony 3.4, this adapter implements
-    :class:`Symfony\\Component\\Cache\\PruneableInterface`, enabling manual
-    :ref:`pruning of expired cache items <component-cache-cache-pool-prune>` by
-    calling its ``prune()`` method.
-
+    This adapter implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
+    enabling manual :ref:`pruning of expired cache items <component-cache-cache-pool-prune>`
+    by calling its ``prune()`` method.
 
 .. _filesystem-tag-aware-adapter:
 
