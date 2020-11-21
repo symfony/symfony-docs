@@ -27,10 +27,58 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
     # .env
     MAILER_DSN=smtp://user:pass@smtp.example.com:port
 
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                dsn: '%env(MAILER_DSN)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:mailer dsn="%env(MAILER_DSN)%"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        return static function (ContainerConfigurator $containerConfigurator): void {
+            $containerConfigurator->extension('framework', [
+                'mailer' => [
+                    'dsn' => '%env(MAILER_DSN)%',
+                ]
+            ]);
+        };
+
 .. caution::
 
     If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
     warned that the DSN format is different.
+
+Using Built-in Transports
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+============  ========================================  ==============================
+DSN protocol  Example                                   Description
+============  ========================================  ==============================
+smtp          ``smtp://user:pass@smtp.example.com:25``  Mailer uses an SMTP server to
+                                                        send emails
+sendmail      ``sendmail://default``                    Mailer uses the local sendmail
+                                                        binary to send emails
+============  ========================================  ==============================
 
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -836,6 +884,8 @@ and it will select the appropriate certificate depending on the ``To`` option::
 
     $firstEncryptedEmail = $encrypter->encrypt($firstEmail);
     $secondEncryptedEmail = $encrypter->encrypt($secondEmail);
+
+.. _multiple-email-transports:
 
 Multiple Email Transports
 -------------------------
