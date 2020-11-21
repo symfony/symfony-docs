@@ -87,7 +87,7 @@ your fronts and have very fast invalidation checks::
 
 .. note::
 
-    Since Symfony 3.4, :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`
+    :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`
     implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
     enabling manual
     :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
