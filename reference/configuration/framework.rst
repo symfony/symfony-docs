@@ -183,8 +183,6 @@ Configuration
     * `sender`_
     * `recipients`_
 
-  * :ref:`headers <mailer-headers>`
-
 * `php_errors`_
 
   * `log`_
@@ -3076,16 +3074,6 @@ recipients set in the code.
                 ]
             ]);
         };
-
-.. _mailer-headers:
-
-headers
-.......
-
-**type**: ``array``
-
-Headers to add to emails. key (``name`` attribute in xml format)
-is the header name and value the header value.
 
 workflows
 ~~~~~~~~~
