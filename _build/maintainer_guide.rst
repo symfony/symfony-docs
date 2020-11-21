@@ -335,6 +335,23 @@ in the tree as follows:
     $ git push origin
     $ git push upstream
 
+Merging in the wrong branch
+...........................
+
+A Pull Request was made against ``5.x`` but it should be merged in ``5.1`` and you
+forgot to merge as ``gh merge NNNNN -s 5.1`` to change the merge branch. Solution:
+
+.. code-block:: terminal
+
+    $ git checkout 5.1
+    $ git cherry-pick <SHA OF YOUR MERGE COMMIT> -m 1
+    $ git checkout 5.x
+    $ git revert <SHA OF YOUR MERGE COMMIT> -m 1
+    # now continue with the normal "upmerging"
+    $ git checkout 5.2
+    $ git merge 5.1
+    $ ...
+
 .. _`symfony/symfony-docs`: https://github.com/symfony/symfony-docs
 .. _`Symfony Docs team`: https://github.com/orgs/symfony/teams/team-symfony-docs
 .. _`Symfony's respectful review comments`: https://symfony.com/doc/current/contributing/community/review-comments.html
