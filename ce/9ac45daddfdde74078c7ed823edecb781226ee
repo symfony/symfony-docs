@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-02-10T13:10:04Z
+
+Hi Ben 👋
+
+Thanks for this improvement, not sure we need to be reproducable.
+Is this image build all the time or is it cached?
+
+@javiereguiluz WDYT?
+
+@localheinz can you please leave your 2 cents here? Thanks!
+
+---------------------------------------------------------------------------
+
+by bendavies at 2020-02-10T13:13:30Z
+
+@OskarStark hey, this is just a personal preference really.
+I just pushed a commit removing the custom action.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-09-09T18:08:42Z
+
+@OskarStark I don't know much about GitHub actions, so you'll need to make a decision about this: is this something that fixes issues? improves things? Does it complicate anything? Would we lose something? etc. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-21T15:25:19Z
+
+Friendly ping @OskarStark :)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-10-21T17:39:28Z
+
+Will check tomorrow, thanks
