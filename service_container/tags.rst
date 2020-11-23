@@ -60,6 +60,8 @@ and many tags require additional arguments (beyond the ``name`` parameter).
 **For most users, this is all you need to know**. If you want to go further and
 learn how to create your own custom tags, keep reading.
 
+.. _di-instanceof:
+
 Autoconfiguring Tags
 --------------------
 

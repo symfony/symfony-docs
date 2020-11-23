@@ -187,16 +187,24 @@ called "output sections". Create one or more of these sections when you need to
 clear and overwrite the output information.
 
 Sections are created with the
-:method:`Symfony\\Component\\Console\\Output\\ConsoleOutput::section` method,
-which returns an instance of
+:method:`ConsoleOutput::section() <Symfony\\Component\\Console\\Output\\ConsoleOutput::section>`
+method, which returns an instance of
 :class:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput`::
+
+    // ...
+    use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
     class MyCommand extends Command
     {
         protected function execute(InputInterface $input, OutputInterface $output)
         {
+            if (!$output instanceof ConsoleOutputInterface) {
+                throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
+            }
+
             $section1 = $output->section();
             $section2 = $output->section();
+
             $section1->writeln('Hello');
             $section2->writeln('World!');
             // Output displays "Hello\nWorld!\n"
