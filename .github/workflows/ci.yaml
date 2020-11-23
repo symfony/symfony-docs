@@ -86,14 +86,14 @@ jobs:
                 run: mkdir .cache
 
             -   name: "Extract base branch name"
+                id: base-branch
                 run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:=${GITHUB_REF##*/}})"
-                id: extract_base_branch
 
             -   name: "Cache DOCtor-RST"
                 uses: actions/cache@v2
                 with:
                     path: .cache
-                    key: ${{ runner.os }}-doctor-rst-${{ steps.extract_base_branch.outputs.branch }}
+                    key: ${{ runner.os }}-doctor-rst-${{ steps.base-branch.outputs.branch }}
 
             -   name: "Run DOCtor-RST"
                 uses: docker://oskarstark/doctor-rst
