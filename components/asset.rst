@@ -72,7 +72,7 @@ any versioning::
     echo $package->getUrl('image.png');
     // result: image.png
 
-Packages implement :class:`Symfony\\Component\\Asset\\PackageInterface`,
+Package implement :class:`Symfony\\Component\\Asset\\PackageInterface`,
 which defines the following two methods:
 
 :method:`Symfony\\Component\\Asset\\PackageInterface::getVersion`
