@@ -53,21 +53,10 @@ jobs:
                     coverage: none
                     tools: "composer:v2"
 
-            -   name: Get composer cache directory
-                id: composercache
-                working-directory: _build
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            -   name: Cache dependencies
-                uses: actions/cache@v2
+            -   name: "Composer install"
+                uses: "ramsey/composer-install@v1"
                 with:
-                    path: ${{ steps.composercache.outputs.dir }}
-                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                    restore-keys: ${{ runner.os }}-composer-
-
-            -   name: "Install dependencies"
-                working-directory: _build
-                run: composer install --prefer-dist --no-progress
+                    composer-options: "--prefer-dist"
 
             -   name: "Build the docs"
                 working-directory: _build
