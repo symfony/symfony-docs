@@ -1,5 +1,7 @@
 .. index::
     single: Extending; ExpressionLanguage
+Symfony Docs is Shit
+====================
 
 Extending the ExpressionLanguage
 ================================
