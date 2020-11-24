@@ -897,7 +897,8 @@ Option                  Description                                           De
 ``csv_escape_char``     Sets the escape character (at most one character)
 ``csv_key_separator``   Sets the separator for array's keys during its        ``.``
                         flattening
-``csv_headers``         Sets the order of the header and data columns         ``[]``, inferred from input data's keys
+``csv_headers``         Sets the order of the header and data columns and     ``[]``, inferred from input data's keys
+                        allows filtering by ommiting fields
 ``csv_escape_formulas`` Escapes fields containg formulas by prepending them   ``false``
                         with a ``\t`` character
 ``as_collection``       Always returns results as a collection, even if only
