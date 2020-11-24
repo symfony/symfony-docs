@@ -67,7 +67,7 @@ with the ``new`` command:
 
 .. code-block:: terminal
 
-    $ symfony new my_project_name 3.4
+    $ symfony new my_project_name --version=3.4
 
 This command creates a new directory called ``my_project_name/`` that contains
 an empty project based on the most recent stable Symfony version available. In
