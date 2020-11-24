@@ -49,7 +49,7 @@ If an array, the keys of the ``choices`` array must be used as keys::
 
         // ...
         $builder->add('choices', ChoiceType::class, [
-            'choice_label' => ChoiceList::attr($this, function (?Category $category) {
+            'choice_attr' => ChoiceList::attr($this, function (?Category $category) {
                 return $category ? ['data-uuid' => $category->getUuid()] : [];
             }),
         ]);
