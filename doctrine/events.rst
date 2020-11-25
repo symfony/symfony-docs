@@ -16,7 +16,7 @@ on other common tasks (e.g. ``loadClassMetadata``, ``onClear``).
 
 There are different ways to listen to these Doctrine events:
 
-* **Lifecycle callbacks**, they are defined as methods on the entity classes and
+* **Lifecycle callbacks**, they are defined as public methods on the entity classes and
   they are called when the events are triggered;
 * **Lifecycle listeners and subscribers**, they are classes with callback
   methods for one or more events and they are called for all entities;
@@ -46,7 +46,7 @@ to learn everything about them.
 Doctrine Lifecycle Callbacks
 ----------------------------
 
-Lifecycle callbacks are defined as methods inside the entity you want to modify.
+Lifecycle callbacks are defined as public methods inside the entity you want to modify.
 For example, suppose you want to set a ``createdAt`` date column to the current
 date, but only when the entity is first persisted (i.e. inserted). To do so,
 define a callback for the ``prePersist`` Doctrine event:
