@@ -60,6 +60,8 @@ and many tags require additional arguments (beyond the ``name`` parameter).
 **For most users, this is all you need to know**. If you want to go further and
 learn how to create your own custom tags, keep reading.
 
+.. _di-instanceof:
+
 Autoconfiguring Tags
 --------------------
 
@@ -126,7 +128,7 @@ In a Symfony application, call this method in your kernel class::
     {
         // ...
 
-        protected function build(ContainerBuilder $container)
+        protected function build(ContainerBuilder $container): void
         {
             $container->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
@@ -142,7 +144,7 @@ In a Symfony bundle, call this method in the ``load()`` method of the
     {
         // ...
 
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             $container->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
@@ -178,7 +180,7 @@ To begin with, define the ``TransportChain`` class::
             $this->transports = [];
         }
 
-        public function addTransport(\Swift_Transport $transport)
+        public function addTransport(\Swift_Transport $transport): void
         {
             $this->transports[] = $transport;
         }
@@ -305,7 +307,7 @@ container for any services with the ``app.mail_transport`` tag::
 
     class MailTransportPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // always first check if the primary service is defined
             if (!$container->has(TransportChain::class)) {
@@ -342,7 +344,7 @@ or from your kernel::
     {
         // ...
 
-        protected function build(ContainerBuilder $container)
+        protected function build(ContainerBuilder $container): void
         {
             $container->addCompilerPass(new MailTransportPass());
         }
@@ -373,16 +375,18 @@ To begin with, change the ``TransportChain`` class::
             $this->transports = [];
         }
 
-        public function addTransport(\Swift_Transport $transport, $alias)
+        public function addTransport(\Swift_Transport $transport, $alias): void
         {
             $this->transports[$alias] = $transport;
         }
 
-        public function getTransport($alias)
+        public function getTransport($alias): ?\Swift_Transport
         {
             if (array_key_exists($alias, $this->transports)) {
                 return $this->transports[$alias];
             }
+
+            return null;
         }
     }
 
@@ -478,7 +482,7 @@ use this, update the compiler::
 
     class TransportCompilerPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // ...
 

@@ -340,7 +340,7 @@ you can type-hint the new ``SiteUpdateManager`` class and use it::
 
     // src/Controller/SiteController.php
     namespace App\Controller;
-    
+
     // ...
     use App\Service\SiteUpdateManager;
 
@@ -378,7 +378,7 @@ example, suppose you want to make the admin email configurable:
     +    private $adminEmail;
 
     -    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
-    +    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer, $adminEmail)
+    +    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer, string $adminEmail)
         {
             // ...
     +        $this->adminEmail = $adminEmail;

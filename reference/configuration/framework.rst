@@ -98,7 +98,7 @@ Configuration
     * `cafile`_
     * `capath`_
     * `ciphers`_
-    * `headers`_
+    * :ref:`headers <http-headers>`
     * `http_version`_
     * `local_cert`_
     * `local_pk`_
@@ -126,7 +126,7 @@ Configuration
     * `cafile`_
     * `capath`_
     * `ciphers`_
-    * `headers`_
+    * :ref:`headers <http-headers>`
     * `http_version`_
     * `local_cert`_
     * `local_pk`_
@@ -174,6 +174,16 @@ Configuration
 
     * :ref:`name <reference-lock-resources-name>`
 
+* `mailer`_
+
+  * :ref:`dsn <mailer-dsn>`
+  * `transports`_
+  * `message_bus`_
+  * `envelope`_
+
+    * `sender`_
+    * `recipients`_
+
 * `php_errors`_
 
   * `log`_
@@ -182,7 +192,7 @@ Configuration
 * `profiler`_
 
   * `collect`_
-  * `dsn`_
+  * :ref:`dsn <profiler-dsn>`
   * :ref:`enabled <reference-profiler-enabled>`
   * `only_exceptions`_
   * `only_master_requests`_
@@ -915,6 +925,8 @@ enabled
 Whether to enable the support for retry failed HTTP request or not.
 This setting is automatically set to true when one of the child settings is configured.
 
+.. _http-headers:
+
 headers
 .......
 
@@ -1195,6 +1207,8 @@ only_master_requests
 
 When this is set to ``true``, the profiler will only be enabled on the master
 requests (and not on the subrequests).
+
+.. _profiler-dsn:
 
 dsn
 ...
@@ -2972,6 +2986,108 @@ Name of the lock you want to create.
             class: Symfony\Component\Lock\Store\RetryTillSaveStore
             decorates: lock.invoice.store
             arguments: ['@.inner', 100, 50]
+
+mailer
+~~~~~~
+
+.. _mailer-dsn:
+
+dsn
+...
+
+**type**: ``string`` **default**: ``null``
+
+The DSN used by the mailer. When several DSN may be used, use
+``transports`` option (see below) instead.
+
+transports
+..........
+
+**type**: ``array``
+
+A :ref:`list of DSN <multiple-email-transports>` that can be used by the
+mailer. A transport name is the key and the dsn is the value.
+
+message_bus
+...........
+
+.. versionadded:: 5.1
+
+    The ``message_bus`` option was introduced in Symfony 5.1.
+
+**type**: ``string`` **default**: ``null`` or default bus if Messenger component is installed
+
+Service identifier of the message bus to use when using the
+:doc:`Messenger component </messenger>` (e.g. ``messenger.default_bus``).
+
+envelope
+........
+
+sender
+""""""
+
+**type**: ``string``
+
+Sender used by the ``Mailer``. Keep in mind that this setting override a
+sender set in the code.
+
+recipients
+""""""""""
+
+**type**: ``array``
+
+Recipients used by the ``Mailer``. Keep in mind that this setting override
+recipients set in the code.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                dsn: 'smtp://localhost:25'
+                envelope:
+                    recipients: ['admin@symfony.com', 'lead@symfony.com']
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:mailer dsn="smtp://localhost:25">
+                    <framework:envelope>
+                        <framework:recipient>admin@symfony.com</framework:recipient>
+                        <framework:recipient>lead@symfony.com</framework:recipient>
+                    </framework:envelope>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $containerConfigurator): void {
+            $containerConfigurator->extension('framework', [
+                'mailer' => [
+                    'dsn' => 'smtp://localhost:25',
+                    'envelope' => [
+                        'recipients' => [
+                            'admin@symfony.com',
+                            'lead@symfony.com',
+                        ]
+                    ]
+                ]
+            ]);
+        };
 
 workflows
 ~~~~~~~~~

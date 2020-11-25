@@ -363,7 +363,7 @@ Read more about :ref:`template directories and namespaces <templates-namespaces>
 strict_variables
 ~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If set to ``true``, Symfony shows an exception whenever a Twig variable,
 attribute or method doesn't exist. If set to ``false`` these errors are ignored

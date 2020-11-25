@@ -52,7 +52,7 @@ and process the services inside the ``process()`` method::
 
         // ...
 
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // in this method you can manipulate the service container:
             // for example, changing some container service:
@@ -81,7 +81,7 @@ method in the extension)::
 
     class MyBundle extends Bundle
     {
-        public function build(ContainerBuilder $container)
+        public function build(ContainerBuilder $container): void
         {
             parent::build($container);
 

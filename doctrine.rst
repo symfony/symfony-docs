@@ -46,9 +46,12 @@ The database connection information is stored as an environment variable called
     # customize this line!
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
 
+    # to use mariadb:
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
+
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
-    
+
     # to use postgresql:
     # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
 
@@ -499,46 +502,60 @@ Fetching an object back out of the database is even easier. Suppose you want to
 be able to go to ``/product/1`` to see your new product::
 
     // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use App\Entity\Product;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    /**
-     * @Route("/product/{id}", name="product_show")
-     */
-    public function show($id)
+    class ProductController extends AbstractController
     {
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->find($id);
+        /**
+         * @Route("/product/{id}", name="product_show")
+         */
+        public function show(int $id): Response
+        {
+            $product = $this->getDoctrine()
+                ->getRepository(Product::class)
+                ->find($id);
 
-        if (!$product) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$id
-            );
+            if (!$product) {
+                throw $this->createNotFoundException(
+                    'No product found for id '.$id
+                );
+            }
+
+            return new Response('Check out this great product: '.$product->getName());
+
+            // or render a template
+            // in the template, print things with {{ product.name }}
+            // return $this->render('product/show.html.twig', ['product' => $product]);
         }
-
-        return new Response('Check out this great product: '.$product->getName());
-
-        // or render a template
-        // in the template, print things with {{ product.name }}
-        // return $this->render('product/show.html.twig', ['product' => $product]);
     }
 
 Another possibility is to use the ``ProductRepository`` using Symfony's autowiring
 and injected by the dependency injection container::
 
     // src/Controller/ProductController.php
-    // ...
+    namespace App\Controller;
+
+    use App\Entity\Product;
     use App\Repository\ProductRepository;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
 
-    /**
-     * @Route("/product/{id}", name="product_show")
-     */
-    public function show($id, ProductRepository $productRepository)
+    class ProductController extends AbstractController
     {
-        $product = $productRepository
-            ->find($id);
+        /**
+         * @Route("/product/{id}", name="product_show")
+         */
+        public function show(int $id, ProductRepository $productRepository): Response
+        {
+            $product = $productRepository
+                ->find($id);
 
-        // ...
+            // ...
+        }
     }
 
 Try it out!
@@ -604,15 +621,23 @@ for you automatically! First, install the bundle in case you don't have it:
 Now, simplify your controller::
 
     // src/Controller/ProductController.php
-    use App\Entity\Product;
+    namespace App\Controller;
 
-    /**
-     * @Route("/product/{id}", name="product_show")
-     */
-    public function show(Product $product)
+    use App\Entity\Product;
+    use App\Repository\ProductRepository;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    class ProductController extends AbstractController
     {
-        // use the Product!
-        // ...
+        /**
+         * @Route("/product/{id}", name="product_show")
+         */
+        public function show(Product $product): Response
+        {
+            // use the Product!
+            // ...
+        }
     }
 
 That's it! The bundle uses the ``{id}`` from the route to query for the ``Product``
@@ -626,26 +651,37 @@ Updating an Object
 Once you've fetched an object from Doctrine, you interact with it the same as
 with any PHP model::
 
-    /**
-     * @Route("/product/edit/{id}")
-     */
-    public function update($id)
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use App\Entity\Product;
+    use App\Repository\ProductRepository;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    class ProductController extends AbstractController
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $product = $entityManager->getRepository(Product::class)->find($id);
+        /**
+         * @Route("/product/edit/{id}")
+         */
+        public function update(int $id): Response
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $product = $entityManager->getRepository(Product::class)->find($id);
 
-        if (!$product) {
-            throw $this->createNotFoundException(
-                'No product found for id '.$id
-            );
+            if (!$product) {
+                throw $this->createNotFoundException(
+                    'No product found for id '.$id
+                );
+            }
+
+            $product->setName('New product name!');
+            $entityManager->flush();
+
+            return $this->redirectToRoute('product_show', [
+                'id' => $product->getId()
+            ]);
         }
-
-        $product->setName('New product name!');
-        $entityManager->flush();
-
-        return $this->redirectToRoute('product_show', [
-            'id' => $product->getId()
-        ]);
     }
 
 Using Doctrine to edit an existing product consists of three steps:
@@ -721,7 +757,7 @@ a new method for this to your repository::
         /**
          * @return Product[]
          */
-        public function findAllGreaterThanPrice($price): array
+        public function findAllGreaterThanPrice(int $price): array
         {
             $entityManager = $this->getEntityManager();
 
@@ -766,25 +802,28 @@ based on PHP conditions)::
     // src/Repository/ProductRepository.php
 
     // ...
-    public function findAllGreaterThanPrice($price, $includeUnavailableProducts = false): array
+    class ProductRepository extends ServiceEntityRepository
     {
-        // automatically knows to select Products
-        // the "p" is an alias you'll use in the rest of the query
-        $qb = $this->createQueryBuilder('p')
-            ->where('p.price > :price')
-            ->setParameter('price', $price)
-            ->orderBy('p.price', 'ASC');
+        public function findAllGreaterThanPrice(int $price, bool $includeUnavailableProducts = false): array
+        {
+            // automatically knows to select Products
+            // the "p" is an alias you'll use in the rest of the query
+            $qb = $this->createQueryBuilder('p')
+                ->where('p.price > :price')
+                ->setParameter('price', $price)
+                ->orderBy('p.price', 'ASC');
 
-        if (!$includeUnavailableProducts) {
-            $qb->andWhere('p.available = TRUE');
+            if (!$includeUnavailableProducts) {
+                $qb->andWhere('p.available = TRUE');
+            }
+
+            $query = $qb->getQuery();
+
+            return $query->execute();
+
+            // to get just one result:
+            // $product = $query->setMaxResults(1)->getOneOrNullResult();
         }
-
-        $query = $qb->getQuery();
-
-        return $query->execute();
-
-        // to get just one result:
-        // $product = $query->setMaxResults(1)->getOneOrNullResult();
     }
 
 Querying with SQL
@@ -795,20 +834,23 @@ In addition, you can query directly with SQL if you need to::
     // src/Repository/ProductRepository.php
 
     // ...
-    public function findAllGreaterThanPrice($price): array
+    class ProductRepository extends ServiceEntityRepository
     {
-        $conn = $this->getEntityManager()->getConnection();
+        public function findAllGreaterThanPrice(int $price): array
+        {
+            $conn = $this->getEntityManager()->getConnection();
 
-        $sql = '
-            SELECT * FROM product p
-            WHERE p.price > :price
-            ORDER BY p.price ASC
-            ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['price' => $price]);
+            $sql = '
+                SELECT * FROM product p
+                WHERE p.price > :price
+                ORDER BY p.price ASC
+                ';
+            $stmt = $conn->prepare($sql);
+            $stmt->execute(['price' => $price]);
 
-        // returns an array of arrays (i.e. a raw data set)
-        return $stmt->fetchAllAssociative();
+            // returns an array of arrays (i.e. a raw data set)
+            return $stmt->fetchAllAssociative();
+        }
     }
 
 With SQL, you will get back raw data, not objects (unless you use the `NativeQuery`_
