@@ -305,7 +305,7 @@ order. Start by creating this custom event class and documenting it::
             $this->order = $order;
         }
 
-        public function getOrder()
+        public function getOrder(): Order
         {
             return $this->order;
         }
