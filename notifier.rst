@@ -166,6 +166,8 @@ Chatters are configured using the ``chatter_transports`` setting:
 
     # .env
     SLACK_DSN=slack://default/ID
+    # If your slack webhook looks like "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX" then use:
+    SLACK_DSN=slack://default/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX
 
 .. configuration-block::
 
