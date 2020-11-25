@@ -73,14 +73,20 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
 Using Built-in Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-============  ========================================  ==============================
+.. versionadded:: 5.2
+
+    The native protocol was introduced in Symfony 5.2.
+
+============  ========================================  ==============================================================
 DSN protocol  Example                                   Description
-============  ========================================  ==============================
-smtp          ``smtp://user:pass@smtp.example.com:25``  Mailer uses an SMTP server to
-                                                        send emails
-sendmail      ``sendmail://default``                    Mailer uses the local sendmail
-                                                        binary to send emails
-============  ========================================  ==============================
+============  ========================================  ==============================================================
+smtp          ``smtp://user:pass@smtp.example.com:25``  Mailer uses an SMTP server to send emails
+sendmail      ``sendmail://default``                    Mailer uses the local sendmail binary to send emails
+native        ``native://default``                      Mailer uses the sendmail binary and options configured
+                                                        in the ``sendmail_path`` setting of ``php.ini``. On Windows
+                                                        hosts, Mailer fallbacks to ``smtp`` and ``smtp_port``
+                                                        ``php.ini`` settings when ``sendmail_path`` is not configured.
+============  ========================================  ==============================================================
 
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

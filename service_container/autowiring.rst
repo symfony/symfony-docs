@@ -563,12 +563,12 @@ to inject the ``logger`` service, and decide to use setter-injection:
             /**
              * @required
              */
-            public function setLogger(LoggerInterface $logger)
+            public function setLogger(LoggerInterface $logger): void
             {
                 $this->logger = $logger;
             }
 
-            public function transform($value)
+            public function transform($value): string
             {
                 $this->logger->info('Transforming '.$value);
                 // ...
@@ -587,12 +587,12 @@ to inject the ``logger`` service, and decide to use setter-injection:
             private $logger;
 
             #[Required]
-            public function setLogger(LoggerInterface $logger)
+            public function setLogger(LoggerInterface $logger): void
             {
                 $this->logger = $logger;
             }
 
-            public function transform($value)
+            public function transform($value): string
             {
                 $this->logger->info('Transforming '.$value);
                 // ...
