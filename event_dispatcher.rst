@@ -109,7 +109,7 @@ using a special "tag":
         use App\EventListener\ExceptionListener;
 
         $container->register(ExceptionListener::class)
-            ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
+            ->tag('kernel.event_listener', ['event' => 'kernel.exception'])
         ;
 
 Symfony follows this logic to decide which method to call inside the event
