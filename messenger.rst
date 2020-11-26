@@ -1339,7 +1339,7 @@ The transport has a number of options:
 ======================  ======================================  ===================================
 ``access_key``          AWS access key
 ``account``             Identifier of the AWS account           The owner of the credentials
-``auto_setup``          Whether the table should be created     ``true``
+``auto_setup``          Whether the queue should be created     ``true``
                         automatically during send / get.
 ``buffer_size``         Number of messages to prefetch          9
 ``endpoint``            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
