@@ -788,7 +788,7 @@ indexed by the ``key`` attribute:
 
 After compilation the ``HandlerCollection`` is able to iterate over your
 application handlers. To retrieve a specific service by it's ``key`` attribute
-from the iterator, we can use ``iterator_to_array`` and retrieve the ``handler_two``:
+from the iterator, we can use ``iterator_to_array``
 to get an array and then retrieve the ``handler_two`` handler::
 
     // src/Handler/HandlerCollection.php
