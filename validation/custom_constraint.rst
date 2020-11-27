@@ -182,6 +182,11 @@ If your constraint contains options, then they should be public properties
 on the custom Constraint class you created earlier. These options can be
 configured like options on core Symfony constraints.
 
+To manually validate an entity, using *just* this single validator, pass an instance
+as second argument to ``validate()``::
+
+    $errors = $validator->validate($author, new ContainsAlphanumeric());
+
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
