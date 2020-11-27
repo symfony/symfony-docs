@@ -189,14 +189,14 @@ such as Symfony projects, should use at least these values:
 Optimize Composer Autoloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The class loader used while developing the application is optimized to find
-new and changed classes. In production servers, PHP files should never change,
+The class loader used while developing the application is optimized to find new
+and changed classes. In production servers, PHP files should never change,
 unless a new application version is deployed. That's why you can optimize
-Composer's autoloader to scan the entire application once and build a "class map",
-which is a big array of the locations of all the classes and it's stored
-in ``vendor/composer/autoload_classmap.php``.
+Composer's autoloader to scan the entire application once and build an
+optimized "class map", which is a big array of the locations of all the classes
+and it's stored in ``vendor/composer/autoload_classmap.php``.
 
-Execute this command to generate the class map (and make it part of your
+Execute this command to generate the new class map (and make it part of your
 deployment process too):
 
 .. code-block:: terminal
@@ -208,8 +208,6 @@ deployment process too):
 * ``--classmap-authoritative`` creates a class map for PSR-0 and PSR-4 compatible classes
   used in your application and prevents Composer from scanning the file system for
   classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
-
-You can also use the ``--classmap-authoritative`` option with the ``composer install`` command.
 
 .. _profiling-applications:
 
