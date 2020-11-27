@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-11-27T08:10:56Z
+
+I do agree with these changes. At least that what I do in my applications too as the `Validator` namespace itself would otherwise be empty.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-27T08:42:43Z
+
+It looks OK to me too 👍
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-11-27T13:11:08Z
+
+I'm done :-)
