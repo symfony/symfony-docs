@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-26T14:14:53Z
+
+Antoine, even if you are technically correct, I wouldn't add this to the docs. This article is about getting the most performance (in production mostly) so I think it's better to only show the `dump-autoload` with all the needed options. Showing a similar option but for `composer install` would be confusion: do I need to run both? Only one? If only one, which one is the best one? Always or it depends? etc.
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-11-26T14:27:55Z
+
+@javiereguiluz yes i see your point, lets not change
+
+still, do you have an idea on the question in the PR desc? it feels weird actually
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-26T14:43:41Z
+
+I'm not sure about the answer to that question. Even Composer docs refer to this technique as "class map generation": https://getcomposer.org/doc/articles/autoloader-optimization.md#optimization-level-1-class-map-generation
+
+---------------------------------------------------------------------------
+
+by stof at 2020-11-26T15:54:23Z
+
+ @javiereguiluz the symfony doc article is about dumping an optimized autoloader for production, and does not rely only on the classmap generation. `--classmap-authoritative` is not about classmap generation as it is about the level 2 optimization.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-26T15:57:32Z
+
+@stof I don't follow you:
+
+Composer docs say:
+
+* "Optimization Level 1: Class map generation"
+* And it shows this command -> "dump-autoload -o"
+
+Symfony Docs say:
+
+* "Execute this command to generate the class map"
+* And it shows this command -> "dump-autoload -o" (and it adds the "authorative" thing)
+
+To me, the two are saying the same thing.
+
+---------------------------------------------------------------------------
+
+by stof at 2020-11-26T16:08:58Z
+
+the command you use is `composer dump-autoload --no-dev --classmap-authoritative`, not `dump-autoload -o`.
+And this command is not *only* about generating a classmap, but also about enabling more optimizations.
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-11-26T16:28:19Z
+
+@javiereguiluz @stof
+
+so maybe the PR should be: instead of adding the `composer install ...`
+
+just to rewrite this paragraph:
+
+```
+That's why you can optimize
+Composer's autoloader to scan the entire application once and build a "class map",
+which is a big array of the locations of all the classes and it's stored
+in ``vendor/composer/autoload_classmap.php``.
+Execute this command to generate the class map (and make it part of your
+deployment process too):
+```
+
+to
+
+```
+That's why you can optimize
+Composer's autoloader to scan the entire application once and build an optimize "class map",
+which is a big array of the locations of all the classes and it's stored
+in ``vendor/composer/autoload_classmap.php``.
+Execute this command to generate the new class map (and make it part of your
+deployment process too):
+```
