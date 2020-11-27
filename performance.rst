@@ -209,6 +209,8 @@ deployment process too):
   used in your application and prevents Composer from scanning the file system for
   classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
 
+You can also use the ``--classmap-authoritative`` option with the ``composer install`` command.
+
 .. _profiling-applications:
 
 Profiling Symfony Applications
