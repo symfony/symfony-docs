@@ -193,14 +193,14 @@ such as Symfony projects, should use at least these values:
 Optimize Composer Autoloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The class loader used while developing the application is optimized to find
-new and changed classes. In production servers, PHP files should never change,
+The class loader used while developing the application is optimized to find new
+and changed classes. In production servers, PHP files should never change,
 unless a new application version is deployed. That's why you can optimize
-Composer's autoloader to scan the entire application once and build a "class map",
-which is a big array of the locations of all the classes and it's stored
-in ``vendor/composer/autoload_classmap.php``.
+Composer's autoloader to scan the entire application once and build an
+optimized "class map", which is a big array of the locations of all the classes
+and it's stored in ``vendor/composer/autoload_classmap.php``.
 
-Execute this command to generate the class map (and make it part of your
+Execute this command to generate the new class map (and make it part of your
 deployment process too):
 
 .. code-block:: terminal
