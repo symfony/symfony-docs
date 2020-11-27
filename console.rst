@@ -58,8 +58,8 @@ want a command to create a user::
             // (it's equivalent to returning int(1))
             // return Command::FAILURE;
 
-            // or return this if there was invalid value during the execution
-            // (it's equivalent to returning int(2))
+            // or return this to indicate incorrect command usage; e.g. invalid options
+            // or missing arguments (it's equivalent to returning int(2))
             // return Command::INVALID
         }
     }
@@ -71,7 +71,7 @@ want a command to create a user::
 
 .. versionadded:: 5.3
 
-    The ``Command::INVALID`` constants was introduced in Symfony 5.3
+    The ``Command::INVALID`` constant was introduced in Symfony 5.3
 
 Configuring the Command
 -----------------------
