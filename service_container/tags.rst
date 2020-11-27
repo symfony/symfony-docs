@@ -798,7 +798,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
         {
             $handlers = iterator_to_array($handlers);
 
-            $handlerTwo = $handlers['handler_two']:
+            $handlerTwo = $handlers['handler_two'];
         }
     }
 
