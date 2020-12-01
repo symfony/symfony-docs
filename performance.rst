@@ -109,9 +109,7 @@ During container compilation (e.g. when running the ``cache:clear`` command),
 Symfony generates a file called ``preload.php`` in the ``config/`` directory
 with the list of classes to preload.
 
-The only requirement is that you need to set both ``container.dumper.inline_factories``
-and ``container.dumper.inline_class_loader`` parameters to ``true``. Then, you
-can configure PHP to use this preload file:
+You can configure PHP to use this preload file:
 
 .. code-block:: ini
 
