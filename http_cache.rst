@@ -315,7 +315,7 @@ Safe Methods: Only caching GET or HEAD requests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HTTP caching only works for "safe" HTTP methods (like GET and HEAD). This means
-two things:
+three things:
 
 * Don't try to cache PUT or DELETE requests. It won't work and with good reason.
   These methods are meant to be used when mutating the state of your application
