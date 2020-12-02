@@ -337,7 +337,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
                         - App\Security\ApiKeyAuthenticator
 
                     # don't forget to also configure the entry_point if the
-                    # authenticator implements AuthenticatorEntryPointInterface
+                    # authenticator implements AuthenticationEntryPointInterface
                     # entry_point: App\Security\CustomFormLoginAuthenticator
 
     .. code-block:: xml
@@ -409,7 +409,7 @@ well as other pieces of information, like whether a password should be checked
 or if "remember me" functionality should be enabled.
 
 The default
-:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`.
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
 requires a user object and credentials. The following credential classes
 are supported by default:
 
