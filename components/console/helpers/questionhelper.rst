@@ -12,7 +12,7 @@ helper set, which you can get by calling
     $helper = $this->getHelper('question');
 
 The Question Helper has a single method
-:method:`Symfony\\Component\\Console\\Command\\Command::ask` that needs an
+:method:`Symfony\\Component\\Console\\Helper\\QuestionHelper::ask` that needs an
 :class:`Symfony\\Component\\Console\\Input\\InputInterface` instance as the
 first argument, an :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance as the second argument and a
