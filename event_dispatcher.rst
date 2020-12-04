@@ -108,7 +108,7 @@ using a special "tag":
             $services = $configurator->services();
 
             $services->set(ExceptionListener::class)
-                ->addTag('kernel.event_listener', ['event' => 'kernel.exception'])
+                ->tag('kernel.event_listener', ['event' => 'kernel.exception'])
             ;
         };
 
