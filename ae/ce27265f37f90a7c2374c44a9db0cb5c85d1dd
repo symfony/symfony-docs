@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by malteschlueter at 2020-12-03T13:08:41Z
+
+@wouterj In general, what do you think about a new page under Learn more like "How to configure slack and send messages" including a little explanation how to get the token and the correct authorization in the Slack API? Or would that going too far for the symfony documentation?
+
+For example it was a little bit difficult to find the correct documentation of the current Slack implementation which is symfony using.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-03T14:55:56Z
+
+>  In general, what do you think about a new page under Learn more like "How to configure slack and send messages" including a little explanation how to get the token and the correct authorization in the Slack API? Or would that going too far for the symfony documentation?
+
+I would love to have sth like this and as it is about Slack which is a big player I think we can and should provide it to make the experience as smooth as possible 👍
+
+WDYT @Nyholm @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-12-03T15:01:11Z
+
+I'm usually against having lots of small pages ... for our maintenance is not great, but for users is also bad in many situations (they end jumping from one small page to another, opening 10 browser tabs ... instead of having a single page with all the info).
+
+In these past years we've moved from "small pages" to "big reference pages". See for example the Routing page, it's large, but it covers 90% of the routing features, leaving the very specific and advanced features for other separate pages.
+
+If possible, I'd like to do the same here. If the resulting page is impossibly long, this might be a caution warning about the component itself, which is too verbose or complex to setup.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-03T17:54:43Z
+
+Makes sense, but you are not against a section (not an extra page) with the content, right?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-12-03T18:16:22Z
+
+Let's merge this PR as-is :+1:
+
+The current Notifier doc structure was build on 5.0. The component changed a lot since then and we've only "patched" the docs. I think it no longer fits the current docs ( e.g. Slack and another chatter also have their own page, etc.). Let's discuss how to better structure this part of the documentation in a new issue.
