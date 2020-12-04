@@ -145,29 +145,26 @@ GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_T
 LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-Slack       ``symfony/slack-notifier``        ``slack://default/ID``
+Slack       ``symfony/slack-notifier``        ``slack://TOKEN@default?channel=CHANNEL``
 Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
 Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:APIKEY@ENDPOINT?channel=CHANNEL``
 ==========  ================================  ===========================================================================
 
 .. versionadded:: 5.1
 
-    The Mattermost and RocketChat integrations were introduced in Symfony
-    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
-    Webhooks instead of legacy tokens.
+    The Mattermost and RocketChat integrations were introduced in Symfony 5.1.
 
 .. versionadded:: 5.2
 
     The GoogleChat, LinkedIn, Zulip and Discord integrations were introduced in Symfony 5.2.
+    The Slack DSN changed in Symfony 5.2 to use Slack Web API again same as in 5.0.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
 .. code-block:: bash
 
     # .env
-    SLACK_DSN=slack://default/ID
-    # If your slack webhook looks like "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX" then use:
-    SLACK_DSN=slack://default/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX
+    SLACK_DSN=slack://TOKEN@default?channel=CHANNEL
 
 .. configuration-block::
 
