@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-03T17:53:21Z
+
+Shouldn't this go in 4.4? 🧐
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-12-05T15:27:58Z
+
+@OskarStark yes! The front-end stuff is (almost always) independent from the Symfony version, so let's merge it in the lowest maintained branch. Thanks!
