@@ -322,6 +322,17 @@ its name:
 
     $ php bin/console debug:event-dispatcher kernel.exception
 
+or can get everything which partial matches the event name:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel // matches "kernel.exception", "kernel.response" etc.
+    $ php bin/console debug:event-dispatcher Security // matches "Symfony\Component\Security\Http\Event\CheckPassportEvent"
+
+.. versionadded:: 5.3
+
+    The ability to match partial event names was introduced in Symfony 5.3.
+
 The :doc:`new experimental Security </security/experimental_authenticators>`
 system adds an event dispatcher per firewall. Use the ``--dispatcher`` option to
 get the registered listeners for a particular event dispatcher:
