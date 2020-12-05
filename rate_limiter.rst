@@ -85,6 +85,7 @@ enforce different levels of service (free or paid):
     # config/packages/rate_limiter.yaml
     framework:
         rate_limiter:
+            enabled: true
             anonymous_api:
                 # use 'sliding_window' if you prefer that policy
                 policy: 'fixed_window'
