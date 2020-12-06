@@ -71,7 +71,8 @@ Active Core Members
   * **Tobias Nyholm** (`Nyholm`_);
   * **Wouter De Jong** (`wouterj`_);
   * **Alexander M. Turek** (`derrabus`_);
-  * **Jérémy Derussé** (`jderusse`_).
+  * **Jérémy Derussé** (`jderusse`_);
+  * **Titouan Galopin** (`tgalopin`_).
 
 * **Security Team** (``@symfony/security`` on GitHub):
 
@@ -207,3 +208,4 @@ discretion of the **Project Leader**.
 .. _`lsmith77`: https://github.com/lsmith77/
 .. _`derrabus`: https://github.com/derrabus/
 .. _`jderusse`: https://github.com/jderusse/
+.. _`tgalopin`: https://github.com/tgalopin/
