@@ -720,31 +720,28 @@ Encrypting the Cache
 
 .. versionadded:: 5.1
 
-    :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller` has been
-    introduced in Symfony 5.1.
+    The :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`
+    class was introduced in Symfony 5.1.
 
 To encrypt the cache using ``libsodium``, you can use the
 :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.
 
-.. note::
-
-    This will encrypt the values of the cache items, but not the cache keys. Be
-    careful not the leak sensitive data in the keys.
-
-Generate a key:
+First, you need to generate a secure key and add it to your :doc:`secret
+store </configuration/secrets>` as ``CACHE_DECRYPTION_KEY``:
 
 .. code-block:: terminal
 
     $ php -r 'echo base64_encode(sodium_crypto_box_keypair());'
 
-And add it to your :doc:`secret store </configuration/secrets>` as
-``CACHE_DECRYPTION_KEY`` and enable the ``SodiumMarshaller``:
+Then, register the ``SodiumMarshaller`` service using this key:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/packages/cache.yaml
+
+        # ...
         services:
             Symfony\Component\Cache\Marshaller\SodiumMarshaller:
                 decorates: cache.default_marshaller
@@ -766,13 +763,14 @@ And add it to your :doc:`secret store </configuration/secrets>` as
                 http://symfony.com/schema/dic/symfony
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
+            <!-- ... -->
+
             <services>
                 <service id="Symfony\Component\Cache\Marshaller\SodiumMarshaller" decorates="cache.default_marshaller">
-                    <argument>redis://localhost</argument>
                     <argument type="collection">
                         <argument>env(base64:CACHE_DECRYPTION_KEY)</argument>
                         <!-- use multiple keys in order to rotate them -->
-                        <!-- argument>env(base64:OLD_CACHE_DECRYPTION_KEY)</argument -->
+                        <!-- <argument>env(base64:OLD_CACHE_DECRYPTION_KEY)</argument> -->
                     </argument>
                     <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
                 </service>
@@ -783,17 +781,22 @@ And add it to your :doc:`secret store </configuration/secrets>` as
 
         // config/packages/cache.php
         use Symfony\Component\Cache\Marshaller\SodiumMarshaller;
+        use Symfony\Component\DependencyInjection\ChildDefinition;
+        use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register(SodiumMarshaller::class)
-            ->decorate('cache.default_marshaller')
+        // ...
+        $container->setDefinition(SodiumMarshaller::class, new ChildDefinition('cache.default_marshaller'))
             ->addArgument(['env(base64:CACHE_DECRYPTION_KEY)'])
             // use multiple keys in order to rotate them
-            // ->addArgument(['env(base64:CACHE_DECRYPTION_KEY)', 'env(base64:OLD_CACHE_DECRYPTION_KEY)'])
-            ->addArgument(service('@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'));
+            //->addArgument(['env(base64:CACHE_DECRYPTION_KEY)', 'env(base64:OLD_CACHE_DECRYPTION_KEY)'])
+            ->addArgument(new Reference(SodiumMarshaller::class.'.inner'));
 
-To rotate your encryption keys but still be able to read existing cache entries,
-add the old encryption key to the service arguments. The first key will be used
-for reading and writing, and the additional key(s) will only be used for reading.
+.. caution::
 
-Once all cache items encrypted with the old key have expired, you can remove
-`OLD_CACHE_DECRYPTION_KEY` completely.
+    This will encrypt the values of the cache items, but not the cache keys. Be
+    careful not the leak sensitive data in the keys.
+
+When configuring multiple keys, the first key will be used for reading and
+writing, and the additional key(s) will only be used for reading. Once all
+cache items encrypted with the old key have expired, you can remove
+``OLD_CACHE_DECRYPTION_KEY`` completely.
