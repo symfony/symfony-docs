@@ -2055,6 +2055,8 @@ If you need to generate URLs dynamically or if you are using pure JavaScript
 code, this solution doesn't work. In those cases, consider using the
 `FOSJsRoutingBundle`_.
 
+.. _router-generate-urls-commands:
+
 Generating URLs in Commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
