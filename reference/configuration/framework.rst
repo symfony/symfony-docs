@@ -217,6 +217,7 @@ Configuration
 
 * `router`_
 
+  * `default_uri`_
   * `http_port`_
   * `https_port`_
   * `resource`_
@@ -1303,6 +1304,18 @@ type
 The type of the resource to hint the loaders about the format. This isn't
 needed when you use the default routers with the expected file extensions
 (``.xml``, ``.yaml``, ``.php``).
+
+default_uri
+...........
+
+**type**: ``string``
+
+.. versionadded:: 5.1
+
+    The ``default_uri`` option was introduced in Symfony 5.1.
+
+The default URI used to generate URLs in a non-HTTP context (see
+:ref:`Generating URLs in Commands <router-generate-urls-commands>`).
 
 http_port
 .........

@@ -719,3 +719,89 @@ Clear all caches everywhere:
 .. code-block:: terminal
 
     $ php bin/console cache:pool:clear cache.global_clearer
+
+Encrypting the Cache
+--------------------
+
+.. versionadded:: 5.1
+
+    The :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`
+    class was introduced in Symfony 5.1.
+
+To encrypt the cache using ``libsodium``, you can use the
+:class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.
+
+First, you need to generate a secure key and add it to your :doc:`secret
+store </configuration/secrets>` as ``CACHE_DECRYPTION_KEY``:
+
+.. code-block:: terminal
+
+    $ php -r 'echo base64_encode(sodium_crypto_box_keypair());'
+
+Then, register the ``SodiumMarshaller`` service using this key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+
+        # ...
+        services:
+            Symfony\Component\Cache\Marshaller\SodiumMarshaller:
+                decorates: cache.default_marshaller
+                arguments:
+                    - ['%env(base64:CACHE_DECRYPTION_KEY)%']
+                    # use multiple keys in order to rotate them
+                    #- ['%env(base64:CACHE_DECRYPTION_KEY)%', '%env(base64:OLD_CACHE_DECRYPTION_KEY)%']
+                    - '@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'
+
+    .. code-block:: xml
+
+        <!-- config/packages/cache.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+
+            <services>
+                <service id="Symfony\Component\Cache\Marshaller\SodiumMarshaller" decorates="cache.default_marshaller">
+                    <argument type="collection">
+                        <argument>env(base64:CACHE_DECRYPTION_KEY)</argument>
+                        <!-- use multiple keys in order to rotate them -->
+                        <!-- <argument>env(base64:OLD_CACHE_DECRYPTION_KEY)</argument> -->
+                    </argument>
+                    <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        use Symfony\Component\Cache\Marshaller\SodiumMarshaller;
+        use Symfony\Component\DependencyInjection\ChildDefinition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->setDefinition(SodiumMarshaller::class, new ChildDefinition('cache.default_marshaller'))
+            ->addArgument(['env(base64:CACHE_DECRYPTION_KEY)'])
+            // use multiple keys in order to rotate them
+            //->addArgument(['env(base64:CACHE_DECRYPTION_KEY)', 'env(base64:OLD_CACHE_DECRYPTION_KEY)'])
+            ->addArgument(new Reference(SodiumMarshaller::class.'.inner'));
+
+.. caution::
+
+    This will encrypt the values of the cache items, but not the cache keys. Be
+    careful not the leak sensitive data in the keys.
+
+When configuring multiple keys, the first key will be used for reading and
+writing, and the additional key(s) will only be used for reading. Once all
+cache items encrypted with the old key have expired, you can remove
+``OLD_CACHE_DECRYPTION_KEY`` completely.
