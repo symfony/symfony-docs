@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-04T07:58:48Z
+
+So we should merge this only in `4.4` and keep `Command::SUCCESS` in the upper branches, right?
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2020-12-04T08:22:27Z
+
+@OskarStark
+
+> So we should merge this only in 4.4 and keep Command::SUCCESS in the upper branches, right?
+
+Sorry if my desc was not clear :s
+Here is the diff accordingly for branches
+
+```diff
+-return 0;                                            // v4.4
++return Command::SUCCESS;         // v5.1+, as the doc was updated to use the const instead of integer
+```
