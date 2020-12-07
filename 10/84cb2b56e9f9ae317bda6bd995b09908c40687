@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-05T07:48:51Z
+
+Could you find the corresponding code PR and link it here?
+
+Should we add a versionadded directive? @javiereguiluz @wouterj
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-12-05T08:44:10Z
+
+It was new in 5.1. It has a dedicated section in the [docs](https://symfony.com/doc/current/routing.html#generating-urls-in-commands), Im not sure it needs a "new in sf51" here too.
+
+Code was introduced here: https://github.com/symfony/symfony/pull/36651
