@@ -1151,6 +1151,10 @@ default_uri
 
 **type**: ``string``
 
+.. versionadded:: 5.1
+
+    The ``default_uri`` option was introduced in Symfony 5.1.
+
 The default URI used to generate URLs in a non-HTTP context (see
 :ref:`Generating URLs in Commands <router-generate-urls-commands>`).
 
