@@ -322,9 +322,9 @@ its name:
 
     $ php bin/console debug:event-dispatcher kernel.exception
 
-For the :doc:`new experimental Security </security/experimental_authenticators>`
-an event dispatcher per firewall was added. You can get the registered listeners
-for a particular event dispatcher by using the ``--dispatcher`` option:
+The :doc:`new experimental Security </security/experimental_authenticators>`
+system adds an event dispatcher per firewall. Use the ``--dispatcher`` option to
+get the registered listeners for a particular event dispatcher:
 
 .. code-block:: terminal
 
