@@ -55,8 +55,8 @@ Adding Interactions to a Slack Message
 --------------------------------------
 
 With a Slack message, you can use the
-:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions` to add
-some interactive options called `Block elements`_::
+:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions` class
+to add some interactive options called `Block elements`_::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackActionsBlock;
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
