@@ -38,7 +38,7 @@ that adds two convenient methods to lock and release commands::
             // if not released explicitly, Symfony releases the lock
             // automatically when the execution of the command ends
             $this->release();
-            
+
             return 0;
         }
     }
