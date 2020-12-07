@@ -45,7 +45,7 @@ want a command to create a user::
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            // ... put here the code to run in your command
+            // ... put here the code to create the user
 
             // this method must return an integer number with the "exit status code"
             // of the command.
