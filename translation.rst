@@ -113,7 +113,7 @@ of text (called a *message*), use the
 for example, that you're translating a static message from inside a controller::
 
     // ...
-    use Symfony\Contracts\Translation\TranslatorInterface;
+    use Symfony\Component\Translation\TranslatorInterface;
 
     public function index(TranslatorInterface $translator)
     {
