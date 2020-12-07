@@ -295,8 +295,8 @@ method that fits most use-cases::
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-    use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
     use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
     use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
@@ -328,14 +328,7 @@ method that fits most use-cases::
                 throw new CustomUserMessageAuthenticationException('No API token provided');
             }
 
-            $user = $this->entityManager->getRepository(User::class)
-                ->findOneBy(['apiToken' => $apiToken])
-            ;
-            if (null === $user) {
-                throw new UsernameNotFoundException();
-            }
-
-            return new SelfValidatingPassport($user);
+            return new SelfValidatingPassport(new UserBadge($apiToken));
         }
 
         public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
@@ -472,12 +465,23 @@ are supported by default:
             $apiToken
         ));
 
-.. note::
 
-    If you don't need any credentials to be checked (e.g. a JWT token), you
-    can use the
-    :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\SelfValidatingPassport`.
-    This class only requires a user and optionally `Passport Badges`_.
+Self Validating Passport
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you don't need any credentials to be checked (e.g. a JWT token), you can use the
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\SelfValidatingPassport`.
+This class only requires a ``UserBadge`` object and optionally `Passport Badges`_.
+
+You can also pass a user loader to the ``UserBadge``. This callable receives the
+``$userIdentifier`` as argument and must return a ``UserInterface`` object
+(otherwise a ``UsernameNotFoundException`` is thrown). If this is not set, 
+the default user provider will be used with ``$userIdentifier`` as username::
+
+    // ...
+    return new SelfValidatingPassport(new UserBadge($email, function ($username) {
+        return $this->userRepository->findOneBy(['email' => $username]);
+    });
+
 
 Passport Badges
 ~~~~~~~~~~~~~~~
@@ -547,7 +551,7 @@ authenticator, you would initialize the passport like this::
     ``createAuthenticatedToken()``)::
 
         // ...
-        use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+        use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
         class LoginAuthenticator extends AbstractAuthenticator
         {
@@ -557,7 +561,7 @@ authenticator, you would initialize the passport like this::
             {
                 // ... process the request
 
-                $passport = new SelfValidatingPassport($username, []);
+                $passport = new SelfValidatingPassport(new UserBadge($username), []);
 
                 // set a custom attribute (e.g. scope)
                 $passport->setAttribute('scope', $oauthScope);
