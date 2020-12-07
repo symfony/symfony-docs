@@ -322,6 +322,18 @@ its name:
 
     $ php bin/console debug:event-dispatcher kernel.exception
 
+For the :doc:`new experimental Security </security/experimental_authenticators>`
+an event dispatcher per firewall was added. You can get the registered listeners
+for a particular event dispatcher by using the ``--dispatcher`` option:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher --dispatcher=security.event_dispatcher.main
+
+.. versionadded:: 5.3
+
+    The ``dispatcher`` option was introduced in Symfony 5.3.
+
 Learn more
 ----------
 
