@@ -55,8 +55,8 @@ Adding Interactions to a Slack Message
 --------------------------------------
 
 With a Slack message, you can use the
-:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions` to add
-some interactive options called `Block elements`_::
+:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions` class
+to add some interactive options called `Block elements`_::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackActionsBlock;
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
@@ -104,8 +104,8 @@ Adding Interactions to a Discord Message
 ----------------------------------------
 
 With a Discord message, you can use the
-:class:`Symfony\\Component\\Notifier\\Bridge\\Discord\\DiscordOptions` to add
-some interactive options called `Embed elements`_::
+:class:`Symfony\\Component\\Notifier\\Bridge\\Discord\\DiscordOptions` class
+to add some interactive options called `Embed elements`_::
 
     use Symfony\Component\Notifier\Bridge\Discord\DiscordOptions;
     use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordEmbed;
