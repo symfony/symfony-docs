@@ -564,8 +564,8 @@ Now the cached dumped container is used regardless of whether debug mode
 is on or not. The difference is that the ``ConfigCache`` is set to debug
 mode with its second constructor argument. When the cache is not in debug
 mode the cached container will always be used if it exists. In debug mode,
-an additional metadata file is written with the timestamps of all the resource
-files. These are then checked to see if the files have changed, if they
+an additional metadata file is written with all the involved resource
+files. These are then checked to see if their timestamps have changed, if they
 have the cache will be considered stale.
 
 .. note::
