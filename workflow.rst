@@ -391,7 +391,7 @@ order:
         In Symfony 5.2, the context is accessible in all events::
 
             // $context must be an array
-            $context = ['context'];
+            $context = ['context_key' => 'context_value'];
             $workflow->apply($subject, $transitionName, $context);
 
             // in an event listener
