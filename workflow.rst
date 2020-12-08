@@ -404,7 +404,7 @@ order:
 
 .. note::
 
-    If you initialize the marking by calling ``$workflow->getMarking($object);``, then the ``workflow.[workflow name].entered.[initial place name]`` will be called with a default context ``Workflow::DEFAULT_INITIAL_CONTEXT``
+    If you initialize the marking by calling ``$workflow->getMarking($object);``, then the ``workflow.[workflow name].entered.[initial place name]`` event will be called with a default context ``Workflow::DEFAULT_INITIAL_CONTEXT``.
 
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
