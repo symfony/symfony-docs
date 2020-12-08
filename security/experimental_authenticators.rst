@@ -435,22 +435,60 @@ into a security
 Security Passports
 ~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 5.2
+
+    The ``UserBadge`` was introduced in Symfony 5.2. Prior to 5.2, the user
+    instance was provided directly to the passport.
+
 A passport is an object that contains the user that will be authenticated as
 well as other pieces of information, like whether a password should be checked
 or if "remember me" functionality should be enabled.
 
 The default
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
-requires a user object and credentials. The following credential classes
-are supported by default:
+requires a user and credentials.
 
+Use the
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\UserBadge`
+to attach the user to the passport. The ``UserBadge`` requires a user
+identifier (e.g. the username or email), which is used to load the user
+using :ref:`the user provider <security-user-providers>`::
+
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+
+    // ...
+    $passport = new Passport(new UserBadge($email), $credentials);
+
+.. note::
+
+    You can optionally pass a user loader as second argument to the
+    ``UserBadge``. This callable receives the ``$userIdentifier``
+    and must return a ``UserInterface`` object (otherwise a
+    ``UsernameNotFoundException`` is thrown)::
+
+        // ...
+        $passport = new Passport(
+            new UserBadge($email, function ($userIdentifier) {
+                return $this->userRepository->findOneBy(['email' => $userIdentifier]);
+            }),
+            $credentials
+        );
+
+The following credential classes are supported by default:
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Credentials\\PasswordCredentials`
     This requires a plaintext ``$password``, which is validated using the
-    :ref:`password encoder configured for the user <security-encoding-user-password>`.
+    :ref:`password encoder configured for the user <security-encoding-user-password>`::
+
+        use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+
+        // ...
+        return new Passport($user, new PasswordCredentials($plaintextPassword));
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Credentials\\CustomCredentials`
     Allows a custom closure to check credentials::
+
+        use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 
         // ...
         return new Passport($user, new CustomCredentials(
@@ -467,21 +505,13 @@ are supported by default:
 
 
 Self Validating Passport
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If you don't need any credentials to be checked (e.g. a JWT token), you can use the
+........................
+
+If you don't need any credentials to be checked (e.g. when using API
+tokens), you can use the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\SelfValidatingPassport`.
-This class only requires a ``UserBadge`` object and optionally `Passport Badges`_.
-
-You can also pass a user loader to the ``UserBadge``. This callable receives the
-``$userIdentifier`` as argument and must return a ``UserInterface`` object
-(otherwise a ``UsernameNotFoundException`` is thrown). If this is not set, 
-the default user provider will be used with ``$userIdentifier`` as username::
-
-    // ...
-    return new SelfValidatingPassport(new UserBadge($email, function ($username) {
-        return $this->userRepository->findOneBy(['email' => $username]);
-    });
-
+This class only requires a ``UserBadge`` object and optionally `Passport
+Badges`_.
 
 Passport Badges
 ~~~~~~~~~~~~~~~
@@ -511,8 +541,13 @@ the following badges are supported:
     initiated). This skips the
     :doc:`pre-authentication user checker </security/user_checkers>`.
 
-For instance, if you want to add CSRF and password migration to your custom
-authenticator, you would initialize the passport like this::
+.. versionadded:: 5.2
+
+    Since 5.2, the ``PasswordUpgradeBadge`` is automatically added to
+    the passport if the passport has ``PasswordCredentials``.
+
+For instance, if you want to add CSRF to your custom authenticator, you
+would initialize the passport like this::
 
     // src/Service/LoginAuthenticator.php
     namespace App\Service;
@@ -520,7 +555,7 @@ authenticator, you would initialize the passport like this::
     // ...
     use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
     use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
-    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\PasswordUpgradeBadge;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
     use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
     use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 
@@ -532,14 +567,13 @@ authenticator, you would initialize the passport like this::
             $username = $request->request->get('username');
             $csrfToken = $request->request->get('csrf_token');
 
-            // ... get the $user from the $username and validate no
-            // parameter is empty
+            // ... validate no parameter is empty
 
-            return new Passport($user, new PasswordCredentials($password), [
-                // $this->userRepository must implement PasswordUpgraderInterface
-                new PasswordUpgradeBadge($password, $this->userRepository),
-                new CsrfTokenBadge('login', $csrfToken),
-            ]);
+            return new Passport(
+                new UserBadge($user),
+                new PasswordCredentials($password),
+                [new CsrfTokenBadge('login', $csrfToken)]
+            );
         }
     }
 
