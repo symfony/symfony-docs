@@ -165,6 +165,9 @@ Deprecation notices can be triggered by using::
 
     @trigger_error('Your deprecation message', E_USER_DEPRECATED);
 
+You can also require the ``symfony/deprecation-contracts`` package that provides
+a global ``trigger_deprecation()`` function for this usage.
+
 Without the `@-silencing operator`_, users would need to opt-out from deprecation
 notices. Silencing by default swaps this behavior and allows users to opt-in
 when they are ready to cope with them (by adding a custom error handler like the
