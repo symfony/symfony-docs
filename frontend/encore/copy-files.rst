@@ -12,7 +12,7 @@ To reference an image tag from inside a JavaScript file, *require* the file:
 
 .. code-block:: javascript
 
-    // assets/js/app.js
+    // assets/app.js
 
     // returns the final, public path to this file
     // path is relative to this file - e.g. assets/images/logo.png

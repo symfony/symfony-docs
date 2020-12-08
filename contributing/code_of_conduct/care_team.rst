@@ -29,12 +29,6 @@ of them at once by emailing **care@symfony.com**:
   * *Twitter*: `@EmilieLorenzo <https://twitter.com/EmilieLorenzo>`_
   * *SymfonyConnect*: `emilielorenzo <https://connect.symfony.com/profile/emilielorenzo>`_
 
-* **Michelle Sanver**
-
-  * *E-mail*: michelle [at] liip.ch
-  * *Twitter*: `@michellesanver <https://twitter.com/michellesanver>`_
-  * *SymfonyConnect*: `michellesanver <https://connect.symfony.com/profile/michellesanver>`_
-
 * **Tobias Nyholm**
 
   * *E-mail*: tobias.nyholm [at] gmail.com

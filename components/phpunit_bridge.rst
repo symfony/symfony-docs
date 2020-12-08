@@ -233,7 +233,7 @@ You can have even finer-grained control by using other keys of the ``max``
 array, which are ``self``, ``direct``, and ``indirect``. The
 ``SYMFONY_DEPRECATIONS_HELPER`` environment variable accepts a URL-encoded
 string, meaning you can combine thresholds and any other configuration setting,
-like this: ``SYMFONY_DEPRECATIONS_HELPER=max[total]=42&max[self]=0&verbose=0``
+like this: ``SYMFONY_DEPRECATIONS_HELPER='max[total]=42&max[self]=0&verbose=0'``
 
 Internal deprecations
 .....................
@@ -296,6 +296,14 @@ By default, the bridge will display a detailed output with the number of
 deprecations and where they arise. If this is too much for you, you can use
 ``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn the verbose output off.
 
+It's also possible to change verbosity per deprecation type. For example, using
+``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
+"indirect" and "other".
+
+.. versionadded:: 5.1
+
+    The ``quiet`` option was introduced in Symfony 5.1.
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -336,7 +344,7 @@ the compiling and warming up of the container:
 
 .. code-block:: terminal
 
-    $ debug:container --deprecations
+    $ php bin/console debug:container --deprecations
 
 .. versionadded:: 5.1
 
@@ -444,16 +452,16 @@ call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
 
     class MyTest extends TestCase
     {
-        // when using the SetUpTearDownTrait, methods like doSetup() can
+        // when using the SetUpTearDownTrait, methods like doSetUp() can
         // be defined with and without the 'void' return type, as you wish
         use SetUpTearDownTrait;
 
-        private function doSetup()
+        private function doSetUp()
         {
             // ...
         }
 
-        protected function doSetup(): void
+        protected function doSetUp(): void
         {
             // ...
         }
@@ -492,8 +500,8 @@ If you have this kind of time-related tests::
         }
     }
 
-You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
-calculate the duration time of your process, here 10 seconds. However, depending
+You calculated the duration time of your process using the Stopwatch utilities to
+:ref:`profile Symfony applications <profiling-applications>`. However, depending
 on the load of the server or the processes running on your local machine, the
 ``$duration`` could for example be ``10.000023s`` instead of ``10s``.
 
@@ -828,8 +836,6 @@ its ``bin/simple-phpunit`` command. It has the following features:
 
 * Works with a standalone vendor directory that doesn't conflict with yours;
 * Does not embed ``prophecy`` to prevent any conflicts with its dependencies;
-* Uses PHPUnit 4.8 when run with PHP <=5.5, PHPUnit 5.7 when run with PHP >=5.6
-  and PHPUnit 6.5 when run with PHP >=7.2;
 * Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
   env var is defined: the env var should specify a file name that will be used for
   storing skipped tests on a first run, and replay them on the second run;
@@ -869,6 +875,15 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
     It's also possible to set ``SYMFONY_PHPUNIT_VERSION`` as a real env var
     (not defined in a :ref:`dotenv file <config-dot-env>`).
+
+    In the same way, ``SYMFONY_MAX_PHPUNIT_VERSION`` will set the maximum version
+    of PHPUnit to be considered. This is useful when testing a framework that does
+    not support the latest version(s) of PHPUnit.
+
+.. versionadded:: 5.2
+
+    The ``SYMFONY_MAX_PHPUNIT_VERSION`` env variable was introduced in
+    Symfony 5.2.
 
 .. tip::
 

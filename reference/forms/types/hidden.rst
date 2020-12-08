@@ -6,25 +6,30 @@ HiddenType Field
 
 The hidden type represents a hidden input field.
 
-+-------------+----------------------------------------------------------------------+
-| Rendered as | ``input`` ``hidden`` field                                           |
-+-------------+----------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                        |
-| options     | - `error_bubbling`_                                                  |
-|             | - `required`_                                                        |
-+-------------+----------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                            |
-| options     | - `data`_                                                            |
-|             | - `empty_data`_                                                      |
-|             | - `error_mapping`_                                                   |
-|             | - `mapped`_                                                          |
-|             | - `property_path`_                                                   |
-|             | - `row_attr`_                                                        |
-+-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                        |
-+-------------+----------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
-+-------------+----------------------------------------------------------------------+
++---------------------------+----------------------------------------------------------------------+
+| Rendered as               | ``input`` ``hidden`` field                                           |
++---------------------------+----------------------------------------------------------------------+
+| Overridden options        | - `compound`_                                                        |
+|                           | - `error_bubbling`_                                                  |
+|                           | - `invalid_message`_                                                 |
+|                           | - `required`_                                                        |
++---------------------------+----------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                            |
+|                           | - `data`_                                                            |
+|                           | - `empty_data`_                                                      |
+|                           | - `error_mapping`_                                                   |
+|                           | - `mapped`_                                                          |
+|                           | - `property_path`_                                                   |
+|                           | - `row_attr`_                                                        |
++---------------------------+----------------------------------------------------------------------+
+| Default invalid message   | The hidden field is invalid.                                         |
++---------------------------+----------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
++---------------------------+----------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
++---------------------------+----------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |
++---------------------------+----------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -39,6 +44,8 @@ Overridden Options
 **default**: ``true``
 
 Pass errors to the root form, otherwise they will not be visible.
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 ``required``
 ~~~~~~~~~~~~

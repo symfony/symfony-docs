@@ -67,12 +67,18 @@ Active Core Members
   * **Robin Chalas** (`chalasr`_);
   * **Maxime Steinhausser** (`ogizanagi`_);
   * **Samuel Rozé** (`sroze`_);
-  * **Yonel Ceruto** (`yceruto`_).
+  * **Yonel Ceruto** (`yceruto`_);
+  * **Tobias Nyholm** (`Nyholm`_);
+  * **Wouter De Jong** (`wouterj`_);
+  * **Alexander M. Turek** (`derrabus`_);
+  * **Jérémy Derussé** (`jderusse`_);
+  * **Titouan Galopin** (`tgalopin`_).
 
 * **Security Team** (``@symfony/security`` on GitHub):
 
   * **Fabien Potencier** (`fabpot`_);
-  * **Michael Cullum** (`michaelcullum`_).
+  * **Michael Cullum** (`michaelcullum`_);
+  * **Jérémy Derussé** (`jderusse`_).
 
 * **Recipes Team**:
 
@@ -98,7 +104,8 @@ Symfony contributions:
 * **Bernhard Schussek** (`webmozart`_);
 * **Abdellatif AitBoudad** (`aitboudad`_);
 * **Romain Neutron** (`romainneutron`_);
-* **Jordi Boggiano** (`Seldaek`_).
+* **Jordi Boggiano** (`Seldaek`_);
+* **Lukas Kahwe Smith** (`lsmith77`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -198,3 +205,7 @@ discretion of the **Project Leader**.
 .. _`HeahDude`: https://github.com/HeahDude
 .. _`OskarStark`: https://github.com/OskarStark
 .. _`romainneutron`: https://github.com/romainneutron
+.. _`lsmith77`: https://github.com/lsmith77/
+.. _`derrabus`: https://github.com/derrabus/
+.. _`jderusse`: https://github.com/jderusse/
+.. _`tgalopin`: https://github.com/tgalopin/

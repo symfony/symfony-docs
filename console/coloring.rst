@@ -40,13 +40,22 @@ It is possible to define your own styles using the
     use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
     // ...
-    $outputStyle = new OutputFormatterStyle('red', 'yellow', ['bold', 'blink']);
+    $outputStyle = new OutputFormatterStyle('red', '#ff0', ['bold', 'blink']);
     $output->getFormatter()->setStyle('fire', $outputStyle);
 
     $output->writeln('<fire>foo</>');
 
-Available foreground and background colors are: ``black``, ``red``, ``green``,
-``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
+Any hex color is supported for foreground and background colors. Besides that, these named colors are supported:
+``black``, ``red``, ``green``, ``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
+
+.. versionadded:: 5.2
+
+    True (hex) color support was introduced in Symfony 5.2
+
+.. note::
+
+    If the terminal doesn't support true colors, the nearest named color is used.
+    E.g. ``#c0392b`` is degraded to ``red`` or ``#f1c40f`` is degraded to ``yellow``.
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
 (enables the "reverse video" mode where the background and foreground colors
@@ -58,6 +67,9 @@ You can also set these colors and options directly inside the tag name::
 
     // green text
     $output->writeln('<fg=green>foo</>');
+
+    // red text
+    $output->writeln('<fg=#c0392b>foo</>');
 
     // black text on a cyan background
     $output->writeln('<fg=black;bg=cyan>foo</>');

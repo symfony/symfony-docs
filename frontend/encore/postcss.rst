@@ -67,6 +67,17 @@ support. The best-practice is to configure this directly in your ``package.json`
 
     {
     +  "browserslist": [
+    +    "defaults"
+    +  ]
+    }
+
+The ``defaults`` option is recommended for most users and would be equivalent
+to the following browserslist:
+
+.. code-block:: diff
+
+    {
+    +  "browserslist": [
     +    "> 0.5%",
     +    "last 2 versions",
     +    "Firefox ESR",

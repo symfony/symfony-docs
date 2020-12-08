@@ -9,6 +9,8 @@ application. This is necessary if you are using different databases or even
 vendors with entirely different sets of entities. In other words, one entity
 manager that connects to one database will handle some entities while another
 entity manager that connects to another database might handle the rest.
+It is also possible to use multiple entity managers to manage a common set of
+entities, each with their own database connection strings or separate cache configuration.
 
 .. note::
 
@@ -44,7 +46,6 @@ The following configuration code shows how you can configure two entity managers
                         driver: 'pdo_mysql'
                         server_version: '5.7'
                         charset: utf8mb4
-
             orm:
                 default_entity_manager: default
                 entity_managers:
@@ -183,7 +184,7 @@ In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
 ``src/Entity/Main`` directory, while the ``customer`` entity manager manages
 entities in ``src/Entity/Customer``. You've also defined two connections, one
-for each entity manager.
+for each entity manager, but you are free to define the same connection for both.
 
 .. caution::
 
@@ -192,8 +193,8 @@ for each entity manager.
     the connection or entity manager, the default (i.e. ``default``) is used.
 
     If you use a different name than ``default`` for the default entity manager,
-    you will need to redefine the default entity manager in ``prod`` environment
-    configuration too:
+    you will need to redefine the default entity manager in the ``prod`` environment
+    configuration and in the Doctrine migrations configuration (if you use that):
 
     .. code-block:: yaml
 
@@ -203,6 +204,13 @@ for each entity manager.
                 default_entity_manager: 'your default entity manager name'
 
         # ...
+
+    .. code-block:: yaml
+
+        # config/packages/doctrine_migrations.yaml
+        doctrine_migrations:
+            # ...
+            em: 'your default entity manager name'
 
 When working with multiple connections to create your databases:
 
@@ -229,13 +237,15 @@ When working with multiple entity managers to generate migrations:
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
 
-    // ...
+    // src/Controller/UserController.php
+    namespace App\Controller;
 
+    // ...
     use Doctrine\ORM\EntityManagerInterface;
 
     class UserController extends AbstractController
     {
-        public function index(EntityManagerInterface $entityManager)
+        public function index(EntityManagerInterface $entityManager): Response
         {
             // These methods also return the default entity manager, but it's preferred
             // to get it by injecting EntityManagerInterface in the action method
@@ -246,14 +256,19 @@ the default entity manager (i.e. ``default``) is returned::
             // Both of these return the "customer" entity manager
             $customerEntityManager = $this->getDoctrine()->getManager('customer');
             $customerEntityManager = $this->get('doctrine.orm.customer_entity_manager');
+
+            // ...
         }
     }
 
-You can now use Doctrine just as you did before - using the ``default`` entity
+You can now use Doctrine like you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
 
 The same applies to repository calls::
+
+    // src/Controller/UserController.php
+    namespace App\Controller;
 
     use AcmeStoreBundle\Entity\Customer;
     use AcmeStoreBundle\Entity\Product;
@@ -261,7 +276,7 @@ The same applies to repository calls::
 
     class UserController extends AbstractController
     {
-        public function index()
+        public function index(): Response
         {
             // Retrieves a repository managed by the "default" em
             $products = $this->getDoctrine()
@@ -280,7 +295,31 @@ The same applies to repository calls::
                 ->getRepository(Customer::class, 'customer')
                 ->findAll()
             ;
+
+            // ...
         }
     }
+
+.. caution::
+
+    One entity can be managed by more than one entity manager. This however
+    results in unexpected behavior when extending from ``ServiceEntityRepository``
+    in your custom repository. The ``ServiceEntityRepository`` always
+    uses the configured entity manager for that entity.
+
+    In order to fix this situation, extend ``EntityRepository`` instead and
+    no longer rely on autowiring::
+
+        // src/Repository/CustomerRepository.php
+        namespace App\Repository;
+
+        use Doctrine\ORM\EntityRepository;
+
+        class CustomerRepository extends EntityRepository
+        {
+            // ...
+        }
+
+	You should now always fetch this repository using ``ManagerRegistry::getRepository()``.
 
 .. _`several alternatives`: https://stackoverflow.com/a/11494543

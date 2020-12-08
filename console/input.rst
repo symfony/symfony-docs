@@ -106,7 +106,7 @@ There are three argument variants you can use:
     The argument can contain any number of values. For that reason, it must be
     used at the end of the argument list.
 
-You can combine ``IS_ARRAY`` with ``REQUIRED`` and ``OPTIONAL`` like this::
+You can combine ``IS_ARRAY`` with ``REQUIRED`` or ``OPTIONAL`` like this::
 
     $this
         // ...
@@ -186,13 +186,13 @@ flag:
         ;
 
 Note that to comply with the `docopt standard`_, long options can specify their
-values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
-``--iterations=5``), but short options can only use white spaces or no
+values after a whitespace or an ``=`` sign (e.g. ``--iterations 5`` or
+``--iterations=5``), but short options can only use whitespaces or no
 separation at all (e.g. ``-i 5`` or ``-i5``).
 
 .. caution::
 
-    While it is possible to separate an option from its value with a white space,
+    While it is possible to separate an option from its value with a whitespace,
     using this form leads to an ambiguity should the option appear before the
     command name. For example, ``php bin/console --iterations 5 app:greet Fabien``
     is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
@@ -249,7 +249,7 @@ optionally accepts a value, but it's a bit tricky. Consider this example::
         )
     ;
 
-This option can be used in 3 ways: ``greet --yell``, ``greet yell=louder``,
+This option can be used in 3 ways: ``greet --yell``, ``greet --yell=louder``,
 and ``greet``. However, it's hard to distinguish between passing the option
 without a value (``greet --yell``) and not passing the option (``greet``).
 

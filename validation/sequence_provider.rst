@@ -149,6 +149,9 @@ that group are valid, the second group, ``Strict``, will be validated.
 
 You can also define a group sequence in the ``validation_groups`` form option::
 
+    // src/Form/MyType.php
+    namespace App\Form;
+    
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Validator\Constraints\GroupSequence;
@@ -360,7 +363,7 @@ How to Sequentially Apply Constraints on a Single Property
 ----------------------------------------------------------
 
 Sometimes, you may want to apply constraints sequentially on a single
-property. The :doc:`Sequentially constraint</reference/constraints/Sequentially>`
+property. The :doc:`Sequentially constraint </reference/constraints/Sequentially>`
 can solve this for you in a more straightforward way than using a ``GroupSequence``.
 
 .. versionadded:: 5.1

@@ -13,7 +13,7 @@ The BrowserKit Component
     In Symfony versions prior to 4.3, the BrowserKit component could only make
     internal requests to your application. Starting from Symfony 4.3, this
     component can also :ref:`make HTTP requests to any public site <component-browserkit-external-requests>`
-    when using it in combination with the :doc:`HttpClient component </components/http_client>`.
+    when using it in combination with the :doc:`HttpClient component </http_client>`.
 
 Installation
 ------------
@@ -161,6 +161,32 @@ provides access to the form properties (e.g. ``$form->getUri()``,
     // submit that form
     $crawler = $client->submit($form);
 
+Custom Header Handling
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``getHeaders()`` method was introduced in Symfony 5.2.
+
+The optional HTTP headers passed to the ``request()`` method follows the FastCGI
+request format (uppercase, underscores instead of dashes and prefixed with ``HTTP_``).
+Before saving those headers to the request, they are lower-cased, with ``HTTP_``
+stripped, and underscores turned to dashes.
+
+If you're making a request to an application that has special rules about header
+capitalization or punctuation, override the ``getHeaders()`` method, which must
+return an associative array of headers::
+
+    protected function getHeaders(Request $request): array
+    {
+        $headers = parent::getHeaders($request);
+        if (isset($request->getServer()['api_key'])) {
+            $headers['api_key'] = $request->getServer()['api_key'];
+        }
+
+        return $headers;
+    }
+
 Cookies
 -------
 
@@ -289,7 +315,7 @@ So far, all the examples in this article have assumed that you are making
 internal requests to your own application. However, you can run the exact same
 examples when making HTTP requests to external web sites and applications.
 
-First, install and configure the :doc:`HttpClient component </components/http_client>`.
+First, install and configure the :doc:`HttpClient component </http_client>`.
 Then, use the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` to create
 the client that will make the external HTTP requests::
 

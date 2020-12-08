@@ -24,8 +24,8 @@ to render the form, and then back into a ``DateTime`` object on submit.
 
 .. _simple-example-sanitizing-html-on-user-input:
 
-Simple Example: Transforming String Tags from User Input to an Array
---------------------------------------------------------------------
+Example #1: Transforming Strings Form Data Tags from User Input to an Array
+---------------------------------------------------------------------------
 
 Suppose you have a Task form with a tags ``text`` type::
 
@@ -40,12 +40,12 @@ Suppose you have a Task form with a tags ``text`` type::
     // ...
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('tags', TextType::class);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Task::class,
@@ -56,7 +56,7 @@ Suppose you have a Task form with a tags ``text`` type::
     }
 
 Internally the ``tags`` are stored as an array, but displayed to the user as a
-simple comma separated string to make them easier to edit.
+plain comma separated string to make them easier to edit.
 
 This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
@@ -72,7 +72,7 @@ class::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('tags', TextType::class);
 
@@ -115,8 +115,8 @@ slightly::
             ->addModelTransformer(...)
     );
 
-Harder Example: Transforming an Issue Number into an Issue Entity
------------------------------------------------------------------
+Example #2: Transforming an Issue Number into an Issue Entity
+-------------------------------------------------------------
 
 Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
 Task has an optional foreign key to its related Issue). Adding a list box with all
@@ -136,7 +136,7 @@ Start by setting up the text field like normal::
     // ...
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('description', TextareaType::class)
@@ -144,7 +144,7 @@ Start by setting up the text field like normal::
             ;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Task::class,
@@ -188,9 +188,8 @@ to and from the issue number and the ``Issue`` object::
          * Transforms an object (issue) to a string (number).
          *
          * @param  Issue|null $issue
-         * @return string
          */
-        public function transform($issue)
+        public function transform($issue): string
         {
             if (null === $issue) {
                 return '';
@@ -203,10 +202,9 @@ to and from the issue number and the ``Issue`` object::
          * Transforms a string (number) to an object (issue).
          *
          * @param  string $issueNumber
-         * @return Issue|null
          * @throws TransformationFailedException if object (issue) is not found.
          */
-        public function reverseTransform($issueNumber)
+        public function reverseTransform($issueNumber): ?Issue
         {
             // no issue number? It's optional, so that's ok
             if (!$issueNumber) {
@@ -233,7 +231,7 @@ to and from the issue number and the ``Issue`` object::
         }
     }
 
-Just like in the first example, a transformer has two directions. The ``transform()``
+Like the first example, the transformer has two directions. The ``transform()``
 method is responsible for converting the data used in your code to a format that
 can be rendered in your form (e.g. an ``Issue`` object to its ``id``, a string).
 The ``reverseTransform()`` method does the reverse: it converts the submitted value
@@ -273,7 +271,7 @@ and type-hint the new class::
             $this->transformer = $transformer;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('description', TextareaType::class)
@@ -306,7 +304,7 @@ end-user error message in the data transformer using the
     {
         // ...
 
-        public function reverseTransform($issueNumber)
+        public function reverseTransform($issueNumber): ?Issue
         {
             // ...
 
@@ -390,19 +388,19 @@ First, create the custom field type class::
             $this->transformer = $transformer;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->addModelTransformer($this->transformer);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'invalid_message' => 'The selected issue does not exist',
             ]);
         }
 
-        public function getParent()
+        public function getParent(): string
         {
             return TextType::class;
         }
@@ -423,7 +421,7 @@ As long as you're using :ref:`autowire <services-autowire>` and
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('description', TextareaType::class)

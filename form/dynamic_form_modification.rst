@@ -45,13 +45,13 @@ a bare form class looks like::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('name');
             $builder->add('price');
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Product::class,
@@ -92,7 +92,7 @@ creating that particular field is delegated to an event listener::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('price');
 
@@ -109,7 +109,7 @@ object is new (e.g. hasn't been persisted to the database). Based on that,
 the event listener might look like the following::
 
     // ...
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -151,14 +151,14 @@ you can also move the logic for creating the ``name`` field to an
 
     class AddNameFieldSubscriber implements EventSubscriberInterface
     {
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             // Tells the dispatcher that you want to listen on the form.pre_set_data
             // event and that the preSetData method should be called.
             return [FormEvents::PRE_SET_DATA => 'preSetData'];
         }
 
-        public function preSetData(FormEvent $event)
+        public function preSetData(FormEvent $event): void
         {
             $product = $event->getData();
             $form = $event->getForm();
@@ -179,7 +179,7 @@ Great! Now use that in your form class::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder->add('price');
 
@@ -217,7 +217,7 @@ Using an event listener, your form might look like this::
 
     class FriendMessageFormType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('subject', TextType::class)
@@ -255,6 +255,8 @@ Now that you have all the basics in place you can use the features of the
 security helper to fill in the listener logic::
 
     // src/Form/Type/FriendMessageFormType.php
+    namespace App\Form\Type;
+
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -272,7 +274,7 @@ security helper to fill in the listener logic::
             $this->security = $security;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('subject', TextType::class)
@@ -335,10 +337,12 @@ and :doc:`tag it </service_container/tags>` with the ``form.type`` tag.
 In a controller, create the form like normal::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class FriendMessageController extends AbstractController
     {
-        public function new(Request $request)
+        public function new(Request $request): Response
         {
             $form = $this->createForm(FriendMessageFormType::class);
 
@@ -349,7 +353,7 @@ In a controller, create the form like normal::
 You can also  embed the form type into another form::
 
     // inside some other "form type" class
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('message', FriendMessageFormType::class);
     }
@@ -382,7 +386,7 @@ sport like this::
 
     class SportMeetupType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('sport', EntityType::class, [
@@ -446,7 +450,7 @@ The type would now look like::
 
     class SportMeetupType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('sport', EntityType::class, [
@@ -513,11 +517,12 @@ your application. Assume that you have a sport meetup creation controller::
     use App\Form\Type\SportMeetupType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
     class MeetupController extends AbstractController
     {
-        public function create(Request $request)
+        public function create(Request $request): Response
         {
             $meetup = new SportMeetup();
             $form = $this->createForm(SportMeetupType::class, $meetup);

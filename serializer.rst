@@ -67,10 +67,13 @@ As well as the following normalizers:
   for :phpclass:`DateInterval` objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
   transform :phpclass:`SplFileInfo` objects in `Data URIs`_
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer` for
+  objects implementing the :class:`Symfony\\Component\\Form\\FormInterface` to
+  normalize form errors.
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
   to deal with objects implementing the :phpclass:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
-  denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
+  denormalize arrays of objects using a notation like ``MyObject[]`` (note the ``[]`` suffix)
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
 
@@ -78,6 +81,12 @@ Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
+
+.. caution::
+
+    Always make sure to load the ``DateTimeNormalizer`` when serializing the
+    ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
+    usage and exposing internal details.
 
 Here is an example on how to load the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
@@ -138,11 +147,46 @@ To use annotations, first add support for them via the SensioFrameworkExtraBundl
     $ composer require sensio/framework-extra-bundle
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
-to your class and choose which groups to use when serializing::
+to your class::
+
+    // src/Entity/Product.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Serializer\Annotation\Groups;
+
+    /**
+     * @ORM\Entity()
+     */
+    class Product
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(type="integer")
+         * @Groups({"show_product", "list_product"})
+         */
+        private $id;
+
+        /**
+         * @ORM\Column(type="string", length=255)
+         * @Groups({"show_product", "list_product"})
+         */
+        private $name;
+
+        /**
+         * @ORM\Column(type="integer")
+         * @Groups({"show_product"})
+         */
+        private $description;
+    }
+
+You can now choose which groups to use when serializing::
 
     $json = $serializer->serialize(
-        $someObject,
-        'json', ['groups' => 'group1']
+        $product,
+        'json',
+        ['groups' => 'show_product']
     );
 
 .. tip::

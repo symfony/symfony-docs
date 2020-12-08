@@ -364,9 +364,19 @@ a JWT containing a topic selector matching by the update's topic.
 
 To provide this JWT, the subscriber can use a cookie,
 or a ``Authorization`` HTTP header.
-Cookies are automatically sent by the browsers when opening an ``EventSource`` connection.
-Using cookies is the most secure and preferred way when the client is a web browser.
-If the client is not a web browser, then using an authorization header is the way to go.
+
+Cookies are automatically sent by the browsers when opening an ``EventSource``
+connection if the ``withCredentials`` attribute is set to ``true``:
+
+.. code-block:: javascript
+
+    const eventSource = new EventSource(hub, {
+        withCredentials: true
+    });
+
+Using cookies is the most secure and preferred way when the client is a web
+browser. If the client is not a web browser, then using an authorization header
+is the way to go.
 
 .. tip::
 
@@ -438,7 +448,7 @@ And here is the controller::
     To use the cookie authentication method, the Symfony app and the Hub
     must be served from the same domain (can be different sub-domains).
 
-Generating Programmatically The JWT Used to Publish
+Programmatically Generating The JWT Used to Publish
 ---------------------------------------------------
 
 Instead of directly storing a JWT in the configuration,

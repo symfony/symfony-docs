@@ -27,7 +27,7 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `annotations`_
 
@@ -98,7 +98,7 @@ Configuration
     * `cafile`_
     * `capath`_
     * `ciphers`_
-    * `headers`_
+    * :ref:`headers <http-headers>`
     * `http_version`_
     * `local_cert`_
     * `local_pk`_
@@ -126,7 +126,7 @@ Configuration
     * `cafile`_
     * `capath`_
     * `ciphers`_
-    * `headers`_
+    * :ref:`headers <http-headers>`
     * `http_version`_
     * `local_cert`_
     * `local_pk`_
@@ -137,10 +137,33 @@ Configuration
     * `proxy`_
     * `query`_
     * `resolve`_
+
+    * :ref:`retry_failed <reference-http-client-retry-failed>`
+
+      * `retry_strategy`_
+      * :ref:`enabled <reference-http-client-retry-enabled>`
+      * `delay`_
+      * `http_codes`_
+      * `max_delay`_
+      * `max_retries`_
+      * `multiplier`_
+      * `jitter`_
+
     * `timeout`_
     * `max_duration`_
     * `verify_host`_
     * `verify_peer`_
+
+  * :ref:`retry_failed <reference-http-client-retry-failed>`
+
+    * `retry_strategy`_
+    * :ref:`enabled <reference-http-client-retry-enabled>`
+    * `delay`_
+    * `http_codes`_
+    * `max_delay`_
+    * `max_retries`_
+    * `multiplier`_
+    * `jitter`_
 
 * `http_method_override`_
 * `ide`_
@@ -151,6 +174,18 @@ Configuration
 
     * :ref:`name <reference-lock-resources-name>`
 
+* `mailer`_
+
+  * :ref:`dsn <mailer-dsn>`
+  * `transports`_
+  * `message_bus`_
+  * `envelope`_
+
+    * `sender`_
+    * `recipients`_
+
+  * :ref:`headers <mailer-headers>`
+
 * `php_errors`_
 
   * `log`_
@@ -159,7 +194,7 @@ Configuration
 * `profiler`_
 
   * `collect`_
-  * `dsn`_
+  * :ref:`dsn <profiler-dsn>`
   * :ref:`enabled <reference-profiler-enabled>`
   * `only_exceptions`_
   * `only_master_requests`_
@@ -167,6 +202,8 @@ Configuration
 * `property_access`_
 
   * `magic_call`_
+  * `magic_get`_
+  * `magic_set`_
   * `throw_exception_on_invalid_index`_
   * `throw_exception_on_invalid_property_path`_
 
@@ -180,6 +217,7 @@ Configuration
 
 * `router`_
 
+  * `default_uri`_
   * `http_port`_
   * `https_port`_
   * `resource`_
@@ -740,6 +778,40 @@ If you use for example
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
+.. _reference-http-client-retry-failed:
+
+By enabling the optional ``retry_failed`` configuration, the HTTP client service
+will automatically retry failed HTTP requests.
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        # ...
+        http_client:
+            # ...
+            retry_failed:
+                # retry_strategy: app.custom_strategy
+                http_codes:
+                    0: ['GET', 'HEAD']   # retry network errors if request method is GET or HEAD
+                    429: true            # retry all responses with 429 status code
+                    500: ['GET', 'HEAD']
+                max_retries: 2
+                delay: 1000
+                multiplier: 3
+                max_delay: 5000
+                jitter: 0.3
+
+            scoped_clients:
+                my_api.client:
+                    # ...
+                    retry_failed:
+                        max_retries: 4
+
+.. versionadded:: 5.2
+
+    The ``retry_failed`` option was introduced in Symfony 5.2.
+
 auth_basic
 ..........
 
@@ -801,7 +873,7 @@ outgoing network interface.
 buffer
 ......
 
-**type**: ``bool`` | ``Closure``
+**type**: ``boolean`` | ``Closure``
 
 Buffering the response means that you can access its content multiple times
 without performing the request again. Buffering is enabled by default when the
@@ -835,13 +907,47 @@ ciphers
 A list of the names of the ciphers allowed for the SSL/TLS connections. They
 can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
 
+delay
+.....
+
+**type**: ``integer`` **default**: ``1000``
+
+.. versionadded:: 5.2
+
+    The ``delay`` option was introduced in Symfony 5.2.
+
+The initial delay in milliseconds used to compute the waiting time between retries.
+
+.. _reference-http-client-retry-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the support for retry failed HTTP request or not.
+This setting is automatically set to true when one of the child settings is configured.
+
+.. _http-headers:
+
 headers
 .......
 
 **type**: ``array``
 
 An associative array of the HTTP headers added before making the request. This
-value must use the format ``['header-name' => header-value, ...]``.
+value must use the format ``['header-name' => 'value0, value1, ...']``.
+
+http_codes
+..........
+
+**type**: ``array`` **default**: :method:`Symfony\\Component\\HttpClient\\Retry\\GenericRetryStrategy::DEFAULT_RETRY_STATUS_CODES`
+
+.. versionadded:: 5.2
+
+    The ``http_codes`` option was introduced in Symfony 5.2.
+
+The list of HTTP status codes that triggers a retry of the request.
 
 http_version
 ............
@@ -850,6 +956,20 @@ http_version
 
 The HTTP version to use, typically ``'1.1'``  or ``'2.0'``. Leave it to ``null``
 to let Symfony select the best version automatically.
+
+jitter
+......
+
+**type**: ``float`` **default**: ``0.1`` (must be between 0.0 and 1.0)
+
+.. versionadded:: 5.2
+
+    The ``jitter`` option was introduced in Symfony 5.2.
+
+This option adds some randomness to the delay. It's useful to avoid sending
+multiple requests to the server at the exact same time. The randomness is
+calculated as ``delay * jitter``. For example: if delay is ``1000ms`` and jitter
+is ``0.2``, the actual delay will be a number between ``800`` and ``1200`` (1000 +/- 20%).
 
 local_cert
 ..........
@@ -868,6 +988,26 @@ local_pk
 The path of a file that contains the `PEM formatted`_ private key of the
 certificate defined in the ``local_cert`` option.
 
+max_delay
+.........
+
+**type**: ``integer`` **default**: ``0``
+
+.. versionadded:: 5.2
+
+    The ``max_delay`` option was introduced in Symfony 5.2.
+
+The maximum amount of milliseconds initial to wait between retries.
+Use ``0`` to not limit the duration.
+
+max_duration
+............
+
+**type**: ``float`` **default**: 0
+
+The maximum execution time, in seconds, that the request and the response are
+allowed to take. A value lower than or equal to 0 means it is unlimited.
+
 max_host_connections
 ....................
 
@@ -885,6 +1025,30 @@ max_redirects
 
 The maximum number of redirects to follow. Use ``0`` to not follow any
 redirection.
+
+max_retries
+...........
+
+**type**: ``integer`` **default**: ``3``
+
+.. versionadded:: 5.2
+
+    The ``max_retries`` option was introduced in Symfony 5.2.
+
+The maximum number of retries for failing requests. When the maximum is reached,
+the client returns the last received response.
+
+multiplier
+..........
+
+**type**: ``float`` **default**: ``2``
+
+.. versionadded:: 5.2
+
+    The ``multiplier`` option was introduced in Symfony 5.2.
+
+This value is multiplied to the delay each time a retry occurs, to distribute
+retries in time instead of making all of them sequentially.
 
 no_proxy
 ........
@@ -945,6 +1109,22 @@ client and to make your tests easier.
 The value of this option is an associative array of ``domain => IP address``
 (e.g ``['symfony.com' => '46.137.106.254', ...]``).
 
+retry_strategy
+...............
+
+**type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``retry_strategy`` option was introduced in Symfony 5.2.
+
+The service is used to decide if a request should be retried and to compute the
+time to wait between retries. By default, it uses an instance of
+:class:`Symfony\\Component\\HttpClient\\Retry\\GenericRetryStrategy` configured
+with ``http_codes``, ``delay``, ``max_delay``, ``multiplier`` and ``jitter``
+options. This class has to implement
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryStrategyInterface`.
+
 scope
 .....
 
@@ -963,14 +1143,6 @@ Time, in seconds, to wait for a response. If the response stales for longer, a
 :class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
 Its default value is the same as the value of PHP's `default_socket_timeout`_
 config option.
-
-max_duration
-............
-
-**type**: ``float`` **default**: 0
-
-The maximum execution time, in seconds, that the request and the response are
-allowed to take. A value lower than or equal to 0 means it is unlimited.
 
 verify_host
 ...........
@@ -1038,6 +1210,8 @@ only_master_requests
 
 When this is set to ``true``, the profiler will only be enabled on the master
 requests (and not on the subrequests).
+
+.. _profiler-dsn:
 
 dsn
 ...
@@ -1130,6 +1304,18 @@ type
 The type of the resource to hint the loaders about the format. This isn't
 needed when you use the default routers with the expected file extensions
 (``.xml``, ``.yaml``, ``.php``).
+
+default_uri
+...........
+
+**type**: ``string``
+
+.. versionadded:: 5.1
+
+    The ``default_uri`` option was introduced in Symfony 5.1.
+
+The default URI used to generate URLs in a non-HTTP context (see
+:ref:`Generating URLs in Commands <router-generate-urls-commands>`).
 
 http_port
 .........
@@ -1315,6 +1501,10 @@ The possible values for this option are:
 
 * ``null``, use it to disable this protection. Same behavior as in older Symfony
   versions.
+* ``'none'`` (or the ``Cookie::SAMESITE_NONE`` constant), use it to allow
+  sending of cookies when the HTTP request originated from a different domain
+  (previously this was the default behavior of null, but in newer browsers ``'lax'``
+  would be applied when the header has not been set)
 * ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
   send any cookie when the HTTP request is not originated from the same domain.
 * ``'lax'`` (or the ``Cookie::SAMESITE_LAX`` constant), use it to allow sending
@@ -2103,7 +2293,10 @@ paths
 **type**: ``array`` **default**: ``[]``
 
 This option allows to define an array of paths where the component will look
-for translation files.
+for translation files. The later a path is added, the more priority it has
+(translations from later paths overwrite earlier ones). Translations from the
+`default_path <reference-translator-default_path>` have more priority than
+translations from all these paths.
 
 .. _reference-translator-default_path:
 
@@ -2126,6 +2319,32 @@ magic_call
 When enabled, the ``property_accessor`` service uses PHP's
 :ref:`magic __call() method <components-property-access-magic-call>` when
 its ``getValue()`` method is called.
+
+magic_get
+.........
+
+**type**: ``boolean`` **default**: ``true``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __get() method <components-property-access-magic-get>` when
+its ``getValue()`` method is called.
+
+.. versionadded:: 5.2
+
+    The ``magic_get`` option was introduced in Symfony 5.2.
+
+magic_set
+.........
+
+**type**: ``boolean`` **default**: ``true``
+
+When enabled, the ``property_accessor`` service uses PHP's
+:ref:`magic __set() method <components-property-access-writing-to-objects>` when
+its ``setValue()`` method is called.
+
+.. versionadded:: 5.2
+
+    The ``magic_set`` option was introduced in Symfony 5.2.
 
 throw_exception_on_invalid_index
 ................................
@@ -2643,9 +2862,14 @@ Can also be the service id of another cache pool where tags will be stored.
 default_lifetime
 """"""""""""""""
 
-**type**: ``integer``
+**type**: ``integer`` | ``string``
 
-Default lifetime of your cache items in seconds.
+Default lifetime of your cache items. Give an integer value to set the default
+lifetime in seconds. A string value could be ISO 8601 time interval, like ``"PT5M"``
+or a PHP date expression that is accepted by ``strtotime()``, like ``"5 minutes"``.
+
+If no value is provided, the cache adapter will fallback to the default value on
+the actual cache storage.
 
 provider
 """"""""
@@ -2685,6 +2909,12 @@ It's also useful when using `blue/green deployment`_ strategies and more
 generally, when you need to abstract out the actual deployment directory (for
 example, when warming caches offline).
 
+.. versionadded:: 5.2
+
+    Starting from Symfony 5.2, the ``%kernel.container_class%`` parameter is no
+    longer appended automatically to the value of this option. This allows
+    sharing caches between applications or different environments.
+
 .. _reference-lock:
 
 lock
@@ -2720,21 +2950,7 @@ A list of lock stores to be created by the framework extension.
 
         # config/packages/lock.yaml
         framework:
-            # these are all the supported lock stores
-            lock: ~
-            lock: 'flock'
-            lock: 'flock:///path/to/file'
-            lock: 'semaphore'
-            lock: 'memcached://m1.docker'
-            lock: ['memcached://m1.docker', 'memcached://m2.docker']
-            lock: 'redis://r1.docker'
-            lock: ['redis://r1.docker', 'redis://r2.docker']
-            lock: '%env(MEMCACHED_OR_REDIS_URL)%'
-
-            # named locks
-            lock:
-                invoice: ['redis://r1.docker', 'redis://r2.docker']
-                report: 'semaphore'
+            lock: '%env(LOCK_DSN)%'
 
     .. code-block:: xml
 
@@ -2749,29 +2965,7 @@ A list of lock stores to be created by the framework extension.
 
             <framework:config>
                 <framework:lock>
-                    <!-- these are all the supported lock stores -->
-                    <framework:resource>flock</framework:resource>
-
-                    <framework:resource>flock:///path/to/file</framework:resource>
-
-                    <framework:resource>semaphore</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-                    <framework:resource>memcached://m2.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-                    <framework:resource>redis://r2.docker</framework:resource>
-
-                    <framework:resource>%env(REDIS_URL)%</framework:resource>
-
-                    <!-- named locks -->
-                    <framework:resource name="invoice">redis://r1.docker</framework:resource>
-                    <framework:resource name="invoice">redis://r2.docker</framework:resource>
-                    <framework:resource name="report">semaphore</framework:resource>
+                    <framework:resource>%env(LOCK_DSN)%</framework:resource>
                 </framework:lock>
             </framework:config>
         </container>
@@ -2780,23 +2974,12 @@ A list of lock stores to be created by the framework extension.
 
         // config/packages/lock.php
         $container->loadFromExtension('framework', [
-            // these are all the supported lock stores
-            'lock' => null,
-            'lock' => 'flock',
-            'lock' => 'flock:///path/to/file',
-            'lock' => 'semaphore',
-            'lock' => 'memcached://m1.docker',
-            'lock' => ['memcached://m1.docker', 'memcached://m2.docker'],
-            'lock' => 'redis://r1.docker',
-            'lock' => ['redis://r1.docker', 'redis://r2.docker'],
-            'lock' => '%env(MEMCACHED_OR_REDIS_URL)%',
-
-            // named locks
-            'lock' => [
-                'invoice' => ['redis://r1.docker', 'redis://r2.docker'],
-                'report' => 'semaphore',
-            ],
+            'lock' => '%env(LOCK_DSN)%',
         ]);
+
+.. seealso::
+
+    For more details, see :doc:`/lock`.
 
 .. _reference-lock-resources-name:
 
@@ -2818,6 +3001,122 @@ Name of the lock you want to create.
             class: Symfony\Component\Lock\Store\RetryTillSaveStore
             decorates: lock.invoice.store
             arguments: ['@.inner', 100, 50]
+
+mailer
+~~~~~~
+
+.. _mailer-dsn:
+
+dsn
+...
+
+**type**: ``string`` **default**: ``null``
+
+The DSN used by the mailer. When several DSN may be used, use
+``transports`` option (see below) instead.
+
+transports
+..........
+
+**type**: ``array``
+
+A :ref:`list of DSN <multiple-email-transports>` that can be used by the
+mailer. A transport name is the key and the dsn is the value.
+
+message_bus
+...........
+
+.. versionadded:: 5.1
+
+    The ``message_bus`` option was introduced in Symfony 5.1.
+
+**type**: ``string`` **default**: ``null`` or default bus if Messenger component is installed
+
+Service identifier of the message bus to use when using the
+:doc:`Messenger component </messenger>` (e.g. ``messenger.default_bus``).
+
+envelope
+........
+
+sender
+""""""
+
+**type**: ``string``
+
+Sender used by the ``Mailer``. Keep in mind that this setting override a
+sender set in the code.
+
+recipients
+""""""""""
+
+**type**: ``array``
+
+Recipients used by the ``Mailer``. Keep in mind that this setting override
+recipients set in the code.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                dsn: 'smtp://localhost:25'
+                envelope:
+                    recipients: ['admin@symfony.com', 'lead@symfony.com']
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:mailer dsn="smtp://localhost:25">
+                    <framework:envelope>
+                        <framework:recipient>admin@symfony.com</framework:recipient>
+                        <framework:recipient>lead@symfony.com</framework:recipient>
+                    </framework:envelope>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $containerConfigurator): void {
+            $containerConfigurator->extension('framework', [
+                'mailer' => [
+                    'dsn' => 'smtp://localhost:25',
+                    'envelope' => [
+                        'recipients' => [
+                            'admin@symfony.com',
+                            'lead@symfony.com',
+                        ]
+                    ]
+                ]
+            ]);
+        };
+
+.. _mailer-headers:
+
+headers
+.......
+
+.. versionadded:: 5.2
+
+    The ``headers`` mailer option was introduced in Symfony 5.2.
+
+**type**: ``array``
+
+Headers to add to emails. The key (``name`` attribute in xml format) is the
+header name and value the header value.
 
 workflows
 ~~~~~~~~~
@@ -2891,7 +3190,7 @@ Name of the workflow you want to create.
 audit_trail
 """""""""""
 
-**type**: ``bool``
+**type**: ``boolean``
 
 If set to ``true``, the :class:`Symfony\\Component\\Workflow\\EventListener\\AuditTrailListener`
 will be enabled.

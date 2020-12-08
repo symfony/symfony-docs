@@ -65,7 +65,7 @@ The following block shows all possible configuration keys:
                 charset:              UTF8
                 logging:              '%kernel.debug%'
                 platform_service:     App\DBAL\MyDatabasePlatformService
-                server_version:       '5.6'
+                server_version:       '5.7'
                 mapping_types:
                     enum: string
                 types:
@@ -99,7 +99,7 @@ The following block shows all possible configuration keys:
                     charset="UTF8"
                     logging="%kernel.debug%"
                     platform-service="App\DBAL\MyDatabasePlatformService"
-                    server-version="5.6">
+                    server-version="5.7">
 
                     <doctrine:option key="foo">bar</doctrine:option>
                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
@@ -117,12 +117,12 @@ The following block shows all possible configuration keys:
     version).
 
     If you are running a MariaDB database, you must prefix the ``server_version``
-    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.2.12``).
+    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.4.14``).
 
     Always wrap the server version number with quotes to parse it as a string
     instead of a float number. Otherwise, the floating-point representation
-    issues can make your version be considered a different number (e.g. ``5.6``
-    will be rounded as ``5.5999999999999996447286321199499070644378662109375``).
+    issues can make your version be considered a different number (e.g. ``5.7``
+    will be rounded as ``5.6999999999999996447286321199499070644378662109375``).
 
     If you don't define this option and you haven't created your database
     yet, you may get ``PDOException`` errors because Doctrine will try to

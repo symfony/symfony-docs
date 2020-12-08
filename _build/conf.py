@@ -16,11 +16,12 @@ import sys, os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.append(os.path.abspath('_themes/_exts'))
+sys.path.append(os.path.abspath('_exts'))
 
 # adding PhpLexer
 from sphinx.highlighting import lexers
 from pygments.lexers.compiled import CLexer
+from pygments.lexers.shell import BashLexer
 from pygments.lexers.special import TextLexer
 from pygments.lexers.text import RstLexer
 from pygments.lexers.web import PhpLexer
@@ -29,14 +30,15 @@ from symfonycom.sphinx.lexer import TerminalLexer
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.0'
+needs_sphinx = '1.8.5'
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    'sphinx.ext.autodoc', 'sphinx.ext.doctest', 'sphinx.ext.todo',
-    'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode', 'sensio.sphinx.bestpractice', 'sensio.sphinx.codeblock',
-    'symfonycom.sphinx'
+    'sphinx.ext.autodoc', 'sphinx.ext.doctest',
+    'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode', 'sphinx.ext.extlinks',
+    'sensio.sphinx.codeblock', 'sensio.sphinx.configurationblock', 'sensio.sphinx.phpcode', 'sensio.sphinx.bestpractice'
     #,'sphinxcontrib.spelling'
 ]
 
@@ -98,7 +100,7 @@ exclude_patterns = ['_build']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'symfonycom.sphinx.SensioStyle'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -109,28 +111,32 @@ pygments_style = 'sphinx'
 lexers['markdown'] = TextLexer()
 lexers['php'] = PhpLexer(startinline=True)
 lexers['php-annotations'] = PhpLexer(startinline=True)
+lexers['php-attributes'] = PhpLexer(startinline=True)
 lexers['php-standalone'] = PhpLexer(startinline=True)
 lexers['php-symfony'] = PhpLexer(startinline=True)
 lexers['rst'] = RstLexer()
+lexers['varnish2'] = CLexer()
 lexers['varnish3'] = CLexer()
 lexers['varnish4'] = CLexer()
 lexers['terminal'] = TerminalLexer()
+lexers['env']  = BashLexer()
 
 config_block = {
     'apache': 'Apache',
     'markdown': 'Markdown',
     'nginx': 'Nginx',
     'rst': 'reStructuredText',
-    'terminal': 'Terminal',
+    'varnish2': 'Varnish 2',
     'varnish3': 'Varnish 3',
-    'varnish4': 'Varnish 4'
+    'varnish4': 'Varnish 4',
+    'env': '.env'
 }
 
-# use PHP as the primary domain
-primary_domain = 'php'
+# don't enable Sphinx Domains
+primary_domain = None
 
 # set url for API links
-api_url = 'http://api.symfony.com/master/%s'
+api_url = 'https://github.com/symfony/symfony/blob/master/src/%s.php'
 
 
 # -- Options for HTML output ---------------------------------------------------
@@ -138,12 +144,15 @@ api_url = 'http://api.symfony.com/master/%s'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 html_theme = "sphinx_rtd_theme"
-html_theme_path = ["_themes", ]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+html_theme_options = {
+    'logo_only': True,
+    'prev_next_buttons_location': None,
+    'style_nav_header_background': '#f0f0f0'
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
@@ -157,7 +166,7 @@ html_theme_path = ["_themes", ]
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = None
+html_logo = '_static/symfony-logo.svg'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -167,7 +176,8 @@ html_theme_path = ["_themes", ]
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ['_static']
+html_static_path = ['_static']
+html_css_files = ['rtd_custom.css']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.

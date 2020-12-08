@@ -96,6 +96,8 @@ typical usage of this is gender:
     .. code-block:: yaml
 
         # translations/messages+intl-icu.en.yaml
+
+        # the 'other' key is required, and is selected if no other case matches
         invitation_title: >-
             {organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
@@ -112,6 +114,7 @@ typical usage of this is gender:
                 <body>
                     <trans-unit id="invitation_title">
                         <source>invitation_title</source>
+                        <!-- the 'other' key is required, and is selected if no other case matches -->
                         <target>{organizer_gender, select,
                             female {{organizer_name} has invited you for her party!}
                             male {{organizer_name} has invited you for his party!}
@@ -126,6 +129,7 @@ typical usage of this is gender:
 
         // translations/messages+intl-icu.en.php
         return [
+            // the 'other' key is required, and is selected if no other case matches
             'invitation_title' => '{organizer_gender, select,
                 female {{organizer_name} has invited you for her party!}
                 male   {{organizer_name} has invited you for his party!}
@@ -469,7 +473,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
     echo $translator->trans('value_of_object', ['value' => 9988776.65]);
 
 .. _`online editor`: http://format-message.github.io/icu-message-format-for-translators/
-.. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
+.. _`ICU MessageFormat`: https://unicode-org.github.io/icu/userguide/format_parse/messages/
 .. _`switch statement`: https://www.php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
 .. _`constants defined by the IntlDateFormatter class`: https://www.php.net/manual/en/class.intldateformatter.php

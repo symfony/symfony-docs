@@ -13,7 +13,7 @@ the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
 This can typically be the case in your controllers, where you may inject several
-services in the constructor, but the action executed only uses some of them.
+services in the constructor, but the action called only uses some of them.
 Another example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
@@ -87,7 +87,7 @@ a PSR-11 ``ContainerInterface``::
             $this->locator = $locator;
         }
 
-        public static function getSubscribedServices()
+        public static function getSubscribedServices(): array
         {
             return [
                 'App\FooCommand' => FooHandler::class,
@@ -130,7 +130,7 @@ service locator::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -142,7 +142,7 @@ Service types can also be keyed by a service name for internal use::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -159,7 +159,7 @@ typically happens when extending ``AbstractController``::
 
     class MyController extends AbstractController
     {
-        public static function getSubscribedServices()
+        public static function getSubscribedServices(): array
         {
             return array_merge(parent::getSubscribedServices(), [
                 // ...
@@ -176,7 +176,7 @@ errors if there's no matching service found in the service container::
 
     use Psr\Log\LoggerInterface;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             // ...
@@ -383,8 +383,9 @@ will share identical locators among all the services referencing them::
 
     use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Reference;
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         // ...
 

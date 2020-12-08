@@ -68,7 +68,7 @@ protected forms. As an alternative, you can:
   cache the rest of the page contents;
 * Cache the entire page and load the form via an uncached AJAX request;
 * Cache the entire page and use :doc:`hinclude.js </templating/hinclude>` to
-  load just the CSRF token with an uncached AJAX request and replace the form
+  load the CSRF token with an uncached AJAX request and replace the form
   field value with it.
 
 CSRF Protection in Symfony Forms
@@ -83,6 +83,9 @@ protected against CSRF attacks.
 By default Symfony adds the CSRF token in a hidden field called ``_token``, but
 this can be customized on a form-by-form basis::
 
+    // src/Form/TaskType.php
+    namespace App\Form;
+    
     // ...
     use App\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -129,7 +132,7 @@ Although Symfony Forms provide automatic CSRF protection by default, you may
 need to generate and check CSRF tokens manually for example when using regular
 HTML forms not managed by the Symfony Form component.
 
-Consider a simple HTML form created to allow deleting items. First, use the
+Consider a HTML form created to allow deleting items. First, use the
 :ref:`csrf_token() Twig function <reference-twig-function-csrf-token>` to
 generate a CSRF token in the template and store it as a hidden form field:
 

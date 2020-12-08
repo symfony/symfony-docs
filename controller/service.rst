@@ -26,6 +26,8 @@ a service like: ``App\Controller\HelloController::index``:
     .. code-block:: php-annotations
 
         // src/Controller/HelloController.php
+        namespace App\Controller;
+
         use Symfony\Component\Routing\Annotation\Route;
 
         class HelloController
@@ -87,6 +89,8 @@ which is a common practice when following the `ADR pattern`_
     .. code-block:: php-annotations
 
         // src/Controller/Hello.php
+        namespace App\Controller;
+
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 

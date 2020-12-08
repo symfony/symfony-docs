@@ -6,8 +6,23 @@
 How to Use Voters to Check User Permissions
 ===========================================
 
-Security voters are the most granular way of checking permissions (e.g. "can this
-specific user edit the given item?"). This article explains voters in detail.
+Voters are Symfony's most powerful way of managing permissions. They allow you
+to centralize all permission logic, then reuse them in many places.
+
+However, if you don't reuse permissions or your rules are basic, you can always
+put that logic directly into your controller instead. Here's an example how
+this could look like, if you want to make a route accessible to the "owner" only::
+
+    // src/Controller/PostController.php
+    // ...
+
+    // inside your controller action
+    if ($post->getOwner() !== $this->getUser()) {
+        throw $this->createAccessDeniedException();
+    }
+
+In that sense, the following example used throughout this page is a minimal
+example for voters.
 
 .. tip::
 
@@ -15,10 +30,7 @@ specific user edit the given item?"). This article explains voters in detail.
     :doc:`authorization </components/security/authorization>`
     article for an even deeper understanding on voters.
 
-How Symfony Uses Voters
------------------------
-
-In order to use voters, you have to understand how Symfony works with them.
+Here's how Symfony works with voters:
 All voters are called each time you use the ``isGranted()`` method on Symfony's
 authorization checker or call ``denyAccessUnlessGranted()`` in a controller (which
 uses the authorization checker), or by
@@ -190,7 +202,7 @@ To recap, here's what's expected from the two abstract methods:
 
 ``voteOnAttribute(string $attribute, $subject, TokenInterface $token)``
     If you return ``true`` from ``supports()``, then this method is called. Your
-    job is simple: return ``true`` to allow access and ``false`` to deny access.
+    job is to return ``true`` to allow access and ``false`` to deny access.
     The ``$token`` can be used to find the current user object (if any). In this
     example, all of the complex business logic is included to determine access.
 
@@ -204,7 +216,7 @@ and tag it with ``security.voter``. But if you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that's done automatically for you! When you
 :ref:`call isGranted() with view/edit and pass a Post object <how-to-use-the-voter-in-a-controller>`,
-your voter will be executed and you can control access.
+your voter will be called and you can control access.
 
 Checking for Roles inside a Voter
 ---------------------------------
@@ -321,5 +333,51 @@ security configuration:
             'access_decision_manager' => [
                 'strategy' => 'unanimous',
                 'allow_if_all_abstain' => false,
+            ],
+        ]);
+
+Custom Access Decision Strategy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If none of the built-in strategies fits your use case, define the ``service``
+option to use a custom service as the Access Decision Manager (your service
+must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface`):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            access_decision_manager:
+                service: App\Security\MyCustomAccessDecisionManager
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+
+            <config>
+                <access-decision-manager
+                    service="App\Security\MyCustomAccessDecisionManager"/>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\MyCustomAccessDecisionManager;
+
+        $container->loadFromExtension('security', [
+            'access_decision_manager' => [
+                'service' => MyCustomAccessDecisionManager::class,
+                // ...
             ],
         ]);

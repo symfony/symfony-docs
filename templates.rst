@@ -90,12 +90,13 @@ passes to it the needed variables::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class UserController extends AbstractController
     {
         // ...
 
-        public function notifications()
+        public function notifications(): Response
         {
             // get the user information and notifications somehow
             $userFirstName = '...';
@@ -117,8 +118,8 @@ Template Naming
 
 Symfony recommends the following for template names:
 
-* Use `snake case`_ for filenames and directories (e.g. ``blog_posts.twig``,
-  ``admin/default_theme/blog/index.twig``, etc.);
+* Use `snake case`_ for filenames and directories (e.g. ``blog_posts.html.twig``,
+  ``admin/default_theme/blog/index.html.twig``, etc.);
 * Define two extensions for filenames (e.g. ``index.html.twig`` or
   ``blog_posts.xml.twig``) being the first extension (``html``, ``xml``, etc.)
   the final format that the template will generate.
@@ -163,7 +164,9 @@ in the following order:
 #. ``$foo->getBar()`` (object and *getter* method);
 #. ``$foo->isBar()`` (object and *isser* method);
 #. ``$foo->hasBar()`` (object and *hasser* method);
-#. If none of the above exists, use ``null``.
+#. If none of the above exists, use ``null`` (or throw a ``Twig\Error\RuntimeError``
+   exception if the :ref:`strict_variables <config-twig-strict-variables>`
+   option is enabled).
 
 This allows to evolve your application code without having to change the
 template code (you can start with array variables for the application proof of
@@ -191,6 +194,7 @@ Consider the following routing configuration:
         namespace App\Controller;
 
         // ...
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
@@ -198,7 +202,7 @@ Consider the following routing configuration:
             /**
              * @Route("/", name="blog_index")
              */
-            public function index()
+            public function index(): Response
             {
                 // ...
             }
@@ -206,7 +210,7 @@ Consider the following routing configuration:
             /**
              * @Route("/article/{slug}", name="blog_post")
              */
-            public function show(string $slug)
+            public function show(string $slug): Response
             {
                 // ...
             }
@@ -399,7 +403,7 @@ use the ``render()`` helper::
 
     class ProductController extends AbstractController
     {
-        public function index()
+        public function index(): Response
         {
             // ...
 
@@ -565,12 +569,10 @@ Checking if a Template Exists
 Templates are loaded in the application using a `Twig template loader`_, which
 also provides a method to check for template existence. First, get the loader::
 
-    // in a controller extending from AbstractController
-    $loader = $this->get('twig')->getLoader();
-
-    // in a service using autowiring
     use Twig\Environment;
 
+    // this code assumes that your service uses autowiring to inject dependencies
+    // otherwise, inject the service called 'twig' manually
     public function __construct(Environment $twig)
     {
         $loader = $twig->getLoader();
@@ -739,11 +741,12 @@ First, create the controller that renders a certain number of recent articles::
     // src/Controller/BlogController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
     class BlogController extends AbstractController
     {
-        public function recentArticles($max = 3)
+        public function recentArticles(int $max = 3): Response
         {
             // get the recent articles somehow (e.g. making a database query)
             $articles = ['...', '...', '...'];

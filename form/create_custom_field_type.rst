@@ -38,7 +38,7 @@ By convention they are stored in the ``src/Form/Type/`` directory::
 
     class ShippingType extends AbstractType
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'choices' => [
@@ -49,26 +49,23 @@ By convention they are stored in the ``src/Form/Type/`` directory::
             ]);
         }
 
-        public function getParent()
+        public function getParent(): string
         {
             return ChoiceType::class;
         }
     }
 
-The ``configureOptions()`` method, which is explained later in this article,
-defines the options that can be configured for the form type and sets the
-default value of those options.
-
-The ``getParent()`` method defines which is the form type used as the base of
-this type. In this case, the type extends from ``ChoiceType`` to reuse all of
-the logic and rendering of that field type.
+The methods of the ``FormTypeInterface`` are explained in detail later in
+this article. Here, ``getParent()`` method defines the base type
+(``ChoiceType``) and ``configureOptions()`` overrides some of its options.
+The resulting form type is a choice field with predefined choices.
 
 .. note::
 
     The PHP class extension mechanism and the Symfony form field extension
     mechanism are not the same. The parent type returned in ``getParent()`` is
     what Symfony uses to build and manage the field type. Making the PHP class
-    extend from ``AbstractType`` is only a convenience way of implementing the
+    extend from ``AbstractType`` is only a convenient way of implementing the
     required ``FormTypeInterface``.
 
 Now you can add this form type when :doc:`creating Symfony forms </forms>`::
@@ -82,7 +79,7 @@ Now you can add this form type when :doc:`creating Symfony forms </forms>`::
 
     class OrderType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -144,12 +141,26 @@ These are the most important methods that a form type class can define:
 
 ``configureOptions()``
     It defines the options configurable when using the form type, which are also
-    the options that can be used in ``buildForm()`` and ``buildView()`` methods.
+    the options that can be used in ``buildForm()`` and ``buildView()``
+    methods. Options are inherited from parent types and parent type
+    extensions, but you can create any custom option you need.
 
 ``finishView()``
     When creating a form type that consists of many fields, this method allows
     to modify the "view" of any of those fields. For any other use case, it's
     recommended to use instead the ``buildView()`` method.
+
+``getParent()``
+    If your custom type is based on another type (i.e. they share some
+    functionality) add this method to return the fully-qualified class name
+    of that original type. Do not use PHP inheritance for this.
+    Symfony will call all the form type methods (``buildForm()``,
+    ``buildView()``, etc.) of the parent type and it will call all its type
+    extensions before calling the ones defined in your custom type.
+
+    By default, the ``AbstractType`` class returns the generic
+    :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`
+    type, which is the root parent for all form types in the Form component.
 
 Defining the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -168,7 +179,7 @@ in the postal address. For the moment, all fields are of type ``TextType``::
     {
         // ...
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('addressLine1', TextType::class, [
@@ -209,7 +220,7 @@ correctly rendered in any template::
 
     class OrderType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -254,7 +265,7 @@ to define, validate and process their values::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // this defines the available options and their default values when
             // they are not configured explicitly when using the form type
@@ -287,11 +298,13 @@ to define, validate and process their values::
 Now you can configure these options when using the form type::
 
     // src/Form/Type/OrderType.php
+    namespace App\Form\Type;
+
     // ...
 
     class OrderType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -310,13 +323,15 @@ Now you can configure these options when using the form type::
 The last step is to use these options when building the form::
 
     // src/Form/Type/PostalAddressType.php
+    namespace App\Form\Type;
+
     // ...
 
     class PostalAddressType extends AbstractType
     {
         // ...
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             // ...
 
@@ -447,6 +462,8 @@ defined by the form or be completely independent::
 
 
     // src/Form/Type/PostalAddressType.php
+    namespace App\Form\Type;
+
     use Doctrine\ORM\EntityManagerInterface;
     // ...
 
@@ -461,7 +478,7 @@ defined by the form or be completely independent::
 
         // ...
 
-        public function buildView(FormView $view, FormInterface $form, array $options)
+        public function buildView(FormView $view, FormInterface $form, array $options): void
         {
             // pass the form type option directly to the template
             $view->vars['isExtendedAddress'] = $options['is_extended_address'];

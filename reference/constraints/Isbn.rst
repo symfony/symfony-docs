@@ -37,7 +37,7 @@ on an object that will contain an ISBN.
             /**
              * @Assert\Isbn(
              *     type = "isbn10",
-             *     message = "This value is not  valid."
+             *     message = "This value is not valid."
              * )
              */
             protected $isbn;
@@ -51,7 +51,7 @@ on an object that will contain an ISBN.
                 isbn:
                     - Isbn:
                         type: isbn10
-                        message: This value is not  valid.
+                        message: This value is not valid.
 
     .. code-block:: xml
 
@@ -65,7 +65,7 @@ on an object that will contain an ISBN.
                 <property name="isbn">
                     <constraint name="Isbn">
                         <option name="type">isbn10</option>
-                        <option name="message">This value is not  valid.</option>
+                        <option name="message">This value is not valid.</option>
                     </constraint>
                 </property>
             </class>
@@ -109,7 +109,12 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
@@ -127,7 +132,12 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 isbn13Message
 ~~~~~~~~~~~~~
@@ -143,7 +153,12 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 message
 ~~~~~~~
@@ -159,7 +174,12 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

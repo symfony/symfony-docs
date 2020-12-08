@@ -32,11 +32,19 @@ you to send messages to chat services like Slack or Telegram::
                 // default transport (the first one configured)
                 ->transport('slack');
 
-            $chatter->send($message);
+            $sentMessage = $chatter->send($message);
 
             // ...
         }
     }
+
+The ``send()`` method returns a variable of type
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
+information such as the message ID and the original message contents.
+
+.. versionadded:: 5.2
+
+    The ``SentMessage`` class was introduced in Symfony 5.2.
 
 .. seealso::
 
@@ -46,9 +54,9 @@ you to send messages to chat services like Slack or Telegram::
 Adding Interactions to a Slack Message
 --------------------------------------
 
-With a Slack message, you can use the 
-:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions` to add
-some interactive options called `Block elements`_::
+With a Slack message, you can use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions` class
+to add some interactive options called `Block elements`_::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackActionsBlock;
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
@@ -77,7 +85,7 @@ some interactive options called `Block elements`_::
             ->text('The Symfony Community')
             ->accessory(
                 new SlackImageBlockElement(
-                    'https://example.com/symfony-logo.png',
+                    'https://symfony.com/favicons/apple-touch-icon.png',
                     'Symfony'
                 )
             )
@@ -90,4 +98,89 @@ some interactive options called `Block elements`_::
 
     $chatter->send($chatMessage);
 
+Adding Interactions to a Discord Message
+----------------------------------------
+
+With a Discord message, you can use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\Discord\\DiscordOptions` class
+to add some interactive options called `Embed elements`_::
+
+    use Symfony\Component\Notifier\Bridge\Discord\DiscordOptions;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordEmbed;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFieldEmbedObject;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordFooterEmbedObject;
+    use Symfony\Component\Notifier\Bridge\Discord\Embeds\DiscordMediaEmbedObject;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('');
+
+    // Create Discord Embed
+    $discordOptions = (new DiscordOptions())
+        ->username('connor bot')
+        ->addEmbed((new DiscordEmbed())
+            ->color(2021216)
+            ->title('New song added!')
+            ->thumbnail((new DiscordMediaEmbedObject())
+            ->url('https://i.scdn.co/image/ab67616d0000b2735eb27502aa5cb1b4c9db426b'))
+            ->addField((new DiscordFieldEmbedObject())
+                ->name('Track')
+                ->value('[Common Ground](https://open.spotify.com/track/36TYfGWUhIRlVjM8TxGUK6)')
+                ->inline(true)
+            )
+            ->addField((new DiscordFieldEmbedObject())
+                ->name('Artist')
+                ->value('Alasdair Fraser')
+                ->inline(true)
+            )
+            ->addField((new DiscordFieldEmbedObject())
+                ->name('Album')
+                ->value('Dawn Dance')
+                ->inline(true)
+            )
+            ->footer((new DiscordFooterEmbedObject())
+                ->text('Added ...')
+                ->iconUrl('https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/200px-Spotify_logo_without_text.svg.png')
+            )
+        )
+    ;
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($discordOptions);
+
+    $chatter->send($chatMessage);
+
+Adding Interactions to a Telegram Message
+-----------------------------------------
+
+With a Telegram message, you can use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\Telegram\\TelegramOptions` class
+to add `message options`_::
+
+    use Symfony\Component\Notifier\Bridge\Telegram\Reply\Markup\Button\InlineKeyboardButton;
+    use Symfony\Component\Notifier\Bridge\Telegram\Reply\Markup\InlineKeyboardMarkup;
+    use Symfony\Component\Notifier\Bridge\Telegram\TelegramOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('');
+
+    // Create Telegram options
+    $telegramOptions = (new TelegramOptions())
+        ->chatId('@symfonynotifierdev')
+        ->parseMode('MarkdownV2')
+        ->disableWebPagePreview(true)
+        ->disableNotification(true)
+        ->replyMarkup((new InlineKeyboardMarkup())
+            ->inlineKeyboard([
+                (new InlineKeyboardButton('Visit symfony.com'))
+                    ->url('https://symfony.com/'),
+            ])
+        );
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($telegramOptions);
+
+    $chatter->send($chatMessage);
+
 .. _`Block elements`: https://api.slack.com/reference/block-kit/block-elements
+.. _`Embed elements`: https://discord.com/developers/docs/resources/webhook
+.. _`message options`: https://core.telegram.org/bots/api

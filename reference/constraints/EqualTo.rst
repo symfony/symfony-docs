@@ -10,6 +10,7 @@ To force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualT
     equal. Use :doc:`/reference/constraints/IdenticalTo` to compare with
     ``===``.
 
+
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_

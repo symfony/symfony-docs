@@ -28,7 +28,8 @@ First, enable ``form_login`` under your firewall:
 
             firewalls:
                 main:
-                    anonymous: lazy
+                    anonymous: true
+                    lazy: true
                     form_login:
                         login_path: login
                         check_path: login
@@ -46,8 +47,7 @@ First, enable ``form_login`` under your firewall:
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
-                <firewall name="main">
-                    <anonymous lazy="true"/>
+                <firewall name="main" anonymous="true" lazy="true">
                     <form-login login-path="login" check-path="login"/>
                 </firewall>
             </config>
@@ -59,7 +59,8 @@ First, enable ``form_login`` under your firewall:
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
-                    'anonymous'  => 'lazy',
+                    'anonymous' => true,
+                    'lazy' => true,
                     'form_login' => [
                         'login_path' => 'login',
                         'check_path' => 'login',
@@ -95,6 +96,7 @@ configuration (``login``):
     .. code-block:: php-annotations
 
         // src/Controller/SecurityController.php
+        namespace App\Controller;
 
         // ...
         use Symfony\Component\Routing\Annotation\Route;

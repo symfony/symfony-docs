@@ -6,14 +6,12 @@ public or having public accessor methods (e.g. a public getter).
 If your object needs to be traversed to validate its data, you can use this
 constraint.
 
-+----------------+-------------------------------------------------------------------------------------+
-| Applies to     | :ref:`class <validation-class-target>`                                              |
-+----------------+-------------------------------------------------------------------------------------+
-| Options        | - `payload`_                                                                        |
-|                | - :ref:`traverse <traverse-option>`                                                 |
-+----------------+-------------------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Traverse`                       |
-+----------------+-------------------------------------------------------------------------------------+
+==========  ===================================================================
+Applies to  :ref:`class <validation-class-target>`
+Options     - `payload`_
+            - :ref:`traverse <traverse-option>`
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\Traverse`
+==========  ===================================================================
 
 Basic Usage
 -----------
@@ -28,8 +26,8 @@ that all have constraints on their properties.
         // src/Entity/BookCollection.php
         namespace App\Entity;
 
-        use Doctrine\Collections\ArrayCollection;
-        use Doctrine\Collections\Collection
+        use Doctrine\Common\Collections\ArrayCollection;
+        use Doctrine\Common\Collections\Collection
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -148,7 +146,7 @@ The ``groups`` option is not available for this constraint.
 ``traverse``
 ~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 Instances of ``\Traversable`` are traversed by default, use this option to
 disable validating:

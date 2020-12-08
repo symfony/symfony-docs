@@ -261,7 +261,7 @@ so ``DoctrineTokenProvider`` can store the tokens:
 
     CREATE TABLE `rememberme_token` (
         `series`   char(88)     UNIQUE PRIMARY KEY NOT NULL,
-        `value`    char(88)     NOT NULL,
+        `value`    varchar(88)  NOT NULL,
         `lastUsed` datetime     NOT NULL,
         `class`    varchar(100) NOT NULL,
         `username` varchar(200) NOT NULL
@@ -284,7 +284,7 @@ so ``DoctrineTokenProvider`` can store the tokens:
         .. code-block:: xml
 
             # config/packages/doctrine.xml
-            <doctrine:dbal schema-filter="~^(?!rememberme_token)~" .../>
+            <doctrine:dbal schema-filter="~^(?!rememberme_token)~"/>
 
         .. code-block:: php
 
@@ -298,7 +298,7 @@ so ``DoctrineTokenProvider`` can store the tokens:
             ]);
 
 Finally, set the ``token_provider`` option of the ``remember_me`` config to the
-service you just created:
+service you created before:
 
 .. configuration-block::
 

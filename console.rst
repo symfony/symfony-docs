@@ -45,7 +45,7 @@ want a command to create a user::
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            // ... put here the code to run in your command
+            // ... put here the code to create the user
 
             // this method must return an integer number with the "exit status code"
             // of the command. You can also use these constants to make code more readable
@@ -127,7 +127,7 @@ this is already done for you, thanks to :ref:`autoconfiguration <services-autoco
 Executing the Command
 ---------------------
 
-After configuring and registering the command, you can execute it in the terminal:
+After configuring and registering the command, you can run it in the terminal:
 
 .. code-block:: terminal
 
@@ -187,16 +187,24 @@ called "output sections". Create one or more of these sections when you need to
 clear and overwrite the output information.
 
 Sections are created with the
-:method:`Symfony\\Component\\Console\\Output\\ConsoleOutput::section` method,
-which returns an instance of
+:method:`ConsoleOutput::section() <Symfony\\Component\\Console\\Output\\ConsoleOutput::section>`
+method, which returns an instance of
 :class:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput`::
+
+    // ...
+    use Symfony\Component\Console\Output\ConsoleOutputInterface;
 
     class MyCommand extends Command
     {
         protected function execute(InputInterface $input, OutputInterface $output)
         {
+            if (!$output instanceof ConsoleOutputInterface) {
+                throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
+            }
+
             $section1 = $output->section();
             $section2 = $output->section();
+
             $section1->writeln('Hello');
             $section2->writeln('World!');
             // Output displays "Hello\nWorld!\n"
@@ -375,6 +383,14 @@ console::
             // ...
         }
     }
+
+If you are using a :doc:`single-command application </components/console/single_command_tool>`,
+call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``.
+
+.. versionadded:: 5.2
+
+    The ``setAutoExit()`` method for single-command applications was introduced
+    in Symfony 5.2.
 
 .. tip::
 

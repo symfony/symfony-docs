@@ -126,21 +126,29 @@ While developing locally, you'll usually store these in ``.env`` and ``.env.loca
 
 1. Create "real" environment variables. How you set environment variables, depends
    on your setup: they can be set at the command line, in your Nginx configuration,
-   or via other methods provided by your hosting service.
+   or via other methods provided by your hosting service;
 
-2. Or, create a ``.env.local`` file just like your local development (see note below)
+2. Or, create a ``.env.local`` file like your local development.
 
 There is no significant advantage to either of the two options: use whatever is
 most natural in your hosting environment.
 
-.. note::
+.. tip::
 
-    If you use the ``.env.*`` files on production, you may need to move your
-    ``symfony/dotenv`` dependency from ``require-dev`` to ``require`` in ``composer.json``:
+    You might not want your application to process the ``.env.*`` files on
+    every request. You can generate an optimized ``.env.local.php`` which
+    overrides all other configuration files:
 
     .. code-block:: terminal
 
-        $ composer require symfony/dotenv
+        $ composer dump-env prod
+
+    The generated file will contain all the configuration stored in ``.env``. If you
+    want to rely only on environment variables, generate one without any values using:
+
+    .. code-block:: terminal
+
+        $ composer dump-env prod --empty
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -187,6 +195,8 @@ setup:
 * Add/edit CRON jobs
 * :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
 * Pushing assets to a CDN
+* On a shared hosting platform using the Apache web server, you may need to
+  install the :ref:`symfony/apache-pack package <web-server-apache-mod-php>`
 * ...
 
 Application Lifecycle: Continuous Integration, QA, etc.

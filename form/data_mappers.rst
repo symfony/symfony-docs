@@ -98,7 +98,7 @@ in your form type::
         /**
          * @param Color|null $viewData
          */
-        public function mapDataToForms($viewData, $forms)
+        public function mapDataToForms($viewData, iterable $forms): void
         {
             // there is no data yet, so nothing to prepopulate
             if (null === $viewData) {
@@ -119,7 +119,7 @@ in your form type::
             $forms['blue']->setData($viewData->getBlue());
         }
 
-        public function mapFormsToData($forms, &$viewData)
+        public function mapFormsToData(iterable $forms, &$viewData): void
         {
             /** @var FormInterface[] $forms */
             $forms = iterator_to_array($forms);
@@ -158,7 +158,7 @@ method::
 
     final class ColorType extends AbstractType implements DataMapperInterface
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('red', IntegerType::class, [
@@ -177,7 +177,7 @@ method::
             ;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // when creating a new color, the initial data should be null
             $resolver->setDefault('empty_data', null);
@@ -188,6 +188,45 @@ method::
 
 Cool! When using the ``ColorType`` form, the custom data mapper methods will
 create a new ``Color`` object now.
+
+Mapping Form Fields Using Callbacks
+-----------------------------------
+
+Conveniently, you can also map data from and into a form field by using the
+``getter`` and ``setter`` options. For example, suppose you have a form with some
+fields and only one of them needs to be mapped in some special way or you only
+need to change how it's written into the underlying object. In that case, register
+a PHP callable that is able to write or read to/from that specific object::
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        // ...
+
+        $builder->add('state', ChoiceType::class, [
+            'choices' => [
+                'active' => true,
+                'paused' => false,
+            ],
+            'getter' => function (Task $task, FormInterface $form): bool {
+                return !$task->isCancelled() && !$task->isPaused();
+            },
+            'setter' => function (Task &$task, bool $state, FormInterface $form): void {
+                if ($state) {
+                    $task->activate();
+                } else {
+                    $task->pause();
+                }
+            },
+        ]);
+    }
+
+If available, these options have priority over the property path accessor and
+the default data mapper will still use the :doc:`PropertyAccess component </components/property_access>`
+for the other form fields.
+
+.. versionadded:: 5.2
+
+    The ``getter`` and ``setter`` options were introduced in Symfony 5.2.
 
 .. caution::
 

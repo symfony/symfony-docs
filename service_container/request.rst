@@ -11,6 +11,7 @@ add it as an argument to the methods that need the request or inject the
 :method:`Symfony\\Component\\HttpFoundation\\RequestStack::getCurrentRequest`
 method::
 
+    // src/Newsletter/NewsletterManager.php
     namespace App\Newsletter;
 
     use Symfony\Component\HttpFoundation\RequestStack;

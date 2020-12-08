@@ -12,7 +12,7 @@ to an array callback::
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => [
@@ -23,16 +23,16 @@ to an array callback::
     }
 
 This will call the static method ``determineValidationGroups()`` on the
-``Client`` class after the form is submitted, but before validation is executed.
-The Form object is passed as an argument to that method (see next example).
-You can also define whole logic inline by using a ``Closure``::
+``Client`` class after the form is submitted, but before validation is
+invoked. The Form object is passed as an argument to that method (see next
+example).  You can also define whole logic inline by using a ``Closure``::
 
     use App\Entity\Client;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -56,7 +56,7 @@ of the entity as well you have to adjust the option as follows::
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {

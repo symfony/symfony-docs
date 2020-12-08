@@ -102,6 +102,21 @@ with a non-zero code)::
     :method:`Symfony\\Component\\Process\\Process::getLastOutputTime` method.
     This method returns ``null`` if the process wasn't started!
 
+Configuring Process Options
+---------------------------
+
+.. versionadded:: 5.2
+
+    The feature to configure process options was introduced in Symfony 5.2.
+
+Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
+You can configure the options passed to the ``other_options`` argument of
+``proc_open()`` using the ``setOptions()`` method::
+
+    $process = new Process(['...', '...', '...']);
+    // this option allows a subprocess to continue running after the main script exited
+    $process->setOptions(['create_new_console' => true]);
+
 Using Features From the OS Shell
 --------------------------------
 
@@ -350,7 +365,7 @@ Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
 two arguments: a timeout and a signal. Once the timeout is reached, the signal
 is sent to the running process. The default signal sent to a process is ``SIGKILL``.
-Please read the :ref:`signal documentation below<reference-process-signal>`
+Please read the :ref:`signal documentation below <reference-process-signal>`
 to find out more about signal handling in the Process component::
 
     $process = new Process(['ls', '-lsa']);
@@ -377,10 +392,9 @@ instead::
 Using a Prepared Command Line
 -----------------------------
 
-You can run the process by using a a prepared command line using the
-double bracket notation. You can use a placeholder in order to have a
-process that can only be changed with the values and without changing
-the PHP code::
+You can run a process by using a prepared command line with double quote
+variable notation. This allows you to use placeholders so that only the
+parameterized values can be changed, but not the rest of the script::
 
     use Symfony\Component\Process\Process;
 

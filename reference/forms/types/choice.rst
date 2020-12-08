@@ -9,52 +9,57 @@ It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
 
 To use this field, you must specify *either* ``choices`` or ``choice_loader`` option.
 
-+-------------+------------------------------------------------------------------------------+
-| Rendered as | can be various tags (see below)                                              |
-+-------------+------------------------------------------------------------------------------+
-| Options     | - `choices`_                                                                 |
-|             | - `choice_attr`_                                                             |
-|             | - `choice_filter`_                                                           |
-|             | - `choice_label`_                                                            |
-|             | - `choice_loader`_                                                           |
-|             | - `choice_name`_                                                             |
-|             | - `choice_translation_domain`_                                               |
-|             | - `choice_value`_                                                            |
-|             | - `expanded`_                                                                |
-|             | - `group_by`_                                                                |
-|             | - `multiple`_                                                                |
-|             | - `placeholder`_                                                             |
-|             | - `preferred_choices`_                                                       |
-+-------------+------------------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                                |
-| options     | - `empty_data`_                                                              |
-|             | - `error_bubbling`_                                                          |
-|             | - `trim`_                                                                    |
-+-------------+------------------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                                    |
-| options     | - `by_reference`_                                                            |
-|             | - `data`_                                                                    |
-|             | - `disabled`_                                                                |
-|             | - `error_mapping`_                                                           |
-|             | - `help`_                                                                    |
-|             | - `help_attr`_                                                               |
-|             | - `help_html`_                                                               |
-|             | - `inherit_data`_                                                            |
-|             | - `label`_                                                                   |
-|             | - `label_attr`_                                                              |
-|             | - `label_format`_                                                            |
-|             | - `mapped`_                                                                  |
-|             | - `required`_                                                                |
-|             | - `row_attr`_                                                                |
-|             | - `translation_domain`_                                                      |
-|             | - `label_translation_parameters`_                                            |
-|             | - `attr_translation_parameters`_                                             |
-|             | - `help_translation_parameters`_                                             |
-+-------------+------------------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                                |
-+-------------+------------------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`         |
-+-------------+------------------------------------------------------------------------------+
++---------------------------+----------------------------------------------------------------------+
+| Rendered as               | can be various tags (see below)                                      |
++---------------------------+----------------------------------------------------------------------+
+| Options                   | - `choices`_                                                         |
+|                           | - `choice_attr`_                                                     |
+|                           | - `choice_filter`_                                                   |
+|                           | - `choice_label`_                                                    |
+|                           | - `choice_loader`_                                                   |
+|                           | - `choice_name`_                                                     |
+|                           | - `choice_translation_domain`_                                       |
+|                           | - `choice_value`_                                                    |
+|                           | - `expanded`_                                                        |
+|                           | - `group_by`_                                                        |
+|                           | - `multiple`_                                                        |
+|                           | - `placeholder`_                                                     |
+|                           | - `preferred_choices`_                                               |
++---------------------------+----------------------------------------------------------------------+
+| Overridden options        | - `compound`_                                                        |
+|                           | - `empty_data`_                                                      |
+|                           | - `error_bubbling`_                                                  |
+|                           | - `trim`_                                                            |
+|                           | - `invalid_message`_                                                 |
++---------------------------+----------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                            |
+|                           | - `by_reference`_                                                    |
+|                           | - `data`_                                                            |
+|                           | - `disabled`_                                                        |
+|                           | - `error_mapping`_                                                   |
+|                           | - `help`_                                                            |
+|                           | - `help_attr`_                                                       |
+|                           | - `help_html`_                                                       |
+|                           | - `inherit_data`_                                                    |
+|                           | - `label`_                                                           |
+|                           | - `label_attr`_                                                      |
+|                           | - `label_format`_                                                    |
+|                           | - `mapped`_                                                          |
+|                           | - `required`_                                                        |
+|                           | - `row_attr`_                                                        |
+|                           | - `translation_domain`_                                              |
+|                           | - `label_translation_parameters`_                                    |
+|                           | - `attr_translation_parameters`_                                     |
+|                           | - `help_translation_parameters`_                                     |
++---------------------------+----------------------------------------------------------------------+
+| Default invalid message   | The selected choice is invalid.                                      |
++---------------------------+----------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
++---------------------------+----------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
++---------------------------+----------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType` |
++---------------------------+----------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -225,7 +230,7 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
-.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain_enabled.rst.inc
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 
@@ -271,6 +276,8 @@ Set that error on this field must be attached to the field instead of
 the parent field (the form in most cases).
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------

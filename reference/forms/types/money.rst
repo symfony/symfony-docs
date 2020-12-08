@@ -11,40 +11,44 @@ This field type allows you to specify a currency, whose symbol is rendered
 next to the text field. There are also several other options for customizing
 how the input and output of the data is handled.
 
-+-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``text`` field                                            |
-+-------------+---------------------------------------------------------------------+
-| Options     | - `currency`_                                                       |
-|             | - `divisor`_                                                        |
-|             | - `grouping`_                                                       |
-|             | - `rounding_mode`_                                                  |
-|             | - `scale`_                                                          |
-+-------------+---------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                       |
-| options     |                                                                     |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `data`_                                                           |
-|             | - `disabled`_                                                       |
-|             | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `invalid_message`_                                                |
-|             | - `invalid_message_parameters`_                                     |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-+-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
-+-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
-+-------------+---------------------------------------------------------------------+
++---------------------------+---------------------------------------------------------------------+
+| Rendered as               | ``input`` ``text`` field                                            |
++---------------------------+---------------------------------------------------------------------+
+| Options                   | - `currency`_                                                       |
+|                           | - `divisor`_                                                        |
+|                           | - `grouping`_                                                       |
+|                           | - `html5`_                                                          |
+|                           | - `rounding_mode`_                                                  |
+|                           | - `scale`_                                                          |
++---------------------------+---------------------------------------------------------------------+
+| Overridden options        | - `compound`_                                                       |
+|                           | - `invalid_message`_                                                |
++---------------------------+---------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                           |
+|                           | - `data`_                                                           |
+|                           | - `disabled`_                                                       |
+|                           | - `empty_data`_                                                     |
+|                           | - `error_bubbling`_                                                 |
+|                           | - `error_mapping`_                                                  |
+|                           | - `help`_                                                           |
+|                           | - `help_attr`_                                                      |
+|                           | - `help_html`_                                                      |
+|                           | - `invalid_message_parameters`_                                     |
+|                           | - `label`_                                                          |
+|                           | - `label_attr`_                                                     |
+|                           | - `label_format`_                                                   |
+|                           | - `mapped`_                                                         |
+|                           | - `required`_                                                       |
+|                           | - `row_attr`_                                                       |
++---------------------------+---------------------------------------------------------------------+
+| Default invalid message   | Please enter a valid money amount.                                  |
++---------------------------+---------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                 |
++---------------------------+---------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                       |
++---------------------------+---------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
++---------------------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -90,6 +94,22 @@ be set back on your object.
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
+html5
+~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 5.2
+
+    This option was introduced in Symfony 5.2.
+
+If set to ``true``, the HTML input will be rendered as a native HTML5
+``<input type="number">`` element.
+
+.. caution::
+
+    As HTML5 number format is normalized, it is incompatible with ``grouping`` option.
+
 scale
 ~~~~~
 
@@ -104,6 +124,8 @@ Overridden Options
 ------------------
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------
@@ -133,8 +155,6 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/help_attr.rst.inc
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 

@@ -1,9 +1,9 @@
-Prevent Multiple Executions of a Console Command
-================================================
+Prevent Running the Same Console Command Multiple Times
+=======================================================
 
-A simple but effective way to prevent multiple executions of the same command in
-a single server is to use `locks`_. The :doc:`Lock component </components/lock>`
-provides multiple classes to create locks based on the filesystem (:ref:`FlockStore <lock-store-flock>`),
+You can use `locks`_ to prevent the same command from running multiple times on
+the same server. The :doc:`Lock component </components/lock>` provides multiple
+classes to create locks based on the filesystem (:ref:`FlockStore <lock-store-flock>`),
 shared memory (:ref:`SemaphoreStore <lock-store-semaphore>`) and even databases
 and Redis servers.
 
@@ -38,6 +38,8 @@ that adds two convenient methods to lock and release commands::
             // if not released explicitly, Symfony releases the lock
             // automatically when the execution of the command ends
             $this->release();
+
+            return Command:SUCCESS;
         }
     }
 

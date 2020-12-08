@@ -110,14 +110,19 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+.. versionadded:: 5.2
+
+    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 ``requireTld``
 ~~~~~~~~~~~~~~
 
-**type**: ``bool`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 By default, hostnames are considered valid only when they are fully qualified
 and include their TLDs (top-level domain names). For instance, ``example.com``

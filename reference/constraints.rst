@@ -21,6 +21,7 @@ Validation Constraints Reference
    constraints/Hostname
    constraints/Ip
    constraints/Uuid
+   constraints/Ulid
    constraints/Json
 
    constraints/EqualTo
@@ -63,6 +64,7 @@ Validation Constraints Reference
    constraints/Bic
    constraints/Isbn
    constraints/Issn
+   constraints/Isin
 
    constraints/AtLeastOneOf
    constraints/Sequentially

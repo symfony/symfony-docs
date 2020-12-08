@@ -16,8 +16,8 @@ request to generate the response.
 
 This single kernel approach is a convenient default, but Symfony applications
 can define any number of kernels. Whereas
-:ref:`environments <configuration-environments>` execute the same application
-with different configurations, kernels can execute different parts of the same
+:ref:`environments <configuration-environments>` run the same application with
+different configurations, kernels can run different parts of the same
 application.
 
 These are some of the common use cases for creating multiple kernels:
@@ -88,31 +88,50 @@ files so they don't collide with the files from ``src/Kernel.php``::
 
     class ApiKernel extends Kernel
     {
-        // ...
+        use MicroKernelTrait;
 
         public function registerBundles()
         {
-            // load only the bundles strictly needed for the API...
+            // load only the bundles strictly needed for the API
+            $contents = require $this->getProjectDir().'/config/api_bundles.php';
+            foreach ($contents as $class => $envs) {
+                if ($envs[$this->environment] ?? $envs['all'] ?? false) {
+                    yield new $class();
+                }
+            }
         }
 
-        public function getCacheDir()
+        public function getProjectDir(): string
         {
-            return dirname(__DIR__).'/var/cache/api/'.$this->getEnvironment();
+            return \dirname(__DIR__);
         }
 
-        public function getLogDir()
+        public function getCacheDir(): string
         {
-            return dirname(__DIR__).'/var/log/api';
+            return $this->getProjectDir().'/var/cache/api/'.$this->getEnvironment();
+        }
+
+        public function getLogDir(): string
+        {
+            return $this->getProjectDir().'/var/log/api';
         }
 
         public function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
         {
-            // load only the config files strictly needed for the API
-            $confDir = $this->getProjectDir().'/config';
-            $loader->load($confDir.'/api/*'.self::CONFIG_EXTS, 'glob');
-            if (is_dir($confDir.'/api/'.$this->environment)) {
-                $loader->load($confDir.'/api/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
-            }
+            $container->addResource(new FileResource($this->getProjectDir().'/config/api_bundles.php'));
+            $container->setParameter('container.dumper.inline_factories', true);
+            $confDir = $this->getProjectDir().'/config/api';
+
+            $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
+            $loader->load($confDir.'/{packages}/'.$this->environment.'/*'.self::CONFIG_EXTS, 'glob');
+            $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
+            $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+        }
+
+        protected function configureRoutes(RouteCollectionBuilder $routes): void
+        {
+            $confDir = $this->getProjectDir().'/config/api';
+            // ... load only the config routes strictly needed for the API
         }
     }
 
@@ -123,7 +142,7 @@ Finally, define the configuration files that the new ``ApiKernel`` will load.
 According to the above code, this config will live in one or multiple files
 stored in ``config/api/`` and ``config/api/ENVIRONMENT_NAME/`` directories.
 
-The new configuration files can be created from scratch when you load just a few
+The new configuration files can be created from scratch when you load only a few
 bundles, because it will be small. Otherwise, duplicate the existing
 config files in ``config/packages/`` or better, import them and override the
 needed options.
@@ -133,13 +152,12 @@ Executing Commands with a Different Kernel
 
 The ``bin/console`` script used to run Symfony commands always uses the default
 ``Kernel`` class to build the application and load the commands. If you need
-to execute console commands using the new kernel, duplicate the ``bin/console``
+to run console commands using the new kernel, duplicate the ``bin/console``
 script and rename it (e.g. ``bin/api``).
 
 Then, replace the ``Kernel`` instance by your own kernel instance
-(e.g. ``ApiKernel``) and now you can execute commands using the new kernel
-(e.g. ``php bin/api cache:clear``) Now you can use execute commands using the
-new kernel.
+(e.g. ``ApiKernel``). Now you can run commands using the new kernel
+(e.g. ``php bin/api cache:clear``).
 
 .. note::
 

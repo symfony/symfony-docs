@@ -27,12 +27,14 @@ on each request with their API token. Your job is to read this and find the asso
 user (if any).
 
 First, make sure you've followed the main :doc:`Security Guide </security>` to
-create your ``User`` class. Then, to keep things simple, add an ``apiToken`` property
-directly to your ``User`` class (the ``make:entity`` command is a good way to do this):
+create your ``User`` class. Then add an ``apiToken`` property directly to
+your ``User`` class (the ``make:entity`` command is a good way to do this):
 
 .. code-block:: diff
 
     // src/Entity/User.php
+    namespace App\Entity;
+
     // ...
 
     class User implements UserInterface
@@ -47,12 +49,69 @@ directly to your ``User`` class (the ``make:entity`` command is a good way to do
         // the getter and setter methods
     }
 
-Don't forget to generate and execute the migration:
+Don't forget to generate and run the migration:
 
 .. code-block:: terminal
 
     $ php bin/console make:migration
     $ php bin/console doctrine:migrations:migrate
+
+Next, configure your "user provider" to use this new ``apiToken`` property:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            providers:
+                your_db_provider:
+                    entity:
+                        class: App\Entity\User
+                        property: apiToken
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="your_db_provider">
+                    <entity class="App\Entity\User" property="apiToken"/>
+                </provider>
+
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+
+            'providers' => [
+                'your_db_provider' => [
+                    'entity' => [
+                        'class' => 'App\Entity\User',
+                        'property' => 'apiToken',
+                    ],
+                ],
+            ],
+
+            // ...
+        ]);
 
 Step 2) Create the Authenticator Class
 --------------------------------------
@@ -113,10 +172,10 @@ This requires you to implement several methods::
                 return null;
             }
 
-            // if a User is returned, checkCredentials() is called
-            return $this->em->getRepository(User::class)
-                ->findOneBy(['apiToken' => $credentials])
-            ;
+            // The "username" in this case is the apiToken, see the key `property`
+            // of `your_db_provider` in `security.yaml`.
+            // If this returns a user, checkCredentials() is called next:
+            return $userProvider->loadUserByUsername($credentials);
         }
 
         public function checkCredentials($credentials, UserInterface $user)
@@ -166,7 +225,7 @@ This requires you to implement several methods::
         }
     }
 
-Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
+Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods <guard-auth-methods>`.
 
 Step 3) Configure the Authenticator
 -----------------------------------
@@ -189,7 +248,8 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
                 # ...
 
                 main:
-                    anonymous: lazy
+                    anonymous: true
+                    lazy: true
                     logout: ~
 
                     guard:
@@ -217,8 +277,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
 
                 <!-- if you want, disable storing the user in the session
                     add 'stateless="true"' to the firewall -->
-                <firewall name="main" pattern="^/">
-                    <anonymous lazy="true"/>
+                <firewall name="main" pattern="^/" anonymous="true" lazy="true">
                     <logout/>
 
                     <guard>
@@ -241,7 +300,8 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
             'firewalls' => [
                 'main'       => [
                     'pattern'        => '^/',
-                    'anonymous'      => 'lazy',
+                    'anonymous'      => true,
+                    'lazy'           => true,
                     'logout'         => true,
                     'guard'          => [
                         'authenticators'  => [
@@ -361,6 +421,8 @@ You can throw this from ``getCredentials()``, ``getUser()`` or ``checkCredential
 to cause a failure::
 
     // src/Security/TokenAuthenticator.php
+    namespace App\Security;
+
     // ...
 
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -403,8 +465,9 @@ completes registration. To do that, use your authenticator and a service called
 ``GuardAuthenticatorHandler``::
 
     // src/Controller/RegistrationController.php
+    namespace App\Controller;
+    
     // ...
-
     use App\Security\LoginFormAuthenticator;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
@@ -497,7 +560,7 @@ Frequently Asked Questions
 --------------------------
 
 **Can I have Multiple Authenticators?**
-    Yes! But when you do, you'll need to choose just *one* authenticator to be your
+    Yes! But when you do, you'll need to choose only *one* authenticator to be your
     "entry_point". This means you'll need to choose *which* authenticator's ``start()``
     method should be called when an anonymous user tries to access a protected resource.
     For more details, see :doc:`/security/multiple_guard_authenticators`.
@@ -508,12 +571,12 @@ Frequently Asked Questions
     collide with other ways to authenticate.
 
 **Can I use this with FOSUserBundle?**
-    Yes! Actually, FOSUserBundle doesn't handle security: it simply gives you a
+    Yes! Actually, FOSUserBundle doesn't handle security: it only gives you a
     ``User`` object and some routes and controllers to help with login, registration,
     forgot password, etc. When you use FOSUserBundle, you typically use ``form_login``
     to actually authenticate the user. You can continue doing that (see previous
     question) or use the ``User`` object from FOSUserBundle and create your own
-    authenticator(s) (just like in this article).
+    authenticator(s) (like in this article).
 
 .. _`Social Authentication`: https://github.com/knpuniversity/oauth2-client-bundle#authenticating-with-guard
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

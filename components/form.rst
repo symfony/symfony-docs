@@ -383,7 +383,7 @@ Creating a simple Form
 
     If you're using the Symfony Framework, then the form factory is available
     automatically as a service called ``form.factory``. Also, the default
-    base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller::createFormBuilder`
+    base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder()``
     on it.
 

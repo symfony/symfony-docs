@@ -1,21 +1,21 @@
 .. index::
    single: Validation; Custom constraints
 
-How to Create a custom Validation Constraint
+How to Create a Custom Validation Constraint
 ============================================
 
 You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`.
-As an example you're going to create a simple validator that checks if a string
-contains only alphanumeric characters.
+:class:`Symfony\\Component\\Validator\\Constraint`. As an example you're
+going to create a basic validator that checks if a string contains only
+alphanumeric characters.
 
 Creating the Constraint Class
 -----------------------------
 
 First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
 
-    // src/Validator/Constraints/ContainsAlphanumeric.php
-    namespace App\Validator\Constraints;
+    // src/Validator/ContainsAlphanumeric.php
+    namespace App\Validator;
 
     use Symfony\Component\Validator\Constraint;
 
@@ -40,22 +40,22 @@ Creating the Validator itself
 As you can see, a constraint class is fairly minimal. The actual validation is
 performed by another "constraint validator" class. The constraint validator
 class is specified by the constraint's ``validatedBy()`` method, which
-includes some simple default logic::
+has this default logic::
 
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
     {
-        return \get_class($this).'Validator';
+        return static::class.'Validator';
     }
 
 In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
 Symfony will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method ``validate()``::
+The validator class only has one required method ``validate()``::
 
-    // src/Validator/Constraints/ContainsAlphanumericValidator.php
-    namespace App\Validator\Constraints;
+    // src/Validator/ContainsAlphanumericValidator.php
+    namespace App\Validator;
 
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
@@ -71,7 +71,7 @@ The validator class is also simple, and only has one required method ``validate(
             }
 
             // custom constraints should ignore null and empty values to allow
-            // other constraints (NotBlank, NotNull, etc.) take care of that
+            // other constraints (NotBlank, NotNull, etc.) to take care of that
             if (null === $value || '' === $value) {
                 return;
             }
@@ -103,14 +103,16 @@ The ``addViolation()`` method call finally adds the violation to the context.
 Using the new Validator
 -----------------------
 
-You can use custom validators just as the ones provided by Symfony itself:
+You can use custom validators like the ones provided by Symfony itself:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
         // src/Entity/AcmeEntity.php
-        use App\Validator\Constraints as AcmeAssert;
+        namespace App\Entity;
+
+        use App\Validator as AcmeAssert;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class AcmeEntity
@@ -133,7 +135,7 @@ You can use custom validators just as the ones provided by Symfony itself:
             properties:
                 name:
                     - NotBlank: ~
-                    - App\Validator\Constraints\ContainsAlphanumeric: ~
+                    - App\Validator\ContainsAlphanumeric: ~
 
     .. code-block:: xml
 
@@ -146,7 +148,7 @@ You can use custom validators just as the ones provided by Symfony itself:
             <class name="App\Entity\AcmeEntity">
                 <property name="name">
                     <constraint name="NotBlank"/>
-                    <constraint name="App\Validator\Constraints\ContainsAlphanumeric"/>
+                    <constraint name="App\Validator\ContainsAlphanumeric"/>
                 </property>
             </class>
         </constraint-mapping>
@@ -154,7 +156,9 @@ You can use custom validators just as the ones provided by Symfony itself:
     .. code-block:: php
 
         // src/Entity/AcmeEntity.php
-        use App\Validator\Constraints\ContainsAlphanumeric;
+        namespace App\Entity;
+
+        use App\Validator\ContainsAlphanumeric;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
@@ -185,7 +189,7 @@ Create a Reusable Set of Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In case you need to apply some common set of constraints in different places
-consistently across your application, you can extend the :doc:`Compound constraint</reference/constraints/Compound>`.
+consistently across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
 
 .. versionadded:: 5.1
 
@@ -242,19 +246,21 @@ not to the property:
         # config/validator/validation.yaml
         App\Entity\AcmeEntity:
             constraints:
-                - App\Validator\Constraints\ProtocolClass: ~
+                - App\Validator\ProtocolClass: ~
 
     .. code-block:: xml
 
         <!-- config/validator/validation.xml -->
         <class name="App\Entity\AcmeEntity">
-            <constraint name="App\Validator\Constraints\ProtocolClass"/>
+            <constraint name="App\Validator\ProtocolClass"/>
         </class>
 
     .. code-block:: php
 
         // src/Entity/AcmeEntity.php
-        use App\Validator\Constraints\ProtocolClass;
+        namespace App\Entity;
+
+        use App\Validator\ProtocolClass;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class AcmeEntity

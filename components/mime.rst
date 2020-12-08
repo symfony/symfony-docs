@@ -57,11 +57,7 @@ methods to compose the entire email message::
     ;
 
 This only purpose of this component is to create the email messages. Use the
-:doc:`Mailer component </components/mailer>` to actually send them. In Symfony
-applications, it's easier to use the :doc:`Mailer integration </mailer>`.
-
-Most of the details about how to create Email objects, including Twig integration,
-can be found in the :doc:`Mailer documentation </mailer>`.
+:doc:`Mailer component </mailer>` to actually send them.
 
 Twig Integration
 ----------------
@@ -103,12 +99,12 @@ extension:
 
 .. code-block:: terminal
 
-    $ composer require twig/cssinliner-extension
+    $ composer require twig/cssinliner-extra
 
 Now, enable the extension::
 
     // ...
-    use Twig\CssInliner\CssInlinerExtension;
+    use Twig\Extra\CssInliner\CssInlinerExtension;
 
     $loader = new FilesystemLoader(__DIR__.'/templates');
     $twig = new Environment($loader);

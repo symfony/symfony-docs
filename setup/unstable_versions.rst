@@ -11,14 +11,14 @@ Creating a New Project Based on an Unstable Symfony Version
 Suppose that the Symfony 4.0 version hasn't been released yet and you want to create
 a new project to test its features. First, `install the Composer package manager`_.
 Then, open a command console, enter your project's directory and
-execute the following command:
+run the following command:
 
 .. code-block:: terminal
 
     # Download the absolute latest commit
     $ composer create-project symfony/skeleton my_project -s dev
 
-Once the command finishes its execution, you'll have a new Symfony project created
+Once the command finishes, you'll have a new Symfony project created
 in the ``my_project/`` directory.
 
 Upgrading your Project to an Unstable Symfony Version

@@ -79,9 +79,9 @@ is the main config file for both Webpack and Webpack Encore:
          * Each entry will result in one JavaScript file (e.g. app.js)
          * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
          */
-        .addEntry('app', './assets/js/app.js')
-        //.addEntry('page1', './assets/js/page1.js')
-        //.addEntry('page2', './assets/js/page2.js')
+        .addEntry('app', './assets/app.js')
+        //.addEntry('page1', './assets/page1.js')
+        //.addEntry('page2', './assets/page2.js')
 
         // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
         .splitEntryChunks()
@@ -124,17 +124,17 @@ is the main config file for both Webpack and Webpack Encore:
 
         // uncomment if you use API Platform Admin (composer require api-admin)
         //.enableReactPreset()
-        //.addEntry('admin', './assets/js/admin.js')
+        //.addEntry('admin', './assets/admin.js')
     ;
 
     module.exports = Encore.getWebpackConfig();
 
-Next, open the new ``assets/js/app.js`` file which contains some JavaScript code
+Next, open the new ``assets/app.js`` file which contains some JavaScript code
 *and* imports some CSS:
 
 .. code-block:: javascript
 
-    // assets/js/app.js
+    // assets/app.js
     /*
      * Welcome to your app's main JavaScript file!
      *
@@ -143,18 +143,18 @@ Next, open the new ``assets/js/app.js`` file which contains some JavaScript code
      */
 
     // any CSS you import will output into a single css file (app.css in this case)
-    import '../css/app.css';
+    import './styles/app.css';
 
     // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
     // import $ from 'jquery';
 
-    console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+    console.log('Hello Webpack Encore! Edit me in assets/app.js');
 
-And the new ``assets/css/app.css`` file:
+And the new ``assets/styles/app.css`` file:
 
 .. code-block:: css
 
-    /* assets/css/app.css */
+    /* assets/styles/app.css */
     body {
         background-color: lightgray;
     }

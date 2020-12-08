@@ -139,7 +139,59 @@ optional features, like :doc:`remember me </security/remember_me>` and
 :doc:`impersonation </security/impersonating_user>`.
 
 Fortunately, the ``make:user`` command already configured one for you in your
-``security.yaml`` file under the ``providers`` key.
+``security.yaml`` file under the ``providers`` key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            providers:
+                # used to reload user from session & other features (e.g. switch_user)
+                app_user_provider:
+                    entity:
+                        class: App\Entity\User
+                        property: email
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- used to reload user from session & other features (e.g. switch-user) -->
+                <provider name="app_user_provider">
+                    <entity class="App\Entity\User" property="email"/>
+                </provider>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Entity\User;
+
+        $container->loadFromExtension('security', [
+            // ...
+
+            'providers' => [
+                // used to reload user from session & other features (e.g. switch_user)
+                'app_user_provider' => [
+                    'entity' => [
+                        'class' => User::class,
+                        'property' => 'email',
+                    ],
+                ],
+            ],
+        ]);
 
 If your ``User`` class is an entity, you don't need to do anything else. But if
 your class is *not* an entity, then ``make:user`` will also have generated a
@@ -341,7 +393,7 @@ A "firewall" is your authentication system: the configuration below it defines
 
 Only one firewall is active on each request: Symfony uses the ``pattern`` key
 to find the first match (you can also :doc:`match by host or other things </security/firewall_restriction>`).
-The ``dev`` firewall is really a fake firewall: it just makes sure that you don't
+The ``dev`` firewall is really a fake firewall: it makes sure that you don't
 accidentally block Symfony's dev tools - which live under URLs like ``/_profiler``
 and ``/_wdt``.
 
@@ -659,7 +711,7 @@ You can deny access from inside a controller::
 
 That's it! If access is not granted, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-is thrown and no more code in your controller is executed. Then, one of two things
+is thrown and no more code in your controller is called. Then, one of two things
 will happen:
 
 1) If the user isn't logged in yet, they will be asked to log in (e.g. redirected
@@ -735,8 +787,8 @@ Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 
 If you *only* want to check if a user is logged in (you don't care about roles),
 you have two options. First, if you've given *every* user ``ROLE_USER``, you can
-just check for that role. Otherwise, you can use a special "attribute" in place
-of a role::
+check for that role. Otherwise, you can use a special "attribute" in place of a
+role::
 
     // ...
 

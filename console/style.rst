@@ -325,6 +325,27 @@ Result Methods
             'Consectetur adipiscing elit',
         ]);
 
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::info`
+    It's similar to the ``success()`` method (the given string or array of strings
+    are displayed with a green background) but the ``[OK]`` label is not prefixed.
+    It's meant to be used once to display the final result of executing the given
+    command, without showing the result as a successful or failed one::
+
+        // use simple strings for short success messages
+        $io->info('Lorem ipsum dolor sit amet');
+
+        // ...
+
+        // consider using arrays when displaying long success messages
+        $io->info([
+            'Lorem ipsum dolor sit amet',
+            'Consectetur adipiscing elit',
+        ]);
+
+.. versionadded:: 5.2
+
+    The ``info()`` method was introduced in Symfony 5.2.
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::warning`
     It displays the given string or array of strings highlighted as a warning
     message (with a red background and the ``[WARNING]`` label). It's meant to be

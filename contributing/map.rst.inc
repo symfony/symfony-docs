@@ -8,6 +8,7 @@
 * **Code**
 
   * :doc:`Bugs </contributing/code/bugs>`
+  * :doc:`Getting a Stack Trace </contributing/code/stack_trace>`
   * :doc:`Pull Requests </contributing/code/pull_requests>`
   * :doc:`Reviewing Issues and Pull Requests </contributing/community/reviews>`
   * :doc:`Maintenance </contributing/code/maintenance>`
@@ -15,9 +16,9 @@
   * :doc:`Security </contributing/code/security>`
   * :doc:`Tests </contributing/code/tests>`
   * :doc:`Backward Compatibility </contributing/code/bc>`
-  * :doc:`Coding Standards</contributing/code/standards>`
-  * :doc:`Code Conventions</contributing/code/conventions>`
-  * :doc:`Git</contributing/code/git>`
+  * :doc:`Coding Standards </contributing/code/standards>`
+  * :doc:`Code Conventions </contributing/code/conventions>`
+  * :doc:`Git </contributing/code/git>`
   * :doc:`License </contributing/code/license>`
 
 * **Documentation**

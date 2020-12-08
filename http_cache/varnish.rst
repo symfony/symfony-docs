@@ -53,7 +53,7 @@ header. In this case, you need to add the following configuration snippet:
 Cookies and Caching
 -------------------
 
-By default, a sane caching proxy does not cache anything when a request is sent
+By default, most caching proxies do not cache anything when a request is sent
 with :ref:`cookies or a basic authentication header <http-cache-introduction>`.
 This is because the content of the page is supposed to depend on the cookie
 value or authentication header.

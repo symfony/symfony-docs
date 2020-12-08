@@ -410,7 +410,7 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
 
             <services>
                 <service id="App\Security\Authentication\Provider\WsseProvider">
-                    <argument key="$cachePool" type="service" id="cache.app"></argument>
+                    <argument key="$cachePool" type="service" id="cache.app"/>
                 </service>
 
                 <service id="App\Security\Firewall\WsseListener">
@@ -541,6 +541,11 @@ can have different timeout lengths.
 You will first need to edit ``WsseFactory`` and define the new option in
 the ``addConfiguration()`` method::
 
+    // src/DependencyInjection/Security/Factory/WsseFactory.php
+    namespace App\DependencyInjection\Security\Factory;
+
+    // ...
+
     class WsseFactory implements SecurityFactoryInterface
     {
         // ...
@@ -559,6 +564,9 @@ contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
 in order to put it to use::
 
+    // src/DependencyInjection/Security/Factory/WsseFactory.php
+    namespace App\DependencyInjection\Security\Factory;
+    
     use App\Security\Authentication\Provider\WsseProvider;
 
     class WsseFactory implements SecurityFactoryInterface

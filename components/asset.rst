@@ -147,7 +147,6 @@ corresponding output file:
 
 .. code-block:: json
 
-    // rev-manifest.json
     {
         "css/app.css": "build/css/app.b916426ea1d10021f3f17ce8031f93c2.css",
         "js/app.js": "build/js/app.13630905267b809161e71d0f8a0c017b.js",
@@ -160,6 +159,7 @@ In those cases, use the
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
+    // assumes the JSON file above is called "rev-manifest.json"
     $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/rev-manifest.json'));
 
     echo $package->getUrl('css/app.css');
@@ -167,7 +167,7 @@ In those cases, use the
 
 If your JSON file is not on your local filesystem but is accessible over HTTP,
 use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
-with the :doc:`HttpClient component </components/http_client>`::
+with the :doc:`HttpClient component </http_client>`::
 
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy;
@@ -200,12 +200,12 @@ every day::
             $this->version = date('Ymd');
         }
 
-        public function getVersion($path)
+        public function getVersion(string $path)
         {
             return $this->version;
         }
 
-        public function applyVersion($path)
+        public function applyVersion(string $path)
         {
             return sprintf('%s?v=%s', $path, $this->getVersion($path));
         }

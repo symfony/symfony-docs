@@ -40,13 +40,13 @@ The following constraints ensure that:
         class Order
         {
             /**
-             * @Assert\ExpressionLanguageSyntax()
+             * @Assert\ExpressionLanguageSyntax
              */
             protected $promotion;
 
             /**
              * @Assert\ExpressionLanguageSyntax(
-             *     allowedVariables = ['user', 'shipping_centers']
+             *     allowedVariables={"user", "shipping_centers"}
              * )
              */
             protected $shippingOptions;
@@ -77,7 +77,10 @@ The following constraints ensure that:
                 </property>
                 <property name="shippingOptions">
                     <constraint name="ExpressionLanguageSyntax">
-                        <option name="allowedVariables">['user', 'shipping_centers']</option>
+                        <option name="allowedVariables">
+                            <value>user</value>
+                            <value>shipping_centers</value>
+                        </option>
                     </constraint>
                 </property>
             </class>

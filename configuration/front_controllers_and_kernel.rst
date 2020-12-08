@@ -30,7 +30,7 @@ The `front controller`_ is a design pattern; it is a section of code that *all*
 requests served by an application run through.
 
 In the Symfony Skeleton, this role is taken by the ``index.php`` file in the
-``public/`` directory. This is the very first PHP script executed when a
+``public/`` directory. This is the very first PHP script that is run when a
 request is processed.
 
 The main purpose of the front controller is to create an instance of the
@@ -244,15 +244,15 @@ the directory of the environment you're using (most commonly ``dev/`` while
 developing and debugging). While it can vary, the ``var/cache/dev/`` directory
 includes the following:
 
-``appDevDebugProjectContainer.php``
+``srcApp_KernelDevDebugContainer.php``
     The cached "service container" that represents the cached application
     configuration.
 
-``appDevUrlGenerator.php``
+``UrlGenerator.php``
     The PHP class generated from the routing configuration and used when
     generating URLs.
 
-``appDevUrlMatcher.php``
+``UrlMatcher.php``
     The PHP class used for route matching - look here to see the compiled regular
     expression logic used to match incoming URLs to different routes.
 

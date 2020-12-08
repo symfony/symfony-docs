@@ -35,7 +35,7 @@ The recommended workflow when working with Symfony forms is the following:
    data and do something with it (e.g. persist it in a database).
 
 Each of these steps is explained in detail in the next sections. To make
-examples easier to follow, all of them assume that you're building a simple Todo
+examples easier to follow, all of them assume that you're building a small Todo
 list application that displays "tasks".
 
 Users create and edit tasks using Symfony forms. Each task is an instance of the
@@ -49,22 +49,22 @@ following ``Task`` class::
         protected $task;
         protected $dueDate;
 
-        public function getTask()
+        public function getTask(): string
         {
             return $this->task;
         }
 
-        public function setTask($task)
+        public function setTask(string $task): void
         {
             $this->task = $task;
         }
 
-        public function getDueDate()
+        public function getDueDate(): ?\DateTime
         {
             return $this->dueDate;
         }
 
-        public function setDueDate(\DateTime $dueDate = null)
+        public function setDueDate(?\DateTime $dueDate): void
         {
             $this->dueDate = $dueDate;
         }
@@ -122,10 +122,11 @@ use the ``createFormBuilder()`` helper::
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class TaskController extends AbstractController
     {
-        public function new(Request $request)
+        public function new(Request $request): Response
         {
             // creates a task object and initializes some data for this example
             $task = new Task();
@@ -178,7 +179,7 @@ implements the interface and provides some utilities::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 ->add('task', TextType::class)
@@ -206,7 +207,7 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             // creates a task object and initializes some data for this example
             $task = new Task();
@@ -241,7 +242,7 @@ the ``data_class`` option by adding the following to your form type class::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Task::class,
@@ -265,10 +266,11 @@ to build another object with the visual representation of the form::
     use App\Form\Type\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class TaskController extends AbstractController
     {
-        public function new(Request $request)
+        public function new(Request $request): Response
         {
             $task = new Task();
             // ...
@@ -352,7 +354,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
         ]);
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
-Bootstrap 3 and 4 and Foundation 5. You can also
+Bootstrap 3 and 4 as well as Foundation 5 and 6. You can also
 :ref:`create your own Symfony form theme <create-your-own-form-theme>`.
 
 In addition to form themes, Symfony allows you to
@@ -374,34 +376,39 @@ Processing a form means to translate user-submitted data back to the properties
 of an object. To make this happen, the submitted data from the user must be
 written into the form object::
 
+    // src/Controller/TaskController.php
+
     // ...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function new(Request $request)
+    class TaskController extends AbstractController
     {
-        // just setup a fresh $task object (remove the example data)
-        $task = new Task();
+        public function new(Request $request): Response
+        {
+            // just setup a fresh $task object (remove the example data)
+            $task = new Task();
 
-        $form = $this->createForm(TaskType::class, $task);
+            $form = $this->createForm(TaskType::class, $task);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $task = $form->getData();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                // $form->getData() holds the submitted values
+                // but, the original `$task` variable has also been updated
+                $task = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
-            // $entityManager = $this->getDoctrine()->getManager();
-            // $entityManager->persist($task);
-            // $entityManager->flush();
+                // ... perform some action, such as saving the task to the database
+                // for example, if Task is a Doctrine entity, save it!
+                // $entityManager = $this->getDoctrine()->getManager();
+                // $entityManager->persist($task);
+                // $entityManager->flush();
 
-            return $this->redirectToRoute('task_success');
+                return $this->redirectToRoute('task_success');
+            }
+
+            return $this->render('task/new.html.twig', [
+                'form' => $form->createView(),
+            ]);
         }
-
-        return $this->render('task/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
 This controller follows a common pattern for handling forms and has three
@@ -459,9 +466,12 @@ Before using validation, add support for it in your application:
 
     $ composer require symfony/validator
 
-Validation is done by adding a set of rules (called constraints) to a class. To
-see this in action, add validation constraints so that the ``task`` field cannot
-be empty and the ``dueDate`` field cannot be empty and must be a valid \DateTime
+Validation is done by adding a set of rules, called (validation) constraints,
+to a class. You can add them either to the entity class or to the form class.
+
+To see the first approach - adding constraints to the entity - in action,
+add the validation constraints, so that the ``task`` field cannot be empty,
+and the ``dueDate`` field cannot be empty, and must be a valid ``DateTime``
 object.
 
 .. configuration-block::
@@ -531,7 +541,7 @@ object.
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('task', new NotBlank());
 
@@ -544,9 +554,57 @@ object.
         }
 
 That's it! If you re-submit the form with invalid data, you'll see the
-corresponding errors printed out with the form. Read the
-:doc:`Symfony validation documentation </validation>` to learn more about this
-powerful feature.
+corresponding errors printed out with the form.
+
+To see the second approach - adding constraints to the form - and to
+learn more about the validation constraints, please refer to the
+:doc:`Symfony validation documentation </validation>`.
+
+Form Validation Messages
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``legacy_error_messages`` option was introduced in Symfony 5.2
+
+The form types have default error messages that are more clear and
+user-friendly than the ones provided by the validation constraints. To enable
+these new messages set the ``legacy_error_messages`` option to ``false``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            form:
+                legacy_error_messages: false
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:form legacy-error-messages="false"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'form' => [
+                'legacy_error_messages' => false,
+            ],
+        ]);
 
 Other Common Form Features
 --------------------------
@@ -566,7 +624,7 @@ argument of ``createForm()``::
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             $task = new Task();
             // use some PHP logic to decide if this form field is required or not
@@ -594,7 +652,7 @@ options they accept using the ``configureOptions()`` method::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 // ...,
@@ -618,7 +676,7 @@ Now you can use this new form option inside the ``buildForm()`` method::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -667,7 +725,7 @@ Set the ``label`` option on fields to define their labels explicitly::
 
     ->add('dueDate', DateType::class, [
         // set it to FALSE to not display the label for this field
-        'label'  => 'To Be Completed Before',
+        'label' => 'To Be Completed Before',
     ])
 
 .. tip::
@@ -694,6 +752,7 @@ use the ``setAction()`` and ``setMethod()`` methods to change this::
     // src/Controller/TaskController.php
     namespace App\Controller;
 
+    // ...
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -701,7 +760,7 @@ use the ``setAction()`` and ``setMethod()`` methods to change this::
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             // ...
 
@@ -722,10 +781,11 @@ When building the form in a class, pass the action and method as form options::
 
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    // ...
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             // ...
 
@@ -770,10 +830,11 @@ method::
 
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    // ...
 
     class TaskController extends AbstractController
     {
-        public function new()
+        public function new(): Response
         {
             $task = ...;
             $form = $this->get('form.factory')->createNamed('my_name', TaskType::class, $task);
@@ -834,7 +895,7 @@ pass ``null`` to it, to enable Symfony's "guessing mechanism"::
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // if you don't define field options, you can omit the second argument
@@ -893,16 +954,20 @@ If you need extra fields in the form that won't be stored in the object (for
 example to add an *"I agree with these terms"* checkbox), set the ``mapped``
 option to ``false`` in those fields::
 
+    // ...
     use Symfony\Component\Form\FormBuilderInterface;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    class TaskType extends AbstractType
     {
-        $builder
-            ->add('task')
-            ->add('dueDate')
-            ->add('agreeTerms', CheckboxType::class, ['mapped' => false])
-            ->add('save', SubmitType::class)
-        ;
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder
+                ->add('task')
+                ->add('dueDate')
+                ->add('agreeTerms', CheckboxType::class, ['mapped' => false])
+                ->add('save', SubmitType::class)
+            ;
+        }
     }
 
 These "unmapped fields" can be set and accessed in a controller with::

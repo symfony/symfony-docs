@@ -2,8 +2,8 @@ How to Dynamically Configure Form Validation Groups
 ===================================================
 
 Sometimes you need advanced logic to determine the validation groups. If they
-can't be determined by a simple callback, you can use a service. Create a
-service that implements ``__invoke()`` which accepts a ``FormInterface`` as a
+can't be determined by a callback, you can use a service. Create a service
+that implements ``__invoke()`` which accepts a ``FormInterface`` as a
 parameter::
 
     // src/Validation/ValidationGroupResolver.php
@@ -23,11 +23,7 @@ parameter::
             $this->service2 = $service2;
         }
 
-        /**
-         * @param FormInterface $form
-         * @return array
-         */
-        public function __invoke(FormInterface $form)
+        public function __invoke(FormInterface $form): array
         {
             $groups = [];
 
@@ -56,7 +52,7 @@ Then in your form, inject the resolver and set it as the ``validation_groups``::
         }
 
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'validation_groups' => $this->groupResolver,

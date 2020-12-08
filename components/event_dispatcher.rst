@@ -305,7 +305,7 @@ order. Start by creating this custom event class and documenting it::
             $this->order = $order;
         }
 
-        public function getOrder()
+        public function getOrder(): Order
         {
             return $this->order;
         }
@@ -524,4 +524,4 @@ Learn More
 .. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
 .. _Observer: https://en.wikipedia.org/wiki/Observer_pattern
 .. _Closures: https://www.php.net/manual/en/functions.anonymous.php
-.. _PHP callable: https://www.php.net/manual/en/language.pseudo-types.php#language.types.callback
+.. _PHP callable: https://www.php.net/manual/en/language.types.callable.php

@@ -25,7 +25,7 @@ under the ``twig`` key in your application configuration.
 Configuration
 -------------
 
-.. class:: list-config-options list-config-options--complex
+.. rst-class:: list-config-options list-config-options--complex
 
 * `auto_reload`_
 * `autoescape`_
@@ -294,7 +294,7 @@ no specific character is passed as argument to the ``number_format`` filter.
 optimizations
 ~~~~~~~~~~~~~
 
-**type**: ``int`` **default**: ``-1``
+**type**: ``integer`` **default**: ``-1``
 
 Twig includes an extension called ``optimizer`` which is enabled by default in
 Symfony applications. This extension analyzes the templates to optimize them
@@ -358,10 +358,12 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
 
 Read more about :ref:`template directories and namespaces <templates-namespaces>`.
 
+.. _config-twig-strict-variables:
+
 strict_variables
 ~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If set to ``true``, Symfony shows an exception whenever a Twig variable,
 attribute or method doesn't exist. If set to ``false`` these errors are ignored

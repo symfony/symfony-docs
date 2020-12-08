@@ -88,8 +88,8 @@ Using XPath expressions, you can select specific nodes within the document::
 
     ``DOMXPath::query`` is used internally to actually perform an XPath query.
 
-If you prefer CSS selectors over XPath, install the CssSelector component.
-It allows you to use jQuery-like selectors to traverse::
+If you prefer CSS selectors over XPath, install :doc:`/components/css_selector`.
+It allows you to use jQuery-like selectors::
 
     $crawler = $crawler->filter('body > p');
 
@@ -105,12 +105,13 @@ An anonymous function can be used to filter with more complex criteria::
             return ($i % 2) == 0;
         });
 
-To remove a node the anonymous function must return false.
+To remove a node, the anonymous function must return ``false``.
 
 .. note::
 
     All filter methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
-    instance with filtered content.
+    instance with the filtered content. To check if the filter actually
+    found something, use ``$crawler->count() > 0`` on this new crawler.
 
 Both the :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` and
 :method:`Symfony\\Component\\DomCrawler\\Crawler::filter` methods work with
@@ -220,9 +221,10 @@ Access the value of the first node of the current selection::
     // avoid the exception passing an argument that text() returns when node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
-    // pass TRUE as the second argument of text() to remove all extra white spaces, including
-    // the internal ones (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
-    $crawler->filterXPath('//body/p')->text('Default text content', true);
+    // by default, text() trims white spaces, including the internal ones
+    // (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
+    // pass FALSE as the second argument to return the original text unchanged
+    $crawler->filterXPath('//body/p')->text('Default text content', false);
 
 Access the attribute value of the first node of the current selection::
 

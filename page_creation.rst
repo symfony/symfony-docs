@@ -63,7 +63,7 @@ random) number and prints it. To do that, create a "Controller" class and a
     }
 
 Now you need to associate this controller function with a public URL (e.g. ``/lucky/number``)
-so that the ``number()`` method is executed when a user browses to it. This association
+so that the ``number()`` method is called when a user browses to it. This association
 is defined by creating a **route** in the ``config/routes.yaml`` file:
 
 .. code-block:: yaml
@@ -136,7 +136,7 @@ special things happened, both thanks to a powerful Composer plugin called
 First, ``annotations`` isn't a real package name: it's an *alias* (i.e. shortcut)
 that Flex resolves to ``sensio/framework-extra-bundle``.
 
-Second, after this package was downloaded, Flex executed a *recipe*, which is a
+Second, after this package was downloaded, Flex runs a *recipe*, which is a
 set of automated instructions that tell Symfony how to integrate an external
 package. `Flex recipes`_ exist for many packages and have the ability
 to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
@@ -176,24 +176,27 @@ the debugging routes in the next section.
 
 You'll learn about many more commands as you continue!
 
+.. _web-debug-toolbar:
+
 The Web Debug Toolbar: Debugging Dream
 --------------------------------------
 
-One of Symfony's *killer* features is the Web Debug Toolbar: a bar that displays
+One of Symfony's *amazing* features is the Web Debug Toolbar: a bar that displays
 a *huge* amount of debugging information along the bottom of your page while
 developing. This is all included out of the box using a :ref:`Symfony pack <symfony-packs>`
 called ``symfony/profiler-pack``.
 
-You will see a black bar along the bottom of the page. You'll learn more about all the information it holds
-along the way, but feel free to experiment: hover over and click
-the different icons to get information about routing, performance, logging and more.
+You will see a dark bar along the bottom of the page. You'll learn more about
+all the information it holds along the way, but feel free to experiment: hover
+over and click the different icons to get information about routing,
+performance, logging and more.
 
 Rendering a Template
 --------------------
 
 If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
-easy, powerful and actually quite fun.
+minimal, powerful and actually quite fun.
 
 Install the twig package with:
 
@@ -223,13 +226,15 @@ variable so you can use it in Twig::
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     // ...
+
     class LuckyController extends AbstractController
     {
         /**
          * @Route("/lucky/number")
          */
-        public function number()
+        public function number(): Response
         {
             $number = random_int(0, 100);
 

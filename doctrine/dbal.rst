@@ -35,7 +35,7 @@ Then configure the ``DATABASE_URL`` environment variable in ``.env``:
     # .env (or override DATABASE_URL in .env.local to avoid committing your changes)
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
 
 Further things can be configured in ``config/packages/doctrine.yaml`` - see
 :ref:`reference-dbal-configuration`. Remove the ``orm`` key in that file
@@ -44,11 +44,16 @@ if you *don't* want to use the Doctrine ORM.
 You can then access the Doctrine DBAL connection by autowiring the ``Connection``
 object::
 
+    // src/Controller/UserController.php
+    namespace App\Controller;
+
     use Doctrine\DBAL\Driver\Connection;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class UserController extends AbstractController
     {
-        public function index(Connection $connection)
+        public function index(Connection $connection): Response
         {
             $users = $connection->fetchAll('SELECT * FROM users');
 

@@ -74,6 +74,11 @@ as the value to the current URL:
 
     http://example.com/somewhere?_switch_user=thomas
 
+.. tip::
+
+    Instead of adding a ``_switch_user`` query string parameter, you can pass
+    the username in a ``HTTP_X_SWITCH_USER`` header.
+
 To switch back to the original user, use the special ``_exit`` username:
 
 .. code-block:: text
@@ -94,7 +99,7 @@ instance, to show a link to exit impersonation in a template:
 .. code-block:: html+twig
 
     {% if is_granted('IS_IMPERSONATOR') %}
-        <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
+        <a href="{{ impersonation_exit_path(path('homepage') ) }}">Exit impersonation</a>
     {% endif %}
 
 .. versionadded:: 5.1
@@ -110,6 +115,9 @@ user rather than the impersonated user. When a user is impersonated the token
 stored in the token storage will be a ``SwitchUserToken`` instance. Use the
 following snippet to obtain the original token which gives you access to
 the impersonator user::
+
+    // src/Service/SomeService.php
+    namespace App\Service;
 
     use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
     use Symfony\Component\Security\Core\Security;
@@ -258,6 +266,7 @@ be called):
 Then, create a voter class that responds to this role and includes whatever custom
 logic you want::
 
+    // src/Service/Voter/SwitchToCustomerVoter.php
     namespace App\Security\Voter;
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

@@ -9,7 +9,7 @@ Although this server is not intended for production use, it supports HTTP/2,
 TLS/SSL, automatic generation of security certificates, local domains, and many
 other features that sooner or later you'll need when developing web projects.
 Moreover, the server is not tied to Symfony and you can also use it with any
-PHP application and even with HTML/SPA (single page applications).
+PHP application and even with HTML or single page applications.
 
 Installation
 ------------
@@ -59,6 +59,10 @@ run the Symfony server in the background:
 
 Enabling PHP-FPM
 ----------------
+
+.. note::
+
+    PHP-FPM must be installed locally for the Symfony server to utilize.
 
 When the server starts it will check for common patterns like ``web/app.php``,
 ``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
@@ -295,6 +299,9 @@ project. It understands that this is a MySQL service and creates environment
 variables accordingly with the service name (``database``) as a prefix:
 ``DATABASE_URL``, ``DATABASE_HOST``, ...
 
+If the service is not in the supported list below, generic environment
+variables are set: ``PORT``, ``IP``, and ``HOST``.
+
 If the ``docker-compose.yaml`` names do not match Symfony's conventions, add a
 label to override the environment variables prefix:
 
@@ -357,6 +364,47 @@ When Docker services are running, browse a page of your Symfony application and
 check the "Symfony Server" section in the web debug toolbar; you'll see that
 "Docker Compose" is "Up".
 
+.. note::
+
+    If you don't want environment variables to be exposed for a service, set
+    the ``com.symfony.server.service-ignore`` label to ``true``:
+
+    .. code-block:: yaml
+
+        # docker-compose.yaml
+        services:
+            db:
+                ports: [3306]
+                labels:
+                    com.symfony.server.service-ignore: true
+
+If your Docker Compose file is not at the root of the project, use the
+``COMPOSE_FILE`` and ``COMPOSE_PROJECT_NAME`` environment variables to define
+its location, same as for ``docker-compose``:
+
+.. code-block:: bash
+
+    # start your containers:
+    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
+
+    # run any Symfony CLI command:
+    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export
+
+.. note::
+
+    If you have more than one Docker Compose file, you can provide them all
+    separated by ``:`` as explained in the `Docker compose CLI env var reference`_.
+
+.. caution::
+
+    When using the Symfony binary with ``php bin/console`` (``symfony console ...``),
+    the binary will **always** use environment variables detected via Docker and will
+    ignore local environment variables.
+    For example if you set up a different database name in your ``.env.test`` file
+    (``DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/test``) and if you run
+    ``symfony console doctrine:database:drop --force --env=test``, the command will drop the database
+    defined in your Docker configuration and not the "test" one.
+
 SymfonyCloud Integration
 ------------------------
 
@@ -377,3 +425,4 @@ debug any issues.
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
 .. _`is treated differently`: https://ec.haxx.se/usingcurl/usingcurl-proxies#http_proxy-in-lower-case-only
+.. _`Docker compose CLI env var reference`: https://docs.docker.com/compose/reference/envvars/

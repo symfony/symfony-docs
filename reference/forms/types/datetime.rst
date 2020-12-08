@@ -10,55 +10,59 @@ date and time (e.g. ``1984-06-05 12:15:30``).
 Can be rendered as a text input or select tags. The underlying format of
 the data can be a ``DateTime`` object, a string, a timestamp or an array.
 
-+----------------------+-----------------------------------------------------------------------------+
-| Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
-+----------------------+-----------------------------------------------------------------------------+
-| Rendered as          | single text box or three select fields                                      |
-+----------------------+-----------------------------------------------------------------------------+
-| Options              | - `choice_translation_domain`_                                              |
-|                      | - `date_format`_                                                            |
-|                      | - `date_label`_                                                             |
-|                      | - `date_widget`_                                                            |
-|                      | - `days`_                                                                   |
-|                      | - `placeholder`_                                                            |
-|                      | - `format`_                                                                 |
-|                      | - `hours`_                                                                  |
-|                      | - `html5`_                                                                  |
-|                      | - `input`_                                                                  |
-|                      | - `input_format`_                                                           |
-|                      | - `minutes`_                                                                |
-|                      | - `model_timezone`_                                                         |
-|                      | - `months`_                                                                 |
-|                      | - `seconds`_                                                                |
-|                      | - `time_label`_                                                             |
-|                      | - `time_widget`_                                                            |
-|                      | - `view_timezone`_                                                          |
-|                      | - `widget`_                                                                 |
-|                      | - `with_minutes`_                                                           |
-|                      | - `with_seconds`_                                                           |
-|                      | - `years`_                                                                  |
-+----------------------+-----------------------------------------------------------------------------+
-| Overridden options   | - `by_reference`_                                                           |
-|                      | - `compound`_                                                               |
-|                      | - `data_class`_                                                             |
-|                      | - `error_bubbling`_                                                         |
-+----------------------+-----------------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                                   |
-| options              | - `data`_                                                                   |
-|                      | - `disabled`_                                                               |
-|                      | - `help`_                                                                   |
-|                      | - `help_attr`_                                                              |
-|                      | - `help_html`_                                                              |
-|                      | - `inherit_data`_                                                           |
-|                      | - `invalid_message`_                                                        |
-|                      | - `invalid_message_parameters`_                                             |
-|                      | - `mapped`_                                                                 |
-|                      | - `row_attr`_                                                               |
-+----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
-+----------------------+-----------------------------------------------------------------------------+
-| Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
-+----------------------+-----------------------------------------------------------------------------+
++---------------------------+-----------------------------------------------------------------------------+
+| Underlying Data Type      | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
++---------------------------+-----------------------------------------------------------------------------+
+| Rendered as               | single text box or three select fields                                      |
++---------------------------+-----------------------------------------------------------------------------+
+| Options                   | - `choice_translation_domain`_                                              |
+|                           | - `date_format`_                                                            |
+|                           | - `date_label`_                                                             |
+|                           | - `date_widget`_                                                            |
+|                           | - `days`_                                                                   |
+|                           | - `placeholder`_                                                            |
+|                           | - `format`_                                                                 |
+|                           | - `hours`_                                                                  |
+|                           | - `html5`_                                                                  |
+|                           | - `input`_                                                                  |
+|                           | - `input_format`_                                                           |
+|                           | - `minutes`_                                                                |
+|                           | - `model_timezone`_                                                         |
+|                           | - `months`_                                                                 |
+|                           | - `seconds`_                                                                |
+|                           | - `time_label`_                                                             |
+|                           | - `time_widget`_                                                            |
+|                           | - `view_timezone`_                                                          |
+|                           | - `widget`_                                                                 |
+|                           | - `with_minutes`_                                                           |
+|                           | - `with_seconds`_                                                           |
+|                           | - `years`_                                                                  |
++---------------------------+-----------------------------------------------------------------------------+
+| Overridden options        | - `by_reference`_                                                           |
+|                           | - `compound`_                                                               |
+|                           | - `data_class`_                                                             |
+|                           | - `error_bubbling`_                                                         |
+|                           | - `invalid_message`_                                                        |
++---------------------------+-----------------------------------------------------------------------------+
+| Inherited options         | - `attr`_                                                                   |
+|                           | - `data`_                                                                   |
+|                           | - `disabled`_                                                               |
+|                           | - `help`_                                                                   |
+|                           | - `help_attr`_                                                              |
+|                           | - `help_html`_                                                              |
+|                           | - `inherit_data`_                                                           |
+|                           | - `invalid_message_parameters`_                                             |
+|                           | - `mapped`_                                                                 |
+|                           | - `row_attr`_                                                               |
++---------------------------+-----------------------------------------------------------------------------+
+| Default invalid message   | Please enter a valid date and time.                                         |
++---------------------------+-----------------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                         |
++---------------------------+-----------------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                               |
++---------------------------+-----------------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
++---------------------------+-----------------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -231,6 +235,8 @@ error_bubbling
 
 **default**: ``false``
 
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
 Inherited Options
 -----------------
 
@@ -249,8 +255,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
@@ -271,4 +275,4 @@ Field Variables
 +----------+------------+----------------------------------------------------------------------+
 
 .. _`datetime local`: http://w3c.github.io/html-reference/datatypes.html#form.data.datetime-local
-.. _`Date/Time Format Syntax`: http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax
+.. _`Date/Time Format Syntax`: https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax

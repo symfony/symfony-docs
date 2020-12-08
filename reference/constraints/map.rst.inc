@@ -22,8 +22,9 @@ String Constraints
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Hostname </reference/constraints/Hostname>`
 * :doc:`Ip </reference/constraints/Ip>`
-* :doc:`Json</reference/constraints/Json>`
-* :doc:`Uuid</reference/constraints/Uuid>`
+* :doc:`Json </reference/constraints/Json>`
+* :doc:`Uuid </reference/constraints/Uuid>`
+* :doc:`Ulid </reference/constraints/Ulid>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 
@@ -81,6 +82,7 @@ Financial and other Number Constraints
 * :doc:`Iban </reference/constraints/Iban>`
 * :doc:`Isbn </reference/constraints/Isbn>`
 * :doc:`Issn </reference/constraints/Issn>`
+* :doc:`Isin </reference/constraints/Isin>`
 
 Other Constraints
 ~~~~~~~~~~~~~~~~~

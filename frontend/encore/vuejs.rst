@@ -110,10 +110,9 @@ Using styles
 You can't use ``<style>`` in ``.jsx`` files. As a workaround, you can import
 ``.css``, ``.scss``, etc. files manually:
 
-.. code-block:: javascript
+.. code-block:: jsx
 
     // App.jsx
-
     import './App.css'
 
     export default {
@@ -139,10 +138,9 @@ You can't use `Scoped Styles`_ (``<style scoped>``) either in ``.jsx`` files. As
 a workaround, you can use `CSS Modules`_ by suffixing import paths with
 ``?module``:
 
-.. code-block:: javascript
+.. code-block:: jsx
 
     // Component.jsx
-
     import styles from './Component.css?module' // suffix with "?module"
 
     export default {
@@ -174,7 +172,7 @@ Using images
 You can't use ``<img src="./image.png">`` in ``.jsx`` files. As a workaround,
 you can import them with ``require()`` function:
 
-.. code-block:: javascript
+.. code-block:: jsx
 
     export default {
         name: 'Component',
@@ -186,6 +184,22 @@ you can import them with ``require()`` function:
             )
         }
     }
+
+Using Vue inside Twig templates
+-------------------------------
+
+Twig templates can instantiate a Vue.js app in the same way as any other
+JavaScript code. However, given that both Twig and Vue.js use the same delimiters
+for variables, you should configure the ``delimiters`` Vue.js option to change
+the default variable delimiters.
+
+If you set for example ``delimiters: ['${', '}$']``, then you can use the
+following in your Twig templates:
+
+ .. code-block:: twig
+
+    {{ twig_variable }}   {# renders a Twig variable #}
+    ${ vuejs_variable }$  {# renders a Vue.js variable #}
 
 .. _`Vue.js`: https://vuejs.org/
 .. _`vue-loader options`: https://vue-loader.vuejs.org/options.html

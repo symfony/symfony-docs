@@ -16,6 +16,7 @@ Sometimes it is hard to tell which entries in the log belong to which session
 and/or request. The following example will add a unique token for each request
 using a processor::
 
+    // src/Logger/SessionRequestProcessor.php
     namespace App\Logger;
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -169,6 +170,14 @@ Symfony's MonologBridge provides processors that can be registered inside your a
 :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor`
     Adds information from the current user's token to the record namely
     username, roles and whether the user is authenticated.
+
+:class:`Symfony\\Bridge\\Monolog\\Processor\\SwitchUserTokenProcessor`
+    Adds information about the user who is impersonating the logged in user,
+    namely username, roles and whether the user is authenticated.
+
+    .. versionadded:: 5.2
+
+        The ``SwitchUserTokenProcessor`` was introduced in Symfony 5.2.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor`
     Overrides data from the request using the data inside Symfony's request

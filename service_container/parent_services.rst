@@ -26,7 +26,7 @@ you may have multiple repository classes which need the
             $this->objectManager = $objectManager;
         }
 
-        public function setLogger(LoggerInterface $logger)
+        public function setLogger(LoggerInterface $logger): void
         {
             $this->logger = $logger;
         }
@@ -58,9 +58,8 @@ Your child service classes may look like this::
         // ...
     }
 
-Just as you use PHP inheritance to avoid duplication in your PHP code, the
-service container allows you to extend parent services in order to avoid
-duplicated service definitions:
+The service container allows you to extend parent services in order to
+avoid duplicated service definitions:
 
 .. configuration-block::
 
@@ -72,7 +71,7 @@ duplicated service definitions:
                 abstract:  true
                 arguments: ['@doctrine.orm.entity_manager']
                 calls:
-                    - [setLogger, ['@logger']]
+                    - setLogger: ['@logger']
 
             App\Repository\DoctrineUserRepository:
                 # extend the App\Repository\BaseDoctrineRepository service

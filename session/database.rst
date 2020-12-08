@@ -30,15 +30,13 @@ First, define a Symfony service for the connection to the Redis server:
                 # you can also use \RedisArray, \RedisCluster or \Predis\Client classes
                 class: Redis
                 calls:
-                    - method: connect
-                      arguments:
-                          - '%env(REDIS_HOST)%'
-                          - '%env(int:REDIS_PORT)%'
+                    - connect:
+                        - '%env(REDIS_HOST)%'
+                        - '%env(int:REDIS_PORT)%'
 
                     # uncomment the following if your Redis server requires a password
-                    # - method: auth
-                    #   arguments:
-                    #       - '%env(REDIS_PASSWORD)%'
+                    # - auth:
+                    #     - '%env(REDIS_PASSWORD)%'
 
     .. code-block:: xml
 
@@ -219,16 +217,22 @@ first register a new handler service with your database credentials:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        $storageDefinition = $container->autowire(PdoSessionHandler::class)
-            ->setArguments([
-                '%env(DATABASE_URL)%',
-                // you can also use PDO configuration, but requires passing two arguments:
-                // 'mysql:dbname=mydatabase; host=myhost; port=myport',
-                // ['db_username' => 'myuser', 'db_password' => 'mypassword'],
-            ])
-        ;
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(PdoSessionHandler::class)
+                ->args([
+                    '%env(DATABASE_URL)%',
+                    // you can also use PDO configuration, but requires passing two arguments:
+                    // 'mysql:dbname=mydatabase; host=myhost; port=myport',
+                    // ['db_username' => 'myuser', 'db_password' => 'mypassword'],
+                ])
+            ;
+        };
 
 Next, use the :ref:`handler_id <config-framework-session-handler-id>`
 configuration option to tell Symfony to use this service as the session handler:
@@ -308,15 +312,20 @@ passed to the ``PdoSessionHandler`` service:
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
-        // ...
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->autowire(PdoSessionHandler::class)
-            ->setArguments([
-                '%env(DATABASE_URL)%',
-                ['db_table' => 'customer_session', 'db_id_col' => 'guid'],
-            ])
-        ;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(PdoSessionHandler::class)
+                ->args([
+                    '%env(DATABASE_URL)%',
+                    ['db_table' => 'customer_session', 'db_id_col' => 'guid'],
+                ])
+            ;
+        };
 
 These are parameters that you can configure:
 
@@ -358,7 +367,7 @@ Preparing the Database to Store Sessions
 
 Before storing sessions in the database, you must create the table that stores
 the information. The session handler provides a method called
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PdoSessionHandler::createTable`
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler::createTable`
 to set up this table for you according to the database engine used::
 
     try {
@@ -468,13 +477,19 @@ the MongoDB connection as argument:
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $storageDefinition = $container->autowire(MongoDbSessionHandler::class)
-            ->setArguments([
-                new Reference('doctrine_mongodb.odm.default_connection'),
-            ])
-        ;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(MongoDbSessionHandler::class)
+                ->args([
+                    service('doctrine_mongodb.odm.default_connection'),
+                ])
+            ;
+        };
 
 Next, use the :ref:`handler_id <config-framework-session-handler-id>`
 configuration option to tell Symfony to use this service as the session handler:
@@ -546,7 +561,7 @@ configure these values with the second argument passed to the
             Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler:
                 arguments:
                     - '@doctrine_mongodb.odm.default_connection'
-                    - { id_field: '_guid', `expiry_field`: `eol` }
+                    - { id_field: '_guid', 'expiry_field': 'eol' }
 
     .. code-block:: xml
 
@@ -571,15 +586,20 @@ configure these values with the second argument passed to the
     .. code-block:: php
 
         // config/services.php
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
-        // ...
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->autowire(MongoDbSessionHandler::class)
-            ->setArguments([
-                '...',
-                ['id_field' => '_guid', 'expiry_field' => 'eol'],
-            ])
-        ;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(MongoDbSessionHandler::class)
+                ->args([
+                    service('doctrine_mongodb.odm.default_connection'),
+                    ['id_field' => '_guid', 'expiry_field' => 'eol'],,
+                ])
+            ;
+        };
 
 These are parameters that you can configure:
 

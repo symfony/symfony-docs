@@ -20,7 +20,7 @@ The only class that is usually manipulated by programmers is the form type class
 which serves as a form blueprint. It is used to generate the ``Form`` and the
 ``FormView``. You could test it directly by mocking its interactions with the
 factory but it would be complex. It is better to pass it to FormFactory like it
-is done in a real application. It is simple to bootstrap and you can trust
+is done in a real application. It is easier to bootstrap and you can trust
 the Symfony components enough to use them as a testing base.
 
 There is already a class that you can benefit from for testing:
@@ -94,7 +94,7 @@ be the first test you write::
     $form = $this->factory->create(TestedType::class, $formData);
 
 This test checks that none of your data transformers used by the form
-failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
+produces an error. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
 method is only set to ``false`` if a data transformer throws an exception::
 
     $form->submit($formData);
@@ -139,8 +139,8 @@ Testings Types Registered as Services
 
 Your form may be used as a service, as it depends on other services (e.g. the
 Doctrine entity manager). In these cases, using the above code won't work, as
-the Form component just instantiates the form type without passing any
-arguments to the constructor.
+the Form component instantiates the form type without passing any arguments
+to the constructor.
 
 To solve this, you have to mock the injected dependencies, instantiate your own
 form type and use the :class:`Symfony\\Component\\Form\\PreloadedExtension` to
@@ -159,7 +159,7 @@ make sure the ``FormRegistry`` uses the created instance::
     {
         private $objectManager;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             // mock any dependencies
             $this->objectManager = $this->createMock(ObjectManager::class);

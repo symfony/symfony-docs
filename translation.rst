@@ -110,7 +110,7 @@ Translation of text is done through the  ``translator`` service
 (:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
 of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
-for example, that you're translating a simple message from inside a controller::
+for example, that you're translating a static message from inside a controller::
 
     // ...
     use Symfony\Contracts\Translation\TranslatorInterface;
@@ -124,7 +124,7 @@ for example, that you're translating a simple message from inside a controller::
 
 .. _translation-resources:
 
-When this code is executed, Symfony will attempt to translate the message
+When this code is run, Symfony will attempt to translate the message
 "Symfony is great" based on the ``locale`` of the user. For this to work,
 you need to tell Symfony how to translate the message via a "translation
 resource", which is usually a file that contains a collection of translations
@@ -292,6 +292,45 @@ To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
 
+Translatable Objects
+--------------------
+
+.. versionadded:: 5.2
+
+    Translatable objects were introduced in Symfony 5.2.
+
+Sometimes translating contents in templates is cumbersome because you need the
+original message, the translation parameters and the translation domain for
+each content. Making the translation in the controller or services simplifies
+your templates, but requires injecting the translator service in different
+parts of your application and mocking it in your tests.
+
+Instead of translating a string at the time of creation, you can use a
+"translatable object", which is an instance of the
+:class:`Symfony\\Component\\Translation\\TranslatableMessage` class. This object stores
+all the information needed to fully translate its contents when needed::
+
+    use Symfony\Component\Translation\TranslatableMessage;
+
+    // the first argument is required and it's the original message
+    $message = new TranslatableMessage('Symfony is great!');
+    // the optional second argument defines the translation parameters and
+    // the optional third argument is the translation domain
+    $status = new TranslatableMessage('order.status', ['%status%' => $order->getStatus()], 'store');
+
+Templates are now much simpler because you can pass translatable objects to the
+``trans`` filter:
+
+.. code-block:: html+twig
+
+    <h1>{{ message|trans }}</h1>
+    <p>{{ status|trans }}</p>
+
+.. tip::
+
+    There's also a :ref:`function called t() <reference-twig-function-t>`,
+    available both in Twig and PHP, as a shortcut to create translatable objects.
+
 .. _translation-in-templates:
 
 Translations in Templates
@@ -369,9 +408,10 @@ priority message files.
 The filename of the translation files is also important: each message file
 must be named according to the following path: ``domain.locale.loader``:
 
-* **domain**: An optional way to organize messages into groups. Unless
+* **domain**: Domains are a way to organize messages into groups. Unless
   parts of the application are explicitly separated from each other, it is
-  recommended to only use default ``messages`` domain;
+  recommended to only use the default ``messages`` domain (e.g.
+  ``messages.en.yaml``).
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
@@ -575,7 +615,7 @@ Learn more
     translation/xliff
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
-.. _`ICU MessageFormat`: http://userguide.icu-project.org/formatparse/messages
+.. _`ICU MessageFormat`: https://unicode-org.github.io/icu/userguide/format_parse/messages/
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html

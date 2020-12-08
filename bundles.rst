@@ -31,7 +31,7 @@ file::
         Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
         Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
         Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
-        // this bundle is enabled only in 'dev'  and 'test', so you can't use it in 'prod'
+        // this bundle is enabled only in 'dev' and 'test', so you can't use it in 'prod'
         Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
     ];
 
@@ -45,9 +45,9 @@ Creating a Bundle
 -----------------
 
 This section creates and enables a new bundle to show there are only a few steps required.
-The new bundle is called AcmeTestBundle, where the ``Acme`` portion is just a
-dummy name that should be replaced by some "vendor" name that represents you or
-your organization (e.g. ABCTestBundle for some company named ``ABC``).
+The new bundle is called AcmeTestBundle, where the ``Acme`` portion is an example
+name that should be replaced by some "vendor" name that represents you or your
+organization (e.g. ABCTestBundle for some company named ``ABC``).
 
 Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::

@@ -157,7 +157,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     time_cost:    2     # Number of iterations
 
                 # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
-                AppBundle\Entity\User: 'sha512'
+                App\Entity\User: 'sha512'
 
     .. code-block:: xml
 
@@ -395,8 +395,6 @@ depend on the authentication mechanism, which can be any of these:
                         # ...
                     remote_user:
                         # ...
-                    simple_preauth:
-                        # ...
                     guard:
                         # ...
                     form_login:
@@ -404,8 +402,6 @@ depend on the authentication mechanism, which can be any of these:
                     form_login_ldap:
                         # ...
                     json_login:
-                        # ...
-                    simple_form:
                         # ...
                     http_basic:
                         # ...
@@ -508,6 +504,14 @@ target_path_parameter
 When using a login form, if you include an HTML element to set the target path,
 this option lets you change the name of the HTML element itself.
 
+failure_path_parameter
+......................
+
+**type**: ``string`` **default**: ``_failure_path``
+
+When using a login form, if you include an HTML element to set the failure path,
+this option lets you change the name of the HTML element itself.
+
 use_referer
 ...........
 
@@ -539,6 +543,14 @@ option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
 .. _reference-security-logout-success-handler:
+
+``path``
+~~~~~~~~
+
+**type**: ``string`` **default**: ``/logout``
+
+The path which triggers logout. If you change it from the default value ``/logout``,
+you need to set up a route with a matching path.
 
 success_handler
 ~~~~~~~~~~~~~~~

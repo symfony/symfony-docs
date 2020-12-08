@@ -191,6 +191,8 @@ method::
     $value = $propertyAccessor->getValue($person, 'birthday');
 
 
+.. _components-property-access-magic-get:
+
 Magic ``__get()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -212,6 +214,11 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
     $person = new Person();
 
     var_dump($propertyAccessor->getValue($person, 'Wouter')); // [...]
+
+.. versionadded:: 5.2
+
+    The magic ``__get()`` method can be disabled since in Symfony 5.2.
+    see `Enable other Features`_.
 
 .. _components-property-access-magic-call:
 
@@ -272,6 +279,8 @@ also write to an array. This can be achieved using the
     var_dump($propertyAccessor->getValue($person, '[first_name]')); // 'Wouter'
     // or
     // var_dump($person['first_name']); // 'Wouter'
+
+.. _components-property-access-writing-to-objects:
 
 Writing to Objects
 ------------------
@@ -351,6 +360,11 @@ see `Enable other Features`_::
 
     var_dump($person->getWouter()); // [...]
 
+.. versionadded:: 5.2
+
+    The magic ``__set()`` method can be disabled since in Symfony 5.2.
+    see `Enable other Features`_.
+
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -393,6 +407,45 @@ and ``removeChild()`` methods to access to the ``children`` property.
 `The Inflector component`_ is used to find the singular of a property name.
 
 If available, *adder* and *remover* methods have priority over a *setter* method.
+
+Using non-standard adder/remover methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`` prefix, like in this example::
+
+    // ...
+    class PeopleList
+    {
+        // ...
+
+        public function joinPeople(string $people): void
+        {
+            $this->peoples[] = $people;
+        }
+
+        public function leavePeople(string $people): void
+        {
+            foreach ($this->peoples as $id => $item) {
+                if ($people === $item) {
+                    unset($this->peoples[$id]);
+                    break;
+                }
+            }
+        }
+    }
+
+    use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+    use Symfony\Component\PropertyAccess\PropertyAccessor;
+
+    $list = new PeopleList();
+    $reflectionExtractor = new ReflectionExtractor(null, null, ['join', 'leave']);
+    $propertyAccessor = new PropertyAccessor(false, false, null, true, $reflectionExtractor, $reflectionExtractor);
+    $propertyAccessor->setValue($person, 'peoples', ['kevin', 'wouter']);
+
+    var_dump($person->getPeoples()); // ['kevin', 'wouter']
+
+Instead of calling ``add<SingularOfThePropertyName>()`` and ``remove<SingularOfThePropertyName>()``, the PropertyAccess
+component will call ``join<SingularOfThePropertyName>()`` and ``leave<SingularOfThePropertyName>()`` methods.
 
 Checking Property Paths
 -----------------------
@@ -461,14 +514,20 @@ configured to enable extra features. To do that you could use the
     // ...
     $propertyAccessorBuilder = PropertyAccess::createPropertyAccessorBuilder();
 
-    // enables magic __call
-    $propertyAccessorBuilder->enableMagicCall();
+    $propertyAccessorBuilder->enableMagicCall(); // enables magic __call
+    $propertyAccessorBuilder->enableMagicGet(); // enables magic __get
+    $propertyAccessorBuilder->enableMagicSet(); // enables magic __set
+    $propertyAccessorBuilder->enableMagicMethods(); // enables magic __get, __set and __call
 
-    // disables magic __call
-    $propertyAccessorBuilder->disableMagicCall();
+    $propertyAccessorBuilder->disableMagicCall(); // enables magic __call
+    $propertyAccessorBuilder->disableMagicGet(); // enables magic __get
+    $propertyAccessorBuilder->disableMagicSet(); // enables magic __set
+    $propertyAccessorBuilder->disableMagicMethods(); // enables magic __get, __set and __call
 
-    // checks if magic __call handling is enabled
+    // checks if magic __call, __get or __set handling are enabled
     $propertyAccessorBuilder->isMagicCallEnabled(); // true or false
+    $propertyAccessorBuilder->isMagicGetEnabled(); // true or false
+    $propertyAccessorBuilder->isMagicSetEnabled(); // true or false
 
     // At the end get the configured property accessor
     $propertyAccessor = $propertyAccessorBuilder->getPropertyAccessor();
@@ -480,7 +539,7 @@ configured to enable extra features. To do that you could use the
 
 Or you can pass parameters directly to the constructor (not the recommended way)::
 
-    // ...
-    $propertyAccessor = new PropertyAccessor(true); // this enables handling of magic __call
+    // enable handling of magic __call, __set but not __get:
+    $propertyAccessor = new PropertyAccessor(PropertyAccessor::MAGIC_CALL | PropertyAccessor::MAGIC_SET);
 
 .. _The Inflector component: https://github.com/symfony/inflector

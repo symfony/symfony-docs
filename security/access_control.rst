@@ -25,7 +25,7 @@ access control should be used on this request. The following ``access_control``
 options are used for matching:
 
 * ``path``: a regular expression (without delimiters)
-* ``ip`` or ``ips``: netmasks are also supported
+* ``ip`` or ``ips``: netmasks are also supported (can be a comma-separated string)
 * ``port``: an integer
 * ``host``: a regular expression
 * ``methods``: one or many methods
@@ -37,6 +37,9 @@ Take the following ``access_control`` entries as an example:
     .. code-block:: yaml
 
         # config/packages/security.yaml
+        parameters:
+            env(TRUSTED_IPS): '10.0.0.1, 10.0.0.2'
+
         security:
             # ...
             access_control:
@@ -44,6 +47,10 @@ Take the following ``access_control`` entries as an example:
                 - { path: '^/admin', roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8080 }
                 - { path: '^/admin', roles: ROLE_USER_HOST, host: symfony\.com$ }
                 - { path: '^/admin', roles: ROLE_USER_METHOD, methods: [POST, PUT] }
+
+                # ips can be comma-separated, which is especially useful when using env variables
+                - { path: '^/admin', roles: ROLE_USER_IP, ips: '%env(TRUSTED_IPS)%' }
+                - { path: '^/admin', roles: ROLE_USER_IP, ips: [127.0.0.1, ::1, '%env(TRUSTED_IPS)%'] }
 
     .. code-block:: xml
 
@@ -57,18 +64,31 @@ Take the following ``access_control`` entries as an example:
                 http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
+            <srv:parameters>
+                <srv:parameter key="env(TRUSTED_IPS)">10.0.0.1, 10.0.0.2</parameter>
+            </srv:parameters>
+
             <config>
                 <!-- ... -->
                 <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1"/>
                 <rule path="^/admin" role="ROLE_USER_PORT" ip="127.0.0.1" port="8080"/>
                 <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$"/>
                 <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT"/>
+
+                <!-- ips can be comma-separated, which is especially useful when using env variables -->
+                <rule path="^/admin" role="ROLE_USER_IP" ip="%env(TRUSTED_IPS)%"/>
+                <rule path="^/admin" role="ROLE_USER_IP">
+                    <ip>127.0.0.1</ip>
+                    <ip>::1</ip>
+                    <ip>%env(TRUSTED_IPS)%</ip>
+                </rule>
             </config>
         </srv:container>
 
     .. code-block:: php
 
         // config/packages/security.php
+        $container->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
         $container->loadFromExtension('security', [
             // ...
             'access_control' => [
@@ -92,9 +112,29 @@ Take the following ``access_control`` entries as an example:
                     'path' => '^/admin',
                     'roles' => 'ROLE_USER_METHOD',
                     'methods' => 'POST, PUT',
-                ]
+                ],
+
+                // ips can be comma-separated, which is especially useful when using env variables
+                [
+                    'path' => '^/admin',
+                    'roles' => 'ROLE_USER_IP',
+                    'ips' => '%env(TRUSTED_IPS)%',
+                ],
+                [
+                    'path' => '^/admin',
+                    'roles' => 'ROLE_USER_IP',
+                    'ips' => [
+                        '127.0.0.1',
+                        '::1',
+                        '%env(TRUSTED_IPS)%',
+                    ],
+                ],
             ],
         ]);
+
+.. versionadded:: 5.2
+
+    Support for comma-separated IP addresses was introduced in Symfony 5.2.
 
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
@@ -260,7 +300,7 @@ the external IP address ``10.0.0.1``:
 * The second access control rule is enabled (the only restriction being the
   ``path``) and so it matches. If you make sure that no users ever have
   ``ROLE_NO_ACCESS``, then access is denied (``ROLE_NO_ACCESS`` can be anything
-  that does not match an existing role, it just serves as a trick to always
+  that does not match an existing role, it only serves as a trick to always
   deny access).
 
 But if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback

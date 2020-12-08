@@ -50,10 +50,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_name --full
+    $ symfony new my_project_name --version=next --full
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_name
+    $ symfony new my_project_name --version=next
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--full`` option installs all the packages that you
@@ -65,10 +65,10 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/website-skeleton my_project_name
+    $ composer create-project symfony/website-skeleton:"5.2.x@dev" my_project_name
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton my_project_name
+    $ composer create-project symfony/skeleton:"5.2.x@dev" my_project_name
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_name/`` directory, download some dependencies
@@ -170,10 +170,10 @@ following example:
     $ cd my-project/
     $ composer require logger
 
-If you execute that command in a Symfony application which doesn't use Flex,
-you'll see a Composer error explaining that ``logger`` is not a valid package
-name. However, if the application has Symfony Flex installed, that command
-installs and enables all the packages needed to use the official Symfony logger.
+If you run that command in a Symfony application which doesn't use Flex, you'll
+see a Composer error explaining that ``logger`` is not a valid package name.
+However, if the application has Symfony Flex installed, that command installs
+and enables all the packages needed to use the official Symfony logger.
 
 .. _recipes-description:
 
@@ -232,7 +232,7 @@ vulnerability:
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. The security
-check is done locally by cloning the public `PHP security advisories database`_,
+check is done locally by fetching the public `PHP security advisories database`_,
 so your ``composer.lock`` file is not sent on the network.
 
 .. tip::
@@ -268,7 +268,7 @@ create new projects. If you use Composer, you need to tell the exact version:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/website-skeleton:^4.4 my_project_name
+    $ composer create-project symfony/website-skeleton:"^4.4" my_project_name
 
 The Symfony Demo application
 ----------------------------

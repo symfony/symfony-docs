@@ -293,10 +293,6 @@ string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
 
-.. versionadded:: 5.1
-
-    Support for typed properties (added in PHP 7.4) was introduced in Symfony 5.1.
-
 ``Type::isNullable()``
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -438,8 +434,16 @@ with the ``property_info`` service in the Symfony Framework::
     );
     $serializerExtractor = new SerializerExtractor($serializerClassMetadataFactory);
 
-    // List information.
-    $serializerExtractor->getProperties($class);
+    // the `serializer_groups` option must be configured (may be set to null)
+    $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
+   
+If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
+checked but you will get only the properties considered by the Serializer
+Component (notably the ``@Ignore`` annotation is taken into account).
+
+.. versionadded:: 5.2
+
+    Support for the ``null`` value in ``serializer_groups`` was introduced in Symfony 5.2. 
 
 DoctrineExtractor
 ~~~~~~~~~~~~~~~~~
@@ -492,6 +496,8 @@ service by defining it as a service with one or more of the following
 * ``property_info.type_extractor`` if it provides type information.
 * ``property_info.description_extractor`` if it provides description information.
 * ``property_info.access_extractor`` if it provides access information.
+* ``property_info.initializable_extractor`` if it provides initializable information
+  (it checks if a property can be initialized through the constructor).
 
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock

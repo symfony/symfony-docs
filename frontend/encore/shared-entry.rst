@@ -18,11 +18,11 @@ Update your code to use ``createSharedEntry()``:
 
     Encore
         // ...
-    -     .addEntry('app', './assets/js/app.js')
-    +     .createSharedEntry('app', './assets/js/app.js')
-        .addEntry('homepage', './assets/js/homepage.js')
-        .addEntry('blog', './assets/js/blog.js')
-        .addEntry('store', './assets/js/store.js')
+    -     .addEntry('app', './assets/app.js')
+    +     .createSharedEntry('app', './assets/app.js')
+        .addEntry('homepage', './assets/homepage.js')
+        .addEntry('blog', './assets/blog.js')
+        .addEntry('store', './assets/store.js')
 
 Before making this change, if both ``app.js`` and ``store.js`` require ``jquery``,
 then ``jquery`` would be packaged into *both* files, which is wasteful. By making

@@ -8,7 +8,7 @@ Symfony provides different means to work with an LDAP server.
 
 The Security component offers:
 
-* The ``ldap`` :doc:`user provider</security/user_provider>`, using the
+* The ``ldap`` :doc:`user provider </security/user_provider>`, using the
   :class:`Symfony\\Component\\Ldap\\Security\\LdapUserProvider`
   class. Like all other user providers, it can be used with any
   authentication provider.
@@ -209,7 +209,7 @@ use the ``ldap`` user provider.
     data. It's a static user defined by its username and password (for improved
     security, define the password as an environment variable).
 
-    If your LDAP server allows to retrieve information anonymously, you can
+    If your LDAP server allows retrieval of information anonymously, you can
     set the ``search_dn`` and ``search_password`` options to ``null``.
 
 The ``ldap`` user provider supports many different configuration options:
@@ -236,7 +236,7 @@ search_dn
 **type**: ``string`` **default**: ``null``
 
 This is your read-only user's DN, which will be used to authenticate
-against the LDAP server in order to fetch the user's information.
+against the LDAP server to fetch the user's information.
 
 search_password
 ...............
@@ -244,7 +244,7 @@ search_password
 **type**: ``string`` **default**: ``null``
 
 This is your read-only user's password, which will be used to authenticate
-against the LDAP server in order to fetch the user's information.
+against the LDAP server to fetch the user's information.
 
 default_roles
 .............
@@ -294,7 +294,7 @@ load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 If you pass ``null`` as the value of this option, the default filter is used
 ``({uid_key}={username})``.
 
-In order to prevent `LDAP injection`_, the username will be escaped.
+To prevent `LDAP injection`_, the username will be escaped.
 
 The syntax for the ``filter`` key is defined by `RFC4515`_.
 
@@ -321,7 +321,7 @@ dn_string
 
 **type**: ``string`` **default**: ``{username}``
 
-This key defines the form of the string used in order to compose the
+This key defines the form of the string used to compose the
 DN of the user, from the username. The ``{username}`` string is
 replaced by the actual username of the person trying to authenticate.
 

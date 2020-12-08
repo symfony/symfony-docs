@@ -8,8 +8,8 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony provides a `Validator`_ component that makes this task easy and
-transparent. This component is based on the `JSR303 Bean Validation specification`_.
+Symfony provides a `Validator`_ component to handle this for you. This
+component is based on the `JSR303 Bean Validation specification`_.
 
 Installation
 ------------
@@ -39,13 +39,13 @@ your application::
         private $name;
     }
 
-So far, this is just an ordinary class that serves some purpose inside your
-application. The goal of validation is to tell you if the data
-of an object is valid. For this to work, you'll configure a list of rules
-(called :ref:`constraints <validation-constraints>`) that the object must
-follow in order to be valid. These rules are usually defined using PHP code or
-annotations but they can also be defined as ``.yaml`` or
-``.xml`` files inside the ``config/validator/`` directory:
+So far, this is an ordinary class that serves some purpose inside your
+application. The goal of validation is to tell you if the data of an object is
+valid. For this to work, you'll configure a list of rules (called
+:ref:`constraints <validation-constraints>`) that the object must follow in
+order to be valid. These rules are usually defined using PHP code or
+annotations but they can also be defined as ``.yaml`` or ``.xml`` files inside
+the ``config/validator/`` directory:
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
@@ -119,8 +119,8 @@ following:
 .. index::
    single: Validation; Using the validator
 
-Using the ``validator`` Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the Validator Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, to actually validate an ``Author`` object, use the ``validate()`` method
 on the ``validator`` service (which implements :class:`Symfony\\Component\\Validator\\Validator\\ValidatorInterface`).
@@ -718,6 +718,46 @@ the :doc:`Callback </reference/constraints/Callback>` constraint is a generic
 constraint that's applied to the class itself. When that class is validated,
 methods specified by that constraint are simply executed so that each can
 provide more custom validation.
+
+Debugging the Constraints
+-------------------------
+
+.. versionadded:: 5.2
+
+    The ``debug:validator`` command was introduced in Symfony 5.2.
+
+Use the ``debug:validator`` command to list the validation constraints of a
+given class:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:validator 'App\Entity\SomeClass'
+
+        App\Entity\SomeClass
+        -----------------------------------------------------
+
+        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
+        | Property      | Name                                             | Groups  | Options                                                    |
+        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
+        | firstArgument | Symfony\Component\Validator\Constraints\NotBlank | Default | [                                                          |
+        |               |                                                  |         |   "message" => "This value should not be blank.",          |
+        |               |                                                  |         |   "allowNull" => false,                                    |
+        |               |                                                  |         |   "normalizer" => null,                                    |
+        |               |                                                  |         |   "payload" => null                                        |
+        |               |                                                  |         | ]                                                          |
+        | firstArgument | Symfony\Component\Validator\Constraints\Email    | Default | [                                                          |
+        |               |                                                  |         |   "message" => "This value is not a valid email address.", |
+        |               |                                                  |         |   "mode" => null,                                          |
+        |               |                                                  |         |   "normalizer" => null,                                    |
+        |               |                                                  |         |   "payload" => null                                        |
+        |               |                                                  |         | ]                                                          |
+        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
+
+You can also validate all the classes stored in a given directory:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:validator src/Entity
 
 Final Thoughts
 --------------

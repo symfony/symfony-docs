@@ -62,7 +62,7 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
         }
 
         // Creating such a method is optional, but allows type-hinting the result
-        private function query(ListItemsQuery $query): ListItemsResult
+        private function query(ListItemsQuery $query): ListItemsQueryResult
         {
             return $this->handle($query);
         }

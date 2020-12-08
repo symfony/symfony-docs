@@ -14,7 +14,7 @@ you to send SMS messages::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
-    
+
     use Symfony\Component\Notifier\Message\SmsMessage;
     use Symfony\Component\Notifier\TexterInterface;
     use Symfony\Component\Routing\Annotation\Route;
@@ -33,11 +33,19 @@ you to send SMS messages::
                 'A new login was detected!'
             );
 
-            $texter->send($sms);
+            $sentMessage = $texter->send($sms);
 
             // ...
         }
     }
+
+The ``send()`` method returns a variable of type
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
+information such as the message ID and the original message contents.
+
+.. versionadded:: 5.2
+
+    The ``SentMessage`` class was introduced in Symfony 5.2.
 
 .. seealso::
 

@@ -83,17 +83,19 @@ can be accessed via several public properties:
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
 instance (or a sub-class of), which is a data holder class:
 
-* ``request``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``request``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` or
+  :class:`Symfony\\Component\\HttpFoundation\\InputBag` if the data is
+  coming from ``$_POST`` parameters;
 
-* ``query``:   :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``query``: :class:`Symfony\\Component\\HttpFoundation\\InputBag`;
 
-* ``cookies``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``cookies``: :class:`Symfony\\Component\\HttpFoundation\\InputBag`;
 
 * ``attributes``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
 
-* ``files``:   :class:`Symfony\\Component\\HttpFoundation\\FileBag`;
+* ``files``: :class:`Symfony\\Component\\HttpFoundation\\FileBag`;
 
-* ``server``:  :class:`Symfony\\Component\\HttpFoundation\\ServerBag`;
+* ``server``: :class:`Symfony\\Component\\HttpFoundation\\ServerBag`;
 
 * ``headers``: :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`.
 
@@ -188,8 +190,17 @@ Finally, the raw data sent with the request body can be accessed using
 
     $content = $request->getContent();
 
-For instance, this may be useful to process a JSON string sent to the
+For instance, this may be useful to process a XML string sent to the
 application by a remote service using the HTTP POST method.
+
+If the request body is a JSON string, it can be accessed using
+:method:`Symfony\\Component\\HttpFoundation\\Request::toArray`::
+
+    $data = $request->toArray();
+
+.. versionadded:: 5.2
+
+    The ``toArray()`` method was introduced in Symfony 5.2.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -271,6 +282,14 @@ this complexity and defines some methods for the most common tasks::
     // Decodes a quoted string
     HeaderUtils::unquote('"foo \"bar\""');
     // => 'foo "bar"'
+
+    // Parses a query string but maintains dots (PHP parse_str() replaces '.' by '_')
+    HeaderUtils::parseQuery('foo[bar.baz]=qux');
+    // => ['foo' => ['bar.baz' => 'qux']]
+
+.. versionadded:: 5.2
+
+    The ``parseQuery()`` method was introduced in Symfony 5.2.
 
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -639,7 +658,7 @@ or change its ``Content-Disposition``::
         'filename.txt'
     );
 
-It is possible to delete the file after the request is sent with the
+It is possible to delete the file after the response is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 

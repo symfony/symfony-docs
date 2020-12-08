@@ -11,6 +11,8 @@ In Symfony 5.1, a new authentication system was introduced. This system
 changes the internals of Symfony Security, to make it more extensible
 and more understandable.
 
+.. _security-enable-authenticator-manager:
+
 Enabling the System
 -------------------
 
@@ -132,6 +134,42 @@ unauthenticated access (e.g. the login page):
                 ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
             ],
         ]);
+
+Granting Anonymous Users Access in a Custom Voter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``NullToken`` class was introduced in Symfony 5.2.
+
+If you're using a :doc:`custom voter </security/voters>`, you can allow
+anonymous users access by checking for a special
+:class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\NullToken`. This token is used
+in the voters to represent the unauthenticated access::
+
+    // src/Security/PostVoter.php
+    namespace App\Security;
+
+    // ...
+    use Symfony\Component\Security\Core\Authentication\Token\NullToken;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+
+    class PostVoter extends Voter
+    {
+        // ...
+
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+        {
+            // ...
+
+            if ($token instanceof NullToken) {
+                // the user is not authenticated, e.g. only allow them to
+                // see public posts
+                return $subject->isPublic();
+            }
+        }
+    }
 
 .. _authenticators-required-entry-point:
 
@@ -337,7 +375,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
                         - App\Security\ApiKeyAuthenticator
 
                     # don't forget to also configure the entry_point if the
-                    # authenticator implements AuthenticatorEntryPointInterface
+                    # authenticator implements AuthenticationEntryPointInterface
                     # entry_point: App\Security\CustomFormLoginAuthenticator
 
     .. code-block:: xml
@@ -409,7 +447,7 @@ well as other pieces of information, like whether a password should be checked
 or if "remember me" functionality should be enabled.
 
 The default
-:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`.
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
 requires a user object and credentials. The following credential classes
 are supported by default:
 
@@ -464,13 +502,16 @@ the following badges are supported:
     authentication. The constructor requires a token ID (unique per form)
     and CSRF token (unique per request). See :doc:`/security/csrf`.
 
-:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\PreAuthenticatedBadge`
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\PreAuthenticatedUserBadge`
     Indicates that this user was pre-authenticated (i.e. before Symfony was
     initiated). This skips the
     :doc:`pre-authentication user checker </security/user_checkers>`.
 
 For instance, if you want to add CSRF and password migration to your custom
 authenticator, you would initialize the passport like this::
+
+    // src/Service/LoginAuthenticator.php
+    namespace App\Service;
 
     // ...
     use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
@@ -493,7 +534,44 @@ authenticator, you would initialize the passport like this::
             return new Passport($user, new PasswordCredentials($password), [
                 // $this->userRepository must implement PasswordUpgraderInterface
                 new PasswordUpgradeBadge($password, $this->userRepository),
-                new CsrfTokenBadge('login', $csrfToken);
+                new CsrfTokenBadge('login', $csrfToken),
             ]);
         }
     }
+
+.. tip::
+
+    Besides badges, passports can define attributes, which allows the
+    ``authenticate()`` method to store arbitrary information in the
+    passport to access it from other authenticator methods (e.g.
+    ``createAuthenticatedToken()``)::
+
+        // ...
+        use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+
+        class LoginAuthenticator extends AbstractAuthenticator
+        {
+            // ...
+
+            public function authenticate(Request $request): PassportInterface
+            {
+                // ... process the request
+
+                $passport = new SelfValidatingPassport($username, []);
+
+                // set a custom attribute (e.g. scope)
+                $passport->setAttribute('scope', $oauthScope);
+
+                return $passport;
+            }
+
+            public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface
+            {
+                // read the attribute value
+                return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
+            }
+        }
+
+.. versionadded:: 5.2
+
+    Passport attributes were introduced in Symfony 5.2.

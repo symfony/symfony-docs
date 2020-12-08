@@ -4,7 +4,7 @@
 Transactional Messages: Handle New Messages After Handling is Done
 ==================================================================
 
-A message handler can ``dispatch`` new messages during execution, to either the
+A message handler can ``dispatch`` new messages while handling others, to either the
 same or a different bus (if the application has
 :doc:`multiple buses </messenger/multiple_buses>`). Any errors or exceptions that
 occur during this process can have unintended consequences, such as:
@@ -44,6 +44,7 @@ are dispatched by a handler once that handler has fully finished. This can be by
 using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 ``DispatchAfterCurrentBusStamp`` stamp to :ref:`the message Envelope <messenger-envelopes>`::
 
+    // src/Messenger/CommandHandler/RegisterUserHandler.php
     namespace App\Messenger\CommandHandler;
 
     use App\Entity\User;
@@ -85,6 +86,7 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 
 .. code-block:: php
 
+    // src/Messenger/EventSubscriber/WhenUserRegisteredThenSendWelcomeEmail.php
     namespace App\Messenger\EventSubscriber;
 
     use App\Entity\User;

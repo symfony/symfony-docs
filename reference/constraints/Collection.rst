@@ -96,7 +96,7 @@ following:
                 profileData:
                     - Collection:
                         fields:
-                            personal_email: 
+                            personal_email:
                                 - Email: ~
                             short_bio:
                                 - NotBlank: ~
@@ -209,7 +209,7 @@ you can do the following:
              *     }
              * )
              */
-            protected $profileData = ['personal_email'];
+            protected $profileData = ['personal_email' => 'email@example.com'];
         }
 
     .. code-block:: yaml

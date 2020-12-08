@@ -74,10 +74,7 @@ class that processes the login submit and 4) updates the main security config fi
             // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
 
-            return $this->render('security/login.html.twig', [
-                'last_username' => $lastUsername,
-                'error' => $error
-            ]);
+            return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
         }
 
         /**
@@ -99,12 +96,13 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
         security:
             # ...
 
-            providers:
-                # ...
-                logout:
-                    path: app_logout
-                    # where to redirect after logout
-                    # target: app_any_route
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        path: app_logout
+                        # where to redirect after logout
+                        # target: app_any_route
 
     .. code-block:: xml
 
@@ -119,8 +117,11 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
-                <rule path="^/login$" role="IS_AUTHENTICATED_ANONYMOUSLY"/>
                 <!-- ... -->
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout path="app_logout"/>
+                </firewall>
             </config>
         </srv:container>
 
@@ -129,16 +130,19 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
         // config/packages/security.php
         $container->loadFromExtension('security', [
             // ...
-            'access_control' => [
-                [
-                    'path' => '^/login',
-                    'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+            'firewalls' => [
+                'main' => [
+                    // ...
+                    'logout' => [
+                        'path' => 'app_logout',
+                        // where to redirect after logout
+                        'target' => 'app_any_route'
+                    ],
                 ],
-                // ...
             ],
         ]);
 
-**Step 2.** The template has very little to do with security: it just generates
+**Step 2.** The template has very little to do with security: it generates
 a traditional HTML form that submits to ``/login``:
 
 .. code-block:: html+twig
@@ -160,10 +164,10 @@ a traditional HTML form that submits to ``/login``:
         {% endif %}
 
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail" class="sr-only">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="inputEmail">Email</label>
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" required>
 
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}"
@@ -295,7 +299,7 @@ a traditional HTML form that submits to ``/login``:
         }
     }
 
-**Step 4.** Updates the main security config file to enable the Guard authenticator:
+**Step 4.** Updates the main security config file to enable the Guard authenticator and configure logout route:
 
 .. configuration-block::
 
@@ -311,6 +315,8 @@ a traditional HTML form that submits to ``/login``:
                     guard:
                         authenticators:
                             - App\Security\LoginFormAuthenticator
+                    logout:
+                        path: app_logout
 
     .. code-block:: xml
 
@@ -331,6 +337,7 @@ a traditional HTML form that submits to ``/login``:
                     <guard>
                         <authenticator class="App\Security\LoginFormAuthenticator"/>
                     </guard>
+                    <logout path="app_logout"/>
                 </firewall>
             </config>
         </srv:container>
@@ -349,6 +356,9 @@ a traditional HTML form that submits to ``/login``:
                         'authenticators' => [
                             LoginFormAuthenticator::class,
                         ]
+                    ],
+                    'logout' => [
+                        'path' => 'app_logout',
                     ],
                 ],
             ],
@@ -402,8 +412,6 @@ Controlling Error Messages
 
 You can cause authentication to fail with a custom message at any step by throwing
 a custom :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`.
-This is an easy way to control the error message.
-
 But in some cases, like if you return ``false`` from ``checkCredentials()``, you
 may see an error that comes from the core of Symfony - like ``Invalid credentials.``.
 
@@ -465,6 +473,7 @@ If you also want to apply this behavior to public pages, you can create an
 :doc:`event subscriber </event_dispatcher>` to set the target path manually
 whenever the user browses a page::
 
+    // src/EventSubscriber/RequestSubscriber.php
     namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;

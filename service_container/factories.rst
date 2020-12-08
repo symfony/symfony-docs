@@ -19,9 +19,14 @@ Static Factories
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object by calling the static ``createNewsletterManager()`` method::
 
+    // src/Email\NewsletterManagerStaticFactory.php
+    namespace App\Email;
+
+    // ...
+
     class NewsletterManagerStaticFactory
     {
-        public static function createNewsletterManager()
+        public static function createNewsletterManager(): NewsletterManager
         {
             $newsletterManager = new NewsletterManager();
 
@@ -170,9 +175,13 @@ Invokable Factories
 Suppose you now change your factory method to ``__invoke()`` so that your
 factory service can be used as a callback::
 
+    // src/Email/InvokableNewsletterManagerFactory.php
+    namespace App\Email;
+
+    // ...
     class InvokableNewsletterManagerFactory
     {
-        public function __invoke()
+        public function __invoke(): NewsletterManager
         {
             $newsletterManager = new NewsletterManager();
 
@@ -183,8 +192,7 @@ factory service can be used as a callback::
     }
 
 Services can be created and configured via invokable factories by omitting the
-method name, just as routes can reference
-:ref:`invokable controllers <controller-service-invoke>`.
+method name:
 
 .. configuration-block::
 

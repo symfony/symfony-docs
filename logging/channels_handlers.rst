@@ -25,7 +25,9 @@ Switching a Channel to a different Handler
 
 Now, suppose you want to log the ``security`` channel to a different file.
 To do this, create a new handler and configure it to log only messages
-from the ``security`` channel:
+from the ``security`` channel. The following example does that only in the
+``prod`` :ref:`configuration environment <configuration-environments>` but you
+can do it in any (or all) environments:
 
 .. configuration-block::
 
@@ -121,7 +123,7 @@ Creating your own Channel
 
 You can change the channel Monolog logs to one service at a time. This is done
 either via the :ref:`configuration <monolog-channels-config>` below
-or by tagging your service with :ref:`monolog.logger<dic_tags-monolog>` and
+or by tagging your service with :ref:`monolog.logger <dic_tags-monolog>` and
 specifying which channel the service should log to. With the tag, the logger
 that is injected into that service is preconfigured to use the channel you've
 specified.
@@ -180,8 +182,11 @@ How to Autowire Logger Channels
 
 Starting from `MonologBundle`_ 3.5 you can autowire different Monolog channels
 by type-hinting your service arguments with the following syntax:
-``Psr\Log\LoggerInterface $<channel>Logger``. For example, to inject the service
-related to the ``app`` logger channel use this:
+``Psr\Log\LoggerInterface $<channel>Logger``. The ``<channel>`` must have been
+:ref:`predefined in your Monolog configuration <monolog-channels-config>`.
+
+For example to inject the service related to the ``app`` logger channel,
+change your constructor like this:
 
 .. code-block:: diff
 

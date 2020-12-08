@@ -31,17 +31,19 @@ by using transports.
 
 The notifier component supports the following channels:
 
-* `SMS <SMS Channel>`_ sends notifications to phones via SMS messages
-* `Chat <Chat Channel>`_ sends notifications to chat services like Slack
-  and Telegram;
-* `Email <Email Channel>`_ integrates the :doc:`Symfony Mailer </mailer>`;
-* Browser uses :ref:`flash messages <flash-messages>`.
+* :ref:`SMS channel <notifier-sms-channel>` sends notifications to phones via
+  SMS messages;
+* :ref:`Chat channel <notifier-chat-channel>` sends notifications to chat
+  services like Slack and Telegram;
+* :ref:`Email channel <notifier-email-channel>` integrates the :doc:`Symfony Mailer </mailer>`;
+* Browser channel uses :ref:`flash messages <flash-messages>`.
 
 .. tip::
 
     Use :doc:`secrets </configuration/secrets>` to securily store your
     API's tokens.
 
+.. _notifier-sms-channel:
 .. _notifier-texter-dsn:
 
 SMS Channel
@@ -52,19 +54,28 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==========  ===============================  ====================================================
-Service     Package                          DSN
-==========  ===============================  ====================================================
-Twilio      ``symfony/twilio-notifier``      ``twilio://SID:TOKEN@default?from=FROM``
-Nexmo       ``symfony/nexmo-notifier``       ``nexmo://KEY:SECRET@default?from=FROM``
-OvhCloud    ``symfony/ovhcloud-notifier``    ``ovhcloud://KEY:SECRET@default?from=FROM``
-Sinch       ``symfony/sinch-notifier``       ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-FreeMobile  ``symfony/freemobile-notifier``  ``freemobile://LOGIN:PASS@default?phone=PHONE``
-==========  ===============================  ====================================================
+==========  ================================  ====================================================
+Service     Package                           DSN
+==========  ================================  ====================================================
+Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
+FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+Infobip     ``symfony/infobip-notifier``      ``infobip://TOKEN@default?from=FROM``
+Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
+Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
+OvhCloud    ``symfony/ovh-cloud-notifier``    ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+Sendinblue  ``symfony/sendinblue-notifier``   ``sendinblue://API_KEY@default?sender=PHONE``
+Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+Smsapi      ``symfony/smsapi-notifier``       ``smsapi://TOKEN@default?from=FROM``
+Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
+==========  ================================  ====================================================
 
 .. versionadded:: 5.1
 
     The OvhCloud, Sinch and FreeMobile integrations were introduced in Symfony 5.1.
+
+.. versionadded:: 5.2
+
+    The Smsapi, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -116,6 +127,7 @@ configure the ``texter_transports``:
             ],
         ]);
 
+.. _notifier-chat-channel:
 .. _notifier-chatter-dsn:
 
 Chat Channel
@@ -125,27 +137,34 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==========  ===============================  ============================================
-Service     Package                          DSN
-==========  ===============================  ============================================
-Slack       ``symfony/slack-notifier``       ``slack://default/ID``
-Telegram    ``symfony/telegram-notifier``    ``telegram://TOKEN@default?channel=CHAT_ID``
-Mattermost  ``symfony/mattermost-notifier``  ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
-RocketChat  ``symfony/rocketchat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-==========  ===============================  ============================================
+==========  ================================  ===========================================================================
+Service     Package                           DSN
+==========  ================================  ===========================================================================
+Discord     ``symfony/discord-notifier``      ``discord://TOKEN@default?webhook_id=ID``
+GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
+LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
+Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
+RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+Slack       ``symfony/slack-notifier``        ``slack://TOKEN@default?channel=CHANNEL``
+Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
+Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:APIKEY@ENDPOINT?channel=CHANNEL``
+==========  ================================  ===========================================================================
 
 .. versionadded:: 5.1
 
-    The Mattermost and RocketChat integrations were introduced in Symfony
-    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
-    Webhooks instead of legacy tokens.
+    The Mattermost and RocketChat integrations were introduced in Symfony 5.1.
+
+.. versionadded:: 5.2
+
+    The GoogleChat, LinkedIn, Zulip and Discord integrations were introduced in Symfony 5.2.
+    The Slack DSN changed in Symfony 5.2 to use Slack Web API again same as in 5.0.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
 .. code-block:: bash
 
     # .env
-    SLACK_DSN=slack://default/ID
+    SLACK_DSN=slack://TOKEN@default?channel=CHANNEL
 
 .. configuration-block::
 
@@ -188,6 +207,8 @@ Chatters are configured using the ``chatter_transports`` setting:
                 ],
             ],
         ]);
+
+.. _notifier-email-channel:
 
 Email Channel
 ~~~~~~~~~~~~~
@@ -296,9 +317,9 @@ transport:
 
                     <!-- Send notifications to the next scheduled transport
                          calculated by round robin -->
-                    <framework:chatter-transport name="slack">
+                    <framework:chatter-transport name="slack"><![CDATA[
                         %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
-                    </framework:chatter-transport>
+                    ]]></framework:chatter-transport>
                 </framework:notifier>
             </framework:config>
         </container>
@@ -333,7 +354,7 @@ To send a notification, autowire the
 
     use Symfony\Component\Notifier\Notification\Notification;
     use Symfony\Component\Notifier\NotifierInterface;
-    use Symfony\Component\Notifier\Recipient\AdminRecipient;
+    use Symfony\Component\Notifier\Recipient\Recipient;
 
     class InvoiceController extends AbstractController
     {
@@ -350,13 +371,13 @@ To send a notification, autowire the
                 ->content('You got a new invoice for 15 EUR.');
 
             // The receiver of the Notification
-            $recipient = new AdminRecipient(
+            $recipient = new Recipient(
                 $user->getEmail(),
                 $user->getPhonenumber()
             );
 
             // Send the notification to the recipient
-            $notifier->send($notification, $recipient);
+            $sentMessage = $notifier->send($notification, $recipient);
 
             // ...
         }
@@ -367,10 +388,18 @@ channels. The channels specify which channel (or transport) should be used
 to send the notification. For instance, ``['email', 'sms']`` will send
 both an email and sms notification to the user.
 
+The ``send()`` method used to send the notification returns a variable of type
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
+information such as the message ID and the original message contents.
+
+.. versionadded:: 5.2
+
+    The ``SentMessage`` class was introduced in Symfony 5.2.
+
 The default notification also has a ``content()`` and ``emoji()`` method to
 set the notification content and icon.
 
-Symfony provides three types of recipients:
+Symfony provides the following recipients:
 
 :class:`Symfony\\Component\\Notifier\\Recipient\\NoRecipient`
     This is the default and is useful when there is no need to have
@@ -378,13 +407,14 @@ Symfony provides three types of recipients:
     the current requests's :ref:`session flashbag <flash-messages>`;
 
 :class:`Symfony\\Component\\Notifier\\Recipient\\Recipient`
-    This contains only the email address of the user and can be used for
-    messages on the email and browser channel;
-
-:class:`Symfony\\Component\\Notifier\\Recipient\\AdminRecipient`
     This can contain both email address and phonenumber of the user. This
     recipient can be used for all channels (depending on whether they are
     actually set).
+
+.. versionadded:: 5.2
+
+    The ``AdminRecipient`` class was removed in Symfony 5.2, you should use
+    ``Recipient`` instead.
 
 Configuring Channel Policies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -500,7 +530,8 @@ very high and the recipient has a phone number::
     namespace App\Notifier;
 
     use Symfony\Component\Notifier\Notification\Notification;
-    use Symfony\Component\Notifier\Recipient\Recipient;
+    use Symfony\Component\Notifier\Recipient\RecipientInterface;
+    use Symfony\Component\Notifier\Recipient\SmsRecipientInterface;
 
     class InvoiceNotification extends Notification
     {
@@ -511,12 +542,11 @@ very high and the recipient has a phone number::
             $this->price = $price;
         }
 
-        public function getChannels(Recipient $recipient)
+        public function getChannels(RecipientInterface $recipient)
         {
             if (
                 $this->price > 10000
-                && $recipient instanceof AdminRecipient
-                && null !== $recipient->getPhone()
+                && $recipient instanceof SmsRecipientInterface
             ) {
                 return ['sms'];
             }
@@ -540,7 +570,7 @@ and its ``asChatMessage()`` method::
     use Symfony\Component\Notifier\Message\ChatMessage;
     use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
     use Symfony\Component\Notifier\Notification\Notification;
-    use Symfony\Component\Notifier\Recipient\Recipient;
+    use Symfony\Component\Notifier\Recipient\SmsRecipientInterface;
 
     class InvoiceNotification extends Notification implements ChatNotificationInterface
     {
@@ -551,7 +581,7 @@ and its ``asChatMessage()`` method::
             $this->price = $price;
         }
 
-        public function asChatMessage(Recipient $recipient, string $transport = null): ?ChatMessage
+        public function asChatMessage(RecipientInterface $recipient, string $transport = null): ?ChatMessage
         {
             // Add a custom emoji if the message is sent to Slack
             if ('slack' === $transport) {

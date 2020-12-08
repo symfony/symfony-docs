@@ -42,6 +42,8 @@ Topics
     forms
     frontend
     http_cache
+    http_client
+    lock
     logging
     mailer
     mercure
@@ -50,6 +52,7 @@ Topics
     notifier
     performance
     profiler
+    rate_limiter
     routing
     security
     session

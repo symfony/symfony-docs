@@ -28,7 +28,7 @@ Setting Up a Symfony Application
 
 Imagine you've installed your Symfony application in
 ``~/projects/symfony_demo`` on your local system. You first need Homestead to
-sync your files in this project. Execute ``homestead edit`` to edit the
+sync your files in this project. Run ``homestead edit`` to edit the
 Homestead configuration and configure the ``~/projects`` directory:
 
 .. code-block:: yaml

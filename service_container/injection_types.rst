@@ -19,6 +19,7 @@ The most common way to inject dependencies is via a class's constructor.
 To do this you need to add an argument to the constructor signature to accept
 the dependency::
 
+    // src/Mail/NewsletterManager.php
     namespace App\Mail;
 
     // ...
@@ -111,6 +112,9 @@ Immutable-setter Injection
 Another possible injection is to use a method which returns a separate instance
 by cloning the original service, this approach allows you to make a service immutable::
 
+    // src/Mail/NewsletterManager.php
+    namespace App\Mail;
+
     // ...
     use Symfony\Component\Mailer\MailerInterface;
 
@@ -122,7 +126,7 @@ by cloning the original service, this approach allows you to make a service immu
          * @required
          * @return static
          */
-        public function withMailer(MailerInterface $mailer)
+        public function withMailer(MailerInterface $mailer): self
         {
             $new = clone $this;
             $new->mailer = $mailer;
@@ -146,7 +150,7 @@ In order to use this type of injection, don't forget to configure it:
             app.newsletter_manager:
                 class: App\Mail\NewsletterManager
                 calls:
-                    - [withMailer, ['@mailer'], true]
+                    - withMailer: !returns_clone ['@mailer']
 
     .. code-block:: xml
 
@@ -201,8 +205,9 @@ so, here's the advantages of immutable-setters:
 
 The disadvantages are:
 
-* As the setter call is optional, a dependency can be null during execution,
-  you must check that the dependency is available before calling it.
+* As the setter call is optional, a dependency can be null when calling
+  methods of the service. You must check that the dependency is available
+  before using it.
 
 * Unless the service is declared lazy, it is incompatible with services
   that reference each other in what are called circular loops.
@@ -213,12 +218,18 @@ Setter Injection
 Another possible injection point into a class is by adding a setter method
 that accepts the dependency::
 
+    // src/Mail/NewsletterManager.php
+    namespace App\Mail;
+
     // ...
     class NewsletterManager
     {
         private $mailer;
 
-        public function setMailer(MailerInterface $mailer)
+        /**
+         * @required
+         */
+        public function setMailer(MailerInterface $mailer): void
         {
             $this->mailer = $mailer;
         }
@@ -237,7 +248,7 @@ that accepts the dependency::
             app.newsletter_manager:
                 class: App\Mail\NewsletterManager
                 calls:
-                    - [setMailer, ['@mailer']]
+                    - setMailer: ['@mailer']
 
     .. code-block:: xml
 
@@ -287,13 +298,15 @@ This time the advantages are:
 
 The disadvantages of setter injection are:
 
-* The setter can be called more than just at the time of construction so
-  you cannot be sure the dependency is not replaced during the lifetime
-  of the object (except by explicitly writing the setter method to check
-  if it has already been called).
+* The setter can be called more than once, also long after initialization,
+  so you cannot be sure the dependency is not replaced during the lifetime
+  of the object (except by explicitly writing the setter method to check if
+  it has already been called).
 
 * You cannot be sure the setter will be called and so you need to add checks
   that any required dependencies are injected.
+
+.. _property-injection:
 
 Property Injection
 ------------------

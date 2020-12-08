@@ -48,8 +48,8 @@ Symfony application.
 
 .. tip::
 
-    Code coverage can be generated with the ``--coverage-*`` options, see the
-    help information that is shown when using ``--help`` for more information.
+    Use the ``--coverage-*`` command options to generate code coverage reports.
+    Read the PHPUnit manual to learn more about `code coverage analysis`_.
 
 .. index::
    single: Tests; Unit tests
@@ -57,13 +57,14 @@ Symfony application.
 Unit Tests
 ----------
 
-A unit test is a test against a single PHP class, also called a *unit*. If you
-want to test the overall behavior of your application, see the section about
-:ref:`Functional Tests <functional-tests>`.
+A `unit test`_ ensures that individual units of source code (e.g. a single class
+or some specific method in some class) meet their design and behave as intended.
+If you want to test an entire feature of your application (e.g. registering as a
+user or generating an invoice), see the section about :ref:`Functional Tests <functional-tests>`.
 
 Writing Symfony unit tests is no different from writing standard PHPUnit
-unit tests. Suppose, for example, that you have an *incredibly* simple class
-called ``Calculator`` in the ``src/Util/`` directory of the app::
+unit tests. Suppose, for example, that you have an class called ``Calculator``
+in the ``src/Util/`` directory of the app::
 
     // src/Util/Calculator.php
     namespace App\Util;
@@ -104,8 +105,8 @@ of your application::
     ``src/Util/`` directory, put the test in the ``tests/Util/``
     directory.
 
-Just like in your real application - autoloading is automatically enabled
-via the ``vendor/autoload.php`` file (as configured by default in the
+Like in your real application - autoloading is automatically enabled via the
+``vendor/autoload.php`` file (as configured by default in the
 ``phpunit.xml.dist`` file).
 
 You can also limit a test run to a directory or a specific test file:
@@ -213,7 +214,7 @@ Now you can use CSS selectors with the crawler. To assert that the phrase
     $this->assertSelectorTextContains('html h1.title', 'Hello World');
 
 This assertion checks if the first element matching the CSS selector contains
-the given text. This asserts calls ``$crawler->filter('html h1.title')``
+the given text. This assert calls ``$crawler->filter('html h1.title')``
 internally, which allows you to use CSS selectors to filter any HTML element in
 the page and check for its existence, attributes, text, etc.
 
@@ -533,74 +534,51 @@ You can also get the objects related to the latest request::
 Accessing the Container
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-It's highly recommended that a functional test only tests the response. But
-under certain very rare circumstances, you might want to access some services
-to write assertions. Given that services are private by default, test classes
-define a property that stores a special container created by Symfony which
-allows fetching both public and all non-removed private services::
+Functional tests should only test the response (e.g. its contents or its HTTP
+status code). However, in some rare circumstances you may need to access the
+container to use some service.
 
-    // gives access to the same services used in your test, unless you're using
-    // $client->insulate() or using real HTTP requests to test your application
-    // don't forget to call self::bootKernel() before, otherwise, the container
-    // will be empty
-    $container = self::$container;
+First, you can get the same container used in the application, which only
+includes the public services::
 
-For a list of services available in your application, use the ``debug:container``
-command.
+    public function testSomething()
+    {
+        $client = self::createClient();
+        $container = $client->getContainer();
+        // $someService = $container->get('the-service-ID');
 
-If a private service is *never* used in your application (outside of your test),
-it is *removed* from the container and cannot be accessed as described above. In
-that case, you can create a public alias in the ``test`` environment and access
-it via that alias:
+        // ...
+    }
 
-.. configuration-block::
+Symfony tests also have access to a special container that includes both the
+public services and the non-removed :ref:`private services <container-public>`
+services::
 
-    .. code-block:: yaml
+    public function testSomething()
+    {
+        // this call is needed; otherwise the container will be empty
+        self::bootKernel();
 
-        # config/services_test.yaml
-        services:
-            # access the service in your test via
-            # self::$container->get('test.App\Test\SomeTestHelper')
-            test.App\Test\SomeTestHelper:
-                # the id of the private service
-                alias: 'App\Test\SomeTestHelper'
-                public: true
+        $container = self::$container;
+        // $someService = $container->get('the-service-ID');
 
-    .. code-block:: xml
+        // ...
+    }
 
-        <!-- config/services_test.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+Finally, for the most rare edge-cases, Symfony includes a special container
+which provides access to all services, public and private. This special
+container is a service that can be get via the normal container::
 
-            <services>
-                <!-- ... -->
+    public function testSomething()
+    {
+        $client = self::createClient();
+        $normalContainer = $client->getContainer();
+        $specialContainer = $normalContainer->get('test.service_container');
 
-                <service id="test.App\Test\SomeTestHelper" alias="App\Test\SomeTestHelper" public="true"/>
-            </services>
-        </container>
+        // $somePrivateService = $specialContainer->get('the-service-ID');
 
-    .. code-block:: php
-
-        // config/services_test.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Service\MessageGenerator;
-        use App\Updates\SiteUpdateManager;
-
-        return function(ContainerConfigurator $configurator) {
-            // ...
-
-            $services->alias('test.App\Test\SomeTestHelper', 'App\Test\SomeTestHelper')->public();
-        };
-
-.. tip::
-
-    The special container that gives access to private services exists only in
-    the ``test`` environment and is itself a service that you can get from the
-    real container using the ``test.service_container`` id.
+        // ...
+    }
 
 .. tip::
 
@@ -670,7 +648,7 @@ Accessing the Profiler Data
 
 On each request, you can enable the Symfony profiler to collect data about the
 internal handling of that request. For example, the profiler could be used to
-verify that a given page executes less than a certain number of database
+verify that a given page runs less than a certain number of database
 queries when loading.
 
 To get the Profiler for the last request, do the following::
@@ -908,7 +886,7 @@ their type::
     $form['photo']->upload('/path/to/lucas.jpg');
 
     // In the case of a multiple file upload
-    $form['my_form[field][O]']->upload('/path/to/lucas.jpg');
+    $form['my_form[field][0]']->upload('/path/to/lucas.jpg');
     $form['my_form[field][1]']->upload('/path/to/lisa.jpg');
 
 .. tip::
@@ -1054,7 +1032,7 @@ need in your ``.env.test`` file:
 .. code-block:: text
 
     # .env.test
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test?serverVersion=5.7"
 
     # use SQLITE
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
@@ -1177,5 +1155,7 @@ Learn more
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.readthedocs.io/
 .. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
+.. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`$_SERVER`: https://www.php.net/manual/en/reserved.variables.server.php
 .. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers
+.. _`code coverage analysis`: https://phpunit.readthedocs.io/en/9.1/code-coverage-analysis.html

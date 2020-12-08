@@ -171,7 +171,7 @@ Finally, you need to update the code of the controller that handles the form::
 
                 // ... persist the $product variable or any other work
 
-                return $this->redirect($this->generateUrl('app_product_list'));
+                return $this->redirectToRoute('app_product_list');
             }
 
             return $this->render('product/new.html.twig', [
@@ -317,14 +317,23 @@ Then, define a service for this class:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\FileUploader;
 
-        $container->autowire(FileUploader::class)
-            ->setArgument('$targetDirectory', '%brochures_directory%');
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(FileUploader::class)
+                ->arg('$targetDirectory', '%brochures_directory%')
+            ;
+        };
 
 Now you're ready to use this service in the controller::
 
     // src/Controller/ProductController.php
+    namespace App\Controller;
+
     use App\Service\FileUploader;
     use Symfony\Component\HttpFoundation\Request;
 
@@ -335,7 +344,7 @@ Now you're ready to use this service in the controller::
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $brochureFile */
-            $brochureFile = $form['brochure']->getData();
+            $brochureFile = $form->get('brochure')->getData();
             if ($brochureFile) {
                 $brochureFileName = $fileUploader->upload($brochureFile);
                 $product->setBrochureFilename($brochureFileName);

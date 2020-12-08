@@ -53,8 +53,7 @@ Expiration with the ``Expires`` Header
 --------------------------------------
 
 An alternative to the ``Cache-Control`` header is ``Expires``. There's no advantage
-or disadvantage to either: they're just different ways to set expiration caching
-on your response.
+or disadvantage to either.
 
 According to the HTTP specification, "the ``Expires`` header field gives
 the date/time after which the response is considered stale." The ``Expires``

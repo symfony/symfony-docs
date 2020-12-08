@@ -267,6 +267,66 @@ expression
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
 to the :doc:`ExpressionLanguage component </components/expression_language>`.
 
+impersonation_exit_path
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_path(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``impersonation_exit_path()`` function was introduced in Symfony 5.2.
+
+Generates a URL that you can visit to exit :doc:`user impersonation </security/impersonating_user>`.
+After exiting impersonation, the user is redirected to the current URI. If you
+prefer to redirect to a different URI, define its value in the ``exitTo`` argument.
+
+If no user is being impersonated, the function returns an empty string.
+
+impersonation_exit_url
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_url(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+.. versionadded:: 5.2
+
+    The ``impersonation_exit_url()`` function was introduced in Symfony 5.2.
+
+It's similar to the `impersonation_exit_path`_ function, but it generates
+absolute URLs instead of relative URLs.
+
+.. _reference-twig-function-t:
+
+t
+~
+
+.. code-block:: twig
+
+    {{ t(message, parameters = [], domain = 'messages')|trans }}
+
+``message``
+    **type**: ``string``
+``parameters`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+``domain`` *(optional)*
+    **type**: ``string`` **default**: ``messages``
+
+.. versionadded:: 5.2
+
+    The ``t()`` function was introduced in Symfony 5.2.
+
+Creates a ``Translatable`` object that can be passed to the
+:ref:`trans filter <reference-twig-filter-trans>`.
+
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -304,6 +364,8 @@ Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
 
+.. _reference-twig-filter-trans:
+
 trans
 ~~~~~
 
@@ -312,13 +374,17 @@ trans
     {{ message|trans(arguments = [], domain = null, locale = null) }}
 
 ``message``
-    **type**: ``string``
+    **type**: ``string`` | ``Translatable``
 ``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
 ``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
+
+.. versionadded:: 5.2
+
+    ``message`` accepting ``Translatable`` as a valid type was introduced in Symfony 5.2.
 
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.
@@ -543,15 +609,17 @@ trans_default_domain
 
 This will set the default domain in the current template.
 
+.. _reference-twig-tag-stopwatch:
+
 stopwatch
 ~~~~~~~~~
 
 .. code-block:: twig
 
-    {% stopwatch 'name' %}...{% endstopwatch %}
+    {% stopwatch 'event_name' %}...{% endstopwatch %}
 
-This will time the run time of the code inside it and put that on the timeline
-of the WebProfilerBundle.
+This measures the time and memory used to execute some code in the template and
+displays it in the Symfony profiler. See :ref:`how to profile Symfony applications <profiling-applications>`.
 
 .. _reference-twig-tests:
 

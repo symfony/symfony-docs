@@ -19,6 +19,7 @@ Imagine you want to serialize and deserialize YAML. For that you'll have to
 create your own encoder that uses the
 :doc:`Yaml Component </components/yaml>`::
 
+    // src/Serializer/YamlEncoder.php
     namespace App\Serializer;
 
     use Symfony\Component\Serializer\Encoder\DecoderInterface;
@@ -27,22 +28,22 @@ create your own encoder that uses the
 
     class YamlEncoder implements EncoderInterface, DecoderInterface
     {
-        public function encode($data, $format, array $context = [])
+        public function encode($data, string $format, array $context = [])
         {
             return Yaml::dump($data);
         }
 
-        public function supportsEncoding($format)
+        public function supportsEncoding(string $format)
         {
             return 'yaml' === $format;
         }
 
-        public function decode($data, $format, array $context = [])
+        public function decode(string $data, string $format, array $context = [])
         {
             return Yaml::parse($data);
         }
 
-        public function supportsDecoding($format)
+        public function supportsDecoding(string $format)
         {
             return 'yaml' === $format;
         }
@@ -65,7 +66,7 @@ that's done automatically!
 
 .. tip::
 
-    If you're not using :ref:`autoconfigure <service_autoconfigure>`, make sure
+    If you're not using :ref:`autoconfigure <services-autoconfigure>`, make sure
     to register your class as a service and tag it with ``serializer.encoder``.
 
 Now you'll be able to serialize and deserialize YAML!

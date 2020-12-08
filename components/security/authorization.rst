@@ -114,12 +114,12 @@ user fully authenticated, or only based on a "remember-me" cookie, or even
 authenticated anonymously?
 
 It also supports the attributes ``IS_ANONYMOUS``, ``IS_REMEMBERED``,
-``IS_IMPERSONATED`` to grant access based on a specific state of
+``IS_IMPERSONATOR`` to grant access based on a specific state of
 authentication.
 
 .. versionadded:: 5.1
 
-    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATED``
+    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
     attributes were introduced in Symfony 5.1.
 
 ::
