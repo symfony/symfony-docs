@@ -54,19 +54,20 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==========  ================================  ====================================================
-Service     Package                           DSN
-==========  ================================  ====================================================
-FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
-OvhCloud    ``symfony/ovh-cloud-notifier``    ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
-Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
-==========  ================================  ====================================================
+==============  ================================  ====================================================
+Service         Package                           DSN
+==============  ================================  ====================================================
+`Free Mobile`_  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+`Nexmo`_        ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
+`OvhCloud`_     ``symfony/ovh-cloud-notifier``    ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+`Sinch`_        ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+`Twilio`_       ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
+==============  ================================  ====================================================
 
 .. versionadded:: 5.1
 
-    The OvhCloud, Sinch and FreeMobile integrations were introduced in Symfony 5.1.
+    The `OvhCloud`_, `Sinch`_ and `Free Mobile`_ integrations were
+    introduced in Symfony 5.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -128,19 +129,19 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==========  ================================  ============================================
-Service     Package                           DSN
-==========  ================================  ============================================
-Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
-RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-Slack       ``symfony/slack-notifier``        ``slack://default/ID``
-Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
-==========  ================================  ============================================
+=============  ================================  ============================================
+Service        Package                           DSN
+=============  ================================  ============================================
+`Mattermost`_  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
+`RocketChat`_  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+`Slack`_       ``symfony/slack-notifier``        ``slack://default/ID``
+`Telegram`_    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
+=============  ================================  ============================================
 
 .. versionadded:: 5.1
 
-    The Mattermost and RocketChat integrations were introduced in Symfony
-    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
+    The `Mattermost`_ and `RocketChat`_ integrations were introduced in Symfony
+    5.1. The `Slack`_ DSN changed in Symfony 5.1 to use Slack Incoming
     Webhooks instead of legacy tokens.
 
 Chatters are configured using the ``chatter_transports`` setting:
@@ -610,3 +611,13 @@ Learn more
     :glob:
 
     notifier/*
+
+.. _`Free Mobile`: https://free-mobile.fr
+.. _`Nexmo`: https://nexmo.com
+.. _`OvhCloud`: https://docs.ovh.com/gb/en/sms/
+.. _`Sinch`: https://www.sinch.com
+.. _`Twilio`: https://www.twilio.com
+.. _`Mattermost`: https://mattermost.com
+.. _`RocketChat`: https://rocket.chat
+.. _`Slack`: https://slack.com
+.. _`Telegram`: https://telegram.org
