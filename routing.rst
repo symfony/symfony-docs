@@ -790,11 +790,6 @@ concise, but it can decrease route readability when requirements are complex:
             // ...
         };
 
-.. versionadded:: 5.2
-
-    Since Symfony 5.2, inline parameter requirements are also supported in the
-    host. Before Symfony 5.2, they were supported in the path only.
-
 Optional Parameters
 ~~~~~~~~~~~~~~~~~~~
 
@@ -988,11 +983,6 @@ parameter:
 
     To give a ``null`` default value to any parameter, add nothing after the
     ``?`` character (e.g. ``/blog/{page?}``).
-
-.. versionadded:: 5.2
-
-    Since Symfony 5.2, inline parameter default values are also supported in
-    the host. Before Symfony 5.2, they were supported in the path only.
 
 Priority Parameter
 ~~~~~~~~~~~~~~~~~~
@@ -2045,6 +2035,16 @@ these routes.
             // or get the value from some container parameter:
             // ['HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain')]
         );
+
+.. tip::
+
+    You can also use the inline defaults and requirements format in the
+    ``host`` option: ``{subdomain<m|mobile>?m}.example.com``
+
+.. versionadded:: 5.2
+
+    Inline parameter default values support in hosts were introduced in
+    Symfony 5.2. Prior to Symfony 5.2, they were supported in the path only.
 
 .. _i18n-routing:
 
