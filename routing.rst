@@ -2036,6 +2036,16 @@ these routes.
             // ['HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain')]
         );
 
+.. tip::
+
+    You can also use the inline defaults and requirements format in the
+    ``host`` option: ``{subdomain<m|mobile>?m}.example.com``
+
+.. versionadded:: 5.2
+
+    Inline parameter default values support in hosts were introduced in
+    Symfony 5.2. Prior to Symfony 5.2, they were supported in the path only.
+
 .. _i18n-routing:
 
 Localized Routes (i18n)
