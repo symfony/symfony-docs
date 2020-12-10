@@ -807,8 +807,17 @@ to retry them:
 
 .. code-block:: terminal
 
-    # see all messages in the failure transport
+    # see all messages in the failure transport with a default limit of 50
     $ php bin/console messenger:failed:show
+    
+    # see the 10 first messages
+    $ php bin/console messenger:failed:show --max=10
+
+    # see only MyClass messages
+    $ php bin/console messenger:failed:show --class-filter='MyClass'
+
+    # see the number of messages by message class
+    $ php bin/console messenger:failed:show --stats
 
     # see details about a specific failure
     $ php bin/console messenger:failed:show 20 -vv
