@@ -81,6 +81,35 @@ started. In other words, your new application is ready!
     and ``<project>/var/log/``) must be writable by the web server. If you have
     any issue, read how to :doc:`set up permissions for Symfony applications </setup/file_permissions>`.
 
+.. _install-existing-app:
+
+Setting up an Existing Symfony Project
+--------------------------------------
+
+In addition to creating new Symfony projects, you will also work on projects
+already created by other developers. In that case, you only need to get the
+project code and install the dependencies with Composer. Assuming your team uses
+Git, setup your project with the following commands:
+
+.. code-block:: terminal
+
+    # clone the project to download its contents
+    $ cd projects/
+    $ git clone ...
+
+    # make Composer install the project's dependencies into vendor/
+    $ cd my-project/
+    $ composer install
+
+You'll probably also need to customize your :ref:`.env file <config-dot-env>`
+and do a few other project-specific tasks (e.g. creating a database). When
+working on a existing Symfony application for the first time, it may be useful
+to run this command which displays information about the project:
+
+.. code-block:: terminal
+
+    $ php bin/console about
+
 Running Symfony Applications
 ----------------------------
 
@@ -111,35 +140,6 @@ the server by pressing ``Ctrl+C`` from your terminal.
 
     The web server works with any PHP application, not only Symfony projects,
     so it's a very useful generic development tool.
-
-.. _install-existing-app:
-
-Setting up an Existing Symfony Project
---------------------------------------
-
-In addition to creating new Symfony projects, you will also work on projects
-already created by other developers. In that case, you only need to get the
-project code and install the dependencies with Composer. Assuming your team uses
-Git, setup your project with the following commands:
-
-.. code-block:: terminal
-
-    # clone the project to download its contents
-    $ cd projects/
-    $ git clone ...
-
-    # make Composer install the project's dependencies into vendor/
-    $ cd my-project/
-    $ composer install
-
-You'll probably also need to customize your :ref:`.env file <config-dot-env>`
-and do a few other project-specific tasks (e.g. creating a database). When
-working on a existing Symfony application for the first time, it may be useful
-to run this command which displays information about the project:
-
-.. code-block:: terminal
-
-    $ php bin/console about
 
 .. _symfony-flex:
 
