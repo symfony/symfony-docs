@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-12-11T14:44:30Z
+
+The proposed changes are correct according to https://github.com/symfony/symfony/blob/26e1e6b18efb57ac4d006fa756bdf8681f1d151a/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php#L1833 and https://github.com/symfony/symfony/blob/26e1e6b18efb57ac4d006fa756bdf8681f1d151a/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php#L1841
+
+Thanks Pierre!
