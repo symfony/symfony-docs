@@ -260,8 +260,8 @@ Rate Limiter Storage and Locking
 --------------------------------
 
 Rate limiters use the default cache and locking mechanisms defined in your
-Symfony application. If you prefer to change that, use the ``lock`` and
-``storage`` options:
+Symfony application. If you prefer to change that, use the ``lock_factory`` and
+``storage_service`` options:
 
 .. code-block:: yaml
 
@@ -274,9 +274,9 @@ Symfony application. If you prefer to change that, use the ``lock`` and
                 cache_pool: 'app.redis_cache'
                 # or define a service implementing StorageInterface to use a different
                 # mechanism to store the limiter information
-                storage: 'App\RateLimiter\CustomRedisStorage'
+                storage_service: 'App\RateLimiter\CustomRedisStorage'
                 # the value is the name of any lock defined in your application
-                lock: 'app.rate_limiter_lock'
+                lock_factory: 'app.rate_limiter_lock'
 
 .. _`token bucket algorithm`: https://en.wikipedia.org/wiki/Token_bucket
 .. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative
