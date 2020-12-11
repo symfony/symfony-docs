@@ -196,8 +196,8 @@ to reset the TTL to its original value::
         $lock->refresh(600);
 
 This component also provides two useful methods related to expiring locks:
-``getExpiringDate()`` (which returns ``null`` or a ``\DateTimeImmutable``
-object) and ``isExpired()`` (which returns a boolean).
+``getRemainingLifetime()`` (which returns ``null`` or a ``float``
+as seconds) and ``isExpired()`` (which returns a boolean).
 
 The Owner of The Lock
 ---------------------
