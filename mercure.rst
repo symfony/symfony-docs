@@ -428,9 +428,9 @@ And here is the controller::
             $configuration = Configuration::forSymmetricSigner(new Sha256(), $key);
             
             $token = $configuration->builder()
-                                    ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
-                                    ->getToken($configuration->signer(), $configuration->signingKey())
-                                    ->toString();
+                ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
+                ->getToken($configuration->signer(), $configuration->signingKey())
+                ->toString();
 
             $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
             $cookie = Cookie::create('mercureAuthorization')
