@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-12-11T15:19:37Z
+
+This can be verified at: https://github.com/symfony/symfony/blob/278688deeb27e02836fc960cbae71dcffd5f90e7/src/Symfony/Component/Lock/LockInterface.php#L72
+
+Thanks Youssef!
