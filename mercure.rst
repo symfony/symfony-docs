@@ -408,7 +408,7 @@ And here is the controller::
     // src/Controller/DiscoverController.php
     namespace App\Controller;
 
-    use Lcobucci\JWT\Builder;
+    use Lcobucci\JWT\Configuration;
     use Lcobucci\JWT\Signer\Hmac\Sha256;
     use Lcobucci\JWT\Signer\Key;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -423,11 +423,14 @@ And here is the controller::
         {
             $hubUrl = $this->getParameter('mercure.default_hub');
             $this->addLink($request, new Link('mercure', $hubUrl));
-
-            $token = (new Builder())
-                // set other appropriate JWT claims, such as an expiration date
+            
+            $key = Key\InMemory::plainText('mercure_secret_key'); // don't forget to set this parameter! Test value: !ChangeMe!
+            $configuration = Configuration::forSymmetricSigner(new Sha256(), $key);
+            
+            $token = $configuration->builder()
                 ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
-                ->getToken(new Sha256(), new Key($this->getParameter('mercure_secret_key'))); // don't forget to set this parameter! Test value: !ChangeMe!
+                ->getToken($configuration->signer(), $configuration->signingKey())
+                ->toString();
 
             $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
             $cookie = Cookie::create('mercureAuthorization')
