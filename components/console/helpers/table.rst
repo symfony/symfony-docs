@@ -233,7 +233,7 @@ If the built-in styles do not fit your need, define your own::
 
     // customizes the style
     $tableStyle
-        ->setDefaultCrossingChars('<fg=magenta>|</>')
+        ->setHorizontalBorderChars('<fg=magenta>|</>')
         ->setVerticalBorderChars('<fg=magenta>-</>')
         ->setDefaultCrossingChar(' ')
     ;
@@ -244,7 +244,7 @@ If the built-in styles do not fit your need, define your own::
 Here is a full list of things you can customize:
 
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPaddingChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setHorizontalBorderChars`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChars`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChars`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChar`
