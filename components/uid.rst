@@ -168,6 +168,35 @@ entity primary keys::
 
     The UUID types and generators were introduced in Symfony 5.2.
 
+When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
+knows how to convert these UUID types to build the SQL query
+(e.g. ``->findOneBy(['user' => $user->getUuid()])``). However, when using DQL
+queries or building the query yourself, you'll need to set ``uuid`` as the type
+of the UUID parameters::
+
+    // src/Repository/ProductRepository.php
+
+    // ...
+    class ProductRepository extends ServiceEntityRepository
+    {
+        // ...
+
+        public function findUserProducts(User $user): array
+        {
+            $qb = $this->createQueryBuilder('p')
+                // ...
+                // add 'uuid' as the third argument to tell Doctrine that this is an UUID
+                ->setParameter('user', $user->getUuid(), 'uuid')
+
+                // alternatively, you can convert it to a value compatible with
+                // the type inferred by Doctrine
+                ->setParameter('user', $user->getUuid()->toBinary())
+            ;
+
+            // ...
+        }
+    }
+
 ULIDs
 -----
 
@@ -282,6 +311,35 @@ entity primary keys::
 .. versionadded:: 5.2
 
     The ULID types and generator were introduced in Symfony 5.2.
+
+When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
+knows how to convert these ULID types to build the SQL query
+(e.g. ``->findOneBy(['user' => $user->getUlid()])``). However, when using DQL
+queries or building the query yourself, you'll need to set ``ulid`` as the type
+of the ULID parameters::
+
+    // src/Repository/ProductRepository.php
+
+    // ...
+    class ProductRepository extends ServiceEntityRepository
+    {
+        // ...
+
+        public function findUserProducts(User $user): array
+        {
+            $qb = $this->createQueryBuilder('p')
+                // ...
+                // add 'ulid' as the third argument to tell Doctrine that this is an ULID
+                ->setParameter('user', $user->getUlid(), 'ulid')
+
+                // alternatively, you can convert it to a value compatible with
+                // the type inferred by Doctrine
+                ->setParameter('user', $user->getUlid()->toBinary())
+            ;
+
+            // ...
+        }
+    }
 
 .. _`unique identifiers`: https://en.wikipedia.org/wiki/UID
 .. _`UUIDs`: https://en.wikipedia.org/wiki/Universally_unique_identifier
