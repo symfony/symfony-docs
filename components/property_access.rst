@@ -519,10 +519,10 @@ configured to enable extra features. To do that you could use the
     $propertyAccessorBuilder->enableMagicSet(); // enables magic __set
     $propertyAccessorBuilder->enableMagicMethods(); // enables magic __get, __set and __call
 
-    $propertyAccessorBuilder->disableMagicCall(); // enables magic __call
-    $propertyAccessorBuilder->disableMagicGet(); // enables magic __get
-    $propertyAccessorBuilder->disableMagicSet(); // enables magic __set
-    $propertyAccessorBuilder->disableMagicMethods(); // enables magic __get, __set and __call
+    $propertyAccessorBuilder->disableMagicCall(); // disables magic __call
+    $propertyAccessorBuilder->disableMagicGet(); // disables magic __get
+    $propertyAccessorBuilder->disableMagicSet(); // disables magic __set
+    $propertyAccessorBuilder->disableMagicMethods(); // disables magic __get, __set and __call
 
     // checks if magic __call, __get or __set handling are enabled
     $propertyAccessorBuilder->isMagicCallEnabled(); // true or false
