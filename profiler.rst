@@ -195,7 +195,7 @@ event::
 
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$this->getKernel()->isDebug()) {
+        if (!$event->getKernel()->isDebug()) {
             return;
         }
 
