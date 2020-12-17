@@ -155,7 +155,7 @@ difference is that it's done in the constructor:
         {
             // ...
 
-     +        $this->logger->info('Using the greeting: '.$greeting);
+    +        $this->logger->info('Using the greeting: '.$greeting);
 
              return $greeting;
         }
