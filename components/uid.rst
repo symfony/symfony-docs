@@ -71,7 +71,7 @@ Converting UUIDs
 
 Use these methods to transform the UUID object into different bases::
 
-    $uuid = new Uuid::fromString('d9e7a184-5d5b-11ea-a62a-3499710062d0');
+    $uuid = Uuid::fromString('d9e7a184-5d5b-11ea-a62a-3499710062d0');
 
     $uuid->toBinary();  // string(16) "..." (binary contents can't be printed)
     $uuid->toBase32();  // string(26) "6SWYGR8QAV27NACAHMK5RG0RPG"
