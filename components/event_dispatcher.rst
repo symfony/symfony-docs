@@ -348,7 +348,8 @@ of the event to dispatch::
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
     $dispatcher->dispatch($event, OrderPlacedEvent::NAME);
-    // note that ``OrderPlacedEvent::NAME`` is optional, read more below
+    // note that the second argument ``OrderPlacedEvent::NAME`` is optional,
+    // read more below in the subscriber code part
 
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed``
@@ -393,7 +394,8 @@ Take the following example of a subscriber that subscribes to the
                 ],
                 OrderPlacedEvent::NAME => 'onStoreOrder',
                 // you can also subscribe this way if you pass only
-                // the event object
+                // the event object as first argument and omit the second
+                // of the $dispatcher->dispatch method
                 OrderPlacedEvent::class => 'onStoreOrder',
             ];
         }
