@@ -144,7 +144,6 @@ integration with these chat services:
 
 ==========  ================================  ===========================================================================
 Service     Package                           DSN
-<<<<<<< HEAD
 ==========  ================================  ===========================================================================
 Discord     ``symfony/discord-notifier``      ``discord://TOKEN@default?webhook_id=ID``
 GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
