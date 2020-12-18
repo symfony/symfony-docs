@@ -320,6 +320,8 @@ are two of the main tasks when handling forms. Both are too similar (most of the
 times, almost identical), so it's much simpler to let a single controller action
 handle both.
 
+.. _best-practice-internationalization:
+
 Internationalization
 --------------------
 
