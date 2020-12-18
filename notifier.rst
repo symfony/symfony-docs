@@ -131,7 +131,7 @@ integration with these chat services:
 ==========  ================================  ============================================
 Service     Package                           DSN
 ==========  ================================  ============================================
-Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
+Mattermost  ``symfony/mattermost-notifier``   ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack       ``symfony/slack-notifier``        ``slack://default/ID``
 Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
