@@ -48,7 +48,9 @@ The database connection information is stored as an environment variable called
 
     # to use mariadb:
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
-
+    # to disable ssl for mysql and mariadb:
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?sslmode=disable"
+    
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
 
