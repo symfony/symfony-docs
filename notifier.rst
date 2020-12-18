@@ -59,7 +59,7 @@ Service     Package                           DSN
 ==========  ================================  ====================================================
 Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-Infobip     ``symfony/infobip-notifier``      ``infobip://TOKEN@default?from=FROM``
+Infobip     ``symfony/infobip-notifier``      ``infobip://ACCESS_TOKEN@HOST?from=FROM``
 Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
 Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
 OvhCloud    ``symfony/ovh-cloud-notifier``    ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
@@ -147,7 +147,7 @@ Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?chan
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack       ``symfony/slack-notifier``        ``slack://TOKEN@default?channel=CHANNEL``
 Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
-Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:APIKEY@ENDPOINT?channel=CHANNEL``
+Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ==========  ================================  ===========================================================================
 
 .. versionadded:: 5.1
