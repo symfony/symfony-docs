@@ -115,9 +115,8 @@ UUID objects created with the ``Uuid`` class can use the following methods
 Storing UUIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can store UUID values as any other regular string values in the database.
-However, if you :doc:`use Doctrine </doctrine>`, it's more convenient to use the
-special Doctrine types which convert to/from UUID objects automatically::
+If you :doc:`use Doctrine </doctrine>`, consider using the ``uuid`` Doctrine
+type, which converts to/from UUID objects automatically::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -136,10 +135,6 @@ special Doctrine types which convert to/from UUID objects automatically::
 
         // ...
     }
-
-.. versionadded:: 5.2
-
-    The UuidBinary type has been removed in Symfony 5.2.
 
 There's also a Doctrine generator to help autogenerate UUID values for the
 entity primary keys::
@@ -165,7 +160,7 @@ entity primary keys::
 
 .. versionadded:: 5.2
 
-    The UUID types and generators were introduced in Symfony 5.2.
+    The UUID type and generators were introduced in Symfony 5.2.
 
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these UUID types to build the SQL query
@@ -259,9 +254,8 @@ ULID objects created with the ``Ulid`` class can use the following methods::
 Storing ULIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can store ULID values as any other regular string values in the database.
-However, if you :doc:`use Doctrine </doctrine>`, it's more convenient to use the
-special Doctrine types which convert to/from ULID objects automatically::
+If you :doc:`use Doctrine </doctrine>`, consider using the ``ulid`` Doctrine
+type, which converts to/from ULID objects automatically::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -280,10 +274,6 @@ special Doctrine types which convert to/from ULID objects automatically::
 
         // ...
     }
-
-.. versionadded:: 5.2
-
-    The UlidBinary type has been removed in Symfony 5.2.
 
 There's also a Doctrine generator to help autogenerate ULID values for the
 entity primary keys::
@@ -308,7 +298,7 @@ entity primary keys::
 
 .. versionadded:: 5.2
 
-    The ULID types and generator were introduced in Symfony 5.2.
+    The ULID type and generator were introduced in Symfony 5.2.
 
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these ULID types to build the SQL query
