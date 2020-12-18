@@ -79,7 +79,7 @@ you want to use. See :doc:`/validation` for more details.
 
 .. _form-option-constraints:
 
-But if the form is not mapped to an object and you instead want to retrieve a
+But if the form is not mapped to an object and you instead want to retrieve an
 array of your submitted data, how can you add constraints to the data of
 your form?
 
