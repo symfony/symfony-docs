@@ -423,10 +423,10 @@ And here is the controller::
         {
             $hubUrl = $this->getParameter('mercure.default_hub');
             $this->addLink($request, new Link('mercure', $hubUrl));
-            
+
             $key = Key\InMemory::plainText('mercure_secret_key'); // don't forget to set this parameter! Test value: !ChangeMe!
             $configuration = Configuration::forSymmetricSigner(new Sha256(), $key);
-            
+
             $token = $configuration->builder()
                 ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
                 ->getToken($configuration->signer(), $configuration->signingKey())
