@@ -115,7 +115,7 @@ UUID objects created with the ``Uuid`` class can use the following methods
 Storing UUIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can store UUID values as any other regular string/binary values in the database.
+You can store UUID values as any other regular string values in the database.
 However, if you :doc:`use Doctrine </doctrine>`, it's more convenient to use the
 special Doctrine types which convert to/from UUID objects automatically::
 
@@ -134,13 +134,12 @@ special Doctrine types which convert to/from UUID objects automatically::
          */
         private $someProperty;
 
-        /**
-         * @ORM\Column(type="uuid_binary")
-         */
-        private $anotherProperty;
-
         // ...
     }
+
+.. versionadded:: 5.2
+
+    The UuidBinary type has been removed in Symfony 5.2.
 
 There's also a Doctrine generator to help autogenerate UUID values for the
 entity primary keys::
@@ -260,7 +259,7 @@ ULID objects created with the ``Ulid`` class can use the following methods::
 Storing ULIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can store ULID values as any other regular string/binary values in the database.
+You can store ULID values as any other regular string values in the database.
 However, if you :doc:`use Doctrine </doctrine>`, it's more convenient to use the
 special Doctrine types which convert to/from ULID objects automatically::
 
@@ -279,13 +278,12 @@ special Doctrine types which convert to/from ULID objects automatically::
          */
         private $someProperty;
 
-        /**
-         * @ORM\Column(type="ulid_binary")
-         */
-        private $anotherProperty;
-
         // ...
     }
+
+.. versionadded:: 5.2
+
+    The UlidBinary type has been removed in Symfony 5.2.
 
 There's also a Doctrine generator to help autogenerate ULID values for the
 entity primary keys::
