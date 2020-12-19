@@ -1,9 +1,9 @@
 Using Bootstrap CSS & JS
 ========================
 
-Want to use Bootstrap (or something similar) in your project? No problem!
-First, install it. To be able to customize things further, we'll install
-``bootstrap``:
+This article explains how to install and integrate the `Bootstrap CSS framework`_
+in your Symfony application using :doc:`Webpack Encore </frontend>`.
+First, to be able to customize things further, we'll install ``bootstrap``:
 
 .. code-block:: terminal
 
@@ -79,3 +79,5 @@ and CSS like normal:
     // require 2 CSS files needed
     require('bootstrap-star-rating/css/star-rating.css');
     require('bootstrap-star-rating/themes/krajee-svg/theme.css');
+
+.. _`Bootstrap CSS framework`: https://getbootstrap.com/
