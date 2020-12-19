@@ -393,6 +393,16 @@ console::
     not dispatched. If you need to test those events, use the
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester` instead.
 
+.. caution::
+
+    When testing commands using the :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`
+    class, don't forget to disable the auto exit flag::
+
+        $application = new Application();
+        $application->setAutoExit(false);
+        
+        $tester = new ApplicationTester($application);
+
 .. note::
 
     When using the Console component in a standalone project, use
