@@ -287,7 +287,7 @@ entity primary keys::
     {
         /**
          * @ORM\Id
-         * @ORM\Column(type="uuid", unique=true)
+         * @ORM\Column(type="ulid", unique=true)
          * @ORM\GeneratedValue(strategy="CUSTOM")
          * @ORM\CustomIdGenerator(class=UlidGenerator::class)
          */
