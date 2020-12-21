@@ -300,15 +300,6 @@ argument of type ``service_locator``:
                 ])]);
         };
 
-.. versionadded:: 4.2
-
-    The ability to add services without specifying an array key was introduced
-    in Symfony 4.2.
-
-.. versionadded:: 4.2
-
-    The ``service_locator`` argument type was introduced in Symfony 4.2.
-
 As shown in the previous sections, the constructor of the ``CommandBus`` class
 must type-hint its argument with ``ContainerInterface``. Then, you can get any of
 the service locator services via their ID (e.g. ``$this->locator->get('App\FooCommand')``).
