@@ -190,6 +190,26 @@ party provider:
 
     Note that the protocol is *always* HTTPs and cannot be changed.
 
+Checking your configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have any doubt on your configuration. Or if want to make sure your mail supplier is still working.
+You can do this with the ``mailer:send-email`` command:
+
+.. code-block:: terminal
+
+    $ php bin/console mailer:send-email from=a@symfony.com to=b@symfony.com --subject=Test --body=body
+
+    # No subject/body to send simple test mail
+    $ php bin/console mailer:send-email from=a@symfony.com to=b@symfony.com
+
+The command can also send body from file using ``--body-source`` option:
+
+.. code-block:: terminal
+
+    $ php bin/console mailer:send-email from=a@symfony.com to=b@symfony.com --body-source=file --body=/path/to/file
+
+
 High Availability
 ~~~~~~~~~~~~~~~~~
 
