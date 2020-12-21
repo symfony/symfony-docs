@@ -449,6 +449,16 @@ possible paths:
     data is passed to it, you can
     :doc:`use the submit() method to handle form submissions </form/direct_submit>`.
 
+.. tip::
+
+    If you need to render and process the same form in different templates,
+    use the ``render()`` function to :ref:`embed the controller <templates-embed-controllers>`
+    that processes the form:
+
+    .. code-block:: twig
+
+        {{ render(controller('App\\Controller\\TaskController::new')) }}
+
 .. _validating-forms:
 
 Validating Forms
