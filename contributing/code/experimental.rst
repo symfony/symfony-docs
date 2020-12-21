@@ -12,7 +12,8 @@ approach.
 
 To avoid being bound to our backward compatibility promise, such features can
 be marked as **experimental** and their classes and methods must be marked with
-the ``@experimental`` tag.
+the ``@experimental`` tag. Afterwards a BC-break is allowed, but only in a new minor
+version!
 
 A feature can be marked as being experimental for only one minor version, and
 can never be introduced in an :ref:`LTS version <releases-lts>`. The core team
