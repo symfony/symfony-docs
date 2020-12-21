@@ -246,9 +246,80 @@ service type to a service.
 Defining a Service Locator
 --------------------------
 
-To manually define a service locator, create a new service definition and add
-the ``container.service_locator`` tag to it. Use the first argument of the
-service definition to pass a collection of services to the service locator:
+To manually define a service locator and inject it to another service, create an
+argument of type ``service_locator``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\CommandBus:
+                arguments:
+                    !service_locator
+                        App\FooCommand: '@app.command_handler.foo'
+                        App\BarCommand: '@app.command_handler.bar'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\CommandBus">
+                    <argument type="service_locator">
+                        <argument key="App\FooCommand" type="service" id="sapp.command_handler.foo"/>
+                        <argument key="App\BarCommandr" type="service" id="app.command_handler.bar"/>
+                        <!-- if the element has no key, the ID of the original service is used -->
+                        <argument type="service" id="app.command_handler.baz"/>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\CommandBus;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(CommandBus::class)
+                ->args([service_locator([
+                    'App\FooCommand' => ref('app.command_handler.foo'),
+                    'App\BarCommand' => ref('app.command_handler.bar'),
+                    // if the element has no key, the ID of the original service is used
+                    ref('app.command_handler.baz'),
+                ])]);
+        };
+
+.. versionadded:: 4.2
+
+    The ability to add services without specifying an array key was introduced
+    in Symfony 4.2.
+
+.. versionadded:: 4.2
+
+    The ``service_locator`` argument type was introduced in Symfony 4.2.
+
+As shown in the previous sections, the constructor of the ``CommandBus`` class
+must type-hint its argument with ``ContainerInterface``. Then, you can get any of
+the service locator services via their ID (e.g. ``$this->locator->get('App\FooCommand')``).
+
+Reusing a Service Locator in Multiple Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you inject the same service locator in several services, it's better to
+define the service locator as a stand-alone service and then inject it in the
+other services. To do so, create a new service definition using the
+``ServiceLocator`` class:
 
 .. configuration-block::
 
@@ -334,7 +405,7 @@ service definition to pass a collection of services to the service locator:
     The services defined in the service locator argument must include keys,
     which later become their unique identifiers inside the locator.
 
-Now you can use the service locator by injecting it in any other service:
+Now you can inject the service locator in any other services:
 
 .. configuration-block::
 
@@ -375,6 +446,9 @@ Now you can use the service locator by injecting it in any other service:
             $services->set(CommandBus::class)
                 ->args([service('app.command_handler_locator')]);
         };
+
+Using Service Locators in Compiler Passes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
 to use the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\ServiceLocatorTagPass::register`
