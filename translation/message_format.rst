@@ -165,21 +165,6 @@ you to use literal text in the select statements:
 #. Inside this block, ``{organizer_name}`` starts "code" mode again, allowing
    ``organizer_name`` to be processed as variable.
 
-Additionally, it's possible to write the message directly in code::
-
-    $invitation = '{organizer_gender, select,
-                female {{organizer_name} has invited you for her party!}
-                male   {{organizer_name} has invited you for his party!}
-                other  {{organizer_name} have invited you for their party!}
-            }';
-    // prints "Ryan has invited you for his party!"
-    echo $translator->trans($invitation, [
-        'organizer_name' => 'Ryan',
-        'organizer_gender' => 'male',
-    ]);
-
-This can be used to create a wrapper.
-
 .. tip::
 
     While it might seem more logical to only put ``her``, ``his`` or ``their``
@@ -188,6 +173,22 @@ This can be used to create a wrapper.
     readable for translators and, as you can see in the ``other`` case, other
     parts of the sentence might be influenced by the variables.
 
+.. tip::
+
+    It's possible to translate ICU MessageFormat messages directly in code,
+    without having to define them in any file::
+
+        $invitation = '{organizer_gender, select,
+            female {{organizer_name} has invited you for her party!}
+            male   {{organizer_name} has invited you for his party!}
+            other  {{organizer_name} have invited you for their party!}
+        }';
+
+        // prints "Ryan has invited you for his party!"
+        echo $translator->trans($invitation, [
+            'organizer_name' => 'Ryan',
+            'organizer_gender' => 'male',
+        ]);
 
 .. _component-translation-pluralization:
 
