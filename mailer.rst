@@ -303,12 +303,13 @@ both strings or address objects::
     :class:`Symfony\\Component\\Mailer\\Event\\MessageEvent` event to set the
     same ``From`` email to all messages.
 
-Multiple addresses are defined with the ``addXXX()`` methods::
+Use ``addTo()``, ``addCc()``, or ``addBcc()`` methods to add more addresses::
 
     $email = (new Email())
         ->to('foo@example.com')
         ->addTo('bar@example.com')
-        ->addTo('baz@example.com')
+        ->cc('cc@example.com')
+        ->addCc('cc2@example.com')
 
         // ...
     ;
