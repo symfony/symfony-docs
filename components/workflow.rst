@@ -106,7 +106,6 @@ If you want to initiate your workflow, you can call ``getMarking()`` method::
     // initiate workflow
     $workflow->getMarking($blogPost);
 
-
 Learn more
 ----------
 
