@@ -97,7 +97,7 @@ you can retrieve a workflow from it and use it as follows::
 Initialization
 --------------
 
-If you want to initiate your workflow, you can call ``getMarking()`` method::
+If the property of your object is null and you want to set it with the `initial_marking` from the configuration, you can call the `getMarking()` method to initialize the object property::
 
     // ...
     $blogPost = new BlogPost();
