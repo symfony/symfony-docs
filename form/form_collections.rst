@@ -4,10 +4,10 @@
 How to Embed a Collection of Forms
 ==================================
 
-In this article, you'll learn how to create a form that embeds a collection
-of many other forms. This could be useful, for example, if you had a ``Task``
-class and you wanted to edit/create/remove many ``Tag`` objects related to
-that Task, right inside the same form.
+Symfony Forms can embed a collection of many other forms, which is useful to
+edit related entities in a single form. In this article, you'll create a form to
+edit a ``Task`` class and, right inside the same form, you'll be able to edit,
+create and remove many ``Tag`` objects related to that Task.
 
 Let's start by creating a ``Task`` entity::
 
@@ -45,12 +45,13 @@ Let's start by creating a ``Task`` entity::
 
 .. note::
 
-    The ``ArrayCollection`` is specific to Doctrine and is basically the
-    same as using an ``array`` (but it must be an ``ArrayCollection`` if
-    you're using Doctrine).
+    The `ArrayCollection`_ is specific to Doctrine and is similar to a PHP array
+    but provides many utility methods.
 
 Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
+
+.. code-block:: php
 
     // src/Entity/Tag.php
     namespace App\Entity;
@@ -688,3 +689,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
+.. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
