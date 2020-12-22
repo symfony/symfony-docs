@@ -97,7 +97,7 @@ you can retrieve a workflow from it and use it as follows::
 Initialization
 --------------
 
-If you want to initiate your workflow, you can call ``getMarking``::
+If you want to initiate your workflow, you can call ``getMarking()`` method::
 
     // ...
     $blogPost = new BlogPost();
