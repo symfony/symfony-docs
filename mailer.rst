@@ -327,12 +327,13 @@ both strings or address objects::
 
         Support for UTF-8 characters in email addresses was introduced in Symfony 5.2.
 
-Multiple addresses are defined with the ``addXXX()`` methods::
+Use ``addTo()``, ``addCc()``, or ``addBcc()`` methods to add more addresses::
 
     $email = (new Email())
         ->to('foo@example.com')
         ->addTo('bar@example.com')
-        ->addTo('baz@example.com')
+        ->cc('cc@example.com')
+        ->addCc('cc2@example.com')
 
         // ...
     ;
