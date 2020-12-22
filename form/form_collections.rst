@@ -1,18 +1,15 @@
 .. index::
    single: Form; Embed collection of forms
 
-Edit Related Entities in a Single Form
-======================================
+How to Embed a Collection of Forms
+==================================
 
-To edit associated entities in the same form, Symfony has the concept of
-Form "Collections". Think of it as a series of sub-forms, embedded into
-the main form.
+Symfony Forms can embed a collection of many other forms, which is useful to
+edit related entities in a single form. In this article, you'll create a form to
+edit a ``Task`` class and, right inside the same form, you'll be able to edit,
+create and remove many ``Tag`` objects related to that Task.
 
-The example used in this article is a ``Task`` entity that relates to
-a ``Tag`` entitiy. The goal is to create a single form for tasks, that
-also allows to edit/create/remove many tags associated with that task.
-
-Here's the ``Task`` and the ``Tag`` entity::
+Let's start by creating a ``Task`` entity::
 
     // src/Entity/Task.php
     namespace App\Entity;
@@ -48,8 +45,11 @@ Here's the ``Task`` and the ``Tag`` entity::
 
 .. note::
 
-    The `ArrayCollection`_ is specific to Doctrine and is basically the
-    same as using an ``array``.
+    The `ArrayCollection`_ is specific to Doctrine and is similar to a PHP array
+    but provides many utility methods.
+
+Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
+objects::
 
 .. code-block:: php
 
