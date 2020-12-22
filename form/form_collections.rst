@@ -51,8 +51,6 @@ Let's start by creating a ``Task`` entity::
 Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
 
-.. code-block:: php
-
     // src/Entity/Tag.php
     namespace App\Entity;
 
