@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by Philosoft at 2020-11-04T04:31:03Z
+
+I haven't touched Apache in years but may be `Options -Indexes` will be more robust? On a `VirtualHost` level, since nowadays directory index is veeery rarely used feature.
+
+Docs: https://httpd.apache.org/docs/2.4/mod/core.html#options
