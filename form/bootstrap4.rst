@@ -97,10 +97,9 @@ Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
 File inputs
 -----------
 
-Files input are rendered using the Bootstrap "custom-file" class.
-
-Due to Bootstrap internals, the rendered field does not display the selected filename.
-To fix that missing display, you can use the "`bs-custom-file-input`_" plugin (vanilla javascript), as recommended by `Bootstrap Forms documentation`_.
+File inputs are rendered using the Bootstrap "custom-file" class, which hides
+the name of the selected file. To fix that, use the `bs-custom-file-input`_
+JavaScript plugin, as recommended by `Bootstrap Forms documentation`_.
 
 Accessibility
 -------------
