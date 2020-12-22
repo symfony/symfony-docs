@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-07-24T15:14:39Z
+
+I like most of these additions ... but I'm not sure about the array one. You _cannot_ pass an array to these methods; that's why the example uses `->to(...$toAddresses)` instead of `->to($toAddresses)`
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-07-24T15:21:59Z
+
+Well, how would you call it? "pass a *splat-operator-splatted* array"? ;-)
+
+Sure we could expand on this aspect more. What about:
+
+> Alternatively, you can pass multiple addresses to each method. If you pass an array, you need to use the splat operator.
+
+But in the end, the code sample shows how to do it :-)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-07-24T15:31:12Z
+
+We could rename this:
+
+```
+Alternatively, you can pass multiple addresses or an array to each method::
+```
+
+As this:
+
+```
+These methods are variadic, so you can pass multiple addresses to them::
+```
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-07-24T15:35:26Z
+
+Well, the very reason for this PR is to get the word "array" onto the page ;-)
+
+---------------------------------------------------------------------------
+
+by stof at 2020-07-24T16:06:40Z
+
+Well, this update is wrong. you **cannot** pass an array to these methods. If you want to pass multiple addresses, you **must** pass them as separate arguments. You *can* use the spread operator of PHP (`...`) to do that from an array you have, but that would still not pass the array to the method.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2020-07-24T16:27:16Z
+
+I changed it to a comment in the code sample.
+
+If you don't like that either ;-) we could rename the variable in the code sample from `$toAddresses` to `$addressesArray`.
