@@ -6,8 +6,7 @@ Creating and Sending Notifications
 
 .. versionadded:: 5.0
 
-    The Notifier component was introduced in Symfony 5.0 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The Notifier component was introduced in Symfony 5.0.
 
 Installation
 ------------

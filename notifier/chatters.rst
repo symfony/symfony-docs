@@ -6,8 +6,7 @@ How to send Chat Messages
 
 .. versionadded:: 5.0
 
-    The Notifier component was introduced in Symfony 5.0 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The Notifier component was introduced in Symfony 5.0.
 
 The :class:`Symfony\\Component\\Notifier\\ChatterInterface` class allows
 you to send messages to chat services like Slack or Telegram::
