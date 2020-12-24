@@ -604,6 +604,8 @@ abstracts the hard work behind a simple API::
     $fileContent = ...; // the generated file content
     $response = new Response($fileContent);
 
+    // Note: this does not handle / or \, use a slugger
+    // like provided in the String component.
     $disposition = HeaderUtils::makeDisposition(
         HeaderUtils::DISPOSITION_ATTACHMENT,
         'foo.pdf'
