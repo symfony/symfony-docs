@@ -304,6 +304,7 @@ Configuration
   * `static_method`_
   * `translation_domain`_
 
+* `web_link`_
 * `workflows`_
 
   * :ref:`enabled <reference-workflows-enabled>`
@@ -3185,6 +3186,16 @@ headers
 Headers to add to emails. The key (``name`` attribute in xml format) is the
 header name and value the header value.
 
+web_link
+~~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
+
+Adds a `Link HTTP header`_ to the response.
+
 workflows
 ~~~~~~~~~
 
@@ -3358,3 +3369,4 @@ to know their differences.
 .. _`session.cache-limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter
 .. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/win32/secauthn/microsoft-ntlm
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
+.. _`Link HTTP header`: https://tools.ietf.org/html/rfc5988
