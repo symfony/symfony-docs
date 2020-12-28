@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-12-23T12:01:14Z
+
+`null` and `~` are the same in Yaml afaics, so they should both be A, right? The other changes seem correct to me.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-12-23T12:23:27Z
+
+Thank you.. But how will this line ever be true?
+
+https://github.com/symfony/symfony/blob/73a3b838b742f103033218a2758548b829d27061/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L949
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-12-23T12:27:21Z
+
+Because the default value is only there if we dont set `handler_id`. Fair.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2020-12-23T12:33:31Z
+
+PR description is updated
