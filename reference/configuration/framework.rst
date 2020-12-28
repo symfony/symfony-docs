@@ -278,6 +278,7 @@ Configuration
   * `strict_email`_
   * `translation_domain`_
 
+* `web_link`_
 * `workflows`_
 
   * :ref:`enabled <reference-workflows-enabled>`
@@ -3024,6 +3025,17 @@ recipients set in the code.
                 ]
             ]);
         };
+
+
+web_link
+~~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
+
+Adds a Link HTTP header to the response.
 
 workflows
 ~~~~~~~~~
