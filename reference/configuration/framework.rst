@@ -1250,8 +1250,8 @@ lock_factory
 
 **type**: ``string`` **default:** ``lock.factory``
 
-The service that is used to create a lock. The service has to implement the
-:class:`Symfony\\Component\\Lock\\LockFactoryInterface`.
+The service that is used to create a lock. The service has to be an instance of
+the :class:`Symfony\\Component\\Lock\\LockFactory` class.
 
 policy
 """"""
