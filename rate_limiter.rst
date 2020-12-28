@@ -16,6 +16,8 @@ Symfony uses these rate limiters in built-in features like "login throttling",
 which limits how many failed login attempts a user can make in a given period of
 time, but you can use them for your own features too.
 
+.. _rate-limiter-policies:
+
 Rate Limiting Policies
 ----------------------
 

@@ -211,6 +211,13 @@ Configuration
 
   * :ref:`enabled <reference-property-info-enabled>`
 
+* `rate_limiter`_:
+
+  * :ref:`name <reference-rate-limiter-name>`
+
+    * `lock_factory`_
+    * `policy`_
+
 * `request`_:
 
   * `formats`_
@@ -1226,6 +1233,35 @@ dsn
 
 The DSN where to store the profiling information.
 
+rate_limiter
+~~~~~~~~~~~~
+
+.. _reference-rate-limiter-name:
+
+name
+....
+
+**type**: ``prototype``
+
+Name of the rate limiter you want to create.
+
+lock_factory
+""""""""""""
+
+**type**: ``string`` **default:** ``lock.factory``
+
+The service that is used to create a lock. The service has to be an instance of
+the :class:`Symfony\\Component\\Lock\\LockFactory` class.
+
+policy
+""""""
+
+**type**: ``string`` **required**
+
+The name of the rate limiting algorithm to use. Example names are ``fixed_window``,
+``sliding_window`` and ``no_limit``. See :ref:`Rate Limiter Policies <rate-limiter-policies>`)
+for more information.
+
 request
 ~~~~~~~
 
@@ -1399,11 +1435,11 @@ alias will be set to this service id. This class has to implement
 handler_id
 ..........
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string`` **default**: ``'session.handler.native_file'``
 
-The service id used for session storage. The default ``null`` value means to use
-the native PHP session mechanism. Set it to ``'session.handler.native_file'`` to
-let Symfony manage the sessions itself using files to store the session metadata.
+The service id used for session storage. The default value ``'session.handler.native_file'``
+will let Symfony manage the sessions itself using files to store the session metadata.
+Set it to ``null`` to use the native PHP session mechanism.
 You can also :doc:`store sessions in a database </session/database>`.
 
 .. _name:

@@ -39,7 +39,7 @@ that adds two convenient methods to lock and release commands::
             // automatically when the execution of the command ends
             $this->release();
 
-            return Command:SUCCESS;
+            return Command::SUCCESS;
         }
     }
 

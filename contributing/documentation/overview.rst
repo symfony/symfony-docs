@@ -121,7 +121,7 @@ branch of the ``upstream`` remote, which is the original Symfony Docs repository
 Fixes should always be based on the **oldest maintained branch** which contains
 the error. Nowadays this is the ``4.4`` branch. If you are instead documenting a
 new feature, switch to the first Symfony version that included it, e.g.
-``upstream/3.1``. Not sure? That's OK! Just use the ``upstream/master`` branch.
+``upstream/3.1``.
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
 even remove any content and do your best to comply with the
@@ -295,12 +295,12 @@ Please be patient. It can take up to several days before your pull request can
 be fully reviewed. After merging the changes, it could take again several hours
 before your changes appear on the Symfony website.
 
-Why Should I Use the Oldest Maintained Branch Instead of the Master Branch?
+Why Should I Use the Oldest Maintained Branch Instead of the Latest Branch?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Consistent with Symfony's source code, the documentation repository is split
 into multiple branches, corresponding to the different versions of Symfony itself.
-The ``master`` branch holds the documentation for the development branch of
+The latest (e.g. ``5.x``) branch holds the documentation for the development branch of
 the code.
 
 Unless you're documenting a feature that was introduced after Symfony 4.4,
