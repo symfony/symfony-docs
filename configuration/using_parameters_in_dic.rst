@@ -106,7 +106,7 @@ be injected with this parameter via the extension as follows::
     {
         private $debug;
 
-        public function  __construct($debug)
+        public function __construct($debug)
         {
             $this->debug = (bool) $debug;
         }
