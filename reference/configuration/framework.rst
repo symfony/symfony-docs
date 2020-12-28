@@ -197,6 +197,12 @@ Configuration
   * `utf8`_
 
 * `secret`_
+* `secrets`_
+
+  * `decryption_env_var`_
+  * `local_dotenv_file`_
+  * `vault_directory`_
+
 * `serializer`_
 
   * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
@@ -2482,6 +2488,31 @@ automatically update when the original file is changed (both with code and
 annotation changes). For performance reasons, it is recommended to disable
 debug mode in production, which will happen automatically if you use the
 default value.
+
+
+secrets
+~~~~~~~
+
+decryption_env_var
+..................
+
+**type**: ``string`` **default**: ``base64:default::SYMFONY_DECRYPTION_SECRET``
+
+The environment variable that contains the decryption key.
+
+local_dotenv_file
+.................
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/.env.%kernel.environment%.local``
+
+Path to an dotenv file that holds secrets. This is primarily used for testing.
+
+vault_directory
+...............
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/config/secrets/%kernel.environment%``
+
+The directory where the vault of secrets is stored.
 
 .. _configuration-framework-serializer:
 
