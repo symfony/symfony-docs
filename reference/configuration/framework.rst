@@ -211,6 +211,13 @@ Configuration
 
   * :ref:`enabled <reference-property-info-enabled>`
 
+* `rate_limiter`_:
+
+  * :ref:`name <reference-rate-limiter-name>`
+
+    * `lock_factory`_
+    * `policy`_
+
 * `request`_:
 
   * `formats`_
@@ -1225,6 +1232,35 @@ dsn
 **type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
 
 The DSN where to store the profiling information.
+
+rate_limiter
+~~~~~~~~~~~~
+
+.. _reference-rate-limiter-name:
+
+name
+....
+
+**type**: ``prototype``
+
+Name of the rate limiter you want to create.
+
+lock_factory
+""""""""""""
+
+**type**: ``string`` **default:** ``lock.factory``
+
+The service that is used to create a lock. The service has to implement the
+:class:`Symfony\\Component\\Lock\\LockFactoryInterface`.
+
+policy
+""""""
+
+**type**: ``string`` **required**
+
+The name of the rate limiting algorithm to use. Example names are ``fixed_window``,
+``sliding_window`` and ``no_limit``. See :ref:`Rate Limiter Policies <rate-limiter-policies>`)
+for more information.
 
 request
 ~~~~~~~
