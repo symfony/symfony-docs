@@ -616,7 +616,7 @@ defines a ``Person`` entity with a ``firstName`` property:
 This custom mapping is used to convert property names when serializing and
 deserializing objects::
 
-    $serialized = $serializer->serialize(new Person("Kévin"), 'json');
+    $serialized = $serializer->serialize(new Person('Kévin'), 'json');
     // {"customer_name": "Kévin"}
 
 Serializing Boolean Attributes
