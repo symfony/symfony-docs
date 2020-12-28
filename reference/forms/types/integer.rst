@@ -57,7 +57,7 @@ Field Options
 
 **type**: ``integer`` **default**: ``\NumberFormatter::ROUND_HALFUP``
 
-By default, if the users enters a non-integer number, it will be rounded
+By default, if the user enters a non-integer number, it will be rounded
 down. You have several configurable options for that rounding. Each option
 is a constant on the :phpclass:`NumberFormatter` class:
 
@@ -88,9 +88,8 @@ is a constant on the :phpclass:`NumberFormatter` class:
 .. deprecated:: 5.1
 
     In Symfony versions prior to 5.1, these constants were also defined as aliases
-    in the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`
+    in the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`
     class, but they are now deprecated in favor of the :phpclass:`NumberFormatter` constants.
-
 
 Overridden Options
 ------------------
