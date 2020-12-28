@@ -1046,7 +1046,7 @@ you have a transport called ``async``, you can route the message there:
                     async: "%env(MESSENGER_TRANSPORT_DSN)%"
 
                 routing:
-                    'Symfony\Component\Mailer\Messenger\SendEmailMessage':  async
+                    'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
 
     .. code-block:: xml
 
