@@ -106,8 +106,16 @@ make them available to all requests until the server is restarted, improving
 performance significantly.
 
 During container compilation (e.g. when running the ``cache:clear`` command),
-Symfony generates a file called ``preload.php`` in the ``config/`` directory
-with the list of classes to preload.
+Symfony generates a file with the list of classes to preload in the
+``var/cache`` directory.
+
+Rather than use this file directly, when installing with Flex the Framework
+Bundle recipe will create a file called ``preload.php`` in the ``config/``
+directory, which you can use safely, since it includes safeguards in case the
+cache has not been warmed beforehand.
+
+If this file is missing, you can reinstall the recipe by executing
+``composer recipes:install symfony/framework-bundle --force -v``.
 
 The only requirement is that you need to set both ``container.dumper.inline_factories``
 and ``container.dumper.inline_class_loader`` parameters to ``true``. Then, you
