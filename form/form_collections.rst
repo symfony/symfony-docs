@@ -245,7 +245,7 @@ the following ``data-prototype`` attribute to the existing ``<ul>`` in your temp
 
     <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
 
-Now add a button just next to the ``<ul>`` to dynamically add a new tag
+Now add a button just next to the ``<ul>`` to dynamically add a new tag:
 
 .. code-block:: html+twig
 
@@ -280,13 +280,13 @@ On the rendered page, the result will look something like this:
     the ``data-prototype`` attribute is automatically added to the containing ``div``,
     and you need to adjust the following JavaScript accordingly.
 
-The goal of this section will be to use JavaScript to read this attribute
-and dynamically add new tag forms when the user clicks the "Add a tag" button.
-This example uses jQuery and assumes you have it included somewhere on your page.
+Now add some JavaScript to read this attribute and dynamically add new tag forms
+when the user clicks the "Add a tag" link. This example uses `jQuery`_ and
+assumes you have it included somewhere on your page (e.g. using Symfony's
+:doc:`Webpack Encore </frontend>`).
 
-Add a ``script`` tag somewhere on your page so you can start writing some
-JavaScript. In this script, bind to the "click" event of the "Add a tag"
-button so you can add a new tag form (``addFormToCollection()`` will be show next):
+Add a ``<script>`` tag somewhere on your page to include the required
+functionality with JavaScript:
 
 .. code-block:: javascript
 
@@ -304,14 +304,11 @@ button so you can add a new tag form (``addFormToCollection()`` will be show nex
         })
     });
 
-The ``addTagForm()`` function's job will be to use the ``data-prototype`` attribute
-to dynamically add a new form when this link is clicked. The ``data-prototype``
-HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
-and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
-which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
-
-The actual code needed to make this all work can vary quite a bit, but here's
-one example:
+The ``addFormToCollection()`` function's job will be to use the ``data-prototype``
+attribute to dynamically add a new form when this link is clicked. The ``data-prototype``
+HTML contains the tag's ``text`` input element with a name of ``task[tags][__name__][name]``
+and id of ``task_tags___name___name``. The ``__name__`` is a placeholder, which
+you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``):
 
 .. code-block:: javascript
 
@@ -343,11 +340,6 @@ one example:
         // Add the new form at the end of the list
         $collectionHolder.append($newFormLi)
     }
-
-.. note::
-
-    It is better to separate your JavaScript in real JavaScript files than
-    to write it inside the HTML as is done here.
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
@@ -572,7 +564,7 @@ First, add a "delete this tag" link to each tag form:
         // ... the rest of the block from above
     });
 
-    function addTagForm() {
+    function addFormToCollection() {
         // ...
 
         // add a delete link to the new form
@@ -684,6 +676,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     the `symfony-collection`_ package based on jQuery for the rest of browsers.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
+.. _`jQuery`: http://jquery.com/
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
