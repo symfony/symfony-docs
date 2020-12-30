@@ -280,7 +280,7 @@ On the rendered page, the result will look something like this:
     the ``data-prototype`` attribute is automatically added to the containing ``div``,
     and you need to adjust the following JavaScript accordingly.
 
-The goal of this section will be to use JavaScript to read this attribute
+Now add some JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks the "Add a tag" link.
 This example uses `jQuery`_ and assumes you have it included somewhere on your
 page (e.g. using Symfony's :doc:`Webpack Encore </frontend>`).
