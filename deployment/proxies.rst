@@ -26,7 +26,7 @@ and what headers your reverse proxy uses to send information:
 
 .. configuration-block::
 
-    .. config-block:: yaml
+    .. code-block:: yaml
 
         # config/packages/framework.yaml
         framework:
@@ -41,7 +41,7 @@ and what headers your reverse proxy uses to send information:
             trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_AWS_ELB, '!x-forwarded-host', '!x-forwarded-prefix']
             trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_TRAEFIK, '!x-forwarded-host', '!x-forwarded-prefix']
 
-    .. config-block:: xml
+    .. code-block:: xml
 
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -69,7 +69,7 @@ and what headers your reverse proxy uses to send information:
             </framework:config>
         </container>
 
-    .. config-block:: php
+    .. code-block:: php
 
         // config/packages/framework.php
         use Symfony\Component\HttpFoundation\Request;
