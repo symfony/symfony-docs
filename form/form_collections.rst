@@ -572,7 +572,7 @@ First, add a "delete this tag" link to each tag form:
         // ... the rest of the block from above
     });
 
-    function addTagForm() {
+    function addFormToCollection() {
         // ...
 
         // add a delete link to the new form
