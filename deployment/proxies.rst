@@ -120,9 +120,9 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
    other than your load balancers. For AWS, this can be done with `security groups`_.
 
 #. Once you've guaranteed that traffic will only come from your trusted reverse
-   proxies, configure Symfony to *always* trust incoming request::
+   proxies, configure Symfony to *always* trust incoming request:
 
-    .. config-block:: yaml
+    .. code-block:: yaml
 
         # config/packages/framework.yaml
         framework:
@@ -148,7 +148,7 @@ other information.
         # .env
         TRUSTED_PROXIES=127.0.0.1,REMOTE_ADDR
 
-    .. config-block:: yaml
+    .. code-block:: yaml
 
         # config/packages/framework.yaml
         framework:
