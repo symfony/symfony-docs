@@ -284,6 +284,7 @@ Configuration
   * `logging`_
   * :ref:`paths <reference-translator-paths>`
 
+* `trusted_headers`_
 * `trusted_hosts`_
 * `trusted_proxies`_
 * `validation`_
@@ -380,12 +381,32 @@ named ``kernel.http_method_override``.
         $request = Request::createFromGlobals();
         // ...
 
+.. _reference-framework-trusted-headers:
+
+trusted_headers
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``trusted_headers`` option was introduced in Symfony 5.2.
+
+The ``trusted_headers`` option is needed to configure which client information
+should be trusted (e.g. their host) when running Symfony behind a load balancer
+or a reverse proxy. See :doc:`/deployment/proxies`.
+
 .. _reference-framework-trusted-proxies:
 
 trusted_proxies
 ~~~~~~~~~~~~~~~
 
-The ``trusted_proxies`` option was removed in Symfony 3.3. See :doc:`/deployment/proxies`.
+.. versionadded:: 5.2
+
+    The ``trusted_headers`` option was reintroduced in Symfony 5.2 (it had been
+    removed in Symfony 3.3).
+
+The ``trusted_proxies`` option is needed to get precise information about the
+client (e.g. their IP address) when running Symfony behind a load balancer or a
+reverse proxy. See :doc:`/deployment/proxies`.
 
 ide
 ~~~

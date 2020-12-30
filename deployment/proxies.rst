@@ -22,28 +22,69 @@ Solution: ``setTrustedProxies()``
 ---------------------------------
 
 To fix this, you need to tell Symfony which reverse proxy IP addresses to trust
-and what headers your reverse proxy uses to send information::
+and what headers your reverse proxy uses to send information:
 
-    // public/index.php
+.. configuration-block::
 
-    // ...
-    $request = Request::createFromGlobals();
+    .. config-block:: yaml
 
-    // tell Symfony about your reverse proxy
-    Request::setTrustedProxies(
-        // the IP address (or range) of your proxy
-        ['192.0.0.1', '10.0.0.0/8'],
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            // the IP address (or range) of your proxy
+            trusted_proxies: '192.0.0.1,10.0.0.0/8'
+            // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
+            trusted_headers: ['x-forwarded-all', '!x-forwarded-host', '!x-forwarded-prefix']
+            // or, if your proxy instead uses the "Forwarded" header
+            trusted_headers: ['forwarded', '!x-forwarded-host', '!x-forwarded-prefix']
+            // or, if you're using a wellknown proxy
+            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_AWS_ELB, '!x-forwarded-host', '!x-forwarded-prefix']
+            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_TRAEFIK, '!x-forwarded-host', '!x-forwarded-prefix']
 
-        // trust *all* "X-Forwarded-*" headers
-        Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO
+    .. config-block:: xml
 
-        // or, if your proxy instead uses the "Forwarded" header
-        // Request::HEADER_FORWARDED
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        // or, if you're using a well-known proxy
-        // Request::HEADER_X_FORWARDED_AWS_ELB
-        // Request::HEADER_X_FORWARDED_TRAEFIK
-    );
+            <framework:config>
+                <!-- the IP address (or range) of your proxy -->
+                <framework:trusted-proxies>192.0.0.1,10.0.0.0/8</framework:trusted-proxies>
+
+                <!-- trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers) -->
+                <framework:trusted-header>x-forwarded-all</framework:trusted-header>
+                <framework:trusted-header>!x-forwarded-host</framework:trusted-header>
+                <framework:trusted-header>!x-forwarded-prefix</framework:trusted-header>
+
+                <!-- or, if your proxy instead uses the "Forwarded" header -->
+                <framework:trusted-header>forwarded</framework:trusted-header>
+                <framework:trusted-header>!x-forwarded-host</framework:trusted-header>
+                <framework:trusted-header>!x-forwarded-prefix</framework:trusted-header>
+            </framework:config>
+        </container>
+
+    .. config-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Component\HttpFoundation\Request;
+
+        $container->loadFromExtension('framework', [
+            // the IP address (or range) of your proxy
+            'trusted_proxies' => '192.0.0.1,10.0.0.0/8',
+            // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
+            'trusted_headers' => ['x-forwarded-all', '!x-forwarded-host', '!x-forwarded-prefix'],
+            // or, if your proxy instead uses the "Forwarded" header
+            'trusted_headers' => ['forwarded', '!x-forwarded-host', '!x-forwarded-prefix'],
+            // or, if you're using a wellknown proxy
+            'trusted_headers' => [Request::HEADER_X_FORWARDED_AWS_ELB, '!x-forwarded-host', '!x-forwarded-prefix'],
+            'trusted_headers' => [Request::HEADER_X_FORWARDED_TRAEFIK, '!x-forwarded-host', '!x-forwarded-prefix'],
+        ]);
 
 .. deprecated:: 5.2
 
@@ -61,6 +102,13 @@ The Request object has several ``Request::HEADER_*`` constants that control exac
 *which* headers from your reverse proxy are trusted. The argument is a bit field,
 so you can also pass your own value (e.g. ``0b00110``).
 
+.. versionadded:: 5.2
+
+    The feature to configure trusted proxies and headers with ``trusted_proxies``
+    and ``trusted_headers`` options was introduced in Symfony 5.2. In earlier
+    Symfony versions you needed to use the ``Request::setTrustedProxies()``
+    method in the ``public/index.php`` file.
+
 But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
 
@@ -74,17 +122,17 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 #. Once you've guaranteed that traffic will only come from your trusted reverse
    proxies, configure Symfony to *always* trust incoming request::
 
-       // public/index.php
+    .. config-block:: yaml
 
-       // ...
-       Request::setTrustedProxies(
-           // trust *all* requests (the 'REMOTE_ADDR' string is replaced at
-           // run time by $_SERVER['REMOTE_ADDR'])
-           ['127.0.0.1', 'REMOTE_ADDR'],
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            // trust *all* requests (the 'REMOTE_ADDR' string is replaced at
+            // run time by $_SERVER['REMOTE_ADDR'])
+            trusted_proxies: '127.0.0.1,REMOTE_ADDR'
 
-           // if you're using ELB, otherwise use a constant from above
-           Request::HEADER_X_FORWARDED_AWS_ELB
-       );
+            // if you're using ELB, otherwise use another Request::HEADER-* constant
+            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_AWS_ELB, '!x-forwarded-host', '!x-forwarded-prefix']
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
@@ -100,6 +148,12 @@ other information.
         # .env
         TRUSTED_PROXIES=127.0.0.1,REMOTE_ADDR
 
+    .. config-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
 If you are also using a reverse proxy on top of your load balancer (e.g.
 `CloudFront`_), calling ``$request->server->get('REMOTE_ADDR')`` won't be
@@ -111,11 +165,13 @@ trusted proxies.
 Custom Headers When Using a Reverse Proxy
 -----------------------------------------
 
-Some reverse proxies (like `CloudFront`_ with ``CloudFront-Forwarded-Proto``) may force you to use a custom header.
-For instance you have ``Custom-Forwarded-Proto`` instead of ``X-Forwarded-Proto``.
+Some reverse proxies (like `CloudFront`_ with ``CloudFront-Forwarded-Proto``)
+may force you to use a custom header. For instance you have
+``Custom-Forwarded-Proto`` instead of ``X-Forwarded-Proto``.
 
-In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value of
-``Custom-Forwarded-Proto`` early enough in your application, i.e. before handling the request::
+In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
+of ``Custom-Forwarded-Proto`` early enough in your application, i.e. before
+handling the request::
 
     // public/index.php
 
