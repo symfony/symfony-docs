@@ -1981,7 +1981,7 @@ use the ``generateUrl()`` helper::
 
     If you pass to the ``generateUrl()`` method some parameters that are not
     part of the route definition, they are included in the generated URL as a
-    query string:::
+    query string::
 
         $this->generateUrl('blog', ['page' => 2, 'category' => 'Symfony']);
         // the 'blog' route only defines the 'page' parameter; the generated URL is:
