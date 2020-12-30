@@ -304,10 +304,11 @@ functionality with JavaScript:
         })
     });
 
-The ``data-prototype`` HTML contains the tag's ``text`` input element with a name of
-``task[tags][__name__][name]`` and id of ``task_tags___name___name``. The ``__name__``
-part is a "placeholder", which is replaced by a unique, incrementing number
-(e.g. ``task[tags][3][name]``).
+The ``addFormToCollection()`` function's job will be to use the ``data-prototype``
+attribute to dynamically add a new form when this link is clicked. The ``data-prototype``
+HTML contains the tag's ``text`` input element with a name of ``task[tags][__name__][name]``
+and id of ``task_tags___name___name``. The ``__name__`` is a placeholder, which
+you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``):
 
 .. code-block:: javascript
 
