@@ -245,7 +245,7 @@ the following ``data-prototype`` attribute to the existing ``<ul>`` in your temp
 
     <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
 
-Now add a button just next to the ``<ul>`` to dynamically add a new tag
+Now add a button just next to the ``<ul>`` to dynamically add a new tag:
 
 .. code-block:: html+twig
 
@@ -284,9 +284,7 @@ The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks the "Add a tag" button.
 This example uses jQuery and assumes you have it included somewhere on your page.
 
-Add a ``script`` tag somewhere on your page so you can start writing some
-JavaScript. In this script, bind to the "click" event of the "Add a tag"
-button so you can add a new tag form (``addFormToCollection()`` will be show next):
+Now add the required functionality with JavaScript:
 
 .. code-block:: javascript
 
@@ -343,11 +341,6 @@ one example:
         // Add the new form at the end of the list
         $collectionHolder.append($newFormLi)
     }
-
-.. note::
-
-    It is better to separate your JavaScript in real JavaScript files than
-    to write it inside the HTML as is done here.
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
