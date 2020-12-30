@@ -141,6 +141,7 @@ integration with these chat services:
 Service     Package                           DSN
 ==========  ================================  ===========================================================================
 Discord     ``symfony/discord-notifier``      ``discord://TOKEN@default?webhook_id=ID``
+Firebase    ``symfony/firebase-notifier``     ``firebase://USERNAME:PASSWORD@default``
 GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
 LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
@@ -152,7 +153,9 @@ Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:TOKEN@HOST?channel
 
 .. versionadded:: 5.1
 
-    The Mattermost and RocketChat integrations were introduced in Symfony 5.1.
+    The Firebase, Mattermost and RocketChat integrations were introduced in Symfony
+    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
+    Webhooks instead of legacy tokens.
 
 .. versionadded:: 5.2
 
