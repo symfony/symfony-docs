@@ -14,6 +14,7 @@ rules:
     lowercase_as_in_use_statements: ~
     max_blank_lines:
         max: 2
+    max_colons: ~
     no_app_console: ~
     no_blank_line_after_filepath_in_php_code_block: ~
     no_blank_line_after_filepath_in_twig_code_block: ~
