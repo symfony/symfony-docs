@@ -285,7 +285,8 @@ and dynamically add new tag forms when the user clicks the "Add a tag" link.
 This example uses `jQuery`_ and assumes you have it included somewhere on your
 page (e.g. using Symfony's :doc:`Webpack Encore </frontend>`).
 
-Now add the required functionality with JavaScript:
+Add a ``<script>`` tag somewhere on your page to include the required
+functionality with JavaScript:
 
 .. code-block:: javascript
 
