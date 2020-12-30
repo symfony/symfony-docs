@@ -131,6 +131,7 @@ integration with these chat services:
 ==========  ================================  ============================================
 Service     Package                           DSN
 ==========  ================================  ============================================
+Firebase    ``symfony/firebase-notifier``     ``firebase://USERNAME:PASSWORD@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack       ``symfony/slack-notifier``        ``slack://default/ID``
@@ -139,7 +140,7 @@ Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel
 
 .. versionadded:: 5.1
 
-    The Mattermost and RocketChat integrations were introduced in Symfony
+    The Firebase, Mattermost and RocketChat integrations were introduced in Symfony
     5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
     Webhooks instead of legacy tokens.
 
