@@ -280,9 +280,8 @@ On the rendered page, the result will look something like this:
     the ``data-prototype`` attribute is automatically added to the containing ``div``,
     and you need to adjust the following JavaScript accordingly.
 
-The goal of this section will be to use JavaScript to read this attribute
-and dynamically add new tag forms when the user clicks the "Add a tag" button.
-This example uses jQuery and assumes you have it included somewhere on your page.
+Now we need some JavaScript to read this attribute and dynamically add new tag forms
+when the user clicks an "Add a tag" link. This example uses `jQuery`_.
 
 Add a ``script`` tag somewhere on your page so you can start writing some
 JavaScript. In this script, bind to the "click" event of the "Add a tag"
@@ -684,6 +683,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     the `symfony-collection`_ package based on jQuery for the rest of browsers.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
+.. _`jQuery`: http://jquery.com/
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
