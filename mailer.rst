@@ -281,19 +281,15 @@ Use ``addTo()``, ``addCc()``, or ``addBcc()`` methods to add more addresses::
         ->addTo('bar@example.com')
         ->cc('cc@example.com')
         ->addCc('cc2@example.com')
-
-        // ...
     ;
 
 Alternatively, you can pass multiple addresses to each method::
 
-    $toAddresses = ['foo@example.com', new Address('bar@example.com')];
+    $addressesArray = ['foo@example.com', new Address('bar@example.com')];
 
     $email = (new Email())
-        ->to(...$toAddresses)
+        ->to(...$addressesArray)
         ->cc('cc1@example.com', 'cc2@example.com')
-
-        // ...
     ;
 
 Message Headers
