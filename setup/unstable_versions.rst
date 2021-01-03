@@ -68,7 +68,7 @@ Symfony version has deprecated some of its features.
         $ cd projects/my_project/
         $ git checkout -b testing_new_symfony
         # ... update composer.json configuration
-        $ composer update symfony/symfony
+        $ composer update "symfony/*"
 
         # ... after testing the new Symfony version
         $ git checkout master
