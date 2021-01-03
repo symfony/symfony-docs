@@ -477,6 +477,12 @@ that only includes safe ASCII characters::
     $slug = $slugger->slug('10% or 5€');
     // $slug = '10-percent-or-5-euro'
 
+    // if there is no symbols map for your locale (e.g. 'en_GB') then the parent locale's symbols map
+    // will be used instead (i.e. 'en')
+    $slugger = new AsciiSlugger('en_GB', ['en' => ['%' => 'percent', '€' => 'euro']]);
+    $slug = $slugger->slug('10% or 5€');
+    // $slug = '10-percent-or-5-euro'
+
     // for more dynamic substitutions, pass a PHP closure instead of an array
     $slugger = new AsciiSlugger('en', function ($string, $locale) {
         return str_replace('❤️', 'love', $string);
@@ -489,6 +495,10 @@ that only includes safe ASCII characters::
 .. versionadded:: 5.2
 
     The feature to use a PHP closure to define substitutions was introduced in Symfony 5.2.
+
+.. versionadded:: 5.3
+
+    The feature to fallback to the parent locale's symbols map was introduced in Symfony 5.3.
 
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::
