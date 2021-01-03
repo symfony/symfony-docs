@@ -187,10 +187,14 @@ Get the same level nodes after or before the current selection::
     $crawler->filter('body > p')->nextAll();
     $crawler->filter('body > p')->previousAll();
 
-Get all the child or parent nodes::
+Get all the child or ancestor nodes::
 
     $crawler->filter('body')->children();
-    $crawler->filter('body > p')->parents();
+    $crawler->filter('body > p')->ancestors();
+
+.. versionadded:: 5.3
+
+    The ``ancestors()`` method was introduced in Symfony 5.3.
 
 Get all the direct child nodes matching a CSS selector::
 

@@ -713,7 +713,7 @@ selects the last one on the page, and then selects its immediate parent element:
 
     $newCrawler = $crawler->filter('input[type=submit]')
         ->last()
-        ->parents()
+        ->ancestors()
         ->first()
     ;
 
@@ -735,8 +735,8 @@ Many other methods are also available:
     All following siblings.
 ``previousAll()``
     All preceding siblings.
-``parents()``
-    Returns the parent nodes.
+``ancestors()``
+    Returns the ancestor nodes.
 ``children()``
     Returns children nodes.
 ``reduce($lambda)``
@@ -766,7 +766,7 @@ Extracting Information
 The Crawler can extract information from the nodes::
 
     use Symfony\Component\DomCrawler\Crawler;
-    
+
     // returns the attribute value for the first node
     $crawler->attr('class');
 
