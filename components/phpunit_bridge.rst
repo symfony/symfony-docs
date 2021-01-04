@@ -759,11 +759,25 @@ classes, interfaces and/or traits for the code to run::
 
     class MyClassTest extends TestCase
     {
+        public static function setUpBeforeClass(): void
+        {
+            ClassExistsMock::register(MyClass::class);
+        }
+
+        protected function setUp(): void
+        {
+            ClassExistsMock::withMockedClasses([]);
+        }
+
+        public function tearDown(): void
+        {
+            ClassExistsMock::withMockedClasses([]);
+        }
+        
         // ...
 
         public function testHelloDefault()
         {
-            ClassExistsMock::register(MyClass::class);
             ClassExistsMock::withMockedClasses([DependencyClass::class => false]);
 
             $class = new MyClass();
