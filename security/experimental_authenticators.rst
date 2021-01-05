@@ -287,8 +287,6 @@ method that fits most use-cases::
     // src/Security/ApiKeyAuthenticator.php
     namespace App\Security;
 
-    use App\Entity\User;
-    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -302,13 +300,6 @@ method that fits most use-cases::
 
     class ApiKeyAuthenticator extends AbstractAuthenticator
     {
-        private $entityManager;
-
-        public function __construct(EntityManagerInterface $entityManager)
-        {
-            $this->entityManager = $entityManager;
-        }
-
         /**
          * Called on every request to decide if this authenticator should be
          * used for the request. Returning `false` will cause this authenticator
