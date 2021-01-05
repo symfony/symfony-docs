@@ -346,15 +346,17 @@ maxMessage
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
 The message that will be shown if the underlying value is more than the
-`max`_ option, and no `min`_ option has been defined (if both are defined, use
-`notInRangeMessage`_).
+`max`_ option, and **no** `min`_ option has been defined.
+
+If **both** are defined, use `notInRangeMessage`_ or use the parameter ``{{ max }}`` instead.
 
 You can use the following parameters in this message:
 
 ===============  ==============================================================
 Parameter        Description
 ===============  ==============================================================
-``{{ limit }}``  The upper limit
+``{{ limit }}``  The upper limit (if only `max`_ is defined)
+``{{ max }}``    The upper limit (if both `min`_ and `max`_ are defined)
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
@@ -394,15 +396,17 @@ minMessage
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
 The message that will be shown if the underlying value is less than the
-`min`_ option, and no `max`_ option has been defined (if both are defined, use
-`notInRangeMessage`_).
+`min`_ option, and **no** `max`_ option has been defined.
+
+If **both** are defined, use `notInRangeMessage`_ or use the parameter ``{{ min }}`` instead.
 
 You can use the following parameters in this message:
 
 ===============  ==============================================================
 Parameter        Description
 ===============  ==============================================================
-``{{ limit }}``  The lower limit
+``{{ limit }}``  The lower limit (if only `min`_ is defined)
+``{{ min }}``    The lower limit (if both `min`_ and `max`_ are defined)
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
