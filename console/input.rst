@@ -199,7 +199,7 @@ separation at all (e.g. ``-i 5`` or ``-i5``).
     this situation, always place options after the command name, or avoid using
     a space to separate the option name from its value.
 
-There are four option variants you can use:
+There are five option variants you can use:
 
 ``InputOption::VALUE_IS_ARRAY``
     This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``);
@@ -215,6 +215,14 @@ There are four option variants you can use:
 ``InputOption::VALUE_OPTIONAL``
     This option may or may not have a value (e.g. ``--yell`` or
     ``--yell=loud``).
+
+``InputOption::VALUE_NEGATABLE``
+    Accept either the flag (e.g. ``--yell``) or its negation (e.g.
+    ``--no-yell``).
+
+.. versionadded:: 5.3
+
+    The ``InputOption::VALUE_NEGATABLE`` constant was introduced in Symfony 5.3.
 
 You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
