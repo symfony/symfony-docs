@@ -432,7 +432,7 @@ transports, which is useful to debug errors.
         The ``getMessageId()`` method was introduced in Symfony 4.4.
 
 The exceptions related to mailer transports (those which implement
-:class:`Symfony\\Component\\Mailer\\Exception\\TransportException`) also provide
+:class:`Symfony\\Component\\Mailer\\Exception\\TransportExceptionInterface`) also provide
 this debug information via the ``getDebug()`` method.
 
 .. versionadded:: 4.4
