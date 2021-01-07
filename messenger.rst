@@ -1005,6 +1005,11 @@ The transport has a number of options:
 ``exchange[type]``                            Type of exchange                                   ``fanout``
 ============================================  =================================================  ===================================
 
+.. deprecated:: 5.3
+
+    The ``prefetch_count`` option was deprecated in Symfony 5.3 because it has
+    no effect on the AMQP Messenger transport.
+
 You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
 your Envelope::
