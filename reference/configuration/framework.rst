@@ -401,7 +401,7 @@ trusted_proxies
 
 .. versionadded:: 5.2
 
-    The ``trusted_headers`` option was reintroduced in Symfony 5.2 (it had been
+    The ``trusted_proxies`` option was reintroduced in Symfony 5.2 (it had been
     removed in Symfony 3.3).
 
 The ``trusted_proxies`` option is needed to get precise information about the
