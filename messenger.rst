@@ -1342,6 +1342,8 @@ The transport has a number of options:
 ``auto_setup``          Whether the queue should be created     ``true``
                         automatically during send / get.
 ``buffer_size``         Number of messages to prefetch          9
+``debug``               If ``true`` it logs all HTTP requests   ``false``
+                        and responses (it impacts performance)
 ``endpoint``            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
 ``poll_timeout``        Wait for new message duration in        0.1
                         seconds
@@ -1352,6 +1354,10 @@ The transport has a number of options:
                         not be visible (`Visibility Timeout`_)
 ``wait_time``           `Long polling`_ duration in seconds     20
 ======================  ======================================  ===================================
+
+.. versionadded:: 5.3
+
+    The ``debug`` option was introduced in Symfony 5.3.
 
 .. note::
 
