@@ -112,8 +112,32 @@ you'll need to do:
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``check:requirements`` command to check if your server meets the
-:ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`.
+There are some :ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`.
+In your development machine, the recommended way to check these requirements is
+to use `Symfony CLI`_. However, in your production server you might prefer to
+not install the Symfony CLI tool. In those cases, install this other package in
+your application:
+
+.. code-block:: terminal
+
+    $ composer require symfony/requirements-checker
+
+Then, make sure that the checker is included in your Composer scripts:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+
+        "scripts": {
+            "auto-scripts": {
+                "vendor/bin/requirements-checker": "php-script",
+                "...": "..."
+            },
+
+            "...": "..."
+        }
+    }
 
 .. _b-configure-your-app-config-parameters-yml-file:
 
@@ -257,3 +281,4 @@ Learn More
 .. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
 .. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html
 .. _`Scalingo`: https://doc.scalingo.com/languages/php/symfony
+.. _`Symfony CLI`: https://symfony.com/download
