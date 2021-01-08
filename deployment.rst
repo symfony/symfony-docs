@@ -46,7 +46,7 @@ Basic File Transfer
 The most basic way of deploying an application is copying the files manually
 via FTP/SCP (or similar method). This has its disadvantages as you lack control
 over the system as the upgrade progresses. This method also requires you
-to take some manual steps after transferring the files (see `Common Pre-Post-Deployment Tasks`_)
+to take some manual steps after transferring the files (see `Common Deployment Tasks`_)
 
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
@@ -58,7 +58,7 @@ system. When using Git, a common approach is to create a tag for each release
 and check out the appropriate tag on deployment (see `Git Tagging`_).
 
 This makes updating your files *easier*, but you still need to worry about
-manually taking other steps (see `Common Pre-Post-Deployment Tasks`_).
+manually taking other steps (see `Common Deployment Tasks`_).
 
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -103,11 +103,13 @@ specifically tailored to the requirements of Symfony.
     `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
     (which works only with Capistrano 2).
 
-Common Pre-Post-Deployment Tasks
---------------------------------
+.. _common-post-deployment-tasks:
 
-Before and after deploying your actual source code, there are a number of common things
-you'll need to do:
+Common Deployment Tasks
+-----------------------
+
+Before and after deploying your actual source code, there are a number of common
+things you'll need to do:
 
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -237,7 +239,7 @@ are simple and more complex tools and one can make the deployment as easy
 
 Don't forget that deploying your application also involves updating any dependency
 (typically via Composer), migrating your database, clearing your cache and
-other potential things like pushing assets to a CDN (see `Common Pre-Post-Deployment Tasks`_).
+other potential things like pushing assets to a CDN (see `Common Deployment Tasks`_).
 
 Troubleshooting
 ---------------
