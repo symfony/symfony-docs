@@ -117,6 +117,7 @@ can configure PHP to use this preload file:
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
+    ;opcache.preload_user=www-data ; you may also define the preload_user
 
 .. _performance-configure-opcache:
 
