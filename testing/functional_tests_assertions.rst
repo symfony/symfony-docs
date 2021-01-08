@@ -39,6 +39,12 @@ Response
 - ``assertResponseHasCookie()``
 - ``assertResponseNotHasCookie()``
 - ``assertResponseCookieValueSame()``
+- ``assertResponseFormatSame()`` (the response format is the value returned by
+  the :method:`Symfony\Component\HttpFoundation\Response::getFormat` method).
+
+.. versionadded:: 5.3
+
+    The ``assertResponseFormatSame()`` method was introduced in Symfony 5.3.
 
 Request
 ~~~~~~~
