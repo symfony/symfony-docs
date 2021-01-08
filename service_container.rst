@@ -500,13 +500,14 @@ parameter and in PHP config use the ``ref`` function:
         # config/services.yaml
         services:
             App\Service\MessageGenerator:
-                # this is not a string, but a reference to a service called 'logger'
-                arguments: ['@logger']
+                arguments:
+                    # this is not a string, but a reference to a service called 'logger'
+                    - '@logger'
 
-                # if the value of a string parameter starts with '@', you need to escape
-                # it by adding another '@' so Symfony doesn't consider it a service
-                # (this will be parsed as the string '@securepassword')
-                mailer_password: '@@securepassword'
+                    # if the value of a string argument starts with '@', you need to escape
+                    # it by adding another '@' so Symfony doesn't consider it a service
+                    # the following example would be parsed as the string '@securepassword'
+                    # - '@@securepassword'
 
     .. code-block:: xml
 
