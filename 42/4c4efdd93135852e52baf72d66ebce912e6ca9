@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-22T16:00:59Z
+
+Hi @SpiGAndromeda! Thanks for the PR and detailed references to relevant PRs.
+
+However, I'm not so sure if this is something that has to be documented. Won't this "just work"? In other words, are there situations where this behavior would be inconsistent with what people are expecting? If there is, we should document those (and show how to avoid it). Otherwise, I would vote to not document this change.
+
+---------------------------------------------------------------------------
+
+by SpiGAndromeda at 2020-10-22T16:08:07Z
+
+@wouterj It can be problematic if you want to base some logic (e.g. for PATCH request handling) on the uninitialized state. If I would apply the NotNull constraint, it would return true even if the property is uninitialized but not null.
+
+That PATCH requests are ugly and you maybe should not rely on the uninitialized state is another matter but could be mentioned.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-23T09:04:35Z
+
+Aha, thanks for clarifying @SpiGAndromeda.
+
+It makes sense to document this now. I would suggest changing the contents slightly, not warn users about this unexpected behavior. E.g. something like:
+
+```rst
+.. caution::
+
+    The validator will use a value ``null`` if a typed property is uninitialized. This can
+    cause unexpected behavior if the property holds a value when initialized. In order
+    to avoid this, make sure all properties are initialized before validating it.
+```
+
+What do you think?
