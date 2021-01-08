@@ -232,6 +232,8 @@ what actions are allowed on a blog post::
 
     // See all the available transitions for the post in the current state
     $transitions = $workflow->getEnabledTransitions($post);
+    // See a specific available transition for the post in the current state
+    $transition = $workflow->getEnabledTransition($post, 'publish');
 
 Accessing the Workflow in a Class
 ---------------------------------
@@ -788,6 +790,9 @@ of domain logic in your templates:
 ``workflow_transitions()``
     Returns an array with all the transitions enabled for the given object.
 
+``workflow_transition()``
+    Returns a specific transition enabled for the given object and transition name.
+
 ``workflow_marked_places()``
     Returns an array with the place names of the given marking.
 
@@ -1029,6 +1034,15 @@ In Twig templates, metadata is available via the ``workflow_metadata()`` functio
                     <code>{{ workflow_metadata(blog_post, 'priority', transition) ?: 0 }}</code>
                 </li>
             {% endfor %}
+        </ul>
+    </p>
+    <p>
+        <strong>to_review Priority</strong>
+        <ul>
+            <li>
+                to_review:
+                <code>{{ workflow_metadata(blog_post, 'priority', workflow_transition(blog_post, 'to_review')) }}</code>
+            </li>
         </ul>
     </p>
 
