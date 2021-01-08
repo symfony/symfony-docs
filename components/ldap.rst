@@ -142,6 +142,9 @@ delete existing ones::
 
     $phoneNumber = $entry->getAttribute('phoneNumber');
     $isContractor = $entry->hasAttribute('contractorCompany');
+    // attribute names in getAttribute() and hasAttribute() methods are case-sensitive
+    // pass FALSE as the second method argument to make them case-insensitive
+    $isContractor = $entry->hasAttribute('contractorCompany', false);
 
     $entry->setAttribute('email', ['fabpot@symfony.com']);
     $entryManager->update($entry);
@@ -152,6 +155,11 @@ delete existing ones::
 
     // Removing an existing entry
     $entryManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
+
+.. versionadded:: 5.3
+
+    The option to make attribute names case-insensitive in ``getAttribute()``
+    and ``hasAttribute()`` was introduce in Symfony 5.3.
 
 Batch Updating
 ______________
