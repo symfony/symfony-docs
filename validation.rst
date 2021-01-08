@@ -613,10 +613,9 @@ class to have at least 3 characters.
 
 .. caution::
 
-    With PHP 7.4, typed properties were introduced. If a property is accessed
-    before a value is assigned (explicitly or as a default value), PHP will
-    throw an exception. To avoid that, the Validator will use ``null`` as the
-    properties value if it's uninitialized.
+    The validator will use a value ``null`` if a typed property is uninitialized.
+    This can cause unexpected behavior if the property holds a value when initialized.
+    In order to avoid this, make sure all properties are initialized before validating them.
 
 .. index::
    single: Validation; Getter constraints
