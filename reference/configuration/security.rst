@@ -254,6 +254,68 @@ encoding algorithm. Also, each algorithm defines different config options:
     select a different password encoder for each user instance. Read
     :doc:`this article </security/named_encoders>` for more details.
 
+.. tip::
+
+    Encoding passwords is resource intensive and takes time in order to generate
+    secure password hashes. In tests however, secure hashes are not important, so
+    you can change the encoders configuration in ``test`` environment to run tests faster:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/test/security.yaml
+            encoders:
+                # Use your user class name here
+                App\Entity\User:
+                    algorithm: auto # This should be the same value as in config/packages/security.yaml
+                    cost: 4 # Lowest possible value for bcrypt
+                    time_cost: 3 # Lowest possible value for argon
+                    memory_cost: 10 # Lowest possible value for argon
+
+        .. code-block:: xml
+
+            <!-- config/packages/test/security.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <config>
+                    <!-- class: Use your user class name here -->
+                    <!-- algorithm: This should be the same value as in config/packages/security.yaml -->
+                    <!-- cost: Lowest possible value for bcrypt -->
+                    <!-- time_cost: Lowest possible value for argon -->
+                    <!-- memory_cost: Lowest possible value for argon -->
+                    <encoder
+                        class="App\Entity\User"
+                        algorithm="auto"
+                        cost="4"
+                        time_cost="3"
+                        memory_cost="10"
+                    />
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // config/packages/test/security.php
+            use App\Entity\User;
+
+            $container->loadFromExtension('security', [
+                'encoders' => [
+                    // Use your user class name here
+                    User::class => [
+                        'algorithm' => 'auto', // This should be the same value as in config/packages/security.yaml
+                        'cost' => 4, // Lowest possible value for bcrypt
+                        'time_cost' => 3, // Lowest possible value for argon
+                        'memory_cost' => 10, // Lowest possible value for argon
+                    ]
+                ],
+            ]);
+
 .. _reference-security-sodium:
 .. _using-the-argon2i-password-encoder:
 
