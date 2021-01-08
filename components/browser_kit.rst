@@ -80,6 +80,20 @@ The value returned by the ``request()`` method is an instance of the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
 
+The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::jsonRequest` method,
+which defines the same arguments as the ``request()`` method, is a shortcut to
+convert the request parameters into a JSON string and set the needed HTTP headers::
+
+    use Acme\Client;
+
+    $client = new Client();
+    // this encodes parameters as JSON and sets the required CONTENT_TYPE and HTTP_ACCEPT headers
+    $crawler = $client->jsonRequest('GET', '/', ['some_parameter' => 'some_value']);
+
+.. versionadded:: 5.3
+
+    The ``jsonRequest()`` method was introduced in Symfony 5.3.
+
 The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to
 make AJAX requests::
