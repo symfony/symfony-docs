@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-12-22T14:51:57Z
+
+@nicolas-grekas could you please check if this contribution is correct?
+
+If it is, maybe we should update HttpClient component ... because this doesn't look very "ergonomic" when testing failures. Thanks!
