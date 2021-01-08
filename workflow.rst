@@ -791,7 +791,7 @@ of domain logic in your templates:
     Returns an array with all the transitions enabled for the given object.
 
 ``workflow_transition()``
-    Returns a specific transitions enabled for the given object and transition name.
+    Returns a specific transition enabled for the given object and transition name.
 
 ``workflow_marked_places()``
     Returns an array with the place names of the given marking.
