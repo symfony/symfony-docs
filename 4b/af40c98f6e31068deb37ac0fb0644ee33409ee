@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-04-29T15:42:17Z
+
+Thanks for this contribution.
+
+Question to @symfony/team-symfony-docs I'm 99.99% sure that we have or had something like this in the docs. Maybe in the "Best Practices"? But I can't find it. Can you remember? Did we remove this from docs for some reason? Thanks.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-05-12T08:22:53Z
+
+I thought we had something about the plaintext password encoder, but I couldn't find anything. What do you think if we change the example here to make use of the plaintext encoder?
+
+---------------------------------------------------------------------------
+
+by kbond at 2020-05-12T17:10:17Z
+
+A few arguments against plaintext:
+
+1. In my test suite, switching to the plaintext encoder breaks a few tests related to password migration (I check to see if legacy passwords are properly migrated on login).
+2. There was virtually no performance gain using plaintext vs sodium (with the lowest cost).
+3. I like to have my test environment as close as possible to production
+
+That all being said, the plaintext config would be simpler. I'm fine switching if that's what you think would be best.
+
+---------------------------------------------------------------------------
+
+by kbond at 2020-11-20T13:10:06Z
+
+> please add the comments to xml and php examples
+
+Done. ~but see my issue with the xml comments.~
