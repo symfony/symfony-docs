@@ -611,6 +611,12 @@ class to have at least 3 characters.
             }
         }
 
+.. caution::
+
+    The validator will use a value ``null`` if a typed property is uninitialized.
+    This can cause unexpected behavior if the property holds a value when initialized.
+    In order to avoid this, make sure all properties are initialized before validating them.
+
 .. index::
    single: Validation; Getter constraints
 
