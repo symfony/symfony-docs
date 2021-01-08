@@ -1,0 +1,77 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-12-09T14:34:30Z
+
+Thank you @Yondz. This indeed looks quite weird.
+
+What do you think about modifying the example a little bit, like this:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    # this is not a string, but a reference to a service called 'logger'
+                    - '@logger'
+
+                    # if the value of a string parameter starts with '@', you need to escape
+                    # it by adding another '@' so Symfony doesn't consider it a service
+                    # (this will be parsed as the string '@securepassword')
+                    - '@@securepassword'
+
+If you agree, please update your PR (by pushing to `fix_service_container_service_parameters`), otherwise I would like to learn your ideas :)
+
+---------------------------------------------------------------------------
+
+by Yondz at 2020-12-09T14:48:12Z
+
+Hi @wouterj ,
+
+That's okay and better :) I might have to update the `MessageGenerator` / XML / PHP configurations as well to keep consistent then (that's why I wasn't sure at first sight),
+
+I'll update this :)
+Thanks
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-12-09T14:56:28Z
+
+Oh ah, yeah it's a bit confusing in XML/PHP, as the `@` doesn't need to be escaped there. I think it's best to keep these as they are now.
+
+---------------------------------------------------------------------------
+
+by Yondz at 2020-12-09T15:00:21Z
+
+And furthermore, when you scroll down a bit, there's even a redundancy with [this example](https://symfony.com/doc/4.3/service_container.html#choose-a-specific-service) :
+
+```yaml
+# config/services.yaml
+services:
+    # ... same code as before
+
+    # explicitly configure the service
+    App\Service\MessageGenerator:
+        arguments:
+            # the '@' symbol is important: that's what tells the container
+            # you want to pass the *service* whose id is 'monolog.logger.request',
+            # and not just the *string* 'monolog.logger.request'
+            $logger: '@monolog.logger.request'
+```
+
+Maybe this would be a good tradeoff :
+
+```yaml
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    # this is not a string, but a reference to a service called 'logger'
+                    - '@logger'
+
+                    # if the value of a string argument starts with '@', you need to escape
+                    # it by adding another '@' so Symfony doesn't consider it a service
+                    # the following example would be parsed as the string '@securepassword' :
+                    # - '@@securepassword'
+```
+
+WDYT ?
