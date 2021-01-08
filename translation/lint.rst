@@ -33,6 +33,17 @@ The linter results can be exported to JSON using the ``--format`` option:
     $ php bin/console lint:yaml translations/ --format=json
     $ php bin/console lint:xliff translations/ --format=json
 
+When running the YAML linter inside `GitHub Actions`_, the output is automatically
+adapted to the format required by GitHub, but you can force that format too:
+
+.. code-block:: terminal
+
+    $ php bin/console lint:yaml translations/ --format=github
+
+.. versionadded:: 5.3
+
+    The ``github`` output format was introduced in Symfony 5.3.
+
 .. tip::
 
     The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
@@ -45,3 +56,5 @@ The linter results can be exported to JSON using the ``--format`` option:
     .. versionadded:: 5.1
 
         The ``yaml-lint`` binary was introduced in Symfony 5.1.
+
+.. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
