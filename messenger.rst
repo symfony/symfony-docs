@@ -716,6 +716,15 @@ this is configurable for each transport:
             ],
         ]);
 
+.. tip::
+
+    Symfony triggers a :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageRetriedEvent`
+    when a message is retried so you can run your own logic.
+
+    .. versionadded:: 5.2
+
+        The ``WorkerMessageRetriedEvent`` class was introduced in Symfony 5.2.
+
 Avoiding Retrying
 ~~~~~~~~~~~~~~~~~
 
