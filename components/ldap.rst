@@ -139,6 +139,10 @@ delete existing ones::
     $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
     $result = $query->execute();
     $entry = $result[0];
+
+    $phoneNumber = $entry->getAttribute('phoneNumber');
+    $isContractor = $entry->hasAttribute('contractorCompany');
+
     $entry->setAttribute('email', ['fabpot@symfony.com']);
     $entryManager->update($entry);
 
