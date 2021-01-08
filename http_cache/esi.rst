@@ -156,9 +156,9 @@ used ``render()``.
 
 .. note::
 
-    Symfony detects if a gateway cache supports ESI via another Akamai
-    specification that is supported out of the box by the Symfony reverse
-    proxy.
+    Symfony considers that a gateway cache supports ESI if its responses include
+    the ``Surrogate-Capability`` HTTP header and the value of that header
+    contains the ``ESI/1.0`` string anywhere.
 
 The embedded action can now specify its own caching rules entirely independently
 of the master page::
