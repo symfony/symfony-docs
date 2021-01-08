@@ -1387,20 +1387,18 @@ responses dynamically when it's called::
     $client = new MockHttpClient($callback);
     $response = $client->request('...'); // calls $callback to get the response
 
-If you need to test your error handling with responses that have an HTTP status 
-code different than 200, you need to provide a raw HTTP header with the 
-`response_headers` key::
+If you need to test responses with HTTP status codes different than 200,
+define the ``http_code`` option::
 
     use Symfony\Component\HttpClient\MockHttpClient;
     use Symfony\Component\HttpClient\Response\MockResponse;
 
     $client = new MockHttpClient([
-        new MockResponse('...', ['response_headers' => ['HTTP/1.1 500 Internal Server Error']]),
-        new MockResponse('...', ['response_headers' => ['HTTP/1.1 404 Page Not Found']]),
+        new MockResponse('...', ['http_code' => 500]),
+        new MockResponse('...', ['http_code' => 404]),
     ]);
 
     $response = $client->request('...');
-
 
 The responses provided to the mock client don't have to be instances of
 ``MockResponse``. Any class implementing ``ResponseInterface`` will work (e.g.
