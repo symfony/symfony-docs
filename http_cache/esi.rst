@@ -99,7 +99,7 @@ independently of the rest of the page::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
-    
+
     // ...
     class DefaultController extends AbstractController
     {
@@ -156,7 +156,7 @@ used ``render()``.
 
 .. note::
 
-    Symfony considers that a gateway cache supports ESI if its responses include
+    Symfony considers that a gateway cache supports ESI if its request include
     the ``Surrogate-Capability`` HTTP header and the value of that header
     contains the ``ESI/1.0`` string anywhere.
 
