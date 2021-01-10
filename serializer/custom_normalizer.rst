@@ -6,7 +6,7 @@ How to Create your Custom Normalizer
 
 The :doc:`Serializer component </components/serializer>` uses
 normalizers to transform any data into an array. The component provides several
-:doc:`built-in normalizers </serializer/normalizers>` but you may need to create
+:ref:`built-in normalizers <component-serializer-normalizers>` but you may need to create
 your own normalizer to transform an unsupported data structure.
 
 Creating a New Normalizer
