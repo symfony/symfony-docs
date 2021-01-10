@@ -833,27 +833,27 @@ which defines the configuration options for the CsvEncoder an associative array:
 
 These are the options available:
 
-======================= ====================================================  ==========================
-Option                  Description                                           Default
-======================= ====================================================  ==========================
-``csv_delimiter``       Sets the field delimiter separating values (one       ``,``
+======================= =====================================================  ==========================
+Option                  Description                                            Default
+======================= =====================================================  ==========================
+``csv_delimiter``       Sets the field delimiter separating values (one        ``,``
                         character only)
-``csv_enclosure``       Sets the field enclosure (one character only)         ``"``
+``csv_enclosure``       Sets the field enclosure (one character only)          ``"``
 ``csv_escape_char``     Sets the escape character (at most one character)
-``csv_key_separator``   Sets the separator for array's keys during its        ``.``
+``csv_key_separator``   Sets the separator for array's keys during its         ``.``
                         flattening
 ``csv_headers``         Sets the order of the header and data columns
                         E.g.: if ``$data = ['c' => 3, 'a' => 1, 'b' => 2]``
                         and ``$options = ['csv_headers' => ['a', 'b', 'c']]``
                         then ``serialize($data, 'csv', $options)`` returns
-                        ``a,b,c\n1,2,3 ``                                     ``[]``, inferred from input data's keys
-``csv_escape_formulas`` Escapes fields containg formulas by prepending them   ``false``
+                        ``a,b,c\n1,2,3``                                       ``[]``, inferred from input data's keys
+``csv_escape_formulas`` Escapes fields containg formulas by prepending them    ``false``
                         with a ``\t`` character
 ``as_collection``       Always returns results as a collection, even if only
                         one line is decoded.
-``no_headers``          Disables header in the encoded CSV                    ``false``
-``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data  ``false``
-======================= ====================================================  ==========================
+``no_headers``          Disables header in the encoded CSV                     ``false``
+``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data   ``false``
+======================= =====================================================  ==========================
 
 .. versionadded:: 4.4
 
