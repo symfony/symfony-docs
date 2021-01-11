@@ -210,12 +210,11 @@ For example, to add debugging features in your application, you can run the
 which in turn installs several packages like ``symfony/debug-bundle``,
 ``symfony/monolog-bundle``, ``symfony/var-dumper``, etc.
 
-By default, when installing Symfony packs, your ``composer.json`` file shows the
-pack dependency (e.g. ``"symfony/debug-pack": "^1.0"``) instead of the actual
-packages installed. To show the packages, add the ``--unpack`` option when
-installing a pack (e.g. ``composer require debug --dev --unpack``) or run this
-command to unpack the already installed packs: ``composer unpack PACK_NAME``
-(e.g. ``composer unpack debug``).
+You won't see the `symfony/debug-pack` dependency in your `composer.json`, as Flex
+automatically unpacks the pack. This means that it only adds the real packages 
+as dependencies (e.g. you will see the new `symfony/var-dumper` in `require-dev`). 
+While it is not recommended, you can use the `composer require --no-unpack ...`
+option to disable unpacking.
 
 .. _security-checker:
 
