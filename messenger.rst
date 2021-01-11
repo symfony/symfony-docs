@@ -971,6 +971,9 @@ The transport has a number of options:
                                               fractional.
 ``connect_timeout``                           Connection timeout. Note: 0 or greater seconds.
                                               May be fractional.
+``confirm_timeout``                           Number of seconds to wait for message sending
+                                              confirmation. If not specified, transport won't
+                                              wait for confirmation. May be fractional.
 ``frame_max``                                 The largest frame size that the server proposes
                                               for the connection, including frame header and
                                               end-byte. 0 means standard extension limit
@@ -1013,6 +1016,10 @@ The transport has a number of options:
 ``exchange[name]``                            Name of the exchange
 ``exchange[type]``                            Type of exchange                                   ``fanout``
 ============================================  =================================================  ===================================
+
+.. versionadded:: 5.2
+
+    The ``confirm_timeout`` option was introduced in Symfony 5.2.
 
 .. deprecated:: 5.3
 
