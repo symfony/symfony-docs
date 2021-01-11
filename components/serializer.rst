@@ -946,11 +946,6 @@ Option                          Description                                     
                                 generated XML
 ==============================  =================================================  ==========================
 
-.. versionadded:: 4.2
-
-    The ``decoder_ignored_node_types`` and ``encoder_ignored_node_types``
-    options were introduced in Symfony 4.2.
-
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
