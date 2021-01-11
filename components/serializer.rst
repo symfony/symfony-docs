@@ -669,7 +669,24 @@ When serializing, you can set a callback to format a specific object property::
 Normalizers
 -----------
 
-There are several types of normalizers available:
+Normalizers turn **object** into **array** and vice versa. They implement
+::class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
+for normalize (object to array) and
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizableInterface` for denormalize
+(array to object).
+
+You can add new normalizers to a Serializer instance by using its first constructor argument::
+
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $normalizers = [new ObjectNormalizer()];
+    $serializer = new Serializer($normalizers, []);
+
+Built-in Normalizers
+~~~~~~~~~~~~~~~~~~~~
+
+The Serializer component provides several built-in normalizers:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
     This normalizer leverages the :doc:`PropertyAccess Component </components/property_access>`
@@ -739,6 +756,14 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
 
+.. note::
+
+    You can also create your own Normalizer to use another structure. Read more at
+    :doc:`/serializer/custom_normalizer`.
+
+All these normalizers are enabled by default when using the Serializer component
+in a Symfony application.
+
 .. _component-serializer-encoders:
 
 Encoders
@@ -776,6 +801,11 @@ The Serializer component provides several built-in encoders:
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
     This encoder encodes and decodes data in `CSV`_.
+
+.. note::
+
+    You can also create your own Encoder to use another structure. Read more at
+    :doc:`/serializer/custom_encoders`.
 
 All these encoders are enabled by default when using the Serializer component
 in a Symfony application.
@@ -896,24 +926,55 @@ which defines the configuration options for the XmlEncoder an associative array:
 
 These are the options available:
 
-======================  ==================================================== ==========================
-Option                  Description                                          Default
-======================  ==================================================== ==========================
-``xml_format_output``   If set to true, formats the generated XML with line
-                        breaks and indentation.
-``xml_version``         Sets the XML version attribute                       ``1.1``
-``xml_encoding``        Sets the XML encoding attribute                      ``utf-8``
-``xml_standalone``      Adds standalone attribute in the generated XML       ``true``
-``xml_root_node_name``  Sets the root node name (default: ``response``).
-``remove_empty_tags``   If set to true, removes all empty tags in the        ``false``
-                        generated XML
-======================  ==================================================== ==========================
+==============================  =================================================  ==========================
+Option                          Description                                        Default
+==============================  =================================================  ==========================
+``xml_format_output``           If set to true, formats the generated XML with
+                                line breaks and indentation.
+``xml_version``                 Sets the XML version attribute                     ``1.1``
+``xml_encoding``                Sets the XML encoding attribute                    ``utf-8``
+``xml_standalone``              Adds standalone attribute in the generated XML     ``true``
+``xml_type_cast_attributes``    This provides the ability to forgot the attribute  ``true``
+                                type casting
+``xml_root_node_name``          Sets the root node name (default: ``response``).
+``as_collection``               Always returns results as a collection, even if
+                                only one line is decoded
+``decoder_ignored_node_types``  Sets nodes to be ignored in the decode             ``[\XML_PI_NODE, \XML_COMMENT_NODE]``
+``encoder_ignored_node_types``  Sets nodes to be ignored in the encode             ``[]``
+``load_options``                XML loading `options with libxml`_                 ``\LIBXML_NONET | \LIBXML_NOBLANKS``
+``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
+                                generated XML
+==============================  =================================================  ==========================
+
+.. versionadded:: 4.2
+
+    The ``decoder_ignored_node_types`` and ``encoder_ignored_node_types``
+    options were introduced in Symfony 4.2.
 
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
 This encoder requires the :doc:`Yaml Component </components/yaml>` and
 transforms from and to Yaml.
+
+The ``YamlEncoder`` Context Options
+...................................
+
+The ``encode()`` method, like other encoder, uses ``context`` to set
+configuration options for the YamlEncoder an associative array::
+
+    $xmlEncoder->encode($array, 'xml', $context);
+
+These are the options available:
+
+=============== ========================================================  ==========================
+Option          Description                                               Default
+=============== ========================================================  ==========================
+``yaml_inline`` The level where you switch to inline YAML                 ``0``
+``yaml_indent`` The level of indentation (used internally)                ``0``
+``yaml_flags``  A bit field of ``Yaml::DUMP_*`` / ``PARSE_*`` constants   ``0``
+                to customize the encoding / decoding YAML string
+=============== ========================================================  ==========================
 
 Skipping ``null`` Values
 ------------------------
@@ -1469,6 +1530,7 @@ Learn more
 .. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
+.. _`options with libxml`: https://www.php.net/manual/en/libxml.constants.php
 .. _JSON: http://www.json.org/
 .. _XML: https://www.w3.org/XML/
 .. _YAML: https://yaml.org/
