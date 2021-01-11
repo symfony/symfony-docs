@@ -1,6 +1,7 @@
 rules:
     american_english: ~
     avoid_repetetive_words: ~
+    blank_line_after_anchor: ~
     blank_line_after_directive: ~
     blank_line_before_directive: ~
     composer_dev_option_not_at_the_end: ~
