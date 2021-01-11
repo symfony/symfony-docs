@@ -590,6 +590,12 @@ container is a service that can be get via the normal container::
         // ...
     }
 
+.. caution::
+
+    The special container ``test.service_container`` doesn't give access
+    to the services that have been removed. In this case, you'll have
+    to declare the services you need as public.
+
 .. tip::
 
     If the information you need to check is available from the profiler, use
