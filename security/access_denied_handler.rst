@@ -210,7 +210,7 @@ configure a :ref:`kernel.exception listener <use-kernel-exception-event>`::
 
         public function onKernelException(ExceptionEvent $event): void
         {
-            $exception = $event->getException();
+            $exception = $event->getThrowable();
             if (!$exception instanceof AccessDeniedException) {
                 return;
             }
