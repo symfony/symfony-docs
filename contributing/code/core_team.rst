@@ -104,7 +104,8 @@ Symfony contributions:
 * **Abdellatif AitBoudad** (`aitboudad`_);
 * **Romain Neutron** (`romainneutron`_);
 * **Jordi Boggiano** (`Seldaek`_);
-* **Lukas Kahwe Smith** (`lsmith77`_).
+* **Lukas Kahwe Smith** (`lsmith77`_);
+* **Jules Pietri** (`HeahDude`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -201,6 +202,7 @@ discretion of the **Project Leader**.
 .. _`yceruto`: https://github.com/yceruto
 .. _`michaelcullum`: https://github.com/michaelcullum
 .. _`wouterj`: https://github.com/wouterj
+.. _`HeahDude`: https://github.com/HeahDude
 .. _`OskarStark`: https://github.com/OskarStark
 .. _`romainneutron`: https://github.com/romainneutron
 .. _`lsmith77`: https://github.com/lsmith77/
