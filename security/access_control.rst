@@ -43,8 +43,8 @@ Take the following ``access_control`` entries as an example:
         security:
             # ...
             access_control:
-                - { path: '^/admin', roles: ROLE_USER_IP, ip: 127.0.0.1 }
                 - { path: '^/admin', roles: ROLE_USER_PORT, ip: 127.0.0.1, port: 8080 }
+                - { path: '^/admin', roles: ROLE_USER_IP, ip: 127.0.0.1 }
                 - { path: '^/admin', roles: ROLE_USER_HOST, host: symfony\.com$ }
                 - { path: '^/admin', roles: ROLE_USER_METHOD, methods: [POST, PUT] }
 
@@ -70,8 +70,8 @@ Take the following ``access_control`` entries as an example:
 
             <config>
                 <!-- ... -->
-                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1"/>
                 <rule path="^/admin" role="ROLE_USER_PORT" ip="127.0.0.1" port="8080"/>
+                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1"/>
                 <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$"/>
                 <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT"/>
 
@@ -94,14 +94,14 @@ Take the following ``access_control`` entries as an example:
             'access_control' => [
                 [
                     'path' => '^/admin',
-                    'roles' => 'ROLE_USER_IP',
-                    'ips' => '127.0.0.1',
-                ],
-                [
-                    'path' => '^/admin',
                     'roles' => 'ROLE_USER_PORT',
                     'ip' => '127.0.0.1',
                     'port' => '8080',
+                ],
+                [
+                    'path' => '^/admin',
+                    'roles' => 'ROLE_USER_IP',
+                    'ips' => '127.0.0.1',
                 ],
                 [
                     'path' => '^/admin',
@@ -145,13 +145,13 @@ if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | URI             | IP          | PORT        | HOST        | METHOD     | ``access_control``             | Why?                                                        |
 +=================+=============+=============+=============+============+================================+=============================================================+
-| ``/admin/user`` | 127.0.0.1   | 80          | example.com | GET        | rule #1 (``ROLE_USER_IP``)     | The URI matches ``path`` and the IP matches ``ip``.         |
+| ``/admin/user`` | 127.0.0.1   | 80          | example.com | GET        | rule #2 (``ROLE_USER_IP``)     | The URI matches ``path`` and the IP matches ``ip``.         |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 127.0.0.1   | 80          | symfony.com | GET        | rule #1 (``ROLE_USER_IP``)     | The ``path`` and ``ip`` still match. This would also match  |
+| ``/admin/user`` | 127.0.0.1   | 80          | symfony.com | GET        | rule #2 (``ROLE_USER_IP``)     | The ``path`` and ``ip`` still match. This would also match  |
 |                 |             |             |             |            |                                | the ``ROLE_USER_HOST`` entry, but *only* the **first**      |
 |                 |             |             |             |            |                                | ``access_control`` match is used.                           |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 127.0.0.1   | 8080        | symfony.com | GET        | rule #2 (``ROLE_USER_PORT``)   | The ``path``, ``ip`` and ``port`` match.                    |
+| ``/admin/user`` | 127.0.0.1   | 8080        | symfony.com | GET        | rule #1 (``ROLE_USER_PORT``)   | The ``path``, ``ip`` and ``port`` match.                    |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | GET        | rule #3 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match the first rule, so the second      |
 |                 |             |             |             |            |                                | rule (which matches) is used.                               |
