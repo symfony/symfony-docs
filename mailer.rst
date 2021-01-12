@@ -687,7 +687,7 @@ arguments to the filter:
 
 You can pass unlimited number of arguments to ``inline_css()`` to load multiple
 CSS files. For this example to work, you also need to define a new Twig namespace
-called ``css`` that points to the directory where ``email.css`` lives:
+called ``styles`` that points to the directory where ``email.css`` lives:
 
 .. _mailer-css-namespace:
 
@@ -810,11 +810,11 @@ You can combine all filters to create complex email messages:
 
 .. code-block:: twig
 
-    {% apply inky_to_html|inline_css(source('@css/foundation-emails.css')) %}
+    {% apply inky_to_html|inline_css(source('@styles/foundation-emails.css')) %}
         {# ... #}
     {% endapply %}
 
-This makes use of the :ref:`css Twig namespace <mailer-css-namespace>` we created
+This makes use of the :ref:`styles Twig namespace <mailer-css-namespace>` we created
 earlier. You could, for example, `download the foundation-emails.css file`_
 directly from GitHub and save it in ``assets/styles``.
 
