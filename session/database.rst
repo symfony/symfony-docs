@@ -166,11 +166,11 @@ parallel and only the first one stored the CSRF token in the session.
     If you use Memcached instead of Redis, follow a similar approach but replace
     ``RedisSessionHandler`` by :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`.
 
-Store Sessions in a Relational Database (MySQL, PostgreSQL)
+Store Sessions in a Relational Database (MariaDB, MySQL, PostgreSQL)
 -----------------------------------------------------------
 
 Symfony includes a :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
-to store sessions in relational databases like MySQL and PostgreSQL. To use it,
+to store sessions in relational databases like MariaDB, MySQL and PostgreSQL. To use it,
 first register a new handler service with your database credentials:
 
 .. configuration-block::
@@ -379,8 +379,8 @@ file and run the migration with the following command:
 
     $ php bin/console doctrine:migrations:migrate
 
-MySQL
-.....
+MariaDB/MySQL
+.............
 
 .. code-block:: sql
 
