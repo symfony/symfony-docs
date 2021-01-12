@@ -91,7 +91,6 @@ Active Core Members
   * **Ryan Weaver** (`weaverryan`_);
   * **Christian Flothmann** (`xabbuh`_);
   * **Wouter De Jong** (`wouterj`_);
-  * **Jules Pietri** (`HeahDude`_);
   * **Javier Eguiluz** (`javiereguiluz`_).
   * **Oskar Stark** (`OskarStark`_).
 
@@ -202,7 +201,6 @@ discretion of the **Project Leader**.
 .. _`yceruto`: https://github.com/yceruto
 .. _`michaelcullum`: https://github.com/michaelcullum
 .. _`wouterj`: https://github.com/wouterj
-.. _`HeahDude`: https://github.com/HeahDude
 .. _`OskarStark`: https://github.com/OskarStark
 .. _`romainneutron`: https://github.com/romainneutron
 .. _`lsmith77`: https://github.com/lsmith77/
