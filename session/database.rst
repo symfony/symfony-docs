@@ -417,7 +417,7 @@ Microsoft SQL Server
 
     CREATE TABLE sessions (
         sess_id VARCHAR(128) NOT NULL PRIMARY KEY,
-        sess_data VARBINARY(MAX) NOT NULL,
+        sess_data NVARCHAR(MAX) NOT NULL,
         sess_lifetime INTEGER NOT NULL,
         sess_time INTEGER NOT NULL
     );
