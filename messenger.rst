@@ -1380,6 +1380,9 @@ The transport has a number of options:
 
     The ``debug`` option was introduced in Symfony 5.3.
 
+    Automatic recovery from temporary connection instantiation internal errors using
+    ``RecoverableMessageHandlingException`` was added in Symfony 5.3.
+
 .. note::
 
     The ``wait_time`` parameter defines the maximum duration Amazon SQS should
