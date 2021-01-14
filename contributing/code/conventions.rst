@@ -7,8 +7,10 @@ coding standards and conventions used in the core framework to make it more
 consistent and predictable. You are encouraged to follow them in your own
 code, but you don't need to.
 
-Method Names
-------------
+.. _method-names:
+
+Naming a Method
+---------------
 
 When an object has a "main" many relation with related "things"
 (objects, parameters, ...), the method names are normalized:
@@ -77,19 +79,63 @@ must be used instead (where ``XXX`` is the name of the related thing):
     ``replaceXXX()``, on the other hand, cannot add new elements. If an unrecognized
     key is passed to ``replaceXXX()`` it must throw an exception.
 
+Writing a CHANGELOG Entry
+-------------------------
+
+When adding a new feature in a minor version or deprecating an existing
+behavior, an entry to the relevant CHANGELOG(s) should be added.
+
+New features and deprecations must be described in a file named
+``CHANGELOG.md`` that should be at the root directory of the modified
+Component, Bridge or Bundle.
+
+The file must be written with the Markdown syntax and follow the following
+conventions:
+
+* The main title is always ``CHANGELOG``;
+
+* Each entry must be added to a minor version section (like ``5.3``) as a list
+  element;
+
+* No third level sections are allowed;
+
+* Messages should follow the commit message conventions: should be short,
+  capitalize the line, do not end with a period, use an imperative verb to
+  start the line;
+
+* New entries must be added on top of the list.
+
+Here is a complete example for reference:
+
+.. code-block:: markdown
+
+    CHANGELOG
+    =========
+
+    5.3
+    ---
+
+     * Add `MagicConfig` that allows configuring things
+
+.. note::
+
+    The main ``CHANGELOG-*`` files at the ``symfony/symfony`` root directory
+    are automatically generated when releases are prepared and should never be
+    modified manually.
+
 .. _contributing-code-conventions-deprecations:
 
 Deprecating Code
 ----------------
 
-From time to time, some classes and/or methods are deprecated in the
-framework; that happens when a feature implementation cannot be changed
-because of backward compatibility issues, but we still want to propose a
-"better" alternative. In that case, the old implementation can be **deprecated**.
+From time to time, some classes and/or methods are deprecated in the framework;
+that happens when a feature implementation cannot be changed because of
+backward compatibility issues, but we still want to propose a "better"
+alternative. In that case, the old implementation can be **deprecated**.
 
 Deprecations must only be introduced on the next minor version of the impacted
-component (or bundle, or bridge, or contract).
-They can exceptionally be introduced on previous supported versions if they are critical.
+component (or bundle, or bridge, or contract). They can exceptionally be
+introduced on previous supported versions if they are critical.
 
 A new class (or interface, or trait) cannot be introduced as deprecated, or
 contain deprecated methods.
@@ -144,10 +190,10 @@ after the use declarations, like in this example from
 
 The deprecation must be added to the ``CHANGELOG.md`` file of the impacted component::
 
-    4.4.0
-    -----
+    4.4
+    ---
 
-    * Deprecated the `Deprecated` class, use `Replacement` instead.
+    * Deprecate the `Deprecated` class, use `Replacement` instead
 
 It must also be added to the ``UPGRADE.md`` file of the targeted minor version
 (``UPGRADE-4.4.md`` in our example)::
@@ -155,15 +201,17 @@ It must also be added to the ``UPGRADE.md`` file of the targeted minor version
     DependencyInjection
     -------------------
 
-    * Deprecated the `Deprecated` class, use `Replacement` instead.
+     * Deprecate the `Deprecated` class, use `Replacement` instead
 
 Finally, its consequences must be added to the ``UPGRADE.md`` file of the next major version
-(``UPGRADE-5.0.md`` in our example)::
+(``UPGRADE-5.0.md`` in our example):
+
+.. code-block:: markdown
 
     DependencyInjection
     -------------------
 
-    * Removed the `Deprecated` class, use `Replacement` instead.
+     * Remove the `Deprecated` class, use `Replacement` instead
 
 All these tasks are mandatory and must be done in the same pull request.
 
@@ -174,12 +222,14 @@ Removing deprecated code can only be done once every 2 years, on the next major 
 impacted component (``master`` branch).
 
 When removing deprecated code, the consequences of the deprecation must be added to the ``CHANGELOG.md`` file
-of the impacted component::
+of the impacted component:
 
-    5.0.0
-    -----
+.. code-block:: markdown
 
-    * Removed the `Deprecated` class, use `Replacement` instead.
+    5.0
+    ---
+
+     * Remove the `Deprecated` class, use `Replacement` instead
 
 This task is mandatory and must be done in the same pull request.
 
