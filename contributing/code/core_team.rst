@@ -72,7 +72,8 @@ Active Core Members
   * **Wouter De Jong** (`wouterj`_);
   * **Alexander M. Turek** (`derrabus`_);
   * **Jérémy Derussé** (`jderusse`_);
-  * **Titouan Galopin** (`tgalopin`_).
+  * **Titouan Galopin** (`tgalopin`_);
+  * **Oskar Stark** (`OskarStark`_).
 
 * **Security Team** (``@symfony/security`` on GitHub):
 
