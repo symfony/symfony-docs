@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-10-23T05:17:57Z
+
+Sorry (I forgot), please change:
+```diff
+.. versionadded:: 5.2
+
+-    The Smsapi, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
++    The Smsapi, GatewayAPI, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
+```
+
+---------------------------------------------------------------------------
+
+by PGLongo at 2020-10-23T07:04:05Z
+
+> Sorry (I forgot), please change:
+>
+> ```diff
+> .. versionadded:: 5.2
+>
+> -    The Smsapi, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
+> +    The Smsapi, GatewayAPI, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
+> ```
+
+Done. Than you so much.
+
+---------------------------------------------------------------------------
+
+by PGLongo at 2020-11-26T13:22:18Z
+
+@OskarStark & @Nyholm since there is the RC of 5.2 should I update `.. versionadded:: 5.2`?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-11T09:01:27Z
+
+Thanks for the double check Tobias 👍
