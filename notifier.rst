@@ -62,6 +62,7 @@ Infobip     ``symfony/infobip-notifier``      ``infobip://ACCESS_TOKEN@HOST?from
 Iqsms       ``symfony/iqsms-notifier``        ``iqsms://LOGIN:PASSWORD@default?from=FROM``
 Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
 Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
+Octopush    ``symfony/octopush-notifier``     ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
 OvhCloud    ``symfony/ovh-cloud-notifier``    ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
 Sendinblue  ``symfony/sendinblue-notifier``   ``sendinblue://API_KEY@default?sender=PHONE``
 Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
@@ -79,7 +80,7 @@ Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=
 
 .. versionadded:: 5.3
 
-    The Iqsms integration was introduced in Symfony 5.3.
+    The Iqsms and Octopush integrations were introduced in Symfony 5.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
