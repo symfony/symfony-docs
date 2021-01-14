@@ -56,6 +56,7 @@ with a couple popular SMS services:
 ==========  ================================  ====================================================
 Service     Package                           DSN
 ==========  ================================  ====================================================
+AllMySms    ``symfony/allmysms-notifier``     ``allmysms://LOGIN:APIKEY@default?from=FROM``
 Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 GatewayApi  ``symfony/gatewayapi-notifier``   ``gatewayapi://TOKEN@default?from=FROM``
@@ -81,7 +82,8 @@ Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=
 
 .. versionadded:: 5.3
 
-    The Iqsms, GatewayApi and Octopush integrations were introduced in Symfony 5.3.
+    The Iqsms, GatewayApi, Octopush and AllMySms integrations were introduced in Symfony 5.3.
+
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
