@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2020-07-21T15:28:47Z
+
+I don't remember exactly how these settings relate to opcache and I'm afk. If either true or false work, it means we should remove the sentence actually, since these wouldn't be requirements. Please try and confirm what you observe.
+
+---------------------------------------------------------------------------
+
+by ITernovtsiy at 2020-07-21T15:50:13Z
+
+> If either true or false work, it means we should remove the sentence actually, since these wouldn't be requirements.
+
+`inline_factories: true` will work fine with preload, just a bit slower (I guess). So, this can be safely removed or updated to specify that it's a recommendation, not a requirement.
+
+`inline_class_loader: true` doesn't make sense with preloading in place (except use-case when all services tagged by `container.no_preload`, which is not in v4.4 anyway). So, we should keep this as a requirement for opcache preload.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2020-07-21T16:08:56Z
+
+Honestly, these claims should be verified before we commit anything.
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2020-11-24T10:05:43Z
+
+I checked the four combinations using blackfire on a new Symfony project with preloading enabled and it worked for all of them, so I’m not sure there is any requirement.
+
+Also even if each combination performed roughly the same, `container.dumper.inline_factories` seemed to bring some benefits.
+
+---------------------------------------------------------------------------
+
+by ITernovtsiy at 2020-11-24T10:41:21Z
+
+@MatTheCat Did you spot `cannot redeclare class` error with `inline_class_loader: true` and OPcache preload enabled?
+
+And even if not, it doesn't make sense to call `include_once` in service getter, as class already preloaded by OPcache and it makes it less efficient.
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2020-11-24T11:46:12Z
+
+> Did you spot cannot redeclare class error with inline_class_loader: true and OPcache preload enabled?
+
+Nope.
+
+If I refer to https://bugs.php.net/bug.php?id=78169 it should not cause any error, but it is true preloaded classes files will still be included.
+
+@nicolas-grekas the PHP issue seems stalled; did you hear about it elsewhere?
