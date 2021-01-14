@@ -59,7 +59,7 @@ Service     Package                           DSN
 Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 GatewayApi  ``symfony/gatewayapi-notifier``   ``gatewayapi://TOKEN@default?from=FROM``
-Infobip     ``symfony/infobip-notifier``      ``infobip://ACCESS_TOKEN@HOST?from=FROM``
+Infobip     ``symfony/infobip-notifier``      ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms       ``symfony/iqsms-notifier``        ``iqsms://LOGIN:PASSWORD@default?from=FROM``
 Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
 Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
