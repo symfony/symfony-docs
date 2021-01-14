@@ -433,6 +433,12 @@ Then, execute the script for validating contents:
     # or contents passed to STDIN
     $ cat path/to/file.yaml | php lint.php
 
+Use the `--exclude` option to exclude one or more specific files from multiple file list:
+
+.. code-block:: terminal
+
+    $ php lint.php path/to/directory --exclude=path/to/directory/foo.yaml --exclude=path/to/directory/bar.yaml
+
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
