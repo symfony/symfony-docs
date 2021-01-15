@@ -580,6 +580,13 @@ container is a service that can be get via the normal container::
         // ...
     }
 
+.. caution::
+
+    The special container ``test.service_container`` doesn't give access to the
+    private services that have been removed (those who are not used by any
+    other services). The solution is to declare those private services as public
+    in the ``config/services_test.yaml`` file.
+
 .. tip::
 
     If the information you need to check is available from the profiler, use
