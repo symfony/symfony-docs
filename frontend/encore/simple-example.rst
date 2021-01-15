@@ -104,18 +104,18 @@ can do most of the work for you:
                 <!-- Renders a link tag (if your module requires any CSS)
                      <link rel="stylesheet" href="/build/app.css"> -->
             {% endblock %}
-        </head>
-        <body>
-            <!-- ... -->
 
             {% block javascripts %}
                 {{ encore_entry_script_tags('app') }}
 
                 <!-- Renders app.js & a webpack runtime.js file
-                    <script src="/build/runtime.js"></script>
-                    <script src="/build/app.js"></script> -->
+                    <script src="/build/runtime.js" defer></script>
+                    <script src="/build/app.js" defer></script>
+                    See note below about the "defer" attribute -->
             {% endblock %}
-        </body>
+        </head>
+
+        <!-- ... -->
     </html>
 
 .. _encore-entrypointsjson-simple-description:
@@ -135,11 +135,14 @@ If you're *not* using Symfony, you can ignore the ``entrypoints.json`` file and
 point to the final, built file directly. ``entrypoints.json`` is only required for
 some optional features.
 
-.. versionadded:: 0.21.0
+.. versionadded:: 1.9.0
 
-    The ``encore_entry_link_tags()`` comes from WebpackEncoreBundle and relies
-    on a feature in Encore that was first introduced in version 0.21.0. Previously,
-    the ``asset()`` function was used to point directly to the file.
+    The ``defer`` attribute on the ``script`` tags delays the execution of the
+    JavaScript until the page loads (similar to putting the ``script`` at the
+    bottom of the page). The ability to always add this attribute was introduced
+    in WebpackEncoreBundle 1.9.0 and is automatically enabled in that bundle's
+    recipe in the ``config/packages/webpack_encore.yaml`` file. See
+    `WebpackEncoreBundle Configuration`_ for more details.
 
 Requiring JavaScript Modules
 ----------------------------
@@ -355,3 +358,4 @@ Encore supports many more features! For a full list of what you can do, see
 
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
 .. _`ECMAScript 6 modules`: https://hacks.mozilla.org/2015/08/es6-in-depth-modules/
+.. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
