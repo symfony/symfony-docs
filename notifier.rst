@@ -150,7 +150,7 @@ Service     Package                           DSN
 ==========  ================================  ===========================================================================
 Discord     ``symfony/discord-notifier``      ``discord://TOKEN@default?webhook_id=ID``
 Firebase    ``symfony/firebase-notifier``     ``firebase://USERNAME:PASSWORD@default``
-GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
+GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
 LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
