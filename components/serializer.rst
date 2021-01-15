@@ -829,21 +829,25 @@ The Serializer component provides several built-in normalizers:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
     This normalizer converts objects that implement
-    :class:`Symfony\\Component\\Uid\\AbstractUid` into strings. Also it can
-    denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
-    or :class:`Symfony\\Component\\Uid\\Ulid`.
+    :class:`Symfony\\Component\\Uid\\AbstractUid` into strings.
+    The default normalization format for objects that implement :class:`Symfony\\Component\\Uid\\Uuid`
+    is the `RFC 4122`_ format (example: ``d9e7a184-5d5b-11ea-a62a-3499710062d0``).
+    The default normalization format for objects that implement :class:`Symfony\\Component\\Uid\\Ulid`
+    is the Base 32 format (example: ``01E439TP9XJZ9RPFH3T1PYBCR8``).
+    You can change the string format by setting the serializer context option
+    ``UidNormalizer::NORMALIZATION_FORMAT_KEY`` to ``UidNormalizer::NORMALIZATION_FORMAT_BASE_58``,
+    ``UidNormalizer::NORMALIZATION_FORMAT_BASE_32`` or ``UidNormalizer::NORMALIZATION_FORMAT_RFC_4122``.
+
+    Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
+    or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
 .. versionadded:: 5.2
 
     The ``UidNormalizer`` was introduced in Symfony 5.2.
 
-.. note::
+.. versionadded:: 5.3
 
-    You can also create your own Normalizer to use another structure. Read more at
-    :doc:`/serializer/custom_normalizer`.
-
-All these normalizers are enabled by default when using the Serializer component
-in a Symfony application.
+    The ``UidNormalizer`` normalization formats were introduced in Symfony 5.3.
 
 .. _component-serializer-encoders:
 
@@ -1616,3 +1620,4 @@ Learn more
 .. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object
 .. _`API Platform`: https://api-platform.com
 .. _`list of PHP timezones`: https://www.php.net/manual/en/timezones.php
+.. _`RFC 4122`: https://tools.ietf.org/html/rfc4122
