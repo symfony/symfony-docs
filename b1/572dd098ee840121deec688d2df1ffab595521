@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-03T16:00:13Z
+
+I disagree with this 😐   I'd love to provide a realistic example that readers can copy+paste to test their bundles.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-03T16:17:37Z
+
+Alright, what do we do then? Given [Travis changes its paid plan](https://twitter.com/lsmith/status/1323514135791939584), does it makes sense to replace the Travis config with GitHub actions? (as it'll probably be a more common use-case for new bundles starting now)
+
+Or as, suggested by @noniagriconomie, do we want tabs? The "issue" with tabs is that we need to explicitly add them to the Sphinx config.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-08T11:56:46Z
+
+Something else I was just thinking: what about creating a template repository for new bundles? That would include the README, GitHub actions config, main directories, etc.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-11-08T12:09:04Z
+
+That could be a nice idea. I feel like the "onboarding" for bundle authors has too much friction. We could have a `make:bundle` maker, a template repository, better docs about how to create a bundle and support multiple Symfony versions, how to create a "fake" Symfony app to functional test the bundle, etc.
