@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-01-14T07:22:20Z
+
+@Nyholm do you think this can be achieved by fabbot? Otherwise I am afraid, we cannot think of it all the time
+
+---------------------------------------------------------------------------
+
+by fabpot at 2021-01-14T07:33:33Z
+
+I'm the one managing fabbot :)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-01-14T07:35:19Z
+
+> I'm the one managing fabbot :)
+
+Indeed, he is actively working on gh and carsonbot 😃
+
+---------------------------------------------------------------------------
+
+by dunglas at 2021-01-14T08:16:07Z
+
+Regarding commit messages, are you aware of the [conventional commits](https://www.conventionalcommits.org/) spec? It has a nice syntax and some tools already implement it ([GitHub bots checking message formats](https://github.com/zeke/semantic-pull-requests), [changelog generators](https://github.com/conventional-changelog/standard-version), linters, [IDE plugins](https://plugins.jetbrains.com/plugin/13389-conventional-commit) etc).
+
+For Symfony commit messages following this spec would look like:
+
+```
+feat(serializer): add support for foo
+```
+
+```
+fix(dependency-injection): add missing type hint for bar
+```
+
+```
+fix(cache)!: remove function foo()
+
+BREAKING CHANGE: function foo() has been removed to fix a security issue
+```
+
+---------------------------------------------------------------------------
+
+by fabpot at 2021-01-14T08:52:38Z
+
+TBH, that's looks really ugly :) And we already have tools built around our conventions.
