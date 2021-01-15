@@ -224,7 +224,18 @@ in mind the following:
 * Never fix coding standards in some existing code as it makes the code review
   more difficult;
 
-* Write good commit messages (see the tip below).
+* Write good commit messages: Start by a short subject line (the first line),
+  followed by a blank line and a more detailed description.
+
+  The subject line should start with the Component, Bridge or Bundle you are
+  working on in square brackets (``[DependencyInjection]``,
+  ``[FrameworkBundle]``, ...).
+
+  Then, capitalize the sentence, do not end with a period, and use an
+  imperative verb to start.
+
+  Here is a full example of a subject line: ``[MagicBundle] Add `MagicConfig`
+  that allows configuring things``.
 
 .. tip::
 
@@ -234,15 +245,6 @@ in mind the following:
 
     A status is posted below the pull request description with a summary
     of any problems it detects or any `Travis-CI`_ build failures.
-
-.. tip::
-
-    A good commit message is composed of a summary (the first line),
-    optionally followed by a blank line and a more detailed description. The
-    summary should start with the Component you are working on in square
-    brackets (``[DependencyInjection]``, ``[FrameworkBundle]``, ...). Use a
-    verb (``fixed ...``, ``added ...``, ...) to start the summary and don't
-    add a period at the end.
 
 .. _prepare-your-patch-for-submission:
 
