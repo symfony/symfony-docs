@@ -178,10 +178,10 @@ A bundle should at least test:
 
 * The lower bound of their dependencies (by running ``composer update --prefer-lowest``);
 * The supported PHP versions;
-* All supported major Symfony versions (e.g. both ``3.x`` and ``4.x`` if
+* All supported major Symfony versions (e.g. both ``4.x`` and ``5.x`` if
   support is claimed for both).
 
-Thus, a bundle support PHP 7.3, 7.4 and 8.0, and Symfony 3.4 and 4.x should
+Thus, a bundle supporting PHP 7.3, 7.4 and 8.0, and Symfony 3.4 and 4.x should
 have at least this test matrix:
 
 ===========  ===============  ===================
