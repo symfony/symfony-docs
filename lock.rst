@@ -293,4 +293,4 @@ you can do it by :doc:`decorating the store </service_container/service_decorati
     lock.default.retry_till_save.store:
         class: Symfony\Component\Lock\Store\RetryTillSaveStore
         decorates: lock.default.store
-        arguments: ['@lock.default.retry_till_save.store.inner', 100, 50]
+        arguments: ['@.inner', 100, 50]
