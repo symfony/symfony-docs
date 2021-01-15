@@ -48,6 +48,11 @@ The Request object has several ``Request::HEADER_*`` constants that control exac
 *which* headers from your reverse proxy are trusted. The argument is a bit field,
 so you can also pass your own value (e.g. ``0b00110``).
 
+.. caution::
+
+    The "trusted proxies" feature does not work as expected when using the
+    `nginx realip module`_. Disable that module when serving Symfony applications.
+
 But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
 
@@ -114,3 +119,4 @@ In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
 .. _`security groups`: https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
 .. _`CloudFront IP ranges`: https://ip-ranges.amazonaws.com/ip-ranges.json
+.. _`nginx realip module`: http://nginx.org/en/docs/http/ngx_http_realip_module.html
