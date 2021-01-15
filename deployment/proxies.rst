@@ -109,6 +109,11 @@ so you can also pass your own value (e.g. ``0b00110``).
     Symfony versions you needed to use the ``Request::setTrustedProxies()``
     method in the ``public/index.php`` file.
 
+.. caution::
+
+    The "trusted proxies" feature does not work as expected when using the
+    `nginx realip module`_. Disable that module when serving Symfony applications.
+
 But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
 
@@ -184,3 +189,4 @@ handling the request::
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
 .. _`CloudFront IP ranges`: https://ip-ranges.amazonaws.com/ip-ranges.json
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
+.. _`nginx realip module`: http://nginx.org/en/docs/http/ngx_http_realip_module.html
