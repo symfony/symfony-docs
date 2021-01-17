@@ -609,10 +609,10 @@ The ``layout.php`` file is nearly identical:
             <meta charset="UTF-8">
             <title>{% block title %}Welcome!{% endblock %}</title>
             {% block stylesheets %}{% endblock %}
+            {% block javascripts %}{% endblock %}
         </head>
         <body>
             {% block body %}{% endblock %}
-            {% block javascripts %}{% endblock %}
         </body>
     </html>
 
