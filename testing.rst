@@ -63,7 +63,7 @@ If you want to test an entire feature of your application (e.g. registering as a
 user or generating an invoice), see the section about :ref:`Functional Tests <functional-tests>`.
 
 Writing Symfony unit tests is no different from writing standard PHPUnit
-unit tests. Suppose, for example, that you have an class called ``Calculator``
+unit tests. Suppose, for example, that you have a class called ``Calculator``
 in the ``src/Util/`` directory of the app::
 
     // src/Util/Calculator.php

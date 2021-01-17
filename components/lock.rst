@@ -165,7 +165,7 @@ method, the resource will stay locked until the timeout::
 
 .. tip::
 
-    To avoid letting the lock in a locking state, it's recommended to wrap the
+    To avoid leaving the lock in a locked state, it's recommended to wrap the
     job in a try/catch/finally block to always try to release the expiring lock.
 
 In case of long-running tasks, it's better to start with a not too long TTL and
