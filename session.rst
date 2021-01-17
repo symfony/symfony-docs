@@ -167,6 +167,11 @@ By default, session attributes are key-value pairs managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
 class.
 
+.. deprecated:: 5.3
+
+    The ``NamespacedAttributeBag`` class is deprecated since Symfony 5.3.
+    If you need this feature, you will have to implement the class yourself.
+
 If your application needs are complex, you may prefer to use
 :ref:`namespaced session attributes <namespaced-attributes>` which are managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
