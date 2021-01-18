@@ -141,6 +141,7 @@ entity primary keys::
 
     // there are generators for UUID V1 and V6 too
     use Symfony\Bridge\Doctrine\IdGenerator\UuidV4Generator;
+    use Symfony\Component\Uid\Uuid;
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -155,6 +156,13 @@ entity primary keys::
          */
         private $id;
 
+        // ...
+        
+        public function getId(): ?Uuid
+        {
+            return $this->id;
+        }
+        
         // ...
     }
 
@@ -279,6 +287,7 @@ There's also a Doctrine generator to help autogenerate ULID values for the
 entity primary keys::
 
     use Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator;
+    use Symfony\Component\Uid\Ulid;    
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -294,6 +303,14 @@ entity primary keys::
         private $id;
 
         // ...
+        
+        public function getId(): ?Ulid
+        {
+            return $this->id;
+        }
+        
+        // ...
+        
     }
 
 .. versionadded:: 5.2
