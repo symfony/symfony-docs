@@ -25,6 +25,7 @@ namespace short name, which must end with ``Bundle``.
 A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these rules:
 
+* Extend Symfony\Component\HttpKernel\Bundle\Bundle
 * Use only alphanumeric characters and underscores;
 * Use a StudlyCaps name (i.e. camelCase with an uppercase first letter);
 * Use a descriptive and short name (no more than two words);
@@ -40,9 +41,6 @@ Namespace                   Bundle Class Name
 ``Acme\Bundle\BlogBundle``  AcmeBlogBundle
 ``Acme\BlogBundle``         AcmeBlogBundle
 ==========================  ==================
-
-By convention, the ``getName()`` method of the bundle class should return the
-class name.
 
 .. note::
 
