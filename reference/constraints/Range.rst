@@ -348,7 +348,7 @@ maxMessage
 The message that will be shown if the underlying value is more than the
 `max`_ option, and **no** `min`_ option has been defined.
 
-If **both** are defined, use `notInRangeMessage`_ or use the parameter ``{{ max }}`` instead.
+If **both** are defined, use `notInRangeMessage`_.
 
 You can use the following parameters in this message:
 
@@ -398,7 +398,7 @@ minMessage
 The message that will be shown if the underlying value is less than the
 `min`_ option, and **no** `max`_ option has been defined.
 
-If **both** are defined, use `notInRangeMessage`_ or use the parameter ``{{ min }}`` instead.
+If **both** are defined, use `notInRangeMessage`_.
 
 You can use the following parameters in this message:
 
