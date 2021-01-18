@@ -457,13 +457,33 @@ using :ref:`the user provider <security-user-providers>`::
     and must return a ``UserInterface`` object (otherwise a
     ``UsernameNotFoundException`` is thrown)::
 
+        // src/Security/CustomAuthenticator.php
+        namespace App\Security;
+
+        use App\Repository\UserRepository;
         // ...
-        $passport = new Passport(
-            new UserBadge($email, function ($userIdentifier) {
-                return $this->userRepository->findOneBy(['email' => $userIdentifier]);
-            }),
-            $credentials
-        );
+
+        class CustomAuthenticator extends AbstractAuthenticator
+        {
+            private $userRepository;
+
+            public function __construct(UserRepository $userRepository)
+            {
+                $this->userRepository = $userRepository;
+            }
+
+            public function authenticate(Request $request): PassportInterface
+            {
+                // ...
+
+                return new Passport(
+                    new UserBadge($email, function ($userIdentifier) {
+                        return $this->userRepository->findOneBy(['email' => $userIdentifier]);
+                    }),
+                    $credentials
+                );
+            }
+        }
 
 The following credential classes are supported by default:
 
