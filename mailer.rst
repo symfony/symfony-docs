@@ -1062,6 +1062,7 @@ you have a transport called ``async``, you can route the message there:
 
             <framework:config>
                 <framework:messenger>
+                    <framework:transport name="async">%env(MESSENGER_TRANSPORT_DSN)%</framework:transport>
                     <framework:routing message-class="Symfony\Component\Mailer\Messenger\SendEmailMessage">
                         <framework:sender service="async"/>
                     </framework:routing>
@@ -1074,6 +1075,9 @@ you have a transport called ``async``, you can route the message there:
         // config/packages/messenger.php
         $container->loadFromExtension('framework', [
             'messenger' => [
+                'transports' => [
+                    'async' => '%env(MESSENGER_TRANSPORT_DSN)%',
+                ],
                 'routing' => [
                     'Symfony\Component\Mailer\Messenger\SendEmailMessage' => 'async',
                 ],
