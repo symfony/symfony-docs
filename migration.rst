@@ -238,6 +238,7 @@ could look something like this::
     // public/index.php
     use App\Kernel;
     use App\LegacyBridge;
+    use Symfony\Component\Dotenv\Dotenv;
     use Symfony\Component\ErrorHandler\Debug;
     use Symfony\Component\HttpFoundation\Request;
 
