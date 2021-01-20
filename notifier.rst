@@ -150,6 +150,7 @@ Service     Package                           DSN
 ==========  ================================  ===========================================================================
 Discord     ``symfony/discord-notifier``      ``discord://TOKEN@default?webhook_id=ID``
 Firebase    ``symfony/firebase-notifier``     ``firebase://USERNAME:PASSWORD@default``
+Gitter      ``symfony/gitter-notifier``       ``GITTER_DSN=gitter://TOKEN@default?room_id=ROOM_ID``
 GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
 LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
@@ -173,7 +174,7 @@ Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:TOKEN@HOST?channel
 
 .. versionadded:: 5.3
 
-    The Mercure integration was introduced in Symfony 5.3.
+    The Gitter and Mercure integrations were introduced in Symfony 5.3.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
