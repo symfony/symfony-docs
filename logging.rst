@@ -159,6 +159,13 @@ to write logs using the :phpfunction:`syslog` function:
 This defines a *stack* of handlers and each handler is called in the order that it's
 defined.
 
+.. note::
+
+    If you want to override the ``monolog`` configuration via another config
+    file, you will need to redefine the entire ``handlers`` stack. The configuration
+    from the two files cannot be merged because the order matters and a merge does
+    not allow to control the order.
+
 Handlers that Modify Log Entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -262,13 +269,6 @@ debugging much easier!
 
     The handler named "file_log" will not be included in the stack itself as
     it is used as a nested handler of the ``fingers_crossed`` handler.
-
-.. note::
-
-    If you want to override the ``monolog`` configuration via another config
-    file, you will need to redefine the entire ``handlers`` stack. The configuration
-    from the two files cannot be merged because the order matters and a merge does
-    not allow to control the order.
 
 All Built-in Handlers
 ---------------------
