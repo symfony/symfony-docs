@@ -38,6 +38,19 @@ string which contains any of the `PHP timezone identifiers`_ (e.g. ``America/New
             protected $timezone;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/UserSettings.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class UserSettings
+        {
+            #[Assert\Timezone]
+            protected $timezone;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

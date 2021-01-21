@@ -47,6 +47,23 @@ you might add the following:
             protected $height;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Participant.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Participant
+        {
+            #[Assert\Range(
+                min: 120,
+                max: 180,
+                notInRangeMessage: 'You must be between {{ min }}cm and {{ max }}cm tall to enter',
+            )]
+            protected $height;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -125,6 +142,22 @@ date must lie within the current year like this:
             protected $startDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            #[Assert\Range(
+                min: 'first day of January',
+                max: 'first day of January next year',
+            )]
+            protected $startDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -195,6 +228,22 @@ dates. If you want to fix the timezone, append it to the date string:
             protected $startDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            #[Assert\Range(
+                min: 'first day of January UTC',
+                max: 'first day of January next year UTC',
+            )]
+            protected $startDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -262,6 +311,22 @@ can check that a delivery date starts within the next five hours like this:
              *      max = "+5 hours"
              * )
              */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\Range(
+                min: 'now',
+                max: '+5 hours',
+            )]
             protected $deliveryDate;
         }
 

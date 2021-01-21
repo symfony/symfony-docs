@@ -93,6 +93,23 @@ below a certain file size and a valid PDF, add the following:
             protected $bioFile;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\File(
+                maxSize: '1024k',
+                mimeTypes: ['application/pdf', 'application/x-pdf'],
+                mimeTypesMessage: 'Please upload a valid PDF',
+            )]
+            protected $bioFile;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

@@ -59,6 +59,31 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
             protected $accessCode;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Type('Ramsey\Uuid\UuidInterface')]
+            protected $id;
+
+            #[Assert\Type('string')]
+            protected $firstName;
+
+            #[Assert\Type(
+                type: 'integer',
+                message: 'The value {{ value }} is not a valid {{ type }}.',
+            )]
+            protected $age;
+
+            #[Assert\Type(type: ['alpha', 'digit'])]
+            protected $accessCode;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
