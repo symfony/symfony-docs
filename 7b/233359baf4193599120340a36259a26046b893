@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by wkania at 2020-11-16T17:20:52Z
+
+@javiereguiluz Hi. Before I will add info about the attributes in constraints, could I receive some review about the message and position of the message?
+In my opinion, it should be between the table and `Basic Usage` header.
+The message:
+
+    The ability to use PHP attributes to configure constraints was introduced in
+    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
+    annotate field of a class with constraint configuration.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-07T11:16:29Z
+
+I would love to get your review here @derrabus 👍  Thanks
+
+@wkania I am not sure if we need this information, the code examples are only available in the `5.2` docs 🤔
+
+---------------------------------------------------------------------------
+
+by derrabus at 2020-12-08T19:32:52Z
+
+I don't think that we want to have this `versionadded` block on each constraint page. On some overview article that describes the various ways a developer might configure constraints, this block is certainly helpful, though.
+
+---------------------------------------------------------------------------
+
+by wkania at 2021-01-20T18:04:16Z
+
+Hi @OskarStark , @derrabus , @xabbuh , @maxhelias
+From what I see, @HeahDude  is a [former member of docs team](https://github.com/symfony/symfony-docs/pull/14824).
+What about his review of this pull request?
