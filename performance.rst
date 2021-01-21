@@ -17,6 +17,7 @@ for maximum performance:
 * **Symfony Application Checklist**:
 
   #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
+  #. :ref:`Hash passwords faster only for tests <performance-hash-passwords-faster>`
 
 * **Production Server Checklist**:
 
@@ -36,6 +37,73 @@ If your production server still uses the legacy APC PHP extension instead of
 OPcache, install the `APCu Polyfill component`_ in your application to enable
 compatibility with `APCu PHP functions`_ and unlock support for advanced Symfony
 features, such as the APCu Cache adapter.
+
+.. _performance-hash-passwords-faster:
+
+Hash Passwords Faster Only for Tests
+------------------------------------
+
+By default, :ref:`password encoders <security-encoding-user-password>` are
+resource intensive and take time. This is important to generate secure password
+hashes. In tests however, secure hashes are not important, so you can make your
+tests faster changing the encoders configuration to generate password hashes as
+fast as possible:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/test/security.yaml
+        encoders:
+            # Use your user class name here
+            App\Entity\User:
+                algorithm: auto # This should be the same value as in config/packages/security.yaml
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon
+
+    .. code-block:: xml
+
+        <!-- config/packages/test/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- class: Use your user class name here -->
+                <!-- algorithm: This should be the same value as in config/packages/security.yaml -->
+                <!-- cost: Lowest possible value for bcrypt -->
+                <!-- time_cost: Lowest possible value for argon -->
+                <!-- memory_cost: Lowest possible value for argon -->
+                <encoder
+                    class="App\Entity\User"
+                    algorithm="auto"
+                    cost="4"
+                    time_cost="3"
+                    memory_cost="10"
+                />
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/test/security.php
+        use App\Entity\User;
+
+        $container->loadFromExtension('security', [
+            'encoders' => [
+                // Use your user class name here
+                User::class => [
+                    'algorithm' => 'auto', // This should be the same value as in config/packages/security.yaml
+                    'cost' => 4, // Lowest possible value for bcrypt
+                    'time_cost' => 3, // Lowest possible value for argon
+                    'memory_cost' => 10, // Lowest possible value for argon
+                ]
+            ],
+        ]);
 
 .. _performance-service-container-single-file:
 
