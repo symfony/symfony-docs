@@ -23,17 +23,36 @@ Here are all the members of the CARE team (in alphabetic order). You can contact
 any of them directly using the contact details below or you can also contact all
 of them at once by emailing **care@symfony.com**:
 
-* **Emilie Lorenzo**
+* **Timo Bakx**
 
-  * *E-mail*: emilie.lorenzo [at] symfony.com
-  * *Twitter*: `@EmilieLorenzo <https://twitter.com/EmilieLorenzo>`_
-  * *SymfonyConnect*: `emilielorenzo <https://connect.symfony.com/profile/emilielorenzo>`_
+  * *E-mail*: timobakx [at] gmail.com
+  * *Twitter*: `@TimoBakx <https://twitter.com/TimoBakx>`_
+  * *SymfonyConnect*: `timobakx <https://connect.symfony.com/profile/timobakx>`_
+  * *SymfonySlack*: `@Timo Bakx <https://symfony-devs.slack.com/team/U3FQ2GVJA>`_
+
+* **Zan Baldwin**
+
+  * *E-mail*: hello [at] zanbaldwin.com
+  * *Twitter*: `@ZanBaldwin <https://twitter.com/ZanBaldwin>`_
+  * *SymfonyConnect*: `zanbaldwin <https://connect.symfony.com/profile/zanbaldwin>`_
+
+* **Valentine Boineau**
+
+  * *E-mail*: valentine.boineau [at] gmail.com
+  * *Twitter*: `@BoineauV <https://twitter.com/BoineauV>`_
+
+* **Magali Milbergue**
+
+  * *E-mail*: magali.milbergue [at] gmail.com
+  * *Twitter*: `@magalimilbergue <https://twitter.com/magalimilbergue>`_
+  * *SymfonyConnect*: `magali_milbergue <https://connect.symfony.com/profile/magali_milbergue>`_
 
 * **Tobias Nyholm**
 
   * *E-mail*: tobias.nyholm [at] gmail.com
   * *Twitter*: `@tobiasnyholm <https://twitter.com/tobiasnyholm>`_
   * *SymfonyConnect*: `tobias <https://connect.symfony.com/profile/tobias>`_
+  * *SymfonySlack*: `@Tobias Nyholm <https://symfony-devs.slack.com/team/U3A9CNEDB>`_
 
 About the CARE Team
 -------------------
