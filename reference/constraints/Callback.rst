@@ -50,6 +50,23 @@ Configuration
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
+        class Author
+        {
+            #[Assert\Callback]
+            public function validate(ExecutionContextInterface $context, $payload)
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -174,6 +191,19 @@ You can then use the following configuration to invoke this validator:
         /**
          * @Assert\Callback({"Acme\Validator", "validate"})
          */
+        class Author
+        {
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Acme\Validator;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        #[Assert\Callback([Validator::class, 'validate'])]
         class Author
         {
         }

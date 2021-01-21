@@ -100,6 +100,24 @@ that it is between a certain size, add the following:
             protected $headshot;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Image(
+                minWidth: 200,
+                maxWidth: 400,
+                minHeight: 200,
+                maxHeight: 400,
+            )]
+            protected $headshot;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -177,6 +195,22 @@ following code:
              *     allowPortrait = false
              * )
              */
+            protected $headshot;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Image(
+                allowLandscape: false,
+                allowPortrait: false,
+            )]
             protected $headshot;
         }
 

@@ -49,6 +49,24 @@ The following constraints ensure that:
             protected $age;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\GreaterThan(5)]
+            protected $siblings;
+
+            #[Assert\GreaterThan(
+                value: 18,
+            )]
+            protected $age;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -126,6 +144,19 @@ that a date must at least be the next day:
             protected $deliveryDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\GreaterThan('today')]
+            protected $deliveryDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -182,6 +213,19 @@ dates. If you want to fix the timezone, append it to the date string:
             /**
              * @Assert\GreaterThan("today UTC")
              */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\GreaterThan('today UTC')]
             protected $deliveryDate;
         }
 
@@ -242,6 +286,19 @@ current time:
             /**
              * @Assert\GreaterThan("+5 hours")
              */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            #[Assert\GreaterThan('+5 hours')]
             protected $deliveryDate;
         }
 

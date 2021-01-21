@@ -42,6 +42,19 @@ will contain a host name.
             protected $name;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/ServerSettings.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class ServerSettings
+        {
+            #[Assert\Hostname(message: 'The server name must be a valid hostname.')]
+            protected $name;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
