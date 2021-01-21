@@ -12,20 +12,43 @@ alphanumeric characters.
 Creating the Constraint Class
 -----------------------------
 
-First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
+First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`:
 
-    // src/Validator/ContainsAlphanumeric.php
-    namespace App\Validator;
+.. configuration-block::
 
-    use Symfony\Component\Validator\Constraint;
+    .. code-block:: php-annotations
 
-    /**
-     * @Annotation
-     */
-    class ContainsAlphanumeric extends Constraint
-    {
-        public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-    }
+        // src/Validator/ContainsAlphanumeric.php
+        namespace App\Validator;
+
+        use Symfony\Component\Validator\Constraint;
+
+        /**
+         * @Annotation
+         */
+        class ContainsAlphanumeric extends Constraint
+        {
+            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Validator/ContainsAlphanumeric.php
+        namespace App\Validator;
+
+        use Symfony\Component\Validator\Constraint;
+
+        #[\Attribute]
+        class ContainsAlphanumeric extends Constraint
+        {
+            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+        }
+
+.. versionadded:: 5.2
+
+    The ability to use PHP attributes to configure constraints was introduced in
+    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
+    annotate constraints.
 
 .. note::
 
@@ -123,6 +146,25 @@ You can use custom validators like the ones provided by Symfony itself:
              * @Assert\NotBlank
              * @AcmeAssert\ContainsAlphanumeric
              */
+            protected $name;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
+        use App\Validator as AcmeAssert;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class AcmeEntity
+        {
+            // ...
+
+            #[Assert\NotBlank]
+            #[AcmeAssert\ContainsAlphanumeric]
             protected $name;
 
             // ...
@@ -236,6 +278,14 @@ not to the property:
         /**
          * @AcmeAssert\ProtocolClass
          */
+        class AcmeEntity
+        {
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        #[AcmeAssert\ProtocolClass]
         class AcmeEntity
         {
             // ...
