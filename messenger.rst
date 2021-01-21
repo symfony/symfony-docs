@@ -214,7 +214,7 @@ you can configure them to be sent to a transport:
 
                 routing:
                     # async is whatever name you gave your transport above
-                    'App\Message\SmsNotification':  async
+                    'App\Message\SmsNotification': async
 
     .. code-block:: xml
 
