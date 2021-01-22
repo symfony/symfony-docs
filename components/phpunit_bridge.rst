@@ -289,6 +289,35 @@ Here is a summary that should help you pick the right configuration:
 |                        | cannot afford to use one of the modes above.        |
 +------------------------+-----------------------------------------------------+
 
+Baseline Deprecations
+.....................
+
+If your application has some deprecations that you can't fix for some reasons,
+you can tell Symfony to ignore them. The trick is to create a file with the
+allowed deprecations and define it as the "deprecation baseline". Deprecations
+inside that file are ignore but the rest of deprecations are still reported.
+
+First, generate the file with the allowed deprecations (run the same command
+whenever you want to update the existing file):
+
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='generateBaseline=true&baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
+
+This command stores all the deprecations reported while running tests in the
+given file path and encoded in JSON.
+
+Then, you can run the following command to use that file and ignore those deprecations:
+
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
+
+.. versionadded:: 5.2
+
+    The ``baselineFile`` and ``generateBaseline`` options were introduced in
+    Symfony 5.2.
+
 Disabling the Verbose Output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
