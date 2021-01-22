@@ -167,7 +167,7 @@ parallel and only the first one stored the CSRF token in the session.
     ``RedisSessionHandler`` by :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`.
 
 Store Sessions in a Relational Database (MariaDB, MySQL, PostgreSQL)
------------------------------------------------------------
+--------------------------------------------------------------------
 
 Symfony includes a :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
 to store sessions in relational databases like MariaDB, MySQL and PostgreSQL. To use it,
@@ -378,6 +378,8 @@ file and run the migration with the following command:
 .. code-block:: terminal
 
     $ php bin/console doctrine:migrations:migrate
+
+.. _mysql:
 
 MariaDB/MySQL
 .............
