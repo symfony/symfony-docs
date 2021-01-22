@@ -68,11 +68,20 @@ clients.
 An official and open source (AGPL) implementation of a Hub can be downloaded
 as a static binary from `Mercure.rocks`_.
 
-Run the following command to start it:
+If you use `Symfony Docker`_,
+a Mercure Hub is already included and you can skip straight to the next section.
 
-.. code-block:: terminal
+On Linux and Mac, run the following command to start it:
 
-    $ ./mercure --jwt-key='!ChangeMe!' --addr='localhost:3000' --allow-anonymous --cors-allowed-origins='*'
+.. rst-class:: command-linux
+
+    $ SERVER_NAME=:3000 MERCURE_PUBLISHER_JWT_KEY="!ChangeMe!" MERCURE_SUBSCRIBER_JWT_KEY="!ChangeMe!" ./mercure run -config Caddyfile.dev
+
+On Windows run:
+
+.. rst-class: command-windows
+
+    > $env:SERVER_NAME=':3000'; $env:MERCURE_PUBLISHER_JWT_KEY='!ChangeMe!'; $env:MERCURE_SUBSCRIBER_JWT_KEY='!ChangeMe!'; .\mercure.exe run -config Caddyfile.dev
 
 .. note::
 
@@ -175,8 +184,8 @@ the **topic** being updated. This topic should be an `IRI`_
 of the resource being dispatched.
 
 Usually, this parameter contains the original URL of the resource
-transmitted to the client, but it can be any valid `IRI`_, it doesn't
-have to be a URL that exists (similarly to XML namespaces).
+transmitted to the client, but it can be any string or `IRI`_,
+and it doesn't have to be a URL that exists (similarly to XML namespaces).
 
 The second parameter of the constructor is the content of the update.
 It can be anything, stored in any format.
@@ -635,6 +644,7 @@ Enable the panel in your configuration, as follows:
 .. _`high-level implementations`: https://mercure.rocks/docs/ecosystem/awesome
 .. _`In this recording`: https://www.youtube.com/watch?v=UI1l0JOjLeI
 .. _`Mercure.rocks`: https://mercure.rocks
+.. _`Symfony Docker`: https://github.com/dunglas/symfony-docker/
 .. _`API Platform distribution`: https://api-platform.com/docs/distribution/
 .. _`JSON Web Token`: https://tools.ietf.org/html/rfc7519
 .. _`example JWT`: https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.iHLdpAEjX4BqCsHJEegxRmO-Y6sMxXwNATrQyRNt3GY
