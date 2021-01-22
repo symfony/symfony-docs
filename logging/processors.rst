@@ -103,7 +103,7 @@ information:
 
         $container
             ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', ['method' => 'processRecord']);
+            ->addTag('monolog.processor');
 
 Finally, set the formatter to be used on whatever handler you want:
 
