@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by ghost at 2020-12-15T10:31:44Z
+
+This caveat might get lost in the large code example. My suggestion is to use a tip block under the code block that highlights this caveat:
+
+```
+.. tip::
+
+    When PHP-FPM is hosted on a different machine from nginx $realpath_root
+    may not resolve as expected! In this case try using $document_root instead.
+```
