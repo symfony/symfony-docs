@@ -1316,6 +1316,15 @@ during a request::
         :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
         or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
 
+.. tip::
+
+    Using ``in-memory://?serialize=true`` as dsn will perform message serialization as real asynchronous transport will do.
+    Useful to test an additional layer, especially when you use your own message serializer.
+
+.. versionadded:: 5.3
+
+    The ``in-memory://?serialize=true`` dsn was introduced in Symfony 5.3.
+
 Amazon SQS
 ~~~~~~~~~~
 
