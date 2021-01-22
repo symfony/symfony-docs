@@ -394,7 +394,7 @@ Symfony provides the following env var processors:
             // config/packages/framework.php
             $container->setParameter('env(PHP_FILE)', '../config/.runtime-evaluated.php');
             $container->loadFromExtension('app', [
-                'auth' => '%env(require:AUTH_FILE)%',
+                'auth' => '%env(require:PHP_FILE)%',
             ]);
 
     .. versionadded:: 4.3
