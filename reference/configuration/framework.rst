@@ -1232,9 +1232,14 @@ storage_id
 
 **type**: ``string`` **default**: ``'session.storage.native'``
 
-The service id used for session storage. The ``session.storage`` service
-alias will be set to this service id. This class has to implement
+The service ID used for storing the session. The ``session.storage`` service
+alias will be set to this service. The class has to implement
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
+To see a list of all available storages, run:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container session.storage.
 
 .. _config-framework-session-handler-id:
 
