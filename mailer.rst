@@ -1170,3 +1170,4 @@ a specific address, instead of the *real* address:
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
+.. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
