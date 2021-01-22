@@ -1524,32 +1524,6 @@ Once configured, the serializer uses the mapping to pick the correct class::
     $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');
     // instanceof GitHubCodeRepository
 
-Performance
------------
-
-To figure which normalizer (or denormalizer) must be used to handle an object,
-the :class:`Symfony\\Component\\Serializer\\Serializer` class will call the
-:method:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface::supportsNormalization`
-(or :method:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface::supportsDenormalization`)
-of all registered normalizers (or denormalizers) in a loop.
-
-The result of these methods can vary depending on the object to serialize, the
-format and the context. That's why the result **is not cached** by default and
-can result in a significant performance bottleneck.
-
-However, most normalizers (and denormalizers) always return the same result when
-the object's type and the format are the same, so the result can be cached. To
-do so, make those normalizers (and denormalizers) implement the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface`
-and return ``true`` when
-:method:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface::hasCacheableSupportsMethod`
-is called.
-
-.. note::
-
-    All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
-    as well the ones included in `API Platform`_ natively implement this interface.
-
 Learn more
 ----------
 
