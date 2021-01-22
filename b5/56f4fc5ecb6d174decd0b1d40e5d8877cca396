@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2020-10-04T11:17:46Z
+
+If I understand this correctly, this section only makes sense when creating a custom normalizer (as the build-in normalizers already implement this). Is there a reason to keep this section in `/serializer`, or should we instead only put it in `/serializer/custom_normalizers`?
+
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-10-05T09:22:34Z
+
+Indeed yes, after it's always interesting to know it. Tell me, what do you prefer?
+
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-11-05T20:20:20Z
+
+@wouterj what would you like to do with this ? move all in the custom normalizer or keep it as it is ?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2020-11-08T12:59:07Z
+
+Sorry, I somehow missed your reaction. Yes, I'm in favor of moving the performance section to the custom normalizer article.
