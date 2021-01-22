@@ -869,18 +869,15 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Controller\LuckyController;
-        use Psr\Log\LoggerInterface;
-        use Symfony\Component\DependencyInjection\Reference;
 
         return static function (ContainerConfigurator $container) {
             $container->services()
-                ->set(LuckyController::class)
-                    ->public()
-                    ->args([
-                        // pass this value to any $projectDir argument for any service
-                        // that's created in this file (including controller arguments)
-                        '$projectDir' => '%kernel.project_dir%',
-                    ]);
+                ->defaults()
+                    // pass this value to any $projectDir argument for any service
+                    // that's created in this file (including controller arguments)
+                    ->bind('$projectDir', '%kernel.project_dir%');
+            
+            // ...
         };
 
 .. seealso::
