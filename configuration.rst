@@ -883,7 +883,7 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         use App\Controller\LuckyController;
 
         return static function (ContainerConfigurator $container) {
-            $services = $container->services()
+            $container->services()
                 ->defaults()
                     // pass this value to any $projectDir argument for any service
                     // that's created in this file (including controller arguments)
