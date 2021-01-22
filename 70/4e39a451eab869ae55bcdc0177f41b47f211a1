@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2020-12-23T23:56:38Z
+
+`Caddyfile.dev` is included in the archive as well as in the Docker image.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-01-22T12:25:51Z
+
+v0.11 was released three days ago (https://github.com/dunglas/mercure/releases/tag/v0.11.0) so let's merge this. Kévin, congrats on the release!
