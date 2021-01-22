@@ -1309,21 +1309,22 @@ during a request::
         }
     }
 
+The transport has a number of options:
+
+``serialize`` (boolean, default: ``false``)
+    Whether to serialize messages or not. This is useful to test an additional
+    layer, especially when you use your own message serializer.
+
+.. versionadded:: 5.3
+
+    The ``serialize`` option was introduced in Symfony 5.3.
+
 .. note::
 
         All ``in-memory`` transports will be reset automatically after each test **in**
         test classes extending
         :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
         or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
-
-.. tip::
-
-    Using ``in-memory://?serialize=true`` as dsn will perform message serialization as real asynchronous transport will do.
-    Useful to test an additional layer, especially when you use your own message serializer.
-
-.. versionadded:: 5.3
-
-    The ``in-memory://?serialize=true`` dsn was introduced in Symfony 5.3.
 
 Amazon SQS
 ~~~~~~~~~~
