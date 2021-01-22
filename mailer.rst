@@ -1120,3 +1120,4 @@ a specific address, instead of the *real* address:
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
+.. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
