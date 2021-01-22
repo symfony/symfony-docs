@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-01-20T16:55:04Z
+
+Listing information like this is always problematic because code can change and we can't keep docs updated. Instead of this, let's tell the reader to run this command `$ php bin/console debug:container session.storage.` to know the exact storages available in their app.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2021-01-20T17:23:09Z
+
+There you go :-) I see your point, but on the other hand I think there should be a detailed explanation of all those storages somewhere. What do you think?
+
+And I don't quite understand the difference to `handler_id` - its description is exactly the same:
+  > The service id used for session storage.
+
+But in fact, `handler_id` is about the storage *location* (Symfony folder, PHP folder, Redis)? But what is `save_path` then?
