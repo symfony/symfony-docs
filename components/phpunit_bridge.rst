@@ -302,17 +302,16 @@ whenever you want to update the existing file):
 
 .. code-block:: terminal
 
-    $ SYMFONY_DEPRECATIONS_HELPER='generateBaseline=true&baselineFile=tests/allowed.json' ./vendor/bin/simple-phpunit
+    $ SYMFONY_DEPRECATIONS_HELPER='generateBaseline=true&baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
 
 This command stores all the deprecations reported while running tests in the
-given file and encoded in JSON. The file path defined in ``baselineFile`` can
-be absolute or relative to your project root.
+given file path and encoded in JSON.
 
 Then, you can run the following command to use that file and ignore those deprecations:
 
 .. code-block:: terminal
 
-    $ SYMFONY_DEPRECATIONS_HELPER='baselineFile=tests/allowed.json' ./vendor/bin/simple-phpunit
+    $ SYMFONY_DEPRECATIONS_HELPER='baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
 
 .. versionadded:: 5.2
 
