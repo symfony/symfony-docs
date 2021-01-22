@@ -11,7 +11,7 @@ Using React? First add some dependencies with Yarn:
 .. code-block:: terminal
 
     $ yarn add @babel/preset-react --dev
-    $ yarn add react react-dom prop-types
+    $ yarn add --dev react react-dom prop-types
 
 Enable react in your ``webpack.config.js``:
 
