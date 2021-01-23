@@ -345,7 +345,6 @@ important section is ``firewalls``:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: true
                     lazy: true
 
     .. code-block:: xml
@@ -366,7 +365,6 @@ important section is ``firewalls``:
                     security="false"/>
 
                 <firewall name="main"
-                    anonymous="true"
                     lazy="true"/>
                 </firewall>
             </config>
@@ -382,11 +380,14 @@ important section is ``firewalls``:
                     'security' => false,
                 ],
                 'main' => [
-                    'anonymous' => true,
                     'lazy' => true,
                 ],
             ],
         ]);
+        
+..tip::
+
+    If you do not enable the authentication manager, you likely want to add `anonymous: true` next to lazy under the main firewall.
 
 A "firewall" is your authentication system: the configuration below it defines
 *how* your users will be able to authenticate (e.g. login form, API token, etc).
