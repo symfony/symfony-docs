@@ -345,7 +345,6 @@ important section is ``firewalls``:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: true
                     lazy: true
 
     .. code-block:: xml
