@@ -120,7 +120,7 @@ You can validate each of these constraints sequentially to solve these issues:
             {
                 $metadata->addPropertyConstraint('address', new Assert\Sequentially([
                     new Assert\NotNull(),
-                    new Assert\Type("string"),
+                    new Assert\Type('string'),
                     new Assert\Length(['min' => 10]),
                     new Assert\Regex(self::ADDRESS_REGEX),
                     new AcmeAssert\Geolocalizable(),
