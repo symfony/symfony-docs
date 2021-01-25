@@ -94,6 +94,20 @@ you can retrieve a workflow from it and use it as follows::
     $workflow->can($blogPost, 'publish'); // True
     $workflow->getEnabledTransitions($blogPost); // $blogPost can perform transition "publish" or "reject"
 
+Initialization
+--------------
+
+If the property of your object is ``null`` and you want to set it with the
+``initial_marking`` from the configuration, you can call the ``getMarking()``
+method to initialize the object property::
+
+    // ...
+    $blogPost = new BlogPost();
+    $workflow = $registry->get($blogPost);
+
+    // initiate workflow
+    $workflow->getMarking($blogPost);
+
 Learn more
 ----------
 
