@@ -166,7 +166,7 @@ CSRF Tokens and Compression Side-Channel Attacks
 ------------------------------------------------
 
 `BREACH`_ and `CRIME`_ are security exploits against HTTPS when using HTTP
-compression. Attacker can leverage information leaked by compression to recover
+compression. Attackers can leverage information leaked by compression to recover
 targeted parts of the plaintext. To mitigate these attacks, and prevent an
 attacker from guessing the CSRF tokens, a random mask is prepended to the token
 and used to scramble it.
