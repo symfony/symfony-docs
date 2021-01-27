@@ -682,9 +682,10 @@ about `Expire Data from Collections by Setting TTL`_ in MongoDB.
     locks don't expire prematurely; the lock TTL should be set with enough extra
     time in ``expireAfterSeconds`` to account for any clock drift between nodes.
 
-``writeConcern``, ``readConcern`` and ``readPreference`` are not specified by
-MongoDbStore meaning the collection's settings will take effect. Read more
-about `Replica Set Read and Write Semantics`_ in MongoDB.
+``writeConcern`` and ``readConcern`` are not specified by MongoDbStore meaning
+the collection's settings will take effect.
+``readPreference`` is ``primary`` for all queries.
+Read more about `Replica Set Read and Write Semantics`_ in MongoDB.
 
 PdoStore
 ~~~~~~~~~~
