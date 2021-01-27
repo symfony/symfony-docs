@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by derrabus at 2021-01-22T10:32:54Z
+
+The PR should target 5.2 and we should add a note that attribute constraints have been added with Symfony 5.2.
+
+---------------------------------------------------------------------------
+
+by yoannrenard at 2021-01-22T13:48:03Z
+
+I've added a small note inspired by the one made for [creating routes as attributes](https://symfony.com/doc/current/routing.html#creating-routes-as-attributes-or-annotations) as you requested @derrabus and changed the PR target to 5.2
+
+---------------------------------------------------------------------------
+
+by yoannrenard at 2021-01-25T20:40:36Z
+
+@derrabus You mean something explaining how to use both (Doctrine annotations + PHP attributes) at the same time? Like using a constraint that supports attributes and one which doesn't?
+
+---------------------------------------------------------------------------
+
+by derrabus at 2021-01-25T23:55:00Z
+
+You can build classes that are a valid Doctrine annotation as well as a valid PHP attribute. Almost all of Symfony's built-in constraints work that way. The examples you provided only work with one of the annotation implementations. But that's probably knowledge most developers won't need.
+
+I think, we're good here.
