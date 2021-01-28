@@ -10,8 +10,7 @@ The UID Component
 
 .. versionadded:: 5.1
 
-    The UID component was introduced in Symfony 5.1 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The UID component was introduced in Symfony 5.1.
 
 Installation
 ------------
@@ -157,12 +156,12 @@ entity primary keys::
         private $id;
 
         // ...
-        
+
         public function getId(): ?Uuid
         {
             return $this->id;
         }
-        
+
         // ...
     }
 
@@ -287,7 +286,7 @@ There's also a Doctrine generator to help autogenerate ULID values for the
 entity primary keys::
 
     use Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator;
-    use Symfony\Component\Uid\Ulid;    
+    use Symfony\Component\Uid\Ulid;
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -303,14 +302,14 @@ entity primary keys::
         private $id;
 
         // ...
-        
+
         public function getId(): ?Ulid
         {
             return $this->id;
         }
-        
+
         // ...
-        
+
     }
 
 .. versionadded:: 5.2
