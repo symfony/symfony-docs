@@ -96,9 +96,9 @@ UUID objects created with the ``Uuid`` class can use the following methods
     $uuid = Uuid::v4();
     $uuid instanceof UuidV4; // true
 
-    // getting the UUID time (it's only available in certain UUID types)
+    // getting the UUID datetime (it's only available in certain UUID types)
     $uuid = Uuid::v1();
-    $uuid->getTime();  // e.g. float(1584111384.2613)
+    $uuid->getDateTime();  // returns a \DateTimeImmutable instance
 
     // comparing UUIDs and checking for equality
     $uuid1 = Uuid::v1();
@@ -110,6 +110,11 @@ UUID objects created with the ``Uuid`` class can use the following methods
     //   * int > 0 if $uuid1 is greater than $uuid4
     //   * int < 0 if $uuid1 is less than $uuid4
     $uuid1->compare($uuid4); // e.g. int(4)
+
+.. versionadded:: 5.3
+
+    The ``getDateTime()`` method was introduced in Symfony 5.3. In previous
+    versions it was called ``getTime()``.
 
 Storing UUIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -250,13 +255,18 @@ ULID objects created with the ``Ulid`` class can use the following methods::
     // checking if a given value is valid as ULID
     $isValid = Ulid::isValid($ulidValue); // true or false
 
-    // getting the ULID time
-    $ulid1->getTime(); // e.g. float(1584111384.2613)
+    // getting the ULID datetime
+    $ulid1->getDateTime(); // returns a \DateTimeImmutable instance
 
     // comparing ULIDs and checking for equality
     $ulid1->equals($ulid2); // false
     // this method returns $ulid1 <=> $ulid2
     $ulid1->compare($ulid2); // e.g. int(-1)
+
+.. versionadded:: 5.3
+
+    The ``getDateTime()`` method was introduced in Symfony 5.3. In previous
+    versions it was called ``getTime()``.
 
 Storing ULIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
