@@ -62,9 +62,6 @@ What other services are available? Find out by running:
       Request stack that controls the lifecycle of requests.
       Symfony\Component\HttpFoundation\RequestStack (request_stack)
 
-      Interface for the session.
-      Symfony\Component\HttpFoundation\Session\SessionInterface (session)
-
       RouterInterface is the interface that all Router classes must implement.
       Symfony\Component\Routing\RouterInterface (router.default)
 
@@ -80,7 +77,7 @@ in the container.
 .. tip::
 
     There are actually *many* more services in the container, and each service has
-    a unique id in the container, like ``session`` or ``router.default``. For a full
+    a unique id in the container, like ``request_stack`` or ``router.default``. For a full
     list, you can run ``php bin/console debug:container``. But most of the time,
     you won't need to worry about this. See :ref:`services-wire-specific-service`.
     See :doc:`/service_container/debug`.
@@ -282,9 +279,6 @@ type-hints by running:
 
       Request stack that controls the lifecycle of requests.
       Symfony\Component\HttpFoundation\RequestStack (request_stack)
-
-      Interface for the session.
-      Symfony\Component\HttpFoundation\Session\SessionInterface (session)
 
       RouterInterface is the interface that all Router classes must implement.
       Symfony\Component\Routing\RouterInterface (router.default)
