@@ -770,7 +770,7 @@ can be two running containers in parallel.
 .. caution::
 
     All concurrent processes must use the same machine. Before starting a
-    concurrent process on a new machine, check that other process are stopped
+    concurrent process on a new machine, check that other processes are stopped
     on the old one.
 
 .. caution::
