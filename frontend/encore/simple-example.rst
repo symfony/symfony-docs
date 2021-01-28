@@ -19,8 +19,6 @@ application: it will *require* all of the dependencies it needs (e.g. jQuery or 
 
     import './styles/app.css';
 
-    // import $ from 'jquery';
-
 Encore's job (via Webpack) is simple: to read and follow *all* of the ``require()``
 statements and create one final ``app.js`` (and ``app.css``) that contains *everything*
 your app needs. Encore can do a lot more: minify files, pre-process Sass/LESS,
@@ -35,7 +33,7 @@ of your project. It already holds the basic config you need:
 .. code-block:: javascript
 
     // webpack.config.js
-    var Encore = require('@symfony/webpack-encore');
+    const Encore = require('@symfony/webpack-encore');
 
     Encore
         // directory where compiled assets will be stored
@@ -130,6 +128,8 @@ filename(s) to render. This file is *especially* useful because you can
 :doc:`enable versioning </frontend/encore/versioning>` or
 :doc:`point assets to a CDN </frontend/encore/cdn>` without making *any* changes to your
 template: the paths in ``entrypoints.json`` will always be the final, correct paths.
+And if you use :doc:`splitEntryChunks() </frontend/encore/split-chunks>` (where Webpack splits the output into even
+more files), all the necessary ``script`` and ``link`` tags will render automatically.
 
 If you're *not* using Symfony, you can ignore the ``entrypoints.json`` file and
 point to the final, built file directly. ``entrypoints.json`` is only required for
@@ -147,13 +147,13 @@ some optional features.
 Requiring JavaScript Modules
 ----------------------------
 
-Webpack is a module bundler, which means that you can ``require`` other JavaScript
+Webpack is a module bundler, which means that you can ``import`` other JavaScript
 files. First, create a file that exports a function:
 
 .. code-block:: javascript
 
     // assets/greet.js
-    module.exports = function(name) {
+    export default function(name) {
         return `Yo yo ${name} - welcome to Encore!`;
     };
 
@@ -163,7 +163,7 @@ We'll use jQuery to print this message on the page. Install it via:
 
     $ yarn add jquery --dev
 
-Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
+Great! Use ``import`` to import ``jquery`` and ``greet.js``:
 
 .. code-block:: diff
 
@@ -171,11 +171,11 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     // ...
 
     + // loads the jquery package from node_modules
-    + var $ = require('jquery');
+    + import jquery from 'jquery';
 
     + // import the function from greet.js (the .js extension is optional)
     + // ./ (or ../) means to look for a local file
-    + var greet = require('./greet');
+    + import greet from './greet';
 
     + $(document).ready(function() {
     +     $('body').prepend('<h1>'+greet('jill')+'</h1>');
@@ -184,37 +184,6 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
 That's it! If you previously ran ``encore dev --watch``, your final, built files
 have already been updated: jQuery and ``greet.js`` have been automatically
 added to the output file (``app.js``). Refresh to see the message!
-
-The import and export Statements
---------------------------------
-
-Instead of using ``require()`` and ``module.exports`` like shown above, JavaScript
-provides an alternate syntax based on the `ECMAScript 6 modules`_ that includes
-the ability to use dynamic imports.
-
-To export values using the alternate syntax, use ``export``:
-
-.. code-block:: diff
-
-    // assets/greet.js
-    - module.exports = function(name) {
-    + export default function(name) {
-        return `Yo yo ${name} - welcome to Encore!`;
-    };
-
-To import values, use ``import``:
-
-.. code-block:: diff
-
-    // assets/app.js
-    - require('../styles/app.css');
-    + import './styles/app.css';
-
-    - var $ = require('jquery');
-    + import $ from 'jquery';
-
-    - var greet = require('./greet');
-    + import greet from './greet';
 
 .. _multiple-javascript-entries:
 
@@ -357,5 +326,4 @@ Encore supports many more features! For a full list of what you can do, see
 `Encore's index.js file`_. Or, go back to :ref:`list of Encore articles <encore-toc>`.
 
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
-.. _`ECMAScript 6 modules`: https://hacks.mozilla.org/2015/08/es6-in-depth-modules/
 .. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
