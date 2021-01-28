@@ -10,8 +10,7 @@ The UID Component
 
 .. versionadded:: 5.1
 
-    The UID component was introduced in Symfony 5.1 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The UID component was introduced in Symfony 5.1.
 
 Installation
 ------------
