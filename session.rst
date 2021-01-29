@@ -127,25 +127,26 @@ Check out the Symfony config reference to learn more about the other available
 Basic Usage
 -----------
 
-Symfony provides a session service that is injected in your services and
+The sessions is available througth the Request and the RequestStack.
+Symfony provides a request_stack service that is injected in your services and
 controllers if you type-hint an argument with
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
+:class:`Symfony\\Component\\HttpFoundation\\RequestStack`::
 
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpFoundation\RequestStack;
 
     class SomeService
     {
-        private $session;
+        private $requestStack;
 
-        public function __construct(SessionInterface $session)
+        public function __construct(RequestStack $requestStack)
         {
-            $this->session = $session;
+            $this->requestStack = $requestStack;
         }
 
         public function someMethod()
         {
             // stores an attribute in the session for later reuse
-            $this->session->set('attribute-name', 'attribute-value');
+            $this->requestStack->getSession()->set('attribute-name', 'attribute-value');
 
             // gets an attribute by name
             $foo = $this->session->get('foo');
@@ -157,10 +158,10 @@ controllers if you type-hint an argument with
         }
     }
 
-.. tip::
+.. deprecated:: 5.3
 
-    Every ``SessionInterface`` implementation is supported. If you have your
-    own implementation, type-hint this in the argument instead.
+    The ``SessionInterface`` and ``session`` service are deprecated since
+    Symfony 5.3. Inject a request stack instead.
 
 Stored attributes remain in the session for the remainder of that user's session.
 By default, session attributes are key-value pairs managed with the
@@ -175,21 +176,43 @@ class.
 If your application needs are complex, you may prefer to use
 :ref:`namespaced session attributes <namespaced-attributes>` which are managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
-class. Before using them, override the ``session`` service definition to replace
-the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
+class. Before using them, override the ``session_listener`` service definition to build
+your ``Session`` object with the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/services.yaml
-        session:
-            public: true
-            class: Symfony\Component\HttpFoundation\Session\Session
-            arguments: ['@session.storage', '@session.namespacedattributebag']
+        session_listener:
+            autoconfigure: true
+            class: App\EventListener\SessionListener
+            arguments:
+            - !service_locator
+                logger: '@?logger'
+                session_collector: '@?data_collector.request.session_collector'
+                session_storage: '@session.storage'
+                session_attributes: '@session.namespacedattributebag'
+            - '%kernel.debug%'
 
         session.namespacedattributebag:
             class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+
+.. code-block:: php
+
+    namespace App\EventListener;
+
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
+
+    class SessionListener extends AbstractSessionListener
+    {
+        protected function getSession(): ?SessionInterface
+        {
+            return new Session($this->container->get('session_storage'), $this->container->get('session_attributes'));
+        }
+    }
 
 .. _session-avoid-start:
 

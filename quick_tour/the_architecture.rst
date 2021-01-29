@@ -72,9 +72,6 @@ What other possible classes or interfaces could you use? Find out by running:
       Request stack that controls the lifecycle of requests.
       Symfony\Component\HttpFoundation\RequestStack (request_stack)
 
-      Interface for the session.
-      Symfony\Component\HttpFoundation\Session\SessionInterface (session)
-
       RouterInterface is the interface that all Router classes must implement.
       Symfony\Component\Routing\RouterInterface (router.default)
 

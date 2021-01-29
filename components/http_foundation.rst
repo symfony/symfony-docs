@@ -247,7 +247,8 @@ Accessing the Session
 ~~~~~~~~~~~~~~~~~~~~~
 
 If you have a session attached to the request, you can access it via the
-:method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
+:method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method or the
+:method:`Symfony\\Component\\HttpFoundation\\RequestStack::getSession` method;
 the
 :method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
 method tells you if the request contains a session which was started in one of

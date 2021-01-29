@@ -19,30 +19,33 @@ using a processor::
     // src/Logger/SessionRequestProcessor.php
     namespace App\Logger;
 
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
+    use Symfony\Component\HttpFoundation\RequestStack;
 
     class SessionRequestProcessor
     {
-        private $session;
-        private $sessionId;
+        private $requestStack;
 
-        public function __construct(SessionInterface $session)
+        public function __construct(RequestStack $requestStack)
         {
-            $this->session = $session;
+            $this->requestStack = $requestStack;
         }
 
         // this method is called for each log record; optimize it to not hurt performance
         public function __invoke(array $record)
         {
-            if (!$this->session->isStarted()) {
+            try {
+                $session = $requestStack->getSession();
+            } catch (SessionNotFoundException $e) {
+                return;
+            }
+            if (!$session->isStarted()) {
                 return $record;
             }
 
-            if (!$this->sessionId) {
-                $this->sessionId = substr($this->session->getId(), 0, 8) ?: '????????';
-            }
+            $sessionId = substr($session->getId(), 0, 8) ?: '????????';
 
-            $record['extra']['token'] = $this->sessionId.'-'.substr(uniqid('', true), -8);
+            $record['extra']['token'] = $sessionId.'-'.substr(uniqid('', true), -8);
 
             return $record;
         }

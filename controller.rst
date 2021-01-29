@@ -394,7 +394,7 @@ Request object.
 Managing the Session
 --------------------
 
-Symfony provides a session service that you can use to store information
+Symfony provides a session object that you can use to store information
 about the user between requests. Session is enabled by default, but will only be
 started if you read or write from it.
 
