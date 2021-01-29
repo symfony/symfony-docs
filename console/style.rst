@@ -331,12 +331,12 @@ Result Methods
     It's meant to be used once to display the final result of executing the given
     command, without showing the result as a successful or failed one::
 
-        // use simple strings for short success messages
+        // use simple strings for short info messages
         $io->info('Lorem ipsum dolor sit amet');
 
         // ...
 
-        // consider using arrays when displaying long success messages
+        // consider using arrays when displaying long info messages
         $io->info([
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
