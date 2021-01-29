@@ -10,7 +10,8 @@ The Semaphore Component
 
 .. versionadded:: 5.2
 
-    The Semaphore Component was introduced in Symfony 5.2.
+    The Semaphore Component was introduced in Symfony 5.2 as an
+    :doc:`experimental feature </contributing/code/experimental>`.
 
 Installation
 ------------
