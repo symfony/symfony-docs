@@ -160,8 +160,9 @@ controllers if you type-hint an argument with
 
 .. deprecated:: 5.3
 
-    The ``SessionInterface`` and ``session`` service are deprecated since
-    Symfony 5.3. Inject a request stack instead.
+    The ``SessionInterface`` and ``session`` service were deprecated in
+    Symfony 5.3. Instead, inject the ``RequestStack`` service to get the session
+    object of the current request.
 
 Stored attributes remain in the session for the remainder of that user's session.
 By default, session attributes are key-value pairs managed with the
