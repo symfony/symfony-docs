@@ -38,7 +38,7 @@ squares).
 
 .. raw:: html
 
-    <object data="../_images/rate_limiter/fixed_window.svg" type="image/svg+xml"></object>
+    <object data="_images/rate_limiter/fixed_window.svg" type="image/svg+xml"></object>
 
 Its main drawback is that resource usage is not evenly distributed in time and
 it can overload the server at the window edges. In the previous example,
@@ -59,7 +59,7 @@ using a 1 hour window that slides over the timeline:
 
 .. raw:: html
 
-    <object data="../_images/rate_limiter/sliding_window.svg" type="image/svg+xml"></object>
+    <object data="_images/rate_limiter/sliding_window.svg" type="image/svg+xml"></object>
 
 As you can see, this removes the edges of the window and would prevent the
 6th request at 11:45.
@@ -93,7 +93,7 @@ of 1 token per 15 minutes:
 
 .. raw:: html
 
-    <object data="../_images/rate_limiter/token_bucket.svg" type="image/svg+xml"></object>
+    <object data="_images/rate_limiter/token_bucket.svg" type="image/svg+xml"></object>
 
 This algorithm handles more complex back-off algorithm to manage bursts.
 For instance, it can allow a user to try a password 5 times and then only
