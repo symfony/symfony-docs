@@ -34,7 +34,7 @@ on an object that will contain a credit card number.
         {
             /**
              * @Assert\CardScheme(
-             *     schemes={"VISA"},
+             *     schemes={Assert\CardScheme::VISA},
              *     message="Your credit card number is invalid."
              * )
              */
@@ -64,7 +64,7 @@ on an object that will contain a credit card number.
             properties:
                 cardNumber:
                     - CardScheme:
-                        schemes: [VISA]
+                        schemes: [!php/const Symfony\Component\Validator\Constraints\CardScheme::VISA]
                         message: Your credit card number is invalid.
 
     .. code-block:: xml
