@@ -511,9 +511,10 @@ requests and the specific headers for each request:
 
         # config/packages/framework.yaml
         framework:
-            http_client:
-                headers:
-                    'User-Agent': 'My Fancy App'
+            default_options:
+                http_client:
+                    headers:
+                        'User-Agent': 'My Fancy App'
 
     .. code-block:: xml
 
@@ -528,7 +529,9 @@ requests and the specific headers for each request:
 
             <framework:config>
                 <framework:http-client>
-                    <framework:header name="User-Agent">My Fancy App</framework:header>
+                    <framework:default-options>
+                        <framework:header name="User-Agent">My Fancy App</framework:header>
+                    </framework:default-options>
                 </framework-http-client>
             </framework:config>
         </container>
@@ -538,8 +541,10 @@ requests and the specific headers for each request:
         // config/packages/framework.php
         $container->loadFromExtension('framework', [
             'http_client' => [
-                'headers' => [
-                    'User-Agent' => 'My Fancy App',
+                'default_options' => [
+                    'headers' => [
+                        'User-Agent' => 'My Fancy App',
+                    ],
                 ],
             ],
         ]);
