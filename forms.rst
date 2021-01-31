@@ -95,7 +95,7 @@ This may be confusing at first, but it will feel natural to you soon enough.
 Besides, it simplifies code and makes "composing" and "embedding" form fields
 much easier to implement.
 
-There are tens of :doc:`form types provided by Symfony </reference/forms/types>`
+There are tons of :doc:`form types provided by Symfony </reference/forms/types>`
 and you can also :doc:`create your own form types </form/create_custom_field_type>`.
 
 Building Forms
