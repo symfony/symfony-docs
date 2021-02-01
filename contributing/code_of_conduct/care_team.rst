@@ -35,6 +35,7 @@ of them at once by emailing **care@symfony.com**:
   * *E-mail*: hello [at] zanbaldwin.com
   * *Twitter*: `@ZanBaldwin <https://twitter.com/ZanBaldwin>`_
   * *SymfonyConnect*: `zanbaldwin <https://connect.symfony.com/profile/zanbaldwin>`_
+  * *SymfonySlack*: `@Zan <https://symfony-devs.slack.com/team/UBHGRU3NW>`_
 
 * **Valentine Boineau**
 
