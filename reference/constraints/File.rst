@@ -11,7 +11,7 @@ Validates that a value is a valid "file", which can be one of the following:
 This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
 form field.
 
-.. tip::
+.. seealso::
 
     If the file you're validating is an image, try the :doc:`Image </reference/constraints/Image>`
     constraint.
