@@ -42,12 +42,3 @@ The :doc:`Symfony project leader </contributing/code/core_team>` appoints the CA
 team with candidates they see fit. The CARE team will consist of at least
 3 people. The team should be representing as many demographics as possible,
 ideally from different employers.
-
-CARE Team Transparency Reports
-------------------------------
-
-The CARE team publishes a transparency report at the end of each year:
-
-* `Symfony Code of Conduct Transparency Report 2018`_.
-
-.. _`Symfony Code of Conduct Transparency Report 2018`: https://symfony.com/blog/symfony-code-of-conduct-transparency-report-2018
