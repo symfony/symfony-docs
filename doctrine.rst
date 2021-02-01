@@ -884,8 +884,7 @@ Doctrine Extensions (Timestampable, Translatable, etc.)
 
 Doctrine community has created some extensions to implement common needs such as
 *"set the value of the createdAt property automatically when creating an entity"*.
-Read more about the `available Doctrine extensions`_ and use the
-`StofDoctrineExtensionsBundle`_ to integrate them in your application.
+Read more about the `available Doctrine extensions`_ .
 
 Learn more
 ----------
@@ -921,4 +920,3 @@ Learn more
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
 .. _`PDO`: https://www.php.net/pdo
 .. _`available Doctrine extensions`: https://github.com/Atlantic18/DoctrineExtensions
-.. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
