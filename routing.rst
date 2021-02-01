@@ -2704,7 +2704,7 @@ request is different from the scheme used by the route:
 
     {# if the current scheme is HTTP, generates an absolute URL to change
        the scheme: https://example.com/login #}
-    {{ path('login') }}
+    {{ url('login') }}
 
 The scheme requirement is also enforced for incoming requests. If you try to
 access the ``/login`` URL with HTTP, you will automatically be redirected to the
