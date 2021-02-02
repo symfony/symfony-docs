@@ -16,6 +16,14 @@ Symfony uses these rate limiters in built-in features like "login throttling",
 which limits how many failed login attempts a user can make in a given period of
 time, but you can use them for your own features too.
 
+.. caution::
+
+    By definition, the Symfony rate limiters require Symfony to be booted
+    in a PHP process. This makes them not useful to protect against `DoS attacks`_.
+    Such protections must consume the least resources possible. Consider
+    using `Apache mod_ratelimit`_, `NGINX rate limiting`_ or proxies (like
+    AWS or Cloudflare) to prevent your server from being overwhelmed.
+
 .. _rate-limiter-policies:
 
 Rate Limiting Policies
@@ -314,5 +322,8 @@ Symfony application. If you prefer to change that, use the ``lock_factory`` and
                 # the value is the name of any lock defined in your application
                 lock_factory: 'app.rate_limiter_lock'
 
+.. _`DoS attacks`: https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html
+.. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html
+.. _`NGINX rate limiting`: https://www.nginx.com/blog/rate-limiting-nginx/
 .. _`token bucket algorithm`: https://en.wikipedia.org/wiki/Token_bucket
 .. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative
