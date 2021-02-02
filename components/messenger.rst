@@ -56,7 +56,7 @@ Concepts
    which means they can tweak the envelope, by adding stamps to it or even
    replacing it, as well as interrupt the middleware chain. Middleware are called
    both when a message is originally dispatched and again later when a message
-   is received from a transport,
+   is received from a transport.
 
 **Envelope**:
    Messenger specific concept, it gives full flexibility inside the message bus,
