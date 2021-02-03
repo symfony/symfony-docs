@@ -167,7 +167,7 @@ A deprecation must also be triggered to help people with the migration
 
     trigger_deprecation('symfony/package-name', '5.1', 'The "%s" class is deprecated, use "%s" instead.', Deprecated::class, Replacement::class);
 
-When deprecating a whole class the ``trigger_error()`` call should be placed
+When deprecating a whole class the ``trigger_deprecation()`` call should be placed
 after the use declarations, like in this example from `ServiceRouterLoader`_::
 
     namespace Symfony\Component\Routing\Loader\DependencyInjection;
