@@ -587,6 +587,29 @@ to handle messages in a priority order:
 The worker will always first look for messages waiting on ``async_priority_high``. If
 there are none, *then* it will consume messages from ``async_priority_low``.
 
+.. _messenger-limit-queues:
+
+Limit Consuming to Specific Queues
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some transports (notably AMQP) have the concept of exchanges and queues. A Symfony
+transport is always bound to an exchange. By default, the worker consumes from all
+queues attached to the exchange of the specified transport. However, there are use
+cases to want a worker to only consume from specific queues.
+
+You can limit the worker to only process messages from specific queues:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume my_transport --queues=fasttrack
+
+To allow using the ``queues`` option, the receiver must implement the
+:class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
+
+.. versionadded:: 5.3
+
+    Limiting the worker to specific queues was introduced in Symfony 5.3.
+
 .. _messenger-supervisor:
 
 Supervisor Configuration
@@ -949,6 +972,11 @@ it in the ``port`` parameter of the DSN (e.g. ``amqps://localhost?cacert=/etc/ss
     By default, the transport will automatically create any exchanges, queues and
     binding keys that are needed. That can be disabled, but some functionality
     may not work correctly (like delayed queues).
+
+.. note::
+
+    With Symfony 5.3 or newer, you can limit the consumer of an AMQP transport to only
+    process messages from some queues of an exchange. See :ref:`messenger-limit-queues`.
 
 The transport has a number of other options, including ways to configure
 the exchange, queues binding keys and more. See the documentation on
