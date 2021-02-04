@@ -289,7 +289,11 @@ Now you can configure all the user information in ``config/packages/security.yam
                 memory:
                     users:
                         john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
-                        jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+                        jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'], extra_fields: {'name': 'Jane', 'age': 42}}
+
+.. versionadded:: 5.3
+
+    The ``extra_fields`` support was introduced in Symfony 5.3.
 
 .. caution::
 
