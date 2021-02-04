@@ -469,6 +469,113 @@ here are a few common use-cases:
 * :doc:`/security/guard_authentication` – see this for the most detailed
   description of authenticators and how they work
 
+Limiting Login Attempts
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    Login throttling was introduced in Symfony 5.2.
+
+Symfony provides basic protection against `brute force login attacks`_ if
+you're using the :doc:`experimental authenticators </security/experimental_authenticators>`.
+You must enable this using the ``login_throttling`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            enable_authenticator_manager: true
+
+            firewalls:
+                # ...
+
+                main:
+                    # ...
+
+                    # by default, the feature allows 5 login attempts per minute
+                    login_throttling: null
+
+                    # configure the maximum login attempts (per minute)
+                    login_throttling:
+                        max_attempts: 3
+
+                    # use a custom rate limiter via its service ID
+                    login_throttling:
+                        limiter: app.my_login_rate_limiter
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config enable-authenticator-manager="true">
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- by default, the feature allows 5 login attempts per minute -->
+                    <login-throttling/>
+
+                    <!-- configure the maximum login attempts (per minute) -->
+                    <login-throttling max-attempts="3"/>
+
+                    <!-- use a custom rate limiter via its service ID -->
+                    <login-throttling limiter="app.my_login_rate_limiter"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            'enable_authenticator_manager' => true,
+
+            'firewalls' => [
+                // ...
+
+                'main' => [
+                    // by default, the feature allows 5 login attempts per minute
+                    'login_throttling' => null,
+
+                    // configure the maximum login attempts (per minute)
+                    'login_throttling' => [
+                        'max_attempts' => 3,
+                    ],
+
+                    // use a custom rate limiter via its service ID
+                    'login_throttling' => [
+                        'limiter' => 'app.my_login_rate_limiter',
+                    ],
+                ],
+            ],
+        ]);
+
+By default, login attempts are limited on ``max_attempts`` (default: 5)
+failed requests for ``IP address + username`` and ``5 * max_attempts``
+failed requests for ``IP address``. The second limit protects against an
+attacker using multiple usernames from bypassing the first limit, without
+distrupting normal users on big networks (such as offices).
+
+If you need a more complex limiting algorithm, create a class that implements
+:class:`Symfony\\Component\\HttpFoundation\\RateLimiter\\RequestRateLimiterInterface`
+and set the ``limiter`` option to its service ID.
+
+.. tip::
+
+    Limiting the failed login attempts is only one basic protection against
+    brute force attacks. The `OWASP Brute Force Attacks`_ guidelines mention
+    several other protections that you should consider depending on the
+    level of protection required.
+
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
 
@@ -1257,5 +1364,7 @@ Authorization (Denying Access)
 
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+.. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
+.. _`brute force login attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
