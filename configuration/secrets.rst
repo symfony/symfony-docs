@@ -10,7 +10,8 @@ might be set to one value while developing locally and another value on producti
 
 When these values are *sensitive* and need to be kept private, you can safely
 store them by using Symfony's secrets management system - sometimes called a
-"vault".
+"vault". This way you can safely commit them to source control, as long as you don't 
+commit the private key that is used to decrypt them.
 
 .. note::
 
