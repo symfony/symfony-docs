@@ -88,6 +88,7 @@ whitelist:
         - '.. versionadded:: 1.3' # MakerBundle
         - '.. versionadded:: 1.8' # MakerBundle
         - '.. versionadded:: 1.6' # Flex in setup/upgrade_minor.rst
+        - '.. versionadded:: 1.0.0' # Encore
         - '0 => 123' # assertion for var_dumper - components/var_dumper.rst
         - '1 => "foo"' # assertion for var_dumper - components/var_dumper.rst
         - '123,' # assertion for var_dumper - components/var_dumper.rst

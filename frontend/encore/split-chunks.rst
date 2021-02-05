@@ -23,9 +23,10 @@ To enable this, call ``splitEntryChunks()``:
 
 
 Now, each output file (e.g. ``homepage.js``) *may* be split into multiple file
-(e.g. ``homepage.js``, ``vendor~homepage.js``). This means that you *may* need to
-include *multiple* ``script`` tags (or ``link`` tags for CSS) in your template.
-Encore creates an :ref:`entrypoints.json <encore-entrypointsjson-simple-description>`
+(e.g. ``homepage.js`` & ``vendors-node_modules_jquery_dist_jquery_js.js`` - the
+filename of the second will be less obvious when you build for production). This
+means that you *may* need to include *multiple* ``script`` tags (or ``link`` tags
+for CSS) in your template. Encore creates an :ref:`entrypoints.json <encore-entrypointsjson-simple-description>`
 file that lists exactly which CSS and JavaScript files are needed for each entry.
 
 If you're using the ``encore_entry_link_tags()`` and ``encore_entry_script_tags()``
@@ -37,9 +38,9 @@ tags as needed:
 
     {#
         May now render multiple script tags:
-            <script src="/build/runtime.js"></script>
-            <script src="/build/vendor~homepage.js"></script>
-            <script src="/build/homepage.js"></script>
+            <script src="/build/runtime.js" defer></script>
+            <script src="/build/vendors-node_modules_jquery_dist_jquery_js.js" defer></script>
+            <script src="/build/homepage.js" defer></script>
     #}
     {{ encore_entry_script_tags('homepage') }}
 

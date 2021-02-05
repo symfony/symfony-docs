@@ -65,11 +65,11 @@ Hot Module Replacement (HMR)
 
 The ``vue-loader`` supports hot module replacement: just update your code and watch
 your Vue.js app update *without* a browser refresh! To activate it, use the
-``dev-server`` with the ``--hot`` option:
+``dev-server``:
 
 .. code-block:: terminal
 
-    $ yarn encore dev-server --hot
+    $ yarn encore dev-server
 
 That's it! Change one of your ``.vue`` files and watch your browser update. But
 note: this does *not* currently work for *style* changes in a ``.vue`` file. Seeing
