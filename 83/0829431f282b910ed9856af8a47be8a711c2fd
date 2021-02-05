@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-01-29T01:05:17Z
+
+Thanks @Kocal! I really appreciate it - good catches.
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-01-29T07:44:10Z
+
+Hi!
+
+I'm sorry, I was wrong for the option `--firewall false`, it does not work as expected.
+Since https://github.com/symfony/webpack-encore/releases/tag/v1.0.2 has been released, I'm now able to play with the dev-server and I faced the `Invalid Host Header`.
+
+However, using `Encore.configureDevServer()` works fine but that's not ideal:
+```js
+Encore.configureDevServer(option => {
+    option.firewall = false;
+});
+```
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-01-31T18:13:05Z
+
+What do you think about the last commit @Kocal? I'm showing `options.firewall = false`. That section about CORS had previously mentioned using ``--port`, but that seemed unrelated / unnecessary to me.
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-01-31T18:39:37Z
+
+That's great 👍
+
+I don't think this will be an issue for not specifying `--port` option, usually VM opens all ports (I've never had to configure this flag).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-02-01T18:32:46Z
+
+Ok, should be good again!
