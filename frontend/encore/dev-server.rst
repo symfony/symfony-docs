@@ -97,6 +97,9 @@ the ``firewall`` option:
             options.firewall = false;
         })
 
+Beware that `it's not recommended to disable the firewall`_ in general, but
+here it's required to solve the CORS issue.
+
 Hot Module Replacement HMR
 --------------------------
 
@@ -113,3 +116,4 @@ your page. HMR works automatically with CSS (as long as you're using the
     CSS. That is no longer needed.
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
+.. _`it's not recommended to disable the firewall`: https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck
