@@ -43,8 +43,8 @@ Inside the expression, you have access to a number of variables:
     indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
     does not include the ``IS_AUTHENTICATED_*`` attributes (see the functions below).
 ``role_names``
-    A string representation of the roles the user has. This array includes any roles granted
-    indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
+    An array with the string representation of the roles the user has. This array
+    includes any roles granted indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
     does not include the ``IS_AUTHENTICATED_*`` attributes (see the functions below).
 ``object``
     The object (if any) that's passed as the second argument to ``isGranted()``.
