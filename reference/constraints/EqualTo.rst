@@ -61,7 +61,7 @@ and that the ``age`` is ``20``, you could do the following:
 
         class Person
         {
-            #[Assert\EqualTo("Mary")]
+            #[Assert\EqualTo('Mary')]
             protected $firstName;
 
             #[Assert\EqualTo(
