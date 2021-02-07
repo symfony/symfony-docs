@@ -188,7 +188,7 @@ that uses this configuration:
                     // or expanded to configure more options
                     'async' => [
                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                       'options' => []
+                       'options' => [],
                     ],
                 ],
             ],
