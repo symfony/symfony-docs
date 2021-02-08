@@ -521,6 +521,9 @@ and headers.
             ],
         ]);
 
+.. versionadded:: 5.2
+
+    The ``headers`` option was introduced in Symfony 5.2.
 
 Handling Sending Failures
 -------------------------
