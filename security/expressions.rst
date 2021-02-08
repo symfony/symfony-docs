@@ -48,6 +48,8 @@ Inside the expression, you have access to a number of variables:
     does not include the ``IS_AUTHENTICATED_*`` attributes (see the functions below).
 ``object``
     The object (if any) that's passed as the second argument to ``isGranted()``.
+``subject``
+    It stores the same value as ``object``, so they are equivalent.
 ``token``
     The token object.
 ``trust_resolver``
