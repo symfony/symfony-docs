@@ -21,12 +21,18 @@ you're done: the paths in your templates will automatically point to the dev ser
 dev-server Options
 ------------------
 
+.. caution::
+
+    Encore uses ``webpack-dev-server`` version 4, which at the time of Encore's
+    1.0 release was still in beta and was not documented. See the `4.0 CHANGELOG`_
+    for changes.
+
 The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
 You can set these options via command line options:
 
 .. code-block:: terminal
 
-    $ yarn encore dev-server --https --port 9000
+    $ yarn encore dev-server --port 9000
 
 You can also set these options using the ``Encore.configureDevServerOptions()``
 method in your ``webpack.config.js`` file:
@@ -58,26 +64,27 @@ If you're using the :doc:`Symfony web server </setup/symfony_server>` locally wi
 you'll need to also tell the dev-server to use HTTPS. To do this, you can reuse the Symfony web
 server SSL certificate:
 
-.. code-block:: javascript
+.. code-block:: diff
 
     // webpack.config.js
     // ...
-    const path = require('path');
+    + const path = require('path');
 
     Encore
         // ...
 
-        .configureDevServerOptions(options => {
-            options.https = {
-                pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
-            }
-        })
+    +     .configureDevServerOptions(options => {
+    +         options.https = {
+    +             pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
+    +         }
+    +     })
 
-Then make sure you run the ``dev-server`` with the ``--https`` option:
 
-.. code-block:: terminal
+.. caution::
 
-    $ yarn encore dev-server --https
+    Make sure to **not** pass the ``--https`` flag at the command line when
+    running ``encore dev-server``. This flag was required before 1.0, but now
+    will cause your config to be overridden.
 
 CORS Issues
 -----------
@@ -117,3 +124,4 @@ your page. HMR works automatically with CSS (as long as you're using the
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
 .. _`it's not recommended to disable the firewall`: https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck
+.. _`4.0 CHANGELOG`: https://github.com/webpack/webpack-dev-server/blob/master/CHANGELOG.md#400-beta0-2020-11-27
