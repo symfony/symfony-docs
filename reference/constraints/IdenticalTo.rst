@@ -63,7 +63,7 @@ The following constraints ensure that:
 
         class Person
         {
-            #[Assert\IdenticalTo("Mary")]
+            #[Assert\IdenticalTo('Mary')]
             protected $firstName;
 
             #[Assert\IdenticalTo(
