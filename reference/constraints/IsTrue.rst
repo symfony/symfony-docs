@@ -2,7 +2,7 @@ IsTrue
 ======
 
 Validates that a value is ``true``. Specifically, this checks if the value is
-exactly ``true``, exactly the integer ``1``, or exactly the string ``"1"``.
+exactly ``true``, exactly the integer ``1``, or exactly the string ``'1'``.
 
 Also see :doc:`IsFalse <IsFalse>`.
 
