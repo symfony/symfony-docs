@@ -3,7 +3,7 @@ IsFalse
 
 Validates that a value is ``false``. Specifically, this checks to see if
 the value is exactly ``false``, exactly the integer ``0``, or exactly the
-string "``0``".
+string ``'0'``.
 
 Also see :doc:`IsTrue <IsTrue>`.
 
