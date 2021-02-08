@@ -320,8 +320,7 @@ both strings or address objects::
 .. tip::
 
     Instead of calling ``->from()`` *every* time you create a new email, you can
-    create an :doc:`event subscriber </event_dispatcher>` and listen to the
-    :class:`Symfony\\Component\\Mailer\\Event\\MessageEvent` event to set the
+    :ref:`configure emails globally <mailer-configure-email-globally>` to set the
     same ``From`` email to all messages.
 
 .. note::
@@ -372,6 +371,12 @@ header, etc.) but most of the times you'll set text headers::
 
         // ...
     ;
+
+.. tip::
+
+    Instead of calling ``->addTextHeader()`` *every* time you create a new email, you can
+    :ref:`configure emails globally <mailer-configure-email-globally>` to set the same
+    headers to all sent emails.
 
 Message Contents
 ~~~~~~~~~~~~~~~~
@@ -447,6 +452,75 @@ images inside the HTML contents::
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
     ;
+
+.. _mailer-configure-email-globally:
+
+Configuring Emails Globally
+---------------------------
+
+Instead of calling ``->from()`` on each Email you create, you can configure this
+value globally so that it is set on all sent emails. The same is true with ``->to()``
+and headers.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/dev/mailer.yaml
+        framework:
+            mailer:
+                envelope:
+                    sender: 'fabien@example.com'
+                    recipients: ['foo@example.com', 'bar@example.com']
+                headers:
+                    from: 'Fabien <fabien@example.com>'
+                    bcc: 'baz@example.com'
+                    X-Custom-Header: 'foobar'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+            <framework:config>
+                <framework:mailer>
+                    <framework:envelope>
+                        <framework:sender>fabien@example.com</framework:sender>
+                        <framework:recipients>foo@example.com</framework:recipients>
+                        <framework:recipients>bar@example.com</framework:recipients>
+                    </framework:envelope>
+                    <framework:header name="from">Fabien &lt;fabien@example.com&gt;</framework:header>
+                    <framework:header name="bcc">baz@example.com</framework:header>
+                    <framework:header name="X-Custom-Header">foobar</framework:header>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        $container->loadFromExtension('framework', [
+            // ...
+            'mailer' => [
+                'envelope' => [
+                    'sender' => 'fabien@example.com',
+                    'recipients' => ['foo@example.com', 'bar@example.com'],
+                ],
+                'headers' => [
+                    'from' => 'Fabien <fabien@example.com>',
+                    'bcc' => 'baz@example.com',
+                    'X-Custom-Header' => 'foobar',
+                ],
+            ],
+        ]);
+
 
 Handling Sending Failures
 -------------------------
