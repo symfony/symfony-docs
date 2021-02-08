@@ -35,7 +35,7 @@ In such situations, you may encounter three issues:
 
 * the ``Length`` or ``Regex`` constraints may fail hard with a :class:`Symfony\\Component\\Validator\\Exception\\UnexpectedValueException`
   exception if the actual value is not a string, as enforced by ``Type``.
-* you may end with multiple error messages for the same property
+* you may end with multiple error messages for the same property.
 * you may perform a useless and heavy external call to geolocalize the address,
   while the format isn't valid.
 
