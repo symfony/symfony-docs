@@ -899,7 +899,7 @@ options. Options can be passed to the transport via a DSN string or configuratio
                         'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
                         'options' => [
                             'auto_setup' => false,
-                        ]
+                        ],
                     ],
                 ],
             ],
