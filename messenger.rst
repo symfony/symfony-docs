@@ -975,8 +975,8 @@ The transport has a number of options:
                     'async_priority_low' => [
                         'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
                         'options' => [
-                            'queue_name' => 'normal_priority'
-                        ]
+                            'queue_name' => 'normal_priority',
+                        ],
                     ],
                 ],
             ],
@@ -1445,8 +1445,8 @@ Then, make sure to "route" your message to *both* transports:
                     'image_transport' => '...',
                 ],
                 'routing' => [
-                    'App\Message\UploadedImage' => ['image_transport', 'async_priority_normal']
-                ]
+                    'App\Message\UploadedImage' => ['image_transport', 'async_priority_normal'],
+                ],
             ],
         ]);
 
