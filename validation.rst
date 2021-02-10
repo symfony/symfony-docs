@@ -298,7 +298,7 @@ rules). In order to validate an object, simply map one or more constraints
 to its class and then pass it to the ``validator`` service.
 
 Behind the scenes, a constraint is simply a PHP object that makes an assertive
-statement. In real life, a constraint could be: 'The cake must not be burned'.
+statement. In real life, a constraint could be: ``'The cake must not be burned'``.
 In Symfony, constraints are similar: they are assertions that a condition
 is true. Given a value, a constraint will tell you if that value
 adheres to the rules of the constraint.
@@ -342,7 +342,7 @@ literature genre mostly associated with the author, which can be set to either
         {
             /**
              * @Assert\Choice(
-             *     choices = { "fiction", "non-fiction" },
+             *     choices = {"fiction", "non-fiction"},
              *     message = "Choose a valid genre."
              * )
              */
@@ -509,7 +509,7 @@ of the form fields::
         $builder
             ->add('myField', TextType::class, [
                 'required' => true,
-                'constraints' => [new Length(['min' => 3])]
+                'constraints' => [new Length(['min' => 3])],
             ])
         ;
     }
@@ -606,7 +606,7 @@ class to have at least 3 characters.
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
                 $metadata->addPropertyConstraint(
                     'firstName',
-                    new Assert\Length(["min" => 3])
+                    new Assert\Length(['min' => 3])
                 );
             }
         }

@@ -275,6 +275,11 @@ not to the property:
 
     .. code-block:: php-annotations
 
+        // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
+        use App\Validator as AcmeAssert;
+        
         /**
          * @AcmeAssert\ProtocolClass
          */
