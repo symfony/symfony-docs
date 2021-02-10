@@ -922,7 +922,7 @@ options. Options can be passed to the transport via a DSN string or configuratio
                         'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
                         'options' => [
                             'auto_setup' => false,
-                        ]
+                        ],
                     ],
                 ],
             ],
@@ -1736,8 +1736,8 @@ Then, make sure to "route" your message to *both* transports:
                     'image_transport' => '...',
                 ],
                 'routing' => [
-                    'App\Message\UploadedImage' => ['image_transport', 'async_priority_normal']
-                ]
+                    'App\Message\UploadedImage' => ['image_transport', 'async_priority_normal'],
+                ],
             ],
         ]);
 
