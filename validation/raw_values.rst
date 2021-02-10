@@ -88,7 +88,7 @@ Validation of arrays is possible using the ``Collection`` constraint::
                 new Assert\Collection([
                     'slug' => [
                         new Assert\NotBlank(),
-                        new Assert\Type(['type' => 'string'])
+                        new Assert\Type(['type' => 'string']),
                     ],
                     'label' => [
                         new Assert\NotBlank(),
