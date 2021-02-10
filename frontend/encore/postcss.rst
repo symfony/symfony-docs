@@ -43,13 +43,14 @@ You can also pass options to the `postcss-loader`_ by passing a callback:
 .. code-block:: diff
 
     // webpack.config.js
+    + const path = require('path');
 
     Encore
         // ...
     +     .enablePostCssLoader((options) => {
-    +         options.config = {
+    +         options.postcssOptions = {
     +             // the directory where the postcss.config.js file is stored
-    +             path: 'path/to/config'
+    +             config: path.resolve(__dirname, 'sub-dir', 'custom.config.js'),
     +         };
     +     })
     ;
