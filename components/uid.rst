@@ -21,6 +21,8 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
+.. _uuid:
+
 UUIDs
 -----
 
@@ -213,6 +215,8 @@ of the UUID parameters::
             // ...
         }
     }
+
+.. _ulid:
 
 ULIDs
 -----
