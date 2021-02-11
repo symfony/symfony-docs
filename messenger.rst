@@ -965,8 +965,8 @@ The transport has a number of options:
 ``cert``                                      Path to the client certificate in PEM format.
 ``channel_max``                               Specifies highest channel number that the server
                                               permits. 0 means standard extension limit
-``confirm_timeout``                           Timeout in seconds for confirmation, if none
-                                              specified transport will not wait for message
+``confirm_timeout``                           Timeout in seconds for confirmation; if none
+                                              specified, transport will not wait for message
                                               confirmation. Note: 0 or greater seconds. May be
                                               fractional.
 ``connect_timeout``                           Connection timeout. Note: 0 or greater seconds.
