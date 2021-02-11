@@ -151,39 +151,38 @@ type, which converts to/from UUID objects automatically::
         // ...
     }
 
-There's also a Doctrine generator to help autogenerate UUID values for the
-entity primary keys::
+.. versionadded:: 5.2
 
-    // there are generators for UUID V1 and V6 too
-    use Symfony\Bridge\Doctrine\IdGenerator\UuidV4Generator;
-    use Symfony\Component\Uid\Uuid;
+    The UUID type was introduced in Symfony 5.2.
 
-    /**
-     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
-     */
-    class Product
+There is no generator to assign UUIDs automatically as the value of your entity
+primary keys, but you can use instead the following::
+
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    // ...
+
+    class User implements UserInterface
     {
         /**
          * @ORM\Id
-         * @ORM\Column(type="uuid", unique=true)
-         * @ORM\GeneratedValue(strategy="CUSTOM")
-         * @ORM\CustomIdGenerator(class=UuidV4Generator::class)
+         * @ORM\Column(type="ulid", unique=true)
          */
         private $id;
 
-        // ...
+        public function __construct()
+        {
+            $this->id = new Ulid();
+        }
 
-        public function getId(): ?Uuid
+        public function getId(): Ulid
         {
             return $this->id;
         }
 
         // ...
     }
-
-.. versionadded:: 5.2
-
-    The UUID type and generators were introduced in Symfony 5.2.
 
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these UUID types to build the SQL query
