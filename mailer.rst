@@ -186,9 +186,9 @@ A failover transport is configured with two or more transports and the
 
     MAILER_DSN="failover(postmark+api://ID@default sendgrid+smtp://KEY@default)"
 
-The mailer will start using the first transport. If the sending fails, the
-mailer won't retry it with the other transports, but it will switch to the next
-transport automatically for the following deliveries.
+The failover-transport starts using the first transport and if it fails, it
+will retry the same delivery with the next transports until one of them succeeds
+(or until all of them fail).
 
 Load Balancing
 ~~~~~~~~~~~~~~
@@ -203,9 +203,12 @@ A round-robin transport is configured with two or more transports and the
 
     MAILER_DSN="roundrobin(postmark+api://ID@default sendgrid+smtp://KEY@default)"
 
-The mailer will start using the first transport and if it fails, it will retry
-the same delivery with the next transports until one of them succeeds (or until
-all of them fail).
+The round-robin transport starts with a *randomly* selected transport and
+then switches to the next available transport for each subsequent email.
+
+As with the failover transport, round-robin retries deliveries until
+a transport succeeds (or all fail). In contrast to the failover transport,
+it *spreads* the load across all its transports.
 
 Creating & Sending Messages
 ---------------------------
