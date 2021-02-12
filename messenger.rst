@@ -1100,7 +1100,7 @@ Beanstalkd Transport
 
     The Beanstalkd transport was introduced in Symfony 5.2.
 
-The Beanstalkd transports sends messages directly to a Beanstalkd work queue. Install
+The Beanstalkd transport sends messages directly to a Beanstalkd work queue. Install
 it by running:
 
 .. code-block:: terminal
