@@ -156,27 +156,28 @@ type, which converts to/from UUID objects automatically::
     The UUID type was introduced in Symfony 5.2.
 
 There is no generator to assign UUIDs automatically as the value of your entity
-primary keys, but you can use instead the following::
+primary keys, but you can use the following::
 
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Uid\Uuid;
     // ...
 
     class User implements UserInterface
     {
         /**
          * @ORM\Id
-         * @ORM\Column(type="ulid", unique=true)
+         * @ORM\Column(type="uuid", unique=true)
          */
         private $id;
 
         public function __construct()
         {
-            $this->id = new Ulid();
+            $this->id = Uuid::v4();
         }
 
-        public function getId(): Ulid
+        public function getId(): Uuid
         {
             return $this->id;
         }
