@@ -196,22 +196,6 @@ the existence of data in the session. This may hurt your application performance
 because all users will receive a session cookie. In order to prevent that, you
 must *completely* avoid accessing the session.
 
-For example, if your templates include some code to display the
-:ref:`flash messages <flash-messages>`, sessions will start even if the user
-is not logged in and even if you haven't created any flash messages. To avoid
-this behavior, add a check before trying to access the flash messages:
-
-.. code-block:: html+twig
-
-    {# this check prevents starting a session when there are no flash messages #}
-    {% if app.request.hasPreviousSession %}
-        {% for message in app.flashes('notice') %}
-            <div class="flash-notice">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-
 More about Sessions
 -------------------
 
