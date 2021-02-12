@@ -859,7 +859,7 @@ your Envelope::
 
     $attributes = [];
     $bus->dispatch(new SmsNotification(), [
-        new AmqpStamp('custom-routing-key', AMQP_NOPARAM, $attributes)
+        new AmqpStamp('custom-routing-key', AMQP_NOPARAM, $attributes),
     ]);
 
 .. caution::
@@ -1483,12 +1483,12 @@ to your message::
     {
         $bus->dispatch(new SmsNotification('...'), [
             // wait 5 seconds before processing
-            new DelayStamp(5000)
+            new DelayStamp(5000),
         ]);
 
         // or explicitly create an Envelope
         $bus->dispatch(new Envelope(new SmsNotification('...'), [
-            new DelayStamp(5000)
+            new DelayStamp(5000),
         ]));
 
         // ...
