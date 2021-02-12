@@ -33,13 +33,13 @@ and what headers your reverse proxy uses to send information:
             # ...
             // the IP address (or range) of your proxy
             trusted_proxies: '192.0.0.1,10.0.0.0/8'
-            // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
-            trusted_headers: ['x-forwarded-all', '!x-forwarded-host', '!x-forwarded-prefix']
+            // trust *all* "X-Forwarded-*" headers
+            trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
             // or, if your proxy instead uses the "Forwarded" header
-            trusted_headers: ['forwarded', '!x-forwarded-host', '!x-forwarded-prefix']
+            trusted_headers: ['forwarded']
             // or, if you're using a wellknown proxy
-            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_AWS_ELB, '!x-forwarded-host', '!x-forwarded-prefix']
-            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_TRAEFIK, '!x-forwarded-host', '!x-forwarded-prefix']
+            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_AWS_ELB]
+            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_TRAEFIK]
 
     .. code-block:: xml
 
@@ -57,15 +57,14 @@ and what headers your reverse proxy uses to send information:
                 <!-- the IP address (or range) of your proxy -->
                 <framework:trusted-proxies>192.0.0.1,10.0.0.0/8</framework:trusted-proxies>
 
-                <!-- trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers) -->
-                <framework:trusted-header>x-forwarded-all</framework:trusted-header>
-                <framework:trusted-header>!x-forwarded-host</framework:trusted-header>
-                <framework:trusted-header>!x-forwarded-prefix</framework:trusted-header>
+                <!-- trust *all* "X-Forwarded-*" headers -->
+                <framework:trusted-header>x-forwarded-for</framework:trusted-header>
+                <framework:trusted-header>x-forwarded-host</framework:trusted-header>
+                <framework:trusted-header>x-forwarded-proto</framework:trusted-header>
+                <framework:trusted-header>x-forwarded-port</framework:trusted-header>
 
                 <!-- or, if your proxy instead uses the "Forwarded" header -->
                 <framework:trusted-header>forwarded</framework:trusted-header>
-                <framework:trusted-header>!x-forwarded-host</framework:trusted-header>
-                <framework:trusted-header>!x-forwarded-prefix</framework:trusted-header>
             </framework:config>
         </container>
 
@@ -78,12 +77,12 @@ and what headers your reverse proxy uses to send information:
             // the IP address (or range) of your proxy
             'trusted_proxies' => '192.0.0.1,10.0.0.0/8',
             // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
-            'trusted_headers' => ['x-forwarded-all', '!x-forwarded-host', '!x-forwarded-prefix'],
+            'trusted_headers' => ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port'],
             // or, if your proxy instead uses the "Forwarded" header
-            'trusted_headers' => ['forwarded', '!x-forwarded-host', '!x-forwarded-prefix'],
+            'trusted_headers' => ['forwarded'],
             // or, if you're using a wellknown proxy
-            'trusted_headers' => [Request::HEADER_X_FORWARDED_AWS_ELB, '!x-forwarded-host', '!x-forwarded-prefix'],
-            'trusted_headers' => [Request::HEADER_X_FORWARDED_TRAEFIK, '!x-forwarded-host', '!x-forwarded-prefix'],
+            'trusted_headers' => [Request::HEADER_X_FORWARDED_AWS_ELB],
+            'trusted_headers' => [Request::HEADER_X_FORWARDED_TRAEFIK],
         ]);
 
 .. deprecated:: 5.2
