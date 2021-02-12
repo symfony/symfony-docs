@@ -75,7 +75,7 @@ On Linux and Mac, run the following command to start it:
 
 .. rst-class:: command-linux
 
-    $ SERVER_NAME=:3000 MERCURE_PUBLISHER_JWT_KEY="!ChangeMe!" MERCURE_SUBSCRIBER_JWT_KEY="!ChangeMe!" ./mercure run -config Caddyfile.dev
+    $ SERVER_NAME=:3000 MERCURE_PUBLISHER_JWT_KEY='!ChangeMe!' MERCURE_SUBSCRIBER_JWT_KEY='!ChangeMe!' ./mercure run -config Caddyfile.dev
 
 On Windows run:
 
