@@ -1954,6 +1954,67 @@ may want to use:
             ],
         ]);
 
+Other Middlewares
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.3
+
+    The ``router_context`` middleware were introduced in Symfony 5.3.
+
+When the consumer needs to build an absolute URL, for instance: rendering a
+template with links, it needs the initial's request context in order to
+retrieves the domain and information needed to build the URL. This can be
+achieved by declaring the ``router_context`` middleware in the bus.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    command_bus:
+                        middleware:
+                            - router_context
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:bus name="command_bus">
+                        <framework:middleware id="router_context"/>
+                    </framework:bus>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'buses' => [
+                    'command_bus' => [
+                        'middleware' => [
+                            'router_context',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+
 Messenger Events
 ~~~~~~~~~~~~~~~~
 
