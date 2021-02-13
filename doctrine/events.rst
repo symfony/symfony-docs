@@ -166,7 +166,7 @@ with the ``doctrine.event_listener`` tag:
                         # this is the only required option for the lifecycle listener tag
                         event: 'postPersist'
 
-                        # listeners can define their priority in case multiple listeners are associated
+                        # listeners can define their priority in case multiple subscribers or listeners are associated
                         # to the same event (default priority = 0; higher numbers = listener is run earlier)
                         priority: 500
 
@@ -184,7 +184,7 @@ with the ``doctrine.event_listener`` tag:
 
                 <!--
                     * 'event' is the only required option that defines the lifecycle listener
-                    * 'priority': used when multiple listeners are associated to the same event
+                    * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
                 -->
@@ -213,7 +213,7 @@ with the ``doctrine.event_listener`` tag:
                     // this is the only required option for the lifecycle listener tag
                     'event' => 'postPersist',
 
-                    // listeners can define their priority in case multiple listeners are associated
+                    // listeners can define their priority in case multiple subscribers or listeners are associated
                     // to the same event (default priority = 0; higher numbers = listener is run earlier)
                     'priority' => 500,
 
@@ -428,7 +428,14 @@ with the ``doctrine.event_subscriber`` tag:
 
             App\EventListener\DatabaseActivitySubscriber:
                 tags:
-                    - { name: 'doctrine.event_subscriber' }
+                    - name: 'doctrine.event_subscriber'
+
+                      # subscribers can define their priority in case multiple subscribers or listeners are associated
+                      # to the same event (default priority = 0; higher numbers = listener is run earlier)
+                      priority: 500
+
+                      # you can also restrict listeners to a specific Doctrine connection
+                      connection: 'default'
 
     .. code-block:: xml
 
@@ -439,8 +446,15 @@ with the ``doctrine.event_subscriber`` tag:
             <services>
                 <!-- ... -->
 
+                <!--
+                    * 'priority': used when multiple subscribers or listeners are associated to the same event
+                    *             (default priority = 0; higher numbers = listener is run earlier)
+                    * 'connection': restricts the listener to a specific Doctrine connection
+                -->
                 <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber"/>
+                    <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
+                </service>
+
                 </service>
             </services>
         </container>
@@ -456,7 +470,14 @@ with the ``doctrine.event_subscriber`` tag:
             $services = $configurator->services();
 
             $services->set(DatabaseActivitySubscriber::class)
-                ->tag('doctrine.event_subscriber')
+                ->tag('doctrine.event_subscriber'[
+                    // subscribers can define their priority in case multiple subscribers or listeners are associated
+                    // to the same event (default priority = 0; higher numbers = listener is run earlier)
+                    'priority' => 500,
+
+                    # you can also restrict listeners to a specific Doctrine connection
+                    'connection' => 'default',
+                ])
             ;
         };
 
@@ -504,6 +525,10 @@ can do it in the service configuration:
                 ->tag('doctrine.event_subscriber', ['connection' => 'default'])
             ;
         };
+
+.. versionadded:: 5.3
+
+    Handling priority for subscribers alongside listeners has been introduced in Symfony 5.3.
 
 .. tip::
 
