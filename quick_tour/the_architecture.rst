@@ -134,13 +134,14 @@ Yes! You can use autowiring inside a service to access *other* services. The onl
 difference is that it's done in the constructor:
 
 .. code-block:: diff
+   :dedent: 0
 
-    <?php
-    // src/GreetingGenerator.php
+      <?php
+      // src/GreetingGenerator.php
     + use Psr\Log\LoggerInterface;
 
-    class GreetingGenerator
-    {
+      class GreetingGenerator
+      {
     +     private $logger;
     +
     +     public function __construct(LoggerInterface $logger)
@@ -148,15 +149,15 @@ difference is that it's done in the constructor:
     +         $this->logger = $logger;
     +     }
 
-        public function getRandomGreeting()
-        {
-            // ...
+          public function getRandomGreeting()
+          {
+              // ...
 
     +        $this->logger->info('Using the greeting: '.$greeting);
 
-             return $greeting;
-        }
-    }
+               return $greeting;
+          }
+      }
 
 Yes! This works too: no configuration, no time wasted. Keep coding!
 
@@ -275,8 +276,9 @@ Oh, how do you change the environment? Change the ``APP_ENV`` environment variab
 from ``dev`` to ``prod``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    # .env
+      # .env
     - APP_ENV=dev
     + APP_ENV=prod
 
@@ -317,11 +319,12 @@ your app needs a database ORM. Let's install the Doctrine ORM:
 Thanks to a new recipe installed by Flex, look at the ``.env`` file again:
 
 .. code-block:: diff
+   :dedent: 0
 
-    ###> symfony/framework-bundle ###
-    APP_ENV=dev
-    APP_SECRET=cc86c7ca937636d5ddf1b754beb22a10
-    ###< symfony/framework-bundle ###
+      ###> symfony/framework-bundle ###
+      APP_ENV=dev
+      APP_SECRET=cc86c7ca937636d5ddf1b754beb22a10
+      ###< symfony/framework-bundle ###
 
     + ###> doctrine/doctrine-bundle ###
     + # ...

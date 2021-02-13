@@ -104,33 +104,35 @@ a full HTML page.
 But the routing system is *much* more powerful. So let's make the route more interesting:
 
 .. code-block:: diff
+   :dedent: 0
 
-    # config/routes.yaml
-    index:
+      # config/routes.yaml
+      index:
     -     path: /
     +     path: /hello/{name}
-        controller: 'App\Controller\DefaultController::index'
+          controller: 'App\Controller\DefaultController::index'
 
 The URL to this page has changed: it is *now* ``/hello/*``: the ``{name}`` acts
 like a wildcard that matches anything. And it gets better! Update the controller too:
 
 .. code-block:: diff
+   :dedent: 0
 
-    <?php
-    // src/Controller/DefaultController.php
-    namespace App\Controller;
+      <?php
+      // src/Controller/DefaultController.php
+      namespace App\Controller;
 
-    use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\HttpFoundation\Response;
 
-    class DefaultController
-    {
+      class DefaultController
+      {
     -     public function index()
     +     public function index($name)
-        {
+          {
     -         return new Response('Hello!');
     +         return new Response("Hello $name!");
-        }
-    }
+          }
+      }
 
 Try the page out by going to ``http://localhost:8000/hello/Symfony``. You should
 see: Hello Symfony! The value of the ``{name}`` in the URL is available as a ``$name``
@@ -154,23 +156,24 @@ Now, comment-out the YAML route by adding the ``#`` character:
 Instead, add the route *right above* the controller method:
 
 .. code-block:: diff
+   :dedent: 0
 
-    <?php
-    // src/Controller/DefaultController.php
-    namespace App\Controller;
+      <?php
+      // src/Controller/DefaultController.php
+      namespace App\Controller;
 
-    use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\HttpFoundation\Response;
     + use Symfony\Component\Routing\Annotation\Route;
 
-    class DefaultController
-    {
+      class DefaultController
+      {
     +    /**
     +     * @Route("/hello/{name}")
     +     */
-         public function index($name) {
-             // ...
-         }
-    }
+           public function index($name) {
+               // ...
+           }
+      }
 
 This works just like before! But by using annotations, the route and controller
 live right next to each other. Need another page? Add another route and method

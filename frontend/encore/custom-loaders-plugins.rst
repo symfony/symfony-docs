@@ -49,15 +49,16 @@ via the ``addPlugin()`` method. For example, if you use `Moment.js`_, you might 
 to use the `IgnorePlugin`_ (see `moment/moment#2373`_):
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
+      // webpack.config.js
     + var webpack = require('webpack');
 
-    Encore
-        // ...
+      Encore
+          // ...
 
     +     .addPlugin(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
-    ;
+      ;
 
 .. _`handlebars-loader`: https://github.com/pcardune/handlebars-loader
 .. _`plugins`: https://webpack.js.org/plugins/

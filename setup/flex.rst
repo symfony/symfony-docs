@@ -57,15 +57,16 @@ manual steps:
    it will not be installed again:
 
    .. code-block:: diff
+      :dedent: 0
 
-       {
-           "require": {
-               "symfony/flex": "^1.0",
-       +     },
-       +     "conflict": {
-       +         "symfony/symfony": "*"
-           }
-       }
+         {
+             "require": {
+                 "symfony/flex": "^1.0",
+       +   },
+       +   "conflict": {
+       +       "symfony/symfony": "*"
+             }
+         }
 
    Now you must add in ``composer.json`` all the Symfony dependencies required
    by your project. A quick way to do that is to add all the components that

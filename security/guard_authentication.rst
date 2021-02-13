@@ -31,23 +31,24 @@ create your ``User`` class. Then add an ``apiToken`` property directly to
 your ``User`` class (the ``make:entity`` command is a good way to do this):
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Entity/User.php
-    namespace App\Entity;
+      // src/Entity/User.php
+      namespace App\Entity;
 
-    // ...
+      // ...
 
-    class User implements UserInterface
-    {
-        // ...
+      class User implements UserInterface
+      {
+          // ...
 
     +     /**
     +      * @ORM\Column(type="string", unique=true, nullable=true)
     +      */
     +     private $apiToken;
 
-        // the getter and setter methods
-    }
+          // the getter and setter methods
+      }
 
 Don't forget to generate and run the migration:
 
@@ -525,14 +526,15 @@ are two possible fixes:
    authenticated:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Security/MyIpAuthenticator.php
-    // ...
+      // src/Security/MyIpAuthenticator.php
+      // ...
 
     + use Symfony\Component\Security\Core\Security;
 
-    class MyIpAuthenticator
-    {
+      class MyIpAuthenticator
+      {
     +     private $security;
 
     +     public function __construct(Security $security)
@@ -540,8 +542,8 @@ are two possible fixes:
     +         $this->security = $security;
     +     }
 
-        public function supports(Request $request)
-        {
+          public function supports(Request $request)
+          {
     +         // if there is already an authenticated user (likely due to the session)
     +         // then return false and skip authentication: there is no need.
     +         if ($this->security->getUser()) {
@@ -550,8 +552,8 @@ are two possible fixes:
 
     +         // the user is not logged in, so the authenticator should continue
     +         return true;
-        }
-    }
+          }
+      }
 
 If you use autowiring, the ``Security``  service will automatically be passed to
 your authenticator.

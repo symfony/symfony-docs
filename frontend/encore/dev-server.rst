@@ -65,13 +65,14 @@ you'll need to also tell the dev-server to use HTTPS. To do this, you can reuse 
 server SSL certificate:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
     + const path = require('path');
 
-    Encore
-        // ...
+      Encore
+          // ...
 
     +     .configureDevServerOptions(options => {
     +         options.https = {

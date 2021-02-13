@@ -104,22 +104,23 @@ routes. To do this, install the annotations package:
 You can now add your route directly *above* the controller:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Controller/LuckyController.php
+      // src/Controller/LuckyController.php
 
-    // ...
+      // ...
     + use Symfony\Component\Routing\Annotation\Route;
 
-    class LuckyController
-    {
+      class LuckyController
+      {
     +     /**
     +      * @Route("/lucky/number")
     +      */
-        public function number()
-        {
-            // this looks exactly the same
-        }
-    }
+          public function number()
+          {
+              // this looks exactly the same
+          }
+      }
 
 That's it! The page - http://localhost:8000/lucky/number will work exactly
 like before! Annotations are the recommended way to configure routes.
@@ -208,17 +209,18 @@ Make sure that ``LuckyController`` extends Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController` class:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Controller/LuckyController.php
+      // src/Controller/LuckyController.php
 
-    // ...
+      // ...
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class LuckyController
     + class LuckyController extends AbstractController
-    {
-        // ...
-    }
+      {
+          // ...
+      }
 
 Now, use the handy ``render()`` function to render a template. Pass it a ``number``
 variable so you can use it in Twig::

@@ -380,18 +380,19 @@ whole process works. You will *at least* need to fill in *where* you want your u
 be redirected after success:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Security/LoginFormAuthenticator.php
+      // src/Security/LoginFormAuthenticator.php
 
-    // ...
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-    {
-        // ...
+      // ...
+      public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+      {
+          // ...
 
     -     throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     +     // redirect to some "app_homepage" route - of wherever you want
     +     return new RedirectResponse($this->urlGenerator->generate('app_homepage'));
-    }
+      }
 
 Unless you have any other TODOs in that file, that's it! If you're loading users
 from the database, make sure you've loaded some :ref:`dummy users <doctrine-fixtures>`.

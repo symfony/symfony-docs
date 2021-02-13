@@ -362,35 +362,36 @@ But there are a few cases when an argument to a service cannot be autowired. For
 example, suppose you want to make the admin email configurable:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Service/SiteUpdateManager.php
-    // ...
+      // src/Service/SiteUpdateManager.php
+      // ...
 
-    class SiteUpdateManager
-    {
-        // ...
+      class SiteUpdateManager
+      {
+          // ...
     +    private $adminEmail;
 
     -    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
     +    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer, string $adminEmail)
-        {
-            // ...
+          {
+              // ...
     +        $this->adminEmail = $adminEmail;
-        }
+          }
 
-        public function notifyOfSiteUpdate(): bool
-        {
-            // ...
+          public function notifyOfSiteUpdate(): bool
+          {
+              // ...
 
-            $email = (new Email())
-                // ...
+              $email = (new Email())
+                  // ...
     -            ->to('manager@example.com')
     +            ->to($this->adminEmail)
-                // ...
-            ;
-            // ...
-        }
-    }
+                  // ...
+              ;
+              // ...
+          }
+      }
 
 If you make this change and refresh, you'll see an error:
 

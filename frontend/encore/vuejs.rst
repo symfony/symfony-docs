@@ -9,16 +9,17 @@ Enabling Vue.js (``vue-loader``)
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        // ...
-        .addEntry('main', './assets/main.js')
+      Encore
+          // ...
+          .addEntry('main', './assets/main.js')
 
     +     .enableVueLoader()
-    ;
+      ;
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
@@ -84,19 +85,20 @@ You can enable `JSX with Vue.js`_ by configuring the second parameter of the
 ``.enableVueLoader()`` method:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        // ...
-        .addEntry('main', './assets/main.js')
+      Encore
+          // ...
+          .addEntry('main', './assets/main.js')
 
     -     .enableVueLoader()
     +     .enableVueLoader(() => {}, {
     +         useJsx: true
     +     })
-    ;
+      ;
 
 Next, run or restart Encore. When you do, you will see an error message helping
 you install any missing dependencies. After running that command and restarting

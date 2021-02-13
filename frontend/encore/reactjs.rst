@@ -16,14 +16,15 @@ Using React? First add some dependencies with Yarn:
 Enable react in your ``webpack.config.js``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        // ...
+      Encore
+          // ...
     +     .enableReactPreset()
-    ;
+      ;
 
 
 Then restart Encore. When you do, it will give you a command you can run to

@@ -646,16 +646,17 @@ explained in the previous sections or the ``textTemplate()`` method provided by
 the ``TemplatedEmail`` class:
 
 .. code-block:: diff
+   :dedent: 0
 
     + use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
-    $email = (new TemplatedEmail())
-        // ...
+      $email = (new TemplatedEmail())
+          // ...
 
-        ->htmlTemplate('emails/signup.html.twig')
+          ->htmlTemplate('emails/signup.html.twig')
     +     ->textTemplate('emails/signup.txt.twig')
-        // ...
-    ;
+          // ...
+      ;
 
 .. _mailer-twig-embedding-images:
 

@@ -5,16 +5,17 @@ Are you deploying to a CDN? That's awesome :) Once you've made sure that your
 built files are uploaded to the CDN, configure it in Encore:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        .setOutputPath('public/build/')
-        // in dev mode, don't use the CDN
-        .setPublicPath('/build');
-        // ...
-    ;
+      Encore
+          .setOutputPath('public/build/')
+          // in dev mode, don't use the CDN
+          .setPublicPath('/build');
+          // ...
+      ;
 
     + if (Encore.isProduction()) {
     +     Encore.setPublicPath('https://my-cool-app.com.global.prod.fastly.net');

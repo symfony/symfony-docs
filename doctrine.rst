@@ -279,21 +279,22 @@ This adds the new ``description`` property and ``getDescription()`` and ``setDes
 methods:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Entity/Product.php
-    // ...
+      // src/Entity/Product.php
+      // ...
 
-    class Product
-    {
-        // ...
+      class Product
+      {
+          // ...
 
     +     /**
     +      * @ORM\Column(type="text")
     +      */
     +     private $description;
 
-        // getDescription() & setDescription() were also added
-    }
+          // getDescription() & setDescription() were also added
+      }
 
 The new property is mapped, but it doesn't exist yet in the ``product`` table. No
 problem! Generate a new migration:

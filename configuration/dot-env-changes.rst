@@ -55,17 +55,18 @@ changes can be made to any Symfony 3.4 or higher app:
 #. Update ``.gitignore``:
 
    .. code-block:: diff
+      :dedent: 0
 
-       # .gitignore
-       # ...
+         # .gitignore
+         # ...
 
-       ###> symfony/framework-bundle ###
+         ###> symfony/framework-bundle ###
        - /.env
        + /.env.local
        + /.env.local.php
        + /.env.*.local
 
-       # ...
+         # ...
 
 #. Rename ``.env`` to ``.env.local`` and ``.env.dist`` to ``.env``:
 

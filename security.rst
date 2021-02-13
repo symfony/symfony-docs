@@ -284,14 +284,15 @@ create dummy database users:
 Use this service to encode the passwords:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/DataFixtures/UserFixtures.php
+      // src/DataFixtures/UserFixtures.php
 
     + use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-    // ...
+      // ...
 
-    class UserFixtures extends Fixture
-    {
+      class UserFixtures extends Fixture
+      {
     +     private $passwordEncoder;
 
     +     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -299,19 +300,19 @@ Use this service to encode the passwords:
     +         $this->passwordEncoder = $passwordEncoder;
     +     }
 
-        public function load(ObjectManager $manager)
-        {
-            $user = new User();
-            // ...
+          public function load(ObjectManager $manager)
+          {
+              $user = new User();
+              // ...
 
     +         $user->setPassword($this->passwordEncoder->encodePassword(
     +             $user,
     +             'the_new_password'
     +         ));
 
-            // ...
-        }
-    }
+              // ...
+          }
+      }
 
 You can manually encode a password by running:
 
@@ -834,9 +835,10 @@ Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
 using annotations:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // src/Controller/AdminController.php
-    // ...
+      // src/Controller/AdminController.php
+      // ...
 
     + use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -845,18 +847,18 @@ using annotations:
     +  *
     +  * @IsGranted("ROLE_ADMIN")
     +  */
-    class AdminController extends AbstractController
-    {
+      class AdminController extends AbstractController
+      {
     +     /**
     +      * Require ROLE_ADMIN for only this controller method.
     +      *
     +      * @IsGranted("ROLE_ADMIN")
     +      */
-        public function adminDashboard()
-        {
-            // ...
-        }
-    }
+          public function adminDashboard()
+          {
+              // ...
+          }
+      }
 
 For more information, see the `FrameworkExtraBundle documentation`_.
 

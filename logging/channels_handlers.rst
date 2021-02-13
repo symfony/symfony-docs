@@ -189,11 +189,12 @@ For example to inject the service related to the ``app`` logger channel,
 change your constructor like this:
 
 .. code-block:: diff
+   :dedent: 0
 
     -     public function __construct(LoggerInterface $logger)
     +     public function __construct(LoggerInterface $appLogger)
-        {
-            $this->logger = $appLogger;
-        }
+          {
+              $this->logger = $appLogger;
+          }
 
 .. _`MonologBundle`: https://github.com/symfony/monolog-bundle

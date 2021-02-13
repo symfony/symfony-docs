@@ -130,41 +130,43 @@ Composer by modifying your ``composer.json`` file and changing all the libraries
 starting with ``symfony/`` to the new major version:
 
 .. code-block:: diff
+   :dedent: 0
 
-    {
-        "...": "...",
+      {
+          "...": "...",
 
-        "require": {
+          "require": {
     -         "symfony/cache": "4.4.*",
     +         "symfony/cache": "5.0.*",
     -         "symfony/config": "4.4.*",
     +         "symfony/config": "5.0.*",
     -         "symfony/console": "4.4.*",
     +         "symfony/console": "5.0.*",
-            "...": "...",
+              "...": "...",
 
-            "...": "A few libraries starting with
-                    symfony/ follow their own versioning scheme. You
-                    do not need to update these versions: you can
-                    upgrade them independently whenever you want",
-            "symfony/monolog-bundle": "^3.5",
-        },
-        "...": "...",
-    }
+              "...": "A few libraries starting with
+                      symfony/ follow their own versioning scheme. You
+                      do not need to update these versions: you can
+                      upgrade them independently whenever you want",
+              "symfony/monolog-bundle": "^3.5",
+          },
+          "...": "...",
+      }
 
 At the bottom of your ``composer.json`` file, in the ``extra`` block you can
 find a data setting for the Symfony version. Make sure to also upgrade
 this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
 
 .. code-block:: diff
+   :dedent: 0
 
-    "extra": {
-        "symfony": {
-            "allow-contrib": false,
+      "extra": {
+          "symfony": {
+              "allow-contrib": false,
     -       "require": "4.4.*"
     +       "require": "5.0.*"
-        }
-    }
+          }
+      }
 
 Next, use Composer to download new versions of the libraries:
 

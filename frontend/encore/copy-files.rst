@@ -31,12 +31,13 @@ Webpack - like a template - you can use the ``copyFiles()`` method to copy those
 files into your final output directory.
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
+      // webpack.config.js
 
-    Encore
-        // ...
-        .setOutputPath('public/build/')
+      Encore
+          // ...
+          .setOutputPath('public/build/')
 
     +     .copyFiles({
     +         from: './assets/images',

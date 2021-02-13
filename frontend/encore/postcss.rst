@@ -27,13 +27,14 @@ Next, create a ``postcss.config.js`` file at the root of your project:
 Then, enable the loader in Encore!
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
+      // webpack.config.js
 
-    Encore
-        // ...
+      Encore
+          // ...
     +     .enablePostCssLoader()
-    ;
+      ;
 
 Because you just modified ``webpack.config.js``, stop and restart Encore.
 
@@ -41,19 +42,20 @@ That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
 You can also pass options to the `postcss-loader`_ by passing a callback:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
+      // webpack.config.js
     + const path = require('path');
 
-    Encore
-        // ...
+      Encore
+          // ...
     +     .enablePostCssLoader((options) => {
     +         options.postcssOptions = {
     +             // the directory where the postcss.config.js file is stored
     +             config: path.resolve(__dirname, 'sub-dir', 'custom.config.js'),
     +         };
     +     })
-    ;
+      ;
 
 .. _browserslist_package_config:
 
@@ -65,26 +67,28 @@ support. The best-practice is to configure this directly in your ``package.json`
 (so that all the tools can read this):
 
 .. code-block:: diff
+   :dedent: 0
 
-    {
+      {
     +  "browserslist": [
     +    "defaults"
     +  ]
-    }
+      }
 
 The ``defaults`` option is recommended for most users and would be equivalent
 to the following browserslist:
 
 .. code-block:: diff
+   :dedent: 0
 
-    {
+      {
     +  "browserslist": [
     +    "> 0.5%",
     +    "last 2 versions",
     +    "Firefox ESR",
     +    "not dead"
     +  ]
-    }
+      }
 
 See `browserslist`_ for more details on the syntax.
 

@@ -92,21 +92,22 @@ Modify the code of your front controller to wrap the default kernel into the
 caching kernel:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // public/index.php
+      // public/index.php
 
     + use App\CacheKernel;
-    use App\Kernel;
+      use App\Kernel;
 
-    // ...
-    $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+      // ...
+      $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
     + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
     + if ('prod' === $kernel->getEnvironment()) {
     +     $kernel = new CacheKernel($kernel);
     + }
 
-    $request = Request::createFromGlobals();
-    // ...
+      $request = Request::createFromGlobals();
+      // ...
 
 The caching kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.

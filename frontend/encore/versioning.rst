@@ -11,13 +11,14 @@ instead of ``app.js``). This allows you to use aggressive caching strategies
 ignoring any existing cache:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        .setOutputPath('public/build/')
-        // ...
+      Encore
+          .setOutputPath('public/build/')
+          // ...
     +     .enableVersioning()
 
 To link to these assets, Encore creates two files ``entrypoints.json`` and

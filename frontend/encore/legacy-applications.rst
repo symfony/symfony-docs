@@ -31,11 +31,12 @@ jQuery plugins often expect that jQuery is already available via the ``$`` or
 ``webpack.config.js`` file:
 
 .. code-block:: diff
+   :dedent: 0
 
-    Encore
-        // ...
+      Encore
+          // ...
     +     .autoProvidejQuery()
-    ;
+      ;
 
 After restarting Encore, Webpack will look for all uninitialized ``$`` and ``jQuery``
 variables and automatically require ``jquery`` and set those variables for you.
@@ -73,9 +74,10 @@ For example, in your ``app.js`` file that's processed by Webpack and loaded on e
 page, add:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // require jQuery normally
-    const $ = require('jquery');
+      // require jQuery normally
+      const $ = require('jquery');
 
     + // create global $ and jQuery variables
     + global.$ = global.jQuery = $;

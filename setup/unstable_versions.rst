@@ -32,15 +32,16 @@ project. Then, edit the value of all of the ``symfony/*`` libraries to the
 new version and change your ``minimum-stability`` to ``beta``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    {
-        "require": {
+      {
+          "require": {
     +         "symfony/framework-bundle": "^4.0",
     +         "symfony/finder": "^4.0",
-            "...": "..."
-        },
+              "...": "..."
+          },
     +     "minimum-stability": "beta"
-    }
+      }
 
 You can also use set ``minimum-stability`` to ``dev``, or omit this line
 entirely, and opt into your stability on each package by using constraints

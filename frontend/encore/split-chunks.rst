@@ -9,15 +9,16 @@ into additional files, which will contain "shared" code.
 To enable this, call ``splitEntryChunks()``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    Encore
-        // ...
+      Encore
+          // ...
 
-        // multiple entry files, which probably import the same code
-        .addEntry('app', './assets/app.js')
-        .addEntry('homepage', './assets/homepage.js')
-        .addEntry('blog', './assets/blog.js')
-        .addEntry('store', './assets/store.js')
+          // multiple entry files, which probably import the same code
+          .addEntry('app', './assets/app.js')
+          .addEntry('homepage', './assets/homepage.js')
+          .addEntry('blog', './assets/blog.js')
+          .addEntry('store', './assets/store.js')
 
     +     .splitEntryChunks()
 
@@ -52,11 +53,12 @@ The logic for *when* and *how* to split the files is controlled by the
 this plugin with the ``configureSplitChunks()`` function:
 
 .. code-block:: diff
+   :dedent: 0
 
-    Encore
-        // ...
+      Encore
+          // ...
 
-        .splitEntryChunks()
+          .splitEntryChunks()
     +     .configureSplitChunks(function(splitChunks) {
     +         // change the configuration
     +         splitChunks.minSize = 0;

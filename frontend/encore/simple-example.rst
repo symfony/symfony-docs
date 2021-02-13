@@ -166,9 +166,10 @@ We'll use jQuery to print this message on the page. Install it via:
 Great! Use ``import`` to import ``jquery`` and ``greet.js``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // assets/app.js
-    // ...
+      // assets/app.js
+      // ...
 
     + // loads the jquery package from node_modules
     + import jquery from 'jquery';
@@ -208,14 +209,15 @@ etc.). To handle this, create a new "entry" JavaScript file for each page:
 Next, use ``addEntry()`` to tell Webpack to read these two new files when it builds:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    Encore
-        // ...
-        .addEntry('app', './assets/app.js')
+      // webpack.config.js
+      Encore
+          // ...
+          .addEntry('app', './assets/app.js')
     +     .addEntry('checkout', './assets/checkout.js')
     +     .addEntry('account', './assets/account.js')
-        // ...
+          // ...
 
 And because you just changed the ``webpack.config.js`` file, make sure to stop
 and restart Encore:
@@ -232,9 +234,10 @@ Finally, include the ``script`` and ``link`` tags on the individual pages where
 you need them:
 
 .. code-block:: diff
+   :dedent: 0
 
-    {# templates/.../checkout.html.twig #}
-    {% extends 'base.html.twig' %}
+      {# templates/.../checkout.html.twig #}
+      {% extends 'base.html.twig' %}
 
     + {% block stylesheets %}
     +     {{ parent() }}
@@ -262,21 +265,23 @@ CSS you can also use Sass, LESS or Stylus. To use Sass, rename the ``app.css``
 file to ``app.scss`` and update the ``import`` statement:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // assets/app.js
+      // assets/app.js
     - import './styles/app.css';
     + import './styles/app.scss';
 
 Then, tell Encore to enable the Sass pre-processor:
 
 .. code-block:: diff
+   :dedent: 0
 
-    // webpack.config.js
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
 
     +    .enableSassLoader()
-    ;
+      ;
 
 Because you just changed your ``webpack.config.js`` file, you'll need to restart
 Encore. When you do, you'll see an error!

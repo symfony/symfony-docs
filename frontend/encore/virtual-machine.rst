@@ -48,15 +48,16 @@ If your Symfony application is running on a custom domain (e.g.
 ``package.json``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server",
     +        "dev-server": "encore dev-server --public http://app.vm:8080",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 After restarting Encore and reloading your web page, you will probably see
 different issues in the web console:
@@ -77,15 +78,16 @@ Add the ``--host 0.0.0.0`` argument to the ``dev-server`` configuration in your
 connections:
 
 .. code-block:: diff
+   :dedent: 0
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server --public http://app.vm:8080",
     +        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 .. caution::
 
@@ -99,15 +101,16 @@ Webpack will respond ``Invalid Host header`` when trying to access files from
 the dev-server. To fix this, add the argument ``--disable-host-check``:
 
 .. code-block:: diff
+   :dedent: 0
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0",
     +        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0 --disable-host-check",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 .. caution::
 
