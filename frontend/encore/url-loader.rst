@@ -1,4 +1,4 @@
-Inlining Images & Fronts in CSS
+Inlining Images & Fonts in CSS
 ===============================
 
 A simple technique to improve the performance of web applications is to reduce
