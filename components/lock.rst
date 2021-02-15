@@ -61,7 +61,7 @@ method can be safely called repeatedly, even if the lock is already acquired.
 
 .. note::
 
-    Unlike other implementations, the Lock Component distinguishes locks
+    Unlike other implementations, the Lock Component distinguishes lock
     instances even when they are created for the same resource. It means that for
     a given scope and resource one lock instance can be acquired multiple times. 
     If a lock has to be used by several services, they should share the same ``Lock``
