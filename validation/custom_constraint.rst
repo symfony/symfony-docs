@@ -52,7 +52,7 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 
 .. note::
 
-    The ``@Annotation`` annotation is necessary for this new constraint in
+    The ``@Annotation`` or ``#[\Attribute]`` annotation is necessary for this new constraint in
     order to make it available for use in classes via annotations.
     Options for your constraint are represented as public properties on the
     constraint class.
