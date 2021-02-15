@@ -64,11 +64,12 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Ramsey\Uuid\UuidInterface;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            #[Assert\Type('Ramsey\Uuid\UuidInterface')]
+            #[Assert\Type(UuidInterface::class)]
             protected $id;
 
             #[Assert\Type('string')]
