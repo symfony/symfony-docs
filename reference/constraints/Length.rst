@@ -23,8 +23,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator`
 Basic Usage
 -----------
 
-To verify that the ``firstName`` field length of a class is between "2"
-and "50", you might add the following:
+To verify that the ``firstName`` field length of a class is between ``2``
+and ``50``, you might add the following:
 
 .. configuration-block::
 
