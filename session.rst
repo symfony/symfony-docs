@@ -185,33 +185,51 @@ your ``Session`` object with the default ``AttributeBag`` by the ``NamespacedAtt
     .. code-block:: yaml
 
         # config/services.yaml
-        session_listener:
+        session.factory:
             autoconfigure: true
-            class: App\EventListener\SessionListener
+            class: App\Session\SessionFactory
             arguments:
-            - !service_locator
-                logger: '@?logger'
-                session_collector: '@?data_collector.request.session_collector'
-                session_storage: '@session.storage'
-                session_attributes: '@session.namespacedattributebag'
-            - '%kernel.debug%'
+            - '@request_stack'
+            - '@session.storage.factory'
+            - ['@session_listener', 'onSessionUsage']
+            - '@session.namespacedattributebag'
 
         session.namespacedattributebag:
             class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
 
 .. code-block:: php
 
-    namespace App\EventListener;
+    namespace App\Session;
 
+    use Symfony\Component\HttpFoundation\RequestStack;
+    use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
-    use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
+    use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageFactoryInterface;
 
-    class SessionListener extends AbstractSessionListener
+    class SessionFactory
     {
-        protected function getSession(): ?SessionInterface
+        private $requestStack;
+        private $storageFactory;
+        private $usageReporter;
+        private $sessionAttributes;
+
+        public function __construct(RequestStack $requestStack, SessionStorageFactoryInterface $storageFactory, callable $usageReporter, NamespacedAttributeBag $sessionAttributes)
         {
-            return new Session($this->container->get('session_storage'), $this->container->get('session_attributes'));
+            $this->requestStack = $requestStack;
+            $this->storageFactory = $storageFactory;
+            $this->usageReporter = $usageReporter;
+            $this->sessionAttributes = $sessionAttributes;
+        }
+
+        public function createSession(): SessionInterface
+        {
+            return new Session(
+                $this->storageFactory->createStorage($this->requestStack->getMasterRequest()),
+                $this->sessionAttributes,
+                null,
+                $this->usageReporter
+            );
         }
     }
 

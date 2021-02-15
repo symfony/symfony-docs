@@ -269,7 +269,7 @@ Configuration
   * `save_path`_
   * `sid_length`_
   * `sid_bits_per_character`_
-  * `storage_id`_
+  * `storage_factory_id`_
   * `use_cookies`_
 
 * `test`_
@@ -1443,19 +1443,24 @@ errors.
 session
 ~~~~~~~
 
-storage_id
-..........
+storage_factory_id
+..................
 
-**type**: ``string`` **default**: ``'session.storage.native'``
+**type**: ``string`` **default**: ``'session.storage.factory.native'``
 
-The service ID used for storing the session. The ``session.storage`` service
-alias will be set to this service. The class has to implement
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageInterface`.
+The service ID used for creatig the ``SessionStorageInterface`` that will store
+the session. The ``session.storage.factory`` service alias will be set to this
+service. The class has to implement
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageFactoryInterface`.
 To see a list of all available storages, run:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:container session.storage.
+    $ php bin/console debug:container session.storage.factory.
+
+.. versionadded:: 5.3
+
+    The ``storage_factory_id`` option was introduced in Symfony 5.3.
 
 .. _config-framework-session-handler-id:
 
