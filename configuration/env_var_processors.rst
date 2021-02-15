@@ -136,6 +136,46 @@ Symfony provides the following env var processors:
                 'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
             ]);
 
+``env(not:FOO)``
+
+    .. versionadded:: 5.3
+
+        The ``not:`` env var processor was introduced in Symfony 5.3.
+
+    Casts ``FOO`` to a bool (just as ``env(bool:...)`` does) except it returns the inverted value
+    (falsy values are returned as ``true``, truthy values are returned as ``false``):
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                safe_for_production: '%env(not:APP_DEBUG)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="safe_for_production">%env(not:APP_DEBUG)%</parameter>
+                </parameters>
+
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('safe_for_production', '%env(not:APP_DEBUG)%');
+
 ``env(int:FOO)``
     Casts ``FOO`` to an int.
 
