@@ -1448,9 +1448,9 @@ storage_factory_id
 
 **type**: ``string`` **default**: ``'session.storage.factory.native'``
 
-The service ID used for creatig the ``SessionStorageInterface`` that will store
-the session. The ``session.storage.factory`` service alias will be set to this
-service. The class has to implement
+The service ID used for creating the ``SessionStorageInterface`` that stores
+the session. This service is available in the Symfony application via the
+``session.storage.factory`` service alias. The class has to implement
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\SessionStorageFactoryInterface`.
 To see a list of all available storages, run:
 
