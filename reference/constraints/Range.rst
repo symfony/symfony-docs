@@ -23,7 +23,7 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator`
 Basic Usage
 -----------
 
-To verify that the "height" field of a class is between "120" and "180",
+To verify that the ``height`` field of a class is between ``120`` and ``180``,
 you might add the following:
 
 .. configuration-block::
