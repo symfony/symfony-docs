@@ -1,5 +1,5 @@
-Inlining Images & Fronts in CSS
-===============================
+Inlining Images & Fonts in CSS
+==============================
 
 A simple technique to improve the performance of web applications is to reduce
 the number of HTTP requests inlining small files as base64 encoded URLs in the
