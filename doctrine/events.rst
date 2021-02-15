@@ -528,7 +528,7 @@ can do it in the service configuration:
 
 .. versionadded:: 5.3
 
-    Handling priority for subscribers alongside listeners has been introduced in Symfony 5.3.
+    Subscriber priority was introduced in Symfony 5.3.
 
 .. tip::
 
