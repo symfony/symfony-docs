@@ -1197,9 +1197,6 @@ The Redis transport DSN may looks like this:
 
     The Unix socket DSN was introduced in Symfony 5.1.
 
-To use the Redis transport, you will need the Redis PHP extension (>=4.3) and
-a running Redis server (^5.0).
-
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
