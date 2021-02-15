@@ -44,18 +44,15 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
             public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
         }
 
+Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
+use it as an annotation/attribute in other classes. If the constraint has
+configuration options, define them as public properties on the constraint class.
+
 .. versionadded:: 5.2
 
     The ability to use PHP attributes to configure constraints was introduced in
     Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
     annotate constraints.
-
-.. note::
-
-    The ``@Annotation`` annotation is necessary for this new constraint in
-    order to make it available for use in classes via annotations.
-    Options for your constraint are represented as public properties on the
-    constraint class.
 
 Creating the Validator itself
 -----------------------------
