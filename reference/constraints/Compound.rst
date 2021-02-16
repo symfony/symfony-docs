@@ -23,27 +23,63 @@ Basic Usage
 Suppose that you have different places where a user password must be validated,
 you can create your own named set or requirements to be reused consistently everywhere::
 
-    // src/Validator/Constraints/PasswordRequirements.php
-    namespace App\Validator\Constraints;
+.. configuration-block::
 
-    use Symfony\Component\Validator\Constraints\Compound;
-    use Symfony\Component\Validator\Constraints as Assert;
+    .. code-block:: php-annotations
+    
+        // src/Validator/Constraints/PasswordRequirements.php
+        namespace App\Validator\Constraints;
 
-    /**
-     * @Annotation
-     */
-    class PasswordRequirements extends Compound
-    {
-        protected function getConstraints(array $options): array
+        use Symfony\Component\Validator\Constraints\Compound;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        /**
+         * @Annotation
+         */
+        class PasswordRequirements extends Compound
         {
-            return [
-                new Assert\NotBlank(),
-                new Assert\Type('string'),
-                new Assert\Length(['min' => 12]),
-                new Assert\NotCompromisedPassword(),
-            ];
+            protected function getConstraints(array $options): array
+            {
+                return [
+                    new Assert\NotBlank(),
+                    new Assert\Type('string'),
+                    new Assert\Length(['min' => 12]),
+                    new Assert\NotCompromisedPassword(),
+                ];
+            }
         }
-    }
+
+    .. code-block:: php-attributes
+
+        // src/Validator/Constraints/PasswordRequirements.php
+        namespace App\Validator\Constraints;
+
+        use Symfony\Component\Validator\Constraints\Compound;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        #[\Attribute]
+        class PasswordRequirements extends Compound
+        {
+            protected function getConstraints(array $options): array
+            {
+                return [
+                    new Assert\NotBlank(),
+                    new Assert\Type('string'),
+                    new Assert\Length(['min' => 12]),
+                    new Assert\NotCompromisedPassword(),
+                ];
+            }
+        }  
+
+Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
+use it as an annotation/attribute in other classes. If the constraint has
+configuration options, define them as public properties on the constraint class.
+
+.. versionadded:: 5.2
+
+    The ability to use PHP attributes to configure constraints was introduced in
+    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
+    annotate constraints.
 
 You can now use it anywhere you need it:
 
@@ -61,6 +97,19 @@ You can now use it anywhere you need it:
             /**
              * @AcmeAssert\PasswordRequirements()
              */
+            public $password;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/User/RegisterUser.php
+        namespace App\User;
+
+        use App\Validator\Constraints as AcmeAssert;
+
+        class RegisterUser
+        {
+            #[AcmeAssert\PasswordRequirements]
             public $password;
         }
 
