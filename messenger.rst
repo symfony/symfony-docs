@@ -1981,12 +1981,12 @@ Other Middlewares
 
 .. versionadded:: 5.3
 
-    The ``router_context`` middleware were introduced in Symfony 5.3.
+    The ``router_context`` middleware was introduced in Symfony 5.3.
 
-When the consumer needs to build an absolute URL, for instance: rendering a
-template with links, it needs the initial's request context in order to
-retrieves the domain and information needed to build the URL. This can be
-achieved by declaring the ``router_context`` middleware in the bus.
+Add the ``router_context`` middleware if you need to generate absolute URLs in
+the consumer (e.g. render a template with links). This middleware stores the
+original request context (i.e. the host, the HTTP port, etc.) which is needed
+when building absolute URLs.
 
 .. configuration-block::
 
