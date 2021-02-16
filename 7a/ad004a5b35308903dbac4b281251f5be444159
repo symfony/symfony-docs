@@ -1,0 +1,36 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-02-13T15:56:24Z
+
+Nice feature, thanks, can you add a short example on how to get this info/context in the message handler? Thanks 😃
+
+---------------------------------------------------------------------------
+
+by jderusse at 2021-02-13T16:32:48Z
+
+> can you add a short example on how to get this info/context in the message handler
+
+Hmm... This is not aimed to be used by the message handler, and I don't have any use-case for this.
+
+The purpose of this feature is to make `UrlGenerator` working out of the box, without providing `asset.request_context` parameters
+
+```
+$this->urlGenerator->generate('route', [], UrlGeneratorInterface::ABSOLUTE_URL);
+// before: http://localhost/my_route
+// after: https://my-real-domain:81/my_route
+
+```
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-02-13T16:45:37Z
+
+Ah so you don't care about it directly, and just use the urGenerator which takes the provided request context into account?
+
+---------------------------------------------------------------------------
+
+by jderusse at 2021-02-13T16:57:20Z
+
+> Ah so you don't care about it directly, and just use the urGenerator which takes the provided request context into account?
+
+yes, exactly. Main use case: Generating an email with link to your application, and the template is rendered by the consumer (the `message` contains only the template + few parameters)
