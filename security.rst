@@ -219,9 +219,8 @@ command will pre-configure this for you:
             encoders:
                 # use your user class name here
                 App\Entity\User:
-                    # Use native password encoder
-                    # This value auto-selects the best possible hashing algorithm
-                    # (i.e. Sodium when available).
+                    # Use native password encoder, which auto-selects the best
+                    # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
                     algorithm: auto
 
     .. code-block:: xml

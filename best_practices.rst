@@ -368,7 +368,7 @@ Use the ``auto`` Password Hasher
 
 The :ref:`auto password hasher <reference-security-encoder-auto>` automatically
 selects the best possible encoder/hasher depending on your PHP installation.
-Currently, it tries to use ``sodium`` by default and falls back to ``bcrypt``.
+Starting from Symfony 5.3, the default auto hasher is ``bcrypt``.
 
 Use Voters to Implement Fine-grained Security Restrictions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
