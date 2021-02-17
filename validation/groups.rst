@@ -123,7 +123,7 @@ user registers and when a user updates their contact information later:
                 ]));
 
                 $metadata->addPropertyConstraint('city', new Assert\Length([
-                    "min" => 2,
+                    'min' => 2,
                 ]));
             }
         }
