@@ -1324,7 +1324,7 @@ The SQS transport DSN may looks like this:
 .. code-block:: env
 
     # .env
-    MESSENGER_TRANSPORT_DSN=https://AKIAIOSFODNN7EXAMPLE:j17M97ffSVoKI0briFoo9a@sqs.eu-west-3.amazonaws.com/123456789012/messages
+    MESSENGER_TRANSPORT_DSN=https://sqs.eu-west-3.amazonaws.com/123456789012/messages?access_key= AKIAIOSFODNN7EXAMPLE&secret_key=j17M97ffSVoKI0briFoo9a
     MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?sslmode=disable
 
 .. note::
