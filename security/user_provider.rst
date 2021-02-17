@@ -294,6 +294,7 @@ Now you can configure all the user information in ``config/packages/security.yam
 .. versionadded:: 5.3
 
     The ``extra_fields`` support was introduced in Symfony 5.3.
+    This allows you to retrieve some user data with ``$user->getExtraFields()['age'];`` having a ``$user`` from the Security layer.
 
 .. caution::
 
