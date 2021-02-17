@@ -750,7 +750,8 @@ the ``http_version`` option:
         # config/packages/framework.yaml
         framework:
             http_client:
-                http_version: '2.0'
+                default_options:
+                    http_version: '2.0'
 
     .. code-block:: xml
 
