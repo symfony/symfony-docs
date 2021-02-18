@@ -137,7 +137,7 @@ method. Each constraint exposes the attached payload as a public property::
     // Symfony\Component\Validator\ConstraintViolation
     $constraintViolation = ...;
     $constraint = $constraintViolation->getConstraint();
-    $severity = isset($constraint->payload['severity']) ? $constraint->payload['severity'] : null;
+    $severity = $constraint->payload['severity'] ?? null;
 
 For example, you can leverage this to customize the ``form_errors`` block
 so that the severity is added as an additional HTML class:
