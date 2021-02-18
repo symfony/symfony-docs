@@ -63,7 +63,7 @@ configuration options (see below for some usage examples).
 Directory Structure
 -------------------
 
-The basic directory structure of an AcmeBlogBundle must read as follows:
+The following is the recommended directory structure of an AcmeBlogBundle:
 
 .. code-block:: text
 
@@ -84,11 +84,11 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
 
 .. versionadded:: 4.4
 
-    This directory convention was introduced in Symfony 4.4 and can be used only when requiring
-    ``symfony/http-kernel`` 4.4 or superior.
+    This directory convention was introduced in Symfony 4.4 and can be used only
+    when requiring ``symfony/http-kernel`` 4.4 or superior.
 
-
-and the bundle path must be adjusted to the root directory::
+This directory structure requires to configure the bundle path to its root
+directory as follows::
 
     class AcmeBlogBundle extends Bundle
     {
