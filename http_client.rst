@@ -848,7 +848,8 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
         # config/packages/framework.yaml
         framework:
             http_client:
-                http_version: '2.0'
+                default_options:
+                    http_version: '2.0'
 
     .. code-block:: xml
 
@@ -862,7 +863,9 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:http-client http-version="2.0"/>
+                <framework:http-client>
+                    <framework:default-options http-version="2.0"/>
+                </framework-http-client>
             </framework:config>
         </container>
 
@@ -871,7 +874,9 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
         // config/packages/framework.php
         $container->loadFromExtension('framework', [
             'http_client' => [
-                'http_version' => '2.0',
+                'default_options' => [
+                    'http_version' => '2.0',
+                ],
             ],
         ]);
 
