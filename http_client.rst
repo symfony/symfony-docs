@@ -765,7 +765,9 @@ the ``http_version`` option:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:http-client http-version="2.0"/>
+                <framework:http-client>
+                    <framework:default-options http-version="2.0"/>
+                </framework-http-client>
             </framework:config>
         </container>
 
@@ -774,7 +776,9 @@ the ``http_version`` option:
         // config/packages/framework.php
         $container->loadFromExtension('framework', [
             'http_client' => [
-                'http_version' => '2.0',
+                'default_options' => [
+                    'http_version' => '2.0',
+                ],
             ],
         ]);
 
