@@ -99,9 +99,9 @@ conventions:
 
 * No third level sections are allowed;
 
-* Messages should follow the commit message conventions: should be short,
-  capitalize the line, do not end with a period, use an imperative verb to
-  start the line;
+* Messages should follow the :ref:`commit message conventions <commit-messages>`:
+  should be short, capitalize the line, do not end with a period, use an
+  imperative verb to start the line;
 
 * New entries must be added on top of the list.
 
