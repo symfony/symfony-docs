@@ -82,11 +82,6 @@ The following is the recommended directory structure of an AcmeBlogBundle:
     ├── LICENSE
     └── README.md
 
-.. versionadded:: 4.4
-
-    This directory convention was introduced in Symfony 4.4 and can be used only
-    when requiring ``symfony/http-kernel`` 4.4 or superior.
-
 This directory structure requires to configure the bundle path to its root
 directory as follows::
 
