@@ -224,6 +224,8 @@ in mind the following:
 * Never fix coding standards in some existing code as it makes the code review
   more difficult;
 
+.. _commit-messages:
+
 * Write good commit messages: Start by a short subject line (the first line),
   followed by a blank line and a more detailed description.
 
