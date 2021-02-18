@@ -68,30 +68,47 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
 .. code-block:: text
 
     <your-bundle>/
-    ├─ AcmeBlogBundle.php
-    ├─ Controller/
-    ├─ README.md
-    ├─ LICENSE
-    ├─ Resources/
-    │   ├─ config/
-    │   ├─ doc/
-    │   │  └─ index.rst
-    │   ├─ translations/
-    │   ├─ views/
-    │   └─ public/
-    └─ Tests/
+    ├── config/
+    ├── docs/
+    │   └─ index.md
+    ├── public/
+    ├── src/
+    │   ├── Controller/
+    │   ├── DependencyInjection/
+    │   └── AcmeBlogBundle.php
+    ├── templates/
+    ├── tests/
+    ├── translations/
+    ├── LICENSE
+    └── README.md
+
+.. versionadded:: 4.4
+
+    This directory convention was introduced in Symfony 4.4 and can be used only when requiring
+    ``symfony/http-kernel`` 4.4 or superior.
+
+
+and the bundle path must be adjusted to the root directory::
+
+    class AcmeBlogBundle extends Bundle
+    {
+        public function getPath(): string
+        {
+            return \dirname(__DIR__);
+        }
+    }
 
 **The following files are mandatory**, because they ensure a structure convention
 that automated tools can rely on:
 
-* ``AcmeBlogBundle.php``: This is the class that transforms a plain directory
+* ``src/AcmeBlogBundle.php``: This is the class that transforms a plain directory
   into a Symfony bundle (change this to your bundle's name);
 * ``README.md``: This file contains the basic description of the bundle and it
   usually shows some basic examples and links to its full documentation (it
   can use any of the markup formats supported by GitHub, such as ``README.rst``);
 * ``LICENSE``: The full contents of the license used by the code. Most third-party
   bundles are published under the MIT license, but you can `choose any license`_;
-* ``Resources/doc/index.rst``: The root file for the Bundle documentation.
+* ``docs/index.md``: The root file for the Bundle documentation.
 
 The depth of subdirectories should be kept to a minimum for the most used
 classes and files. Two levels is the maximum.
@@ -107,19 +124,19 @@ and others are just conventions followed by most developers):
 ===================================================  ========================================
 Type                                                 Directory
 ===================================================  ========================================
-Commands                                             ``Command/``
-Controllers                                          ``Controller/``
-Service Container Extensions                         ``DependencyInjection/``
-Doctrine ORM entities (when not using annotations)   ``Entity/``
-Doctrine ODM documents (when not using annotations)  ``Document/``
-Event Listeners                                      ``EventListener/``
-Configuration (routes, services, etc.)               ``Resources/config/``
-Web Assets (CSS, JS, images)                         ``Resources/public/``
-Translation files                                    ``Resources/translations/``
-Validation (when not using annotations)              ``Resources/config/validation/``
-Serialization (when not using annotations)           ``Resources/config/serialization/``
-Templates                                            ``Resources/views/``
-Unit and Functional Tests                            ``Tests/``
+Commands                                             ``src/Command/``
+Controllers                                          ``src/Controller/``
+Service Container Extensions                         ``src/DependencyInjection/``
+Doctrine ORM entities (when not using annotations)   ``src/Entity/``
+Doctrine ODM documents (when not using annotations)  ``src/Document/``
+Event Listeners                                      ``src/EventListener/``
+Configuration (routes, services, etc.)               ``config/``
+Web Assets (CSS, JS, images)                         ``public/``
+Translation files                                    ``translations/``
+Validation (when not using annotations)              ``config/validation/``
+Serialization (when not using annotations)           ``config/serialization/``
+Templates                                            ``templates/``
+Unit and Functional Tests                            ``tests/``
 ===================================================  ========================================
 
 Classes
@@ -127,7 +144,7 @@ Classes
 
 The bundle directory structure is used as the namespace hierarchy. For
 instance, a ``ContentController`` controller which is stored in
-``Acme/BlogBundle/Controller/ContentController.php`` would have the fully
+``src/Controller/ContentController.php`` would have the fully
 qualified class name of ``Acme\BlogBundle\Controller\ContentController``.
 
 All classes and files must follow the :doc:`Symfony coding standards </contributing/code/standards>`.
@@ -153,7 +170,7 @@ Tests
 -----
 
 A bundle should come with a test suite written with PHPUnit and stored under
-the ``Tests/`` directory. Tests should follow the following principles:
+the ``tests/`` directory. Tests should follow the following principles:
 
 * The test suite must be executable with a simple ``phpunit`` command run from
   a sample application;
@@ -240,10 +257,10 @@ Documentation
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the ``Resources/doc/``
+Extensive documentation should also be provided in the ``docs/``
 directory.
-The index file (for example ``Resources/doc/index.rst`` or
-``Resources/doc/index.md``) is the only mandatory file and must be the entry
+The index file (for example ``docs/index.rst`` or
+``docs/index.md``) is the only mandatory file and must be the entry
 point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
 used to render the documentation on the Symfony website.
@@ -480,10 +497,22 @@ The ``composer.json`` file should include at least the following metadata:
     This information is used by Symfony to load the classes of the bundle. It's
     recommended to use the `PSR-4`_ autoload standard: use the namespace as key,
     and the location of the bundle's main class (relative to ``composer.json``)
-    as value. For example, if the main class is located in the bundle root
-    directory: ``"autoload": { "psr-4": { "SomeVendor\\BlogBundle\\": "" } }``.
-    If the main class is located in the ``src/`` directory of the bundle:
-    ``"autoload": { "psr-4": { "SomeVendor\\BlogBundle\\": "src/" } }``.
+    as value. As the main class is located in the ``src/`` directory of the bundle:
+
+    .. code-block:: json
+
+        {
+            "autoload": {
+                "psr-4": {
+                    "Acme\\BlogBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Acme\\BlogBundle\\Tests\\": "tests/"
+                }
+            }
+        }
 
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
@@ -493,15 +522,15 @@ Resources
 
 If the bundle references any resources (config files, translation files, etc.),
 don't use physical paths (e.g. ``__DIR__/config/services.xml``) but logical
-paths (e.g. ``@FooBundle/Resources/config/services.xml``).
+paths (e.g. ``@AcmeBlogBundle/config/services.xml``).
 
 The logical paths are required because of the bundle overriding mechanism that
 lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
 for more details about transforming physical paths into logical paths.
 
 Beware that templates use a simplified version of the logical path shown above.
-For example, an ``index.html.twig`` template located in the ``Resources/views/Default/``
-directory of the FooBundle, is referenced as ``@Foo/Default/index.html.twig``.
+For example, an ``index.html.twig`` template located in the ``templates/Default/``
+directory of the AcmeBlogBundle, is referenced as ``@AcmeBlog/Default/index.html.twig``.
 
 Learn more
 ----------
