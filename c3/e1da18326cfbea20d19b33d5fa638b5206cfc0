@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-02-17T14:50:46Z
+
+What's our official recommendation for existing third-party bundles that no longer support 3.4. Do we encourage them to upgrade their structure or it's better to use this only in brand-new bundles?
+
+Related to the previous question, even if we don't recommend to change the structure for existing bundles, can you think of any problem if they do? Thanks!
+
+---------------------------------------------------------------------------
+
+by yceruto at 2021-02-17T15:13:29Z
+
+> What's our official recommendation for existing third-party bundles that no longer support 3.4. Do we encourage them to upgrade their structure or it's better to use this only in brand-new bundles?
+
+As long as the old structure is kept alive, I don't think we should encourage upgrading, at least not now. Maybe when we start deprecating the old structure.
+
+> Related to the previous question, even if we don't recommend to change the structure for existing bundles, can you think of any problem if they do? Thanks!
+
+As long as the bundle is strictly compatible with Sf >= 4.4 shouldn't be a problem 🤞
+
+---------------------------------------------------------------------------
+
+by stof at 2021-02-17T17:44:37Z
+
+maybe the doc should have a note saying that this structure can be used only when requiring `symfony/http-kernel` 4.4+ only, to avoid issues with bundle migrating to it (due to reading the new doc) without changing their min version.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2021-02-17T18:15:42Z
+
+Updated:
+ * @stof, comments addressed and added `versionadded::` note.
+ * @OskarStark, rebased on 4.4 branch.
+ * consistent vendor/bundle naming
