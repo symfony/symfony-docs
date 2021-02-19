@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-01-29T08:33:49Z
+
+@nietonchique thanks for this contribution. The problem I see is that in newer Symfony versions there's a built-in way to use Symfony's UUID/ULID as ID generators and types, so this might be confusing (because it's unnecessary in those new Symfony apps).
+
+We might want to update this example, but using a different example. Thanks.
