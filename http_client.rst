@@ -559,15 +559,18 @@ Use the ``headers`` option to define the default headers added to all requests:
 
 You can also set new headers or override the default ones for specific requests:
 
-.. code-block:: php
 
-    // this header is only included in this request and overrides the value
-    // of the same header if defined globally by the HTTP client
-    $response = $client->request('POST', 'https://...', [
-        'headers' => [
-            'Content-Type' => 'text/plain',
-        ],
-    ]);
+.. configuration-block::
+
+    .. code-block:: php
+
+        // this header is only included in this request and overrides the value
+        // of the same header if defined globally by the HTTP client
+        $response = $client->request('POST', 'https://...', [
+            'headers' => [
+                'Content-Type' => 'text/plain',
+            ],
+        ]);
 
 Uploading Data
 ~~~~~~~~~~~~~~
