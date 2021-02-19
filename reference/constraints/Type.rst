@@ -18,7 +18,7 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 Basic Usage
 -----------
 
-This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
+This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\Address``,
 ``firstName`` is of type ``string`` (using :phpfunction:`is_string` PHP function),
 ``age`` is an ``integer`` (using :phpfunction:`is_int` PHP function) and
 ``accessCode`` contains either only letters or only digits (using
@@ -36,9 +36,9 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
         class Author
         {
             /**
-             * @Assert\Type("Ramsey\Uuid\UuidInterface")
+             * @Assert\Type("Symfony\Component\Mime\Address")
              */
-            protected $id;
+            protected $emailAddress;
 
             /**
              * @Assert\Type("string")
@@ -90,8 +90,8 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
         # config/validator/validation.yaml
         App\Entity\Author:
             properties:
-                id:
-                    - Type: Ramsey\Uuid\UuidInterface
+                emailAddress:
+                    - Type: Symfony\Component\Mime\Address
 
                 firstName:
                     - Type: string
@@ -114,9 +114,9 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="App\Entity\Author">
-                <property name="id">
+                <property name="emailAddress">
                     <constraint name="Type">
-                        <option name="type">Ramsey\Uuid\UuidInterface</option>
+                        <option name="type">Symfony\Component\Mime\Address</option>
                     </constraint>
                 </property>
                 <property name="firstName">
@@ -146,7 +146,7 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
         // src/Entity/Author.php
         namespace App\Entity;
 
-        use Ramsey\Uuid\UuidInterface;
+        use Symfony\Component\Mime\Address;
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
@@ -154,7 +154,7 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('id', new Assert\Type(UuidInterface::class));
+                $metadata->addPropertyConstraint('emailAddress', new Assert\Type(Address::class));
 
                 $metadata->addPropertyConstraint('firstName', new Assert\Type('string'));
 
