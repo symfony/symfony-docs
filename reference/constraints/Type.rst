@@ -18,7 +18,7 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 Basic Usage
 -----------
 
-This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
+This will check if ``id`` is an instance of ``Symfony\Component\Uid\Uid``,
 ``firstName`` is of type ``string`` (using :phpfunction:`is_string` PHP function),
 ``age`` is an ``integer`` (using :phpfunction:`is_int` PHP function) and
 ``accessCode`` contains either only letters or only digits (using
@@ -36,7 +36,7 @@ This will check if ``id`` is an instance of ``Ramsey\Uuid\UuidInterface``,
         class Author
         {
             /**
-             * @Assert\Type("Ramsey\Uuid\UuidInterface")
+             * @Assert\Type("Symfony\Component\Uid\Uid")
              */
             protected $id;
 
