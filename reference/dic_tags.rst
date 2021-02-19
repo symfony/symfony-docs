@@ -56,12 +56,16 @@ assets.package
 
 **Purpose**: Add an asset package to the application
 
-This is an alternative way to declare a package in :doc:`/components/asset`.
+.. versionadded:: 5.3
 
+    The ``assets.package`` tag was introduced in Symfony 5.3.
+
+This is an alternative way to declare an :ref:`asset package <asset-packages>`.
 The name of the package is set in this order:
-* first, the `package` attribute of the tag
-* then, the value returned by the static method `getDefaultPackageName()` if defined
-* finally, the service name
+
+* first, the ``package`` attribute of the tag;
+* then, the value returned by the static method ``getDefaultPackageName()`` if defined;
+* finally, the service name.
 
 .. configuration-block::
 

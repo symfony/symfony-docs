@@ -51,6 +51,8 @@ Installation
 Usage
 -----
 
+.. _asset-packages:
+
 Asset Packages
 ~~~~~~~~~~~~~~
 
