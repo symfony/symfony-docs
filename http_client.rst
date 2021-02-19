@@ -120,7 +120,7 @@ You can configure the global options using the ``default_options`` option:
             <framework:config>
                 <framework:http-client>
                     <framework:default-options max-redirects="7"/>
-                </framework-http-client>
+                </framework:http-client>
             </framework:config>
         </container>
 
@@ -179,7 +179,7 @@ The HTTP client also has one configuration option called
             <framework:config>
                 <framework:http-client max-host-connections="10">
                     <!-- ... -->
-                </framework-http-client>
+                </framework:http-client>
             </framework:config>
         </container>
 
@@ -502,8 +502,7 @@ associative array via the ``query`` option, that will be merged with the URL::
 Headers
 ~~~~~~~
 
-Use the ``headers`` option to define both the default headers added to all
-requests and the specific headers for each request:
+Use the ``headers`` option to define the default headers added to all requests:
 
 .. configuration-block::
 
@@ -511,8 +510,8 @@ requests and the specific headers for each request:
 
         # config/packages/framework.yaml
         framework:
-            default_options:
-                http_client:
+            http_client:
+                default_options:
                     headers:
                         'User-Agent': 'My Fancy App'
 
@@ -532,7 +531,7 @@ requests and the specific headers for each request:
                     <framework:default-options>
                         <framework:header name="User-Agent">My Fancy App</framework:header>
                     </framework:default-options>
-                </framework-http-client>
+                </framework:http-client>
             </framework:config>
         </container>
 
@@ -557,6 +556,8 @@ requests and the specific headers for each request:
                 'User-Agent' => 'My Fancy App',
             ],
         ]);
+
+You can also set new headers or override the default ones for specific requests:
 
 .. code-block:: php
 
@@ -772,7 +773,7 @@ the ``http_version`` option:
             <framework:config>
                 <framework:http-client>
                     <framework:default-options http-version="2.0"/>
-                </framework-http-client>
+                </framework:http-client>
             </framework:config>
         </container>
 
