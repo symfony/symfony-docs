@@ -64,13 +64,13 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
         // src/Entity/Author.php
         namespace App\Entity;
 
-        use Ramsey\Uuid\UuidInterface;
+        use Symfony\Component\Mime\Address;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            #[Assert\Type(UuidInterface::class)]
-            protected $id;
+            #[Assert\Type(Address::class)]
+            protected $emailAddress;
 
             #[Assert\Type('string')]
             protected $firstName;
