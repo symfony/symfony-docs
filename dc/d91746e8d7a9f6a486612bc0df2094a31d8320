@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-02-19T14:42:14Z
+
+Good catch! I checked the source code and, as you said, this was always true, false "auto" in all versions, from 4.4 to 5.2 and 5.x. So, let's merge this. Thanks ... and congrats on your first Symfony Docs contribution!
