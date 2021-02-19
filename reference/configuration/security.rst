@@ -472,6 +472,26 @@ depend on the authentication mechanism, which can be any of these:
                     http_digest:
                         # ...
 
+You can view actual information about the firewalls in your application with
+the ``debug:firewall`` command:
+
+.. code-block:: terminal
+
+    # displays a list of firewalls currently configured for your application
+    $ php bin/console debug:firewall
+
+    # displays the details of a specific firewall
+    $ php bin/console debug:firewall main
+
+    # displays the details of a specific firewall, including detailed information
+    # about the event listeners for the firewall
+    $ php bin/console debug:firewall main --include-listeners
+
+.. versionadded:: 5.3
+
+    The ``debug:firewall`` command was introduced in Symfony 5.3.
+
+
 .. _reference-security-firewall-form-login:
 
 ``form_login`` Authentication
