@@ -6,8 +6,8 @@ Want to use `TypeScript`_? No problem! First, enable it:
 .. code-block:: diff
 
     // webpack.config.js
-    // ...
 
+    // ...
     Encore
         // ...
     +     .addEntry('main', './assets/main.ts')
@@ -30,6 +30,7 @@ method.
 
 .. code-block:: diff
 
+    // webpack.config.js
     Encore
         // ...
         .addEntry('main', './assets/main.ts')

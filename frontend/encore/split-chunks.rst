@@ -10,6 +10,7 @@ To enable this, call ``splitEntryChunks()``:
 
 .. code-block:: diff
 
+    // webpack.config.js
     Encore
         // ...
 
@@ -52,6 +53,7 @@ this plugin with the ``configureSplitChunks()`` function:
 
 .. code-block:: diff
 
+    // webpack.config.js
     Encore
         // ...
 

@@ -61,9 +61,9 @@ manual steps:
        {
            "require": {
                "symfony/flex": "^1.0",
-       +     },
-       +     "conflict": {
-       +         "symfony/symfony": "*"
+       +   },
+       +   "conflict": {
+       +       "symfony/symfony": "*"
            }
        }
 
