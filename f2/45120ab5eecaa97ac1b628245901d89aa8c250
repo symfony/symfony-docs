@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-02-18T23:36:11Z
+
+Please check the CI, thanks
+
+---------------------------------------------------------------------------
+
+by wkania at 2021-02-19T06:59:32Z
+
+@OskarStark Look at CI error, it's related [to](https://github.com/symfony/symfony-docs/pull/15002)
+From what I understand, not my Pull request introduced this error.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-02-19T09:49:09Z
+
+Indeed, can you please rebase?
+
+---------------------------------------------------------------------------
+
+by wkania at 2021-02-19T17:47:31Z
+
+Unlucky PR. Another [error](https://github.com/symfony/symfony-docs/pull/15005) @OskarStark .
