@@ -507,6 +507,23 @@ object.
             protected $dueDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Task.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Task
+        {
+            #[Assert\NotBlank]
+            public $task;
+
+            #[Assert\NotBlank]
+            #[Assert\Type(\DateTime::class)]
+            protected $dueDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
