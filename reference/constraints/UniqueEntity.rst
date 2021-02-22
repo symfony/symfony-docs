@@ -10,6 +10,11 @@ using an email address that already exists in the system.
     If you want to validate that all the elements of the collection are unique
     use the :doc:`Unique constraint </reference/constraints/Unique>`.
 
+.. note::
+
+    In order to use this constraint, you should have installed the
+    symfony/doctrine-bridge with Composer.
+
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
 Options     - `em`_
