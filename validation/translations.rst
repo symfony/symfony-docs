@@ -8,6 +8,11 @@ If you're using validation constraints with the Form component, you can translat
 the error messages by creating a translation resource for the
 ``validators`` :ref:`domain <translation-resource-locations>`.
 
+.. note::
+
+    In order to translate the error message, you should have installed the
+    symfony/translation component with Composer.
+
 To start, suppose you've created a plain-old-PHP object that you need to
 use somewhere in your application::
 
@@ -93,7 +98,7 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
 
     .. code-block:: xml
 
-        <!-- translations/validators.en.xlf -->
+        <!-- translations/validators/validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -108,12 +113,12 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
 
     .. code-block:: yaml
 
-        # translations/validators.en.yaml
+        # translations/validators/validators.en.yaml
         author.name.not_blank: Please enter an author name.
 
     .. code-block:: php
 
-        // translations/validators.en.php
+        // translations/validators/validators.en.php
         return [
             'author.name.not_blank' => 'Please enter an author name.',
         ];
