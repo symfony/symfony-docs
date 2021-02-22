@@ -279,7 +279,7 @@ You can also profile your template code with the :ref:`stopwatch Twig tag <refer
 .. code-block:: twig
 
     {% stopwatch 'render-blog-posts' %}
-        {% for post in blog_posts%}
+        {% for post in blog_posts %}
             {# ... #}
         {% endfor %}
     {% endstopwatch %}

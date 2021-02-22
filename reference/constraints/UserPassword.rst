@@ -12,7 +12,7 @@ password, but needs to enter their old password for security.
 
 .. note::
 
-    In order to use this constraints, you should have installed the
+    In order to use this constraint, you should have installed the
     symfony/security-core component with Composer.
 
 ==========  ===================================================================

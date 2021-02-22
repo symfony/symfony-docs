@@ -76,7 +76,7 @@ define a callback for the ``prePersist`` Doctrine event:
              */
             public function setCreatedAtValue(): void
             {
-                $this->createdAt = new \DateTime();
+                $this->createdAt = new \DateTimeImmutable();
             }
         }
 
