@@ -259,7 +259,7 @@ be called):
 Then, create a voter class that responds to this role and includes whatever custom
 logic you want::
 
-    // src/Service/Voter/SwitchToCustomerVoter.php
+    // src/Security/Voter/SwitchToCustomerVoter.php
     namespace App\Security\Voter;
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
