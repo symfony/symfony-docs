@@ -37,9 +37,6 @@ and what headers your reverse proxy uses to send information:
             trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
             // or, if your proxy instead uses the "Forwarded" header
             trusted_headers: ['forwarded']
-            // or, if you're using a wellknown proxy
-            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_AWS_ELB]
-            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_TRAEFIK]
 
     .. code-block:: xml
 
@@ -80,9 +77,6 @@ and what headers your reverse proxy uses to send information:
             'trusted_headers' => ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port'],
             // or, if your proxy instead uses the "Forwarded" header
             'trusted_headers' => ['forwarded'],
-            // or, if you're using a wellknown proxy
-            'trusted_headers' => [Request::HEADER_X_FORWARDED_AWS_ELB],
-            'trusted_headers' => [Request::HEADER_X_FORWARDED_TRAEFIK],
         ]);
 
 .. deprecated:: 5.2
@@ -134,9 +128,6 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
             // trust *all* requests (the 'REMOTE_ADDR' string is replaced at
             // run time by $_SERVER['REMOTE_ADDR'])
             trusted_proxies: '127.0.0.1,REMOTE_ADDR'
-
-            // if you're using ELB, otherwise use another Request::HEADER-* constant
-            trusted_headers: [!php/const Symfony\\Component\\HttpFoundation\\Request::HEADER_X_FORWARDED_AWS_ELB, '!x-forwarded-host', '!x-forwarded-prefix']
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
