@@ -10,15 +10,15 @@ To enable this, call ``splitEntryChunks()``:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
 
-        // multiple entry files, which probably import the same code
-        .addEntry('app', './assets/js/app.js')
-        .addEntry('homepage', './assets/js/homepage.js')
-        .addEntry('blog', './assets/js/blog.js')
-        .addEntry('store', './assets/js/store.js')
+          // multiple entry files, which probably import the same code
+          .addEntry('app', './assets/js/app.js')
+          .addEntry('homepage', './assets/js/homepage.js')
+          .addEntry('blog', './assets/js/blog.js')
+          .addEntry('store', './assets/js/store.js')
 
     +     .splitEntryChunks()
 
@@ -53,11 +53,11 @@ this plugin with the ``configureSplitChunks()`` function:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
 
-        .splitEntryChunks()
+          .splitEntryChunks()
     +     .configureSplitChunks(function(splitChunks) {
     +         // change the configuration
     +         splitChunks.minSize = 0;

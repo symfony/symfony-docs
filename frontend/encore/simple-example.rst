@@ -167,8 +167,8 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
 
 .. code-block:: diff
 
-    // assets/js/app.js
-    // ...
+      // assets/js/app.js
+      // ...
 
     + // loads the jquery package from node_modules
     + var $ = require('jquery');
@@ -196,17 +196,17 @@ To export values using the alternate syntax, use ``export``:
 
 .. code-block:: diff
 
-    // assets/js/greet.js
+      // assets/js/greet.js
     - module.exports = function(name) {
     + export default function(name) {
-        return `Yo yo ${name} - welcome to Encore!`;
-    };
+          return `Yo yo ${name} - welcome to Encore!`;
+      };
 
 To import values, use ``import``:
 
 .. code-block:: diff
 
-    // assets/js/app.js
+      // assets/js/app.js
     - require('../css/app.css');
     + import '../css/app.css';
 
@@ -240,13 +240,13 @@ Next, use ``addEntry()`` to tell Webpack to read these two new files when it bui
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
-        .addEntry('app', './assets/js/app.js')
+      // webpack.config.js
+      Encore
+          // ...
+          .addEntry('app', './assets/js/app.js')
     +     .addEntry('checkout', './assets/js/checkout.js')
     +     .addEntry('account', './assets/js/account.js')
-        // ...
+          // ...
 
 And because you just changed the ``webpack.config.js`` file, make sure to stop
 and restart Encore:
@@ -264,8 +264,8 @@ you need them:
 
 .. code-block:: diff
 
-    {# templates/.../checkout.html.twig #}
-    {% extends 'base.html.twig' %}
+      {# templates/.../checkout.html.twig #}
+      {% extends 'base.html.twig' %}
 
     + {% block stylesheets %}
     +     {{ parent() }}
@@ -294,7 +294,7 @@ file to ``app.scss`` and update the ``import`` statement:
 
 .. code-block:: diff
 
-    // assets/js/app.js
+      // assets/js/app.js
     - import '../css/app.css';
     + import '../css/app.scss';
 
@@ -302,12 +302,12 @@ Then, tell Encore to enable the Sass pre-processor:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
 
     +    .enableSassLoader()
-    ;
+      ;
 
 Because you just changed your ``webpack.config.js`` file, you'll need to restart
 Encore. When you do, you'll see an error!

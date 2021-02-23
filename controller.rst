@@ -98,16 +98,16 @@ Add the ``use`` statement atop your controller class and then modify
 
 .. code-block:: diff
 
-    // src/Controller/LuckyController.php
-    namespace App\Controller;
+      // src/Controller/LuckyController.php
+      namespace App\Controller;
 
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class LuckyController
     + class LuckyController extends AbstractController
-    {
-        // ...
-    }
+      {
+          // ...
+      }
 
 That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
 and many others that you'll learn about next.

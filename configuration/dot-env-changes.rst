@@ -60,16 +60,16 @@ changes can be made to any Symfony 3.4 or higher app:
 
    .. code-block:: diff
 
-       # .gitignore
-       # ...
+         # .gitignore
+         # ...
 
-       ###> symfony/framework-bundle ###
+         ###> symfony/framework-bundle ###
        - /.env
        + /.env.local
        + /.env.local.php
        + /.env.*.local
 
-       # ...
+         # ...
 
 #. Rename ``.env`` to ``.env.local`` and ``.env.dist`` to ``.env``:
 

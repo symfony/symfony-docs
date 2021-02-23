@@ -16,13 +16,13 @@ Update your code to use ``createSharedEntry()``:
 
 .. code-block:: diff
 
-    Encore
-        // ...
+      Encore
+          // ...
     -     .addEntry('app', './assets/js/app.js')
     +     .createSharedEntry('app', './assets/js/app.js')
-        .addEntry('homepage', './assets/js/homepage.js')
-        .addEntry('blog', './assets/js/blog.js')
-        .addEntry('store', './assets/js/store.js')
+          .addEntry('homepage', './assets/js/homepage.js')
+          .addEntry('blog', './assets/js/blog.js')
+          .addEntry('store', './assets/js/store.js')
 
 Before making this change, if both ``app.js`` and ``store.js`` require ``jquery``,
 then ``jquery`` would be packaged into *both* files, which is wasteful. By making

@@ -49,14 +49,14 @@ If your Symfony application is running on a custom domain (e.g.
 
 .. code-block:: diff
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server",
     +        "dev-server": "encore dev-server --public http://app.vm:8080",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 After restarting Encore and reloading your web page, you will probably see
 different issues in the web console:
@@ -78,14 +78,14 @@ connections:
 
 .. code-block:: diff
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server --public http://app.vm:8080",
     +        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 .. caution::
 
@@ -100,14 +100,14 @@ the dev-server. To fix this, add the argument ``--disable-host-check``:
 
 .. code-block:: diff
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0",
     +        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0 --disable-host-check",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 .. caution::
 

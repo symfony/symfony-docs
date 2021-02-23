@@ -12,12 +12,12 @@ ignoring any existing cache:
 
 .. code-block:: diff
 
-    // webpack.config.js
+      // webpack.config.js
 
-    // ...
-    Encore
-        .setOutputPath('public/build/')
-        // ...
+      // ...
+      Encore
+          .setOutputPath('public/build/')
+          // ...
     +     .enableVersioning()
 
 To link to these assets, Encore creates two files ``entrypoints.json`` and
