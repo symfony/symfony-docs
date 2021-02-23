@@ -607,7 +607,7 @@ submitting a login form - make a test very slow. For this reason, Symfony
 provides a ``loginUser()`` method to simulate logging in in your functional
 tests.
 
-Instead of login in with real users, it's recommended to create a user only for
+Instead of logging in with real users, it's recommended to create a user only for
 tests. You can do that with Doctrine :ref:`data fixtures <user-data-fixture>`,
 to load the testing users only in the test database.
 
