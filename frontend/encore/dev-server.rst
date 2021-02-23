@@ -65,14 +65,14 @@ the ``package.json`` file:
 
 .. code-block:: diff
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server",
     +        "dev-server": "encore dev-server --https --pfx=$HOME/.symfony/certs/default.p12 --allowed-hosts=mydomain.wip",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 If you experience issues related to CORS (Cross Origin Resource Sharing), add
 the ``--disable-host-check`` and ``--port`` options to the ``dev-server``
@@ -80,14 +80,14 @@ command in the ``package.json`` file:
 
 .. code-block:: diff
 
-    {
-        ...
-        "scripts": {
+      {
+          ...
+          "scripts": {
     -        "dev-server": "encore dev-server",
     +        "dev-server": "encore dev-server --port 8080 --disable-host-check",
-            ...
-        }
-    }
+              ...
+          }
+      }
 
 .. caution::
 

@@ -28,39 +28,39 @@ probably need to update the version constraint next to each library starting
 
 .. code-block:: diff
 
-    {
-        "...": "...",
+      {
+          "...": "...",
 
-        "require": {
+          "require": {
     -         "symfony/cache": "4.3.*",
     +         "symfony/cache": "4.4.*",
     -         "symfony/config": "4.3.*",
     +         "symfony/config": "4.4.*",
     -         "symfony/console": "4.3.*",
     +         "symfony/console": "4.4.*",
-            "...": "...",
+              "...": "...",
 
-            "...": "A few libraries starting with
-                    symfony/ follow their versioning scheme. You
-                    do not need to update these versions: you can
-                    upgrade them independently whenever you want",
-            "symfony/monolog-bundle": "^3.5",
-        },
-        "...": "...",
-    }
+              "...": "A few libraries starting with
+                      symfony/ follow their versioning scheme. You
+                      do not need to update these versions: you can
+                      upgrade them independently whenever you want",
+              "symfony/monolog-bundle": "^3.5",
+          },
+          "...": "...",
+      }
 
 Your ``composer.json`` file should also have an ``extra`` block that you will
 *also* need to update:
 
 .. code-block:: diff
 
-    "extra": {
-        "symfony": {
-            "...": "...",
+      "extra": {
+          "symfony": {
+              "...": "...",
     -         "require": "4.3.*"
     +         "require": "4.4.*"
-        }
-    }
+          }
+      }
 
 Next, use Composer to download new versions of the libraries:
 

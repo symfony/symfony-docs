@@ -28,12 +28,12 @@ Then, enable the loader in Encore!
 
 .. code-block:: diff
 
-    // webpack.config.js
+      // webpack.config.js
 
-    Encore
-        // ...
+      Encore
+          // ...
     +     .enablePostCssLoader()
-    ;
+      ;
 
 Because you just modified ``webpack.config.js``, stop and restart Encore.
 
@@ -42,17 +42,17 @@ You can also pass options to the `postcss-loader`_ by passing a callback:
 
 .. code-block:: diff
 
-    // webpack.config.js
+      // webpack.config.js
 
-    Encore
-        // ...
+      Encore
+          // ...
     +     .enablePostCssLoader((options) => {
     +         options.config = {
     +             // the directory where the postcss.config.js file is stored
     +             path: 'path/to/config'
     +         };
     +     })
-    ;
+      ;
 
 .. _browserslist_package_config:
 
@@ -65,25 +65,25 @@ support. The best-practice is to configure this directly in your ``package.json`
 
 .. code-block:: diff
 
-    {
+      {
     +  "browserslist": [
     +    "defaults"
     +  ]
-    }
+      }
 
 The ``defaults`` option is recommended for most users and would be equivalent
 to the following browserslist:
 
 .. code-block:: diff
 
-    {
+      {
     +  "browserslist": [
     +    "> 0.5%",
     +    "last 2 versions",
     +    "Firefox ESR",
     +    "not dead"
     +  ]
-    }
+      }
 
 See `browserslist`_ for more details on the syntax.
 
