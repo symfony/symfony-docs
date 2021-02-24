@@ -214,9 +214,9 @@ activated), the ``loadUserByUsername()`` method on ``UserRepository`` will be ca
 Memory User Provider
 --------------------
 
-It's not recommended to use this provider in real applications because of its
-limitations and how difficult it is to manage users. It may be useful in application
-prototypes and for limited applications that don't store users in databases.
+It's not recommended to use this provider because of its limitations to manage users.
+It nonetheless may be useful in application prototypes and for specific applications
+that don't need to have a complex user modelisation.
 
 This user provider stores all user information in a configuration file,
 including their passwords. That's why the first step is to configure how these
@@ -288,8 +288,9 @@ Now you can configure all the user information in ``config/packages/security.yam
             backend_users:
                 memory:
                     users:
-                        john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
-                        jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'], extra_fields: {'name': 'Jane', 'age': 42}}
+                        john_admin:  { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
+                        alice_admin: { password: '$2y$13$AMg7Z ... dFxRBA', roles: ['ROLE_ADMIN'], extra_fields: {'name': 'Alice', 'age': 42}}
+                        jane_admin:  { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
 
 .. versionadded:: 5.3
 
