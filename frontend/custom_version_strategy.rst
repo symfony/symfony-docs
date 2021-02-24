@@ -83,7 +83,7 @@ version string::
                 $this->hashes = $this->loadManifest();
             }
 
-            return isset($this->hashes[$path]) ? $this->hashes[$path] : '';
+            return $this->hashes[$path] ?? '';
         }
 
         public function applyVersion(string $path)
