@@ -25,7 +25,7 @@ First, if the ``name`` query parameter is not defined in the URL query string,
 you will get a PHP warning; so let's fix it::
 
     // framework/index.php
-    $name = isset($_GET['name']) ? $_GET['name'] : 'World';
+    $name = $_GET['name'] ?? 'World';
 
     printf('Hello %s', $name);
 
@@ -33,7 +33,7 @@ Then, this *application is not secure*. Can you believe it? Even this simple
 snippet of PHP code is vulnerable to one of the most widespread Internet
 security issue, XSS (Cross-Site Scripting). Here is a more secure version::
 
-    $name = isset($_GET['name']) ? $_GET['name'] : 'World';
+    $name = $_GET['name'] ?? 'World';
 
     header('Content-Type: text/html; charset=utf-8');
 
