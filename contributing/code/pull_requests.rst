@@ -370,8 +370,7 @@ because you want early feedback on your work, add an item to todo-list:
     - [ ] gather feedback for my changes
 
 As long as you have items in the todo-list, please prefix the pull request
-title with "[WIP]". If you do not yet want to trigger the automated tests,
-you can also set the PR to `draft status`_.
+title with "[WIP]".
 
 In the pull request description, give as much detail as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
@@ -436,4 +435,3 @@ before merging.
 .. _`searching on GitHub`: https://github.com/symfony/symfony/issues?q=+is%3Aopen+
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
-.. _`draft status`: https://help.github.com/github/collaborating-with-issues-and-pull-requests/about-pull-requests#draft-pull-requests
