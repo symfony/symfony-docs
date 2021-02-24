@@ -94,6 +94,14 @@ with the ``choice_translation_locale`` option.
     The :doc:`Timezone constraint </reference/constraints/Timezone>` can validate
     both timezone sets and adapts to the selected set automatically.
 
+.. versionadded:: 5.3
+
+    The Intl component needs to be installed when this value is ``true``.
+
+    .. code-block:: terminal
+
+        $ composer require symfony/intl
+
 Overridden Options
 ------------------
 

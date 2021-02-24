@@ -65,6 +65,14 @@ the option manually, but then you should just use the ``ChoiceType`` directly.
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
+.. versionadded:: 5.3
+
+    The Intl component is required to get a list of countries.
+
+    .. code-block:: terminal
+
+        $ composer require symfony/intl
+
 Field Options
 -------------
 
