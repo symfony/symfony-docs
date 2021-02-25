@@ -111,6 +111,8 @@ Then you can validate this method with ``IsTrue`` as follows:
 
 If the ``isTokenValid()`` returns false, the validation will fail.
 
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
+
 Options
 -------
 

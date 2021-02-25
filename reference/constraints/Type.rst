@@ -148,6 +148,8 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
     The feature to define multiple types in the ``type`` option was introduced
     in Symfony 4.4.
 
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
+
 Options
 -------
 
