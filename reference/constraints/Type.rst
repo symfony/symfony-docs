@@ -169,6 +169,8 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
             }
         }
 
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
+
 Options
 -------
 
