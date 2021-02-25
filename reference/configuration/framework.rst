@@ -415,7 +415,13 @@ Since every developer uses a different IDE, the recommended way to enable this
 feature is to configure it on a system level. This can be done by setting the
 ``xdebug.file_link_format`` option in your ``php.ini`` configuration file. The
 format to use is the same as for the ``framework.ide`` option, but without the
-need to escape the percent signs (``%``) by doubling them.
+need to escape the percent signs (``%``) by doubling them::
+
+    // example for PhpStorm
+    xdebug.file_link_format="phpstorm://open?file=%f&line=%l"
+
+    // example for Sublime
+    xdebug.file_link_format="subl://open?url=file://%f&line=%l"
 
 .. note::
 
