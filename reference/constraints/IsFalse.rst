@@ -125,6 +125,8 @@ method returns **false**:
             // ...
         }
 
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
+
 Options
 -------
 
