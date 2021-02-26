@@ -64,8 +64,8 @@ Enabling PHP-FPM
 
     PHP-FPM must be installed locally for the Symfony server to utilize.
 
-When the server starts it will check for common patterns like ``web/app.php``,
-``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
+When the server starts, it checks for ``web/index_dev.php``, ``web/index.php``,
+``public/app_dev.php``, ``public/app.php`` in that order. If one is found, the
 server will automatically start with PHP-FPM enabled. Otherwise the server will
 start without PHP-FPM and will show a ``Page not found`` page when trying to
 access a ``.php`` file in the browser.
