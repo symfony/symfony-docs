@@ -399,6 +399,36 @@ The :doc:`core team </contributing/code/core_team>` is responsible for deciding
 which PR gets merged, so their feedback is the most relevant. So do not feel
 pressured to refactor your code immediately when someone provides feedback.
 
+Automated Feedback
+~~~~~~~~~~~~~~~~~~
+
+There are many automated scripts that will provide feedback on a pull request.
+
+fabbot
+""""""
+
+`fabbot`_ will review code style, check for common typos and make sure the git
+history looks good. If there are any issues, fabbot will often suggest what changes
+that should be done. Most of the time you get a command to run to automatically
+fix the changes.
+
+It is rare, but fabbot could be wrong. One should verify if the suggested changes
+make sense and that they are related to the pull request.
+
+Psalm
+"""""
+
+`Psalm`_ will make a comment on a pull request if it discovers any potential
+type errors. The Psalm errors are not always correct, but each should be reviewed
+and discussed. A pull request should not update the Psalm baseline nor add ``@psalm-``
+annotations.
+
+After the `Psalm phar is installed`_, the analysis can be run locally with:
+
+.. code-block:: terminal
+
+    $ psalm.phar src/Symfony/Component/Workflow
+
 .. _rework-your-patch:
 
 Rework your Pull Request
@@ -430,8 +460,10 @@ before merging.
 .. _Symfony repository: https://github.com/symfony/symfony
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
 .. _`fabbot`: https://fabbot.io
+.. _`Psalm`: https://psalm.dev/
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
 .. _`searching on GitHub`: https://github.com/symfony/symfony/issues?q=+is%3Aopen+
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
+.. _`Psalm phar is installed`: https://psalm.dev/docs/running_psalm/installation/
