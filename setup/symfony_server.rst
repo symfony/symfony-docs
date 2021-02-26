@@ -282,8 +282,11 @@ The local Symfony server provides full `Docker`_ integration for projects that
 use it.
 
 When the web server detects that Docker Compose is running for the project, it
-automatically exposes environment variables according to the exposed port and
-the name of the ``docker-compose`` services.
+automatically exposes some environment variables.
+
+Via the ``docker-compose`` API, it looks for exposed ports used for common
+services. When it detects one it knows about, it uses the service name to
+expose environment variables.
 
 Consider the following configuration:
 
