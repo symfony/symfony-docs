@@ -476,7 +476,7 @@ and headers.
                     sender: 'fabien@example.com'
                     recipients: ['foo@example.com', 'bar@example.com']
                 headers:
-                    from: 'Fabien <fabien@example.com>'
+                    From: 'Fabien <fabien@example.com>'
                     bcc: 'baz@example.com'
                     X-Custom-Header: 'foobar'
 
