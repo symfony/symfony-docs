@@ -550,11 +550,6 @@ You must enable this using the ``login_throttling`` setting:
                     'login_throttling' => [
                         'max_attempts' => 3,
                     ],
-
-                    // use a custom rate limiter via its service ID
-                    'login_throttling' => [
-                        'limiter' => 'app.my_login_rate_limiter',
-                    ],
                 ],
             ],
         ]);
@@ -565,16 +560,147 @@ failed requests for ``IP address``. The second limit protects against an
 attacker using multiple usernames from bypassing the first limit, without
 distrupting normal users on big networks (such as offices).
 
-If you need a more complex limiting algorithm, create a class that implements
-:class:`Symfony\\Component\\HttpFoundation\\RateLimiter\\RequestRateLimiterInterface`
-and set the ``limiter`` option to its service ID.
-
 .. tip::
 
     Limiting the failed login attempts is only one basic protection against
     brute force attacks. The `OWASP Brute Force Attacks`_ guidelines mention
     several other protections that you should consider depending on the
     level of protection required.
+
+If you need a more complex limiting algorithm, create a class that implements
+:class:`Symfony\\Component\\HttpFoundation\\RateLimiter\\RequestRateLimiterInterface`
+(or use
+:class:`Symfony\\Component\\Security\\Http\\RateLimiter\\DefaultLoginRateLimiter`)
+and set the ``limiter`` option to its service ID:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        framework:
+            rate_limiter:
+                # define 2 rate limiters (one for username+IP, the other for IP)
+                username_ip_login:
+                    policy: token_bucket
+                    limit: 5
+                    rate: { interval: '5 minutes' }
+
+                ip_login:
+                    policy: sliding_window
+                    limit: 50
+                    interval: '15 minutes'
+
+        services:
+            # our custom login rate limiter
+            app.login_rate_limiter:
+                class: Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter
+                arguments:
+                    # globalFactory is the limiter for IP
+                    $globalFactory: '@limiter.ip_login'
+                    # localFactory is the limiter for username+IP
+                    $localFactory: '@limiter.username_ip_login'
+
+        security:
+            firewalls:
+                main:
+                    # use a custom rate limiter via its service ID
+                    login_throttling:
+                        limiter: app.login_rate_limiter
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <framework:config>
+                <framework:rate-limiter>
+                    <!-- define 2 rate limiters (one for username+IP, the other for IP) -->
+                    <framework:limiter name="username_ip_login"
+                        policy="token_bucket"
+                        limit="5"
+                    >
+                        <framework:rate interval="5 minutes"/>
+                    </framework:limiter>
+
+                    <framework:limiter name="ip_login"
+                        policy="sliding_window"
+                        limit="50"
+                        interval="15 minutes"
+                    />
+                </framework:rate-limiter>
+            </framework:config>
+
+            <srv:services>
+                <!-- our custom login rate limiter -->
+                <srv:service id="app.login_rate_limiter"
+                    class="Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter"
+                >
+                    <!-- 1st argument is the limiter for IP -->
+                    <srv:argument type="service" id="limiter.ip_login"/>
+                    <1-- 2nd argument is the limiter for username+IP -->
+                    <srv:argument type="service" id="limiter.username_ip_login"/>
+                </srv:service>
+            </srv:services>
+
+            <config>
+                <firewall name="main">
+                    <!-- use a custom rate limiter via its service ID -->
+                    <login-throttling limiter="app.login_rate_limiter"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter;
+
+        $container->loadFromExtension('framework', [
+            'rate_limiter' => [
+                // define 2 rate limiters (one for username+IP, the other for IP)
+                'username_ip_login' => [
+                    'policy' => 'token_bucket',
+                    'limit' => 5,
+                    'rate' => [ 'interval' => '5 minutes' ],
+                ],
+                'ip_login' => [
+                    'policy' => 'sliding_window',
+                    'limit' => 50,
+                    'interval' => '15 minutes',
+                ],
+            ],
+        ]);
+
+        $container->register('app.login_rate_limiter', DefaultLoginRateLimiter::class)
+            ->setArguments([
+                // 1st argument is the limiter for IP
+                new Reference('limiter.ip_login'),
+                // 2nd argument is the limiter for username+IP
+                new Reference('limiter.username_ip_login'),
+            ]);
+
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
+                    // use a custom rate limiter via its service ID
+                    'login_throttling' =>
+                        'limiter' => 'app.login_rate_limiter',
+                    ],
+                ],
+            ],
+        ]);
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:

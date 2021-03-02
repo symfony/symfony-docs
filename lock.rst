@@ -228,6 +228,8 @@ processes asking for the same ``$version``::
         }
     }
 
+.. _lock-named-locks:
+
 Named Lock
 ----------
 
