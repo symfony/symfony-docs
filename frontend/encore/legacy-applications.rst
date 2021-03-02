@@ -32,6 +32,7 @@ jQuery plugins often expect that jQuery is already available via the ``$`` or
 
 .. code-block:: diff
 
+    // webpack.config.js
     Encore
         // ...
     +     .autoProvidejQuery()
@@ -73,6 +74,8 @@ For example, in your ``app.js`` file that's processed by Webpack and loaded on e
 page, add:
 
 .. code-block:: diff
+
+    // webpack.config.js
 
     // require jQuery normally
     const $ = require('jquery');
