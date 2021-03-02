@@ -15,43 +15,37 @@ Symfony integrates with an independent library called `PHPUnit`_ to give you a
 rich testing framework. This article won't cover PHPUnit itself, which has its
 own excellent `documentation`_.
 
-Before creating your first test, install the `PHPUnit Bridge component`_, which
-wraps the original PHPUnit binary to provide additional features:
+Before creating your first test, install the PHPUnit with the following command:
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/phpunit-bridge
+    $ composer require --dev phpunit/phpunit
 
-After the library downloads, try executing PHPUnit by running (the first time
-you run this, it will download PHPUnit itself and make its classes available in
-your app):
+After the library is installed, try executing PHPUnit by running:
 
 .. code-block:: terminal
 
-    $ ./bin/phpunit
+    $ ./vendor/bin/phpunit
 
 .. note::
 
-    The ``./bin/phpunit`` command is created by :ref:`Symfony Flex <symfony-flex>`
-    when installing the ``phpunit-bridge`` package. If the command is missing, you
-    can remove the package (``composer remove symfony/phpunit-bridge``) and install
-    it again. Another solution is to remove the project's ``symfony.lock`` file and
-    run ``composer install`` to force the execution of all Symfony Flex recipes.
+    :ref:`Symfony Flex <symfony-flex>` has automatically created ``phpunit.xml.dist``
+    and ``tests/bootstrap.php``. If the files are missing, you can remove the package
+    (``composer remove phpunit/phpunit``) and install it again.
 
 Each test is a PHP class that should live in the ``tests/`` directory of
 your application. If you follow this rule, then you can run all of your
 application's tests with the same command as before.
 
-PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
-Symfony application.
-
-.. tip::
-
-    Use the ``--coverage-*`` command options to generate code coverage reports.
-    Read the PHPUnit manual to learn more about `code coverage analysis`_.
+PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your application.
 
 Types of Tests
 --------------
+
+To get a common language and shared context, it is important to define a what different
+types of tests really mean. Symfony will use the following definition. If you have
+learned something different, that is not necessarily wrong. It is just different
+from what the Symfony documentation is using.
 
 `Unit Tests`_
     These tests ensure that *individual* units of source code (e.g. a single
@@ -60,22 +54,18 @@ Types of Tests
 `Integration Tests`_
     These tests test a combination of classes and commonly interact with
     Symfony's service container. These tests do not yet cover the full
-    working application, those are called *Functional tests*.
+    working application, those are called *Application tests*.
 
-`Functional Tests`_
-    Functional tests test the behavior of a complete application. They
+`Application Tests`_
+    Application tests test the behavior of a complete application. They
     make HTTP requests and test that the response is as expected.
-
-`End to End Tests (E2E)`_
-    At last, end to end tests test the application as a real user. They use
-    a real browser and real integrations with external services.
 
 Unit Tests
 ----------
 
 A `unit test`_ ensures that individual units of source code (e.g. a single
 class or some specific method in some class) meet their design and behave
-as intended. Writing Symfony unit tests is no different from writing
+as intended. Writing unit tests is a Symfony application no different from writing
 standard PHPUnit unit tests. You can learn about it in the PHPUnit
 documentation: `Writing Tests for PHPUnit`_.
 
@@ -85,52 +75,49 @@ of your application for unit tests. So, if you're testing a class in the
 Autoloading is automatically enabled via the ``vendor/autoload.php`` file
 (as configured by default in the ``phpunit.xml.dist`` file).
 
-You can run tests using the ``bin/phpunit`` command:
+You can run tests using the ``./vendor/bin/phpunit`` command:
 
 .. code-block:: terminal
 
     # run all tests of the application
-    $ php bin/phpunit
+    $ php ./vendor/bin/phpunit
 
     # run all tests in the Util/ directory
-    $ php bin/phpunit tests/Util
+    $ php ./vendor/bin/phpunit tests/Util
 
     # run tests for the Calculator class
-    $ php bin/phpunit tests/Util/CalculatorTest.php
+    $ php ./vendor/bin/phpunit tests/Util/CalculatorTest.php
 
 Integration Tests
 -----------------
 
-TODO: KernelTestCase
+An integration test will test a larger part of your application compared to a unit
+test. Integration tests will use the Kernel to fetch a service from the dependency
+injection container.
 
-Accessing the Container
-~~~~~~~~~~~~~~~~~~~~~~~
-
-You can get the same container used in the application, which only includes
-the public services::
-
-    public function testSomething()
-    {
-        $kernel = self::bootKernel();
-        $container = $kernel->getContainer();
-        $someService = $container->get('the-service-ID');
-
-        // ...
-    }
-
-Symfony tests also have access to a special container that includes both the
+Symfony tests have access to a special container that includes both the
 public services and the non-removed :ref:`private services <container-public>`
 services::
 
-    public function testSomething()
+    // tests/Service/AcmeServiceTest.php
+    namespace App\Tests\Service;
+
+    use App\Service\AcmeService;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+    class AcmeServiceTest extends KernelTestCase
     {
-        // this call is needed; otherwise the container will be empty
-        self::bootKernel();
+        public function testSomething()
+        {
+            // this call is needed; otherwise the container will be empty
+            self::bootKernel();
 
-        $container = self::$container;
-        // $someService = $container->get('the-service-ID');
+            $container = self::$container;
+            $someService = $container->get(AcmeService::class);
 
-        // ...
+            $result = $someService->something();
+            $this->assertTrue($result);
+        }
     }
 
 .. caution::
@@ -140,55 +127,21 @@ services::
     other services). The solution is to declare those private services as public
     in the ``config/services_test.yaml`` file.
 
-.. TODO is this really different from self::$container and how to access
-   this in KernelTestCase?
+.. tip::
 
-    Finally, for the most rare edge-cases, Symfony includes a special container
-    which provides access to all services, public and private. This special
-    container is a service that can be get via the normal container::
+    To run your application tests, the ``KernelTestCase`` class needs to know which
+    is the application kernel to bootstrap it. The kernel class is usually
+    defined in the ``KERNEL_CLASS`` environment variable (included in the
+    default ``.env.test`` file provided by Symfony Flex):
 
-        public function testSomething()
-        {
-            $client = self::createClient();
-            $normalContainer = $client->getContainer();
-            $specialContainer = $normalContainer->get('test.service_container');
-
-            // $somePrivateService = $specialContainer->get('the-service-ID');
-
-            // ...
-        }
-
-Mocking Services
-~~~~~~~~~~~~~~~~
-
-TODO
-
-.. _functional-tests:
-
-Functional Tests
-----------------
-
-Functional tests check the integration of the different layers of an
-application (from the routing to the views). They are no different from unit
-tests as far as PHPUnit is concerned, but they have a very specific workflow:
-
-* Make a request;
-* Click on a link or submit a form;
-* Test the response;
-* Rinse and repeat.
-
-Before creating your first test, install the ``symfony/test-pack`` which
-requires multiple packages providing some of the utilities used in the
-tests:
-
-.. code-block:: terminal
-
-    $ composer require --dev symfony/test-pack
+    If your use case is more complex, you can also override the
+    ``createKernel()`` or ``getKernelClass()`` methods of your functional test,
+    which take precedence over the ``KERNEL_CLASS`` env var.
 
 Set-up your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Client used by functional tests creates a Kernel that runs in a special
+The tests creates a Kernel that runs in a special
 ``test`` environment. Since Symfony loads the ``config/packages/test/*.yaml``
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
@@ -236,7 +189,7 @@ You can also use a different environment entirely, or override the default
 debug mode (``true``) by passing each as options to the ``createClient()``
 method::
 
-    $client = static::createClient([
+    self::bootKernel([
         'environment' => 'my_test_env',
         'debug'       => false,
     ]);
@@ -300,7 +253,7 @@ that ensures that each test is run with the same unmodified database:
 
     $ composer require --dev dama/doctrine-test-bundle
 
-Now, enable it as a PHPUnit extension or listener:
+Now, enable it as a PHPUnit extension:
 
 .. code-block:: xml
 
@@ -373,10 +326,34 @@ Empty the database and reload *all* the fixture classes with:
 
 For more information, read the `DoctrineFixturesBundle documentation`_.
 
-Write Your First Functional Test
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _functional-tests:
 
-Functional tests are PHP files that typically live in the ``tests/Controller``
+Application Tests
+-----------------
+
+Application tests check the integration of all the different layers of the
+application (from the routing to the views). They are no different from unit tests
+or integration tests as far as PHPUnit is concerned, but they have a very specific
+workflow:
+
+* Make a request;
+* Click on a link or submit a form;
+* Test the response;
+* Rinse and repeat.
+
+Before creating your first test, install the ``symfony/test-pack`` which
+requires multiple packages providing some of the utilities used in the
+tests:
+
+.. code-block:: terminal
+
+    $ composer require --dev symfony/test-pack
+
+
+Write Your First Application Test
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Application tests are PHP files that typically live in the ``tests/Controller``
 directory of your application. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
@@ -399,17 +376,6 @@ As an example, a test could look like this::
             $this->assertEquals(200, $client->getResponse()->getStatusCode());
         }
     }
-
-.. tip::
-
-    To run your functional tests, the ``WebTestCase`` class needs to know which
-    is the application kernel to bootstrap it. The kernel class is usually
-    defined in the ``KERNEL_CLASS`` environment variable (included in the
-    default ``.env.test`` file provided by Symfony):
-
-    If your use case is more complex, you can also override the
-    ``createKernel()`` or ``getKernelClass()`` methods of your functional test,
-    which take precedence over the ``KERNEL_CLASS`` env var.
 
 In the above example, you validated that the HTTP response was successful. The
 next step is to validate that the page actually contains the expected content.
@@ -495,7 +461,7 @@ returns a ``Crawler`` instance.
 
 .. tip::
 
-    Hardcoding the request URLs is a best practice for functional tests. If the
+    Hardcoding the request URLs is a best practice for application tests. If the
     test generates URLs using the Symfony router, it won't detect any change
     made to the application URLs which may impact the end users.
 
@@ -718,7 +684,7 @@ You can also override HTTP headers on a per request basis::
 Reporting Exceptions
 ....................
 
-Debugging exceptions in functional tests may be difficult because by default
+Debugging exceptions in application tests may be difficult because by default
 they are caught and you need to look at the logs to see which exception was
 thrown. Disabling catching of exceptions in the test client allows the exception
 to be reported by PHPUnit::
@@ -1044,7 +1010,6 @@ Learn more
 
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.readthedocs.io/
-.. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
 .. _`Writing Tests for PHPUnit`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`$_SERVER`: https://www.php.net/manual/en/reserved.variables.server.php
