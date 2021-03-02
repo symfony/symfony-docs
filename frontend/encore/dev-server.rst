@@ -66,12 +66,12 @@ server SSL certificate:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
     + const path = require('path');
 
-    Encore
-        // ...
+      Encore
+          // ...
 
     +     .configureDevServerOptions(options => {
     +         options.https = {

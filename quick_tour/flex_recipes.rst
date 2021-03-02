@@ -75,28 +75,28 @@ Thanks to Flex, after one command, you can start using Twig immediately:
 
 .. code-block:: diff
 
-    <?php
-    // src/Controller/DefaultController.php
-    namespace App\Controller;
+      <?php
+      // src/Controller/DefaultController.php
+      namespace App\Controller;
 
-    use Symfony\Component\Routing\Annotation\Route;
+      use Symfony\Component\Routing\Annotation\Route;
     - use Symfony\Component\HttpFoundation\Response;
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class DefaultController
     + class DefaultController extends AbstractController
-    {
-         /**
-          * @Route("/hello/{name}")
-          */
-         public function index($name)
-         {
+      {
+           /**
+            * @Route("/hello/{name}")
+            */
+           public function index($name)
+           {
     -        return new Response("Hello $name!");
     +        return $this->render('default/index.html.twig', [
     +            'name' => $name,
     +        ]);
-         }
-    }
+           }
+      }
 
 By extending ``AbstractController``, you now have access to a number of shortcut
 methods and tools, like ``render()``. Create the new template:

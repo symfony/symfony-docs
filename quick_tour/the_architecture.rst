@@ -138,12 +138,12 @@ difference is that it's done in the constructor:
 
 .. code-block:: diff
 
-    <?php
-    // src/GreetingGenerator.php
+      <?php
+      // src/GreetingGenerator.php
     + use Psr\Log\LoggerInterface;
 
-    class GreetingGenerator
-    {
+      class GreetingGenerator
+      {
     +     private $logger;
     +
     +     public function __construct(LoggerInterface $logger)
@@ -151,15 +151,15 @@ difference is that it's done in the constructor:
     +         $this->logger = $logger;
     +     }
 
-        public function getRandomGreeting()
-        {
-            // ...
+          public function getRandomGreeting()
+          {
+              // ...
 
     +        $this->logger->info('Using the greeting: '.$greeting);
 
-             return $greeting;
-        }
-    }
+               return $greeting;
+          }
+      }
 
 Yes! This works too: no configuration, no time wasted. Keep coding!
 
@@ -279,7 +279,7 @@ from ``dev`` to ``prod``:
 
 .. code-block:: diff
 
-    # .env
+      # .env
     - APP_ENV=dev
     + APP_ENV=prod
 
@@ -321,10 +321,10 @@ Thanks to a new recipe installed by Flex, look at the ``.env`` file again:
 
 .. code-block:: diff
 
-    ###> symfony/framework-bundle ###
-    APP_ENV=dev
-    APP_SECRET=cc86c7ca937636d5ddf1b754beb22a10
-    ###< symfony/framework-bundle ###
+      ###> symfony/framework-bundle ###
+      APP_ENV=dev
+      APP_SECRET=cc86c7ca937636d5ddf1b754beb22a10
+      ###< symfony/framework-bundle ###
 
     + ###> doctrine/doctrine-bundle ###
     + # ...

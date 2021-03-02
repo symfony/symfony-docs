@@ -167,8 +167,8 @@ Great! Use ``import`` to import ``jquery`` and ``greet.js``:
 
 .. code-block:: diff
 
-    // assets/app.js
-    // ...
+      // assets/app.js
+      // ...
 
     + // loads the jquery package from node_modules
     + import jquery from 'jquery';
@@ -209,13 +209,13 @@ Next, use ``addEntry()`` to tell Webpack to read these two new files when it bui
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
-        .addEntry('app', './assets/app.js')
+      // webpack.config.js
+      Encore
+          // ...
+          .addEntry('app', './assets/app.js')
     +     .addEntry('checkout', './assets/checkout.js')
     +     .addEntry('account', './assets/account.js')
-        // ...
+          // ...
 
 And because you just changed the ``webpack.config.js`` file, make sure to stop
 and restart Encore:
@@ -233,8 +233,8 @@ you need them:
 
 .. code-block:: diff
 
-    {# templates/.../checkout.html.twig #}
-    {% extends 'base.html.twig' %}
+      {# templates/.../checkout.html.twig #}
+      {% extends 'base.html.twig' %}
 
     + {% block stylesheets %}
     +     {{ parent() }}
@@ -263,7 +263,7 @@ file to ``app.scss`` and update the ``import`` statement:
 
 .. code-block:: diff
 
-    // assets/app.js
+      // assets/app.js
     - import './styles/app.css';
     + import './styles/app.scss';
 
@@ -271,12 +271,12 @@ Then, tell Encore to enable the Sass pre-processor:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
 
     +    .enableSassLoader()
-    ;
+      ;
 
 Because you just changed your ``webpack.config.js`` file, you'll need to restart
 Encore. When you do, you'll see an error!

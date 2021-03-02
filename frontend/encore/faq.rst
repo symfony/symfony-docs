@@ -63,11 +63,11 @@ like ``/myAppSubdir``), you will need to configure that when calling ``Encore.se
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
+      // webpack.config.js
+      Encore
+          // ...
 
-        .setOutputPath('public/build/')
+          .setOutputPath('public/build/')
 
     -     .setPublicPath('/build')
     +     // this is your *true* public path
@@ -76,7 +76,7 @@ like ``/myAppSubdir``), you will need to configure that when calling ``Encore.se
     +     // this is now needed so that your manifest.json keys are still `build/foo.js`
     +     // (which is a file that's used by Symfony's `asset()` function)
     +     .setManifestKeyPrefix('build')
-    ;
+      ;
 
 If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
 Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
