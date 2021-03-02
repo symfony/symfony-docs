@@ -5,20 +5,20 @@ Want to use `TypeScript`_? No problem! First, enable it:
 
 .. code-block:: diff
 
-    // webpack.config.js
+      // webpack.config.js
 
-    // ...
-    Encore
-        // ...
+      // ...
+      Encore
+          // ...
     +     .addEntry('main', './assets/main.ts')
 
     +     .enableTypeScriptLoader()
 
-        // optionally enable forked type script for faster builds
-        // https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
-        // requires that you have a tsconfig.json file that is setup correctly.
+          // optionally enable forked type script for faster builds
+          // https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
+          // requires that you have a tsconfig.json file that is setup correctly.
     +     //.enableForkedTypeScriptTypesChecking()
-    ;
+      ;
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
@@ -30,10 +30,10 @@ method.
 
 .. code-block:: diff
 
-    // webpack.config.js
-    Encore
-        // ...
-        .addEntry('main', './assets/main.ts')
+      // webpack.config.js
+      Encore
+          // ...
+          .addEntry('main', './assets/main.ts')
 
     -     .enableTypeScriptLoader()
     +     .enableTypeScriptLoader(function(tsConfig) {
@@ -43,8 +43,8 @@ method.
     +         // tsConfig.silent = false
     +     })
 
-            // ...
-    ;
+              // ...
+      ;
 
 See the `Encore's index.js file`_ for detailed documentation and check
 out the `tsconfig.json reference`_ and the `Webpack guide about Typescript`_.

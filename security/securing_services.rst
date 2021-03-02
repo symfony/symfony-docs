@@ -14,14 +14,14 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
 
 .. code-block:: diff
 
-    // src/Newsletter/NewsletterManager.php
+      // src/Newsletter/NewsletterManager.php
 
-    // ...
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+      // ...
+      use Symfony\Component\Security\Core\Exception\AccessDeniedException;
     + use Symfony\Component\Security\Core\Security;
 
-    class SalesReportManager
-    {
+      class SalesReportManager
+      {
     +     private $security;
 
     +     public function __construct(Security $security)
@@ -29,19 +29,19 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
     +         $this->security = $security;
     +     }
 
-        public function sendNewsletter()
-        {
-            $salesData = [];
+          public function sendNewsletter()
+          {
+              $salesData = [];
 
     +         if ($this->security->isGranted('ROLE_SALES_ADMIN')) {
     +             $salesData['top_secret_numbers'] = rand();
     +         }
 
-            // ...
-        }
+              // ...
+          }
 
-        // ...
-    }
+          // ...
+      }
 
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically pass the ``security.helper`` to your service

@@ -32,11 +32,11 @@ files into your final output directory.
 
 .. code-block:: diff
 
-    // webpack.config.js
+      // webpack.config.js
 
-    Encore
-        // ...
-        .setOutputPath('public/build/')
+      Encore
+          // ...
+          .setOutputPath('public/build/')
 
     +     .copyFiles({
     +         from: './assets/images',
