@@ -131,7 +131,6 @@ array of ``key => value`` pairs representing option names and their respective v
 
         // associative array of configuration options
         [
-            'compression' => true,
             'lazy' => false,
             'persistent' => 0,
             'persistent_id' => null,
@@ -150,10 +149,6 @@ Available Options
     Specifies the connection library to return, either ``\Redis`` or ``\Predis\Client``.
     If none is specified, it will return ``\Redis`` if the ``redis`` extension is
     available, and ``\Predis\Client`` otherwise.
-
-``compression`` (type: ``bool``, default: ``true``)
-    Enables or disables compression of items. This requires phpredis v4 or higher with
-    LZF support enabled.
 
 ``lazy`` (type: ``bool``, default: ``false``)
     Enables or disables lazy connections to the backend. It's ``false`` by
