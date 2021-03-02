@@ -13,8 +13,8 @@ ignoring any existing cache:
 .. code-block:: diff
 
     // webpack.config.js
-    // ...
 
+    // ...
     Encore
         .setOutputPath('public/build/')
         // ...

@@ -83,9 +83,9 @@ Thanks to Flex, after one command, you can start using Twig immediately:
     - use Symfony\Component\HttpFoundation\Response;
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    -class DefaultController
-    +class DefaultController extends AbstractController
-     {
+    - class DefaultController
+    + class DefaultController extends AbstractController
+    {
          /**
           * @Route("/hello/{name}")
           */
