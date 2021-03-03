@@ -352,7 +352,7 @@ The ``translation:update`` command looks for missing translations in:
   defined in the :ref:`twig.default_path <config-twig-default-path>` and
   :ref:`twig.paths <config-twig-paths>` config options);
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
-  the ``translator`` service and makes calls to the ``trans()`` function.
+  the ``translator`` service and makes calls to the ``trans()`` method.
 
 .. versionadded:: 4.3
 
