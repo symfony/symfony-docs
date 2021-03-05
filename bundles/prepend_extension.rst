@@ -82,9 +82,11 @@ in case a specific other bundle is not registered::
 
         // process the configuration of AcmeHelloExtension
         $configs = $container->getExtensionConfig($this->getAlias());
-        // resolve config parameters e.g. %kernel.debug% to boolean value
+
+        // resolve config parameters e.g. %kernel.debug% to its boolean value
         $resolvingBag = $container->getParameterBag();
         $configs = $resolvingBag->resolveValue($configs);
+        
         // use the Configuration class to generate a config array with
         // the settings "acme_hello"
         $config = $this->processConfiguration(new Configuration(), $configs);
