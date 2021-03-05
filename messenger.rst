@@ -1001,6 +1001,12 @@ auto_setup          Whether the table should be created
                     automatically during send / get.       true
 ==================  =====================================  ======================
 
+.. caution::
+
+    Messages are stored in the database will have a datetime property which is created
+    with the timezone of the current system. This may cause issues if multiple machines
+    with different timezone configuration is using the same storage.
+
 Redis Transport
 ~~~~~~~~~~~~~~~
 
