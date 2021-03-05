@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by bastnic at 2021-03-02T14:43:45Z
+
+Thanks @Nyholm
+
+---------------------------------------------------------------------------
+
+by bastnic at 2021-03-02T18:50:17Z
+
+Maybe mention the `DeflateMarshaller` way somewhere?
+
+BTW I've a doubt about memcache config also talking about compression.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-03-02T18:51:58Z
+
+> Maybe mention the DeflateMarshaller way somewhere?
+
+Sure!
+
+> BTW I've a doubt about memcache config also talking about compression.
+
+You can use DeflateMarshaller for Memcache too. Or what are your doubts?
+
+---------------------------------------------------------------------------
+
+by bastnic at 2021-03-02T19:08:55Z
+
+I've a doubt about the memcache adapter documentation also talking about compression and I guess that if there is a global marshaller then individual adapter should not have compression option?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-03-02T19:19:11Z
+
+FYI #15054
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-03-02T19:30:57Z
+
+Oops, You are correct!
+
+Thank you for noticing. I've updated the PR
