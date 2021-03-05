@@ -1039,7 +1039,7 @@ The ``YamlEncoder`` Context Options
 The ``encode()`` method, like other encoder, uses ``context`` to set
 configuration options for the YamlEncoder an associative array::
 
-    $xmlEncoder->encode($array, 'xml', $context);
+    $yamlEncoder->encode($array, 'yaml', $context);
 
 These are the options available:
 

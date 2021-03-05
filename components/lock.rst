@@ -207,6 +207,38 @@ This component also provides two useful methods related to expiring locks:
 ``getRemainingLifetime()`` (which returns ``null`` or a ``float``
 as seconds) and ``isExpired()`` (which returns a boolean).
 
+Automatically Releasing The Lock
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Lock are automatically released when their Lock objects are destructed. This is
+an implementation detail that will be important when sharing Locks between
+processes. In the example below, ``pcntl_fork()`` creates two processes and the
+Lock will be released automatically as soon as one process finishes::
+
+    // ...
+    $lock = $factory->createLock('report-generation', 3600);
+    if (!$lock->acquire()) {
+        return;
+    }
+
+    $pid = pcntl_fork();
+    if (-1 === $pid) {
+        // Could not fork
+        exit(1);
+    } elseif ($pid) {
+        // Parent process
+        sleep(30);
+    } else {
+        // Child process
+        echo 'The lock will be released now.'
+        exit(0);
+    }
+    // ...
+
+To disable this behavior, set to ``false`` the third argument of
+``LockFactory::createLock()``. That will make the lock acquired for 3600 seconds
+or until ``Lock::release()`` is called.
+
 Shared Locks
 ------------
 
