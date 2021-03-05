@@ -1003,9 +1003,9 @@ auto_setup          Whether the table should be created
 
 .. caution::
 
-    Messages are stored in the database will have a datetime property which is created
-    with the timezone of the current system. This may cause issues if multiple machines
-    with different timezone configuration is using the same storage.
+    The datetime property of the messages stored in the database uses the
+    timezone of the current system. This may cause issues if multiple machines
+    with different timezone configuration use the same storage.
 
 Redis Transport
 ~~~~~~~~~~~~~~~
