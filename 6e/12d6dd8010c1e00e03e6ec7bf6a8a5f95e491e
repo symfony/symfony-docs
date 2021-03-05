@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by twisted1919 at 2021-03-02T13:22:40Z
+
+I think there should be a note for PCNTL as well, something like:
+> Please pay special attention when you create a lock and then you call `pcntl_fork` to create a new process. Resulted process will release the lock when it finishes, leaving the main process unlocked. To prevent this, make sure you do not autoi-release the lock and instead, you release it manually.
+
+Something in between these lines...
+
+Other than this, the info is very helpful, thank you.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-03-02T13:31:33Z
+
+I've updated the PR to use a better PCNTL example and changed the text to be more clear
+
+---------------------------------------------------------------------------
+
+by twisted1919 at 2021-03-02T13:36:27Z
+
+Looks okay to me, I pointed out a small typo as well, maybe you'll fix that as well.
+Thank you :)
