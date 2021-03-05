@@ -19,9 +19,10 @@ command helps you to find these missing or unused translation messages templates
 
 .. caution::
 
-    The extractors can't find messages translated outside templates, like form
-    labels or controllers. Dynamic translations using variables or expressions
-    in templates are not detected either:
+    The extractors can't find messages translated outside templates (like form
+    labels or controllers) unless using :ref:`translatable-objects` or calling
+    the ``trans()`` method on a translator. Dynamic translations using variables
+    or expressions in templates are not detected either:
 
     .. code-block:: twig
 

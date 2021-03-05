@@ -292,6 +292,8 @@ To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
 
+.. _translatable-objects:
+
 Translatable Objects
 --------------------
 
@@ -386,6 +388,9 @@ The ``translation:update`` command looks for missing translations in:
   :ref:`twig.paths <config-twig-paths>` config options);
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
   the ``translator`` service and makes calls to the ``trans()`` method.
+* Any PHP file/class stored in the ``src/`` directory that creates
+  :ref:`translatable-objects` using the constructor or the ``t()`` method or calls
+  the ``trans()`` method.
 
 .. _translation-resource-locations:
 
