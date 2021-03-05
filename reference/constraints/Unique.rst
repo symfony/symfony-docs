@@ -120,7 +120,7 @@ You can use the following parameters in this message:
 =============================  ================================================
 Parameter                      Description
 =============================  ================================================
-``{{ value }}``                The repeated value
+``{{ value }}``                The current (invalid) value
 =============================  ================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
