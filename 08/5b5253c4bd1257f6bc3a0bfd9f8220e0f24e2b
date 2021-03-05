@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by bastnic at 2021-03-02T19:33:45Z
+
+How to use them?
+When to use what? Igbinary better than compression?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-03-02T19:45:06Z
+
+I think it depends on your data. Some types of data might be better with Igbinary. I have not tested any of them so I cannot really tell.
+
+> How to use them?
+
+I'll add a code example.
