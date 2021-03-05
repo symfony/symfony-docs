@@ -1126,6 +1126,12 @@ auto_setup          Whether the table should be created
                     automatically during send / get.       true
 ==================  =====================================  ======================
 
+.. caution::
+
+    The datetime property of the messages stored in the database uses the
+    timezone of the current system. This may cause issues if multiple machines
+    with different timezone configuration use the same storage.
+
 Beanstalkd Transport
 ~~~~~~~~~~~~~~~~~~~~
 

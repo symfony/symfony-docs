@@ -327,7 +327,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(TRUSTED_HOSTS): "10.0.0.1, 10.0.0.2"
+                env(TRUSTED_HOSTS): "10.0.0.1,10.0.0.2"
             framework:
                trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
 
@@ -344,7 +344,7 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(TRUSTED_HOSTS)">["10.0.0.1", "10.0.0.2"]</parameter>
+                    <parameter key="env(TRUSTED_HOSTS)">10.0.0.1,10.0.0.2</parameter>
                 </parameters>
 
                 <framework:config trusted-hosts="%env(csv:TRUSTED_HOSTS)%"/>
@@ -353,7 +353,7 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
+            $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
             $container->loadFromExtension('framework', [
                 'trusted_hosts' => '%env(csv:TRUSTED_HOSTS)%',
             ]);
