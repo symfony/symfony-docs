@@ -192,6 +192,25 @@ Now you can create, retrieve, update and delete items using this cache pool::
 
 For a list of all of the supported adapters, see :doc:`/components/cache/cache_pools`.
 
+Serializing Data
+----------------
+
+When an item is stored in the cache, it is serialised to a string. It is a class
+implementing :class:`Symfony\\Component\\Cache\\Marshaller\\MarshallerInterface`
+that is responsible for serializing and unserializing. Or to be technically correct:
+to ``marshall()`` and to ``unmarshall()``.
+
+The :class:`Symfony\\Component\\Cache\\Marshaller\\DefaultMarshaller` is using PHP's
+``serialize()`` or ``igbinary_serialize()`` if the Igbinary extension is installed.
+There are other marshallers that will encrypt or compress the data before storing it::
+
+    use Symfony\Component\Cache\Adapter\RedisAdapter;
+    use Symfony\Component\Cache\DefaultMarshaller;
+    use Symfony\Component\Cache\DeflateMarshaller;
+
+    $marshaller = new DeflateMarshaller(new DefaultMarshaller());
+    $cache = new RedisAdapter(new \Redis(), 'namespace', 0, $marshaller);
+
 Advanced Usage
 --------------
 
