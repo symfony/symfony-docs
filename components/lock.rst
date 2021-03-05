@@ -203,10 +203,10 @@ as seconds) and ``isExpired()`` (which returns a boolean).
 Automatically Releasing The Lock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A Lock will be automatically released when the Lock object is destructed. This is
-an implementation detail that will be important when Locks are shared between processes.
-In the example below, the ``pcntl_fork()`` will create two processes and the Lock
-will be released automatically as soon as one process finishes::
+Lock are automatically released when their Lock objects are destructed. This is
+an implementation detail that will be important when sharing Locks between
+processes. In the example below, ``pcntl_fork()`` creates two processes and the
+Lock will be released automatically as soon as one process finishes::
 
     // ...
     $lock = $factory->createLock('report-generation', 3600);
@@ -215,7 +215,7 @@ will be released automatically as soon as one process finishes::
     }
 
     $pid = pcntl_fork();
-    if ($pid == -1) {
+    if (-1 === $pid) {
         // Could not fork
         exit(1);
     } elseif ($pid) {
@@ -228,9 +228,9 @@ will be released automatically as soon as one process finishes::
     }
     // ...
 
-To disable this behavior, one needs to set the 3rd argument to the ``LockFactory::createLock()``
-to false. That will make the Lock acquired for 3600 seconds or until ``Lock::release()``
-is called.
+To disable this behavior, set to ``false`` the third argument of
+``LockFactory::createLock()``. That will make the lock acquired for 3600 seconds
+or until ``Lock::release()`` is called.
 
 The Owner of The Lock
 ---------------------
