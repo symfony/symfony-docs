@@ -89,9 +89,10 @@ and ``RedisProxy``:
             Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
                 arguments:
                     - '@Redis'
-                    # you can optionally pass an array of options. The only option is 'prefix',
-                    # which defines the prefix to use for the keys to avoid collision on the Redis server
-                    # - { prefix: 'my_prefix' }
+                    # you can optionally pass an array of options. The only options are 'prefix' and 'ttl',
+                    # which define the prefix to use for the keys to avoid collision on the Redis server 
+                    # and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
+                    # - { 'prefix' => 'my_prefix', 'ttl' => 600 }
 
     .. code-block:: xml
 
@@ -99,8 +100,9 @@ and ``RedisProxy``:
         <services>
             <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler">
                 <argument type="service" id="Redis"/>
-                <!-- you can optionally pass an array of options. The only option is 'prefix',
-                     which defines the prefix to use for the keys to avoid collision on the Redis server:
+                <!-- you can optionally pass an array of options. The only options are 'prefix' and 'ttl',
+                     which define the prefix to use for the keys to avoid collision on the Redis server 
+                     and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
                 <argument type="collection">
                     <argument key="prefix">my_prefix</argument>
                 </argument> -->
@@ -116,9 +118,10 @@ and ``RedisProxy``:
             ->register(RedisSessionHandler::class)
             ->addArgument(
                 new Reference('Redis'),
-                // you can optionally pass an array of options. The only option is 'prefix',
-                // which defines the prefix to use for the keys to avoid collision on the Redis server:
-                // ['prefix' => 'my_prefix'],
+                // you can optionally pass an array of options. The only options are 'prefix' and 'ttl',
+                // which define the prefix to use for the keys to avoid collision on the Redis server 
+                // and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
+                // ['prefix' => 'my_prefix', 'ttl' => 600],
             );
 
 Next, use the :ref:`handler_id <config-framework-session-handler-id>`
