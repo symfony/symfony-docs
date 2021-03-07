@@ -37,7 +37,8 @@ file into ``global.scss``. You can even customize the Bootstrap variables first!
 Importing Bootstrap JavaScript
 ------------------------------
 
-Bootstrap JavaScript requires jQuery and Popper.js, so make sure you have this installed:
+Bootstrap JavaScript requires Popper.js. Prior to Bootstrap 5, jQuery is required too.
+Make sure you have this installed:
 
 .. code-block:: terminal
 
