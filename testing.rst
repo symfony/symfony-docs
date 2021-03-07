@@ -11,41 +11,45 @@ using both functional and unit tests.
 The PHPUnit Testing Framework
 -----------------------------
 
-Symfony integrates with an independent library called `PHPUnit`_ to give you a
-rich testing framework. This article won't cover PHPUnit itself, which has its
-own excellent `documentation`_.
+Symfony integrates with an independent library called `PHPUnit`_ to give
+you a rich testing framework. This article won't cover PHPUnit itself,
+which has its own excellent `documentation`_.
 
-Before creating your first test, install the PHPUnit with the following command:
-
-.. code-block:: terminal
-
-    $ composer require --dev phpunit/phpunit
-
-After the library is installed, try executing PHPUnit by running:
+Before creating your first test, install ``phpunit/phpunit`` and the
+``symfony/test-pack``, which installs some other packages providing useful
+Symfony test utilities:
 
 .. code-block:: terminal
 
-    $ ./vendor/bin/phpunit
+    $ composer require --dev phpunit/phpunit symfony/test-pack
+
+After the library is installed, try running PHPUnit:
+
+.. code-block:: terminal
+
+    $ php ./vendor/bin/phpunit
+
+This commands automatically runs your application's tests. Each test is a
+PHP class ending with "Test" (e.g. ``BlogControllerTest``) that lives in
+the ``tests/`` directory of your application.
+
+PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
+application.
 
 .. note::
 
-    :ref:`Symfony Flex <symfony-flex>` has automatically created ``phpunit.xml.dist``
-    and ``tests/bootstrap.php``. If the files are missing, you can remove the package
-    (``composer remove phpunit/phpunit``) and install it again.
-
-Each test is a PHP class that should live in the ``tests/`` directory of
-your application. If you follow this rule, then you can run all of your
-application's tests with the same command as before.
-
-PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your application.
+    :ref:`Symfony Flex <symfony-flex>` automatically creates
+    ``phpunit.xml.dist`` and ``tests/bootstrap.php``. If these files are
+    missing, you can try running the recipe again using
+    ``composer recipes:install phpunit/phpunit --force -v``.
 
 Types of Tests
 --------------
 
-To get a common language and shared context, it is important to define a what different
-types of tests really mean. Symfony will use the following definition. If you have
-learned something different, that is not necessarily wrong. It is just different
-from what the Symfony documentation is using.
+There are many types of automated tests and precise definitions often
+differ from project to project. In Symfony, the following definitions are
+used. If you have learned something different, that is not necessarily
+wrong, just different from what the Symfony documentation is using.
 
 `Unit Tests`_
     These tests ensure that *individual* units of source code (e.g. a single
@@ -53,25 +57,26 @@ from what the Symfony documentation is using.
 
 `Integration Tests`_
     These tests test a combination of classes and commonly interact with
-    Symfony's service container. These tests do not yet cover the full
+    Symfony's service container. These tests do not yet cover the fully
     working application, those are called *Application tests*.
 
 `Application Tests`_
     Application tests test the behavior of a complete application. They
-    make HTTP requests and test that the response is as expected.
+    make HTTP requests (both real and simulated ones) and test that the
+    response is as expected.
 
 Unit Tests
 ----------
 
 A `unit test`_ ensures that individual units of source code (e.g. a single
 class or some specific method in some class) meet their design and behave
-as intended. Writing unit tests is a Symfony application no different from writing
-standard PHPUnit unit tests. You can learn about it in the PHPUnit
-documentation: `Writing Tests for PHPUnit`_.
+as intended. Writing unit tests in a Symfony application is no different
+from writing standard PHPUnit unit tests. You can learn about it in the
+PHPUnit documentation: `Writing Tests for PHPUnit`_.
 
 By convention, the ``tests/`` directory should replicate the directory
 of your application for unit tests. So, if you're testing a class in the
-``src/Util/`` directory, put the test in the ``tests/Util/`` directory.
+``src/Form/`` directory, put the test in the ``tests/Form/`` directory.
 Autoloading is automatically enabled via the ``vendor/autoload.php`` file
 (as configured by default in the ``phpunit.xml.dist`` file).
 
@@ -82,111 +87,109 @@ You can run tests using the ``./vendor/bin/phpunit`` command:
     # run all tests of the application
     $ php ./vendor/bin/phpunit
 
-    # run all tests in the Util/ directory
-    $ php ./vendor/bin/phpunit tests/Util
+    # run all tests in the Form/ directory
+    $ php ./vendor/bin/phpunit tests/Form
 
-    # run tests for the Calculator class
-    $ php ./vendor/bin/phpunit tests/Util/CalculatorTest.php
+    # run tests for the UserType class
+    $ php ./vendor/bin/phpunit tests/Form/UserTypeTest.php
+
+.. tip::
+
+    In large test suites, it can make sense to create subdirectories for
+    each type of tests (e.g. ``tests/Unit/`` and ``test/Functional/``).
+
+.. _integration-tests:
 
 Integration Tests
 -----------------
 
-An integration test will test a larger part of your application compared to a unit
-test. Integration tests will use the Kernel to fetch a service from the dependency
-injection container.
+An integration test will test a larger part of your application compared to
+a unit test (e.g. a combination of services). Integration tests might want
+to use the Symfony Kernel to fetch a service from the dependency injection
+container.
 
-Symfony tests have access to a special container that includes both the
-public services and the non-removed :ref:`private services <container-public>`
-services::
+Symfony provides a :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
+class to help you creating and booting the kernel in your tests using
+``bootKernel()``::
 
-    // tests/Service/AcmeServiceTest.php
+    // tests/Service/NewsletterGeneratorTest.php
     namespace App\Tests\Service;
 
-    use App\Service\AcmeService;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-    class AcmeServiceTest extends KernelTestCase
+    class NewsletterGeneratorTest extends KernelTestCase
     {
         public function testSomething()
         {
-            // this call is needed; otherwise the container will be empty
             self::bootKernel();
 
-            $container = self::$container;
-            $someService = $container->get(AcmeService::class);
-
-            $result = $someService->something();
-            $this->assertTrue($result);
+            // ...
         }
     }
 
-.. caution::
+The ``KernelTestCase`` also makes sure your kernel is rebooted for each
+test. This assures that each test is run independently from eachother.
 
-    The special container ``test.service_container`` doesn't give access to the
-    private services that have been removed (those who are not used by any
-    other services). The solution is to declare those private services as public
-    in the ``config/services_test.yaml`` file.
+To run your application tests, the ``KernelTestCase`` class needs to
+find the application kernel to initialize. The kernel class is
+usually defined in the ``KERNEL_CLASS`` environment variable
+(included in the default ``.env.test`` file provided by Symfony Flex):
 
-.. tip::
+.. code-block:: env
 
-    To run your application tests, the ``KernelTestCase`` class needs to know which
-    is the application kernel to bootstrap it. The kernel class is usually
-    defined in the ``KERNEL_CLASS`` environment variable (included in the
-    default ``.env.test`` file provided by Symfony Flex):
+    # .env.test
+    KERNEL_CLASS=App\Kernel
+
+.. note::
 
     If your use case is more complex, you can also override the
-    ``createKernel()`` or ``getKernelClass()`` methods of your functional test,
-    which take precedence over the ``KERNEL_CLASS`` env var.
+    ``getKernelClass()`` or ``createKernel()`` methods of your functional
+    test, which take precedence over the ``KERNEL_CLASS`` env var.
 
 Set-up your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The tests creates a Kernel that runs in a special
-``test`` environment. Since Symfony loads the ``config/packages/test/*.yaml``
-in the ``test`` environment, you can tweak any of your application's settings
-specifically for testing.
+The tests create a kernel that runs in the ``test``
+:ref:`environment <configuration-environments>`. This allows to have
+special settings for your tests inside ``config/packages/test/``.
 
-For example, by default, the Swift Mailer is configured to *not* actually
-deliver emails in the ``test`` environment. You can see this under the ``swiftmailer``
-configuration option:
+If you have Symfony Flex installed, some packages already installed some
+useful test configuration. For example, by default, the Twig bundle is
+configured to be especially strict to catch errors before deploying your
+code to production:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/packages/test/swiftmailer.yaml
-
-        # ...
-        swiftmailer:
-            disable_delivery: true
+        # config/packages/test/twig.yaml
+        twig:
+            strict_variables: true
 
     .. code-block:: xml
 
-        <!-- config/packages/test/swiftmailer.xml -->
+        <!-- config/packages/test/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer
-                https://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+                http://symfony.com/schema/dic/twig
+                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-            <!-- ... -->
-            <swiftmailer:config disable-delivery="true"/>
+            <framework:config strict-variables="true"/>
         </container>
 
     .. code-block:: php
 
-        // config/packages/test/swiftmailer.php
-
-        // ...
-        $container->loadFromExtension('swiftmailer', [
-            'disable_delivery' => true,
+        // config/packages/test/twig.php
+        $container->loadFromExtension('twig', [
+            'strict_variables' => true,
         ]);
 
 You can also use a different environment entirely, or override the default
-debug mode (``true``) by passing each as options to the ``createClient()``
+debug mode (``true``) by passing each as options to the ``bootKernel()``
 method::
 
     self::bootKernel([
@@ -197,7 +200,15 @@ method::
 .. tip::
 
     It is recommended to run your test with ``debug`` set to ``false`` on
-    your CI server, as it significantly improves test performance.
+    your CI server, as it significantly improves test performance. This
+    disables clearing the cache. If your tests don't run in a clean
+    environment each time, you have to manually clear it using for instance
+    this code in ``tests/bootstrap.php``::
+
+        // ...
+
+        // ensure a fresh cache when debug mode is disabled
+        (new \Symfony\Component\Filesystem\Filesystem())->remove(__DIR__.'/../var/cache/test');
 
 Customizing Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -209,45 +220,112 @@ need in your ``.env.test`` file:
 .. code-block:: text
 
     # .env.test
+
+    # ...
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test?serverVersion=5.7"
 
-    # use SQLITE
-    # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
+In the test environment, these env files are read (if vars are duplicated
+in them, files lower in the list override previous items):
 
-This file is automatically read in the ``test`` environment: any keys here override
-the defaults in ``.env``.
+#. ``.env``: containing env vars with application defaults;
+#. ``.env.test``: overriding/setting specific test values or vars;
+#. ``.env.test.local``: overriding settings specific for this machine.
+
+.. caution::
+
+    The ``.env.local`` file is **not** used in the test environment, to
+    make each test set-up as consistent as possible.
+
+Retrieving Services in the Test
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In your integration tests, you often need to fetch the service from the
+service container to call a specific method. After booting the kernel,
+the container is stored in ``self::$container``::
+
+    // tests/Service/NewsletterGeneratorTest.php
+    namespace App\Tests\Service;
+
+    use App\Service\NewsletterGenerator;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+    class NewsletterGeneratorTest extends KernelTestCase
+    {
+        public function testSomething()
+        {
+            // (1) boot the Symfony kernel
+            self::bootKernel();
+
+            // (2) use self::$container to access the service container
+            $container = self::$container;
+
+            // (3) run some service & test the result
+            $newsletterGenerator = $container->get(NewsletterGenerator::class);
+            $newsletter = $newsletterGenerator->generateMonthlyNews(...);
+
+            $this->assertEquals(..., $newsletter->getContent());
+        }
+    }
+
+The container in ``self::$container`` is actually a special test container.
+It gives you access to both the public services and the non-removed
+:ref:`private services <container-public>` services.
+
+.. note::
+
+    If you need to test private services that have been removed (those who
+    are not used by any other services), you need to declare those private
+    services as public in the ``config/services_test.yaml`` file.
+
+.. _testing-databases:
 
 Configuring a Database for Tests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Tests that interact with the database should use their own separate database to
-not mess with the databases used in the other :ref:`configuration environments <configuration-environments>`.
-To do that, edit or create the ``.env.test.local`` file at the root directory of
-your project and define the new value for the ``DATABASE_URL`` env var:
+Tests that interact with the database should use their own separate
+database to not mess with the databases used in the other
+:ref:`configuration environments <configuration-environments>`.
 
-.. code-block:: bash
+To do that, edit or create the ``.env.test.local`` file at the root
+directory of your project and define the new value for the ``DATABASE_URL``
+env var:
+
+.. code-block:: env
 
     # .env.test.local
     DATABASE_URL="mysql://USERNAME:PASSWORD@127.0.0.1:3306/DB_NAME?serverVersion=5.7"
 
+This assumes that each developer/machine uses a different database for the
+tests. If the test set-up is the same on each machine, use the ``.env.test``
+file instead and commit it to the shared repository. Learn more about
+:ref:`using multiple .env files in Symfony applications <configuration-multiple-env-files>`.
+
+After that, you can create the test database and all tables using:
+
+.. code-block:: terminal
+
+    # create the test database
+    $ php bin/console --env=test doctrine:database:create
+
+    # create the tables/columns in the test database
+    $ php bin/console --env=test doctrine:schema:create
+
 .. tip::
 
-    A common practice is to append the ``_test`` suffix to the original database
-    names in tests. If the database name in production is called ``project_acme``
-    the name of the testing database could be ``project_acme_test``.
-
-The above assumes that each developer/machine uses a different database for the
-tests. If the entire team uses the same settings for tests, edit or create the
-``.env.test`` file instead and commit it to the shared repository. Learn more
-about :ref:`using multiple .env files in Symfony applications <configuration-multiple-env-files>`.
+    A common practice is to append the ``_test`` suffix to the original
+    database names in tests. If the database name in production is called
+    ``project_acme`` the name of the testing database could be
+    ``project_acme_test``.
 
 Resetting the Database Automatically Before each Test
 .....................................................
 
-Tests should be independent from each other to avoid side effects. For example,
-if some test modifies the database (by adding or removing an entity) it could
-change the results of other tests. Run the following command to install a bundle
-that ensures that each test is run with the same unmodified database:
+Tests should be independent from each other to avoid side effects. For
+example, if some test modifies the database (by adding or removing an
+entity) it could change the results of other tests.
+
+The `DAMADoctrineTestBundle`_ uses Doctrine transactions to let each test
+interact with an unmodified database. Install it using:
 
 .. code-block:: terminal
 
@@ -266,25 +344,27 @@ Now, enable it as a PHPUnit extension:
         </extensions>
     </phpunit>
 
-This bundle uses a clever trick to avoid side effects without sacrificing
-performance: it begins a database transaction before every test and rolls it
-back automatically after the test finishes to undo all changes. Read more in the
-documentation of the `DAMADoctrineTestBundle`_.
+That's it! This bundle uses a clever trick: it begins a database
+transaction before every test and rolls it back automatically after the
+test finishes to undo all changes. Read more in the documentation of the
+`DAMADoctrineTestBundle`_.
 
 .. _doctrine-fixtures:
 
 Load Dummy Data Fixtures
 ........................
 
-Instead of using the real data from the production database, it's common to use
-fake or dummy data in the test database. This is usually called *"fixtures data"*
-and Doctrine provides a library to create and load them. Install it with:
+Instead of using the real data from the production database, it's common to
+use fake or dummy data in the test database. This is usually called
+*"fixtures data"* and Doctrine provides a library to create and load them.
+Install it with:
 
 .. code-block:: terminal
 
     $ composer require --dev doctrine/doctrine-fixtures-bundle
 
-Then, use the ``make:fixtures`` command to generate an empty fixture class:
+Then, use the ``make:fixtures`` command of the `SymfonyMakerBundle`_ to
+generate an empty fixture class:
 
 .. code-block:: terminal
 
@@ -293,7 +373,8 @@ Then, use the ``make:fixtures`` command to generate an empty fixture class:
     The class name of the fixtures to create (e.g. AppFixtures):
     > ProductFixture
 
-Customize the new class to load ``Product`` objects into Doctrine::
+Then you modify use this class to load new entities in the database. For
+instance, to load ``Product`` objects into Doctrine, use::
 
     // src/DataFixtures/ProductFixture.php
     namespace App\DataFixtures;
@@ -332,33 +413,44 @@ Application Tests
 -----------------
 
 Application tests check the integration of all the different layers of the
-application (from the routing to the views). They are no different from unit tests
-or integration tests as far as PHPUnit is concerned, but they have a very specific
-workflow:
+application (from the routing to the views). They are no different from
+unit tests or integration tests as far as PHPUnit is concerned, but they
+have a very specific workflow:
 
-* Make a request;
-* Click on a link or submit a form;
-* Test the response;
-* Rinse and repeat.
+#. Make a request;
+#. Click on a link or submit a form;
+#. Test the response;
+#. Rinse and repeat.
 
-Before creating your first test, install the ``symfony/test-pack`` which
-requires multiple packages providing some of the utilities used in the
-tests:
+.. note::
 
-.. code-block:: terminal
-
-    $ composer require --dev symfony/test-pack
-
+    The tools used in this section can be installed via the ``symfony/test-pack``,
+    use ``composer require symfony/test-pack`` if you haven't done so already.
 
 Write Your First Application Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Application tests are PHP files that typically live in the ``tests/Controller``
-directory of your application. If you want to test the pages handled by your
-``PostController`` class, start by creating a new ``PostControllerTest.php``
-file that extends a special ``WebTestCase`` class.
+Application tests are PHP files that typically live in the ``tests/Controller/``
+directory of your application. They often extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`. This class
+adds special logic on top of the ``KernelTestCase``. You can read more
+about that in the above :ref:`section on integration tests <integration-tests>`.
 
-As an example, a test could look like this::
+If you want to test the pages handled by your
+``PostController`` class, start by creating a new ``PostControllerTest``
+using the ``make:test`` command of the `SymfonyMakerBundle`_:
+
+.. code-block:: terminal
+
+    $ php bin/console make:test
+
+     Which test type would you like?:
+     > WebTestCase
+
+     The name of the test class (e.g. BlogPostTest):
+     > Controller\PostControllerTest
+
+This creates the following test class::
 
     // tests/Controller/PostControllerTest.php
     namespace App\Tests\Controller;
@@ -367,86 +459,35 @@ As an example, a test could look like this::
 
     class PostControllerTest extends WebTestCase
     {
-        public function testShowPost()
+        public function testSomething(): void
         {
+            // This calls KernelTestCase::bootKernel(), and creates a
+            // "client" that is acting as the browser
             $client = static::createClient();
 
-            $client->request('GET', '/post/hello-world');
+            // Request a specific page
+            $crawler = $client->request('GET', '/');
 
-            $this->assertEquals(200, $client->getResponse()->getStatusCode());
+            // Validate a successful response and some content
+            $this->assertResponseIsSuccessful();
+            $this->assertSelectorTextContains('h1', 'Hello World');
         }
     }
 
-In the above example, you validated that the HTTP response was successful. The
-next step is to validate that the page actually contains the expected content.
-The ``createClient()`` method returns a client, which is like a browser that
-you'll use to crawl your site::
+In the above example, the test validates that the HTTP response was successful
+and the request body contains a ``<h1>`` tag with ``"Hello world"``. The
+``createClient()`` method also returns a client, which is like a browser
+that you can use to crawl your site::
 
     $crawler = $client->request('GET', '/post/hello-world');
+
+    // for instance, count the number of ``.comment`` elements on the page
+    $this->assertCount(4, $crawler->filter('.comment'));
 
 The ``request()`` method (read
 :ref:`more about the request method <testing-request-method-sidebar>`)
 returns a :class:`Symfony\\Component\\DomCrawler\\Crawler` object which can
 be used to select elements in the response, click on links and submit forms.
-
-Useful Assertions
-~~~~~~~~~~~~~~~~~
-
-To get you started faster, here is a list of the most common and
-useful test assertions::
-
-    use Symfony\Component\HttpFoundation\Response;
-
-    // ...
-
-    // asserts that there is at least one h2 tag with the class "subtitle"
-    // the third argument is an optional message shown on failed tests
-    $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count(),
-        'There is at least one subtitle'
-    );
-
-    // asserts that there are exactly 4 h2 tags on the page
-    $this->assertCount(4, $crawler->filter('h2'));
-
-    // asserts that the "Content-Type" header is "application/json"
-    $this->assertResponseHeaderSame('Content-Type', 'application/json');
-    // equivalent to:
-    $this->assertTrue($client->getResponse()->headers->contains(
-        'Content-Type', 'application/json'
-    ));
-
-    // asserts that the response content contains a string
-    $this->assertContains('foo', $client->getResponse()->getContent());
-    // ...or matches a regex
-    $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
-
-    // asserts that the response status code is 2xx
-    $this->assertResponseIsSuccessful();
-    // equivalent to:
-    $this->assertTrue($client->getResponse()->isSuccessful());
-
-    // asserts that the response status code is 404 Not Found
-    $this->assertTrue($client->getResponse()->isNotFound());
-
-    // asserts a specific status code
-    $this->assertResponseStatusCodeSame(201);
-    // HTTP status numbers are available as constants too:
-    // e.g. 201 === Symfony\Component\HttpFoundation\Response::HTTP_CREATED
-    // equivalent to:
-    $this->assertEquals(201, $client->getResponse()->getStatusCode());
-
-    // asserts that the response is a redirect to /demo/contact
-    $this->assertResponseRedirects('/demo/contact');
-    // equivalent to:
-    $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
-    // ...or check that the response is a redirect to any URL
-    $this->assertResponseRedirects();
-
-.. versionadded:: 4.3
-
-    The ``assertResponseHeaderSame()``, ``assertResponseIsSuccessful()``,
-    ``assertResponseStatusCodeSame()``, ``assertResponseRedirects()`` and other
-    related methods were introduced in Symfony 4.3.
 
 Working with the Test Client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -461,41 +502,9 @@ returns a ``Crawler`` instance.
 
 .. tip::
 
-    Hardcoding the request URLs is a best practice for application tests. If the
-    test generates URLs using the Symfony router, it won't detect any change
-    made to the application URLs which may impact the end users.
-
-.. _testing-request-method-sidebar:
-
-.. sidebar:: More about the ``request()`` Method:
-
-    The full signature of the ``request()`` method is::
-
-        request(
-            $method,
-            $uri,
-            array $parameters = [],
-            array $files = [],
-            array $server = [],
-            $content = null,
-            $changeHistory = true
-        )
-
-    The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the
-    ``Content-Type`` and ``Referer`` HTTP headers, you'd pass the following (mind
-    the ``HTTP_`` prefix for non standard headers)::
-
-        $client->request(
-            'GET',
-            '/post/hello-world',
-            [],
-            [],
-            [
-                'CONTENT_TYPE' => 'application/json',
-                'HTTP_REFERER' => '/foo/bar',
-            ]
-        );
+    Hardcoding the request URLs is a best practice for application tests.
+    If the test generates URLs using the Symfony router, it won't detect
+    any change made to the application URLs which may impact the end users.
 
 Use the crawler to find DOM elements in the response. These elements can then
 be used to click on links and submit forms::
@@ -555,6 +564,38 @@ process to avoid any side effects when working with several clients in the same
 script::
 
     $client->insulate();
+
+.. _testing-request-method-sidebar:
+
+.. sidebar:: More about the ``request()`` Method:
+
+    The full signature of the ``request()`` method is::
+
+        request(
+            $method,
+            $uri,
+            array $parameters = [],
+            array $files = [],
+            array $server = [],
+            $content = null,
+            $changeHistory = true
+        )
+
+    The ``server`` array is the raw values that you'd expect to normally
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the
+    ``Content-Type`` and ``Referer`` HTTP headers, you'd pass the following (mind
+    the ``HTTP_`` prefix for non standard headers)::
+
+        $client->request(
+            'GET',
+            '/post/hello-world',
+            [],
+            [],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_REFERER' => '/foo/bar',
+            ]
+        );
 
 AJAX Requests
 .............
@@ -690,6 +731,65 @@ thrown. Disabling catching of exceptions in the test client allows the exception
 to be reported by PHPUnit::
 
     $client->catchExceptions(false);
+
+Useful Assertions
+~~~~~~~~~~~~~~~~~
+
+To get you started faster, here is a list of the most common and
+useful test assertions::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    // ...
+
+    // asserts that there is at least one h2 tag with the class "subtitle"
+    // the third argument is an optional message shown on failed tests
+    $this->assertGreaterThan(0, $crawler->filter('h2.subtitle')->count(),
+        'There is at least one subtitle'
+    );
+
+    // asserts that there are exactly 4 h2 tags on the page
+    $this->assertCount(4, $crawler->filter('h2'));
+
+    // asserts that the "Content-Type" header is "application/json"
+    $this->assertResponseHeaderSame('Content-Type', 'application/json');
+    // equivalent to:
+    $this->assertTrue($client->getResponse()->headers->contains(
+        'Content-Type', 'application/json'
+    ));
+
+    // asserts that the response content contains a string
+    $this->assertContains('foo', $client->getResponse()->getContent());
+    // ...or matches a regex
+    $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
+
+    // asserts that the response status code is 2xx
+    $this->assertResponseIsSuccessful();
+    // equivalent to:
+    $this->assertTrue($client->getResponse()->isSuccessful());
+
+    // asserts that the response status code is 404 Not Found
+    $this->assertTrue($client->getResponse()->isNotFound());
+
+    // asserts a specific status code
+    $this->assertResponseStatusCodeSame(201);
+    // HTTP status numbers are available as constants too:
+    // e.g. 201 === Symfony\Component\HttpFoundation\Response::HTTP_CREATED
+    // equivalent to:
+    $this->assertEquals(201, $client->getResponse()->getStatusCode());
+
+    // asserts that the response is a redirect to /demo/contact
+    $this->assertResponseRedirects('/demo/contact');
+    // equivalent to:
+    $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
+    // ...or check that the response is a redirect to any URL
+    $this->assertResponseRedirects();
+
+.. versionadded:: 4.3
+
+    The ``assertResponseHeaderSame()``, ``assertResponseIsSuccessful()``,
+    ``assertResponseStatusCodeSame()``, ``assertResponseRedirects()`` and other
+    related methods were introduced in Symfony 4.3.
 
 .. index::
    single: Tests; Crawler
@@ -922,13 +1022,13 @@ their type::
         $client->submit($form, [], ['HTTP_ACCEPT_LANGUAGE' => 'es']);
         $client->submitForm($button, [], 'POST', ['HTTP_ACCEPT_LANGUAGE' => 'es']);
 
-End to End Tests (E2E)
-----------------------
+.. TODO
+    End to End Tests (E2E)
+    ----------------------
 
-TODO
-* panther
-* testing javascript
-* UX or form collections as example?
+    * panther
+    * testing javascript
+    * UX or form collections as example?
 
 PHPUnit Configuration
 ---------------------
@@ -976,8 +1076,8 @@ configuration adds tests from a custom ``lib/tests`` directory:
         <!-- ... -->
     </phpunit>
 
-To include other directories in the code coverage, also edit the ``<filter>``
-section:
+To include other directories in the `code coverage analysis`_, also edit the
+``<filter>`` section:
 
 .. code-block:: xml
 
@@ -1012,6 +1112,9 @@ Learn more
 .. _`documentation`: https://phpunit.readthedocs.io/
 .. _`Writing Tests for PHPUnit`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
+.. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
+.. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`$_SERVER`: https://www.php.net/manual/en/reserved.variables.server.php
+.. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`code coverage analysis`: https://phpunit.readthedocs.io/en/9.1/code-coverage-analysis.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18

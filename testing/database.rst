@@ -1,8 +1,14 @@
 .. index::
    single: Tests; Database
 
-How to Test Code that Interacts with the Database
-=================================================
+How to Test A Doctrine Repository
+=================================
+
+.. seealso::
+
+    The :ref:`main Testing guide <testing-databases>` describes how to use
+    and set-up a database for your automated tests. The contents of this
+    article show ways to test your Doctrine repositories.
 
 Mocking a Doctrine Repository in Unit Tests
 -------------------------------------------
@@ -134,6 +140,3 @@ so, get the entity manager via the service container as follows::
             $this->entityManager = null;
         }
     }
-
-.. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
-.. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
