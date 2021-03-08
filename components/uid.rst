@@ -186,7 +186,7 @@ of the UUID parameters::
         {
             $qb = $this->createQueryBuilder('p')
                 // ...
-                // add 'uuid' as the third argument to tell Doctrine that this is an UUID
+                // add 'uuid' as the third argument to tell Doctrine that this is a UUID
                 ->setParameter('user', $user->getUuid(), 'uuid')
 
                 // alternatively, you can convert it to a value compatible with
@@ -333,7 +333,7 @@ of the ULID parameters::
         {
             $qb = $this->createQueryBuilder('p')
                 // ...
-                // add 'ulid' as the third argument to tell Doctrine that this is an ULID
+                // add 'ulid' as the third argument to tell Doctrine that this is a ULID
                 ->setParameter('user', $user->getUlid(), 'ulid')
 
                 // alternatively, you can convert it to a value compatible with
