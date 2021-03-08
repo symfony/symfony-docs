@@ -68,6 +68,20 @@ following:
             private $name;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\NotBlank]
+            private $name;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -351,6 +365,25 @@ literature genre mostly associated with the author, which can be set to either
             // ...
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Choice(
+                choices: ['fiction', 'non-fiction'],
+                message: 'Choose a valid genre.',
+            )]
+            private $genre;
+
+            // ...
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -432,6 +465,22 @@ options can be specified in this way.
             /**
              * @Assert\Choice({"fiction", "non-fiction"})
              */
+            private $genre;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Choice(['fiction', 'non-fiction'])]
             private $genre;
 
             // ...
@@ -559,6 +608,20 @@ class to have at least 3 characters.
             private $firstName;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+
+        // ...
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\NotBlank]
+            #[Assert\Length(min: 3)]
+            private $firstName;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -649,6 +712,23 @@ this method must return ``true``:
             /**
              * @Assert\IsTrue(message="The password cannot match your first name")
              */
+            public function isPasswordSafe()
+            {
+                // ... return true or false
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\IsTrue(message: 'The password cannot match your first name')]
             public function isPasswordSafe()
             {
                 // ... return true or false
