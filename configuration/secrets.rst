@@ -208,9 +208,9 @@ Listing the secrets will now also display the local variable:
       DATABASE_PASSWORD   "dev value"   "root"
      ------------------- ------------- -------------
 
-Symfony also provides the ``secrets:decrypt-to-local`` command to decrypts
-all secrets and stores them in the local vault and ``secrets:encrypt-from-local``
-to encrypt all local secrets to the vault.
+Symfony also provides the ``secrets:decrypt-to-local`` command which decrypts
+all secrets and stores them in the local vault and the ``secrets:encrypt-from-local``
+command to encrypt all local secrets to the vault.
 
 Secrets in the test Environment
 -------------------------------
