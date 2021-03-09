@@ -293,7 +293,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
 
             // ...
 
-            $reponse = new Response('...');
+            $response = new Response('...');
             $response->headers->add($headers);
 
             return $response;
