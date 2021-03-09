@@ -1264,7 +1264,7 @@ the common configuration using options when importing the routes.
     was introduced in Symfony 4.4.
 
 In this example, the route of the ``index()`` action will be called ``blog_index``
-and its URL will be ``/blog/``. The route of the ``show()`` action will be called
+and its URL will be ``/blog/{_locale}``. The route of the ``show()`` action will be called
 ``blog_show`` and its URL will be ``/blog/{_locale}/posts/{slug}``. Both routes
 will also validate that the ``_locale`` parameter matches the regular expression
 defined in the class annotation.
