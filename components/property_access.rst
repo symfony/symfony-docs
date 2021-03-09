@@ -435,7 +435,7 @@ Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`
 
     $list = new PeopleList();
     $reflectionExtractor = new ReflectionExtractor(null, null, ['join', 'leave']);
-    $propertyAccessor = new PropertyAccessor(false, false, null, true, $reflectionExtractor, $reflectionExtractor);
+    $propertyAccessor = new PropertyAccessor(PropertyAccessor::DISALLOW_MAGIC_METHODS, false, null, true, $reflectionExtractor, $reflectionExtractor);
     $propertyAccessor->setValue($person, 'peoples', ['kevin', 'wouter']);
 
     var_dump($person->getPeoples()); // ['kevin', 'wouter']
