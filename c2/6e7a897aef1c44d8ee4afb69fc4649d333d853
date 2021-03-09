@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-03-09T11:37:54Z
+
+The referenced ticket looks wrong 🤔
+
+Did you mean https://github.com/symfony/symfony/pull/39693 ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2021-03-09T12:13:03Z
+
+The PR was intended this way. In symfony/symfony#32133 we introduced the ability to configure the magic methods behavior through a new bitwise flag with Symfony 5.2. We forgot to update this place while changing the one somewhere below in the document.
+
+#15080 targets the `5.x` branch to account for the additional bitwise flag introduced in symfony/symfony#39693 for 5.3.
