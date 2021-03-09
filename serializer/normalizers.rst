@@ -25,7 +25,7 @@ Symfony includes the following normalizers but you can also
 :doc:`create your own normalizer </serializer/custom_normalizer>`:
 
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
-  normalize PHP object using the :doc:`PropertyAccessor component </components/property_access>`;
+  normalize PHP object using the :doc:`PropertyAccess component </components/property_access>`;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
   for :phpclass:`DateTimeZone` objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
