@@ -1218,7 +1218,7 @@ disable asynchronous delivery.
 
 .. versionadded:: 5.1
 
-    The `message_bus` option was introduced in Symfony 5.1.
+    The ``message_bus`` option was introduced in Symfony 5.1.
 
 Adding Tags and Metadata to Emails
 ----------------------------------
