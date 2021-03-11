@@ -1209,6 +1209,7 @@ The following transports currently support tags and metadata:
 * Postmark
 * Mailgun
 * MailChimp
+* Sendinblue
 
 Development & Debugging
 -----------------------
