@@ -1174,6 +1174,52 @@ you have a transport called ``async``, you can route the message there:
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
 
+You can configure which bus is used to dispatch the message using the ``message_bus`` option.
+You can also set this to ``false`` to call the Mailer transport directly and
+disable asynchronous delivery.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                message_bus: app.another_bus
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:mailer
+                    message_bus="app.another_bus"
+                >
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        $container->loadFromExtension('framework', [
+            'mailer' => [
+                'message_bus' => 'app.another_bus',
+            ],
+        ]);
+
+.. versionadded:: 5.1
+
+    The `message_bus` option was introduced in Symfony 5.1.
+
 Adding Tags and Metadata to Emails
 ----------------------------------
 
