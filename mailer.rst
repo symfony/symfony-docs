@@ -1206,9 +1206,9 @@ If your transport does not support tags and metadata, they will be added as cust
 
 The following transports currently support tags and metadata:
 
-* Postmark
-* Mailgun
 * MailChimp
+* Mailgun
+* Postmark
 * Sendinblue
 
 Development & Debugging
