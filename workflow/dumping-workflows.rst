@@ -241,8 +241,8 @@ Below is the configuration for the pull request state machine with styling added
                 'pull_request' => [
                     'type' => 'state_machine',
                     'marking_store' => [
-                        type: 'method',
-                        property: 'currentPlace',
+                        'type' => 'method',
+                        'property' => 'currentPlace',
                     ],
                     'supports' => ['App\Entity\PullRequest'],
                     'initial_marking' => 'start',
