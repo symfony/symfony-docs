@@ -96,26 +96,27 @@ Fix "Invalid Host header" Issue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Webpack will respond ``Invalid Host header`` when trying to access files from
-the dev-server. To fix this, add the argument ``--disable-host-check``:
+the dev-server. To fix this, set the ``firewall`` option:
 
-.. code-block:: diff
+.. code-block:: javascript
 
-      {
-          ...
-          "scripts": {
-    -        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0",
-    +        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0 --disable-host-check",
-              ...
-          }
-      }
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .configureDevServerOptions(options => {
+            options.firewall = false;
+        })
 
 .. caution::
 
-    Beware that `it's not recommended to disable host checking`_ in general, but
+    Beware that `it's not recommended to disable the firewall`_ in general, but
     here it's required to solve the issue when using Encore in a virtual machine.
 
 .. _`VirtualBox`: https://www.virtualbox.org/
 .. _`VMWare`: https://www.vmware.com
 .. _`NFS`: https://en.wikipedia.org/wiki/Network_File_System
 .. _`polling`: https://webpack.js.org/configuration/watch/#watchoptionspoll
-.. _`it's not recommended to disable host checking`: https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck
+.. _`it's not recommended to disable the firewall`: https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck
