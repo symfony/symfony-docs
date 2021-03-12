@@ -1,10 +1,11 @@
 Built-in Symfony Events
 =======================
 
-During the handling of an HTTP request, the Symfony framework (or any
+The Symfony framework is an HTTP Request-Response one.
+During the handling of an HTTP request, the framework (or any
 application using the :doc:`HttpKernel component </components/http_kernel>`)
 dispatches some :doc:`events </event_dispatcher>` which you can use to modify
-how the request is handled.
+how the request is handled and how the response is returned.
 
 Kernel Events
 -------------
