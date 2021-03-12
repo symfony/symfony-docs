@@ -5,7 +5,7 @@ Configuring in the Kernel
 =========================
 
 Some configuration can be done on the kernel class itself (located by default at
-``src/Kernel.php``). You can do this by overriding specific methods in
+``src/Kernel.php``). You can do this by overriding specific methods of
 the parent :class:`Symfony\\Component\\HttpKernel\\Kernel` class.
 
 Configuration
