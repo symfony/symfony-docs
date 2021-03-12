@@ -67,9 +67,10 @@ dump_destination
 
 Configures the output destination of the dumps.
 
-By default, the dumps are shown in the toolbar. Since this is not always
-possible (e.g. when working on a JSON API), you can have an alternate output
-destination for dumps. Typically, you would set this to ``php://stderr``:
+By default, dumps are shown in the WebDebugToolbar when returning HTML.
+Since this is not always possible (e.g. when working on a JSON API),
+you can have an alternate output destination for dumps.
+Typically, you would set this to ``php://stderr``:
 
 .. configuration-block::
 
