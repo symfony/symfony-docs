@@ -458,6 +458,7 @@
 /templating/embedding_controllers /templates#embedding-controllers
 /templating/inheritance /templates#template-inheritance-and-layouts
 /testing/doctrine /testing/database
+/translation/templates /translation#translation-in-templates
 /doctrine/lifecycle_callbacks /doctrine/events
 /doctrine/event_listeners_subscribers /doctrine/events
 /doctrine/common_extensions /doctrine
