@@ -348,11 +348,17 @@ of the event to dispatch::
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
     $dispatcher->dispatch($event, OrderPlacedEvent::NAME);
-    // note that the second argument ``OrderPlacedEvent::NAME`` is optional,
-    // read more below in the subscriber code part
+    // or since Symfony 4.3+
+    $dispatcher->dispatch($event);
+
+.. versionadded:: 4.3
+
+    The event name is now optional since Symfony 4.3 in
+    the :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`.
 
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
-the ``dispatch()`` method. Now, any listener to the ``order.placed``
+the ``dispatch()`` method. Now, any listener to the ``order.placed`` or the
+``Acme\Store\Event\OrderPlacedEvent`` (FQCN)
 event will receive the ``OrderPlacedEvent``.
 
 .. index::
@@ -392,10 +398,9 @@ Take the following example of a subscriber that subscribes to the
                     ['onKernelResponsePre', 10],
                     ['onKernelResponsePost', -10],
                 ],
+                // when using two arguments, the event and the event name
                 OrderPlacedEvent::NAME => 'onStoreOrder',
-                // you can also subscribe this way if you pass only
-                // the event object as first argument and omit the second
-                // of the $dispatcher->dispatch method
+                // when using only one argument, the event (since Symfony 4.3+)
                 OrderPlacedEvent::class => 'onStoreOrder',
             ];
         }
