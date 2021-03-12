@@ -65,7 +65,7 @@ Selecting Runtimes
 The default Runtime is :class:`Symfony\\Component\\Runtime\\SymfonyRuntime`, it
 works excellent on most applications running with a webserver like Nginx and Apache,
 and PHP-FPM. You may change Runtime to :class:`Symfony\\Component\\Runtime\\GenericRuntime`
-or a custom Runtime for Swoole or Aws Lambda. This can be done by specifying the
+or a custom Runtime for Swoole or AWS Lambda. This can be done by specifying the
 Runtime class in the ``APP_RUNTIME`` environment variable or to specify the
 ``extra.runtime.class`` in ``composer.json``.
 
@@ -82,8 +82,8 @@ Runtime class in the ``APP_RUNTIME`` environment variable or to specify the
         }
     }
 
-Using SymfonyRuntime
---------------------
+Using the SymfonyRuntime
+------------------------
 
 The :class:`Symfony\\Component\\Runtime\\RuntimeInterface` has two methods. One
 to get an instance of :class:`Symfony\\Component\\Runtime\\ResolverInterface`
@@ -309,8 +309,8 @@ The second way to pass an option to ``SymfonyRuntime::__construct()`` is to use
     The environment variable ``APP_DEBUG`` has special support to easily
     turn on and off debugging.
 
-Creating Your Own Runtime
--------------------------
+Create Your Own Runtime
+-----------------------
 
 This is an advanced topic that describes the internals of the Runtime component.
 
@@ -319,7 +319,7 @@ could be versioned as a part of a normal package. If the application author deci
 to use this component, the package maintainer of the Runtime class will have more
 control and can fix bugs and add features.
 
--- note::
+.. note::
 
     Before Symfony 5.3, the boostrap logic was part of a Flex recipe. Since recipes
     are rarely updated by users, bug patches would rarely be installed.
@@ -413,5 +413,3 @@ The end user will now be able to create front controller like::
     return function (array $context) {
         return new Psr15Application();
     };
-
-
