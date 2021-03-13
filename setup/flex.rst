@@ -117,14 +117,14 @@ manual steps:
    * ``app/Resources/<BundleName>/views/`` -> ``templates/bundles/<BundleName>/``
    * rest of ``app/Resources/`` files -> ``src/Resources/``
 
-#. Move the original PHP source code from ``src/AppBundle/*``, except bundle
+#. Move the original PHP source code files from ``src/AppBundle/*``, except bundle
    specific files (like ``AppBundle.php`` and ``DependencyInjection/``), to
-   ``src/``.
+   ``src/`` and update the namespace of each moved file to be ``App\...`` (advanced
+   IDEs can do this automatically).
 
    In addition to moving the files, update the ``autoload`` and ``autoload-dev``
    values of the ``composer.json`` file as `shown in this example`_ to use
-   ``App\`` and ``App\Tests\`` as the application namespaces (advanced IDEs can
-   do this automatically).
+   ``App\`` and ``App\Tests\`` as the application namespaces.
 
    If you used multiple bundles to organize your code, you must reorganize your
    code into ``src/``. For example, if you had ``src/UserBundle/Controller/DefaultController.php``
@@ -133,6 +133,8 @@ manual steps:
 
 #. Move the public assets, such as images or compiled CSS/JS files, from
    ``src/AppBundle/Resources/public/`` to ``public/`` (e.g. ``public/images/``).
+   
+#. Remove ``src/AppBundle/``.
 
 #. Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
    :doc:`Webpack Encore </frontend>` to manage and compile them.
@@ -148,12 +150,6 @@ manual steps:
 
 #. Update the ``bin/console`` script `copying Symfony's bin/console source`_
    and changing anything according to your original console script.
-
-#. Remove ``src/AppBundle/``.
-
-#. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
-   update the namespaces of every PHP file to be ``App\...`` (advanced IDEs can do
-   this automatically).
 
 #. Remove the ``bin/symfony_requirements`` script and if you need a replacement
    for it, use the new `Symfony Requirements Checker`_.
