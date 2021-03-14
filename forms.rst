@@ -277,11 +277,14 @@ to build another object with the visual representation of the form::
 
             $form = $this->createForm(TaskType::class, $task);
 
-            return $this->render('task/new.html.twig', [
-                'form' => $form->createView(),
-            ]);
+            return $this->renderForm('task/new.html.twig', $form);
         }
     }
+
+.. versionadded:: 5.3
+
+    The ``renderForm`` method was introduced in Symfony 5.3, allowing to
+    return 422 HTTP status code if an invalid form is submitted.
 
 Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
 render the form contents:
@@ -405,9 +408,7 @@ written into the form object::
                 return $this->redirectToRoute('task_success');
             }
 
-            return $this->render('task/new.html.twig', [
-                'form' => $form->createView(),
-            ]);
+            return $this->renderForm('task/new.html.twig', $form);
         }
     }
 

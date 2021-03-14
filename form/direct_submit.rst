@@ -29,9 +29,7 @@ control over when exactly your form is submitted and what data is passed to it::
             }
         }
 
-        return $this->render('task/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->renderForm('task/new.html.twig', $form);
     }
 
 .. tip::
