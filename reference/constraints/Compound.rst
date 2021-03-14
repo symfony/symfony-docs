@@ -21,7 +21,7 @@ Basic Usage
 -----------
 
 Suppose that you have different places where a user password must be validated,
-you can create your own named set or requirements to be reused consistently everywhere::
+you can create your own named set or requirements to be reused consistently everywhere:
 
 .. configuration-block::
 
