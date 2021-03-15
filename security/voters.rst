@@ -278,12 +278,16 @@ There are three strategies available:
     This grants access as soon as there is *one* voter granting access;
 
 ``consensus``
-    This grants access if there are more voters granting access than denying;
+    This grants access if there are more voters granting access than
+    denying. If case of a tie the decision is based on the
+    ``allow_if_equal_granted_denied`` config option (defaulting to ``true``);
 
 ``unanimous``
-    This only grants access if there is no voter denying access. If all voters
-    abstained from voting, the decision is based on the ``allow_if_all_abstain``
-    config option (which defaults to ``false``).
+    This only grants access if there is no voter denying access.
+
+Regardless the chosen strategy, if all voters abstained from voting, the
+decision is based on the ``allow_if_all_abstain`` config option (which
+defaults to ``false``).
 
 In the above scenario, both voters should grant access in order to grant access
 to the user to read the post. In this case, the default strategy is no longer
