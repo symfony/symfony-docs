@@ -110,7 +110,7 @@ to catching the exception, you can also check if a given language code is valid:
 
     $isValidLanguage = Languages::exists($languageCode);
 
-Or if you have a alpha3 language code you want to check::
+Or if you have an alpha3 language code you want to check::
 
     $isValidLanguage = Languages::alpha3CodeExists($alpha3Code);
 
@@ -197,7 +197,7 @@ to catching the exception, you can also check if a given country code is valid::
 
     $isValidCountry = Countries::exists($alpha2Code);
 
-Or if you have a alpha3 country code you want to check::
+Or if you have an alpha3 country code you want to check::
 
     $isValidCountry = Countries::alpha3CodeExists($alpha3Code);
 

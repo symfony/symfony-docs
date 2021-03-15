@@ -109,7 +109,8 @@ via some "Change Locale" route & controller), or create a route with the :ref:`_
             $container->register(LocaleSubscriber::class)
                 ->addArgument('%kernel.default_locale%')
                 // uncomment the next line if you are not using autoconfigure
-                // ->addTag('kernel.event_subscriber');
+                // ->addTag('kernel.event_subscriber')
+            ;
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
 sticky throughout the request.
