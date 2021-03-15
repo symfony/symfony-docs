@@ -339,6 +339,8 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony provides native
 support for both Twig and PHP templates.
 
+.. _translation-tags:
+
 Using Twig Tags
 ~~~~~~~~~~~~~~~
 
