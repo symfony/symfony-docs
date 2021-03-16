@@ -174,11 +174,6 @@ party provider:
     For example, the DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be
     configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
 
-.. caution::
-
-    Symfony 4.4 only supports Amazon SES signature version 3 which has been
-    deprecated. You need to use ``symfony/amazon-mailer`` 5.1 or newer.
-
 .. note::
 
     When using SMTP, the default timeout for sending a message before throwing an
