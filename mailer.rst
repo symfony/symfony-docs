@@ -162,7 +162,7 @@ party provider:
 
 .. caution::
 
-    Symfony 4.4 only suppports Amazon SES Signature Version 3, that has been deprecated.
+    Symfony 4.4 only supports Amazon SES Signature Version 3, that has been deprecated.
     You need to use symfony/amazon-mailer 5.1 or newer.
 
 .. tip::
