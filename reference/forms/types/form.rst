@@ -19,6 +19,7 @@ on all types for which ``FormType`` is the parent.
 |                           | - `error_bubbling`_                                                |
 |                           | - `error_mapping`_                                                 |
 |                           | - `extra_fields_message`_                                          |
+|                           | - `form_attr`_                                                     |
 |                           | - `help`_                                                          |
 |                           | - `help_attr`_                                                     |
 |                           | - `help_html`_                                                     |
@@ -115,6 +116,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/extra_fields_message.rst.inc
+
+.. include:: /reference/forms/types/options/form_attr.rst.inc
 
 .. include:: /reference/forms/types/options/help.rst.inc
 
