@@ -41,7 +41,7 @@ the autoload files since the component includes a composer plugin. The ``autoloa
 will instantiate a :class:`Symfony\\Component\\Runtime\\RuntimeInterface`, its job
 is to take the callable and resolve the arguments (``array $context``). Then it calls
 the callable to get the application ``App\Kernel``. At last it will run the application,
-ie calling ``$kernel->handle(Request::createFromGlobals())->send()``.
+i.e. calling ``$kernel->handle(Request::createFromGlobals())->send()``.
 
 To make a console application, the same bootstrap code would look like::
 
