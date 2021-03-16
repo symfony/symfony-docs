@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-03-16T08:20:24Z
+
+**Note for the mergers:**
+This caution must be removed in all branches `>= 5.2` ❗
+
+---------------------------------------------------------------------------
+
+by garak at 2021-03-16T08:22:27Z
+
+> **Note for the mergers:**
+> This caution must be removed in all branches `>= 5.2` exclamation
+
+I'd say `>= 5.1` instead
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-03-16T08:23:21Z
+
+@garak you are technically right, but we currently do not up merge to 5.1 anymore ;-)
