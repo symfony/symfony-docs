@@ -23,7 +23,7 @@ To do so, :ref:`override the "logger" service definition <service-psr4-loader>`.
 Logging a Message
 -----------------
 
-To log a message, inject the default logger in your controller::
+To log a message, inject the default logger in your controller or service::
 
     use Psr\Log\LoggerInterface;
 
