@@ -165,7 +165,7 @@ party provider:
  Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
  Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
  Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
- Sendinblue           sendinblue+smtp://apikey:USERNAME:PASSWORD@default   n/a                                         sendinblue+api://KEY@default
+ Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
 ==================== ==================================================== =========================================== ========================================
 
 .. caution::
