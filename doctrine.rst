@@ -54,6 +54,9 @@ The database connection information is stored as an environment variable called
 
     # to use postgresql:
     # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
+    
+    # to use oracle:
+    # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
 
 .. caution::
 
