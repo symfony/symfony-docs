@@ -60,7 +60,6 @@ Active Core Members
   * **Christian Flothmann** (`xabbuh`_);
   * **Tobias Schultze** (`Tobion`_);
   * **Kévin Dunglas** (`dunglas`_);
-  * **Jakub Zalas** (`jakzal`_);
   * **Javier Eguiluz** (`javiereguiluz`_);
   * **Grégoire Pineau** (`lyrixx`_);
   * **Ryan Weaver** (`weaverryan`_);
@@ -106,7 +105,8 @@ Symfony contributions:
 * **Romain Neutron** (`romainneutron`_);
 * **Jordi Boggiano** (`Seldaek`_);
 * **Lukas Kahwe Smith** (`lsmith77`_);
-* **Jules Pietri** (`HeahDude`_).
+* **Jules Pietri** (`HeahDude`_);
+* **Jakub Zalas** (`jakzal`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

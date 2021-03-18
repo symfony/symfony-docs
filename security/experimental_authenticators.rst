@@ -494,7 +494,7 @@ The following credential classes are supported by default:
         use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
         // ...
-        return new Passport($user, new PasswordCredentials($plaintextPassword));
+        return new Passport(new UserBadge($email), new PasswordCredentials($plaintextPassword));
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Credentials\\CustomCredentials`
     Allows a custom closure to check credentials::
@@ -502,7 +502,7 @@ The following credential classes are supported by default:
         use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 
         // ...
-        return new Passport($user, new CustomCredentials(
+        return new Passport(new UserBadge($email), new CustomCredentials(
             // If this function returns anything else than `true`, the credentials
             // are marked as invalid.
             // The $credentials parameter is equal to the next argument of this class
@@ -581,7 +581,7 @@ would initialize the passport like this::
             // ... validate no parameter is empty
 
             return new Passport(
-                new UserBadge($user),
+                new UserBadge($email),
                 new PasswordCredentials($password),
                 [new CsrfTokenBadge('login', $csrfToken)]
             );

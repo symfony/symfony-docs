@@ -110,7 +110,7 @@ Mailer
 - ``assertQueuedEmailCount()``
 - ``assertEmailIsQueued()``
 - ``assertEmailIsNotQueued()``
-- ``assertEmailAttachementCount()``
+- ``assertEmailAttachmentCount()``
 - ``assertEmailTextBodyContains()``
 - ``assertEmailTextBodyNotContains()``
 - ``assertEmailHtmlBodyContains()``
