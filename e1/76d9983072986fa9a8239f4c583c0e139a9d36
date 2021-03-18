@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-03-17T09:25:41Z
+
+As the corresponding PR is merged into `5.x` aka `5.3`, should this PR target `5.3` instead?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-03-17T11:00:41Z
+
+This feature is supported since 5.2 (and deprecated in 5.2), and removed in 5.3. I only found out that we didn't correctly update all examples after deleting the feature :). So 5.2 is the correct target
