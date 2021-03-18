@@ -150,8 +150,8 @@ party provider:
  Google Gmail         gmail+smtp://USERNAME:PASSWORD@default     n/a                                         n/a
  Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default  mandrill+https://KEY@default                mandrill+api://KEY@default
  Mailgun              mailgun+smtp://USERNAME:PASSWORD@default   mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
- Postmark             postmark+smtp://ID:ID@default              n/a                                         postmark+api://KEY@default
- Sendgrid             sendgrid+smtp://apikey:KEY@default         n/a                                         sendgrid+api://KEY@default
+ Postmark             postmark+smtp://ID@default                 n/a                                         postmark+api://KEY@default
+ Sendgrid             sendgrid+smtp://KEY@default                n/a                                         sendgrid+api://KEY@default
 ==================== ========================================== =========================================== ========================================
 
 .. caution::
