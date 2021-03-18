@@ -163,8 +163,8 @@ party provider:
  Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
  Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
  Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
- Postmark             postmark+smtp://ID:ID@default                        n/a                                         postmark+api://KEY@default
- Sendgrid             sendgrid+smtp://apikey:KEY@default                   n/a                                         sendgrid+api://KEY@default
+ Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
+ Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
  Sendinblue           sendinblue+smtp://apikey:USERNAME:PASSWORD@default   n/a                                         sendinblue+api://KEY@default
 ==================== ==================================================== =========================================== ========================================
 
@@ -192,8 +192,8 @@ party provider:
     .. code-block:: env
 
         # .env
-        MAILER_DSN=mailgun+https://KEY:DOMAIN@example.com
-        MAILER_DSN=mailgun+https://KEY:DOMAIN@example.com:99
+        MAILER_DSN=mailgun+https://KEY:DOMAIN@requestbin.com
+        MAILER_DSN=mailgun+https://KEY:DOMAIN@requestbin.com:99
 
     Note that the protocol is *always* HTTPs and cannot be changed.
 
