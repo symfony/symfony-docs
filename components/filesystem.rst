@@ -162,7 +162,7 @@ permissions of a file. The fourth argument is a boolean recursive option::
 
     // sets the mode of the video to 0600
     $filesystem->chmod('video.ogg', 0600);
-    // changes the mod of the src directory recursively
+    // changes the mode of the src directory recursively
     $filesystem->chmod('src', 0700, 0000, true);
 
 .. note::
