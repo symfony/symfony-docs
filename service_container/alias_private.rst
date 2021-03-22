@@ -166,7 +166,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
     .. code-block:: yaml
 
         app.mailer:
-            alias: '@App\Mail\PhpMailer'
+            alias: 'App\Mail\PhpMailer'
 
             # this will display a generic deprecation message...
             deprecated: true
