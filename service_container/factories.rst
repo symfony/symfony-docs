@@ -428,9 +428,9 @@ Next, use settings similar to those in the sections above. These settings allow 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Factories\DeliveryFactory;
         use App\Deliveries\DHL;
         use App\Deliveries\UPS;
+        use App\Factories\DeliveryFactory;
 
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
