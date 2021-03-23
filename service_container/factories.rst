@@ -447,7 +447,7 @@ Next, use settings similar to those in the sections above. These settings allow 
 
 Now we can use our delivery services as usual (via dependency injection). The only difference is that subclasses instances of services are created in the factory. Let's get those services in controller::
 
-    public function getDeliveriesCost(DHL $dhl, UPS $ups)
+    public function getDeliveriesPrice(DHL $dhl, UPS $ups)
     {
         // ...
         
