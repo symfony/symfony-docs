@@ -106,7 +106,7 @@ doing so much work.
 
 .. tip::
 
-    Symfony also supports weak ``ETag``s by passing ``true`` as the second
+    Symfony also supports weak ``ETag`` s by passing ``true`` as the second
     argument to the
     :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag` method.
 
