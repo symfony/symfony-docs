@@ -315,6 +315,7 @@ Services (subclasses) definition::
 	
     interface DeliveryInterface
     {
+        public function getPrice(): float;
     }
 
     // src/Deliveries/DHL.php
@@ -324,9 +325,10 @@ Services (subclasses) definition::
 
     class DHL implements DeliveryInterface
     {
-        public $costLabel;
+        public string $priceLabel;
     
-        public function cost() {
+        public function getPrice(): float
+        {
             return 100;
         }
     }
@@ -338,34 +340,47 @@ Services (subclasses) definition::
 
     class UPS implements DeliveryInterface
     {
-        public $costLabel;
+        public string $priceLabel;
     
-        public function cost() {
+        public function getPrice(): float
+        {
             return 200;
         }
     }
 
-Factory definition::
+Static factory definition::
 
     // src/Factories/DeliveryFactory.php
     namespace App\Factories;
-	
+
     use App\Deliveries\DeliveryInterface;
-    
-    abstract class DeliveryFactory
+    use App\Deliveries\DHL;
+    use App\Deliveries\UPS;
+
+    class DeliveryFactory
     {
         public static function create(string $deliveryMethod): DeliveryInterface
         {
-            $delivery = new $deliveryMethod;			
-            $delivery->costLabel = 'Delivery cost is: ';
-    
+            switch ($deliveryMethod) {
+                case 'dhl':
+                    $delivery = new DHL;
+                    break;
+                case 'ups':
+                    $delivery = new UPS;
+                    break;
+                default:
+                    throw new \InvalidArgumentException('Unknown delivery method given');
+            }
+
+            // Since DeliveryFactory is a factory of DHL and UPS instances,
+            // priceLabel property with exactly this value ('Delivery price is: ')
+            // is accessible for them - you will see it soon.
+            $delivery->priceLabel = 'Delivery price is: ';
+
             return $delivery;
         }
-        
-        abstract public function price();
+
     }
-    
-As you can see, ``DeliveryFactory`` doesn't specify the exact class of the object that will be created.
     
 Next, use settings similar to those in the sections above. These settings allow you to define a factory method for subclasses without explicitly extending the abstract class (i.e., without ``class DHL extends DeliveryFactory``)!
 
@@ -378,11 +393,11 @@ Next, use settings similar to those in the sections above. These settings allow 
             # ...
 
             App\Deliveries\DHL:
-                factory:   ['@App\Factories\DeliveryFactory', create]
-                arguments: ['App\Deliveries\DHL']
+                factory:   ['App\Factories\DeliveryFactory', 'create']
+                arguments: ['dhl']
             App\Deliveries\UPS:
-                factory:   ['@App\Factories\DeliveryFactory', create]
-                arguments: ['App\Deliveries\UPS']
+                factory:   ['App\Factories\DeliveryFactory', 'create']
+                arguments: ['ups']
             
 
     .. code-block:: xml
@@ -398,12 +413,12 @@ Next, use settings similar to those in the sections above. These settings allow 
                 <!-- ... -->
 
                 <service id="App\Deliveries\DHL">
-                    <factory service="App\Factories\DeliveryFactory" method="create"/>
-                    <argument>App\Deliveries\DHL</argument>
+                    <factory class="App\Factories\DeliveryFactory" method="create"/>
+                    <argument>dhl</argument>
                 </service>
                 <service id="App\Deliveries\UPS">
-                    <factory service="App\Factories\DeliveryFactory" method="create"/>
-                    <argument>App\Deliveries\UPS</argument>
+                    <factory class="App\Factories\DeliveryFactory" method="create"/>
+                    <argument>ups</argument>
                 </service>
             </services>
         </container>
@@ -413,35 +428,32 @@ Next, use settings similar to those in the sections above. These settings allow 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        use App\Factories\DeliveryFactory;
         use App\Deliveries\DHL;
         use App\Deliveries\UPS;
-        use App\Factories\DeliveryFactory;
 
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
             $services->set(DHL::class)
-                ->factory([ref(DeliveryFactory::class), 'create'])
-                ->args(['App\Deliveries\DHL'])
+                ->factory([DeliveryFactory::class, 'create'])
+                ->args(['dhl'])
             ;
             $services->set(UPS::class)
-                ->factory([ref(DeliveryFactory::class), 'create'])
-                ->args(['App\Deliveries\UPS'])
+                ->factory([DeliveryFactory::class, 'create'])
+                ->args(['ups'])
             ;
         };
 
-Now we can use our services as usual (via dependency injection). The only difference is that subclasses instances of services are created in the factory. Let's get those services in controller::
+Now we can use our delivery services as usual (via dependency injection). The only difference is that subclasses instances of services are created in the factory. Let's get those services in controller::
 
-    /**
-     * @Route("/get-deliveries-cost", methods={"GET"})
-     */
     public function getDeliveriesCost(DHL $dhl, UPS $ups)
     {
         // ...
         
-        // $dhl->costLabel and $ups->costLabel are fulfilled in factory method.
-        $dhlCost = $dhl->costLabel . $dhl->cost();
-        $upsCost = $ups->costLabel . $ups->cost();
+        // $dpd->priceLabel and $ups->priceLabel are fulfilled in factory method.
+        $dhlPriceMessage = $dhl->priceLabel . $dhl->getPrice();
+        $upsPriceMessage = $ups->priceLabel . $ups->getPrice();
         
         // ...
     }
