@@ -240,7 +240,8 @@ Accessing the Workflow in a Class
 
 You can use the workflow inside a class by using
 :doc:`service autowiring </service_container/autowiring>` and using
-``camelCased workflow name + Workflow`` as parameter name::
+``camelCased workflow name + Workflow`` as parameter name. If it is a state
+machine type, use ``camelCased workflow name + StateMachine``::
 
     use App\Entity\BlogPost;
     use Symfony\Component\Workflow\WorkflowInterface;

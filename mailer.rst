@@ -155,6 +155,7 @@ transport, but you can force to use one:
 This table shows the full list of available DSN formats for each third
 party provider:
 
+<<<<<<< HEAD
 ==================== ==================================================== =========================================== ========================================
  Provider             SMTP                                                 HTTP                                        API
 ==================== ==================================================== =========================================== ========================================
@@ -167,6 +168,18 @@ party provider:
  Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
  Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
 ==================== ==================================================== =========================================== ========================================
+=======
+==================== ========================================== =========================================== ========================================
+ Provider             SMTP                                       HTTP                                        API
+==================== ========================================== =========================================== ========================================
+ Amazon SES           ses+smtp://USERNAME:PASSWORD@default       ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
+ Google Gmail         gmail+smtp://USERNAME:PASSWORD@default     n/a                                         n/a
+ Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default  mandrill+https://KEY@default                mandrill+api://KEY@default
+ Mailgun              mailgun+smtp://USERNAME:PASSWORD@default   mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
+ Postmark             postmark+smtp://ID@default                 n/a                                         postmark+api://KEY@default
+ Sendgrid             sendgrid+smtp://KEY@default                n/a                                         sendgrid+api://KEY@default
+==================== ========================================== =========================================== ========================================
+>>>>>>> 4.4
 
 .. caution::
 

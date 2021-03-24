@@ -172,7 +172,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
     .. code-block:: yaml
 
         app.mailer:
-            alias: '@App\Mail\PhpMailer'
+            alias: 'App\Mail\PhpMailer'
 
             # this outputs the following generic deprecation message:
             # Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
