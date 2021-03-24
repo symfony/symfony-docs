@@ -168,7 +168,6 @@ party provider:
  Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
 ==================== ==================================================== =========================================== ========================================
 
-
 .. caution::
 
     If your credentials contain special characters, you must URL-encode them.
