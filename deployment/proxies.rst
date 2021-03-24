@@ -125,8 +125,8 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
         # config/packages/framework.yaml
         framework:
             # ...
-            // trust *all* requests (the 'REMOTE_ADDR' string is replaced at
-            // run time by $_SERVER['REMOTE_ADDR'])
+            # trust *all* requests (the 'REMOTE_ADDR' string is replaced at
+            # run time by $_SERVER['REMOTE_ADDR'])
             trusted_proxies: '127.0.0.1,REMOTE_ADDR'
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
