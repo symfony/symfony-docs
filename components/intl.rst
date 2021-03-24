@@ -353,8 +353,8 @@ arguments to get the offset at any given point in time::
 The string representation of the GMT offset can vary depending on the locale, so
 you can pass the locale as the third optional argument::
 
-    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'ar')); // $offset = 'غرينتش+01:00'
-    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'dz')); // $offset = 'ཇི་ཨེམ་ཏི་+01:00'
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'ar'); // $offset = 'غرينتش+01:00'
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'dz'); // $offset = 'ཇི་ཨེམ་ཏི་+01:00'
 
 If the given timezone ID doesn't exist, the methods trigger a
 :class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition

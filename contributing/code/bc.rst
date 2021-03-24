@@ -4,10 +4,13 @@ Our Backward Compatibility Promise
 Ensuring smooth upgrades of your projects is our first priority. That's why
 we promise you backward compatibility (BC) for all minor Symfony releases.
 You probably recognize this strategy as `Semantic Versioning`_. In short,
-Semantic Versioning means that only major releases (such as 2.0, 3.0 etc.) are
-allowed to break backward compatibility. Minor releases (such as 2.5, 2.6 etc.)
+Semantic Versioning means that only major releases (such as 5.0, 6.0 etc.) are
+allowed to break backward compatibility. Minor releases (such as 5.1, 5.2 etc.)
 may introduce new features, but must do so without breaking the existing API of
-that release branch (2.x in the previous example).
+that release branch (5.x in the previous example).
+
+We also provide deprecation message triggered in the code base to help you with
+the migration process across major release.
 
 .. caution::
 

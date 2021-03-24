@@ -320,6 +320,6 @@ The same applies to repository calls::
             // ...
         }
 
-	You should now always fetch this repository using ``ManagerRegistry::getRepository()``.
+    You should now always fetch this repository using ``ManagerRegistry::getRepository()``.
 
 .. _`several alternatives`: https://stackoverflow.com/a/11494543
