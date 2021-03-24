@@ -158,7 +158,7 @@ party provider:
 ==================== ==================================================== =========================================== ========================================
  Provider             SMTP                                                 HTTP                                        API
 ==================== ==================================================== =========================================== ========================================
- Amazon SES           ses+smtp://ACCESS_KEY:SECRET_KEY@default             ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
+ Amazon SES           ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
  Google Gmail         gmail+smtp://USERNAME:PASSWORD@default               n/a                                         n/a
  Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
  Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
