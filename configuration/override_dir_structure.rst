@@ -117,7 +117,7 @@ for multiple directories):
         # config/packages/twig.yaml
         twig:
             # ...
-            default_path: "%kernel.project_dir%//resources/views"
+            default_path: "%kernel.project_dir%/resources/views"
 
     .. code-block:: xml
 
