@@ -831,17 +831,18 @@ will automatically retry failed HTTP requests.
         # ...
         http_client:
             # ...
-            retry_failed:
-                # retry_strategy: app.custom_strategy
-                http_codes:
-                    0: ['GET', 'HEAD']   # retry network errors if request method is GET or HEAD
-                    429: true            # retry all responses with 429 status code
-                    500: ['GET', 'HEAD']
-                max_retries: 2
-                delay: 1000
-                multiplier: 3
-                max_delay: 5000
-                jitter: 0.3
+            default_options:
+                retry_failed:
+                    # retry_strategy: app.custom_strategy
+                    http_codes:
+                        0: ['GET', 'HEAD']   # retry network errors if request method is GET or HEAD
+                        429: true            # retry all responses with 429 status code
+                        500: ['GET', 'HEAD']
+                    max_retries: 2
+                    delay: 1000
+                    multiplier: 3
+                    max_delay: 5000
+                    jitter: 0.3
 
             scoped_clients:
                 my_api.client:
