@@ -138,7 +138,7 @@ interface only requires one method: ``loadUserByUsername($username)``::
         public function loadUserByUsername(string $usernameOrEmail)
         {
             $entityManager = $this->getEntityManager();
-            
+
             return $entityManager->createQuery(
                     'SELECT u
                     FROM App\Entity\User u
@@ -231,7 +231,7 @@ users will encode their passwords:
             # ...
             encoders:
                 # this internal class is used by Symfony to represent in-memory users
-                Symfony\Component\Security\Core\User\User: 'auto'
+                Symfony\Component\Security\Core\User\InMemoryUser: 'auto'
 
     .. code-block:: xml
 
@@ -249,7 +249,7 @@ users will encode their passwords:
                 <!-- ... -->
 
                 <!-- this internal class is used by Symfony to represent in-memory users -->
-                <encoder class="Symfony\Component\Security\Core\User\User"
+                <encoder class="Symfony\Component\Security\Core\User\InMemoryUser"
                     algorithm="auto"
                 />
             </config>
@@ -260,7 +260,7 @@ users will encode their passwords:
         // config/packages/security.php
 
         // this internal class is used by Symfony to represent in-memory users
-        use Symfony\Component\Security\Core\User\User;
+        use Symfony\Component\Security\Core\User\InMemoryUser;
 
         $container->loadFromExtension('security', [
             // ...
@@ -417,7 +417,7 @@ command will generate a nice skeleton to get you started::
         {
             return User::class === $class || is_subclass_of($class, User::class);
         }
-        
+
         /**
          * Upgrades the encoded password of a user, typically for using a better hash algorithm.
          */

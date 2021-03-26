@@ -175,14 +175,14 @@ receives an array of encoders::
     use Acme\Entity\LegacyUser;
     use Symfony\Component\Security\Core\Encoder\EncoderFactory;
     use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
-    use Symfony\Component\Security\Core\User\User;
+    use Symfony\Component\Security\Core\User\InMemoryUser;
 
     $defaultEncoder = new MessageDigestPasswordEncoder('sha512', true, 5000);
     $weakEncoder = new MessageDigestPasswordEncoder('md5', true, 1);
 
     $encoders = [
-        User::class       => $defaultEncoder,
-        LegacyUser::class => $weakEncoder,
+        InMemoryUser::class => $defaultEncoder,
+        LegacyUser::class   => $weakEncoder,
         // ...
     ];
     $encoderFactory = new EncoderFactory($encoders);
