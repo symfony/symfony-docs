@@ -15,7 +15,7 @@ Each event dispatched by the HttpKernel component is a subclass of
 following information:
 
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
-    Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
+    Returns the *type* of the request (``HttpKernelInterface::MAIN_REQUEST``
     or ``HttpKernelInterface::SUB_REQUEST``).
 
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getKernel`
@@ -24,8 +24,8 @@ following information:
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequest`
     Returns the current ``Request`` being handled.
 
-:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
-    Checks if this is a master request.
+:method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMainRequest`
+    Checks if this is a main request.
 
 .. _kernel-core-request:
 
