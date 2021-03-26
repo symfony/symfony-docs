@@ -109,6 +109,6 @@ which holds the error message on its ``getMessage()`` method.
 .. note::
 
     When using groups with the
-    :doc:`Collection</reference/constraints/Collection>` constraint, be sure to
+    :doc:`Collection </reference/constraints/Collection>` constraint, be sure to
     use the ``Optional`` constraint when appropriate as explained in its
     reference documentation.
