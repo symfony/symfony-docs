@@ -279,7 +279,7 @@ There are three strategies available:
 
 ``consensus``
     This grants access if there are more voters granting access than
-    denying. If case of a tie the decision is based on the
+    denying. In case of a tie the decision is based on the
     ``allow_if_equal_granted_denied`` config option (defaulting to ``true``);
 
 ``unanimous``
