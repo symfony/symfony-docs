@@ -121,8 +121,8 @@ you might add the following:
 Options
 -------
 
-divisibleBy
-~~~~~~~~~~~
+``divisibleBy``
+~~~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: null
 
@@ -139,8 +139,8 @@ a certain number.
     are divisible by a certain number, use the
     :doc:`DivisibleBy </reference/constraints/DivisibleBy>` constraint.
 
-divisibleByMessage
-~~~~~~~~~~~~~~~~~~
+``divisibleByMessage``
+~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The number of elements in this collection should be a multiple of {{ compared_value }}.``
 
@@ -159,8 +159,8 @@ Parameter                 Description
 ``{{ compared_value }}``  The number configured in the ``divisibleBy`` option
 ========================  ===================================================
 
-exactMessage
-~~~~~~~~~~~~
+``exactMessage``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
 
@@ -178,8 +178,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -188,8 +188,8 @@ collection elements count is **greater** than this max value.
 
 This option is required when the ``min`` option is not defined.
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or less.``
 
@@ -205,8 +205,8 @@ Parameter        Description
 ``{{ limit }}``  The upper limit
 ===============  ==============================================================
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -215,8 +215,8 @@ collection elements count is **less** than this min value.
 
 This option is required when the ``max`` option is not defined.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain {{ limit }} elements or more.``
 

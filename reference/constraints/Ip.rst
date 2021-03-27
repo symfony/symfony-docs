@@ -95,8 +95,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid IP address.``
 
@@ -119,8 +119,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-version
-~~~~~~~
+``version``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``4``
 

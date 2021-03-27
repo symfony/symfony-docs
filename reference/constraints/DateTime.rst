@@ -100,8 +100,8 @@ Basic Usage
 Options
 -------
 
-format
-~~~~~~
+``format``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Y-m-d H:i:s``
 

@@ -100,22 +100,22 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-iban
-~~~~
+``iban``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
 An IBAN value to validate that its country code is the same as the BIC's one.
 
-ibanMessage
-~~~~~~~~~~~
+``ibanMessage``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.``
 
 The default message supplied when the value does not pass the combined BIC/IBAN check.
 
-ibanPropertyPath
-~~~~~~~~~~~~~~~~
+``ibanPropertyPath``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -125,8 +125,8 @@ For example, if you want to compare the ``$bic`` property of some object
 with regard to the ``$iban`` property of the same object, use
 ``ibanPropertyPath="iban"`` in the comparison constraint of ``$bic``.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid Business Identifier Code (BIC).``
 

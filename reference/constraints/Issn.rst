@@ -92,8 +92,8 @@ Basic Usage
 Options
 -------
 
-caseSensitive
-~~~~~~~~~~~~~
+``caseSensitive``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 
@@ -102,8 +102,8 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` default: ``This value is not a valid ISSN.``
 
@@ -124,8 +124,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-requireHyphen
-~~~~~~~~~~~~~
+``requireHyphen``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 

@@ -95,8 +95,8 @@ string which contains any of the `PHP timezone identifiers`_ (e.g. ``America/New
 Options
 -------
 
-countryCode
-~~~~~~~~~~~
+``countryCode``
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -109,8 +109,8 @@ The value of this option must be a valid `ISO 3166-1 alpha-2`_ country code
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-intlCompatible
-~~~~~~~~~~~~~~
+``intlCompatible``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -123,8 +123,8 @@ timezones provided by PHP's Intl extension (because they use different ICU
 versions). If this option is set to ``true``, this constraint only considers
 valid the values compatible with the PHP ``\IntlTimeZone::createTimeZone()`` method.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid timezone.``
 
@@ -145,8 +145,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-zone
-~~~~
+``zone``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``\DateTimeZone::ALL``
 

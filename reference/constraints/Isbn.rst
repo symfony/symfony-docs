@@ -111,8 +111,8 @@ on an object that will contain an ISBN.
 Available Options
 -----------------
 
-bothIsbnMessage
-~~~~~~~~~~~~~~~
+``bothIsbnMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
 
@@ -134,8 +134,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-isbn10Message
-~~~~~~~~~~~~~
+``isbn10Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-10.``
 
@@ -155,8 +155,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-isbn13Message
-~~~~~~~~~~~~~
+``isbn13Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-13.``
 
@@ -176,8 +176,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -199,8 +199,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-type
-~~~~
+``type``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
