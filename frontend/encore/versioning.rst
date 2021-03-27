@@ -7,7 +7,7 @@ Tired of deploying and having browser's cache the old version of your assets?
 By calling ``enableVersioning()``, each filename will now include a hash that
 changes whenever the *contents* of that file change (e.g. ``app.123abc.js``
 instead of ``app.js``). This allows you to use aggressive caching strategies
-(e.g. a far future ``Expires``) because, whenever a file change, its hash will change,
+(e.g. a far future ``Expires``) because, whenever a file changes, its hash will change,
 ignoring any existing cache:
 
 .. code-block:: diff
