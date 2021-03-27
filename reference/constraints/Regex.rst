@@ -197,8 +197,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-htmlPattern
-~~~~~~~~~~~
+``htmlPattern``
+~~~~~~~~~~~~~~~
 
 **type**: ``string|boolean`` **default**: null
 
@@ -298,8 +298,8 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 Setting ``htmlPattern`` to false will disable client side validation.
 
-match
-~~~~~
+``match``
+~~~~~~~~~
 
 **type**: ``boolean`` default: ``true``
 
@@ -308,8 +308,8 @@ the given `pattern`_ regular expression. However, when this option is set
 to ``false``, the opposite will occur: validation will pass only if the
 given string does **not** match the `pattern`_ regular expression.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not valid.``
 
@@ -328,8 +328,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-pattern
-~~~~~~~
+``pattern``
+~~~~~~~~~~~
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 

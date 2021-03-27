@@ -320,8 +320,8 @@ you can pass the class name and the method as an array.
 Available Options
 -----------------
 
-callback
-~~~~~~~~
+``callback``
+~~~~~~~~~~~~
 
 **type**: ``string|array|Closure``
 
@@ -329,8 +329,8 @@ This is a callback method that can be used instead of the `choices`_ option
 to return the choices array. See
 `Supplying the Choices with a Callback Function`_ for details on its usage.
 
-choices
-~~~~~~~
+``choices``
+~~~~~~~~~~~
 
 **type**: ``array`` [:ref:`default option <validation-default-option>`]
 
@@ -340,8 +340,8 @@ will be matched against this array.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -350,8 +350,8 @@ to force no more than XX number of values to be selected. For example, if
 ``max`` is 3, but the input array contains 4 valid items, the validation
 will fail.
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``You must select at most {{ limit }} choices.``
 
@@ -367,8 +367,8 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The value you selected is not a valid choice.``
 
@@ -385,8 +385,8 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -395,8 +395,8 @@ to force at least XX number of values to be selected. For example, if
 ``min`` is 3, but the input array only contains 2 valid items, the validation
 will fail.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``You must select at least {{ limit }} choices.``
 
@@ -412,8 +412,8 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-multiple
-~~~~~~~~
+``multiple``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -422,8 +422,8 @@ of a single, scalar value. The constraint will check that each value of
 the input array can be found in the array of valid choices. If even one
 of the input values cannot be found, the validation will fail.
 
-multipleMessage
-~~~~~~~~~~~~~~~
+``multipleMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``One or more of the given values is invalid.``
 

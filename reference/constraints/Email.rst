@@ -103,8 +103,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid email address.``
 
@@ -123,8 +123,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-mode
-~~~~
+``mode``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``loose``
 
@@ -135,20 +135,20 @@ Valid values are:
 * ``strict``
 * ``html5``
 
-loose
-.....
+``loose``
+.........
 
 A simple regular expression. Allows all values with an "@" symbol in, and a "."
 in the second host part of the email address.
 
-strict
-......
+``strict``
+..........
 
 Uses the `egulias/email-validator`_ library to perform an RFC compliant
 validation. You will need to install that library to use this mode.
 
-html5
-.....
+``html5``
+.........
 
 This matches the pattern used for the `HTML5 email input element`_.
 

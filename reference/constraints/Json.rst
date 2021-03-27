@@ -97,8 +97,8 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
 Options
 -------
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be valid JSON.``
 

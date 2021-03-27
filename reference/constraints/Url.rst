@@ -98,8 +98,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid URL.``
 
@@ -200,8 +200,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-protocols
-~~~~~~~~~
+``protocols``
+~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``['http', 'https']``
 
@@ -290,8 +290,8 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
             }
         }
 
-relativeProtocol
-~~~~~~~~~~~~~~~~
+``relativeProtocol``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

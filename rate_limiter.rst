@@ -167,6 +167,7 @@ the number of requests to the API::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
     use Symfony\Component\RateLimiter\RateLimiterFactory;
 
@@ -174,7 +175,7 @@ the number of requests to the API::
     {
         // if you're using service autowiring, the variable name must be:
         // "rate limiter name" (in camelCase) + "Limiter" suffix
-        public function index(RateLimiterFactory $anonymousApiLimiter)
+        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter)
         {
             // create a limiter based on a unique identifier of the client
             // (e.g. the client's IP address, a username/email, an API key, etc.)
@@ -272,12 +273,13 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\RateLimiter\RateLimiterFactory;
 
     class ApiController extends AbstractController
     {
-        public function index(RateLimiterFactory $anonymousApiLimiter)
+        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter)
         {
             $limiter = $anonymousApiLimiter->create($request->getClientIp());
             $limit = $limiter->consume();
