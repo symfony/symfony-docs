@@ -140,8 +140,8 @@ the uniqueness. If it's left blank, the correct entity manager will be
 determined for this class. For that reason, this option should probably
 not need to be used.
 
-entityClass
-~~~~~~~~~~~
+``entityClass``
+~~~~~~~~~~~~~~~
 
 **type**: ``string``
 
@@ -151,8 +151,8 @@ inheritance mapping, you need to execute the query in a different repository.
 Use this option to define the fully-qualified class name (FQCN) of the Doctrine
 entity associated with the repository you want to use.
 
-errorPath
-~~~~~~~~~
+``errorPath``
+~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: The name of the first field in `fields`_
 
@@ -249,8 +249,8 @@ Consider this example:
 
 Now, the message would be bound to the ``port`` field with this configuration.
 
-fields
-~~~~~~
+``fields``
+~~~~~~~~~~
 
 **type**: ``array`` | ``string`` [:ref:`default option <validation-default-option>`]
 
@@ -266,8 +266,8 @@ each with a single field.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-ignoreNull
-~~~~~~~~~~
+``ignoreNull``
+~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -276,8 +276,8 @@ entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is already used.``
 
@@ -300,8 +300,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-repositoryMethod
-~~~~~~~~~~~~~~~~
+``repositoryMethod``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``findBy``
 

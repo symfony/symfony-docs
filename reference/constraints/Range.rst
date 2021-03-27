@@ -316,8 +316,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-invalidMessage
-~~~~~~~~~~~~~~
+``invalidMessage``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
@@ -332,16 +332,16 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``number`` or ``string`` (date format)
 
 This required option is the "max" value. Validation will fail if the given
 value is **greater** than this max value.
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
@@ -358,8 +358,8 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-maxPropertyPath
-~~~~~~~~~~~~~~~
+``maxPropertyPath``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string``
 
@@ -380,16 +380,16 @@ with regard to the ``$deadline`` property of the same object, use
     include it in the error messages displayed to end users, it's useful when
     using APIs for doing any mapping logic on client-side.
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``number`` or ``string`` (date format)
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
@@ -406,8 +406,8 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-minPropertyPath
-~~~~~~~~~~~~~~~
+``minPropertyPath``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string``
 
@@ -428,8 +428,8 @@ with regard to the ``$startDate`` property of the same object, use
     include it in the error messages displayed to end users, it's useful when
     using APIs for doing any mapping logic on client-side.
 
-notInRangeMessage
-~~~~~~~~~~~~~~~~~
+``notInRangeMessage``
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be between {{ min }} and {{ max }}.``
 

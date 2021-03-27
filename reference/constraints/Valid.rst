@@ -250,8 +250,8 @@ Options
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-traverse
-~~~~~~~~
+``traverse``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
