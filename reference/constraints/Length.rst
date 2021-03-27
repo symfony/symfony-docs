@@ -114,8 +114,8 @@ and ``50``, you might add the following:
 Options
 -------
 
-allowEmptyString
-~~~~~~~~~~~~~~~~
+``allowEmptyString``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean``  **default**: ``true``
 
@@ -132,8 +132,8 @@ valid.
 
     This option does not have any effect when no minimum length is given.
 
-charset
-~~~~~~~
+``charset``
+~~~~~~~~~~~
 
 **type**: ``string``  **default**: ``UTF-8``
 
@@ -141,8 +141,8 @@ The charset to be used when computing value's length with the
 :phpfunction:`mb_check_encoding` and :phpfunction:`mb_strlen`
 PHP functions.
 
-charsetMessage
-~~~~~~~~~~~~~~
+``charsetMessage``
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value does not match the expected {{ charset }} charset.``
 
@@ -176,8 +176,8 @@ Parameter          Description
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-max
-~~~
+``max``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -186,8 +186,8 @@ the given value's length is **greater** than this max value.
 
 This option is required when the ``min`` option is not defined.
 
-maxMessage
-~~~~~~~~~~
+``maxMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
@@ -203,8 +203,8 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-min
-~~~
+``min``
+~~~~~~~
 
 **type**: ``integer``
 
@@ -217,8 +217,8 @@ It is important to notice that NULL values and empty strings are considered
 valid no matter if the constraint required a minimum length. Validators
 are triggered only if the value is not blank.
 
-minMessage
-~~~~~~~~~~
+``minMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 

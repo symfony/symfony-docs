@@ -82,8 +82,8 @@ class were not blank, you could do the following:
 Options
 -------
 
-allowNull
-~~~~~~~~~
+``allowNull``
+~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

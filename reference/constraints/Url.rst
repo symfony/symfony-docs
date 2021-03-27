@@ -81,8 +81,8 @@ Basic Usage
 Options
 -------
 
-checkDNS
-~~~~~~~~
+``checkDNS``
+~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -163,8 +163,8 @@ option to the value of any of the ``CHECK_DNS_TYPE_*`` constants in the
 This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
 of the DNS record corresponding to the host associated with the given URL.
 
-dnsMessage
-~~~~~~~~~~
+``dnsMessage``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The host could not be resolved.``
 
@@ -242,8 +242,8 @@ DNS check failed.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid URL.``
 
@@ -324,8 +324,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-protocols
-~~~~~~~~~
+``protocols``
+~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``['http', 'https']``
 
@@ -399,8 +399,8 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
             }
         }
 
-relativeProtocol
-~~~~~~~~~~~~~~~~
+``relativeProtocol``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

@@ -92,8 +92,8 @@ Basic Usage
 Options
 -------
 
-checkHost
-~~~~~~~~~
+``checkHost``
+~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -105,8 +105,8 @@ If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX *or* the A *or* the AAAA record of the host
 of the given email.
 
-checkMX
-~~~~~~~
+``checkMX``
+~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -124,8 +124,8 @@ check the validity of the MX record of the host of the given email.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid email address.``
 
@@ -139,8 +139,8 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-mode
-~~~~
+``mode``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``loose``
 

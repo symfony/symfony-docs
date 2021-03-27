@@ -89,8 +89,8 @@ Basic Usage
 Options
 -------
 
-canonicalize
-~~~~~~~~~~~~
+``canonicalize``
+~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 

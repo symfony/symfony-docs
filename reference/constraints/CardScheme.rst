@@ -99,8 +99,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
@@ -116,8 +116,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-schemes
-~~~~~~~
+``schemes``
+~~~~~~~~~~~
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 
