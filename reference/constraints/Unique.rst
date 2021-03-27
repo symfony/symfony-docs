@@ -2,8 +2,9 @@ Unique
 ======
 
 Validates that all the elements of the given collection are unique (none of them
-is present more than once). Elements are compared strictly, so ``'7'`` and ``7``
-are considered different elements (a string and an integer, respectively).
+is present more than once). By default elements are compared strictly,
+so ``'7'`` and ``7`` are considered different elements (a string and an integer, respectively).
+If you want any other comparison logic to be applied, use the `normalizer`_ option.
 
 .. seealso::
 
@@ -21,6 +22,7 @@ are considered different elements (a string and an integer, respectively).
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `groups`_
             - `message`_
+            - `normalizer`_
             - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Unique`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UniqueValidator`
@@ -123,4 +125,22 @@ Parameter                      Description
 ``{{ value }}``                The current (invalid) value
 =============================  ================================================
 
+``normalizer``
+~~~~~~~~~~~~~~
+
+**type**: a `PHP callable`_ **default**: ``null``
+
+.. versionadded:: 5.3
+
+    The ``normalizer`` option was introduced in Symfony 5.3.
+
+This option allows to define the PHP callable applied to each element of the given collection before
+checking if the collection is valid.
+
+For example, you may want to pass the ``'trim'`` string to apply the
+:phpfunction:`trim` PHP function to each element of the collection in order to ignore leading and trailing
+whitespace during validation.
+
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`PHP callable`: https://www.php.net/callable
