@@ -59,6 +59,7 @@ Service     Package                           DSN
 AllMySms    ``symfony/allmysms-notifier``     ``allmysms://LOGIN:APIKEY@default?from=FROM``
 Clickatell  ``symfony/clickatell-notifier``   ``clickatell://ACCESS_TOKEN@default?from=FROM``
 Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
+FakeSms     ``symfony/fake-sms-notifier``     ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM``
 FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 GatewayApi  ``symfony/gatewayapi-notifier``   ``gatewayapi://TOKEN@default?from=FROM``
 Infobip     ``symfony/infobip-notifier``      ``infobip://AUTH_TOKEN@HOST?from=FROM``
@@ -84,9 +85,8 @@ Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=
 
 .. versionadded:: 5.3
 
-    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell and SpotHit integrations
-    were introduced in Symfony 5.3.
-
+    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit and FakeSms
+    integrations were introduced in Symfony 5.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
