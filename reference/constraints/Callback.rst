@@ -254,9 +254,8 @@ constructor of the Callback constraint::
 .. warning::
 
     Using a ``Closure`` together with annotation configuration will disable the
-    annotation cache for that class/property/methods because ``Closure``s cannot
-    be cached. For best performance, it is recommended to use a static callback
-    method.
+    annotation cache for that class/property/method because ``Closure`` cannot
+    be cached. For best performance, it's recommended to use a static callback method.
 
 Options
 -------
