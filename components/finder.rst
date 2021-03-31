@@ -210,7 +210,7 @@ Use the forward slash (i.e. ``/``) as the directory separator on all platforms,
 including Windows. The component makes the necessary conversion internally.
 
 The ``path()`` method accepts a string, a regular expression or an array of
-strings or regulars expressions::
+strings or regular expressions::
 
     $finder->path('foo/bar');
     $finder->path('/^foo\/bar/');
