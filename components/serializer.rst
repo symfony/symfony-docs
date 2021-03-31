@@ -315,6 +315,26 @@ Then, create your groups definition:
             // ...
         }
 
+    .. code-block:: php-attributes
+
+        namespace Acme;
+
+        use Symfony\Component\Serializer\Annotation\Groups;
+
+        class MyObj
+        {
+            #[Groups(['group1', 'group2'])]
+            public $foo;
+
+            #[Groups(['group3'])]
+            public function getBar() // is* methods are also supported
+            {
+                return $this->bar;
+            }
+
+            // ...
+        }
+
     .. code-block:: yaml
 
         Acme\MyObj:
@@ -434,6 +454,20 @@ Option 1: Using ``@Ignore`` Annotation
             /**
              * @Ignore()
              */
+            public $bar;
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\Ignore;
+
+        class MyClass
+        {
+            public $foo;
+
+            #[Ignore]
             public $bar;
         }
 
@@ -648,6 +682,25 @@ defines a ``Person`` entity with a ``firstName`` property:
             /**
              * @SerializedName("customer_name")
              */
+            private $firstName;
+
+            public function __construct($firstName)
+            {
+                $this->firstName = $firstName;
+            }
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App\Entity;
+
+        use Symfony\Component\Serializer\Annotation\SerializedName;
+
+        class Person
+        {
+            #[SerializedName('customer_name')]
             private $firstName;
 
             public function __construct($firstName)
@@ -1218,6 +1271,20 @@ Here, we set it to 2 for the ``$child`` property:
             // ...
         }
 
+    .. code-block:: php-attributes
+
+        namespace Acme;
+
+        use Symfony\Component\Serializer\Annotation\MaxDepth;
+
+        class MyObj
+        {
+            #[MaxDepth(2)]
+            public $child;
+
+            // ...
+        }
+
     .. code-block:: yaml
 
         Acme\MyObj:
@@ -1523,6 +1590,23 @@ and ``BitBucketCodeRepository`` classes:
          *    "bitbucket"="App\BitBucketCodeRepository"
          * })
          */
+        interface CodeRepository
+        {
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App;
+
+        use App\BitBucketCodeRepository;
+        use App\GitHubCodeRepository;
+        use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
+
+        #[DiscriminatorMap(typeProperty: 'type', mapping: [
+            'github' => GitHubCodeRepository::class,
+            'bitbucket' => BitBucketCodeRepository::class,
+        ])]
         interface CodeRepository
         {
             // ...
