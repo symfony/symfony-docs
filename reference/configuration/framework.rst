@@ -3097,18 +3097,6 @@ name
 
 Name of the lock you want to create.
 
-.. tip::
-
-    If you want to use the `RetryTillSaveStore` for :ref:`non-blocking locks <lock-blocking-locks>`,
-    you can do it by :doc:`decorating the store </service_container/service_decoration>` service:
-
-    .. code-block:: yaml
-
-        lock.invoice.retry_till_save.store:
-            class: Symfony\Component\Lock\Store\RetryTillSaveStore
-            decorates: lock.invoice.store
-            arguments: ['@.inner', 100, 50]
-
 mailer
 ~~~~~~
 
