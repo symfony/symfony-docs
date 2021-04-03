@@ -596,8 +596,8 @@ would initialize the passport like this::
     ``createAuthenticatedToken()``)::
 
         // ...
-        use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
         use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
+        use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
         class ApiAuthenticator implements AuthenticatorInterface
         {
