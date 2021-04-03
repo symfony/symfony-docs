@@ -925,8 +925,8 @@ You can remove an existing field, e.g. a tag::
     $crawler = $client->request($form->getMethod(), $form->getUri(),
         $values, $form->getPhpFiles());
 
-    // the tag has been removed
-    $this->assertEquals(0, $crawler->filter('ul.tags > li')->count());
+    // the tag 'foo' has been removed
+    $this->assertEquals(1, $crawler->filter('ul.tags > li')->count());
 
 .. index::
    pair: Tests; Configuration
