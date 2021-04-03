@@ -1154,18 +1154,42 @@ In some cases you need to execute extra logic upon logout (e.g. invalidate
 some tokens) or want to customize what happens after a logout. During
 logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
 is dispatched. Register an :doc:`event listener or subscriber </event_dispatcher>`
-to execute custom logic. The following information is available in the
-event class:
+to execute custom logic::
 
-``getToken()``
-    Returns the security token of the session that is about to be logged
-    out.
-``getRequest()``
-    Returns the current request.
-``getResponse()``
-    Returns a response, if it is already set by a custom listener. Use
-    ``setResponse()`` to configure a custom logout response.
+    // src/EventListener/LogoutSubscriber.php
+    namespace App\EventListener;
 
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Security\Http\Event\LogoutEvent;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\RedirectResponse;
+
+    class LogoutSubscriber extends AbstractController implements EventSubscriberInterface
+    {
+        public static function getSubscribedEvents()
+        {
+            // return the subscribed events, their methods and priorities
+            return [
+                LogoutEvent::class => ['logout', 0],
+            ];
+        }
+
+        public function logout(LogoutEvent $event)
+        {
+            // Returns the security token of the session that is about to be logged out:
+            $event->getToken();
+            
+            // Returns the current request:
+            $request = $event->getRequest();
+            
+            // Returns a response, if it is already set by a custom listener:
+            $response = $event->getResponse();
+            
+            // Configure a custom logout response:
+            $response = new RedirectResponse($this->generateUrl('homepage', []), RedirectResponse::HTTP_SEE_OTHER);
+            $event->setResponse($response);
+        }
+    }
 
 .. tip::
 
@@ -1185,7 +1209,7 @@ event class:
             services:
                 # ...
 
-                App\EventListener\CustomLogoutSubscriber:
+                App\EventListener\LogoutSubscriber:
                     tags:
                         - name: kernel.event_subscriber
                           dispatcher: security.event_dispatcher.main
@@ -1202,7 +1226,7 @@ event class:
                 <services>
                     <!-- ... -->
 
-                    <service id="App\EventListener\CustomLogoutSubscriber">
+                    <service id="App\EventListener\LogoutSubscriber">
                         <tag name="kernel.event_subscriber"
                              dispacher="security.event_dispatcher.main"
                          />
@@ -1215,14 +1239,12 @@ event class:
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            use App\EventListener\CustomLogoutListener;
-            use App\EventListener\CustomLogoutSubscriber;
-            use Symfony\Component\Security\Http\Event\LogoutEvent;
+            use App\EventListener\LogoutSubscriber;
 
             return function(ContainerConfigurator $configurator) {
                 $services = $configurator->services();
 
-                $services->set(CustomLogoutSubscriber::class)
+                $services->set(LogoutSubscriber::class)
                     ->tag('kernel.event_subscriber', [
                         'dispatcher' => 'security.event_dispatcher.main',
                     ]);
