@@ -1029,6 +1029,10 @@ You can also override HTTP headers on a per request basis::
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ]);
 
+.. caution::
+
+    Every custom header must have `HTTP_` prefix.
+
 .. tip::
 
     The test client is available as a service in the container in the ``test``
