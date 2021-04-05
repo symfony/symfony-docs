@@ -7,7 +7,11 @@ The Runtime Component
 
     The Runtime Component decouples the bootstrapping logic from any global state
     to make sure the application can run with runtimes like PHP-FPM, ReactPHP,
-    Swoole etc without any changes.
+    Swoole, etc. without any changes.
+
+.. versionadded:: 5.3
+
+    The Runtime component was introduced in Symfony 5.3.
 
 Installation
 ------------
@@ -21,10 +25,10 @@ Installation
 Usage
 -----
 
-The Runtime component allows you to write front-controllers in a generic way
-and with use of configuration you may change the behavior. Let's consider the
-``public/index.php`` as an example. It will return a callable which will create
-and return the application::
+The Runtime component abstracts most bootstrapping logic as so-called
+*runtimes*, allowing you to write front-controllers in a generic way.
+For instance, the Runtime component allows Symfony's ``public/index.php``
+to look like this::
 
     <?php
     // public/index.php
@@ -36,14 +40,18 @@ and return the application::
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
     };
 
-The special ``autoload_runtime.php`` is automatically created when composer dumps
-the autoload files since the component includes a composer plugin. The ``autoload_runtime.php``
-will instantiate a :class:`Symfony\\Component\\Runtime\\RuntimeInterface`, its job
-is to take the callable and resolve the arguments (``array $context``). Then it calls
-the callable to get the application ``App\Kernel``. At last it will run the application,
-i.e. calling ``$kernel->handle(Request::createFromGlobals())->send()``.
+So how does this front-controller work? At first, the special
+``autoload_runtime.php`` is automatically created by the Composer plugin in
+the component. This file runs the following logic:
 
-To make a console application, the same bootstrap code would look like::
+#. It instantiates a :class:`Symfony\\Component\\Runtime\\RuntimeInterface`;
+#. The callable (returned in the file) is passed to the Runtime, whose job
+   is to resolve the arguments (in this example: ``array $content``);
+#. Then, this callable is called to get the application (``App\Kernel``);
+#. At last, the Runtime is used to run the application (i.e. calling
+   ``$kernel->handle(Request::createFromGlobals())->send()``).
+
+To make a console application, the bootstrap code would look like::
 
     #!/usr/bin/env php
     <?php
@@ -56,47 +64,59 @@ To make a console application, the same bootstrap code would look like::
 
     return function (array $context) {
         $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+
+        // returning an "Application" makes the Runtime run a Console
+        // application instead of the HTTP Kernel
         return new Application($kernel);
     };
 
 Selecting Runtimes
 ------------------
 
-The default Runtime is :class:`Symfony\\Component\\Runtime\\SymfonyRuntime`, it
-works excellent on most applications running with a webserver like Nginx and Apache,
-and PHP-FPM. You may change Runtime to :class:`Symfony\\Component\\Runtime\\GenericRuntime`
-or a custom Runtime for Swoole or AWS Lambda. This can be done by specifying the
-Runtime class in the ``APP_RUNTIME`` environment variable or to specify the
-``extra.runtime.class`` in ``composer.json``.
+The default Runtime is :class:`Symfony\\Component\\Runtime\\SymfonyRuntime`. It
+works excellent on most applications running with a webserver using PHP-FPM like
+Nginx or Apache.
 
-.. code-block:: json
+The component also provides a :class:`Symfony\\Component\\Runtime\\GenericRuntime`,
+which uses PHP's ``$_SERVER``, ``$_POST``, ``$_GET``, ``$_FILES`` and
+``$_SESSION`` superglobals. You may also use a custom Runtime (e.g. to
+integrate with Swoole or AWS Lambda).
 
-    {
-        "require": {
-            "...": "..."
-        },
-        "extra": {
-            "runtime": {
-                "class": "Symfony\\Component\\Runtime\\GenericRuntime"
+Use the ``APP_RUNTIME`` environment variable or by specifying the
+``extra.runtime.class`` in ``composer.json`` to change the Runtime class:
+
+.. configuration-block::
+
+    .. code-block:: json
+
+        {
+            "require": {
+                "...": "..."
+            },
+            "extra": {
+                "runtime": {
+                    "class": "Symfony\\Component\\Runtime\\GenericRuntime"
+                }
             }
         }
-    }
 
-Using the SymfonyRuntime
-------------------------
+    .. code-block:: env
 
-The :class:`Symfony\\Component\\Runtime\\RuntimeInterface` has two methods. One
-to get an instance of :class:`Symfony\\Component\\Runtime\\ResolverInterface`
-that prepares the arguments to the callable and one get an instance of
-:class:`Symfony\\Component\\Runtime\\RunnerInterface` to run the application.
+        APP_RUNTIME="Symfony\\Component\\Runtime\\GenericRuntime"
 
-The :class:`Symfony\\Component\\Runtime\\SymfonyRuntime` supports a number of
-arguments and different applications.
+Using the Runtime
+-----------------
+
+A Runtime is resposible for passing arguments into the closure and run the
+application returned by the closure. The :class:`Symfony\\Component\\Runtime\\SymfonyRuntime` and
+:class:`Symfony\\Component\\Runtime\\GenericRuntime` supports a number of
+arguments and different applications that you can use in your
+front-controllers.
 
 Resolvable Arguments
 ~~~~~~~~~~~~~~~~~~~~
 
-The closure returned from the script may have zero or more arguments.::
+The closure returned from the front-controller may have zero or more arguments::
 
     <?php
     // public/index.php
@@ -109,27 +129,32 @@ The closure returned from the script may have zero or more arguments.::
         // ...
     };
 
+The following arguments are supported by the ``SymfonyRuntime``:
 
-``:class:`Symfony\\Component\\HttpFoundation\\Request` $request``
+:class:`Symfony\\Component\\HttpFoundation\\Request`
     A request created from globals.
 
-``:class:`Symfony\\Component\\Console\\Input\\InputInterface` $input``
+:class:`Symfony\\Component\\Console\\Input\\InputInterface`
     An input to read options and arguments.
 
-``:class:`Symfony\\Component\\Console\\Output\\OutputInterface` $output``
+:class:`Symfony\\Component\\Console\\Output\\OutputInterface`
     Console output to print to the CLI with style.
 
-``:class:`Symfony\\Component\\Console\\Application` $application``
+:class:`Symfony\\Component\\Console\\Application`
     An application for creating CLI applications.
 
-``:class:`Symfony\\Component\\Command\\Command` $command``
-    For creating one line command CLI applications.
+:class:`Symfony\\Component\\Command\\Command`
+    For creating one line command CLI applications (using
+    ``Command::setCode()``).
+
+And these arguments are supported by both the ``SymfonyRuntime`` and
+``GenerGenericRuntime`` (both type and variable name are important):
 
 ``array $context``
-    This is the same as ``$_SERVER`` + ``$_ENV``
+    This is the same as ``$_SERVER`` + ``$_ENV``.
 
 ``array $argv``
-    The arguments passed to the command. Same as ``$_SERVER['argv']``
+    The arguments passed to the command (same as ``$_SERVER['argv']``).
 
 ``array $request``
     With keys ``query``, ``body``, ``files`` and ``session``.
@@ -137,9 +162,8 @@ The closure returned from the script may have zero or more arguments.::
 Resolvable Applications
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The application returned by the closure below is a Symfony Kernel. However, the
-:class:`Symfony\\Component\\Runtime\\SymfonyRuntime` supports a number of
-different applications.::
+The application returned by the closure below is a Symfony Kernel. However,
+a number of different applications are supported::
 
     <?php
     // public/index.php
@@ -151,13 +175,15 @@ different applications.::
         return new Kernel('prod', false);
     };
 
-``:class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface```
-    The application will be executed with :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\HttpKernelRunner``
-    just like a "standard" Symfony application.
+The ``SymfonyRuntime`` can handle these applications:
 
-``:class:`Symfony\\Component\\HttpFoundation\\Response```
+:class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
+    The application will be run with :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\HttpKernelRunner``
+    like a "standard" Symfony application.
+
+:class:`Symfony\\Component\\HttpFoundation\\Response`
     The Response will be printed by
-    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ResponseRunner``.::
+    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ResponseRunner``::
 
         <?php
         // public/index.php
@@ -169,9 +195,9 @@ different applications.::
             return new Response('Hello world');
         };
 
-``:class:`Symfony\\Component\\Console\\Command\\Command```
-    To write one command applications. This will use the
-    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner``.::
+:class:`Symfony\\Component\\Console\\Command\\Command`
+    To write single command applications. This will use the
+    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner``::
 
         <?php
 
@@ -189,9 +215,9 @@ different applications.::
             return $command;
         };
 
-``:class:`Symfony\\Component\\Console\\Application```
+:class:`Symfony\\Component\\Console\\Application`
     Useful with console applications with more than one command. This will use the
-    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner``.::
+    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner``::
 
         <?php
 
@@ -215,9 +241,12 @@ different applications.::
             return $app;
         };
 
-``:class:`Symfony\\Component\\Runtime\\RunnerInterface```
+The ``GenericRuntime`` and ``SymfonyRuntime`` also support these generic
+applications:
+
+:class:`Symfony\\Component\\Runtime\\RunnerInterface`
     The ``RuntimeInterface`` is a way to use a custom application with the
-    generic Runtime.::
+    generic Runtime::
 
         <?php
         // public/index.php
@@ -233,13 +262,12 @@ different applications.::
 
                     return 0;
                 }
-
             };
         };
 
 ``callable``
     Your "application" can also be a ``callable``. The first callable will return
-    the "application" and the second callable is the "application" itself.::
+    the "application" and the second callable is the "application" itself::
 
         <?php
         // public/index.php
@@ -258,7 +286,7 @@ different applications.::
 
 ``void``
     If the callable doesn't return anything, the ``SymfonyRuntime`` will assume
-    everything is fine.::
+    everything is fine::
 
         <?php
 
@@ -268,13 +296,11 @@ different applications.::
             echo 'Hello world';
         };
 
-
 Using Options
 ~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Runtime\\SymfonyRuntime` supports a number of
-options. They can be passed to the constructor in two ways. First by specifying
-options to ``APP_RUNTIME_OPTIONS`` environment variable.::
+Some behavior of the Runtimes can be modified through runtime options. They
+can be set using the ``APP_RUNTIME_OPTIONS`` environment variable::
 
     <?php
 
@@ -286,8 +312,7 @@ options to ``APP_RUNTIME_OPTIONS`` environment variable.::
 
     // ...
 
-The second way to pass an option to ``SymfonyRuntime::__construct()`` is to use
-``extra.runtime.options`` in ``composer.json``.
+You can also configure ``extra.runtime.options`` in ``composer.json``:
 
 .. code-block:: json
 
@@ -304,51 +329,89 @@ The second way to pass an option to ``SymfonyRuntime::__construct()`` is to use
         }
     }
 
-.. note::
+The following options are supported by the ``SymfonyRuntime``:
 
-    The environment variable ``APP_DEBUG`` has special support to easily
-    turn on and off debugging.
+``env`` (default: ``APP_ENV`` environment variable, or ``"dev"``)
+    To define the name of the environment the app runs in.
+``disable_dotenv`` (default: ``false``)
+    To disable looking for ``.env`` files.
+``dotenv_path`` (default: ``.env``)
+    To define the path of dot-env files.
+``use_putenv``
+    To tell Dotenv to set env vars using ``putenv()`` (NOT RECOMMENDED).
+``prod_envs`` (default: ``["prod"]``)
+    To define the names of the production envs.
+``test_envs`` (default: ``["test"]``)
+    To define the names of the test envs.
+
+Besides these, the ``GenericRuntime`` and ``SymfonyRuntime`` also support
+these options:
+
+``debug`` (default: ``APP_DEBUG`` environment variable, or ``true``)
+    Toggles displaying errors.
+``runtimes``
+    Maps "application types" to a ``GenericRuntime`` implementation that
+    knows how to deal with each of them.
+``error_handler`` (default: :class:`Symfony\\Component\\Runtime\\Internal\\BasicErrorHandler` or :class:`Symfony\\Component\\Runtime\\Internal\\SymfonyErrorHandler` for ``SymfonyRuntime``)
+    Defines the class to use to handle PHP errors.
 
 Create Your Own Runtime
 -----------------------
 
 This is an advanced topic that describes the internals of the Runtime component.
 
-Using the runtime component will benefit maintainers because the bootstrap logic
-could be versioned as a part of a normal package. If the application author decides
-to use this component, the package maintainer of the Runtime class will have more
-control and can fix bugs and add features.
+Using the Runtime component will benefit maintainers because the bootstrap
+logic could be versioned as a part of a normal package. If the application
+author decides to use this component, the package maintainer of the Runtime
+class will have more control and can fix bugs and add features.
 
 .. note::
 
-    Before Symfony 5.3, the boostrap logic was part of a Flex recipe. Since recipes
-    are rarely updated by users, bug patches would rarely be installed.
+    Before Symfony 5.3, the Symfony boostrap logic was part of a Flex recipe.
+    Since recipes are rarely updated by users, bug patches would rarely be
+    installed.
 
-The Runtime component is designed to be totally generic and able to run any application
-outside of the global state in 6 steps:
+The Runtime component is designed to be totally generic and able to run any
+application outside of the global state in 6 steps:
 
- 1. The main entry point returns a callable (A) that wraps the application
- 2. Callable (A) is passed to ``RuntimeInterface::getResolver()``, which returns a
-    ``ResolverInterface``. This resolver returns an array with the callable (A)
-    (or something that decorates the callable (A)) at index 0, and all its resolved
-    arguments at index 1.
- 3. The callable A is invoked with its arguments, it will return an object that
-    represents the application (B).
- 4. That object (B) is passed to ``RuntimeInterface::getRunner()``, which returns a
-    ``RunnerInterface``: an instance that knows how to "run" the object (B).
- 5. The ``RunnerInterface::run($objectB)`` is executed and it returns the exit status
-    code as `int`.
- 6. The PHP engine is exited with this status code.
+#. The main entry point returns a *callable* (the "app") that wraps the application;
+#. The *app callable* is passed to ``RuntimeInterface::getResolver()``, which returns
+   a :class:`Symfony\\Component\\Runtime\\ResolverInterface`. This resolver returns
+   an array with the app callable (or something that decorates this callable) at
+   index 0 and all its resolved arguments at index 1.
+#. The *app callable* is invoked with its arguments, it will return an object that
+   represents the application.
+#. This *application object* is passed to ``RuntimeInterface::getRunner()``, which
+   returns a :class:`Symfony\\Component\\Runtime\\RunnerInterface`: an instance
+   that knows how to "run" the appliction object.
+#. The ``RunnerInterface::run(object $application)`` is called and it returns the
+   exit status code as `int`.
+#. The PHP engine is exited with this status code.
 
 When creating a new runtime, there are two things to consider: First, what arguments
 will the end user use? Second, what will the user's application look like?
 
-To create a runtime for ReactPHP, we see that no special arguments are typically
-required. We will use the standard arguments provided by :class:`Symfony\\Component\\Runtime\\GenericRuntime`
-by extending tha class. But a ReactPHP application will need some special logic
-to run. That logic is added in a new class implementing :class:`Symfony\\Component\\Runtime\\RunnerInterface`::
+For instance, imagine you want to create a runtime for `ReactPHP`_:
+
+**What arguments will the end user use?**
+
+For a generic ReactPHP application, there are no special arguments are
+typically required. This means that you can use the
+:class:`Symfony\\Component\\Runtime\\GenericRuntime`.
+
+**What will the user's application look like?**
+
+There is also no typical React application, so you might want to rely on
+the `PSR-15`_ interfaces for HTTP request handling.
+
+However, a ReactPHP application will need some special logic to *run*. That logic
+is added in a new class implementing :class:`Symfony\\Component\\Runtime\\RunnerInterface`::
 
     use Psr\Http\Message\ServerRequestInterface;
+    use Psr\Http\Server\RequestHandlerInterface;
+    use React\EventLoop\Factory as ReactFactory;
+    use React\Http\Server as ReactHttpServer;
+    use React\Socket\Server as ReactSocketServer;
     use Symfony\Component\Runtime\RunnerInterface;
 
     class ReactPHPRunner implements RunnerInterface
@@ -365,13 +428,18 @@ to run. That logic is added in a new class implementing :class:`Symfony\\Compone
         public function run(): int
         {
             $application = $this->application;
-            $loop = \React\EventLoop\Factory::create();
+            $loop = ReactFactory::create();
 
-            $server = new \React\Http\Server($loop, function (ServerRequestInterface $request) use ($application) {
-                return $application->handle($request);
-            });
+            // configure ReactPHP to correctly handle the PSR-15 application
+            $server = new ReactHttpServer(
+                $loop,
+                function (ServerRequestInterface $request) use ($application) {
+                    return $application->handle($request);
+                }
+            );
 
-            $socket = new \React\Socket\Server($this->port, $loop);
+            // start the ReactPHP server
+            $socket = new ReactSocketServer($this->port, $loop);
             $server->listen($socket);
 
             $loop->run();
@@ -380,8 +448,8 @@ to run. That logic is added in a new class implementing :class:`Symfony\\Compone
         }
     }
 
-Now we should create a new :class:`Symfony\\Component\\Runtime\\RuntimeInterface`
-that is using our ``ReactPHPRunner``::
+By extending the ``GenericRuntime``, you make sure that the application is
+always using this ``ReactPHPRunner``::
 
     use Symfony\Component\Runtime\GenericRuntime;
     use Symfony\Component\Runtime\RunnerInterface;
@@ -402,14 +470,21 @@ that is using our ``ReactPHPRunner``::
                 return new ReactPHPRunner($application, $this->port);
             }
 
+            // if it's not a PSR-15 application, use the GenericRuntime to
+            // run the application (see "Resolvable Applications" above)
             return parent::getRunner($application);
         }
     }
 
 The end user will now be able to create front controller like::
 
+    <?php
+
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
     return function (array $context) {
-        return new Psr15Application();
+        return new SomeCustomPsr15Application();
     };
+
+.. _ReactPHP: https://reactphp.org/
+.. _`PSR-15`: https://www.php-fig.org/psr/psr-15/
