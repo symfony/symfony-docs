@@ -1221,7 +1221,7 @@ The value can be one of:
 ``true``
     Throw an exception when the requirements are not met;
 ``false``
-    Disable exceptions when the requirements are not met and return ``null``
+    Disable exceptions when the requirements are not met and return ``''``
     instead;
 ``null``
     Disable checking the requirements (thus, match the route even when the
