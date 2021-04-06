@@ -880,6 +880,9 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer`
+    Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
     This normalizer converts objects that implement
     :class:`Symfony\\Component\\Uid\\AbstractUid` into strings.
