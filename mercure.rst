@@ -159,20 +159,19 @@ service, including controllers::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Mercure\PublisherInterface;
+    use Symfony\Component\Mercure\HubInterface;
     use Symfony\Component\Mercure\Update;
 
     class PublishController
     {
-        public function __invoke(PublisherInterface $publisher): Response
+        public function __invoke(HubInterface $hub): Response
         {
             $update = new Update(
                 'http://example.com/books/1',
                 json_encode(['status' => 'OutOfStock'])
             );
 
-            // The Publisher service is an invokable object
-            $publisher($update);
+            $hub->publish($update);
 
             return new Response('published!');
         }
@@ -297,17 +296,14 @@ by using the ``AbstractController::addLink`` helper method::
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\WebLink\Link;
+    use Symfony\Component\Mercure\Discovery;
 
     class DiscoverController extends AbstractController
     {
-        public function __invoke(Request $request): JsonResponse
+        public function __invoke(Request $request, Discovery $discovery): JsonResponse
         {
-            // This parameter is automatically created by the MercureBundle
-            $hubUrl = $this->getParameter('mercure.default_hub');
-
             // Link: <http://localhost:3000/.well-known/mercure>; rel="mercure"
-            $this->addLink($request, new Link('mercure', $hubUrl));
+            $discovery->addLink($request);
 
             return $this->json([
                 '@id' => '/books/1',
@@ -346,13 +342,13 @@ of the ``Update`` constructor to ``true``::
     // src/Controller/Publish.php
     namespace App\Controller;
 
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Mercure\PublisherInterface;
     use Symfony\Component\Mercure\Update;
 
-    class PublishController
+    class PublishController extends AbstractController
     {
-        public function __invoke(PublisherInterface $publisher): Response
+        public function __invoke(HubInterface $hub): Response
         {
             $update = new Update(
                 'http://example.com/books/1',
@@ -362,7 +358,7 @@ of the ``Update`` constructor to ``true``::
 
             // Publisher's JWT must contain this topic, a URI template it matches or * in mercure.publish or you'll get a 401
             // Subscriber's JWT must contain this topic, a URI template it matches or * in mercure.subscribe to receive the update
-            $publisher($update);
+            $hub->publish($update);
 
             return new Response('private update published!');
         }
@@ -406,50 +402,73 @@ This cookie will be automatically sent by the web browser when connecting to the
 Then, the Hub will verify the validity of the provided JWT, and extract the topic selectors
 from it.
 
-To generate the JWT, we'll use the ``lcobucci/jwt`` library. Install it:
+add your JWT secret to the configuration as follow ::
 
-.. code-block:: terminal
+.. configuration-block::
 
-    $ composer require lcobucci/jwt
+    .. code-block:: yaml
+
+        # config/packages/mercure.yaml
+        mercure:
+            hubs:
+                default:
+                    url: https://mercure-hub.example.com/.well-known/mercure
+                    jwt:
+                        secret: '!ChangeMe!'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mercure.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <config>
+            <hub
+                name="default"
+                url="https://mercure-hub.example.com/.well-known/mercure"
+            >
+                <jwt secret="!ChangeMe!"/>
+            </hub>
+        </config>
+
+    .. code-block:: php
+
+        // config/packages/mercure.php
+        $container->loadFromExtension('mercure', [
+            'hubs' => [
+                'default' => [
+                    'url' => 'https://mercure-hub.example.com/.well-known/mercure',
+                    'jwt' => [
+                        'secret' => '!ChangeMe!',
+                    ]
+                ],
+            ],
+        ]);
 
 And here is the controller::
 
     // src/Controller/DiscoverController.php
     namespace App\Controller;
 
-    use Lcobucci\JWT\Configuration;
-    use Lcobucci\JWT\Signer\Hmac\Sha256;
-    use Lcobucci\JWT\Signer\Key;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Cookie;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\WebLink\Link;
+    use Symfony\Component\Mercure\Authorization;
+    use Symfony\Component\Mercure\Discovery;
 
     class DiscoverController extends AbstractController
     {
-        public function __invoke(Request $request): Response
+        public function __invoke(Request $request, Discovery $discovery, Authorization $authorization): Response
         {
-            $hubUrl = $this->getParameter('mercure.default_hub');
-            $this->addLink($request, new Link('mercure', $hubUrl));
+            $discovery->addLink($request);
 
-            $key = Key\InMemory::plainText('mercure_secret_key'); // don't forget to set this parameter! Test value: !ChangeMe!
-            $configuration = Configuration::forSymmetricSigner(new Sha256(), $key);
+            $response = new JsonResponse([
+                '@id' => '/demo/books/1',
+                'availability' => 'https://schema.org/InStock'
+            ]);
 
-            $token = $configuration->builder()
-                ->withClaim('mercure', ['subscribe' => ["http://example.com/books/1"]]) // can also be a URI template, or *
-                ->getToken($configuration->signer(), $configuration->signingKey())
-                ->toString();
-
-            $response = $this->json(['@id' => '/demo/books/1', 'availability' => 'https://schema.org/InStock']);
-            $cookie = Cookie::create('mercureAuthorization')
-                ->withValue($token)
-                ->withPath('/.well-known/mercure')
-                ->withSecure(true)
-                ->withHttpOnly(true)
-                ->withSameSite('strict')
-            ;
-            $response->headers->setCookie($cookie);
+            $response->headers->setCookie(
+                $authorization->createCookie($request,  ["http://example.com/books/1"])
+            );
 
             return $response;
         }
@@ -464,15 +483,17 @@ Programmatically Generating The JWT Used to Publish
 ---------------------------------------------------
 
 Instead of directly storing a JWT in the configuration,
-you can create a service that will return the token used by
-the ``Publisher`` object::
+you can create a token provider that will return the token used by
+the ``HubInterface`` object::
 
-    // src/Mercure/MyJwtProvider.php
+    // src/Mercure/MyTokenProvider.php
     namespace App\Mercure;
 
-    final class MyJwtProvider
+    use Symfony\Component\Mercure\JWT\TokenProviderInterface;
+
+    final class MyTokenProvider implements TokenProviderInterface
     {
-        public function __invoke(): string
+        public function getToken(): string
         {
             return 'the-JWT';
         }
@@ -489,7 +510,8 @@ Then, reference this service in the bundle configuration:
             hubs:
                 default:
                     url: https://mercure-hub.example.com/.well-known/mercure
-                    jwt_provider: App\Mercure\MyJwtProvider
+                    jwt:
+                        provider: App\Mercure\MyTokenProvider
 
     .. code-block:: xml
 
@@ -499,8 +521,9 @@ Then, reference this service in the bundle configuration:
             <hub
                 name="default"
                 url="https://mercure-hub.example.com/.well-known/mercure"
-                jwt-provider="App\Mercure\MyJwtProvider"
-            />
+            >
+                <jwt provider="App\Mercure\MyTokenProvider"/>
+            </hub>
         </config>
 
     .. code-block:: php
@@ -512,7 +535,9 @@ Then, reference this service in the bundle configuration:
             'hubs' => [
                 'default' => [
                     'url' => 'https://mercure-hub.example.com/.well-known/mercure',
-                    'jwt_provider' => MyJwtProvider::class,
+                    'jwt' => [
+                        'provider' => MyJwtProvider::class,
+                    ]
                 ],
             ],
         ]);
@@ -573,29 +598,59 @@ its Mercure support.
 Testing
 --------
 
-During functional testing there is no need to send updates to Mercure. They will
-be handled by a stub publisher::
+During unit testing there is not need to send updates to Mercure.
 
-    // tests/Functional/Fixtures/PublisherStub.php
-    namespace App\Tests\Functional\Fixtures;
+You can instead make use of the `MockHub`::
 
-    use Symfony\Component\Mercure\PublisherInterface;
+    // tests/Functional/.php
+    namespace App\Tests\Unit\Controller;
+
+    use App\Controller\MessageController;
+    use Symfony\Component\Mercure\HubInterface;
+    use Symfony\Component\Mercure\JWT\StaticTokenProvider;
+    use Symfony\Component\Mercure\MockHub;
     use Symfony\Component\Mercure\Update;
 
-    class PublisherStub implements PublisherInterface
+    class MessageControllerTest extends TestCase
     {
-        public function __invoke(Update $update): string
+        public function testPublishing()
         {
-            return '';
+            $hub = new MockHub('default', 'https://internal/.well-known/mercure', new StaticTokenProvider('foo'), function(Update $update): string {
+                // $this->assertTrue($update->isPrivate());
+
+                return 'id';
+            });
+
+            $controller = new MessageController($hub);
+
+            ...
         }
     }
 
-PublisherStub decorates the default publisher service so no updates are actually
-sent. Here is the PublisherStub implementation::
+During functional testing you can instead decorate the Hub::
+
+    // tests/Functional/Fixtures/HubStub.php
+    namespace App\Tests\Functional\Fixtures;
+
+    use Symfony\Component\Mercure\HubInterface;
+    use Symfony\Component\Mercure\Update;
+
+    class HubStub implements HubInterface
+    {
+        public function publish(Update $update): string
+        {
+            return 'id';
+        }
+
+        // implement rest of HubInterface methods here
+    }
+
+HubStub decorates the default hub service so no updates are actually
+sent. Here is the HubStub implementation::
 
     # config/services_test.yaml
-    App\Tests\Functional\Fixtures\PublisherStub:
-        decorates: mercure.hub.default.publisher
+    App\Tests\Functional\Fixtures\HubStub:
+        decorates: mercure.hub.default
 
 
 Debugging
