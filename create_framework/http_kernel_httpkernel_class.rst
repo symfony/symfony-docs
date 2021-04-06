@@ -50,11 +50,11 @@ And the new front controller::
     $context = new Routing\RequestContext();
     $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
-    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
-    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
+    $controllerResolver = new Symfony\Component\HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new Symfony\Component\HttpKernel\Controller\ArgumentResolver();
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, $requestStack));
+    $dispatcher->addSubscriber(new Symfony\Component\HttpKernel\EventListener\RouterListener($matcher, $requestStack));
 
     $framework = new Simplex\Framework($dispatcher, $controllerResolver, $requestStack, $argumentResolver);
 
@@ -74,14 +74,14 @@ make your error management configurable::
 
         return new Response($msg, $exception->getStatusCode());
     };
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\ErrorListener($errorHandler));
+    $dispatcher->addSubscriber(new Symfony\Component\HttpKernel\EventListener\ErrorListener($errorHandler));
 
 ``ErrorListener`` gives you a ``FlattenException`` instance instead of the
 thrown ``Exception`` or ``Error`` instance to ease exception manipulation and
 display. It can take any valid controller as an exception handler, so you can
 create an ErrorController class instead of using a Closure::
 
-    $listener = new HttpKernel\EventListener\ErrorListener(
+    $listener = new Symfony\Component\HttpKernel\EventListener\ErrorListener(
         'Calendar\Controller\ErrorController::exception'
     );
     $dispatcher->addSubscriber($listener);
@@ -112,12 +112,12 @@ ensures that a Response is compliant with the HTTP specification. It is
 probably a good idea to always call it just before sending the Response to the
 client; that's what the ``ResponseListener`` does::
 
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
+    $dispatcher->addSubscriber(new Symfony\Component\HttpKernel\EventListener\ResponseListener('UTF-8'));
 
 If you want out of the box support for streamed responses, subscribe
 to ``StreamedResponseListener``::
 
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\StreamedResponseListener());
+    $dispatcher->addSubscriber(new Symfony\Component\HttpKernel\EventListener\StreamedResponseListener());
 
 And in your controller, return a ``StreamedResponse`` instance instead of a
 ``Response`` instance.

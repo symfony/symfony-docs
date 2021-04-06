@@ -72,8 +72,8 @@ resolver from HttpKernel::
 
     use Symfony\Component\HttpKernel;
 
-    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
-    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
+    $controllerResolver = new Symfony\Component\HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new Symfony\Component\HttpKernel\Controller\ArgumentResolver();
 
     $controller = $controllerResolver->getController($request);
     $arguments = $argumentResolver->getArguments($request, $controller);
@@ -181,8 +181,8 @@ Let's conclude with the new version of our framework::
     $context->fromRequest($request);
     $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
-    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
-    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
+    $controllerResolver = new Symfony\Component\HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new Symfony\Component\HttpKernel\Controller\ArgumentResolver();
 
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));

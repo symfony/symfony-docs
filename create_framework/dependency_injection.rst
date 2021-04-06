@@ -15,7 +15,7 @@ to it::
     use Symfony\Component\HttpKernel;
     use Symfony\Component\Routing;
 
-    class Framework extends HttpKernel\HttpKernel
+    class Framework extends Symfony\Component\HttpKernel\HttpKernel
     {
         public function __construct($routes)
         {
@@ -23,15 +23,15 @@ to it::
             $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
             $requestStack = new RequestStack();
 
-            $controllerResolver = new HttpKernel\Controller\ControllerResolver();
-            $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
+            $controllerResolver = new Symfony\Component\HttpKernel\Controller\ControllerResolver();
+            $argumentResolver = new Symfony\Component\HttpKernel\Controller\ArgumentResolver();
 
             $dispatcher = new EventDispatcher();
-            $dispatcher->addSubscriber(new HttpKernel\EventListener\ErrorListener(
+            $dispatcher->addSubscriber(new Symfony\Component\HttpKernel\EventListener\ErrorListener(
                 'Calendar\Controller\ErrorController::exception'
             ));
-            $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, $requestStack));
-            $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
+            $dispatcher->addSubscriber(new Symfony\Component\HttpKernel\EventListener\RouterListener($matcher, $requestStack));
+            $dispatcher->addSubscriber(new Symfony\Component\HttpKernel\EventListener\ResponseListener('UTF-8'));
             $dispatcher->addSubscriber(new StringResponseListener());
 
             parent::__construct($dispatcher, $controllerResolver, $requestStack, $argumentResolver);
@@ -114,17 +114,17 @@ Create a new file to host the dependency injection container configuration::
     $containerBuilder->register('matcher', Routing\Matcher\UrlMatcher::class)
         ->setArguments([$routes, new Reference('context')])
     ;
-    $containerBuilder->register('request_stack', HttpFoundation\RequestStack::class);
-    $containerBuilder->register('controller_resolver', HttpKernel\Controller\ControllerResolver::class);
-    $containerBuilder->register('argument_resolver', HttpKernel\Controller\ArgumentResolver::class);
+    $containerBuilder->register('request_stack', Symfony\Component\HttpFoundation\RequestStack::class);
+    $containerBuilder->register('controller_resolver', Symfony\Component\HttpKernel\Controller\ControllerResolver::class);
+    $containerBuilder->register('argument_resolver', Symfony\Component\HttpKernel\Controller\ArgumentResolver::class);
 
-    $containerBuilder->register('listener.router', HttpKernel\EventListener\RouterListener::class)
+    $containerBuilder->register('listener.router', Symfony\Component\HttpKernel\EventListener\RouterListener::class)
         ->setArguments([new Reference('matcher'), new Reference('request_stack')])
     ;
-    $containerBuilder->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
+    $containerBuilder->register('listener.response', Symfony\Component\ttpKernel\EventListener\ResponseListener::class)
         ->setArguments(['UTF-8'])
     ;
-    $containerBuilder->register('listener.exception', HttpKernel\EventListener\ErrorListener::class)
+    $containerBuilder->register('listener.exception', Symfony\Component\HttpKernel\EventListener\ErrorListener::class)
         ->setArguments(['Calendar\Controller\ErrorController::exception'])
     ;
     $containerBuilder->register('dispatcher', EventDispatcher\EventDispatcher::class)
@@ -217,7 +217,7 @@ These parameters can be used when defining object definitions. Let's make the
 charset configurable::
 
     // ...
-    $container->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
+    $container->register('listener.response', Symfony\Component\HttpKernel\EventListener\ResponseListener::class)
         ->setArguments(['%charset%'])
     ;
 

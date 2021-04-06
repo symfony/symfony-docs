@@ -59,9 +59,9 @@ PHP; it implements ``HttpKernelInterface`` and wraps another
     use Symfony\Component\HttpKernel;
 
     $framework = new Simplex\Framework($dispatcher, $matcher, $controllerResolver, $argumentResolver);
-    $framework = new HttpKernel\HttpCache\HttpCache(
+    $framework = new Symfony\Component\HttpKernel\HttpCache\HttpCache(
         $framework,
-        new HttpKernel\HttpCache\Store(__DIR__.'/../cache')
+        new Symfony\Component\HttpKernel\HttpCache\Store(__DIR__.'/../cache')
     );
 
     $response = $framework->handle($request);
@@ -173,10 +173,10 @@ For ESI tags to be supported by HttpCache, you need to pass it an instance of
 the ``ESI`` class. The ``ESI`` class automatically parses ESI tags and makes
 sub-requests to convert them to their proper content::
 
-    $framework = new HttpKernel\HttpCache\HttpCache(
+    $framework = new Symfony\Component\HttpKernel\HttpCache\HttpCache(
         $framework,
-        new HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
-        new HttpKernel\HttpCache\Esi()
+        new Symfony\Component\HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
+        new Symfony\Component\HttpKernel\HttpCache\Esi()
     );
 
 .. note::
@@ -189,10 +189,10 @@ When using complex HTTP caching strategies and/or many ESI include tags, it
 can be hard to understand why and when a resource should be cached or not. To
 ease debugging, you can enable the debug mode::
 
-    $framework = new HttpKernel\HttpCache\HttpCache(
+    $framework = new Symfony\Component\HttpKernel\HttpCache\HttpCache(
         $framework,
-        new HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
-        new HttpKernel\HttpCache\Esi(),
+        new Symfony\Component\HttpKernel\HttpCache\Store(__DIR__.'/../cache'),
+        new Symfony\Component\HttpKernel\HttpCache\Esi(),
         ['debug' => true]
     );
 
