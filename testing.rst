@@ -1071,6 +1071,13 @@ You can also override HTTP headers on a per request basis::
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ]);
 
+.. caution::
+
+    The name of your custom headers must follow the syntax defined in the
+    `section 4.1.18 of RFC 3875`_: replace ``-`` by ``_``, transform it into
+    uppercase and prefix the result with ``HTTP_``. For example, if your
+    header name is ``X-Session-Token``, pass ``HTTP_X_SESSION_TOKEN``.
+
 .. tip::
 
     The test client is available as a service in the container in the ``test``
@@ -1166,3 +1173,4 @@ Learn more
 .. _`$_SERVER`: https://www.php.net/manual/en/reserved.variables.server.php
 .. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers
 .. _`code coverage analysis`: https://phpunit.readthedocs.io/en/9.1/code-coverage-analysis.html
+.. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18
