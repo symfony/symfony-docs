@@ -782,6 +782,9 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer`
+    Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
+
 .. note::
 
     You can also create your own Normalizer to use another structure. Read more at
