@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-03-31T11:13:48Z
+
+In which version should we merge this? This article is available in 4.4, 5.2 and 5.x branches. Thanks!
+
+---------------------------------------------------------------------------
+
+by azjezz at 2021-04-06T10:26:17Z
+
+> In which version should we merge this? This article is available in 4.4, 5.2 and 5.x branches. Thanks!
+
+mercure and mercure-bundle don't follow symfony versioning, these changes apply to mercure 0.5 and mercure-bundle 0.3, so i'm not really sure.
+
+---------------------------------------------------------------------------
+
+by chalasr at 2021-04-06T10:56:03Z
+
+As symfony/mercure and mercure-bundle are still in 0.x versions, and because the latest versions support all maintained Symfony versions, I suggest to merge this in the 4.4 branch.
