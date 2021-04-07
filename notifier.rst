@@ -45,8 +45,8 @@ The notifier component supports the following channels:
 .. _notifier-sms-channel:
 .. _notifier-texter-dsn:
 
-SMS Channel - NEW
-~~~~~~~~~~~~~~~~~
+SMS Channel - NEW - Option 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The SMS channel uses :class:`Symfony\\Component\\Notifier\\Texter` classes
 to send SMS messages to mobile phones. This feature requires subscribing to
@@ -76,6 +76,42 @@ Clickatell
     .. versionadded:: 5.3
 
         The Clickatell integration was introduced in Symfony 5.3.
+
+SMS Channel - NEW - Option 2
+----------------------------
+
+The SMS channel uses :class:`Symfony\\Component\\Notifier\\Texter` classes
+to send SMS messages to mobile phones. This feature requires subscribing to
+a third-party service that sends SMS messages. Symfony provides integration
+with a couple popular SMS services:
+
+AllMySms
+~~~~~~~~
+
+``symfony/allmysms-notifier``
+
+.. code-block:: bash
+
+    # .env
+    allmysms://LOGIN:APIKEY@default?from=FROM
+
+.. versionadded:: 5.3
+
+    The AllMySms integration was introduced in Symfony 5.3.
+
+Clickatell
+~~~~~~~~~~
+
+``symfony/clickatell-notifier``
+
+.. code-block:: bash
+
+    # .env
+    clickatell://ACCESS_TOKEN@default?from=FROM
+
+.. versionadded:: 5.3
+
+    The Clickatell integration was introduced in Symfony 5.3.
 
 SMS Channel OLD
 ~~~~~~~~~~~~~~~~
