@@ -656,9 +656,12 @@ user create this POST request (e.g. by clicking a button)::
     {% endblock %}
 
 Customizing the Success Handler
-...............................
+-------------------------------
 
-To customize, how the success handler behaves, create your own ``AuthenticationSuccessHandler``::
+Sometimes, the default success handling does not fit your use-case (e.g.
+when you need to generate and return an API key). To customize how the
+success handler behaves, create your own
+:class:`Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface`::
 
     // src/Security/Authentication/AuthenticationSuccessHandler.php
     namespace App\Security\Authentication;
@@ -672,16 +675,14 @@ To customize, how the success handler behaves, create your own ``AuthenticationS
     {
         public function onAuthenticationSuccess(Request $request, TokenInterface $token): JsonResponse
         {
-            // Example use case: Create API token for Guard Authentication.
-            $user = $token->getUser(); // Returns string|\Stringable|UserInterface - depends on your implementation.
-
+            $user = $token->getUser();
             $userApiToken = $user->getApiToken();
 
             return new JsonResponse(['apiToken' => 'userApiToken']);
         }
     }
 
-Modify the configuration and use your handler for the ``success_handler`` key:
+Then, configure this service ID as the ``success_handler``:
 
 .. configuration-block::
 
@@ -715,7 +716,7 @@ Modify the configuration and use your handler for the ``success_handler`` key:
                         check-post-only="true"
                         max-uses="1"
                         lifetime="600"
-                        success_handler="App\Security\Authentication\AuthenticationSuccessHandler"
+                        success-handler="App\Security\Authentication\AuthenticationSuccessHandler"
                     />
                 </firewall>
             </config>
@@ -724,6 +725,8 @@ Modify the configuration and use your handler for the ``success_handler`` key:
     .. code-block:: php
 
         // config/packages/security.php
+        use App\Security\Authentication\AuthenticationSuccessHandler;
+
         $container->loadFromExtension('security', [
             'firewalls' => [
                 'main' => [
@@ -731,7 +734,7 @@ Modify the configuration and use your handler for the ``success_handler`` key:
                         'check_route' => 'login_check',
                         'lifetime' => 600,
                         'max_uses' => 1,
-                        'success_handler' => 'App\Security\Authentication\AuthenticationSuccessHandler',
+                        'success_handler' => AuthenticationSuccessHandler::class,
                     ],
                 ],
             ],
