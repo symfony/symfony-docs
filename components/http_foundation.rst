@@ -633,7 +633,7 @@ handling, switching to chunked encoding instead::
     use Symfony\Component\HttpFoundation\BinaryFileResponse;
     use Symfony\Component\HttpFoundation\File\Stream;
 
-    $stream  = new Stream('path/to/stream');
+    $stream = new Stream('path/to/stream');
     $response = new BinaryFileResponse($stream);
 
 .. note::
