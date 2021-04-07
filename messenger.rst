@@ -1110,9 +1110,9 @@ than the default polling behavior of the Doctrine transport because
 PostgreSQL will directly notify the workers when a new message is inserted
 in the table.
 
-=======================  =====================================       ======================
+=======================  ==========================================  ======================
 Option                   Description                                 Default
-=======================  =====================================       ======================
+=======================  ==========================================  ======================
 use_notify               Whether to use LISTEN/NOTIFY.               true
 check_delayed_interval   The interval to check for delayed           1000
                          messages, in milliseconds.
