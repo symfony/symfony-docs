@@ -63,7 +63,7 @@ helper method allows creating and configuring the Redis client class instance us
 
 The DSN can specify either an IP/host (and an optional port) or a socket path, as well as a
 password and a database index. To enable TLS for connections, the scheme ``redis`` must be
-replaced by ``rediss``.
+replaced by ``rediss`` (the second ``s`` means "secure").
 
 .. note::
 
