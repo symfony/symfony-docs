@@ -468,6 +468,11 @@ The ``translation:update`` command looks for missing translations in:
   :ref:`translatable-objects` using the constructor or the ``t()`` method or calls
   the ``trans()`` method.
 
+.. versionadded:: 5.3
+
+    Support for extracting Translatable objects has been introduced in
+    Symfony 5.3.
+
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
