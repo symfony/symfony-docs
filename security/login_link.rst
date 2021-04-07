@@ -654,3 +654,85 @@ user create this POST request (e.g. by clicking a button)::
             <button type="submit">Continue</button>
         </form>
     {% endblock %}
+
+Customizing the Success Handler
+...............................
+
+To customize, how the success handler behaves, create your own ``AuthenticationSuccessHandler``::
+
+    // src/Security/Authentication/AuthenticationSuccessHandler.php
+    namespace App\Security\Authentication;
+
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+
+    class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface
+    {
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token): JsonResponse
+        {
+            // Example use case: Create API token for Guard Authentication.
+            $user = $token->getUser(); // Returns string|\Stringable|UserInterface - depends on your implementation.
+
+            $userApiToken = $user->getApiToken();
+
+            return new JsonResponse(['apiToken' => 'userApiToken']);
+        }
+    }
+
+Modify the configuration and use your handler for the ``success_handler`` key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    login_link:
+                        check_route: login_check
+                        lifetime: 600
+                        max_uses: 1
+                        success_handler: App\Security\Authentication\AuthenticationSuccessHandler
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <login-link check-route="login_check"
+                        check-post-only="true"
+                        max-uses="1"
+                        lifetime="600"
+                        success_handler="App\Security\Authentication\AuthenticationSuccessHandler"
+                    />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
+                    'login_link' => [
+                        'check_route' => 'login_check',
+                        'lifetime' => 600,
+                        'max_uses' => 1,
+                        'success_handler' => 'App\Security\Authentication\AuthenticationSuccessHandler',
+                    ],
+                ],
+            ],
+        ]);
