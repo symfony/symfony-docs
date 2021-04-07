@@ -41,6 +41,19 @@ you need it or it can be used in a controller::
         }
     }
 
+Or you can use the ``serialize`` Twig filter in a template:
+
+.. code-block:: twig
+
+    {{ object|serialize(format = 'json') }}
+
+See the :doc:`twig reference </reference/twig_reference>` for
+more information.
+
+.. versionadded:: 5.3
+
+    A ``serialize`` filter was introduced in Symfony 5.3 that uses the Serializer component.
+
 Adding Normalizers and Encoders
 -------------------------------
 
