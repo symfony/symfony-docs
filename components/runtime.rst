@@ -85,24 +85,18 @@ integrate with Swoole or AWS Lambda).
 Use the ``APP_RUNTIME`` environment variable or by specifying the
 ``extra.runtime.class`` in ``composer.json`` to change the Runtime class:
 
-.. configuration-block::
+.. code-block:: json
 
-    .. code-block:: json
-
-        {
-            "require": {
-                "...": "..."
-            },
-            "extra": {
-                "runtime": {
-                    "class": "Symfony\\Component\\Runtime\\GenericRuntime"
-                }
+    {
+        "require": {
+            "...": "..."
+        },
+        "extra": {
+            "runtime": {
+                "class": "Symfony\\Component\\Runtime\\GenericRuntime"
             }
         }
-
-    .. code-block:: env
-
-        APP_RUNTIME="Symfony\\Component\\Runtime\\GenericRuntime"
+    }
 
 Using the Runtime
 -----------------
