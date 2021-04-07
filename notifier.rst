@@ -159,7 +159,7 @@ Gitter      ``symfony/gitter-notifier``       ``GITTER_DSN=gitter://TOKEN@defaul
 GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
 LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
 Mattermost  ``symfony/mattermost-notifier``   ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
-Mercure     ``symfony/mercure-notifier``      ``mercure://PUBLISHER_SERVICE_ID?topic=TOPIC``
+Mercure     ``symfony/mercure-notifier``      ``mercure://HUB_ID?topic=TOPIC``
 RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack       ``symfony/slack-notifier``        ``slack://TOKEN@default?channel=CHANNEL``
 Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
