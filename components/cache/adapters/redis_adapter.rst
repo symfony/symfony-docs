@@ -62,7 +62,8 @@ helper method allows creating and configuring the Redis client class instance us
     );
 
 The DSN can specify either an IP/host (and an optional port) or a socket path, as well as a
-password and a database index.
+password and a database index. To enable TLS for connections, the scheme ``redis`` must be
+replaced by ``rediss`` (the second ``s`` means "secure").
 
 .. note::
 
@@ -70,7 +71,7 @@ password and a database index.
 
     .. code-block:: text
 
-        redis://[pass@][ip|host|socket[:port]][/db-index]
+        redis[s]://[pass@][ip|host|socket[:port]][/db-index]
 
 Below are common examples of valid DSNs showing a combination of available values::
 

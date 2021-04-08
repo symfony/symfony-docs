@@ -705,9 +705,11 @@ class, which can make this even easier::
     // if you know the data to send when creating the response
     $response = new JsonResponse(['data' => 123]);
 
-    // if you don't know the data to send when creating the response
+    // if you don't know the data to send or if you want to customize the encoding options
     $response = new JsonResponse();
     // ...
+    // configure any custom encoding options (if needed, it must be called before "setData()")
+    //$response->setEncodingOptions(JsonResponse::DEFAULT_ENCODING_OPTIONS | \JSON_PRESERVE_ZERO_FRACTION);
     $response->setData(['data' => 123]);
 
     // if the data to send is already encoded in JSON

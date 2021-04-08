@@ -313,6 +313,13 @@ to multiple transports:
             ],
         ]);
 
+.. note::
+
+    If you configure routing for both a child and parent class, both rules
+    are used. E.g. if you have an ``SmsNotification`` object that extends
+    from ``Notification``, both the routing for ``Notification`` and
+    ``SmsNotification`` will be used.
+
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
