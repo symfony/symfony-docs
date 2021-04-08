@@ -187,7 +187,7 @@ This requires you to implement several methods::
             return true;
         }
 
-        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
         {
             // on success, let the request continue
             return null;

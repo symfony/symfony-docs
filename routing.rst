@@ -2216,8 +2216,8 @@ Stateless Routes
     The ``stateless`` option was introduced in Symfony 5.1.
 
 Sometimes, when an HTTP response should be cached, it is important to ensure
-that can happen. However, whenever session is started during a request, Symfony
-turns the response into a private non-cacheable response.
+that can happen. However, whenever a session is started during a request,
+Symfony turns the response into a private non-cacheable response.
 
 For details, see :doc:`/http_cache`.
 
