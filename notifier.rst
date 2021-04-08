@@ -64,7 +64,7 @@ FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@defa
 GatewayApi  ``symfony/gatewayapi-notifier``   ``gatewayapi://TOKEN@default?from=FROM``
 Infobip     ``symfony/infobip-notifier``      ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms       ``symfony/iqsms-notifier``        ``iqsms://LOGIN:PASSWORD@default?from=FROM``
-LightSMS    ``symfony/lightsms-notifier``     ``lightsms://LOGIN:TOKEN@default?from=PHONE``
+LightSms    ``symfony/light-sms-notifier``    ``lightsms://LOGIN:TOKEN@default?from=PHONE``
 Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
 Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
 Octopush    ``symfony/octopush-notifier``     ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
@@ -86,7 +86,7 @@ Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=
 
 .. versionadded:: 5.3
 
-    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms and LightSMS
+    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms and LightSms
     integrations were introduced in Symfony 5.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
