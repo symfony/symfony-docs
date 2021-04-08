@@ -381,10 +381,35 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
+    You can avoid triggering those events by using the context::
+
+        $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
+
+    .. versionadded:: 5.1
+
+        The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
+
+    .. versionadded:: 5.2
+
+        In Symfony 5.2, the context is accessible in all events::
+
+            // $context must be an array
+            $context = ['context_key' => 'context_value'];
+            $workflow->apply($subject, $transitionName, $context);
+
+            // in an event listener
+            $context = $event->getContext(); // returns ['context']
+
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
     in same place.
+
+.. note::
+
+    If you initialize the marking by calling ``$workflow->getMarking($object);``,
+    then the ``workflow.[workflow_name].entered.[initial_place_name]`` event will
+    be called with the default context (``Workflow::DEFAULT_INITIAL_CONTEXT``).
 
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::

@@ -313,6 +313,13 @@ to multiple transports:
             ],
         ]);
 
+.. note::
+
+    If you configure routing for both a child and parent class, both rules
+    are used. E.g. if you have an ``SmsNotification`` object that extends
+    from ``Notification``, both the routing for ``Notification`` and
+    ``SmsNotification`` will be used.
+
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1107,6 +1114,12 @@ a table named ``messenger_messages``.
 Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
 
+.. caution::
+
+    The datetime property of the messages stored in the database uses the
+    timezone of the current system. This may cause issues if multiple machines
+    with different timezone configuration use the same storage.
+
 The transport has a number of options:
 
 ==================  =====================================  ======================
@@ -1126,11 +1139,28 @@ auto_setup          Whether the table should be created
                     automatically during send / get.       true
 ==================  =====================================  ======================
 
-.. caution::
+.. versionadded:: 5.1
 
-    The datetime property of the messages stored in the database uses the
-    timezone of the current system. This may cause issues if multiple machines
-    with different timezone configuration use the same storage.
+    The ability to leverage PostgreSQL's LISTEN/NOTIFY was introduced
+    in Symfony 5.1.
+
+When using PostgreSQL, you have access to the following options to leverage
+the `LISTEN/NOTIFY`_ feature. This allow for a more performant approach
+than the default polling behavior of the Doctrine transport because
+PostgreSQL will directly notify the workers when a new message is inserted
+in the table.
+
+=======================  ==========================================  ======================
+Option                   Description                                 Default
+=======================  ==========================================  ======================
+use_notify               Whether to use LISTEN/NOTIFY.               true
+check_delayed_interval   The interval to check for delayed           1000
+                         messages, in milliseconds.
+                         Set to 0 to disable checks.
+get_notify_timeout       The length of time to wait for a            0
+                         response when calling
+                         ``PDO::pgsqlGetNotify```, in milliseconds.
+=======================  ==========================================  ======================
 
 Beanstalkd Transport
 ~~~~~~~~~~~~~~~~~~~~
@@ -2081,3 +2111,4 @@ Learn more
 .. _`Long polling`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
+.. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html
