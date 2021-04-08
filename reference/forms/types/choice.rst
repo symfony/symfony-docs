@@ -196,11 +196,11 @@ Field Options
 choices
 ~~~~~~~
 
-**type**: ``array`` **default**: ``[]``
+**type**: ``array``, ``callable`` **default**: ``[]``
 
 This is the most basic way to specify the choices that should be used
-by this field. The ``choices`` option is an array, where the array key
-is the item's label and the array value is the item's value::
+by this field. The ``choices`` option can be an array, where the array
+key is the item's label and the array value is the item's value::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
@@ -216,6 +216,19 @@ If there are choice values that are not scalar or the stringified
 representation is not unique Symfony will use incrementing integers
 as values. When the form gets submitted the correct values with the
 correct types will be assigned to the model.
+
+The ``choices`` option can also be a callable. This allows you,
+among other things, to use the power of PHP generators::
+
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('inStock', ChoiceType::class, [
+        'choices' => static function () {
+            yield 'In Stock' => true;
+            yield 'Out of Stock' => false;
+        },
+    ]);
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
