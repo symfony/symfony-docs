@@ -984,6 +984,8 @@ Option                  Description                                            D
 ``csv_delimiter``       Sets the field delimiter separating values (one        ``,``
                         character only)
 ``csv_enclosure``       Sets the field enclosure (one character only)          ``"``
+``csv_end_of_line``     Sets the character(s) used to mark the end of each     ``\n``
+                        line in the CSV file
 ``csv_escape_char``     Sets the escape character (at most one character)      empty string
 ``csv_key_separator``   Sets the separator for array's keys during its         ``.``
                         flattening
@@ -999,6 +1001,10 @@ Option                  Description                                            D
 ``no_headers``          Disables header in the encoded CSV                     ``false``
 ``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data   ``false``
 ======================= =====================================================  ==========================
+
+.. versionadded:: 5.3
+
+    The ``csv_end_of_line`` option was introduced in Symfony 5.3.
 
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
