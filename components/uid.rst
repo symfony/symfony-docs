@@ -370,6 +370,116 @@ of the ULID parameters::
         }
     }
 
+Generating and Inspecting UUIDs/ULIDs in the Console
+----------------------------------------------------
+
+.. versionadded:: 5.3
+
+    The commands to inspect and generate UUIDs/ULIDs were introduced in Symfony 5.3.
+
+This component provides several commands to generate and inspect UUIDs/ULIDs in
+the console. They are not enabled by default, so you must add the following
+configuration in your application before using these commands:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Uid\Command\GenerateUlidCommand: ~
+            Symfony\Component\Uid\Command\GenerateUuidCommand: ~
+            Symfony\Component\Uid\Command\InspectUlidCommand: ~
+            Symfony\Component\Uid\Command\InspectUuidCommand: ~
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="Symfony\Component\Uid\Command\GenerateUlidCommand"/>
+                <service id="Symfony\Component\Uid\Command\GenerateUuidCommand"/>
+                <service id="Symfony\Component\Uid\Command\InspectUlidCommand"/>
+                <service id="Symfony\Component\Uid\Command\InspectUuidCommand"/>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\Uid\Command\GenerateUlidCommand;
+        use Symfony\Component\Uid\Command\GenerateUuidCommand;
+        use Symfony\Component\Uid\Command\InspectUlidCommand;
+        use Symfony\Component\Uid\Command\InspectUuidCommand;
+
+        return static function (ContainerConfigurator $configurator): void {
+            // ...
+
+            $services
+                ->set(GenerateUlidCommand::class)
+                ->set(GenerateUuidCommand::class)
+                ->set(InspectUlidCommand::class)
+                ->set(InspectUuidCommand::class);
+        };
+
+Now you can generate UUIDs/ULIDs as follows (add the ``--help`` option to the
+commands to learn about all their options):
+
+.. code-block:: terminal
+
+    # generate 1 random-based UUID
+    $ php bin/console uuid:generate --random-based
+
+    # generate 1 time-based UUID with a specific node
+    $ php bin/console uuid:generate --time-based=now --node=fb3502dc-137e-4849-8886-ac90d07f64a7
+
+    # generate 2 UUIDs and output them in base58 format
+    $ php bin/console uuid:generate --count=2 --format=base58
+
+    # generate 1 ULID with the current time as the timestamp
+    $ php bin/console ulid:generate
+
+    # generate 1 ULID with a specific timestamp
+    $ php bin/console ulid:generate --time="2021-02-02 14:00:00"
+
+    # generate 2 ULIDs and ouput them in RFC4122 format
+    $ php bin/console ulid:generate --count=2 --format=rfc4122
+
+In addition to generating new UIDs, you can also inspect them with the following
+commands to show all the information for a given UID:
+
+.. code-block:: terminal
+
+    $ php bin/console uuid:inspect d0a3a023-f515-4fe0-915c-575e63693998
+     ---------------------- --------------------------------------
+      Label                  Value
+     ---------------------- --------------------------------------
+      Version                4
+      Canonical (RFC 4122)   d0a3a023-f515-4fe0-915c-575e63693998
+      Base 58                SmHvuofV4GCF7QW543rDD9
+      Base 32                6GMEG27X8N9ZG92Q2QBSHPJECR
+     ---------------------- --------------------------------------
+
+    $ php bin/console ulid:inspect 01F2TTCSYK1PDRH73Z41BN1C4X
+     --------------------- --------------------------------------
+      Label                 Value
+     --------------------- --------------------------------------
+      Canonical (Base 32)   01F2TTCSYK1PDRH73Z41BN1C4X
+      Base 58               1BYGm16jS4kX3VYCysKKq6
+      RFC 4122              0178b5a6-67d3-0d9b-889c-7f205750b09d
+     --------------------- --------------------------------------
+      Timestamp             2021-04-09 08:01:24.947
+     --------------------- --------------------------------------
+
 .. _`unique identifiers`: https://en.wikipedia.org/wiki/UID
 .. _`UUIDs`: https://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`ULIDs`: https://github.com/ulid/spec
