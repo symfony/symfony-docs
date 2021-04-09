@@ -20,8 +20,9 @@ enough to render an entire form, including all its fields and error messages:
 
 .. code-block:: twig
 
-    {# form is a variable passed from the controller and created
-      by calling to the $form->createView() method #}
+    {# form is a variable passed from the controller via either
+      $this->renderForm('...', $form)
+      or $this->render('...', ['form' => $form->createView()]) #}
     {{ form(form) }}
 
 The next step is to use the :ref:`form_start() <reference-forms-twig-start>`,
