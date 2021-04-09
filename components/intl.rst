@@ -262,15 +262,45 @@ as some of their information (symbol, fraction digits, etc.)::
     $symbol = Currencies::getSymbol('INR');
     // => '₹'
 
-    $fractionDigits = Currencies::getFractionDigits('INR');
-    // => 2
+The fraction digits methods return the number of decimal digits to display when
+formatting numbers with this currency. Depending on the currency, this value
+can change if the number is used in cash transactions or in other scenarios
+(e.g. accounting)::
 
-    $roundingIncrement = Currencies::getRoundingIncrement('INR');
-    // => 0
+    // Indian rupee defines the same value for both
+    $fractionDigits = Currencies::getFractionDigits('INR');         // returns: 2
+    $cashFractionDigits = Currencies::getCashFractionDigits('INR'); // returns: 2
 
-All methods (except for ``getFractionDigits()`` and ``getRoundingIncrement()``)
-accept the translation locale as the last, optional parameter, which defaults to
-the current default locale::
+    // Swedish krona defines different values
+    $fractionDigits = Currencies::getFractionDigits('SEK');         // returns: 2
+    $cashFractionDigits = Currencies::getCashFractionDigits('SEK'); // returns: 0
+
+.. versionadded:: 5.3
+
+    The ``getCashFractionDigits()`` method was introduced in Symfony 5.3.
+
+Some currencies require to round numbers to the nearest increment of some value
+(e.g. 5 cents). This increment might be different if numbers are formatted for
+cash transactions or other scenarios (e.g. accounting)::
+
+    // Indian rupee defines the same value for both
+    $roundingIncrement = Currencies::getRoundingIncrement('INR');         // returns: 0
+    $cashRoundingIncrement = Currencies::getCashRoundingIncrement('INR'); // returns: 0
+
+    // Canadian dollar defines different values because they have eliminated
+    // the smaller coins (1-cent and 2-cent) and prices in cash must be rounded to
+    // 5 cents (e.g. if price is 7.42 you pay 7.40; if price is 7.48 you pay 7.50)
+    $roundingIncrement = Currencies::getRoundingIncrement('CAD');         // returns: 0
+    $cashRoundingIncrement = Currencies::getCashRoundingIncrement('CAD'); // returns: 5
+
+.. versionadded:: 5.3
+
+    The ``getCashRoundingIncrement()`` method was introduced in Symfony 5.3.
+
+All methods (except for ``getFractionDigits()``, ``getCashFractionDigits()``,
+``getRoundingIncrement()`` and ``getCashRoundingIncrement()``) accept the
+translation locale as the last, optional parameter, which defaults to the
+current default locale::
 
     $currencies = Currencies::getNames('de');
     // => ['AFN' => 'Afghanischer Afghani', 'EGP' => 'Ägyptisches Pfund', ...]
