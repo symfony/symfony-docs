@@ -6,12 +6,11 @@ The Intl Component
 ==================
 
     This component provides access to the localization data of the `ICU library`_.
-    It also provides a PHP replacement layer for the C `intl extension`_.
 
 .. caution::
 
     The replacement layer is limited to the ``en`` locale. If you want to use
-    other locales, you should `install the intl extension`_. There is no conflict 
+    other locales, you should `install the intl extension`_. There is no conflict
     between the two because, even if you use the extension, this package can still
     be useful to access the ICU data.
 
@@ -29,30 +28,6 @@ Installation
     $ composer require symfony/intl
 
 .. include:: /components/require_autoload.rst.inc
-
-If you install the component via Composer, the following classes and functions
-of the intl extension will be automatically provided if the intl extension is
-not loaded:
-
-* :phpclass:`Collator`
-* :phpclass:`IntlDateFormatter`
-* :phpclass:`Locale`
-* :phpclass:`NumberFormatter`
-* :phpfunction:`intl_error_name`
-* :phpfunction:`intl_is_failure`
-* :phpfunction:`intl_get_error_code`
-* :phpfunction:`intl_get_error_message`
-
-When the intl extension is not available, the following classes are used to
-replace the intl classes:
-
-* :class:`Symfony\\Component\\Intl\\Collator\\Collator`
-* :class:`Symfony\\Component\\Intl\\DateFormatter\\IntlDateFormatter`
-* :class:`Symfony\\Component\\Intl\\Locale\\Locale`
-* :class:`Symfony\\Component\\Intl\\NumberFormatter\\NumberFormatter`
-* :class:`Symfony\\Component\\Intl\\Globals\\IntlGlobals`
-
-Composer automatically exposes these classes in the global namespace.
 
 Accessing ICU Data
 ------------------
@@ -211,9 +186,9 @@ Locales
 ~~~~~~~
 
 A locale is the combination of a language, a region and some parameters that
-define the interface preferences of the user. For example, "Chinese" is the 
-language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified" 
-(script) + "Macau SAR China" (region). The ``Locales`` class provides access to 
+define the interface preferences of the user. For example, "Chinese" is the
+language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified"
+(script) + "Macau SAR China" (region). The ``Locales`` class provides access to
 the name of all locales::
 
     use Symfony\Component\Intl\Locales;
@@ -375,7 +350,6 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _intl extension: https://www.php.net/manual/en/book.intl.php
 .. _install the intl extension: https://www.php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
