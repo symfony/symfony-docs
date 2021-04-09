@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-06T09:52:05Z
+
+A small ping on this PR.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2021-04-06T11:55:44Z
+
+There is still this sentence in the introduction:
+
+> It also provides a PHP replacement layer for the C intl extension.
+
+We should check if there are more references to the extension.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-07T06:35:40Z
+
+Thank you.
+
+The PR is updated
