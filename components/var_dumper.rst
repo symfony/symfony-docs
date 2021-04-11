@@ -470,7 +470,7 @@ then its dump representation::
     if (dump($t <= "12")) {
         echo "Have a good day!";
     } else if (dump($t <= "20")) {
-        echo "Have a good night!";
+        echo "Have a good afternoon!";
     } else {
         echo "Have a good night!";
     }
