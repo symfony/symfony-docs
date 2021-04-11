@@ -463,6 +463,20 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/09-cut.png
 
+.. code-block:: php
+
+    $t = date("H"); //now is 14:00 (2 pm)        
+
+    if (dump($t <= "12")) {
+        echo "Have a good day!";
+    } else if (dump($t <= "20")) {
+        echo "Have a good night!";
+    } else {
+        echo "Have a good night!";
+    }
+    dump($t);    
+        
+
 Learn More
 ----------
 
