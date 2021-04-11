@@ -53,28 +53,29 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==========  ================================  ====================================================
-Service     Package                           DSN
-==========  ================================  ====================================================
-AllMySms    ``symfony/allmysms-notifier``     ``allmysms://LOGIN:APIKEY@default?from=FROM``
-Clickatell  ``symfony/clickatell-notifier``   ``clickatell://ACCESS_TOKEN@default?from=FROM``
-Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-FakeSms     ``symfony/fake-sms-notifier``     ``fakesms+email://default?to=TO&from=FROM``
-FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-GatewayApi  ``symfony/gatewayapi-notifier``   ``gatewayapi://TOKEN@default?from=FROM``
-Infobip     ``symfony/infobip-notifier``      ``infobip://AUTH_TOKEN@HOST?from=FROM``
-Iqsms       ``symfony/iqsms-notifier``        ``iqsms://LOGIN:PASSWORD@default?from=FROM``
-LightSms    ``symfony/light-sms-notifier``    ``lightsms://LOGIN:TOKEN@default?from=PHONE``
-Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
-Octopush    ``symfony/octopush-notifier``     ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
-OvhCloud    ``symfony/ovh-cloud-notifier``    ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
-Sendinblue  ``symfony/sendinblue-notifier``   ``sendinblue://API_KEY@default?sender=PHONE``
-Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-Smsapi      ``symfony/smsapi-notifier``       ``smsapi://TOKEN@default?from=FROM``
-SpotHit     ``symfony/spothit-notifier``      ``spothit://TOKEN@default?from=FROM``
-Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
-==========  ================================  ====================================================
+==============  ====================================  ===========================================================================
+Service         Package                               DSN
+==============  ====================================  ===========================================================================
+AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
+Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
+Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
+FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM``
+FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
+Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
+Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
+Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
+Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@default?from=FROM``
+Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
+OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
+Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
+SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
+SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
+Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
+==============  ====================================  ===========================================================================
 
 .. versionadded:: 5.1
 
