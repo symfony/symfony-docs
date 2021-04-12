@@ -500,6 +500,11 @@ You must enable this using the ``login_throttling`` setting:
                     login_throttling:
                         max_attempts: 3
 
+                    # configure the maximum login attempts in a custom period of time
+                    login_throttling:
+                        max_attempts: 3
+                        interval: '15 minutes'
+
                     # use a custom rate limiter via its service ID
                     login_throttling:
                         limiter: app.my_login_rate_limiter
@@ -526,6 +531,9 @@ You must enable this using the ``login_throttling`` setting:
                     <!-- configure the maximum login attempts (per minute) -->
                     <login-throttling max-attempts="3"/>
 
+                    <!-- configure the maximum login attempts in a custom period of time -->
+                    <login-throttling max-attempts="3" interval="15 minutes"/>
+
                     <!-- use a custom rate limiter via its service ID -->
                     <login-throttling limiter="app.my_login_rate_limiter"/>
                 </firewall>
@@ -550,6 +558,12 @@ You must enable this using the ``login_throttling`` setting:
                         'max_attempts' => 3,
                     ],
 
+                    // configure the maximum login attempts in a custom period of time
+                    'login_throttling' => [
+                        'max_attempts' => 3,
+                        'interval' => '15 minutes',
+                    ],
+
                     // use a custom rate limiter via its service ID
                     'login_throttling' => [
                         'limiter' => 'app.my_login_rate_limiter',
@@ -557,6 +571,10 @@ You must enable this using the ``login_throttling`` setting:
                 ],
             ],
         ]);
+
+.. versionadded:: 5.3
+
+    The ``login_throttling.interval`` option was introduced in Symfony 5.3.
 
 By default, login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
