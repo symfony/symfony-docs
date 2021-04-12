@@ -85,7 +85,7 @@ changes can be made to any Symfony 3.4 or higher app:
    and update your `phpunit.xml.dist file`_ so it loads the ``tests/bootstrap.php``
    file.
 
-.. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.1/public/index.php
+.. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.2/public/index.php
 .. _`bin/console`: https://github.com/symfony/recipes/blob/master/symfony/console/5.1/bin/console
 .. _`comment on the top of .env`: https://github.com/symfony/recipes/blob/master/symfony/flex/1.0/.env
 .. _`create a new .env.test`: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/3.3/.env.test
