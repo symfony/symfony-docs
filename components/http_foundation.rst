@@ -190,7 +190,7 @@ Finally, the raw data sent with the request body can be accessed using
 
     $content = $request->getContent();
 
-For instance, this may be useful to process a XML string sent to the
+For instance, this may be useful to process an XML string sent to the
 application by a remote service using the HTTP POST method.
 
 If the request body is a JSON string, it can be accessed using
@@ -519,7 +519,7 @@ call::
         's_maxage'         => 600,
         'immutable'        => true,
         'last_modified'    => new \DateTime(),
-        'etag'             => 'abcdef'
+        'etag'             => 'abcdef',
     ]);
 
 .. versionadded:: 5.1
