@@ -190,7 +190,7 @@ Finally, the raw data sent with the request body can be accessed using
 
     $content = $request->getContent();
 
-For instance, this may be useful to process a XML string sent to the
+For instance, this may be useful to process an XML string sent to the
 application by a remote service using the HTTP POST method.
 
 If the request body is a JSON string, it can be accessed using
@@ -347,11 +347,11 @@ analysis purposes. Use the ``anonymize()`` method from the
     use Symfony\Component\HttpFoundation\IpUtils;
 
     $ipv4 = '123.234.235.236';
-    $anonymousIpv4 = IPUtils::anonymize($ipv4);
+    $anonymousIpv4 = IpUtils::anonymize($ipv4);
     // $anonymousIpv4 = '123.234.235.0'
 
     $ipv6 = '2a01:198:603:10:396e:4789:8e99:890f';
-    $anonymousIpv6 = IPUtils::anonymize($ipv6);
+    $anonymousIpv6 = IpUtils::anonymize($ipv6);
     // $anonymousIpv6 = '2a01:198:603:10::'
 
 Accessing other Data
@@ -520,7 +520,7 @@ call::
         's_maxage'         => 600,
         'immutable'        => true,
         'last_modified'    => new \DateTime(),
-        'etag'             => 'abcdef'
+        'etag'             => 'abcdef',
     ]);
 
 .. versionadded:: 5.1
