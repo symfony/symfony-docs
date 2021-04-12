@@ -292,7 +292,9 @@ context of the crawler::
 Adding the Content
 ~~~~~~~~~~~~~~~~~~
 
-The crawler supports multiple ways of adding the content::
+The crawler supports multiple ways of adding the content, but they are mutually
+exclusive, so you can only use one of them to add content (e.g. if you pass the
+content to the ``Crawler`` constructor, you can't call ``addContent()`` later)::
 
     $crawler = new Crawler('<html><body/></html>');
 
