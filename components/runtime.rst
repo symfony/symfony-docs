@@ -142,7 +142,7 @@ The following arguments are supported by the ``SymfonyRuntime``:
     ``Command::setCode()``).
 
 And these arguments are supported by both the ``SymfonyRuntime`` and
-``GenerGenericRuntime`` (both type and variable name are important):
+``GenericRuntime`` (both type and variable name are important):
 
 ``array $context``
     This is the same as ``$_SERVER`` + ``$_ENV``.
