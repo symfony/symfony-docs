@@ -59,7 +59,7 @@ Service     Package                           DSN
 AllMySms    ``symfony/allmysms-notifier``     ``allmysms://LOGIN:APIKEY@default?from=FROM``
 Clickatell  ``symfony/clickatell-notifier``   ``clickatell://ACCESS_TOKEN@default?from=FROM``
 Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-FakeSms     ``symfony/fake-sms-notifier``     ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM``
+FakeSms     ``symfony/fake-sms-notifier``     ``fakesms+email://default?to=TO&from=FROM``
 FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 GatewayApi  ``symfony/gatewayapi-notifier``   ``gatewayapi://TOKEN@default?from=FROM``
 Infobip     ``symfony/infobip-notifier``      ``infobip://AUTH_TOKEN@HOST?from=FROM``
@@ -153,7 +153,7 @@ integration with these chat services:
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
 Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
-FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://MAILER_SERVICE_ID?to=TO&from=FROM``
+FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM``
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
 Gitter          ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
 GoogleChat      ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
