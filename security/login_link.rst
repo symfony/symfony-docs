@@ -739,3 +739,5 @@ Then, configure this service ID as the ``success_handler``:
                 ],
             ],
         ]);
+        
+If you want to manage the failure for example the link is expires, use 'failure_handler' and implements "AuthenticationFailureHandlerInterface" instand of "AuthenticationSuccessHandlerInterface"
