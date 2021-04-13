@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by Kocal at 2021-04-13T08:31:46Z
+
+Funny, I updated the Symfony CLI from 4.21.6 to the latest version and there is a changelog entry about `APP_ENV=test` and databases:
+![image](https://user-images.githubusercontent.com/2103975/114522175-666b9300-9c43-11eb-9ea4-9f1e53b30874.png)
+
+This definitly needs to be in the documentation I think.
