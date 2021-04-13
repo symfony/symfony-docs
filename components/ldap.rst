@@ -115,6 +115,10 @@ to the ``LDAP_SCOPE_BASE`` scope of :phpfunction:`ldap_read`) and ``SCOPE_ONE``
 
     $query = $ldap->query('dc=symfony,dc=com', '...', ['scope' => QueryInterface::SCOPE_ONE]);
 
+Use the ``filter`` option to only retrieve some specific attributes:
+
+    $query = $ldap->query('dc=symfony,dc=com', '...', ['filter' => ['cn, mail']);
+
 Creating or Updating Entries
 ----------------------------
 
