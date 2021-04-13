@@ -9,7 +9,12 @@ them as SVG or PNG images. First, install any of these free and open source
 applications needed to generate the images:
 
 * `Graphviz`_, provides the ``dot`` command;
+* `Mermaid CLI`_, provides the ``mmdc`` command;
 * `PlantUML`_, provides the ``plantuml.jar`` file (which requires Java).
+
+.. versionadded:: 5.3
+
+    The ``mermaid`` dump format was introduced in Symfony 5.3.
 
 If you are defining the workflow inside a Symfony application, run this command
 to dump it as an image:
@@ -28,9 +33,16 @@ to dump it as an image:
     # highlight 'place1' and 'place2' in the dumped workflow
     $ php bin/console workflow:dump workflow-name place1 place2 | dot -Tsvg -o graph.svg
 
+    # using Mermaid.js CLI
+    $ php bin/console workflow:dump workflow_name --dump-format=mermaid | mmdc -o graph.svg
+
 The DOT image will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
+
+The Mermaid image will look like this:
+
+.. image:: /_images/components/workflow/blogpost_mermaid.png
 
 The PlantUML image will look like this:
 
@@ -63,7 +75,7 @@ You can use ``metadata`` with the following keys to style the workflow:
 
   * ``bg_color``: a color;
   * ``description``: a string that describes the state.
-  
+
 * for transitions:
 
   * ``label``: a string that replaces the name of the transition;
@@ -75,6 +87,11 @@ Colors can be defined as:
 
 * a color name from `PlantUML's color list`_;
 * an hexadecimal color (both ``#AABBCC`` and ``#ABC`` formats are supported).
+
+.. note::
+
+    The Mermaid dumper does not support coloring the arrow heads
+    with ``arrow_color`` as there is no support in Mermaid for doing so.
 
 Below is the configuration for the pull request state machine with styling added.
 
@@ -310,5 +327,6 @@ The PlantUML image will look like this:
 .. image:: /_images/components/workflow/pull_request_puml_styled.png
 
 .. _`Graphviz`: https://www.graphviz.org
+.. _`Mermaid CLI`: https://github.com/mermaid-js/mermaid-cli
 .. _`PlantUML`: https://plantuml.com/
 .. _`PlantUML's color list`: https://plantuml.com/color
