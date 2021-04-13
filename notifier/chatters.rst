@@ -218,6 +218,44 @@ to add `message options`_::
 
     $chatter->send($chatMessage);
 
+Adding Options to a Microsoft Teams Message
+-------------------------------------------
+
+With a Microsoft Teams message, you can use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\MicrosoftTeams\\MicrosoftTeamsOptions` class
+to add `options`_::
+
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\MicrosoftTeamsOptions;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Section\Field\Image;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Section\Section;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('');
+
+    // Create MicrosoftTeams options
+    $options = (new MicrosoftTeamsOptions())
+        ->title('Hey all!')
+        ->summary('**A big thank you**') // you can use Markdown here
+        ->text('Lets celebrate the release of Symfony 5.3 all together!')
+        ->themeColor('FF0000');
+
+    $options->section((new Section())
+        ->image((new Image())
+            ->image('https://symfony.com/logo.png')
+            ->title('The Symfony Logo')
+        )
+    );
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($options);
+
+    $chatter->send($chatMessage);
+
+.. versionadded:: 5.3
+
+    Options for Microsoft Teams were introduced in Symfony 5.3.
+
 .. _`Block elements`: https://api.slack.com/reference/block-kit/block-elements
 .. _`Embed elements`: https://discord.com/developers/docs/resources/webhook
 .. _`message options`: https://core.telegram.org/bots/api
+.. _`options`: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
