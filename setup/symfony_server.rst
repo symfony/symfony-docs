@@ -322,9 +322,9 @@ prefixed with ``DB_``, but as the ``com.symfony.server.service-prefix`` is set
 to ``DATABASE``, the web server creates environment variables starting with
 ``DATABASE_`` instead as expected by the default Symfony configuration.
 
-You don't need to create two containers for a main database and a test database.
-Using `APP_ENV=test symfony` will automatically adjust `DATABASE_*` environment variables
-for a test environment.
+You don't need to create two containers for the main database and the test
+database. Using ``APP_ENV=test symfony`` will automatically adjust
+``DATABASE_*`` environment variables for the ``test`` environment:
 
 .. code-block:: terminal
 
