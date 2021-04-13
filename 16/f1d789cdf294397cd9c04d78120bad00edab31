@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-04-11T05:34:51Z
+
+Is this code already available in Symfony 4.4?
+
+---------------------------------------------------------------------------
+
+by jraller at 2021-04-12T15:47:21Z
+
+> Is this code already available in Symfony 4.4?
+
+Using blame to look at /Adapter/ExtLdap/Query.php in the callSearchFunction line shows that there was a refactor on 2020-10-07, but that the code that was refactored had `$this->options['filter']` already at that point.
+
+I'm seeing this as far back as 3 years ago, so I'm feeling like it was available in 4.4.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-04-12T17:11:50Z
+
+Thanks for your feedback ✅
