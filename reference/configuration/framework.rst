@@ -3207,6 +3207,10 @@ headers
 Headers to add to emails. The key (``name`` attribute in xml format) is the
 header name and value the header value.
 
+.. seealso::
+
+    For more information, see :ref:`Configuring Emails Globally <mailer-configure-email-globally>`
+
 web_link
 ~~~~~~~~
 
