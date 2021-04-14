@@ -758,8 +758,7 @@ Set the ``label`` option on fields to define their labels explicitly::
 .. tip::
 
     By default, ``<label>`` tags of required fields are rendered with a
-    ``required`` CSS class, so you can display an asterisk for required
-    fields applying these CSS styles:
+    ``required`` CSS class, so you can display an asterisk by applying a CSS style:
 
     .. code-block:: css
 
