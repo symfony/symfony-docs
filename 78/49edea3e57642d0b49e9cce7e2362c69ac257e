@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2021-01-02T19:44:07Z
+
+No, pty was introduced in 2.5 and tty even before that. This is one of the oldest undocumented features
