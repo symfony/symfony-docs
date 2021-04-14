@@ -106,15 +106,18 @@ make them available to all requests until the server is restarted, improving
 performance significantly.
 
 During container compilation (e.g. when running the ``cache:clear`` command),
-Symfony generates a file called ``preload.php`` in the ``config/`` directory
-with the list of classes to preload.
-
-You can configure PHP to use this preload file:
+Symfony generates a file with the list of classes to preload in the
+``var/cache/`` directory. Rather than use this file directly, use the
+``config/preload.php`` file that is created when
+:doc:`using Symfony Flex in your project </setup/flex>`:
 
 .. code-block:: ini
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
+
+If this file is missing, run this command to reinstall the Symfony Flex recipe:
+``composer recipes:install symfony/framework-bundle --force -v``.
 
 Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
