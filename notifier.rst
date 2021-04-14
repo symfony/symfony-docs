@@ -87,8 +87,8 @@ Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@defau
 
 .. versionadded:: 5.3
 
-    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms and LightSms
-    integrations were introduced in Symfony 5.3.
+    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms, LightSms,
+    and SmsBiuras integrations were introduced in Symfony 5.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
