@@ -660,10 +660,8 @@ Customizing the Success Handler
 
 Sometimes, the default success handling does not fit your use-case (e.g.
 when you need to generate and return an API key). To customize how the
-success handler behaves, create your own that must implement
-:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`.
-
-.. code-block:: php
+success handler behaves, create your own handler as a class that implements
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`::
 
     // src/Security/Authentication/AuthenticationSuccessHandler.php
     namespace App\Security\Authentication;
