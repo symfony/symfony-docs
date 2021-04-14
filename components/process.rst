@@ -358,6 +358,35 @@ The input of a process can also be defined using `PHP streams`_::
     // will echo: 'foobar'
     echo $process->getOutput();
 
+Using TTY and PTY Modes
+-----------------------
+
+All examples above show that your program has control over the input of a
+process (using ``setInput()``) and the output from that process (using
+``getOutput()``). The Process component has two special modes that tweak
+the relationship between your program and the process: teletype (tty) and
+pseudo-teletype (pty).
+
+In TTY mode, you connect the input and output of the process to the input
+and output of your program. This allows for instance to open an editor like
+Vim or Nano as a process. You enable TTY mode by calling
+:method:`Symfony\\Component\\Process\\Process::setTty`::
+
+    $process = new Process(['vim']);
+    $process->setTty(true);
+    $process->run();
+
+    // As the output is connected to the terminal, it is no longer possible
+    // to read or modify the output from the process!
+    dump($process->getOutput()); // null
+
+In PTY mode, your program behaves as a terminal for the process instead of
+a plain input and output. Some programs behave differently when
+interacting with a real terminal instead of another program. For instance,
+some programs prompt for a password when talking with a terminal. Use
+:method:`Symfony\\Component\\Process\\Process::setPty` to enable this
+mode.
+
 Stopping a Process
 ------------------
 
@@ -512,7 +541,6 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.
-
 
 Finding an Executable
 ---------------------
