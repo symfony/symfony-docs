@@ -75,7 +75,7 @@ page, add:
 
 .. code-block:: diff
 
-      // webpack.config.js
+      // app.js
 
       // require jQuery normally
       const $ = require('jquery');
