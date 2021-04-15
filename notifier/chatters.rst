@@ -98,6 +98,44 @@ to add some interactive options called `Block elements`_::
 
     $chatter->send($chatMessage);
 
+Adding Fields and Values to a Slack Message
+-------------------------------------------
+
+To add fields and values to your message you can use the
+:method:`SlackSectionBlock::field() <Symfony\\Component\\Notifier\\Bridge\\Slack\\Block\\SlackSectionBlock::field>` method::
+
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('Symfony Feature');
+
+    $options = (new SlackOptions())
+        ->block((new SlackSectionBlock())->text('My message'))
+        ->block(new SlackDividerBlock())
+        ->block(
+            (new SlackSectionBlock())
+                ->field('*Max Rating*')
+                ->field('5.0')
+                ->field('*Min Rating*')
+                ->field('1.0')
+        );
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($options);
+
+    $chatter->send($chatMessage);
+
+The result will be something like:
+
+.. image:: /_images/notifier/slack/field-method.png
+   :align: center
+
+.. versionadded:: 5.1
+
+    The `field()` method was introduced in Symfony 5.1.
+
 Adding Interactions to a Discord Message
 ----------------------------------------
 
