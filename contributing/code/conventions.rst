@@ -227,3 +227,11 @@ of the impacted component:
      * Remove the `Deprecated` class, use `Replacement` instead
 
 This task is mandatory and must be done in the same pull request.
+
+Naming Commands and Options
+---------------------------
+
+Commands and their options should be named and described using the English
+imperative mood (i.e. 'run' instead of 'runs', 'list' instead of 'lists'). Using
+the imperative mood is concise and consistent with similar command-line
+interfaces (such as Unix man pages).
