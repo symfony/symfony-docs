@@ -997,10 +997,12 @@ Priority Parameter
 
     The ``priority`` parameter was introduced in Symfony 5.1
 
-Symfony evaluates routes in the order they are defined. So a routing pattern
-that matches many routes might prevent subsequent routes to be matched. In YAML
-and XML you can control the order by moving the routes up or down inside the file.
-For annotations and attributes, there is an optional ``priority`` parameter:
+Symfony evaluates routes in the order they are defined. If the path of a route
+matches many different patterns, it might prevent other routes from being
+matched. In YAML and XML you can move the route definitions up or down in the
+configuration file to control their priority. In routes defined as PHP
+annotations or attributes this is much harder to do, so you can set the
+optional ``priority`` parameter in those routes to control their priority:
 
 .. configuration-block::
 
