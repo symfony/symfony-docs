@@ -798,7 +798,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
     {
         public function __construct(iterable $handlers)
         {
-            $handlers = iterator_to_array($handlers);
+            $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
             $handlerTwo = $handlers['handler_two'];
         }
