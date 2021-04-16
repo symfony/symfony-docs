@@ -92,10 +92,10 @@ fetched from the container::
     
     // adds a new argument with the name of the argument
     // $argumentName = the name of the argument in the constructor
-    $argument = $definition->setArgument('$argumentName', $argumentValue);
+    $definition = $definition->setArgument('$argumentName', $argumentValue);
 
     // adds a new argument
-    $definition->addArgument($argument);
+    $definition->addArgument($argumentValue);
 
     // replaces argument on a specific index (0 = first argument)
     $definition->replaceArgument($index, $argument);
