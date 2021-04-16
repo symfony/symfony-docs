@@ -335,7 +335,9 @@ service into your autowired classes.
 
 .. note::
 
-    Pay attention to the trailing slashes in the `base_uri` parameter and prefixed slashes in your path when making a request. The URI will be merged following the rules explained in the [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt) standard. [You can view some examples here](https://symfony.com/doc/current/reference/configuration/framework.html#base-uri)
+    Read the :ref:`base_uri option docs <reference-http-client-base-uri>` to
+    learn the rules applied when merging relative URIs into the base URI of the
+    scoped client.
 
 Making Requests
 ---------------

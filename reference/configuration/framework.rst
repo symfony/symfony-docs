@@ -817,6 +817,8 @@ in the `Microsoft NTLM authentication protocol`_. The value of this option must
 follow the format ``username:password``. This authentication mechanism requires
 using the cURL-based transport.
 
+.. _reference-http-client-base-uri:
+
 base_uri
 ........
 
