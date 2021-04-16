@@ -90,8 +90,8 @@ fetched from the container::
     // gets a specific argument
     $firstArgument = $definition->getArgument(0);
     
-    // adds a new argument with the name of the argument
-    // $argumentName = the name of the argument in the constructor
+    // adds a new named argument
+    // '$argumentName' = the name of the argument in the constructor, including the '$' symbol
     $definition = $definition->setArgument('$argumentName', $argumentValue);
 
     // adds a new argument
