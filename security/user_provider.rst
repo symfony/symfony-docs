@@ -231,6 +231,8 @@ users will encode their passwords:
             # ...
             encoders:
                 # this internal class is used by Symfony to represent in-memory users
+                # (the 'InMemoryUser' class was introduced in Symfony 5.3.
+                # In previous versions it was called 'User')
                 Symfony\Component\Security\Core\User\InMemoryUser: 'auto'
 
     .. code-block:: xml
@@ -249,6 +251,8 @@ users will encode their passwords:
                 <!-- ... -->
 
                 <!-- this internal class is used by Symfony to represent in-memory users -->
+                <!-- (the 'InMemoryUser' class was introduced in Symfony 5.3.
+                     In previous versions it was called 'User') -->
                 <encoder class="Symfony\Component\Security\Core\User\InMemoryUser"
                     algorithm="auto"
                 />
@@ -260,6 +264,8 @@ users will encode their passwords:
         // config/packages/security.php
 
         // this internal class is used by Symfony to represent in-memory users
+        // (the 'InMemoryUser' class was introduced in Symfony 5.3.
+        // In previous versions it was called 'User')
         use Symfony\Component\Security\Core\User\InMemoryUser;
 
         $container->loadFromExtension('security', [

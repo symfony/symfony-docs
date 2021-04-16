@@ -130,6 +130,8 @@ password was valid::
     use Symfony\Component\Security\Core\User\InMemoryUserProvider;
     use Symfony\Component\Security\Core\User\UserChecker;
 
+    // The 'InMemoryUser' class was introduced in Symfony 5.3.
+    // In previous versions it was called 'User'
     $userProvider = new InMemoryUserProvider(
         [
             'admin' => [
