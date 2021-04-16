@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-03-27T11:57:20Z
+
+Thanks for this contribution!
+
+Given that this is an important change, and to make the transition smoother to users (and to Google search results) we may add a comment about how this class was renamed. We do the same in other parts of the docs, e.g.:
+
+```rst
+.. versionadded:: 4.3
+
+    The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` class was
+    introduced in Symfony 4.3. In previous versions it was called
+    ``Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent``.
+```
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-03-27T12:16:49Z
+
+I would do this as a code comment: `// The InMemoryUser class was introduced in Symfony 5.3. In previous versions it was called User.` (IIRC, we also applied that tactic for some renames that are often used in non-related code)
