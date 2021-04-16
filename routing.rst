@@ -1880,6 +1880,14 @@ use the ``generateUrl()`` helper::
         // the 'blog' route only defines the 'page' parameter; the generated URL is:
         // /blog/2?category=Symfony
 
+.. caution::
+
+    While objects are converted to string when used as placeholders, they are not
+    converted when used as extra parameters. So, if you're passing an object (e.g. an Uuid)
+    as value of an extra parameter, you need to explictly convert it to a string::
+
+        $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid())]
+
 If your controller does not extend from ``AbstractController``, you'll need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 follow the instructions of the next section.
