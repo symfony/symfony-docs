@@ -333,6 +333,10 @@ If you use for example
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
+.. note::
+
+    Pay attention to the trailing slashes in the `base_uri` parameter and prefixed slashes in your path when making a request. The URI will be merged following the rules explained in the [RFC 3986](https://www.ietf.org/rfc/rfc3986.txt) standard. [You can view some examples here](https://symfony.com/doc/current/reference/configuration/framework.html#base-uri)
+
 Making Requests
 ---------------
 
