@@ -919,16 +919,20 @@ parameters at once by type-hinting any of its constructor arguments with the
 Using PHP ConfigBuilders
 ------------------------
 
-Writing PHP config is sometimes difficult because you end up with large nested arrays
-and you have no help from your favorite IDE. A way to address this is to use "ConfigBuilders".
-They are objects that will help you build these arrays.
-
 .. versionadded:: 5.3
 
-    The "ConfigBuilders" was added in Symfony 5.3 as an :doc:`experimental feature </contributing/code/experimental>`.
+    The "ConfigBuilders" feature was introduced in Symfony 5.3 as an
+    :doc:`experimental feature </contributing/code/experimental>`.
 
-The ConfigBuilders are automatically generated in your ``kernel.build_dir`` for
-every bundle. By convention they all live in the namespace ``Symfony\Config``.::
+Writing PHP config is sometimes difficult because you end up with large nested
+arrays and you have no autocompletion help from your favorite IDE. A way to
+address this is to use "ConfigBuilders". They are objects that will help you
+build these arrays.
+
+Symfony generates the ConfigBuilder classes automatically in the
+:ref:`kernel build directory <configuration-kernel-build-directory>` for all the
+bundles installed in your application. By convention they all live in the
+namespace ``Symfony\Config``::
 
     // config/packages/security.php
     use Symfony\Config\SecurityConfig;
