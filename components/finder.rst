@@ -293,6 +293,7 @@ Directory Depth
 By default, the Finder recursively traverses directories. Restrict the depth of
 traversing with :method:`Symfony\\Component\\Finder\\Finder::depth`::
 
+    // this will only consider files/directories which are direct children
     $finder->depth('== 0');
     $finder->depth('< 3');
 
