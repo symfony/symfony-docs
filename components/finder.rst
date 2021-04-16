@@ -311,6 +311,8 @@ Restrict by a depth range by chaining calls or passing an array::
 
     // same as above
     $finder->depth(['> 2', '< 5']);
+    
+Depth 0 means direct children (files and folders).
 
 Custom Filtering
 ~~~~~~~~~~~~~~~~
