@@ -1886,7 +1886,7 @@ use the ``generateUrl()`` helper::
     converted when used as extra parameters. So, if you're passing an object (e.g. an Uuid)
     as value of an extra parameter, you need to explictly convert it to a string::
 
-        $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid())]
+        $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid()]);
 
 If your controller does not extend from ``AbstractController``, you'll need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
