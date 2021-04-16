@@ -248,7 +248,7 @@ machine type, use ``camelCased workflow name + StateMachine``::
     {
         private $blogPublishingWorkflow;
 
-        // this injects the blog_publishing workflow configured before
+        // Symfony will inject the blog_publishing workflow configured before
         public function __construct(WorkflowInterface $blogPublishingWorkflow)
         {
             $this->blogPublishingWorkflow = $blogPublishingWorkflow;
