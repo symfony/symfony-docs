@@ -64,7 +64,7 @@ when rendering the field:
 
         {{ form_widget(form.publishAt, { 'separator': '=====' }) }}
 
-    .. code-block:: php
+    .. code-block:: html+php
 
         <?= $view['form']->widget($form['publishAt'], [
             'separator' => '=====',
