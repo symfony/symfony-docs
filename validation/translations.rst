@@ -4,12 +4,19 @@
 How to Translate Validation Constraint Messages
 ===============================================
 
-If you're using validation constraints with the Form component, you can translate
-the error messages by creating a translation resource for the
-``validators`` :ref:`domain <translation-resource-locations>`.
+The validation constraints used in forms can translate their error messages by
+creating a translation resource for the ``validators``
+:ref:`translation domain <translation-resource-locations>`.
 
-To start, suppose you've created a plain-old-PHP object that you need to
-use somewhere in your application::
+First of all, install the Symfony translation component (if it's not already
+installed in your application) running the following command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/translation
+
+Suppose you've created a plain-old-PHP object that you need to use somewhere in
+your application::
 
     // src/Entity/Author.php
     namespace App\Entity;
@@ -106,7 +113,7 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
 
     .. code-block:: xml
 
-        <!-- translations/validators.en.xlf -->
+        <!-- translations/validators/validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -121,12 +128,12 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
 
     .. code-block:: yaml
 
-        # translations/validators.en.yaml
+        # translations/validators/validators.en.yaml
         author.name.not_blank: Please enter an author name.
 
     .. code-block:: php
 
-        // translations/validators.en.php
+        // translations/validators/validators.en.php
         return [
             'author.name.not_blank' => 'Please enter an author name.',
         ];
