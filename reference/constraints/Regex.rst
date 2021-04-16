@@ -175,12 +175,12 @@ Options
 This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
 You usually don't need to specify this option because by default, the constraint
 will convert the pattern given in the `pattern`_ option into an HTML5 compatible
-pattern. This means that the delimiters are removed (e.g. ``/[a-z]+/`` becomes
-``[a-z]+``).
+pattern. Notably, the delimiters are removed and the anchors are implicit (e.g.
+``/^[a-z]+$/`` becomes ``[a-z]+``, and ``/[a-z]+/`` becomes ``.*[a-z]+.*``).
 
 However, there are some other incompatibilities between both patterns which
 cannot be fixed by the constraint. For instance, the HTML5 ``pattern`` attribute
-does not support flags. If you have a pattern like ``/[a-z]+/i``, you
+does not support flags. If you have a pattern like ``/^[a-z]+$/i``, you
 need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
@@ -197,7 +197,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
             /**
              * @Assert\Regex(
              *     pattern     = "/^[a-z]+$/i",
-             *     htmlPattern = "^[a-zA-Z]+$"
+             *     htmlPattern = "[a-zA-Z]+"
              * )
              */
             protected $name;
@@ -211,7 +211,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
                 name:
                     - Regex:
                         pattern: '/^[a-z]+$/i'
-                        htmlPattern: '^[a-zA-Z]+$'
+                        htmlPattern: '[a-zA-Z]+'
 
     .. code-block:: xml
 
@@ -225,7 +225,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
                 <property name="name">
                     <constraint name="Regex">
                         <option name="pattern">/^[a-z]+$/i</option>
-                        <option name="htmlPattern">^[a-zA-Z]+$</option>
+                        <option name="htmlPattern">[a-zA-Z]+</option>
                     </constraint>
                 </property>
             </class>
@@ -245,7 +245,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
             {
                 $metadata->addPropertyConstraint('name', new Assert\Regex([
                     'pattern' => '/^[a-z]+$/i',
-                    'htmlPattern' => '^[a-zA-Z]+$',
+                    'htmlPattern' => '[a-zA-Z]+',
                 ]));
             }
         }
