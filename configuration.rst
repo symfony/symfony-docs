@@ -71,8 +71,8 @@ readable. These are the main advantages and disadvantages of each format:
   and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
 * **XML**:autocompleted/validated by most IDEs and is parsed natively by PHP,
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
-* **PHP**: very powerful and it allows you to create dynamic configuration, but the
-  resulting configuration is less readable than the other formats.
+* **PHP**: very powerful and it allows you to create dynamic configuration with
+  arrays or a :ref:`ConfigBuilder <config-config-builder>`.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -913,6 +913,41 @@ parameters at once by type-hinting any of its constructor arguments with the
             // ...
         }
     }
+
+.. _config-config-builder:
+
+Using PHP ConfigBuilders
+------------------------
+
+Writing PHP config is sometimes difficult because you end up with large nested arrays
+and you have no help from your favorite IDE. A way to address this is to use "ConfigBuilders".
+They are objects that will help you build these arrays.
+
+.. versionadded:: 5.3
+
+    The "ConfigBuilders" was added in Symfony 5.3 as an :doc:`experimental feature </contributing/code/experimental>`.
+
+The ConfigBuilders are automatically generated in your ``kernel.build_dir`` for
+every bundle. By convention they all live in the namespace ``Symfony\Config``.::
+
+    // config/packages/security.php
+    use Symfony\Config\SecurityConfig;
+
+    return static function (SecurityConfig $security) {
+        $security->firewall('main')
+            ->pattern('^/*')
+            ->lazy(true)
+            ->anonymous();
+
+        $security
+            ->roleHierarchy('ROLE_ADMIN', ['ROLE_USER'])
+            ->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'])
+            ->accessControl()
+                ->path('^/user')
+                ->role('ROLE_USER');
+
+        $security->accessControl(['path' => '^/admin', 'roles' => 'ROLE_ADMIN']);
+    };
 
 Keep Going!
 -----------
