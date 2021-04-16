@@ -1255,6 +1255,7 @@ the common configuration using options when importing the routes.
                 ->namePrefix('blog_')
                 // these requirements are added to all imported routes
                 ->requirements(['_locale' => 'en|es|fr'])
+                ->exclude('../../src/Controller/{DebugEmailController}.php')
             ;
         };
 
