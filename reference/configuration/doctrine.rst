@@ -327,7 +327,7 @@ directory instead:
 
     .. code-block:: xml
 
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -378,7 +378,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
     .. code-block:: xml
 
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"

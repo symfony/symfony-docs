@@ -263,7 +263,7 @@ so ``DoctrineTokenProvider`` can store the tokens:
 
         .. code-block:: xml
 
-            # config/packages/doctrine.xml
+            <!-- config/packages/doctrine.xml -->
             <doctrine:dbal schema-filter="~^(?!rememberme_token)~"/>
 
         .. code-block:: php

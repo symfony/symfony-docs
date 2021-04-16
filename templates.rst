@@ -553,9 +553,12 @@ also provides a method to check for template existence. First, get the loader::
     // in a service using autowiring
     use Twig\Environment;
 
-    public function __construct(Environment $twig)
+    class YourService
     {
-        $loader = $twig->getLoader();
+        public function __construct(Environment $twig)
+        {
+            $loader = $twig->getLoader();
+        }
     }
 
 Then, pass the path of the Twig template to the ``exists()`` method of the loader::

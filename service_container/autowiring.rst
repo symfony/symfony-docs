@@ -526,6 +526,7 @@ the injection::
                 // want to use a named autowiring alias, wire it manually:
                 //     ->arg('$transformer', ref(UppercaseTransformer::class))
                 // ...
+            ;
         };
 
 Thanks to the ``App\Util\TransformerInterface`` alias, any argument type-hinted

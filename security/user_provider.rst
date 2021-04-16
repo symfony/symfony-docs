@@ -44,6 +44,7 @@ to retrieve them:
     .. code-block:: yaml
 
         # config/packages/security.yaml
+        security:
             # ...
 
             providers:
@@ -138,7 +139,7 @@ interface only requires one method: ``loadUserByUsername($username)``::
         public function loadUserByUsername($usernameOrEmail)
         {
             $entityManager = $this->getEntityManager();
-            
+
             return $entityManager->createQuery(
                     'SELECT u
                     FROM App\Entity\User u
@@ -413,7 +414,7 @@ command will generate a nice skeleton to get you started::
         {
             return User::class === $class || is_subclass_of($class, User::class);
         }
-        
+
         /**
          * Upgrades the encoded password of a user, typically for using a better hash algorithm.
          */

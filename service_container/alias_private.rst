@@ -269,7 +269,7 @@ The following example shows how to inject an anonymous service into another serv
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->args([inline(AnonymousBar::class)])
+                ->args([inline(AnonymousBar::class)]);
         };
 
 .. note::
@@ -320,7 +320,7 @@ Using an anonymous service as a factory looks like this:
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->factory([inline(AnonymousBar::class), 'constructFoo'])
+                ->factory([inline(AnonymousBar::class), 'constructFoo']);
         };
 
 Deprecating Services

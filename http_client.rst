@@ -428,7 +428,7 @@ each request (which overrides any global authentication):
                         auth-bearer="the-bearer-token"
                         auth-ntlm="the-username:the-password"
                     />
-                </framework-http-client>
+                </framework:http-client>
             </framework:config>
         </container>
 
