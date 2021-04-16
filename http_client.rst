@@ -330,6 +330,12 @@ If you use for example
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
+.. note::
+
+    Read the :ref:`base_uri option docs <reference-http-client-base-uri>` to
+    learn the rules applied when merging relative URIs into the base URI of the
+    scoped client.
+
 Making Requests
 ---------------
 
