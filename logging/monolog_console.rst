@@ -67,6 +67,16 @@ the console. If they are displayed, they are timestamped and colored appropriate
 Additionally, error logs are written to the error output (``php://stderr``).
 There is no need to conditionally handle the verbosity settings anymore.
 
+===============  =======================================  ============
+LoggerInterface  Verbosity                                Command line
+===============  =======================================  ============
+->error()        OutputInterface::VERBOSITY_QUIET         stderr
+->warning()      OutputInterface::VERBOSITY_NORMAL        stdout
+->notice()       OutputInterface::VERBOSITY_VERBOSE       -v
+->info()         OutputInterface::VERBOSITY_VERY_VERBOSE  -vv
+->debug()        OutputInterface::VERBOSITY_DEBUG         -vvv
+===============  =======================================  ============
+
 The Monolog console handler is enabled by default:
 
 .. configuration-block::
