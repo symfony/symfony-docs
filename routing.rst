@@ -1199,9 +1199,11 @@ the common configuration using options when importing the routes.
             # these requirements are added to all imported routes
             requirements:
                 _locale: 'en|es|fr'
+
             # An imported route with an empty URL will become "/blog/"
             # Uncomment this option to make that URL "/blog" instead
             # trailing_slash_on_root: false
+
             # you can optionally exclude some files/subdirectories when loading annotations
             # exclude: '../../src/Controller/{DebugEmailController}.php'
 
@@ -1248,13 +1250,18 @@ the common configuration using options when importing the routes.
             $routes->import('../../src/Controller/', 'annotation')
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
+
                 // An imported route with an empty URL will become "/blog/"
                 // Pass FALSE as the second argument to make that URL "/blog" instead
                 // ->prefix('/blog', false)
+
                 // this is added to the beginning of all imported route names
                 ->namePrefix('blog_')
+
                 // these requirements are added to all imported routes
                 ->requirements(['_locale' => 'en|es|fr'])
+
+                // you can optionally exclude some files/subdirectories when loading annotations
                 ->exclude('../../src/Controller/{DebugEmailController}.php')
             ;
         };
