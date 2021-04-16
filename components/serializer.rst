@@ -331,7 +331,7 @@ Then, create your groups definition:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
@@ -613,7 +613,7 @@ defines a ``Person`` entity with a ``firstName`` property:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
@@ -903,7 +903,7 @@ For example, take an object normalized as following::
 
 The ``XmlEncoder`` will encode this object like that::
 
-    <?xml version="1.0"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <response>
         <foo>1</foo>
         <foo>2</foo>
@@ -1187,7 +1187,7 @@ Here, we set it to 2 for the ``$child`` property:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
@@ -1505,7 +1505,7 @@ and ``BitBucketCodeRepository`` classes:
 
     .. code-block:: xml
 
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping

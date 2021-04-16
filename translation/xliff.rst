@@ -19,7 +19,7 @@ loaded/dumped inside a Symfony application:
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <xliff xmlns="urn:oasis:names:tc:xliff:document:2.1" version="2.1"
         srcLang="fr-FR" trgLang="en-US">
         <file id="messages.en_US">

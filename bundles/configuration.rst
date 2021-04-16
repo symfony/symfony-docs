@@ -64,7 +64,7 @@ can add some configuration that looks like this:
     .. code-block:: xml
 
         <!-- config/packages/acme_social.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:acme-social="http://example.org/schema/dic/acme_social"
@@ -416,7 +416,7 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 .. code-block:: xml
 
     <!-- config/packages/acme_hello.xml -->
-    <?xml version="1.0" ?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"
