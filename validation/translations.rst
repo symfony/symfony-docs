@@ -4,17 +4,19 @@
 How to Translate Validation Constraint Messages
 ===============================================
 
-If you're using validation constraints with the Form component, you can translate
-the error messages by creating a translation resource for the
-``validators`` :ref:`domain <translation-resource-locations>`.
+The validation constraints used in forms can translate their error messages by
+creating a translation resource for the ``validators``
+:ref:`translation domain <translation-resource-locations>`.
 
-.. note::
+First of all, install the Symfony translation component (if it's not already
+installed in your application) running the following command:
 
-    In order to translate the error message, you should have installed the
-    symfony/translation component with Composer.
+.. code-block:: terminal
 
-To start, suppose you've created a plain-old-PHP object that you need to
-use somewhere in your application::
+    $ composer require symfony/translation
+
+Suppose you've created a plain-old-PHP object that you need to use somewhere in
+your application::
 
     // src/Entity/Author.php
     namespace App\Entity;
