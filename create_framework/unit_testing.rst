@@ -13,7 +13,7 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.1/phpunit.xsd"
@@ -49,7 +49,7 @@ resolver. Modify the framework to make use of them::
     namespace Simplex;
 
     // ...
-    
+
     use Calendar\Controller\LeapYearController;
     use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
     use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;

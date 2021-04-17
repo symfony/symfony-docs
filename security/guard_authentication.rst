@@ -72,7 +72,7 @@ Next, configure your "user provider" to use this new ``apiToken`` property:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -258,7 +258,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -458,7 +458,7 @@ completes registration. To do that, use your authenticator and a service called
 
     // src/Controller/RegistrationController.php
     namespace App\Controller;
-    
+
     // ...
     use App\Security\LoginFormAuthenticator;
     use Symfony\Component\HttpFoundation\Request;
