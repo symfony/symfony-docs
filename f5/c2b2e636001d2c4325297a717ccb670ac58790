@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-04-16T18:39:18Z
+
+You can extend the DOCtor rule if you like to spot these issues
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-16T18:45:32Z
+
+It was just this one =)
+
+I've looked at all other code block =)
+
+Btw, we have `html+twig` and `twig`. What is the difference?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-04-16T18:48:54Z
+
+> Btw, we have html+twig and twig. What is the difference?
+
+Same as with php and html+php. `{{ form_row(form) }}` is twig, `<div>{{ form_label(form) }}</div>` is html+twig
