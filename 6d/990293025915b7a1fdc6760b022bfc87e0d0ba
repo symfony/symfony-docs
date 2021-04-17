@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-03-09T11:25:21Z
+
+Awesome. Thank you Kevin!
+I agree with all your comments. @wouterj I'll let you decide what actions to take on Kevin's review.
+
+My suggestion is that we should try to wrap up this PR to get it merged (hopefully this week) and I'll be happy to take actions on the comments in a separate PR.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-03-12T07:00:30Z
+
+@dmaicher maybe you want to have look at his PR 👀
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-04-17T13:06:23Z
+
+I think this PR is now ready to be merged. The rewrite is not fully finished, but finished enough to be merged imho. Merging this now allows Tobias and others to also work on the document.
+
+Among some other things, my major open points with this article are: move most of the dom crawler section to a subarticle and favor the Symfony assertion traits; use `make:test` in all sections; document the other options of `make:test`.
+
+@javiereguiluz or @weaverryan do you mind having a look at this PR (and maybe merge it)?
