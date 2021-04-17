@@ -176,7 +176,7 @@ with the ``doctrine.event_listener`` tag:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
@@ -289,7 +289,7 @@ with the ``doctrine.orm.entity_listener`` tag:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
@@ -440,7 +440,7 @@ with the ``doctrine.event_subscriber`` tag:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
@@ -499,7 +499,7 @@ can do it in the service configuration:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
