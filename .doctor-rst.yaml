@@ -101,3 +101,4 @@ whitelist:
         - 'provides a ``loginUser()`` method to simulate logging in in your functional'
         - '.. code-block:: twig'
         - '.. versionadded:: 3.6' # MonologBundle
+        - 'End to End Tests (E2E)'

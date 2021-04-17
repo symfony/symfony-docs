@@ -121,8 +121,8 @@ variable exists and will be available in your form themes::
 
 .. tip::
 
-    Use :ref:`PHPUnit data providers <testing-data-providers>` to test multiple
-    form conditions using the same test code.
+    Use `PHPUnit data providers`_ to test multiple form conditions using
+    the same test code.
 
 .. caution::
 
@@ -242,3 +242,5 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeExtensions`
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
+
+.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html#data-providers
