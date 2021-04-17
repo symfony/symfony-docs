@@ -399,8 +399,8 @@ Smoke Test your URLs
 
 In software engineering, `smoke testing`_ consists of *"preliminary testing to
 reveal simple failures severe enough to reject a prospective software release"*.
-Using :ref:`PHPUnit data providers <testing-data-providers>` you can define a
-functional test that checks that all application URLs load successfully::
+Using `PHPUnit data providers`_ you can define a functional test that
+checks that all application URLs load successfully::
 
     // tests/ApplicationAvailabilityFunctionalTest.php
     namespace App\Tests;
@@ -454,3 +454,4 @@ you must set up a redirection.
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/
+.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html#data-providers

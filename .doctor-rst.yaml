@@ -95,3 +95,4 @@ whitelist:
         - ".. _`Deploying Symfony 4 Apps on Heroku`: https://devcenter.heroku.com/articles/deploying-symfony4"
         - '.. versionadded:: 0.2' # MercureBundle
         - '.. code-block:: twig'
+        - 'End to End Tests (E2E)'
