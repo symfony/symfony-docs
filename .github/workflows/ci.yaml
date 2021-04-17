@@ -73,6 +73,10 @@ jobs:
                 working-directory: _build
                 run: php build.php -vvv
 
+            -   name: Show log file
+                if: ${{ always() }}
+                run: cat _build/logs.txt || true
+
     doctor-rst:
         name: Lint (DOCtor-RST)
 

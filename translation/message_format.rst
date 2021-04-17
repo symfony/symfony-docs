@@ -47,7 +47,7 @@ The basic usage of the MessageFormat allows you to use placeholders (called
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -108,7 +108,7 @@ typical usage of this is gender:
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -214,7 +214,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -342,7 +342,7 @@ Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal sc
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -406,7 +406,7 @@ using the :phpclass:`IntlDateFormatter`:
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -448,7 +448,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
     .. code-block:: xml
 
         <!-- translations/messages+intl-icu.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
