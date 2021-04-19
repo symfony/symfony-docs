@@ -271,7 +271,7 @@ the argument by its name:
             ->addTag('controller.service_arguments')
             ->setBindings([
                 '$logger' => new Reference('monolog.logger.doctrine'),
-                '$projectDir' => '%kernel.project_dir%'
+                '$projectDir' => '%kernel.project_dir%',
             ])
         ;
 
