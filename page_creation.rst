@@ -220,7 +220,7 @@ Make sure that ``LuckyController`` extends Symfony's base
           // ...
       }
 
-Now, use the handy ``render()`` function to render a template. Pass it a ``number``
+Now, use the handy ``render()`` method to render a template. Pass it a ``number``
 variable so you can use it in Twig::
 
     // src/Controller/LuckyController.php

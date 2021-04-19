@@ -402,7 +402,7 @@ This cookie will be automatically sent by the web browser when connecting to the
 Then, the Hub will verify the validity of the provided JWT, and extract the topic selectors
 from it.
 
-add your JWT secret to the configuration as follow ::
+Add your JWT secret to the configuration as follow:
 
 .. configuration-block::
 

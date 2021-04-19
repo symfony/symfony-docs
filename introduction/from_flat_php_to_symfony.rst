@@ -528,7 +528,7 @@ The Sample Application in Symfony
 
 The blog has come a *long* way, but it still contains a lot of code for such
 a basic application. Along the way, you've made a basic routing system and
-a method using ``ob_start()`` and ``ob_get_clean()`` to render templates.
+a function using ``ob_start()`` and ``ob_get_clean()`` to render templates.
 If, for some reason, you needed to continue building this "framework" from
 scratch, you could at least use Symfony's standalone :doc:`Routing </routing>`
 component and :doc:`Twig </templates>`, which already solve these problems.

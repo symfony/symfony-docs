@@ -10,7 +10,7 @@ While developing, instead of using ``yarn encore dev --watch``, you can use the
 
 This builds and serves the front-end assets from a new server. This server runs at
 ``localhost:8080`` by default, meaning your build assets are available at ``localhost:8080/build``.
-This server does not actually write the files to disk; instead it servers them from memory,
+This server does not actually write the files to disk; instead it serves them from memory,
 allowing for hot module reloading.
 
 As a consequence, the ``link`` and ``script`` tags need to point to the new server. If you're using the
