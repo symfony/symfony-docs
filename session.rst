@@ -55,18 +55,20 @@ sessions, check their default configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
                 // enables the support of sessions in the app
-                'enabled' => true,
+                ->enabled(true)
                 // ID of the service used for session storage
                 // NULL means that Symfony uses PHP default session mechanism
-                'handler_id' => null,
+                ->handlerId(null)
                 // improves the security of the cookies used for sessions
-                'cookie_secure' => 'auto',
-                'cookie_samesite' => 'lax',
-            ],
-        ]);
+                ->cookieSecure('auto')
+                ->cookieSamesite('lax')
+            ;
+        };
 
 Setting the ``handler_id`` config option to ``null`` means that Symfony will
 use the native PHP session mechanism. The session metadata files will be stored
@@ -112,13 +114,15 @@ session metadata files:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
                 // ...
-                'handler_id' => 'session.handler.native_file',
-                'save_path' => '%kernel.project_dir%/var/sessions/%kernel.environment%',
-            ],
-        ]);
+                ->handlerId('session.handler.native_file')
+                ->savePath('%kernel.project_dir%/var/sessions/%kernel.environment%')
+            ;
+        };
 
 Check out the Symfony config reference to learn more about the other available
 :ref:`Session configuration options <config-framework-session>`. You can also

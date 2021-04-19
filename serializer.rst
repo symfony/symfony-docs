@@ -259,12 +259,11 @@ value:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'serializer' => [
-                'name_converter' => 'serializer.name_converter.camel_case_to_snake_case',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->serializer()->nameConverter('serializer.name_converter.camel_case_to_snake_case');
+        };
 
 Going Further with the Serializer
 ---------------------------------

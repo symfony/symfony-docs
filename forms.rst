@@ -345,13 +345,13 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_layout.html.twig',
-            ],
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes(['bootstrap_4_layout.html.twig']);
 
             // ...
-        ]);
+        };
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
 Bootstrap 3 and 4 as well as Foundation 5 and 6. You can also
@@ -627,11 +627,11 @@ these new messages set the ``legacy_error_messages`` option to ``false``:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'form' => [
-                'legacy_error_messages' => false,
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->form()->legacyErrorMessages(false);
+        };
 
 Other Common Form Features
 --------------------------

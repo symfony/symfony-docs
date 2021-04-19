@@ -2508,12 +2508,11 @@ The solution is to configure the ``default_uri`` option to define the
     .. code-block:: php
 
         // config/packages/routing.php
-        $container->loadFromExtension('framework', [
-            'router' => [
-                // ...
-                'default_uri' => "https://example.org/my/path/",
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->router()->defaultUri('https://example.org/my/path/');
+        };
 
 .. versionadded:: 5.1
 
