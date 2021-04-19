@@ -843,12 +843,6 @@ useful test assertions::
     // ...or check that the response is a redirect to any URL
     $this->assertResponseRedirects();
 
-.. versionadded:: 4.3
-
-    The ``assertResponseHeaderSame()``, ``assertResponseIsSuccessful()``,
-    ``assertResponseStatusCodeSame()``, ``assertResponseRedirects()`` and other
-    related methods were introduced in Symfony 4.3.
-
 .. index::
    single: Tests; Crawler
 
