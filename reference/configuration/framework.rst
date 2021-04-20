@@ -1247,10 +1247,17 @@ only_exceptions
 When this is set to ``true``, the profiler will only be enabled when an
 exception is thrown during the handling of the request.
 
+.. _only_master_requests:
+
 only_main_requests
 ..................
 
 **type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 5.3
+
+    The ``only_main_requests`` option was introduced in Symfony 5.3. In previous
+    versions it was called ``only_master_requests``.
 
 When this is set to ``true``, the profiler will only be enabled on the main
 requests (and not on the subrequests).
