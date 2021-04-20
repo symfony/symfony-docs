@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-03-27T11:59:09Z
+
+Thanks for taking care of these important changes!
+
+I'd add the same comment as in https://github.com/symfony/symfony-docs/pull/15157#issuecomment-808721361. I think we should add a comment about how "main " was called "master" in previous Symfony versions. It's not needed to add this in all places mentioning "main requests", but maybe just in the most important article explaining this. Thanks!
