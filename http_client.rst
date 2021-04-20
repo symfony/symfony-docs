@@ -1498,7 +1498,8 @@ This allows using them where native PHP streams are needed::
 Extensibility
 -------------
 
-In order to extend the behavior of a base HTTP client, decoration is the way to go::
+If you want to extend the behavior of a base HTTP client, you can use
+:doc:`service decoration </service_container/service_decoration>`::
 
     class MyExtendedHttpClient implements HttpClientInterface
     {
@@ -1511,11 +1512,11 @@ In order to extend the behavior of a base HTTP client, decoration is the way to 
 
         public function request(string $method, string $url, array $options = []): ResponseInterface
         {
-            // do what you want here with $method, $url and/or $options
+            // process and/or change the $method, $url and/or $options as needed
+            $response = $this->decoratedClient->request($method, $url, $options);
 
-            $response = $this->decoratedClient->request();
-
-            //!\ calling any method on $response here would break async, see below for a better way
+            // if you call here any method on $response, the HTTP request
+            // won't be async; see below for a better way
 
             return $response;
         }
@@ -1526,13 +1527,13 @@ In order to extend the behavior of a base HTTP client, decoration is the way to 
         }
     }
 
-A decorator like this one is suited for use cases where processing the
-requests' arguments is enough.
+A decorator like this one is useful in cases where processing the requests'
+arguments is enough. By decorating the ``on_progress`` option, you can
+even implement basic monitoring of the response. However, since calling
+responses' methods forces synchronous operations, doing so inside ``request()``
+will break async.
 
-By decorating the ``on_progress`` option, one can
-even implement basic monitoring of the response. But since calling responses'
-methods forces synchronous operations, doing so in ``request()`` breaks async.
-The solution then is to also decorate the response object itself.
+The solution is to also decorate the response object itself.
 :class:`Symfony\\Component\\HttpClient\\TraceableHttpClient` and
 :class:`Symfony\\Component\\HttpClient\\Response\\TraceableResponse` are good
 examples as a starting point.
@@ -1551,10 +1552,9 @@ processing the stream of chunks as they come back from the network::
 
         public function request(string $method, string $url, array $options = []): ResponseInterface
         {
-            // do what you want here with $method, $url and/or $options
+            // process and/or change the $method, $url and/or $options as needed
 
             $passthru = function (ChunkInterface $chunk, AsyncContext $context) {
-
                 // do what you want with chunks, e.g. split them
                 // in smaller chunks, group them, skip some, etc.
 
@@ -1571,19 +1571,19 @@ it shall return an
 :class:`Symfony\\Component\\HttpClient\\Response\\AsyncResponse`.
 
 The custom processing of chunks should happen in ``$passthru``: this generator
-is where you need to write your logic. It will be called for each chunk yielded by
-the underlying client. A ``$passthru`` that does nothing would just ``yield $chunk;``.
-Of course, you could also yield a modified chunk, split the chunk into many
+is where you need to write your logic. It will be called for each chunk yielded
+by the underlying client. A ``$passthru`` that does nothing would just ``yield
+$chunk;``. You could also yield a modified chunk, split the chunk into many
 ones by yielding several times, or even skip a chunk altogether by issuing a
 ``return;`` instead of yielding.
 
 In order to control the stream, the chunk passthru receives an
 :class:`Symfony\\Component\\HttpClient\\Response\\AsyncContext` as second
 argument. This context object has methods to read the current state of the
-response. It also allows altering the response stream with methods to create new
-chunks of content, pause the stream, cancel the stream, change the info of the
-response, replace the current request by another one or change the chunk passthru
-itself.
+response. It also allows altering the response stream with methods to create
+new chunks of content, pause the stream, cancel the stream, change the info of
+the response, replace the current request by another one or change the chunk
+passthru itself.
 
 Checking the test cases implemented in
 :class:`Symfony\\Component\\HttpClient\\Response\\Tests\\AsyncDecoratorTraitTest`
@@ -1594,10 +1594,10 @@ Here are the use cases that it simulates:
 * send a preflight request, e.g. for authentication needs;
 * issue subrequests and include their content in the main response's body.
 
-The logic in :class:`Symfony\\Component\\HttpClient\\Response\\AsyncResponse` has
-many safety checks that will throw a ``LogicException`` if the chunk passthru
-doesn't behave correctly; e.g. if a chunk is yielded after an ``isLast()`` one,
-or if a content chunk is yielded before an ``isFirst()`` one, etc.
+The logic in :class:`Symfony\\Component\\HttpClient\\Response\\AsyncResponse`
+has many safety checks that will throw a ``LogicException`` if the chunk
+passthru doesn't behave correctly; e.g. if a chunk is yielded after an ``isLast()``
+one, or if a content chunk is yielded before an ``isFirst()`` one, etc.
 
 Testing HTTP Clients and Responses
 ----------------------------------
