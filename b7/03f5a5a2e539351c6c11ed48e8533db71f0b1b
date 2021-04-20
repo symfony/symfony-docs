@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by AndreasA at 2020-12-02T16:46:41Z
+
+It would be great to know if this could also be used as authentication middleware, e.g. for OAuth2 and if so, a short example how one could use it.
+
+I guess in both cases - using the AsynDecoratorTrait and not using it to provde a middleware I would use the Symfony service decoration, correct?
+
+So like:
+```yml
+services:
+     My\MyService:
+          decorates: 'Symfony\Component\HttpClient\HttpClient'
+```
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2021-02-16T10:32:34Z
+
+Maybe this one could be merged?
