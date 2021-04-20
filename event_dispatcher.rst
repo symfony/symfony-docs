@@ -206,10 +206,10 @@ the ``EventSubscriber`` directory. Symfony takes care of the rest.
 Request Events, Checking Types
 ------------------------------
 
-A single page can make several requests (one master request, and then multiple
+A single page can make several requests (one main request, and then multiple
 sub-requests - typically when :ref:`embedding controllers in templates <templates-embed-controllers>`).
 For the core Symfony events, you might need to check to see if the event is for
-a "master" request or a "sub request"::
+a "main" request or a "sub request"::
 
     // src/EventListener/RequestListener.php
     namespace App\EventListener;
@@ -220,8 +220,8 @@ a "master" request or a "sub request"::
     {
         public function onKernelRequest(RequestEvent $event)
         {
-            if (!$event->isMasterRequest()) {
-                // don't do anything if it's not the master request
+            if (!$event->isMainRequest()) {
+                // don't do anything if it's not the main request
                 return;
             }
 

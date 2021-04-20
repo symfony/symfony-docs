@@ -65,7 +65,7 @@ that system::
          */
         public function handle(
             Request $request,
-            int $type = self::MASTER_REQUEST,
+            int $type = self::MAIN_REQUEST,
             bool $catch = true
         );
     }
@@ -701,12 +701,12 @@ argument as follows::
 
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
-listeners (e.g. security) may only act upon the master request. Each listener
+listeners (e.g. security) may only act upon the main request. Each listener
 is passed some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
-whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
-can be used to check if the current request is a "master" or "sub" request.
+whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMainRequest`
+can be used to check if the current request is a "main" or "sub" request.
 
-For example, a listener that only needs to act on the master request may
+For example, a listener that only needs to act on the main request may
 look like this::
 
     use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -714,7 +714,7 @@ look like this::
 
     public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

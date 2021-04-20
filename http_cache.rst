@@ -155,7 +155,7 @@ header to the response. You can also use the ``trace_level`` config
 option and set it to either ``none``, ``short`` or ``full`` to
 add this information.
 
-``short`` will add the information for the master request only.
+``short`` will add the information for the main request only.
 It's written in a concise way that makes it easy to record the
 information in your server log files. For example, in Apache you can
 use ``%{X-Symfony-Cache}o`` in ``LogFormat`` format statements.

@@ -197,7 +197,7 @@ Configuration
   * :ref:`dsn <profiler-dsn>`
   * :ref:`enabled <reference-profiler-enabled>`
   * `only_exceptions`_
-  * `only_master_requests`_
+  * `only_main_requests`_
 
 * `property_access`_
 
@@ -1247,12 +1247,12 @@ only_exceptions
 When this is set to ``true``, the profiler will only be enabled when an
 exception is thrown during the handling of the request.
 
-only_master_requests
-....................
+only_main_requests
+..................
 
 **type**: ``boolean`` **default**: ``false``
 
-When this is set to ``true``, the profiler will only be enabled on the master
+When this is set to ``true``, the profiler will only be enabled on the main
 requests (and not on the subrequests).
 
 .. _profiler-dsn:

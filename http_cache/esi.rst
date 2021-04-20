@@ -161,7 +161,7 @@ used ``render()``.
     contains the ``ESI/1.0`` string anywhere.
 
 The embedded action can now specify its own caching rules entirely independently
-of the master page::
+of the main page::
 
     // src/Controller/NewsController.php
     namespace App\Controller;

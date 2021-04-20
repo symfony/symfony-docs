@@ -225,7 +225,7 @@ your ``Session`` object with the default ``AttributeBag`` by the ``NamespacedAtt
         public function createSession(): SessionInterface
         {
             return new Session(
-                $this->storageFactory->createStorage($this->requestStack->getMasterRequest()),
+                $this->storageFactory->createStorage($this->requestStack->getMainRequest()),
                 $this->sessionAttributes,
                 null,
                 $this->usageReporter
