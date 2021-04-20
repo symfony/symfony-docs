@@ -313,11 +313,11 @@ somewhat like this::
 
     class LegacyBridge
     {
-        public static function prepareLegacyScript(Request $request, Response $response, string $publicDirectory): string
+        public static function prepareLegacyScript(Request $request, Response $response, string $publicDirectory): ?string
         {
             // If Symfony successfully handled the route, you do not have to do anything.
             if (false === $response->isNotFound()) {
-                return;
+                return null;
             }
 
             // Figure out how to map to the needed script file

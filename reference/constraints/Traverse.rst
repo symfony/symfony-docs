@@ -27,7 +27,7 @@ that all have constraints on their properties.
         namespace App\Entity;
 
         use Doctrine\Collections\ArrayCollection;
-        use Doctrine\Collections\Collection
+        use Doctrine\Collections\Collection;
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Component\Validator\Constraints as Assert;
 

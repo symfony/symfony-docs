@@ -332,7 +332,9 @@ Profiling Templates
 ~~~~~~~~~~~~~~~~~~~
 
 By using the ``stopwatch`` helper, you are able to time parts of your template
-and display it on the timeline of the WebProfilerBundle::
+and display it on the timeline of the WebProfilerBundle:
+
+.. code-block:: html+php
 
     <?php $view['stopwatch']->start('foo') ?>
     ... things that get timed
@@ -347,13 +349,17 @@ Output Escaping
 ---------------
 
 When using PHP templates, escape variables whenever they are displayed to the
-user::
+user:
+
+.. code-block:: html+php
 
     <?= $view->escape($var) ?>
 
 By default, the ``escape()`` method assumes that the variable is outputted
 within an HTML context. The second argument lets you change the context. For
-instance, to output something in a JavaScript script, use the ``js`` context::
+instance, to output something in a JavaScript script, use the ``js`` context:
+
+.. code-block:: html+php
 
     <?= $view->escape($var, 'js') ?>
 

@@ -341,18 +341,21 @@ you can type-hint the new ``SiteUpdateManager`` class and use it::
     // src/Controller/SiteController.php
     namespace App\Controller;
 
-    // ...
     use App\Service\SiteUpdateManager;
+    // ...
 
-    public function new(SiteUpdateManager $siteUpdateManager)
+    class SiteController extends AbstractController
     {
-        // ...
+        public function new(SiteUpdateManager $siteUpdateManager)
+        {
+            // ...
 
-        if ($siteUpdateManager->notifyOfSiteUpdate()) {
-            $this->addFlash('success', 'Notification mail was sent successfully.');
+            if ($siteUpdateManager->notifyOfSiteUpdate()) {
+                $this->addFlash('success', 'Notification mail was sent successfully.');
+            }
+
+            // ...
         }
-
-        // ...
     }
 
 Thanks to autowiring and your type-hints in ``__construct()``, the container creates
@@ -867,6 +870,7 @@ This is mostly useful when you want to fetch services lazily::
 
             // ...
         }
+    }
 
 As a best practice, you should only create *private* services. This allows for
 safe container optimizations, e.g. removing unused services. You should not use

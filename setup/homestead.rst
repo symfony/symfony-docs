@@ -58,7 +58,9 @@ Homestead now supports a Symfony 2 and 3 web layout with ``app.php`` and
 using type ``symfony4``.
 
 At last, edit the hosts file on your local machine to map ``symfony-demo.test``
-to ``192.168.10.10`` (which is the IP used by Homestead)::
+to ``192.168.10.10`` (which is the IP used by Homestead):
+
+.. code-block:: text
 
     # /etc/hosts (unix) or C:\Windows\System32\drivers\etc\hosts (Windows)
     192.168.10.10 symfony-demo.test

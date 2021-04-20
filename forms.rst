@@ -592,7 +592,7 @@ argument of ``createForm()``::
         {
             $task = new Task();
             // use some PHP logic to decide if this form field is required or not
-            $dueDateIsRequired = ...
+            $dueDateIsRequired = ...;
 
             $form = $this->createForm(TaskType::class, $task, [
                 'require_due_date' => $dueDateIsRequired,

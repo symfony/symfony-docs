@@ -230,7 +230,7 @@ option in your ``composer.json`` file like this:
         "config": {
             "bin-dir": "bin",
             "vendor-dir": "/some/dir/vendor"
-        },
+        }
     }
 
 .. tip::
