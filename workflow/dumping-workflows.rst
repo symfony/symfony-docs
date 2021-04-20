@@ -63,7 +63,7 @@ You can use ``metadata`` with the following keys to style the workflow:
 
   * ``bg_color``: a color;
   * ``description``: a string that describes the state.
-  
+
 * for transitions:
 
   * ``label``: a string that replaces the name of the transition;
@@ -168,7 +168,6 @@ Below is the configuration for the pull request state machine with styling added
                         <framework:metadata>
                             <framework:bg_color>DeepSkyBlue</framework:bg_color>
                         </framework:metadata>
-                    </framework:place>
                     </framework:place>
 
                     <framework:transition name="submit">

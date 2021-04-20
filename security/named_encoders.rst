@@ -33,7 +33,7 @@ to apply to all instances of a specific class:
                 <!-- ... -->
                 <encoder class="App\Entity\User"
                     algorithm="auto"
-                    cost=12
+                    cost="12"
                 />
             </config>
         </srv:container>

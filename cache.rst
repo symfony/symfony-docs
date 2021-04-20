@@ -373,7 +373,7 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
 
                 $services->set('app.cace.adapter.redis')
                     ->parent('cache.adapter.redis')
-                    ->tag('cache.pool', ['namespace' => 'my_custom_namespace'])
+                    ->tag('cache.pool', ['namespace' => 'my_custom_namespace']);
             };
 
 Custom Provider Options

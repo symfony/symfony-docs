@@ -56,13 +56,13 @@ an **event bus**. The event bus could have zero or more subscribers.
                     <framework:bus name="command.bus">
                         <framework:middleware id="validation"/>
                         <framework:middleware id="doctrine_transaction"/>
-                    <framework:bus>
+                    </framework:bus>
                     <framework:bus name="query.bus">
                         <framework:middleware id="validation"/>
-                    <framework:bus>
+                    </framework:bus>
                     <framework:bus name="event.bus" default-middleware="allow_no_handlers">
                         <framework:middleware id="validation"/>
-                    <framework:bus>
+                    </framework:bus>
                 </framework:messenger>
             </framework:config>
         </container>
