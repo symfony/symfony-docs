@@ -875,6 +875,10 @@ retry has been hit, the message will be discarded permanently.
 Multiple Failed Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 5.3
+
+    The possibility to use multiple failed transports was introduced in Symfony 5.3.
+
 Sometimes it is not enough to have a single, global ``failed transport`` configured
 because some messages are more important than others. In those cases, you can
 override the failure transport for only specific transports:
