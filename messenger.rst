@@ -1483,7 +1483,7 @@ this globally (or for each transport) to a service that implements
                 ],
                 'transports' => [
                     'async_priority_normal' => [
-                        'dsn' => // ...
+                        'dsn' => ...,
                         'serializer' => 'messenger.transport.symfony_serializer',
                     ],
                 ],

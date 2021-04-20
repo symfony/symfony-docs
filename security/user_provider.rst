@@ -44,6 +44,7 @@ to retrieve them:
     .. code-block:: yaml
 
         # config/packages/security.yaml
+        security:
             # ...
 
             providers:

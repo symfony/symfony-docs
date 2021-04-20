@@ -283,7 +283,7 @@ The following example shows how to inject an anonymous service into another serv
 
             $services->set(Foo::class)
                 // In versions earlier to Symfony 5.1 the inline_service() function was called inline()
-                ->args([inline_service(AnonymousBar::class)])
+                ->args([inline_service(AnonymousBar::class)]);
         };
 
 .. note::
@@ -334,7 +334,7 @@ Using an anonymous service as a factory looks like this:
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->factory([inline_service(AnonymousBar::class), 'constructFoo'])
+                ->factory([inline_service(AnonymousBar::class), 'constructFoo']);
         };
 
 Deprecating Services

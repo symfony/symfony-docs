@@ -194,7 +194,7 @@ use the ``ldap`` user provider.
                     ],
                 ],
             ],
-        ];
+        ]);
 
 .. caution::
 
@@ -408,7 +408,7 @@ Configuration example for form login
                     ],
                 ],
             ]
-        ];
+        ]);
 
 Configuration example for HTTP Basic
 ....................................
@@ -467,7 +467,7 @@ Configuration example for HTTP Basic
                     'stateless' => true,
                 ],
             ],
-        ];
+        ]);
 
 Configuration example for form login and query_string
 .....................................................
