@@ -77,8 +77,8 @@ Now, examine the results to see this closely:
         $container->loadFromExtension('my_bundle', [
                 'logging' => true,
                 // true, as expected
-            )
-        ];
+            ]
+        );
 
         $container->loadFromExtension('my_bundle', [
                 'logging' => "%kernel.debug%",

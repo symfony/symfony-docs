@@ -845,7 +845,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <!-- ... --!>
+                    <!-- ... -->
 
                     <service id="App\HandlerCollection">
                         <!-- use getIndex() instead of getDefaultIndexName() -->

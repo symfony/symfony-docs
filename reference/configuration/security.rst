@@ -162,7 +162,7 @@ encoding algorithm. Also, each algorithm defines different config options:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -764,7 +764,7 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"

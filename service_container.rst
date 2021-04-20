@@ -989,7 +989,6 @@ for classes under the same namespace:
             <services>
                 <prototype namespace="App\Domain"
                     resource="../src/App/Domain/*"/>
-                </prototype>
 
                 <!-- ... -->
             </services>

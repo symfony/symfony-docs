@@ -338,7 +338,7 @@ This results in:
         $table->setHeaders([
             [new TableCell('Main table title', ['colspan' => 3])],
             ['ISBN', 'Title', 'Author'],
-        ])
+        ]);
         // ...
 
     This generates:

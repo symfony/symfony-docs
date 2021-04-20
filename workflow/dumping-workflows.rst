@@ -186,7 +186,6 @@ Below is the configuration for the pull request state machine with styling added
                             <framework:bg_color>DeepSkyBlue</framework:bg_color>
                         </framework:metadata>
                     </framework:place>
-                    </framework:place>
 
                     <framework:transition name="submit">
                         <framework:from>start</framework:from>

@@ -118,11 +118,11 @@ method returns **false**:
                     'message' => "You've entered an invalid state.",
                 ]));
             }
-        }
 
-        public function isStateInvalid()
-        {
-            // ...
+            public function isStateInvalid()
+            {
+                // ...
+            }
         }
 
 .. include:: /reference/constraints/_null-values-are-valid.rst.inc

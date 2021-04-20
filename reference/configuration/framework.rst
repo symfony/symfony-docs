@@ -2913,7 +2913,7 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
                     <framework:pool
                         name="cache.mycache"
                         adapter="cache.adapter.redis"
-                        default-lifetime=3600
+                        default-lifetime="3600"
                     />
                 </framework:cache>
                 <!-- ... -->

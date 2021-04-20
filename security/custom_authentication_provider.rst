@@ -422,7 +422,7 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
 
     .. code-block:: php
 
-         // config/services.php
+        // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Security\Authentication\Provider\WsseProvider;
