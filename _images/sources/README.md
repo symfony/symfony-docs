@@ -27,6 +27,12 @@ Saving and Exporting the Diagram
 * Save the original diagram in `*.dia` format in `_images/sources/<folder-name>`;
 * Export the diagram to SVG format and save it in `_images/<folder-name>`.
 
+Important: choose "Cairo Scalable Vector Graphics (.svg)" format instead of
+plain " Scalable Vector Graphics (.svg)" because the former is the only format
+that transforms text into vector shapes (resulting file is larger in size, but
+it's truly portable because text is displayed the same even if you don't have
+some fonts installed).
+
 Including the Diagram in the Symfony Docs
 -----------------------------------------
 
