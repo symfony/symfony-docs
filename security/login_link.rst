@@ -740,4 +740,8 @@ Then, configure this service ID as the ``success_handler``:
             ],
         ]);
         
-If you want to manage the failure for example the link is expires, use 'failure_handler' and implements "AuthenticationFailureHandlerInterface" instand of "AuthenticationSuccessHandlerInterface"
+.. tip::
+
+    If you want to customize the default failure handling, use the
+    ``failure_handler`` option and create a class that implements
+    :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
