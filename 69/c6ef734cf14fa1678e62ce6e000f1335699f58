@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-18T17:14:14Z
+
+Note that it will not complain about the existing syntax error (missing semi colon) [in the cache.rst](https://github.com/symfony/symfony-docs/blame/1859eb306a4a0a8a80d3a04121e0e06b8c1f2509/cache.rst#L376). (It will be fixed [here](https://github.com/symfony/symfony-docs/pull/15250/files#diff-8d0ff073208b4ebfbd064d55c3957dda3d98d8e836adc48080072394208aabd4L376)).
+
+This is thanks to the baseline feature.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-19T12:35:55Z
+
+The PR is updated. The docs team has an invitation to https://github.com/symfony-docs-tools
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-19T12:37:52Z
+
+Here is an example output that shows both a syntax error and where a code block for config will cause an issue on `bin/console cache:warmup`.
+
+<img width="1023" alt="Screenshot 2021-04-19 at 14 36 54" src="https://user-images.githubusercontent.com/1275206/115237318-b99a8580-a11c-11eb-8468-e5bdd0d15650.png">
