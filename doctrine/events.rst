@@ -454,8 +454,6 @@ with the ``doctrine.event_subscriber`` tag:
                 <service id="App\EventListener\DatabaseActivitySubscriber">
                     <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
                 </service>
-
-                </service>
             </services>
         </container>
 
@@ -475,7 +473,7 @@ with the ``doctrine.event_subscriber`` tag:
                     // to the same event (default priority = 0; higher numbers = listener is run earlier)
                     'priority' => 500,
 
-                    # you can also restrict listeners to a specific Doctrine connection
+                    // you can also restrict listeners to a specific Doctrine connection
                     'connection' => 'default',
                 ])
             ;
