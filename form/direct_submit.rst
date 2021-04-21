@@ -34,6 +34,24 @@ control over when exactly your form is submitted and what data is passed to it::
         ]);
     }
 
+The list of fields submitted with the ``submit()`` method must be the same as
+the fields defined by the form class. Otherwise, you'll see a form validation error::
+
+    public function new(Request $request): Response
+    {
+        // ...
+
+        if ($request->isMethod('POST')) {
+            // '$json' represents payload data sent by React/Angular/Vue
+            // the merge of parameters is needed to submit all form fields
+            $form->submit(array_merge($json, $request->request->all()));
+
+            // ...
+        }
+
+        // ...
+    }
+
 .. tip::
 
     Forms consisting of nested fields expect an array in
@@ -59,12 +77,3 @@ control over when exactly your form is submitted and what data is passed to it::
 
         // 'email' and 'username' are added manually to force their validation
         $form->submit(array_merge(['email' => null, 'username' => null], $request->request->all()), false);
-        
-.. caution::
-
-    When submitting a form via a "POST" request and manually submitting the form 
-    with ``submit()``, ensure that list of fields in payload equals the list of validated 
-    fields in FormType class - in other case the form validation will fail.
-
-    //'json' represents payload data (used frequently by api client as React/Angular/Vue etc.)
-    $form->submit(array_merge($json, $request->request->all()));
