@@ -648,7 +648,7 @@ and set the ``limiter`` option to its service ID:
                 >
                     <!-- 1st argument is the limiter for IP -->
                     <srv:argument type="service" id="limiter.ip_login"/>
-                    <1-- 2nd argument is the limiter for username+IP -->
+                    <!-- 2nd argument is the limiter for username+IP -->
                     <srv:argument type="service" id="limiter.username_ip_login"/>
                 </srv:service>
             </srv:services>
